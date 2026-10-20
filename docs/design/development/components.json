@@ -337,7 +337,11 @@
         "route:/estimating/cpq",
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
-        "route:/estimating/rules/[id]"
+        "route:/estimating/rules/[id]",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -729,7 +733,9 @@
         "route:/estimating/rules",
         "route:/products",
         "route:/customers",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:SV-01",
+        "route:/service/tickets"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -1681,7 +1687,10 @@
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
         "route:/admin/access/roles",
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2396,7 +2405,9 @@
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "scope:SV-02",
+        "route:/service/tickets/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -3037,7 +3048,12 @@
         "route:/admin/access/requests/[id]",
         "route:/projects",
         "scope:CS-01",
-        "route:/customers/new"
+        "route:/customers/new",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]",
+        "route:/service/tickets/new"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3526,7 +3542,9 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:SV-02",
+        "route:/service/tickets/[id]"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -3910,7 +3928,12 @@
         "scope:CS-01",
         "route:/products",
         "route:/sales/leads",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]",
+        "route:/service/tickets/new"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",

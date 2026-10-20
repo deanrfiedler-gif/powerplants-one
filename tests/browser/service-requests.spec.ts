@@ -1,212 +1,303 @@
 import { test, expect, type Page } from "@playwright/test";
-import { randomUUID } from "node:crypto";
-
-// SV-01 build plan I2: the native service requests register for the three states the application moves a
-// request through today (D3). Synthetic seed data only.
-const id = (type: number, n = 1) => `${type}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-const company = id(20),
-  site = id(70),
-  coordinator = id(30),
-  person = id(60);
-
-async function login(page: Page, origin: string, profile = "coordinator") {
-  const response = await page.request.post(`${origin}/api/v1/local-session`, { headers: { origin }, data: { profile } });
-  expect(response.status()).toBe(200);
-}
-async function createRequest(page: Page, origin: string) {
-  const ticket = randomUUID(),
-    summary = `SYN SV-01 register ${ticket.slice(0, 8)}`;
-  const response = await page.request.post(`${origin}/api/v1/service/tickets`, {
+import type { RegisterItem } from "../../src/service/ticket-register-view";
+const uuid = (n: number) => `40000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+const actor = "30000000-0000-4000-8000-000000000001",
+  company = "20000000-0000-4000-8000-000000000001",
+  site = "70000000-0000-4000-8000-000000000001";
+const now = "2026-10-17T00:42:00.000Z";
+const titles = [
+  "Irrigation pump not starting after power outage",
+  "Heating loop sensor readings drift overnight",
+  "Climate computer alarm: vent position fault",
+  "Fertigation EC reading above set point",
+  "Misting line pressure drops at midday",
+  "Invoice query on the last service visit",
+  "Boiler controller alarm",
+  "Shade screen stops halfway",
+  "Vent actuator in bay 2",
+  "Nutrient tank level sensor reads empty",
+  "Cool room fan vibrating",
+  "Unidentified pump at bore 3",
+];
+const items: RegisterItem[] = titles.map((summary, i) => ({
+  id: uuid(97 - i),
+  display_number: `SYN-PPO-TKT-${String(97 - i).padStart(6, "0")}`,
+  summary,
+  status: [0, 2, 4].includes(i) ? "New" : [1, 3, 5].includes(i) ? "NeedsInformation" : "Triaged",
+  priority: i === 0 ? "Urgent" : [1, 2, 6].includes(i) ? "High" : "Normal",
+  version: 3,
+  received_at: now,
+  channel: "Phone",
+  next_action: "Review the reported issue",
+  triage_owner_id: actor,
+  triage_owner_name: "SYN Sasha Cole",
+  site:
+    i === 2
+      ? null
+      : {
+          id: site,
+          display_number: "SYN-PPO-SITE-000001",
+          display_name: "SYN Block C Plant Room",
+        },
+  site_identification_needed: i === 2,
+  asset: {
+    id: uuid(500),
+    display_number: "SYN-PPO-EQP-000001",
+    description: "Heating loop controller",
+  },
+  customer: {
+    id: uuid(600),
+    display_name: "SYN Northbank Farm",
+    basis: "SiteOperator",
+  },
+  clarification:
+    i === 1
+      ? {
+          id: uuid(700),
+          summary: "Confirm which loop sensor was replaced",
+          owner_name: "SYN Sasha Cole",
+          due_at: "2026-10-16T06:00:00Z",
+          due_needed: false,
+          status: "Open",
+        }
+      : null,
+  clarification_unavailable: false,
+  triage_blocker_count: i < 6 ? 1 : 0,
+  work_orders: [],
+  can_edit_intake: i < 6,
+}));
+const record = () => ({
+  id: items[1].id,
+  company_id: company,
+  display_number: items[1].display_number,
+  summary: items[1].summary,
+  status: "NeedsInformation",
+  version: 3,
+  synthetic: true,
+  updated_at: now,
+  received_at: now,
+  received_time_basis: "UserReported",
+  channel: "Phone",
+  requester_id: uuid(600),
+  requester_description: "",
+  site_id: site,
+  site_identification_needed: false,
+  asset_id: uuid(500),
+  symptom: "Readings drift up to 3 °C between 01:00 and 05:00.",
+  impact: "Manual check at 06:00",
+  priority: "High",
+  priority_reason: "Drift could harm the crop",
+  triage_owner_id: actor,
+  owner_name: "SYN Sasha Cole",
+  next_action: "Review the linked work order",
+  open_questions: "Was it the sensor replaced on 3 Oct?",
+  clarification_outcome: null,
+  clarification_activity: {
+    id: uuid(700),
+    version: 1,
+    status: "Open",
+    summary: "Confirm which loop sensor was replaced",
+    owner_id: actor,
+    owner_name: "SYN Sasha Cole",
+    due_at: "2026-10-16T06:00:00Z",
+    can_complete: true,
+  },
+  clarification_unavailable: false,
+  requester: { display_name: "SYN Ravi Patel" },
+  site: { display_name: "SYN Block C Plant Room" },
+  asset: { description: "Heating loop controller" },
+  customer: items[1].customer,
+  work_orders: [],
+  history: [
+    {
+      id: uuid(800),
+      kind: "TicketInformationRequested",
+      occurred_at: now,
+      actor_name: "SYN Sasha Cole",
+      record_version: 3,
+    },
+  ],
+  history_partial: false,
+  can_edit: false,
+  can_edit_intake: true,
+  can_record_statement: true,
+  triage_blockers: [
+    {
+      field: "clarification_activity_id",
+      message: "Complete the owned clarification activity with an outcome before triage.",
+    },
+  ],
+});
+const envelope = (values: unknown[]) => ({
+  items: values,
+  next_cursor: null,
+  observed_at: now,
+  completeness: "Complete",
+});
+async function setup(page: Page, origin: string) {
+  const login = await page.request.post(origin + "/api/v1/local-session", {
     headers: { origin },
-    data: {
-      schema_version: 1,
-      operation_id: randomUUID(),
-      reason: "SYN SV-01 register browser proof",
-      id: ticket,
-      company_id: company,
-      received_at: new Date(Date.now() - 3600000).toISOString(),
-      channel: "Phone",
-      requester_id: person,
-      requester_description: null,
-      site_id: site,
-      site_identification_needed: false,
-      asset_id: null,
-      summary,
-      symptom: "Fictional symptom for the register proof.",
-      impact: "Monitoring interrupted",
-      priority: "Urgent",
-      priority_reason: "Fictional scenario; urgency does not authorise work.",
-      triage_owner_id: coordinator,
-      next_action: "Review intake and assign response",
+    data: { profile: "coordinator" },
+  });
+  expect(login.status()).toBe(200);
+  await page.route("**/api/v1/selectors/owners?*", (r) =>
+    r.fulfill({
+      json: envelope([{ id: actor, display_name: "SYN Sasha Cole" }]),
+    }),
+  );
+  await page.route("**/api/v1/service/tickets/queues**", (r) =>
+    r.fulfill({
+      json: {
+        as_at: now,
+        all_open: 12,
+        my_requests: 4,
+        new: 3,
+        urgent: 1,
+        needs_information: 3,
+        overdue_clarifications: 1,
+        no_work_order: 6,
+        work_order_linked: 0,
+        triaged: 6,
+      },
+    }),
+  );
+  await page.route("**/api/v1/service/tickets?*", (r) => r.fulfill({ json: envelope(items) }));
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) => r.fulfill({ json: envelope([record()]) }));
+  await page.route("**/api/v1/service/tickets/*/statements", (r) => r.fulfill({ json: { items: [], partial: false } }));
+}
+async function fits(page: Page) {
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+}
+for (const width of [1440, 1024, 390, 320])
+  test(`SV-01 accepted register at ${width}px: list, named controls and no page overflow`, async ({
+    page,
+    baseURL,
+  }, info) => {
+    await page.setViewportSize({ width, height: width > 780 ? 900 : 844 });
+    await setup(page, baseURL!);
+    await page.goto("/service/tickets");
+    await expect(page.getByText(titles[0], { exact: true }).first()).toBeVisible();
+    await fits(page);
+    if (width > 780) {
+      await expect(page.getByRole("table")).toBeVisible();
+      await page.getByLabel(`Select ${items[0].display_number}`, { exact: true }).check();
+      await expect(page.getByRole("link", { name: "Open in sequence" })).toBeVisible();
+      await expect(page.getByRole("button", { name: "Export list" })).toBeVisible();
+    } else {
+      await expect(page.locator(".sr-phone-row")).toHaveCount(12);
+      await expect(
+        page.getByRole("link", { name: "Log a request", exact: true }).filter({ visible: true }),
+      ).toHaveCount(1);
+    }
+    await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
+  });
+test("SV-01 Board and large snapshot retain three native states", async ({ page, baseURL }, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await setup(page, baseURL!);
+  await page.goto("/service/tickets?view=board");
+  await expect(page.locator("[data-lane]")).toHaveCount(3);
+  await page.screenshot({ path: info.outputPath("board.png") });
+  await page.goto("/service/tickets");
+  await page
+    .getByRole("button", {
+      name: `Preview ${items[1].display_number}`,
+      exact: true,
+    })
+    .click();
+  await expect(page.getByRole("dialog", { name: "Request snapshot" })).toBeVisible();
+  await expect(page.getByRole("dialog").getByText("Reported issue", { exact: true })).toBeVisible();
+  await page.screenshot({ path: info.outputPath("snapshot.png") });
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});
+test("SV-01 no matches, failed read and loading never present stale rows", async ({ page, baseURL }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await setup(page, baseURL!);
+  await page.route("**/api/v1/service/tickets?*", (r) => r.fulfill({ json: envelope([]) }));
+  await page.goto("/service/tickets?q=unknown");
+  await expect(page.getByRole("heading", { name: "No requests match these filters" })).toBeVisible();
+  await page.screenshot({ path: info.outputPath("no-matches.png") });
+  await page.route("**/api/v1/service/tickets?*", (r) =>
+    r.fulfill({
+      status: 503,
+      json: { message: "Requests could not be loaded" },
+    }),
+  );
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Try again" })).toBeVisible();
+  await expect(page.locator(".sr-phone-row")).toHaveCount(0);
+  await page.screenshot({ path: info.outputPath("failed.png") });
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/v1/service/tickets?*", async (r) => {
+    await gate;
+    await r.fulfill({ json: envelope(items) });
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".sr-skeleton")).toBeVisible();
+  await page.screenshot({ path: info.outputPath("loading.png") });
+  release();
+});
+test("SV-02 phone triage keeps entries on validation and newer revision, then submits one reviewed command", async ({
+  page,
+  baseURL,
+}, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await setup(page, baseURL!);
+  const sent: Record<string, unknown>[] = [];
+  await page.route("**/api/v1/service/tickets/*/triage", async (r) => {
+    sent.push(r.request().postDataJSON());
+    await r.fulfill({
+      status: 409,
+      json: {
+        code: "VersionConflict",
+        message: "Not saved. A newer request revision exists.",
+      },
+    });
+  });
+  await page.goto("/service/tickets/" + items[1].id);
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await expect(page.getByRole("alert")).toBeVisible();
+  await page.screenshot({ path: info.outputPath("triage-validation.png") });
+  await page.getByLabel("Clarification outcome", { exact: true }).fill("SYN caller confirmed the sensor identity");
+  await page.getByLabel("Reason for this triage action", { exact: true }).fill("SYN clarification received");
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await expect(page.getByRole("button", { name: "Review changes", exact: true })).toBeVisible();
+  await expect(page.getByLabel("Clarification outcome", { exact: true })).toHaveValue(
+    "SYN caller confirmed the sensor identity",
+  );
+  expect(sent).toHaveLength(1);
+  expect(sent[0]).toMatchObject({
+    expected_version: 3,
+    clarification_version: 1,
+    review: {
+      priority: "High",
+      triage_owner_id: actor,
+      priority_reason: "Drift could harm the crop",
+      next_action: "Review the linked work order",
     },
   });
-  expect(response.status(), await response.text()).toBe(201);
-  const read = await (await page.request.get(`${origin}/api/v1/service/tickets/${ticket}`)).json();
-  return { id: ticket, summary, reference: read.items[0].display_number as string };
-}
-async function noOverflow(page: Page) {
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-}
-async function settled(page: Page) {
-  await expect(page.getByText("Loading permitted requests…", { exact: true })).toHaveCount(0);
-}
-
-test("SV-01 board shows the native lanes and queues, and a keyboard Move completes triage through the existing form", async ({ page, baseURL }, info) => {
-  test.skip(info.project.name !== "desktop-chromium", "The board is a desktop presentation; phones use the card list.");
-  await login(page, baseURL!);
-  const request = await createRequest(page, baseURL!);
-  await page.goto("/service/tickets");
-  await settled(page);
-  // A full-bleed module workspace: the hidden heading stays for assistive technology and the shell hides its
-  // Service tab row (D6).
-  await expect(page.getByRole("heading", { level: 1, name: "Service requests", exact: true })).toBeAttached();
-  await expect(page.locator("nav.module-navigation")).toHaveCount(0);
-  await expect(page.locator("#ppo-service-requests[data-module-layout=full-bleed]")).toBeVisible();
-  for (const lane of ["New", "Needs information", "Triaged"])
-    await expect(page.getByRole("region", { name: lane, exact: true })).toBeVisible();
-  await expect(page.locator("[data-lane]")).toHaveCount(3);
-  const queues = page.getByRole("group", { name: "Queues", exact: true });
-  for (const name of ["All open", "New to triage", "Urgent", "Needs information", "Overdue clarifications"])
-    await expect(queues.getByRole("button", { name: new RegExp(`^${name} \\d+$`) })).toBeVisible();
-  await expect(queues.getByRole("button", { name: /^All open/ })).toHaveAttribute("aria-pressed", "true");
-  await page.screenshot({ path: info.outputPath("SV01-board.png") });
-
-  // Queue and search narrow the board on the server; the new request is Urgent and New.
-  await queues.getByRole("button", { name: /^Urgent/ }).click();
-  await expect(page).toHaveURL(/queue=urgent/);
-  await page.getByRole("searchbox", { name: "Search service requests by title or reference" }).fill(request.summary);
-  await expect(page).toHaveURL(/q=SYN/);
-  const card = page.locator(`[data-lane="New"] [data-ticket-id="${request.id}"]`);
-  await expect(card).toBeVisible();
-  await expect(card.getByText("Ready to triage", { exact: true })).toBeVisible();
-  await expect(card.getByText("Recorded next action · no due time", { exact: true })).toBeVisible();
-
-  // Move is the keyboard alternative to dragging. It opens the existing command form; the request stays in its
-  // lane until the server accepts the form.
-  await card.getByRole("button", { name: `Move ${request.reference}`, exact: true }).focus();
-  await page.keyboard.press("Enter");
-  const dialog = page.getByRole("dialog", { name: "Move request", exact: true });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("radio", { name: /Needs information/ })).toBeChecked();
-  await dialog.getByRole("radio", { name: /Triaged/ }).check();
-  await expect(dialog.getByRole("button", { name: "Request information", exact: true })).toHaveCount(0);
-  await expect(card).toBeVisible();
-  await page.screenshot({ path: info.outputPath("SV01-move-triage.png") });
-  await dialog.getByLabel("Reason for this triage action", { exact: true }).fill("SYN register proof triage");
-  await dialog.getByRole("button", { name: "Complete triage", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
-  await expect(page.getByRole("status").filter({ hasText: `${request.reference}: triage saved.` })).toBeVisible();
-  const moved = page.locator(`[data-lane="Triaged"] [data-ticket-id="${request.id}"]`);
-  await expect(moved).toBeVisible();
-  await expect(moved.getByRole("link", { name: request.summary, exact: true })).toBeFocused();
-  // Triaged is the last native stage, so Move stays visible, disabled, with its reason.
-  await expect(moved.getByRole("button", { name: `Move ${request.reference}`, exact: true })).toBeDisabled();
-  const saved = await (await page.request.get(`${baseURL}/api/v1/service/tickets/${request.id}`)).json();
-  expect(saved.items[0].status).toBe("Triaged");
-  await noOverflow(page);
+  await page.screenshot({ path: info.outputPath("triage-refused.png") });
+  await fits(page);
 });
-
-test("SV-01 list shows the fourteen native columns, keeps a column choice, and previews with focus return", async ({ page, baseURL }, info) => {
-  test.skip(info.project.name !== "desktop-chromium", "The table is a desktop presentation; phones use the card list.");
-  await login(page, baseURL!);
-  await page.goto("/service/tickets?view=list");
-  await settled(page);
-  const table = page.getByRole("region", { name: "Service requests list — scroll for all columns", exact: true });
-  await expect(table).toBeVisible();
-  await expect(table.locator("thead th")).toHaveCount(14);
-  await expect(table.locator("thead th").first()).toHaveText("Request");
-  for (const hidden of ["Customer update", "Affected areas", "Response route", "Category"])
-    await expect(table.locator("thead th", { hasText: hidden })).toHaveCount(0);
-  await expect(page.getByText(/^\d+–\d+ of \d+$/)).toBeVisible();
-
-  // Columns is a per-viewer choice that survives a reload; Request cannot be hidden.
-  await page.getByText("Columns", { exact: true }).click();
-  await expect(page.getByRole("checkbox", { name: "Request (always shown)" })).toBeDisabled();
-  await page.getByRole("checkbox", { name: "Channel", exact: true }).uncheck();
-  await expect(table.locator("thead th")).toHaveCount(13);
+test("SV-02 view-only and permission denied expose no write path", async ({ page, baseURL }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await setup(page, baseURL!);
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
+    r.fulfill({
+      json: envelope([{ ...record(), can_edit_intake: false, can_record_statement: false }]),
+    }),
+  );
+  await page.goto("/service/tickets/" + items[1].id);
+  await expect(page.getByText(/View only. Triage needs/)).toBeVisible();
+  await page.screenshot({ path: info.outputPath("view-only.png") });
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
+    r.fulfill({ status: 404, json: { message: "Record unavailable" } }),
+  );
   await page.reload();
-  await settled(page);
-  await expect(table.locator("thead th")).toHaveCount(13);
-  await page.getByText("Columns", { exact: true }).click();
-  await page.getByRole("checkbox", { name: "Channel", exact: true }).check();
-  await expect(table.locator("thead th")).toHaveCount(14);
-  await page.keyboard.press("Escape");
-
-  // Preview docks beside the table at 1440 px and returns focus to its trigger.
-  const first = table.locator("tbody tr").first();
-  const trigger = first.getByRole("button", { name: /^Preview / });
-  await trigger.click();
-  const preview = page.locator("aside.sr-preview");
-  await expect(preview).toBeVisible();
-  await expect(page.locator(".sr-body")).toHaveAttribute("data-preview", "docked");
-  await expect(first).toHaveAttribute("data-selected", "true");
-  await expect(preview.getByRole("link", { name: "Open request", exact: true })).toBeVisible();
-  await page.screenshot({ path: info.outputPath("SV01-list-preview.png") });
-  await page.keyboard.press("Escape");
-  await expect(preview).toHaveCount(0);
-  await expect(trigger).toBeFocused();
-  await noOverflow(page);
-
-  // At 1024 × 768 the preview overlays the table and the queues use their short labels (frame 16).
-  await page.setViewportSize({ width: 1024, height: 768 });
-  await expect(page.getByRole("group", { name: "Queues" }).getByRole("button", { name: /^New \d+$/ })).toBeVisible();
-  await trigger.click();
-  await expect(page.locator(".sr-body")).toHaveAttribute("data-preview", "overlay");
-  await page.screenshot({ path: info.outputPath("SV01-list-1024.png") });
-  await noOverflow(page);
-});
-
-test("SV-01 read-only and unavailable registers state why nothing can change", async ({ page, baseURL }, info) => {
-  test.skip(info.project.name !== "desktop-chromium", "Covered once at desktop width.");
-  await login(page, baseURL!, "observer");
-  await page.goto("/service/tickets");
-  await settled(page);
-  await expect(page.getByText("You can view service requests.", { exact: true })).toBeVisible();
-  const moves = page.locator("[data-move]");
-  expect(await moves.count()).toBeGreaterThan(0);
-  for (const button of await moves.all()) await expect(button).toBeDisabled();
-  await page.route("**/api/v1/service/tickets?**", (route) => route.abort());
-  await page.reload();
-  await expect(page.getByRole("button", { name: "Try again", exact: true })).toBeVisible();
-  await expect(page.getByText("Nothing was changed. Check the connection and try again.", { exact: true })).toBeVisible();
-  await expect(page.locator("[data-ticket-id]")).toHaveCount(0);
-});
-
-test("SV-01 phone register: cards, the filters sheet, no matches and 320 px", async ({ page, baseURL }, info) => {
-  test.skip(info.project.name !== "mobile-chromium", "The card list is the phone presentation.");
-  await login(page, baseURL!);
-  await page.goto("/service/tickets");
-  await settled(page);
-  await expect(page.getByRole("group", { name: "Presentation" })).toHaveCount(0);
-  await expect(page.locator(".sr-phone-card").first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "Log a request", exact: true })).toBeVisible();
-  await noOverflow(page);
-  await page.screenshot({ path: info.outputPath("SV01-phone.png") });
-
-  // Filters open as a full-screen sheet with a live count (frame 19).
-  await page.getByRole("button", { name: "Filters", exact: true }).click();
-  const sheet = page.getByRole("dialog", { name: "Filters", exact: true });
-  await expect(sheet).toBeVisible();
-  expect((await sheet.boundingBox())!.width).toBe(390);
-  await expect(sheet.getByRole("button", { name: /^Show \d+ requests?$/ })).toBeVisible();
-  await page.screenshot({ path: info.outputPath("SV01-phone-filters.png") });
-  await sheet.getByRole("button", { name: "Close filters", exact: true }).click();
-  await expect(sheet).toHaveCount(0);
-
-  // No matches keeps the removable condition visible and offers Clear filters (frame 20).
-  await page.getByRole("searchbox").fill("SYN no matching request 493021");
-  await expect(page.getByRole("heading", { name: "No requests match these filters", exact: true })).toBeVisible();
-  await expect(page.getByText(/open requests? (is|are) hidden by the current filters\./)).toBeVisible();
-  await expect(page.getByRole("button", { name: /^Remove search / })).toBeVisible();
-  await page.screenshot({ path: info.outputPath("SV01-phone-no-matches.png") });
-  await page.getByRole("button", { name: "Clear filters", exact: true }).click();
-  await expect(page.locator(".sr-phone-card").first()).toBeVisible();
-
-  // At 320 px Filters becomes an icon button so Log a request keeps its label (frame 23).
-  await page.setViewportSize({ width: 320, height: 568 });
-  const filters = page.getByRole("button", { name: "Filters", exact: true });
-  expect(Math.round((await filters.boundingBox())!.width)).toBe(44);
-  await expect(page.getByRole("link", { name: "Log a request", exact: true })).toBeVisible();
-  await noOverflow(page);
-  await page.screenshot({ path: info.outputPath("SV01-phone-320.png") });
+  await expect(page.getByText(titles[1], { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Complete triage", exact: true })).toHaveCount(0);
 });

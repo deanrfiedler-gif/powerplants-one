@@ -341,7 +341,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
   // user or existing row changes; every class stays Off, and the hosted worker does not drain the
   // synthetic queue. Existing all-table runtime privileges cover the new tables.
-  if (latestMigrationVersion !== 109) throw Error("Review the existing-demo upgrade for this release.");
+  // 0112 adds an empty immutable customer-statement table and one outbox kind.
+  // No identity, grant, seed or existing row changes; all-table runtime privileges cover it.
+  if (latestMigrationVersion !== 112) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

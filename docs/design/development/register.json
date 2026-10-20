@@ -2451,7 +2451,7 @@
       "title": "Service desk and triage worklist",
       "kind": "scope",
       "module": "SV",
-      "summary": "Integrate the fuller Service Cases & Triage workspace over current ticket/intake routes.",
+      "summary": "Accepted Service requests: compact list, side-menu queues, Board, large snapshot and logging with advisory duplicate check; owner visual review pending.",
       "path": "/service/tickets",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2485,11 +2485,18 @@
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
         "docs/delivery/service-requests-integration-build-plan.md",
-        "docs/decisions/service-requests-figma-design.md"
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "docs/testing/evidence/service-requests-accepted/README.md",
+        "src/service/intake.ts",
+        "src/service/statements.ts",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx",
+        "src/app/styles/service-request-record.css"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Focused automated proof of the I2 native register (three states): tests/browser/service-requests.spec.ts",
+      "visual_status": "Owner visual review pending — Service requests — accepted design; implementation not accepted",
+      "functional_status": "Implementation verification in progress; see docs/testing/evidence/service-requests-accepted/README.md. Design acceptance and deployment are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2508,7 +2515,7 @@
       "title": "Request detail and communication timeline",
       "kind": "scope",
       "module": "SV",
-      "summary": "Complete the richer request detail and communication timeline, with evidence, coverage uncertainty and linked work/visits.",
+      "summary": "Accepted Service request record: permission-filtered context, reported statements and atomic triage review; owner visual review pending.",
       "path": "/service/tickets",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2539,11 +2546,18 @@
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
-        "docs/decisions/service-requests-figma-design.md"
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "docs/testing/evidence/service-requests-accepted/README.md",
+        "src/service/intake.ts",
+        "src/service/statements.ts",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx",
+        "src/app/styles/service-request-record.css"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "visual_status": "Owner visual review pending — Service requests — accepted design; implementation not accepted",
+      "functional_status": "Implementation verification in progress; see docs/testing/evidence/service-requests-accepted/README.md. Design acceptance and deployment are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8308,7 +8322,7 @@
       "title": "Service request detail",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Accepted Service request record: permission-filtered context, reported statements and atomic triage review; owner visual review pending.",
       "path": "/service/tickets/[id]",
       "source_paths": [
         "src/app/(business)/service/tickets/[id]/page.tsx"
@@ -8338,11 +8352,18 @@
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
-        "docs/decisions/service-requests-figma-design.md"
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "docs/testing/evidence/service-requests-accepted/README.md",
+        "src/service/intake.ts",
+        "src/service/statements.ts",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx",
+        "src/app/styles/service-request-record.css"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "visual_status": "Owner visual review pending — Service requests — accepted design; implementation not accepted",
+      "functional_status": "Implementation verification in progress; see docs/testing/evidence/service-requests-accepted/README.md. Design acceptance and deployment are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8358,7 +8379,7 @@
       "title": "Create service request",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-16 carries accepted Won context into an explicitly linked native Project or Service work order; native intake, scope and authorisation remain independent.",
+      "summary": "Accepted Service requests: compact list, side-menu queues, Board, large snapshot and logging with advisory duplicate check; owner visual review pending.",
       "path": "/service/tickets/new",
       "source_paths": [
         "src/app/(business)/service/tickets/new/page.tsx"
@@ -8377,11 +8398,18 @@
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "docs/decisions/service-requests-figma-design.md"
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "docs/testing/evidence/service-requests-accepted/README.md",
+        "src/service/intake.ts",
+        "src/service/statements.ts",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx",
+        "src/app/styles/service-request-record.css"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-16 passes eight focused database cases, 13 selected upgrades and 12 compiled desktop/phone cases; see won-delivery-continuity evidence, including retained initial layout/focus failures. Paired design and owner acceptance remain pending.",
+      "visual_status": "Owner visual review pending — Service requests — accepted design; implementation not accepted",
+      "functional_status": "Implementation verification in progress; see docs/testing/evidence/service-requests-accepted/README.md. Design acceptance and deployment are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8397,7 +8425,7 @@
       "title": "Service request register",
       "kind": "route",
       "module": "SV",
-      "summary": "The SV-01 native register (build plan I2): Board and List over New, Needs information and Triaged, with queues, filters, preview and Move through the existing triage form. Later stages wait for ADR-0043.",
+      "summary": "Accepted Service requests: compact list, side-menu queues, Board, large snapshot and logging with advisory duplicate check; owner visual review pending.",
       "path": "/service/tickets",
       "source_paths": [
         "src/app/(business)/service/tickets/page.tsx",
@@ -8430,11 +8458,18 @@
       "dependencies": [
         "docs/decisions/service-requests-native-refinement.md",
         "docs/decisions/ADR-0043-service-request-lifecycle.md",
-        "docs/decisions/service-requests-figma-design.md"
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "docs/testing/evidence/service-requests-accepted/README.md",
+        "src/service/intake.ts",
+        "src/service/statements.ts",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx",
+        "src/app/styles/service-request-record.css"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Focused automated proof of the I2 native register (three states): tests/browser/service-requests.spec.ts",
+      "visual_status": "Owner visual review pending — Service requests — accepted design; implementation not accepted",
+      "functional_status": "Implementation verification in progress; see docs/testing/evidence/service-requests-accepted/README.md. Design acceptance and deployment are separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

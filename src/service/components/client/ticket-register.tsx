@@ -3,6 +3,8 @@
 // states). A full-bleed module workspace: the shell supplies the rail, header and breadcrumb, and this module
 // draws no masthead. The server read decides every state, blocker and permitted action.
 import Link from "next/link";
+import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
+import { TicketRecord, ServiceDialog } from "./ticket-record";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
@@ -18,17 +20,44 @@ import { useIdentity } from "../../../components/business-session";
 import { ProductIcon } from "../../../components/product-icons";
 import { usePublishPageDescription } from "../../../shell/page-description";
 import { formatWhen, type MoveTarget, type QueueKey, type RegisterItem } from "../../ticket-register-view";
-import { Board, columns, MoveDialog, PhoneCards, Preview, Table, type ColumnKey } from "./ticket-register-parts";
+import { Board, columns, MoveDialog, PhoneCards, Table, type ColumnKey } from "./ticket-register-parts";
 
 type Queues = Record<QueueKey, number> & { as_at: string };
-type Filters = { q: string; company_id: string; site_id: string; owner_id: string };
-const filterKeys = ["company_id", "site_id", "owner_id"] as const;
-const queues: { key: QueueKey; label: string; short: string; tone?: "danger" }[] = [
+type Filters = {
+  q: string;
+  company_id: string;
+  site_id: string;
+  owner_id: string;
+  priority: string;
+};
+const filterKeys = ["company_id", "site_id", "owner_id", "priority"] as const;
+const queues: {
+  key: QueueKey;
+  label: string;
+  short: string;
+  tone?: "danger";
+}[] = [
   { key: "all_open", label: "All open", short: "All open" },
+  { key: "my_requests", label: "My requests", short: "Mine" },
   { key: "new", label: "New to triage", short: "New" },
   { key: "urgent", label: "Urgent", short: "Urgent" },
-  { key: "needs_information", label: "Needs information", short: "Information" },
-  { key: "overdue_clarifications", label: "Overdue clarifications", short: "Overdue", tone: "danger" },
+  {
+    key: "needs_information",
+    label: "Needs information",
+    short: "Information",
+  },
+  {
+    key: "overdue_clarifications",
+    label: "Overdue clarifications",
+    short: "Overdue",
+    tone: "danger",
+  },
+  { key: "no_work_order", label: "No work order yet", short: "No work order" },
+  {
+    key: "work_order_linked",
+    label: "Work order linked",
+    short: "Linked work",
+  },
 ];
 const queueKeys = new Set<string>(queues.map((queue) => queue.key));
 const query = (fields: Record<string, string>) =>
@@ -76,7 +105,15 @@ function useHiddenColumns() {
   return [hidden, toggle] as const;
 }
 
-function ColumnsMenu({ hidden, toggle, compact }: { hidden: ColumnKey[]; toggle: (key: ColumnKey) => void; compact: boolean }) {
+function ColumnsMenu({
+  hidden,
+  toggle,
+  compact,
+}: {
+  hidden: ColumnKey[];
+  toggle: (key: ColumnKey) => void;
+  compact: boolean;
+}) {
   const menu = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const close = (event: MouseEvent) => {
@@ -96,7 +133,10 @@ function ColumnsMenu({ hidden, toggle, compact }: { hidden: ColumnKey[]; toggle:
         }
       }}
     >
-      <summary className={compact ? "button secondary sr-icon-button" : "button secondary"} aria-label={compact ? "Columns" : undefined}>
+      <summary
+        className={compact ? "button secondary sr-icon-button" : "button secondary"}
+        aria-label={compact ? "Columns" : undefined}
+      >
         <ProductIcon name="list" />
         {!compact && <span>Columns</span>}
       </summary>
@@ -107,7 +147,8 @@ function ColumnsMenu({ hidden, toggle, compact }: { hidden: ColumnKey[]; toggle:
         </label>
         {columns.map((column) => (
           <label className="sr-check" key={column.key}>
-            <input type="checkbox" checked={!hidden.includes(column.key)} onChange={() => toggle(column.key)} /> {column.label}
+            <input type="checkbox" checked={!hidden.includes(column.key)} onChange={() => toggle(column.key)} />{" "}
+            {column.label}
           </label>
         ))}
       </fieldset>
@@ -131,7 +172,9 @@ function FiltersPanel({
     dialog = useRef<HTMLDialogElement>(null),
     [draft, setDraft] = useState(filters);
   const companies = useResource<Envelope<Option>>("selectors/companies"),
-    sites = useResource<Envelope<Option>>(draft.company_id ? `sites?${query({ company_id: draft.company_id, limit: "200" })}` : null),
+    sites = useResource<Envelope<Option>>(
+      draft.company_id ? `sites?${query({ company_id: draft.company_id, limit: "200" })}` : null,
+    ),
     owners = useResource<Envelope<Option>>(
       draft.company_id
         ? `selectors/owners?${query({ company_id: draft.company_id, site_id: draft.site_id, purpose: "Ticket" })}`
@@ -150,11 +193,28 @@ function FiltersPanel({
   return (
     <dialog ref={dialog} className="sr-filters" aria-labelledby="sr-filters-title" onClose={onClose}>
       <header className="sr-filters-head">
-        <button type="button" className="secondary sr-icon-button" aria-label="Close filters" onClick={() => dialog.current?.close()}>
+        <button
+          type="button"
+          className="secondary sr-icon-button"
+          aria-label="Close filters"
+          onClick={() => dialog.current?.close()}
+        >
           <ProductIcon name="close" />
         </button>
         <h2 id="sr-filters-title">Filters</h2>
-        <button type="button" className="secondary sr-quiet" onClick={() => setDraft({ ...draft, company_id: "", site_id: "", owner_id: "" })}>
+        <button
+          type="button"
+          className="secondary sr-quiet"
+          onClick={() =>
+            setDraft({
+              ...draft,
+              company_id: "",
+              site_id: "",
+              owner_id: "",
+              priority: "",
+            })
+          }
+        >
           Clear all
         </button>
       </header>
@@ -165,7 +225,14 @@ function FiltersPanel({
           value={draft.company_id}
           options={companies.data?.items ?? []}
           empty="Any permitted company"
-          onChange={(value) => setDraft({ ...draft, company_id: value, site_id: "", owner_id: draft.owner_id === p.actor_id ? p.actor_id : "" })}
+          onChange={(value) =>
+            setDraft({
+              ...draft,
+              company_id: value,
+              site_id: "",
+              owner_id: draft.owner_id === p.actor_id ? p.actor_id : "",
+            })
+          }
         />
         <SelectField
           name="sr-filter-site"
@@ -183,7 +250,20 @@ function FiltersPanel({
           empty="Anyone"
           onChange={(value) => setDraft({ ...draft, owner_id: value })}
         />
-        {!draft.company_id && <p className="sr-muted">Choose a company context to filter by another owner or a site.</p>}
+        <SelectField
+          name="sr-filter-priority"
+          label="Priority"
+          value={draft.priority}
+          options={["Urgent", "High", "Normal", "Low"].map((value) => ({
+            id: value,
+            display_name: value,
+          }))}
+          empty="Any priority"
+          onChange={(value) => setDraft({ ...draft, priority: value })}
+        />
+        {!draft.company_id && (
+          <p className="sr-muted">Choose a company context to filter by another owner or a site.</p>
+        )}
         {[companies, sites, owners].map((read, index) => (
           <ErrorNotice key={index} error={read.error} />
         ))}
@@ -207,7 +287,7 @@ function Skeleton() {
   return (
     <div className="sr-state" aria-busy="true">
       <ul className="sr-skeleton" aria-hidden="true">
-        {[0, 1, 2, 3].map((row) => (
+        {[0, 1, 2, 3, 4, 5].map((row) => (
           <li key={row}>
             <span />
             <span />
@@ -225,7 +305,7 @@ export function TicketRegister() {
     router = useRouter(),
     path = usePathname(),
     p = useIdentity(),
-    wide = useMedia("(min-width: 1024px)"),
+    wide = useMedia("(min-width: 781px)"),
     roomy = useMedia("(min-width: 1200px)");
   usePublishPageDescription(
     "Service requests",
@@ -236,15 +316,21 @@ export function TicketRegister() {
     company_id: params.get("company_id") ?? "",
     site_id: params.get("site_id") ?? "",
     owner_id: params.get("owner_id") ?? "",
+    priority: params.get("priority") ?? "",
   };
   const requested = params.get("queue") ?? "all_open",
     queue = (queueKeys.has(requested) ? requested : "all_open") as QueueKey,
-    view = wide ? (params.get("view") === "list" ? "list" : "board") : "cards";
+    view = wide ? (params.get("view") === "board" ? "board" : "list") : "cards";
+  const [menuOpen, setMenuOpen] = useState(true),
+    menuState = useSecondaryMenu(menuOpen, setMenuOpen);
   const [search, setSearch] = useState(filters.q),
     [addressQ, setAddressQ] = useState(filters.q),
     [cursors, setCursors] = useState<string[]>([]),
     [preview, setPreview] = useState<string | null>(null),
-    [move, setMove] = useState<{ item: RegisterItem; target?: MoveTarget } | null>(null),
+    [move, setMove] = useState<{
+      item: RegisterItem;
+      target?: MoveTarget;
+    } | null>(null),
     [filtersOpen, setFiltersOpen] = useState(false),
     [feedback, setFeedback] = useState(""),
     [hidden, toggleColumn] = useHiddenColumns();
@@ -265,6 +351,7 @@ export function TicketRegister() {
     }
     setCursors([]);
     setPreview(null);
+    menuState.closeOverlay(false);
     const text = next.toString();
     router.replace(text ? `${path}?${text}` : path, { scroll: false });
   };
@@ -287,7 +374,7 @@ export function TicketRegister() {
   })}`;
   const list = useResource<Envelope<RegisterItem>>(listPath),
     counts = useResource<Queues>(`service/tickets/queues?${query(filters)}`);
-  const filtered = !!(filters.q || filters.company_id || filters.site_id || filters.owner_id),
+  const filtered = !!(filters.q || filters.company_id || filters.site_id || filters.owner_id || filters.priority),
     empty = !!list.data && !list.error && list.data.items.length === 0,
     everything = useResource<Queues>(empty && filtered ? "service/tickets/queues" : null);
 
@@ -321,12 +408,16 @@ export function TicketRegister() {
     requestAnimationFrame(() => {
       const target = returnFocus.current?.isConnected
         ? returnFocus.current
-        : document.querySelector<HTMLElement>(`[data-ticket-id="${id}"] [data-move]:not([disabled]), [data-ticket-id="${id}"] a`);
+        : document.querySelector<HTMLElement>(
+            `[data-ticket-id="${id}"] [data-move]:not([disabled]), [data-ticket-id="${id}"] a`,
+          );
       target?.focus();
     });
   };
   const moved = (item: RegisterItem, target: MoveTarget) => {
-    setFeedback(`${item.display_number}: ${target === "Triaged" ? "triage" : "information request"} saved. The register shows its current stage.`);
+    setFeedback(
+      `${item.display_number}: ${target === "Triaged" ? "triage" : "information request"} saved. The register shows its current stage.`,
+    );
     setMove(null);
     setFocusTicket(item.id);
     reload();
@@ -345,13 +436,23 @@ export function TicketRegister() {
   const clearAll = () => {
     clearTimeout(searchTimer.current);
     setSearch("");
-    navigate({ q: "", company_id: "", site_id: "", owner_id: "", queue: "" });
+    navigate({
+      q: "",
+      company_id: "",
+      site_id: "",
+      owner_id: "",
+      queue: "",
+      priority: "",
+    });
   };
 
   // Names for the active filter chips come from the same permitted selectors the panel uses.
   const companies = useResource<Envelope<Option>>(filters.company_id ? "selectors/companies" : null),
-    sites = useResource<Envelope<Option>>(filters.company_id && filters.site_id ? `sites?${query({ company_id: filters.company_id, limit: "200" })}` : null);
+    sites = useResource<Envelope<Option>>(
+      filters.company_id && filters.site_id ? `sites?${query({ company_id: filters.company_id, limit: "200" })}` : null,
+    );
   const chipLabel = (key: (typeof filterKeys)[number]) => {
+    if (key === "priority") return `Priority: ${filters.priority}`;
     if (key === "owner_id") return filters.owner_id === p.actor_id ? "Owner: me" : "Owner: selected person";
     const source = key === "company_id" ? companies : sites;
     const name = source.data?.items.find((option) => option.id === filters[key])?.display_name;
@@ -361,7 +462,12 @@ export function TicketRegister() {
 
   if (isDenied(list.error))
     return (
-      <section id="ppo-service-requests" data-module-layout="full-bleed" data-module-scope="SV-01" aria-label="Service requests">
+      <section
+        id="ppo-service-requests"
+        data-module-layout="full-bleed"
+        data-module-scope="SV-01"
+        aria-label="Service requests"
+      >
         <h1 className="sr-only">Service requests</h1>
         <div className="sr-state">
           <ReadState loading={false} error={list.error} retry={list.reload} />
@@ -369,103 +475,166 @@ export function TicketRegister() {
       </section>
     );
 
-  const readOnly = items.some((item) => item.status !== "Triaged") && items.every((item) => item.status === "Triaged" || !item.can_edit_intake);
+  const readOnly =
+    items.some((item) => item.status !== "Triaged") &&
+    items.every((item) => item.status === "Triaged" || !item.can_edit_intake);
 
   return (
-    <section
+    <SecondaryMenuFrame
+      state={menuState}
       id="ppo-service-requests"
-      data-module-layout="full-bleed"
-      data-module-scope="SV-01"
-      data-view={view}
-      aria-label="Service requests"
+      name="Service requests"
+      menuId="sv-queues"
+      contentId="sv-register"
+      message={feedback}
+      phoneHeader={{
+        title: "Service requests",
+        count: total,
+        filter: { open: () => setFiltersOpen(true), applied: filtered },
+      }}
+      attributes={{ "data-module-scope": "SV-01", "data-view": view }}
+      menu={
+        <nav aria-label="Service request queues">
+          {["Requests", "Triage", "After triage"].map((heading, index) => (
+            <section key={heading}>
+              <h2>{heading}</h2>
+              <ul>
+                {queues
+                  .slice(index === 0 ? 0 : index === 1 ? 2 : 6, index === 0 ? 2 : index === 1 ? 6 : 8)
+                  .map((entry) => (
+                    <li key={entry.key}>
+                      <Link
+                        href={`/service/tickets?${query({ ...filters, queue: entry.key })}`}
+                        aria-current={queue === entry.key ? "page" : undefined}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate({
+                            queue: entry.key === "all_open" ? "" : entry.key,
+                          });
+                        }}
+                      >
+                        <span>{entry.label}</span>
+                        <span className="mw-badge">{counts.data?.[entry.key] ?? "–"}</span>
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+            </section>
+          ))}
+        </nav>
+      }
     >
       <h1 className="sr-only">Service requests</h1>
       <div className="sr-toolbar">
-        {wide && (
-          <div className="sr-segmented" role="group" aria-label="Presentation">
-            {(["board", "list"] as const).map((value) => (
-              <button
-                key={value}
-                type="button"
-                className="secondary"
-                aria-pressed={view === value}
-                onClick={() => navigate({ view: value === "board" ? "" : value })}
-              >
-                <ProductIcon name={value} />
-                <span>{value === "board" ? "Board" : "List"}</span>
-              </button>
+        <Link className="button sr-primary" href="/service/tickets/new">
+          <ProductIcon name="plus" />
+          Log a request
+        </Link>
+        <label className="sr-toolbar-select">
+          <span className="sr-only">Owner</span>
+          <select aria-label="Owner" value={filters.owner_id} onChange={(e) => navigate({ owner_id: e.target.value })}>
+            <option value="">Owner: Anyone</option>
+            <option value={p.actor_id}>Owner: Me</option>
+            {[
+              ...new Map(
+                items
+                  .filter((i) => i.triage_owner_id && i.triage_owner_id !== p.actor_id)
+                  .map((i) => [i.triage_owner_id!, i.triage_owner_name]),
+              ).entries(),
+            ].map(([id, name]) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
             ))}
-          </div>
-        )}
-        <label className="sr-search">
-          <ProductIcon name="search" />
-          <span className="sr-only">Search service requests by title or reference</span>
-          <input
-            type="search"
-            name="sr-search"
-            placeholder={roomy ? "Search requests by title or reference" : "Search requests"}
-            value={search}
-            maxLength={200}
-            onChange={(event) => typeSearch(event.target.value)}
-          />
+          </select>
         </label>
-        <div className="sr-toolbar-actions">
-          <button
-            type="button"
-            className="secondary sr-filter-button"
-            aria-haspopup="dialog"
-            aria-label={activeFilters.length ? `Filters, ${activeFilters.length} active` : "Filters"}
-            onClick={() => setFiltersOpen(true)}
+        <label className="sr-toolbar-select">
+          <span className="sr-only">Priority</span>
+          <select
+            aria-label="Priority"
+            value={filters.priority}
+            onChange={(e) => navigate({ priority: e.target.value })}
           >
-            <ProductIcon name="filter" />
-            <span className="sr-filter-label">Filters</span>
-            {activeFilters.length > 0 && <span className="sr-badge">{activeFilters.length}</span>}
-          </button>
-          {view === "list" && <ColumnsMenu hidden={hidden} toggle={toggleColumn} compact={!roomy} />}
-          <Link className="button sr-primary" href="/service/tickets/new">
-            <ProductIcon name="plus" />
-            Log a request
-          </Link>
+            <option value="">Priority: Any</option>
+            {["Urgent", "High", "Normal", "Low"].map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
+        <div className="sr-segmented" role="group" aria-label="Presentation">
+          {(["list", "board"] as const).map((value) => (
+            <button
+              type="button"
+              key={value}
+              className="secondary"
+              aria-label={value === "list" ? "List" : "Board"}
+              aria-pressed={view === value}
+              onClick={() => navigate({ view: value === "list" ? "" : value })}
+            >
+              <ProductIcon name={value} />
+            </button>
+          ))}
         </div>
+        <span className="sr-toolbar-count">
+          {list.loading ? "Loading…" : list.error ? "" : `${total ?? items.length} open requests`}
+        </span>
+        <button className="secondary sr-icon-button" aria-label="Refresh requests" onClick={reload}>
+          <ProductIcon name="changes" />
+        </button>
+        <details
+          className="sr-more-menu"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.currentTarget.open = false;
+              e.currentTarget.querySelector("summary")?.focus();
+            }
+          }}
+        >
+          <summary className="button secondary" aria-label="More register actions">
+            …
+          </summary>
+          <div>
+            <label className="sr-search">
+              <span className="sr-only">Search service requests by title or reference</span>
+              <input
+                type="search"
+                name="sr-search"
+                placeholder="Search requests"
+                value={search}
+                maxLength={200}
+                onChange={(e) => typeSearch(e.target.value)}
+              />
+            </label>
+            <button className="secondary" onClick={() => setFiltersOpen(true)}>
+              Filters
+            </button>
+            {view === "list" && <ColumnsMenu hidden={hidden} toggle={toggleColumn} compact={false} />}
+          </div>
+        </details>
       </div>
-      <div className="sr-queues">
-        <div className="sr-queue-row" role="group" aria-label="Queues">
-          {queues.map((entry) => {
-            const count = counts.data?.[entry.key];
-            return (
-              <button
-                key={entry.key}
-                type="button"
-                className="secondary"
-                data-tone={entry.tone && count ? entry.tone : undefined}
-                aria-pressed={queue === entry.key}
-                onClick={() => navigate({ queue: entry.key === "all_open" ? "" : entry.key })}
-              >
-                <span className="sr-queue-label">{roomy ? entry.label : entry.short}</span>
-                <span className="sr-badge" aria-label={count === undefined ? "count unavailable" : `${count}`}>
-                  {count ?? "–"}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <p className="sr-queue-meta">
-          {total !== undefined && (
-            <span>
-              {total} {total === 1 ? "request" : "requests"}
-            </span>
-          )}
-          {wide && <span className="sr-sort">Sorted by urgency</span>}
-        </p>
+      <div className="sr-phone-queue">
+        <button className="secondary" onClick={(e) => menuState.toggle(e.currentTarget)}>
+          {queues.find((q) => q.key === queue)?.label}
+          <ProductIcon name="chevron" />
+        </button>
+        <span>{total ?? "–"} open</span>
+        <button className="secondary sr-icon-button" aria-label="Filters" onClick={() => setFiltersOpen(true)}>
+          <ProductIcon name="filter" />
+        </button>
       </div>
       {(activeFilters.length > 0 || filters.q) && (
         <div className="sr-filter-chips" aria-label="Active filters">
           {filters.q && (
-            <button type="button" className="secondary" aria-label={`Remove search ${filters.q}`} onClick={() => {
+            <button
+              type="button"
+              className="secondary"
+              aria-label={`Remove search ${filters.q}`}
+              onClick={() => {
                 clearTimeout(searchTimer.current);
                 setSearch("");
                 navigate({ q: "" });
-              }}>
+              }}
+            >
               <span>Search: {filters.q}</span>
               <ProductIcon name="close" />
             </button>
@@ -495,7 +664,8 @@ export function TicketRegister() {
       {readOnly && (
         <div className="sr-notice tone-neutral sr-readonly">
           <p>
-            <strong>You can view service requests.</strong> Moving a request needs service request edit permission for its site. Move stays visible, disabled, with this reason.
+            <strong>You can view service requests.</strong> Moving a request needs service request edit permission for
+            its site. Move stays visible, disabled, with this reason.
           </p>
         </div>
       )}
@@ -509,7 +679,7 @@ export function TicketRegister() {
                 Try again
               </button>
             </div>
-          ) : list.loading && !list.data ? (
+          ) : list.loading ? (
             <Skeleton />
           ) : empty ? (
             filtered || queue !== "all_open" ? (
@@ -519,7 +689,9 @@ export function TicketRegister() {
                 <p>
                   {(() => {
                     const all = filtered ? everything.data?.all_open : counts.data?.all_open;
-                    return all === undefined ? "Some open requests may be hidden by the current filters." : `${all} open ${all === 1 ? "request is" : "requests are"} hidden by the current filters.`;
+                    return all === undefined
+                      ? "Some open requests may be hidden by the current filters."
+                      : `${all} open ${all === 1 ? "request is" : "requests are"} hidden by the current filters.`;
                   })()}
                 </p>
                 <button type="button" className="secondary" onClick={clearAll}>
@@ -539,7 +711,11 @@ export function TicketRegister() {
             )
           ) : view === "board" ? (
             <>
-              {list.loading && <p className="sr-refreshing" role="status">Refreshing…</p>}
+              {list.loading && (
+                <p className="sr-refreshing" role="status">
+                  Refreshing…
+                </p>
+              )}
               <Board items={items} now={now} selected={preview} onPreview={openPreview} onMove={startMove} />
               {list.data?.next_cursor && (
                 <p className="sr-muted sr-board-limit">
@@ -551,57 +727,75 @@ export function TicketRegister() {
             <Table items={items} now={now} hidden={hidden} selected={preview} onPreview={openPreview} />
           ) : (
             <>
-              <p className="sr-phone-meta">
-                {total ?? items.length} open · urgent first
-              </p>
+              <p className="sr-phone-meta">{total ?? items.length} open · urgent first</p>
               <PhoneCards items={items} now={now} />
             </>
           )}
         </div>
-        {selected && wide && <Preview item={selected} now={now} onClose={closePreview} onMove={(item) => startMove(item)} />}
+        {selected && wide && (
+          <ServiceDialog title="Request snapshot" onClose={closePreview}>
+            <TicketRecord id={selected.id} snapshot />
+          </ServiceDialog>
+        )}
       </div>
+      <Link className="sr-phone-create" href="/service/tickets/new" aria-label="Log a request">
+        <ProductIcon name="plus" />
+      </Link>
       {/* On a phone the count sits above the cards, so the footer appears only when there is another page. */}
-      {view !== "board" && list.data && !list.error && items.length > 0 && (wide || cursors.length > 0 || !!list.data.next_cursor) && (
-        <footer className="sr-footer">
-          <span>
-            {total ?? items.length} {queue === "all_open" ? "open" : ""} {total === 1 ? "request" : "requests"}
-            {roomy ? " · urgent first, then oldest received" : ""} · as at {formatWhen(list.data.observed_at, now)}
-          </span>
-          <span className="sr-pager">
+      {view !== "board" &&
+        list.data &&
+        !list.error &&
+        items.length > 0 &&
+        (wide || cursors.length > 0 || !!list.data.next_cursor) && (
+          <footer className="sr-footer">
             <span>
-              {firstRow}–{firstRow + items.length - 1}
-              {total !== undefined ? ` of ${total}` : ""}
+              {total ?? items.length} {queue === "all_open" ? "open" : ""} {total === 1 ? "request" : "requests"}
+              {roomy ? " · urgent first, then oldest received" : ""} · as at {formatWhen(list.data.observed_at, now)}
             </span>
-            <button
-              type="button"
-              className="secondary sr-icon-button"
-              aria-label="Previous page"
-              disabled={!cursors.length}
-              onClick={() => setCursors((old) => old.slice(0, -1))}
-            >
-              <ProductIcon name="collapse" />
-            </button>
-            <button
-              type="button"
-              className="secondary sr-icon-button"
-              aria-label="Next page"
-              disabled={!list.data.next_cursor}
-              onClick={() => setCursors((old) => [...old, list.data!.next_cursor!])}
-            >
-              <ProductIcon name="expand" />
-            </button>
-          </span>
-        </footer>
+            <span className="sr-pager">
+              <span>
+                {firstRow}–{firstRow + items.length - 1}
+                {total !== undefined ? ` of ${total}` : ""}
+              </span>
+              <button
+                type="button"
+                className="secondary sr-icon-button"
+                aria-label="Previous page"
+                disabled={!cursors.length}
+                onClick={() => setCursors((old) => old.slice(0, -1))}
+              >
+                <ProductIcon name="collapse" />
+              </button>
+              <button
+                type="button"
+                className="secondary sr-icon-button"
+                aria-label="Next page"
+                disabled={!list.data.next_cursor}
+                onClick={() => setCursors((old) => [...old, list.data!.next_cursor!])}
+              >
+                <ProductIcon name="expand" />
+              </button>
+            </span>
+          </footer>
+        )}
+      {move && (
+        <MoveDialog key={move.item.id} item={move.item} target={move.target} onClose={endMove} onMoved={moved} />
       )}
-      {move && <MoveDialog key={move.item.id} item={move.item} target={move.target} onClose={endMove} onMoved={moved} />}
       {filtersOpen && (
         <FiltersPanel
           filters={filters}
           queue={queue}
           onClose={() => setFiltersOpen(false)}
-          onApply={(next) => navigate({ company_id: next.company_id, site_id: next.site_id, owner_id: next.owner_id })}
+          onApply={(next) =>
+            navigate({
+              company_id: next.company_id,
+              site_id: next.site_id,
+              owner_id: next.owner_id,
+              priority: next.priority,
+            })
+          }
         />
       )}
-    </section>
+    </SecondaryMenuFrame>
   );
 }

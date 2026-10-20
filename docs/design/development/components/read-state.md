@@ -209,3 +209,7 @@ Use the [execution record](../../../testing/evidence/projects-register/README.md
 ## CS-01 native consumer — 19 October 2026
 
 The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.
+
+## Service requests consumer
+
+SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-01`, `scope:SV-02`, `route:/service/tickets`, `route:/service/tickets/[id]`, `route:/service/tickets/new`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.

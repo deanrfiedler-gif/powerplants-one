@@ -1,54 +1,51 @@
-# Service request detail — design reference
+# Service request record — page contract
 
-Stable entry: `route:/service/tickets/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**. A proposed native refinement was recorded on 23 September 2026. Dean accepted its recommendations (D1–D8) that day. His visual review is still to be recorded, so it is not an accepted baseline.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/tickets/{id}`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and task
+Stable entry: `route:/service/tickets/[id]`.
 
-This route is the SV-02 record. The proposed refinement gives it a record header, a progress strip and the record tabs that r02 placed alongside its register.
+Owner: Dean Fiedler. Implementation owner visual review: **pending**. Design acceptance is recorded in [Service requests design](../../../decisions/service-requests-figma-design.md); it does not grant implementation acceptance. Scope: SV-01/SV-02; parent requirements SVC-01, SVC-02 and SVC-06 are unchanged.
 
-1. Confirm the record reference and customer/site context in this record workspace.
-2. Open the request and review its timeline and commitments.
-3. Separate customer statements from verified findings.
-4. Link the correct authorised work and retain unresolved questions.
+## Accepted source
+
+Live source: **PPO - Design**, named version **Service requests — accepted**, page 1249:9313; index 630:2, Service requests row 1262:5220; notes card 1261:289978. D1–D6 and Q1–Q2 bind this build. No private file identifier, URL or Pro artwork is retained here.
+
+Desktop section 1249:9359 (1440 × 900): register 1249:9382, snapshot 1254:3846, Board 1255:2587, Log a request / possible duplicate 1259:3354, record Triage 1255:3172, Complete triage 1256:287381, Triaged / Linked work 1257:3058. Tablet section 1249:9363: 1259:288310 (1024 × 900). Phone section 1249:9367: register 1259:289789, 320 register 1259:290489, record 1259:290111, triage validation sheet 1259:290321 (390/320 × 844). States section 1249:9374: loading 1261:4946, no matches 1261:5127, failed load 1261:5300, view only 1261:289734, refused newer revision 1261:289886. Page parts 1250:963 include row 1250:965, header 1250:1010, Board card 1255:2149 and phone row 1259:289773.
+
+Retained icon-free references: [thirteen captures and manifest](../../../reference/ui/service/service-requests-design-r01/README.md). Those issued bytes remain unchanged. Live Figma supplies the current layout; its generated code is not application source. Runtime comparison and limits are recorded in the [evidence ledger](../../../testing/evidence/service-requests-accepted/README.md).
 
 ## Desktop
 
-Accepted design: the [Service requests design decision](../../../decisions/service-requests-figma-design.md) of 17 October 2026, with captures 05–07 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md).
+The existing routes are refined in place. List is the default; queues live in the flush secondary menu: All open, My requests, New to triage, Urgent, Needs information, Overdue clarifications, No work order yet, Work order linked. The last two describe visible linked work only. Grid rows are 40 px, with separate reference and summary columns, row selection and a pinned snapshot action. Selection permits Open in sequence and Export list only. Board retains only New, NeedsInformation and Triaged. A large snapshot opens the same permission-filtered record.
 
-- **Layout:** the shared record layout (D4). The header carries a stage Tag and Update details with the stage’s primary action. A “Before triage” readiness bar lists site, equipment, impact and backup, priority reason, next action and any open clarification. The details column holds Summary; Customer, site and equipment; and Linked work.
-- **Tabs:** Triage, Reported issue, Linked work, Updates and History. Updates is r02’s Evidence & updates.
-- **Complete triage:** edits in the Triage tab with a save bar (D5): clarification outcome, reviewed priority, request owner, priority reason, next action and the reason. It authorises no work and books no visit.
-- **Linked work:** each work order in its own state, and a “Who owns what” list.
-- Nothing new is built. Resolution & review waits for ADR-0043 (D6).
-
-Follow the [SV-02 contract](scope-sv-02.md#desktop). The route-specific points are:
-
-- The shell's breadcrumb ends with the request reference.
-- Register the route in `src/shell/module-workspaces.ts` as `padded` with `navigation: "workspace"` (D6, accepted).
-- The existing *← Service requests* link stays as the back link in the record header.
-- The record keeps its heading, because it carries name, reference, stage, priority and revision. The existing-modules rule keeps record headings.
+The record uses a full-bleed header, readiness row, 380 px details column and Triage, Reported issue, Linked work, Updates and History tabs. Complete triage edits inline with a save bar. This accepted composition supersedes the earlier padded-record proposal. The logging page keeps its draft open beside the possible-duplicate check. No extra module masthead is added. The known tablet shell account clipping remains separate (Q2).
 
 ## Mobile
 
-Accepted design: captures 11–13 in [design r01](../../../reference/ui/service/service-requests-design-r01/README.md). Status first, then view tabs, the panel and the triage checks, with Update details and Complete triage pinned. Complete triage is a full-screen sheet with an error summary. The view-only and save-refused states are in image 13.
+Use the shared 56 px compact header and existing bottom navigation. At 390 and 320 px the register has dense three-line rows, a queue selector and floating Log a request action. The record shows status first, view tabs and pinned permitted actions. Complete triage occupies the full screen, with a validation summary and sticky save/cancel controls. Unknowns use amber words. Controls have names, visible focus, keyboard tab operation and dialog focus return; optional equipment is not promoted to a server blocker.
 
-Follow the [SV-02 contract](scope-sv-02.md#mobile): sticky record actions above the bottom navigation, a full-screen triage form with an error summary, phone Work & visits and Evidence & updates (frames 21 and 22), and the 320 px layout (frame 24).
+The page makes online requests only. No offline queue, offline acceptance or guaranteed draft survival across reload is claimed; follow the [offline contract](../systems/offline.md). An uncertain save retains its original command for an unchanged retry. Stale revision refuses saving and retains entries for comparison.
+
+## Behaviour and handovers
+
+Existing scoped selectors, native intake commands, permission checks and revision guards remain authoritative. The [scoped backend decision](../../../decisions/service-request-capture-and-triage.md) authorises immutable customer statements and one atomic triage review, including completion of the caller's owned clarification when permitted. Neither action authorises work or books a visit. Statements remain ReportedSymptom evidence, never verified findings.
+
+Site handover accepts site and site_id query parameters and derives the company from a permitted Site read. Existing Sales delivery handover binding is retained. Linked work opens native work orders with their own authorisation/readiness checks; none of the field readiness, quotation tracking, ADR-0058/0059 or MYOB authority rules is changed. Test data remains synthetic with stable internal IDs and explicit references.
 
 ## Shared components and states
 
-See the [SV-02 contract](scope-sv-02.md#shared-components-and-states).
+Reuses SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, RegisterTable, Button/ButtonLink, ProductIcon through font-awesome-icons.ts, Field/EnumField/SelectField, LocalDateTimeField, ValidationFields/ErrorNotice, ReadState, RecordTabs/RecordPanel, useResource/useCommand and existing IntakeForm/TriageActions. These are consumer bindings; no new shared component is introduced.
 
-## Visual references
+States include loading, zero results, filtered no matches, failed/denied reads, partial bounded results, view-only actions, validation, unsaved-discard confirmation and refused newer revisions. Reads never present stale rows as current after failure. Board and duplicate windows disclose their bounds. Existing Request information and Update details forms retain native behaviour because their accepted layouts are not drawn.
 
-Accepted Figma design: [Service requests design r01 captures](../../../reference/ui/service/service-requests-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/service-requests-figma-design.md). Images of the Reported issue, Updates and History tabs, the Request information and Update details forms, and the tablet record are still missing.
+## Deviations and open questions
 
-- [PPO-Service-Cases-and-Triage-Workspace-r02.html](../../../reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html). Retained design reference.
-- [Board images r01](../../../reference/ui/service-cases/native-refinement-r01/README.md): `07-request-overview.png`, `09-request-evidence.png`, `10-request-resolution.png`, `12-phone-request.png` and `13-phone-triage.png`. These are renders of the private claude.ai design canvas "Page Refinement Audit", version 7. Proposed.
-- [Board images r02](../../../reference/ui/service-cases/native-refinement-r02/README.md): `08-request-work-visits.png` (supersedes r01's), `15-request-triage-actions.png`, `17-request-overview-1024.png`, `21-phone-work-visits.png`, `22-phone-evidence.png` and `24-narrow-request-320.png`. Renders of canvas version 8. Proposed.
-- **Missing:** a current native capture of this route.
+- Customer selection in the drawing has no native persisted customer field. The form displays the visible current site Operator and labels company visibility separately. Should a later design add explicit customer binding? This change does not silently create that field.
+- Duplicate detection is advisory matching of permitted open requests at the same site, narrowed to selected equipment, within a declared 20-result window; it does not assert a verified duplicate. Semantic matching rules remain unspecified.
+- Reported issue, Updates, History, Request information, Update details, phone filter internals and tablet record layouts are not drawn. Existing controls and native data are reused; their final visual treatment remains an owner question.
+- Existing Board drag/Move behaviour remains native and is not an additional stage. All later ADR-0043 stages and Conversations remain out of scope.
+- Some form counters in Figma differ from existing command limits. Native limits remain explicit; no silent truncation or new business rule is added.
 
-## Behaviour, handovers and verification
+## Delivery and evidence
 
-The draft User Guide `guide.page.service.tickets.id` describes the running page and remains Draft. Source presence, visual review, functional testing, owner acceptance and deployment stay separate. Acceptance evidence is pending; see the [proposed refinement record](../../../decisions/service-requests-native-refinement.md).
+Source implementation is under review in draft PR #636. [Verification ledger](../../../testing/evidence/service-requests-accepted/README.md) records actual check results and local limits. No review fingerprint, reviewer or review date is asserted. No deployment or production readiness is claimed. Passing documentation checks is not business acceptance.

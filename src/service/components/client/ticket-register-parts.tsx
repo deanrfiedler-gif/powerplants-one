@@ -2,7 +2,8 @@
 // SV-01 register parts (build plan I2): board, list, phone cards, preview and the Move dialog. Presentation
 // only. Every state, blocker and permitted action comes from the server read or from the existing commands.
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode, type UIEvent } from "react";
+import { RegisterTable } from "../../../components/ui/register-table";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ReadState, useResource, type Envelope } from "../../../components/business-ui";
 import { TriageActions, type Intake } from "../../../components/intake-screens";
 import { ProductIcon } from "../../../components/product-icons";
@@ -32,7 +33,15 @@ import {
 
 const href = (item: RegisterItem) => `/service/tickets/${item.id}`;
 
-export function Chip({ tone = "neutral", icon, children }: { tone?: Tone; icon?: "warning" | "flag"; children: ReactNode }) {
+export function Chip({
+  tone = "neutral",
+  icon,
+  children,
+}: {
+  tone?: Tone;
+  icon?: "warning" | "flag";
+  children: ReactNode;
+}) {
   return (
     <span className={`sr-chip tone-${tone}`}>
       {icon && <ProductIcon name={icon} />}
@@ -114,7 +123,15 @@ function WorkChips({ item }: { item: RegisterItem }) {
   );
 }
 
-function MoveButton({ item, onMove, compact = false }: { item: RegisterItem; onMove: (item: RegisterItem) => void; compact?: boolean }) {
+function MoveButton({
+  item,
+  onMove,
+  compact = false,
+}: {
+  item: RegisterItem;
+  onMove: (item: RegisterItem) => void;
+  compact?: boolean;
+}) {
   const reason = moveUnavailable(item);
   return (
     <button
@@ -229,7 +246,8 @@ export function Board({
     <div className="sr-board">
       {nativeLanes.map((lane) => {
         const cards = items.filter((item) => item.status === lane.status),
-          allowed = !!dragging && moveTargets(dragging).includes(lane.status as MoveTarget) && !moveUnavailable(dragging),
+          allowed =
+            !!dragging && moveTargets(dragging).includes(lane.status as MoveTarget) && !moveUnavailable(dragging),
           collapsed = cards.length === 0 && !expanded[lane.status] && over !== lane.status,
           heading = `sr-lane-${lane.status}`;
         return (
@@ -279,7 +297,10 @@ export function Board({
                     <h2 id={heading}>{lane.label}</h2>
                     <p>{lane.purpose}</p>
                   </div>
-                  <span className="sr-count" aria-label={`${cards.length} ${cards.length === 1 ? "request" : "requests"}`}>
+                  <span
+                    className="sr-count"
+                    aria-label={`${cards.length} ${cards.length === 1 ? "request" : "requests"}`}
+                  >
                     {cards.length}
                   </span>
                   {cards.length === 0 && (
@@ -324,6 +345,7 @@ export function Board({
 // The fourteen list columns with a native source (SV-01 contract). Customer update, Affected areas, Response
 // route and Category wait for a contract that supplies them.
 export type ColumnKey =
+  | "summary"
   | "customer"
   | "priority"
   | "stage"
@@ -337,7 +359,12 @@ export type ColumnKey =
   | "owner"
   | "received"
   | "channel";
-type Column = { key: ColumnKey; label: string; width: number; cell: (item: RegisterItem, now: Date) => ReactNode };
+type Column = {
+  key: ColumnKey;
+  label: string;
+  width: number;
+  cell: (item: RegisterItem, now: Date) => ReactNode;
+};
 const person = (name: string | null) => (
   <span className="sr-person">
     <Avatar name={name} />
@@ -345,9 +372,30 @@ const person = (name: string | null) => (
   </span>
 );
 export const columns: Column[] = [
-  { key: "customer", label: "Customer", width: 190, cell: (item) => customer(item) },
-  { key: "priority", label: "Priority", width: 104, cell: (item) => <PriorityChip priority={item.priority} /> },
-  { key: "stage", label: "Stage", width: 176, cell: (item) => <Chip>{stageLabel(item.status)}</Chip> },
+  {
+    key: "summary",
+    label: "Summary",
+    width: 240,
+    cell: (item) => <Link href={href(item)}>{item.summary}</Link>,
+  },
+  {
+    key: "customer",
+    label: "Customer",
+    width: 190,
+    cell: (item) => customer(item),
+  },
+  {
+    key: "priority",
+    label: "Priority",
+    width: 104,
+    cell: (item) => <PriorityChip priority={item.priority} />,
+  },
+  {
+    key: "stage",
+    label: "Stage",
+    width: 176,
+    cell: (item) => <Chip>{stageLabel(item.status)}</Chip>,
+  },
   {
     key: "attention",
     label: "Attention",
@@ -363,8 +411,20 @@ export const columns: Column[] = [
       );
     },
   },
-  { key: "next", label: "Next action", width: 290, cell: (item, now) => <span className="sr-wrap">{nextAction(item, now).text || <Unknown>Not recorded</Unknown>}</span> },
-  { key: "action_owner", label: "Action owner", width: 150, cell: (item) => person(actionOwner(item)) },
+  {
+    key: "next",
+    label: "Next action",
+    width: 290,
+    cell: (item, now) => (
+      <span className="sr-wrap">{nextAction(item, now).text || <Unknown>Not recorded</Unknown>}</span>
+    ),
+  },
+  {
+    key: "action_owner",
+    label: "Action owner",
+    width: 150,
+    cell: (item) => person(actionOwner(item)),
+  },
   {
     key: "action_due",
     label: "Action due",
@@ -380,7 +440,12 @@ export const columns: Column[] = [
     },
   },
   { key: "site", label: "Site", width: 180, cell: (item) => site(item) },
-  { key: "equipment", label: "Equipment", width: 170, cell: (item) => equipment(item) },
+  {
+    key: "equipment",
+    label: "Equipment",
+    width: 170,
+    cell: (item) => equipment(item),
+  },
   {
     key: "work",
     label: "Linked work",
@@ -400,9 +465,24 @@ export const columns: Column[] = [
       );
     },
   },
-  { key: "owner", label: "Request owner", width: 150, cell: (item) => person(item.triage_owner_name) },
-  { key: "received", label: "Received", width: 186, cell: (item, now) => formatWhen(item.received_at, now) },
-  { key: "channel", label: "Channel", width: 120, cell: (item) => channelLabel(item.channel) },
+  {
+    key: "owner",
+    label: "Request owner",
+    width: 150,
+    cell: (item) => person(item.triage_owner_name),
+  },
+  {
+    key: "received",
+    label: "Received",
+    width: 186,
+    cell: (item, now) => formatWhen(item.received_at, now),
+  },
+  {
+    key: "channel",
+    label: "Channel",
+    width: 120,
+    cell: (item) => channelLabel(item.channel),
+  },
 ];
 
 export function Table({
@@ -418,47 +498,109 @@ export function Table({
   selected: string | null;
   onPreview: (item: RegisterItem) => void;
 }) {
-  const [edges, setEdges] = useState({ start: false, end: false });
-  const scroller = useRef<HTMLDivElement>(null);
-  const measure = (node: HTMLDivElement) =>
-    setEdges({ start: node.scrollLeft > 0, end: node.scrollLeft + node.clientWidth < node.scrollWidth - 1 });
-  useEffect(() => {
-    const node = scroller.current;
-    if (!node) return;
-    measure(node);
-    const observer = new ResizeObserver(() => measure(node));
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [hidden]);
-  const shown = columns.filter((column) => !hidden.includes(column.key));
+  const [checked, setChecked] = useState<string[]>([]);
+  const chosen = items.filter((i) => checked.includes(i.id));
+  const shown = [...columns]
+    .sort(
+      (a, b) =>
+        [
+          "summary",
+          "stage",
+          "priority",
+          "attention",
+          "next",
+          "action_due",
+          "action_owner",
+          "customer",
+          "site",
+          "equipment",
+          "work",
+          "owner",
+          "received",
+          "channel",
+        ].indexOf(a.key) -
+        [
+          "summary",
+          "stage",
+          "priority",
+          "attention",
+          "next",
+          "action_due",
+          "action_owner",
+          "customer",
+          "site",
+          "equipment",
+          "work",
+          "owner",
+          "received",
+          "channel",
+        ].indexOf(b.key),
+    )
+    .filter((c) => !hidden.includes(c.key));
+  const toggle = (id: string) => setChecked((old) => (old.includes(id) ? old.filter((x) => x !== id) : [...old, id]));
+  function exportList() {
+    const cell = (v: string) => '"' + (/^[=+@-]/.test(v) ? "'" : "") + v.replaceAll('"', '""') + '"';
+    const csv = [
+      ["Request", "Summary", "Stage", "Priority"],
+      ...chosen.map((i) => [i.display_number, i.summary, stageLabel(i.status), i.priority]),
+    ]
+      .map((row) => row.map(cell).join(","))
+      .join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ppo-service-requests.csv";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
   return (
-    <div
-      ref={scroller}
-      className="sr-table-scroll"
-      role="region"
-      tabIndex={0}
-      aria-label="Service requests list — scroll for all columns"
-      data-scrolled={edges.start || undefined}
-      data-more={edges.end || undefined}
-      onScroll={(event: UIEvent<HTMLDivElement>) => measure(event.currentTarget)}
-    >
-      <table className="sr-table">
+    <div className="sr-table-frame">
+      {!!chosen.length && (
+        <div className="sr-selection" role="status">
+          <span>{chosen.length} selected</span>
+          <Link
+            className="button secondary"
+            href={`/service/tickets/${chosen[0].id}?sequence=${chosen.map((i) => i.id).join(",")}`}
+          >
+            Open in sequence
+          </Link>
+          <button className="secondary" onClick={exportList}>
+            Export list
+          </button>
+          <button className="secondary" onClick={() => setChecked([])}>
+            Clear selection
+          </button>
+        </div>
+      )}
+      <RegisterTable caption="Service requests. Select rows for export or open them in sequence; open a snapshot to inspect a request.">
         <colgroup>
-          <col style={{ width: 300 }} />
-          {shown.map((column) => (
-            <col key={column.key} style={{ width: column.width }} />
+          <col className="sr-col-select" />
+          <col className="sr-col-request" />
+          {shown.map((c) => (
+            <col key={c.key} className={`sr-col-${c.key}`} />
           ))}
+          <col className="sr-col-settings" />
         </colgroup>
         <thead>
           <tr>
-            <th scope="col" className="sr-pinned">
-              Request
+            <th scope="col">
+              <input
+                type="checkbox"
+                aria-label="Select all requests on this page"
+                checked={!!items.length && chosen.length === items.length}
+                onChange={() => setChecked(chosen.length === items.length ? [] : items.map((i) => i.id))}
+              />
             </th>
-            {shown.map((column) => (
-              <th scope="col" key={column.key}>
-                {column.label}
+            <th scope="col">Request</th>
+            {shown.map((c) => (
+              <th scope="col" key={c.key}>
+                {c.label}
               </th>
             ))}
+            <th scope="col">
+              <span className="sr-only">Snapshot</span>
+              <ProductIcon name="settings" />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -466,35 +608,37 @@ export function Table({
             <tr
               key={item.id}
               data-ticket-id={item.id}
-              data-selected={selected === item.id || undefined}
-              onClick={(event) => {
-                if (!(event.target as HTMLElement).closest("a,button")) onPreview(item);
-              }}
+              data-selected={checked.includes(item.id) || undefined}
+              data-inspected={selected === item.id || undefined}
             >
-              <th scope="row" className="sr-pinned">
-                <div className="sr-request-cell">
-                  <div>
-                    <Link href={href(item)}>{item.summary}</Link>
-                    <small>{item.display_number}</small>
-                  </div>
-                  <button
-                    type="button"
-                    className="secondary sr-icon-button"
-                    aria-label={`Preview ${item.display_number}`}
-                    aria-pressed={selected === item.id}
-                    onClick={() => onPreview(item)}
-                  >
-                    <ProductIcon name="eye" />
-                  </button>
-                </div>
+              <td>
+                <input
+                  type="checkbox"
+                  aria-label={`Select ${item.display_number}`}
+                  checked={checked.includes(item.id)}
+                  onChange={() => toggle(item.id)}
+                />
+              </td>
+              <th scope="row">
+                <Link href={href(item)}>{item.display_number}</Link>
               </th>
-              {shown.map((column) => (
-                <td key={column.key}>{column.cell(item, now)}</td>
+              {shown.map((c) => (
+                <td key={c.key}>{c.cell(item, now)}</td>
               ))}
+              <td>
+                <button
+                  type="button"
+                  className="secondary sr-icon-button"
+                  aria-label={`Preview ${item.display_number}`}
+                  onClick={() => onPreview(item)}
+                >
+                  <ProductIcon name="eye" />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </RegisterTable>
     </div>
   );
 }
@@ -504,35 +648,29 @@ export function PhoneCards({ items, now }: { items: RegisterItem[]; now: Date })
   return (
     <ol className="sr-phone-cards">
       {items.map((item) => {
-        const chips = cardChips(item);
+        const att = attention(item, now);
         return (
           <li key={item.id}>
-            <article className="sr-phone-card" data-ticket-id={item.id}>
-              <div className="sr-card-top">
-                <span className="sr-ref">
-                  <span className="sr-ref-prefix">{item.display_number.replace(/TKT-.*$/, "")}</span>
-                  {item.display_number.replace(/^.*?(TKT-)/, "$1")} · {stageLabel(item.status)}
-                </span>
-                <PriorityChip priority={item.priority} />
+            <Link className="sr-phone-row" href={href(item)} data-ticket-id={item.id}>
+              <div className="sr-phone-title">
+                <strong>{item.summary}</strong>
+                <span>{formatWhen(item.received_at, now).split(",")[0]}</span>
               </div>
-              <h2>
-                <Link href={href(item)}>{item.summary}</Link>
-              </h2>
-              <p className="sr-card-line">
-                {customer(item)} · {site(item)}
-              </p>
-              <NextActionBlock item={item} now={now} />
-              {(chips.length > 0 || item.work_orders.length > 0) && (
-                <div className="sr-chip-row">
-                  {chips.map((chip) => (
-                    <Chip key={chip.text} tone={chip.tone} icon={chip.tone === "warning" ? "warning" : undefined}>
-                      {chip.text}
-                    </Chip>
-                  ))}
-                  <WorkChips item={item} />
-                </div>
-              )}
-            </article>
+              <div className="sr-phone-context">
+                <small>
+                  {item.display_number} · {customerLabel(item)}
+                </small>
+                {["Urgent", "High"].includes(item.priority) && <PriorityChip priority={item.priority} />}
+              </div>
+              <div className="sr-phone-attention">
+                <span className={att ? `tone-${att.tone}` : "sr-none"}>
+                  {att && <ProductIcon name="warning" />}
+                  {att?.text ?? (item.work_orders[0] ? workOrderLabel(item.work_orders[0]) : "No attention needed")}
+                </span>
+                <small>{stageLabel(item.status)}</small>
+              </div>
+              <ProductIcon name="expand" />
+            </Link>
           </li>
         );
       })}
@@ -642,7 +780,11 @@ export function Preview({
               <dd>
                 {customer(item)}
                 {item.customer && (
-                  <small>{item.customer.basis === "SiteOperator" ? "The site's current operator" : "The caller's organisation"}</small>
+                  <small>
+                    {item.customer.basis === "SiteOperator"
+                      ? "The site's current operator"
+                      : "The caller's organisation"}
+                  </small>
                 )}
               </dd>
             </div>
@@ -711,18 +853,18 @@ export function MoveDialog({
     if (node && !node.open) node.showModal();
   }, []);
   return (
-    <dialog
-      ref={dialog}
-      className="sr-move"
-      aria-labelledby="sr-move-title"
-      onClose={onClose}
-    >
+    <dialog ref={dialog} className="sr-move" aria-labelledby="sr-move-title" onClose={onClose}>
       <header className="sr-move-head">
         <div>
           <span className="sr-ref">{item.display_number}</span>
           <h2 id="sr-move-title">Move request</h2>
         </div>
-        <button type="button" className="secondary sr-icon-button" aria-label="Close move form" onClick={() => dialog.current?.close()}>
+        <button
+          type="button"
+          className="secondary sr-icon-button"
+          aria-label="Close move form"
+          onClick={() => dialog.current?.close()}
+        >
           <ProductIcon name="close" />
         </button>
       </header>
@@ -737,10 +879,20 @@ export function MoveDialog({
             <legend>Move to</legend>
             {targets.map((value) => (
               <label key={value}>
-                <input type="radio" name="sr-move-target" value={value} checked={target === value} onChange={() => setTarget(value)} />
+                <input
+                  type="radio"
+                  name="sr-move-target"
+                  value={value}
+                  checked={target === value}
+                  onChange={() => setTarget(value)}
+                />
                 <span>
                   <strong>{stageLabel(value)}</strong>
-                  <small>{value === "NeedsInformation" ? "Ask for what is missing, with an owned follow-up" : "Complete the triage assessment"}</small>
+                  <small>
+                    {value === "NeedsInformation"
+                      ? "Ask for what is missing, with an owned follow-up"
+                      : "Complete the triage assessment"}
+                  </small>
                 </span>
               </label>
             ))}
@@ -755,7 +907,8 @@ export function MoveDialog({
           <div className="sr-notice tone-warning">
             <ProductIcon name="warning" />
             <p>
-              <strong>This request is now {stageLabel(ticket.status)}.</strong> It changed after the register loaded. Close this form to see its current stage.
+              <strong>This request is now {stageLabel(ticket.status)}.</strong> It changed after the register loaded.
+              Close this form to see its current stage.
             </p>
           </div>
         )}
@@ -763,7 +916,8 @@ export function MoveDialog({
           <div className="sr-notice tone-warning">
             <ProductIcon name="warning" />
             <p>
-              <strong>This request changed after the register loaded.</strong> The form below uses its current revision, {ticket.version}.
+              <strong>This request changed after the register loaded.</strong> The form below uses its current revision,{" "}
+              {ticket.version}.
             </p>
           </div>
         )}

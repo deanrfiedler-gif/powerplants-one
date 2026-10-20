@@ -1,13 +1,14 @@
 import { Suspense } from "react";
-import { TicketCreate } from "../../../../../components/intake-screens";
+import { TicketCreatePage } from "../../../../../service/components/client/ticket-create";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ site?: string }>;
+  searchParams: Promise<{ site?: string; site_id?:string }>;
 }) {
+  const query=await searchParams;
   return (
     <Suspense fallback={<p>Loading Service intake…</p>}>
-      <TicketCreate siteId={(await searchParams).site} />
+      <TicketCreatePage siteId={query.site_id??query.site} />
     </Suspense>
   );
 }
