@@ -6,6 +6,11 @@
 ## Chrome 156 compatibility maintenance — 21 October 2026
 
 Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduces on unchanged main `4c1097cc`. The [browser maintenance decision](decisions/browser-runtime-maintenance.md) extends the existing version floor while preserving majors 153–155 and refusing older 156 builds and unreviewed major 157. Boundary tests, actual browser/PDF execution and CI results remain distinct; final-head CI is pending. The existing stable-channel installer and exact dependency packages remain unchanged. No deployment, database change or business transaction is authorised by this repair.
+## Changes and follow-up PL-04 implementation claimed — 21 October 2026
+
+Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow-up-figma-design.md) on a dedicated branch and worktree. The claim covers `/schedule/changes` and the temporary comparison on `/schedule/policy-impact`, their page-local components and permitted reads, focused tests, and the matching design register, component bindings and guides. The existing policy publication controls remain in scope only for preserving access to their current workflow.
+
+The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
 ## Site surveys CS-08 build preflight awaits migration approval — 20 October 2026
 
