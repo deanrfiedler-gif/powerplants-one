@@ -1,0 +1,20 @@
+{
+  "scope": "CS-02",
+  "owner": "Dean Fiedler",
+  "owner_review": "pending",
+  "source": {
+    "file": "PPO - Design",
+    "page": "1395:150275",
+    "named_version": "People — accepted",
+    "notes": "1395:151383",
+    "frames": ["1395:150312", "1395:150835", "1395:151069", "1395:151245", "1395:151303", "1395:151346"],
+    "phone_amendment": "1530:110 — Phone header amendment — accepted"
+  },
+  "routes": ["/people?department=service", "/contacts?view=people&department=service"],
+  "fixture": "tests/helpers/people-register.ts",
+  "browser_proof": "tests/browser/people-native.spec.ts",
+  "database_proof": "tests/database/people-register.test.ts",
+  "viewports": [[1440,900],[1024,900],[390,844],[320,844]],
+  "states": ["active", "loading", "no-matches", "failed", "denied", "filters", "selection", "receiving-record", "legacy-saved-views"],
+  "boundaries": "Synthetic composition and local fallback icons only. No external keys are fabricated; stable fixture IDs are local internal identities. 320 px register, filters, selection and denied state have no People frame; inherited controls are tested without asserting owner design acceptance. Person record frames are a separate delivery."
+}
