@@ -40,9 +40,11 @@ export const list = readRoute((p, _id, q) => {
     const items = [];
     for (const x of candidates) {
       try {
-        const { row, operational_hold } = await readIncident(c, p, x.id);
+        const { row, operational_hold, context, actions, source_current } =
+          await readIncident(c, p, x.id);
         items.push({
           id: row.id,
+          reference: context.reference,
           summary: row.facts.summary,
           state: row.state,
           classification: row.facts.classification,
@@ -51,6 +53,20 @@ export const list = readRoute((p, _id, q) => {
           hold: operational_hold,
           due_at: row.due_at,
           appointment_id: row.appointment_id,
+          reporter_id: row.reporter_id,
+          reporter: context.reporter,
+          site_id: row.site_id,
+          site: context.site,
+          reported_at: row.reported_at,
+          timezone: context.timezone,
+          actions: actions.length,
+          actions_open: actions.filter(
+            (a) =>
+              a.activity.status !== "Completed" ||
+              !a.accepted_by ||
+              !a.assignment_current,
+          ).length,
+          source_current,
         });
       } catch (e) {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
@@ -58,6 +74,7 @@ export const list = readRoute((p, _id, q) => {
     }
     return {
       items,
+      as_at: new Date().toISOString(),
       window:
         "Latest 200 candidates, individually permission checked. No restricted counts or search index.",
     };
@@ -111,12 +128,17 @@ export const contextRead = readRoute((p, _id, q) => {
         if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       }
     }
+    const site = await visible(c, p, "Site", ctx.a.site_id);
     return {
       appointment: {
         id: ctx.a.id,
         reference: ctx.a.display_number,
         work_order: ctx.w.display_number,
         status: ctx.a.status,
+        timezone: ctx.a.site_timezone,
+        site: String(site.name ?? site.display_name ?? site.display_number),
+        scheduled_start_at: ctx.a.start_at,
+        scheduled_end_at: ctx.a.end_at,
       },
       targets,
       selected: selected

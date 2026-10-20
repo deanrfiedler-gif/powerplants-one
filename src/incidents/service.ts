@@ -781,6 +781,10 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
     )
   ).rows;
   const duties: Record<string, boolean> = {};
+  // Reflect the existing command's independence test in the available controls.
+  const isIndependent = row.reporter_id !== p.actor_id &&
+    !g.actions.some(a => a.owner_id === p.actor_id) &&
+    !g.evidence.some(e => e.added_by === p.actor_id);
   for (const action of [
     "save",
     "submit",
@@ -798,7 +802,7 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
   ]) {
     try {
       await access(c, p, id, action);
-      duties[action] = true;
+      duties[action] = !["accept_action", "accept", "close"].includes(action) || isIndependent;
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       duties[action] = false;
@@ -814,8 +818,18 @@ export async function readIncident(c: QueryClient, p: Principal, id: string) {
       [p.workspace_id, row.reporter_id],
     )
   ).rows[0];
+  const identity = (
+    await c.query<{ display_number: string | null }>(
+      "SELECT display_number FROM ppo.business_identities WHERE workspace_id=$1 AND id=$2",
+      [p.workspace_id, id],
+    )
+  ).rows[0];
   return {
     context: {
+      reference: identity?.display_number || id,
+      timezone: ctx.a.site_timezone,
+      scheduled_start_at: ctx.a.start_at,
+      scheduled_end_at: ctx.a.end_at,
       appointment: ctx.a.display_number,
       work_order: ctx.w.display_number,
       site: site.name ?? site.display_name ?? site.display_number,

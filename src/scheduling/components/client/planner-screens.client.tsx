@@ -1,4 +1,5 @@
 "use client";
+import { IncidentVisitMenu } from "../../../incidents/visit-menu";
 import { visitArrivalGuidance, visitPreparationGuidance } from "../../../field/visit-guidance";
 import { PolicyResolution } from "./policy-resolution.client";
 import { useEffect, useRef, useState } from "react";
@@ -1043,6 +1044,7 @@ export function AppointmentScreen({ id }: { id: string }) {
             <div>
               <p className="eyebrow">{a.site_name}</p>
               <h2>{a.display_number}</h2>
+              <IncidentVisitMenu appointmentId={id}/>
               <p>{a.scope_summary}</p>
               <p>
                 Work order{" "}

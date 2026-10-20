@@ -37,3 +37,7 @@ Access & readiness opts into `sourcesLabel="Readiness basis"` and `statusPlaceme
 The CS-06 host suppresses the second phone navigation bar while retaining the compact header's menu, and supplies its own status summary and sticky actions. Review forms restore opener focus. Its delayed-read fixture keeps subsequent mutations unavailable until the saved record version arrives; this is host behaviour, not a change to the shared record's defaults.
 
 [Deterministic fixture](../../../../tests/helpers/access-readiness-fixture.ts) and [browser states](../../../../tests/browser/access-readiness-native.spec.ts) cover checks, grouped requirements, exact review/acknowledgement, stale refusal, empty, read-only and denied cases. [Current evidence](../../../testing/evidence/access-readiness-native/README.md) records execution separately. PPO - Design, Access & readiness — accepted: `1400:346553`, `1400:354078`, `1400:347071`, `1400:355748`; full mapping is in the [page contract](../pages/route-sites-id-readiness.md). Owner alignment review, including undrawn forms and token differences, remains pending.
+
+## FI-06 consumer
+
+The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
