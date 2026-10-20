@@ -33,13 +33,13 @@ The later [reviewed creation direction](../../../decisions/discovery-creation-jo
 
 Before creation, Alternatives and Revisions show zero. No price is calculated: cost basis is Not costed and routing Not configured. Readiness stays Not checked until server preview, then displays its result.
 
-## Desktop and tablet
+## Desktop
 
 Use the existing shell, Estimating navigation group and page guide. At 1440 px retain the 240 px rail, 380 px summary, ruled context/tabs, five 48 px steps and 64 px footer. No extra module container. Main column and summary own separate scrolling. Choice rows are compact and keyboard-selectable.
 
 At 1024 px the existing wizard rule uses the 76 px rail; Summary opens a native dialog. Requirements uses two-column canonical context, full-width included work and half-width declarations. AreasEditor, FamilyOverview, SystemsEditor and ResponsibilitiesEditor retain their editing contracts.
 
-## Phone, accessibility and offline
+## Mobile
 
 At 390 and 320 CSS px use the shared compact phone header, wrapped radio rows, equal view tabs, viewed alternative and step selector. The footer retains Summary and Create workspace; the scroll region contains the same draft. Native dialogs contain keyboard focus, Escape closes dismissible states and closing restores the opener. Creating is not dismissible.
 

@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--ppo-control-gap);
-  min-height: var(--ppo-control-height);
+  min-height: 40px;
   max-width: 100%;
   padding: 8px var(--ppo-control-padding);
   border: 1px solid var(--control-border);
@@ -47,6 +47,7 @@
 }
 #ppo-estimate-wizard.es02-create-workspace .es02-summary {
   width: auto;
+  min-height: 100%;
   border: 0;
 }
 #ppo-estimate-wizard.es02-create-workspace .create-summary-head {
@@ -54,10 +55,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 #ppo-estimate-wizard.es02-create-workspace .create-summary-head h2 { margin: 0; }
-#ppo-estimate-wizard.es02-create-workspace .create-summary-head button { flex: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-head button { flex: none; width: 32px; min-height: 32px; padding: 0; }
 #ppo-estimate-wizard.es02-create-workspace .es02-context { border-bottom: 1px solid var(--line); }
 #ppo-estimate-wizard.es02-create-workspace .es02-view-row { border-top: 0; }
 #ppo-estimate-wizard.es02-create-workspace .es02-step { min-width: 0; }
@@ -74,13 +75,13 @@
 #ppo-estimate-wizard.es02-create-workspace .create-phone-summary,
 #ppo-estimate-wizard.es02-create-workspace .create-step-select { display: none; }
 #ppo-estimate-wizard.es02-create-workspace .create-choose { padding-top: 24px; }
-#ppo-estimate-wizard.es02-create-workspace .create-choose h2 { font-size: 20px; line-height: 26px; margin-bottom: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-choose h2 { font-size: 16px; line-height: 21px; margin-bottom: 4px; }
 #ppo-estimate-wizard.es02-create-workspace .create-choose > p { color: var(--text-secondary); font-size: 14px; line-height: 20px; }
 #ppo-estimate-wizard.es02-create-workspace .create-search {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 20px 0 16px;
+  margin: 16px 0;
   min-height: 40px;
   padding: 0 12px;
   border: 1px solid var(--control-border);
@@ -304,3 +305,10 @@
 @media (max-width: 780px) {
   #ppo-estimate-wizard.es02-create-workspace .create-choose h2 { display: none; }
 }
+
+#ppo-estimate-wizard.es02-create-workspace .create-choice small { font-weight: 400; }
+
+#ppo-estimate-wizard.es02-create-workspace .es02-summary .es02-subtle { font-size: 12px; line-height: 18px; }
+#ppo-estimate-wizard.es02-create-workspace .es02-summary .create-callout { text-align: left; margin: 8px 0 0; }
+#ppo-estimate-wizard.es02-create-workspace .es02-summary hr { margin: 8px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-editable > .es02-section:first-of-type { padding-top: 0; }

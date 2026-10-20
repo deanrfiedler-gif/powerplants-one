@@ -891,9 +891,7 @@
         "src/development/component-fixtures.ts",
         "src/components/discovery-creation.tsx",
         "src/components/discovery-creation.css",
-        "src/components/estimation-wizard-dialog.tsx",
-        "tests/helpers/discovery-creation.ts",
-        "tests/browser/discovery-creation.spec.ts"
+        "src/components/estimation-wizard-dialog.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -4516,9 +4514,7 @@
         "scripts/es02-fixture.ts",
         "src/components/discovery-creation.tsx",
         "src/components/discovery-creation.css",
-        "src/components/estimation-wizard-dialog.tsx",
-        "tests/helpers/discovery-creation.ts",
-        "tests/browser/discovery-creation.spec.ts"
+        "src/components/estimation-wizard-dialog.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",

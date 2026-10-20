@@ -71,7 +71,7 @@ function ChooseOpportunity({ initial, onContinue }: { initial: string; onContinu
   const shown = items.filter(o => [o.title, o.display_number, o.customer, o.site].join(" ").toLocaleLowerCase("en-AU").includes(query));
   return <CreationLayout title="New discovery workspace" subtitle="One workspace per opportunity" status={choices.loading ? "Loading…" : "Not started · nothing saved"}
     summary={<CreationSummary title={current?.title} reference={current?.display_number} />}
-    footer={() => <><span className="es02-bottom-state">{items.length || choices.loading ? "Choose an opportunity to continue" : "Nothing to create"}</span>
+    footer={() => <><span className="es02-bottom-state">{current ? `${current.title} selected · nothing saved yet` : items.length || choices.loading ? "Choose an opportunity to continue" : "Nothing to create"}</span>
       <ButtonLink href="/estimating/discovery" className="create-cancel">Cancel</ButtonLink>
       <Button variant="primary" disabled={!current || choices.loading || !!choices.error} onClick={() => current && onContinue(current.id)}><Icon name="arrow-right" />Continue to discovery</Button></>}>
     <section className="create-choose" aria-labelledby="create-choose-title"><h2 id="create-choose-title">Choose the opportunity</h2>

@@ -68,6 +68,7 @@ async function reviewed(page: Page) {
     const dialog = page.getByRole("dialog");
     await dialog.getByLabel(`${id} follow-up reason`, { exact: true }).fill(`SYN confirm ${id} with the customer`);
     await dialog.getByRole("button", { name: "Done", exact: true }).click();
+    await expect(page.getByRole("button", { name: `Review ${id} state, source and follow-up`, exact: true })).toBeFocused();
   }
   if ((page.viewportSize()?.width ?? 1440) <= 780) await page.getByLabel("Discovery step", { exact: true }).selectOption("Scope & delivery");
   else await page.getByRole("button", { name: /3\. Scope & delivery/ }).click();
@@ -75,13 +76,16 @@ async function reviewed(page: Page) {
   await page.locator(".es02-bottom .ppo-button--primary").click();
   const dialog = page.getByRole("dialog", { name: "Create discovery workspace", exact: true });
   await expect(dialog).toBeVisible();
+  const bounds = await dialog.boundingBox();
+  expect(bounds!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  expect(bounds!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   await dialog.getByLabel("Discovery change reason", { exact: true }).fill("SYN first discovery from accepted Sales context");
   return dialog;
 }
 
 for (const width of [1440, 1024, 390, 320]) test(`ES02 creation: choose and wrap at ${width} px`, async ({ page }, info) => {
     await fixture(page);
-    await page.setViewportSize({ width, height: width >= 781 ? 960 : 844 });
+    await page.setViewportSize({ width, height: width >= 781 ? 1000 : 844 });
     await page.goto("/estimating/discovery/new", { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("radio")).toHaveCount(2);
     await expect(page.getByRole("button", { name: "Continue to discovery" })).toBeDisabled();
@@ -90,6 +94,9 @@ for (const width of [1440, 1024, 390, 320]) test(`ES02 creation: choose and wrap
     await page.getByRole("searchbox", { name: "Search opportunity, number or customer" }).fill("");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (width <= 780) await expect(page.locator("#shell-header")).toBeVisible();
+    await page.getByRole("radio").first().check();
+    await expect(page.getByRole("button", { name: "Continue to discovery" })).toBeEnabled();
+    await page.locator(".create-choose > p").first().click();
     await capture(page, info.outputPath(`choose-${width}.png`));
 });
 
@@ -165,13 +172,17 @@ test("ES02 creation: direct Sales handover locks the opportunity and validation 
   await expect(page.getByRole("radio")).toHaveCount(0);
   await expect(page.getByLabel("Included work · Q01", { exact: true })).toHaveValue(creationContextFixture.brief!.content.included_scope);
   await expect(page.getByRole("button", { name: "Choose another opportunity", exact: true })).toHaveCount(0);
+  for (const width of [1440, 1024, 390, 320]) {
+    await page.setViewportSize({ width, height: width >= 781 ? 1000 : 844 });
+    await page.locator('.es02-scroll').evaluate(element => element.scrollTo(0, 0));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await capture(page, info.outputPath(`requirements-${width}.png`));
+    const fullHeight = await page.locator(".es02-scroll").evaluate(element => element.scrollHeight + element.getBoundingClientRect().top + 96);
+    await page.setViewportSize({ width, height: Math.ceil(fullHeight) });
+    await capture(page, info.outputPath(`requirements-full-${width}.png`));
+  }
   await page.locator(".es02-bottom .ppo-button--primary").click();
   await expect(page.getByRole("alert").filter({ hasText: "details need attention" })).toBeVisible();
   await expect(page.locator('[id="scope.systems"]')).toBeFocused();
   await capture(page, info.outputPath("needs-attention.png"));
-  for (const width of [1440, 1024, 390, 320]) {
-    await page.setViewportSize({ width, height: width >= 781 ? 960 : 844 });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await capture(page, info.outputPath(`requirements-${width}.png`));
-  }
 });
