@@ -48,6 +48,8 @@ One development-mobile P09 run also failed to find the response sheet after clic
 
 The two new tests passed **4/4** across desktop and phone after the repair, followed by the complete page fixture suite **16/16**. An initial local attempt preceded diagnostic server readiness and failed with connection refused; the subsequent pre-fix run reproduced the duplicate status. The temporary local configuration is removed. Persisted CI reruns and owner visual review remain required; the PR stays draft.
 
+Current main (`5ebb5c0a`) is merged, preserving both SV-06 and CS-02 shared-component consumer records. Follow-up checks passed: `npm run studio:check` (366 entries, 48 components, no errors), `npm run typecheck`, `npm run lint`, the three report-register tests plus the People summary test (**4/4**), naming (743 records), foundation (78 requirements, 12,875 links, 6,750 scanned files, 62 status fragments) and `git diff --check`. Status and build-sequence generators ran. Full local unit/build and persisted database checks were not rerun for this receipt/test repair; the recorded Windows and database limits still apply. The 16/16 browser fixture run preceded the main merge; it is not represented as a post-merge persisted run.
+
 ## Visual comparison and limits
 
 Application captures are local-only test artefacts, outside Git, under the temporary `ppo-sv06-browser` folder. No Font Awesome Pro artwork is retained in the public repository. The immutable source captures are the existing icon-free files under `docs/reference/ui/service/service-review-design-r01/`.
