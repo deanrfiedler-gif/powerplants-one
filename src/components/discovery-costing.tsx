@@ -715,7 +715,7 @@ function CostingEditor({
                         </Link>
                       </div>
                     ))}
-                    <div>
+                    {(unchangedSystems.length > 0 || changedScope.length === 0) && <div>
                       <Icon name="check" />
                       <span>
                         <strong>
@@ -731,7 +731,7 @@ function CostingEditor({
                             : "Open exact saved source for the full retained scope."}
                         </small>
                       </span>
-                    </div>
+                    </div>}
                   </div>
                 )}
                 <details className="dc-source">

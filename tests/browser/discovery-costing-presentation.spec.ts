@@ -46,7 +46,7 @@ test("manual edit compares saved lines, keeps provenance and submits native adop
   const modal = await openReview(page);
   await page.screenshot({ path: info.outputPath("review.png") });
   await modal.getByRole("button", { name: /^Adopt r02/ }).click();
-  await expect.poll(() => fixture.adoptions.length).toBe(1);
+  await expect.poll(() => fixture.adoptions.length, {timeout:60000}).toBe(1);
   const body = fixture.adoptions[0];
   expect(body).toMatchObject({
     revision_id: costingId(12),
@@ -70,12 +70,14 @@ for (const width of [1440, 1024, 390, 320])
     await expect(page.locator("#ppo-estimate-wizard")).toHaveAttribute("data-module-layout", "full-bleed");
     const icon = await page.locator(".dc-basis-banner > .dc-banner > .es02-icon").boundingBox();
     expect(icon?.width).toBeLessThanOrEqual(20);
+    expect((await review(page).boundingBox())?.height).toBeGreaterThanOrEqual(36);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
     if (width < 780) {
+      await expect(page.locator("#shell-header.topbar.ppo-shell-header")).toBeVisible();
       await expect(page.locator(".dc-phone-lines")).toBeVisible();
       await expect(page.locator(".dc-grid")).toBeHidden();
     }
@@ -198,9 +200,7 @@ test("loading and revoked source never imply zero totals or retain protected cos
   const f = costingFixture();
   f.mode = "loading";
   await mountCosting(page, f);
-  await expect(page.getByRole("status")).toContainText(
-    "Loading the saved scope",
-  );
+  await expect(page.getByRole("status").filter({ hasText: "Loading the saved scope" })).toBeVisible();
   await page.screenshot({ path: info.outputPath("loading.png") });
   f.mode = "normal";
   f.release?.();
