@@ -91,7 +91,7 @@ async function reviewed(page: Page) {
 
 for (const width of [1440, 1024, 390, 320]) test(`ES02 creation: choose and wrap at ${width} px`, async ({ page }, info) => {
     await fixture(page);
-    await page.setViewportSize({ width, height: width >= 781 ? 1000 : 844 });
+    await page.setViewportSize({ width, height: width === 1024 ? 768 : width >= 781 ? 1000 : 844 });
     await page.goto("/estimating/discovery/new", { waitUntil: "domcontentloaded" });
     await waitForCreation(page);
     await expect(page.getByRole("radio")).toHaveCount(2);
@@ -114,6 +114,9 @@ test("ES02 creation: empty, denied and loading choices", async ({ page }, info) 
   await waitForCreation(page);
   await expect(page.getByRole("heading", { name: "No eligible opportunities" })).toBeVisible();
   await capture(page, info.outputPath("empty.png"));
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await capture(page, info.outputPath("empty-desktop.png"));
+  await page.setViewportSize({ width: 320, height: 844 });
   state.choices = "denied"; await page.reload({ waitUntil: "domcontentloaded" });
   await waitForCreation(page);
   await expect(page.getByRole("radio")).toHaveCount(0);
@@ -123,6 +126,8 @@ test("ES02 creation: empty, denied and loading choices", async ({ page }, info) 
   await waitForCreation(page);
   await expect(page.getByText("Loading permitted opportunities…")).toBeVisible();
   await capture(page, info.outputPath("loading-320.png"));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await capture(page, info.outputPath("loading-390.png"));
 });
 
 test("ES02 creation: Sales entry, explicit follow-ups and exact original recovery survive access refresh", async ({ page }, info) => {
@@ -184,7 +189,7 @@ test("ES02 creation: direct Sales handover locks the opportunity and validation 
   await expect(page.getByLabel("Included work · Q01", { exact: true })).toHaveValue(creationContextFixture.brief!.content.included_scope);
   await expect(page.getByRole("button", { name: "Choose another opportunity", exact: true })).toHaveCount(0);
   for (const width of [1440, 1024, 390, 320]) {
-    await page.setViewportSize({ width, height: width >= 781 ? 1000 : 844 });
+    await page.setViewportSize({ width, height: width === 1024 ? 768 : width >= 781 ? 1000 : 844 });
     await page.locator('.es02-scroll').evaluate(element => element.scrollTo(0, 0));
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await capture(page, info.outputPath(`requirements-${width}.png`));
@@ -192,6 +197,8 @@ test("ES02 creation: direct Sales handover locks the opportunity and validation 
     await page.setViewportSize({ width, height: Math.ceil(fullHeight) });
     await capture(page, info.outputPath(`requirements-full-${width}.png`));
   }
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.locator(".es02-scroll").evaluate(element => element.scrollTo(0, 0));
   await page.locator(".es02-bottom .ppo-button--primary").click();
   await expect(page.getByRole("alert").filter({ hasText: "details need attention" })).toBeVisible();
   await expect(page.locator('[id="scope.systems"]')).toBeFocused();
