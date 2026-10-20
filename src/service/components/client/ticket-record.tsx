@@ -2,7 +2,13 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePublishRecordIdentity } from "../../../shell/record-identity";
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { Button, ButtonLink } from "../../../components/ui/button";
 import {
   EnumField,
@@ -17,14 +23,25 @@ import {
   type Option,
   type Failure,
 } from "../../../components/business-ui";
-import { IntakeForm, TriageActions, type Intake } from "../../../components/intake-screens";
-import { LocalDateTimeField, RecordPanel, RecordTabs, useUnsavedChanges } from "../../../components/record-ui";
+import {
+  IntakeForm,
+  TriageActions,
+  type Intake,
+} from "../../../components/intake-screens";
+import {
+  LocalDateTimeField,
+  RecordPanel,
+  RecordTabs,
+  useUnsavedChanges,
+} from "../../../components/record-ui";
 import { ProductIcon } from "../../../components/product-icons";
 import { usePhoneHeader } from "../../../shell/phone-header";
 import { stageLabel, channelLabel } from "../../ticket-register-view";
 import type { ticketStatements } from "../../statements";
 
-const label = (source: Intake["site"] | Intake["asset"] | Intake["requester"]) => {
+const label = (
+  source: Intake["site"] | Intake["asset"] | Intake["requester"],
+) => {
   return source && "display_name" in source
     ? String(source.display_name)
     : source && "description" in source
@@ -49,7 +66,12 @@ export function ServiceDialog({
   const ref = useRef<HTMLDialogElement>(null);
   const changed = useRef(false);
   const close = () => {
-    if (ref.current?.querySelector("[data-save-uncertain=true],fieldset[disabled]")) return;
+    if (
+      ref.current?.querySelector(
+        "[data-save-uncertain=true],fieldset[disabled]",
+      )
+    )
+      return;
     if (
       changed.current &&
       ref.current?.querySelector("form,input,textarea,select") &&
@@ -109,7 +131,9 @@ function DetailFields({ t }: { t: Intake }) {
           <dd>
             {stamp(t.received_at)}
             <small>
-              {t.received_time_basis === "LegacyUnverified" ? "Retained time — unverified" : "User-reported time"}
+              {t.received_time_basis === "LegacyUnverified"
+                ? "Retained time — unverified"
+                : "User-reported time"}
             </small>
           </dd>
           <dt>Channel</dt>
@@ -117,9 +141,13 @@ function DetailFields({ t }: { t: Intake }) {
           <dt>Requester</dt>
           <dd>
             {t.requester_id ? (
-              <Link href={`/people/${t.requester_id}`}>{label(t.requester)}</Link>
+              <Link href={`/people/${t.requester_id}`}>
+                {label(t.requester)}
+              </Link>
             ) : (
-              <span className="sv-unknown">{t.requester_description || "Not identified"}</span>
+              <span className="sv-unknown">
+                {t.requester_description || "Not identified"}
+              </span>
             )}
           </dd>
         </dl>
@@ -130,7 +158,9 @@ function DetailFields({ t }: { t: Intake }) {
           <dt>Customer</dt>
           <dd>
             {t.customer ? (
-              <Link href={`/customers/${t.customer.id}`}>{t.customer.display_name}</Link>
+              <Link href={`/customers/${t.customer.id}`}>
+                {t.customer.display_name}
+              </Link>
             ) : (
               <span className="sv-unknown">Not identified</span>
             )}
@@ -153,14 +183,17 @@ function DetailFields({ t }: { t: Intake }) {
           </dd>
         </dl>
         <small>
-          Site and equipment can change before triage. Corrections retain their earlier values in the audit history.
+          Site and equipment can change before triage. Corrections retain their
+          earlier values in the audit history.
         </small>
       </section>
       <section>
         <h2>Linked work ({t.work_orders.length})</h2>
         {t.work_orders.map((w) => (
           <p key={w.id}>
-            <Link href={`/service/work-orders/${w.id}`}>{w.display_number}</Link>{" "}
+            <Link href={`/service/work-orders/${w.id}`}>
+              {w.display_number}
+            </Link>{" "}
             <span className="sv-tag">{w.status}</span>
           </p>
         ))}
@@ -196,7 +229,9 @@ function TriageForm({
   }, []);
   const cmd = useCommand(),
     [expected, setExpected] = useState(t.version),
-    [activityVersion, setActivityVersion] = useState(t.clarification_activity?.version),
+    [activityVersion, setActivityVersion] = useState(
+      t.clarification_activity?.version,
+    ),
     [reviewing, setReviewing] = useState(false),
     [discard, setDiscard] = useState(false);
   const [v, setV] = useState({
@@ -220,8 +255,11 @@ function TriageForm({
   const owners = useResource<Envelope<Option>>(
     `selectors/owners?${new URLSearchParams({ company_id: basis.company_id, ...(basis.site_id ? { site_id: basis.site_id } : {}), purpose: "Ticket" })}`,
   );
-  const completeActivity = basis.status === "NeedsInformation" && basis.clarification_activity?.can_complete;
-  const set = (key: keyof typeof v, value: string) => setV((old) => ({ ...old, [key]: value }));
+  const completeActivity =
+    basis.status === "NeedsInformation" &&
+    basis.clarification_activity?.can_complete;
+  const set = (key: keyof typeof v, value: string) =>
+    setV((old) => ({ ...old, [key]: value }));
   const cancel = () => {
     if (cmd.busy || (cmd.error as Failure | null)?.retryable) return;
     if (dirty) setDiscard(true);
@@ -274,7 +312,9 @@ function TriageForm({
     if (result) onSaved();
   }
   const conflict = (cmd.error as Failure | null)?.code === "VersionConflict";
-  const current = useResource<Envelope<Intake>>(reviewing ? `service/tickets/${t.id}` : null),
+  const current = useResource<Envelope<Intake>>(
+      reviewing ? `service/tickets/${t.id}` : null,
+    ),
     latest = current.data?.items[0];
   return (
     <form
@@ -296,7 +336,11 @@ function TriageForm({
           ).filter((el) => el.getClientRects().length > 0);
           const first = controls[0],
             last = controls.at(-1);
-          if (event.shiftKey && (document.activeElement === first || document.activeElement === heading.current)) {
+          if (
+            event.shiftKey &&
+            (document.activeElement === first ||
+              document.activeElement === heading.current)
+          ) {
             event.preventDefault();
             last?.focus();
           } else if (!event.shiftKey && document.activeElement === last) {
@@ -305,7 +349,9 @@ function TriageForm({
           }
         }
       }}
-      data-save-uncertain={!!(cmd.error as Failure | null)?.retryable || undefined}
+      data-save-uncertain={
+        !!(cmd.error as Failure | null)?.retryable || undefined
+      }
       onSubmit={submit}
       noValidate
     >
@@ -315,22 +361,35 @@ function TriageForm({
             Complete triage
           </h2>
           <span className="sv-tag">{stageLabel(basis.status)} → Triaged</span>
-          <Button className="sv-phone-close" variant="quiet" aria-label="Close triage" onClick={cancel}>
+          <Button
+            className="sv-phone-close"
+            variant="quiet"
+            aria-label="Close triage"
+            onClick={cancel}
+          >
             <ProductIcon name="close" />
           </Button>
         </div>
         <p className="sv-phone-intro">
-          {t.display_number} · Nothing moves until you save. A newer revision refuses the save and keeps your entries.
+          {t.display_number} · Nothing moves until you save. A newer revision
+          refuses the save and keeps your entries.
         </p>
         <ValidationFields error={failure}>
           <ErrorNotice error={failure} />
           {conflict && (
             <section className="sv-conflict">
-              <p>Not saved. Your entries are kept. Review the current revision before trying again.</p>
+              <p>
+                Not saved. Your entries are kept. Review the current revision
+                before trying again.
+              </p>
               <Button onClick={() => setReviewing(true)}>Review changes</Button>
               {reviewing && (
                 <>
-                  <ReadState loading={current.loading} error={current.error} retry={current.reload} />
+                  <ReadState
+                    loading={current.loading}
+                    error={current.error}
+                    retry={current.reload}
+                  />
                   {latest && !current.loading && !current.error && (
                     <>
                       <dl>
@@ -349,14 +408,18 @@ function TriageForm({
                         <dt>Next action</dt>
                         <dd>{latest.next_action}</dd>
                         <dt>Clarification</dt>
-                        <dd>{latest.clarification_activity?.status ?? "None"}</dd>
+                        <dd>
+                          {latest.clarification_activity?.status ?? "None"}
+                        </dd>
                       </dl>
                       <Button
                         disabled={!latest.can_edit_intake}
                         onClick={() => {
                           setExpected(latest.version);
                           setBasis(latest);
-                          setActivityVersion(latest.clarification_activity?.version);
+                          setActivityVersion(
+                            latest.clarification_activity?.version,
+                          );
                           cmd.clear();
                           setReviewing(false);
                         }}
@@ -369,7 +432,9 @@ function TriageForm({
               )}
             </section>
           )}
-          <fieldset disabled={cmd.busy || !!(cmd.error as Failure | null)?.retryable}>
+          <fieldset
+            disabled={cmd.busy || !!(cmd.error as Failure | null)?.retryable}
+          >
             <section className="sv-form-section">
               <h3>Response decision</h3>
               {basis.status === "NeedsInformation" &&
@@ -395,7 +460,11 @@ function TriageForm({
                   options={owners.data?.items ?? []}
                 />
               </div>
-              {field("priority_reason", "Priority reason", "Why this priority. Urgent priority bypasses no control.")}
+              {field(
+                "priority_reason",
+                "Priority reason",
+                "Why this priority. Urgent priority bypasses no control.",
+              )}
               {field(
                 "next_action",
                 "Next action",
@@ -403,24 +472,37 @@ function TriageForm({
               )}
               {field("reason", "Reason for this triage action")}
               {completeActivity && (
-                <p className="sv-note">Saving also completes your linked clarification activity with this outcome.</p>
+                <p className="sv-note">
+                  Saving also completes your linked clarification activity with
+                  this outcome.
+                </p>
               )}
               {basis.status === "NeedsInformation" &&
                 basis.clarification_activity?.status !== "Completed" &&
                 !completeActivity && (
-                  <p className="sv-unknown">The clarification’s current owner must complete it before triage.</p>
+                  <p className="sv-unknown">
+                    The clarification’s current owner must complete it before
+                    triage.
+                  </p>
                 )}
             </section>
           </fieldset>
         </ValidationFields>
-        <ReadState loading={owners.loading} error={owners.error} retry={owners.reload} />
+        <ReadState
+          loading={owners.loading}
+          error={owners.error}
+          retry={owners.reload}
+        />
       </div>
       <footer className="sv-savebar">
         <small>
-          Completing triage moves this request to Triaged (revision {expected + 1}). It authorises no work and books no
-          visit.
+          Completing triage moves this request to Triaged (revision{" "}
+          {expected + 1}). It authorises no work and books no visit.
         </small>
-        <Button onClick={cancel} disabled={cmd.busy || !!(cmd.error as Failure | null)?.retryable}>
+        <Button
+          onClick={cancel}
+          disabled={cmd.busy || !!(cmd.error as Failure | null)?.retryable}
+        >
           Cancel
         </Button>
         <Button
@@ -440,7 +522,10 @@ function TriageForm({
         </Button>
       </footer>
       {discard && (
-        <ServiceDialog title="Discard triage entries?" onClose={() => setDiscard(false)}>
+        <ServiceDialog
+          title="Discard triage entries?"
+          onClose={() => setDiscard(false)}
+        >
           <p>Your saved request is unchanged.</p>
           <footer>
             <Button onClick={() => setDiscard(false)}>Keep editing</Button>
@@ -453,23 +538,48 @@ function TriageForm({
     </form>
   );
 }
-function StatementForm({ t, onSaved, onCancel }: { t: Intake; onSaved: () => void; onCancel: () => void }) {
+export type TicketStatementDraft = {
+  body: string;
+  source_label: string;
+  occurred_at: string;
+  channel: string;
+  reason: string;
+};
+function StatementForm({
+  t,
+  onSaved,
+  onCancel,
+  initial,
+}: {
+  t: Intake;
+  onSaved: () => void;
+  onCancel: () => void;
+  initial?: TicketStatementDraft;
+}) {
   const cmd = useCommand(),
     [id] = useState(() => crypto.randomUUID()),
-    [body, setBody] = useState(""),
-    [source, setSource] = useState(""),
-    [when, setWhen] = useState(() => new Date().toISOString()),
-    [channel, setChannel] = useState(t.channel),
-    [reason, setReason] = useState(""),
+    [body, setBody] = useState(initial?.body ?? ""),
+    [source, setSource] = useState(initial?.source_label ?? ""),
+    [when, setWhen] = useState(
+      initial?.occurred_at ?? new Date().toISOString(),
+    ),
+    [channel, setChannel] = useState(initial?.channel ?? t.channel),
+    [reason, setReason] = useState(initial?.reason ?? ""),
     [expected, setExpected] = useState(t.version),
     [comparing, setComparing] = useState(false);
-  const current = useResource<Envelope<Intake>>(comparing ? `service/tickets/${t.id}` : null),
+  const current = useResource<Envelope<Intake>>(
+      comparing ? `service/tickets/${t.id}` : null,
+    ),
     latest = current.data?.items[0];
   const conflict = (cmd.error as Failure | null)?.code === "VersionConflict",
     uncertain = !!(cmd.error as Failure | null)?.retryable;
   const cancel = () => {
     if (cmd.busy || uncertain) return;
-    if ((body || source || reason) && !window.confirm("Discard this unsaved customer statement?")) return;
+    if (
+      (body || source || reason) &&
+      !window.confirm("Discard this unsaved customer statement?")
+    )
+      return;
     onCancel();
   };
   useUnsavedChanges(!!body || !!source || !!reason, cmd.busy);
@@ -494,22 +604,30 @@ function StatementForm({ t, onSaved, onCancel }: { t: Intake; onSaved: () => voi
     >
       <div className="sv-form-scroll">
         <p>
-          Keep the customer’s words as reported symptoms. This does not change the priority, request owner or stage.
+          Keep the customer’s words as reported symptoms. This does not change
+          the priority, request owner or stage.
         </p>
         <ValidationFields error={cmd.error}>
           <ErrorNotice error={cmd.error} />
           {conflict && (
             <div className="sv-conflict">
-              <p>Your statement is kept. Review the current request before recording it against a newer revision.</p>
+              <p>
+                Your statement is kept. Review the current request before
+                recording it against a newer revision.
+              </p>
               <Button onClick={() => setComparing(true)}>Review changes</Button>
               {comparing && (
                 <>
-                  <ReadState loading={current.loading} error={current.error} retry={current.reload} />
+                  <ReadState
+                    loading={current.loading}
+                    error={current.error}
+                    retry={current.reload}
+                  />
                   {latest && !current.loading && !current.error && (
                     <>
                       <p>
-                        Revision {latest.version} · {stageLabel(latest.status)} · {latest.priority} ·{" "}
-                        {latest.owner_name}
+                        Revision {latest.version} · {stageLabel(latest.status)}{" "}
+                        · {latest.priority} · {latest.owner_name}
                       </p>
                       <Button
                         disabled={!latest.can_record_statement}
@@ -545,13 +663,24 @@ function StatementForm({ t, onSaved, onCancel }: { t: Intake; onSaved: () => voi
               required
               maxLength={200}
             />
-            <LocalDateTimeField name="occurred_at" label="When was it said?" value={when} onChange={setWhen} />
+            <LocalDateTimeField
+              name="occurred_at"
+              label="When was it said?"
+              value={when}
+              onChange={setWhen}
+            />
             <EnumField
               name="channel"
               label="Channel"
               value={channel}
               onChange={setChannel}
-              values={["Phone", "Email", "Manual", "PlannedMaintenance", "Other"]}
+              values={[
+                "Phone",
+                "Email",
+                "Manual",
+                "PlannedMaintenance",
+                "Other",
+              ]}
             />
             <Field
               name="reason"
@@ -568,14 +697,25 @@ function StatementForm({ t, onSaved, onCancel }: { t: Intake; onSaved: () => voi
         <Button onClick={cancel} disabled={cmd.busy || uncertain}>
           Cancel
         </Button>
-        <Button type="submit" variant="primary" busy={cmd.busy} disabled={conflict || comparing}>
+        <Button
+          type="submit"
+          variant="primary"
+          busy={cmd.busy}
+          disabled={conflict || comparing}
+        >
           Record statement
         </Button>
       </footer>
     </form>
   );
 }
-function LinkedWork({ order, active }: { order: Intake["work_orders"][number]; active: boolean }) {
+function LinkedWork({
+  order,
+  active,
+}: {
+  order: Intake["work_orders"][number];
+  active: boolean;
+}) {
   const r = useResource<
       Envelope<{
         summary?: string;
@@ -593,7 +733,10 @@ function LinkedWork({ order, active }: { order: Intake["work_orders"][number]; a
         </h2>
         <span className="sv-tag">{order.status}</span>
       </header>
-      <p>Work orders own scope, authorisation, coverage and visits. This request keeps its own stage.</p>
+      <p>
+        Work orders own scope, authorisation, coverage and visits. This request
+        keeps its own stage.
+      </p>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {w && !r.error && !r.loading && (
         <>
@@ -612,12 +755,16 @@ function LinkedWork({ order, active }: { order: Intake["work_orders"][number]; a
                 <small key={i}>{b.message}</small>
               ))}
             </div>
-            <Link href={`/service/work-orders/${order.id}`}>Open work order</Link>
+            <Link href={`/service/work-orders/${order.id}`}>
+              Open work order
+            </Link>
           </div>
           <div className="sv-decision-row">
             <ProductIcon name="calendar" />
             <div>
-              <strong>Visits: {w.visits.length ? w.visits.length : "none proposed"}</strong>
+              <strong>
+                Visits: {w.visits.length ? w.visits.length : "none proposed"}
+              </strong>
               {w.visits.map((v) => (
                 <small key={v.id}>
                   {v.display_number} · {v.status}
@@ -633,7 +780,9 @@ function LinkedWork({ order, active }: { order: Intake["work_orders"][number]; a
         <div>
           <section>
             <strong>Request</strong>
-            <p>Service requests · the request owner keeps the customer informed.</p>
+            <p>
+              Service requests · the request owner keeps the customer informed.
+            </p>
           </section>
         </div>
         <div>
@@ -645,28 +794,49 @@ function LinkedWork({ order, active }: { order: Intake["work_orders"][number]; a
         <div>
           <section>
             <strong>Visits</strong>
-            <p>Schedule · bookings and crew. Parts readiness is assessed through the work order.</p>
+            <p>
+              Schedule · bookings and crew. Parts readiness is assessed through
+              the work order.
+            </p>
           </section>
         </div>
       </div>
     </section>
   );
 }
-function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => void; snapshot?: boolean }) {
+function RecordBody({
+  t,
+  reload,
+  snapshot = false,
+}: {
+  t: Intake;
+  reload: () => void;
+  snapshot?: boolean;
+}) {
   const params = useSearchParams(),
     router = useRouter();
   const sequence = (params.get("sequence") ?? "")
       .split(",")
-      .filter((id) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))
+      .filter((id) =>
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          id,
+        ),
+      )
       .slice(0, 25),
     position = sequence.indexOf(t.id);
   const go = (offset: number) =>
-    router.push(`/service/tickets/${sequence[position + offset]}?sequence=${sequence.join(",")}`);
+    router.push(
+      `/service/tickets/${sequence[position + offset]}?sequence=${sequence.join(",")}`,
+    );
   usePublishRecordIdentity(snapshot ? null : t.display_number, t.summary);
   const [tab, setTab] = useState("triage"),
-    [mode, setMode] = useState<"triage" | "details" | "information" | "statement" | null>(null);
+    [mode, setMode] = useState<
+      "triage" | "details" | "information" | "statement" | null
+    >(null);
   const statements = useResource<Awaited<ReturnType<typeof ticketStatements>>>(
-    tab === "updates" || tab === "reported" ? `service/tickets/${t.id}/statements` : null,
+    tab === "updates" || tab === "reported"
+      ? `service/tickets/${t.id}/statements`
+      : null,
   );
   const saved = () => {
     setMode(null);
@@ -700,7 +870,10 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
         },
   );
   const a = t.clarification_activity,
-    overdue = !!a?.due_at && new Date(a.due_at) < new Date() && ["Open", "InProgress"].includes(a.status);
+    overdue =
+      !!a?.due_at &&
+      new Date(a.due_at) < new Date() &&
+      ["Open", "InProgress"].includes(a.status);
   const checks = [
     { name: "Site identified", pass: !!t.site_id, value: label(t.site) },
     {
@@ -722,20 +895,32 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
       name: "Clarification answered",
       pass: t.status !== "NeedsInformation" || a?.status === "Completed",
       value:
-        t.status !== "NeedsInformation" ? "No open clarification" : (a?.outcome ?? "The customer has not answered"),
+        t.status !== "NeedsInformation"
+          ? "No open clarification"
+          : (a?.outcome ?? "The customer has not answered"),
     },
   ];
   const actions = (
     <>
-      <Button onClick={() => setMode("details")} disabled={!t.can_edit_intake || mode === "triage"}>
+      <Button
+        onClick={() => setMode("details")}
+        disabled={!t.can_edit_intake || mode === "triage"}
+      >
         Update details
       </Button>
       {t.status === "Triaged" && t.work_orders[0] ? (
-        <ButtonLink variant="primary" href={`/service/work-orders/${t.work_orders[0].id}`}>
+        <ButtonLink
+          variant="primary"
+          href={`/service/work-orders/${t.work_orders[0].id}`}
+        >
           Open work order
         </ButtonLink>
       ) : (
-        <Button variant="primary" onClick={() => setMode("triage")} disabled={!t.can_edit_intake || mode === "triage"}>
+        <Button
+          variant="primary"
+          onClick={() => setMode("triage")}
+          disabled={!t.can_edit_intake || mode === "triage"}
+        >
           Complete triage
         </Button>
       )}
@@ -749,15 +934,27 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
           {position >= 0 && (
             <span>
               {position + 1} of {sequence.length}{" "}
-              <Button aria-label="Previous request" disabled={position === 0} onClick={() => go(-1)}>
+              <Button
+                aria-label="Previous request"
+                disabled={position === 0}
+                onClick={() => go(-1)}
+              >
                 ↑
               </Button>
-              <Button aria-label="Next request" disabled={position === sequence.length - 1} onClick={() => go(1)}>
+              <Button
+                aria-label="Next request"
+                disabled={position === sequence.length - 1}
+                onClick={() => go(1)}
+              >
                 ↓
               </Button>
             </span>
           )}
-          {snapshot && <ButtonLink href={`/service/tickets/${t.id}`}>Open record</ButtonLink>}
+          {snapshot && (
+            <ButtonLink href={`/service/tickets/${t.id}`}>
+              Open record
+            </ButtonLink>
+          )}
         </div>
         <div className="sv-record-title">
           <h1>{t.summary}</h1>
@@ -766,18 +963,25 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
             {actions}
             <details>
               <summary aria-label="More request actions">…</summary>
-              <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
+              <Button
+                onClick={() => setMode("statement")}
+                disabled={!t.can_record_statement || mode === "triage"}
+              >
                 Record customer statement
               </Button>
-              <Button onClick={() => setMode("information")} disabled={!t.can_edit || mode === "triage"}>
+              <Button
+                onClick={() => setMode("information")}
+                disabled={!t.can_edit || mode === "triage"}
+              >
                 Request information
               </Button>
             </details>
           </div>
         </div>
         <p>
-          {t.display_number} · {t.owner_name} · Request owner · Received {stamp(t.received_at)} by{" "}
-          {channelLabel(t.channel).toLowerCase()} · revision {t.version}
+          {t.display_number} · {t.owner_name} · Request owner · Received{" "}
+          {stamp(t.received_at)} by {channelLabel(t.channel).toLowerCase()} ·
+          revision {t.version}
         </p>
       </header>
       <div className="sv-phone-status">
@@ -836,7 +1040,9 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                 <section className="sv-decision">
                   <header>
                     <h2>
-                      <ProductIcon name={t.status === "Triaged" ? "check" : "warning"} />
+                      <ProductIcon
+                        name={t.status === "Triaged" ? "check" : "warning"}
+                      />
                       {stageLabel(t.status)}
                     </h2>
                     {overdue && <span className="sv-tag">1 overdue</span>}
@@ -852,9 +1058,15 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                     <div className="sv-decision-row">
                       <ProductIcon name="warning" />
                       <div>
-                        <strong>{overdue ? "Clarification overdue" : "Owned clarification"}</strong>
+                        <strong>
+                          {overdue
+                            ? "Clarification overdue"
+                            : "Owned clarification"}
+                        </strong>
                         <small>
-                          {a.owner_name} · {a.due_at ? stamp(a.due_at) : "Due time needed"} · {a.status}
+                          {a.owner_name} ·{" "}
+                          {a.due_at ? stamp(a.due_at) : "Due time needed"} ·{" "}
+                          {a.status}
                         </small>
                       </div>
                       <Link href={`/work/${a.id}`}>Open</Link>
@@ -869,7 +1081,7 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                       </div>
                       <Button
                         variant="quiet"
-                        disabled={!t.can_edit_intake || mode === "triage"}
+                        disabled={!t.can_edit_intake}
                         onClick={() => setMode("triage")}
                       >
                         Answer
@@ -877,13 +1089,16 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                     </div>
                   )}
                   {t.clarification_unavailable && (
-                    <p className="sv-unknown">The clarification is outside your activity access.</p>
+                    <p className="sv-unknown">
+                      The clarification is outside your activity access.
+                    </p>
                   )}
                 </section>
                 <h2 className="sv-check-title">
                   Triage checks{" "}
                   <small>
-                    {checks.filter((c) => c.pass).length} of {checks.length} complete
+                    {checks.filter((c) => c.pass).length} of {checks.length}{" "}
+                    complete
                   </small>
                 </h2>
                 <div className="sv-checks">
@@ -893,7 +1108,9 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                       <section>
                         <strong>
                           {c.name}{" "}
-                          <span className={c.pass ? "sv-pass" : "sv-unknown"}>{c.pass ? "Pass" : "Unknown"}</span>
+                          <span className={c.pass ? "sv-pass" : "sv-unknown"}>
+                            {c.pass ? "Pass" : "Unknown"}
+                          </span>
                         </strong>
                         <p>{c.value}</p>
                       </section>
@@ -902,7 +1119,13 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                 </div>
                 {t.triage_blockers
                   .filter(
-                    (b) => !["site_id", "impact", "priority_reason", "clarification_activity_id"].includes(b.field),
+                    (b) =>
+                      ![
+                        "site_id",
+                        "impact",
+                        "priority_reason",
+                        "clarification_activity_id",
+                      ].includes(b.field),
                   )
                   .map((b) => (
                     <p className="sv-unknown" key={b.field}>
@@ -910,7 +1133,8 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                     </p>
                   ))}
                 <p className="sv-note">
-                  Triage is not authorisation. Work, coverage and visits are decided on the work order.
+                  Triage is not authorisation. Work, coverage and visits are
+                  decided on the work order.
                 </p>
               </RecordPanel>
               <RecordPanel id="sv-record" tab="reported" value={tab}>
@@ -919,7 +1143,10 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                 <p className="sv-narrative">{t.symptom}</p>
                 <h3>Impact and backup</h3>
                 <p className="sv-narrative">{t.impact ?? "Not recorded"}</p>
-                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
+                <Button
+                  onClick={() => setMode("statement")}
+                  disabled={!t.can_record_statement}
+                >
                   Record customer statement
                 </Button>
               </RecordPanel>
@@ -929,40 +1156,61 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
                   <LinkedWork key={w.id} order={w} active={tab === "linked"} />
                 ))}
                 {!t.work_orders.length && <p>No visible work order linked.</p>}
-                <p className="sv-note">A linked work order has its own readiness and authorisation checks.</p>
+                <p className="sv-note">
+                  A linked work order has its own readiness and authorisation
+                  checks.
+                </p>
               </RecordPanel>
               <RecordPanel id="sv-record" tab="updates" value={tab}>
                 <h2>Customer statements</h2>
-                <Button onClick={() => setMode("statement")} disabled={!t.can_record_statement || mode === "triage"}>
+                <Button
+                  onClick={() => setMode("statement")}
+                  disabled={!t.can_record_statement}
+                >
                   Record customer statement
                 </Button>
-                <ReadState loading={statements.loading} error={statements.error} retry={statements.reload} />
-                {!statements.loading && !statements.error && statements.data && (
-                  <>
-                    {statements.data.items.map((s) => (
-                      <article className="sv-statement" key={s.id}>
-                        <h3>
-                          {s.source_label} <span className="sv-tag">Reported symptom</span>
-                        </h3>
-                        <p className="sv-narrative">{s.body}</p>
-                        <small>
-                          {stamp(s.occurred_at)} · {channelLabel(s.channel)} · recorded by {s.recorded_by_name} ·
-                          revision {s.ticket_version}
-                        </small>
-                      </article>
-                    ))}
-                    {!statements.data.items.length && <p>No customer statements recorded.</p>}
-                    {statements.data.partial && <p>Showing the latest 100 statements.</p>}
-                  </>
-                )}
+                <ReadState
+                  loading={statements.loading}
+                  error={statements.error}
+                  retry={statements.reload}
+                />
+                {!statements.loading &&
+                  !statements.error &&
+                  statements.data && (
+                    <>
+                      {statements.data.items.map((s) => (
+                        <article className="sv-statement" key={s.id}>
+                          <h3>
+                            {s.source_label}{" "}
+                            <span className="sv-tag">Reported symptom</span>
+                          </h3>
+                          <p className="sv-narrative">{s.body}</p>
+                          <small>
+                            {stamp(s.occurred_at)} · {channelLabel(s.channel)} ·
+                            recorded by {s.recorded_by_name} · revision{" "}
+                            {s.ticket_version}
+                          </small>
+                        </article>
+                      ))}
+                      {!statements.data.items.length && (
+                        <p>No customer statements recorded.</p>
+                      )}
+                      {statements.data.partial && (
+                        <p>Showing the latest 100 statements.</p>
+                      )}
+                    </>
+                  )}
               </RecordPanel>
               <RecordPanel id="sv-record" tab="history" value={tab}>
                 <h2>History</h2>
                 {t.history.map((e) => (
                   <article className="sv-statement" key={e.id}>
-                    <strong>{e.kind.replace(/([a-z])([A-Z])/g, "$1 $2")}</strong>
+                    <strong>
+                      {e.kind.replace(/([a-z])([A-Z])/g, "$1 $2")}
+                    </strong>
                     <p>
-                      {e.actor_name} · {stamp(e.occurred_at)} · revision {e.record_version}
+                      {e.actor_name} · {stamp(e.occurred_at)} · revision{" "}
+                      {e.record_version}
                     </p>
                   </article>
                 ))}
@@ -982,7 +1230,8 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
           >
             …
           </Button>
-          {t.can_edit_intake || (t.status === "Triaged" && t.work_orders.length > 0) ? (
+          {t.can_edit_intake ||
+          (t.status === "Triaged" && t.work_orders.length > 0) ? (
             actions
           ) : (
             <small>
@@ -995,11 +1244,15 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
       )}
       {!t.can_edit_intake && t.status !== "Triaged" && (
         <p className="sv-view-only">
-          View only. Request changes from someone with service request edit permission for this site.
+          View only. Request changes from someone with service request edit
+          permission for this site.
         </p>
       )}
       {mode === "statement" && (
-        <ServiceDialog title="Record customer statement" onClose={() => setMode(null)}>
+        <ServiceDialog
+          title="Record customer statement"
+          onClose={() => setMode(null)}
+        >
           <StatementForm t={t} onSaved={saved} onCancel={() => setMode(null)} />
         </ServiceDialog>
       )}
@@ -1009,21 +1262,46 @@ function RecordBody({ t, reload, snapshot = false }: { t: Intake; reload: () => 
         </ServiceDialog>
       )}
       {mode === "information" && (
-        <ServiceDialog title="Request information" onClose={() => setMode(null)}>
+        <ServiceDialog
+          title="Request information"
+          onClose={() => setMode(null)}
+        >
           <TriageActions ticket={t} target="NeedsInformation" reload={saved} />
         </ServiceDialog>
       )}
     </>
   );
 }
-function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
+function SnapshotBody({
+  t,
+  reload,
+  statementDraft,
+  onStatementSaved,
+  onStatementCancelled,
+}: {
+  t: Intake;
+  reload: () => void;
+  statementDraft?: TicketStatementDraft;
+  onStatementSaved?: () => void;
+  onStatementCancelled?: () => void;
+}) {
   const [tab, setTab] = useState("triage"),
-    [editing, setEditing] = useState<"triage" | "statement" | "information" | null>(null);
+    [editing, setEditing] = useState<
+      "triage" | "statement" | "information" | null
+    >(statementDraft ? "statement" : null);
   const saved = () => {
     setEditing(null);
     reload();
   };
-  if (editing === "statement") return <StatementForm t={t} onSaved={saved} onCancel={() => setEditing(null)} />;
+  if (editing === "statement")
+    return (
+      <StatementForm
+        t={t}
+        initial={statementDraft}
+        onSaved={onStatementSaved ?? saved}
+        onCancel={onStatementCancelled ?? (() => setEditing(null))}
+      />
+    );
   if (editing === "information")
     return (
       <>
@@ -1049,7 +1327,8 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
         <div className="sv-form-scroll">
           <h2>{t.summary}</h2>
           <small>
-            {t.display_number} · received {stamp(t.received_at)} by {channelLabel(t.channel).toLowerCase()}
+            {t.display_number} · received {stamp(t.received_at)} by{" "}
+            {channelLabel(t.channel).toLowerCase()}
           </small>
           <p>
             <span className="sv-tag">{stageLabel(t.status)}</span>
@@ -1061,7 +1340,9 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
           </p>
           <p>
             {label(t.site)}
-            <small>{t.site_id ? "Site · recorded at intake" : "Site not identified"}</small>
+            <small>
+              {t.site_id ? "Site · recorded at intake" : "Site not identified"}
+            </small>
           </p>
           <p>
             {label(t.asset)}
@@ -1072,11 +1353,16 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
             <small>Request owner</small>
           </p>
           <p>
-            {t.requester ? label(t.requester) : t.requester_description || "Not identified"}
+            {t.requester
+              ? label(t.requester)
+              : t.requester_description || "Not identified"}
             <small>Caller</small>
           </p>
           <h3>Reported issue</h3>
-          <Button disabled={!t.can_record_statement} onClick={() => setEditing("statement")}>
+          <Button
+            disabled={!t.can_record_statement}
+            onClick={() => setEditing("statement")}
+          >
             Record customer statement
           </Button>
           <p className="sv-narrative">
@@ -1091,14 +1377,21 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
             {t.priority}: {t.priority_reason ?? "Priority reason not recorded"}
           </p>
           <p className="sv-snapshot-limit">
-            Triage records the intake assessment. Work authorisation, coverage, readiness and booking are separate later
-            decisions, made on the work order. Urgent priority bypasses no control.
+            Triage records the intake assessment. Work authorisation, coverage,
+            readiness and booking are separate later decisions, made on the work
+            order. Urgent priority bypasses no control.
           </p>
         </div>
         <footer className="sv-savebar">
-          <ButtonLink href={`/service/tickets/${t.id}`}>Open request</ButtonLink>
+          <ButtonLink href={`/service/tickets/${t.id}`}>
+            Open request
+          </ButtonLink>
 
-          <Button variant="primary" disabled={!t.can_edit_intake} onClick={() => setEditing("triage")}>
+          <Button
+            variant="primary"
+            disabled={!t.can_edit_intake}
+            onClick={() => setEditing("triage")}
+          >
             Complete triage
           </Button>
         </footer>
@@ -1118,7 +1411,8 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
           <RecordPanel id="sv-snapshot" tab="triage" value={tab}>
             <p>
               Before triage · {t.triage_blockers.length}{" "}
-              {t.triage_blockers.length === 1 ? "requirement" : "requirements"} open
+              {t.triage_blockers.length === 1 ? "requirement" : "requirements"}{" "}
+              open
             </p>
             {[
               {
@@ -1151,7 +1445,8 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
                 <div>
                   Owned clarification
                   <small>
-                    {t.clarification_activity.summary} · {t.clarification_activity.owner_name}
+                    {t.clarification_activity.summary} ·{" "}
+                    {t.clarification_activity.owner_name}
                   </small>
                 </div>
               </div>
@@ -1168,7 +1463,10 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
           <RecordPanel id="sv-snapshot" tab="linked" value={tab}>
             {t.work_orders.map((w) => (
               <p key={w.id}>
-                <Link href={`/service/work-orders/${w.id}`}>{w.display_number}</Link> · {w.status}
+                <Link href={`/service/work-orders/${w.id}`}>
+                  {w.display_number}
+                </Link>{" "}
+                · {w.status}
               </p>
             ))}
             {!t.work_orders.length && <p>No visible work order linked.</p>}
@@ -1189,7 +1487,19 @@ function SnapshotBody({ t, reload }: { t: Intake; reload: () => void }) {
     </div>
   );
 }
-export function TicketRecord({ id, snapshot = false }: { id: string; snapshot?: boolean }) {
+export function TicketRecord({
+  id,
+  snapshot = false,
+  statementDraft,
+  onStatementSaved,
+  onStatementCancelled,
+}: {
+  id: string;
+  snapshot?: boolean;
+  statementDraft?: TicketStatementDraft;
+  onStatementSaved?: () => void;
+  onStatementCancelled?: () => void;
+}) {
   const r = useResource<Envelope<Intake>>(`service/tickets/${id}`),
     t = r.data?.items[0];
   return (
@@ -1204,7 +1514,14 @@ export function TicketRecord({ id, snapshot = false }: { id: string; snapshot?: 
         !r.loading &&
         !r.error &&
         (snapshot ? (
-          <SnapshotBody key={t.id} t={t} reload={r.reload} />
+          <SnapshotBody
+            key={t.id}
+            t={t}
+            reload={r.reload}
+            statementDraft={statementDraft}
+            onStatementSaved={onStatementSaved}
+            onStatementCancelled={onStatementCancelled}
+          />
         ) : (
           <RecordBody key={t.id} t={t} reload={r.reload} />
         ))}

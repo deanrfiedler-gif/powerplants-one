@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import type { RegisterItem } from "../../src/service/ticket-register-view";
-const uuid = (n: number) => `40000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+const uuid = (n: number) =>
+  `40000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const actor = "30000000-0000-4000-8000-000000000001",
   company = "20000000-0000-4000-8000-000000000001",
   site = "70000000-0000-4000-8000-000000000001";
@@ -23,7 +24,11 @@ const items: RegisterItem[] = titles.map((summary, i) => ({
   id: uuid(97 - i),
   display_number: `SYN-PPO-TKT-${String(97 - i).padStart(6, "0")}`,
   summary,
-  status: [0, 2, 4].includes(i) ? "New" : [1, 3, 5].includes(i) ? "NeedsInformation" : "Triaged",
+  status: [0, 2, 4].includes(i)
+    ? "New"
+    : [1, 3, 5].includes(i)
+      ? "NeedsInformation"
+      : "Triaged",
   priority: i === 0 ? "Urgent" : [1, 2, 6].includes(i) ? "High" : "Normal",
   version: 3,
   received_at: now,
@@ -124,7 +129,8 @@ const record = () => ({
   triage_blockers: [
     {
       field: "clarification_activity_id",
-      message: "Complete the owned clarification activity with an outcome before triage.",
+      message:
+        "Complete the owned clarification activity with an outcome before triage.",
     },
   ],
 });
@@ -134,12 +140,31 @@ const envelope = (values: unknown[]) => ({
   observed_at: now,
   completeness: "Complete",
 });
-async function setup(page: Page, origin: string) {
-  const login = await page.request.post(origin + "/api/v1/local-session", {
-    headers: { origin },
-    data: { profile: "coordinator" },
-  });
-  expect(login.status()).toBe(200);
+// Synthetic UI proof; native authentication/command integration remains in intake.spec.ts.
+async function setup(page: Page) {
+  await page.route("**/api/v1/local-session", (r) =>
+    r.fulfill({
+      json: {
+        actor_id: actor,
+        workspace_id: uuid(1),
+        display_name: "SYN Sasha Cole",
+      },
+    }),
+  );
+  await page.route("**/api/v1/shell/context", (r) =>
+    r.fulfill({
+      json: {
+        display_name: "SYN Sasha Cole",
+        preference_scope: "sv-fixture",
+        actions: [],
+        navigation: ["tickets", "orders", "planner", "work", "contacts", "sites", "equipment"],
+        can_preview: false,
+        companies: [{ id: company, name: "SYN Grower Services" }],
+        working_company_id: company,
+        conversations: false,
+      },
+    }),
+  );
   await page.route("**/api/v1/selectors/owners?*", (r) =>
     r.fulfill({
       json: envelope([{ id: actor, display_name: "SYN Sasha Cole" }]),
@@ -161,39 +186,60 @@ async function setup(page: Page, origin: string) {
       },
     }),
   );
-  await page.route("**/api/v1/service/tickets?*", (r) => r.fulfill({ json: envelope(items) }));
-  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) => r.fulfill({ json: envelope([record()]) }));
-  await page.route("**/api/v1/service/tickets/*/statements", (r) => r.fulfill({ json: { items: [], partial: false } }));
+  await page.route("**/api/v1/service/tickets?*", (r) =>
+    r.fulfill({ json: envelope(items) }),
+  );
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
+    r.fulfill({ json: envelope([record()]) }),
+  );
+  await page.route("**/api/v1/service/tickets/*/statements", (r) =>
+    r.fulfill({ json: { items: [], partial: false } }),
+  );
 }
 async function fits(page: Page) {
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
 }
 for (const width of [1440, 1024, 390, 320])
   test(`SV-01 accepted register at ${width}px: list, named controls and no page overflow`, async ({
     page,
-    baseURL,
   }, info) => {
     await page.setViewportSize({ width, height: width > 780 ? 900 : 844 });
-    await setup(page, baseURL!);
+    await setup(page);
     await page.goto("/service/tickets");
-    await expect(page.getByText(titles[0], { exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByText(titles[0], { exact: true }).first(),
+    ).toBeVisible();
     await fits(page);
+    await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
     if (width > 780) {
       await expect(page.getByRole("table")).toBeVisible();
-      await page.getByLabel(`Select ${items[0].display_number}`, { exact: true }).check();
-      await expect(page.getByRole("link", { name: "Open in sequence" })).toBeVisible();
-      await expect(page.getByRole("button", { name: "Export list" })).toBeVisible();
+      await page
+        .getByLabel(`Select ${items[0].display_number}`, { exact: true })
+        .check();
+      await expect(
+        page.getByRole("link", { name: "Open in sequence" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Export list" }),
+      ).toBeVisible();
     } else {
       await expect(page.locator(".sr-phone-row")).toHaveCount(12);
       await expect(
-        page.getByRole("link", { name: "Log a request", exact: true }).filter({ visible: true }),
+        page
+          .getByRole("link", { name: "Log a request", exact: true })
+          .filter({ visible: true }),
       ).toHaveCount(1);
     }
-    await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
   });
-test("SV-01 Board and large snapshot retain three native states", async ({ page, baseURL }, info) => {
+test("SV-01 Board and large snapshot retain three native states", async ({
+  page,
+}, info) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await setup(page, baseURL!);
+  await setup(page);
   await page.goto("/service/tickets?view=board");
   await expect(page.locator("[data-lane]")).toHaveCount(3);
   await page.screenshot({ path: info.outputPath("board.png") });
@@ -204,18 +250,28 @@ test("SV-01 Board and large snapshot retain three native states", async ({ page,
       exact: true,
     })
     .click();
-  await expect(page.getByRole("dialog", { name: "Request snapshot" })).toBeVisible();
-  await expect(page.getByRole("dialog").getByText("Reported issue", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("dialog", { name: "Request snapshot" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("dialog").getByText("Reported issue", { exact: true }),
+  ).toBeVisible();
   await page.screenshot({ path: info.outputPath("snapshot.png") });
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
-test("SV-01 no matches, failed read and loading never present stale rows", async ({ page, baseURL }, info) => {
+test("SV-01 no matches, failed read and loading never present stale rows", async ({
+  page,
+}, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await setup(page, baseURL!);
-  await page.route("**/api/v1/service/tickets?*", (r) => r.fulfill({ json: envelope([]) }));
+  await setup(page);
+  await page.route("**/api/v1/service/tickets?*", (r) =>
+    r.fulfill({ json: envelope([]) }),
+  );
   await page.goto("/service/tickets?q=unknown");
-  await expect(page.getByRole("heading", { name: "No requests match these filters" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "No requests match these filters" }),
+  ).toBeVisible();
   await page.screenshot({ path: info.outputPath("no-matches.png") });
   await page.route("**/api/v1/service/tickets?*", (r) =>
     r.fulfill({
@@ -242,10 +298,9 @@ test("SV-01 no matches, failed read and loading never present stale rows", async
 });
 test("SV-02 phone triage keeps entries on validation and newer revision, then submits one reviewed command", async ({
   page,
-  baseURL,
 }, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await setup(page, baseURL!);
+  await setup(page);
   const sent: Record<string, unknown>[] = [];
   await page.route("**/api/v1/service/tickets/*/triage", async (r) => {
     sent.push(r.request().postDataJSON());
@@ -258,17 +313,39 @@ test("SV-02 phone triage keeps entries on validation and newer revision, then su
     });
   });
   await page.goto("/service/tickets/" + items[1].id);
-  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
-  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await expect(
+    page.getByRole("tab", { name: "Triage", exact: true }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("record-phone.png") });
+  await page
+    .getByRole("button", { name: "Complete triage", exact: true })
+    .filter({ visible: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Complete triage", exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Complete triage", exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole("alert")).toBeVisible();
   await page.screenshot({ path: info.outputPath("triage-validation.png") });
-  await page.getByLabel("Clarification outcome", { exact: true }).fill("SYN caller confirmed the sensor identity");
-  await page.getByLabel("Reason for this triage action", { exact: true }).fill("SYN clarification received");
-  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
-  await expect(page.getByRole("button", { name: "Review changes", exact: true })).toBeVisible();
-  await expect(page.getByLabel("Clarification outcome", { exact: true })).toHaveValue(
-    "SYN caller confirmed the sensor identity",
-  );
+  await page
+    .getByLabel("Clarification outcome", { exact: true })
+    .fill("SYN caller confirmed the sensor identity");
+  await page
+    .getByLabel("Reason for this triage action", { exact: true })
+    .fill("SYN clarification received");
+  await page
+    .getByRole("button", { name: "Complete triage", exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Review changes", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Clarification outcome", { exact: true }),
+  ).toHaveValue("SYN caller confirmed the sensor identity");
   expect(sent).toHaveLength(1);
   expect(sent[0]).toMatchObject({
     expected_version: 3,
@@ -283,12 +360,16 @@ test("SV-02 phone triage keeps entries on validation and newer revision, then su
   await page.screenshot({ path: info.outputPath("triage-refused.png") });
   await fits(page);
 });
-test("SV-02 view-only and permission denied expose no write path", async ({ page, baseURL }, info) => {
+test("SV-02 view-only and permission denied expose no write path", async ({
+  page,
+}, info) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await setup(page, baseURL!);
+  await setup(page);
   await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
     r.fulfill({
-      json: envelope([{ ...record(), can_edit_intake: false, can_record_statement: false }]),
+      json: envelope([
+        { ...record(), can_edit_intake: false, can_record_statement: false },
+      ]),
     }),
   );
   await page.goto("/service/tickets/" + items[1].id);
@@ -299,5 +380,153 @@ test("SV-02 view-only and permission denied expose no write path", async ({ page
   );
   await page.reload();
   await expect(page.getByText(titles[1], { exact: true })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Complete triage", exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Complete triage", exact: true }),
+  ).toHaveCount(0);
+});
+
+test("SV-02 desktop record, inline triage and linked-work boundaries", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await setup(page);
+  await page.goto("/service/tickets/" + items[1].id);
+  await expect(
+    page.getByRole("heading", { name: titles[1], exact: true }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("record-desktop.png") });
+  await page
+    .getByRole("button", { name: "Complete triage", exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(
+    page.getByLabel("Clarification outcome", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("tab", { name: "Linked work (0)" }),
+  ).toBeDisabled();
+  await page.screenshot({ path: info.outputPath("triage-desktop.png") });
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  const order = {
+    id: uuid(900),
+    display_number: "SYN-PPO-WO-000042",
+    status: "Draft",
+  };
+  await page.route("**/api/v1/service/tickets/" + items[1].id, (r) =>
+    r.fulfill({
+      json: envelope([
+        {
+          ...record(),
+          status: "Triaged",
+          version: 4,
+          can_edit_intake: false,
+          work_orders: [order],
+          triage_blockers: [],
+        },
+      ]),
+    }),
+  );
+  await page.route("**/api/v1/service/work-orders/" + order.id, (r) =>
+    r.fulfill({
+      json: envelope([
+        {
+          blockers: [
+            { message: "Coverage decision is still needed" },
+            { message: "Authorisation is still needed" },
+          ],
+          visits: [],
+        },
+      ]),
+    }),
+  );
+  await page.reload();
+  await page.getByRole("tab", { name: "Linked work (1)" }).click();
+  await expect(
+    page.getByText("Authorisation: blocked · 2 items"),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("triaged-linked-work.png") });
+  await fits(page);
+});
+
+test("SV-01 possible duplicate hands caller words to statement capture and preserves the new-request draft", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await setup(page);
+  await page.route("**/api/v1/selectors/companies", (r) =>
+    r.fulfill({
+      json: envelope([{ id: company, display_name: "SYN Grower Services" }]),
+    }),
+  );
+  const location = {
+    id: site,
+    company_id: company,
+    display_name: "SYN Block C Plant Room",
+    parties: [
+      {
+        organisation_id: uuid(600),
+        display_name: "SYN Northbank Farm",
+        role: "Operator",
+        is_current: true,
+      },
+    ],
+  };
+  await page.route("**/api/v1/sites?*", (r) =>
+    r.fulfill({ json: envelope([location]) }),
+  );
+  await page.route("**/api/v1/sites/" + site, (r) =>
+    r.fulfill({ json: envelope([location]) }),
+  );
+  await page.route("**/api/v1/people?*", (r) =>
+    r.fulfill({
+      json: envelope([{ id: uuid(600), display_name: "SYN Ravi Patel" }]),
+    }),
+  );
+  await page.route("**/api/v1/assets?*", (r) =>
+    r.fulfill({
+      json: envelope([
+        { id: uuid(500), description: "Heating loop controller" },
+      ]),
+    }),
+  );
+  await page.route("**/api/v1/service/tickets?*", (r) =>
+    r.fulfill({ json: envelope([items[1]]) }),
+  );
+  await page.goto("/service/tickets/new?site_id=" + site);
+  await page.getByLabel("Caller", { exact: true }).selectOption(uuid(600));
+  await page
+    .getByLabel("Summary", { exact: true })
+    .fill("Heating loop still drifting overnight");
+  await page
+    .getByLabel("What the customer reported", { exact: true })
+    .fill("SYN readings rose overnight; the manual check caught it.");
+  await page.getByLabel("Equipment", { exact: true }).selectOption(uuid(500));
+  await expect(
+    page.getByRole("button", {
+      name: "Add as customer statement",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("create-possible-duplicate.png"),
+  });
+  await page
+    .getByRole("button", { name: "Add as customer statement", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Record customer statement",
+    exact: true,
+  });
+  await expect(
+    dialog.getByLabel("Customer statement", { exact: true }),
+  ).toHaveValue("SYN readings rose overnight; the manual check caught it.");
+  await expect(
+    dialog.getByLabel("Who said this?", { exact: true }),
+  ).toHaveValue("SYN Ravi Patel");
+  page.once("dialog", (d) => d.accept());
+  await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(page.getByLabel("Summary", { exact: true })).toHaveValue(
+    "Heating loop still drifting overnight",
+  );
+  await fits(page);
 });

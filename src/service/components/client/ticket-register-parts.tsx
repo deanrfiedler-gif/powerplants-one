@@ -393,7 +393,7 @@ export const columns: Column[] = [
     key: "stage",
     label: "Stage",
     width: 176,
-    cell: (item) => <Chip>{stageLabel(item.status)}</Chip>,
+    cell: (item) => <Chip tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}>{stageLabel(item.status)}</Chip>,
   },
   {
     key: "attention",
@@ -738,7 +738,7 @@ export function Preview({
           {customerLabel(item)} · {siteLabel(item)}
         </p>
         <div className="sr-chip-row">
-          <Chip>{stageLabel(item.status)}</Chip>
+          <Chip tone={item.status === "NeedsInformation" ? "warning" : item.status === "Triaged" ? "success" : "neutral"}>{stageLabel(item.status)}</Chip>
           <Chip tone={item.priority === "Urgent" ? "danger" : item.priority === "High" ? "warning" : "neutral"}>
             {item.priority} priority
           </Chip>

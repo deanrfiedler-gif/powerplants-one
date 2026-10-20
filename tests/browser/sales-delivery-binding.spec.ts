@@ -249,7 +249,7 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
     .getByLabel("Summary", { exact: true })
     .fill("SYN Won receiving intake");
   await page
-    .getByLabel("Reported symptoms", {
+    .getByLabel("What the customer reported", {
       exact: true,
     })
     .fill("SYN scope needs technical review");
@@ -278,7 +278,7 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
       url.searchParams.get("purpose") === "WorkOrder";
   });
   await page
-    .getByRole("button", { name: "Log request", exact: true })
+    .getByRole("button", { name: "Create request", exact: true })
     .click();
   await expect(page).toHaveURL(/\/service\/work-orders\/new\?.*ticket_id=/);
   const ticket = new URL(page.url()).searchParams.get("ticket_id")!;

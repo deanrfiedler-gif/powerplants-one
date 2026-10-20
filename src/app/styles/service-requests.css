@@ -1054,3 +1054,10 @@
     width: 140px;
   }
 }
+
+#ppo-service-requests .mw-menu {background:var(--surface-hover);}
+#ppo-service-requests .mw-menu section:first-child ul {margin-top:0;}
+#ppo-service-requests .mw-menu li + li {margin-top:2px;}
+#ppo-service-requests .mw-menu li a {gap:12px;}
+#ppo-service-requests .mw-menu .sr-queue-label {flex:1;}
+#ppo-service-requests .mw-menu .product-icon {width:16px;height:16px;color:var(--text-secondary);}

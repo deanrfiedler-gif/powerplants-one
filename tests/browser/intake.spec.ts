@@ -182,12 +182,12 @@ test("SV-01/SV-02 persisted logging, customer statement and atomic owned clarifi
   await expect(page.getByLabel("Site", { exact: true })).toHaveValue(site);
   await page.getByLabel("Summary", { exact: true }).fill(`SYN accepted intake ${info.project.name}`);
   await page.getByLabel("Caller", { exact: true }).selectOption(person);
-  await page.getByLabel("Reported symptoms", { exact: true }).fill("SYN intermittent alarm reported");
+  await page.getByLabel("What the customer reported", { exact: true }).fill("SYN intermittent alarm reported");
   await page.getByLabel("Impact and backup", { exact: true }).fill("Manual monitoring in place");
   await page.getByLabel("Priority reason", { exact: true }).fill("Review while manual monitoring continues");
   await page.getByLabel("Next action", { exact: true }).fill("Confirm the sensor identity");
   await page.getByLabel("Reason for logging", { exact: true }).fill("Capture the synthetic call");
-  await page.getByRole("button", { name: "Log request", exact: true }).click();
+  await page.getByRole("button", { name: "Create request", exact: true }).click();
   await expect(page).toHaveURL(/\/service\/tickets\/[0-9a-f-]{36}$/);
   const id = page.url().split("/").at(-1)!;
   await page.getByRole("tab", { name: "Updates", exact: true }).click();

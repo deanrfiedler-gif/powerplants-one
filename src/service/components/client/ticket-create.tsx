@@ -15,27 +15,53 @@ import {
   type Envelope,
   type Option,
 } from "../../../components/business-ui";
-import { LocalDateTimeField, useCreateDraft } from "../../../components/record-ui";
-import { DeliveryCreation, type SalesCreation } from "../../../components/sales-delivery-creation";
+import {
+  LocalDateTimeField,
+  useCreateDraft,
+} from "../../../components/record-ui";
+import {
+  DeliveryCreation,
+  type SalesCreation,
+} from "../../../components/sales-delivery-creation";
 import { Button, ButtonLink } from "../../../components/ui/button";
+import { stageLabel } from "../../ticket-register-view";
 import type { RegisterItem } from "../../ticket-register-view";
 import { ServiceDialog, TicketRecord } from "./ticket-record";
 export function TicketCreatePage({ siteId }: { siteId?: string }) {
   return (
     <DeliveryCreation kind="Service" intake>
-      {(sales) => <CreateContext siteId={siteId ?? sales?.source.site_id ?? undefined} sales={sales} />}
+      {(sales) => (
+        <CreateContext
+          siteId={siteId ?? sales?.source.site_id ?? undefined}
+          sales={sales}
+        />
+      )}
     </DeliveryCreation>
   );
 }
-function CreateContext({ siteId, sales }: { siteId?: string; sales?: SalesCreation }) {
-  const site = useResource<Envelope<Option & { company_id: string }>>(siteId ? `sites/${siteId}` : null);
+function CreateContext({
+  siteId,
+  sales,
+}: {
+  siteId?: string;
+  sales?: SalesCreation;
+}) {
+  const site = useResource<Envelope<Option & { company_id: string }>>(
+    siteId ? `sites/${siteId}` : null,
+  );
   return (
     <section id="ppo-service-create" data-module-layout="full-bleed">
-      <ReadState loading={site.loading} error={site.error} retry={site.reload} />
+      <ReadState
+        loading={site.loading}
+        error={site.error}
+        retry={site.reload}
+      />
       {(!siteId || (!site.loading && !site.error && site.data)) && (
         <CreateForm
           initialSite={siteId}
-          initialCompany={site.data?.items[0].company_id ?? sales?.source.company_id}
+          initialCompany={
+            site.data?.items[0].company_id ?? sales?.source.company_id
+          }
           sales={sales}
         />
       )}
@@ -55,7 +81,11 @@ function CreateForm({
     router = useRouter(),
     cmd = useCommand(),
     [id] = useState(() => crypto.randomUUID()),
-    [preview, setPreview] = useState<string | null>(null);
+    [preview, setPreview] = useState<{
+      id: string;
+      statement?: boolean;
+    } | null>(null),
+    [feedback, setFeedback] = useState("");
   const [v, setV] = useState({
     company: initialCompany ?? "",
     site: initialSite ?? "",
@@ -73,12 +103,17 @@ function CreateForm({
     next_action: "",
     reason: "",
   });
-  const set = (k: keyof typeof v, value: string) => setV((old) => ({ ...old, [k]: value }));
+  const set = (k: keyof typeof v, value: string) =>
+    setV((old) => ({ ...old, [k]: value }));
   const saved = useCreateDraft(v, cmd.busy, !sales?.blocked);
   const companies = useResource<Envelope<Option>>("selectors/companies"),
-    sites = useResource<Envelope<Option>>(v.company ? `sites?company_id=${v.company}&limit=200` : null),
+    sites = useResource<Envelope<Option>>(
+      v.company ? `sites?company_id=${v.company}&limit=200` : null,
+    ),
     people = useResource<Envelope<Option>>("people?limit=200"),
-    assets = useResource<Envelope<Option>>(v.site ? `assets?site_id=${v.site}&limit=200` : null),
+    assets = useResource<Envelope<Option>>(
+      v.site ? `assets?site_id=${v.site}&limit=200` : null,
+    ),
     owners = useResource<Envelope<Option>>(
       v.company
         ? `selectors/owners?${new URLSearchParams({ company_id: v.company, ...(v.site ? { site_id: v.site } : {}), purpose: "Ticket" })}`
@@ -102,11 +137,13 @@ function CreateForm({
     ).values(),
   ];
   const duplicates = useResource<Envelope<RegisterItem>>(
-    v.site ? `service/tickets?site_id=${v.site}&queue=all_open&limit=20&sort=urgency` : null,
+    v.site
+      ? `service/tickets?site_id=${v.site}&queue=all_open&limit=20&sort=urgency`
+      : null,
   );
-  const matches = (duplicates.loading || duplicates.error ? [] : (duplicates.data?.items ?? [])).filter(
-    (i) => !v.asset || i.asset?.id === v.asset,
-  );
+  const matches = (
+    duplicates.loading || duplicates.error ? [] : (duplicates.data?.items ?? [])
+  ).filter((i) => !v.asset || i.asset?.id === v.asset);
   const field = (
     key: keyof typeof v,
     title: string,
@@ -117,7 +154,14 @@ function CreateForm({
   ) => (
     <Field
       name={key}
-      validationField={({ requester: "requester_id", owner: "triage_owner_id" } as Record<string, string>)[key] ?? key}
+      validationField={
+        (
+          { requester: "requester_id", owner: "triage_owner_id" } as Record<
+            string,
+            string
+          >
+        )[key] ?? key
+      }
       label={title}
       value={v[key]}
       onChange={(value) => set(key, value)}
@@ -148,7 +192,9 @@ function CreateForm({
       next_action: v.next_action,
       reason: v.reason,
     };
-    const result = sales ? await sales.send(fields) : await cmd.send<{ record_id: string }>("service/tickets", fields);
+    const result = sales
+      ? await sales.send(fields)
+      : await cmd.send<{ record_id: string }>("service/tickets", fields);
     if (result) {
       saved();
       if (!sales) router.push(`/service/tickets/${result.record_id}`);
@@ -165,21 +211,32 @@ function CreateForm({
             <fieldset disabled={busy}>
               <section className="sv-form-section">
                 <h2>Caller and customer</h2>
-                <SelectField
-                  name="company_id"
-                  label="Company visibility context"
-                  value={v.company}
-                  options={companies.data?.items ?? []}
-                  required
-                  onChange={(value) =>
-                    setV((old) => ({
-                      ...old,
-                      company: value,
-                      site: "",
-                      asset: "",
-                    }))
-                  }
-                />
+                <details
+                  className="sv-company-context"
+                  open={!v.company || undefined}
+                >
+                  <summary>
+                    Company context
+                    {v.company
+                      ? `: ${companies.data?.items.find((c) => c.id === v.company)?.display_name ?? "Selected"}`
+                      : " — choose to start"}
+                  </summary>{" "}
+                  <SelectField
+                    name="company_id"
+                    label="Company visibility context"
+                    value={v.company}
+                    options={companies.data?.items ?? []}
+                    required
+                    onChange={(value) =>
+                      setV((old) => ({
+                        ...old,
+                        company: value,
+                        site: "",
+                        asset: "",
+                      }))
+                    }
+                  />
+                </details>{" "}
                 <div className="sv-two-fields">
                   <div className="field">
                     <span className="sv-field-label">Customer</span>
@@ -192,7 +249,9 @@ function CreateForm({
                             ? customers[0].display_name
                             : "Not identified — derived from site or requester"}
                     </p>
-                    <small>Company visibility is separate from the customer.</small>
+                    <small>
+                      Company visibility is separate from the customer.
+                    </small>
                   </div>
                   <SelectField
                     name="site_id"
@@ -200,7 +259,9 @@ function CreateForm({
                     value={v.site}
                     options={sites.data?.items ?? []}
                     empty="Not identified — clarify later"
-                    onChange={(value) => setV((old) => ({ ...old, site: value, asset: "" }))}
+                    onChange={(value) =>
+                      setV((old) => ({ ...old, site: value, asset: "" }))
+                    }
                   />
                 </div>
                 <div className="sv-two-fields">
@@ -216,11 +277,22 @@ function CreateForm({
                     name="channel"
                     label="Channel"
                     value={v.channel}
-                    values={["Phone", "Email", "Manual", "PlannedMaintenance", "Other"]}
+                    values={[
+                      "Phone",
+                      "Email",
+                      "Manual",
+                      "PlannedMaintenance",
+                      "Other",
+                    ]}
                     onChange={(value) => set("channel", value)}
                   />
                 </div>
-                {!v.requester && field("requester_description", "Caller description / what needs clarifying", true)}
+                {!v.requester &&
+                  field(
+                    "requester_description",
+                    "Caller description / what needs clarifying",
+                    true,
+                  )}
                 <LocalDateTimeField
                   name="received_at"
                   label="Received"
@@ -229,90 +301,140 @@ function CreateForm({
                 />
               </section>
               <section className="sv-form-section">
-                <h2>Reported issue</h2>
+                <h2>Issue</h2>
                 {field("summary", "Summary", true, false, 200)}
                 {field(
                   "symptom",
-                  "Reported symptoms",
+                  "What the customer reported",
                   true,
                   true,
                   10000,
                   "Use the caller’s words. Record uncertainty explicitly.",
                 )}
-                {field("impact", "Impact and backup", false, true)}
-                {v.site && (
-                  <SelectField
-                    name="asset_id"
-                    label="Equipment"
-                    value={v.asset}
-                    options={assets.data?.items ?? []}
-                    empty="Not recorded"
-                    onChange={(value) => set("asset", value)}
-                  />
-                )}
               </section>
               <section className="sv-form-section">
-                <h2>Ownership and next action</h2>
+                <h2>Location and impact</h2>
                 <div className="sv-two-fields">
+                  {v.site && (
+                    <SelectField
+                      name="asset_id"
+                      label="Equipment"
+                      value={v.asset}
+                      options={assets.data?.items ?? []}
+                      empty="Not recorded"
+                      onChange={(value) => set("asset", value)}
+                    />
+                  )}
+
                   <EnumField
                     name="priority"
-                    label="Priority"
+                    label="Reported priority"
                     value={v.priority}
                     values={["Low", "Normal", "High", "Urgent"]}
                     onChange={(value) => set("priority", value)}
                   />
-                  <SelectField
-                    name="triage_owner_id"
-                    label="Request owner"
-                    value={v.owner}
-                    options={owners.data?.items ?? []}
-                    required
-                    onChange={(value) => set("owner", value)}
-                  />
                 </div>
-                {field("priority_reason", "Priority reason", false, true, 2000, "Urgent priority bypasses no control.")}
+
+                {field("impact", "Impact and backup", false, true)}
+                {field(
+                  "priority_reason",
+                  "Priority reason",
+                  false,
+                  true,
+                  2000,
+                  "Urgent priority bypasses no control.",
+                )}
+              </section>
+              <section className="sv-form-section">
+                <h2>Ownership and next action</h2>{" "}
+                <SelectField
+                  name="triage_owner_id"
+                  label="Request owner"
+                  value={v.owner}
+                  options={owners.data?.items ?? []}
+                  required
+                  onChange={(value) => set("owner", value)}
+                />
                 {field("next_action", "Next action", true, true)}
                 {field("reason", "Reason for logging", true, false, 1000)}
               </section>
             </fieldset>
           </ValidationFields>
-          {[companies, sites, people, assets, owners, siteContext].map((r, i) => (
-            <ReadState key={i} loading={r.loading} error={r.error} retry={r.reload} />
-          ))}
+          {[companies, sites, people, assets, owners, siteContext].map(
+            (r, i) => (
+              <ReadState
+                key={i}
+                loading={r.loading}
+                error={r.error}
+                retry={r.reload}
+              />
+            ),
+          )}
         </div>
         <footer className="sv-savebar">
-          <small>The request starts at New. Logging it authorises no work and books no visit.</small>
+          <small>
+            The request starts at New. Logging it authorises no work and books
+            no visit.
+          </small>
           <ButtonLink href="/service/tickets">Cancel</ButtonLink>
           <Button type="submit" variant="primary" busy={busy}>
-            Log request
+            Create request
           </Button>
         </footer>
       </form>
       <aside className="sv-duplicate">
-        <h2>Check for an existing request</h2>
+        <h2>Check before creating</h2>
         <p>Review open requests at this site before logging another.</p>
+        {feedback && <p role="status">{feedback}</p>}
         {!v.site ? (
           <p>Select a site to check.</p>
         ) : (
           <>
-            <ReadState loading={duplicates.loading} error={duplicates.error} retry={duplicates.reload} />
+            <ReadState
+              loading={duplicates.loading}
+              error={duplicates.error}
+              retry={duplicates.reload}
+            />
             {matches.length > 0 ? (
               <>
                 <div className="sv-duplicate-warning">
-                  <strong>Possible duplicate</strong>
-                  <p>Same site{v.asset ? " and equipment" : ""}. Check whether this is the same issue.</p>
+                  <strong>
+                    {matches.length} open{" "}
+                    {matches.length === 1 ? "request may" : "requests may"} be
+                    the same issue
+                  </strong>
+                  <p>
+                    Same site{v.asset ? " and equipment" : ""}. Check whether
+                    this is the same issue.
+                  </p>
                 </div>
                 {matches.map((item) => (
                   <article key={item.id}>
                     <small>{item.display_number}</small>
                     <h3>{item.summary}</h3>
-                    <span className="sv-tag">{item.status}</span>
+                    <span className="sv-tag">{stageLabel(item.status)}</span>
                     <p>
-                      {item.customer?.display_name ?? "Customer not identified"} · {item.site?.display_name}
+                      {item.customer?.display_name ?? "Customer not identified"}{" "}
+                      · {item.site?.display_name}
                     </p>
-                    <Button onClick={() => setPreview(item.id)}>Open request</Button>
+                    <div className="sv-duplicate-actions">
+                      <Button
+                        onClick={() =>
+                          setPreview({ id: item.id, statement: true })
+                        }
+                      >
+                        Add as customer statement
+                      </Button>
+                      <Button
+                        variant="quiet"
+                        onClick={() => setPreview({ id: item.id })}
+                      >
+                        Open request
+                      </Button>
+                    </div>
                     <p className="sv-note">
-                      If this is the same issue, record the customer’s statement on that request.
+                      If this is the same issue, record the customer’s statement
+                      on that request.
                     </p>
                   </article>
                 ))}
@@ -320,19 +442,55 @@ function CreateForm({
             ) : (
               !duplicates.loading &&
               !duplicates.error && (
-                <p>No matching open requests in the loaded results. This does not prove the issue is new.</p>
+                <p>
+                  No matching open requests in the loaded results. This does not
+                  prove the issue is new.
+                </p>
               )
             )}
             {duplicates.data?.next_cursor && (
-              <p>Only the first 20 open requests are checked. Search the register for more.</p>
+              <p>
+                Only the first 20 open requests are checked. Search the register
+                for more.
+              </p>
             )}
           </>
         )}
         <Link href="/service/tickets">Search all requests</Link>
       </aside>
       {preview && (
-        <ServiceDialog title="Request snapshot" onClose={() => setPreview(null)}>
-          <TicketRecord id={preview} snapshot />
+        <ServiceDialog
+          title={
+            preview.statement ? "Record customer statement" : "Request snapshot"
+          }
+          onClose={() => setPreview(null)}
+        >
+          <TicketRecord
+            key={preview.id + String(preview.statement)}
+            id={preview.id}
+            snapshot
+            statementDraft={
+              preview.statement
+                ? {
+                    body: v.symptom,
+                    source_label:
+                      people.data?.items.find((o) => o.id === v.requester)
+                        ?.display_name ?? v.requester_description,
+                    occurred_at: v.received,
+                    channel: v.channel,
+                    reason: v.reason,
+                  }
+                : undefined
+            }
+            onStatementCancelled={() => setPreview(null)}
+            onStatementSaved={() => {
+              setFeedback(
+                "Customer statement recorded. Your new-request entries are kept; no new request was created.",
+              );
+              setPreview(null);
+              duplicates.reload();
+            }}
+          />
         </ServiceDialog>
       )}
     </div>

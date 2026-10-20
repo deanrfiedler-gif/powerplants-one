@@ -930,3 +930,7 @@
 }
 
 .sv-triage-panel { display:flex;flex:1;min-height:0; }
+
+.sv-record > form {display:flex;flex-direction:column;flex:1;min-height:0;}
+.sv-duplicate-actions {display:flex;flex-wrap:wrap;gap:8px;}
+.sv-company-context summary {font-size:12px;color:var(--text-secondary);cursor:pointer;}

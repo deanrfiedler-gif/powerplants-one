@@ -57,6 +57,7 @@ const queues: {
     short: "Linked work",
   },
 ];
+const queueIcons = {all_open:"list",my_requests:"person",new:"inbox",urgent:"warning",needs_information:"help",overdue_clarifications:"clock",no_work_order:"documents",work_order_linked:"work",triaged:"check"} as const;
 const queueKeys = new Set<string>(queues.map((queue) => queue.key));
 const query = (fields: Record<string, string>) =>
   new URLSearchParams(Object.entries(fields).filter(([, value]) => value)).toString();
@@ -495,7 +496,7 @@ export function TicketRegister() {
         <nav aria-label="Service request queues">
           {["Requests", "Triage", "After triage"].map((heading, index) => (
             <section key={heading}>
-              <h2>{heading}</h2>
+              {index > 0 && <h2>{heading}</h2>}
               <ul>
                 {queues
                   .slice(index === 0 ? 0 : index === 1 ? 2 : 6, index === 0 ? 2 : index === 1 ? 6 : 8)
@@ -511,7 +512,7 @@ export function TicketRegister() {
                           });
                         }}
                       >
-                        <span>{entry.label}</span>
+                        <ProductIcon name={queueIcons[entry.key]}/><span className="sr-queue-label">{entry.label}</span>
                         <span className="mw-badge">{counts.data?.[entry.key] ?? "–"}</span>
                       </Link>
                     </li>
@@ -574,7 +575,7 @@ export function TicketRegister() {
           ))}
         </div>
         <span className="sr-toolbar-count">
-          {list.loading ? "Loading…" : list.error ? "" : `${total ?? items.length} open requests`}
+          {list.loading ? "Loading…" : list.error ? "" : `${total ?? items.length} open requests${list.data ? ` · updated ${new Intl.DateTimeFormat("en-AU", {timeStyle:"short",timeZone:"Australia/Brisbane"}).format(new Date(list.data.observed_at))} AEST` : ""}`}
         </span>
         <button className="secondary sr-icon-button" aria-label="Refresh requests" onClick={reload}>
           <ProductIcon name="changes" />
@@ -671,6 +672,7 @@ export function TicketRegister() {
         <div className="sr-scroll">
           {list.error ? (
             <div className="sr-state">
+              <h2>Could not load service requests</h2>
               <ErrorNotice error={list.error} />
               <p>Nothing was changed. Check the connection and try again.</p>
               <button type="button" className="secondary" onClick={reload}>
@@ -744,7 +746,7 @@ export function TicketRegister() {
         list.data &&
         !list.error &&
         items.length > 0 &&
-        (wide || cursors.length > 0 || !!list.data.next_cursor) && (
+        (cursors.length > 0 || !!list.data.next_cursor) && (
           <footer className="sr-footer">
             <span>
               {total ?? items.length} {queue === "all_open" ? "open" : ""} {total === 1 ? "request" : "requests"}
