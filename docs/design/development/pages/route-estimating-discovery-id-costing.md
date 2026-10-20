@@ -32,11 +32,15 @@ D6: Review and adopt shows the exact revision, successor cost version, changes, 
 
 D7: preserve the proposal if discovery, selection or the saved estimate changes; block adoption until explicit fresh comparison. Incomplete discovery exposes findings and retains saved prices. Adopting freezes edits and dismissal. Uncertain outcome uses existing original-operation recovery, including retry of the same idempotent request when no receipt exists. Do not claim the server saved nothing after a lost response. A legacy option retains its estimate and hands back to the workspace to branch. Lost source authority removes protected cost details. Failed reads offer retry, and a missing comparison blocks adoption.
 
-## Desktop, tablet and phone
+## Desktop
 
 Desktop reference: 1440 px, shared 240 px rail, 380 px costing summary, 94 px context, 52 px tabs, 48 px steps and 24 px content insets. Use ruled sections, compact toolbar and a bounded horizontal semantic table; keep four 112 px total tiles aligned. No internal module container. White/neutral surfaces use shared tokens, and the primary action uses navy.
 
-Tablet reference: 1024 × 768. Hide the side summary behind Summary; retain bounded grid scrolling. Phone: 390 × 844 and 320 px. Use the current shared compact phone header, equal view links, viewed alternative, Pricing controls, cost cards, two compact total rows and fixed Summary / Review and adopt footer. Q4: Edit opens a full-screen, labelled line editor; all fields including source/date remain available. The same editor is used on desktop to preserve native validation. Keep keyboard focus in modal dialogs and return it to the opener; show visible focus and native labelled inputs.
+Tablet reference: 1024 × 768. Hide the side summary behind Summary; retain bounded grid scrolling.
+
+## Mobile
+
+Phone: 390 × 844 and 320 px. Use the current shared compact phone header, equal view links, viewed alternative, Pricing controls, cost cards, two compact total rows and fixed Summary / Review and adopt footer. Q4: Edit opens a full-screen, labelled line editor; all fields including source/date remain available. The same editor is used on desktop to preserve native validation. Keep keyboard focus in modal dialogs and return it to the opener; show visible focus and native labelled inputs.
 
 Reused components: `Button`, `ButtonLink`, `Field`, `SelectField`, `ValidationFields`, `ErrorNotice`, wizard `Icon`/`Tag`/`Row`/`TableScroll`, `ProductIcon` through the existing Font Awesome mapping, `ScopeView`, `FertigationReceivedNotes`, `RecordIdentity`, `usePhoneHeader`, `useCrmResource`, `useCrmCommand`. The page-local modal is composed around native `dialog` focus behaviour. No shared component API, dependency, capability, database object or pricing command is added.
 

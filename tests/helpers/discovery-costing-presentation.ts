@@ -184,7 +184,7 @@ export async function mountCosting(page: Page, fixture = costingFixture()) {
       return reply({
         display_name: "SYN Estimator",
         actions: [],
-        navigation: ["estimating"],
+        navigation: ["estimates", "intake", "wizard", "pricing", "quotations", "configurations"],
         can_preview: false,
         companies: [],
         conversations: false,

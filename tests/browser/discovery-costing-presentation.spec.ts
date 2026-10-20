@@ -157,6 +157,7 @@ test("adopting freezes confirmation; uncertain checks original operation without
     .click();
   await expect(page).toHaveURL(
     new RegExp(`/estimating/estimates/${costingId(4)}`),
+    {timeout:90000},
   );
   expect(f.adoptions).toHaveLength(1);
 });

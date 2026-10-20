@@ -1,3 +1,4 @@
+#ppo-estimate-wizard {
 /* ES-02 costing only. PPO - Design 1431:809, Discovery costing — accepted.
    The shell retains the shared compact phone header and owns the viewport. */
 .dc-layout {
@@ -263,6 +264,8 @@
   background: transparent;
 }
 .dc-grid {
+  margin: 0;
+  max-width: 100%;
   border-block: 1px solid var(--line);
   overflow: auto;
 }
@@ -620,7 +623,7 @@
 .dc-phone-viewed,
 .dc-totals > .dc-phone-total,
 .dc-phone-lines,
-.dc-mobile-summary {
+.dc-layout .dc-mobile-summary {
   display: none;
 }
 @media (max-width: 1199px) {
@@ -808,7 +811,7 @@
   .dc-desktop-revision {
     display: none;
   }
-  .dc-mobile-summary {
+  .dc-layout .dc-mobile-summary {
     display: inline-flex;
   }
   .dc-bottom > .ppo-button:last-child {
@@ -879,4 +882,11 @@
   .dc-phone-lines strong {
     overflow-wrap: anywhere;
   }
+}
+
+}
+
+/* This page adopts the shared compact header; the parent wizard retains its legacy header. */
+@media (max-width: 780px) {
+.app-frame:has(#ppo-estimate-wizard.dc-host) .workspace > #shell-header.topbar.ppo-shell-header { display: flex; }
 }

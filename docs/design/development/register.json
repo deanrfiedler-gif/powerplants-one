@@ -6950,9 +6950,7 @@
       ],
       "dependencies": [
         "docs/decisions/discovery-costing-figma-design.md",
-        "docs/testing/evidence/discovery-costing/README.md",
-        "tests/helpers/discovery-costing-presentation.ts",
-        "tests/browser/discovery-costing-presentation.spec.ts"
+        "docs/testing/evidence/discovery-costing/README.md"
       ],
       "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Needs review",

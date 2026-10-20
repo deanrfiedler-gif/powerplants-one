@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type ComponentProps } from "react";
 import type { CostLine } from "../estimating/math";
 import type { SourceBinding } from "../estimating/sources/bindings";
 import { parseLines } from "../estimating/validation";
-import { Button } from "./ui/button";
+import { Button as SharedButton, ButtonLink as SharedButtonLink } from "./ui/button";
 import {
   Field,
   SelectField,
@@ -20,6 +20,16 @@ import {
   proposalAmounts,
   retainedSource,
 } from "./discovery-costing-model";
+
+// The wizard's legacy reset opts controls in through its existing mw-button classes.
+const costingButtonClass = (variant = "secondary", className = "") => `mw-button ${variant === "secondary" ? "" : `mw-button-${variant}`} ${className}`;
+export function CostingButton({ variant, className, ...props }: ComponentProps<typeof SharedButton>) {
+  return <SharedButton {...props} variant={variant} className={costingButtonClass(variant, className)} />;
+}
+export function CostingButtonLink({ variant, className, ...props }: ComponentProps<typeof SharedButtonLink>) {
+  return <SharedButtonLink {...props} variant={variant} className={costingButtonClass(variant, className)} />;
+}
+const Button = CostingButton;
 
 // Page-local composition of the wizard dialog contract; native modal focus and return.
 export function CostingDialog({
@@ -122,7 +132,7 @@ export function CostingTotals({
   version?: number;
 }) {
   const totals = proposalAmounts(lines),
-    old = saved ? proposalAmounts(saved) : null;
+    old = saved ? proposalAmounts(saved, 1) : null;
   return (
     <section className="dc-totals" aria-label="Proposal totals">
       <div>

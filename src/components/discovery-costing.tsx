@@ -29,7 +29,6 @@ import { ScopeView } from "./discovery-screens";
 import { FertigationReceivedNotes } from "./fertigation-received-notes";
 import { LegacyDiscoveryCosting } from "./discovery-costing-legacy";
 import { Icon, Tag, Row } from "./estimation-wizard-ui";
-import { Button, ButtonLink } from "./ui/button";
 import {
   CostingBanner,
   CostingDialog,
@@ -37,6 +36,8 @@ import {
   CostingLines,
   CostingLoading,
   CostingTotals,
+  CostingButton as Button,
+  CostingButtonLink as ButtonLink,
 } from "./discovery-costing-parts";
 import {
   compareCostLines,
@@ -76,7 +77,7 @@ export function DiscoveryCosting({ id }: { id: string }) {
       </div>
     );
   return (
-    <section id="ppo-estimate-wizard" data-module-layout="full-bleed" aria-label="Discovery costing">
+    <section id="ppo-estimate-wizard" className="dc-host" data-module-layout="full-bleed" aria-label="Discovery costing">
       {data.loading && <CostingLoading />}
       <ErrorNotice error={data.error} />
       {data.error != null && (
@@ -147,7 +148,7 @@ function CostingEditor({
     denied(savedRead.error) ||
     savedRead.data?.status === "Unavailable" ||
     option?.cost.status === "Unavailable";
-  const blockedRead = !!readError || !!savedRead.error || !!baseline.error || !!error;
+  const blockedRead = !!readError || !!savedRead.error || !!baseline.error || !!error || baseline.loading || savedRead.loading;
   const permitted =
     d.can_edit &&
     !denied(error) &&

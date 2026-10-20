@@ -4493,9 +4493,7 @@
         "scripts/es02-fixture.ts",
         "src/components/discovery-costing-parts.tsx",
         "src/components/discovery-costing-model.ts",
-        "src/components/discovery-costing.css",
-        "tests/helpers/discovery-costing-presentation.ts",
-        "tests/browser/discovery-costing-presentation.spec.ts"
+        "src/components/discovery-costing.css"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
