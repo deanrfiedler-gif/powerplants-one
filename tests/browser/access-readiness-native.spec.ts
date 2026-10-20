@@ -20,6 +20,14 @@ async function fixture(page: Page, value = accessReadinessFixture()) {
   return value;
 }
 test.beforeEach(async ({ page, baseURL }) => {
+  // Retain geometry while excluding licensed glyph artwork from every capture.
+  await page.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      const style = document.createElement("style");
+      style.textContent = ".ppo-fa, svg { visibility: hidden !important; }";
+      document.head.append(style);
+    });
+  });
   const r = await page.request.post(`${baseURL}/api/v1/local-session`, {
     headers: { origin: baseURL! },
     data: { profile: "coordinator" },
