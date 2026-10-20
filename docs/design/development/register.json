@@ -415,13 +415,18 @@
       "title": "Site register and site workspace",
       "kind": "scope",
       "module": "CS",
-      "summary": "Maintain canonical Site context and navigate its Facilities, equipment, readiness and as-found evidence.",
+      "summary": "Find permitted Sites by current or previous reference; review access, visits, parties and installed/served equipment; hand over to the owning workflow.",
       "path": "/sites/[id]",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "src/components/context-screens.tsx",
         "src/components/site-primary-contact.tsx",
-        "src/shared/contacts/commands.ts"
+        "src/shared/contacts/commands.ts",
+        "src/components/sites-register.tsx",
+        "src/components/site-workspace.tsx",
+        "src/shared/sites.ts",
+        "src/shared/sites-model.ts",
+        "src/shared/site-reference.ts",
+        "src/app/styles/sites.css"
       ],
       "guide_key": "guide.cs.04",
       "design_path": "docs/design/development/pages/scope-cs-04.md",
@@ -437,12 +442,15 @@
         "docs/reference/ui/sites/sites-design-r01/PPO-Sites-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/sites-figma-design.md"
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "Native CS-04 accepted-design implementation; owner visual review pending",
+      "visual_status": "Owner visual review pending; see Sites implementation evidence and documented adaptations",
+      "functional_status": "Focused checks tracked in docs/delivery/sites-cs04-build.md; not business acceptance",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -8580,13 +8588,18 @@
       "title": "Site detail",
       "kind": "route",
       "module": "CS",
-      "summary": "Maintain canonical Site context and navigate its Facilities, equipment, readiness and as-found evidence.",
+      "summary": "Find permitted Sites by current or previous reference; review access, visits, parties and installed/served equipment; hand over to the owning workflow.",
       "path": "/sites/[id]",
       "source_paths": [
         "src/app/(business)/sites/[id]/page.tsx",
-        "src/components/context-screens.tsx",
         "src/components/site-primary-contact.tsx",
-        "src/shared/contacts/commands.ts"
+        "src/shared/contacts/commands.ts",
+        "src/components/sites-register.tsx",
+        "src/components/site-workspace.tsx",
+        "src/shared/sites.ts",
+        "src/shared/sites-model.ts",
+        "src/shared/site-reference.ts",
+        "src/app/styles/sites.css"
       ],
       "guide_key": "guide.page.sites.id",
       "design_path": "docs/design/development/pages/route-sites-id.md",
@@ -8598,12 +8611,15 @@
         "docs/reference/ui/sites/sites-design-r01/PPO-Sites-07-Phone-320-Site-Overview-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/sites-figma-design.md"
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "Native CS-04 accepted-design implementation; owner visual review pending",
+      "visual_status": "Owner visual review pending; see Sites implementation evidence and documented adaptations",
+      "functional_status": "Focused checks tracked in docs/delivery/sites-cs04-build.md; not business acceptance",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -8619,10 +8635,16 @@
       "title": "Site register",
       "kind": "route",
       "module": "CS",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Find permitted Sites by current or previous reference; review access, visits, parties and installed/served equipment; hand over to the owning workflow.",
       "path": "/sites",
       "source_paths": [
-        "src/app/(business)/sites/page.tsx"
+        "src/app/(business)/sites/page.tsx",
+        "src/components/sites-register.tsx",
+        "src/components/site-workspace.tsx",
+        "src/shared/sites.ts",
+        "src/shared/sites-model.ts",
+        "src/shared/site-reference.ts",
+        "src/app/styles/sites.css"
       ],
       "guide_key": "guide.page.sites",
       "design_path": "docs/design/development/pages/route-sites.md",
@@ -8634,12 +8656,15 @@
         "docs/reference/ui/sites/sites-design-r01/PPO-Sites-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/sites-figma-design.md"
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "scope_status": "Native CS-04 accepted-design implementation; owner visual review pending",
+      "visual_status": "Owner visual review pending; see Sites implementation evidence and documented adaptations",
+      "functional_status": "Focused checks tracked in docs/delivery/sites-cs04-build.md; not business acceptance",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",

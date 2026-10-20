@@ -29,4 +29,28 @@ Dean approved adopting the shorter convention deliberately on 20 October 2026: "
 
 The Git acceptance record, live notes card and File index agree on CS-04 and the accepted design. Live screenshots of all ten viewport/state frames plus the notes card were read privately; high-fidelity design context and tokens were retrieved, with register/tablet context split into visible child nodes where the full frame response was sparse. Existing icon-free repository captures remain unchanged. No Figma link, file key or licensed artwork is retained in this contribution.
 
-Existing routes, Site reads, permanent identifiers, equipment installed/served reads, permissions, shared controls, page contracts, build queue and offline boundary were inspected. The existing dependencies were installed without changing the lockfile. Application implementation and verification have not started; this draft currently changes only this build/clarification record.
+Existing routes, Site reads, permanent identifiers, equipment installed/served reads, permissions, shared controls, page contracts, build queue and offline boundary were inspected. Existing dependencies were installed without changing the lockfile. PR #626 contained only this preflight record; the follow-up PR #635 now contains the implementation and its verification work.
+
+## Implementation and adaptations
+
+The page-specific `sites-register.tsx` and `site-workspace.tsx` replace only the existing Sites route compositions. `src/shared/sites.ts` supplies permission-scoped rows, view counts, contact, facility/equipment counts and permitted visits; the overview keeps independent work-order, follow-up and survey source states. `site-reference.ts` defines short/previous-reference compatibility at the shared Site read/search boundary. Existing UUID links and primary-contact/party/history commands remain in use.
+
+Reused: SecondaryMenuFrame and compact phone-header bindings; Button/ButtonLink; RegisterTable, RegisterSortHeader, RegisterChip and RegisterFooter; RecordTabs/RecordPanel; WorklistChoice, WorklistMenu and WorklistPanel; ReadState; ProductIcon through the existing icon mapping; FacilityRegister; SitePrimaryContact. Shared menu CSS changes only add the Sites consumer selector. No new shared control, dependency, schema, grant or capability.
+
+The CS-04 scope and both route contracts, register entries and Draft guides describe the actual controls. Component bindings, host states and the Sites fixture manifest are updated. The status fragment generates STATUS and the decision index; the build sequence is generated into `tmp/` under the current repository rule.
+
+Explicit differences from the accepted frames:
+
+- P4 is unavailable. Readiness links to CS-06; the design's synthetic confirmed/reconfirmed story is not asserted as live data. The Readiness view lists upcoming permitted visits and says so.
+- Local Site filtering is offered in Search and filter; the global shell search retains its existing cross-application purpose.
+- Site rows include the short reference, so long rows can exceed the drawn 40 px. Shared dates retain year and time-zone information; long values wrap.
+- The later accepted compact phone header replaces duplicate phone toolbar rows. Phone actions use 44 px targets.
+- Equipment groups use recorded installation facilities without inventing a parent-building relationship. Installed and served locations remain separate.
+- Undrawn tabs, details and restricted/partial states use existing controls. Work/History do not show invented combined totals. Work rows are labelled as permitted work rather than implying every source has an open/closed definition. Record position is shown only for a complete returned population.
+- Synthetic comparison fixtures preserve composition but use explicit P4-unavailable wording. Application captures use the repository's fallback icons with the private kit omitted; no Pro artwork is retained.
+
+Open for Dean: owner visual review of the implementation and these adaptations; review of the undrawn tabs and source-state wording. No implementation decision grants visual approval or business acceptance.
+
+## Verification in progress
+
+The focused lint, typecheck, naming and design-register checks have passed. Three Sites database assertions passed against the current schema and full synthetic seed set after setup completed; the diagnostic run omitted the reset hook, leaving every assertion unchanged. Standard reset/seed initially hit Windows timezone-scan timeouts; unmodified main subsequently seeded the isolated instance successfully. Full build, serial unit suite, foundation check and browser comparison results are still being collected. These provisional results are replaced by the final check table before handover.

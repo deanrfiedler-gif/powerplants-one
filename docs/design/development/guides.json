@@ -1826,20 +1826,20 @@
       "title": "Site workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "CS-04 implementation; owner visual and guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-20",
       "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Current executed results and limitations: docs/delivery/sites-cs04-build.md.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain canonical Site context and navigate its Facilities, equipment, readiness and as-found evidence."
+            "Find a permitted Site, quote its SYN-SITE number and open the source workflow for a visit, request, equipment item or readiness check."
           ],
           "steps": [],
           "headers": [],
@@ -1849,7 +1849,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Site, company and time zone. A Site address is not a Facility location."
+            "Check the working company and Site time zone. Only permitted records contribute to rows and counts. These are synthetic prototype records."
           ],
           "steps": [],
           "headers": [],
@@ -1860,9 +1860,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Read location, address, time zone, arrival/access and biosecurity context.",
-            "Check the primary contact and separate operator, property owner and bill payer.",
-            "Change the primary contact only to a permitted active Person in the same company, with a reason."
+            "Open Sites from More. Choose All sites, Readiness to confirm, Biosecurity unknown or Address to review.",
+            "Use Search and filter sites to find a name, customer, location, SYN-SITE reference or previous SYN-PPO-SITE reference.",
+            "Open the Site name, check readiness and access, then use Start service request or the exact source link."
           ],
           "headers": [],
           "rows": []
@@ -1871,7 +1871,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Details and Facilities & areas, with links to Access & readiness and Surveys & as-found briefs."
+            "The desktop grid has Customer and Readiness filters, sorting, optional columns, selection and pagination. Selection performs no business action. View counts include the current search and filters.",
+            "The record has Overview, Facilities & areas, Equipment, Work and visits and History. Equipment separates Installed in from Serves. Site actions includes details and parties, surveys and permitted owned follow-up."
           ],
           "steps": [],
           "headers": [],
@@ -1881,7 +1882,9 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "No duplicated Facility form is embedded. Equipment installation and areas it serves remain distinct. Delivery instructions are not separately verified. Access context does not establish Site readiness or work authority."
+            "The shorter Site reference maps to its permanent previous reference without renumbering it. Both spellings find the same permitted Site; UUID links remain valid.",
+            "Readiness to confirm selects upcoming permitted visits. P4 customer confirmation is unavailable; no confirmed, reconfirmed or dispatch-ready state is inferred. CS-06 owns the readiness handover.",
+            "An address or biosecurity note marked recorded is a presence check, not a verification. External Maps is an address handoff; confirm the arrival point with the contact. Delivery basis is not verified."
           ],
           "steps": [],
           "headers": [],
@@ -1892,10 +1895,10 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Read location, address, time zone, arrival/access and biosecurity context.",
-            "Check the primary contact and separate operator, property owner and bill payer.",
-            "Change the primary contact only to a permitted active Person in the same company, with a reason.",
-            "Open canonical Facilities, installed equipment or technical history; use readiness and survey entry points for those workflows."
+            "Check Site number, customer parties, primary contact, location and time zone.",
+            "Use Access & readiness for the current visit context. Access notes do not authorise work.",
+            "Open Equipment to compare installation and served areas. Show more opens the filtered equipment register.",
+            "Use Site actions → Site details and parties to change a permitted primary contact with a reason, add a party or record technical context. Existing save, validation and version-conflict controls apply."
           ],
           "headers": [],
           "rows": []
@@ -1904,8 +1907,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "Opening a source or selecting a row does not change a business record. A primary-contact save is complete only when its existing form confirms the server result. Owner visual review, business acceptance and deployment remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -1915,8 +1917,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading says current results are unconfirmed. No matching sites offers Clear the search. Could not load clears rows and counts and offers Retry loading. A denied read shows an access message without disclosing hidden records.",
+            "Related record sources may be restricted, unavailable or partial independently. A partial source shows only its first permitted records; open the source to continue. Zero visible visits is not proof that no other visits exist."
           ],
           "steps": [],
           "headers": [],
@@ -1926,7 +1928,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "A contact changes, so a retained readiness preparation based on the previous Site version requires recheck. The original preparation remains retained."
+            "Search SYN-SITE-000012 or SYN-PPO-SITE-000012: when permitted, both return the same Site and preserve its existing links. This example does not assert a record is available in every workspace."
           ],
           "steps": [],
           "headers": [],
@@ -1936,10 +1938,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Retry a failed read. If your access changes, inaccessible content is cleared. Re-select a view to restart pagination when results have changed.",
+            "Primary-contact validation stays in the existing form. Preserve the intended correction when a version conflict occurs; use Confirm original save for an uncertain outcome."
           ],
           "steps": [],
           "headers": [],
@@ -1949,9 +1949,9 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact phone header holds the view count, search and filters; duplicate toolbars are removed. At 320 px search and filter combine.",
+            "The record shows readiness first, then access and biosecurity. At 390 px the footer has Readiness and Service request; at 320 px Readiness moves into Site actions.",
+            "Use arrow keys, Home and End on tabs. Escape closes menus and panels and returns focus. Equipment has a local horizontal scroller. This page requires an online read and promises no offline cache."
           ],
           "steps": [],
           "headers": [],
@@ -1961,8 +1961,7 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html"
+            "See docs/decisions/sites-figma-design.md, docs/decisions/site-reference-convention.md and docs/delivery/sites-cs04-build.md. Readiness, Facilities, Surveys, Equipment and service requests retain their own authority and permissions."
           ],
           "steps": [],
           "headers": [],
@@ -1972,8 +1971,7 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide describes the CS-04 implementation in the current source. Guide review and owner visual review are pending; automated checks do not grant business acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -1988,9 +1986,12 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Sites register and record, short-reference compatibility, current phone controls and explicit P4/source limits.",
       "document_id": "PPO-GUIDE-CS-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -2000,7 +2001,10 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -47803,20 +47807,20 @@
       "title": "Site workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "CS-04 implementation; owner visual and guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-20",
       "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Current executed results and limitations: docs/delivery/sites-cs04-build.md.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain canonical Site context and navigate its Facilities, equipment, readiness and as-found evidence."
+            "Find a permitted Site, quote its SYN-SITE number and open the source workflow for a visit, request, equipment item or readiness check."
           ],
           "steps": [],
           "headers": [],
@@ -47826,7 +47830,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the Site, company and time zone. A Site address is not a Facility location."
+            "Check the working company and Site time zone. Only permitted records contribute to rows and counts. These are synthetic prototype records."
           ],
           "steps": [],
           "headers": [],
@@ -47837,9 +47841,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Read location, address, time zone, arrival/access and biosecurity context.",
-            "Check the primary contact and separate operator, property owner and bill payer.",
-            "Change the primary contact only to a permitted active Person in the same company, with a reason."
+            "Open Sites from More. Choose All sites, Readiness to confirm, Biosecurity unknown or Address to review.",
+            "Use Search and filter sites to find a name, customer, location, SYN-SITE reference or previous SYN-PPO-SITE reference.",
+            "Open the Site name, check readiness and access, then use Start service request or the exact source link."
           ],
           "headers": [],
           "rows": []
@@ -47848,7 +47852,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Details and Facilities & areas, with links to Access & readiness and Surveys & as-found briefs."
+            "The desktop grid has Customer and Readiness filters, sorting, optional columns, selection and pagination. Selection performs no business action. View counts include the current search and filters.",
+            "The record has Overview, Facilities & areas, Equipment, Work and visits and History. Equipment separates Installed in from Serves. Site actions includes details and parties, surveys and permitted owned follow-up."
           ],
           "steps": [],
           "headers": [],
@@ -47858,7 +47863,9 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "No duplicated Facility form is embedded. Equipment installation and areas it serves remain distinct. Delivery instructions are not separately verified. Access context does not establish Site readiness or work authority."
+            "The shorter Site reference maps to its permanent previous reference without renumbering it. Both spellings find the same permitted Site; UUID links remain valid.",
+            "Readiness to confirm selects upcoming permitted visits. P4 customer confirmation is unavailable; no confirmed, reconfirmed or dispatch-ready state is inferred. CS-06 owns the readiness handover.",
+            "An address or biosecurity note marked recorded is a presence check, not a verification. External Maps is an address handoff; confirm the arrival point with the contact. Delivery basis is not verified."
           ],
           "steps": [],
           "headers": [],
@@ -47869,10 +47876,10 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Read location, address, time zone, arrival/access and biosecurity context.",
-            "Check the primary contact and separate operator, property owner and bill payer.",
-            "Change the primary contact only to a permitted active Person in the same company, with a reason.",
-            "Open canonical Facilities, installed equipment or technical history; use readiness and survey entry points for those workflows."
+            "Check Site number, customer parties, primary contact, location and time zone.",
+            "Use Access & readiness for the current visit context. Access notes do not authorise work.",
+            "Open Equipment to compare installation and served areas. Show more opens the filtered equipment register.",
+            "Use Site actions → Site details and parties to change a permitted primary contact with a reason, add a party or record technical context. Existing save, validation and version-conflict controls apply."
           ],
           "headers": [],
           "rows": []
@@ -47881,8 +47888,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "Opening a source or selecting a row does not change a business record. A primary-contact save is complete only when its existing form confirms the server result. Owner visual review, business acceptance and deployment remain separate."
           ],
           "steps": [],
           "headers": [],
@@ -47892,8 +47898,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Current and historic source records remain distinguishable. Optional unknown context stays Not recorded or Unknown."
+            "Loading says current results are unconfirmed. No matching sites offers Clear the search. Could not load clears rows and counts and offers Retry loading. A denied read shows an access message without disclosing hidden records.",
+            "Related record sources may be restricted, unavailable or partial independently. A partial source shows only its first permitted records; open the source to continue. Zero visible visits is not proof that no other visits exist."
           ],
           "steps": [],
           "headers": [],
@@ -47903,7 +47909,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "A contact changes, so a retained readiness preparation based on the previous Site version requires recheck. The original preparation remains retained."
+            "Search SYN-SITE-000012 or SYN-PPO-SITE-000012: when permitted, both return the same Site and preserve its existing links. This example does not assert a record is available in every workspace."
           ],
           "steps": [],
           "headers": [],
@@ -47913,10 +47919,8 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Retry a failed read. If your access changes, inaccessible content is cleared. Re-select a view to restart pagination when results have changed.",
+            "Primary-contact validation stays in the existing form. Preserve the intended correction when a version conflict occurs; use Confirm original save for an uncertain outcome."
           ],
           "steps": [],
           "headers": [],
@@ -47926,9 +47930,9 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "The compact phone header holds the view count, search and filters; duplicate toolbars are removed. At 320 px search and filter combine.",
+            "The record shows readiness first, then access and biosecurity. At 390 px the footer has Readiness and Service request; at 320 px Readiness moves into Site actions.",
+            "Use arrow keys, Home and End on tabs. Escape closes menus and panels and returns focus. Equipment has a local horizontal scroller. This page requires an online read and promises no offline cache."
           ],
           "steps": [],
           "headers": [],
@@ -47938,8 +47942,7 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html"
+            "See docs/decisions/sites-figma-design.md, docs/decisions/site-reference-convention.md and docs/delivery/sites-cs04-build.md. Readiness, Facilities, Surveys, Equipment and service requests retain their own authority and permissions."
           ],
           "steps": [],
           "headers": [],
@@ -47949,8 +47952,7 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "This guide describes the CS-04 implementation in the current source. Guide review and owner visual review are pending; automated checks do not grant business acceptance."
           ],
           "steps": [],
           "headers": [],
@@ -47964,9 +47966,12 @@
       "source_paths": [
         "src/app/(business)/sites/[id]/page.tsx",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Sites register and record, short-reference compatibility, current phone controls and explicit P4/source limits.",
       "document_id": "PPO-GUIDE-PAGE-SITES-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -47976,7 +47981,10 @@
       "workflow_basis": [
         "src/app/(business)/sites/[id]/page.tsx",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -47987,22 +47995,20 @@
       "title": "Site register",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "CS-04 implementation; owner visual and guide review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-20",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Current executed results and limitations: docs/delivery/sites-cs04-build.md.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Site register to work towards this outcome: Work is associated with the correct physical site.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Postal address, equipment location and served growing area can be different."
+            "Find a permitted Site, quote its SYN-SITE number and open the source workflow for a visit, request, equipment item or readiness check."
           ],
           "steps": [],
           "rows": [],
@@ -48012,9 +48018,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer, site name, address, location hierarchy and access contact.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Check the working company and Site time zone. Only permitted records contribute to rows and counts. These are synthetic prototype records."
           ],
           "steps": [],
           "rows": [],
@@ -48025,11 +48029,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Select the correct customer and site",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Sites from More. Choose All sites, Readiness to confirm, Biosecurity unknown or Address to review.",
+            "Use Search and filter sites to find a name, customer, location, SYN-SITE reference or previous SYN-PPO-SITE reference.",
+            "Open the Site name, check readiness and access, then use Start service request or the exact source link."
           ],
           "rows": [],
           "headers": []
@@ -48037,42 +48039,21 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Site register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The desktop grid has Customer and Readiness filters, sorting, optional columns, selection and pagination. Selection performs no business action. View counts include the current search and filters.",
+            "The record has Overview, Facilities & areas, Equipment, Work and visits and History. Equipment separates Installed in from Serves. Site actions includes details and parties, surveys and permitted owned follow-up."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer, site name, address, location hierarchy and access contact.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "The shorter Site reference maps to its permanent previous reference without renumbering it. Both spellings find the same permitted Site; UUID links remain valid.",
+            "Readiness to confirm selects upcoming permitted visits. P4 customer confirmation is unavailable; no confirmed, reconfirmed or dispatch-ready state is inferred. CS-06 owns the readiness handover.",
+            "An address or biosecurity note marked recorded is a presence check, not a verification. External Maps is an address handoff; confirm the arrival point with the contact. Delivery basis is not verified."
           ],
           "steps": [],
           "rows": [],
@@ -48081,13 +48062,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Task sequence for review against the applicable running release."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Select the correct customer and site",
-            "Review its facilities, equipment and access context",
-            "Use the site record when linking downstream work"
+            "Check Site number, customer parties, primary contact, location and time zone.",
+            "Use Access & readiness for the current visit context. Access notes do not authorise work.",
+            "Open Equipment to compare installation and served areas. Show more opens the filtered equipment register.",
+            "Use Site actions → Site details and parties to change a permitted primary contact with a reason, add a party or record technical context. Existing save, validation and version-conflict controls apply."
           ],
           "rows": [],
           "headers": []
@@ -48096,9 +48076,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Work is associated with the correct physical site.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Postal address, equipment location and served growing area can be different."
+            "Opening a source or selecting a row does not change a business record. A primary-contact save is complete only when its existing form confirms the server result. Owner visual review, business acceptance and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -48107,38 +48085,13 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading says current results are unconfirmed. No matching sites offers Clear the search. Could not load clears rows and counts and offers Retry loading. A denied read shows an access message without disclosing hidden records.",
+            "Related record sources may be restricted, unavailable or partial independently. A partial source shows only its first permitted records; open the source to continue. Zero visible visits is not proof that no other visits exist."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
@@ -48154,45 +48107,21 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Retry a failed read. If your access changes, inaccessible content is cleared. Re-select a view to restart pagination when results have changed.",
+            "Primary-contact validation stays in the existing form. Preserve the intended correction when a version conflict occurs; use Confirm original save for an uncertain outcome."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The compact phone header holds the view count, search and filters; duplicate toolbars are removed. At 320 px search and filter combine.",
+            "The record shows readiness first, then access and biosecurity. At 390 px the footer has Readiness and Service request; at 320 px Readiness moves into Site actions.",
+            "Use arrow keys, Home and End on tabs. Escape closes menus and panels and returns focus. Equipment has a local horizontal scroller. This page requires an online read and promises no offline cache."
           ],
           "steps": [],
           "rows": [],
@@ -48202,8 +48131,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See docs/decisions/sites-figma-design.md, docs/decisions/site-reference-convention.md and docs/delivery/sites-cs04-build.md. Readiness, Facilities, Surveys, Equipment and service requests retain their own authority and permissions."
           ],
           "steps": [],
           "rows": [],
@@ -48213,9 +48141,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "This guide describes the CS-04 implementation in the current source. Guide review and owner visual review are pending; automated checks do not grant business acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -48229,9 +48155,12 @@
       "source_paths": [
         "src/app/(business)/sites/page.tsx",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Sites register and record, short-reference compatibility, current phone controls and explicit P4/source limits.",
       "document_id": "PPO-GUIDE-PAGE-SITES",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -48241,7 +48170,10 @@
       "workflow_basis": [
         "src/app/(business)/sites/page.tsx",
         "docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/sites-figma-design.md",
+        "docs/decisions/site-reference-convention.md",
+        "docs/delivery/sites-cs04-build.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

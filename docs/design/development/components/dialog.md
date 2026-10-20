@@ -51,3 +51,7 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 ## Page-scoped Job Pack variant
 
 The [Job Pack dialog](job-pack-dialog.md) is separately inventoried with its actual pack consumers and state fixtures. I4 adds explicit Tab containment, including Shift+Tab from the focused heading. It retains r03 styling and does not change WorklistPanel or claim one universal dialog contract.
+
+## Sites CS-04 consumer
+
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
