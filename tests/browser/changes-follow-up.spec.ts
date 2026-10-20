@@ -95,6 +95,17 @@ test("PL-04 register, snapshot and follow-up at desktop, tablet, 390 and 320", a
       ),
     ).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
+    if (width === 1440) {
+      expect(
+        (await page.locator(".changes-toolbar").boundingBox())!.height,
+      ).toBeLessThanOrEqual(62);
+      expect(
+        (await page
+          .locator(".changes-desktop-grid tbody tr")
+          .first()
+          .boundingBox())!.height,
+      ).toBeLessThanOrEqual(42);
+    }
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

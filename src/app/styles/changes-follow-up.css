@@ -666,50 +666,168 @@
   }
 }
 
-#ppo-schedule-changes .changes-filter-fields { display:grid; gap:16px; }
-#ppo-schedule-changes .changes-filter-fields label { display:grid; gap:6px; }
-@media (max-width:780px) {
- #ppo-schedule-changes .changes-toolbar :is(.changes-search,.changes-site,.changes-zone) { display:none; }
+#ppo-schedule-changes .changes-filter-fields {
+  display: grid;
+  gap: 16px;
+}
+#ppo-schedule-changes .changes-filter-fields label {
+  display: grid;
+  gap: 6px;
+}
+@media (max-width: 780px) {
+  #ppo-schedule-changes
+    .changes-toolbar
+    :is(.changes-search, .changes-site, .changes-zone) {
+    display: none;
+  }
 }
 
-#ppo-schedule-changes .mw-menu ul { list-style:none; margin:0; padding:0; }
-#ppo-schedule-changes .mw-menu li a { text-decoration:none; }
-@media (min-width:781px) {
- #ppo-schedule-changes .mw-content:has(.changes-snapshot) { overflow:visible; }
- #ppo-schedule-changes .changes-snapshot { height:100%; min-height:0; grid-template-rows:auto minmax(0,1fr) auto; }
- #ppo-schedule-changes .changes-booking-column { overflow:auto; min-height:0; }
- #ppo-schedule-changes .changes-review-column { overflow:auto; min-height:0; }
- #ppo-schedule-changes .changes-request textarea { min-height:40px; height:40px; }
+#ppo-schedule-changes .mw-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-@media (min-width:781px) and (max-width:1199px) {
- #ppo-schedule-changes .changes-snapshot { grid-template-rows:auto auto minmax(0,1fr) auto; }
+#ppo-schedule-changes .mw-menu li a {
+  text-decoration: none;
+}
+@media (min-width: 781px) {
+  #ppo-schedule-changes .mw-content:has(.changes-snapshot) {
+    overflow: visible;
+  }
+  #ppo-schedule-changes .changes-snapshot {
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  #ppo-schedule-changes .changes-booking-column {
+    overflow: auto;
+    min-height: 0;
+  }
+  #ppo-schedule-changes .changes-review-column {
+    overflow: auto;
+    min-height: 0;
+  }
+  #ppo-schedule-changes .changes-request textarea {
+    min-height: 40px;
+    height: 40px;
+  }
+}
+@media (min-width: 781px) and (max-width: 1199px) {
+  #ppo-schedule-changes .changes-snapshot {
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+  }
 }
 
-#ppo-schedule-changes { font-family:PPOShellRoboto,Roboto,Arial,sans-serif; }
-#ppo-schedule-changes .changes-toolbar label { margin:0; font-weight:400; }
-#ppo-schedule-changes .changes-search { height:40px; }
-#ppo-schedule-changes .changes-search input { height:38px; min-height:38px; margin:0; font-weight:400; }
-#ppo-schedule-changes .changes-desktop-grid td * { white-space:normal; overflow-wrap:anywhere; }
-#ppo-schedule-changes .changes-policy .field { gap:6px; }
-#ppo-schedule-changes .changes-policy .field label { margin:0; font-weight:500; }
-#ppo-schedule-changes .changes-policy .field :is(input,select) { margin:0; font-weight:400; }
-
-@media (max-width:780px) {
- #ppo-schedule-changes .changes-snapshot { flex:0 0 auto; min-height:auto; height:auto; }
- #ppo-schedule-changes .changes-snapshot :is(.changes-snapshot-nav,.changes-snapshot-title,.changes-tab-card,.changes-consequences,.changes-booked,.changes-history-disclosure,.changes-note,.changes-snapshot-footer) { flex-shrink:0; }
+#ppo-schedule-changes {
+  font-family: PPOShellRoboto, Roboto, Arial, sans-serif;
+}
+#ppo-schedule-changes .changes-toolbar label {
+  margin: 0;
+  font-weight: 400;
+}
+#ppo-schedule-changes .changes-toolbar :is(input, select, button) {
+  margin: 0;
+}
+#ppo-schedule-changes .changes-toolbar > button {
+  min-height: 40px;
+}
+#ppo-schedule-changes .changes-search {
+  height: 40px;
+}
+#ppo-schedule-changes .changes-search input {
+  height: 38px;
+  min-height: 38px;
+  margin: 0;
+  font-weight: 400;
+}
+#ppo-schedule-changes .changes-desktop-grid td * {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#ppo-schedule-changes .changes-policy .field {
+  gap: 6px;
+}
+#ppo-schedule-changes .changes-policy .field label {
+  margin: 0;
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-policy .field :is(input, select) {
+  margin: 0;
+  font-weight: 400;
 }
 
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(4) > span { display:inline; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(4) > span + span::before { content:" · "; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(2) strong { display:block; font-weight:500; }
+@media (max-width: 780px) {
+  #ppo-schedule-changes .changes-snapshot {
+    flex: 0 0 auto;
+    min-height: auto;
+    height: auto;
+  }
+  #ppo-schedule-changes
+    .changes-snapshot
+    :is(
+      .changes-snapshot-nav,
+      .changes-snapshot-title,
+      .changes-tab-card,
+      .changes-consequences,
+      .changes-booked,
+      .changes-history-disclosure,
+      .changes-note,
+      .changes-snapshot-footer
+    ) {
+    flex-shrink: 0;
+  }
+}
 
-#ppo-schedule-changes .changes-desktop-grid th { background:var(--surface-white); font-size:14px; font-weight:500; }
-#ppo-schedule-changes .changes-desktop-grid .changes-link { font-weight:500; }
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(4) > span {
+  display: inline;
+}
+#ppo-schedule-changes
+  .changes-desktop-grid
+  td:nth-child(4)
+  > span
+  + span::before {
+  content: " · ";
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(2) strong {
+  display: block;
+  font-weight: 500;
+}
+
+#ppo-schedule-changes .changes-desktop-grid th {
+  background: var(--surface-white);
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-desktop-grid .changes-link {
+  font-weight: 500;
+}
 
 /* Keep the register compact; the snapshot carries the full multi-line evidence. */
-#ppo-schedule-changes .changes-desktop-grid td { white-space:nowrap; }
-#ppo-schedule-changes .changes-desktop-grid td * { white-space:nowrap; overflow-wrap:normal; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(5) span { display:inline; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) small { display:inline; margin:0 0 0 6px; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) > span { display:inline; }
-#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) > span + span::before { content:" · "; }
+#ppo-schedule-changes .changes-desktop-grid td {
+  white-space: nowrap;
+  padding: 5px 12px;
+}
+#ppo-schedule-changes .changes-desktop-grid td * {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(5) span {
+  display: inline;
+}
+#ppo-schedule-changes .changes-requested > span + span::before {
+  content: " · ";
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) small {
+  display: inline;
+  margin: 0 0 0 6px;
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) > span {
+  display: inline;
+}
+#ppo-schedule-changes
+  .changes-desktop-grid
+  td:nth-child(7)
+  > span
+  + span::before {
+  content: " · ";
+}
