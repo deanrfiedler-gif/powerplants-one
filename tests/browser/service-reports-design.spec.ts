@@ -511,9 +511,15 @@ test("SV-06 repeated exact presentations save independent responses", async ({
   await page.route(`**/api/v1/reports/${reportId}`, (route) =>
     route.fulfill({ json: { items: [report] } }),
   );
-  await page.route(`**/api/v1/reports/${reportId}/html?*`, (route) =>
-    route.fulfill({ contentType: "text/html", body: html }),
-  );
+  let holdPresentation = false;
+  let releasePresentation!: () => void;
+  const presentationReady = new Promise<void>((resolve) => {
+    releasePresentation = resolve;
+  });
+  await page.route(`**/api/v1/reports/${reportId}/html?*`, async (route) => {
+    if (holdPresentation) await presentationReady;
+    await route.fulfill({ contentType: "text/html", body: html });
+  });
   await page.route(`**/api/v1/reports/${reportId}/respond`, async (route) => {
     const body = route.request().postDataJSON();
     expect(body.expected_report_version).toBe(report.version);
@@ -556,18 +562,29 @@ test("SV-06 repeated exact presentations save independent responses", async ({
         .update((await page.locator(".report-preview").getAttribute("srcdoc"))!)
         .digest("hex"),
     ).toBe(contentHash);
+    if (choice === "Accepted") holdPresentation = true;
     await page
       .getByRole("button", { name: "Present Issued Report", exact: true })
       .click();
+    if (choice === "Accepted") {
+      await expect(
+        page.getByLabel("Customer response", { exact: true }),
+      ).toHaveAttribute("role", "tabpanel");
+      holdPresentation = false;
+      releasePresentation();
+    }
     const sheet = page.getByRole("dialog", {
       name: "Record customer response",
     });
     await expect(
       sheet.getByRole("heading", { name: "Record customer response" }),
     ).toBeFocused();
-    await page
-      .getByLabel("Customer response", { exact: true })
-      .selectOption(choice);
+    const responseChoice = sheet.getByRole("combobox", {
+      name: "Customer response",
+      exact: true,
+    });
+    await expect(responseChoice).toHaveValue("");
+    await responseChoice.selectOption(choice);
     if (choice !== "Unavailable") {
       await page
         .getByLabel("Stated respondent name (synthetic)", { exact: true })
@@ -607,6 +624,41 @@ test("SV-06 repeated exact presentations save independent responses", async ({
   expect(new Set(responses.map((response) => response.operation_id)).size).toBe(
     5,
   );
+  const reservation = responses[1];
+  await page.locator("#correct-" + reservation.id).click();
+  const correctionSheet = page.getByRole("dialog", {
+    name: "Record customer response",
+    exact: true,
+  });
+  await expect(
+    correctionSheet.getByRole("heading", {
+      name: "Record customer response",
+      exact: true,
+    }),
+  ).toBeFocused();
+  await expect(
+    correctionSheet.getByLabel("Response concerns", { exact: true }),
+  ).toBeDisabled();
+  const correctionChoice = correctionSheet.getByRole("combobox", {
+    name: "Customer response",
+    exact: true,
+  });
+  await expect(correctionChoice).toHaveValue("");
+  await correctionChoice.selectOption("Disputed");
+  await correctionSheet
+    .getByLabel("Correction or clarification reason", { exact: true })
+    .fill("SYN witness clarified the retained reservation");
+  await correctionSheet
+    .getByRole("button", { name: "Record response", exact: true })
+    .click();
+  await expect(correctionSheet).toHaveCount(0);
+  await expect(
+    page.getByRole("tab", { name: "Customer response", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  expect(responses).toHaveLength(6);
+  expect(responses[5].supersedes_response_id).toBe(reservation.id);
+  expect(responses[5].subject).toBe(reservation.subject);
+  expect(responses[5].response).toBe("Disputed");
 });
 
 test("SV-06 restores one original response receipt across record tabs", async ({

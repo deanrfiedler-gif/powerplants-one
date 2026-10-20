@@ -50,6 +50,12 @@ The two new tests passed **4/4** across desktop and phone after the repair, foll
 
 Current main (`5ebb5c0a`) is merged, preserving both SV-06 and CS-02 shared-component consumer records. Follow-up checks passed: `npm run studio:check` (366 entries, 48 components, no errors), `npm run typecheck`, `npm run lint`, the three report-register tests plus the People summary test (**4/4**), naming (743 records), foundation (78 requirements, 12,875 links, 6,750 scanned files, 62 status fragments) and `git diff --check`. Status and build-sequence generators ran. Full local unit/build and persisted database checks were not rerun for this receipt/test repair; the recorded Windows and database limits still apply. The 16/16 browser fixture run preceded the main merge; it is not represented as a post-merge persisted run.
 
+## Subsequent CI: response-sheet handover
+
+The `2b9bc32d` rerun passed the original receipt-recovery assertion, then exposed a later FI-07 selector race in the reports job **118547760943** and compiled-mobile job **118549797015**. Before the exact HTML fetch and hash verification completed, the unscoped `getByLabel("Customer response")` resolved the labelled tab panel, not the form select; `toHaveValue` stopped with **Not an input element**. The reports job passed seven cases and failed the two desktop/phone copies of this handover; compiled mobile passed 452, skipped 79 and failed this one case. These are not passing aggregate results.
+
+The issued-response and correction handovers now wait for the focused modal heading and address the named combobox inside that dialog. Saving must remove the sheet and select Customer response before the next command/read. The blank initial choice, immutable presentation, original operation, independent response, correction lineage and owned follow-up assertions are retained. The synthetic repeated-presentation test now explicitly holds the presentation read, proves the old label targets the tab panel before readiness, then exercises five independent choices and an exact correction. No application permissions, command semantics or timeouts change.
+
 ## Visual comparison and limits
 
 Application captures are local-only test artefacts, outside Git, under the temporary `ppo-sv06-browser` folder. No Font Awesome Pro artwork is retained in the public repository. The immutable source captures are the existing icon-free files under `docs/reference/ui/service/service-review-design-r01/`.

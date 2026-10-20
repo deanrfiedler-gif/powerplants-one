@@ -23,6 +23,8 @@ CI at `1434b482` exposed the phone footer covering the technician-evidence hando
 
 CI at `3677e4f1` passed the P11 selected journey and original-failure replay, all database shards and nineteen workflows, but exposed duplicate receipt-recovery status in the hidden Customer response panel. That section now mounts once; a fixture verifies original receipt restoration across tabs/reload without resending. The long-report journey also waits for the verified preview before its next presentation, and desktop/phone fixtures cover five independent response captures. Fresh aggregate CI and owner visual review remain pending.
 
+The `2b9bc32d` rerun passed receipt recovery and reached a later FI-07 form-readiness race: its label locator matched the response tab panel before the verified presentation opened. The journey now waits for the focused sheet, targets its combobox, and observes save completion before correction. A controlled delayed-presentation fixture covers that boundary and exact correction lineage; no command or timeout is relaxed. Fresh CI and owner visual review remain pending.
+
 ## People register implementation and synthetic verification — 20 October 2026
 
 The accepted CS-02 People register is implemented in the dedicated `codex/accepted-ui-build` worktree: `/people` and the People view of `/contacts`, with the existing Person record receiving the exact handover. Source: **PPO - Design**, page `1395:150275`, named **People — accepted**, register/tablet/phone `1395:150312`, `1395:150835`, `1395:151069`, plus the three register states. The later compact phone amendment removes repeated toolbar rows. The queue-only PR #624 merged before the application change; the application is draft PR #625.
