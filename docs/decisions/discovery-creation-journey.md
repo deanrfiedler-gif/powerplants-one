@@ -23,7 +23,7 @@ This decision applies to ES-02 `/estimating/discovery/new`, PPO-010 and EST-01â€
 
 The existing UI-only compromise would retain a second navigation and link action and prevent the accepted owner selection. It remains safe for legacy clients but does not fulfil the chosen journey. Running two browser mutations for the new flow would expose partial creation/link outcomes and complicate exact retry. The chosen implementation keeps the accepted review dialog and moves the coordinated operation into the existing PostgreSQL transaction and command-journal architecture. It introduces no framework, dependency, service, grant or capability.
 
-The existing Sales binding constraint ties receiver, link actor and workspace owner together. The prerequisite must extend its evidence checks for reviewed initial creation while retaining the existing binding branch and all historical rows. Migration 0113 is reserved; inspect the fully migrated synthetic schema and prove populated upgrades, rollback and evidence refusal. The migration is not permission to weaken accepted-source or audit requirements.
+The existing Sales binding constraint ties receiver, link actor and workspace owner together. The prerequisite extends its evidence checks for reviewed initial creation while retaining the existing binding branch and all historical rows. Migration 0113 replaces that guard after inspection of the fully migrated synthetic schema. Populated upgrades, rollback and evidence refusal require proof. The migration is not permission to weaken accepted-source or audit requirements.
 
 ## Required evidence
 
