@@ -51,3 +51,7 @@ Backend catalogue amendment (ADR-0054): retain the existing r01 area fixture, st
 ## ES-02 Figma consumer
 
 The [Estimation Wizard host](estimation-journey.md) now adopts the accepted Figma record layout using this existing control. Its host fixtures cover desktop and phone save/revision continuity; source and review remain separate. The component implementation is unchanged outside the scoped ES-02 consumer.
+
+## First discovery creation consumer
+
+The existing /estimating/discovery/new route now reuses this host/control, with fixture states in tests/helpers/discovery-creation.ts and tests/browser/discovery-creation.spec.ts. The [creation page contract](../pages/route-estimating-discovery-new.md) records frame references, shared compact phone header, combined review and original-command recovery. WizardDialog is extracted from the saved wizard; AnswerFields is exported unchanged for the new consumer. Scope-specific CSS adopts the shared Button tokens above the legacy wizard reset. No new generic component family or independent catalogue renderer is claimed. Owner visual review and the first-creation alignment item remain pending.

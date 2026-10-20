@@ -1,3 +1,4 @@
+import { saveCsWithReviewedRequirements as saveCs } from "../helpers/readiness-publication";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { beforeEach, after, test } from "node:test";
@@ -8,7 +9,7 @@ import {
   transaction,
 } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
-import { createCs, saveCs, readCs } from "../../src/shared/cs/service";
+import { createCs, readCs } from "../../src/shared/cs/service";
 import {
   readFieldReadiness,
   acknowledgeFieldReadiness,
@@ -150,7 +151,10 @@ test("FI05 exact assigned review reuses CS records, keeps missing induction unkn
   assert.equal(view.acknowledgements.length, 1);
   assert.equal(view.acknowledgements[0].current_selection, true);
   const originalSnapshot = (
-    await rows("SELECT basis FROM ppo.cs_snapshots WHERE record_id=$1", [f.id])
+    await rows(
+      "SELECT basis FROM ppo.cs_snapshots WHERE record_id=$1 AND kind='Preparation'",
+      [f.id],
+    )
   )[0].basis;
   assert.equal(originalSnapshot.field_context.actor_id, f.tech.actor_id);
   assert.equal(
@@ -181,9 +185,10 @@ test("FI05 exact assigned review reuses CS records, keeps missing induction unkn
   );
   assert.deepEqual(
     (
-      await rows("SELECT basis FROM ppo.cs_snapshots WHERE record_id=$1", [
-        f.id,
-      ])
+      await rows(
+        "SELECT basis FROM ppo.cs_snapshots WHERE record_id=$1 AND kind='Preparation'",
+        [f.id],
+      )
     )[0].basis,
     originalSnapshot,
   );

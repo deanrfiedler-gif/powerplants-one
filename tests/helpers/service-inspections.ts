@@ -1,11 +1,7 @@
+import { saveCsWithReviewedRequirements as saveCs } from "./readiness-publication";
 import { randomUUID } from "node:crypto";
 import { started, principal, base, rows, png, startInput } from "./field";
-import {
-  createCs,
-  saveCs,
-  readCs,
-  csAction,
-} from "../../src/shared/cs/service";
+import { createCs, readCs, csAction } from "../../src/shared/cs/service";
 import { transaction } from "../../src/platform/database";
 import { loadServiceInspections } from "../../src/inspections/service-context";
 import {

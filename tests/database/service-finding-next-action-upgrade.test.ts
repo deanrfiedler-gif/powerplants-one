@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { migrate, seed } from "../../scripts/database";
+import { migrationFiles } from "../../scripts/migration-registry";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { confirmed, principal, base } from "../helpers/packs";
@@ -8,13 +9,22 @@ import { readActivity, activityCommand } from "../../src/activities/activities";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database only");
 after(closeDatabase);
-test("0111 preserves populated 0109 sources, Activities, grants and exact migration/seed ledgers", async () => {
+for (const through of [109, 113])
+test(`0111 preserves populated ${through} sources, Activities, grants and exact migration/seed ledgers`, async () => {
   const c = database();
   await c.query(
     "DROP SCHEMA IF EXISTS ppo CASCADE; DROP SCHEMA IF EXISTS ppo_proof CASCADE; DROP TABLE IF EXISTS public.ppo_migrations",
   );
-  await migrate(109);
-  await seed(109);
+  // Reproduce main before the reserved 0111 migration lands, including the
+  // newer 0113 history. Installing a lower reserved version must retain it.
+  const index = migrationFiles.indexOf("0111-service-finding-next-actions.sql");
+  const [migration] = (migrationFiles as unknown as string[]).splice(index, 1);
+  try {
+    await migrate(through);
+    await seed(through);
+  } finally {
+    (migrationFiles as unknown as string[]).splice(index, 0, migration);
+  }
   await confirmed();
   const tables = [
     "activities",
@@ -45,6 +55,7 @@ test("0111 preserves populated 0109 sources, Activities, grants and exact migrat
   const ledger = (
     await c.query("SELECT * FROM public.ppo_migrations ORDER BY version")
   ).rows;
+  const versions = new Set(ledger.map((row) => row.version));
   const p = await principal(),
     id = (
       await c.query("SELECT activity_id FROM ppo.schedule_follow_ups LIMIT 1")
@@ -73,18 +84,18 @@ test("0111 preserves populated 0109 sources, Activities, grants and exact migrat
   assert.deepEqual(
     (
       await c.query(
-        "SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version",
+        "SELECT * FROM public.ppo_migrations ORDER BY version",
       )
-    ).rows,
+    ).rows.filter((row) => versions.has(row.version)),
     ledger,
   );
   assert.deepEqual(
     (
       await c.query(
-        "SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version",
+        "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
-    ).rows,
-    [{ version: 111 }],
+    ).rows.filter((row) => !versions.has(row.version)),
+    through === 109 ? [{ version: 111 }, { version: 113 }] : [{ version: 111 }],
   );
   assert.equal(
     (

@@ -78,7 +78,7 @@ Fertigation: handover, fertigation-figma-implementation.md; exact scopes, neutra
 
 Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. PT-28 synthetic pass; PT-30 continuous; human acceptance open. Retain #330, installed SQL.
 
-Sales: lead-to-delivery-continuity.md and sales-followup-continuity.md; outcome, Won and Lead-context decisions apply. Preserve native facts, source access and Activity owners; accept, create, link and plan separately.
+Sales: lead-to-delivery-continuity.md; sales-followup-continuity.md. Keep facts/access/Activity owners. discovery-creation-journey.md: initial owner/exact brief link: atomic; later linking, acceptance and planning stay separate.
 
 Equipment: ADR-0045 / equipment-native-completion-handover.md; reuse Assets, CS, Inspection and SH; read-only scanning. Preserve originals/context. Recovery grants no controller-restore authority; support grants no replacement authority.
 
