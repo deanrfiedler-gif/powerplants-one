@@ -1,3 +1,4 @@
+import { saveCsWithReviewedRequirements as saveCs } from "../helpers/readiness-publication";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { before, after, test } from "node:test";
@@ -6,12 +7,7 @@ import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { createAsset, createFacility } from "../../src/shared/commands";
-import {
-  createCs,
-  saveCs,
-  readCs,
-  csAction,
-} from "../../src/shared/cs/service";
+import { createCs, readCs, csAction } from "../../src/shared/cs/service";
 import { createProject } from "../../src/projects/service";
 import { createEngineeringRequest } from "../../src/engineering/service";
 import {

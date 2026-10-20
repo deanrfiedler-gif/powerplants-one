@@ -520,17 +520,20 @@
     },
     {
       "key": "scope:CS-06",
-      "title": "Site access and horticultural readiness",
+      "title": "Access & readiness",
       "kind": "scope",
       "module": "CS",
-      "summary": "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation.",
+      "summary": "Review the exact visit basis, independently publish requirements and review evidence; acknowledgement grants no authority to proceed.",
       "path": "/sites/[id]/readiness",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "src/components/cs-workspace.tsx",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
         "src/components/cs-forms.tsx",
+        "src/components/ui/shared-record.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/readiness.ts"
+        "src/shared/cs/readiness.ts",
+        "src/shared/cs/requirement-revisions.ts"
       ],
       "guide_key": "guide.cs.06",
       "design_path": "docs/design/development/pages/scope-cs-06.md",
@@ -546,12 +549,14 @@
         "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/access-readiness-figma-design.md"
+        "docs/decisions/access-readiness-figma-design.md",
+        "docs/decisions/access-readiness-native-build.md",
+        "docs/decisions/field-readiness-gate-proposal.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-06 native implementation of the accepted design; owner application acceptance pending",
+      "visual_status": "Accepted Figma source; native owner visual review pending",
+      "functional_status": "Focused database, unit and browser proof executed; Windows limits and CI status in access-readiness-native evidence; owner review pending",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -2706,7 +2711,7 @@
       "title": "Service review and controlled report workspace",
       "kind": "scope",
       "module": "SV",
-      "summary": "Integrate the fuller Service Review & Reports workspace over the existing review/report routes and commands.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2729,11 +2734,16 @@
         "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2772,7 +2782,9 @@
         "docs/reference/ui/service/findings-design-r01/PPO-Findings-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/findings-figma-design.md"
+        "docs/decisions/findings-figma-design.md",
+        "docs/decisions/service-findings-backend.md",
+        "docs/contracts/service-findings.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -6930,10 +6942,14 @@
       "title": "Discovery costing",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Review the exact saved discovery basis, edit a proposal copied from the current estimate and deliberately adopt a new cost version. Discovery never generates prices.",
       "path": "/estimating/discovery/[id]/costing",
       "source_paths": [
-        "src/app/(business)/estimating/discovery/[id]/costing/page.tsx"
+        "src/app/(business)/estimating/discovery/[id]/costing/page.tsx",
+        "src/components/discovery-costing.tsx",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css"
       ],
       "guide_key": "guide.page.estimating.discovery.id.costing",
       "design_path": "docs/design/development/pages/route-estimating-discovery-id-costing.md",
@@ -6951,11 +6967,12 @@
         "docs/reference/ui/estimating/discovery-costing-figma-design-r01/PPO-Discovery-Costing-10-Phone-Loading-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/discovery-costing-figma-design.md"
+        "docs/decisions/discovery-costing-figma-design.md",
+        "docs/testing/evidence/discovery-costing/README.md"
       ],
-      "scope_status": "refine",
+      "scope_status": "Native implementation; owner acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Verification recorded separately in docs/testing/evidence/discovery-costing/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7046,7 +7063,7 @@
       "title": "Create discovery workspace",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Choose an eligible opportunity, author the first discovery with shared wizard controls, then review its estimator and exact accepted Sales brief link together. Original-request recovery and all drawn creation states remain explicit.",
       "path": "/estimating/discovery/new",
       "source_paths": [
         "src/app/(business)/estimating/discovery/new/page.tsx"
@@ -7072,11 +7089,20 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/decisions/create-discovery-workspace-figma-design.md"
+        "docs/decisions/create-discovery-workspace-figma-design.md",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation-parts.tsx",
+        "src/components/discovery-creation-model.ts",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/estimating/discovery-creation-context.ts",
+        "src/estimating/discovery-creation-reads.ts",
+        "docs/decisions/discovery-creation-journey.md",
+        "docs/testing/evidence/create-discovery-workspace/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Implemented; page unit, scoped read, eight browser and two phone dialog checks passed. Evidence and baseline limits: docs/testing/evidence/create-discovery-workspace/README.md. Prerequisite transaction proof, complete CI and owner visual review remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -7496,7 +7522,7 @@
     },
     {
       "key": "route:/people",
-      "title": "Contact directory",
+      "title": "People",
       "kind": "route",
       "module": "CS",
       "summary": "Find a canonical Person and maintain accurate contact information without inventing customer authority or consent.",
@@ -7504,9 +7530,13 @@
       "source_paths": [
         "src/app/(business)/people/page.tsx",
         "src/components/crm-directory.tsx",
-        "src/components/context-screens.tsx",
         "src/crm/directory.ts",
-        "src/app/layout.tsx"
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx"
       ],
       "guide_key": "guide.page.people",
       "design_path": "docs/design/development/pages/route-people.md",
@@ -7518,12 +7548,14 @@
         "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/people-figma-design.md"
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/design/development/people-native-fixtures.json"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-02 accepted People register implemented for synthetic review; person record follows separately",
+      "visual_status": "Accepted People and compact-header sources compared with application captures at 1440, 1024, 390 and 320 px; deviations recorded; owner visual/device review pending",
+      "functional_status": "Two real database cases and ten People browser cases pass; desktop/mobile navigation and retained saved views also pass. Full unit run has three main-reproduced Windows failures and two timeouts that pass in quiet reruns. Check results and boundaries: docs/testing/evidence/people-native/README.md",
+      "deployment_status": "Dedicated local worktree; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -7534,7 +7566,7 @@
         "route:/contacts"
       ],
       "reviewer": null,
-      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
+      "notes": "PPO - Design page 1395:150275, register 1395:150312, tablet 1395:150835, phone 1395:151069; named People — accepted. No review fingerprint copied. Existing saved views remain at people_layout=directory; Organisations hub and Person record remain earlier native workflows."
     },
     {
       "key": "route:/projects/[id]",
@@ -8163,7 +8195,7 @@
       "title": "Service report detail",
       "kind": "route",
       "module": "SV",
-      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate. Submitted Photo entries support exact original inspection by the current Service review owner; customer output remains separate.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports/[id]",
       "source_paths": [
         "src/app/(business)/service/reports/[id]/page.tsx"
@@ -8194,11 +8226,16 @@
         "src/components/report-photo.tsx",
         "src/reports/photos.ts",
         "docs/decisions/report-photo-inspection.md",
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8218,7 +8255,7 @@
       "title": "Service review & reports",
       "kind": "route",
       "module": "SV",
-      "summary": "FI-07 uses the existing P07/P09 report destinations: customer attendance acknowledgement, exact report response, retained corrections and owned follow-up; internal Service acceptance remains separate.",
+      "summary": "SV-06 accepted-design register, report snapshot and tabbed record over the existing exact review, issue and FI-07 response commands. Latest-200 window, permission-filtered queues and owned work remain bounded.",
       "path": "/service/reports",
       "source_paths": [
         "src/app/(business)/service/reports/page.tsx"
@@ -8243,11 +8280,16 @@
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
         "docs/testing/evidence/field-customer-response/README.md",
-        "docs/decisions/service-review-figma-design.md"
+        "docs/decisions/service-review-figma-design.md",
+        "src/components/report-register.tsx",
+        "src/components/report-workspace.tsx",
+        "src/reports/register-model.ts",
+        "src/app/styles/service-reports.css",
+        "docs/testing/evidence/service-review-build/README.md"
       ],
       "scope_status": "refine",
-      "visual_status": "Needs review",
-      "functional_status": "FI-07 persisted synthetic verification is recorded separately in docs/testing/evidence/field-customer-response/README.md. Human acceptance pending.",
+      "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
+      "functional_status": "SV-06 build verification and local limits: docs/testing/evidence/service-review-build/README.md. FI-07 prior persisted proof remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -9095,7 +9137,13 @@
         "src/app/(business)/contacts/page.tsx",
         "src/components/crm-directory.tsx",
         "src/components/contacts-navigation.tsx",
-        "src/crm/directory.ts"
+        "src/crm/directory.ts",
+        "src/components/people-register.tsx",
+        "src/shared/people-register.ts",
+        "src/shared/people-register-model.ts",
+        "src/app/api/v1/people/register/route.ts",
+        "src/app/styles/people-register.css",
+        "src/shell/secondary-menu.tsx"
       ],
       "guide_key": "guide.page.contacts",
       "design_path": "docs/design/development/pages/route-contacts.md",
@@ -9107,12 +9155,14 @@
         "docs/reference/ui/customers/people-design-r01/PPO-People-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/people-figma-design.md"
+        "docs/decisions/people-figma-design.md",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/design/development/people-native-fixtures.json"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-02 accepted People register implemented for synthetic review; person record follows separately",
+      "visual_status": "Accepted People and compact-header sources compared with application captures at 1440, 1024, 390 and 320 px; deviations recorded; owner visual/device review pending",
+      "functional_status": "Two real database cases and ten People browser cases pass; desktop/mobile navigation and retained saved views also pass. Full unit run has three main-reproduced Windows failures and two timeouts that pass in quiet reruns. Check results and boundaries: docs/testing/evidence/people-native/README.md",
+      "deployment_status": "Dedicated local worktree; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -9123,7 +9173,7 @@
         "route:/people"
       ],
       "reviewer": null,
-      "notes": "Directory host uses deliberate link activation with automatic prefetch disabled; exact receiving and timing evidence remain separate from visual/owner acceptance."
+      "notes": "PPO - Design page 1395:150275, register 1395:150312, tablet 1395:150835, phone 1395:151069; named People — accepted. No review fingerprint copied. Existing saved views remain at people_layout=directory; Organisations hub and Person record remain earlier native workflows."
     },
     {
       "key": "route:/engineering/[id]/changes",
@@ -10903,17 +10953,20 @@
     },
     {
       "key": "route:/sites/[id]/readiness",
-      "title": "sites /  id  / readiness",
+      "title": "Access & readiness",
       "kind": "route",
       "module": "CS",
-      "summary": "Record exact requirements, evidence and work windows, then evaluate and acknowledge a retained visit preparation.",
+      "summary": "Review the exact visit basis, independently publish requirements and review evidence; acknowledgement grants no authority to proceed.",
       "path": "/sites/[id]/readiness",
       "source_paths": [
         "src/app/(business)/sites/[id]/readiness/page.tsx",
-        "src/components/cs-workspace.tsx",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
         "src/components/cs-forms.tsx",
+        "src/components/ui/shared-record.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/readiness.ts"
+        "src/shared/cs/readiness.ts",
+        "src/shared/cs/requirement-revisions.ts"
       ],
       "guide_key": "guide.route-sites-id-readiness",
       "design_path": "docs/design/development/pages/route-sites-id-readiness.md",
@@ -10929,12 +10982,14 @@
         "docs/reference/ui/site-access/access-readiness-design-r01/PPO-Access-Readiness-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/access-readiness-figma-design.md"
+        "docs/decisions/access-readiness-figma-design.md",
+        "docs/decisions/access-readiness-native-build.md",
+        "docs/decisions/field-readiness-gate-proposal.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-06 native implementation of the accepted design; owner application acceptance pending",
+      "visual_status": "Accepted Figma source; native owner visual review pending",
+      "functional_status": "Focused database, unit and browser proof executed; Windows limits and CI status in access-readiness-native evidence; owner review pending",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "reviewer": null,

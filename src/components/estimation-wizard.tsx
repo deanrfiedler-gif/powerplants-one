@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { WizardDialog as Dialog } from "./estimation-wizard-dialog";
 import { SpecialistEntry } from "./specialist-entry";
 import { WorkspaceSalesBriefs } from "./sales-estimating-link";
 import { useSearchParams } from "next/navigation";
@@ -140,60 +141,6 @@ const valueText = (value: unknown): string =>
               .map(([k, v]) => `${k}: ${valueText(v)}`)
               .join("\n")
         : String(value);
-
-// A modal dialog: head, body and footer, 640 px, closed by Escape, Cancel or the owner.
-function Dialog({
-  title,
-  subtitle,
-  children,
-  footer,
-  close,
-  wide = false,
-  label,
-}: {
-  title: string;
-  subtitle?: ReactNode;
-  children: ReactNode;
-  footer?: ReactNode;
-  close: () => void;
-  wide?: boolean;
-  label?: string;
-}) {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const d = ref.current!;
-    d.showModal();
-    return () => d.close();
-  }, []);
-  return (
-    <dialog
-      ref={ref}
-      className={`es02-dialog${wide ? " es02-dialog-wide" : ""}`}
-      aria-label={label ?? title}
-      onCancel={(e) => {
-        e.preventDefault();
-        close();
-      }}
-    >
-      <div className="es02-dialog-head">
-        <div>
-          <h2>{title}</h2>
-          {subtitle && <p>{subtitle}</p>}
-        </div>
-        <button
-          type="button"
-          className="es02-button es02-button-icon"
-          onClick={close}
-          aria-label={`Close ${title}`}
-        >
-          <Icon name="close" />
-        </button>
-      </div>
-      <div className="es02-dialog-body">{children}</div>
-      {footer && <div className="es02-dialog-foot">{footer}</div>}
-    </dialog>
-  );
-}
 
 // A right-side panel that overlays the summary and never replaces it (board P7). It does
 // not trap focus; Escape, the close control or the owner closes it.

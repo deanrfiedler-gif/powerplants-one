@@ -120,7 +120,7 @@ export function CsLanding({
     </div>
   );
 }
-function CreateCs({
+export function CreateCs({
   kind,
   contextId,
   onSaved,

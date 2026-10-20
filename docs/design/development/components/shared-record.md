@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Review: pending. Scope: CS-01 first consumer; no other page is adopted by this implementation.
+Owner: Dean Fiedler. Review: pending. Consumers: CS-01 and CS-06; each retains its own page acceptance and source authority.
 
 `SharedRecord`, `RecordFactSection` and `RecordSourceState` are exported from `src/components/ui/shared-record.tsx`. They compose existing PageHeader, RecordTabs/RecordPanel, Button, WorklistMenu/Panel and semantic sections. Domain reads, actions and permissions stay in the host. Styling is the scoped record section of `organisations.css`; it uses shared semantic tokens.
 
@@ -29,3 +29,11 @@ Mappings inherited from the catalogue: Components > Record / Field `224:12`, Vie
 Incoming: exact permitted organisation. Outgoing: existing source records, people/sites, stakeholders, account development and My Work. Correct details uses only the existing name-revision command, expected-version comparison and recoverable original operation. Additional correction fields are not inferred.
 
 No owner/device acceptance, deployment or production-readiness claim is recorded.
+
+## CS-06 host binding
+
+Access & readiness opts into `sourcesLabel="Readiness basis"` and `statusPlacement="title"`; defaults preserve CS-01. Domain reads, permissions and commands remain in the host. Scoped CSS supplies 380/300 px facts and the 390/320 phone treatment. Phone tabs are reordered semantically.
+
+The CS-06 host suppresses the second phone navigation bar while retaining the compact header's menu, and supplies its own status summary and sticky actions. Review forms restore opener focus. Its delayed-read fixture keeps subsequent mutations unavailable until the saved record version arrives; this is host behaviour, not a change to the shared record's defaults.
+
+[Deterministic fixture](../../../../tests/helpers/access-readiness-fixture.ts) and [browser states](../../../../tests/browser/access-readiness-native.spec.ts) cover checks, grouped requirements, exact review/acknowledgement, stale refusal, empty, read-only and denied cases. [Current evidence](../../../testing/evidence/access-readiness-native/README.md) records execution separately. PPO - Design, Access & readiness — accepted: `1400:346553`, `1400:354078`, `1400:347071`, `1400:355748`; full mapping is in the [page contract](../pages/route-sites-id-readiness.md). Owner alignment review, including undrawn forms and token differences, remains pending.
