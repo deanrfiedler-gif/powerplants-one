@@ -37,7 +37,12 @@ function composition(body: string, mentionsValue: unknown, asksValue: unknown) {
     const ordinal = Number(m.ordinal);
     if (!Number.isInteger(ordinal) || ordinal < 1 || ordinal > maxMentions)
       invalid(`mentions.${index}`, `Number mentions from 1 to ${maxMentions}.`);
-    const kind = choice(m.kind, `mentions.${index}.kind`, ["Person", "Record"] as const);
+    const kind = choice(m.kind, `mentions.${index}.kind`, ["Person", "Record", "Agent"] as const);
+    if (kind === "Agent") {
+      if ("person_id" in m || "record_type" in m || "record_id" in m)
+        invalid(`mentions.${index}`, "An assistant tag has no user or record identity.");
+      return { ordinal, kind };
+    }
     if (kind === "Person") {
       if ("record_type" in m || "record_id" in m)
         invalid(`mentions.${index}`, "A person mention names a person only.");
@@ -52,6 +57,8 @@ function composition(body: string, mentionsValue: unknown, asksValue: unknown) {
     };
   });
   const seen = new Set<number>();
+  if (mentions.filter(m => m.kind === "Agent").length > 1)
+    invalid("mentions", "Tag the assistant at most once in a message.");
   for (const m of mentions) {
     if (seen.has(m.ordinal)) invalid("mentions", "Each mention number is used once.");
     seen.add(m.ordinal);
@@ -60,11 +67,11 @@ function composition(body: string, mentionsValue: unknown, asksValue: unknown) {
   if (
     tokens.length !== placed.size ||
     placed.size !== mentions.length ||
-    mentions.some((m) => placed.get(m.ordinal) !== m.kind)
+    mentions.some((m) => placed.get(m.ordinal) !== (m.kind === "Agent" ? "Person" : m.kind))
   )
     invalid(
       "body",
-      "Put each mention in the text once, as @{n} for a person and #{n} for a record, matching its number.",
+      "Put each mention in the text once, as @{n} for a person or assistant and #{n} for a record, matching its number.",
     );
   const rawAsks = asksValue ?? [];
   if (!Array.isArray(rawAsks) || rawAsks.length > maxAsks)

@@ -27,6 +27,29 @@ const invalid = (field?: string) => (error: unknown) => {
   return e.code === "InvalidData" && (!field || e.field_errors?.some((f) => f.field === field) === true);
 };
 
+test("a message can tag Carl once without a user or record identity", () => {
+  const mentions = [{ ordinal: 1, kind: "Agent" }];
+  const input = postMessageInput(randomUUID(), { ...common(), body: "SYN @{1} where is the controller?", mentions });
+  assert.deepEqual(input.mentions, mentions);
+  for (const extra of [{ person_id: randomUUID() }, { record_id: randomUUID() }, { record_type: "Project" }])
+    assert.throws(() => postMessageInput(randomUUID(), {
+      ...common(), body: "SYN @{1}", mentions: [{ ...mentions[0], ...extra }],
+    }), invalid("mentions.0"));
+});
+
+test("two Agent mentions are refused even at different ordinals", () => {
+  assert.throws(() => postMessageInput(randomUUID(), {
+    ...common(), body: "SYN @{1} and @{2}", mentions: [{ ordinal: 1, kind: "Agent" }, { ordinal: 2, kind: "Agent" }],
+  }), invalid("mentions"));
+});
+
+test("a human ask cannot target the Agent ordinal", () => {
+  assert.throws(() => postMessageInput(randomUUID(), {
+    ...common(), body: "SYN @{1}", mentions: [{ ordinal: 1, kind: "Agent" }],
+    asks: [{ ordinal: 1, question: "SYN When?" }],
+  }), invalid("asks.0.ordinal"));
+});
+
 test("a thread starts with a title, a record anchor and a plain body", () => {
   const parsed = startThreadInput(start());
   assert.equal(parsed.anchor_type, "Opportunity");

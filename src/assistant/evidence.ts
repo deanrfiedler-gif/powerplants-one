@@ -8,7 +8,7 @@ import { opportunityVisibility } from "../crm/context";
 import { SALES_KINDS } from "../crm/validation";
 import { activityVisibility } from "../activities/activities";
 import { personCanReadThread, visibleThread } from "../conversations/access";
-import { claimLine } from "./answer";
+import { answerFooter, claimLine, declineBody } from "./answer";
 import { readableSources, sourceKey, type SourceKey } from "./source-access";
 import { agentName, envelopeLimits, type EvidenceEnvelope, type EvidenceItem, type EvidenceValue, type SourceType, type StoredClaim } from "./model";
 
@@ -138,7 +138,7 @@ async function messagesFor(c: QueryClient, p: Principal, thread: string, trigger
   )).rows[0]?.sequence;
   if (!through) throw unavailable();
   const rows = (await c.query(
-    `SELECT id,body,author_kind FROM ppo.conversation_messages
+    `SELECT id,body,author_kind,agent_outcome FROM ppo.conversation_messages
      WHERE workspace_id=$1 AND thread_id=$2 AND sequence<=$3 ORDER BY sequence DESC LIMIT $4`,
     [p.workspace_id, thread, through, envelopeLimits.messages + 1],
   )).rows;
@@ -160,12 +160,11 @@ async function messagesFor(c: QueryClient, p: Principal, thread: string, trigger
         "SELECT ordinal,kind,text,source_numbers FROM ppo.conversation_message_claims WHERE workspace_id=$1 AND message_id=$2 ORDER BY ordinal",
         [p.workspace_id, m.id],
       )).rows as StoredClaim[];
-      const original = claims.map(claimLine).join("\n");
       const safe = claims.map(claim => claim.source_numbers.every(n => {
         const source = sources.find(s => s.number === n);
         return source && allowed.has(sourceKey(source));
       }) ? claimLine(claim) : "A statement from a record you can't open").join("\n");
-      text = original && text.startsWith(original) ? safe + text.slice(original.length) : safe;
+      text = m.agent_outcome === "CannotAnswer" ? declineBody() : safe + answerFooter(text, claims);
     } else {
       const mentions = (await c.query(
         `SELECT m.ordinal,m.kind,m.record_type,m.record_id,u.display_name FROM ppo.conversation_mentions m

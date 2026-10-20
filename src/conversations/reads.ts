@@ -13,6 +13,9 @@ import {
   visibleThread,
 } from "./access";
 import { anchorTypes, type AnchorType } from "./model";
+import { agentLabel, agentName, type StoredClaim, type StoredSource, type TurnReason, type TurnState } from "../assistant/model";
+import { answerFooter, declineBody } from "../assistant/answer";
+import { readerView } from "../assistant/reader-view";
 
 const iso = (value: Date | null) => (value ? value.toISOString() : null);
 // The anchor's own number and title. Reaching the thread already means the reader can open the record.
@@ -101,6 +104,8 @@ export async function conversationBadge(p: Principal) {
 // cannot open carries no type, ID, number or title.
 export async function readThread(p: Principal, id: string) {
   return transaction(async (c) => {
+    // P1: permission checks, source labels and the drawn answer share one observation.
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
     const t = await visibleThread(c, p, uuid(id, "thread_id"));
     const anchor = (
       await c.query(
@@ -120,8 +125,10 @@ export async function readThread(p: Principal, id: string) {
     ).rows;
     const messages = (
       await c.query(
-        `SELECT m.id,m.sequence,m.author_id,u.display_name AS author_name,m.body,m.created_at FROM ppo.conversation_messages m
-         JOIN ppo.users u ON (u.workspace_id,u.id)=(m.workspace_id,m.author_id)
+        `SELECT m.id,m.sequence,m.author_id,u.display_name AS author_name,m.body,m.created_at,m.author_kind,m.acted_for_id,
+          af.display_name AS acted_for_name,m.agent_outcome,m.adapter,m.left_out_count FROM ppo.conversation_messages m
+         LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(m.workspace_id,m.author_id)
+         LEFT JOIN ppo.users af ON (af.workspace_id,af.id)=(m.workspace_id,m.acted_for_id)
          WHERE m.workspace_id=$1 AND m.thread_id=$2 ORDER BY m.sequence`,
         [p.workspace_id, t.id],
       )
@@ -140,6 +147,7 @@ export async function readThread(p: Principal, id: string) {
     for (const m of mentionRows) {
       let entry: unknown;
       if (m.kind === "Person") entry = { ordinal: m.ordinal, kind: "Person", person_id: m.person_id, display_name: m.person_name };
+      else if (m.kind === "Agent") entry = { ordinal: m.ordinal, kind: "Agent", display_name: agentName };
       else {
         const key = `${m.record_type}:${m.record_id}`;
         if (!openable.has(key)) {
@@ -175,6 +183,44 @@ export async function readThread(p: Principal, id: string) {
         [p.workspace_id, t.id],
       )
     ).rows;
+    const turns = (await c.query<{
+      id: string; trigger_message_id: string; state: TurnState; acted_for_id: string; reason: TurnReason | null;
+    }>(
+      `SELECT id,trigger_message_id,state,acted_for_id,CASE WHEN acted_for_id=$3 THEN reason END AS reason
+       FROM ppo.assistant_turns WHERE workspace_id=$1 AND thread_id=$2 ORDER BY created_at,id`,
+      [p.workspace_id, t.id, p.actor_id],
+    )).rows;
+    const drawnMessages = [];
+    for (const m of messages) {
+      const common = {
+        id: m.id, sequence: m.sequence, author_kind: m.author_kind as "Person" | "Agent",
+        author_id: m.author_id as string | null,
+        author_name: m.author_kind === "Agent" ? agentLabel : m.author_name,
+        created_at: m.created_at.toISOString(), mentions: drawn.get(m.id) ?? [],
+      };
+      if (m.author_kind === "Person") {
+        drawnMessages.push({ ...common, body: m.body as string });
+        continue;
+      }
+      const claims = (await c.query<StoredClaim>(
+        "SELECT ordinal,kind,text,source_numbers FROM ppo.conversation_message_claims WHERE workspace_id=$1 AND message_id=$2 ORDER BY ordinal",
+        [p.workspace_id, m.id],
+      )).rows;
+      const sources = (await c.query<StoredSource>(
+        "SELECT number,record_type AS type,record_id,source_version,retrieved_at FROM ppo.conversation_message_sources WHERE workspace_id=$1 AND message_id=$2 ORDER BY number",
+        [p.workspace_id, m.id],
+      )).rows;
+      const view = await readerView(c, p.workspace_id, p.actor_id, claims, sources);
+      drawnMessages.push({
+        ...common,
+        body: m.agent_outcome === "CannotAnswer" ? declineBody() : view.body + answerFooter(m.body, claims),
+        acted_for: { user_id: m.acted_for_id as string, display_name: m.acted_for_name as string },
+        agent: {
+          outcome: m.agent_outcome as "Answered" | "CannotAnswer", adapter: m.adapter as "Simulated" | "Claude",
+          label: m.adapter as string, claims: view.claims, sources: view.sources, left_out: m.left_out_count as number,
+        },
+      });
+    }
     return {
       id: t.id,
       title: t.title,
@@ -191,15 +237,8 @@ export async function readThread(p: Principal, id: string) {
         role: r.role,
         last_read_sequence: r.last_read_sequence,
       })),
-      messages: messages.map((m) => ({
-        id: m.id,
-        sequence: m.sequence,
-        author_id: m.author_id,
-        author_name: m.author_name,
-        body: m.body,
-        created_at: m.created_at.toISOString(),
-        mentions: drawn.get(m.id) ?? [],
-      })),
+      messages: drawnMessages,
+      turns,
       asks: asks.map((k) => ({
         id: k.id,
         message_id: k.message_id,

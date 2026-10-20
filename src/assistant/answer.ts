@@ -50,6 +50,17 @@ export function coverageLines(envelope: Pick<EvidenceEnvelope, "coverage" | "lef
 export function claimLine(claim: Pick<StoredClaim, "kind" | "text" | "source_numbers">): string {
   return claim.kind === "Gap" ? `Gap: ${claim.text}` : `${claim.text} ${claim.source_numbers.map(n => `[${n}]`).join(" ")}`;
 }
+// The immutable body also holds PPO's coverage lines. Preserve only that fixed grammar
+// when redrawing claims, never arbitrary trailing text from the original answer.
+export function answerFooter(body: string, claims: StoredClaim[]): string {
+  const prefix = claims.map(claimLine).join("\n");
+  if (!prefix || !body.startsWith(prefix + "\n")) return "";
+  const suffix = body.slice(prefix.length);
+  const names = Object.values(coverageNames).join("|");
+  const coverage = new RegExp(`^Coverage: \\d+ (${names}) shown \\(limit \\d+; more exist\\)\\.$`);
+  return suffix.slice(1).split("\n").every(line => coverage.test(line)
+    || /^\d+ sources? left out because not everyone here can see them\.$/.test(line)) ? suffix : "";
+}
 export function renderAnswer(checked: CheckedAnswer, envelope: EvidenceEnvelope): {
   body: string; claims: StoredClaim[]; sources: StoredSource[];
 } {
