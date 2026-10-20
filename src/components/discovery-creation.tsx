@@ -76,7 +76,7 @@ function ChooseOpportunity({ initial, onContinue }: { initial: string; onContinu
       <Button variant="primary" disabled={!current || choices.loading || !!choices.error} onClick={() => current && onContinue(current.id)}><Icon name="arrow-right" />Continue to discovery</Button></>}>
     <section className="create-choose" aria-labelledby="create-choose-title"><h2 id="create-choose-title">Choose the opportunity</h2>
       <p>Only opportunities you can estimate that have no estimate and no workspace yet are listed, newest first.</p>
-      <label className="create-search"><Icon name="search" /><span className="sr-only">Search opportunity, number or customer</span><input type="search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search opportunity, number or customer" disabled={choices.loading} /></label>
+      <label className="create-search"><Icon name="search" /><span className="sr-only">Search opportunity, number or customer</span><input type="search" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search opportunity or customer" disabled={choices.loading} /></label>
       <ErrorNotice error={choices.error} />{!!choices.error && <Button onClick={choices.reload}>Try loading again</Button>}
       {choices.loading && <><p role="status">Loading permitted opportunities…</p><div className="create-skeletons" aria-hidden="true">{[0, 1, 2, 3].map(i => <div key={i}><span /><span /></div>)}</div></>}
       {!choices.loading && !choices.error && (items.length ? <>
