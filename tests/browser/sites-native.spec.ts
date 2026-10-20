@@ -110,6 +110,15 @@ test("CS04 accepted compositions at desktop, tablet and 390/320 with exact hando
           exact: true,
         }),
       ).toBeVisible();
+      if (width === 390) {
+        const searchButton = page.getByRole("button", { name: "Search sites", exact: true });
+        await searchButton.click();
+        const filters = page.getByRole("dialog", { name: "Search and filter sites" });
+        await expect(filters.getByLabel("Search sites", { exact: true })).toBeFocused();
+        await capture(page, info, "filters-390");
+        await filters.press("Escape");
+        await expect(searchButton).toBeFocused();
+      }
     }
     await capture(page, info, `register-${width}`);
     await page.goto(`/sites/${siteId}?department=service`);
@@ -225,6 +234,7 @@ test("CS04 loading, empty, retry, revoked access and partial source states", asy
     page.getByRole("heading", { name: "Sites unavailable with this access" }),
   ).toBeVisible();
   await expect(page.locator(".sites-phone-list")).toHaveCount(0);
+  await capture(page, info, "denied-390");
   await page.route(`**/api/v1/sites/${siteId}/overview`, (route) =>
     route.fulfill({
       json: {

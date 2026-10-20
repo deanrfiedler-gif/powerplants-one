@@ -275,15 +275,15 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
           ["Biosecurity controls", s.biosecurity_recorded],
           ["Primary contact", !!s.primary_contact],
         ].map(([label, known]) => (
-          <span key={String(label)}>
+          <span key={String(label)} title={`${label}: ${known ? "recorded" : "unknown"}`}>
             <ProductIcon name={known ? "check" : "warning"} />
             {label}
-            {known ? " recorded" : " unknown"}
+            {known ? label === "Address" ? " recorded" : "" : " unknown"}
           </span>
         ))}
         <Link href={readiness}>
           <ProductIcon name="warning" />
-          Check readiness in CS-06
+          Readiness in CS-06
         </Link>
         <span>
           <ProductIcon name="info" />
@@ -663,10 +663,9 @@ function SiteEquipment({ site }: { site: SiteRow }) {
                 .map((item) => (
                   <tr key={item.id}>
                     <td>
-                      <Link href={`/equipment/${item.id}`}>
+                      <Link href={`/equipment/${item.id}`} title={item.display_number}>
                         {item.description}
                       </Link>
-                      <small>{item.display_number}</small>
                     </td>
                     <td>
                       {item.facility_id ? (

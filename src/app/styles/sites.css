@@ -162,6 +162,7 @@
 #ppo-sites .sites-col-name a {
   display: block;
   color: var(--ink);
+  line-height: 18px;
 }
 #ppo-sites .sites-col-name strong {
   font-weight: 500;
@@ -169,6 +170,7 @@
 #ppo-sites .sites-col-name small {
   display: block;
   font-size: 11px;
+  line-height: 14px;
   color: var(--muted);
 }
 #ppo-sites .sites-col-customer {
@@ -384,7 +386,7 @@
   justify-content: space-between;
   gap: 8px 16px;
   min-height: 102px;
-  padding: 18px 24px;
+  padding: 14px 24px;
   border-bottom: 1px solid var(--line);
   background: var(--white);
 }
@@ -427,7 +429,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px 18px;
-  padding: 12px 24px;
+  padding: 10px 24px;
   background: var(--white);
   border-bottom: 1px solid var(--line);
   font-size: 12px;
@@ -615,6 +617,8 @@
 }
 #ppo-sites .site-card footer {
   display: flex;
+  justify-content: flex-start;
+  text-align: left;
   gap: 10px;
   align-items: start;
   padding: 12px 16px;
@@ -885,3 +889,11 @@
 #ppo-sites .sites-col-name { width:220px; }
 #ppo-sites .sites-col-location { width:150px; }
 #ppo-sites .sites-col-readiness { width:200px; }
+
+#ppo-sites .site-equipment .ppo-register {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+#ppo-sites .site-equipment th { height: 36px; padding: 0 12px; }
+#ppo-sites .site-equipment td { height: 40px; padding: 8px 12px; }
+#ppo-sites .site-equipment .ppo-register-chip { padding: 0 8px; font-size: 11px; }

@@ -327,7 +327,7 @@ function Register({ query }: { query: URLSearchParams }) {
           <h2>Related</h2>
           <nav aria-label="Related records">
             <Link href="/facilities"><ProductIcon name="nav-facilities" /><span>Facilities & growing areas</span></Link>
-            <Link href="/surveys"><ProductIcon name="nav-surveys" /><span>Site surveys & as-found</span></Link>
+            <Link href="/surveys"><ProductIcon name="work" /><span>Site surveys & as-found</span></Link>
             <Link href="/equipment"><ProductIcon name="nav-equipment" /><span>Equipment</span></Link>
           </nav>
         </>
