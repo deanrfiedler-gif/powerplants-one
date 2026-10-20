@@ -46,6 +46,8 @@ Job Packs: job-pack-figma-implementation.md. Preserve issued revisions/hashes/sc
 
 Prevent duplicate work/financial effects; reconcile unknown outcomes. Distinguish offline local-save/queued/synced/failed/conflict; retain context and unsent evidence.
 
+[SV-07 findings](../decisions/service-findings-backend.md): source-bound next actions use one Activity and its history; changing or completing the task does not close its inspection, incident, incomplete report or customer response. Preserve source authority and explicit native disposition.
+
 ## 7. UX and quality
 
 Australian English; intact logo; ui-style-specification.md; crm-desktop-mobile-refinements.md; department-navigation-icons.md; ADR-0050. Show synthetic/environment.

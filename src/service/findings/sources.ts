@@ -3,6 +3,7 @@ import { unavailable } from "../../platform/errors";
 import type { QueryClient } from "../../platform/permissions";
 import { visible } from "../../shared/reads";
 import { visibleActivity } from "../../activities/activities";
+import { activityRequirements } from "../../activities/requirements";
 import { serviceInspectionAccess } from "../../inspections/service-context";
 import {
   access as incidentAccess,
@@ -22,7 +23,7 @@ export type Candidate = {
 
 // Only identifiers are discovered here. Every payload and every count is gated
 // by the owning source's native authority below, before filtering or paging.
-export const candidateSql = `
+export const nativeCandidateSql = `
  SELECT 'inspection' AS source,d.id,d.host_id AS parent_id,d.activity_id FROM ppo.inspection_defects d
  WHERE d.workspace_id=$1 AND d.host_type='ServiceAppointment'
  UNION ALL
@@ -36,6 +37,11 @@ export const candidateSql = `
  WHERE r.workspace_id=$1 AND r.response<>'Accepted'
  UNION ALL
  SELECT 'schedule',f.activity_id,f.appointment_id,f.activity_id FROM ppo.schedule_follow_ups f WHERE f.workspace_id=$1`;
+
+export const candidateSql = `SELECT n.source,n.id,n.parent_id,COALESCE(n.activity_id,b.activity_id) AS activity_id
+ FROM (${nativeCandidateSql}) n LEFT JOIN ppo.service_finding_activity_bindings b
+ ON b.workspace_id=$1 AND b.source=n.source AND b.source_id=n.id
+ WHERE b.activity_id IS NULL OR (b.parent_id=n.parent_id AND (n.activity_id IS NULL OR n.activity_id=b.activity_id))`;
 
 export async function authorise(c: QueryClient, p: Principal, row: Candidate) {
   let ctx: Awaited<ReturnType<typeof visibleAppointment>>;
@@ -132,6 +138,7 @@ export async function project(
           id: activity.id,
           version: activity.version,
           summary: activity.summary,
+          required_evidence: await activityRequirements(c, p, activity.id),
           status: activity.status,
           owner_id: activity.owner_id,
           owner_name: owner?.display_name ?? "Unknown",
