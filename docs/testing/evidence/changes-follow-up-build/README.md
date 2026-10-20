@@ -27,6 +27,8 @@ The unchanged-main comparison used `0685e30c99d3146005f7699345623d5c5476942d` in
 
 The configured local synthetic database port refused the connection. No database outcome is inferred from browser fixtures. Browser fixtures use the running application with synthetic API responses and block the licensed icon Kit; they do not establish server authority or business acceptance.
 
+The broader [compiled-application CI job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39509143440/job/118926473204) stopped during browser installation, before its build/test proof: stable Chrome was `156.0.8078.47`, whereas the existing runtime guard permits reviewed majors 153–155. The guard also rejects that recorded version on unchanged main; this is a direct guard reproduction, not a rerun of the complete CI job. The browser guard and installer are unchanged in this PR. Browser runtime approval remains a separate maintenance change. Full CI success is not claimed.
+
 ## Visual comparison
 
 Application captures are in [images](images/), made from source commit `242b6e9` with `tests/helpers/changes-follow-up.ts` and the real application shell. The browser spec blocks Kit requests, asserts no licensed icon nodes and waits for fonts before capture. These are current implementation evidence, not replacements for the accepted reference. The final set includes the compact-cell and toolbar corrections.
