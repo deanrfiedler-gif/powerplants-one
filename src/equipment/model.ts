@@ -70,6 +70,12 @@ export function lookupIdentifier(
   if (link) return { value: link[1].toLowerCase(), kind: "id" };
   if (/^SYN-(?:PPO-)?AST-\d{6,}$/.test(text))
     return { value: text, kind: "reference" };
-  if (/^(?:SYN-|PPO-|https?:|javascript:|data:|\/)/i.test(text)) return null;
+  // Synthetic serials also start with SYN-. Reserve Asset syntax and complete
+  // business references without rejecting the broader serial prefix.
+  if (
+    /^(?:SYN-PPO-|SYN-AST-|PPO-|https?:|javascript:|data:|\/)/i.test(text) ||
+    /^SYN-[A-Z]+-\d{6,}$/i.test(text)
+  )
+    return null;
   return { value: text, kind: "serial" };
 }
