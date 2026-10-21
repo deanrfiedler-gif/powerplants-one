@@ -312,3 +312,6 @@ export const registerTableFixture: {
 export const projectCalendarFixture = {
   key: "PPO-PJ-CALENDAR-02" as const, revision: 1, name: "Synthetic site calendar", timezone: "Australia/Sydney", weekdays: [1,2,3,4,5], exceptions: [{date:"2026-09-23",working:false,reason:"Synthetic site closure"}],
 };
+
+// SV-02: navigation stays visible while the triage decision owns the edit form.
+export const serviceRequestTabsFixture = [{id:"triage",label:"Triage"},{id:"reported",label:"Reported issue"},{id:"linked",label:"Linked work"},{id:"updates",label:"Updates"},{id:"history",label:"History"}];

@@ -113,6 +113,8 @@ export const migrationFiles = [
   "0109-customer-communications.sql",
   "0110-conversation-agent.sql",
   "0111-service-finding-next-actions.sql",
+
+  "0112-service-request-statements.sql",
   "0113-discovery-creation-link.sql",
   "0114-reference-namespaces-surveys.sql",
 ] as const;

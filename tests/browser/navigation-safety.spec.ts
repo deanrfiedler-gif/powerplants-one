@@ -139,7 +139,7 @@ for (const selection of ["pointer", "keyboard"] as const) {
 // bar), a header search result or browser Back asks before discarding it; a clean form just leaves.
 for (const form of [
   { path: "/customers/new", label: "Display name" },
-  { path: "/service/tickets/new", label: "Request summary" },
+  { path: "/service/tickets/new", label: "Summary" },
   { path: "/work/new", label: "What needs doing?" },
   { path: "/service/work-orders/new", label: "Company context", option: CRM.company },
   { path: "/sales/opportunities/new", label: "Qualification outcome" },

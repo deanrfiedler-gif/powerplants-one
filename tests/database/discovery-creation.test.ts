@@ -161,7 +161,7 @@ test("0113 preserves populated original links, receipts, grants and migration le
   await migrate(); await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 113 }, { version: 114 }]);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }]);
   const afterGrants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map(g => g.id));
   assert.deepEqual(afterGrants.filter(g => ids.has(g.id)), grants);
   assert.deepEqual(afterGrants.filter(g => !ids.has(g.id)),

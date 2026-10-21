@@ -12085,22 +12085,20 @@
       "title": "Service desk and triage worklist",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented synthetic workflow; owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-requests-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service desk and triage worklist to work towards this outcome: A service request is understandable and accountable.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Use Service requests to capture a reported issue, clarify unknowns and record an owned next action. Triage does not authorise work or book a visit."
           ],
           "steps": [],
           "rows": [],
@@ -12110,9 +12108,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the active identity and company visibility context. Customer context is derived from the current site Operator or the requester’s single visible relationship; it is not the company visibility setting."
           ],
           "steps": [],
           "rows": [],
@@ -12121,56 +12117,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Find or capture the request without duplicating an existing case",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open All open or My requests. Use List for comparison or Board for the three native stages. Open a request title or snapshot before acting."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service desk and triage worklist · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The side menu contains triage and linked-work queues. The record separates details, Triage, Reported issue, Linked work, Updates and History. On a phone, use the header view chooser and pinned actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Prepare the received time and channel, caller, site or explicit identification gap, summary, reported symptoms, priority, owner and next action. Explain unknowns; do not guess a contact, impact or equipment record."
           ],
           "steps": [],
           "rows": [],
@@ -12180,13 +12148,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Log a request keeps the draft beside an advisory check of open requests at the same site, narrowed to the selected equipment. Open a possible match and add the customer’s statement if appropriate.",
+            "Complete triage reviews priority, owner, priority reason, next action and the reason together. For Needs information, record the clarification outcome. An open linked clarification can be completed atomically only by its permitted current owner."
           ],
-          "steps": [
-            "Find or capture the request without duplicating an existing case",
-            "Review impact and missing context",
-            "Assign triage and the next contact or assessment action"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -12194,9 +12159,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A service request is understandable and accountable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Check the saved revision and resulting stage. A customer statement advances the revision but leaves priority, owner and stage unchanged. Work orders retain their own readiness and authorisation decisions."
           ],
           "steps": [],
           "rows": [],
@@ -12205,45 +12168,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not show an earlier list as current. No matches offers Clear filters. Permission-denied reads reveal no record; view-only records keep permitted information and explain unavailable actions.",
+            "A validation error identifies entries to correct. A newer revision refuses the save and keeps the entries; use Review changes before choosing to keep the proposal against the current revision. A retryable unknown outcome requires an unchanged retry."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site/equipment, symptoms, impact, contact and owned unknowns. Follow the task sequence and check that a service request is understandable and accountable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service desk and triage worklist has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Triage does not authorise work, confirm warranty or book attendance."
+            "Synthetic example: a caller reports a drifting sensor. Review the same-site request before logging another. Record their exact words as a customer statement; the triage owner separately reviews the impact and priority."
           ],
           "steps": [],
           "rows": [],
@@ -12252,45 +12189,19 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a load fails, check the connection and use Try again. If saving has an uncertain outcome, retain the page and retry the unchanged action before starting another. A blocked triage needs its native intake requirements or the clarification’s authorised owner."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the compact header, queue chooser and three-line request rows. Complete triage opens a full-screen form. Tab/Shift+Tab moves through named controls; arrow keys change record tabs; Escape closes a dismissible dialog.",
+            "This is an online workflow. No offline queue or persistence across reload is promised."
           ],
           "steps": [],
           "rows": [],
@@ -12300,8 +12211,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service requests accepted design decision, scoped statement/triage decision and implementation evidence ledger. Sites can prefill a permitted site; existing Sales handover binding is retained."
           ],
           "steps": [],
           "rows": [],
@@ -12311,9 +12221,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner walkthrough and implementation visual review are pending. This guide describes implemented controls, not operational approval or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -12329,9 +12237,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Service requests layout, immutable customer statements and atomic triage review; native authority and deferred lifecycle preserved.",
       "document_id": "PPO-GUIDE-SV-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -12352,22 +12264,20 @@
       "title": "Request detail and communication timeline",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Existing foundation + proposed completion",
+      "content_mode": "Implemented synthetic workflow; owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-requests-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Request detail and communication timeline to work towards this outcome: The request history explains what is known and what happens next.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Use Service requests to capture a reported issue, clarify unknowns and record an owned next action. Triage does not authorise work or book a visit."
           ],
           "steps": [],
           "rows": [],
@@ -12377,9 +12287,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Request identity, communication evidence, coverage basis and linked visits.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the active identity and company visibility context. Customer context is derived from the current site Operator or the requester’s single visible relationship; it is not the company visibility setting."
           ],
           "steps": [],
           "rows": [],
@@ -12388,56 +12296,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Open the request and review its timeline",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open All open or My requests. Use List for comparison or Board for the three native stages. Open a request title or snapshot before acting."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Request detail and communication timeline · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The side menu contains triage and linked-work queues. The record separates details, Triage, Reported issue, Linked work, Updates and History. On a phone, use the header view chooser and pinned actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Request identity, communication evidence, coverage basis and linked visits.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Prepare the received time and channel, caller, site or explicit identification gap, summary, reported symptoms, priority, owner and next action. Explain unknowns; do not guess a contact, impact or equipment record."
           ],
           "steps": [],
           "rows": [],
@@ -12447,13 +12327,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Log a request keeps the draft beside an advisory check of open requests at the same site, narrowed to the selected equipment. Open a possible match and add the customer’s statement if appropriate.",
+            "Complete triage reviews priority, owner, priority reason, next action and the reason together. For Needs information, record the clarification outcome. An open linked clarification can be completed atomically only by its permitted current owner."
           ],
-          "steps": [
-            "Open the request and review its timeline",
-            "Separate customer statements from verified findings",
-            "Link the correct authorised work and retain unresolved questions"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -12461,9 +12338,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The request history explains what is known and what happens next.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Check the saved revision and resulting stage. A customer statement advances the revision but leaves priority, owner and stage unchanged. Work orders retain their own readiness and authorisation decisions."
           ],
           "steps": [],
           "rows": [],
@@ -12472,45 +12347,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not show an earlier list as current. No matches offers Clear filters. Permission-denied reads reveal no record; view-only records keep permitted information and explain unavailable actions.",
+            "A validation error identifies entries to correct. A newer revision refuses the save and keeps the entries; use Review changes before choosing to keep the proposal against the current revision. A retryable unknown outcome requires an unchanged retry."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare request identity, communication evidence, coverage basis and linked visits. Follow the task sequence and check that the request history explains what is known and what happens next. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Request detail and communication timeline has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Synthetic example: a caller reports a drifting sensor. Review the same-site request before logging another. Record their exact words as a customer statement; the triage owner separately reviews the impact and priority."
           ],
           "steps": [],
           "rows": [],
@@ -12519,45 +12368,19 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a load fails, check the connection and use Try again. If saving has an uncertain outcome, retain the page and retry the unchanged action before starting another. A blocked triage needs its native intake requirements or the clarification’s authorised owner."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the compact header, queue chooser and three-line request rows. Complete triage opens a full-screen form. Tab/Shift+Tab moves through named controls; arrow keys change record tabs; Escape closes a dismissible dialog.",
+            "This is an online workflow. No offline queue or persistence across reload is promised."
           ],
           "steps": [],
           "rows": [],
@@ -12567,8 +12390,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service requests accepted design decision, scoped statement/triage decision and implementation evidence ledger. Sites can prefill a permitted site; existing Sales handover binding is retained."
           ],
           "steps": [],
           "rows": [],
@@ -12578,9 +12400,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner walkthrough and implementation visual review are pending. This guide describes implemented controls, not operational approval or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -12595,9 +12415,13 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Service requests layout, immutable customer statements and atomic triage review; native authority and deferred lifecycle preserved.",
       "document_id": "PPO-GUIDE-SV-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45930,22 +45754,20 @@
       "title": "Service request detail",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented synthetic workflow; owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-requests-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service request detail to work towards this outcome: The request history explains what is known and what happens next.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Use Service requests to capture a reported issue, clarify unknowns and record an owned next action. Triage does not authorise work or book a visit."
           ],
           "steps": [],
           "rows": [],
@@ -45955,9 +45777,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Request identity, communication evidence, coverage basis and linked visits.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the active identity and company visibility context. Customer context is derived from the current site Operator or the requester’s single visible relationship; it is not the company visibility setting."
           ],
           "steps": [],
           "rows": [],
@@ -45966,56 +45786,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Read the current revision, stage and readiness. Triage explains outstanding checks; Reported issue retains the original report, Updates retains customer statements, and Linked work opens separately authorised work orders."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service request detail · Record workspace"
-            ],
-            [
-              "Application links",
-              "Use the record UUID from the selected environment; local and hosted IDs may differ. The parent link lets you choose a record first."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The side menu contains triage and linked-work queues. The record separates details, Triage, Reported issue, Linked work, Updates and History. On a phone, use the header view chooser and pinned actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Request identity, communication evidence, coverage basis and linked visits.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Prepare the received time and channel, caller, site or explicit identification gap, summary, reported symptoms, priority, owner and next action. Explain unknowns; do not guess a contact, impact or equipment record."
           ],
           "steps": [],
           "rows": [],
@@ -46025,14 +45817,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Complete triage reviews priority, request owner, priority reason, next action, clarification outcome and reason in one save. Only the permitted current owner can also complete an open linked clarification. Until saving succeeds, the request stays at its existing stage.",
+            "Record customer statement keeps the source, time, channel and words as reported symptoms. It advances the request revision without changing its assessment. Update details and Request information remain separate permitted native actions."
           ],
-          "steps": [
-            "Confirm the record reference and customer/site context in this record workspace.",
-            "Open the request and review its timeline",
-            "Separate customer statements from verified findings",
-            "Link the correct authorised work and retain unresolved questions"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -46040,9 +45828,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The request history explains what is known and what happens next.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Check the saved revision and resulting stage. A customer statement advances the revision but leaves priority, owner and stage unchanged. Work orders retain their own readiness and authorisation decisions."
           ],
           "steps": [],
           "rows": [],
@@ -46051,45 +45837,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not show an earlier list as current. No matches offers Clear filters. Permission-denied reads reveal no record; view-only records keep permitted information and explain unavailable actions.",
+            "A validation error identifies entries to correct. A newer revision refuses the save and keeps the entries; use Review changes before choosing to keep the proposal against the current revision. A retryable unknown outcome requires an unchanged retry."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare request identity, communication evidence, coverage basis and linked visits. Follow the task sequence and check that the request history explains what is known and what happens next. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service request detail has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A request can have several work orders or visits; one completed visit may leave the case unresolved."
+            "Synthetic example: a caller reports a drifting sensor. Review the same-site request before logging another. Record their exact words as a customer statement; the triage owner separately reviews the impact and priority."
           ],
           "steps": [],
           "rows": [],
@@ -46098,45 +45858,19 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a load fails, check the connection and use Try again. If saving has an uncertain outcome, retain the page and retry the unchanged action before starting another. A blocked triage needs its native intake requirements or the clarification’s authorised owner."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the compact header, queue chooser and three-line request rows. Complete triage opens a full-screen form. Tab/Shift+Tab moves through named controls; arrow keys change record tabs; Escape closes a dismissible dialog.",
+            "This is an online workflow. No offline queue or persistence across reload is promised."
           ],
           "steps": [],
           "rows": [],
@@ -46146,8 +45880,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service requests accepted design decision, scoped statement/triage decision and implementation evidence ledger. Sites can prefill a permitted site; existing Sales handover binding is retained."
           ],
           "steps": [],
           "rows": [],
@@ -46157,9 +45890,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner walkthrough and implementation visual review are pending. This guide describes implemented controls, not operational approval or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -46172,9 +45903,13 @@
       "source_paths": [
         "src/app/(business)/service/tickets/[id]/page.tsx",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Service requests layout, immutable customer statements and atomic triage review; native authority and deferred lifecycle preserved.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TICKETS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -46195,22 +45930,20 @@
       "title": "Create service request",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented synthetic workflow; owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/service-requests-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Create service request to work towards this outcome: A service request is understandable and accountable.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Use Service requests to capture a reported issue, clarify unknowns and record an owned next action. Triage does not authorise work or book a visit."
           ],
           "steps": [],
           "rows": [],
@@ -46220,9 +45953,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the active identity and company visibility context. Customer context is derived from the current site Operator or the requester’s single visible relationship; it is not the company visibility setting."
           ],
           "steps": [],
           "rows": [],
@@ -46231,56 +45962,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Search the related register for an existing record before creating another.",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose or confirm Company context and Site. Enter Caller, Summary and What the customer reported. Review the possible matches before selecting Create request."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Create service request · Creation form"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Caller and customer records the received time, channel and visible context. Issue retains the caller’s words. Location and impact records Equipment, Reported priority and its explanation. Ownership and next action identifies who will act. Check before creating remains beside the draft."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Prepare the received time and channel, caller, site or explicit identification gap, summary, reported symptoms, priority, owner and next action. Explain unknowns; do not guess a contact, impact or equipment record."
           ],
           "steps": [],
           "rows": [],
@@ -46290,14 +45993,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use Add as customer statement on a possible match to carry the caller’s words, name, time and channel into that existing request. Review them and record a reason. Saving adds attributed reported-symptom evidence and keeps the new-request draft; it creates no new request and changes no priority, owner or stage.",
+            "If the issue is new, complete the required entries and select Create request. Successful creation opens the request at New. Cancelling unsaved work asks whether to discard it."
           ],
-          "steps": [
-            "Search the related register for an existing record before creating another.",
-            "Complete the information requested by the creation form; keep unknown values explicit.",
-            "Review the entered context, save through the page action and inspect the resulting record/confirmation.",
-            "Then continue the wider workflow: Assign triage and the next contact or assessment action"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -46305,9 +46004,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A service request is understandable and accountable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Check the saved revision and resulting stage. A customer statement advances the revision but leaves priority, owner and stage unchanged. Work orders retain their own readiness and authorisation decisions."
           ],
           "steps": [],
           "rows": [],
@@ -46316,45 +46013,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not show an earlier list as current. No matches offers Clear filters. Permission-denied reads reveal no record; view-only records keep permitted information and explain unavailable actions.",
+            "A validation error identifies entries to correct. A newer revision refuses the save and keeps the entries; use Review changes before choosing to keep the proposal against the current revision. A retryable unknown outcome requires an unchanged retry."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site/equipment, symptoms, impact, contact and owned unknowns. Follow the task sequence and check that a service request is understandable and accountable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Create service request has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Triage does not authorise work, confirm warranty or book attendance."
+            "Synthetic example: a caller reports a drifting sensor. Review the same-site request before logging another. Record their exact words as a customer statement; the triage owner separately reviews the impact and priority."
           ],
           "steps": [],
           "rows": [],
@@ -46364,46 +46035,18 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Typed entries are protected until saved. Following the navigation rail or phone bar, a header link or browser Back asks first; choose Cancel to keep editing. A saved record opens without asking."
+            "If a load fails, check the connection and use Try again. If saving has an uncertain outcome, retain the page and retry the unchanged action before starting another. A blocked triage needs its native intake requirements or the clarification’s authorised owner."
           ],
           "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
-          ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the compact header, queue chooser and three-line request rows. Complete triage opens a full-screen form. Tab/Shift+Tab moves through named controls; arrow keys change record tabs; Escape closes a dismissible dialog.",
+            "This is an online workflow. No offline queue or persistence across reload is promised."
           ],
           "steps": [],
           "rows": [],
@@ -46413,8 +46056,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service requests accepted design decision, scoped statement/triage decision and implementation evidence ledger. Sites can prefill a permitted site; existing Sales handover binding is retained."
           ],
           "steps": [],
           "rows": [],
@@ -46424,9 +46066,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner walkthrough and implementation visual review are pending. This guide describes implemented controls, not operational approval or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -46436,11 +46076,7 @@
           "section_id": "native-won-receiving",
           "title": "Continue an accepted Won handover",
           "paragraphs": [
-            "Accept the current Won handover and its receiving owner before choosing a native Project or Service destination. Create a native record through its existing form, or choose a matching record owned and editable by the receiver. Creation saves separately.",
-            "For Service, link a permitted request or use Record a new Service request and return. Intake retains its own owner and explicit unknowns. Save the draft work order, return to the handover, then review its exact customer, site and version. Native scope, authorisation and booking still require their usual decisions.",
-            "Review delivery link freezes the compared Sales and native versions. Supply a link reason; when Sales left the site unknown, explicitly review the chosen native site. If either source changes, discard and review a fresh comparison. Refresh alone never changes your reviewed submission.",
-            "Check original native creation or Check original delivery link resolves an uncertain save; Retry exact original sends the retained operation. Same-tab recovery survives reload. A later Sales successor preserves earlier attribution as historical. Current access still governs recovery.",
-            "The native record shows exact accepted Sales context beside its own controls. The Deal shows source-derived receiving progress and retains the original accountable Won event and existing Activity owners/dates. A link is not evidence of completed delivery. Parts receiving remains an unresolved native route."
+            "When opened from an accepted Sales handover, retained source context and the native binding are checked again on save. Complete the request fields and use Create request. A changed or unavailable handover must be resolved at its source; entering a new customer statement does not consume that handover."
           ],
           "steps": [],
           "rows": [],
@@ -46453,9 +46089,13 @@
       "source_paths": [
         "src/app/(business)/service/tickets/new/page.tsx",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Accepted Service requests layout, immutable customer statements and atomic triage review; native authority and deferred lifecycle preserved.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TICKETS-NEW",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -46476,22 +46116,20 @@
       "title": "Service request register",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Implemented synthetic workflow; owner review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Automated browser proof of the SV-01 I2 register (tests/browser/service-requests.spec.ts); no business walkthrough",
+      "runtime_evidence": "docs/testing/evidence/service-requests-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Service request register to work towards this outcome: A service request is understandable and accountable.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Use Service requests to capture a reported issue, clarify unknowns and record an owned next action. Triage does not authorise work or book a visit."
           ],
           "steps": [],
           "rows": [],
@@ -46501,9 +46139,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm the active identity and company visibility context. Customer context is derived from the current site Operator or the requester’s single visible relationship; it is not the company visibility setting."
           ],
           "steps": [],
           "rows": [],
@@ -46512,64 +46148,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Choose a queue (All open, New to triage, Urgent, Needs information or Overdue clarifications), or search by title or reference.",
-            "Before logging a new call, search for an open request on the same site or equipment. Log a request only when none matches.",
-            "After a move, read the confirmation and check the request's lane or Stage before leaving the register."
+          "paragraphs": [
+            "Open All open or My requests. Use List for comparison or Board for the three native stages. Open a request title or snapshot before acting."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Service request register · a full-bleed Service workspace. The breadcrumb names the page; the page description is in the page-information panel."
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Board and List",
-              "Board shows the three stages the application supports today: New, Needs information and Triaged. An empty stage collapses to a narrow strip; select it to open it. List shows the same requests in a table with fourteen columns. Columns hides any column except Request, and the choice is kept in this browser only."
-            ],
-            [
-              "Queues and filters",
-              "Each queue's badge counts the permitted requests under the current search and filters. Filters holds company context, site and request owner. Priority is available through the Urgent queue."
-            ],
-            [
-              "Cards and rows",
-              "Each request shows its customer and site, the next action or owned clarification, triage blockers and linked work orders in their own state. Unknown values are stated in amber words."
-            ],
-            [
-              "Preview and Move",
-              "Preview opens the request's summary beside the list; Open request goes to the full record. Move opens the existing triage or request-information form. The request stays in its stage until the server accepts that form."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The side menu contains triage and linked-work queues. The record separates details, Triage, Reported issue, Linked work, Updates and History. On a phone, use the header view chooser and pinned actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site/equipment, symptoms, impact, contact and owned unknowns.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Prepare the received time and channel, caller, site or explicit identification gap, summary, reported symptoms, priority, owner and next action. Explain unknowns; do not guess a contact, impact or equipment record."
           ],
           "steps": [],
           "rows": [],
@@ -46579,13 +46179,10 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Use the queue menu, Owner and Priority filters to narrow visible requests. More contains search, Filters and column controls. Clear filters restores the list. List compares rows; Board shows New, Needs information and Triaged.",
+            "Select rows only for Open in sequence or Export list. Preview opens a large snapshot; Open request enters the full record. Selection does not grant bulk triage, booking or authorisation."
           ],
-          "steps": [
-            "Find the request by queue or search, or log a new one when no open request matches.",
-            "Preview it to review customer, site, equipment, triage blockers and the next action.",
-            "Move it: request information with an owned follow-up, or complete triage once no blocker remains."
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -46593,9 +46190,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A service request is understandable and accountable.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Triage does not authorise work, confirm warranty or book attendance."
+            "Check the saved revision and resulting stage. A customer statement advances the revision but leaves priority, owner and stage unchanged. Work orders retain their own readiness and authorisation decisions."
           ],
           "steps": [],
           "rows": [],
@@ -46604,53 +46199,19 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ],
-            [
-              "Read-only / access refused",
-              "Move stays visible but disabled, with the reason. Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Changed while moving",
-              "The form uses the request's current revision and says so. If the server refuses a stale revision, your entries are kept; compare and save again."
-            ],
-            [
-              "No matches",
-              "The register states how many open requests the current filters hide. Clear filters to see them."
-            ]
+          "paragraphs": [
+            "Loading and failed reads do not show an earlier list as current. No matches offers Clear filters. Permission-denied reads reveal no record; view-only records keep permitted information and explain unavailable actions.",
+            "A validation error identifies entries to correct. A newer revision refuses the save and keeps the entries; use Review changes before choosing to keep the proposal against the current revision. A retryable unknown outcome requires an unchanged retry."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site/equipment, symptoms, impact, contact and owned unknowns. Follow the task sequence and check that a service request is understandable and accountable. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Service request register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Triage does not authorise work, confirm warranty or book attendance."
+            "Synthetic example: a caller reports a drifting sensor. Review the same-site request before logging another. Record their exact words as a customer statement; the triage owner separately reviews the impact and priority."
           ],
           "steps": [],
           "rows": [],
@@ -46659,45 +46220,19 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If a load fails, check the connection and use Try again. If saving has an uncertain outcome, retain the page and retry the unchanged action before starting another. A blocked triage needs its native intake requirements or the clarification’s authorised owner."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach each card's Preview and Move buttons. Move is the keyboard alternative to dragging a card between stages. Enter or Space opens a button; Escape closes the preview, the Move form or the filters.",
-            "On a phone, the register is a list of cards and each card opens its request. Filters opens full screen and shows how many requests the selection will show. Only the documented Offline workspace supports its verified offline business operations; this register needs a connection."
+            "At 390 and 320 px use the compact header, queue chooser and three-line request rows. Complete triage opens a full-screen form. Tab/Shift+Tab moves through named controls; arrow keys change record tabs; Escape closes a dismissible dialog.",
+            "This is an online workflow. No offline queue or persistence across reload is promised."
           ],
           "steps": [],
           "rows": [],
@@ -46707,8 +46242,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "See the Service requests accepted design decision, scoped statement/triage decision and implementation evidence ledger. Sites can prefill a permitted site; existing Sales handover binding is retained."
           ],
           "steps": [],
           "rows": [],
@@ -46718,9 +46252,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Owner walkthrough and implementation visual review are pending. This guide describes implemented controls, not operational approval or deployment."
           ],
           "steps": [],
           "rows": [],
@@ -46735,9 +46267,13 @@
         "src/service/components/client/ticket-register.tsx",
         "src/service/components/client/ticket-register-parts.tsx",
         "docs/reference/ui/service-cases/PPO-Service-Cases-and-Triage-Workspace-r02.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "docs/decisions/service-requests-figma-design.md",
+        "docs/decisions/service-request-capture-and-triage.md",
+        "src/service/components/client/ticket-record.tsx",
+        "src/service/components/client/ticket-create.tsx"
       ],
-      "change_summary": "Updated for the SV-01 I2 native register: Board and List over the three native states, queues, filters, preview and Move through the existing triage form.",
+      "change_summary": "Accepted Service requests layout, immutable customer statements and atomic triage review; native authority and deferred lifecycle preserved.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TICKETS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

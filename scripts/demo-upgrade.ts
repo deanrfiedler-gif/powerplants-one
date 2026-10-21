@@ -349,6 +349,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0111 adds two initially empty Activity extension/binding tables and a binding
   // validator. Existing rows, identities, grants, seeds and hosted users are unchanged;
   // all-table runtime privileges cover both new tables. No external worker is added.
+
+  // 0112 adds an empty immutable customer-statement table and one outbox kind.
+  // No identity, grant, seed or existing row changes; all-table runtime privileges cover it.
   // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
   // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
   // grants, users or seeds change; existing runtime privileges and historical receipts remain.

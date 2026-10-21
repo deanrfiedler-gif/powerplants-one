@@ -168,221 +168,82 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
     fullPage: true,
   });
 });
-test("P03 persisted intake, validation retention, clarification completion, triage and conflict comparison", async ({
+test("SV-01/SV-02 persisted logging, customer statement and atomic owned clarification triage", async ({
   page,
+  baseURL,
 }, info) => {
-  test.setTimeout(90000);
-  await page.goto("/service/tickets/new");
-  await identity(page);
-  await page
-    .getByLabel("Company visibility context", { exact: true })
-    .selectOption(company);
-  await page
-    .getByLabel("Request summary", { exact: true })
-    .fill(`SYN browser P03 ${info.project.name}`);
-  await page
-    .getByLabel("Requester description / clarification")
-    .fill("SYN caller; identity and site need clarification");
-  await page
-    .getByLabel("Reported symptoms / explicit symptom uncertainty")
-    .fill(
-      "An intermittent alarm is reported.\nPrevious fix did not resolve it.",
-    );
-  await page
-    .getByLabel("Next action", { exact: true })
-    .fill("Clarify caller, site and operational impact");
-  await page
-    .getByLabel("Reason for saving")
-    .fill("Capture incomplete synthetic intake");
-  await expect(page.getByLabel("Triage and next-action owner")).toContainText(
-    "SYN Coordinator",
-  );
-  await capture(page, info, "P03-create-intake.png");
-  await page
-    .getByRole("button", { name: "Save service request", exact: true })
-    .click();
-  await expect(page).toHaveURL(/\/service\/tickets\/[0-9a-f-]{36}$/);
-  const url = page.url();
-  await expect(
-    page.getByRole("heading", { name: /SYN browser P03/ }),
-  ).toBeVisible();
-  await page
-    .getByLabel("Reason for this triage action")
-    .fill("Urgency cannot bypass missing information");
-  await page
-    .getByRole("button", { name: "Complete triage", exact: true })
-    .click();
-  await expect(
-    page
-      .getByRole("alert")
-      .filter({ hasText: /Complete the listed intake requirements/ }),
-  ).toBeVisible();
-  await expect(page.getByLabel("Request summary", { exact: true })).toHaveValue(
-    `SYN browser P03 ${info.project.name}`,
-  );
-  await expect(
-    page.getByText("Loading permitted records…", { exact: true }),
-  ).toHaveCount(0);
-  await page.screenshot({
-    path: info.outputPath("P03-intake-validation.png"),
-    fullPage: true,
+  test.setTimeout(120000);
+  const origin = baseURL!;
+  const session = await page.request.post(origin + "/api/v1/local-session", {
+    headers: { origin },
+    data: { profile: "coordinator" },
   });
-  await page
-    .getByText("Request information with owned follow-up", { exact: true })
-    .click();
-  await page
-    .getByLabel("Open clarification questions")
-    .fill(
-      "Confirm caller identity and exact site.\nWhat is the operational impact?",
-    );
-  await page
-    .getByRole("button", { name: "Request information", exact: true })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "Owned clarification", exact: true }),
-  ).toBeVisible();
-  const activityLink = page
-    .locator("section")
-    .filter({
-      has: page.getByRole("heading", {
-        name: "Owned clarification",
-        exact: true,
-      }),
-    })
-    .getByRole("link");
-  const href = await activityLink.getAttribute("href");
-  await page
-    .getByLabel("Known requester", { exact: true })
-    .selectOption(person);
-  await page.getByLabel("Known site", { exact: true }).selectOption(site);
-  await page
-    .getByLabel("Operational impact", { exact: true })
-    .fill("Sensor readings interrupt monitoring");
-  await page
-    .getByLabel("Priority rationale", { exact: true })
-    .fill("Urgent assessment; no work or booking is authorised");
-  await page.getByLabel("Priority", { exact: true }).selectOption("Urgent");
-  await page
-    .getByLabel("Reason for saving")
-    .fill("Record clarified business context");
-  // A distinct API writer changes the same aggregate; the browser must keep its proposed form.
-  const id = url.split("/").at(-1)!;
-  const old = (
-    await (await page.request.get(`/api/v1/service/tickets/${id}`)).json()
-  ).items[0];
-  await page.request.post(`/api/v1/service/tickets/${id}/save-intake`, {
-    headers: { Origin: "http://127.0.0.1:3000" },
+  expect(session.status()).toBe(200);
+  await page.goto(`/service/tickets/new?site_id=${site}`);
+  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true }))
+    .toHaveAttribute("aria-busy", "false");
+  await expect(page.getByLabel("Site", { exact: true })).toHaveValue(site);
+  await page.getByLabel("Summary", { exact: true }).fill(`SYN accepted intake ${info.project.name}`);
+  await page.getByLabel("Caller", { exact: true }).selectOption(person);
+  await page.getByLabel("What the customer reported", { exact: true }).fill("SYN intermittent alarm reported");
+  await page.getByLabel("Impact and backup", { exact: true }).fill("Manual monitoring in place");
+  await page.getByLabel("Priority reason", { exact: true }).fill("Review while manual monitoring continues");
+  await page.getByLabel("Next action", { exact: true }).fill("Confirm the sensor identity");
+  await page.getByLabel("Reason for logging", { exact: true }).fill("Capture the synthetic call");
+  await page.getByRole("button", { name: "Create request", exact: true }).click();
+  await expect(page).toHaveURL(/\/service\/tickets\/[0-9a-f-]{36}$/);
+  const id = page.url().split("/").at(-1)!;
+  await page.getByRole("tab", { name: "Updates", exact: true }).click();
+  await page.getByRole("tabpanel").getByRole("button", { name: "Record customer statement", exact: true }).click();
+  const statement = page.getByRole("dialog", {
+    name: "Record customer statement",
+    exact: true,
+  });
+  await statement.getByLabel("Customer statement", { exact: true }).fill("SYN caller says the alarm returned");
+  await statement.getByLabel("Who said this?", { exact: true }).fill("SYN caller");
+  await statement.getByLabel("Reason for recording", { exact: true }).fill("Retain the original customer words");
+  await statement.getByRole("button", { name: "Record statement", exact: true }).click();
+  await expect(statement).toHaveCount(0);
+  let t = (await (await page.request.get(`/api/v1/service/tickets/${id}`)).json()).items[0];
+  expect(t.version).toBe(2);
+  expect(t.status).toBe("New");
+  expect(t.symptom).toBe("SYN intermittent alarm reported");
+  const activity = crypto.randomUUID();
+  const requested = await page.request.post(`/api/v1/service/tickets/${id}/request-information`, {
+    headers: { origin },
     data: {
       operation_id: crypto.randomUUID(),
       schema_version: 1,
-      reason: "Competing browser test writer",
-      expected_version: old.version,
-      received_at: old.received_at,
-      channel: old.channel,
-      requester_id: old.requester_id,
-      requester_description: old.requester_description,
-      site_id: old.site_id,
-      site_identification_needed: old.site_identification_needed,
-      asset_id: old.asset_id,
-      summary: "SYN competing edit",
-      symptom: old.symptom,
-      impact: old.impact,
-      priority: old.priority,
-      priority_reason: old.priority_reason,
-      triage_owner_id: old.triage_owner_id,
-      next_action: old.next_action,
+      expected_version: 2,
+      reason: "Clarify sensor identity",
+      open_questions: "Which sensor was replaced?",
+      next_action: "Confirm sensor identity",
+      follow_up: {
+        id: activity,
+        owner_id: t.triage_owner_id,
+        due_needed: true,
+        due_at: null,
+      },
     },
   });
+  expect(requested.status()).toBe(200);
+  await page.reload();
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
+  await page.getByLabel("Clarification outcome", { exact: true }).fill("SYN caller confirmed the replaced sensor");
+  await page.getByLabel("Reviewed priority", { exact: true }).selectOption("High");
   await page
-    .getByRole("button", { name: "Save intake details", exact: true })
-    .click();
-  await expect(
-    page.getByRole("alert").filter({ hasText: /This request changed/ }),
-  ).toBeVisible();
-  await expect(page.getByLabel("Request summary", { exact: true })).toHaveValue(
-    `SYN browser P03 ${info.project.name}`,
-  );
-  await page
-    .getByRole("button", { name: "Compare current saved version", exact: true })
-    .click();
-  await expect(
-    page.getByRole("button", {
-      name: "Use current version with my entries",
-      exact: true,
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Loading permitted records…", { exact: true }),
-  ).toHaveCount(0);
-  await page.screenshot({
-    path: info.outputPath("P03-intake-conflict.png"),
-    fullPage: true,
-  });
-  await page
-    .getByRole("button", {
-      name: "Use current version with my entries",
-      exact: true,
-    })
-    .click();
-  await page
-    .getByRole("button", { name: "Save intake details", exact: true })
-    .click();
-  await expect(
-    page
-      .locator("section")
-      .filter({
-        has: page.getByRole("heading", {
-          name: "Edit intake details",
-          exact: true,
-        }),
-      })
-      .getByRole("status")
-      .filter({ hasText: "Saved to the server." }),
-  ).toBeVisible();
-  await page.goto(href!);
-  await page
-    .getByLabel("Reason for change", { exact: true })
-    .fill("Complete owned clarification");
-  await page
-    .getByLabel("Completion outcome or cancellation reason")
-    .fill("Caller, site and impact confirmed in synthetic demonstration.");
-  await capture(page, info, "P03-activity.png");
-  await page
-    .getByRole("button", { name: "Complete with outcome", exact: true })
-    .click();
-  await expect(page.getByText("Completed", { exact: true })).toBeVisible();
-  await capture(page, info, "P03-activity-completed.png");
-  await page.goto(url);
-  await page
-    .getByLabel("Reason for this triage action")
-    .fill("Intake questions resolved");
-  await page
-    .getByLabel("How the clarification questions were resolved")
-    .fill("Known requester and site now linked; operational impact recorded");
-  await page
-    .getByRole("button", { name: "Complete triage", exact: true })
-    .click();
-  await expect(page.getByText("Triaged", { exact: true })).toBeVisible();
-  await expect(
-    page.getByText("Loading permitted records…", { exact: true }),
-  ).toHaveCount(0);
-  await page.screenshot({
-    path: info.outputPath("P03-triaged.png"),
-    fullPage: true,
-  });
+    .getByLabel("Reason for this triage action", { exact: true })
+    .fill("Clarification received; review next action");
+  await page.locator(".sv-triage-form").getByRole("button", { name: "Complete triage", exact: true }).click();
+  await expect(page.locator(".sv-triage-form")).toHaveCount(0);
+  t = (await (await page.request.get(`/api/v1/service/tickets/${id}`)).json()).items[0];
+  expect(t.version).toBe(4);
+  expect(t.status).toBe("Triaged");
+  expect(t.priority).toBe("High");
+  expect(t.clarification_activity.status).toBe("Completed");
+  expect(t.clarification_activity.outcome).toBe("SYN caller confirmed the replaced sensor");
   await noOverflow(page);
-  await page.goto("/service/tickets");
-  // SV-01 I2: a full-bleed register keeps its heading for assistive technology only; Log a request is its action.
-  await expect(
-    page.getByRole("heading", { level: 1, name: "Service requests", exact: true }),
-  ).toBeAttached();
-  await expect(
-    page.getByRole("link", { name: "Log a request", exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Loading permitted requests…", { exact: true }),
-  ).toHaveCount(0);
-  await capture(page, info, "P03-tickets-list.png");
+  await page.screenshot({ path: info.outputPath("SV02-persisted-triage.png") });
 });
 test("P03 unavailable and empty queues stay distinct; keyboard focus and network-failed form entries survive", async ({
   page,

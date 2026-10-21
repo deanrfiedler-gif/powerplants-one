@@ -1,13 +1,9 @@
+import { createHash, randomUUID } from "node:crypto";
 import { database } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
-import { sharedOperation } from "../platform/operations";
-import {
-  hasPermission,
-  requireCapability,
-  scopeSql,
-  type QueryClient,
-} from "../platform/permissions";
+import { canonical, recordOperation, sharedOperation } from "../platform/operations";
+import { hasPermission, requireCapability, scopeSql, type QueryClient } from "../platform/permissions";
 import {
   activityVisibility,
   authoriseActivityInput,
@@ -58,39 +54,21 @@ export function intakeFields(r: Record<string, unknown>) {
   const requester_id = optionalId(r.requester_id, "requester_id"),
     site_id = optionalId(r.site_id, "site_id"),
     asset_id = optionalId(r.asset_id, "asset_id");
-  if (
-    typeof r.site_identification_needed !== "boolean" ||
-    (site_id === null) !== r.site_identification_needed
-  )
-    invalid(
-      "site_id",
-      "Choose a known site or explicitly mark site identification as needed.",
-    );
-  const requester_description =
-    optionalNarrative(r.requester_description, "requester_description", 2000) ??
-    "";
+  if (typeof r.site_identification_needed !== "boolean" || (site_id === null) !== r.site_identification_needed)
+    invalid("site_id", "Choose a known site or explicitly mark site identification as needed.");
+  const requester_description = optionalNarrative(r.requester_description, "requester_description", 2000) ?? "";
   if (!requester_id && !requester_description)
     invalid(
       "requester_description",
       "Describe the requester and what must be clarified when their identity is unknown.",
     );
-  if (asset_id && !site_id)
-    invalid("asset_id", "Choose the equipment's site first.");
+  if (asset_id && !site_id) invalid("asset_id", "Choose the equipment's site first.");
   const received_at = instant(r.received_at, "received_at");
   if (Date.parse(received_at) > Date.now() + 300000)
-    invalid(
-      "received_at",
-      "Received time cannot be in the future (five-minute clock tolerance).",
-    );
+    invalid("received_at", "Received time cannot be in the future (five-minute clock tolerance).");
   return {
     received_at,
-    channel: choice(r.channel, "channel", [
-      "Phone",
-      "Email",
-      "Manual",
-      "PlannedMaintenance",
-      "Other",
-    ]),
+    channel: choice(r.channel, "channel", ["Phone", "Email", "Manual", "PlannedMaintenance", "Other"]),
     requester_id,
     requester_description,
     site_id,
@@ -99,39 +77,16 @@ export function intakeFields(r: Record<string, unknown>) {
     summary: label(r.summary, "summary", 200),
     symptom: narrative(r.symptom, "symptom"),
     impact: optionalNarrative(r.impact, "impact", 2000),
-    priority: choice(r.priority, "priority", [
-      "Low",
-      "Normal",
-      "High",
-      "Urgent",
-    ]),
-    priority_reason: optionalNarrative(
-      r.priority_reason,
-      "priority_reason",
-      2000,
-    ),
+    priority: choice(r.priority, "priority", ["Low", "Normal", "High", "Urgent"]),
+    priority_reason: optionalNarrative(r.priority_reason, "priority_reason", 2000),
     triage_owner_id: uuid(r.triage_owner_id, "triage_owner_id"),
     next_action: narrative(r.next_action, "next_action", 2000),
   };
 }
-async function context(
-  c: QueryClient,
-  p: Principal,
-  company_id: string,
-  fields: ReturnType<typeof intakeFields>,
-) {
+async function context(c: QueryClient, p: Principal, company_id: string, fields: ReturnType<typeof intakeFields>) {
   await requireCapability(c, p, "service.ticket.edit");
   await companyContext(c, p, company_id, fields.site_id, "service.ticket.edit");
-  if (
-    !(await hasPermission(
-      c,
-      p,
-      "service.ticket.read",
-      company_id,
-      fields.site_id ?? undefined,
-    ))
-  )
-    throw unavailable();
+  if (!(await hasPermission(c, p, "service.ticket.read", company_id, fields.site_id ?? undefined))) throw unavailable();
   const owner = await scopedOwner(
     c,
     p,
@@ -140,15 +95,7 @@ async function context(
     fields.site_id ?? undefined,
     "service.ticket.edit",
   );
-  if (
-    !(await hasPermission(
-      c,
-      owner,
-      "service.ticket.read",
-      company_id,
-      fields.site_id ?? undefined,
-    ))
-  )
+  if (!(await hasPermission(c, owner, "service.ticket.read", company_id, fields.site_id ?? undefined)))
     throw unavailable();
   for (const actor of [p, owner]) {
     if (fields.requester_id) {
@@ -165,8 +112,7 @@ async function context(
     }
     if (fields.asset_id) {
       const a = await visible(c, actor, "Asset", fields.asset_id);
-      if (a.company_id !== company_id || a.site_id !== fields.site_id)
-        throw unavailable();
+      if (a.company_id !== company_id || a.site_id !== fields.site_id) throw unavailable();
     }
   }
 }
@@ -184,12 +130,7 @@ export async function createTicket(p: Principal, input: unknown) {
     "CreateTicket",
     (c) => context(c, p, command.company_id, command),
     async (c) => {
-      const {
-        operation_id: _o,
-        schema_version: _s,
-        reason: _r,
-        ...fields
-      } = command;
+      const { operation_id: _o, schema_version: _s, reason: _r, ...fields } = command;
       void _o;
       void _s;
       void _r;
@@ -217,13 +158,31 @@ export async function createTicket(p: Principal, input: unknown) {
 // It uses the same intake validation and authority as ordinary request creation;
 // the caller retains the exact source link, receipt and audit atomically.
 export async function receiveOwnedRequest(
-  c: QueryClient, p: Principal, id: string, company_id: string,
+  c: QueryClient,
+  p: Principal,
+  id: string,
+  company_id: string,
   input: ReturnType<typeof intakeFields>,
 ) {
   const fields = intakeFields(input);
-  await context(c,p,company_id,fields);
-  const entries=Object.entries({...fields,id,company_id,workspace_id:p.workspace_id,created_by:p.actor_id,updated_by:p.actor_id,status:"New",intake_schema_version:2,received_time_basis:"UserReported"});
-  return (await c.query(`INSERT INTO ppo.tickets(${entries.map(([k])=>k).join(",")}) VALUES(${entries.map((_,i)=>`$${i+1}`).join(",")}) RETURNING *`,entries.map(([,v])=>v))).rows[0];
+  await context(c, p, company_id, fields);
+  const entries = Object.entries({
+    ...fields,
+    id,
+    company_id,
+    workspace_id: p.workspace_id,
+    created_by: p.actor_id,
+    updated_by: p.actor_id,
+    status: "New",
+    intake_schema_version: 2,
+    received_time_basis: "UserReported",
+  });
+  return (
+    await c.query(
+      `INSERT INTO ppo.tickets(${entries.map(([k]) => k).join(",")}) VALUES(${entries.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *`,
+      entries.map(([, v]) => v),
+    )
+  ).rows[0];
 }
 export async function saveIntake(p: Principal, id: string, input: unknown) {
   const r = object(input, [...commonKeys, "expected_version", ...intakeKeys]);
@@ -239,20 +198,8 @@ export async function saveIntake(p: Principal, id: string, input: unknown) {
     "SaveTicketIntake",
     async (c) => {
       const t = await visibleTicket(c, p, id, true);
-      if (
-        !(await hasPermission(
-          c,
-          p,
-          "service.ticket.edit",
-          t.company_id,
-          t.site_id ?? undefined,
-        ))
-      )
-        throw new AppError(
-          403,
-          "Forbidden",
-          "This identity cannot edit this intake.",
-        );
+      if (!(await hasPermission(c, p, "service.ticket.edit", t.company_id, t.site_id ?? undefined)))
+        throw new AppError(403, "Forbidden", "This identity cannot edit this intake.");
       await context(c, p, t.company_id, command);
       return t;
     },
@@ -264,14 +211,7 @@ export async function saveIntake(p: Principal, id: string, input: unknown) {
           "TICKET_STATE_INVALID",
           "Only New or Needs information intake can be edited. Triage is a separate action.",
         );
-      const {
-        operation_id: _o,
-        schema_version: _s,
-        reason: _r,
-        id: _i,
-        expected_version: _v,
-        ...fields
-      } = command;
+      const { operation_id: _o, schema_version: _s, reason: _r, id: _i, expected_version: _v, ...fields } = command;
       void _o;
       void _s;
       void _r;
@@ -309,18 +249,8 @@ function checkVersion(actual: number, expected: number) {
       "This request changed. Keep your entries and compare the current version before submitting a new operation.",
     );
 }
-export async function requestInformation(
-  p: Principal,
-  id: string,
-  input: unknown,
-) {
-  const r = object(input, [
-    ...commonKeys,
-    "expected_version",
-    "open_questions",
-    "next_action",
-    "follow_up",
-  ]);
+export async function requestInformation(p: Principal, id: string, input: unknown) {
+  const r = object(input, [...commonKeys, "expected_version", "open_questions", "next_action", "follow_up"]);
   const f = object(r.follow_up, ["id", "owner_id", "due_at", "due_needed"]);
   const command = {
     ...common(r),
@@ -340,20 +270,8 @@ export async function requestInformation(
     "RequestTicketInformation",
     async (c) => {
       const t = await visibleTicket(c, p, id, true);
-      if (
-        !(await hasPermission(
-          c,
-          p,
-          "service.ticket.edit",
-          t.company_id,
-          t.site_id ?? undefined,
-        ))
-      )
-        throw new AppError(
-          403,
-          "Forbidden",
-          "This identity cannot request intake clarification.",
-        );
+      if (!(await hasPermission(c, p, "service.ticket.edit", t.company_id, t.site_id ?? undefined)))
+        throw new AppError(403, "Forbidden", "This identity cannot request intake clarification.");
       const follow: ActivityInput = {
         ...command.follow_up,
         company_id: t.company_id,
@@ -387,14 +305,7 @@ export async function requestInformation(
       const row = (
         await c.query(
           "UPDATE ppo.tickets SET status='NeedsInformation',open_questions=$1,next_action=$2,clarification_activity_id=$3,version=version+1,updated_at=clock_timestamp(),updated_by=$4 WHERE workspace_id=$5 AND id=$6 RETURNING *,status AS state",
-          [
-            command.open_questions,
-            command.next_action,
-            follow.id,
-            p.actor_id,
-            p.workspace_id,
-            id,
-          ],
+          [command.open_questions, command.next_action, follow.id, p.actor_id, p.workspace_id, id],
         )
       ).rows[0];
       return {
@@ -425,28 +336,12 @@ export type IntakeGate = {
 export function triageBlockers(t: IntakeGate, clarificationComplete = false) {
   const blockers: { field: string; message: string }[] = [];
   for (const [field, value, message] of [
-    [
-      "site_id",
-      t.site_id,
-      "Identify the service site before completing triage.",
-    ],
-    [
-      "requester_id",
-      t.requester_id,
-      "Identify a permitted requester contact before completing triage.",
-    ],
+    ["site_id", t.site_id, "Identify the service site before completing triage."],
+    ["requester_id", t.requester_id, "Identify a permitted requester contact before completing triage."],
     ["symptom", t.symptom, "Record the reported symptoms."],
     ["impact", t.impact, "Describe the operational impact."],
-    [
-      "priority_reason",
-      t.priority_reason,
-      "Explain the chosen priority, including urgent requests.",
-    ],
-    [
-      "next_action",
-      t.next_action,
-      "Record the next action owned by the triage owner.",
-    ],
+    ["priority_reason", t.priority_reason, "Explain the chosen priority, including urgent requests."],
+    ["next_action", t.next_action, "Record the next action owned by the triage owner."],
     [
       "received_at",
       t.received_time_basis === "UserReported",
@@ -457,8 +352,7 @@ export function triageBlockers(t: IntakeGate, clarificationComplete = false) {
   if (t.status === "NeedsInformation" && !clarificationComplete)
     blockers.push({
       field: "clarification_activity_id",
-      message:
-        "Complete the owned clarification activity with an outcome before triage.",
+      message: "Complete the owned clarification activity with an outcome before triage.",
     });
   return blockers;
 }
@@ -467,16 +361,26 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
     ...commonKeys,
     "expected_version",
     "clarification_outcome",
+    "review",
+    "clarification_version",
   ]);
+  const reviewInput =
+    r.review === undefined ? null : object(r.review, ["priority", "triage_owner_id", "priority_reason", "next_action"]);
+  const review = reviewInput
+    ? {
+        priority: choice(reviewInput.priority, "priority", ["Low", "Normal", "High", "Urgent"]),
+        triage_owner_id: uuid(reviewInput.triage_owner_id, "triage_owner_id"),
+        priority_reason: narrative(reviewInput.priority_reason, "priority_reason", 2000),
+        next_action: narrative(reviewInput.next_action, "next_action", 2000),
+      }
+    : null;
   const command = {
     ...common(r),
     id: uuid(id, "id"),
     expected_version: version(r.expected_version),
-    clarification_outcome: optionalNarrative(
-      r.clarification_outcome,
-      "clarification_outcome",
-      4000,
-    ),
+    ...(review ? { review } : {}),
+    ...(r.clarification_version === undefined ? {} : { clarification_version: version(r.clarification_version) }),
+    clarification_outcome: optionalNarrative(r.clarification_outcome, "clarification_outcome", 4000),
   };
   return sharedOperation(
     p,
@@ -484,32 +388,29 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
     "TriageTicket",
     async (c) => {
       const t = await visibleTicket(c, p, id, true);
-      if (
-        !(await hasPermission(
-          c,
-          p,
-          "service.ticket.edit",
-          t.company_id,
-          t.site_id ?? undefined,
-        ))
-      )
-        throw new AppError(
-          403,
-          "Forbidden",
-          "This identity cannot triage service requests.",
-        );
+      if (!(await hasPermission(c, p, "service.ticket.edit", t.company_id, t.site_id ?? undefined)))
+        throw new AppError(403, "Forbidden", "This identity cannot triage service requests.");
       const triageOwner = await scopedOwner(
         c,
         p,
-        t.triage_owner_id,
+        review?.triage_owner_id ?? t.triage_owner_id,
         t.company_id,
         t.site_id ?? undefined,
         "service.ticket.edit",
       );
       await visibleTicket(c, triageOwner, t.id);
-      const activity = t.clarification_activity_id
-        ? await visibleActivity(c, p, t.clarification_activity_id)
-        : null;
+      const activity = t.clarification_activity_id ? await visibleActivity(c, p, t.clarification_activity_id) : null;
+      if (command.clarification_version !== undefined) {
+        if (!activity) throw unavailable();
+        if (!(await hasPermission(c, p, "activity.edit", activity.company_id, activity.site_id ?? undefined)))
+          throw new AppError(403, "Forbidden", "This identity cannot complete the clarification activity.");
+        if (activity.owner_id !== p.actor_id)
+          throw new AppError(
+            403,
+            "ACTIVITY_OWNER_REQUIRED",
+            "Only the current owner can complete this clarification activity.",
+          );
+      }
       return { t, activity };
     },
     async (c, { t, activity }) => {
@@ -520,7 +421,13 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
           "TICKET_STATE_INVALID",
           "This request is already triaged or outside the editable intake states.",
         );
-      const blockers = triageBlockers(t, activity?.status === "Completed");
+      const completeClarification = command.clarification_version !== undefined;
+      if (completeClarification) {
+        checkVersion(activity!.version, command.clarification_version!);
+        if (!["Open", "InProgress"].includes(activity!.status))
+          throw new AppError(422, "ACTIVITY_STATE_INVALID", "The clarification activity is no longer open.");
+      }
+      const blockers = triageBlockers({ ...t, ...review }, activity?.status === "Completed" || completeClarification);
       if (t.status === "NeedsInformation" && !command.clarification_outcome)
         blockers.push({
           field: "clarification_outcome",
@@ -533,16 +440,72 @@ export async function triageTicket(p: Principal, id: string, input: unknown) {
           "Complete the listed intake requirements before triage. Urgent priority does not bypass these checks.",
           blockers,
         );
+      let clarificationReceipt = null;
+      if (completeClarification && activity) {
+        const a = (
+          await c.query(
+            "UPDATE ppo.activities SET status='Completed',outcome=$1,version=version+1,updated_at=clock_timestamp(),updated_by=$2 WHERE workspace_id=$3 AND id=$4 RETURNING *,status AS state",
+            [command.clarification_outcome, p.actor_id, p.workspace_id, activity.id],
+          )
+        ).rows[0];
+        const child = { operation_id: randomUUID(), reason: command.reason };
+        clarificationReceipt = await recordOperation(
+          c,
+          p,
+          child,
+          a,
+          "Activity",
+          "ActivityCompleted",
+          createHash("sha256")
+            .update(
+              canonical({
+                command: "CompleteActivityDuringTriage",
+                parent_operation_id: command.operation_id,
+                ...child,
+              }),
+            )
+            .digest("hex"),
+          {
+            command: "CompleteActivityDuringTriage",
+            parent_operation_id: command.operation_id,
+            previous_version: activity.version,
+            record_version: a.version,
+            before: { status: activity.status, outcome: activity.outcome },
+            after: {
+              status: "Completed",
+              outcome: command.clarification_outcome,
+            },
+          },
+        );
+      }
       const row = (
         await c.query(
-          "UPDATE ppo.tickets SET status='Triaged',clarification_outcome=$1,version=version+1,updated_at=clock_timestamp(),updated_by=$2 WHERE workspace_id=$3 AND id=$4 RETURNING *,status AS state",
-          [command.clarification_outcome, p.actor_id, p.workspace_id, id],
+          "UPDATE ppo.tickets SET status='Triaged',clarification_outcome=$1,priority=$5,triage_owner_id=$6,priority_reason=$7,next_action=$8,version=version+1,updated_at=clock_timestamp(),updated_by=$2 WHERE workspace_id=$3 AND id=$4 RETURNING *,status AS state",
+          [
+            command.clarification_outcome,
+            p.actor_id,
+            p.workspace_id,
+            id,
+            review?.priority ?? t.priority,
+            review?.triage_owner_id ?? t.triage_owner_id,
+            review?.priority_reason ?? t.priority_reason,
+            review?.next_action ?? t.next_action,
+          ],
         )
       ).rows[0];
       return {
         ...row,
         audit_details: {
           previous_version: t.version,
+          before: {
+            priority: t.priority,
+            triage_owner_id: t.triage_owner_id,
+            priority_reason: t.priority_reason,
+            next_action: t.next_action,
+            status: t.status,
+          },
+          after: { ...review, status: "Triaged" },
+          clarification_receipt_id: clarificationReceipt?.receipt_id ?? null,
           clarification_outcome: command.clarification_outcome,
           clarification_activity_id: t.clarification_activity_id,
           authority: "Intake triage only; no work authorisation",
@@ -557,10 +520,10 @@ export async function readIntake(p: Principal, id: string) {
   const c = database(),
     t = await visibleTicket(c, p, uuid(id, "id"));
   const owner = (
-    await c.query(
-      "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
-      [p.workspace_id, t.triage_owner_id],
-    )
+    await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [
+      p.workspace_id,
+      t.triage_owner_id,
+    ])
   ).rows[0];
   let clarification = null;
   if (t.clarification_activity_id) {
@@ -570,14 +533,38 @@ export async function readIntake(p: Principal, id: string) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
   }
-  const editable = await hasPermission(
-    c,
-    p,
-    "service.ticket.edit",
-    t.company_id,
-    t.site_id ?? undefined,
-  );
+  const editable = await hasPermission(c, p, "service.ticket.edit", t.company_id, t.site_id ?? undefined);
+  const links = (
+    await c.query(
+      `SELECT ${customerSql} AS customer, ${workOrdersSql} AS work_orders FROM ppo.tickets t WHERE t.workspace_id=$1 AND t.id=$3`,
+      [p.workspace_id, p.actor_id, t.id],
+    )
+  ).rows[0];
+  const history = (
+    await c.query<{
+      id: string;
+      occurred_at: Date;
+      actor_name: string;
+      kind: string;
+      record_version: number;
+    }>(
+      "SELECT e.id,e.occurred_at,u.display_name AS actor_name,j.kind,(j.payload->>'record_version')::integer AS record_version FROM ppo.audit_events e JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.actor_id) JOIN ppo.outbox_jobs j ON (j.workspace_id,j.actor_id,j.operation_id)=(e.workspace_id,e.actor_id,e.operation_id) WHERE e.workspace_id=$1 AND e.object_type='Ticket' AND e.object_id=$2 ORDER BY e.occurred_at DESC,e.id LIMIT 101",
+      [p.workspace_id, t.id],
+    )
+  ).rows;
   return {
+    customer: links.customer as {
+      id: string;
+      display_name: string;
+      basis: string;
+    } | null,
+    work_orders: links.work_orders as {
+      id: string;
+      display_number: string;
+      status: string;
+    }[],
+    history: history.slice(0, 100).map((row) => ({ ...row, occurred_at: row.occurred_at.toISOString() })),
+    history_partial: history.length > 100,
     id: t.id,
     company_id: t.company_id,
     display_number: t.display_number,
@@ -606,11 +593,10 @@ export async function readIntake(p: Principal, id: string) {
     clarification_outcome: clarification ? t.clarification_outcome : null,
     clarification_activity: clarification,
     clarification_unavailable: !!t.clarification_activity_id && !clarification,
-    requester: t.requester_id
-      ? await readShared(p, "Person", t.requester_id)
-      : null,
+    requester: t.requester_id ? await readShared(p, "Person", t.requester_id) : null,
     site: t.site_id ? await readShared(p, "Site", t.site_id) : null,
     asset: t.asset_id ? await readShared(p, "Asset", t.asset_id) : null,
+    can_record_statement: ["New", "NeedsInformation", "Triaged"].includes(t.status) && editable,
     can_edit: t.status === "New" && editable,
     can_edit_intake: ["New", "NeedsInformation"].includes(t.status) && editable,
     triage_blockers: triageBlockers(t, clarification?.status === "Completed"),
@@ -619,13 +605,16 @@ export async function readIntake(p: Principal, id: string) {
 const priorityRank = (alias: string) =>
   `CASE ${alias}.priority WHEN 'Urgent' THEN 0 WHEN 'High' THEN 1 WHEN 'Normal' THEN 2 ELSE 3 END`;
 // Filters shared by the register list and its queue counts; $1 workspace, $2 actor, then $3-$6.
-const registerFilters = `t.workspace_id=$1 AND ${ticketVisibility()}
+const registerFilters = (priorityIndex: number) => `t.workspace_id=$1 AND ${ticketVisibility()}
     AND ($3::uuid IS NULL OR t.company_id=$3) AND ($4::uuid IS NULL OR t.site_id=$4)
-    AND position(lower($5) in lower(t.summary||' '||t.display_number))>0 AND ($6::uuid IS NULL OR t.triage_owner_id=$6)`;
+    AND position(lower($5) in lower(t.summary||' '||t.display_number))>0 AND ($6::uuid IS NULL OR t.triage_owner_id=$6) AND ($${priorityIndex}::text IS NULL OR t.priority=$${priorityIndex})`;
 // Queue predicates shared by the register list (queue filter, SV-01 I2) and its counts (ticketQueues), so a
 // toggle never disagrees with its badge. Keys are validated before use; `ca` is the clarification join.
 const queuePredicates = {
   all_open: "t.status NOT IN ('Closed','Cancelled')",
+  my_requests: "t.status NOT IN ('Closed','Cancelled') AND t.triage_owner_id=$2",
+  no_work_order: `t.status='Triaged' AND NOT EXISTS(SELECT 1 FROM ppo.work_order_tickets wl JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(wl.workspace_id,wl.work_order_id) WHERE wl.workspace_id=t.workspace_id AND wl.ticket_id=t.id AND ${orderVisibility("w")})`,
+  work_order_linked: `t.status='Triaged' AND EXISTS(SELECT 1 FROM ppo.work_order_tickets wl JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(wl.workspace_id,wl.work_order_id) WHERE wl.workspace_id=t.workspace_id AND wl.ticket_id=t.id AND ${orderVisibility("w")})`,
   new: "t.status='New'",
   needs_information: "t.status='NeedsInformation'",
   triaged: "t.status='Triaged'",
@@ -671,7 +660,11 @@ type RegisterRow = IntakeGate & {
   site_name: string | null;
   asset_number: string | null;
   asset_description: string | null;
-  customer: { id: string; display_name: string; basis: "SiteOperator" | "RequesterRelationship" } | null;
+  customer: {
+    id: string;
+    display_name: string;
+    basis: "SiteOperator" | "RequesterRelationship";
+  } | null;
   clarification_id: string | null;
   clarification_summary: string | null;
   clarification_status: string | null;
@@ -707,8 +700,20 @@ function registerRow(t: RegisterRow) {
     received_at: t.received_at.toISOString(),
     channel: t.channel,
     next_action: t.next_action,
-    site: t.site_id ? { id: t.site_id, display_number: t.site_number, display_name: t.site_name } : null,
-    asset: t.asset_id ? { id: t.asset_id, display_number: t.asset_number, description: t.asset_description } : null,
+    site: t.site_id
+      ? {
+          id: t.site_id,
+          display_number: t.site_number,
+          display_name: t.site_name,
+        }
+      : null,
+    asset: t.asset_id
+      ? {
+          id: t.asset_id,
+          display_number: t.asset_number,
+          description: t.asset_description,
+        }
+      : null,
     customer: t.customer,
     clarification,
     clarification_unavailable: !!t.clarification_activity_id && !clarification,
@@ -733,20 +738,16 @@ export async function listTickets(p: Principal, input: unknown = {}) {
     "owner_id",
     "sort",
     "queue",
+    "priority",
   ]);
-  const status =
-      r.status === undefined
-        ? null
-        : choice(r.status, "status", ["New", "NeedsInformation", "Triaged"]),
+  const status = r.status === undefined ? null : choice(r.status, "status", ["New", "NeedsInformation", "Triaged"]),
+    priority = r.priority === undefined ? null : choice(r.priority, "priority", ["Low", "Normal", "High", "Urgent"]),
     owner = optionalId(r.owner_id, "owner_id"),
     sort = r.sort === undefined ? "id" : choice(r.sort, "sort", ["urgency"]),
-    queue =
-      r.queue === undefined
-        ? null
-        : (choice(r.queue, "queue", Object.keys(queuePredicates)) as Queue);
+    queue = r.queue === undefined ? null : (choice(r.queue, "queue", Object.keys(queuePredicates)) as Queue);
   const pg = page(
     Object.fromEntries(
-      Object.entries(r).filter(([k]) => !["status", "owner_id", "sort", "queue"].includes(k)),
+      Object.entries(r).filter(([k]) => !["status", "owner_id", "sort", "queue", "priority"].includes(k)),
     ),
     {
       workspace: p.workspace_id,
@@ -754,6 +755,7 @@ export async function listTickets(p: Principal, input: unknown = {}) {
       kind: "Ticket",
       status,
       owner,
+      ...(priority ? { priority } : {}),
       // The original binding had no sort or queue; keep its fingerprint so existing cursors stay valid.
       ...(sort === "urgency" ? { sort } : {}),
       ...(queue ? { queue } : {}),
@@ -780,19 +782,9 @@ export async function listTickets(p: Principal, input: unknown = {}) {
       LEFT JOIN ppo.assets a ON (a.workspace_id,a.id)=(t.workspace_id,t.asset_id)
       ${clarificationJoin(flags)}
       LEFT JOIN ppo.users cu ON (cu.workspace_id,cu.id)=(ca.workspace_id,ca.owner_id)
-      WHERE ${registerFilters} AND ${keyset} AND ($8::text IS NULL OR t.status=$8) AND ${queue ? queuePredicates[queue] : "TRUE"}
+      WHERE ${registerFilters(10)} AND ${keyset} AND ($8::text IS NULL OR t.status=$8) AND ${queue ? queuePredicates[queue] : "TRUE"}
       ORDER BY ${order} LIMIT $9`,
-      [
-        p.workspace_id,
-        p.actor_id,
-        pg.company_id,
-        pg.site_id,
-        pg.q,
-        owner,
-        pg.after,
-        status,
-        pg.limit + 1,
-      ],
+      [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, owner, pg.after, status, pg.limit + 1, priority],
     )
   ).rows;
   return envelope(
@@ -804,25 +796,32 @@ export async function listTickets(p: Principal, input: unknown = {}) {
 export async function ticketQueues(p: Principal, input: unknown = {}) {
   const c = database();
   await requireCapability(c, p, "service.ticket.read");
-  const r = object(input, ["q", "company_id", "site_id", "owner_id"]);
-  const owner = optionalId(r.owner_id, "owner_id");
-  const pg = page(
-    Object.fromEntries(Object.entries(r).filter(([k]) => k !== "owner_id")),
-    { workspace: p.workspace_id, actor: p.actor_id, kind: "TicketQueues" },
-  );
+  const r = object(input, ["q", "company_id", "site_id", "owner_id", "priority"]);
+  const owner = optionalId(r.owner_id, "owner_id"),
+    priority = r.priority === undefined ? null : choice(r.priority, "priority", ["Low", "Normal", "High", "Urgent"]);
+  const pg = page(Object.fromEntries(Object.entries(r).filter(([k]) => !["owner_id", "priority"].includes(k))), {
+    workspace: p.workspace_id,
+    actor: p.actor_id,
+    kind: "TicketQueues",
+  });
   const flags = await activityFlags(c);
   const counts = (
     await c.query<Record<string, string | Date>>(
       `SELECT clock_timestamp() AS as_at,
-        ${Object.entries(queuePredicates).map(([key, predicate]) => `count(*) FILTER (WHERE ${predicate}) AS ${key}`).join(",\n        ")}
-      FROM ppo.tickets t ${clarificationJoin(flags)} WHERE ${registerFilters}`,
-      [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, owner],
+        ${Object.entries(queuePredicates)
+          .map(([key, predicate]) => `count(*) FILTER (WHERE ${predicate}) AS ${key}`)
+          .join(",\n        ")}
+      FROM ppo.tickets t ${clarificationJoin(flags)} WHERE ${registerFilters(7)}`,
+      [p.workspace_id, p.actor_id, pg.company_id, pg.site_id, pg.q, owner, priority],
     )
   ).rows[0];
   const n = (key: string) => Number(counts[key]);
   return {
     as_at: (counts.as_at as Date).toISOString(),
     all_open: n("all_open"),
+    my_requests: n("my_requests"),
+    no_work_order: n("no_work_order"),
+    work_order_linked: n("work_order_linked"),
     new: n("new"),
     needs_information: n("needs_information"),
     triaged: n("triaged"),
