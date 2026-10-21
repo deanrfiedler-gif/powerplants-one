@@ -256,7 +256,7 @@ function LoadedSurvey({
   return (
     <SharedRecord
       id="ppo-survey-record"
-      sourceLabel="Survey submission and handover checks"
+      sourcesLabel="Survey submission and handover checks"
       title={row.name}
       reference={row.display_number ?? "Site survey"}
       status={<SurveyTag value={row.state} />}

@@ -174,8 +174,8 @@ export function SalesEstimatingLink({ id }: { id: string }) {
               >
                 Create native estimating workspace
               </Link>
-              . Creation saves independently; return here to review and link the
-              accepted brief.
+              . Review creation to save the workspace and exact accepted brief link
+              together. Sales statements remain independent discovery evidence.
             </p>
           )}
           {!d.acceptance_event_id && (

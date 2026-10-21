@@ -111,6 +111,7 @@ export const migrationFiles = [
   "0107-field-readiness-gate.sql",
   "0108-conversations.sql",
   "0109-customer-communications.sql",
+  "0113-discovery-creation-link.sql",
   "0114-reference-namespaces-surveys.sql",
 ] as const;
 export const seedFiles = [

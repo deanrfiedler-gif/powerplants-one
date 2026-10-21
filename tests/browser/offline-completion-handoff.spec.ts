@@ -257,7 +257,7 @@ test("large offline queue continues through online completion with all 100 origi
   const reportHref = (await reportLink.getAttribute("href"))!;
   await reportLink.click();
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
+    page.locator(".sv06-record-header .ppo-register-chip, .sv06-phone-status .ppo-register-chip").filter({ visible: true }).filter({ hasText: "Submitted" }),
   ).toBeVisible();
   await page.goto("/offline/index.html");
   await expect(page.locator("#workspace")).toBeVisible();
@@ -268,9 +268,10 @@ test("large offline queue continues through online completion with all 100 origi
   expect(retained.every((x) => x.status.state === "ServerSaved")).toBe(true);
   await call(page.request, "local-session", { profile: "coordinator" });
   await page.goto(reportHref);
+  await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   await expect(
     page.getByRole("heading", {
-      name: "Review exact submitted entries",
+      name: "Review submission",
       exact: true,
     }),
   ).toBeVisible();

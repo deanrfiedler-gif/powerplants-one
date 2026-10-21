@@ -15,7 +15,8 @@ export function SharedRecord({
   tabs,
   children,
   stickyAction,
-  sourceLabel = "Sources for this customer",
+  sourcesLabel = "Sources for this customer",
+  statusPlacement = "meta",
 }: {
   id: string;
   title: string;
@@ -28,24 +29,29 @@ export function SharedRecord({
   tabs: ReactNode;
   children: ReactNode;
   stickyAction?: ReactNode;
-  sourceLabel?: string;
+  sourcesLabel?: string;
+  statusPlacement?: "meta" | "title";
 }) {
   return (
     <section id={id} className="shared-record" data-module-layout="full-bleed">
       <header className="shared-record-header">
         <div>
-          <PageHeader title={title} eyebrow={reference} />
+          <div
+            className={
+              statusPlacement === "title" ? "shared-record-title" : undefined
+            }
+          >
+            <PageHeader title={title} eyebrow={reference} />
+            {statusPlacement === "title" && status}
+          </div>
           <div className="shared-record-meta">
-            {status}
+            {statusPlacement === "meta" && status}
             {meta}
           </div>
         </div>
         <div className="shared-record-actions">{actions}</div>
       </header>
-      <div
-        className="shared-record-sources"
-        aria-label={sourceLabel}
-      >
+      <div className="shared-record-sources" aria-label={sourcesLabel}>
         {sources}
       </div>
       <div className="shared-record-body">

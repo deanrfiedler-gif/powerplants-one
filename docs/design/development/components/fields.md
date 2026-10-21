@@ -188,6 +188,10 @@ For the local-team host, supplement the native lead selector with its complete s
 
 The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.
 
+## Discovery costing consumer
+
+ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-local composition and synthetic state fixture are described in [the page contract](../pages/route-estimating-discovery-id-costing.md); [execution evidence](../../../testing/evidence/discovery-costing/README.md) is separate from owner review. No new shared component, token, grant or offline capability is introduced.
+
 ## CS-08 Site surveys consumer
 
 The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. No new public control API is introduced for this consumer.

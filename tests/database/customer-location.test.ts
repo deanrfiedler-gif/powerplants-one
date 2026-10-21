@@ -1,3 +1,4 @@
+import { saveCsWithReviewedRequirements as saveCs } from "../helpers/readiness-publication";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { before, after, test } from "node:test";
@@ -7,7 +8,6 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import {
   createCs,
-  saveCs,
   csAction,
   readCs,
   listCs,

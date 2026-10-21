@@ -89,7 +89,7 @@ test("XI97 populated workbook, sources and quotation upgrade to managed Excel pr
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114],
+    [98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

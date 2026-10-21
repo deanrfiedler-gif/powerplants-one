@@ -341,6 +341,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
   // user or existing row changes; every class stays Off, and the hosted worker does not drain the
   // synthetic queue. Existing all-table runtime privileges cover the new tables.
+  // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
+  // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
+  // grants, users or seeds change; existing runtime privileges and historical receipts remain.
   // 0114 shortens newly allocated synthetic references while continuing existing counters.
   // Existing assigned references, evidence hashes and seeds remain unchanged. Only unnumbered
   // surveys receive a first reference; photos gain original-format facts with historical PNG defaults.

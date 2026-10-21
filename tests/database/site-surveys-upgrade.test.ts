@@ -132,7 +132,7 @@ test("0114 preserves populated 0109 references, ledgers and immutable survey sna
         "SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version",
       )
     ).rows,
-    [{ version: 114 }],
+    [{ version: 113 }, { version: 114 }],
   );
   const orgId = randomUUID();
   await createOrganisation(p, {

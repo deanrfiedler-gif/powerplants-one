@@ -5,9 +5,11 @@ import { transaction } from "../platform/database";
 import { sharedOperation, canonical } from "../platform/operations";
 import { AppError, unavailable } from "../platform/errors";
 import { object, optionalId } from "../shared/validation";
-import { requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability } from "../platform/permissions";
+import { discoveryRegisterFields } from "./discovery-register-reads";
 import { visibleOpportunity } from "../crm/context";
 import { digest } from "../documents/store";
+import { reviewCreationContext } from "./discovery-creation-context";
 import { configurationConfirmations, copyConfiguration, requireConfigurationSuccessor } from "./configuration";
 import { savedOptionCost, discoveryHistoryCounts } from "./discovery-reads";
 import { receivedFertigation } from "./fertigation/receiving-reads";
@@ -270,15 +272,19 @@ export async function previewDiscoveryCreate(p: Principal, value: unknown) {
       )
     ).rows[0];
     if (existing) {
-      await workspaceAuthority(c, p, existing.id, true);
+      await workspaceAuthority(c, p, existing.id, !input.creation);
       throw new AppError(
         409,
         "RelationshipConflict",
         "Open the existing estimating workspace for this opportunity.",
       );
     }
+    const creation = input.creation
+      ? await reviewCreationContext(c, p, input.opportunity_id, input.discovery, input.creation)
+      : undefined;
     return {
       ...targets,
+      ...(creation ? { creation } : {}),
       expected_opportunity_version: targets.references.opportunity.version,
       required_confirmation_ids: requiredConfirmations(
         targets.compiled.input,
@@ -413,10 +419,13 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
         input.confirmed_question_ids,
       );
       confirmConfiguration(configurationConfirmations(targets.compiled.input.configuration, undefined, targets.context_hash), input.configuration_confirmations ?? []);
+      const creation = input.creation
+        ? await reviewCreationContext(c, p, input.opportunity_id, input.discovery, input.creation)
+        : undefined;
       const g = (
         await c.query<DiscoveryWorkspace>(
           `INSERT INTO ppo.estimating_workspaces(id,workspace_id,company_id,opportunity_id,owner_id,selected_option_id,created_by,updated_by)
-      VALUES($1,$2,$3,$4,$5,$6,$5,$5) RETURNING *`,
+      VALUES($1,$2,$3,$4,$7,$6,$5,$5) RETURNING *`,
           [
             input.id,
             p.workspace_id,
@@ -424,6 +433,7 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
             input.opportunity_id,
             p.actor_id,
             input.option_id,
+            creation?.owner.id ?? p.actor_id,
           ],
         )
       ).rows[0];
@@ -456,6 +466,17 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
         input.confirmed_question_ids,
         input.reason,
       );
+      if (input.creation?.sales_brief) {
+        const brief = input.creation.sales_brief;
+        await c.query(
+          `INSERT INTO ppo.sales_estimating_bindings
+           (workspace_id,company_id,handover_id,acceptance_event_id,estimating_workspace_id,
+            estimating_version,selected_option_id,selected_revision_id,operation_id,recorded_by,reason)
+           VALUES($1,$2,$3,$4,$5,1,$6,$7,$8,$9,$10)`,
+          [p.workspace_id, g.company_id, brief.handover_id, brief.acceptance_event_id, g.id,
+            input.option_id, input.revision_id, input.operation_id, p.actor_id, input.reason],
+        );
+      }
       return {
         ...g,
         audit_details: {
@@ -464,6 +485,7 @@ export async function createDiscoveryWorkspace(p: Principal, value: unknown) {
           selected_option_id: input.option_id,
           context_hash: targets.context_hash,
           content_hash: targets.compiled.content_hash,
+          ...(input.creation ? { creation: input.creation } : {}),
         },
       };
     },
@@ -750,10 +772,13 @@ export async function listDiscoveryWorkspaces(
           title: opportunity.title,
           display_number: opportunity.display_number,
           selected_option_id: workspace.selected_option_id,
+          ...await discoveryRegisterFields(c, p, workspace, opportunity, options.find(item => item.option.id === workspace.selected_option_id)!.revision.id),
           options: options.map(({ option, revision }) => ({
             id: option.id,
             label: option.label,
+            ordinal: option.ordinal,
             state: option.state,
+            kind: revision.kind,
             revision_id: revision.id,
             revision: revision.version,
             scope_readiness: revision.scope_readiness,
@@ -763,6 +788,6 @@ export async function listDiscoveryWorkspaces(
         if (!(error instanceof AppError) || error.status !== 404) throw error;
       }
     }
-    return { items, limit: 100, synthetic: true };
+    return { items, limit: 100, synthetic: true, as_at: new Date().toISOString(), can_create: await hasPermission(c, p, "estimating.edit") };
   });
 }

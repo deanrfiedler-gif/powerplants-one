@@ -144,6 +144,16 @@
           "id": "ad01-team-access-host",
           "label": "Saved-team current access inspection",
           "description": "tests/browser/access-team-access.spec.ts: exact person handover, timestamped row counts, masked/zero/inactive presentation, refresh preserving draft, stale-read withholding, denial and rapid selection at 1440/390/320 widths. Actual SQL authority/count proofs are separate."
+        },
+        {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
         }
       ],
       "implementation": [
@@ -182,6 +192,12 @@
         "src/app/styles/projects-register.css",
         "src/components/projects-register.tsx",
         "docs/design/projects-register/figma-measurements.json",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
@@ -339,6 +355,10 @@
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
         "route:/estimating/rules/[id]",
+        "route:/estimating/discovery/[id]/costing",
+        "route:/people",
+        "route:/contacts",
+        "route:/estimating/discovery",
         "scope:CS-08",
         "route:/surveys",
         "route:/surveys/[id]"
@@ -525,6 +545,22 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "buttons-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "buttons-cs08-review",
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
@@ -688,6 +724,16 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
         }
       ],
       "implementation": [
@@ -721,6 +767,12 @@
         "src/products/components/catalogue-register.css",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
@@ -743,6 +795,10 @@
         "route:/products",
         "route:/customers",
         "route:/customers/[id]",
+        "route:/service/reports",
+        "route:/people",
+        "route:/contacts",
+        "route:/estimating/discovery",
         "scope:CS-08",
         "route:/surveys",
         "route:/surveys/[id]"
@@ -825,6 +881,22 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "register-table-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "register-table-cs08-review",
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
@@ -895,6 +967,11 @@
           "id": "es02-figma-host",
           "label": "ES-02 Figma host",
           "description": "Accepted ES-02 composition uses existing controls; tests/browser/estimating-wizard-figma.spec.ts and estimating-wizard.spec.ts exercise actual desktop/phone consumers."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
         }
       ],
       "implementation": [
@@ -907,7 +984,10 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -916,7 +996,8 @@
       },
       "specification": "docs/design/development/components/area-editor.md",
       "used_on": [
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new"
       ],
       "desktop": "Select an area before changing its fields. Add/remove affects the preview only; saved configuration commands remain in the owning page.",
       "mobile": "Scroll the table within its container; the selected-area field editor must remain reachable below it.",
@@ -928,6 +1009,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "This is the existing select-and-edit pattern. Spreadsheet-style cell editing, bulk selection and frozen columns are not shared capabilities. r02 family/category authoring awaits the separate accepted Figma implementation.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "area-editor-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer, deterministic host fixtures and real-database handovers added. Shared scope-and-work details retain facility membership and specialist clarification; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1707,6 +1796,7 @@
         "route:/admin/access/requests/[id]",
         "route:/admin/access/roles",
         "route:/sales/opportunities",
+        "route:/estimating/discovery/[id]/costing",
         "scope:CS-08"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
@@ -2370,6 +2460,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
         }
       ],
       "implementation": [
@@ -2393,6 +2488,9 @@
         "src/components/equipment-timeline.tsx",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
@@ -2442,6 +2540,8 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/estimating/fertigation/[id]",
+        "route:/estimating/discovery",
+        "route:/service/reports/[id]",
         "scope:CS-08",
         "route:/surveys"
       ],
@@ -2515,6 +2615,14 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "tabs-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "tabs-cs08-review",
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
@@ -2564,6 +2672,16 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
         }
       ],
       "implementation": [
@@ -2584,7 +2702,13 @@
         "docs/testing/evidence/job-pack-figma-ui/README.md",
         "src/app/styles/job-pack-figma.css",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2604,7 +2728,12 @@
         "route:/service/packs/[id]",
         "route:/service/packs/new",
         "route:/customers",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "route:/service/reports",
+        "route:/service/reports/[id]",
+        "route:/people",
+        "route:/contacts",
+        "route:/estimating/discovery"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2650,6 +2779,22 @@
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2674,6 +2819,16 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
         }
       ],
       "implementation": [
@@ -2686,7 +2841,13 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2705,7 +2866,11 @@
         "scope:SC-07",
         "scope:SC-08",
         "scope:SC-09",
-        "scope:SC-10"
+        "scope:SC-10",
+        "route:/service/reports",
+        "route:/people",
+        "route:/contacts",
+        "route:/estimating/discovery"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -2717,6 +2882,22 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Other module dialogs are still independent implementations; this does not declare one universal dialog contract adopted.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3094,6 +3275,7 @@
         "route:/projects",
         "scope:CS-01",
         "route:/customers/new",
+        "route:/estimating/discovery/[id]/costing",
         "scope:CS-08"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
@@ -3825,6 +4007,16 @@
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         },
         {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
+        },
+        {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs08-survey",
           "label": "Site survey host",
           "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
@@ -3941,6 +4133,12 @@
         "docs/testing/evidence/phone-header/README.md",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
@@ -3992,6 +4190,9 @@
         "route:/products",
         "route:/sales/leads",
         "route:/customers/[id]",
+        "route:/estimating/discovery/[id]/costing",
+        "route:/contacts",
+        "route:/estimating/discovery",
         "scope:CS-08",
         "route:/surveys",
         "route:/surveys/[id]"
@@ -4244,7 +4445,7 @@
         {
           "id": "application-shell-phone-header-amendment",
           "expected": "Phone header amendment (decision PPO-SHELL-PHONE-HEADER-AMENDMENT-DEC, Figma page 1530:70, component set 1530:110): one compact 56 px row on phone pages; list pages show menu, view chooser and at most three icons (page action, Conversations, Filter); records show back, position or reference, previous/next and More; page guide, notifications and global search in the menu.",
-          "actual": "Built on branch feat/phone-header-compact (draft PR #609): the shared phone header is the compact 56 px row and the menu holds search, account and working company, notifications, page guide and Design & build. Measured on the running app at 390 and 320 px (docs/testing/evidence/phone-header/README.md). Pages with a secondary menu wire their menu sheet as Choose view; no page yet hands over a page action, Filter or record navigation, so those parts of the component are built but not exercised by a page, and the retained Sales deal-search row still sits under the row until that page is next changed (P9). Records that publish no identity keep a list header. A record row has Back instead of Menu (as drawn), so its More is always present and starts with Open menu, then Conversations (with its unread count), then the page's own actions, which keeps the menu reachable when a record page drops the tab bar as P3 says (an addition to Figma's More, decided by Dean on Claude's recommendation, 19 October 2026). Icons are Font Awesome Light where the Kit loads and local drawings otherwise. The named Figma version was saved on 19 October 2026; component 1530:110 is on Components 1:4 and 106 headers on 38 accepted pages were swapped (decision section 6a). EC-01 and EC-04 swaps remain separate. The retained captures are in docs/reference/ui/application-shell/phone-header-amendment-r01/.",
+          "actual": "Built on branch feat/phone-header-compact (draft PR #609): the shared phone header is the compact 56 px row and the menu holds search, account and working company, notifications, page guide and Design & build. Measured on the running app at 390 and 320 px (docs/testing/evidence/phone-header/README.md). Pages with a secondary menu wire their menu sheet as Choose view; no page yet hands over a page action, Filter or record navigation, so those parts of the component are built but not exercised by a page, and the retained Sales deal-search row still sits under the row until that page is next changed (P9). Records that publish no identity keep a list header. A record row has Back instead of Menu (as drawn), so its More is always present and starts with Open menu, then Conversations (with its unread count), then the page's own actions, which keeps the menu reachable when a record page drops the tab bar as P3 says (an addition to Figma's More, decided by Dean on Claude's recommendation, 19 October 2026). Icons are Font Awesome Light where the Kit loads and local drawings otherwise. The named Figma version was saved on 19 October 2026; component 1530:110 is on Components 1:4 and 106 headers on 38 accepted pages were swapped (decision section 6a). EC-01 and EC-04 swaps remain separate. The retained captures are in docs/reference/ui/application-shell/phone-header-amendment-r01/. CS-02 now supplies the current view/count, search and Filter through SecondaryMenuFrame.phoneHeader, combined with its owned Choose view registration. Its toolbar rows are removed on phones.",
           "action": "Dean's review of the running app at 390 and 320 px against accepted component 1530:110; EC-01 and EC-04 swaps in their sessions; each page's own change (Filter, page action, record navigation, toolbar rows).",
           "priority": "Medium",
           "owner": "Dean Fiedler"
@@ -4254,6 +4455,22 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -4547,6 +4764,16 @@
           "id": "recovery",
           "label": "Unknown / stale / denied",
           "description": "Existing original-operation recovery, stale comparison invalidation and permission removal remain authoritative."
+        },
+        {
+          "id": "first-creation",
+          "label": "First discovery creation",
+          "description": "Actual creation host with accepted Sales observations, owned follow-ups, busy/unknown/duplicate/denied states; tests/browser/discovery-creation.spec.ts."
+        },
+        {
+          "id": "costing",
+          "label": "Saved discovery costing",
+          "description": "Existing estimate proposal, saved-source comparison, stale basis, review/adopt, original-operation recovery, legacy and permission states; 1440/1024/390/320 px API-boundary fixture."
         }
       ],
       "implementation": [
@@ -4561,6 +4788,22 @@
         {
           "path": "src/components/estimation-catalogue-ui.tsx",
           "symbol": "CatalogueUpgrade"
+        },
+        {
+          "path": "src/components/discovery-creation.tsx",
+          "symbol": "NewDiscoveryWorkspace"
+        },
+        {
+          "path": "src/components/estimation-wizard-dialog.tsx",
+          "symbol": "WizardDialog"
+        },
+        {
+          "path": "src/components/discovery-fields.tsx",
+          "symbol": "AnswerFields"
+        },
+        {
+          "path": "src/components/discovery-costing.tsx",
+          "symbol": "DiscoveryCosting"
         }
       ],
       "dependencies": [
@@ -4569,7 +4812,13 @@
         "src/components/estimation-wizard-changes.ts",
         "docs/decisions/es02-wizard-figma-implementation.md",
         "src/components/estimation-wizard.css",
-        "scripts/es02-fixture.ts"
+        "scripts/es02-fixture.ts",
+        "src/components/discovery-creation.tsx",
+        "src/components/discovery-creation.css",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/components/discovery-costing-parts.tsx",
+        "src/components/discovery-costing-model.ts",
+        "src/components/discovery-costing.css"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/es02-wizard-figma-design-r01/PPO-ES02-Wizard-Figma-01-Desktop-Configuration-r01.png",
@@ -4580,7 +4829,9 @@
       "used_on": [
         "system:theme",
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/new",
+        "route:/estimating/discovery/[id]/costing"
       ],
       "desktop": "Accepted Figma: shared 240/76 px rail, 380 px summary, five 48 px steps, six family filters, full-width system grid and immutable save review. Summary closes for Alternatives/Revisions.",
       "mobile": "Phone record header, equal tabs, viewed alternative, 44 px step controls, scrolling family tiles, system cards and full-page editor, summary sheet and 72 px save footer. No shell bottom tabs.",
@@ -4592,6 +4843,22 @@
           "expected": "Paired accepted Figma review across desktop, tablet and phone, including saved and dirty states.",
           "actual": "Native host implementation and synthetic fixtures; execution evidence is recorded separately. No isolated renderer or owner acceptance claimed.",
           "action": "Review matching application captures against all accepted frames; retain Q6, missing phone Alternatives/Revisions images and device/screen-reader checks as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "estimation-journey-first-creation-review",
+          "expected": "Match accepted first-discovery desktop, tablet and phone frames with the same shared controls.",
+          "actual": "Creation consumer and deterministic host fixtures added; owner visual review remains pending.",
+          "action": "Review the page execution evidence and explicit adaptations; record a real owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "discovery-costing-review",
+          "expected": "Accepted Discovery costing desktop/tablet/phone states and owner review.",
+          "actual": "Page-local composition reuses shared controls; phone editor and workspace tab handovers have no dedicated accepted frames.",
+          "action": "Review the implementation evidence and open questions in the costing page contract.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6728,6 +6995,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs02-register",
+          "label": "CS-02 People register host",
+          "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         }
       ],
       "implementation": [
@@ -6742,6 +7014,10 @@
         {
           "path": "src/components/organisation-register.tsx",
           "symbol": "OrganisationRegister"
+        },
+        {
+          "path": "src/components/people-register.tsx",
+          "symbol": "PeopleRegister"
         }
       ],
       "dependencies": [
@@ -6756,7 +7032,10 @@
         "docs/reference/ui/customers/customer-360-figma-r03/README.md",
         "docs/reference/ui/customers/customer-360-figma-r04/README.md",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/people-native-fixtures.json",
+        "src/components/people-register.tsx",
+        "src/app/styles/people-register.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/PPO-Customer-360-Workspace-r01.html",
@@ -6774,7 +7053,7 @@
       "desktop": "Retain the existing register table, columns, real links and scoped content; activation loads the chosen destination.",
       "mobile": "Retain existing readable cards and touch activation at 390/320 CSS px.",
       "keyboard": "Real Tab/Shift+Tab and Enter activate ordinary links; existing leave-intent protection remains in force.",
-      "limitations": "Real host with synthetic data; no isolated renderer, hosted speed claim or owner/device acceptance. Shared-shell prefetch is outside this change. Organisations now uses the dedicated authorised register; CrmDirectory continues to serve People/Contacts. Earlier proposal and timing fixtures remain historical evidence.",
+      "limitations": "People and Organisations use dedicated permitted registers. The Contacts Organisations view and people_layout=directory retain the earlier CrmDirectory, including its saved-view account contract. Earlier timing fixtures remain historical. Owner/device acceptance pending.",
       "gaps": [
         {
           "id": "crm-directory-prefetch-review",
@@ -6805,6 +7084,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "crm-directory-cs02-review",
+          "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
+          "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
+          "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -7467,6 +7754,11 @@
           "description": "Existing revise-identity command, expected version, retained entries and original-operation recovery; no other correction fields implied."
         },
         {
+          "id": "readiness-check",
+          "label": "Readiness check",
+          "description": "CS-06 check, exact review and acknowledgement forms, source changed, empty and denied hosts at 1440/1024/390/320."
+        },
+        {
           "id": "cs08-survey",
           "label": "Site survey host",
           "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
@@ -7492,6 +7784,8 @@
         "src/components/organisation-correction.tsx",
         "src/shared/customer-360.ts",
         "docs/design/development/organisations-native-fixtures.json",
+        "src/components/access-readiness-workspace.tsx",
+        "src/app/styles/access-readiness.css",
         "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
@@ -7503,6 +7797,8 @@
       "used_on": [
         "scope:CS-01",
         "route:/customers/[id]",
+        "scope:CS-06",
+        "route:/sites/[id]/readiness",
         "scope:CS-08",
         "route:/surveys",
         "route:/surveys/[id]"
@@ -7510,13 +7806,21 @@
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
           "expected": "Owner review of accepted source and real desktop/phone state pairs.",
           "actual": "Implementation and local synthetic proof are separate from owner review; see the evidence pairing table.",
           "action": "Review the retained evidence and explicit data/layout adaptations before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-cs06-review",
+          "expected": "Paired owner review of the accepted CS-06 frames and native state families.",
+          "actual": "Native implementation; owner visual and device review pending.",
+          "action": "Review the CS-06 pairing and undrawn authoring forms before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

@@ -400,7 +400,7 @@ test("LC-13 populated 0073 upgrade retains accepted brief bytes, native Discover
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map(row => row.version), [74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114]);
+  assert.deepEqual(upgraded.slice(ledger.length).map(row => row.version), [74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114]);
   assert.deepEqual(
     await readOperation(f.p, f.create.operation_id),
     f.created.receipt,

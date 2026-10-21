@@ -33,6 +33,8 @@ Validation must cover unchanged legacy conversion, a site discovered after follo
 
 ## LC-13: accepted estimating brief continuity
 
+The following is the retained separate-link contract. The [20 October creation direction](../decisions/discovery-creation-journey.md) adds a reviewed initial-creation path: the creator reviews the eligible estimator and exact accepted Sales event together, then one transaction records the new workspace, first revision and optional immutable binding. The receiver's original acceptance remains separate attribution. Existing-workspace linking and legacy create clients continue to use the separate review below; assignment grants no access.
+
 The receiver explicitly links the exact accepted Sales brief event to the native estimating workspace for the same Deal. Compare the current accepted handover version/source hash and the native workspace version, selected option and scope revision. A changed source, successor, different Deal, hidden target or changed workspace blocks new intent. The receiver must also own and be allowed to edit the destination workspace. No default grant is added.
 
 Creation reuses the native discovery workflow and its original receipt. It returns to the handover for a separate explicit link review. If creation succeeds and linking is interrupted or refused, the workspace remains visible and its original creation receipt remains valid. Existing workspaces use the same explicit comparison. Linking never confirms discovery answers, copies costs, changes quotation status or rewrites accepted Sales evidence. The original problem, scope, exclusions, assumptions, unknowns and requested-date basis remain available beside the native workspace as attributed Sales context.
