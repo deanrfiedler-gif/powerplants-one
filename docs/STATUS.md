@@ -15,6 +15,14 @@ The [Field team native build](decisions/field-team-native-build.md) implements t
 
 CI repair follow-up: the shared Chrome maintenance repair landed separately on main in `36c55914` through PR #630. Field team uses that baseline and retains only its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
 
+The later compiled desktop run reaches its job limit on both unchanged main and #648. Separate maintenance PR #652 partitions that existing suite; #648 temporarily targets it to keep infrastructure outside the page diff. Prior-head application, database and phone checks pass, but the final inherited-workflow result remains pending. The evidence records the original Reports/Specialist navigation failures without claiming that partitioning fixes them.
+
+## Compiled desktop browser CI partition prepared — 21 October 2026
+
+Dean requested green CI for Field team #648 with unrelated infrastructure repairs kept separate. Codex owns separate maintenance PR #652. The compiled desktop job reached its 60-minute limit on unchanged main `78795dd6` and on #648; the complete suite no longer has reliable job margin. The [compiled-browser decision](decisions/ci-compiled-browser-suite.md) records the baseline and preserves all projects, original test deadlines, warm-up and retained restart proof.
+
+The change is limited to `.github/workflows/application-compiled.yml`, that maintenance record and this generated status entry: run the desktop project in two native Playwright shards, each with its own application and disposable `ppo_synthetic_test`, preserve serial execution within a shard, and keep both shards mandatory in the existing aggregate. Mobile and retained jobs stay intact. Local discovery proves the complete 562-case population equals the two shard lists (286 and 277), with only warm-up repeated and no missing/extra cases. YAML, Bash syntax and the aggregate truth table pass. Full CI execution remains pending. No application change, dependency, permission, migration, deployment or business acceptance is introduced.
+
 ## Chrome 156 compatibility maintenance — 21 October 2026
 
 Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.

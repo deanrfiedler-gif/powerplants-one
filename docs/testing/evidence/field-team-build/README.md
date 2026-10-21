@@ -37,6 +37,10 @@ The ten selected desktop/phone cases from `field-technicians.spec.ts`, `job-pack
 
 After integrating main `f6d2cc7a`, TypeScript, the studio register, naming, generated status/build-sequence checks and all six focused unit cases pass again. The shared catalogue retains both Discovery and Field team entries. Main `78795dd6` subsequently added only the separately merged #643 maintenance documentation; that baseline is also incorporated. The resulting diff against main contains no browser-runtime files or maintenance fragments. Final-head CI remains separate from these local checks.
 
+At `76db1d1e`, Linux CI passes all 971 unit tests, studio/lint/typecheck/build, every database suite, the broad desktop suite (544 passed / 21 skipped), both phone suites and retained scheduling. Compiled phone records 485 passed / 80 skipped. The first compiled desktop attempt records 543 passed / 21 skipped and one existing Reports navigation timeout; its retry passes that case, records one Specialist dialog timeout, then reaches the 60-minute job limit. Both affected journeys pass on unchanged main and other same-head jobs. Those failures remain recorded rather than being relabelled as passes.
+
+The compiled desktop budget also expires on unchanged main `78795dd6`. Separate maintenance PR #652 partitions that complete project into two isolated native Playwright shards while retaining every case, warm-up, serial worker, test deadline and the existing job limit. #648 temporarily targets that single prerequisite so its diff remains limited to Field team. Its final-head CI must execute the inherited workflow; partitioning is not claimed to repair the two intermittent navigation failures. No Reports or Specialist code/assertion is changed in this page PR.
+
 ## Visual comparison and explicit adaptations
 
 Live Figma screenshots and design context were inspected for the accepted desktop, tablet, phone, all five states, evidence panel and notes. Local browser screenshots are transient ignored test results, with the Font Awesome Kit blocked; no Pro artwork, Figma key or file URL is retained. The reference captures in docs/reference remain unchanged.
