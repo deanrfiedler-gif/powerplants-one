@@ -7,7 +7,7 @@ The [Field team native build](../decisions/field-team-native-build.md) implement
 
 CI repair follow-up: the shared Chrome maintenance repair landed separately on main in `36c55914` through PR #630. Field team uses that baseline and retains only its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
 
-The later compiled desktop run reaches its job limit on both unchanged main and #648. Separate maintenance PR #652 partitions that existing suite; #648 temporarily targets it to keep infrastructure outside the page diff. Prior-head application, database and phone checks pass, but the final inherited-workflow result remains pending. The evidence records the original Reports/Specialist navigation failures without claiming that partitioning fixes them.
+The compiled desktop budget exhausted on unchanged main and the earlier #648 head. Its separately maintained two-shard workflow then passed at `d0775e28`: all 66 checks succeeded, including 971 units, both compiled desktop shards (544 unique passed / 21 skipped, with warm-up repeated), phone (485 passed / 80 skipped), retained Scheduling, every database and application workflow. The original Reports/Specialist navigation failures remain recorded; partitioning is not claimed to fix them. After #648 was merged into #652 outside this session, Dean requested separate review scopes again. Infrastructure-only #653 is the parent; #652 continues the same Field team change above current main, preserving both PL-02 and CS-08 component bindings. Fresh integration CI remains pending, and owner visual review remains pending.
 
 <!-- decision-index -->
 

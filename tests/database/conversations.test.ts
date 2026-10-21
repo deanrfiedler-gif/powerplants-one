@@ -228,7 +228,7 @@ test("T1-4 a # link is stored as type and ID and drawn for each reader from thei
   const asSam = (await readThread(sam, projectThread)).messages[1].mentions[0] as Record<string, unknown>;
   assert.equal(asSam.can_open, true);
   assert.equal(asSam.record_id, deal);
-  assert.match(String(asSam.display_number), /^SYN-PPO-/);
+  assert.match(String(asSam.display_number), /^SYN-OPP-/);
   assert.ok(String(asSam.title).length > 0);
   const asBuilder = (await readThread(builder, projectThread)).messages[1].mentions[0];
   assert.deepEqual(asBuilder, { ordinal: 1, kind: "Record", can_open: false });

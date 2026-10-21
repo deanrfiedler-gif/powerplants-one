@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { CsWorkspace } from "../../../../components/cs-workspace";
+import { SurveyRecord } from "../../../../components/surveys/survey-record";
 export default async function Page({
   params,
 }: {
@@ -8,7 +8,7 @@ export default async function Page({
   const { id } = await params;
   return (
     <Suspense fallback={<p>Loading survey…</p>}>
-      <CsWorkspace kind="Survey" id={id} />
+      <SurveyRecord id={id} />
     </Suspense>
   );
 }

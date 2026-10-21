@@ -2,6 +2,7 @@ import {
   choice,
   dateOnly,
   invalid,
+  instant,
   label,
   narrative,
   object,
@@ -70,6 +71,7 @@ export type ReadinessContent = {
 };
 export type Observation = {
   id: string;
+  answers_observation_id?: string;
   title: string;
   kind:
     "Measured" | "Observed" | "Customer statement" | "Assumption" | "Unknown";
@@ -91,6 +93,12 @@ export type SurveyContent = {
   facility_ids: string[];
   asset_ids: string[];
   observations: Observation[];
+  visit?: {
+    planned_at: string | null;
+    ends_at: string | null;
+    contact_id: string | null;
+    recorder_id: string | null;
+  };
 };
 export type PlannedVisit = {
   id: string;
@@ -112,6 +120,7 @@ export type PlanContent = {
 export type CsContent = ReadinessContent | SurveyContent | PlanContent;
 export type CsRow = {
   id: string;
+  display_number?: string;
   workspace_id: string;
   company_id: string;
   site_id: string | null;
@@ -304,11 +313,13 @@ export function parseContent(
       "facility_ids",
       "asset_ids",
       "observations",
+      "visit",
     ]);
     if (r.schema_version !== 1) invalid("schema_version", "Use schema 1.");
     const observations = entries(r.observations, "observations", (x) => {
       const v = object(x, [
         "id",
+        "answers_observation_id",
         "title",
         "kind",
         "facility_id",
@@ -369,13 +380,21 @@ export function parseContent(
         );
       return {
         id: uuid(v.id, "observation_id"),
+        ...(v.answers_observation_id == null
+          ? {}
+          : {
+              answers_observation_id: uuid(
+                v.answers_observation_id,
+                "answers_observation_id",
+              ),
+            }),
         title: label(v.title, "title", 200),
         kind,
         facility_id: optionalId(v.facility_id, "facility_id"),
         asset_id: optionalId(v.asset_id, "asset_id"),
         value: amount,
         unit,
-        detail: narrative(v.detail, "detail", 2000),
+        detail: v.detail === "" ? "" : optionalNarrative(v.detail, "detail", 2000) ?? "",
         observer: label(v.observer, "observer", 200),
         captured_on: dateOnly(v.captured_on, "captured_on"),
         method_source: narrative(v.method_source, "method_source", 2000),
@@ -384,12 +403,33 @@ export function parseContent(
         activity_id: optionalId(v.activity_id, "activity_id"),
       };
     });
+    let visit: SurveyContent["visit"];
+    if (r.visit !== undefined) {
+      const v = object(r.visit, [
+        "planned_at",
+        "ends_at",
+        "contact_id",
+        "recorder_id",
+      ]);
+      const planned_at =
+        v.planned_at == null ? null : instant(v.planned_at, "planned_at");
+      const ends_at = v.ends_at == null ? null : instant(v.ends_at, "ends_at");
+      if (ends_at && (!planned_at || ends_at <= planned_at))
+        invalid("ends_at", "The visit end must follow its start.");
+      visit = {
+        planned_at,
+        ends_at,
+        contact_id: optionalId(v.contact_id, "contact_id"),
+        recorder_id: optionalId(v.recorder_id, "recorder_id"),
+      };
+    }
     return {
       schema_version: 1,
-      purpose: narrative(r.purpose, "purpose", 4000),
+      purpose: r.purpose === "" ? "" : optionalNarrative(r.purpose, "purpose", 4000) ?? "",
       facility_ids: ids(r.facility_ids, "facility_ids"),
       asset_ids: ids(r.asset_ids, "asset_ids"),
       observations,
+      ...(visit ? { visit } : {}),
     };
   }
   const r = object(value, [

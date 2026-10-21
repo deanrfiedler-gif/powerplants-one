@@ -680,7 +680,7 @@ test("NR-10 number sources read only number queries and still report access for 
     await expected(p),
   );
   assert.equal(word.items.some((i) => i.kind === "Work order" || i.kind === "Estimate"), false);
-  assert.ok((await applicationSearch(p, { q: "SYN-PPO-WO-000001", kind: "Work order" })).items.some((i) => i.reference === "SYN-PPO-WO-000001"));
+  assert.ok((await applicationSearch(p, { q: "SYN-WO-000001", kind: "Work order" })).items.some((i) => i.reference === "SYN-WO-000001"));
   // Someone without either capability is still told so, though a word query reads neither register.
   for (const profile of ["technician", "observer", "finance", "site-observer"]) {
     const r = await principal(profile);

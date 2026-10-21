@@ -2646,23 +2646,23 @@
     {
       "guide_key": "guide.cs.08",
       "entry_key": "scope:CS-08",
-      "title": "Site survey & as-found brief",
+      "title": "Site surveys",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
+      "content_mode": "Accepted CS-08 design implementation; owner visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "prepared_at": "2026-10-21",
+      "source_commit": "d7287038",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending.",
+      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover."
+            "Record an as-found survey for a site, keep observations and original evidence together, and hand over an exact independently reviewed revision."
           ],
           "steps": [],
           "headers": [],
@@ -2672,7 +2672,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Select the exact Site, Facilities and installed equipment. Prepare the observer, capture date, method/source and explicit measurement units."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -2683,9 +2683,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged."
           ],
           "headers": [],
           "rows": []
@@ -2694,7 +2694,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History."
+            "Use All surveys, Drafts, Awaiting review, Returned or Reviewed, then Site and Owner filters. The grid shows visit, open gaps, receiving destination, revision, owner, observation count and reference. Phone has a view chooser, filters and New survey.",
+            "Open a survey for Survey scope, Observations, Photos, Follow-up, Review & handover and retained History. Tabs are bookmarkable."
           ],
           "steps": [],
           "headers": [],
@@ -2704,7 +2705,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Review does not certify design suitability, capacity, Site safety or work authority. Photo bytes and hashes are immutable; unsupported formats are refused. Source changes require recheck and may require return and resubmission. Handover records a receiving obligation and exact source; it never rewrites an accepted Estimate or Engineering basis."
+            "New survey references use SYN-SRV-000nnn. Existing references stay unchanged. Planned visits and contacts are recorded facts; Not recorded is not a failed lookup or an inferred visit.",
+            "Review does not certify design suitability, capacity, site safety or work authority. A changed scope source is shown beside the submitted version and does not prevent an independent reviewer making a recorded decision."
           ],
           "steps": [],
           "headers": [],
@@ -2715,12 +2717,12 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor.",
-            "Link an open owned Site Activity with a due date for each significant Unknown or Assumption before submission.",
-            "Submit the current draft. Another permitted editor reviews or returns the exact submission with clarification.",
-            "Start a successor draft when needed; retain previous submissions and reviews. Hand over an exact Reviewed snapshot to an accountable Estimating or Engineering receiver."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged.",
+            "Link each significant Unknown or Assumption to an open site Activity with owner and due date before submission.",
+            "Submit the draft. A permitted independent reviewer uses Review & handover to review or return with clarification in the same form, with a required note.",
+            "For a Reviewed revision, record an Estimating or Engineering handover with its receiving owner. Start a successor draft for later changes."
           ],
           "headers": [],
           "rows": []
@@ -2729,8 +2731,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "A command is complete only when Saved to the server is confirmed. Review and handover remain bound to their exact submission. Handover records a receiving obligation; it does not send a message or change an accepted Estimate or Engineering basis."
           ],
           "steps": [],
           "headers": [],
@@ -2740,8 +2741,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Survey states are Draft, Submitted, Returned and Reviewed. Readiness snapshots separately show whether their exact source still matches."
+            "Loading, No reviewed surveys, Could not load, access denied and a partial page have different meanings. Retry repeats the read; pagination reads more permitted records. Hidden records are never counted as zero.",
+            "Draft can be edited; Submitted is locked pending review or return. Returned or Reviewed can start a successor draft. Owner, recorder and submitter cannot review their own survey."
           ],
           "steps": [],
           "headers": [],
@@ -2751,7 +2752,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An Unknown water-supply capacity needs an owned follow-up before submission. A later corrected caption requires a successor draft and fresh review; the earlier reviewed photo and caption remain bound to the original snapshot."
+            "A measured width of 0 mm remains an explicit measurement. An Unknown water capacity stays Unknown and needs an owned follow-up before submission if it affects handover. A successor draft may record the answer while preserving the earlier Unknown and review."
           ],
           "steps": [],
           "headers": [],
@@ -2761,10 +2762,9 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Correct labelled validation errors and retry. If another writer changed the record, keep your intended correction and reconcile it with the current version.",
+            "When an outcome is uncertain, use Confirm original save. It checks and retries the original operation rather than creating a duplicate. Do not close the tab until the outcome is resolved.",
+            "Unsaved forms stay in this tab while changing sections. Leaving asks you to save or deliberately discard. Survey writes require a connection; there is no offline queue or promise of recovery after closing the browser."
           ],
           "steps": [],
           "headers": [],
@@ -2774,9 +2774,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "Use the compact phone header to choose a register view or filter. Record tabs scroll within their strip and support arrow keys, Home and End. Measurement value and unit remain together at 320 px.",
+            "Filter dialogs support Escape and return focus. Fields retain labels, required indicators and errors. Long record references wrap rather than changing identity."
           ],
           "steps": [],
           "headers": [],
@@ -2786,8 +2785,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html"
+            "Sites, People, Facilities, Equipment, Access & readiness and My Work are canonical receiving links. Estimating and Engineering retain their own basis authority.",
+            "Design: PPO - Design, Site surveys — accepted; page 1464:2918 and notes 1464:4164. Icon-free captures: docs/reference/ui/customers/site-surveys-design-r01/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -2797,8 +2796,8 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "Accepted design decisions D1–D7 and Q1–Q4 are separate from review of the running application. Owner visual review remains pending.",
+            "See docs/testing/evidence/site-surveys-native/README.md for executed checks, visual differences and limitations; this guide makes no deployment or business acceptance claim."
           ],
           "steps": [],
           "headers": [],
@@ -2816,9 +2815,12 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
       "document_id": "PPO-GUIDE-CS-08",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -2828,7 +2830,10 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -64192,14 +64197,14 @@
     {
       "guide_key": "guide.route-surveys-id",
       "entry_key": "route:/surveys/[id]",
-      "title": "Site survey & as-found brief",
+      "title": "Site survey record",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "content_mode": "Accepted CS-08 design implementation; owner visual review pending",
+      "source_commit": "d7287038",
       "related_entry_keys": [
         "scope:CS-08",
         "route:/surveys"
@@ -64209,7 +64214,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover."
+            "Record an as-found survey for a site, keep observations and original evidence together, and hand over an exact independently reviewed revision."
           ],
           "steps": [],
           "headers": [],
@@ -64219,7 +64224,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Select the exact Site, Facilities and installed equipment. Prepare the observer, capture date, method/source and explicit measurement units."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -64230,9 +64235,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged."
           ],
           "headers": [],
           "rows": []
@@ -64241,8 +64246,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History.",
-            "Saved Equipment entries use canonical /equipment/[id] with an exact bounded Survey source return. Missing or revoked option identities display Equipment unavailable in current scope, without the retained ID/name."
+            "Use All surveys, Drafts, Awaiting review, Returned or Reviewed, then Site and Owner filters. The grid shows visit, open gaps, receiving destination, revision, owner, observation count and reference. Phone has a view chooser, filters and New survey.",
+            "Open a survey for Survey scope, Observations, Photos, Follow-up, Review & handover and retained History. Tabs are bookmarkable."
           ],
           "steps": [],
           "headers": [],
@@ -64252,7 +64257,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Review does not certify design suitability, capacity, Site safety or work authority. Photo bytes and hashes are immutable; unsupported formats are refused. Source changes require recheck and may require return and resubmission. Handover records a receiving obligation and exact source; it never rewrites an accepted Estimate or Engineering basis."
+            "New survey references use SYN-SRV-000nnn. Existing references stay unchanged. Planned visits and contacts are recorded facts; Not recorded is not a failed lookup or an inferred visit.",
+            "Review does not certify design suitability, capacity, site safety or work authority. A changed scope source is shown beside the submitted version and does not prevent an independent reviewer making a recorded decision."
           ],
           "steps": [],
           "headers": [],
@@ -64263,12 +64269,12 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor.",
-            "Link an open owned Site Activity with a due date for each significant Unknown or Assumption before submission.",
-            "Submit the current draft. Another permitted editor reviews or returns the exact submission with clarification.",
-            "Start a successor draft when needed; retain previous submissions and reviews. Hand over an exact Reviewed snapshot to an accountable Estimating or Engineering receiver."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged.",
+            "Link each significant Unknown or Assumption to an open site Activity with owner and due date before submission.",
+            "Submit the draft. A permitted independent reviewer uses Review & handover to review or return with clarification in the same form, with a required note.",
+            "For a Reviewed revision, record an Estimating or Engineering handover with its receiving owner. Start a successor draft for later changes."
           ],
           "headers": [],
           "rows": []
@@ -64277,8 +64283,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "A command is complete only when Saved to the server is confirmed. Review and handover remain bound to their exact submission. Handover records a receiving obligation; it does not send a message or change an accepted Estimate or Engineering basis."
           ],
           "steps": [],
           "headers": [],
@@ -64288,8 +64293,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Survey states are Draft, Submitted, Returned and Reviewed. Readiness snapshots separately show whether their exact source still matches."
+            "Loading, No reviewed surveys, Could not load, access denied and a partial page have different meanings. Retry repeats the read; pagination reads more permitted records. Hidden records are never counted as zero.",
+            "Draft can be edited; Submitted is locked pending review or return. Returned or Reviewed can start a successor draft. Owner, recorder and submitter cannot review their own survey."
           ],
           "steps": [],
           "headers": [],
@@ -64299,7 +64304,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An Unknown water-supply capacity needs an owned follow-up before submission. A later corrected caption requires a successor draft and fresh review; the earlier reviewed photo and caption remain bound to the original snapshot."
+            "A measured width of 0 mm remains an explicit measurement. An Unknown water capacity stays Unknown and needs an owned follow-up before submission if it affects handover. A successor draft may record the answer while preserving the earlier Unknown and review."
           ],
           "steps": [],
           "headers": [],
@@ -64309,10 +64314,9 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Correct labelled validation errors and retry. If another writer changed the record, keep your intended correction and reconcile it with the current version.",
+            "When an outcome is uncertain, use Confirm original save. It checks and retries the original operation rather than creating a duplicate. Do not close the tab until the outcome is resolved.",
+            "Unsaved forms stay in this tab while changing sections. Leaving asks you to save or deliberately discard. Survey writes require a connection; there is no offline queue or promise of recovery after closing the browser."
           ],
           "steps": [],
           "headers": [],
@@ -64322,10 +64326,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "Use the compact phone header to choose a register view or filter. Record tabs scroll within their strip and support arrow keys, Home and End. Measurement value and unit remain together at 320 px.",
+            "Filter dialogs support Escape and return focus. Fields retain labels, required indicators and errors. Long record references wrap rather than changing identity."
           ],
           "steps": [],
           "headers": [],
@@ -64335,8 +64337,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html"
+            "Sites, People, Facilities, Equipment, Access & readiness and My Work are canonical receiving links. Estimating and Engineering retain their own basis authority.",
+            "Design: PPO - Design, Site surveys — accepted; page 1464:2918 and notes 1464:4164. Icon-free captures: docs/reference/ui/customers/site-surveys-design-r01/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -64346,27 +64348,39 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "Accepted design decisions D1–D7 and Q1–Q4 are separate from review of the running application. Owner visual review remains pending.",
+            "See docs/testing/evidence/site-surveys-native/README.md for executed checks, visual differences and limitations; this guide makes no deployment or business acceptance claim."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed."
+      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
+      "source_paths": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ]
     },
     {
       "guide_key": "guide.route-surveys",
       "entry_key": "route:/surveys",
-      "title": "Site survey & as-found brief",
+      "title": "Site surveys",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native synthetic workflow; owner acceptance pending",
-      "source_commit": "25170bf83008727f005e36b5603841a7b9359027",
+      "content_mode": "Accepted CS-08 design implementation; owner visual review pending",
+      "source_commit": "d7287038",
       "related_entry_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
@@ -64376,7 +64390,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover."
+            "Record an as-found survey for a site, keep observations and original evidence together, and hand over an exact independently reviewed revision."
           ],
           "steps": [],
           "headers": [],
@@ -64386,7 +64400,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Select the exact Site, Facilities and installed equipment. Prepare the observer, capture date, method/source and explicit measurement units."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -64397,9 +64411,9 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged."
           ],
           "headers": [],
           "rows": []
@@ -64408,7 +64422,8 @@
           "section_id": "page-tour",
           "title": "Controls and views",
           "paragraphs": [
-            "Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History."
+            "Use All surveys, Drafts, Awaiting review, Returned or Reviewed, then Site and Owner filters. The grid shows visit, open gaps, receiving destination, revision, owner, observation count and reference. Phone has a view chooser, filters and New survey.",
+            "Open a survey for Survey scope, Observations, Photos, Follow-up, Review & handover and retained History. Tabs are bookmarkable."
           ],
           "steps": [],
           "headers": [],
@@ -64418,7 +64433,8 @@
           "section_id": "information",
           "title": "Records and source boundaries",
           "paragraphs": [
-            "Review does not certify design suitability, capacity, Site safety or work authority. Photo bytes and hashes are immutable; unsupported formats are refused. Source changes require recheck and may require return and resubmission. Handover records a receiving obligation and exact source; it never rewrites an accepted Estimate or Engineering basis."
+            "New survey references use SYN-SRV-000nnn. Existing references stay unchanged. Planned visits and contacts are recorded facts; Not recorded is not a failed lookup or an inferred visit.",
+            "Review does not certify design suitability, capacity, site safety or work authority. A changed scope source is shown beside the submitted version and does not prevent an independent reviewer making a recorded decision."
           ],
           "steps": [],
           "headers": [],
@@ -64429,12 +64445,12 @@
           "title": "Workflow",
           "paragraphs": [],
           "steps": [
-            "Start a survey for an exact Site and select its exact Facilities and equipment.",
-            "Record Measured, Observed, Customer statement, Assumption or Unknown separately. A measurement needs a numeric value and unit; Unknown remains unknown.",
-            "Retain original PNG photo evidence with exact target, observer, capture date and method. Correct captions by successor.",
-            "Link an open owned Site Activity with a due date for each significant Unknown or Assumption before submission.",
-            "Submit the current draft. Another permitted editor reviews or returns the exact submission with clarification.",
-            "Start a successor draft when needed; retain previous submissions and reviews. Hand over an exact Reviewed snapshot to an accountable Estimating or Engineering receiver."
+            "Choose New survey, then site, title, owner, planned visit and contact. Select scope and record its purpose; create the draft.",
+            "Record Measured, Observed, Customer statement, Assumption and Unknown separately. Measurements require value and unit; record method and source.",
+            "Add original PNG, JPEG or WebP photos, up to eight originals and 1 MiB each, with bounded dimensions. Caption corrections retain earlier captions; originals remain unchanged.",
+            "Link each significant Unknown or Assumption to an open site Activity with owner and due date before submission.",
+            "Submit the draft. A permitted independent reviewer uses Review & handover to review or return with clarification in the same form, with a required note.",
+            "For a Reviewed revision, record an Estimating or Engineering handover with its receiving owner. Start a successor draft for later changes."
           ],
           "headers": [],
           "rows": []
@@ -64443,8 +64459,7 @@
           "section_id": "completion",
           "title": "What completion means",
           "paragraphs": [
-            "A save is complete when the page confirms Saved to the server. A recorded review or acknowledgement remains bound to its exact source.",
-            "Local code delivery is separate from owner business acceptance and deployment."
+            "A command is complete only when Saved to the server is confirmed. Review and handover remain bound to their exact submission. Handover records a receiving obligation; it does not send a message or change an accepted Estimate or Engineering basis."
           ],
           "steps": [],
           "headers": [],
@@ -64454,8 +64469,8 @@
           "section_id": "states",
           "title": "States and availability",
           "paragraphs": [
-            "Loading, unavailable, restricted and an empty permitted result have different meanings. Hidden records and counts are not disclosed.",
-            "Survey states are Draft, Submitted, Returned and Reviewed. Readiness snapshots separately show whether their exact source still matches."
+            "Loading, No reviewed surveys, Could not load, access denied and a partial page have different meanings. Retry repeats the read; pagination reads more permitted records. Hidden records are never counted as zero.",
+            "Draft can be edited; Submitted is locked pending review or return. Returned or Reviewed can start a successor draft. Owner, recorder and submitter cannot review their own survey."
           ],
           "steps": [],
           "headers": [],
@@ -64465,7 +64480,7 @@
           "section_id": "example",
           "title": "Worked example",
           "paragraphs": [
-            "An Unknown water-supply capacity needs an owned follow-up before submission. A later corrected caption requires a successor draft and fresh review; the earlier reviewed photo and caption remain bound to the original snapshot."
+            "A measured width of 0 mm remains an explicit measurement. An Unknown water capacity stays Unknown and needs an owned follow-up before submission if it affects handover. A successor draft may record the answer while preserving the earlier Unknown and review."
           ],
           "steps": [],
           "headers": [],
@@ -64475,10 +64490,9 @@
           "section_id": "recovery",
           "title": "Recovery and errors",
           "paragraphs": [
-            "Validation appears beside the relevant field and in the error summary. Correct the highlighted value and retry.",
-            "A stale version is refused. Retain your intended correction, reload the current record and reconcile it deliberately.",
-            "If the save outcome is uncertain, use Confirm original save; the original operation is retried without creating a second effect.",
-            "If permissions or source availability change, the page clears inaccessible content. Reopen the canonical source or ask its owner to resolve the context."
+            "Correct labelled validation errors and retry. If another writer changed the record, keep your intended correction and reconcile it with the current version.",
+            "When an outcome is uncertain, use Confirm original save. It checks and retries the original operation rather than creating a duplicate. Do not close the tab until the outcome is resolved.",
+            "Unsaved forms stay in this tab while changing sections. Leaving asks you to save or deliberately discard. Survey writes require a connection; there is no offline queue or promise of recovery after closing the browser."
           ],
           "steps": [],
           "headers": [],
@@ -64488,9 +64502,8 @@
           "section_id": "mobile",
           "title": "Keyboard and smaller screens",
           "paragraphs": [
-            "Tabs keep their selected view in the URL. Use arrow keys, Home and End within tab lists.",
-            "Fields and source cards stack on narrow screens. Scroll the local tab strip where needed; the application retains one page scroll owner.",
-            "An open draft retains its original version. Save or deliberately discard it before navigating."
+            "Use the compact phone header to choose a register view or filter. Record tabs scroll within their strip and support arrow keys, Home and End. Measurement value and unit remain together at 320 px.",
+            "Filter dialogs support Escape and return focus. Fields retain labels, required indicators and errors. Long record references wrap rather than changing identity."
           ],
           "steps": [],
           "headers": [],
@@ -64500,8 +64513,8 @@
           "section_id": "resources",
           "title": "Related workspaces and references",
           "paragraphs": [
-            "Customer 360, Contacts, Stakeholders, Sites, canonical Facilities, My Work and the owning Estimating, Engineering, Service or Finance workspace remain separate.",
-            "Design evidence: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html"
+            "Sites, People, Facilities, Equipment, Access & readiness and My Work are canonical receiving links. Estimating and Engineering retain their own basis authority.",
+            "Design: PPO - Design, Site surveys — accepted; page 1464:2918 and notes 1464:4164. Icon-free captures: docs/reference/ui/customers/site-surveys-design-r01/README.md."
           ],
           "steps": [],
           "headers": [],
@@ -64511,15 +64524,27 @@
           "section_id": "review",
           "title": "Review and acceptance",
           "paragraphs": [
-            "Guide and native receiving adaptations are prepared for review under the authorised CS programme. No owner acceptance or production readiness is asserted.",
-            "See docs/delivery/cs-native-completion-handover.md and docs/testing/evidence/cs-native-completion/README.md for executed checks and actual limitations."
+            "Accepted design decisions D1–D7 and Q1–Q4 are separate from review of the running application. Owner visual review remains pending.",
+            "See docs/testing/evidence/site-surveys-native/README.md for executed checks, visual differences and limitations; this guide makes no deployment or business acceptance claim."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "runtime_evidence": "CS native synthetic database, compiled HTTP and desktop/mobile browser proofs executed on 23 September 2026; see docs/testing/evidence/cs-native-completion/README.md. Owner acceptance pending."
+      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
+      "source_paths": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ]
     },
     {
       "guide_key": "guide.route-schedule-capacity",

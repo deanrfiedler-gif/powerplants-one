@@ -58,7 +58,7 @@ const code = (expected: string) => (e: unknown) =>
 
 test("FN-T01/T03/T78/T79 saved valve exact revisions survive sign-out, clean identity and database reconnect", async () => {
   const f = await fertigationFixture();
-  assert.match(f.detail.scope.display_number, /^SYN-PPO-FRT-\d{6}$/);
+  assert.match(f.detail.scope.display_number, /^SYN-FRT-\d{6}$/);
   const command = saveCommand(f.detail);
   command.proposal.valves[0].label = "SYN north valve revised";
   command.proposal.valves[0].design_flow_m3h = 3.25;

@@ -1,39 +1,59 @@
-# Site survey & as-found brief — native receiving reference
+# Site surveys — CS-08 build contract
 
-Stable entry: `scope:CS-08`. Scope: **CS-08**. Owner: Dean Fiedler.
-Source main: `25170bf83008727f005e36b5603841a7b9359027`. Route: `/surveys`.
-Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
+<!-- versioning: git; committed history is authoritative -->
 
-## Purpose and page type
+Stable entry: `scope:CS-08`. Owner: Dean Fiedler. Routes: /surveys and /surveys/[id]. The accepted design and delivered code have separate review status. Owner visual review: **pending**. Deployment: not performed by this change.
 
-Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover.
+## Design source and acceptance
 
-r20 page type: **Register / worklist; Document & evidence workspace**. Survey register, Survey scope, Measurements & observations, Photos & evidence, Missing information & follow-up, Review & handover and History.
+Build from **PPO - Design**, named version **Site surveys — accepted**, page 1464:2918 and notes 1464:4164; index 630:2. [Design decision](../../../decisions/site-surveys-figma-design.md) records D1–D7 and Q1–Q4. Dean subsequently authorised [shorter new references and migration](../../../decisions/readable-reference-namespaces.md). No source snapshot is rewritten.
+
+| View | Exact nodes | Retained icon-free capture |
+|---|---|---|
+| Desktop register and create | 1464:2955, 1464:3366 | 01, 08 |
+| Scope, observations, photos | 1464:3055, 1468:3554, 1470:2833 | 02, 03, 04 |
+| Follow-up, review, handover | 1471:2847, 1472:3102, 1473:3371 | 05, 06, 07 |
+| Tablet register | 1464:3695 | 09 |
+| Phone list, scope 390 and 320 | 1464:3779, 1464:3821, 1464:3890 | 10, 11, 12 |
+| Successor observation | 1478:3552 | 13 |
+| Loading, no reviewed surveys, could not load | 1464:3958, 1464:4016, 1464:4059 | 14 |
+| Changed scope source | 1464:4095 | Within source state set; live frame governs |
+| Grid header, row, photo tile, notes | 1465:2977, 1464:4188, 1470:3265, 1464:4164 | Live page parts / notes |
+
+Capture numbers refer to [site-surveys-design-r01](../../../reference/ui/customers/site-surveys-design-r01/README.md). Those issued sources stay unchanged. No private file link or icon artwork belongs in Git. Shared ShellIcon maps through font-awesome-icons.ts under ADR-0050.
 
 ## Desktop
 
-Accepted design: the [Site surveys design decision](../../../decisions/site-surveys-figma-design.md) of 19 October 2026 covers the register (`/surveys`), the survey record (`/surveys/[id]`) with its review and handover forms, and New survey, with fourteen icon-free captures in [design r01](../../../reference/ui/customers/site-surveys-design-r01/README.md). Departures D1–D7 and answers Q1–Q4 are recorded there: a grid register with status views, a record with a checks bar and six tabs, an observations table with kind chips, photo tiles shown by their file facts, Review submission and Record reviewed handover forms, and New survey with scope chips that add an equipment's installed area. Nothing new is built; the native pages below remain the built pages.
+r20 page types: Register / worklist and Document & evidence workspace. Reuse the current PPO rail, top bar and compact phone header. The register has a flush secondary menu: Sites; Facilities & growing areas; All surveys, Drafts, Awaiting review, Returned, Reviewed; Access & readiness and Equipment. It uses a compact site/owner toolbar and ruled grid. Columns retain survey, status, site, visit, open gaps, handover, revision, owner, observation count and reference. Horizontal overflow belongs to the register, never the page. Selection currently has no adopted bulk action. Sorting is by title within the loaded page; pagination remains explicit.
 
-Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
+The record has a full-width identity/action band, submission/handover checks, ruled facts and six URL-retained tabs: Survey scope, Observations, Photos & evidence, Follow-up, Review & handover and History. Retained history remains available; full-size History redesign is excluded. New survey groups Survey, Scope and Purpose, with existing surveys and readiness beside the form. Scope includes an equipment item's installed area; served areas require explicit selection.
 
-The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
+Shared components: SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, SharedRecord/RecordFactSection, PageHeader, RecordTabs/RecordPanel, RegisterTable/RegisterSortHeader/RegisterFooter, Button, Field/SelectField, LocalDateTimeField, MultiChoice, ValidationFields, ReadState/ErrorNotice, CommandStatus/useCrmCommand and ShellIcon. Survey-specific composition remains private to this page. SharedRecord reuses the accessible sourcesLabel added by the Sites/readiness handover. Styling uses shared shell/control tokens, including compact 40 px rows and ruled sections; no new shared component family, library or Pro artwork.
 
 ## Mobile
 
-Accepted design: captures 10–14 in [design r01](../../../reference/ui/customers/site-surveys-design-r01/README.md): the surveys list, Survey scope at 390 and 320, recording an observation in a successor draft, and four phone states, including a scope source that changed since submission.
+Compare desktop 1440, tablet 1024, phone 390 and 320 CSS px with the exact frames. Phone uses the shared compact header with Choose view, New survey and Filter. Register rows keep title/status/site/owner/revision/gaps/visit or handover. Filters use a native modal with Escape and return focus. The record retains a scrolling keyboard-operated tab strip, contact/visit context and a reachable primary action. Measurement value and unit stay side by side at 320 px; other inputs reflow. Buttons and links have visible focus; required fields and errors are labelled; permission denial is never rendered as an empty success.
 
-Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
+## Recorded facts, permissions and handovers
 
-## Sources, handovers and authority
+New surveys allocate SYN-SRV-000nnn from the permanent counter with at least six digits. Existing references of every type remain unchanged. Migration 0114 gives previously unnumbered surveys their first reference without altering retained revision content, submission hashes or audit events. Planned start/end and contact on site are explicit recorded fields; historical missing values say Not recorded. They are never inferred from a revision timestamp. New-survey inputs require a planned visit start; an optional end must follow it; purpose and significant-gap follow-ups are required before submission.
 
-Review does not certify design suitability, capacity, Site safety or work authority. Photo bytes and hashes are immutable; unsupported formats are refused. Source changes require recheck and may require return and resubmission. Handover records a receiving obligation and exact source; it never rewrites an accepted Estimate or Engineering basis.
+Use existing cs permissions and canonical permitted Site/People/Facilities/Equipment reads. No new capability or grant. Owner, submitter and recorder cannot review. Recorder checks include retained observation authors and photo recorders, rather than relying only on an editable display name. Review and return share the same form, with a required decision note and an exact submitted revision. Changed scope sources remain visible to the reviewer and do not block an independent review. A handover records an exact Reviewed snapshot, destination Estimating or Engineering and permitted receiving owner; it neither sends communication nor replaces the receiving basis. A successor draft does not inherit a current handover indicator.
 
-Incoming: exact canonical customer/Site/Person and permitted source records. Outgoing: exact source links, owned Activity follow-up and, for surveys, an immutable Reviewed receiving snapshot. Preserve canonical Facilities and their installed-versus-served equipment distinction.
+Measured zero is valid with units; Unknown never becomes zero. Significant Unknowns and Assumptions require an owned open Site Activity with a due date before submission. A successor observation can explicitly answer a retained earlier Unknown. Original supported PNG/JPEG/WebP bytes and hashes remain unchanged; caption corrections are separate immutable entries. The existing synthetic store is reused, with eight originals per survey, 1 MiB per new file and bounded image dimensions; historical PNG reads keep their earlier limit. No document-storage connection is added.
 
-Reference: docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html
+## States and recovery
 
-## Verification and acceptance
+Loading, empty reviewed view, unavailable/retry, partial paginated data, permission denied, source changed, validation, dirty discard and uncertain-save recovery are distinct. Read failures may retain the last authorised record with a warning; access revocation clears it. Forms pin their original record version. Unsaved text remains in memory across section tabs. Navigation uses the shared dirty/uncertain guard; uncertain outcomes use Confirm original save with the same operation identity. No survey offline save, durable browser queue or automatic synchronisation is claimed. Follow the [offline system contract](../systems/offline.md); browser restart can lose an unsubmitted form.
 
-Accepted Figma design: [Site surveys design r01 captures](../../../reference/ui/customers/site-surveys-design-r01/README.md) (fourteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/site-surveys-figma-design.md). The History tab at full size, the Return with clarification form, desktop draft editing, a Returned record, a view-only state, the photo upload dialog, a tablet record and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+## Unspecified behaviour and deviations
 
-The detailed page guide is `guide.cs.08`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
+The shared compact phone record header retains the reference, Back and More controls; the observation form title appears in the body rather than replacing the shell with a separate close-only header. The Service rail follows current permissions and the remembered department. Synthetic fixture names, counts and dates differ from the drawn examples.
+
+The drawn More/settings and selection controls do not define bulk operations or column personalisation; none is invented. Local sorting and pagination are explicit adaptations of the existing read contract. Native labelled date/time inputs expose start and end separately. Units use a labelled text field because an authoritative unit catalogue is not specified. The observation UI retains the recorded date at the model's date precision; it does not fabricate the clock time drawn in the example. Existing Activity links provide follow-up creation and ownership; no new inline Activity command is introduced. Conversations and document-store connections are outside this page's scope.
+
+Open for Dean: define register More/settings and any bulk actions; decide whether observations need persisted clock-time precision and a governed unit catalogue in a future change; confirm the existing synthetic photo size/format limits for field use. These questions do not undo accepted D1–D7/Q1–Q4. Any remaining visual mismatch belongs in the [execution evidence](../../../testing/evidence/site-surveys-native/README.md), not in an altered reference.
+
+## Verification
+
+[Build decision](../../../decisions/site-surveys-native-build.md), [execution evidence](../../../testing/evidence/site-surveys-native/README.md), tests/unit/site-surveys.test.ts, tests/database/site-surveys-upgrade.test.ts and customer-location.test.ts distinguish contract proof from visual review. Documentation checks are not business acceptance. Review fingerprints, reviewer and reviewed date remain empty until a real owner review.

@@ -28,7 +28,12 @@ import {
   type ConversionInput,
 } from "./validation";
 
-function targetCommands(b: PlanBasis, now: Date, reason: string) {
+function targetCommands(
+  b: PlanBasis,
+  now: Date,
+  reason: string,
+  namespace: "SYN" | "SYN-PPO",
+) {
   return b.lines.map((l) => {
     const id = randomUUID();
     return recordCommand({
@@ -39,7 +44,7 @@ function targetCommands(b: PlanBasis, now: Date, reason: string) {
       kind: "Demand",
       company_id: b.target.company,
       site_id: b.target.site_id,
-      reference: `SYN-PPO-SC-${id}`,
+      reference: `${namespace}-SC-${id}`,
       title: l.label,
       item: l.item,
       unit: l.unit,
@@ -203,10 +208,19 @@ async function execute(p: Principal, id: string, input: ConversionInput) {
             d.holds.join(" ") ||
               "The reviewed target basis changed. Compare it before freezing a replacement.",
           );
+        // Freeze the installed naming contract into the plan. Populated upgrade
+        // proofs (and retained plans) must keep pre-amendment references exact.
+        const namespace = (
+          await c.query(
+            "SELECT EXISTS(SELECT 1 FROM public.ppo_migrations WHERE version=114) AS short_names",
+          )
+        ).rows[0].short_names
+          ? "SYN"
+          : "SYN-PPO";
         plan = {
           basis: d.basis,
           basis_hash: d.basis_hash!,
-          commands: targetCommands(d.basis, now, input.reason),
+          commands: targetCommands(d.basis, now, input.reason, namespace),
         };
         planHash = releaseHash(plan);
       } else {

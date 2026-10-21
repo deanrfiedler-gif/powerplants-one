@@ -41,6 +41,14 @@ At `76db1d1e`, Linux CI passes all 971 unit tests, studio/lint/typecheck/build, 
 
 The compiled desktop budget also expires on unchanged main `78795dd6`. Separate maintenance PR #652 partitions that complete project into two isolated native Playwright shards while retaining every case, warm-up, serial worker, test deadline and the existing job limit. #648 temporarily targets that single prerequisite so its diff remains limited to Field team. Its final-head CI must execute the inherited workflow; partitioning is not claimed to repair the two intermittent navigation failures. No Reports or Specialist code/assertion is changed in this page PR.
 
+## Final #648 CI and preserved continuation
+
+At `d0775e286adbe0c6a8d3800a269ec073b6c92081`, all 66 checks passed; the separately dispatched PT-27 comparison is the one expected skipped job. [Compiled assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39534897438) used Node 24.21.0, locked Playwright 1.64.1 and Chrome 156.0.8078.47. Desktop shard 1 passed 278 / skipped 6 in 18.3 minutes; shard 2 passed 267 / skipped 15 in 29.3 minutes. With one repeated warm-up this is 544 unique passes / 21 skips. Phone passed 485 / skipped 80. Retained Scheduling passed 20, with timer/policy restart and zoom proof also passing. Native discovery confirmed all 565 selections in the shard union (284 + 282, warm-up repeated, no missing or extra cases).
+
+[Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39534897545) passed all 971 units, studio, lint, typecheck, build, every database/HTTP group, regular desktop (544 passed / 21 skipped), phone, Reports, finance and quality/performance proof. The other domain and documentation workflows passed. This is code assurance for that exact head; owner visual review and deployment remain separate.
+
+#648 was subsequently merged into #652 outside this session. Dean explicitly requested restoring separate review scopes while preserving that history: infrastructure-only #653 targets current main `bd5d6e6c`; #652 continues Field team above #653. The integration retains both the new CS-08 and existing PL-02 consumer bindings and regenerates status. It introduces no new Field team application behaviour. Fresh integrated-head CI must pass before its outcome is claimed; the earlier green head is not substituted for it.
+
 ## Visual comparison and explicit adaptations
 
 Live Figma screenshots and design context were inspected for the accepted desktop, tablet, phone, all five states, evidence panel and notes. Local browser screenshots are transient ignored test results, with the Font Awesome Kit blocked; no Pro artwork, Figma key or file URL is retained. The reference captures in docs/reference remain unchanged.

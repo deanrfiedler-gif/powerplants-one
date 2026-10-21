@@ -33,7 +33,7 @@ test("N01 saved survey opens each exact Equipment record and returns to its sour
     await page.goto(`/surveys/${survey}`);
     await ready;
     await expect(page.getByRole("heading", { name: "Exact survey scope" })).toBeVisible();
-    const link = page.locator(".detail-section").getByRole("link").filter({ hasText: `SYN NAV Equipment ${index + 1}` });
+    const link = page.getByRole("tabpanel", { name: "Survey scope", exact: true }).getByRole("link", { name: `SYN NAV Equipment ${index + 1}`, exact: true });
     await expect(link).toHaveCount(1);
     await link.click();
     await expect(page).toHaveURL(new RegExp(`/equipment/${id}(?:\\?|$)`));
