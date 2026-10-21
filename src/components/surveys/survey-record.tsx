@@ -299,7 +299,31 @@ function LoadedSurvey({
         <RecordTabs
           id="survey"
           label="Survey sections"
-          tabs={tabs}
+          tabs={tabs.map((tab) => {
+            const count =
+              tab.id === "observations"
+                ? content.observations.length
+                : tab.id === "photos"
+                  ? data.photos.length
+                  : tab.id === "follow-up"
+                    ? details.followups.length
+                    : tab.id === "history"
+                      ? data.history.length
+                      : null;
+            return {
+              ...tab,
+              label: (
+                <>
+                  {tab.label}
+                  {count !== null && (
+                    <span className="srv-tab-count" aria-hidden="true">
+                      {count}
+                    </span>
+                  )}
+                </>
+              ),
+            };
+          })}
           value={view}
           onChange={setView}
         />
@@ -486,13 +510,19 @@ function LoadedSurvey({
         ) : (
           <>
             <div className="srv-section-heading">
-              <h2>Observations</h2>
+              <h2>Measurements &amp; observations</h2>
               {draft && (
                 <Button onClick={() => openObservation()}>
                   Record observation
                 </Button>
               )}
             </div>
+            <p className="srv-observation-guidance">
+              Each entry is one kind. A measurement needs a number and a unit;
+              an Unknown stays Unknown and is never saved as zero. An Unknown or
+              Assumption that affects the handover needs an owned follow-up
+              before the survey can be submitted.
+            </p>
             <div
               className="srv-kind-chips"
               role="group"
@@ -505,6 +535,15 @@ function LoadedSurvey({
                   onClick={() => setKind(v)}
                 >
                   {v}
+                  {v !== "All" && (
+                    <span aria-hidden="true">
+                      {
+                        content.observations.filter(
+                          (observation) => observation.kind === v,
+                        ).length
+                      }
+                    </span>
+                  )}
                 </Button>
               ))}
             </div>
@@ -561,6 +600,12 @@ function LoadedSurvey({
               </tbody>
             </RegisterTable>
             {!content.observations.length && <p>No observations recorded.</p>}
+            {row.state !== "Draft" && (
+              <p className="srv-note">
+                Observations are locked in this revision. Record corrections in
+                a successor draft after review or return.
+              </p>
+            )}
             {current && (
               <SurveySection title={current.title}>
                 <SurveyTag value={current.kind} />

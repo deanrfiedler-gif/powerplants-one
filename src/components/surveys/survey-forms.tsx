@@ -293,16 +293,16 @@ function CreateAtSite({
                         options={options.data.owners.edit}
                         required
                       />
-                    <ScopeFields
-                      part="visit"
-                      requireVisit
-                      content={content}
-                      onChange={(v) => {
-                        setContent(v);
-                        command.dirty();
-                      }}
-                      options={options.data}
-                    />
+                      <ScopeFields
+                        part="visit"
+                        requireVisit
+                        content={content}
+                        onChange={(v) => {
+                          setContent(v);
+                          command.dirty();
+                        }}
+                        options={options.data}
+                      />
                     </div>
                   </SurveySection>
                   <SurveySection title="Scope">

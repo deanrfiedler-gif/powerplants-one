@@ -308,6 +308,8 @@
   margin-bottom: 16px;
 }
 .srv-kind-chips > .ppo-button {
+  border-radius: 20px;
+  gap: 6px;
   min-height: 32px;
   padding: 5px 10px;
   font-size: 12px;
@@ -986,4 +988,39 @@
   padding: 16px;
 }
 
-.srv-form-grid > .srv-form-grid {display:contents;}
+.srv-form-grid > .srv-form-grid {
+  display: contents;
+}
+
+#ppo-survey-record .ppo-register-table tr[data-selected] td {
+  background: var(--info-surface);
+}
+#ppo-survey-record .srv-text-button {
+  color: var(--ppo-shell-link);
+}
+.srv-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding-inline: 4px;
+  border-radius: 20px;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 400;
+}
+.srv-observation-guidance {
+  margin-block: 16px;
+  padding: 10px 12px;
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-survey-record #survey-panel-observations > .srv-section-heading {
+  padding: 0;
+  border: 0;
+}

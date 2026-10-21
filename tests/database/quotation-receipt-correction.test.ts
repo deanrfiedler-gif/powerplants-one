@@ -67,6 +67,7 @@ const snapshot = async (table: string) =>
 
 test("ES07 Receipt correction requires every receiving decision, commits native predecessor/successor and honest shared shortfall, and recovers exact originals", async () => {
   const f = await receiptFixture();
+  assert.match(f.t.basis.conversion.target.reference, /^SYN-SC-/);
   let d = await readConversion(f.owner, f.id);
   await reviewDisposition(f.owner, f.id, dispositionReview(d.dispositions[0]));
   d = await readConversion(f.owner, f.id);
@@ -527,6 +528,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
     allocation = supplyApply(f.t);
   await applySupply(f.owner, f.id, allocation);
   const t = await currentFollowup(f);
+  assert.match(t.basis.conversion.target.reference, /^SYN-PPO-SC-/);
   await recordFact(
     f.owner,
     t.target_id,
