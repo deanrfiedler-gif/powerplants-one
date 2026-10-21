@@ -71,6 +71,12 @@ After #652 was externally merged into its infrastructure parent #653, Dean confi
 
 [Verification evidence](testing/evidence/cs05-accepted-build/README.md) separates the resolved Chrome installation dependency, the failing integration run, local repair checks and subsequent CI. The runtime repair remains in the separately merged PR #643. Owner visual review remains pending; no merge, deployment or business acceptance is claimed.
 
+## Native database CI capacity repair claimed — 21 October 2026
+
+Dean authorised a separate repair for the database-2 job's 90-minute cancellation on Conversations #654. Codex owns `codex/database-ci-timeout`, cut from current main `f13bd157`. The claim covers the native database matrix in `.github/workflows/application.yml`, the existing [retained-suite isolation decision](decisions/ci-retained-suite-isolation.md), selection/workflow verification and execution evidence. Conversations #654 and Facilities #627 remain separate.
+
+The investigation compares the cancelled exact-source job with passing unchanged main. The repair must preserve every discovered database test, serial execution within each disposable `ppo_synthetic_test`, the existing test/job deadlines and mandatory aggregate. Verification is pending. No application, schema, permission, dependency, deployment or business acceptance is claimed.
+
 ## Conversations navigation proof repair — 21 October 2026
 
 Dean authorised a separate investigation of the Conversations navigation failure blocking Facilities PR #627. Codex claims the repair on `codex/conversations-navigation-proof`, cut from current main `bd5d6e6c`. The accepted [T1c design](decisions/conversations-t1c-design.md#52-pages-and-components) opens the preferred thread on desktop and retains the list on phones; the failing browser assertion expected the list URL on both.

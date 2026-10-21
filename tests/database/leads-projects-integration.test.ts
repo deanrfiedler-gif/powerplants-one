@@ -45,7 +45,7 @@ const ledger = () =>
   rows("SELECT * FROM public.ppo_migrations ORDER BY version");
 
 test("fresh combined installation retains both registries and both domains through repeat migration and seed", async () => {
-  await atVersion(114);
+  await atVersion(115);
   await exerciseBoth();
 });
 
