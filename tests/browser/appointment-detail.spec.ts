@@ -121,6 +121,28 @@ test.beforeEach(async ({ page }) => {
     }),
   );
 });
+test("SV04 retains the FI06 exact incident handover on desktop and both phones", async ({ page }) => {
+  await fixture(page);
+  let reads = 0;
+  await page.route("**/api/v1/service/incidents/context?*", (route) => {
+    expect(new URL(route.request().url()).searchParams.get("appointment_id")).toBe(sv04Id(1));
+    reads += 1;
+    return route.fulfill({ json: { can_report: true, targets: [{
+      scope_item_id: sv04Id(70), asset_id: sv04Id(71),
+      task_description: "SYN affected motor", display_name: "SYN shade motor",
+    }] } });
+  });
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(path);
+    await page.getByRole("button", { name: "Visit more actions", exact: true }).click();
+    await expect(page.getByRole("menuitem", { name: "Report an incident", exact: true })).toHaveAttribute(
+      "href", `/service/incidents/new?appointment_id=${sv04Id(1)}&scope_item_id=${sv04Id(70)}&asset_id=${sv04Id(71)}`,
+    );
+  }
+  expect(reads).toBe(3);
+});
+
 test("SV04 shared record fits desktop, tablet and both phones, with one content scroll and reachable actions", async ({
   page,
 }, info) => {

@@ -50,3 +50,5 @@ The accepted Appointment detail composition reuses this API without changing it:
 ## FI-06 consumer
 
 The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
+
+The combined SV-04/FI-06 host retains IncidentVisitMenu beside desktop appointment actions and in the visible phone status row. It reads current reporting authority only when used and hands over the exact appointment/scope item/equipment. `tests/browser/appointment-detail.spec.ts` checks the incoming context and outgoing link at 1440, 390 and 320 px. This consumer integration does not change SharedRecord or grant owner visual acceptance.

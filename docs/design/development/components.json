@@ -8321,7 +8321,7 @@
         {
           "id": "shared-record-sv04-review",
           "expected": "Owner review of accepted Appointment detail frames and the scoped native host.",
-          "actual": "Implementation and synthetic verification are separate from design acceptance; P4/P5 and undrawn controls remain gated.",
+          "actual": "Implementation and synthetic verification are separate from design acceptance; P4/P5 and undrawn controls remain gated. Combined host retains the FI-06 incident handover on desktop/phone and PL-04 action-query context; integration remains pending owner visual review.",
           "action": "Review the SV-04 evidence pairing and listed source/data differences before adopting a UI baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

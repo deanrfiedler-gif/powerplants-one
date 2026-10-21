@@ -353,7 +353,10 @@ export function AppointmentRecord({
         ) : undefined
       }
     >
-      <div className="sv04-phone-status">{status}</div>
+      <div className="sv04-phone-status">
+        {status}
+        <IncidentVisitMenu appointmentId={a.id} />
+      </div>
       <section
         className="sv04-card sv04-dispatch"
         aria-label="Dispatch decision"

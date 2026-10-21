@@ -75,6 +75,10 @@ Desktop 1440/1024 and phone 390/320: retain one content scroll owner, readable w
 
 See [state/action decision](../../../decisions/field-closed-visit-guidance.md), [acceptance matrix](../../../testing/field-closed-visit-acceptance.md) and [execution ledger](../../../testing/evidence/field-closed-visit/README.md). Owner, physical-device, screen-reader and independent visual reviews remain open.
 
+## SV-04 / FI-06 / PL-04 integration
+
+The accepted appointment record retains the FI-06 Visit more actions menu beside desktop actions and in the visible phone status row. Opening it reads current reporting access for this exact appointment; each incident handover carries the permitted scope-item and equipment IDs. Changes and follow-up links retain their validated `returnTo` and `action=contact` or `action=move` context. The current appointment state still governs whether an editor is available. The shared record primitive is unchanged; owner visual review of this combined host remains pending. Exact incident-link coverage at 1440/390/320 is in `tests/browser/appointment-detail.spec.ts`.
+
 ## Owner visual review — 9 October 2026
 
 - **Reviewer:** Dean Fiedler. He accepted Claude's proposed verdicts from the phase 00 review boards (navigation canvas version 29).
