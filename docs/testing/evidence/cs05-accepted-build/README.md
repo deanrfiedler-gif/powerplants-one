@@ -18,7 +18,7 @@ Reused: SecondaryMenuFrame, usePhoneHeader, usePublishRecordIdentity, RegisterTa
 
 Five page contracts, register entries and guides describe the actual controls, data scope and recovery limits. Component consumers/states and alignment gaps were updated in the same change. Build sequence and status were generated with their scripts; the build-sequence report is an ignored generated artefact. Owner review fields remain pending without copied fingerprints.
 
-## Verification record
+## Initial implementation verification record
 
 | Check | Result |
 | --- | --- |
@@ -69,7 +69,7 @@ Merged current main (4c1097cc) in 06395e10. Preserved the Facilities, People, Se
 
 ## CI failure diagnosis — 21 October 2026
 
-The current-head application jobs fail during `Install pinned controlled PDF renderer`, before their static, build, database or browser proof. The compiled-browser and Leads workflows show the same Chrome 156 refusal. This is the unchanged reviewed-major policy from main, not a Facilities-specific assertion. The browser module from main 4c1097cc was copied unchanged into ignored temporary storage and its `assertSupportedBrowser("156.0.8078.47")` produced the same error. The runtime module, installer and package files have no branch diff.
+The application jobs at 903256d3 failed during `Install pinned controlled PDF renderer`, before their static, build, database or browser proof. The compiled-browser and Leads workflows showed the same Chrome 156 refusal. This was the unchanged reviewed-major policy from main, not a Facilities-specific assertion. The browser module from main 4c1097cc was copied unchanged into ignored temporary storage and its `assertSupportedBrowser("156.0.8078.47")` produced the same error. The runtime module, installer and package files had no branch diff.
 
 The separate runtime repair in PR #643 retains earlier reviewed majors and adds the observed 156 floor. At diagnosis the repair was not part of this branch; rerunning the unchanged branch would encounter the same installation failure. Owner review and deployment remain separate.
 
@@ -79,4 +79,18 @@ PR #643 was repaired separately and merged at 00:12 UTC (10:12 am Brisbane). Its
 
 Facilities now integrates main 78795dd6, retaining both PRs separately. The sole textual conflict was generated docs/STATUS.md; the main copy was selected and regenerated from all fragments. Shared component and page-register additions merged without conflict. No Facilities application source changed during this integration. Fresh Facilities branch checks and CI results are recorded below as they complete; the passing runtime-PR checks do not substitute for Facilities proof.
 
-On the integrated tree, `npm run studio:check`, `npm run typecheck`, `python scripts/build_status.py --check`, `python scripts/check_naming.py`, the seven browser-policy/Facilities unit tests and `git diff --check` passed. The fresh foundation check is still running at this commit; fresh CI, including the exact Linux Chrome 156 installation and persisted Facilities proof, remains pending.
+On the integrated tree, `npm run studio:check`, `npm run typecheck`, `python scripts/build_status.py --check`, `python scripts/check_naming.py`, the seven browser-policy/Facilities unit tests and `git diff --check` passed. Foundation also passed: 72 fragments and all 78 parent requirements.
+
+The PR-triggered [Application assurance run at ade97e72](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39522061070) passed Chrome 156.0.8078.47 installation and `npm run check` (design register, lint, typecheck, full unit suite and build). Its compiled Facilities step failed seven of fourteen cases. The completed mobile job separately passed all nine accepted-design cases but failed three native Facilities cases; its full browser result was 488 passed, 3 failed. These failures are addressed below. The earlier duplicate manual run 39521132392 was cancelled after partial installation/static proof and is not a workflow pass.
+
+## Facilities browser repair — 21 October 2026
+
+Signed-in live logs exposed the compiled-step errors while the job-log API was unavailable; the completed mobile job logs later became downloadable. The hierarchy test expected a name without its depth label, phone assertions targeted hidden desktop controls, and a non-waiting checkbox count skipped the asynchronous required review acknowledgement. Repeated desktop/mobile execution also reused one synthetic long name. Locators now target the actual controls, parent handovers assert the exact saved ID, review waits for acknowledgement, and each long-name fixture is unique. Route handlers finish before removal. The native pin review retains its existing confirmation contract, which has no acknowledgement checkbox.
+
+A real phone defect remained: the secondary-menu flex layout constrained the record height, leaving its final Sources control underneath the fixed action footer. The Facilities-only record host now uses natural-height block content with scrolling, preserving footer clearance. Normal clicks open and close Record location pin at 390 and 320 px before saving and reading back the zero-valued pin. No forced pointer action, increased timeout, skipped assertion, shared-shell change, runtime change, dependency or migration is used.
+
+Repair validation uses Windows, Node 24.22.0, Playwright 1.64.1 and installed Chrome 155.0.8059.85 against the development server. An isolated temporary PostgreSQL 16 cluster contains only `ppo_synthetic_test`; no shared database was reset. Initial local attempts exposed and corrected selectors, then exhausted the temporary cluster's deliberately low connection limit. Restoring its normal 100-connection setting and restarting only the task's server removed that environmental failure. The final native run passed all fourteen cases in 2.2 minutes using the repository's 45-second test and 5-second assertion deadlines, one worker and both desktop/phone projects. The nine accepted-design cases then passed in 29.6 seconds, exercising their desktop, tablet, 390 and 320 px viewports and all drawn state fixtures. Earlier timed-out attempts are not counted as passes.
+
+The [390 px](browser-repair/sources-controls-390.png) and [320 px](browser-repair/sources-controls-320.png) icon-free captures show the final Sources control above the footer. Captured from the repair working tree based on ade97e72, with the CSS/test changes in this same commit; viewport heights are 844 px. Builder inspection confirms footer clearance. This retained native Sources view is undrawn and is not a new design acceptance. The original 22 captures and reference files remain unchanged.
+
+`npm run studio:check` passed (366 entries, 49 components), as did focused ESLint, full `npm run lint`, `npm run typecheck`, all five Facilities unit tests, naming, foundation (73 fragments, all 78 parent requirements, 12,951 local links), generated-status consistency and `git diff --check`. Status and the build sequence were regenerated using their scripts. Linux compiled-browser CI remains separate from these local results. A local full build, full unit suite and standalone database suite were not rerun for this CSS/test repair; the new CI run must supply those results. Owner visual review remains pending.

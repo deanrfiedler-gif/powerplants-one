@@ -126,17 +126,19 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   baseURL,
 }, info) => {
   await page.goto(`/facilities?site_id=${site}&q=Propagation&view=hierarchy`);
-  await expect(
-    page.getByRole("button", { name: "Hierarchy", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
   if (info.project.name.startsWith("mobile")) {
+    await expect(page).toHaveURL(/view=hierarchy/);
     await page
       .locator(".facility-phone-row")
       .filter({ hasText: "SYN Propagation Bay A" })
       .click();
   } else {
+    await expect(
+      page.getByRole("button", { name: "Hierarchy", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
     await page
-      .getByRole("button", { name: "SYN Propagation Bay A", exact: true })
+      .locator(".facility-row-open")
+      .filter({ hasText: "SYN Propagation Bay A" })
       .click();
     await page
       .getByRole("link", { name: "Open facility", exact: true })
@@ -145,11 +147,16 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
   await expect(
     page.getByRole("heading", { name: "SYN Propagation Bay A", exact: true }),
   ).toBeVisible();
-  await expect(
-    page
-      .getByRole("link", { name: "SYN Propagation House 01", exact: true })
-      .first(),
-  ).toBeAttached();
+  const parentLink = info.project.name.startsWith("mobile")
+    ? page.getByRole("link", { name: "Open", exact: true })
+    : page
+        .getByRole("link", { name: "SYN Propagation House 01", exact: true })
+        .first();
+  await expect(parentLink).toBeVisible();
+  await expect(parentLink).toHaveAttribute(
+    "href",
+    "/facilities/c5050002-0000-4000-8000-000000000003",
+  );
   await page.goto(`/facilities/new?site_id=${site}`);
   const name = `SYN native outdoor ${randomUUID().slice(0, 8)}`;
   await page.getByLabel("Facility / area name", { exact: true }).fill(name);
@@ -227,8 +234,7 @@ test("CS05 register, exact hierarchy, create, controlled clearing, reload and hi
     style:
       "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
-  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
-    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
+  await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -279,8 +285,9 @@ test("CS05 lost response freezes original, absent lookup replays exactly once, a
     if (posts === 1) await route.abort("failed");
     else await route.fulfill({ response });
   });
-  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
-    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
+  // The comparison arrives asynchronously. Wait for its required acknowledgement
+  // instead of inspecting the current count before the preview has rendered.
+  await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -375,6 +382,26 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("link", { name: "Cancel", exact: true }).click();
   await page.getByRole("tab", { name: /^Sources(?: \d+)?$/ }).click();
+  if (info.project.name.startsWith("mobile")) {
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      // The final Sources control must remain reachable above the fixed footer.
+      // A normal click catches footer interception; never force the pointer.
+      await page
+        .getByRole("button", { name: "Record location pin", exact: true })
+        .click();
+      await expect(page.getByLabel("Latitude", { exact: true })).toBeEditable();
+      await page
+        .getByRole("button", { name: "Close pin form", exact: true })
+        .click();
+      await page.screenshot({
+        path: info.outputPath(`sources-controls-${width}.png`),
+        fullPage: false,
+        style:
+          "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
+      });
+    }
+  }
   await page
     .getByRole("button", { name: "Record location pin", exact: true })
     .click();
@@ -393,8 +420,6 @@ test("CS05 conflict retains proposal, pin review records zero, related pump and 
     style:
       "svg, .fa-light, .fa-solid, .svg-inline--fa { visibility:hidden !important; }",
   });
-  if (await page.getByRole("checkbox", { name: /I have reviewed/ }).count())
-    await page.getByRole("checkbox", { name: /I have reviewed/ }).check();
   await page
     .getByRole("button", { name: "Confirm these changes", exact: true })
     .click();
@@ -425,8 +450,7 @@ test("CS05 real synthetic register and record remain contained at desktop, phone
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  const name =
-    "SYN long propagation location — north-east nursery structure with reported mixed growing context";
+  const name = `SYN long propagation location — north-east nursery structure with reported mixed growing context ${randomUUID().slice(0, 8)}`;
   const id = await create(page, baseURL!, {
     name,
     use: "mixed",
@@ -502,7 +526,7 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
     page.getByRole("link", { name: "SYN Greenhouse 01", exact: true }),
   ).toHaveCount(0);
   await expect(page.locator(".facility-site-filter")).toContainText(/field/i);
-  await page.unroute("**/api/v1/facilities/register?**");
+  await page.unrouteAll({ behavior: "wait" });
   let requests = 0,
     invalidated = false;
   await page.route("**/api/v1/facilities/register?**", async (route) => {
@@ -544,7 +568,7 @@ test("CS05 late Site response, expired cursor, keyboard tabs and forced reload p
       page.getByRole("button", { name: "Hierarchy", exact: true }),
     ).toBeFocused();
   }
-  await page.unroute("**/api/v1/facilities/register?**");
+  await page.unrouteAll({ behavior: "wait" });
   const id = await create(page, baseURL!);
   await page.goto(`/facilities/${id}/edit`);
   await page.locator("summary").filter({ hasText: "Source & notes" }).click();
@@ -578,7 +602,8 @@ test("CS05 selection leaves no hidden dock actions and dirty navigation is delib
   if (!info.project.name.startsWith("mobile")) {
     await page.goto(`/facilities?site_id=${site}&view=hierarchy`);
     await page
-      .getByRole("button", { name: "SYN Propagation Bay A", exact: true })
+      .locator(".facility-row-open")
+      .filter({ hasText: "SYN Propagation Bay A" })
       .click();
     await expect(
       page.getByRole("dialog", { name: "Facility snapshot", exact: true }),
@@ -594,7 +619,7 @@ test("CS05 selection leaves no hidden dock actions and dirty navigation is delib
       })
       .click();
     await page
-      .getByLabel("Search facilities", { exact: true })
+      .getByRole("textbox", { name: "Search facilities", exact: true })
       .fill("No matching SYN area");
     await page.getByRole("button", { name: "Done", exact: true }).click();
     await expect(

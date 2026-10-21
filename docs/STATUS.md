@@ -9,6 +9,12 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Facilities CS-05 browser regression repair — 21 October 2026
+
+[PR #627](https://github.com/deanrfiedler-gif/powerplants-one/pull/627) repairs a Facilities record scroll defect that left the final Sources control under the fixed phone actions. Native browser proof now exercises normal pin-form clicks at 390 and 320 px. Facilities tests also follow the real hierarchy and phone controls, wait for required review acknowledgement and use distinct synthetic names. The page contract, component contract, guide and register describe the reachable controls without changing grants or persistence.
+
+[Verification evidence](testing/evidence/cs05-accepted-build/README.md) separates the resolved Chrome installation dependency, the failing integration run, local repair checks and subsequent CI. The runtime repair remains in the separately merged PR #643. Owner visual review remains pending; no merge, deployment or business acceptance is claimed.
+
 ## Chrome 156 compatibility maintenance — 21 October 2026
 
 Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.

@@ -7837,7 +7837,7 @@
         {
           "id": "record",
           "label": "Overview and Equipment",
-          "description": "Independent measurements; current and ended service groups."
+          "description": "Independent measurements; current and ended service groups; Sources controls remain reachable above the phone footer."
         },
         {
           "id": "review",
@@ -7892,7 +7892,7 @@
         "route:/facilities/new"
       ],
       "desktop": "Compact ruled register; read-only snapshot; details column and tabbed record; in-record comparison.",
-      "mobile": "Compact shared header, area rows, 390/320 cards and stacked saved/proposed comparison.",
+      "mobile": "Compact shared header, area rows, 390/320 cards and stacked saved/proposed comparison. Natural-height record scrolling keeps final controls clear of the fixed footer.",
       "keyboard": "Native labelled controls, RecordTabs, focus on comparison, Escape/return focus on snapshot.",
       "limitations": "UI fixture is synthetic. No new capability, migration or offline queue. Undrawn controls retain native implementations.",
       "gaps": [

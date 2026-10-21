@@ -24,6 +24,8 @@ Use the existing shell rail and breadcrumb, flush Facilities side menu and compa
 
 Use the shared 56 px compact phone header (the later accepted shell amendment), area rows at 390 px and wrapped record cards at 390/320 px. Record actions replace the global phone navigation bar, so Open site and Correct details remain reachable. The comparison stacks Saved and Proposed values while preserving the acknowledgement. Tablet record and mobile create are responsive adaptations awaiting owner review, not separately accepted drawings.
 
+The record scrolls at its natural content height, including clearance above the fixed phone actions. The final Sources controls, including Record location pin, must be clickable at both 390 and 320 px without the footer intercepting them. The native browser fixture proves opening and closing the pin form at both widths, then persists and reads back a zero-valued pin.
+
 ## Reused components and handovers
 
 Reuse SecondaryMenuFrame, usePhoneHeader, RecordIdentity, RegisterTable/Chip/SortHeader, Button/ButtonLink, ShellIcon/ProductIcon and the mapped My Work refresh Icon, PageHeader, RecordTabs/RecordPanel, Field/SelectField, LookupField, ValidationFields, ReadState/ErrorNotice, useCrmResource/useCrmCommand, SourceField, SitePicker, ParentPicker and CopyId. The page-local FacilityRecordLayout binds these existing controls; see [component contract](../components/facility-workspace.md).

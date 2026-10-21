@@ -19,6 +19,12 @@
   overflow: auto;
   overscroll-behavior: contain;
 }
+/* Records have natural-height content, rather than the secondary-menu flex
+   layout. Keep their final controls and footer clearance inside the scroll. */
+#ppo-facilities.facility-record-host {
+  display: block;
+  overflow: auto;
+}
 .facility-workspace {
   min-width: 0;
   max-width: 100%;

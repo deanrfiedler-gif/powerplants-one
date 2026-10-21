@@ -12,7 +12,7 @@ Use the accepted ruled grid, native read-only snapshot dialog, shared shell and 
 
 ## Mobile
 
-At 390/320 px, use the compact phone header, stacked cards and comparison, with reachable record actions.
+At 390/320 px, use the compact phone header, stacked cards and comparison, with reachable record actions. Record content keeps its natural height and scrolls with clearance above the fixed footer, including the final Sources controls. `tests/browser/facilities.spec.ts` opens and closes the pin form at both widths with normal pointer actions before proving the saved zero-valued pin.
 
 ## Keyboard, state and authority
 

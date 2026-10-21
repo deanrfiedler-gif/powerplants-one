@@ -59083,7 +59083,7 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-20",
+      "prepared_at": "2026-10-21",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "docs/testing/evidence/cs05-accepted-build/README.md",
@@ -59125,7 +59125,7 @@
           "title": "Understand this page",
           "paragraphs": [
             "The header names the area, structure, path, last change and version. Details recorded identifies missing context. Overview shows Measurements and Growing context; phone shows Measurements and Location.",
-            "Equipment separates Installed here, Serves this area installed elsewhere and Service ended. Manage service links retains the earlier native controls. Sources retains the complete saved detail and pin form; History retains command events."
+            "Equipment separates Installed here, Serves this area installed elsewhere and Service ended. Manage service links retains the earlier native controls. Sources retains the complete saved detail and pin form; History retains command events. On a phone, scroll Sources to reach Record location pin; Open site and Correct details stay in the bottom action bar."
           ],
           "steps": [],
           "rows": [],

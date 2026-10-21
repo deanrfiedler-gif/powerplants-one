@@ -10152,7 +10152,7 @@
       ],
       "scope_status": "Accepted CS-05 design implemented in existing routes; owner build review pending",
       "visual_status": "Live Figma comparison and deviations tracked in CS-05 build evidence; owner visual review pending",
-      "functional_status": "Verification results and limits recorded in CS-05 build evidence",
+      "functional_status": "CS-05 build evidence records native persistence and 390/320 px footer-clearance proof; CI results and limits remain separate",
       "deployment_status": "Local synthetic application only; not deployed",
       "review_fingerprint": null,
       "reviewed_at": null,
