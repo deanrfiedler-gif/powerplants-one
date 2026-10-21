@@ -24,9 +24,9 @@ export const moduleWorkspaces = [
   {route:"/warranty/supplier-recovery/[id]",moduleId:"MA-07",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma07-record-native-r01"},
   { route: "/service/reports", moduleId: "SV-06", scope: "ppo-reports", layout: "full-bleed", navigation: "workspace", baseline: "fi07-reports-register" },
   { route: "/service/reports/[id]", moduleId: "SV-06", scope: "ppo-reports", layout: "full-bleed", navigation: "workspace", baseline: "fi07-reports-record" },
-  { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-register" },
-  { route: "/service/incidents/new", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-capture" },
-  { route: "/service/incidents/[id]", moduleId: "FI-06", scope: "ppo-incidents", layout: "padded", navigation: "workspace", baseline: "fi06-incidents-record" },
+  { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-register" },
+  { route: "/service/incidents/new", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-capture" },
+  { route: "/service/incidents/[id]", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-record" },
 
   { route: "/my-jobs/inspections", moduleId: "FI-03", scope: "ppo-service-inspections", layout: "padded", navigation: "workspace", baseline: "fi03-inspections-native" },
   { route: "/service/inspections", moduleId: "FI-04", scope: "ppo-service-inspections", layout: "padded", navigation: "workspace", baseline: "fi04-inspections-native" },

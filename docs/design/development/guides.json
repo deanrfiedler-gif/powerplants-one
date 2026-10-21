@@ -15787,10 +15787,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-02",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-21",
+      "source_commit": "4c1097cc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "runtime_evidence": "docs/testing/evidence/fi06-figma-build/README.md; synthetic presentation and persisted checks are reported separately. Guide remains unreviewed.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15816,7 +15816,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+            "From My jobs or Appointment detail, open the visit’s More menu and choose Report an incident for the exact task and equipment. Enter facts, source reference and a reason. Save draft before adding original files in Evidence, or choose Submit report and confirm the scope hold. A submitted report needs its own confirmed receipt."
           ],
           "steps": [],
           "rows": [],
@@ -15826,8 +15826,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The register lists permitted operational summaries. Capture binds the original source. The record shows facts, current source assessment, corrective Activities, evidence, review commands and retained issued outcomes. Read access grants no write or sensitive authority.",
-            "Incidents and actions is a permitted Service destination; exact incident/source and original recovery remain."
+            "Reporter and Site filters, the side-menu views and counts use the same latest-200-candidate window. Open a reference or summary. The record has Factual report, Triage and review, Actions, Evidence and History tabs; drafts have Report, Evidence and History. Selection changes no incident."
           ],
           "steps": [],
           "rows": [],
@@ -15837,7 +15836,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record classification (Unknown is permitted), occurrence time, observations, immediate response already taken and source reference. Put sensitive detail only in Restricted details or Restricted evidence. Server reporting time and reporter are attributable."
+            "Classification is separate from risk assessment. Occurrence and due times show the visit’s site timezone and are saved in UTC. Source reference is required provenance visible to permitted readers. Only the reporter and authorised sensitive reviewers can read Restricted details and Restricted evidence."
           ],
           "steps": [],
           "rows": [],
@@ -15847,7 +15846,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "An authorised reviewer records assessment, priority, owner, due date and reason, retaining the hold. Create an owned corrective Activity; its owner performs work and appends original evidence. Return or clarify with a reason. Reassignment goes through the Activity then is explicitly adopted here; append fresh evidence after reassignment or reopening. A linked inspection defect needs its own correction and fresh independently accepted retest."
+            "In Triage and review, record Assessment, Priority, Accountable owner, Due time and a written basis, then Save triage. Review decisions and corrective work contains the existing return, clarification, owned-activity and linked inspection-defect controls. Completing My Work does not accept evidence. On Actions, choose the exact original file and give a reason before accepting evidence; Return for correction returns the incident."
           ],
           "steps": [],
           "rows": [],
@@ -15857,7 +15856,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An independent reviewer accepts exact action evidence and the complete current closure graph, then closes and issues the internal scoped HTML/PDF. A passing inspection or Completed Activity never closes the incident. Reopening or changed sources restores a restriction without changing issued bytes. Recheck all other receiving-domain blockers."
+            "Independent reviewers accept the current evidence and incident content before close. The unissued outcome summary shows scope, exclusions and the receiving checks still required. Close incident and issue internal outcome generates exact retained HTML/PDF only if current authority, original files and closure prerequisites pass. It does not complete the visit, work order or customer process."
           ],
           "steps": [],
           "rows": [],
@@ -15887,7 +15886,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+            "Unsaved entries remain on this screen. Conflicts retain your input and original expected version; compare the saved history before explicitly using its current version. For an uncertain result, use Check original receipt or Recover the original. Recovery keeps the original operation ID and payload; do not report a replacement. Same-tab recovery does not promise recovery after closing the tab."
           ],
           "steps": [],
           "rows": [],
@@ -15897,8 +15896,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, native selects and labelled buttons. The global guide opens without discarding input; Escape returns focus. Incident operations are online only. Last-known disconnected context cannot authorise work. Existing P08 delayed Start revalidates holds; factual capture can be retained as ReviewRequired.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "The compact phone header provides navigation and the page guide. At 320 px classification choices wrap two by two. Submit opens a confirmation sheet; Escape or Cancel returns focus. Not connected disables Save draft and Submit report, retaining current input and the last saved time of an existing draft. Reports are never queued offline."
           ],
           "steps": [],
           "rows": [],
@@ -15948,7 +15946,9 @@
       "section_aliases": {},
       "workflow_basis": [
         "docs/contracts/field-incidents.md",
-        "docs/decisions/field-incidents.md"
+        "docs/decisions/field-incidents.md",
+        "docs/decisions/incidents-figma-design.md",
+        "docs/decisions/incidents-figma-build.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -40946,7 +40946,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "My Jobs includes the running-timer link. Job detail contains the timer, visit track, saved time and activity, with the existing evidence and completion sections below."
+            "My Jobs includes the running-timer link. Job detail contains the timer, visit track, saved time and activity, with the existing evidence and completion sections below.",
+            "The visit’s More menu offers Report an incident for each currently permitted exact task and equipment target. The new report opens with that context; reporting does not change attendance or timers."
           ],
           "steps": [],
           "rows": [],
@@ -41127,7 +41128,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "My Jobs includes the running-timer link. Job detail contains the timer, visit track, saved time and activity, with the existing evidence and completion sections below."
+            "My Jobs includes the running-timer link. Job detail contains the timer, visit track, saved time and activity, with the existing evidence and completion sections below.",
+            "The visit’s More menu offers Report an incident for each currently permitted exact task and equipment target. The new report opens with that context; reporting does not change attendance or timers."
           ],
           "steps": [],
           "rows": [],
@@ -43993,7 +43995,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "The visit’s More menu offers Report an incident for each currently permitted exact task and equipment target. The new report opens with that context; reporting does not change attendance or timers."
+          ],
           "steps": [],
           "rows": [
             [
@@ -68945,7 +68949,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Implemented workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "4c1097cc",
       "related_entry_keys": [
         "scope:FI-06",
         "route:/service/incidents/new",
@@ -68970,7 +68974,7 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+            "From My jobs or Appointment detail, open the visit’s More menu and choose Report an incident for the exact task and equipment. Enter facts, source reference and a reason. Save draft before adding original files in Evidence, or choose Submit report and confirm the scope hold. A submitted report needs its own confirmed receipt."
           ],
           "steps": [],
           "headers": [],
@@ -68980,15 +68984,15 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+            "Unsaved entries remain on this screen. Conflicts retain your input and original expected version; compare the saved history before explicitly using its current version. For an uncertain result, use Check original receipt or Recover the original. Recovery keeps the original operation ID and payload; do not report a replacement. Same-tab recovery does not promise recovery after closing the tab."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-02",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "prepared_at": "2026-10-21",
+      "runtime_evidence": "docs/testing/evidence/fi06-figma-build/README.md; synthetic presentation and persisted checks are reported separately. Guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/service/incidents/[id]/page.tsx",
         "src/incidents/screen.tsx",
@@ -68996,7 +69000,9 @@
       ],
       "workflow_basis": [
         "docs/contracts/field-incidents.md",
-        "docs/decisions/field-incidents.md"
+        "docs/decisions/field-incidents.md",
+        "docs/decisions/incidents-figma-design.md",
+        "docs/decisions/incidents-figma-build.md"
       ],
       "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
     },
@@ -69010,7 +69016,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Implemented workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "4c1097cc",
       "related_entry_keys": [
         "scope:FI-06",
         "route:/service/incidents/[id]",
@@ -69035,7 +69041,7 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+            "From My jobs or Appointment detail, open the visit’s More menu and choose Report an incident for the exact task and equipment. Enter facts, source reference and a reason. Save draft before adding original files in Evidence, or choose Submit report and confirm the scope hold. A submitted report needs its own confirmed receipt."
           ],
           "steps": [],
           "headers": [],
@@ -69045,15 +69051,15 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+            "Unsaved entries remain on this screen. Conflicts retain your input and original expected version; compare the saved history before explicitly using its current version. For an uncertain result, use Check original receipt or Recover the original. Recovery keeps the original operation ID and payload; do not report a replacement. Same-tab recovery does not promise recovery after closing the tab."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-02",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md",
+      "prepared_at": "2026-10-21",
+      "runtime_evidence": "docs/testing/evidence/fi06-figma-build/README.md; synthetic presentation and persisted checks are reported separately. Guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/service/incidents/new/page.tsx",
         "src/incidents/screen.tsx",
@@ -69061,7 +69067,9 @@
       ],
       "workflow_basis": [
         "docs/contracts/field-incidents.md",
-        "docs/decisions/field-incidents.md"
+        "docs/decisions/field-incidents.md",
+        "docs/decisions/incidents-figma-design.md",
+        "docs/decisions/incidents-figma-build.md"
       ],
       "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
     },
@@ -69075,7 +69083,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Implemented workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "4c1097cc",
       "related_entry_keys": [
         "scope:FI-06",
         "route:/service/incidents/[id]",
@@ -69100,7 +69108,7 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open Report incident from an assigned visit or inspection workspace. Choose exact scope, record facts and any restricted details, then save the draft and submit it for triage. Check the server receipt before leaving."
+            "From My jobs or Appointment detail, open the visit’s More menu and choose Report an incident for the exact task and equipment. Enter facts, source reference and a reason. Save draft before adding original files in Evidence, or choose Submit report and confirm the scope hold. A submitted report needs its own confirmed receipt."
           ],
           "steps": [],
           "headers": [],
@@ -69110,15 +69118,15 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "Unsaved entries remain page memory. Failed validation retains correctable input. A conflict requires comparison and explicit current-version adoption. An uncertain result requires Check original receipt or Retry unchanged original; never create a replacement operation. Reload can recover the original request in the same tab. Closing the tab removes that browser recovery copy, not the persisted server record."
+            "Unsaved entries remain on this screen. Conflicts retain your input and original expected version; compare the saved history before explicitly using its current version. For an uncertain result, use Check original receipt or Recover the original. Recovery keeps the original operation ID and payload; do not report a replacement. Same-tab recovery does not promise recovery after closing the tab."
           ],
           "steps": [],
           "headers": [],
           "rows": []
         }
       ],
-      "prepared_at": "2026-10-02",
-      "runtime_evidence": "docs/testing/evidence/field-incidents/README.md NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "prepared_at": "2026-10-21",
+      "runtime_evidence": "docs/testing/evidence/fi06-figma-build/README.md; synthetic presentation and persisted checks are reported separately. Guide remains unreviewed.",
       "source_paths": [
         "src/app/(business)/service/incidents/page.tsx",
         "src/incidents/screen.tsx",
@@ -69126,7 +69134,9 @@
       ],
       "workflow_basis": [
         "docs/contracts/field-incidents.md",
-        "docs/decisions/field-incidents.md"
+        "docs/decisions/field-incidents.md",
+        "docs/decisions/incidents-figma-design.md",
+        "docs/decisions/incidents-figma-build.md"
       ],
       "change_summary": "Authored current FI-06 persisted synthetic workflow and recovery; independent acceptance pending."
     },

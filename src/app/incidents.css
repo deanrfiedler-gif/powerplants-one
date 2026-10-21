@@ -1,85 +1,761 @@
-.incidents {
-  max-width: 1400px;
-  margin: auto;
-  padding: 24px;
+#ppo-incidents {
+  color: var(--ink);
+  font:
+    400 14px/20px Roboto,
+    sans-serif;
+  background: var(--white);
   min-width: 0;
+}
+#ppo-incidents[data-menu] {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+#ppo-incidents .mw-menu {
+  flex: 0 0 240px;
+  width: 240px;
+  padding: 8px;
+  background: var(--ppo-shell-surface);
+  border-right: 1px solid var(--ppo-shell-line);
+}
+#ppo-incidents .mw-menu-title {
+  display: none;
+}
+#ppo-incidents .mw-menu[hidden] {
+  display: none;
+}
+#ppo-incidents .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#ppo-incidents .mw-menu-edge {
+  position: absolute;
+  left: 236px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  z-index: 3;
+}
+#ppo-incidents .mw-menu-strip {
+  flex: 0 0 20px;
+  width: 20px;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--ppo-shell-line);
+  border-radius: 0;
+  background: var(--ppo-shell-surface);
+}
+#ppo-incidents .mw-menu-grip {
+  display: block;
+  height: 36px;
+  width: 4px;
+  margin: auto;
+  border-radius: 2px;
+  background: var(--hairline);
+}
+#ppo-incidents .mw-menu-overlay {
+  position: fixed;
+  inset: 64px auto 0 var(--ppo-rail-width, 72px);
+  margin: 0;
+  height: calc(100dvh - 64px);
+  max-height: none;
+  border: 0;
+  border-right: 1px solid var(--ppo-shell-line);
+  border-radius: 0;
+}
+#ppo-incidents .mw-menu-overlay::backdrop {
+  background: transparent;
+}
+#ppo-incidents .mw-menu-close {
+  display: flex;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+}
+#ppo-incidents .mw-menu-close svg {
+  width: 16px;
+  height: 16px;
+}
+#ppo-incidents .mw-menu nav {
+  display: grid;
+  gap: 2px;
+}
+#ppo-incidents .mw-menu h2 {
+  margin: 0;
+  padding: 18px 12px 2px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ppo-shell-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.66px;
+}
+#ppo-incidents .mw-menu nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-weight: 400;
+}
+#ppo-incidents .mw-menu nav button[aria-current] {
+  background: var(--ppo-shell-selected);
+  color: var(--link);
+  font-weight: 500;
+}
+#ppo-incidents .mw-menu nav button:hover {
+  background: var(--surface-hover);
+}
+#ppo-incidents .mw-menu small {
+  margin-left: auto;
+  font-size: 12px;
+}
+#ppo-incidents .mw-menu .product-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+#ppo-incidents .mw-content {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: 0;
+}
+
+/* FI-06: accepted register and SV-06 record composition. */
+#ppo-incidents {
+  font-family: PPOShellRoboto, Roboto, sans-serif;
   overflow-wrap: anywhere;
 }
-.incidents .business-card {
-  margin: 16px 0;
-  padding: 20px;
-  background: var(--white);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
+#ppo-incidents .fi06-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
 }
-.incidents fieldset {
+#ppo-incidents .fi06-filters {
+  display: flex;
+  gap: 8px;
+}
+#ppo-incidents .fi06-count {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-incidents .fi06-window {
+  color: var(--muted);
+  padding: 10px 16px;
+  font-size: 12px;
+}
+#ppo-incidents .ppo-register-table {
+  min-width: 1729px;
+  table-layout: fixed;
+}
+#ppo-incidents .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding: 0 12px;
+  border-right: 1px solid var(--line);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-incidents .ppo-register-table th {
+  background: var(--white);
+}
+#ppo-incidents .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding-block: 0;
+}
+#ppo-incidents .ppo-register-table [data-column="Summary"] {
+  width: 290px;
+}
+#ppo-incidents .ppo-register-table th:nth-child(2) {
+  width: 170px;
+}
+#ppo-incidents .ppo-register-table [data-column="Classification"] {
+  width: 130px;
+}
+#ppo-incidents .ppo-register-table [data-column="State"] {
+  width: 170px;
+}
+#ppo-incidents .ppo-register-table [data-column="Hold"] {
+  width: 140px;
+}
+#ppo-incidents .ppo-register-table [data-column="Priority"] {
+  width: 110px;
+}
+#ppo-incidents .ppo-register-table [data-column="Actions"] {
+  width: 100px;
+}
+#ppo-incidents .ppo-register-table [data-column="Reported"] {
+  width: 210px;
+}
+#ppo-incidents .ppo-register-table [data-column="Reporter"] {
+  width: 130px;
+}
+#ppo-incidents .ppo-register-table [data-column="Site"] {
+  width: 190px;
+}
+#ppo-incidents .ppo-register-table .fi06-select {
+  width: 44px;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--white);
+  text-align: center;
+  padding: 0;
+}
+#ppo-incidents .ppo-register-table .fi06-row-menu {
+  width: 44px;
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background: var(--white);
+  text-align: center;
+  padding: 0;
+}
+#ppo-incidents .fi06-row-menu button {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border: 0;
+}
+#ppo-incidents .fi06-select input {
+  display: block;
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  margin: auto;
+  padding: 0;
+  accent-color: var(--navy);
+}
+#ppo-incidents .product-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.fi06-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.fi06-phone-savebar {
+  display: none;
+}
+#ppo-incidents .shared-record {
+  min-height: 100%;
+}
+#ppo-incidents .shared-record-header {
+  padding: 24px;
+}
+#ppo-incidents .shared-record-header .page-header {
+  padding: 0;
+  margin: 0;
+}
+#ppo-incidents .shared-record-header h1 {
+  font-size: 24px;
+  line-height: 32px;
+}
+#ppo-incidents .shared-record-title {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#ppo-incidents .shared-record-title .eyebrow {
+  display: none;
+}
+#ppo-incidents .shared-record-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-incidents .shared-record-sources {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 24px;
+  font-size: 11px;
+  border-block: 1px solid var(--line);
+}
+#ppo-incidents .shared-record-body {
+  grid-template-columns: 380px minmax(0, 1fr);
+}
+#ppo-incidents .shared-record-facts {
+  padding: 20px 24px;
+}
+#ppo-incidents .shared-record-facts dl {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  margin: 14px 0;
+}
+#ppo-incidents .shared-record-facts dt {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+#ppo-incidents .shared-record-facts dd {
+  margin: 0;
+}
+#ppo-incidents .shared-record-fact-section {
+  padding-bottom: 20px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-incidents .shared-record-fact-section h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+#ppo-incidents .shared-record-fact-section p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-incidents .shared-record-workspace {
+  background: var(--paper);
   min-width: 0;
-  border: 1px solid var(--line-strong);
+}
+#ppo-incidents .shared-record-content {
+  padding: 24px;
+}
+#ppo-incidents .record-tablist {
+  margin: 0;
+  padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  gap: 0;
+  overflow: auto;
+}
+#ppo-incidents .record-tablist button {
+  min-height: 44px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+#ppo-incidents .record-tablist button[aria-selected="true"] {
+  border-bottom-color: var(--navy);
+  color: var(--ink);
+  font-weight: 500;
+}
+#ppo-incidents .record-panel {
+  padding: 0;
+}
+#ppo-incidents .record-panel[hidden] {
+  display: none;
+}
+#ppo-incidents .fi06-report-tabs {
+  padding: 12px 24px;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+#ppo-incidents .fi06-card,
+#ppo-incidents .business-card {
+  background: var(--white);
+  border: 1px solid var(--line);
   border-radius: var(--radius-control);
   padding: 16px;
+  margin: 0 0 16px;
+  min-width: 0;
+}
+#ppo-incidents .fi06-section-title {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 24px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+#ppo-incidents .fi06-content-title {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 16px;
+}
+#ppo-incidents .fi06-content-title small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+#ppo-incidents .fi06-fact-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-incidents .fi06-fact-row:last-child {
+  border-bottom: 0;
+}
+#ppo-incidents .fi06-fact-row > div {
+  min-width: 0;
+}
+#ppo-incidents .fi06-fact-row p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+}
+#ppo-incidents .fi06-factual,
+#ppo-incidents .fi06-hold {
+  padding: 0;
+}
+#ppo-incidents .fi06-hash {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+#ppo-incidents .fi06-command {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--info-surface, var(--surface-2));
+  margin-bottom: 16px;
+}
+#ppo-incidents .fi06-command p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+}
+#ppo-incidents .fi06-command [role="status"] {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+#ppo-incidents form,
+#ppo-incidents fieldset {
+  min-width: 0;
+}
+#ppo-incidents .fi06-facts-form > fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+#ppo-incidents .fi06-scope-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+#ppo-incidents .business-card > fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+#ppo-incidents .field {
   margin: 12px 0;
 }
-.incidents label {
-  display: block;
-  margin: 10px 0;
+#ppo-incidents .field label,
+#ppo-incidents label {
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
 }
-.incidents label > select,
-.incidents label > input {
+#ppo-incidents
+  :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 400;
+  margin: 6px 0 0;
+}
+#ppo-incidents textarea {
+  height: 64px;
+  min-height: 62px;
+  resize: vertical;
+}
+#ppo-incidents .fi06-review textarea {
+  height: 64px;
+}
+#ppo-incidents .fi06-review > fieldset {
+  margin: 0 0 16px;
+}
+#ppo-incidents label > select {
   display: block;
   margin-top: 6px;
 }
-.incidents input,
-.incidents select,
-.incidents textarea {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  font-size: 16px;
-  min-height: 44px;
+#ppo-incidents .fi06-classification {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
 }
-.incidents textarea {
-  min-height: 96px;
+#ppo-incidents .fi06-classification span {
+  font-size: 12px;
+  white-space: nowrap;
+  padding-inline: 4px;
 }
-.incident-fields {
+#ppo-incidents .fi06-classification legend {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+#ppo-incidents .fi06-classification > div {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+}
+#ppo-incidents .fi06-classification label {
+  position: relative;
+  margin: 0;
+}
+#ppo-incidents .fi06-classification input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+#ppo-incidents .fi06-classification span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 4px;
+  border-right: 1px solid var(--control-border);
+  text-align: center;
+}
+#ppo-incidents .fi06-classification input:checked + span {
+  background: var(--navy);
+  color: var(--white);
+}
+#ppo-incidents .fi06-classification input:focus-visible + span {
+  outline: 2px solid var(--focus);
+  outline-offset: -3px;
+}
+#ppo-incidents .fi06-classification p,
+#ppo-incidents .fi06-hint {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  margin: 8px 0;
+}
+#ppo-incidents .incident-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
-.incident-summary {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line-strong);
-}
-.incident-notice {
-  border-left: 4px solid var(--warning);
-  padding: 12px;
-  background: var(--warning-surface);
-}
-.incidents details {
-  padding: 12px 0;
-}
-.incidents summary {
-  cursor: pointer;
-  min-height: 44px;
-}
-.incidents button {
-  white-space: normal;
-  max-width: 100%;
-  min-height: 44px;
-}
-.incidents .button-row {
+#ppo-incidents .button-row,
+#ppo-incidents .fi06-form-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 14px 0;
+  gap: 8px;
+  margin: 16px 0;
 }
-@media (max-width: 600px) {
-  .incidents {
-    padding: 12px;
+#ppo-incidents .fi06-form-actions {
+  justify-content: flex-end;
+  padding: 12px 0;
+}
+#ppo-incidents .fi06-note {
+  padding: 12px;
+  background: var(--neutral-surface);
+  border-radius: var(--radius-control);
+}
+#ppo-incidents summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px 0;
+}
+#ppo-incidents fieldset:disabled {
+  opacity: 0.65;
+}
+#ppo-incidents button {
+  max-width: 100%;
+}
+#ppo-incidents :is(button, input, select, textarea, a):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-incidents .fi06-evidence-choice {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0;
+}
+#ppo-incidents .fi06-evidence-choice input {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--navy);
+}
+#ppo-incidents .fi06-submit .crm-r38-panel > footer {
+  display: none;
+}
+.fi06-submit .crm-r38-panel {
+  max-width: 560px;
+}
+.fi06-submit .fi06-confirm-row {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+.fi06-submit .product-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.fi06-submit p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.fi06-submit .button-row {
+  display: flex;
+  gap: 8px;
+}
+.fi06-submit .button-row button {
+  flex: 1;
+}
+@media (max-width: 1199px) {
+  #ppo-incidents .shared-record-body {
+    grid-template-columns: 280px minmax(0, 1fr);
   }
-  .incidents .business-card {
-    padding: 12px;
+  #ppo-incidents .shared-record-content {
+    padding: 16px;
   }
-  .incidents fieldset {
+}
+@media (max-width: 780px) {
+  .fi06-phone-savebar {
+    display: flex;
+    position: fixed;
+    inset: auto 0 calc(64px + env(safe-area-inset-bottom));
+    z-index: 35;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+  }
+  .fi06-phone-savebar button {
+    flex: 1;
+    min-height: 48px;
+  }
+  #ppo-incidents .fi06-form-actions {
+    display: none;
+  }
+  #ppo-incidents .shared-record:has(.fi06-facts-form) .shared-record-content {
+    padding-bottom: 90px;
+  }
+  #ppo-incidents .mw-menu-overlay {
+    inset: 56px 0 0;
+    width: 100%;
+    height: calc(100dvh - 56px);
+    max-width: none;
+  }
+  #ppo-incidents .fi06-toolbar {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  #ppo-incidents .fi06-count {
+    font-size: 11px;
+  }
+  #ppo-incidents .fi06-filters {
+    display: none;
+  }
+  #ppo-incidents .shared-record-header {
+    padding: 12px 16px;
+  }
+  #ppo-incidents .shared-record-header h1 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  #ppo-incidents
+    .shared-record:has(.fi06-facts-form)
+    .shared-record-title
+    .business-heading {
+    display: none;
+  }
+  #ppo-incidents .shared-record-actions,
+  #ppo-incidents .shared-record-sources,
+  #ppo-incidents .shared-record-facts,
+  #ppo-incidents .fi06-report-tabs {
+    display: none;
+  }
+  #ppo-incidents .shared-record-body {
+    display: block;
+  }
+  #ppo-incidents .shared-record-content {
+    padding: 12px 16px;
+  }
+  #ppo-incidents .record-tablist {
+    padding: 0;
+  }
+  #ppo-incidents .record-tablist button {
+    font-size: 13px;
     padding: 10px;
+  }
+  #ppo-incidents
+    :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  #ppo-incidents .incident-fields {
+    grid-template-columns: 1fr;
+  }
+  #ppo-incidents .fi06-form-actions button {
+    flex: 1;
+    min-height: 48px;
+  }
+  #ppo-incidents .shared-record-sticky {
+    display: flex;
+    gap: 10px;
+    background: var(--white);
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+  }
+  #ppo-incidents .shared-record-sticky > * {
+    flex: 1;
+  }
+  #ppo-incidents .shared-record:has(.fi06-facts-form) .shared-record-sticky {
+    display: none;
+  }
+  #ppo-incidents .fi06-submit .crm-r38-panel {
+    position: fixed;
+    inset: auto 0 0;
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    border-radius: 16px 16px 0 0;
+  }
+}
+@media (max-width: 350px) {
+  #ppo-incidents .shared-record-content {
+    padding: 12px;
+  }
+  #ppo-incidents .fi06-classification > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-incidents .fi06-classification span {
+    border-bottom: 1px solid var(--control-border);
   }
 }

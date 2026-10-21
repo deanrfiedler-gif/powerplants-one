@@ -46,3 +46,7 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 ## SV-04 appointment host
 
 The accepted Appointment detail composition reuses this API without changing it: title state/readiness chips, source strip, ruled facts, no tabs, and phone bottom actions. At tablet width its facts follow the workspace; phone shows Visit plus a crew/details disclosure. Scoped styles live in `src/scheduling/components/client/appointment-record.css`. Consumer keys are `scope:SV-04` and `route:/service/appointments/[id]`. Synthetic fixture/state examples are in `tests/helpers/appointment-detail-fixture.ts` and `tests/browser/appointment-detail.spec.ts`. The `shared-record-sv04-review` alignment item and [evidence](../../../testing/evidence/appointment-detail-native/README.md) retain gated P4/P5 and data gaps. Owner visual review is pending.
+
+## FI-06 consumer
+
+The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.

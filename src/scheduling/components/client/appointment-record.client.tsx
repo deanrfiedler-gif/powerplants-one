@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { IncidentVisitMenu } from "../../../incidents/visit-menu";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   api,
@@ -279,6 +280,7 @@ export function AppointmentRecord({
         <>
           {contact}
           {primary}
+          <IncidentVisitMenu appointmentId={a.id} />
           <WorklistMenu label="Appointment actions" icon="more">
             {more.map((action) => (
               <Button
