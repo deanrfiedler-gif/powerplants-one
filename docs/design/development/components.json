@@ -168,6 +168,11 @@
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -212,6 +217,9 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -373,6 +381,7 @@
         "route:/estimating/discovery/[id]/costing",
         "route:/people",
         "route:/contacts",
+        "route:/estimating/discovery",
         "route:/sites",
         "route:/sites/[id]"
       ],
@@ -566,6 +575,14 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "buttons-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "buttons-cs04-review",
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
@@ -736,6 +753,11 @@
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -775,6 +797,9 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -801,6 +826,7 @@
         "route:/service/reports",
         "route:/people",
         "route:/contacts",
+        "route:/estimating/discovery",
         "route:/sites",
         "route:/sites/[id]"
       ],
@@ -886,6 +912,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -2435,6 +2469,11 @@
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -2461,6 +2500,9 @@
         "src/components/equipment-timeline.tsx",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -2511,6 +2553,7 @@
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
         "route:/estimating/fertigation/[id]",
+        "route:/estimating/discovery",
         "route:/service/reports/[id]",
         "route:/sites"
       ],
@@ -2584,6 +2627,14 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "tabs-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "tabs-cs04-review",
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
@@ -2640,6 +2691,11 @@
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -2667,6 +2723,9 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -2693,6 +2752,7 @@
         "route:/service/reports/[id]",
         "route:/people",
         "route:/contacts",
+        "route:/estimating/discovery",
         "route:/sites",
         "route:/sites/[id]"
       ],
@@ -2750,6 +2810,14 @@
           "owner": "Dean Fiedler"
         },
         {
+          "id": "menu-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
           "id": "menu-cs04-review",
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
@@ -2787,6 +2855,11 @@
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -2806,6 +2879,9 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -2830,6 +2906,7 @@
         "route:/service/reports",
         "route:/people",
         "route:/contacts",
+        "route:/estimating/discovery",
         "route:/sites",
         "route:/sites/[id]"
       ],
@@ -2851,6 +2928,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -3986,6 +4071,11 @@
           "description": "PeopleRegister: 1440/1024 grid, 390/320 compact phone header and list, filters and exact handovers, loading/empty/failed/denied states. tests/browser/people-native.spec.ts; deterministic fixture tests/helpers/people-register.ts. Owner review pending."
         },
         {
+          "id": "discovery-register-native",
+          "label": "ES-02 Discovery register",
+          "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
@@ -4105,6 +4195,9 @@
         "docs/design/development/people-native-fixtures.json",
         "src/components/people-register.tsx",
         "src/app/styles/people-register.css",
+        "src/components/discovery-register.tsx",
+        "src/components/discovery-register.css",
+        "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json"
       ],
@@ -4159,6 +4252,7 @@
         "route:/customers/[id]",
         "route:/estimating/discovery/[id]/costing",
         "route:/contacts",
+        "route:/estimating/discovery",
         "route:/sites",
         "route:/sites/[id]"
       ],
@@ -4428,6 +4522,14 @@
           "expected": "Accepted People register and later compact phone header, with separate permission and state proof.",
           "actual": "CS-02 consumes the existing control; page-scoped 40 px grid and 85 px phone rows. Filter and legacy saved-view presentation remain explicit gaps.",
           "action": "Compare docs/testing/evidence/people-native/README.md and route-people contract; owner visual/device review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-discovery-register-review",
+          "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
+          "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
+          "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

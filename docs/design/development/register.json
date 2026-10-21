@@ -7120,7 +7120,7 @@
       "title": "Discovery register",
       "kind": "route",
       "module": "ES",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Read-only ES-02 register: one workspace per opportunity, saved selected scope, estimator, customer and permitted cost basis; desktop snapshot and phone wizard handover.",
       "path": "/estimating/discovery",
       "source_paths": [
         "src/app/(business)/estimating/discovery/page.tsx"
@@ -7139,11 +7139,14 @@
         "docs/reference/ui/estimating/discovery-register-figma-design-r01/PPO-Discovery-Register-08-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/discovery-register-figma-design.md"
+        "docs/decisions/discovery-register-figma-design.md",
+        "docs/decisions/discovery-register-native.md",
+        "src/estimating/discovery-register-model.ts",
+        "docs/testing/evidence/discovery-register-native/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Implementation in PR; verification recorded in discovery-register-native evidence",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

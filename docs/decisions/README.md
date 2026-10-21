@@ -5,6 +5,8 @@
 
 [Short synthetic Site references](site-reference-convention.md) (PPO-SITE-REFERENCE-DEC) records Dean's shorter convention with previous-reference compatibility and no storage renumbering.
 
+[Discovery register native implementation](discovery-register-native.md) (PPO-ES02-DISCOVERY-REGISTER-NATIVE-DEC) records the ES-02 build, confirmed workspace owner, bounded read extensions and pending native review.
+
 [Reviewed discovery creation and initial ownership](discovery-creation-journey.md) records the user-authorised Q1/Q4 prerequisite and combined final review, preserving existing-workspace linking and the accepted ES-02 visual reference.
 
 [Service findings source projection](service-findings-backend.md) (SV-07 / BC-06 R1) defines five-source reads, native closure authority and bounded authorised-window counts. It preserves the accepted page design and records the write, recurrence, receiving and dashboard-total boundaries that remain open.

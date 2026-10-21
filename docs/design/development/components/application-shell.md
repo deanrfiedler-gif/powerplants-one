@@ -309,6 +309,10 @@ PeopleRegister uses this control on `/people` and the People view of `/contacts`
 
 `SecondaryMenuFrame.phoneHeader` accepts the page action, filter, title and count and combines them with its own Choose view callback in one registration. Existing callers omit the optional prop and retain their behaviour. The shared CSS selector lists add only `#ppo-people`. The inherited 780 px phone breakpoint and tablet overlay remain visible differences from the drawn shell.
 
+## Discovery register ES-02 consumer
+
+The `/estimating/discovery` host reuses this component under the [native register record](../../../decisions/discovery-register-native.md). Page-specific 40 px rows and phone lists stay scoped to the register. Fixtures cover loading, no matches, empty, denied, failed/retried and view-only states; see `tests/browser/discovery-register.spec.ts` and `tests/helpers/discovery-register.ts`. Owner visual review is pending; the shared implementation is not granted new approval.
+
 ## Sites CS-04 consumer
 
 The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
