@@ -1,15 +1,13 @@
 "use client";
-import { visitArrivalGuidance, visitPreparationGuidance } from "../../../field/visit-guidance";
-import { PolicyResolution } from "./policy-resolution.client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { JobPackEntry } from "../../../documents/components/client/job-pack-entry";
+import { AppointmentRecord, AppointmentPackRead } from "./appointment-record.client";
+import { appointmentClosed, type AppointmentMode } from "../../appointment-presentation";
 import { useSearchParams } from "next/navigation";
 import { SchedulingNavigation } from "./workspace-navigation.client";
 import { DemandPanel } from "./demand-panel.client";
 import {
   BookingContinuation,
-  showAppointmentDates,
 } from "./booking-continuation.client";
 import { BookingRecovery, useBookingCommand } from "./booking-recovery.client";
 import {
@@ -25,7 +23,6 @@ import {
   Field,
   EnumField,
   SelectField,
-  PageHeader,
   Status,
   Stamp,
   ReadState,
@@ -94,6 +91,9 @@ export type Appointment = {
   site_id: string;
   site_name: string;
   customer_name?: string;
+  customer_id?: string;
+  service_owner_name?: string | null;
+  primary_contact_name?: string | null;
   scope_revision_id: string;
   scope_version: number;
   scope_revision: number;
@@ -121,6 +121,7 @@ export type Appointment = {
     name: string;
   })[];
   readiness: {
+    parts?: import("../../../documents/components/client/job-pack-types").PackParts | null;
     criterion_code: string;
     label: string;
     outcome: string;
@@ -162,7 +163,7 @@ export type Appointment = {
       customer_commitment: string;
     };
   }[];
-  actions: { can_resolve_policy?: boolean; can_manage: boolean; can_request: boolean; can_contact: boolean };
+  actions: { can_read_supply?: boolean; can_resolve_policy?: boolean; can_manage: boolean; can_request: boolean; can_contact: boolean };
 };
 export type ScheduleAppointment = Omit<
   Appointment,
@@ -807,10 +808,10 @@ function ContactForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
         >
           <legend>Current site contact</legend>
           <p>
-            Contact ID:{" "}
-            <span className="record-id">
-              {a.primary_contact_id ??
-                "No current site contact — resolve site context first."}
+            Contact:{" "}
+            <span>
+              {a.primary_contact_name ?? (a.primary_contact_id ?
+                "Site contact name unavailable." : "No current site contact — resolve site context first.")}
             </span>
           </p>
           <div className="form-grid">
@@ -892,15 +893,7 @@ function CancelForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
     </section>
   );
 }
-export function RequestDecision({
-  a,
-  request,
-  onSaved,
-}: {
-  a: Appointment;
-  request: Request;
-  onSaved: () => void;
-}) {
+export function useRequestDecision(a: Appointment, request: Request, onSaved: (action: string) => void) {
   const p = useIdentity(),
     [reason, setReason] = useState(""),
     command = useCommand();
@@ -927,8 +920,20 @@ export function RequestDecision({
         body,
       )
     )
-      onSaved();
+      onSaved(action);
   }
+  return { p, reason, setReason, command, resources, policyPreparation, resourceName, decide };
+}
+export function RequestDecision({
+  a,
+  request,
+  onSaved,
+}: {
+  a: Appointment;
+  request: Request;
+  onSaved: () => void;
+}) {
+  const { p, reason, setReason, command, policyPreparation, resourceName, decide } = useRequestDecision(a, request, onSaved);
   return (
     <article className="change-request">
       <div className="planner-card-head">
@@ -1008,358 +1013,33 @@ export function AppointmentScreen({ id }: { id: string }) {
   useIdentity();
   const search = useSearchParams();
   const returnTo = safePlannerReturn(search.get("returnTo"));
-  const target = appointmentHref(id, returnTo);
   const recovery = useBookingCommand();
-  const resource = useResource<Envelope<Appointment>>(`appointments/${id}`),
-    a = resource.data?.items[0],
-    [mode, setMode] = useState<
-      "confirm" | "move" | "request" | "contact" | "cancel" | null
-    >(null);
+  const resource = useResource<Envelope<Appointment>>(`appointments/${id}`);
+  const a = resource.data?.items[0];
+  const current = !resource.loading && !resource.error;
+  const [mode, setMode] = useState<AppointmentMode | null>(() => search.get("action") === "contact" ? "contact" : search.get("action") === "move" ? "move" : null);
   const reload = useRef(resource.reload);
-  useEffect(() => {
-    reload.current = resource.reload;
-  }, [resource.reload]);
+  useEffect(() => { reload.current = resource.reload; }, [resource.reload]);
   const acceptedOperation = recovery.accepted?.receipt.operation_id;
-  useEffect(() => {
-    if (acceptedOperation) reload.current();
-  }, [acceptedOperation]);
-  return (
-    <>
-      <PageHeader
-        eyebrow="Service Operations · SC-08"
-        title="Appointment"
-        description="Attendance, work authority and customer commitment remain distinct."
-        action={
-          <Link className="button secondary" href={returnTo}>
-            {returnTo.startsWith("/schedule/") ? "Back to scheduling review" : "Back to planner"}
-          </Link>
-        }
-      />
-      <BookingRecovery command={recovery} />
-      <ReadState {...resource} retry={resource.reload} />
-      {a && (
-        <>
-          <section className="planner-summary">
-            <div>
-              <p className="eyebrow">{a.site_name}</p>
-              <h2>{a.display_number}</h2>
-              <p>{a.scope_summary}</p>
-              <p>
-                Work order{" "}
-                <Link href={`/service/work-orders/${a.work_order_id}`}>
-                  {a.work_order_display_number}
-                </Link>{" "}
-                · Scope r{String(a.scope_revision).padStart(2, "0")}
-              </p>
-              <VersionLine a={a} />
-            </div>
-            <div>
-              <Status value={a.status} />
-              <p>
-                <Stamp value={a.start_at} timezone={a.site_timezone} /> –{" "}
-                <Stamp value={a.end_at} timezone={a.site_timezone} />
-              </p>
-              <strong>{a.site_timezone}</strong>
-              <p>
-                Customer commitment: <Status value={a.customer_commitment} />
-              </p>
-            </div>
-          </section>
-          {!!resource.error && (
-            <p className="planner-warning">
-              Showing the last successful read. Current availability is unknown.
-            </p>
-          )}
-          <section className="panel" aria-label="Visit entry guidance">
-            <p>{visitPreparationGuidance(a.status, a.preparation_status, a.scope_review_required)}</p>
-            {visitArrivalGuidance(a.status, false).closed && <p>Further physical attendance needs a separate visit. Original personal evidence, internal Service acceptance and customer responses remain distinct.</p>}
-            {!resource.loading && !resource.error && <Link href={`/service/work-orders/${a.work_order_id}#planned-visits`}>Review existing work-order visits and preparation</Link>}
-            <p>Opening a record does not grant preparation, scheduling or work authority.</p>
-          </section>
-          <p>
-            <Link href={showAppointmentDates(a, returnTo)}>
-              Show its dates / View in planner
-            </Link>
-          </p>
-          <div className="planner-holds">
-            <strong>
-              {(a.dispatch_hold || a.policy_impacts?.some(x => x.held))
-                ? "Dispatch held"
-                : "Crew responses recorded — check current pack readiness"}
-            </strong>
-            <span>
-              {a.pack_requirement === "ReviewRequired"
-                ? "Pack review required"
-                : a.pack_requirement === "CancellationReviewRequired"
-                  ? "Cancellation consequences require review"
-                  : a.pack_requirement === "AwaitingAcknowledgement"
-                    ? "Awaiting individual crew acknowledgement"
-                    : a.pack_requirement === "Acknowledged"
-                      ? "Acknowledgements recorded against the issued pack"
-                      : "Pack preparation required"}{" "}
-              · Open the job pack to check current applicability and controls.
-            </span>
-          </div>
-          {a.scope_review_required && (
-            <p role="status" className="planner-warning">
-              Scope review required. A successor draft grants no extra work
-              authority.
-            </p>
-          )}
-          {a.cancellation_reason && (
-            <p className="planner-warning">
-              Cancellation reason: {a.cancellation_reason}
-            </p>
-          )}
-          <div className="button-row planner-actions">
-            {a.actions.can_manage && ["Proposed", "Confirmed"].includes(a.status) && !a.actual_start_at && (
-              <>
-                <button
-                  disabled={resource.loading || !!resource.error}
-                  onClick={() =>
-                    setMode(a.status === "Proposed" ? "confirm" : "move")
-                  }
-                >
-                  {a.status === "Proposed"
-                    ? "Confirm appointment"
-                    : "Move or reassign"}
-                </button>
-                <button
-                  disabled={resource.loading || !!resource.error}
-                  className="secondary"
-                  onClick={() => setMode("cancel")}
-                >
-                  Cancel appointment
-                </button>
-              </>
-            )}
-            {a.actions.can_request && a.status === "Confirmed" && (
-              <button
-                disabled={resource.loading || !!resource.error}
-                className="secondary"
-                onClick={() => setMode("request")}
-              >
-                Propose change
-              </button>
-            )}
-            {a.actions.can_contact && (
-              <button
-                disabled={resource.loading || !!resource.error}
-                className="secondary"
-                onClick={() => setMode("contact")}
-              >
-                Record contact
-              </button>
-            )}
-            <button
-              disabled={resource.loading || !!resource.error}
-              className="secondary"
-              onClick={resource.reload}
-            >
-              Refresh saved appointment
-            </button>
-          </div>
-          {(mode === "confirm" || mode === "move" || mode === "request") && (
-            <BookingForm
-              key={`${id}:${mode}`}
-              appointment={a}
-              mode={mode}
-              onSaved={resource.reload}
-              onClose={() => setMode(null)}
-            />
-          )}
-          {mode === "contact" && (
-            <ContactForm
-              key={`${a.id}:${a.version}`}
-              a={a}
-              onSaved={resource.reload}
-            />
-          )}
-          {mode === "cancel" && a.status !== "Cancelled" && (
-            <CancelForm a={a} onSaved={resource.reload} />
-          )}
-          <div className="planner-detail-grid">
-            <section className="panel">
-              <h2>Current crew</h2>
-              {a.assignments.filter((x) => x.active).length ? (
-                a.assignments
-                  .filter((x) => x.active)
-                  .map((x) => (
-                    <article className="crew-summary" key={x.id}>
-                      <strong>{x.name}</strong>
-                      <p>
-                        {x.crew_role} · {x.travel_before_minutes} min before /{" "}
-                        {x.travel_after_minutes} min after
-                      </p>
-                      <small>{x.travel_reason}</small>
-                    </article>
-                  ))
-              ) : (
-                <p>
-                  No resources reserved. Proposed attendance does not reserve a
-                  crew.
-                </p>
-              )}
-            </section>
-            <section className="panel">
-              <h2>Readiness and preparation</h2>
-              <p>
-                Preparation: <Status value={a.preparation_status} />
-              </p>
-              <p>
-                <Link
-                  href={`/service/work-orders/${a.work_order_id}?returnTo=${encodeURIComponent(target)}#visit-${a.id}`}
-                >
-                  Review readiness on the work order
-                </Link>
-              </p>
-              {["Unknown", "Blocked"].includes(a.preparation_status) && (
-                <p className="planner-warning">
-                  Readiness assessment does not change this preparation state.
-                  Review with the service owner; use controlled cancellation and
-                  a new proposal where permitted. Preparation cannot be
-                  corrected in place by this screen.
-                </p>
-              )}
-              {a.policy_impacts?.map(impact => <article className="planner-warning" key={impact.impact_id}>
-                <strong>Scheduling policy {impact.held ? "hold" : "impact"} · {impact.disposition}</strong>
-                <p>{impact.reason} · Responsible owner: {impact.owner_name}</p>
-                <p className="record-id">Source publication: {impact.publication_id}</p>
-                <p>{impact.next_action}</p>
-                {a.actions.can_resolve_policy && <PolicyResolution impactId={impact.impact_id} onSaved={resource.reload} />}
-              </article>)}
-              {a.authorisation_blockers.map((b, i) => (
-                <p className="planner-warning" key={i}>
-                  {b.message}
-                </p>
-              ))}
-              {a.readiness
-                .filter((x) => x.criterion_code !== "CrewCompetency")
-                .map((x) => (
-                  <p key={x.criterion_code}>
-                    <strong>{x.label}:</strong> {x.outcome}
-                    <small>{x.reason}</small>
-                  </p>
-                ))}
-              <p>
-                <strong>Crew competency:</strong>{" "}
-                {a.status === "Confirmed"
-                  ? "Checked against the saved booking evidence."
-                  : "Rechecked for the complete crew during confirmation."}
-              </p>
-              <p className="read-meta">
-                {a.policy.name} · v{a.policy.version}
-              </p>
-            </section>
-          </div>
-          <section className="panel">
-            <h2>Owned follow-up</h2>
-            {a.followups.length ? (
-              a.followups.map((f) => (
-                <article className="followup-row" key={f.activity_id}>
-                  <Link href={`/work/${f.activity_id}`}>{f.summary}</Link>
-                  <Status value={f.status} />
-                  <span>
-                    {f.due_needed ? (
-                      "Due date needed"
-                    ) : (
-                      <Stamp value={f.due_at} />
-                    )}
-                  </span>
-                </article>
-              ))
-            ) : (
-              <p>No follow-up visible in your permitted scope.</p>
-            )}
-          </section>
-          <section className="panel">
-            <h2>Schedule change requests</h2>
-            {a.requests.length ? (
-              a.requests.map((r) => (
-                <RequestDecision
-                  key={r.id}
-                  a={a}
-                  request={r}
-                  onSaved={resource.reload}
-                />
-              ))
-            ) : (
-              <p>
-                No change requests. Pending requests never reserve capacity.
-              </p>
-            )}
-          </section>
-          <section className="panel">
-            <h2>Contact history</h2>
-            {a.contacts.length ? (
-              a.contacts.map((c) => (
-                <article className="contact-entry" key={c.id}>
-                  <Status value={c.outcome} />
-                  <p>
-                    {c.recipient_name} · {c.channel} · Schedule v
-                    {c.schedule_version}
-                  </p>
-                  <p>{c.notes}</p>
-                  <small>
-                    <Stamp value={c.occurred_at} timezone={a.site_timezone} />
-                  </small>
-                </article>
-              ))
-            ) : (
-              <p>No recorded customer contact. No date agreement is assumed.</p>
-            )}
-          </section>
-          <details className="panel">
-            <summary>Original proposal and version history</summary>
-            <p>
-              Original dates:{" "}
-              <Stamp
-                value={a.proposal.snapshot.start_at}
-                timezone={a.site_timezone}
-              />{" "}
-              –{" "}
-              <Stamp
-                value={a.proposal.snapshot.end_at}
-                timezone={a.site_timezone}
-              />
-            </p>
-            <p className="record-id">
-              Proposal SHA-256: {a.proposal.content_hash}
-            </p>
-            {a.history.map((h) => (
-              <p key={h.version}>
-                v{h.version} · {h.snapshot.status} ·{" "}
-                <Stamp value={h.snapshot.start_at} timezone={a.site_timezone} />{" "}
-                · Commitment {h.snapshot.customer_commitment}
-              </p>
-            ))}
-          </details>
-          <section className="panel" aria-label="Job pack handover">
-            <h2>Job pack</h2>
-            <JobPackEntry appointmentId={a.id} />
-          </section>
-          <details className="panel">
-            <summary>Exact record identities and observed context</summary>
-            <p className="record-id">Appointment: {a.id}</p>
-            <p className="record-id">Work order: {a.work_order_id}</p>
-            <p className="record-id">
-              Scope: {a.scope_revision_id} · Content v{a.scope_version}
-            </p>
-            <p className="record-id">Scope SHA-256: {a.scope_hash}</p>
-          </details>
-          <p className="read-meta">
-            Permitted records · Observed{" "}
-            <Stamp
-              value={resource.data!.observed_at}
-              timezone={a.site_timezone}
-            />{" "}
-            · {a.site_timezone}
-          </p>
-        </>
-      )}
-    </>
-  );
+  useEffect(() => { if (acceptedOperation) reload.current(); }, [acceptedOperation]);
+  const closed = a ? appointmentClosed(a) : false;
+  return <div className="sv04-host">
+    <BookingRecovery command={recovery} />
+    <ReadState {...resource} retry={resource.reload} />
+    {!a && !resource.loading && !resource.error && <p role="status">No appointment is available in this response. <Link href={returnTo}>Back to planner</Link></p>}
+    {a && <AppointmentPackRead appointmentId={a.id} current={current} observedAt={resource.data!.observed_at}>{(pack, packState) => <AppointmentRecord
+      a={a} current={current} observedAt={resource.data!.observed_at} returnTo={returnTo}
+      mode={mode} onAction={setMode} onRefresh={resource.reload} packData={pack} packState={packState}
+      form={!closed && mode ? <>
+        {(mode === "confirm" || mode === "move" || mode === "request") && <BookingForm key={`${id}:${mode}`} appointment={a} mode={mode} onSaved={resource.reload} onClose={() => setMode(null)} />}
+        {mode === "contact" && <ContactForm key={`${a.id}:${a.version}`} a={a} onSaved={resource.reload} />}
+        {mode === "cancel" && <CancelForm a={a} onSaved={resource.reload} />}
+      </> : null}
+      requests={a.requests.length ? a.requests.map(request => closed ? <article key={request.id}><strong>{request.source_type} · {readableRequestStatus(request.status)}</strong><p>{request.reason}</p>{request.decision_reason && <p>{request.decision_reason}</p>}</article> : <fieldset key={request.id} disabled={!current}><RequestDecision a={a} request={request} onSaved={resource.reload} /></fieldset>) : <p>No change requests. Pending requests never reserve crew or time.</p>}
+    />}</AppointmentPackRead>}
+  </div>;
 }
+const readableRequestStatus = (status: string) => status.replace(/([a-z])([A-Z])/g, "$1 $2");
 // A lane belongs to one person, so the marker uses that person's travel and calendar.
 // Cancelled and proposed visits reserve nothing and are not marked.
 export function laneExtendedHours(a: ScheduleAppointment, r: Resource) {

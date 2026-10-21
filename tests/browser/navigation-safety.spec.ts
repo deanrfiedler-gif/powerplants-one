@@ -139,7 +139,7 @@ for (const selection of ["pointer", "keyboard"] as const) {
 // bar), a header search result or browser Back asks before discarding it; a clean form just leaves.
 for (const form of [
   { path: "/customers/new", label: "Display name" },
-  { path: "/service/tickets/new", label: "Request summary" },
+  { path: "/service/tickets/new", label: "Summary" },
   { path: "/work/new", label: "What needs doing?" },
   { path: "/service/work-orders/new", label: "Company context", option: CRM.company },
   { path: "/sales/opportunities/new", label: "Qualification outcome" },
@@ -295,7 +295,7 @@ test("N12Sales Activities preserves selected day in rail, phone, More and search
 test("N11 blank workspace More opens each permitted operational entry",async({page})=>{
   for(const [profile,workspace,target,label,api,title] of [
     ["coordinator","estimate","/estimating/intake","Intake","/api/v1/sales/handovers","Estimating Intake"],
-    ["assigned-technician","service","/my-jobs/inspections","My inspections","/api/v1/my-jobs/inspections","Inspection capture"],
+    ["assigned-technician","service","/my-jobs/inspections","My inspections","/api/v1/my-jobs/inspections","My inspections"],
     ["coordinator","service","/service/incidents","Incidents and actions","/api/v1/service/incidents","Incidents and corrective actions"],
     ["coordinator","service","/service/inspections","Inspection review","/api/v1/service/inspections","Inspection review"],
   ]){

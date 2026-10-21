@@ -1,4 +1,5 @@
 "use client";
+import { IncidentVisitMenu } from "../incidents/visit-menu";
 import { OfflineEntry } from "./offline-entry";
 import { RunningTimerBanner, WorkTimer } from "./work-timer";
 import { FieldVisitEntry } from "./field-visit-entry";
@@ -393,6 +394,7 @@ export function MyJobsScreen() {
                     <Link href={`/my-jobs/${j.id}`} className="button-link">
                       Open field job
                     </Link>
+                    <IncidentVisitMenu appointmentId={j.id} />
                   </div>
                 </article>
               ))}
@@ -1556,9 +1558,7 @@ export function FieldJobScreen({ id }: { id: string }) {
               Capture Service inspections and retained retests
             </Link>{" "}
             ·{" "}
-            <Link href={`/service/incidents/new?appointment_id=${job.id}`}>
-              Report incident
-            </Link>
+            <IncidentVisitMenu appointmentId={job.id}/>
           </p>
           <section id="field-context" className="business-card">
             <h2>Current work context</h2>

@@ -1,4 +1,6 @@
+import { recordTicketStatement, ticketStatements } from "../../src/service/statements";
 import assert from "node:assert/strict";
+import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
 import {
@@ -10,6 +12,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { recordOperation } from "../../src/platform/operations";
 import { reset, seed, migrate } from "../../scripts/database";
+import { migrationFiles } from "../../scripts/migration-registry";
 import {
   createTicket,
   saveIntake,
@@ -951,14 +954,29 @@ test("SV-01 I2 register: each queue filter lists what its count counts, and each
   await createTicket(p, overdue);
   await requestInformation(p, overdue.id, {
     ...information(),
-    follow_up: { id: randomUUID(), owner_id: actor, due_needed: false, due_at: "2026-09-01T00:00:00Z" },
+    follow_up: {
+      id: randomUUID(),
+      owner_id: actor,
+      due_needed: false,
+      due_at: "2026-09-01T00:00:00Z",
+    },
   });
   await createTicket(p, { ...ticket(), priority: "Urgent" });
   await createTicket(p, ticket());
 
   // One predicate set serves the list and the counts, so a toggle never disagrees with its badge.
   const counts = await ticketQueues(p);
-  for (const queue of ["all_open", "new", "needs_information", "triaged", "urgent", "overdue_clarifications"] as const)
+  for (const queue of [
+    "all_open",
+    "my_requests",
+    "no_work_order",
+    "work_order_linked",
+    "new",
+    "needs_information",
+    "triaged",
+    "urgent",
+    "overdue_clarifications",
+  ] as const)
     assert.equal((await listTickets(p, { queue, sort: "urgency", limit: "200" })).items.length, counts[queue], queue);
   const urgent = (await listTickets(p, { queue: "urgent", limit: "200" })).items;
   assert.ok(urgent.length >= 1 && urgent.every((t) => t.priority === "Urgent"));
@@ -971,10 +989,19 @@ test("SV-01 I2 register: each queue filter lists what its count counts, and each
     (await listTickets(p, { queue: "new", site_id: site, limit: "200" })).items.length,
     (await ticketQueues(p, { site_id: site })).new,
   );
+  const high = await listTickets(p, { priority: "High", limit: "200" });
+  assert.ok(high.items.every((t) => t.priority === "High"));
+  assert.equal(
+    high.items.filter((t) => !["Closed", "Cancelled"].includes(t.status)).length,
+    (await ticketQueues(p, { priority: "High" })).all_open,
+  );
   // A cursor is bound to its queue, and only the native queues exist.
   const first = await listTickets(p, { queue: "new", limit: "1" });
   assert.ok(first.next_cursor);
-  await assert.rejects(listTickets(p, { queue: "urgent", limit: "1", cursor: first.next_cursor! }), code("InvalidData"));
+  await assert.rejects(
+    listTickets(p, { queue: "urgent", limit: "1", cursor: first.next_cursor! }),
+    code("InvalidData"),
+  );
   await assert.rejects(listTickets(p, { queue: "resolved" }), code("InvalidData"));
 
   // The row's edit flag is the record's rule, so Move is offered only where the commands would accept it.
@@ -983,6 +1010,225 @@ test("SV-01 I2 register: each queue filter lists what its count counts, and each
     assert.equal(row.can_edit_intake, (await readIntake(p, row.id)).can_edit_intake, row.display_number);
   assert.ok(all.some((t) => t.can_edit_intake));
   assert.ok(all.some((t) => t.status === "Triaged" && !t.can_edit_intake));
-  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.edit'", [p.actor_id]);
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.edit'", [
+    p.actor_id,
+  ]);
   assert.ok((await listTickets(p, { limit: "200" })).items.every((t) => !t.can_edit_intake));
+});
+
+test("SV-01 statements retain customer words without changing assessment; replay and stale revision are safe", async () => {
+  const p = await principal(),
+    input = ticket();
+  await createTicket(p, input);
+  const statement = {
+    ...base(),
+    id: randomUUID(),
+    expected_version: 1,
+    body: "SYN customer says drift continues",
+    source_label: "SYN caller",
+    occurred_at: "2026-09-04T01:00:00Z",
+    channel: "Phone",
+  };
+  const result = await recordTicketStatement(p, input.id, statement);
+  assert.equal(result.receipt.record_version, 2);
+  assert.equal((await recordTicketStatement(p, input.id, statement)).replayed, true);
+  const t = await readIntake(p, input.id);
+  assert.equal(t.status, "New");
+  assert.equal(t.priority, input.priority);
+  assert.equal(t.triage_owner_id, input.triage_owner_id);
+  assert.equal(t.symptom, input.symptom);
+  assert.equal((await ticketStatements(p, input.id)).items.length, 1);
+  await assert.rejects(
+    recordTicketStatement(p, input.id, {
+      ...statement,
+      ...base(),
+      id: randomUUID(),
+    }),
+    code("VersionConflict"),
+  );
+  await assert.rejects(
+    recordTicketStatement(p, input.id, { ...statement, body: "changed" }),
+    code("OperationConflict"),
+  );
+  await assert.rejects(
+    database().query("UPDATE ppo.ticket_statements SET body='rewritten' WHERE ticket_id=$1", [input.id]),
+  );
+  await assert.rejects(database().query("DELETE FROM ppo.ticket_statements WHERE ticket_id=$1", [input.id]));
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='service.ticket.edit'", [
+    p.actor_id,
+  ]);
+  await assert.rejects(recordTicketStatement(p, input.id, statement), code("Forbidden"));
+});
+test("SV-02 reviewed fields, owned clarification, receipts and triage commit once together", async () => {
+  const p = await principal(),
+    input = ticket();
+  await createTicket(p, input);
+  await requestInformation(p, input.id, information());
+  const t = await readIntake(p, input.id);
+  const command = {
+    ...base(),
+    expected_version: 2,
+    clarification_version: t.clarification_activity!.version,
+    clarification_outcome: "SYN question answered",
+    review: {
+      priority: "High",
+      triage_owner_id: actor,
+      priority_reason: "SYN reviewed impact",
+      next_action: "Review linked work",
+    },
+  };
+  const saved = await triageTicket(p, input.id, command);
+  assert.equal(saved.receipt.record_version, 3);
+  const after = await readIntake(p, input.id);
+  assert.equal(after.status, "Triaged");
+  assert.equal(after.priority, "High");
+  assert.equal(after.next_action, "Review linked work");
+  assert.equal(after.clarification_activity!.status, "Completed");
+  assert.equal(after.clarification_activity!.outcome, "SYN question answered");
+  assert.equal((await triageTicket(p, input.id, command)).replayed, true);
+  assert.equal((await rows("SELECT * FROM ppo.outbox_jobs WHERE kind='ActivityCompleted'")).length, 1);
+  assert.equal((await rows("SELECT * FROM ppo.outbox_jobs WHERE kind='TicketTriaged'")).length, 1);
+});
+test("SV-02 a blocker, stale activity or stale request refuses every triage change", async () => {
+  const p = await principal(),
+    input = ticket();
+  await createTicket(p, input);
+  await requestInformation(p, input.id, information());
+  const t = await readIntake(p, input.id),
+    command = {
+      ...base(),
+      expected_version: 2,
+      clarification_version: t.clarification_activity!.version,
+      clarification_outcome: "SYN resolved",
+      review: {
+        priority: "Low",
+        triage_owner_id: actor,
+        priority_reason: "SYN review",
+        next_action: "Review work",
+      },
+    };
+  await assert.rejects(triageTicket(p, input.id, { ...command, expected_version: 1 }), code("VersionConflict"));
+  await assert.rejects(triageTicket(p, input.id, { ...command, clarification_version: 99 }), code("VersionConflict"));
+  await database().query("UPDATE ppo.tickets SET impact=NULL WHERE id=$1", [input.id]);
+  await assert.rejects(triageTicket(p, input.id, command), code("TICKET_TRIAGE_BLOCKED"));
+  const after = await readIntake(p, input.id);
+  assert.equal(after.version, 2);
+  assert.equal(after.priority, "Urgent");
+  assert.equal(after.clarification_activity!.status, "Open");
+  assert.equal(
+    (await rows("SELECT * FROM ppo.outbox_jobs WHERE kind IN ('ActivityCompleted','TicketTriaged')")).length,
+    0,
+  );
+});
+
+test("SV-02 receipt failure rolls back assessment, clarification and retained statement together", async () => {
+  const p = await principal(),
+    input = ticket();
+  await createTicket(p, input);
+  await requestInformation(p, input.id, information());
+  const before = await readIntake(p, input.id);
+  const evidence = async () =>
+    rows(
+      "SELECT (SELECT count(*) FROM ppo.audit_events) AS audit,(SELECT count(*) FROM ppo.operation_receipts) AS receipts,(SELECT count(*) FROM ppo.outbox_jobs) AS outbox",
+    );
+  const baseline = await evidence();
+  await database().query(
+    "CREATE FUNCTION ppo.sv_test_refuse_evidence() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.kind IN ('TicketTriaged','TicketStatementRecorded') THEN RAISE EXCEPTION 'SYN refused evidence write'; END IF; RETURN NEW; END $$; CREATE TRIGGER sv_test_refuse BEFORE INSERT ON ppo.outbox_jobs FOR EACH ROW EXECUTE FUNCTION ppo.sv_test_refuse_evidence()",
+  );
+  const review = { priority: "Low", triage_owner_id: actor, priority_reason: "SYN review", next_action: "Review work" };
+  try {
+    await assert.rejects(
+      triageTicket(p, input.id, {
+        ...base(),
+        expected_version: 2,
+        clarification_version: before.clarification_activity!.version,
+        clarification_outcome: "SYN resolved",
+        review,
+      }),
+      /SYN refused evidence write/,
+    );
+    await assert.rejects(
+      recordTicketStatement(p, input.id, {
+        ...base(),
+        id: randomUUID(),
+        expected_version: 2,
+        body: "SYN caller update",
+        source_label: "SYN caller",
+        occurred_at: "2026-09-04T01:00:00Z",
+        channel: "Phone",
+      }),
+      /SYN refused evidence write/,
+    );
+    assert.deepEqual(await readIntake(p, input.id), before);
+    assert.deepEqual(await evidence(), baseline);
+    assert.equal((await ticketStatements(p, input.id)).items.length, 0);
+  } finally {
+    await database().query(
+      "DROP TRIGGER sv_test_refuse ON ppo.outbox_jobs; DROP FUNCTION ppo.sv_test_refuse_evidence()",
+    );
+  }
+  await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.edit'", [
+    p.actor_id,
+  ]);
+  await assert.rejects(
+    triageTicket(p, input.id, {
+      ...base(),
+      expected_version: 2,
+      clarification_version: before.clarification_activity!.version,
+      clarification_outcome: "SYN resolved",
+      review,
+    }),
+    code("Forbidden"),
+  );
+  assert.equal((await readIntake(p, input.id)).version, 2);
+  assert.equal((await readActivity(p, before.clarification_activity!.id)).status, "Open");
+});
+
+for (const through of [109, 113, 114, 115])
+test(`SV-01 migration 112 preserves the ${through} history and legacy triage receipts without grants or seeds`, async () => {
+  await recoverSchema();
+  await database().query("DROP TABLE public.ppo_migrations");
+  // Reproduce main both before 0113 and after it shipped with reserved 0112 absent.
+  const files = migrationFiles as unknown as string[];
+  const index = files.indexOf("0112-service-request-statements.sql");
+  const [statementMigration] = files.splice(index, 1);
+  try {
+    await migrate(through);
+  } finally {
+    files.splice(index, 0, statementMigration);
+  }
+  await seed(through);
+  const p = await principal(),
+    input = ticket();
+  await createTicket(p, input);
+  const command = { ...base(), expected_version: 1, clarification_outcome: null };
+  const original = await triageTicket(p, input.id, command);
+  const snapshot = async () => ({
+    tickets: await rows("SELECT * FROM ppo.tickets ORDER BY id"),
+    receipts: await rows("SELECT * FROM ppo.operation_receipts ORDER BY id"),
+    grants: await rows("SELECT * FROM ppo.permission_grants g WHERE capability<>'conversation.agent.ask' ORDER BY to_jsonb(g)::text"),
+    seeds: await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"),
+  });
+  const before = await snapshot(),
+    ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  const grantsBefore = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
+  await migrate();
+  await seed();
+  const grantsAfter = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantIds = new Set(grantsBefore.map(g => g.id));
+  assert.deepEqual(grantsAfter.filter(g => grantIds.has(g.id)), grantsBefore);
+  assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id)), agentAskSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
+  assert.deepEqual(await snapshot(), before);
+  const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  const previousVersions = new Set(ledger.map((row) => row.version));
+  assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115] : through === 113 ? [112, 114, 115] : through === 114 ? [112, 115] : [112]);
+  assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
+  assert.equal((await ticketStatements(p, input.id)).items.length, 0);
+  const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate();
+  await seed();
+  assert.deepEqual(await snapshot(), before);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantsAfter);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"), upgraded);
 });

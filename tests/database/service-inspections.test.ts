@@ -38,6 +38,22 @@ process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
 const code = (s: string) => (e: unknown) => (e as { code: string }).code === s;
+test("FI03 explicitly binds each reading, refuses unrelated instruments and freezes attribution with submission", async()=>{
+  const f=await inspectionFixture(), id=await openInspection(f,f.tech,1), a=await saveInspection(f,id);
+  const links=a.reading_instruments;
+  assert.equal(a.row.reading_instrument_version,1);
+  assert.equal(links.length,a.row.plan.filter(d=>d.instrument_required).length);
+  const save={...base(),action:"save",attempt_id:id,expected_version:a.row.version,occurred_at:a.row.occurred_at!.toISOString(),
+    readings:a.results.map(r=>({check_key:r.check_key,state:r.entry_state,value:r.raw_value,unit:r.unit,choice:r.choice,reason:r.reason,note:r.note})),
+    instrument_ids:a.instruments.map(i=>i.instrument_id),reading_instruments:links.map(({check_key,instrument_id})=>({check_key,instrument_id}))};
+  await assert.rejects(inspectionCommand(f.tech,f.id,{...save,reading_instruments:[{check_key:"another-check",instrument_id:links[0].instrument_id}]},"capture"),code("InvalidReadingInstrument"));
+  await assert.rejects(inspectionCommand(f.tech,f.id,{...save,...base(),reading_instruments:[{check_key:links[0].check_key,instrument_id:randomUUID()}]},"capture"),code("InvalidReadingInstrument"));
+  assert.deepEqual((await inspect(f.tech,f.id)).attempts.find(x=>x.row.id===id)!.reading_instruments,links);
+  await inspectionCommand(f.tech,f.id,{...base(),action:"submit",attempt_id:id,expected_version:a.row.version},"capture");
+  for(const sql of ["DELETE FROM ppo.inspection_reading_instruments WHERE attempt_id=$1","UPDATE ppo.inspection_reading_instruments SET check_key=check_key WHERE attempt_id=$1"])
+    await assert.rejects(database().query(sql,[id]),code("55000"));
+  assert.deepEqual((await inspect(f.tech,f.id)).attempts.find(x=>x.row.id===id)!.reading_instruments,links);
+});
 test("FI03/FI04 atomic failed capture, owned correction, retained fresh retest, independent review and exact issued bytes", async () => {
   const f = await inspectionFixture(),
     id = await openInspection(f, f.tech, 1),
@@ -203,6 +219,7 @@ test("FI03/FI04 atomic failed capture, owned correction, retained fresh retest, 
       action: "save",
       attempt_id: other,
       expected_version: otherDraft.row.version,
+      reading_instruments: [],
       occurred_at: new Date().toISOString(),
       readings: otherDraft.row.plan.map((d) => ({
         check_key: d.key,
@@ -249,12 +266,19 @@ test("FI03/FI04 atomic failed capture, owned correction, retained fresh retest, 
     decision_reason:
       "Release only this synthetic pressure inspection; all other domains excluded.",
   };
+  await assert.rejects(inspectionCommand(f.co, f.id, release, "review"), code("PreparationRequired"));
+  const preparation = { ...release, ...base(), action:"prepare" };
+  await inspectionCommand(f.co, f.id, preparation, "review");
+  const prepared = (await inspect(f.co, f.id, "review")).preparations.find(o=>o.id===release.id)!;
+  assert.ok(prepared.bundle.html_sha256 && prepared.bundle.pdf_sha256);
+  assert.equal((await inspect(f.co, f.id, "review")).outputs.length, 0);
   await inspectionCommand(f.co, f.id, release, "review");
   const prior = await rows(
     "SELECT to_jsonb(o) AS row FROM ppo.service_inspection_outputs o WHERE id=$1",
     [release.id],
   );
   assert.equal(prior[0].row.manifest.remaining_work.length, 2);
+  assert.equal(prior[0].row.bundle.bundle_sha256, prepared.bundle.bundle_sha256);
   assert.equal(prior[0].row.manifest.corrections.length, 1);
   assert(
     !prior[0].row.manifest.corrections.some(
@@ -575,6 +599,7 @@ test("FI03 missing criteria and unknown applicability remain incomplete owned ob
     attempt_id: id,
     expected_version: a.row.version,
     occurred_at: new Date().toISOString(),
+    reading_instruments: [],
     readings: a.row.plan.map((d) => ({
       check_key: d.key,
       state: "NotTested",
@@ -683,6 +708,7 @@ test("FI03 overdue certificate renewal cannot repair a retained test-time snapsh
       expected_version: a.row.version,
       occurred_at: a.row.occurred_at!.toISOString(),
       instrument_ids: [expired],
+      reading_instruments: a.row.plan.filter(d=>d.instrument_required).map(d=>({check_key:d.key,instrument_id:expired})),
       readings: a.results.map((r) => ({
         check_key: r.check_key,
         state: "Recorded",

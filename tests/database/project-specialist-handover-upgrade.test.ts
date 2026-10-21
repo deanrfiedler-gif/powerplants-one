@@ -90,8 +90,8 @@ for (const through of [103, 104])
           async (t) =>
             (
               await c.query(
-                // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
-                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
+                // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
+                `SELECT to_jsonb(x)${t === "material_handovers" ? "-'specialist_package_id'-'specialist_version'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
               )
             ).rows,
         ),
@@ -120,8 +120,8 @@ for (const through of [103, 104])
         )
       ).rows,
       through === 103
-        ? [{ version: 104 }, { version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 113 }, { version: 114 }]
-        : [{ version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 113 }, { version: 114 }],
+        ? [{ version: 104 }, { version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }]
+        : [{ version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }],
     );
     assert.deepEqual(
       (

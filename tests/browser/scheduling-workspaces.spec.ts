@@ -41,7 +41,7 @@ test("native scheduling pages retain context and reflow at coordination, phone a
     for (const [path, name] of screenshots) {
       await page.setViewportSize({ width, height });
       await page.goto(path);
-      if (name !== "resource")
+      if (name !== "resource" && name !== "changes")
         await expect(
           page.getByRole("navigation", { name: "Scheduling workspace" }),
         ).toBeVisible();
@@ -49,14 +49,18 @@ test("native scheduling pages retain context and reflow at coordination, phone a
         await expect(page.locator(".pl02-review-meta")).toContainText(
           "Complete.",
         );
-      else if (name !== "planner")
+      if (name === "changes") {
+        await expect(page.getByRole("navigation", { name: "Scheduling workspace", includeHidden: true })).toBeAttached();
+        await expect(page.locator(".changes-read")).toContainText("Read");
+      }
+      else if (name !== "planner" && name !== "resource")
         await expect(
           page
             .locator(".scheduling-workspace .read-meta")
             .filter({ hasText: /Read at|Snapshot/ })
             .first(),
         ).toBeVisible({ timeout: 15000 });
-      else
+      else if (name === "planner")
         await expect(
           page.getByRole("heading", { name: "Service planner", exact: true }),
         ).toBeAttached();
@@ -170,8 +174,10 @@ test("travel handover retains exact appointment and resource without changing bo
   expect(href).toContain("resource_id=" + id("a4"));
   await link.click();
   await expect(page.getByText(/Exact appointment handover/)).toBeVisible();
-  await page.getByRole("link", { name: "Open appointment controls" }).click();
+  await page.locator(".changes-link:visible, .changes-phone-list button:visible").first().click();
+  await page.getByRole("link", { name: "Open appointment", exact:true }).click();
   await page.getByRole("link", { name: "Back to scheduling review" }).click();
+  await page.getByRole("button", { name: "Close visit review", exact:true }).click();
   await expect(page.getByText(/Exact appointment handover/)).toBeVisible();
 });
 test("change request review presents exact comparison before a reasoned decision and returns focus", async ({
@@ -211,25 +217,11 @@ test("change request review presents exact comparison before a reasoned decision
   );
   expect(response.ok(), await response.text()).toBeTruthy();
   await page.goto("/schedule/changes?day=2031-09-22&appointment_id=" + a.id);
-  const request = page
-    .locator(".change-request")
-    .filter({ hasText: requestId });
-  await expect(
-    request.getByRole("heading", { name: "Current booking" }),
-  ).toBeVisible();
-  await expect(
-    request.getByRole("heading", { name: "Requested booking" }),
-  ).toBeVisible();
-  await request
-    .getByRole("heading", { name: "Current booking", exact: true })
-    .evaluate((e) => e.scrollIntoView({ block: "start" }));
-  await page.screenshot({
-    path: info.outputPath("current-proposed-comparison.png"),
-  });
-  await request
-    .getByRole("heading", { name: "Requested booking", exact: true })
-    .evaluate((e) => e.scrollIntoView({ block: "start" }));
-  await page.screenshot({ path: info.outputPath("requested-comparison.png") });
+  await page.locator(".changes-link:visible, .changes-phone-list button:visible").first().click();
+  const request = page.getByRole("region", {name:"Change request " + requestId, exact:true});
+  await expect(request.getByRole("table",{name:"Booking comparison"})).toBeVisible();
+  await expect(request.getByRole("rowheader",{name:"When",exact:true})).toBeVisible();
+  await page.screenshot({path:info.outputPath("current-requested-comparison.png")});
   await request
     .getByLabel("Decision reason")
     .fill("SYN-PPO retain the existing customer arrangement");
@@ -238,8 +230,7 @@ test("change request review presents exact comparison before a reasoned decision
     .click();
   await expect(
     page
-      .locator(".change-request")
-      .filter({ hasText: requestId })
+      .getByRole("region", { name: "Change request " + requestId, exact: true })
       .getByText("Rejected", { exact: true }),
   ).toBeVisible();
   await expect(page.locator("#scheduling-review-heading")).toBeFocused();

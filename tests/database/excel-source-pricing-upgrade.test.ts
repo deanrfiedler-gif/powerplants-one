@@ -67,8 +67,8 @@ test("XI97 populated workbook, sources and quotation upgrade to managed Excel pr
         async (t) =>
           (
             await database().query(
-              // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
-              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
+              // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
+              `SELECT ${t === "estimate_cost_source_bindings" ? "jsonb_build_object('landed',to_jsonb(r)->'landed') || " : ""}to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
             )
           ).rows,
       ),
@@ -89,7 +89,7 @@ test("XI97 populated workbook, sources and quotation upgrade to managed Excel pr
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114],
+    [98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115],
   );
   assert.equal(
     (await database().query("SELECT * FROM ppo.excel_reimports")).rowCount,

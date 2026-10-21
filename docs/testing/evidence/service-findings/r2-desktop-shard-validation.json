@@ -1,0 +1,23 @@
+{
+  "source_before_ci_repair": "989869560768ae919631f4894c8299db93316a35",
+  "scope": "Playwright discovery and whole-workflow/gate validation only; no browser or database execution",
+  "desktop_complete": 524,
+  "desktop_shard_1": 263,
+  "desktop_shard_2": 262,
+  "desktop_union": 524,
+  "missing": 0,
+  "extra": 0,
+  "duplicate_warmup": 1,
+  "mobile_complete": 524,
+  "mobile_shard_1_of_1_identical": true,
+  "workflow_only_expected_partition_changes": true,
+  "embedded_bash_syntax": "passed",
+  "aggregate_rejects_failed_cancelled_skipped_missing": true,
+  "native_config": {
+    "workers": 1,
+    "fullyParallel": false,
+    "new_retries": 0,
+    "changed_assertions": 0
+  },
+  "review": "Independent GPT-6.1-Sol reviewer found no concrete defects in partition, isolation, warm-up, artifact or aggregate semantics."
+}

@@ -1,47 +1,51 @@
-# Facilities & growing areas · create — native reference
+# Add facility or area — working design contract
 
-Stable entry: `route:/facilities/new`. Scope: **CS-05**. Owner: Dean Fiedler.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d` (imported register entry). Native source: [PR #274](https://github.com/deanrfiedler-gif/powerplants-one/pull/274), merged to main as `ab96e2b` on 22 September 2026. Route: `/facilities/new`.
-Native implementation and adaptations are proposed for owner review; this is not a new accepted visual baseline.
+Stable entry: `route:/facilities/new`. Scope: **CS-05**. Owner: Dean Fiedler. r20 page type: **Form / guided workflow**.
 
-## Purpose and page type
+Native source baseline: PR #274, merged as `ab96e2b`; imported register source `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. ADR-0037 and CS05-D01–D05 retain authority and traceability. No parent requirement IDs, business permissions, migrations or external records are changed.
 
-Record a new Facility or growing area within a permitted Site, with an explicit structure type (or an Unknown reason) and a reason for recording.
+## Accepted reference
 
-r20 page type: **Form / guided workflow**. Opened from Add facility / area, which the register (including the register embedded in Site details) shows only to users who can create; a selected Site is passed as `?site_id=`. Save facility shows Saved to the server and Open saved facility; optional measurements remain unrecorded rather than zero.
+Accepted source: **PPO - Design**, named version **Facilities and growing areas — accepted**. Page `1415:357158`; notes `1415:358266`; index row `1423:376950` under index `630:2`. The live frames and notes were read for this build. Dean accepted D1–D7 and Q1–Q4 in the [decision](../../../decisions/facilities-figma-design.md). This implementation is requested separately by Dean; owner visual review of the running page remains **pending**.
+
+Desktop: register `1415:357195`, snapshot `1416:363644`, hierarchy `1416:365147`, Overview `1415:357445`, Equipment `1416:366300`, correction `1416:366753`, review `1416:367175`, create `1416:367649`. Tablet register `1415:357718`. Phone list `1415:357952`, Overview 390 `1415:357991`, Overview 320 `1416:369291`, review `1416:369765`. States: loading `1415:358128`, no matches `1415:358186`, failure `1415:358229`, conflict `1418:362899`, uncertain `1418:363291`, view only `1418:363685`. Grid parts `1415:358287` and `1415:358302`.
+
+[Seventeen icon-free retained captures](../../../reference/ui/customers/facilities-design-r01/README.md) remain unchanged. No reference image is missing for the listed frames. Sources/History at full size, pin review, service-link dialogs, tablet record and mobile create are not drawn. [Earlier native evidence](../../../testing/evidence/cs05-native-r01/README.md) remains provenance, not the current visual target.
 
 ## Desktop
 
-Accepted design: the [Facilities design decision](../../../decisions/facilities-figma-design.md) of 18 October 2026, with capture 08 in [design r01](../../../reference/ui/customers/facilities-design-r01/README.md) (Figma `1416:367649`). The form follows the accepted Log a request: Site and name, Structure and use, Measurements and reason, and a "Check before creating" column that lists the areas already recorded at the site (D7). Nothing new is built; the native create form below remains the built page.
+Choose a site and complete Site and name, Structure and use, then Measurements and reason. Check before creating lists permitted areas at that site, with exact-name matches highlighted. It is a prompt, not a block.
 
-Use the current native PPO shell. The shell owns header, search, global navigation and viewport height; the Customer locations secondary menu lists Facilities & growing areas. Inside `#ppo-facilities`, the `.facility-host` is the one scroller. Reuse PageHeader, RecordTabs/RecordPanel, LookupField, Field/Select, validation, the session boundary and the original-operation hook; no standalone demo shell is copied.
+More areas at this site finishes a bounded lookup. A similar-name ranking rule is not specified; the page does not claim a fuzzy duplicate decision. Save facility returns a version receipt and Open saved facility.
 
-The register uses a right-hand, read-only inspection dock on wide screens and opens full records on smaller screens; changing the filter or collapsing the view removes the dock, and the dock routes to the full edit page. Revision uses inline comparison inside the form, with exact before/after values and acknowledgements; it adds no second shell or full-height frame. Let long names and unknown values wrap. Browser proof checked 1920, 1440 and 1280 px and 200% zoom at short height for whole-page overflow; the agent's visual review covered the register and dock, detail, clearing and pin review, related equipment and service ending.
+Use the existing shell rail and breadcrumb, flush Facilities side menu and compact ruled grid; the record removes the secondary menu and uses a 380 px details column. No module container surrounds the workspace. The tablet register collapses the menu and moves Use into Search and filter. Group headings span the entire table. Tokens come from the existing shell/theme; icons use existing Font Awesome Kit mappings with repository fallback drawings. Conversations is outside this change.
 
 ## Mobile
 
-Not drawn in the accepted design: Add facility or area at tablet and phone ([design r01](../../../reference/ui/customers/facilities-design-r01/README.md)).
+Use the shared 56 px compact phone header (the later accepted shell amendment), area rows at 390 px and wrapped record cards at 390/320 px. Record actions replace the global phone navigation bar, so Open site and Correct details remain reachable. The comparison stacks Saved and Proposed values while preserving the acknowledgement. Tablet record and mobile create are responsive adaptations awaiting owner review, not separately accepted drawings.
 
-Evidence is Chrome emulation at 390 and 320 CSS px, not a physical phone. Register filters stack in one column. The register table scrolls horizontally inside its own region, so Inspect actions stay reachable without whole-page overflow. The Customer locations menu opens as a dialog; Escape closes it and returns focus. Keyboard labels, tabs, Escape/focus return, validation and deliberate dirty discard were executed; a screen reader was not. No information or required decision is hidden to make a screenshot fit.
+## Reused components and handovers
 
-## Sources, handovers and authority
+Reuse SecondaryMenuFrame, usePhoneHeader, RecordIdentity, RegisterTable/Chip/SortHeader, Button/ButtonLink, ShellIcon/ProductIcon and the mapped My Work refresh Icon, PageHeader, RecordTabs/RecordPanel, Field/SelectField, LookupField, ValidationFields, ReadState/ErrorNotice, useCrmResource/useCrmCommand, SourceField, SitePicker, ParentPicker and CopyId. The page-local FacilityRecordLayout binds these existing controls; see [component contract](../components/facility-workspace.md).
 
-The issued r03 composition is adapted to canonical server data (CS05-D01 to D05 in the handover): a labelled canonical UUID replaces speculative FAC numbers; reported-note sources replace unsupported provider documents; unsupported work and document relations are labelled as unsupported. A legacy parent means Grouping; a new parent records Grouping or Physically within, and nothing is inherited. Measurements are independent optional values; no area total, crop inference or pricing is calculated. Authority is current Site/Company access; per-Facility ACLs do not exist.
+Incoming: Sites CS-04 related menu, site-filtered register, equipment installation links and More. Outgoing: exact site, equipment and facility records, retained source/history, and external maps. Work orders, visits, access and readiness remain on the site (Q4); Estimating keeps its own snapshot. MYOB/SharePoint/CAD authority is unchanged.
 
-Recovery is online memory only. Reloading or closing the tab discards an unsaved proposal or uncertain original; there is no browser draft storage or offline queue. Estimating keeps its own exact Facility ID/name/version snapshot, and new Facility metadata never reprices an estimate. Engineering free-text served areas are not imported. Protected Asset site movement remains disabled.
+## Data, states and recovery
 
-Incoming: exact permitted Site/Facility/Asset UUID and current version. Outgoing: the same canonical identity and immutable audit, never permission to work, pricing adoption or technical approval.
+Register reads include parent, basis, installed equipment count and last actor/change; all counts use existing site/workspace visibility. Side-menu counts represent the complete permitted set; filter counts and keyset pages remain separate. Details to complete includes missing/Unknown structure or use, or an unrecorded footprint (Q3). Zero is never substituted. Equipment separates physical installation, current explicit service and ended service; no parent inheritance or totals are inferred.
 
-Reference: docs/reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html
+Loading and failed reads hide old rows/counts. No matches preserves active filters. Pagination discloses loaded coverage. View-only records remove correction. Labelled validation, comparison focus, acknowledgement and dialog Escape/return focus remain available. A conflict retains explicit edits while adopting unrelated newer values; a new comparison requires a new acknowledgement. Uncertain results lock the original and offer History plus original-operation recovery. No durable offline draft or queued mutation is added; follow the [offline contract](../systems/offline.md). Reloading loses the in-tab draft/recovery context.
 
-## Visual references
+## Unspecified behaviour and deviations for review
 
-- [PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html](../../../reference/ui/customers/PPO-Customers-Sites-and-Growing-Areas-Workspace-r03.html) — issued standalone reference, retained unchanged; the native page adapts it (above).
+- The accepted create card highlights a closest name, but defines no matching/ranking rule. This build highlights exact names and lists the other permitted site areas; fuzzy ranking remains an open question for Dean.
+- Record position and previous/next need a retained query/order contract. No position is fabricated; direct record opens show their path and version. Decide the navigation context before adding these controls.
+- Checkboxes select loaded register rows only. No bulk action or configurable columns are invented; the row menu opens the snapshot.
+- Sources, History, pin review and service-link commands retain earlier native controls. Additional correction fields are disclosed below Measurements and Growing context. They are not new accepted layouts.
+- The synthetic capture fixture is a UI-only composition, not a new database seed. Real register counts/names follow the existing synthetic database; device and source equality remain separate from authorisation.
 
-No capture of this page was retained. The browser proof exercised create, save and reopen (CS05-T01) but kept no image of the form. Record a desktop and phone capture when this page is next reviewed. Related captures of the saved result are listed on `route:/facilities/[id]`.
+The running form also retains native validation, source disclosures and operation controls. This makes correction taller than the drawn frame; review currently has three columns and explicit parent IDs, and conflict recovery retains a separate validation summary. A create route handed a site_id keeps that site fixed instead of showing an editable Site control. These visible deviations are listed for review in the build evidence and are not accepted exceptions.
 
-## Verification and acceptance
+## Evidence and review
 
-Accepted Figma design: [Facilities design r01 captures](../../../reference/ui/customers/facilities-design-r01/README.md) (seventeen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/facilities-figma-design.md). The create form at tablet and phone is not drawn.
-
-[ADR-0037](../../../decisions/ADR-0037-cs05-facilities-native.md) records the decision. The [CS-05 handover](../../../delivery/facilities-growing-areas-handover.md) and [candidate evidence](../../../testing/evidence/cs05-native-r01/README.md) record executed behaviour, captures, source hashes and limits; the [80-case matrix](../../../testing/evidence/cs05-native-r01/acceptance-matrix.md) marks partial cases. The page guide `guide.page.facilities.new` is still the imported draft and has not been rewritten for the native workflow. Owner visual and business acceptance, screen-reader and physical-device checks, external map handoff and the browser search timing budget remain outstanding. Hosted deployment is not verified here.
+[Build evidence, commands, results and visual differences](../../../testing/evidence/cs05-accepted-build/README.md). Automated source/functional checks are not business acceptance. Owner visual review, physical-device/accessibility review and hosted deployment remain pending; no fingerprint, reviewer or acceptance date has been manufactured.

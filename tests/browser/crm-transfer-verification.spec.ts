@@ -1,0 +1,82 @@
+import { test, expect } from "@playwright/test";
+import { randomUUID } from "node:crypto";
+import { crmDiscovery } from "../helpers/crm";
+import { browserFixtureCall } from "../helpers/browser-fixture-call";
+
+test.describe.configure({ timeout: 120000 });
+test("HV-15 loading, no candidates, unavailable, validation and Escape return have no business effects", async ({ page }, info) => {
+  const origin = new URL(info.project.use.baseURL ?? "http://127.0.0.1:3000").origin;
+  const call = (path: string, body?: unknown) => browserFixtureCall(page, path, body, origin);
+  await call("local-session", { profile: "coordinator" });
+  const input = crmDiscovery(); await call("crm/opportunities", input);
+  await page.goto(`/sales/opportunities/${input.id}`);
+  const trigger = page.getByRole("button", { name: "Transfer deal owner", exact: true });
+  const pattern = `**/api/v1/crm/opportunities/${input.id}/handover-options?**`;
+  let release!: () => void, held = false;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  await page.route(pattern, async route => { const response = await route.fetch(); held = true; await pending; await route.fulfill({ response }); }, { times: 1 });
+  await trigger.focus(); await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog");
+  await expect.poll(() => held).toBe(true);
+  await expect(dialog.getByText("Loading eligible owners…", { exact: true })).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Confirm owner transfer", exact: true })).toBeDisabled();
+  await page.screenshot({ path: info.outputPath("transfer-loading.png") }); release();
+  await expect(dialog.getByLabel("Find eligible owner")).toBeEnabled();
+  await dialog.getByLabel("Find eligible owner").fill(`SYN no candidate ${randomUUID()}`);
+  await expect(dialog.getByText("No eligible receiving owners match this search.")).toBeVisible();
+  await page.screenshot({ path: info.outputPath("transfer-empty.png") });
+  await dialog.getByLabel("Find eligible owner").fill("");
+  await expect(dialog.getByLabel("New deal owner").locator("option", { hasText: "SYN Sales receiver" })).toHaveCount(1);
+  // Isolate the missing-owner validation: the shared command validates its
+  // required reason before owner identity, and this form uses server validation.
+  await dialog.getByLabel("Transfer reason").fill("SYN compare the missing receiving owner without transferring");
+  await dialog.getByRole("button", { name: "Confirm owner transfer", exact: true }).click();
+  const validation = dialog.getByRole("alert").filter({ has: page.locator('a[href="#new_owner_id"]') });
+  await expect(validation).toBeFocused();
+  await validation.locator('a[href="#new_owner_id"]').click();
+  await expect(dialog.getByLabel("New deal owner")).toBeFocused();
+  expect(await dialog.getByLabel("New deal owner").evaluate((element: HTMLSelectElement) => element.validity.valueMissing)).toBe(true);
+  await page.route(pattern, route => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ code: "Unavailable", message: "SYN verification: temporary options outage" }) }), { times: 1 });
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(dialog.getByText("SYN verification: temporary options outage", { exact: true })).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Confirm owner transfer", exact: true })).toBeDisabled();
+  await page.screenshot({ path: info.outputPath("transfer-unavailable.png") });
+  page.once("dialog", dialog => dialog.accept());
+  await page.keyboard.press("Escape"); await expect(dialog).not.toBeVisible(); await expect(trigger).toBeFocused();
+  const saved = (await call(`crm/opportunities/${input.id}`)).items[0];
+  expect(saved.version).toBe(1); expect(saved.owner_transfers).toHaveLength(0);
+});
+
+test("HV-16 actor change while an accepted POST response is held clears the old proposal and late result", async ({ page }, info) => {
+  const origin = new URL(info.project.use.baseURL ?? "http://127.0.0.1:3000").origin;
+  const call = (path: string, body?: unknown) => browserFixtureCall(page, path, body, origin);
+  await call("local-session", { profile: "coordinator" });
+  const input = { ...crmDiscovery(), title: `SYN pending actor boundary ${randomUUID()}` };
+  await call("crm/opportunities", input); await page.goto(`/sales/opportunities/${input.id}`);
+  await page.getByRole("button", { name: "Transfer deal owner", exact: true }).click();
+  const dialog = page.getByRole("dialog"), reason = "SYN private proposal must not survive identity change";
+  await dialog.getByLabel("New deal owner").selectOption("30000000-0000-4000-8000-000000000015");
+  await dialog.getByLabel("Transfer reason").fill(reason);
+  let release!: () => void, held = false, operation = "";
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  await page.route(`**/api/v1/crm/opportunities/${input.id}/transfer-owner`, async route => {
+    operation = route.request().postDataJSON().operation_id;
+    const response = await route.fetch(); expect(response.status()).toBe(200); held = true;
+    await pending; await route.fulfill({ response });
+  }, { times: 1 });
+  await dialog.getByRole("button", { name: "Confirm owner transfer", exact: true }).click();
+  await expect.poll(() => held).toBe(true);
+  await expect(dialog.getByLabel("Transfer reason")).toBeDisabled();
+  await call("local-session", { profile: "second-company" });
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(dialog.getByLabel("Transfer reason")).toHaveCount(0);
+  release();
+  await expect(page.locator("body")).not.toContainText(reason);
+  await expect(page.locator("body")).not.toContainText(input.title);
+  const denied = await page.request.get(`${origin}/api/v1/operations/${operation}`); expect(denied.status()).toBe(404);
+  await page.screenshot({ path: info.outputPath("transfer-pending-actor-change.png") });
+  await call("local-session", { profile: "coordinator" });
+  const saved = (await call(`crm/opportunities/${input.id}`)).items[0];
+  expect(saved.version).toBe(2); expect(saved.owner_transfers).toHaveLength(1);
+  expect((await call(`operations/${operation}`)).operation_id).toBe(operation);
+});

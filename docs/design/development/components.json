@@ -15,6 +15,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -27,7 +32,11 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -36,7 +45,11 @@
       },
       "specification": "docs/design/development/components/foundations.md",
       "used_on": [
-        "system:theme"
+        "system:theme",
+        "route:/sites",
+        "route:/sites/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Use semantic tokens and preserve the meaning of each colour.",
       "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
@@ -48,6 +61,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Token adoption across legacy module scopes is incomplete.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "foundations-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -159,6 +180,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -208,7 +234,11 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -372,7 +402,18 @@
         "scope:CS-08",
         "route:/surveys",
         "route:/surveys/[id]",
-        "route:/service/technicians"
+        "route:/service/technicians",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -586,6 +627,30 @@
           "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -758,6 +823,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -802,7 +872,11 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -833,7 +907,23 @@
         "route:/surveys/[id]",
         "scope:PL-02",
         "route:/service/technicians",
-        "route:/service/technicians/[id]"
+        "route:/service/technicians/[id]",
+        "scope:SV-01",
+        "route:/service/tickets",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new",
+        "route:/sites",
+        "route:/sites/[id]",
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -941,6 +1031,30 @@
           "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
           "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
           "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1837,7 +1951,15 @@
         "route:/admin/access/roles",
         "route:/sales/opportunities",
         "route:/estimating/discovery/[id]/costing",
-        "scope:CS-08"
+        "scope:CS-08",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2019,6 +2141,22 @@
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2095,7 +2233,12 @@
       "used_on": [
         "route:/projects/new",
         "route:/sales/leads",
-        "route:/sales/leads/[id]"
+        "route:/sales/leads/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Typed text is not a selected record. Changing search clears selection; choose an explicit result.",
       "mobile": "The result list stays within the available width; long names wrap.",
@@ -2123,6 +2266,14 @@
           "expected": "Preserve explicit record selection, creation return and original recovery across Lead and shared capture forms.",
           "actual": "LC-12 hosts reuse existing controls; no exact new state mockup is available.",
           "action": "Review desktop/mobile creation return, typed-selection distinction, stale comparison and uncertain-original recovery.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "lookup-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2320,7 +2471,12 @@
         "route:/sales/opportunities/new",
         "route:/work/[id]",
         "route:/work/new",
-        "scope:CS-08"
+        "scope:CS-08",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2446,6 +2602,14 @@
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2505,6 +2669,16 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "sv-triage-edit",
+          "label": "Service triage editing",
+          "description": "Disabled RecordTabs retain their visible labels while the triage panel owns an unsaved edit. Synthetic catalogue fixture; owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -2531,7 +2705,11 @@
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
         "docs/testing/evidence/discovery-register-native/README.md",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2583,7 +2761,13 @@
         "route:/estimating/discovery",
         "route:/service/reports/[id]",
         "scope:CS-08",
-        "route:/surveys"
+        "route:/surveys",
+        "scope:SV-02",
+        "route:/service/tickets/[id]",
+        "route:/sites",
+        "route:/service/incidents/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2669,6 +2853,22 @@
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2727,6 +2927,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -2758,7 +2963,11 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2786,10 +2995,21 @@
         "route:/estimating/discovery",
         "scope:PL-02",
         "route:/service/technicians",
-        "route:/service/technicians/[id]"
+        "route:/service/technicians/[id]",
+        "route:/sites",
+        "route:/sites/[id]",
+        "scope:FI-06",
+        "route:/service/incidents",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]",
+        "route:/service/appointments/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
-      "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
+      "mobile": "Popover stays within viewport bounds and closes through selection or dismissal. SV-04 retains the shared global More opener beside its record-action dock after the compact header becomes Back.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
       "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
@@ -2856,6 +3076,14 @@
           "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2890,6 +3118,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -2908,7 +3141,11 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2931,7 +3168,19 @@
         "route:/service/reports",
         "route:/people",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "route:/sites",
+        "route:/sites/[id]",
+        "scope:FI-06",
+        "route:/service/incidents",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -2959,6 +3208,14 @@
           "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
           "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2995,6 +3252,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3009,7 +3271,9 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3034,7 +3298,9 @@
         "scope:CS-01",
         "route:/customers",
         "route:/customers/[id]",
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -3062,6 +3328,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "drawer-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3178,6 +3452,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment and paginated Site-owned follow-ups with exact later-page handovers. P11 observes Overview loading, failure, recovery and denial independently of History pagination. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3187,6 +3466,9 @@
         }
       ],
       "dependencies": [
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/policy-resolution.client.tsx",
+        "src/components/context-screens.tsx",
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
@@ -3212,7 +3494,11 @@
         "docs/design/projects-register/figma-measurements.json",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3337,7 +3623,13 @@
         "scope:CS-01",
         "route:/customers/new",
         "route:/estimating/discovery/[id]/costing",
-        "scope:CS-08"
+        "scope:CS-08",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]",
+        "route:/service/tickets/new",
+        "route:/sites"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3517,6 +3809,22 @@
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3836,7 +4144,9 @@
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
-        "scope:CS-08"
+        "scope:CS-08",
+        "scope:SV-02",
+        "route:/service/tickets/[id]"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -3880,6 +4190,14 @@
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "mobile-form-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4086,6 +4404,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -4210,7 +4533,11 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4269,7 +4596,16 @@
         "route:/surveys/[id]",
         "scope:PL-02",
         "route:/service/technicians",
-        "route:/service/technicians/[id]"
+        "route:/service/technicians/[id]",
+        "scope:SV-01",
+        "scope:SV-02",
+        "route:/service/tickets",
+        "route:/service/tickets/[id]",
+        "route:/service/tickets/new",
+        "route:/sites",
+        "route:/sites/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4561,6 +4897,22 @@
           "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
           "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
           "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-sv01-sv02-review",
+          "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
+          "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
+          "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -5444,8 +5796,7 @@
       },
       "specification": "docs/design/development/components/job-pack-entry.md",
       "used_on": [
-        "route:/service/technicians",
-        "route:/service/appointments/[id]"
+        "route:/service/technicians"
       ],
       "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
       "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
@@ -5762,7 +6113,7 @@
       "title": "Service inspection journey",
       "category": "Forms",
       "module": "FI",
-      "purpose": "Exact appointment inspection drafts, independent review and retained retests.",
+      "purpose": "Accepted Inspections register and record layouts over the existing Service attempt, review and retest authority.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -5806,6 +6157,16 @@
           "id": "recovering",
           "label": "Recovering original",
           "description": "Attempt selection is disabled while the existing original-command guard is busy or unresolved; a recovered original restores the permitted controls."
+        },
+        {
+          "id": "not-attending",
+          "label": "Cannot record yet",
+          "description": "Server capture gate explains missing attendance or readiness."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared outcome",
+          "description": "Exact retained HTML/PDF and hashes before separate issue."
         }
       ],
       "implementation": [
@@ -5821,12 +6182,16 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md",
+        "docs/testing/evidence/service-inspections/accepted-design.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "anchor": "inspection-form",
-        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+        "status": "Historical Quality source; accepted Inspections frames and icon-free captures are linked from the page contracts."
       },
       "specification": "docs/design/development/components/service-inspections.md",
       "used_on": [
@@ -5835,16 +6200,16 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections"
       ],
-      "desktop": "Padded shell, wrapped cards and two-column fields at 1440/1024; one shell content scroll owner.",
-      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "desktop": "Full-bleed register at 1440 and 1024; record summary, ruled readings, readiness and tabs; shared shell and menu.",
+      "mobile": "Compact shared phone header with a retained screen-reader list heading, scrolling 390/320 capture, wrapping choices, submit sheet and original recovery.",
       "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns. Attempt selection visibly follows the existing recovery guard; it cannot accept a click that the guard silently ignores.",
-      "limitations": "Real permitted synthetic appointment/database/issued pack required. No isolated renderer or offline queue. Owner/device/screen-reader acceptance pending.",
+      "limitations": "The real workflow requires a permitted synthetic appointment/database/issued pack. Separate presentation fixtures exercise accepted frame states without granting authority. No offline queue. Owner/device/screen-reader acceptance pending.",
       "gaps": [
         {
           "id": "service-inspection-native-adaptation",
-          "expected": "Accepted native desktop/phone compositions.",
-          "actual": "Proposed Quality r01 adapted to existing shell; accepted images missing.",
-          "action": "Review compiled captures and states independently before adopting a baseline.",
+          "expected": "Implementation aligned with Inspections — accepted at all drawn sizes and states.",
+          "actual": "Accepted source and viewport comparisons exist; retained authority controls and shell differences are recorded in the verification record. Owner visual review is pending.",
+          "action": "Owner to review the recorded differences and current implementation without changing the reference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },
@@ -5959,6 +6324,14 @@
         {
           "path": "src/incidents/activity-handover.tsx",
           "symbol": "IncidentActivityHandover"
+        },
+        {
+          "path": "src/incidents/register.tsx",
+          "symbol": "IncidentRegister"
+        },
+        {
+          "path": "src/incidents/visit-menu.tsx",
+          "symbol": "IncidentVisitMenu"
         }
       ],
       "dependencies": [
@@ -5971,12 +6344,19 @@
         "docs/testing/evidence/field-incidents/README.md",
         "src/incidents/activity-handover.tsx",
         "src/activities/activities.ts",
-        "src/components/activity-screens.tsx"
+        "src/components/activity-screens.tsx",
+        "src/incidents/register.tsx",
+        "src/incidents/parts.tsx",
+        "src/incidents/presentation.ts",
+        "src/incidents/visit-menu.tsx",
+        "src/incidents/http.ts",
+        "docs/decisions/incidents-figma-build.md",
+        "docs/testing/evidence/fi06-figma-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "anchor": "content",
-        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+        "status": "Historical proposed HTML; current accepted Figma source and retained images are identified by the FI-06 page contracts."
       },
       "specification": "docs/design/development/components/field-incidents.md",
       "used_on": [
@@ -5984,27 +6364,39 @@
         "route:/service/incidents/[id]",
         "route:/service/incidents/new",
         "route:/service/incidents",
-        "route:/work/[id]"
+        "route:/work/[id]",
+        "route:/my-jobs",
+        "route:/my-jobs/[id]",
+        "route:/service/appointments/[id]"
       ],
-      "desktop": "Padded shell, wrapped cards and responsive field columns at 1440/1024; one shell content scroll owner.",
-      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "desktop": "Full-bleed register with compact toolbar, counted views and 40 px rows; shared record with ruled context and mounted tabs. Secondary menu collapses below 1200 px.",
+      "mobile": "Shared compact phone header; 390/320 px form, two-by-two classification at 320, disabled offline saves and confirmation sheet.",
       "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns.",
-      "limitations": "Real synthetic appointment and persisted incidents required; host fixtures in tests/browser/field-incidents.spec.ts and tests/database/field-incidents.test.ts. No isolated renderer or offline incident queue.",
+      "limitations": "Presentation fixtures and persisted command evidence are separate. One acceptance file per action; unissued content summary, with exact HTML/PDF generated on close. No offline incident queue. Owner/device/visual review pending.",
       "gaps": [
         {
           "id": "fi06-native-adaptation",
-          "expected": "Accepted native desktop/phone compositions.",
-          "actual": "Native FI-06 host uses proposed Quality reference; accepted images missing.",
-          "action": "Review compiled captures and states independently before adopting a baseline.",
+          "expected": "Owner-reviewed implementation of the accepted FI-06 frames.",
+          "actual": "Live accepted frames implemented with documented existing-command adaptations; owner review pending.",
+          "action": "Compare implementation evidence and review source-reference, one-file acceptance, unissued summary and missing-view adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
       "figma": {
-        "status": "None",
-        "location": "Components",
-        "components": [],
-        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+        "status": "Partial",
+        "location": "Incidents and corrective actions > page parts 1355:2926",
+        "components": [
+          {
+            "node": "1348:4353",
+            "name": "Incident grid header"
+          },
+          {
+            "node": "1348:4367",
+            "name": "Incident grid row"
+          }
+        ],
+        "note": "Page-specific header/row composed from shared grid cells. Accepted page 1348:2972, notes 1355:2930; no new global main component asserted."
       },
       "review": null
     },
@@ -7844,6 +8236,11 @@
           "id": "cs08-survey",
           "label": "Site survey host",
           "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
+        },
+        {
+          "id": "appointment-dispatch",
+          "label": "Appointment dispatch",
+          "description": "SV-04 real host fixture: held, current ready, supply rehold, proposed, cancelled, empty, denied and failed refresh at 1440/1024/390/320. P4/P5 remain unavailable."
         }
       ],
       "implementation": [
@@ -7868,7 +8265,13 @@
         "docs/design/development/organisations-native-fixtures.json",
         "src/components/access-readiness-workspace.tsx",
         "src/app/styles/access-readiness.css",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "docs/testing/evidence/appointment-detail-native/README.md",
+        "src/app/styles/my-work.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -7883,12 +8286,16 @@
         "route:/sites/[id]/readiness",
         "scope:CS-08",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:SV-04",
+        "route:/service/appointments/[id]",
+        "route:/service/incidents/[id]",
+        "route:/service/incidents/new"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern. SV-04 uses no tabs, moves facts below the tablet workspace and puts visit facts in the phone flow. No shared component API changes.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
@@ -7911,6 +8318,14 @@
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-sv04-review",
+          "expected": "Owner review of accepted Appointment detail frames and the scoped native host.",
+          "actual": "Implementation and synthetic verification are separate from design acceptance; P4/P5 and undrawn controls remain gated. Combined host retains the FI-06 incident handover on desktop/phone and PL-04 action-query context; integration remains pending owner visual review.",
+          "action": "Review the SV-04 evidence pairing and listed source/data differences before adopting a UI baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -7937,6 +8352,114 @@
           }
         ],
         "note": "Catalogue mappings reused without live Figma calls. Header composition comes from accepted CS-01 frame 1443:2745; no new main component or named version is asserted."
+      },
+      "review": null
+    },
+    {
+      "id": "facility-workspace",
+      "title": "Facilities and growing areas workspace",
+      "category": "Forms",
+      "module": "CS",
+      "purpose": "Compose the existing register, record and original-operation controls for CS-05.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "register",
+          "label": "Register and hierarchy",
+          "description": "Scoped counts, parents and loaded-page selection."
+        },
+        {
+          "id": "snapshot",
+          "label": "Read-only snapshot",
+          "description": "Native modal, close and focus return, exact record/site handovers."
+        },
+        {
+          "id": "record",
+          "label": "Overview and Equipment",
+          "description": "Independent measurements; current and ended service groups; Sources controls remain reachable above the phone footer."
+        },
+        {
+          "id": "review",
+          "label": "Saved and proposed",
+          "description": "Changed/cleared values, required acknowledgement and parent context."
+        },
+        {
+          "id": "recovery",
+          "label": "Changed or unconfirmed",
+          "description": "Retained edits with newer saved values; original receipt/retry."
+        },
+        {
+          "id": "read-states",
+          "label": "Loading, empty, failed and view only",
+          "description": "No stale rows/counts; no edit actions when read only."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/facility-register.tsx",
+          "symbol": "FacilityRegister"
+        },
+        {
+          "path": "src/components/facility-record-layout.tsx",
+          "symbol": "FacilityRecordLayout"
+        },
+        {
+          "path": "src/components/facility-form.tsx",
+          "symbol": "FacilityFormEntry"
+        }
+      ],
+      "dependencies": [
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css",
+        "src/components/facility-detail.tsx",
+        "src/shared/facilities/reads.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/facilities-design-r01/README.md",
+        "anchor": "",
+        "status": "Owner-accepted design; native owner visual review pending"
+      },
+      "specification": "docs/design/development/components/facility-workspace.md",
+      "used_on": [
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
+      ],
+      "desktop": "Compact ruled register; read-only snapshot; details column and tabbed record; in-record comparison.",
+      "mobile": "Compact shared header, area rows, 390/320 cards and stacked saved/proposed comparison. Natural-height record scrolling keeps final controls clear of the fixed footer.",
+      "keyboard": "Native labelled controls, RecordTabs, focus on comparison, Escape/return focus on snapshot.",
+      "limitations": "UI fixture is synthetic. No new capability, migration or offline queue. Undrawn controls retain native implementations.",
+      "gaps": [
+        {
+          "id": "facility-workspace-visual",
+          "expected": "Accepted CS-05 compositions and owner-reviewed running implementation.",
+          "actual": "Live-frame implementation with adaptations and remaining unspecified behaviour recorded in page contracts.",
+          "action": "Review the build evidence; decide closest-name ranking and retained register navigation.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Facilities and growing areas · CS-05 › Page components (proposed)",
+        "components": [
+          {
+            "node": "1415:358287",
+            "name": "Facility grid header"
+          },
+          {
+            "node": "1415:358302",
+            "name": "Facility grid row"
+          }
+        ],
+        "note": "Page-local grid parts. Record and form layouts reuse accepted shared components; named version Facilities and growing areas — accepted."
       },
       "review": null
     }

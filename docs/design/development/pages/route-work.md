@@ -18,6 +18,8 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Integration repair: the shared `.mw-foot` selector names the My Work and Changes footers through `:is(...)`; it must not apply footer auto margins or padding to the workspace root. The existing My Work browser journey verifies real content scrolling at a short desktop height and retained scroll/filter state when the secondary menu collapses. This repair retains the existing design and review status.
+
 Accepted design (12 October 2026): the [My Work page decision](../../../decisions/my-work-page-design.md), with capture 01 in [My Work page design r01](../../../reference/ui/my-work/my-work-page-design-r01/README.md). The first application increment is authorised on 13 October and described below; other My Work screens remain a separate implementation increment.
 
 - **Layout at 1440 × 900:** the department rail with My Work selected; the breadcrumb "My Work" (shell top bar amendment, 16 October 2026); the flush secondary menu with the six views and their counts, then Pinned views. Toolbar: View: Today's focus, owner, Filters, "updated hh:mm AEST", refresh, + Activity and "…" (Refresh now, Save or manage views…, Customise overview, Open calendar, Full activity form). The greeting and the department chip are removed.

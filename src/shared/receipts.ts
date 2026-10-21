@@ -79,6 +79,7 @@ import type { OperationReceipt } from "../platform/operations";
 import { hasPermission, type Capability } from "../platform/permissions";
 import { visibleTicket } from "../service/tickets";
 import { visibleActivity } from "../activities/activities";
+import { nextActionCommand, nextActionReceiptAuthority } from "../service/findings/next-action";
 import { visible } from "./reads";
 import { uuid } from "./validation";
 export async function readOperation(
@@ -602,6 +603,12 @@ export async function readOperation(
       )
         throw unavailable();
     }
+  } else if (r.object_type === "Activity" && r.command === nextActionCommand) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[p.workspace_id]);
+      await nextActionReceiptAuthority(c,p,r.record_id,operation_id);
+      return r.result as OperationReceipt;
+    });
   } else if (r.object_type === "Activity") {
     const a = await visibleActivity(client, p, r.record_id);
     if (

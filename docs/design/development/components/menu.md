@@ -80,3 +80,20 @@ The `/estimating/discovery` host reuses this component under the [native registe
 ## PL-02 Field team consumer
 
 `scope:PL-02`, `/service/technicians` and `/service/technicians/[id]` reuse this control. The shared implementation is unchanged. Host states and deterministic synthetic fixture: `tests/browser/field-team.spec.ts`, `tests/helpers/field-team-fixture.ts`. The accepted Field team variant uses a 40 px grid, phone rows and read-only panels; column settings is undefined and disabled. Owner alignment remains pending; see [build evidence](../../../testing/evidence/field-team-build/README.md). No review fingerprint is recorded.
+
+## Sites CS-04 consumer
+
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
+
+## FI-06 consumer
+
+The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
+
+
+## PL-04 consumer
+
+The integrated stylesheet keeps shared footer styling on `.mw-foot` in both workspace scopes. A root selector would prevent the My Work content scroller from shrinking with the viewport; `tests/browser/my-work.spec.ts` retains its original short-height scrolling and menu-collapse preservation proof. No menu behaviour or review acceptance changes.
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
+
+SV-04 retains the existing global More control beside its phone record-action dock. It must remain reachable after the header becomes Back; Account and module navigation cannot depend on clicking a temporary loading header. Exact host fixture: tests/browser/appointment-detail.spec.ts at 390/320, including pointer opening and Escape focus return. Owner visual review of this host adaptation remains pending.

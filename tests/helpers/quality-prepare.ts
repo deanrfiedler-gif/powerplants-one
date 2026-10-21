@@ -10,6 +10,7 @@ import { call, capture, identity, saveOriginal } from "./quality-browser";
 
 import {
   keyActivate,
+  keyFocus,
   keyType,
   keySelect,
   keyAdvanceDays,
@@ -193,41 +194,78 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       exact: true,
     }),
   ).toBeVisible();
-  // Site notes also arrive after navigation. Wait for this exact scoped read,
+  // The current Site overview arrives after navigation. Wait for this scoped read,
   // then keep the normal rendering assertion and verify the returned identity.
   const site = await observedResponse(page, "initial-site-read",
-    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}` &&
+    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}/overview` &&
       response.request().method() === "GET",
     () => page.goto(`/sites/${id("70")}`),
     {
-      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}` && request.method() === "GET",
+      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}/overview` && request.method() === "GET",
       timeout: 60000,
     },
   );
   expect(site.status(), await site.text()).toBe(200);
   expect(site.headers()["cache-control"]).toBe("private, no-store");
-  expect((await site.json()).items[0].id).toBe(id("70"));
-  await expect(
-    page.getByText(
-      "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
-      { exact: true },
-    ),
-  ).toBeVisible();
+  expect((await site.json()).site.id).toBe(id("70"));
+  const history = await observedResponse(page, "initial-site-history-read",
+    response => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}/history` && response.request().method() === "GET",
+    async () => {
+      const tabs = page.getByRole("tablist", { name: "Site sections", exact: true });
+      await keyFocus(page, tabs.getByRole("tab", { selected: true }));
+      await page.keyboard.press("End");
+      await expect(tabs.getByRole("tab", { name: "History", exact: true })).toBeFocused();
+    },
+  );
+  expect(history.status(), await history.text()).toBe(200);
+  expect(history.headers()["cache-control"]).toBe("private, no-store");
+  const originalNote = page.getByText(
+    "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
+    { exact: true },
+  );
+  for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
+    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+    if (await originalNote.isVisible()) break;
+    const next = page.getByRole("button", { name: "Next", exact: true });
+    await expect(next).toBeEnabled();
+    const result = page.waitForResponse(r =>
+      new URL(r.url()).pathname === `/api/v1/sites/${id("70")}/history` && r.request().method() === "GET");
+    await keyActivate(page, next);
+    expect((await result).ok()).toBe(true);
+  }
+  await expect(originalNote).toBeVisible();
+  await capture(page, info, "journey-existing-site-history");
+  const activities = await observedResponse(page, "initial-site-owned-follow-up-read",
+    response => {
+      const url = new URL(response.url());
+      return url.pathname === "/api/v1/activities" && response.request().method() === "GET" &&
+        url.searchParams.get("object_type") === "Site" && url.searchParams.get("object_id") === id("70");
+    },
+    async () => {
+      const tabs = page.getByRole("tablist", { name: "Site sections", exact: true });
+      await keyFocus(page, tabs.getByRole("tab", { name: "History", exact: true }));
+      await page.keyboard.press("ArrowLeft");
+      await expect(tabs.getByRole("tab", { name: "Work and visits", exact: true })).toBeFocused();
+    },
+  );
+  expect(activities.status(), await activities.text()).toBe(200);
+  expect(activities.headers()["cache-control"]).toBe("private, no-store");
   // Earlier retained suites add real linked follow-ups. Traverse the current
   // scoped pages without assuming this original must remain on page one.
-  const oem = page.getByRole("link", {
+  const owned = page.locator(".detail-section").filter({ has: page.getByRole("heading", { name: "Owned follow-up", exact: true }) });
+  const oem = owned.getByRole("link", {
     name: "SYN OEM query: intermittent sensor alarm remains unresolved",
     exact: true,
   });
   for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     if (await oem.isVisible()) break;
-    const next = page.getByRole("button", { name: "Next linked activities", exact: true });
+    const next = owned.getByRole("button", { name: "Next linked activities", exact: true });
     await expect(next).toBeVisible();
     const result = page.waitForResponse((r) =>
       new URL(r.url()).pathname === "/api/v1/activities" &&
       r.request().method() === "GET");
-    await next.press("Enter");
+    await keyActivate(page, next);
     expect((await result).ok()).toBe(true);
   }
   await expect(oem).toBeVisible();
@@ -248,6 +286,9 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   ).toBeVisible();
   await capture(page, info, "journey-original-attributed-failed-fix");
   await page.goto("/service/tickets/new");
+  const companyContext = page.locator(".sv-company-context");
+  if ((await companyContext.getAttribute("open")) === null)
+    await keyActivate(page, companyContext.locator("summary"));
   await keySelect(
     page,
     page.getByLabel("Company visibility context", { exact: true }),
@@ -255,37 +296,32 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   );
   await keyType(
     page,
-    page.getByLabel("Request summary", { exact: true }),
+    page.getByLabel("Summary", { exact: true }),
     summary,
   );
   await keySelect(
     page,
-    page.getByLabel("Known requester", { exact: true }),
+    page.getByLabel("Caller", { exact: true }),
     id("60"),
   );
   await keySelect(
     page,
-    page.getByLabel("Known site", { exact: true }),
+    page.getByLabel("Site", { exact: true }),
     id("70"),
   );
   await keyType(
     page,
-    page.getByLabel("Requester description / clarification"),
-    "SYN fictional caller reports repeated external display alarm after an unsuccessful earlier check.",
-  );
-  await keyType(
-    page,
-    page.getByLabel("Reported symptoms / explicit symptom uncertainty"),
+    page.getByLabel("What the customer reported", { exact: true }),
     "SYN intermittent external display alarm; root cause and coverage remain uncertain.",
   );
   await keyType(
     page,
-    page.getByLabel("Operational impact", { exact: true }),
+    page.getByLabel("Impact and backup", { exact: true }),
     "SYN monitoring interrupted; no invented production loss.",
   );
   await keyType(
     page,
-    page.getByLabel("Priority rationale", { exact: true }),
+    page.getByLabel("Priority reason", { exact: true }),
     "SYN assessment needed; urgency does not authorise physical work.",
   );
   await keyType(
@@ -295,21 +331,22 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   );
   await keyType(
     page,
-    page.getByLabel("Reason for saving"),
+    page.getByLabel("Reason for logging", { exact: true }),
     "SYN preserve complete fictional intake before separate work authority.",
   );
   await capture(page, info, "journey-keyboard-intake-ready");
   await keyActivate(
     page,
-    page.getByRole("button", { name: "Save service request", exact: true }),
+    page.getByRole("button", { name: "Create request", exact: true }),
   );
   await expect(page).toHaveURL(/\/service\/tickets\/[a-f0-9-]{36}$/);
   const ticket = page.url().split("/").at(-1)!;
+  await page.getByRole("button", { name: "Complete triage", exact: true }).filter({ visible: true }).click();
   await page
     .getByLabel("Reason for this triage action")
     .fill("SYN exact intake reviewed; triage does not approve scope or dates.");
   await committed(page, `service/tickets/${ticket}/triage`, () =>
-    page.getByRole("button", { name: "Complete triage", exact: true }).click(),
+    page.locator(".sv-triage-form").getByRole("button", { name: "Complete triage", exact: true }).click(),
   );
   await capture(page, info, "journey-intake-triaged");
 

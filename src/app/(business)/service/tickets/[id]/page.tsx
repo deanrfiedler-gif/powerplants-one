@@ -1,8 +1,2 @@
-import { TicketDetail } from "../../../../../components/intake-screens";
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  return <TicketDetail id={(await params).id} />;
-}
+import { TicketRecord } from "../../../../../service/components/client/ticket-record";
+export default async function Page({params}:{params:Promise<{id:string}>}) {return <TicketRecord id={(await params).id}/>;}

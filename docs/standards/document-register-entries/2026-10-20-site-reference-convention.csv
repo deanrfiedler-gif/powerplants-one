@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SITE-REFERENCE-DEC,Short synthetic Site references,docs/decisions/site-reference-convention.md,,Owner decision recorded; implementation and visual review separate,Dean Fiedler,8f5ad31b,,,git,

@@ -42,8 +42,8 @@ const snapshot = async () => {
       tables.map(async (t) => [
         t,
         await rows(
-          // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
-          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
+          // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
+          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ]),
     ),
@@ -75,7 +75,7 @@ test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, origin
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [102, 103, 104, 105, 106, 107, 108, 109, 113, 114],
+    [102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115],
   );
   assert.deepEqual(
     await rows(

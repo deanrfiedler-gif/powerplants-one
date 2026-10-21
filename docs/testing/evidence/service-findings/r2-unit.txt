@@ -1,0 +1,13 @@
+✔ SV07 next-action accepts an exact source, explicit evidence and UTC due instant (3.92ms)
+✔ SV07 next-action refuses arbitrary Activity targeting and unbound or incomplete edits (2.8271ms)
+✔ Findings query accepts only bounded filters and exact source identities (6.9117ms)
+✔ Follow-up completion and cancellation do not assert source closure (0.6662ms)
+✔ Overdue compares the retained deadline instant and never active-looking closed work (0.6325ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5334.624

@@ -1,97 +1,999 @@
-.service-inspections {
-  max-width: 1400px;
-  margin: auto;
-  padding: 24px;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.service-inspections .business-card {
-  margin: 16px 0;
-  padding: 20px;
+#ppo-service-inspections {
+  color: var(--ink);
   background: var(--white);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-}
-.service-inspections fieldset {
+  font:
+    400 14px/20px Roboto,
+    sans-serif;
   min-width: 0;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-control);
-  padding: 16px;
-  margin: 12px 0;
+  height: 100%;
+  overflow: auto;
 }
-.service-inspections label {
+#ppo-service-inspections h1 {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+}
+#ppo-service-inspections h2 {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+#ppo-service-inspections p {
+  margin: 6px 0;
+}
+#ppo-service-inspections small {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-service-inspections a {
+  color: var(--link);
+}
+#ppo-service-inspections :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+#ppo-service-inspections label {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin: 10px 0;
+  min-width: 0;
 }
-.service-inspections input,
-.service-inspections select,
-.service-inspections textarea {
-  width: 100%;
+#ppo-service-inspections :is(input, select, textarea) {
   min-width: 0;
   max-width: 100%;
-  font-size: 16px;
-  min-height: 44px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  min-height: 40px;
+  padding: 8px 12px;
 }
-.service-inspections textarea {
+#ppo-service-inspections textarea {
+  width: 100%;
   min-height: 96px;
+  resize: vertical;
 }
-.inspection-fields {
+#ppo-service-inspections :disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+#ppo-service-inspections .ppo-button {
+  max-width: 100%;
+  white-space: normal;
+}
+#ppo-service-inspections .ppo-button--primary {
+  color: var(--white);
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.inspection-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.inspection-instrument-selection {
+  display: none;
+}
+@media (max-width: 359px) {
+  .inspection-instrument-selection {
+    display: inline;
+    overflow-wrap: anywhere;
+  }
+}
+.inspection-record-head {
+  padding: 20px 24px 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  border-bottom: 1px solid var(--line-soft);
 }
-.inspection-summary {
+.inspection-record-head > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.inspection-record-head > p {
+  grid-column: 1/-1;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.inspection-head-actions,
+.inspection-capture-actions,
+.service-inspections .button-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.inspection-readiness {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  padding: 12px 0;
+  gap: 16px;
+  padding: 12px 24px;
+  font-size: 12px;
   border-bottom: 1px solid var(--line-strong);
 }
-.inspection-summary span,
-.inspection-summary small {
+.inspection-readiness strong {
+  padding-right: 20px;
+  border-right: 1px solid var(--line-strong);
+}
+.inspection-record-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 32%) minmax(0, 1fr);
+  min-height: calc(100vh - 240px);
+}
+.inspection-record-summary {
+  padding: 8px 24px 24px;
+  border-right: 1px solid var(--line-strong);
+}
+.inspection-record-summary section {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-service-inspections .inspection-record-summary h2 {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+.inspection-record-summary dl {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 12px 16px;
+  margin: 12px 0 0;
+}
+.inspection-record-summary dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.inspection-record-summary dd {
+  margin: 0;
   overflow-wrap: anywhere;
+}
+.inspection-record-main {
   min-width: 0;
+  background: var(--ppo-shell-surface);
+}
+.inspection-record-content {
+  padding: 24px;
+}
+.inspection-record-main .record-tablist {
+  margin: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--white);
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+}
+.inspection-record-main .record-tablist button {
+  flex: none;
+  white-space: nowrap;
+  padding: 14px 12px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+}
+.inspection-record-main .record-tablist button[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--navy);
+}
+.inspection-record-main .record-panel {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.inspection-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-control);
+  background: var(--info-surface);
+}
+.inspection-notice svg,
+.inspection-evaluation svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.inspection-notice p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
 }
 .inspection-warning {
-  padding: 12px;
-  border-left: 4px solid var(--warning);
   background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+  color: var(--warning);
+  padding: 16px;
+}
+.inspection-recovery {
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 24px;
+}
+#ppo-service-inspections .inspection-recovery p {
+  margin: 0;
+}
+.inspection-recovery .button-row {
+  width: 100%;
+}
+#ppo-service-inspections .inspection-defect h3 {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  margin: 16px 0 8px;
+}
+.inspection-defect {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.inspection-review-notice,
+.inspection-checks,
+.inspection-findings,
+.inspection-before-test,
+.inspection-output,
+.inspection-review-form,
+.service-inspections .business-card {
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.inspection-review-notice > p {
+  color: var(--text-secondary);
+}
+.inspection-summary {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--white);
+  overflow-wrap: anywhere;
+}
+.inspection-summary > span {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.inspection-summary > strong {
+  font-weight: 500;
+}
+.inspection-summary:first-of-type {
+  border-radius: var(--radius-control) var(--radius-control) 0 0;
+}
+.inspection-attempt-link {
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--link);
+  background: transparent;
+  font: inherit;
+}
+.inspection-attempt-link small {
+  display: block;
+}
+.inspection-attempt-link[aria-current] {
+  font-weight: 600;
+}
+.inspection-text-button {
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--link);
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.inspection-timeline {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+.inspection-timeline > li {
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--white);
+}
+.inspection-lineage-outcome {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+.inspection-before-test {
+  display: none;
+}
+.inspection-draft-status {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-service-inspections .inspection-checks > h2,
+.inspection-findings > h2,
+.inspection-before-test > h2 {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.service-inspections fieldset {
+  min-width: 0;
+  border: 0;
+  padding: 12px 0;
+  margin: 0;
+}
+.service-inspections legend {
+  font-weight: 500;
+  padding: 0;
+}
+.inspection-check {
+  border-top: 1px solid var(--line-soft) !important;
+  margin-top: 20px !important;
+}
+.inspection-check > p {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.inspection-value-unit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 96px;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.inspection-test-time {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.inspection-check > label {
+  margin: 12px 0;
+}
+.inspection-choices {
+  display: flex;
+  margin-top: 12px;
+}
+.inspection-choices label {
+  flex: 1;
+  position: relative;
+}
+.inspection-choices input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.inspection-choices span {
+  padding: 12px 4px;
+  text-align: center;
+  min-height: 44px;
+  border: 1px solid var(--control-border);
+}
+.inspection-choices label + label span {
+  border-left: 0;
+}
+.inspection-choices input:checked + span {
+  background: var(--surface-2);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+.inspection-choices input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.inspection-evaluation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#ppo-service-inspections .inspection-evaluation[data-result="Pass"] {
+  color: var(--success);
+}
+#ppo-service-inspections .inspection-evaluation[data-result="Fail"] {
+  color: var(--danger);
+}
+.inspection-observation {
+  margin-top: 10px;
+  font-size: 12px;
+}
+.inspection-observation summary {
+  cursor: pointer;
+  padding: 6px 0;
+  color: var(--text-secondary);
+}
+.inspection-observation label {
+  margin: 8px 0;
+}
+.inspection-capture-actions {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 0;
+  background: var(--ppo-shell-surface);
+  justify-content: flex-end;
+  z-index: 2;
 }
 .service-inspections pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   font: inherit;
-  max-width: 100%;
 }
-.service-inspections summary {
-  cursor: pointer;
-  min-height: 44px;
-  padding: 10px 0;
+.inspection-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
 }
-.service-inspections .button-row {
+.inspection-submit-dialog {
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  padding: 0;
+  width: min(540px, calc(100vw - 32px));
+  max-height: 90dvh;
+  overflow: auto;
+}
+.inspection-submit-dialog::backdrop {
+  background: color-mix(in srgb, var(--navy) 40%, transparent);
+}
+.inspection-submit-dialog .es02-dialog-head {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px;
+  border-bottom: 1px solid var(--line-soft);
 }
-.service-inspections .ppo-button {
-  max-width: 100%;
-  white-space: normal;
+.inspection-submit-dialog h2 {
+  margin: 0;
+  font-size: 20px;
 }
-.service-inspections :focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+.inspection-submit-dialog .es02-dialog-body {
+  padding: 24px;
 }
-@media (max-width: 600px) {
-  .service-inspections {
+.inspection-submit-dialog .es02-dialog-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--line-strong);
+}
+.inspection-submit-dialog .es02-button-icon {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+}
+.inspection-submit-dialog .es02-button-icon svg {
+  width: 20px;
+  height: 20px;
+}
+#inspection-register {
+  display: flex;
+  height: 100%;
+  min-height: calc(100dvh - 64px);
+  position: relative;
+  overflow: hidden;
+}
+#inspection-register .mw-menu {
+  flex: 0 0 240px;
+  width: 240px;
+  padding: 8px;
+  border-right: 1px solid var(--line-strong);
+  background: var(--white);
+}
+#inspection-register .mw-menu[hidden] {
+  display: none;
+}
+#inspection-register .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#inspection-grid {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+#inspection-register .mw-menu-edge {
+  position: absolute;
+  left: 236px;
+  width: 8px;
+  height: 100%;
+  background: transparent;
+  border: 0;
+  z-index: 3;
+}
+#inspection-register .mw-menu-strip {
+  flex: 0 0 24px;
+  border: 0;
+  border-right: 1px solid var(--line-strong);
+  background: var(--white);
+}
+#inspection-register .mw-menu-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 0;
+  border-radius: var(--radius-control);
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font: inherit;
+  min-height: 40px;
+}
+#inspection-register .mw-menu-item[aria-current] {
+  background: var(--surface-2);
+  font-weight: 500;
+}
+#inspection-register .inspection-menu-heading {
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 20px 12px 4px;
+}
+.inspection-toolbar {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.inspection-toolbar label:first-child {
+  width: 171px;
+}
+.inspection-toolbar label:nth-child(2) {
+  max-width: 180px;
+}
+.inspection-as-at {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#inspection-grid .ppo-register-table {
+  min-width: 1740px;
+  table-layout: fixed;
+}
+#inspection-grid .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding: 8px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#inspection-grid .ppo-register-table th:nth-child(2) {
+  width: 250px;
+}
+.inspection-mine {
+  padding: 24px;
+}
+.inspection-list-intro {
+  position: relative;
+  margin-bottom: 20px;
+}
+.inspection-list-intro > span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.inspection-work-group {
+  margin-bottom: 24px;
+}
+.inspection-work-group > h2 {
+  border-bottom: 1px solid var(--line-strong);
+  padding: 12px 0;
+}
+.inspection-work-group > h2 span {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 400;
+}
+#ppo-service-inspections .inspection-work-item {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line-soft);
+  text-decoration: none;
+  color: var(--ink);
+}
+.inspection-work-item > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.inspection-work-item p {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+@media (max-width: 1100px) {
+  .inspection-record-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+  .inspection-record-summary {
+    padding-inline: 16px;
+  }
+  .inspection-record-content {
     padding: 16px;
   }
-  .service-inspections .business-card {
-    padding: 12px;
+  .inspection-record-head {
+    grid-template-columns: 1fr;
   }
-  .service-inspections fieldset {
-    padding: 10px;
+}
+@media (max-width: 780px) {
+  .inspection-recovery {
+    margin: 12px 16px;
   }
+  .inspection-recovery .ppo-button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .inspection-record-head {
+    padding: 8px 16px;
+    display: block;
+  }
+  #ppo-service-inspections .inspection-record-head h1,
+  .inspection-head-actions,
+  .inspection-readiness,
+  .inspection-record-summary {
+    display: none;
+  }
+  .inspection-record-head > p {
+    font-size: 11px;
+  }
+  .inspection-record-layout {
+    display: block;
+  }
+  .inspection-record-content {
+    padding: 16px;
+  }
+  .inspection-before-test {
+    display: block;
+  }
+  .inspection-before-test > p {
+    border-bottom: 1px solid var(--line-soft);
+    padding: 12px 0;
+  }
+  .inspection-editing .record-tablist {
+    display: none;
+  }
+  .inspection-editing .record-panel[id$="source"] {
+    display: none;
+  }
+  .inspection-capture-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line-strong);
+    background: var(--white);
+    flex-wrap: nowrap;
+  }
+  .inspection-capture-actions .ppo-button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .inspection-capture .inspection-record-content {
+    padding-bottom: 96px;
+  }
+  .inspection-submit-dialog {
+    margin: auto 0 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 12px 12px 0 0;
+    border: 0;
+  }
+  .inspection-submit-dialog .es02-dialog-head,
+  .inspection-submit-dialog .es02-dialog-body {
+    padding: 20px 16px;
+  }
+  .inspection-submit-dialog .es02-dialog-foot {
+    padding: 16px;
+  }
+  .inspection-submit-dialog .es02-dialog-foot .ppo-button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .inspection-mine {
+    padding: 16px;
+  }
+  .inspection-list-intro h1 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .inspection-toolbar {
+    flex-wrap: wrap;
+  }
+  .inspection-as-at {
+    flex: 1;
+    margin-left: 0;
+  }
+}
+@media (max-width: 359px) {
+  .inspection-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .inspection-choices label + label span {
+    border-left: 1px solid var(--control-border);
+  }
+  .inspection-value-unit {
+    grid-template-columns: minmax(0, 1fr) 80px;
+  }
+}
+
+.inspection-saved-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft);
+  background: transparent;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+#ppo-service-inspections .inspection-saved-check {
+  justify-content: flex-start;
+  text-align: left;
+  font: inherit;
+  border-radius: 0;
+}
+.inspection-saved-check .product-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.inspection-saved-check > span {
+  min-width: 0;
+}
+.inspection-saved-check strong,
+.inspection-saved-check small {
+  display: block;
+}
+.inspection-saved-check strong {
+  font-weight: 500;
+}
+#ppo-service-inspections .inspection-phone-status {
+  display: none;
+}
+#ppo-service-inspections .inspection-before-test > h2,
+#ppo-service-inspections .inspection-findings > h2 {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+}
+.inspection-saved-check small {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.inspection-review-actions {
+  display: none;
+}
+.inspection-prepared dd,
+.inspection-output {
+  overflow-wrap: anywhere;
+}
+.inspection-before-test {
+  display: none;
+}
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-service-inspections) .mobile-navigation {
+    display: none;
+  }
+  /* Keep the shared More opener (and its focus return) beside the capture dock. */
+  .app-frame:has(#ppo-service-inspections .inspection-record-layout) .mobile-navigation {
+    display: flex;
+    left: 16px;
+    right: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: var(--white);
+    z-index: 6;
+  }
+  .app-frame:has(#ppo-service-inspections) .mobile-navigation > :not(#navigation-toggle) {
+    display: none;
+  }
+  .app-frame:has(#ppo-service-inspections) #navigation-toggle {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--control-border);
+    border-radius: var(--radius-control);
+  }
+  .app-frame:has(#ppo-service-inspections) #navigation-toggle > span {
+    display: none;
+  }
+  #ppo-service-inspections .inspection-capture-actions,
+  #ppo-service-inspections .inspection-review-actions {
+    padding-left: 72px;
+  }
+  .app-frame:has(#ppo-service-inspections) #shell-header .ppo-phone-position {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .app-frame:has(#ppo-service-inspections) .business-content {
+    padding-bottom: 0;
+  }
+  #ppo-service-inspections :is(input, select, textarea) {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  .inspection-before-test {
+    display: block;
+  }
+  #ppo-service-inspections
+    .inspection-record-head
+    > p:not(.inspection-phone-status) {
+    display: none;
+  }
+  #ppo-service-inspections .inspection-phone-status {
+    display: block;
+    font-size: 11px;
+    margin: 0;
+  }
+  .inspection-record-head > div:first-child {
+    float: left;
+    margin-right: 10px;
+  }
+  .inspection-record-head {
+    min-height: 42px;
+  }
+  .inspection-review-actions {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    gap: 8px;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line-strong);
+    background: var(--white);
+  }
+  .inspection-review-actions .ppo-button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .inspection-record-content {
+    padding-bottom: 96px;
+  }
+}
+
+.inspection-evidence {
+  padding: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  margin-bottom: 16px;
+}
+.inspection-evidence > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+#ppo-service-inspections .inspection-evidence h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.inspection-evidence .inspection-summary {
+  padding-inline: 0;
+}
+.inspection-test-time summary {
+  padding: 8px 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+}
+#inspection-register .mw-menu-overlay {
+  position: fixed;
+  inset: 64px auto 0 0;
+  margin: 0;
+  height: calc(100dvh - 64px);
+  max-height: none;
+  max-width: calc(100vw - 32px);
+  border: 0;
+  border-right: 1px solid var(--line-strong);
+  border-radius: 0;
+}
+#inspection-register .mw-menu-overlay::backdrop {
+  background: color-mix(in srgb, var(--navy) 40%, transparent);
+}
+#inspection-register .mw-menu-close {
+  display: block;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  width: 40px;
+  height: 40px;
+}
+#inspection-register .mw-menu-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.inspection-readings-list {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  overflow: hidden;
+}
+.inspection-reading-row {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.inspection-reading-row:last-child {
+  border: 0;
+}
+.inspection-reading-row .product-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+.inspection-reading-row strong {
+  font-weight: 500;
+}
+#ppo-service-inspections .inspection-reading-row p {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+.inspection-retained-sources {
+  font-size: 12px;
+  margin-top: 16px;
+  overflow-wrap: anywhere;
+}
+#ppo-service-inspections label {
+  font-weight: 400;
+}
+#ppo-service-inspections label small {
+  font-weight: 400;
+}
+#ppo-service-inspections .inspection-check {
+  padding: 8px 0;
+  margin-top: 16px !important;
+  border-top: 0 !important;
 }

@@ -1,0 +1,161 @@
+{
+  "source_commit": "70260676cd020ea173d57deab4c6f439bd141426",
+  "observed_date": "2026-10-21",
+  "scope": "Completed PR workflows before integrating main 4c1097cc; this is not evidence for the subsequent merge commit.",
+  "workflow_runs": [
+    {
+      "id": 39396942140,
+      "name": "Merged-tree check",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942140"
+    },
+    {
+      "id": 39396942023,
+      "name": "Dependency audit",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942023"
+    },
+    {
+      "id": 39396942044,
+      "name": "CRM Leads implementation",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942044"
+    },
+    {
+      "id": 39396942032,
+      "name": "Email Calendar journey assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942032"
+    },
+    {
+      "id": 39396941985,
+      "name": "Quotation disposition assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941985"
+    },
+    {
+      "id": 39396942034,
+      "name": "Azure demo preparation checks",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942034"
+    },
+    {
+      "id": 39396942188,
+      "name": "Document library backend assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942188"
+    },
+    {
+      "id": 39396941991,
+      "name": "Engineering native workflow assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941991"
+    },
+    {
+      "id": 39396941990,
+      "name": "PJ-06 specialist package assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941990"
+    },
+    {
+      "id": 39396941925,
+      "name": "Estimating E1 assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941925"
+    },
+    {
+      "id": 39396941966,
+      "name": "Application assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941966"
+    },
+    {
+      "id": 39396942099,
+      "name": "Quotation Supply follow-up assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396942099"
+    },
+    {
+      "id": 39396941932,
+      "name": "Development register integrity",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941932"
+    },
+    {
+      "id": 39396941786,
+      "name": "Output register backend assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941786"
+    },
+    {
+      "id": 39396941876,
+      "name": "Documentation assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941876"
+    },
+    {
+      "id": 39396941724,
+      "name": "Output actions backend assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941724"
+    },
+    {
+      "id": 39396941787,
+      "name": "Native Products assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941787"
+    },
+    {
+      "id": 39396941835,
+      "name": "Projects Gantt assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941835"
+    },
+    {
+      "id": 39396941748,
+      "name": "Quotation conversion assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941748"
+    },
+    {
+      "id": 39396941746,
+      "name": "Quotation response assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941746"
+    },
+    {
+      "id": 39396941928,
+      "name": "CRM refinements assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941928"
+    },
+    {
+      "id": 39396941868,
+      "name": "Compiled application browser assurance",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39396941868"
+    }
+  ]
+}

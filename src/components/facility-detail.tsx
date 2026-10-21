@@ -2,11 +2,20 @@
 import Link from "next/link";
 import type { OperationReceipt } from "../platform/operations";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  FacilityRecordLayout,
+  FacilityPath,
+  FacilitySnapshotDetails,
+  FacilityOverviewCards,
+} from "./facility-record-layout";
+import { Button, ButtonLink } from "./ui/button";
+import { RegisterChip } from "./ui/register-table";
+import { usePhoneHeader } from "../shell/phone-header";
 import {
   api,
   ErrorNotice,
   Field,
-  PageHeader,
   ReadState,
   SelectField,
   Stamp,
@@ -154,110 +163,176 @@ export function FacilityDetail({
   compact?: boolean;
   onClose?: () => void;
 }) {
-  const r = useCrmResource<Facility>(`facilities/${id}/workspace`),
-    [tab, setTab] = useState("overview"),
+  const r = useCrmResource<Facility>(`facilities/${id}/workspace`, true),
+    params = useSearchParams();
+  const [tab, setTab] = useState(
+      ["equipment", "sources", "history"].includes(params.get("tab") ?? "")
+        ? params.get("tab")!
+        : "overview",
+    ),
     [pin, setPin] = useState(false);
   const [pinGuard, setPinGuard] = useState({ dirty: false, pending: false });
-  const leavePin = () =>
-    !pinGuard.pending &&
-    (!pinGuard.dirty || window.confirm("Discard the unsaved pin proposal?"));
   const f = r.data;
+  usePhoneHeader(
+    compact
+      ? null
+      : { title: f ? String(f.details.name) : "Facility", record: {} },
+  );
+  const selectTab = (value: string) => {
+    if (
+      pinGuard.pending ||
+      (pinGuard.dirty && !window.confirm("Discard the unsaved pin proposal?"))
+    )
+      return;
+    setTab(value);
+    setPin(false);
+    setPinGuard({ dirty: false, pending: false });
+  };
+  if (!f)
+    return <ReadState loading={r.loading} error={r.error} retry={r.reload} />;
+  if (compact)
+    return (
+      <div className="facility-snapshot">
+        <Button
+          className="facility-snapshot-close"
+          aria-label="Close facility snapshot"
+          onClick={onClose}
+        >
+          ×
+        </Button>
+        <div className="facility-snapshot-left">
+          <header>
+            <h2>{String(f.details.name)}</h2>
+            <p>
+              <FacilityPath facility={f} /> · version {f.version}
+            </p>
+          </header>
+          <FacilitySnapshotDetails facility={f} />
+          <footer className="facility-actions">
+            <ButtonLink href={`/sites/${f.site_id}`}>Open site</ButtonLink>
+            <ButtonLink variant="primary" href={`/facilities/${id}`}>
+              Open facility
+            </ButtonLink>
+          </footer>
+        </div>
+        <div className="facility-snapshot-right">
+          <FacilityEquipment facility={f} compact />
+          <FacilityHistory id={id} timezone={f.timezone} compact />
+        </div>
+      </div>
+    );
   return (
-    <div
-      className={compact ? "facility-inspector-content" : "facility-workspace"}
-    >
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {f && (
-        <>
-          <PageHeader
-            eyebrow="Facility / growing area"
-            title={String(f.details.name)}
-            action={
-              <div className="facility-actions">
-                {compact && (
-                  <Link className="button secondary" href={`/facilities/${id}`}>
-                    Open full record
-                  </Link>
+    <FacilityRecordLayout facility={f}>
+      <RecordTabs
+        id="facility"
+        label="Facility record"
+        value={tab}
+        onChange={selectTab}
+        tabs={[
+          { id: "overview", label: "Overview" },
+          {
+            id: "equipment",
+            label: (
+              <>
+                Equipment
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.equipment}
+                    </span>
+                  </>
                 )}
-                {f.can_edit && (
-                  <Link className="button" href={`/facilities/${id}/edit`}>
-                    Edit
-                  </Link>
+              </>
+            ),
+          },
+          {
+            id: "sources",
+            label: (
+              <>
+                Sources
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.sources}
+                    </span>
+                  </>
                 )}
-                {onClose && (
-                  <button type="button" className="secondary" onClick={onClose}>
-                    Close
-                  </button>
+              </>
+            ),
+          },
+          {
+            id: "history",
+            label: (
+              <>
+                History
+                {f.counts && (
+                  <>
+                    {" "}
+                    <span className="facility-tab-count">
+                      {f.counts.history}
+                    </span>
+                  </>
                 )}
-              </div>
-            }
+              </>
+            ),
+          },
+        ]}
+      />
+      <div className="facility-record-scroll">
+        <RecordPanel id="facility" tab="overview" value={tab}>
+          <FacilityOverviewCards
+            facility={f}
+            onSources={() => selectTab("sources")}
           />
-          {!compact && (
-            <RecordTabs
-              id="facility"
-              label="Facility record"
-              value={tab}
-              onChange={(v) => {
-                if (leavePin()) {
-                  setTab(v);
-                  setPin(false);
-                  setPinGuard({ dirty: false, pending: false });
-                }
-              }}
-              tabs={[
-                { id: "overview", label: "Overview" },
-                { id: "related", label: "Related records" },
-                { id: "history", label: "History" },
-              ]}
-            />
-          )}
-          {compact ? (
-            <FacilityOverview facility={f} compact />
-          ) : (
+        </RecordPanel>
+        <RecordPanel id="facility" tab="equipment" value={tab}>
+          {tab === "equipment" && (
             <>
-              <RecordPanel id="facility" tab="overview" value={tab}>
-                <FacilityOverview facility={f} />
-                {f.can_edit && (
-                  <button
-                    type="button"
-                    className="secondary"
-                    disabled={pinGuard.pending}
-                    onClick={() => {
-                      if (!pin || leavePin()) {
-                        setPin((v) => !v);
-                        setPinGuard({ dirty: false, pending: false });
-                      }
-                    }}
-                  >
-                    {pin
-                      ? "Close pin form"
-                      : f.pin
-                        ? "Review location pin"
-                        : "Record location pin"}
-                  </button>
-                )}
-                {pin && (
-                  <PinForm
-                    key={f.id}
-                    facility={f}
-                    reload={r.reload}
-                    guard={setPinGuard}
-                  />
-                )}
-              </RecordPanel>
-              <RecordPanel id="facility" tab="related" value={tab}>
+              <FacilityEquipment facility={f} />
+              <details className="facility-legacy-controls">
+                <summary>Manage service links</summary>
                 <FacilityRelated facility={f} />
-              </RecordPanel>
-              <RecordPanel id="facility" tab="history" value={tab}>
-                {tab === "history" && (
-                  <FacilityHistory id={id} timezone={f.timezone} />
-                )}
-              </RecordPanel>
+              </details>
             </>
           )}
-        </>
-      )}
-    </div>
+        </RecordPanel>
+        <RecordPanel id="facility" tab="sources" value={tab}>
+          {tab === "sources" && (
+            <>
+              <FacilityOverview facility={f} />
+              {f.can_edit && (
+                <Button
+                  onClick={() => {
+                    if (
+                      !pinGuard.pending &&
+                      (!pinGuard.dirty ||
+                        window.confirm("Discard the unsaved pin proposal?"))
+                    )
+                      setPin(!pin);
+                  }}
+                >
+                  {pin
+                    ? "Close pin form"
+                    : f.pin
+                      ? "Review location pin"
+                      : "Record location pin"}
+                </Button>
+              )}
+              {pin && (
+                <PinForm facility={f} reload={r.reload} guard={setPinGuard} />
+              )}
+            </>
+          )}
+        </RecordPanel>
+        <RecordPanel id="facility" tab="history" value={tab}>
+          {tab === "history" && (
+            <FacilityHistory id={id} timezone={f.timezone} />
+          )}
+        </RecordPanel>
+      </div>
+    </FacilityRecordLayout>
   );
 }
 function PinForm({
@@ -513,7 +588,222 @@ type Equipment = {
   installed: boolean;
   link_id: string | null;
   source: unknown;
+  serves?: { id: string; name: string }[];
+  serving_since?: string;
 };
+function FacilityEquipment({
+  facility: f,
+  compact = false,
+}: {
+  facility: Facility;
+  compact?: boolean;
+}) {
+  const current = useFacilityPages<Equipment>(`facilities/${f.id}/equipment`);
+  const ended = useFacilityPages<{
+    id: string;
+    equipment_id: string;
+    description: string;
+    display_number: string;
+    installed_name: string | null;
+    ended_at: string;
+    end_reason: string;
+    ended_by_name: string;
+  }>(`facilities/${f.id}/equipment?state=ended`);
+  if (compact)
+    return (
+      <section className="facility-snapshot-equipment facility-card">
+        <h2>Equipment</h2>
+        <ReadState
+          loading={current.loading || ended.loading}
+          error={current.error || ended.error}
+          retry={() => {
+            current.reload();
+            ended.reload();
+          }}
+        />
+        {!current.loading &&
+          !ended.loading &&
+          !current.error &&
+          !ended.error && (
+            <>
+              <p>
+                {current.items.filter((a) => a.installed).length} installed here
+                · {current.items.filter((a) => a.link_id).length} serve this
+                area · {ended.items.length} ended
+                {current.next || ended.next ? " (loaded records)" : ""}
+              </p>
+              {current.items.map((a) => (
+                <div className="facility-snapshot-equipment-row" key={a.id}>
+                  <Link href={`/equipment/${a.id}`}>{a.description}</Link> ·{" "}
+                  {a.installed ? "installed here" : "serves this area"}
+                  <small>
+                    {a.installed
+                      ? "Serves "
+                      : `Installed in ${a.installed_name ?? "site only"} · serves `}
+                    {a.serves?.map((s) => s.name).join(", ") ||
+                      "no recorded areas"}
+                  </small>
+                </div>
+              ))}
+              {ended.items.map((a) => (
+                <div
+                  className="facility-snapshot-equipment-row facility-meta"
+                  key={a.id}
+                >
+                  {a.description} · service ended{" "}
+                  <Stamp value={a.ended_at} timezone={f.timezone} />
+                  <small>
+                    Reason: {a.end_reason} · {a.ended_by_name}
+                  </small>
+                </div>
+              ))}
+              {current.next && (
+                <Button onClick={current.more}>More equipment</Button>
+              )}
+              {ended.next && (
+                <Button onClick={ended.more}>More ended links</Button>
+              )}
+            </>
+          )}
+      </section>
+    );
+  return (
+    <section className="facility-equipment-view">
+      <h2>Equipment for this area</h2>
+      <p className="facility-banner">
+        “Installed in” is where the equipment physically is. “Serves” is an
+        explicit link to each area it controls or supplies. Each is changed on
+        its own and neither is inferred from the other.
+      </p>
+      <ReadState
+        loading={current.loading || ended.loading}
+        error={current.error || ended.error}
+        retry={() => {
+          current.reload();
+          ended.reload();
+        }}
+      />
+      {!current.loading && !ended.loading && !current.error && !ended.error && (
+        <>
+          <div className="facility-table-scroll">
+            <table className="facility-equipment-table">
+              <thead>
+                <tr>
+                  <th>Equipment</th>
+                  <th>Installed in</th>
+                  <th>Serves</th>
+                  <th>This area</th>
+                </tr>
+              </thead>
+              {[
+                {
+                  label: "Installed here",
+                  items: current.items.filter((a) => a.installed),
+                },
+                {
+                  label: "Serves this area, installed elsewhere",
+                  items: current.items.filter((a) => !a.installed && a.link_id),
+                },
+              ].map((group) => (
+                <tbody key={group.label}>
+                  <tr className="facility-group-band">
+                    <th colSpan={4}>
+                      {group.label} · {group.items.length}
+                      {current.next ? " loaded" : ""}
+                    </th>
+                  </tr>
+                  {group.items.map((a) => (
+                    <tr key={a.id}>
+                      <td>
+                        <Link href={`/equipment/${a.id}`}>{a.description}</Link>
+                      </td>
+                      <td>{a.installed_name ?? "Site only"}</td>
+                      <td>
+                        {a.serves?.length
+                          ? a.serves.map((s, i) => (
+                              <span key={s.id}>
+                                {i > 0 ? ", " : ""}
+                                <Link href={`/facilities/${s.id}`}>
+                                  {s.name}
+                                </Link>
+                              </span>
+                            ))
+                          : "No recorded service links"}
+                      </td>
+                      <td>
+                        <RegisterChip tone={a.link_id ? "positive" : "neutral"}>
+                          {a.installed
+                            ? a.link_id
+                              ? "Installed and serves"
+                              : "Installed only"
+                            : "Serves this area"}
+                        </RegisterChip>
+                      </td>
+                    </tr>
+                  ))}
+                  {!group.items.length && (
+                    <tr>
+                      <td colSpan={4}>
+                        {current.next
+                          ? "None in the loaded page; more equipment is available."
+                          : "No linked equipment."}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              ))}
+              <tbody>
+                <tr className="facility-group-band">
+                  <th colSpan={4}>
+                    Service ended · {ended.items.length}
+                    {ended.next ? " loaded" : ""}
+                  </th>
+                </tr>
+                {ended.items.map((a) => (
+                  <tr key={a.id}>
+                    <td>
+                      <Link href={`/equipment/${a.equipment_id}`}>
+                        {a.description}
+                      </Link>
+                    </td>
+                    <td>{a.installed_name ?? "Site only or unavailable"}</td>
+                    <td>Ended for this area</td>
+                    <td>
+                      <RegisterChip tone="neutral">
+                        <Stamp value={a.ended_at} timezone={f.timezone} />
+                      </RegisterChip>
+                    </td>
+                  </tr>
+                ))}
+                {!ended.items.length && (
+                  <tr>
+                    <td colSpan={4}>No ended service links.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {ended.items.map((a) => (
+            <p className="facility-meta" key={a.id}>
+              {a.description}: {a.end_reason} · {a.ended_by_name}
+            </p>
+          ))}
+          <div className="facility-actions">
+            {current.next && (
+              <Button onClick={current.more}>More equipment</Button>
+            )}
+            {ended.next && (
+              <Button onClick={ended.more}>More ended links</Button>
+            )}
+            <Link href={`/equipment?site_id=${f.site_id}`}>
+              Open the equipment register for {f.site_name}
+            </Link>
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
 function FacilityRelated({ facility: f }: { facility: Facility }) {
   const r = useFacilityPages<Equipment>(`facilities/${f.id}/equipment`),
     [adding, setAdding] = useState(false),
@@ -834,8 +1124,35 @@ type Event = {
     context_observation?: boolean;
   };
 };
-function FacilityHistory({ id, timezone }: { id: string; timezone: string }) {
+function FacilityHistory({
+  id,
+  timezone,
+  compact = false,
+}: {
+  id: string;
+  timezone: string;
+  compact?: boolean;
+}) {
   const r = useFacilityPages<Event>(`facilities/${id}/history`);
+  if (compact)
+    return (
+      <section className="facility-snapshot-history">
+        <h2>History</h2>
+        <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+        {!r.loading && !r.error && !r.items.length && (
+          <p>No retained changes.</p>
+        )}
+        {r.items.map((e) => (
+          <article key={e.id}>
+            <p>{e.reason}</p>
+            <small>
+              <Stamp value={e.occurred_at} timezone={timezone} /> · {e.actor}
+            </small>
+          </article>
+        ))}
+        {r.next && <Button onClick={r.more}>More history</Button>}
+      </section>
+    );
   return (
     <>
       <h2>Immutable change history</h2>

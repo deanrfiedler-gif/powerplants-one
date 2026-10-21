@@ -269,6 +269,7 @@ test("SV07 failed inspection stays open after its Activity completes and follows
       attempt_id: untested,
       expected_version: draft.row.version,
       occurred_at: new Date().toISOString(),
+      reading_instruments: [],
       readings: draft.row.plan.map((d) => ({
         check_key: d.key,
         state: "NotTested",

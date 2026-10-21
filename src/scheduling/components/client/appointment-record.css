@@ -1,0 +1,587 @@
+/* SV-04: shared record composition; all adaptations are scoped to this host. */
+.sv04-host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+}
+.sv04-host > :not(.shared-record) {
+  flex-shrink: 0;
+}
+.sv04-host #ppo-appointment {
+  display: block;
+  overflow: auto;
+  background: var(--white);
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  font:
+    14px/20px Roboto,
+    Verdana,
+    sans-serif;
+}
+#ppo-appointment .shared-record-header {
+  padding: 18px 24px 16px;
+  align-items: center;
+}
+#ppo-appointment .shared-record-header > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+#ppo-appointment .shared-record-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#ppo-appointment .business-heading {
+  margin: 0;
+  min-width: 0;
+}
+#ppo-appointment .business-heading h1 {
+  font-size: 24px;
+  line-height: 32px;
+  overflow-wrap: anywhere;
+}
+#ppo-appointment .business-heading .eyebrow {
+  display: none;
+}
+#ppo-appointment .shared-record-meta {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 20px;
+  gap: 6px 16px;
+}
+#ppo-appointment .shared-record-actions {
+  max-width: none;
+  flex-shrink: 0;
+  gap: 8px;
+}
+#ppo-appointment .shared-record-sources {
+  min-height: 41px;
+  padding: 10px 24px;
+  line-height: 20px;
+}
+#ppo-appointment .shared-record-body {
+  grid-template-columns: 380px minmax(0, 1fr);
+}
+#ppo-appointment .shared-record-facts {
+  padding: 4px 24px 24px;
+}
+#ppo-appointment .shared-record-fact-section {
+  padding: 16px 0;
+}
+#ppo-appointment .shared-record-fact-section h2 {
+  font-size: 11px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+#ppo-appointment .shared-record-fact-section article {
+  border: 0;
+  padding: 6px 0;
+}
+#ppo-appointment .shared-record-fact-section small {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-appointment .sv04-facts {
+  margin: 0;
+}
+#ppo-appointment .sv04-facts > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  padding: 6px 0;
+  margin: 0;
+}
+#ppo-appointment .sv04-facts dt {
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-secondary);
+}
+#ppo-appointment .sv04-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-appointment .shared-record-workspace {
+  background: var(--surface);
+}
+#ppo-appointment .shared-record-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 24px 32px;
+}
+#ppo-appointment .shared-record-content > * {
+  min-width: 0;
+}
+#ppo-appointment a {
+  color: var(--link);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+#ppo-appointment a:hover {
+  text-decoration: underline;
+}
+#ppo-appointment :is(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+#ppo-appointment .ppo-button {
+  min-height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+}
+#ppo-appointment .ppo-button--primary {
+  font-weight: 500;
+}
+#ppo-appointment .ppo-register-chip {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  border-radius: 5px;
+  padding: 2px 8px;
+  white-space: normal;
+}
+#ppo-appointment h2 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 21px;
+}
+#ppo-appointment p {
+  margin: 4px 0;
+}
+#ppo-appointment small {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-appointment .sv04-section-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding-top: 8px;
+  margin-bottom: 16px;
+}
+#ppo-appointment .sv04-section-heading > span {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+#ppo-appointment .sv04-card {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  overflow-wrap: anywhere;
+}
+#ppo-appointment .sv04-decision-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 4px;
+  flex-wrap: wrap;
+}
+#ppo-appointment .sv04-decision-heading > .product-icon {
+  color: var(--warning);
+}
+#ppo-appointment .sv04-decision-copy {
+  padding: 0 16px 14px 42px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+#ppo-appointment .sv04-blocker {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-soft);
+  align-items: start;
+}
+#ppo-appointment .sv04-blocker > div {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-appointment .sv04-blocker strong {
+  font-weight: 500;
+}
+#ppo-appointment .sv04-blocker > .product-icon {
+  color: var(--warning);
+  margin-top: 2px;
+}
+#ppo-appointment .sv04-blocker > a {
+  flex: none;
+  font-size: 12px;
+  padding: 2px 0;
+}
+#ppo-appointment .sv04-note {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--neutral-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 18px;
+  border-radius: var(--radius-control);
+}
+#ppo-appointment .sv04-dispatch > .sv04-note {
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  border-top: 1px solid var(--line-soft);
+  padding: 10px 16px;
+}
+#ppo-appointment .sv04-check {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 16px;
+  min-height: 60px;
+}
+#ppo-appointment .sv04-card > div + div .sv04-check {
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-appointment .sv04-check > .product-icon {
+  margin-top: 2px;
+}
+#ppo-appointment .sv04-check > div {
+  min-width: 0;
+  flex: 1;
+}
+#ppo-appointment .sv04-check-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+#ppo-appointment .sv04-check-title strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+#ppo-appointment .sv04-check p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-appointment .sv04-check[data-tone="positive"] {
+  color: var(--success);
+}
+#ppo-appointment .sv04-check[data-tone="attention"] {
+  color: var(--warning);
+}
+#ppo-appointment .sv04-check[data-tone="neutral"] {
+  color: var(--neutral);
+}
+#ppo-appointment .sv04-parts-lines {
+  margin: 6px 0;
+  padding-left: 16px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-appointment .sv04-parts-lines:empty {
+  display: none;
+}
+#ppo-appointment .sv04-crew {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  align-items: start;
+}
+#ppo-appointment .sv04-crew + .sv04-crew {
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-appointment .sv04-crew > div {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-appointment .sv04-crew strong {
+  font-weight: 500;
+}
+#ppo-appointment .sv04-crew small {
+  display: block;
+  margin-top: 2px;
+}
+#ppo-appointment .sv04-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+  font-size: 12px;
+}
+#ppo-appointment .sv04-contact {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr) minmax(110px, 160px);
+  gap: 16px;
+  padding: 12px 16px;
+  align-items: start;
+}
+#ppo-appointment .sv04-contact + .sv04-contact {
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-appointment .sv04-contact > .ppo-register-chip {
+  justify-self: start;
+}
+#ppo-appointment .sv04-contact strong {
+  font-weight: 500;
+}
+#ppo-appointment .sv04-contact p {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+#ppo-appointment .sv04-contact > small {
+  text-align: right;
+}
+#ppo-appointment .sv04-task {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 12px 16px;
+}
+#ppo-appointment .sv04-task + .sv04-task {
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-appointment .sv04-task > div:first-of-type {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-appointment .sv04-task strong {
+  font-weight: 500;
+}
+#ppo-appointment .sv04-task small {
+  display: block;
+}
+#ppo-appointment .sv04-task > div:last-child {
+  text-align: right;
+}
+#ppo-appointment .sv04-empty,
+#ppo-appointment .sv04-requests {
+  padding: 16px;
+}
+#ppo-appointment .sv04-integrity {
+  color: var(--text-secondary);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+#ppo-appointment .sv04-integrity summary {
+  min-height: 32px;
+  padding: 8px 0;
+  color: var(--link);
+  cursor: pointer;
+}
+#ppo-appointment .sv04-editor {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  scroll-margin-top: 16px;
+}
+#ppo-appointment .sv04-editor > fieldset,
+#ppo-appointment .sv04-requests > fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+#ppo-appointment .sv04-editor .planner-form {
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+#ppo-appointment .sv04-phone-status,
+#ppo-appointment .sv04-phone-visit,
+#ppo-appointment .sv04-phone-label {
+  display: none;
+}
+@media (max-width: 1100px) and (min-width: 781px) {
+  #ppo-appointment .shared-record-body {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-appointment .shared-record-facts {
+    order: 2;
+    border-right: 0;
+  }
+  #ppo-appointment .shared-record-header {
+    flex-wrap: wrap;
+  }
+  #ppo-appointment .shared-record-actions {
+    margin-left: auto;
+  }
+}
+@media (max-width: 780px) {
+  /* Keep the shared global menu reachable beside the record action dock. */
+  .app-frame:has(#ppo-appointment) .mobile-navigation {
+    display: flex;
+    left: 16px;
+    right: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: var(--white);
+    z-index: 6;
+  }
+  .app-frame:has(#ppo-appointment) .mobile-navigation > :not(#navigation-toggle) {
+    display: none;
+  }
+  .app-frame:has(#ppo-appointment) #navigation-toggle {
+    color: var(--ink);
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  .app-frame:has(#ppo-appointment) #navigation-toggle > span {
+    display: none;
+  }
+  #ppo-appointment:not(:has(.shared-record-sticky)) .shared-record-content {
+    padding-bottom: 72px;
+  }
+  .app-frame:has(#ppo-appointment) {
+    padding-bottom: 0;
+  }
+  main:has(#ppo-appointment) {
+    padding: 0;
+  }
+  .sv04-host {
+    height: 100%;
+  }
+  #ppo-appointment .shared-record-header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  #ppo-appointment .shared-record-header .shared-record-actions {
+    display: none;
+  }
+  #ppo-appointment .shared-record-sources {
+    display: none;
+  }
+  #ppo-appointment .shared-record-body {
+    display: block;
+    min-height: 0;
+  }
+  #ppo-appointment .shared-record-facts {
+    display: none;
+  }
+  #ppo-appointment .shared-record-workspace {
+    background: var(--white);
+  }
+  #ppo-appointment .shared-record-content {
+    padding: 8px 16px 24px;
+    gap: 16px;
+  }
+  #ppo-appointment .sv04-phone-status {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 4px;
+  }
+  #ppo-appointment .sv04-phone-visit,
+  #ppo-appointment .sv04-phone-label {
+    display: block;
+  }
+  #ppo-appointment .sv04-wide-label {
+    display: none;
+  }
+  #ppo-appointment .sv04-decision-copy {
+    padding: 0 14px 10px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-appointment .sv04-decision-heading {
+    padding: 14px 14px 4px;
+    gap: 8px;
+  }
+  #ppo-appointment .sv04-decision-heading h2 {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  #ppo-appointment .sv04-blocker {
+    padding: 12px 14px;
+  }
+  #ppo-appointment .sv04-blocker > a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  #ppo-appointment .sv04-section-heading {
+    margin-bottom: 12px;
+  }
+  #ppo-appointment .sv04-check {
+    padding: 12px 14px;
+  }
+  #ppo-appointment .sv04-check p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  #ppo-appointment .sv04-note {
+    background: transparent;
+    padding: 0;
+  }
+  #ppo-appointment .sv04-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #ppo-appointment .sv04-contact > small {
+    text-align: left;
+  }
+  #ppo-appointment .sv04-task {
+    flex-wrap: wrap;
+  }
+  #ppo-appointment .sv04-task > div:last-child {
+    width: 100%;
+    padding-left: 30px;
+    text-align: left;
+  }
+  #ppo-appointment .sv04-crew {
+    flex-wrap: wrap;
+  }
+  #ppo-appointment .sv04-crew > .ppo-register-chip {
+    max-width: 100%;
+  }
+  #ppo-appointment .shared-record-sticky {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    gap: 8px;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom)) 72px;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+  }
+  #ppo-appointment .shared-record-sticky > button {
+    flex: 1;
+    min-width: 0;
+    white-space: normal;
+    padding: 8px;
+  }
+  #ppo-appointment :is(button, input, select, textarea) {
+    min-height: 44px;
+  }
+  #ppo-appointment .ppo-button {
+    min-height: 44px;
+  }
+  #ppo-appointment :is(input, select, textarea) {
+    font-size: 16px;
+  }
+}

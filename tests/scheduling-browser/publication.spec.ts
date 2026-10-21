@@ -18,6 +18,12 @@ import { openAccountPanel } from "../helpers/phone-menu";
 
 const root = "/schedule/policy-impact";
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
+async function openSavedWorkflow(page: Page) {
+  const disclosure = page.locator("details.changes-policy-saved");
+  if (await disclosure.getAttribute("open") === null)
+    await disclosure.locator(":scope > summary").click();
+  await expect(disclosure).toHaveAttribute("open", "");
+}
 async function login(request: APIRequestContext, profile: string) {
   const r = await request.post("/api/v1/local-session", {
     headers: { Origin: origin },
@@ -46,6 +52,7 @@ async function propose(
   minutes = "60",
   effective = "2031-09-22T10:00",
 ) {
+  await openSavedWorkflow(page);
   await page
     .getByLabel("Maximum visit duration (minutes)", { exact: true })
     .fill(minutes);
@@ -118,6 +125,7 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
     }),
   ).toBeVisible();
   await page.goto(root);
+  await openSavedWorkflow(page);
   await page.getByText("Reopen saved records", { exact: true }).click();
   await page
     .getByRole("link", { name: `Open proposal ${proposal}`, exact: true })
@@ -165,7 +173,7 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
     .getByRole("button", { name: "Compare future bookings", exact: true })
     .click();
   await expect(
-    page.getByText(/No matching bookings require review under this comparison/),
+    page.getByText("No matching bookings require review. This is not publication or dispatch approval.", { exact: true }),
   ).toBeVisible();
   const reviewId = await review(page);
   await expect(page.getByText(/Complete workspace family:/)).toBeVisible();
@@ -253,6 +261,7 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
     sessionStorage.removeItem("ppo-pl04-command-v1:accepted");
   });
   await page.goto(root);
+  await openSavedWorkflow(page);
   await page.getByText("Reopen saved records", { exact: true }).click();
   await page
     .getByLabel("Saved record type", { exact: true })
@@ -294,7 +303,11 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
     .getByRole("link", { name: "Review impacted appointment" })
     .click();
   await expect(page).toHaveURL(/\/service\/appointments\//);
-  await expect(page.getByText(/Responsible owner:/).first()).toBeVisible();
+  const visit = page.getByRole("region", { name: "Other visit checks", exact: true }).locator("article").filter({ hasText: publication });
+  const appointmentRead = await page.request.get(new URL(page.url()).pathname.replace("/service/appointments/", "/api/v1/appointments/"));
+  expect(appointmentRead.status()).toBe(200);
+  const owner = (await appointmentRead.json()).items[0].policy_impacts.find((item: { publication_id: string }) => item.publication_id === publication).owner_name;
+  await expect(visit).toContainText(owner);
   await expect(
     page.getByText("Resolve scheduling impact after a controlled change", {
       exact: true,
@@ -335,6 +348,7 @@ test("complete empty review, correctable server and ambiguous local time errors,
 }, info) => {
   await login(page.request, "scheduling-policy-reviewer");
   await page.goto(root);
+  await openSavedWorkflow(page);
   await page
     .getByLabel("Maximum visit duration (minutes)", { exact: true })
     .fill("60");
@@ -541,7 +555,7 @@ test("identity switch invalidates a protected in-flight read and direct comparis
   ).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
-      name: "Temporary scoped comparison",
+      name: "Published rule",
       exact: true,
     }),
   ).toBeVisible();

@@ -41,3 +41,14 @@ The CS-06 host suppresses the second phone navigation bar while retaining the co
 ## CS-08 Site surveys consumer
 
 The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. SharedRecord accepts optional sourcesLabel for the source/check band; the default customer wording is preserved. The survey supplies its own accessible submission/handover label.
+
+
+## SV-04 appointment host
+
+The accepted Appointment detail composition reuses this API without changing it: title state/readiness chips, source strip, ruled facts, no tabs, and phone bottom actions. At tablet width its facts follow the workspace; phone shows Visit plus a crew/details disclosure. Scoped styles live in `src/scheduling/components/client/appointment-record.css`. Consumer keys are `scope:SV-04` and `route:/service/appointments/[id]`. Synthetic fixture/state examples are in `tests/helpers/appointment-detail-fixture.ts` and `tests/browser/appointment-detail.spec.ts`. The `shared-record-sv04-review` alignment item and [evidence](../../../testing/evidence/appointment-detail-native/README.md) retain gated P4/P5 and data gaps. Owner visual review is pending.
+
+## FI-06 consumer
+
+The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
+
+The combined SV-04/FI-06 host retains IncidentVisitMenu beside desktop appointment actions and in the visible phone status row. It reads current reporting authority only when used and hands over the exact appointment/scope item/equipment. `tests/browser/appointment-detail.spec.ts` checks the incoming context and outgoing link at 1440, 390 and 320 px. This consumer integration does not change SharedRecord or grant owner visual acceptance.

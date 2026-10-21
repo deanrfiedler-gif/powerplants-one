@@ -10,6 +10,7 @@ import { createInvitedSession } from "../../src/platform/demo-auth";
 import { readInvitedSession } from "../../src/platform/identity";
 import { reconcileTesters } from "../../scripts/demo-database";
 import { crmCreate } from "../helpers/crm";
+import { expectAppointmentRecord } from "../helpers/appointment-record";
 
 // UI/permission integration on the disposable loopback server. This deliberately
 // does not assert that Microsoft login, public HTTPS or a real phone was tested.
@@ -84,7 +85,7 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   const appointment = schedule.items[0];
   await page.locator(`[data-appointment="${appointment.id}"]`).first().click();
   await page.getByRole("link", { name: "Open appointment", exact: true }).click();
-  await expect(page.getByRole("heading", { name: appointment.display_number, exact: true })).toBeVisible();
+  await expectAppointmentRecord(page, appointment);
   const packEntry = page.getByRole("region", { name: "Visit job pack", exact: true });
   await expect(packEntry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
   await expect(packEntry.getByRole("link")).toHaveCount(0);
@@ -296,7 +297,7 @@ test("invited actor books and reschedules a prepared visit through the UI and re
   expect(saved.start_at).toBe(`${next}T00:00:00.000Z`);
   expect(saved.assignments.filter((a: { active: boolean }) => a.active)).toHaveLength(2);
   expect(saved.customer_commitment).toBe("Changed");
-  await expect(page.getByRole("heading", { name: visit.display_number, exact: true })).toBeVisible();
+  await expectAppointmentRecord(page, visit);
   const packEntry = page.getByRole("region", { name: "Visit job pack", exact: true });
   await expect(packEntry.getByRole("status")).toHaveText("Job pack access is unavailable to this identity.");
   await expect(packEntry.getByRole("link")).toHaveCount(0);

@@ -22,6 +22,7 @@ import {
 } from "./service-context";
 import { evidenceBytes } from "./service";
 import { readBundle } from "../engineering/commissioning/outputs";
+import { inspectionRegister, type InspectionVisit } from "./service-register";
 export const inspectionRead = (mode: Mode) =>
   readRoute(async (p, id, q) => {
     object(q, []);
@@ -63,15 +64,19 @@ export const inspectionList = (mode: Mode) =>
           [p.workspace_id, p.actor_id, mode],
         )
       ).rows;
-      const items = [];
+      const items: InspectionVisit[] = [];
       for (const row of candidates.slice(0, 100)) {
         try {
           const { a, w } = await serviceInspectionAccess(c, p, row.id, mode);
+          const site = (await c.query<{ display_name: string }>("SELECT display_name FROM ppo.sites WHERE workspace_id=$1 AND id=$2", [p.workspace_id,a.site_id])).rows[0];
           items.push({
             id: a.id,
             reference: a.display_number,
             work_order: w.display_number,
             status: a.status,
+            site_id: a.site_id,
+            site: site?.display_name ?? "Site unavailable",
+            start_at: a.start_at,
           });
         } catch (e) {
           if (!(e instanceof AppError) || ![403, 404].includes(e.status))
@@ -80,6 +85,8 @@ export const inspectionList = (mode: Mode) =>
       }
       return {
         items,
+        rows: await inspectionRegister(c, p, items, mode === "capture"),
+        as_at: new Date().toISOString(),
         window: "Latest 100 candidate visits; access checked individually.",
       };
     });
@@ -106,7 +113,7 @@ export const inspectionFiles =
             hash: e.content_hash!,
           };
         }
-        const output = v.outputs.find(
+        const output = [...v.outputs, ...v.preparations].find(
           (o) => o.id === uuid(q.output_id, "output_id"),
         );
         if (!output) throw unavailable();

@@ -9,6 +9,7 @@ import { migrate, seed } from "../../scripts/database";
 import { createCs, csAction, readCs } from "../../src/shared/cs/service";
 import { createOrganisation } from "../../src/shared/commands";
 import { CRM, crmBase as base } from "../helpers/crm";
+import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
@@ -95,7 +96,19 @@ test("0114 preserves populated 0109 references, ledgers and immutable survey sna
   );
   await migrate();
   await seed();
-  assert.deepEqual(await Promise.all(tables.map(snapshot)), originals);
+  const upgraded = await Promise.all(tables.map(snapshot));
+  for (const [i, table] of tables.entries()) {
+    if (table === "permission_grants") {
+      const originalGrants = originals[i].map(x => x.row), afterGrants = upgraded[i].map(x => x.row);
+      const ids = new Set(originalGrants.map(g => g.id));
+      assert.deepEqual(afterGrants.filter(g => ids.has(g.id)), originalGrants);
+      const shape = (grants: Record<string, unknown>[]) => grants.map(g => JSON.stringify(g)).sort();
+      assert.deepEqual(shape(afterGrants.filter(g => !ids.has(g.id))), shape(agentAskSeedGrants(originalGrants)));
+    } else if (table === "seed_receipts") {
+      assert.deepEqual(upgraded[i].filter(x => x.row.version <= 109), originals[i]);
+      assert.deepEqual(upgraded[i].filter(x => x.row.version > 109).map(x => x.row.version), [110]);
+    } else assert.deepEqual(upgraded[i], originals[i]);
+  }
   assert.deepEqual(
     (await snapshot("business_identities")).filter((x) => x.row.id !== id),
     identities.filter((x) => x.row.id !== id),
@@ -132,7 +145,7 @@ test("0114 preserves populated 0109 references, ledgers and immutable survey sna
         "SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version",
       )
     ).rows,
-    [{ version: 113 }, { version: 114 }],
+    [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }],
   );
   const orgId = randomUUID();
   await createOrganisation(p, {

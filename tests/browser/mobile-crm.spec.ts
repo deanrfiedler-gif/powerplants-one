@@ -66,7 +66,7 @@ test("organisation summary opens the full Sites hierarchy; mobile menu contains 
   await expect(sitesTab).toHaveAttribute("aria-selected","true");
   await expect(page).toHaveURL(/view=sites/);
   const sitesPanel=page.getByRole("tabpanel");
-  const siteLink=sitesPanel.locator(`a[href="/sites/${CRM.site}"]`).filter({hasText:"SYN-PPO-SITE-"});
+  const siteLink=sitesPanel.locator(`a[href="/sites/${CRM.site}"]`).filter({hasText:"SYN-SITE-"});
   await expect(siteLink).toBeVisible();
   await expect(sitesPanel.locator(`a[href="/facilities?organisation_id=${CRM.org}"]`)).toBeVisible();
   await page.screenshot({path:info.outputPath("organisation-sites.png")});

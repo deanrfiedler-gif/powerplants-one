@@ -299,6 +299,12 @@ Integration review of PR #609 found that unchanged phone action labels could ret
 
 The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.
 
+## Service requests consumer
+
+SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-01`, `scope:SV-02`, `route:/service/tickets`, `route:/service/tickets/[id]`, `route:/service/tickets/new`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
+
+The Service requests consumer supplies its title, count and filter action through `SecondaryMenuFrame.phoneHeader`; the frame retains ownership of Choose view. This prevents two registrations from replacing one another on phones. Other consumers retain their existing default.
+
 ## Discovery costing consumer
 
 ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-local composition and synthetic state fixture are described in [the page contract](../pages/route-estimating-discovery-id-costing.md); [execution evidence](../../../testing/evidence/discovery-costing/README.md) is separate from owner review. No new shared component, token, grant or offline capability is introduced.
@@ -320,3 +326,12 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 ## PL-02 Field team consumer
 
 `scope:PL-02`, `/service/technicians` and `/service/technicians/[id]` reuse this control. The shared implementation is unchanged. Host states and deterministic synthetic fixture: `tests/browser/field-team.spec.ts`, `tests/helpers/field-team-fixture.ts`. The accepted Field team variant uses a 40 px grid, phone rows and read-only panels; column settings is undefined and disabled. Owner alignment remains pending; see [build evidence](../../../testing/evidence/field-team-build/README.md). No review fingerprint is recorded.
+
+## Sites CS-04 consumer
+
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

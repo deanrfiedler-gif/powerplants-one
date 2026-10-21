@@ -54,6 +54,7 @@ export type Finding = {
     id: string;
     version: number;
     summary: string;
+    required_evidence: string | null;
     status: string;
     owner_id: string;
     owner_name: string;

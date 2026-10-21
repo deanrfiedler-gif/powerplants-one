@@ -13,6 +13,7 @@ export type RegisterItem = {
   channel: string;
   next_action: string | null;
   triage_owner_name: string;
+  triage_owner_id?: string;
   site: { id: string; display_number: string | null; display_name: string | null } | null;
   site_identification_needed: boolean;
   asset: { id: string; display_number: string | null; description: string | null } | null;
@@ -33,7 +34,7 @@ export type RegisterItem = {
 };
 
 export type Tone = "neutral" | "danger" | "warning" | "info" | "success";
-export type QueueKey = "all_open" | "new" | "needs_information" | "triaged" | "urgent" | "overdue_clarifications";
+export type QueueKey = "my_requests" | "no_work_order" | "work_order_linked" | "all_open" | "new" | "needs_information" | "triaged" | "urgent" | "overdue_clarifications";
 
 // The three states the application moves a request through today (D3). Later lanes arrive with ADR-0043.
 export const nativeLanes = [

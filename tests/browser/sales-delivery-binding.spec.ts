@@ -8,7 +8,7 @@ test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL!).origin },
     data: body,
   });
   expect(r.ok(), await r.text()).toBe(true);
@@ -243,13 +243,13 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
     })
     .click();
   await page
-    .getByLabel("Requester description / clarification", { exact: true })
+    .getByLabel("Caller description / what needs clarifying", { exact: true })
     .fill("SYN request reviewed with fictional customer");
   await page
-    .getByLabel("Request summary", { exact: true })
+    .getByLabel("Summary", { exact: true })
     .fill("SYN Won receiving intake");
   await page
-    .getByLabel("Reported symptoms / explicit symptom uncertainty", {
+    .getByLabel("What the customer reported", {
       exact: true,
     })
     .fill("SYN scope needs technical review");
@@ -257,15 +257,15 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
     .getByLabel("Next action", { exact: true })
     .fill("SYN receiver reviews scope before authorisation");
   await page
-    .getByLabel("Reason for saving", { exact: true })
+    .getByLabel("Reason for logging", { exact: true })
     .fill("SYN independently captured intake");
   const intakeRead = await intakeOwners;
   expect(intakeRead.status()).toBe(200);
   expect(await intakeRead.finished()).toBeNull();
   for (const [label, value] of [
     ["Company visibility context", CRM.company],
-    ["Known site", CRM.site],
-    ["Triage and next-action owner", CRM.owner],
+    ["Site", CRM.site],
+    ["Request owner", CRM.owner],
   ]) await expect(page.getByLabel(label, { exact: true })).toHaveValue(value);
   // The returning form mounts fresh scoped selectors. A required select with
   // no options blocks native submission even when its React value is retained.
@@ -278,7 +278,7 @@ test("LC-16 Service intake returns to a native work order and the explicit link 
       url.searchParams.get("purpose") === "WorkOrder";
   });
   await page
-    .getByRole("button", { name: "Save service request", exact: true })
+    .getByRole("button", { name: "Create request", exact: true })
     .click();
   await expect(page).toHaveURL(/\/service\/work-orders\/new\?.*ticket_id=/);
   const ticket = new URL(page.url()).searchParams.get("ticket_id")!;

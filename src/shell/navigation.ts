@@ -257,7 +257,7 @@ export function pageForPath(path: string) {
   if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
   if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };
   if (path === "/products/import") return { ...destination("products"), label: "Product import" };
-  const scheduleViews: Record<string,string> = { changes: "Scheduling change follow-up", "policy-impact": "Scheduling policy impact", travel: "Travel review", capacity: "Capacity review" };
+  const scheduleViews: Record<string,string> = { changes: "Changes & follow-up", "policy-impact": "Policy impact", travel: "Travel review", capacity: "Capacity review" };
   const scheduleView = /^\/schedule\/([^/]+)$/.exec(path)?.[1];
   if (scheduleView && scheduleViews[scheduleView]) return { ...destination("planner"), label: scheduleViews[scheduleView] };
   if (path === "/my-jobs/site-readiness") return { ...destination("jobs"), label: "Field site readiness" };

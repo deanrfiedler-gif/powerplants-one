@@ -66,7 +66,7 @@ export async function serviceInspectionAccess(
     return ctx;
   }
   const cap: Capability =
-    action === "release"
+    action === "release" || action === "prepare"
       ? "report.issue"
       : action
         ? "report.review"
@@ -407,6 +407,11 @@ export async function loadServiceInspections(
       [p.workspace_id, id],
     )
   ).rows;
+  let capture_gate: string | null = null;
+  if (mode === "capture") {
+    try { await serviceInspectionAccess(c, p, id, mode, "save"); await requireCapture(c, p, id); }
+    catch (e) { if (!(e instanceof AppError)) throw e; capture_gate = e.message; }
+  }
   return {
     actor_id: p.actor_id,
     appointment: ctx.a,
@@ -420,6 +425,14 @@ export async function loadServiceInspections(
     outputs,
     incident_holds:await incidentHolds(c,p,id),
     events,
+    preparations: events.filter(e=>e.action==="prepare").map(e=>({
+      id: String(e.details.output_id), attempt_id: String(e.details.attempt_id), review_id: String(e.details.review_id),
+      manifest_hash: String(e.details.manifest_hash), decision_reason: String(e.details.decision_reason),
+      bundle: e.details.bundle as import("../engineering/commissioning/outputs").Prepared,
+    })),
+    capture_gate,
+    can_review: mode === "review" && await hasPermission(c, p, "report.review", ctx.a.company_id, ctx.a.site_id),
+    can_issue: mode === "review" && await hasPermission(c, p, "report.issue", ctx.a.company_id, ctx.a.site_id),
     mode,
   };
 }

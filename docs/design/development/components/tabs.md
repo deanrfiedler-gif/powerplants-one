@@ -94,6 +94,12 @@ The [Organisations implementation](../../../decisions/organisations-figma-implem
 
 The `/estimating/discovery` host reuses this component under the [native register record](../../../decisions/discovery-register-native.md). Page-specific 40 px rows and phone lists stay scoped to the register. Fixtures cover loading, no matches, empty, denied, failed/retried and view-only states; see `tests/browser/discovery-register.spec.ts` and `tests/helpers/discovery-register.ts`. Owner visual review is pending; the shared implementation is not granted new approval.
 
+## Service requests consumer
+
+SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-02`, `route:/service/tickets/[id]`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
+
+`RecordTabs.disabled` keeps all tabs visible but unavailable while a consumer owns an unsaved edit form. Service requests keeps the Triage panel and its labelled relationship present until save or cancel; other consumers retain normal keyboard navigation.
+
 ## SV-06 host binding
 
 Service review and reports uses this existing component in `route:/service/reports/[id]`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.
@@ -101,3 +107,16 @@ Service review and reports uses this existing component in `route:/service/repor
 ## CS-08 Site surveys consumer
 
 The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. No new public control API is introduced for this consumer.
+
+## Sites CS-04 consumer
+
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
+
+## FI-06 consumer
+
+The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

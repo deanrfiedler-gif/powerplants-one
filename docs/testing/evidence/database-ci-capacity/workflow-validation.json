@@ -1,0 +1,57 @@
+{
+  "baseline": "f13bd157835c3fb511885cefae321ba98cc32d86",
+  "boundary": "Configuration and aggregate execution proof only; no application or database tests executed.",
+  "whole_workflow_comparison": "Only database_shard 1/4..4/4 to 1/8..8/8 differs in parsed workflow",
+  "retained": [
+    "all jobs and commands",
+    "90-minute job deadline",
+    "120-second test deadline",
+    "serial database files",
+    "complete database glob",
+    "pinned actions/runtime/services",
+    "evidence paths and lane-specific names",
+    "mandatory aggregate"
+  ],
+  "database_lanes": [
+    {
+      "suite": "database-1",
+      "database_shard": "1/8"
+    },
+    {
+      "suite": "database-2",
+      "database_shard": "2/8"
+    },
+    {
+      "suite": "database-3",
+      "database_shard": "3/8"
+    },
+    {
+      "suite": "database-4",
+      "database_shard": "4/8"
+    },
+    {
+      "suite": "database-5",
+      "database_shard": "5/8"
+    },
+    {
+      "suite": "database-6",
+      "database_shard": "6/8"
+    },
+    {
+      "suite": "database-7",
+      "database_shard": "7/8"
+    },
+    {
+      "suite": "database-8",
+      "database_shard": "8/8"
+    }
+  ],
+  "aggregate_truth_table_exit_codes": {
+    "success": 0,
+    "failure": 1,
+    "cancelled": 1,
+    "skipped": 1,
+    "missing": 1
+  },
+  "bash_syntax_steps_checked": 60
+}

@@ -44,6 +44,7 @@ export async function resolveHost(c: QueryClient, p: Principal, host: Host): Pro
 
 // ---------------------------------------------------------------------------------------------
 export type AttemptRow = {
+  reading_instrument_version?: number;
   id: string; company_id: string; site_id: string | null; host_type: Host["host_type"]; host_id: string; version: number; created_at: Date; created_by: string; updated_at: Date;
   attempt_number: number; predecessor_id: string | null; state: "Draft" | "Submitted"; plan_source: { type: string; id: string; reference: string; hash: string; slot?: string }; plan: CheckDefinition[]; plan_hash: string;
   scope_keys: string[]; check_keys: string[]; configuration_reference: string | null; configuration_source_id: string | null; performer_id: string; occurred_at: Date | null; timezone: string | null; clock_concern: string | null;
@@ -52,6 +53,7 @@ export type AttemptRow = {
 export type ResultRow = { id: string; attempt_id: string; check_key: string; entry_state: Reading["state"]; raw_value: string | null; unit: string | null; choice: string | null; reason: string | null; note: string | null; evaluation: Evaluation | null; evaluation_reason: string | null; compared: string | null; rule_version: string | null };
 export type EvidenceRow = { id: string; attempt_id: string; check_key: string | null; kind: "RetainedSource" | "FieldEntry" | "StoredFile"; source_id: string | null; field_entry_id: string | null; field_entry_revision: number | null; storage_id: string | null; label: string; purpose: string; media_type: string | null; byte_count: number | null; content_hash: string | null; access_class: "Internal" | "CustomerSafe"; state: EvidenceState; added_by: string; added_at: Date; added_by_name: string };
 export type InstrumentRow = { measurement_type?:string|null; measurement_range?:string|null; measurement_unit?:string|null; certificate_reference?:string|null; certificate_revision?:string|null; id: string; reference: string; description: string; calibration_reference: string; calibration_version: string; valid_from: string; valid_to: string; withdrawn_effective_from: string | null; withdrawn_reason: string | null; withdrawn_recorded_at: Date | null };
+export type ReadingInstrumentRow = { attempt_id: string; check_key: string; instrument_id: string };
 export type InstrumentUseRow = { attempt_id: string; instrument_id: string; snapshot: Omit<InstrumentRow, "id" | "withdrawn_recorded_at"> };
 export type ReviewRow = { id: string; attempt_id: string; decision: ReviewDecision | "ClarificationProvided"; reason: string; submitted_hash: string; owner_id: string | null; due: string | null; policy: Record<string, unknown>; independence_required: boolean; operation_id: string; decided_by: string; decided_at: Date; decided_by_name: string; owner_name: string | null };
 export type DefectRow = {
@@ -64,10 +66,11 @@ export type DefectLink = { defect_id: string; attempt_id: string; relation: "Rai
 
 // The frozen content of an attempt: what a review, a defect and a release manifest bind to. Evidence is named
 // by identity and exact hash, so a changed file is a changed attempt.
-export function attemptHash(a: Pick<AttemptRow, "plan_hash" | "scope_keys" | "check_keys" | "configuration_reference" | "configuration_source_id" | "performer_id" | "timezone" | "clock_concern" | "prerequisites" | "findings"> & { occurred_at: string | null },
-  results: Pick<ResultRow, "check_key" | "entry_state" | "raw_value" | "unit" | "choice" | "reason" | "note">[], instruments: { instrument_id: string; snapshot: unknown }[], evidence: Pick<EvidenceRow, "id" | "check_key" | "kind" | "content_hash" | "label" | "purpose" | "access_class">[]) {
+export function attemptHash(a: Pick<AttemptRow, "plan_hash" | "scope_keys" | "check_keys" | "configuration_reference" | "configuration_source_id" | "performer_id" | "timezone" | "clock_concern" | "prerequisites" | "findings"> & { occurred_at: string | null; reading_instrument_version?: number },
+  results: Pick<ResultRow, "check_key" | "entry_state" | "raw_value" | "unit" | "choice" | "reason" | "note">[], instruments: { instrument_id: string; snapshot: unknown }[], evidence: Pick<EvidenceRow, "id" | "check_key" | "kind" | "content_hash" | "label" | "purpose" | "access_class">[], readingInstruments: Pick<ReadingInstrumentRow, "check_key" | "instrument_id">[] = []) {
   const by = <T>(rows: T[], key: (row: T) => string) => [...rows].sort((x, y) => key(x).localeCompare(key(y)));
   return sha256({
+    ...(a.reading_instrument_version === 1 ? { reading_instrument_version: 1, reading_instruments: by(readingInstruments, r=>r.check_key).map(({check_key,instrument_id})=>({check_key,instrument_id})) } : {}),
     plan_hash: a.plan_hash, scope_keys: [...a.scope_keys].sort(), check_keys: [...a.check_keys].sort(), configuration_reference: a.configuration_reference, configuration_source_id: a.configuration_source_id, performer_id: a.performer_id,
     occurred_at: a.occurred_at, timezone: a.timezone, clock_concern: a.clock_concern, prerequisites: a.prerequisites, findings: a.findings,
     results: by(results, (r) => r.check_key).map(({ check_key, entry_state, raw_value, unit, choice, reason, note }) => ({ check_key, entry_state, raw_value, unit, choice, reason, note })),
@@ -79,12 +82,13 @@ const toReading = (r: ResultRow, evidence: EvidenceRow[]): Reading => ({ check_k
 
 // ---------------------------------------------------------------------------------------------
 // Everything the core holds for a set of hosts, in a fixed handful of queries.
-export type LoadedAttempt = { row: AttemptRow; results: ResultRow[]; evidence: EvidenceRow[]; instruments: (InstrumentUseRow & { live: InstrumentRow | null; assessment: InstrumentAssessment; reason: string | null; expired_today: boolean })[]; reviews: ReviewRow[]; review: ReviewState; defects: DefectLink[] };
+export type LoadedAttempt = { reading_instruments: ReadingInstrumentRow[]; row: AttemptRow; results: ResultRow[]; evidence: EvidenceRow[]; instruments: (InstrumentUseRow & { live: InstrumentRow | null; assessment: InstrumentAssessment; reason: string | null; expired_today: boolean })[]; reviews: ReviewRow[]; review: ReviewState; defects: DefectLink[] };
 export async function loadInspections(c: QueryClient, p: Principal, hostType: Host["host_type"], hostIds: string[], today: string) {
   const args = [p.workspace_id, hostType, hostIds], user = (alias: string, column: string, inner = false) => `${inner ? "" : "LEFT "}JOIN ppo.users ${alias} ON (${alias}.workspace_id,${alias}.id)=(t.workspace_id,t.${column})`;
   const viaAttempt = "JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(t.workspace_id,t.attempt_id) WHERE t.workspace_id=$1 AND a.host_type=$2 AND a.host_id=ANY($3::uuid[])";
   const q = async <T extends Record<string, unknown>>(sql: string) => (hostIds.length ? (await c.query<T>(sql, args)).rows : []);
   const attempts = await q<AttemptRow>(`SELECT t.*,pf.display_name AS performer_name FROM ppo.inspection_attempts t ${user("pf", "performer_id", true)} WHERE t.workspace_id=$1 AND t.host_type=$2 AND t.host_id=ANY($3::uuid[]) ORDER BY t.attempt_number`),
+    readingInstruments = await q<ReadingInstrumentRow>(`SELECT t.attempt_id,t.check_key,t.instrument_id FROM ppo.inspection_reading_instruments t ${viaAttempt} ORDER BY t.check_key`),
     results = await q<ResultRow>(`SELECT t.* FROM ppo.inspection_results t ${viaAttempt} ORDER BY t.sort_order,t.check_key`),
     evidence = await q<EvidenceRow>(`SELECT t.*,ad.display_name AS added_by_name FROM ppo.inspection_evidence t ${user("ad", "added_by", true)} ${viaAttempt} ORDER BY t.added_at,t.id`),
     uses = await q<InstrumentUseRow>(`SELECT t.attempt_id,t.instrument_id,t.snapshot FROM ppo.inspection_instrument_uses t ${viaAttempt} ORDER BY t.attempt_id,t.instrument_id`),
@@ -98,6 +102,7 @@ export async function loadInspections(c: QueryClient, p: Principal, hostType: Ho
   const loaded: LoadedAttempt[] = attempts.map((row) => {
     const mine = reviews.filter((r) => r.attempt_id === row.id), occurred = row.occurred_at ? localDate(row.occurred_at, row.timezone) : null;
     return {
+      reading_instruments: readingInstruments.filter(r=>r.attempt_id===row.id),
       row, results: results.filter((r) => r.attempt_id === row.id), evidence: evidence.filter((e) => e.attempt_id === row.id), reviews: mine, review: reviewState(row.state, mine), defects: links.filter((l) => l.attempt_id === row.id),
       instruments: uses.filter((u) => u.attempt_id === row.id).map((u) => {
         const now = live.find((i) => i.id === u.instrument_id) ?? null, calibration = row.host_type === "ServiceAppointment" ? retainedCalibration(u.snapshot, now) : now ? calibrationOf(now) : null;
@@ -144,15 +149,15 @@ export async function openAttempt(c: PoolClient, p: Principal, input: OpenInput)
   const draft = (await c.query<{ attempt_number: number }>("SELECT attempt_number FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3 AND state='Draft' AND ($4::text IS NULL OR (plan_source->>'slot'=$4 AND performer_id=$5)) LIMIT 1", [p.workspace_id, input.host.host_type, input.host.host_id, slot ?? null, input.performer_id])).rows[0];
   if (draft) throw refuse("DraftOpen", `Attempt ${String(draft.attempt_number).padStart(2, "0")} is still a draft. Submit it before opening another.`, 409);
   const number = (await c.query<{ next: number }>("SELECT coalesce(max(attempt_number),0)+1 AS next FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3", [p.workspace_id, input.host.host_type, input.host.host_id])).rows[0].next;
-  const hash = planHash(input.plan), empty = { plan_hash: hash, scope_keys: input.scope_keys, check_keys: input.check_keys, configuration_reference: null, configuration_source_id: null, performer_id: input.performer_id, occurred_at: null, timezone: input.timezone, clock_concern: null, prerequisites: input.prerequisites, findings: null };
-  await c.query(`INSERT INTO ppo.inspection_attempts(id,workspace_id,company_id,site_id,host_type,host_id,created_by,updated_by,attempt_number,predecessor_id,plan_source,plan,plan_hash,scope_keys,check_keys,performer_id,timezone,prerequisites,content_hash)
-    VALUES($1,$2,$3,$4,$5,$6,$7,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)`,
+  const hash = planHash(input.plan), empty = { reading_instrument_version: input.host.host_type === "ServiceAppointment" ? 1 : 0, plan_hash: hash, scope_keys: input.scope_keys, check_keys: input.check_keys, configuration_reference: null, configuration_source_id: null, performer_id: input.performer_id, occurred_at: null, timezone: input.timezone, clock_concern: null, prerequisites: input.prerequisites, findings: null };
+  await c.query(`INSERT INTO ppo.inspection_attempts(id,workspace_id,company_id,site_id,host_type,host_id,created_by,updated_by,attempt_number,predecessor_id,plan_source,plan,plan_hash,scope_keys,check_keys,performer_id,timezone,prerequisites,content_hash,reading_instrument_version)
+    VALUES($1,$2,$3,$4,$5,$6,$7,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)`,
     [input.id, p.workspace_id, input.host.company_id, input.host.site_id, input.host.host_type, input.host.host_id, p.actor_id, number, input.predecessor_id, JSON.stringify(input.plan_source), JSON.stringify(input.plan), hash, JSON.stringify(input.scope_keys), JSON.stringify(input.check_keys),
-      input.performer_id, input.timezone, JSON.stringify(input.prerequisites), attemptHash(empty, [], [], [])]);
+      input.performer_id, input.timezone, JSON.stringify(input.prerequisites), attemptHash(empty, [], [], []), empty.reading_instrument_version]);
   return number;
 }
 
-export type SaveInput = { configuration_reference: string | null; configuration_source_id: string | null; occurred_at: string | null; timezone: string | null; clock_concern: string | null; prerequisites: Prerequisite[]; findings: string | null; readings: Reading[]; instrument_ids: string[] };
+export type SaveInput = { configuration_reference: string | null; configuration_source_id: string | null; occurred_at: string | null; timezone: string | null; clock_concern: string | null; prerequisites: Prerequisite[]; findings: string | null; readings: Reading[]; instrument_ids: string[]; reading_instruments?: Pick<ReadingInstrumentRow, "check_key" | "instrument_id">[] };
 async function lockDraft(c: PoolClient, p: Principal, host: Host, attemptId: string, expectedVersion: number) {
   const row = (await c.query<AttemptRow>("SELECT * FROM ppo.inspection_attempts WHERE workspace_id=$1 AND host_type=$2 AND host_id=$3 AND id=$4 FOR UPDATE", [p.workspace_id, host.host_type, host.host_id, attemptId])).rows[0];
   if (!row) throw unavailable();
@@ -165,7 +170,8 @@ async function rehash(c: PoolClient, p: Principal, row: AttemptRow, set = "", va
   const results = (await c.query<ResultRow>("SELECT * FROM ppo.inspection_results WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id, row.id])).rows,
     uses = (await c.query<InstrumentUseRow>("SELECT attempt_id,instrument_id,snapshot FROM ppo.inspection_instrument_uses WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id, row.id])).rows,
     evidence = (await c.query<EvidenceRow>("SELECT * FROM ppo.inspection_evidence WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id, row.id])).rows;
-  const hash = attemptHash({ ...at, occurred_at: at.occurred_at?.toISOString() ?? null }, results, uses, evidence);
+  const readingInstruments = (await c.query<ReadingInstrumentRow>("SELECT check_key,instrument_id FROM ppo.inspection_reading_instruments WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id,row.id])).rows;
+  const hash = attemptHash({ ...at, occurred_at: at.occurred_at?.toISOString() ?? null }, results, uses, evidence, readingInstruments);
   // Every write advances the version, the hash included; the version returned is the one the next command sends back.
   await c.query("UPDATE ppo.inspection_attempts SET content_hash=$3,version=version+1 WHERE workspace_id=$1 AND id=$2", [p.workspace_id, row.id, hash]);
   return { at: { ...at, version: at.version + 1, content_hash: hash }, results, uses, evidence };
@@ -177,6 +183,14 @@ export async function saveAttempt(c: PoolClient, p: Principal, host: Host, attem
   if (input.occurred_at && new Date(input.occurred_at).getTime() > Date.now() + 5 * 60_000) throw refuse("InvalidData", "The test time is in the future. Record when the test actually took place.");
   if (input.configuration_source_id && !(await c.query("SELECT 1 FROM ppo.material_sources WHERE workspace_id=$1 AND company_id=$2 AND id=$3 AND kind='InstalledConfiguration'", [p.workspace_id, row.company_id, input.configuration_source_id])).rowCount)
     throw refuse("InvalidData", "Choose an installed-configuration record retained for this package.");
+  if (row.reading_instrument_version === 1 && input.reading_instruments === undefined)
+    throw refuse("ReadingInstrumentRequired", "This draft requires explicit reading-to-instrument attribution. Reload the capture page.");
+  if (input.reading_instruments !== undefined) {
+    if (row.host_type !== "ServiceAppointment" || input.reading_instruments.some(link => !input.readings.some(r=>r.check_key===link.check_key) || !input.instrument_ids.includes(link.instrument_id)) || new Set(input.reading_instruments.map(r=>r.check_key)).size !== input.reading_instruments.length)
+      throw refuse("InvalidReadingInstrument", "Every attribution must name one saved reading and an instrument retained with this attempt.");
+    await c.query("UPDATE ppo.inspection_attempts SET reading_instrument_version=1,version=version+1 WHERE workspace_id=$1 AND id=$2 AND reading_instrument_version=0", [p.workspace_id,row.id]);
+  }
+  await c.query("DELETE FROM ppo.inspection_reading_instruments WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id,row.id]);
   await c.query("DELETE FROM ppo.inspection_results WHERE workspace_id=$1 AND attempt_id=$2", [p.workspace_id, row.id]);
   for (const [i, r] of input.readings.entries())
     await c.query("INSERT INTO ppo.inspection_results(id,workspace_id,company_id,attempt_id,check_key,entry_state,raw_value,unit,choice,reason,note,sort_order) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
@@ -189,6 +203,9 @@ export async function saveAttempt(c: PoolClient, p: Principal, host: Host, attem
     if (!found) throw refuse("InvalidData", "Choose an instrument from this company's calibration records.");
     const { id: _id, ...snapshot } = found; void _id;
     await c.query("INSERT INTO ppo.inspection_instrument_uses(workspace_id,company_id,attempt_id,instrument_id,snapshot) VALUES($1,$2,$3,$4,$5)", [p.workspace_id, row.company_id, row.id, id, JSON.stringify(retainedUses.find(u=>u.instrument_id===id)?.snapshot ?? snapshot)]);
+  }
+  for (const link of input.reading_instruments ?? []) {
+    await c.query("INSERT INTO ppo.inspection_reading_instruments(workspace_id,company_id,attempt_id,check_key,instrument_id) VALUES($1,$2,$3,$4,$5)", [p.workspace_id,row.company_id,row.id,link.check_key,link.instrument_id]);
   }
   return (await rehash(c, p, row, "configuration_reference=$4,configuration_source_id=$5,occurred_at=$6,timezone=$7,clock_concern=$8,prerequisites=$9,findings=$10",
     [input.configuration_reference, input.configuration_source_id, input.occurred_at, input.timezone ?? row.timezone, input.clock_concern, JSON.stringify(input.prerequisites), input.findings])).at;

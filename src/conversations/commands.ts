@@ -3,6 +3,7 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
 import { AppError, unavailable } from "../platform/errors";
 import { sharedOperation, type OperationResult } from "../platform/operations";
+import { hasPermission } from "../platform/permissions";
 import { conversationOutboxKind, type AskInput, type MentionInput } from "./model";
 import {
   askDeadlineInput,
@@ -34,8 +35,17 @@ const today = async (c: PoolClient) =>
 const refused = (code: string, message: string, field: string) =>
   new AppError(422, code, message, [{ field, message }]);
 
+async function agentAuthority(c: PoolClient, p: Principal, anchor: Pick<Anchor, "type" | "id">, input: Composition) {
+  const index = input.mentions.findIndex(m => m.kind === "Agent");
+  if (index < 0) return;
+  const scope = await readableAnchor(c, p, anchor.type, anchor.id, "conversation.post");
+  if (!(await hasPermission(c, p, "conversation.agent.ask", scope.company_id, scope.site_id ?? undefined)))
+    throw refused("TagNotPermitted", "You do not hold the duty to ask the assistant on this record.", `mentions.${index}`);
+}
+
 // Checks run before any row is written, so a refused message leaves nothing behind.
 async function checkComposition(c: PoolClient, p: Principal, anchor: Pick<Anchor, "type" | "id">, input: Composition) {
+  await agentAuthority(c, p, anchor, input);
   for (const [index, m] of input.mentions.entries()) {
     if (m.kind === "Person") {
       if (m.person_id === p.actor_id && input.asks.some((a) => a.ordinal === m.ordinal))
@@ -47,7 +57,7 @@ async function checkComposition(c: PoolClient, p: Principal, anchor: Pick<Anchor
           "That person cannot open this record, so they cannot be tagged in its thread.",
           `mentions.${index}`,
         );
-    } else if (!(await recordOpenable(c, p.workspace_id, p.actor_id, m.record_type, m.record_id)))
+    } else if (m.kind === "Record" && !(await recordOpenable(c, p.workspace_id, p.actor_id, m.record_type, m.record_id)))
       throw refused("LinkNotPermitted", "You can only link a record you can open.", `mentions.${index}`);
   }
   const current = await today(c);
@@ -113,11 +123,18 @@ async function writeMessage(
     );
     asks.push({ id: ask, asked_id: asked.person_id });
   }
+  const agentTurn = input.mentions.some(m => m.kind === "Agent") ? randomUUID() : null;
+  if (agentTurn)
+    await c.query(
+      "INSERT INTO ppo.assistant_turns(id,workspace_id,thread_id,trigger_message_id,acted_for_id) VALUES($1,$2,$3,$4,$5)",
+      [agentTurn, p.workspace_id, thread, id, p.actor_id],
+    );
   return {
     id,
     created,
     mentioned: [...new Set(input.mentions.flatMap((m) => (m.kind === "Person" ? [m.person_id] : [])))],
     asks,
+    agent_turn_id: agentTurn,
   };
 }
 
@@ -130,7 +147,9 @@ export async function startThread(p: Principal, value: unknown) {
     // U1: any reader who holds the post capability may start a thread.
     async (c) => {
       await readableAnchor(c, p, input.anchor_type, input.anchor_id, "conversation.read");
-      return readableAnchor(c, p, input.anchor_type, input.anchor_id, "conversation.post");
+      const anchor = await readableAnchor(c, p, input.anchor_type, input.anchor_id, "conversation.post");
+      await agentAuthority(c, p, anchor, input);
+      return anchor;
     },
     async (c, anchor): Promise<OperationResult> => {
       await checkComposition(c, p, { type: anchor.type, id: anchor.id }, input);
@@ -163,6 +182,7 @@ export async function startThread(p: Principal, value: unknown) {
           mentioned: message.mentioned,
           asked: message.asks.map((a) => a.asked_id),
           ask_ids: message.asks.map((a) => a.id),
+          ...(message.agent_turn_id ? { agent_turn_id: message.agent_turn_id } : {}),
         },
       };
     },
@@ -177,7 +197,11 @@ export async function postMessage(p: Principal, thread: string, value: unknown) 
     p,
     input,
     "Conversation:PostMessage",
-    async (c) => visibleThread(c, p, input.thread_id, "conversation.post"),
+    async (c) => {
+      const thread = await visibleThread(c, p, input.thread_id, "conversation.post");
+      await agentAuthority(c, p, { type: thread.anchor_type, id: thread.anchor_id }, input);
+      return thread;
+    },
     async (c, row): Promise<OperationResult> => {
       if (row.state !== "Open")
         throw new AppError(409, "ThreadResolved", "Reopen the thread before posting in it.");
@@ -215,6 +239,7 @@ export async function postMessage(p: Principal, thread: string, value: unknown) 
           asked: message.asks.map((a) => a.asked_id),
           ask_ids: message.asks.map((a) => a.id),
           answered_asks: answered,
+          ...(message.agent_turn_id ? { agent_turn_id: message.agent_turn_id } : {}),
         },
       };
     },

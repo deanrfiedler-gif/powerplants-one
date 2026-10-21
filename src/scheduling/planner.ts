@@ -1092,12 +1092,9 @@ export async function decideChangeRequest(
         blocked("status", "This request already has a decision.");
       let changed: Awaited<ReturnType<typeof applyBooking>> | undefined;
       if (action === "accept") {
-        if (a.schedule_version !== request.expected_schedule_version)
-          throw new AppError(
-            409,
-            "VersionConflict",
-            "The booking changed after this request. Record a new request.",
-          );
+        // PL-04 D4: the request's original schedule is evidence, not a veto.
+        // The decision still binds the current appointment/request versions;
+        // applyBooking rechecks current scope, policy, crew and reservations.
         const crew = (
           await c.query(
             "SELECT resource_id,resource_version,calendar_version,crew_role,travel_before_minutes,travel_after_minutes,travel_reason FROM ppo.schedule_request_crew WHERE workspace_id=$1 AND request_id=$2 ORDER BY resource_id",
@@ -1272,6 +1269,18 @@ async function appointmentActions(
 export async function appointmentDetail(c: QueryClient, p: Principal, id: string) {
   const core = await appointmentCore(c, p, id),
     { a, w, r } = core;
+  let primaryContactName: string | null = null;
+  if (core.site.primary_contact_id) {
+    try {
+      primaryContactName = (await visible(c, p, "Person", core.site.primary_contact_id)).display_name;
+    } catch (error) {
+      if (!(error instanceof AppError) || ![403, 404].includes(error.status)) throw error;
+    }
+  }
+  const owner = (await c.query<{ display_name: string }>(
+    "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+    [p.workspace_id, w.service_owner_id],
+  )).rows[0];
   const contacts = (
     await c.query(
       "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 ORDER BY created_at DESC,id",
@@ -1337,6 +1346,9 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
   ).rows;
   return {
     ...appointmentHeader(core),
+    customer_id: core.customer.id,
+    primary_contact_name: primaryContactName,
+    service_owner_name: owner?.display_name ?? null,
     contacts,
     requests,
     followups,
@@ -1346,7 +1358,7 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
     policy_impacts: await policyImpactHolds(c, p, id),
     readiness: await readiness(c, p, r, a.id),
     authorisation_blockers: await blockers(c, p, w, r),
-    actions: { ...await appointmentActions(c, p, a), can_resolve_policy: await canResolvePolicyImpact(c, p, a.company_id, a.site_id, w.service_owner_id) },
+    actions: { ...await appointmentActions(c, p, a), can_read_supply: await hasPermission(c, p, "supply.read", a.company_id, a.site_id), can_resolve_policy: await canResolvePolicyImpact(c, p, a.company_id, a.site_id, w.service_owner_id) },
   };
 }
 export async function scheduleSummaries(c: QueryClient, p: Principal, ids: string[]) {
@@ -1368,6 +1380,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
         customer_name: string;
         primary_contact_id: string | null;
         can_manage: boolean;
+        can_read_supply: boolean;
         can_request: boolean;
         can_contact: boolean;
         can_resolve_policy: boolean;
@@ -1379,6 +1392,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
          a.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR a.scope_version<>sr.version) AS scope_review_required,
         site.display_name AS site_name,site.primary_contact_id,customer.display_name AS customer_name,
         ${scopeSql("a.company_id", "a.site_id", "schedule.manage")} AS can_manage,
+        ${scopeSql("a.company_id", "a.site_id", "supply.read")} AS can_read_supply,
         ${scopeSql("a.company_id", "a.site_id", "schedule.request")} AS can_request,
         ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact,
         (${policyReads.map(cap => scopeSql("a.company_id", "a.site_id", cap)).join(" AND ")}
@@ -1438,7 +1452,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
     const affected = (await c.query("SELECT DISTINCT appointment_id FROM ppo.scheduling_policy_impacts WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])", [p.workspace_id, permitted])).rows;
     for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
   }
-  return rows.map(({ can_manage, can_request, can_contact, can_resolve_policy, ...a }) => ({
+  return rows.map(({ can_manage, can_read_supply, can_request, can_contact, can_resolve_policy, ...a }) => ({
     ...a,
     projection: "ScheduleSummary" as const,
     policy_impacts: impacts.get(a.id) ?? [],
@@ -1447,7 +1461,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
       .filter((x) => x.appointment_id === a.id)
       .map(({ id, status }) => ({ id, status })),
     policy: policies.get(a.scheduling_policy_id ?? SCHEDULING_POLICY_ID)!,
-    actions: { can_manage, can_request, can_contact, can_resolve_policy },
+    actions: { can_manage, can_read_supply, can_request, can_contact, can_resolve_policy },
   }));
 }
 export async function readAppointment(

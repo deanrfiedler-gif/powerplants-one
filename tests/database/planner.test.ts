@@ -145,6 +145,20 @@ async function snapshot(n: number) {
     ),
   };
 }
+test("SV04 detail projects permitted names and scoped supply navigation without granting authority", async () => {
+  const actor = await p(), a = await appointment();
+  const contact = (await rows("SELECT display_name FROM ppo.people WHERE workspace_id=$1 AND id=$2", [workspace, a.primary_contact_id]))[0];
+  const serviceOwner = (await rows("SELECT u.display_name FROM ppo.work_orders w JOIN ppo.users u ON (u.workspace_id,u.id)=(w.workspace_id,w.service_owner_id) WHERE w.workspace_id=$1 AND w.id=$2", [workspace,a.work_order_id]))[0];
+  assert.equal(a.primary_contact_name, contact.display_name);
+  assert.equal(a.service_owner_name, serviceOwner.display_name);
+  assert.equal(typeof a.customer_id, "string");
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='supply.read'", [workspace,actor.actor_id]);
+  assert.equal((await readAppointment(actor,a.id)).items[0].actions.can_read_supply,false);
+  await rows("UPDATE ppo.sites SET primary_contact_id=NULL WHERE workspace_id=$1 AND id=$2",[workspace,a.site_id]);
+  assert.equal((await readAppointment(actor,a.id)).items[0].primary_contact_name,null);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='shared.read'",[workspace,actor.actor_id]);
+  await assert.rejects(()=>readAppointment(actor,a.id),e => [403,404].includes((e as {status:number}).status));
+});
 test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits", async () => {
   await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
@@ -244,7 +258,7 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
   );
   assert.deepEqual(
     (await rows("SELECT version FROM public.ppo_migrations ORDER BY version")).map(r=>r.version),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115],
   );
 });
 test("confirmation reserves full crew with exact evidence and immutable original receipt; changed operation and stale retry refused", async () => {
@@ -1099,4 +1113,39 @@ test("unchanged accepted operation recovers after connection restart and repeat 
   await seed();
   assert.deepEqual(await snapshot(6), before);
   assert.deepEqual(await readOperation(actor, input.operation_id), a.receipt);
+});
+
+
+test("PL-04 stale request can be reconsidered against the current complete booking", async () => {
+  const actor=await p(), a=await appointment(1), rid=randomUUID();
+  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:crew(1,2)});
+  await moveAppointment(actor,a.id,{...await cmd(1,crew(1,2)),start_at:"2031-09-23T00:00:00Z",end_at:"2031-09-23T02:00:00Z"});
+  const current=await appointment(1);
+  assert.notEqual(current.schedule_version,current.requests.find(r=>r.id===rid)!.expected_schedule_version);
+  const {crew:_crew,...decision}=await cmd(1);void _crew;
+  const receipt=await decideChangeRequest(actor,rid,{...decision,expected_request_version:1},"accept");
+  assert.equal(receipt.receipt.state,"Accepted");
+  const changed=await appointment(1);
+  assert.equal(new Date(changed.start_at).toISOString(),"2031-09-24T00:00:00.000Z");
+  assert.equal(changed.customer_commitment,"Changed");
+  assert.equal(changed.pack_requirement,"ReviewRequired");
+  assert.ok(changed.history.length>current.history.length);
+});
+
+test("PL-04 stale request still refuses changed appointment, request and mismatched resource evidence without reservation loss", async () => {
+  const actor=await p(), a=await appointment(1), rid=randomUUID();
+  // Published resource evidence is immutable. Retain a request carrying a
+  // mismatched resource comparison, then prove acceptance rechecks the source.
+  const comparedCrew = crew(1,2).map((member,index) => index === 0 ? {...member,resource_version:member.resource_version+1} : member);
+  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:comparedCrew});
+  await moveAppointment(actor,a.id,{...await cmd(1,crew(1,2)),start_at:"2031-09-23T00:00:00Z",end_at:"2031-09-23T02:00:00Z"});
+  const before=await snapshot(1), {crew:_crew,...decision}=await cmd(1);void _crew;
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,expected_version:a.version,expected_request_version:1},"accept"),code("VersionConflict"));
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:2},"accept"),code("VersionConflict"));
+  const resourceBefore = await rows("SELECT * FROM ppo.resources WHERE id=$1",[id("a4",1)]);
+  await assert.rejects(database().query("UPDATE ppo.resources SET version=version+1 WHERE id=$1",[id("a4",1)]),code("55000"));
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:1},"accept"),code("VersionConflict"));
+  assert.deepEqual(await snapshot(1),before);
+  assert.deepEqual(await rows("SELECT * FROM ppo.resources WHERE id=$1",[id("a4",1)]),resourceBefore);
+  assert.equal((await appointment(1)).requests.find(r=>r.id===rid)?.status,"Pending");
 });

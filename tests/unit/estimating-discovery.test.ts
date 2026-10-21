@@ -381,3 +381,37 @@ test("E2 rejects repeated or oversized fields without truncating accepted origin
   unsupported.scope.unsupported_scope = follow();
   assert.equal(compileDiscovery(unsupported).scope_readiness, "Incomplete");
 });
+
+test("E2-A03 every work-tag and conditional-choice combination preserves explicit applicability", () => {
+  // Independent expected applicability, including owned Unknown choices.
+  for (let mask = 1; mask < 8; mask++)
+    for (const labour of ["Yes", "No", "Unknown"])
+      for (const freight of ["PPO", "Customer", "Unknown"]) {
+        const f = fixture();
+        f.scope.systems = f.scope.systems.filter((_, index) => mask & (1 << index));
+        const ids = ["Q01", "Q02", "Q03", "Q04",
+          ...(mask & 1 ? ["Q05", "Q06"] : []),
+          ...(mask & 2 ? ["Q07", ...(labour === "Yes" ? ["Q08"] : [])] : []),
+          ...(mask & 4 ? ["Q09", ...(freight === "PPO" ? ["Q10"] : [])] : [])];
+        f.answers.push(answer("Q08", "SYN explicit on-site work"));
+        change(f, "Q07", { value: labour, state: labour === "Unknown" ? "Answered" : "Confirmed", follow_up: labour === "Unknown" ? follow() : null });
+        change(f, "Q09", { value: freight, state: freight === "Unknown" ? "Answered" : "Confirmed", follow_up: freight === "Unknown" ? follow() : null });
+        f.answers = f.answers.filter(a => ids.includes(a.question_id));
+        const compiled = compileDiscovery(f);
+        assert.deepEqual(compiled.input.answers.map(a => a.question_id).sort(), ids.sort());
+        assert.equal(compiled.scope_readiness, (mask & 2 && labour === "Unknown") || (mask & 4 && freight === "Unknown") ? "Incomplete" : "Complete");
+        assert.equal(compiled.delivery_routing.status, "NotConfigured");
+      }
+});
+
+test("E2-A04 definition choice and condition changes cannot silently reuse confirmation", () => {
+  for (const [id, patch] of [
+    ["Q09", { choices: ["PPO", "Customer", "ThirdParty", "Unknown"] }],
+    ["Q08", { when: { question_id: "Q07", equals: "No" } }],
+  ] as const) {
+    const next = structuredClone(discoveryDefinition) as Definition;
+    Object.assign(next.questions.find(q => q.id === id)!, patch);
+    const changes = compareDefinitions(discoveryDefinition, next);
+    assert.equal(changes.find(q => q.question_id === id)!.disposition, "Incompatible");
+  }
+});

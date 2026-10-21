@@ -8,6 +8,7 @@ import {
 } from "../../platform/permissions";
 import { envelope, page, visibility, visible } from "../reads";
 import { invalid, object, uuid } from "../validation";
+import { facilityViews, type FacilityViewCounts } from "./presentation";
 import {
   fields,
   structures,
@@ -164,6 +165,22 @@ export async function projectFacility(
           },
     updated_at: row.updated_at.toISOString(),
     updated_by: row.updated_by,
+    updated_by_name: (
+      await c.query(
+        "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, row.updated_by],
+      )
+    ).rows[0]?.display_name,
+    counts: (
+      await c.query<{ equipment: number; sources: number; history: number }>(
+        `SELECT
+        (SELECT count(*)::integer FROM ppo.assets a WHERE a.workspace_id=$1 AND ${visibility("Asset", "a")} AND
+          (a.facility_id=$3 OR EXISTS (SELECT 1 FROM ppo.asset_served_facilities l WHERE l.workspace_id=a.workspace_id AND l.asset_id=a.id AND l.facility_id=$3 AND l.ended_at IS NULL))) AS equipment,
+        (SELECT count(*)::integer FROM ppo.facility_sources WHERE workspace_id=$1 AND facility_id=$3) AS sources,
+        (SELECT count(*)::integer FROM ppo.audit_events WHERE workspace_id=$1 AND object_type='Facility' AND object_id=$3) AS history`,
+        [p.workspace_id, p.actor_id, row.id],
+      )
+    ).rows[0],
     can_edit: await hasPermission(
       c,
       p,
@@ -242,6 +259,10 @@ export type RegisterRow = {
   footprint_m2: string | null;
   on_site_position: string | null;
   updated_at: string;
+  measurement_basis: string | null;
+  installed_equipment_count: number;
+  updated_by_name: string;
+  timezone: string;
   has_children: boolean;
   ancestor_path?: { id: string; name: string }[];
   organisation_roles?: string[];
@@ -258,6 +279,7 @@ export async function registerFacilities(p: Principal, input: unknown = {}) {
     "cursor",
     "parent_id",
     "exclude_id",
+    "area_view",
   ]);
   const limit = q.limit === undefined ? 50 : Number(q.limit);
   if (!Number.isInteger(limit) || limit < 1 || limit > 200)
@@ -284,7 +306,10 @@ export async function registerFacilities(p: Principal, input: unknown = {}) {
           ? "root"
           : uuid(q.parent_id, "parent_id"),
     exclude_id: q.exclude_id ? uuid(q.exclude_id, "exclude_id") : null,
+    area_view: q.area_view ?? "all",
   };
+  if (!Object.hasOwn(facilityViews, String(filters.area_view)))
+    invalid("area_view", "Choose a listed Facilities view.");
   for (const [field, choices] of [
     ["structure_type", structures],
     ["use", uses],
@@ -313,6 +338,21 @@ export async function registerFacilities(p: Principal, input: unknown = {}) {
     return `$${args.length}`;
   };
   const where = ["f.workspace_id=$1", visibility("Facility", "f")];
+  const growing = `f."use" IN ('propagation','production','trials','mixed')`;
+  const incomplete = `(f.structure_type IS NULL OR f.structure_type='unknown' OR f."use" IS NULL OR f."use"='unknown' OR f.footprint_m2 IS NULL)`;
+  const counts = (
+    await c.query(
+      `SELECT count(*)::integer AS all,
+    count(*) FILTER (WHERE ${growing})::integer AS growing,
+    count(*) FILTER (WHERE f."use"='non_growing')::integer AS non_growing,
+    count(*) FILTER (WHERE ${incomplete})::integer AS incomplete
+    FROM ppo.facilities f WHERE ${where.join(" AND ")}`,
+      args,
+    )
+  ).rows[0] as FacilityViewCounts;
+  if (filters.area_view === "growing") where.push(growing);
+  if (filters.area_view === "non_growing") where.push(`f."use"='non_growing'`);
+  if (filters.area_view === "incomplete") where.push(incomplete);
   if (filters.site_id) where.push(`f.site_id=${bind(filters.site_id)}`);
   if (filters.organisation_id)
     where.push(
@@ -371,9 +411,12 @@ export async function registerFacilities(p: Principal, input: unknown = {}) {
     );
   }
   const result = await c.query(
-    `SELECT f.id,f.name,f.site_id,f.company_id,s.display_name AS site_name,bi.display_number AS reference,f.parent_facility_id,par.name AS parent_name,
+    `SELECT f.id,f.name,f.site_id,f.company_id,s.display_name AS site_name,s.timezone,bi.display_number AS reference,f.parent_facility_id,par.name AS parent_name,
     CASE WHEN f.parent_facility_id IS NOT NULL THEN coalesce(f.parent_relationship,'grouping') END AS parent_relationship,f.structure_type,f."use",f.crop,f.footprint_m2::text,f.on_site_position,f.updated_at,
     EXISTS(SELECT 1 FROM ppo.facilities ch WHERE ch.workspace_id=f.workspace_id AND ch.parent_facility_id=f.id) AS has_children,
+    f.measurement_basis,
+    (SELECT count(*)::integer FROM ppo.assets a WHERE a.workspace_id=f.workspace_id AND a.facility_id=f.id AND ${visibility("Asset", "a")}) AS installed_equipment_count,
+    (SELECT u.display_name FROM ppo.users u WHERE u.workspace_id=f.workspace_id AND u.id=f.updated_by) AS updated_by_name,
     ${sort} AS sort_value,lower(f.name) AS sort_name ${joins} WHERE ${where.join(" AND ")}
     ORDER BY ${sort} COLLATE "C" ${filters.sort === "updated" ? "DESC" : "ASC"},lower(f.name) COLLATE "C",f.id LIMIT ${bind(limit + 1)}`,
     args,
@@ -431,6 +474,7 @@ export async function registerFacilities(p: Principal, input: unknown = {}) {
     ),
     context_ancestors: ancestors,
     total,
+    view_counts: counts,
     can_create: filters.site_id
       ? await hasPermission(
           c,
@@ -476,16 +520,44 @@ export async function facilityEquipment(
   id: string,
   input: unknown = {},
 ) {
-  const q = object(input, ["cursor"]);
+  const q = object(input, ["cursor", "state"]);
+  if (q.state !== undefined && q.state !== "ended")
+    invalid("state", "Choose ended service links or current equipment.");
   const c = database();
   const f = await visible(c, p, "Facility", uuid(id, "id"));
   const pg = cursor(
-    { actor: p.actor_id, workspace: p.workspace_id, equipment: id },
+    {
+      actor: p.actor_id,
+      workspace: p.workspace_id,
+      equipment: id,
+      state: q.state ?? "current",
+    },
     q.cursor,
   );
+  if (q.state === "ended") {
+    const rows = (
+      await c.query(
+        `SELECT l.id,a.id AS equipment_id,a.description,a.display_number,
+      a.facility_id,loc.name AS installed_name,l.ended_at,l.end_reason,u.display_name AS ended_by_name
+      FROM ppo.asset_served_facilities l JOIN ppo.assets a ON a.workspace_id=l.workspace_id AND a.id=l.asset_id
+      LEFT JOIN ppo.facilities loc ON loc.workspace_id=a.workspace_id AND loc.id=a.facility_id AND ${visibility("Facility", "loc")}
+      JOIN ppo.users u ON u.workspace_id=l.workspace_id AND u.id=l.ended_by
+      WHERE l.workspace_id=$1 AND l.facility_id=$3 AND l.ended_at IS NOT NULL AND ${visibility("Asset", "a")}
+      AND ($4::uuid IS NULL OR l.id>$4) ORDER BY l.id LIMIT 51`,
+        [p.workspace_id, p.actor_id, id, pg.after?.[2] ?? null],
+      )
+    ).rows;
+    return envelope(
+      rows.slice(0, 50),
+      rows.length > 50 ? pg.encode(["", "", rows[49].id]) : null,
+    );
+  }
   const rows = (
     await c.query(
-      `SELECT a.id,a.description,a.display_number,a.version,a.facility_id,a.site_id,loc.name AS installed_name,(a.facility_id=$3) AS installed,l.id AS link_id,
+      `SELECT a.id,a.description,a.display_number,a.version,a.facility_id,a.site_id,loc.name AS installed_name,(a.facility_id=$3) AS installed,l.id AS link_id,l.recorded_at AS serving_since,
+    (SELECT coalesce(jsonb_agg(jsonb_build_object('id',sf.id,'name',sf.name) ORDER BY sf.name,sf.id),'[]'::jsonb)
+      FROM ppo.asset_served_facilities sl JOIN ppo.facilities sf ON sf.workspace_id=sl.workspace_id AND sf.id=sl.facility_id
+      WHERE sl.workspace_id=a.workspace_id AND sl.asset_id=a.id AND sl.ended_at IS NULL AND ${visibility("Facility", "sf")}) AS serves,
     CASE WHEN s.id IS NOT NULL THEN to_jsonb(s) || jsonb_build_object('source_date',s.source_date::text) END AS source
     FROM ppo.assets a LEFT JOIN ppo.facilities loc ON loc.workspace_id=a.workspace_id AND loc.id=a.facility_id
     LEFT JOIN ppo.asset_served_facilities l ON l.workspace_id=a.workspace_id AND l.asset_id=a.id AND l.facility_id=$3 AND l.ended_at IS NULL
@@ -494,12 +566,10 @@ export async function facilityEquipment(
       [p.workspace_id, p.actor_id, id, pg.after?.[2] ?? null],
     )
   ).rows;
-  const items = rows
-    .slice(0, 50)
-    .map((r) => ({
-      ...r,
-      source: r.source ? sourceProjection(r.source) : null,
-    }));
+  const items = rows.slice(0, 50).map((r) => ({
+    ...r,
+    source: r.source ? sourceProjection(r.source) : null,
+  }));
   return {
     ...envelope(
       items,

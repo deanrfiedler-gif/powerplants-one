@@ -1,2 +1,2 @@
-import { ChangesWorkspaceScreen } from "../../../../scheduling/components/client/review-workspaces.client";
+import { ChangesWorkspaceScreen } from "../../../../scheduling/components/client/changes-workspace.client";
 export default function Page() { return <ChangesWorkspaceScreen/>; }

@@ -64,9 +64,14 @@ export async function prepareReturnVisit(
   // controlled replacement, retaining the original rather than patching it.
   expect(before.preparation_status).toBe("Unknown");
   await page.goto(`/service/appointments/${aid}`);
-  await page
-    .getByRole("button", { name: "Cancel appointment", exact: true })
-    .click();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.locator("#shell-header").getByRole("button", { name: "More actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Cancel appointment", exact: true }).click();
+  } else {
+    await page.getByRole("button", { name: "Appointment actions", exact: true }).click();
+    await page.getByRole("dialog", { name: "Appointment actions", exact: true })
+      .getByRole("button", { name: "Cancel appointment", exact: true }).click();
+  }
   await page
     .getByLabel("Cancellation reason")
     .fill(

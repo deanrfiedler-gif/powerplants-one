@@ -341,6 +341,17 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // rows, four identity types, eight outbox kinds and two default-denied duties. No seed, grant,
   // user or existing row changes; every class stays Off, and the hosted worker does not drain the
   // synthetic queue. Existing all-table runtime privileges cover the new tables.
+  // 0110 (Conversations T2b) adds empty agent-turn, answer-part and budget-ledger tables,
+  // nullable agent message columns, the AssistantTurn identity and conversation.agent.ask.
+  // Seed 110 replays as the owner: it copies only active PPO-LocalSynthetic posters' live grants
+  // and inserts the workspace ceiling. Hosted testers gain no ask duty. Carl remains off there;
+  // existing all-table runtime privileges cover these objects, with no provider or hosted worker.
+  // 0111 adds two initially empty Activity extension/binding tables and a binding
+  // validator. Existing rows, identities, grants, seeds and hosted users are unchanged;
+  // all-table runtime privileges cover both new tables. No external worker is added.
+
+  // 0112 adds an empty immutable customer-statement table and one outbox kind.
+  // No identity, grant, seed or existing row changes; all-table runtime privileges cover it.
   // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
   // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
   // grants, users or seeds change; existing runtime privileges and historical receipts remain.
@@ -349,7 +360,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // surveys receive a first reference; photos gain original-format facts with historical PNG defaults.
   // No capability, grant, identity provider or operational namespace is enabled. Existing table
   // privileges cover the additive fields; the migration flushes deferred identity constraints.
-  if (latestMigrationVersion !== 114) throw Error("Review the existing-demo upgrade for this release.");
+  // 0115 adds explicit reading attribution. Existing attempts gain only a zero contract
+  // marker: hashes, readings, snapshots and issued output bytes are unchanged. The empty
+  // attribution table uses existing all-table runtime grants; no seed, user or grant changes.
+  if (latestMigrationVersion !== 115) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

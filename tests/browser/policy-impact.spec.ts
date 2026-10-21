@@ -2,9 +2,9 @@ import { test, expect } from "@playwright/test";
 import { openAccountPanel } from "../helpers/phone-menu";
 const path =
   "/schedule/policy-impact?day=2031-09-21&timezone=Australia/Brisbane";
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, baseURL }) => {
   const response = await page.request.post("/api/v1/local-session", {
-    headers: { Origin: "http://127.0.0.1:3000" },
+    headers: { Origin: baseURL! },
     data: { profile: "coordinator" },
   });
   expect(response.ok()).toBeTruthy();
@@ -22,12 +22,19 @@ test("policy analysis is read-only, clears edited results and hands over the exa
       writes.push(r.url());
   });
   await page.getByLabel("Proposed maximum visit (minutes)").fill("60");
+  const comparedRead = page.waitForResponse(response => {
+    const url = new URL(response.url());
+    return url.pathname === "/api/v1/schedule/policy-impact" && url.searchParams.has("max_visit_minutes") && response.request().method() === "GET" && response.status() === 200;
+  });
   await page.getByRole("button", { name: "Compare future bookings" }).click();
   await expect(
     page.getByText("Visit exceeds the proposed duration limit").first(),
   ).toBeVisible();
-  const link = page.getByRole("link", { name: /^Review .*APT/ }).first();
-  await expect(link).toHaveAttribute("href", /appointment_id=/);
+  const compared = await (await comparedRead).json();
+  expect(compared.items.length).toBeGreaterThan(0);
+  const booking = compared.items[0];
+  const link = page.getByRole("link", { name: booking.display_number, exact: true });
+  await expect(link).toHaveAttribute("href", new RegExp(`appointment_id=${booking.id}`));
   for (const width of info.project.name.includes("mobile")
     ? [390, 320]
     : [1440, 1024]) {
@@ -56,7 +63,7 @@ test("policy analysis is read-only, clears edited results and hands over the exa
   await page.getByRole("button", { name: "Compare future bookings" }).click();
   await expect(
     page.getByText(
-      "No matching bookings require review under this comparison. This is not publication or dispatch approval.",
+      "No matching bookings require review. This is not publication or dispatch approval.",
     ),
   ).toBeVisible();
   await page.getByLabel("Proposed maximum visit (minutes)").fill("60");

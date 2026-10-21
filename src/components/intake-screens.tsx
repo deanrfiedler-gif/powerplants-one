@@ -191,7 +191,7 @@ export function TicketDetail({ id }: { id: string }) {
     </>
   );
 }
-function IntakeForm({
+export function IntakeForm({
   ticket: t,
   sales,
   initialSite,
@@ -208,7 +208,9 @@ function IntakeForm({
     router = useRouter(),
     cmd = useCommand(),
     [id] = useState(() => t?.id ?? crypto.randomUUID()),
-    [expected, setExpected] = useState(t?.version ?? 1);
+    [expected, setExpected] = useState(t?.version ?? 1),
+    [compare,setCompare]=useState(false);
+  const current=useResource<Envelope<Intake>>(compare&&t?`service/tickets/${t.id}`:null),latest=current.data?.items[0]??t;
   const [v, setV] = useState<Record<string, string>>({
     company: t?.company_id ?? initialCompany ?? "",
     site: t?.site_id ?? initialSite ?? "",
@@ -427,17 +429,19 @@ function IntakeForm({
           retry={r.reload}
         />
       ))}
-      {t && expected !== t.version && (
+      {t && !!cmd.error && <button className="secondary" onClick={()=>setCompare(true)}>Compare current saved version</button>}
+      {compare&&<ReadState loading={current.loading} error={current.error} retry={current.reload}/>}
+      {t && latest && expected !== latest.version && (
         <section className="conflict-panel">
           <h3>Compare before resubmitting</h3>
           <p>
-            Your proposal remains above. Current saved version {t.version}:{" "}
-            {t.summary}. Symptoms: {t.symptom}
+            Your proposal remains above. Current saved version {latest.version}:{" "}
+            {latest.summary}. Symptoms: {latest.symptom}
           </p>
           <button
             className="secondary"
             onClick={() => {
-              setExpected(t.version);
+              setExpected(latest.version);
               cmd.clear();
             }}
           >

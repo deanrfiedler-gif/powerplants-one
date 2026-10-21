@@ -224,6 +224,15 @@ Use the [execution record](../../../testing/evidence/projects-register/README.md
 
 The configuration and rule registers/workbenches reuse this implementation. CPQ-scoped styling and fixture states are documented in [the host contract](cpq-workbench.md); source behaviours and existing gallery fixtures are unchanged. tests/browser/cpq.spec.ts supplies the real synthetic host. Paired visual and owner acceptance remain separate.
 
+## Service requests consumer
+
+SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-01`, `scope:SV-02`, `route:/service/tickets`, `route:/service/tickets/[id]`, `route:/service/tickets/new`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
+
+
+## Facilities CS-05 consumer
+
+The four `/facilities` routes and `scope:CS-05` reuse this control. Host states and synthetic fixtures are in `tests/browser/facilities-accepted.spec.ts` and `tests/helpers/facilities-design.ts`. No shared control contract is changed. Owner visual review remains pending; see `docs/testing/evidence/cs05-accepted-build/README.md`.
+
 ## SV-06 host binding
 
 Service review and reports uses this existing component in `route:/service/reports` and `route:/service/reports/[id]`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.
@@ -247,3 +256,12 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 ## PL-02 Field team consumer
 
 `scope:PL-02`, `/service/technicians` and `/service/technicians/[id]` reuse this control. The shared implementation is unchanged. Host states and deterministic synthetic fixture: `tests/browser/field-team.spec.ts`, `tests/helpers/field-team-fixture.ts`. The accepted Field team variant uses a 40 px grid, phone rows and read-only panels; column settings is undefined and disabled. Owner alignment remains pending; see [build evidence](../../../testing/evidence/field-team-build/README.md). No review fingerprint is recorded.
+
+## Sites CS-04 consumer
+
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

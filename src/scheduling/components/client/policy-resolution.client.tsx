@@ -14,9 +14,11 @@ import type { readPolicyImpact } from "../../policy-resolution";
 export function PolicyResolution({
   impactId,
   onSaved,
+  current = true,
 }: {
   impactId: string;
   onSaved: () => void;
+  current?: boolean;
 }) {
   const [replacement, setReplacement] = useState(""),
     [outcome, setOutcome] = useState("VerifiedNoConflict"),
@@ -26,6 +28,7 @@ export function PolicyResolution({
   const command = useCommand(),
     pending = !!(command.error as { retryable?: boolean } | null)?.retryable;
   function evaluate() {
+    if (!current) return;
     const next =
       `schedule/policy-impacts/${impactId}` +
       (outcome === "Replaced"
@@ -36,7 +39,7 @@ export function PolicyResolution({
   }
   async function save() {
     const r = read.data;
-    if (!r || read.error || read.loading) return;
+    if (!current || !r || read.error || read.loading) return;
     if (
       await command.send(`schedule/policy-impacts/${impactId}/resolve`, {
         impact_hash: r.impact.content_hash,
@@ -60,7 +63,7 @@ export function PolicyResolution({
         the controlled booking change or cancellation first, then evaluate it
         here.
       </p>
-      <fieldset disabled={command.busy || pending}>
+      <fieldset disabled={!current || command.busy || pending}>
         <legend>Resolution evidence</legend>
         <SelectField
           name={`policy-outcome-${impactId}`}
@@ -132,7 +135,7 @@ export function PolicyResolution({
         variant="primary"
         busy={command.busy}
         disabled={
-          !query || !read.data || !!read.error || read.loading || !reason.trim()
+          !current || !query || !read.data || !!read.error || read.loading || !reason.trim()
         }
         onClick={() => void save()}
       >
