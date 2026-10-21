@@ -1,4 +1,4 @@
-// Conversations T1b (PPO-CONV-T1-SCOPE). People-only threads on deals and projects; no AI, no Carl.
+// Conversations T1b threads, with T2b's explicitly tagged assistant on deals and projects.
 export const anchorTypes = ["Opportunity", "Project"] as const;
 export type AnchorType = (typeof anchorTypes)[number];
 export const threadFilters = ["All", "WaitingOnYou", "Mentions"] as const;
@@ -14,6 +14,7 @@ export const askSteps = ["Remind", "TellAsker"] as const;
 export type AskStep = (typeof askSteps)[number];
 export type MentionInput =
   | { ordinal: number; kind: "Person"; person_id: string }
+  | { ordinal: number; kind: "Agent" }
   | { ordinal: number; kind: "Record"; record_type: AnchorType; record_id: string };
 export type AskInput = {
   ordinal: number;
@@ -25,5 +26,6 @@ export const conversationObjectTypes = [
   "ConversationThread",
   "ConversationMessage",
   "ConversationAsk",
+  "AssistantTurn",
 ] as const;
 export const conversationOutboxKind = "ConversationChanged";

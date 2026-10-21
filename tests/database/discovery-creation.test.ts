@@ -15,6 +15,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { crmBase, crmDiscovery, CRM } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { recoverSchema } from "../helpers/recover-schema";
+import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Disposable synthetic test database only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -152,13 +153,26 @@ test("0113 preserves populated original links, receipts, grants and migration le
   const link = { ...crmBase(), expected_version: b.version, acceptance_event_id: b.acceptance_event_id!, source_hash: b.source_hash!,
     estimating_workspace_id: g.id, expected_estimating_version: g.version, selected_option_id: g.selected_option_id, selected_revision_id: g.selected_revision_id };
   const linked = await bindEstimatingWorkspace(f.receiver, f.handover_id, link);
-  const tables = ["sales_estimating_bindings", "sales_workflow_events", "estimating_workspaces", "estimating_options", "estimation_revisions", "permission_grants", "seed_receipts", "operation_receipts", "audit_events", "outbox_jobs"];
+  const tables = ["sales_estimating_bindings", "sales_workflow_events", "estimating_workspaces", "estimating_options", "estimation_revisions", "operation_receipts", "audit_events", "outbox_jobs"];
   const snapshot = () => Promise.all(tables.map(t => rows(`SELECT to_jsonb(t) AS row FROM ppo.${t} t ORDER BY to_jsonb(t)::text`)));
   const before = await snapshot(), ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
-  await migrate(); await seed(); await migrate(); await seed();
+  const grants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    receipts = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
+  await migrate(); await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 113 }, { version: 114 }]);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 113 }, { version: 114 }]);
+  const afterGrants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map(g => g.id));
+  assert.deepEqual(afterGrants.filter(g => ids.has(g.id)), grants);
+  assert.deepEqual(afterGrants.filter(g => !ids.has(g.id)),
+    agentAskSeedGrants(grants).sort((a, b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"), receipts);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
+  const complete = () => Promise.all([snapshot(), rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
+    rows("SELECT * FROM ppo.seed_receipts ORDER BY version"), rows("SELECT * FROM public.ppo_migrations ORDER BY version")]);
+  const upgraded = await complete();
+  await migrate(); await seed();
+  assert.deepEqual(await complete(), upgraded);
   assert.deepEqual(await readOperation(f.receiver, legacy.operation_id), created.receipt);
   assert.deepEqual(await readOperation(f.receiver, link.operation_id), linked.receipt);
   const next = await setup(); await createDiscoveryWorkspace(next.creator, await proposed(next));

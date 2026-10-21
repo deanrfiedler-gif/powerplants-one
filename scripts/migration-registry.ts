@@ -111,6 +111,7 @@ export const migrationFiles = [
   "0107-field-readiness-gate.sql",
   "0108-conversations.sql",
   "0109-customer-communications.sql",
+  "0110-conversation-agent.sql",
   "0113-discovery-creation-link.sql",
   "0114-reference-namespaces-surveys.sql",
 ] as const;
@@ -158,6 +159,7 @@ export const seedFiles = [
   [84, "seed-access-review-attestations.sql"],
   [107, "seed-field-readiness.sql"],
   [108, "seed-conversations.sql"],
+  [110, "seed-conversation-agent.sql"],
 ] as const;
 export const latestMigrationVersion = 114;
 

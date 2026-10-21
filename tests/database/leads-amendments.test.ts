@@ -352,7 +352,7 @@ test("LC-12 populated previous-version upgrade preserves all Lead originals and 
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
-  assert.deepEqual(afterLedger.slice(ledger.length).map(row => row.version), [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114]);
+  assert.deepEqual(afterLedger.slice(ledger.length).map(row => row.version), [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 113, 114]);
   await resolveLeadContext(f.p, f.input.id, resolveInput(2));
   assert.deepEqual(
     (await createLead(f.p, f.input)).receipt,

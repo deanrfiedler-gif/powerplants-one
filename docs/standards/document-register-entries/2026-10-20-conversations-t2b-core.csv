@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CONV-T2B-DESIGN,"Conversations T2b design, Carl's assistant core",docs/decisions/conversations-t2b-design.md,,P1 to P4 accepted; implementation choices for pull-request review,Dean Fiedler,717e9049f71e208e83bad6f057e4682a2388edb1,,,git,
+PPO-CONV-T2B-CONTRACT,Conversations T2b contract,docs/contracts/conversations-t2b.md,,Synthetic assistant core; cross-model review and owner acceptance pending,Dean Fiedler,717e9049f71e208e83bad6f057e4682a2388edb1,,,git,

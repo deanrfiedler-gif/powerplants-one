@@ -18,7 +18,7 @@ import {
   localTeamContext,
 } from "../../src/access/local-teams";
 import { submitAccessRequest } from "../../src/access/requests";
-import { accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -107,20 +107,22 @@ test(
       grants,
     );
     assert.deepEqual(
-      next.filter((g) => !ids.has(g.id)),
+      next.filter((g) => !ids.has(g.id) && g.capability !== "conversation.agent.ask"),
       [...conversationSeedGrants(grants), ...accessReviewSeedGrants(grants).map(g => ({...g,id:"ad010084-0000-4000-8000-000000000001"})),...accessTeamSeedGrants(grants).map((g) => ({
         ...g,
         id: "ad010082-0000-4000-8000-000000000001",
       }))].sort((a,b)=>String(a.id).localeCompare(String(b.id))),
     );
+    assert.deepEqual(next.filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask"),
+      agentAskSeedGrants([...grants, ...conversationSeedGrants(grants)]).sort((a,b) => String(a.id).localeCompare(String(b.id))));
     const newLedger = await rows(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
       ),
       newSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
     assert.deepEqual(newLedger.filter(r=>r.version<=82), ledger);
-    assert.deepEqual(newLedger.filter(r=>r.version>82).map(r=>r.version), [83,84,85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114]);
+    assert.deepEqual(newLedger.filter(r=>r.version>82).map(r=>r.version), [83,84,85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 113, 114]);
     assert.deepEqual(newSeeds.filter(r=>r.version<=82), seeds);
-    assert.deepEqual(newSeeds.filter(r=>r.version>82).map(r=>r.version), [83,84,107, 108]);
+    assert.deepEqual(newSeeds.filter(r=>r.version>82).map(r=>r.version), [83,84,107, 108, 110]);
     assert.deepEqual(await localTeams(creator), { items: [], has_more: false });
     await migrate();
     await seed();

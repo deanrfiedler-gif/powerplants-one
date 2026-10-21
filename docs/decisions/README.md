@@ -9,6 +9,8 @@
 
 [Reviewed discovery creation and initial ownership](discovery-creation-journey.md) records the user-authorised Q1/Q4 prerequisite and combined final review, preserving existing-workspace linking and the accepted ES-02 visual reference.
 
+[Conversations T2b design](conversations-t2b-design.md) (PPO-CONV-T2B-DESIGN) now has implementation notes for the simulated core, governed by the accepted T2 scope and P1 to P4. The [contract](../contracts/conversations-t2b.md) records the delivered service boundary; cross-model review and owner acceptance remain pending.
+
 [Service findings source projection](service-findings-backend.md) (SV-07 / BC-06 R1) defines five-source reads, native closure authority and bounded authorised-window counts. It preserves the accepted page design and records the write, recurrence, receiving and dashboard-total boundaries that remain open.
 
 [Workshop, Settings and personal preferences scope](workshop-settings-preferences-scope.md) (PPO-WORKSHOP-SETTINGS-SCOPE-DEC) records Dean's 19 October 2026 decisions: a full workshop module (CX-02) as three Figma pages placed after SC-04, with day-to-day work in PPO and MYOB kept as the book of record (option A); the other Phase 11 options left off the design list; a Settings hub around AD-02; and one My account and preferences page.
