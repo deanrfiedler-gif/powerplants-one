@@ -106,6 +106,11 @@ The [Organisations implementation](../../../decisions/organisations-figma-implem
 
 SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-01`, `route:/service/tickets`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
 
+
+## Facilities CS-05 consumer
+
+The four `/facilities` routes and `scope:CS-05` reuse this control. Host states and synthetic fixtures are in `tests/browser/facilities-accepted.spec.ts` and `tests/helpers/facilities-design.ts`. No shared control contract is changed. Owner visual review remains pending; see `docs/testing/evidence/cs05-accepted-build/README.md`.
+
 ## SV-06 host binding
 
 Service review and reports uses this existing component in `route:/service/reports`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.

@@ -1,6 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { FacilityRecordLayout } from "./facility-record-layout";
+import { usePhoneHeader } from "../shell/phone-header";
+import { displayValue } from "../shared/facilities/definition";
+import type { RegisterRow } from "../shared/facilities/reads";
+import {
+  carryProposalForward,
+  measurement,
+} from "../shared/facilities/presentation";
+import { Button } from "./ui/button";
 import {
   api,
   ErrorNotice,
@@ -43,6 +52,27 @@ function editableDetails(saved?: Details): Record<string, unknown> {
           : value,
       ];
     }),
+  );
+}
+function FormGroup({
+  title,
+  collapsed,
+  children,
+}: {
+  title: string;
+  collapsed: boolean;
+  children: ReactNode;
+}) {
+  return collapsed ? (
+    <details className="facility-additional-fields">
+      <summary>{title}</summary>
+      {children}
+    </details>
+  ) : (
+    <section>
+      <h2>{title}</h2>
+      {children}
+    </section>
   );
 }
 export function FacilityFormEntry({
@@ -113,12 +143,32 @@ function FacilityForm({
     setPreview(null);
     reload();
   }, "Unsaved");
+  const commandConflict =
+    (command.error as Failure)?.code === "VersionConflict";
+  const refreshedConflict = useRef<unknown>(null);
+  useEffect(() => {
+    if (commandConflict && refreshedConflict.current !== command.error) {
+      refreshedConflict.current = command.error;
+      reload();
+    }
+  }, [commandConflict, command.error, reload]);
   const blocked =
     command.busy ||
     command.uncertain ||
     previewing ||
     !!accepted ||
     (command.error as Failure)?.code === "OperationConflict";
+  usePhoneHeader({
+    title: preview
+      ? "Review changes"
+      : baseline
+        ? `Correct ${baseline.details.name}`
+        : "Add facility or area",
+    record: {},
+  });
+  const neighbours = useFacilityPages<RegisterRow>(
+    !baseline && site ? `facilities/register?site_id=${site}&sort=name` : null,
+  );
   const before = editableDetails(baseline?.details);
   const changes = Object.fromEntries(
     Object.entries(draft).filter(
@@ -199,19 +249,15 @@ function FacilityForm({
         </p>
       </div>
     );
-  return (
-    <div className="facility-workspace facility-form">
-      <PageHeader
-        eyebrow="Facilities & growing areas"
-        title={
-          baseline ? `Edit ${baseline.details.name}` : "Add facility / area"
-        }
-        description={
-          baseline
-            ? `${baseline.site_name} · Record ID ${baseline.id} · Saved version ${baseline.version}`
-            : "Choose an exact Site and record what is known. Optional measurements can remain blank."
-        }
-      />
+  const form = (
+    <div className={`facility-form${preview ? " facility-form-review" : ""}`}>
+      {!baseline && (
+        <PageHeader
+          eyebrow="Facilities & growing areas"
+          title="Add facility / area"
+          description="Choose an exact Site and record what is known. Optional measurements can remain blank."
+        />
+      )}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -219,10 +265,41 @@ function FacilityForm({
         }}
       >
         <ValidationFields error={command.error ?? previewError}>
-          <ErrorNotice error={command.error ?? previewError} />
+          {command.uncertain ? (
+            <section
+              className="facility-banner facility-banner-warning"
+              role="alert"
+            >
+              <h2>Result not confirmed</h2>
+              <p>
+                We could not confirm whether your changes were saved. Your
+                entries are kept in this tab. Check History before trying again;
+                reloading or closing this tab discards them.
+              </p>
+              {baseline && (
+                <a
+                  href={`/facilities/${baseline.id}?tab=history`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Check history in a new tab
+                </a>
+              )}
+              <Button
+                disabled={command.busy}
+                onClick={() => void command.reconcile()}
+              >
+                Try the original action again
+              </Button>
+            </section>
+          ) : (
+            <ErrorNotice error={command.error ?? previewError} />
+          )}
           {baseline && initial && initial.version !== baseline.version && (
-            <section className="facility-comparison">
-              <h2>A newer saved version is available</h2>
+            <section className="facility-banner facility-banner-warning">
+              <h2>
+                {String(baseline.details.name)} changed since you opened it
+              </h2>
               <p>
                 Your proposal is retained. Compare version {initial.version}{" "}
                 before trying again.
@@ -249,6 +326,15 @@ function FacilityForm({
                 className="secondary"
                 disabled={blocked}
                 onClick={() => {
+                  // Carry only the user's edits onto the newest saved values.
+                  // An unrelated concurrent edit must not become a reversal.
+                  setDraft(
+                    carryProposalForward(
+                      before,
+                      draft,
+                      editableDetails(initial.details),
+                    ),
+                  );
                   setBaseline(initial);
                   setPreview(null);
                   setPreviewError(null);
@@ -258,31 +344,6 @@ function FacilityForm({
                 Use latest saved version for comparison
               </button>
             </section>
-          )}
-          {!baseline && !siteId && (
-            <fieldset disabled={blocked}>
-              <SitePicker
-                value={site}
-                onChange={(id) => {
-                  if (
-                    command.hasUnsavedChanges &&
-                    !window.confirm(
-                      "Changing Site clears the entered location and details. Continue?",
-                    )
-                  )
-                    return;
-                  setSite(id);
-                  setDraft(editableDetails());
-                  setPreview(null);
-                  command.dirty();
-                }}
-              />
-              <ReadState
-                loading={siteRead.loading}
-                error={siteRead.error}
-                retry={siteRead.reload}
-              />
-            </fieldset>
           )}
           {siteRead.data && (
             <p className="facility-meta">
@@ -300,120 +361,239 @@ function FacilityForm({
               Load more retained sources
             </button>
           )}
-          <fieldset disabled={blocked || !!preview} className="facility-fields">
-            {[...new Set(Object.values(fields).map((f) => f.group))].map(
-              (group) => (
-                <section key={group}>
-                  <h2>{group}</h2>
-                  <div className="facility-grid">
-                    {Object.entries(fields)
-                      .filter(
-                        ([k, f]) => f.group === group && applicable(k, draft),
-                      )
-                      .map(([k, f]) => {
-                        if (k === "parent_facility_id")
-                          return site ? (
-                            <ParentPicker
-                              key={k}
-                              siteId={site}
-                              excludeId={baseline?.id}
-                              value={String(draft[k] ?? "")}
-                              onChange={(id) => change(k, id || null)}
-                            />
-                          ) : null;
-                        if (f.kind === "source")
-                          return (
-                            <SourceField
-                              key={k}
-                              name={k}
-                              label={f.label}
-                              value={draft[k] as SourceInput | null}
-                              existing={sourceOptions}
-                              onChange={(v) => change(k, v)}
-                            />
-                          );
-                        if (f.kind === "choice")
-                          return (
-                            <SelectField
-                              key={k}
-                              name={k}
-                              label={f.label}
-                              required={
-                                k === "structure_type" ||
-                                k === "parent_relationship"
-                              }
-                              value={String(draft[k] ?? "")}
-                              empty={
-                                k === "structure_type"
-                                  ? "Choose a structure type"
-                                  : "Not recorded"
-                              }
-                              options={Object.entries(f.options!).map(
-                                ([id, display_name]) => ({ id, display_name }),
-                              )}
-                              onChange={(v) => change(k, v || null)}
-                            />
-                          );
+          <fieldset
+            disabled={blocked || !!preview}
+            className="facility-fields"
+            hidden={!!preview}
+          >
+            {baseline && (
+              <h2>Correct {String(baseline.details.name)}’s details</h2>
+            )}
+            {(baseline
+              ? [
+                  "Measurements",
+                  "Growing context",
+                  "Other growing context",
+                  "Identity & location",
+                  "Structure",
+                  "Source & notes",
+                ]
+              : [
+                  "Identity & location",
+                  "Structure and use",
+                  "Measurements and reason",
+                ]
+            ).map((group) => (
+              <FormGroup
+                key={group}
+                title={
+                  group === "Identity & location" ? "Site and name" : group
+                }
+                collapsed={
+                  !!baseline &&
+                  !["Measurements", "Growing context"].includes(group)
+                }
+              >
+                {group === "Identity & location" && (
+                  <>
+                    {" "}
+                    {!baseline && !siteId && (
+                      <fieldset disabled={blocked}>
+                        <SitePicker
+                          value={site}
+                          onChange={(id) => {
+                            if (
+                              command.hasUnsavedChanges &&
+                              !window.confirm(
+                                "Changing Site clears the entered location and details. Continue?",
+                              )
+                            )
+                              return;
+                            setSite(id);
+                            setDraft(editableDetails());
+                            setPreview(null);
+                            command.dirty();
+                          }}
+                        />
+                        <ReadState
+                          loading={siteRead.loading}
+                          error={siteRead.error}
+                          retry={siteRead.reload}
+                        />
+                      </fieldset>
+                    )}
+                  </>
+                )}
+                <div className="facility-grid">
+                  {Object.entries(fields)
+                    .filter(
+                      ([k, f]) =>
+                        ((f.group === group &&
+                          (!baseline ||
+                            group !== "Growing context" ||
+                            k === "season_label")) ||
+                          (group === "Other growing context" &&
+                            f.group === "Growing context" &&
+                            k !== "season_label") ||
+                          (group === "Structure and use" &&
+                            ["Structure", "Growing context"].includes(
+                              f.group,
+                            )) ||
+                          (group === "Measurements and reason" &&
+                            ["Measurements", "Source & notes"].includes(
+                              f.group,
+                            ))) &&
+                        applicable(k, draft),
+                    )
+                    .sort(([a], [b]) =>
+                      group === "Measurements"
+                        ? [
+                            "footprint_m2",
+                            "measurement_basis",
+                            "length_m",
+                            "width_m",
+                            "maximum_height_m",
+                            "measurement_observed_on",
+                            "measurement_source",
+                          ].indexOf(a) -
+                          [
+                            "footprint_m2",
+                            "measurement_basis",
+                            "length_m",
+                            "width_m",
+                            "maximum_height_m",
+                            "measurement_observed_on",
+                            "measurement_source",
+                          ].indexOf(b)
+                        : 0,
+                    )
+                    .map(([k, f]) => {
+                      if (k === "parent_facility_id")
+                        return site ? (
+                          <ParentPicker
+                            key={k}
+                            siteId={site}
+                            excludeId={baseline?.id}
+                            value={String(draft[k] ?? "")}
+                            onChange={(id) => change(k, id || null)}
+                          />
+                        ) : null;
+                      if (f.kind === "source")
                         return (
-                          <Field
+                          <SourceField
                             key={k}
                             name={k}
                             label={f.label}
-                            value={String(draft[k] ?? "")}
-                            required={
-                              k === "name" ||
-                              k === "type_description" ||
-                              k === "type_unknown_reason" ||
-                              !!f.otherOf
-                            }
-                            multiline={f.kind === "note"}
-                            maxLength={
-                              f.kind === "text" || f.kind === "note"
-                                ? f.max
-                                : 40
-                            }
-                            type={f.kind === "date" ? "date" : "text"}
-                            hint={
-                              f.kind === "decimal"
-                                ? "Optional. Record this measurement independently; no area totals are calculated."
-                                : undefined
-                            }
-                            onChange={(v) =>
-                              change(
-                                k,
-                                v === ""
-                                  ? null
-                                  : f.kind === "integer"
-                                    ? /^\d+$/.test(v)
-                                      ? Number(v)
-                                      : v
-                                    : v,
-                              )
-                            }
+                            value={draft[k] as SourceInput | null}
+                            existing={sourceOptions}
+                            compact
+                            onChange={(v) => change(k, v)}
                           />
                         );
-                      })}
-                  </div>
-                </section>
-              ),
+                      if (f.kind === "choice")
+                        return (
+                          <SelectField
+                            key={k}
+                            name={k}
+                            label={f.label}
+                            required={
+                              k === "structure_type" ||
+                              k === "parent_relationship"
+                            }
+                            value={String(draft[k] ?? "")}
+                            empty={
+                              k === "structure_type"
+                                ? "Choose a structure type"
+                                : "Not recorded"
+                            }
+                            options={Object.entries(f.options!).map(
+                              ([id, display_name]) => ({ id, display_name }),
+                            )}
+                            onChange={(v) => change(k, v || null)}
+                          />
+                        );
+                      return (
+                        <Field
+                          key={k}
+                          name={k}
+                          label={f.label}
+                          value={String(draft[k] ?? "")}
+                          required={
+                            k === "name" ||
+                            k === "type_description" ||
+                            k === "type_unknown_reason" ||
+                            !!f.otherOf
+                          }
+                          multiline={f.kind === "note"}
+                          maxLength={
+                            f.kind === "text" || f.kind === "note" ? f.max : 40
+                          }
+                          type={f.kind === "date" ? "date" : "text"}
+                          hint={
+                            baseline && before[k] !== null && draft[k] === null
+                              ? `Not recorded · saved value “${displayValue(baseline.details[k], k)}” will be cleared`
+                              : undefined
+                          }
+                          onChange={(v) =>
+                            change(
+                              k,
+                              v === ""
+                                ? null
+                                : f.kind === "integer"
+                                  ? /^\d+$/.test(v)
+                                    ? Number(v)
+                                    : v
+                                  : v,
+                            )
+                          }
+                        />
+                      );
+                    })}
+                </div>
+                {group === "Measurements and reason" && (
+                  <Field
+                    name="reason"
+                    label={baseline ? "Change reason" : "Reason for recording"}
+                    required
+                    value={reason}
+                    maxLength={1000}
+                    onChange={(v) => {
+                      setReason(v);
+                      command.dirty();
+                    }}
+                  />
+                )}
+              </FormGroup>
+            ))}
+            {baseline && (
+              <Field
+                name="reason"
+                label={baseline ? "Change reason" : "Reason for recording"}
+                required
+                value={reason}
+                maxLength={1000}
+                onChange={(v) => {
+                  setReason(v);
+                  command.dirty();
+                }}
+              />
             )}
-            <Field
-              name="reason"
-              label={baseline ? "Change reason" : "Reason for recording"}
-              required
-              value={reason}
-              maxLength={1000}
-              onChange={(v) => {
-                setReason(v);
-                command.dirty();
-              }}
-            />
           </fieldset>
           {preview && (
             <Comparison
+              key={preview.proposal_hash + preview.dependency_hash}
               preview={preview}
-              onCancel={() => setPreview(null)}
-              onConfirm={command.busy || command.uncertain}
+              title={`Review changes to ${baseline?.details.name}`}
+              reason={reason}
+              requireAcknowledgement
+              onCancel={() => {
+                if (!blocked) setPreview(null);
+              }}
+              onConfirm={
+                command.busy ||
+                command.uncertain ||
+                initial?.version !== baseline?.version
+              }
               confirm={() =>
                 void command.send(`facilities/${baseline!.id}/revise`, {
                   expected_version: baseline!.version,
@@ -425,7 +605,9 @@ function FacilityForm({
             />
           )}
           <div className="facility-footer">
-            <span role="status">{command.status}</span>
+            <span role="status">
+              {command.uncertain ? "Result not confirmed" : command.status}
+            </span>
             <div className="facility-actions">
               <Link
                 className="button secondary"
@@ -470,6 +652,80 @@ function FacilityForm({
           )}
         </ValidationFields>
       </form>
+    </div>
+  );
+  if (baseline)
+    return (
+      <FacilityRecordLayout facility={baseline} editing>
+        <nav className="facility-form-tabs" aria-label="Facility record">
+          <Link aria-current="page" href={`/facilities/${baseline.id}`}>
+            Overview
+          </Link>
+          <Link href={`/facilities/${baseline.id}?tab=equipment`}>
+            Equipment
+          </Link>
+          <Link href={`/facilities/${baseline.id}?tab=sources`}>Sources</Link>
+          <Link href={`/facilities/${baseline.id}?tab=history`}>History</Link>
+        </nav>
+        <div className="facility-record-scroll">{form}</div>
+      </FacilityRecordLayout>
+    );
+  const exact = neighbours.items.find(
+    (row) =>
+      row.name.trim().toLocaleLowerCase("en-AU") ===
+      String(draft.name ?? "")
+        .trim()
+        .toLocaleLowerCase("en-AU"),
+  );
+  return (
+    <div className="facility-workspace facility-create">
+      <div className="facility-create-main">{form}</div>
+      <aside className="facility-create-check">
+        <h2>Check before creating</h2>
+        <p>
+          Areas already recorded at the chosen site. This check is a prompt, not
+          a block.
+        </p>
+        {!site ? (
+          <p>Choose a site to check its areas.</p>
+        ) : (
+          <>
+            <ReadState
+              loading={neighbours.loading}
+              error={neighbours.error}
+              retry={neighbours.reload}
+            />
+            {!neighbours.loading && !neighbours.error && (
+              <>
+                <p className="facility-banner">
+                  {exact
+                    ? `An area named ${exact.name} is already recorded. Check its location before creating another.`
+                    : neighbours.next
+                      ? "No exact name in the loaded areas. Load more to finish checking this site."
+                      : `No recorded area here is named ${draft.name || "the entered name"}.`}
+                </p>
+                {neighbours.items.map((row) => (
+                  <article key={row.id}>
+                    <Link href={`/facilities/${row.id}`} target="_blank">
+                      {row.name} ·{" "}
+                      {displayValue(row.structure_type, "structure_type")}
+                    </Link>
+                    <p>
+                      {row.parent_name ? `Within ${row.parent_name} · ` : ""}
+                      {measurement(row.footprint_m2, " m²")}
+                    </p>
+                  </article>
+                ))}
+                {neighbours.next && (
+                  <Button onClick={neighbours.more}>
+                    More areas at this site
+                  </Button>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </aside>
     </div>
   );
 }

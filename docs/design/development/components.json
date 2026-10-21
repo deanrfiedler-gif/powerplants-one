@@ -376,7 +376,12 @@
         "scope:SV-01",
         "scope:SV-02",
         "route:/service/tickets",
-        "route:/service/tickets/[id]"
+        "route:/service/tickets/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -596,6 +601,14 @@
           "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
           "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -847,7 +860,12 @@
         "route:/service/technicians",
         "route:/service/technicians/[id]",
         "scope:SV-01",
-        "route:/service/tickets"
+        "route:/service/tickets",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -963,6 +981,14 @@
           "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
           "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1862,7 +1888,12 @@
         "scope:CS-08",
         "scope:SV-01",
         "scope:SV-02",
-        "route:/service/tickets/[id]"
+        "route:/service/tickets/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2052,6 +2083,14 @@
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2128,7 +2167,12 @@
       "used_on": [
         "route:/projects/new",
         "route:/sales/leads",
-        "route:/sales/leads/[id]"
+        "route:/sales/leads/[id]",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Typed text is not a selected record. Changing search clears selection; choose an explicit result.",
       "mobile": "The result list stays within the available width; long names wrap.",
@@ -2156,6 +2200,14 @@
           "expected": "Preserve explicit record selection, creation return and original recovery across Lead and shared capture forms.",
           "actual": "LC-12 hosts reuse existing controls; no exact new state mockup is available.",
           "action": "Review desktop/mobile creation return, typed-selection distinction, stale comparison and uncertain-original recovery.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "lookup-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2353,7 +2405,12 @@
         "route:/sales/opportunities/new",
         "route:/work/[id]",
         "route:/work/new",
-        "scope:CS-08"
+        "scope:CS-08",
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2477,6 +2534,14 @@
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-cs05-owner-review",
+          "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
+          "actual": "Facilities consumes the existing control; owner visual review remains pending.",
+          "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -8021,6 +8086,114 @@
           }
         ],
         "note": "Catalogue mappings reused without live Figma calls. Header composition comes from accepted CS-01 frame 1443:2745; no new main component or named version is asserted."
+      },
+      "review": null
+    },
+    {
+      "id": "facility-workspace",
+      "title": "Facilities and growing areas workspace",
+      "category": "Forms",
+      "module": "CS",
+      "purpose": "Compose the existing register, record and original-operation controls for CS-05.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "register",
+          "label": "Register and hierarchy",
+          "description": "Scoped counts, parents and loaded-page selection."
+        },
+        {
+          "id": "snapshot",
+          "label": "Read-only snapshot",
+          "description": "Native modal, close and focus return, exact record/site handovers."
+        },
+        {
+          "id": "record",
+          "label": "Overview and Equipment",
+          "description": "Independent measurements; current and ended service groups; Sources controls remain reachable above the phone footer."
+        },
+        {
+          "id": "review",
+          "label": "Saved and proposed",
+          "description": "Changed/cleared values, required acknowledgement and parent context."
+        },
+        {
+          "id": "recovery",
+          "label": "Changed or unconfirmed",
+          "description": "Retained edits with newer saved values; original receipt/retry."
+        },
+        {
+          "id": "read-states",
+          "label": "Loading, empty, failed and view only",
+          "description": "No stale rows/counts; no edit actions when read only."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/facility-register.tsx",
+          "symbol": "FacilityRegister"
+        },
+        {
+          "path": "src/components/facility-record-layout.tsx",
+          "symbol": "FacilityRecordLayout"
+        },
+        {
+          "path": "src/components/facility-form.tsx",
+          "symbol": "FacilityFormEntry"
+        }
+      ],
+      "dependencies": [
+        "src/components/facility-record-layout.tsx",
+        "src/components/facility-shell.tsx",
+        "src/components/facility-controls.tsx",
+        "src/shared/facilities/presentation.ts",
+        "src/app/styles/facilities.css",
+        "src/components/facility-detail.tsx",
+        "src/shared/facilities/reads.ts"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/customers/facilities-design-r01/README.md",
+        "anchor": "",
+        "status": "Owner-accepted design; native owner visual review pending"
+      },
+      "specification": "docs/design/development/components/facility-workspace.md",
+      "used_on": [
+        "scope:CS-05",
+        "route:/facilities",
+        "route:/facilities/[id]",
+        "route:/facilities/[id]/edit",
+        "route:/facilities/new"
+      ],
+      "desktop": "Compact ruled register; read-only snapshot; details column and tabbed record; in-record comparison.",
+      "mobile": "Compact shared header, area rows, 390/320 cards and stacked saved/proposed comparison. Natural-height record scrolling keeps final controls clear of the fixed footer.",
+      "keyboard": "Native labelled controls, RecordTabs, focus on comparison, Escape/return focus on snapshot.",
+      "limitations": "UI fixture is synthetic. No new capability, migration or offline queue. Undrawn controls retain native implementations.",
+      "gaps": [
+        {
+          "id": "facility-workspace-visual",
+          "expected": "Accepted CS-05 compositions and owner-reviewed running implementation.",
+          "actual": "Live-frame implementation with adaptations and remaining unspecified behaviour recorded in page contracts.",
+          "action": "Review the build evidence; decide closest-name ranking and retained register navigation.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Facilities and growing areas · CS-05 › Page components (proposed)",
+        "components": [
+          {
+            "node": "1415:358287",
+            "name": "Facility grid header"
+          },
+          {
+            "node": "1415:358302",
+            "name": "Facility grid row"
+          }
+        ],
+        "note": "Page-local grid parts. Record and form layouts reuse accepted shared components; named version Facilities and growing areas — accepted."
       },
       "review": null
     }

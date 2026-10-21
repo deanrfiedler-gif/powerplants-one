@@ -192,6 +192,11 @@ The [Organisations implementation](../../../decisions/organisations-figma-implem
 
 SV-01/SV-02 reuses this component for the accepted Service requests page. Consumer bindings: `scope:SV-01`, `scope:SV-02`, `route:/service/tickets/new`, `route:/service/tickets/[id]`. Host states and viewport evidence are tracked in [Service requests evidence](../../../testing/evidence/service-requests-accepted/README.md). Owner visual review remains pending; no shared primitive or fixture renderer changes.
 
+
+## Facilities CS-05 consumer
+
+The four `/facilities` routes and `scope:CS-05` reuse this control. Host states and synthetic fixtures are in `tests/browser/facilities-accepted.spec.ts` and `tests/helpers/facilities-design.ts`. No shared control contract is changed. Owner visual review remains pending; see `docs/testing/evidence/cs05-accepted-build/README.md`.
+
 ## Discovery costing consumer
 
 ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-local composition and synthetic state fixture are described in [the page contract](../pages/route-estimating-discovery-id-costing.md); [execution evidence](../../../testing/evidence/discovery-costing/README.md) is separate from owner review. No new shared component, token, grant or offline capability is introduced.

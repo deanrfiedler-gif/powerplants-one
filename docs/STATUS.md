@@ -43,6 +43,12 @@ The compiled desktop budget exhausted on unchanged main and the earlier #648 hea
 
 After #652 was externally merged into its infrastructure parent #653, Dean confirmed other merges were paused and requested separate scopes again, with both PRs left unmerged. Infrastructure-only #655 now targets main; #653 continues the same 30-file Field team change above it. Application and test bytes remain identical to green `b21c073a`; only restoration evidence and generated status change. Final-head checks are recorded on #653. A later authorised merge must land the infrastructure parent into main first and retarget Field team to main. Owner visual review remains pending.
 
+## Facilities CS-05 browser regression repair — 21 October 2026
+
+[PR #627](https://github.com/deanrfiedler-gif/powerplants-one/pull/627) repairs a Facilities record scroll defect that left the final Sources control under the fixed phone actions. Native browser proof now exercises normal pin-form clicks at 390 and 320 px. Facilities tests also follow the real hierarchy and phone controls, wait for required review acknowledgement and use distinct synthetic names. The page contract, component contract, guide and register describe the reachable controls without changing grants or persistence.
+
+[Verification evidence](testing/evidence/cs05-accepted-build/README.md) separates the resolved Chrome installation dependency, the failing integration run, local repair checks and subsequent CI. The runtime repair remains in the separately merged PR #643. Owner visual review remains pending; no merge, deployment or business acceptance is claimed.
+
 ## Compiled desktop browser CI partition prepared — 21 October 2026
 
 Dean requested green CI for Field team #648 with unrelated infrastructure repairs kept separate. Codex owns infrastructure-only #655 on `codex/ci-desktop-shards-review`; #653 is the Field team continuation after the externally merged #648 and #652. Dean paused other merges and requested both restored PRs remain unmerged for review. The compiled desktop job reached its 60-minute limit on unchanged main `78795dd6` and on #648; the complete suite no longer has reliable job margin. The [compiled-browser decision](decisions/ci-compiled-browser-suite.md) records the baseline and preserves all projects, original test deadlines, warm-up and retained restart proof.
@@ -106,6 +112,14 @@ PR #625's four full browser jobs failed the same new CS-02 assertion: the compac
 Current main `0ebb26a3` was integrated before the correction. The [page contract](design/development/pages/route-people.md) and [verification evidence](testing/evidence/people-native/README.md) record the source comparison and local database connection limitation. Full CI rerun results remain separate from earlier local passes. No reference, migration, permission, dependency or owner acceptance changes.
 
 At repair commit `53fb1a6a`, all four full browser suites pass the People cases: each desktop suite reports 503 passed / 21 skipped, and each mobile suite 445 passed / 79 skipped. CI also passes 950 unit tests, static/type/build checks, the PostgreSQL shards and other application lanes. The compiled desktop job nevertheless reaches its existing 60-minute job limit after reporting successful tests, leaving its aggregate red; a targeted retry was requested. Unchanged main's corresponding workflow passes, and no test or timeout was weakened. Current main `0909db97` adds claim/reservation records only; its generated-status conflict is resolved through the generator. Exact-run evidence and remaining gate results are distinguished on PR #625. Owner review remains pending.
+
+## Facilities CS-05 accepted-design implementation — 20 October 2026
+
+Dean requested the accepted Facilities and growing areas design in the four existing `/facilities` routes. [PR #627](https://github.com/deanrfiedler-gif/powerplants-one/pull/627) implements the compact register, permitted view counts, snapshot, hierarchy, record cards, grouped Equipment, in-record correction/review and failure recovery using existing schema and grants. Source: **PPO - Design**, page `1415:357158`, named version **Facilities and growing areas — accepted**; D1–D7 and Q1–Q4 retain the [accepted decision](decisions/facilities-figma-design.md).
+
+The page contracts, component consumer/state bindings and five guides are updated together. [Build evidence](testing/evidence/cs05-accepted-build/README.md) records verification, visual differences and Windows limits. Closest-name ranking and previous/next register context remain unspecified. Owner visual review stays pending; this is synthetic code delivery, not business acceptance, production readiness or deployment.
+
+On 21 October, the separate Chrome 156 repair PR #643 merged after its generated-status repair passed. Facilities integrates that landed main through its existing branch; the generated status conflict is regenerated from fragments. [Integration evidence](testing/evidence/cs05-accepted-build/README.md) distinguishes the earlier browser-install refusal, completed local checks and the fresh Facilities CI run. Owner visual review remains pending.
 
 ## Discovery register ES-02 native implementation — 20 October 2026
 

@@ -1,0 +1,119 @@
+{
+  "source_head": "d30e9fb318e7e49642872968242fc8f7efb87069",
+  "suite": "tests/browser/facilities-accepted.spec.ts",
+  "data": "UI-only synthetic fixtures",
+  "icons": "Kit requests blocked and icon artwork hidden before capture",
+  "owner_visual_review": "pending",
+  "captures": [
+    {
+      "file": "conflict-1440.png",
+      "width": 1440,
+      "height": 1120
+    },
+    {
+      "file": "correct-1440.png",
+      "width": 1440,
+      "height": 1033
+    },
+    {
+      "file": "create-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "denied-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "empty-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "equipment-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "error-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "hierarchy-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "loading-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "overview-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "overview-320.png",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "file": "overview-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "register-1024.png",
+      "width": 1024,
+      "height": 900
+    },
+    {
+      "file": "register-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "register-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "review-1440.png",
+      "width": 1440,
+      "height": 1120
+    },
+    {
+      "file": "review-390.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "snapshot-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "unconfirmed-1440.png",
+      "width": 1440,
+      "height": 1120
+    },
+    {
+      "file": "view-only-1440.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "view-only-320.png",
+      "width": 320,
+      "height": 844
+    },
+    {
+      "file": "view-only-390.png",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

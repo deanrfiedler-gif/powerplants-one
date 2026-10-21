@@ -616,6 +616,7 @@ test("CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no
     code("RelationshipConflict"),
   );
   const link = (await facilityEquipment(p, facility)).items[0];
+  assert.ok(link.serves.some((area: { id: string }) => area.id === facility));
   assert.equal(link.installed, false);
   await assert.rejects(
     endAssetServedFacility(
@@ -631,6 +632,17 @@ test("CS05-T29–33,T38,T42: one installed pump, three explicit served areas, no
     expected_version: 2,
   });
   assert.equal((await facilityEquipment(p, facility)).items.length, 0);
+  const ended = await facilityEquipment(p, facility, { state: "ended" });
+  assert.equal(ended.items.length, 1);
+  assert.equal(ended.items[0].equipment_id, pump);
+  assert.equal(ended.items[0].end_reason, "SYN CS-05 verification");
+  await assert.rejects(
+    facilityEquipment(await actor("site-observer"), facility, {
+      state: "ended",
+    }),
+    code("RecordUnavailable"),
+  );
+
   assert.equal(
     (
       await database().query(
@@ -845,5 +857,62 @@ test("CS05-T46,T53–54: failed audit rolls back all effects; upgrade and reseed
   assert.equal(
     (await facilityWorkspace(await actor(), fixture)).details.detail_notes,
     "SYN deliberate edit",
+  );
+});
+
+test("CS05 accepted register views count permitted records independently of filters and page size", async () => {
+  const p = await actor();
+  const normal = create({
+    name: "SYN view growing",
+    use: "production",
+    footprint_m2: "100",
+  });
+  await createFacilityDetails(p, normal);
+  const unknown = create({
+    name: "SYN view incomplete",
+    structure_type: "unknown",
+    type_unknown_reason: "SYN awaiting walkthrough",
+    greenhouse_cladding: null,
+    bay_count: null,
+    use: "unknown",
+  });
+  await createFacilityDetails(p, unknown);
+  const all = await registerFacilities(p, { limit: 1 });
+  const filtered = await registerFacilities(p, {
+    site_id: site,
+    q: normal.id,
+    limit: 1,
+  });
+  assert.deepEqual(filtered.view_counts, all.view_counts);
+  assert.equal(filtered.total, 1);
+  const workspaceRead = await facilityWorkspace(p, normal.id);
+  assert.equal(workspaceRead.counts?.equipment, 0);
+  assert.equal(workspaceRead.counts?.sources, 0);
+  assert.equal(workspaceRead.counts?.history, 1);
+  assert.equal(typeof filtered.items[0].updated_by_name, "string");
+  assert.equal(filtered.items[0].installed_equipment_count, 0);
+  assert.ok(filtered.items[0].timezone);
+  for (const area_view of ["growing", "non_growing", "incomplete"] as const) {
+    const result = await registerFacilities(p, { area_view, limit: 1 });
+    assert.equal(result.total, result.view_counts[area_view]);
+    if (result.next_cursor)
+      await assert.rejects(
+        registerFacilities(p, {
+          area_view: "all",
+          limit: 1,
+          cursor: result.next_cursor,
+        }),
+        code("InvalidData"),
+      );
+  }
+  const restricted = await registerFacilities(await actor("site-observer"), {
+    area_view: "incomplete",
+  });
+  assert.ok(restricted.items.every((row) => row.site_id === site));
+  assert.ok(restricted.view_counts.all < all.view_counts.all);
+  const other = await registerFacilities(await actor("other-workspace"));
+  assert.ok(other.view_counts.all < all.view_counts.all);
+  assert.ok(
+    other.items.every((row) => row.id !== normal.id && row.id !== unknown.id),
   );
 });
