@@ -5,6 +5,8 @@
 
 [Field team native build](field-team-native-build.md) records implementation of accepted PL-02, including the planner hours rule, existing source-read sufficiency and open design details. Owner visual review remains pending.
 
+[Short synthetic Site references](site-reference-convention.md) (PPO-SITE-REFERENCE-DEC) records Dean's shorter convention with previous-reference compatibility and no storage renumbering.
+
 [Service request statement capture and atomic triage](service-request-capture-and-triage.md) records Dean's scoped authorisation, immutable customer evidence, atomic reviewed triage, owned clarification authority and deferred ADR-0043 scope.
 
 [Discovery register native implementation](discovery-register-native.md) (PPO-ES02-DISCOVERY-REGISTER-NATIVE-DEC) records the ES-02 build, confirmed workspace owner, bounded read extensions and pending native review.

@@ -9,6 +9,7 @@ import {
   type QueryClient,
 } from "../platform/permissions";
 import { uuid, invalid, object, optionalId } from "./validation";
+import { siteReference, siteReferenceSearch } from "./site-reference";
 const cursorKey = randomBytes(32);
 export type SharedKind =
   "Organisation" | "Site" | "Asset" | "Person" | "Facility";
@@ -129,7 +130,8 @@ async function project(
     return {
       ...base,
       company_id: row.company_id,
-      display_number: row.display_number,
+      display_number: siteReference(String(row.display_number)),
+      legacy_display_number: row.display_number,
       display_name: row.display_name,
       location_description: row.location_description,
       timezone: row.timezone,
@@ -289,7 +291,7 @@ export async function listShared(
         pg.company_id,
         pg.site_id,
         pg.after,
-        pg.q,
+        kind === "Site" ? siteReferenceSearch(pg.q) : pg.q,
         pg.limit + 1,
       ],
     )

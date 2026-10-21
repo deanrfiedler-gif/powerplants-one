@@ -1,0 +1,10 @@
+{
+  "scope": "CS-04",
+  "source": "PPO - Design / Sites — accepted",
+  "fixtures": "tests/helpers/sites-native.ts",
+  "host_tests": "tests/browser/sites-native.spec.ts",
+  "viewports": [[1440, 900], [1024, 900], [390, 844], [320, 844]],
+  "states": ["register", "overview", "equipment", "loading", "no matches", "could not load", "restricted", "partial source"],
+  "authority": "Synthetic API fixtures for layout and handovers; P4 confirmation remains unavailable. No business acceptance.",
+  "owner_review": "Pending"
+}

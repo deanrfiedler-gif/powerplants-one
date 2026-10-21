@@ -65,6 +65,12 @@ Dean authorised repairing the shared browser-version mismatch that blocked PR #6
 
 No package dependency, installer, launch flag, permission, migration or deployment changes. The Discovery register remains pending owner visual review; passing runtime assurance is separate from business acceptance.
 
+## Sites CS-04 implementation and short references — 20 October 2026
+
+The [Sites implementation](delivery/sites-cs04-build.md) continues the preflight-only PRs #626 and #635 in draft PR #640. It refines `/sites` and `/sites/[id]` around the accepted Sites register/record, with permission-scoped view counts, source summaries, installed/served equipment, current compact phone controls and explicit loading/empty/error/restricted states. Dean approved the shorter Site reference convention on 20 October. Its [reference decision](decisions/site-reference-convention.md) preserves immutable previous references and UUID links; both spellings are searchable. No migration or new capability is needed.
+
+The CS-04 scope and both routes have updated contracts, Draft guides and shared-component consumer bindings. P4 customer readiness confirmation remains unavailable and links to CS-06. Exact verification results are tracked in the build record; owner visual review, business acceptance and deployment remain pending and separate.
+
 ## Site surveys CS-08 build preflight awaits migration approval — 20 October 2026
 
 Dean requested implementation of the accepted Site surveys CS-08 register and record at `/surveys` and `/surveys/[id]` on 20 October 2026. Codex owns the isolated `codex/site-surveys-cs08` branch, cut from main `971ac350`. The [accepted design decision](decisions/site-surveys-figma-design.md) remains the authority for D1–D7 and Q1–Q4. Live Figma inspection confirmed the file-index entry, page structure and accepted notes card: file "PPO - Design", page `1464:2918`, notes `1464:4164`, named version "Site surveys — accepted". Full frame inspection and runtime comparison remain pending.

@@ -1,4 +1,5 @@
-import { ContextList } from "../../../components/context-screens";
+import "../../styles/sites.css";
+import { SitesRegister } from "../../../components/sites-register";
 export default function Page() {
-  return <ContextList section="sites" />;
+  return <SitesRegister />;
 }

@@ -15,6 +15,11 @@
           "id": "default",
           "label": "Default",
           "description": "Representative synthetic content and normal interaction."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -27,7 +32,9 @@
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",
-        "src/development/component-fixtures.ts"
+        "src/development/component-fixtures.ts",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -36,7 +43,9 @@
       },
       "specification": "docs/design/development/components/foundations.md",
       "used_on": [
-        "system:theme"
+        "system:theme",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Use semantic tokens and preserve the meaning of each colour.",
       "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
@@ -48,6 +57,14 @@
           "expected": "Verify the current component against the linked design and desktop/mobile rules.",
           "actual": "Token adoption across legacy module scopes is incomplete.",
           "action": "Compare matching states and viewports, record evidence and resolve or explicitly accept each difference.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "foundations-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -159,6 +176,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -208,7 +230,9 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -381,7 +405,9 @@
         "route:/facilities",
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
-        "route:/facilities/new"
+        "route:/facilities/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -611,6 +637,14 @@
           "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -783,6 +817,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -827,7 +866,9 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -865,7 +906,9 @@
         "route:/facilities",
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
-        "route:/facilities/new"
+        "route:/facilities/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -989,6 +1032,14 @@
           "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
           "actual": "Facilities consumes the existing control; owner visual review remains pending.",
           "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2608,6 +2659,11 @@
           "id": "sv-triage-edit",
           "label": "Service triage editing",
           "description": "Disabled RecordTabs retain their visible labels while the triage panel owns an unsaved edit. Synthetic catalogue fixture; owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -2634,7 +2690,9 @@
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
         "docs/testing/evidence/discovery-register-native/README.md",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2688,7 +2746,8 @@
         "scope:CS-08",
         "route:/surveys",
         "scope:SV-02",
-        "route:/service/tickets/[id]"
+        "route:/service/tickets/[id]",
+        "route:/sites"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2782,6 +2841,14 @@
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2840,6 +2907,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -2871,7 +2943,9 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2899,7 +2973,9 @@
         "route:/estimating/discovery",
         "scope:PL-02",
         "route:/service/technicians",
-        "route:/service/technicians/[id]"
+        "route:/service/technicians/[id]",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2969,6 +3045,14 @@
           "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3003,6 +3087,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3021,7 +3110,9 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3044,7 +3135,9 @@
         "route:/service/reports",
         "route:/people",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -3072,6 +3165,14 @@
           "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
           "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3108,6 +3209,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3122,7 +3228,9 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3147,7 +3255,9 @@
         "scope:CS-01",
         "route:/customers",
         "route:/customers/[id]",
-        "route:/customers/new"
+        "route:/customers/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Use drawers for supplementary record context; preserve the parent task and focus return.",
       "mobile": "The actual drawer should fit the phone viewport and scroll content internally.",
@@ -3175,6 +3285,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "drawer-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3291,6 +3409,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3325,7 +3448,9 @@
         "docs/design/projects-register/figma-measurements.json",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3455,7 +3580,8 @@
         "scope:SV-02",
         "route:/service/tickets",
         "route:/service/tickets/[id]",
-        "route:/service/tickets/new"
+        "route:/service/tickets/new",
+        "route:/sites"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3643,6 +3769,14 @@
           "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
           "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4222,6 +4356,11 @@
           "id": "pl02-field-team",
           "label": "PL-02 Field team host",
           "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
+        },
+        {
+          "id": "cs04-native",
+          "label": "Sites CS-04 host",
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -4346,7 +4485,9 @@
         "src/scheduling/components/client/field-team-screen.client.tsx",
         "src/scheduling/components/client/field-team-parts.tsx",
         "src/scheduling/components/client/resource-workspace.client.tsx",
-        "src/app/styles/field-team.css"
+        "src/app/styles/field-team.css",
+        "src/app/styles/sites.css",
+        "docs/design/development/sites-native-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4410,7 +4551,9 @@
         "scope:SV-02",
         "route:/service/tickets",
         "route:/service/tickets/[id]",
-        "route:/service/tickets/new"
+        "route:/service/tickets/new",
+        "route:/sites",
+        "route:/sites/[id]"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4710,6 +4853,14 @@
           "expected": "Service requests accepted frames at desktop, tablet, 390 px and 320 px.",
           "actual": "Native page consumer and synthetic test cases supplied; owner visual review pending.",
           "action": "Compare docs/testing/evidence/service-requests-accepted with accepted source; retain functional and visual review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-cs04-review",
+          "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
+          "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
+          "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
