@@ -260,8 +260,14 @@ function LegacyContextList({
     </>
   );
 }
-export function RelatedActivities({ type, id }: { type: string; id: string }) {
+export function RelatedActivities({ type, id, observation = "" }: { type: string; id: string; observation?: string }) {
   const [cursor, setCursor] = useState("");
+  const path = `activities?${new URLSearchParams({ object_type: type, object_id: id, ...(cursor ? { cursor } : {}) })}`;
+  // Retain the selected page while remounting its read on fresh parent evidence.
+  // Unmounting also prevents an earlier in-flight read restoring revoked data.
+  return <RelatedActivitiesPage key={observation} path={path} cursor={cursor} setCursor={setCursor} />;
+}
+function RelatedActivitiesPage({ path, cursor, setCursor }: { path: string; cursor: string; setCursor: (cursor: string) => void }) {
   const r = useResource<
     Envelope<{
       id: string;
@@ -271,7 +277,7 @@ export function RelatedActivities({ type, id }: { type: string; id: string }) {
       due_needed: boolean;
       due_at: string | null;
     }>
-  >(`activities?${new URLSearchParams({ object_type: type, object_id: id, ...(cursor ? { cursor } : {}) })}`);
+  >(path);
   return (
     <section className="detail-section">
       <h2>Owned follow-up</h2>

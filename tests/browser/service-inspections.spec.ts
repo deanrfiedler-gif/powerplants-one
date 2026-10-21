@@ -151,7 +151,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     };
     document.addEventListener("DOMContentLoaded", hide);
   });
-  const assertScrollOwner = async () => {
+  const assertScrollOwner = async (allowFittingOutcome = false) => {
     const owners = await page.evaluate(() => {
       const root = document.querySelector("#ppo-service-inspections")!;
       const nodes = new Set<Element>([
@@ -174,7 +174,18 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
         )
         .map((node) => node.id || node.tagName);
     });
-    expect(owners).toHaveLength(1);
+    if (!allowFittingOutcome || owners.length) expect(owners).toHaveLength(1);
+    else {
+      // The accepted Outcome tab can fit entirely on a phone. Prove its
+      // contents are visible rather than requiring artificial overflow.
+      const fits = await page.locator('#ppo-service-inspections [role="tabpanel"]:visible').evaluate(panel => {
+        const box = panel.getBoundingClientRect();
+        return panel.scrollHeight <= panel.clientHeight + 1 &&
+          [...panel.querySelectorAll("*")].filter(node => node.getClientRects().length)
+            .every(node => node.getBoundingClientRect().bottom <= box.bottom + 1);
+      });
+      expect(fits).toBe(true);
+    }
   };
   const login = async (client: APIRequestContext, profile: string) => {
     const r = await client.post(origin + "/api/v1/local-session", {
@@ -678,7 +689,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
         () => document.documentElement.scrollWidth <= innerWidth + 1,
       ),
     ).toBe(true);
-    await assertScrollOwner();
+    await assertScrollOwner(true);
     await page.screenshot({
       path: info.outputPath(`review-${width}.png`),
       fullPage: true,

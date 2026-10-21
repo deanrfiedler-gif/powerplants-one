@@ -60,13 +60,17 @@ async function fixtures(page: Page) {
 }
 test("CS04 Work and visits retains paginated site-owned follow-ups beyond the summary window", async ({ page }) => {
   await fixtures(page);
+  let generation = 0, restricted = false, hold = false;
+  let release!: () => void;
+  const held = new Promise<void>(resolve => { release = resolve; });
   await page.route(`**/api/v1/sites/${siteId}/overview`, route => route.fulfill({ json: {
-    site: siteFixture, sources: [{ name: "Follow-ups", state: "Partial", items: [] }],
-    observed_at: sitesFixture.observed_at,
+    site: siteFixture, sources: [{ name: "Follow-ups", state: restricted ? "Restricted" : "Partial", items: [] }],
+    observed_at: new Date(Date.parse(sitesFixture.observed_at) + generation * 1000).toISOString(),
   } }));
   const cursors: (string | null)[] = [];
   const target = "85000000-0000-4000-8000-000000000001";
-  await page.route("**/api/v1/activities?**", route => {
+  await page.route("**/api/v1/activities?**", async route => {
+    if (hold) await held;
     const query = new URL(route.request().url()).searchParams;
     expect(query.get("object_type")).toBe("Site");
     expect(query.get("object_id")).toBe(siteId);
@@ -88,6 +92,24 @@ test("CS04 Work and visits retains paginated site-owned follow-ups beyond the su
   // Development StrictMode may repeat the initial read. Only the selected
   // cursor sequence matters; every request above still asserts exact Site scope.
   expect([...new Set(cursors)]).toEqual([null, "synthetic-next"]);
+  hold = true;
+  generation++;
+  const refreshing = page.waitForRequest(request => new URL(request.url()).pathname === "/api/v1/activities");
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await refreshing;
+  await expect(owned.getByRole("link", { name: "SYN retained OEM follow-up", exact: true })).toHaveCount(0);
+  restricted = true;
+  generation++;
+  const denied = page.waitForResponse(response => new URL(response.url()).pathname === `/api/v1/sites/${siteId}/overview`);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await denied;
+  await expect(page.getByRole("heading", { name: "Owned follow-up", exact: true })).toHaveCount(0);
+  const late = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/activities");
+  release();
+  await late;
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await expect(page.getByRole("link", { name: "SYN retained OEM follow-up", exact: true })).toHaveCount(0);
+  expect(cursors.at(-1)).toBe("synthetic-next");
 });
 
 test("CS04 live API short and legacy references retain the existing record", async ({

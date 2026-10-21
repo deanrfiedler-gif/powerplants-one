@@ -23,6 +23,12 @@ The combined Sites/Service findings database rerun passes 10/10. The full dedica
 
 Local compiled build, typecheck, targeted lint, studio, foundation and naming checks passed after the receiving repairs. The complete combined CI and further focused runtime reruns remain in progress. Earlier Windows baseline failures and incomplete attempts remain recorded in the preceding fragment. No merge, deployment or new owner/business acceptance is claimed here.
 
+All nine focused compiled phone receiving cases and the phone controlled-cancellation/exact uncertain-resolution case pass. The inspection journey reaches issued exact HTML/PDF; its compact Outcome can fit without scrolling, so the final assertion now proves all Outcome content fits while the longer reading form still requires one scroll owner. Failed local retries after Scheduling publication or a previous booking were reset-fixture conflicts, not passes.
+
+Independent GPT-6-astra receiving review at 9f516a90 found a retained Site follow-up access gap: a refreshed Restricted source left the non-refreshing child mounted. The child is now gated by the authoritative source state and its read remounts on each Overview observation while preserving the selected cursor. Earlier in-flight replies are ignored after unmount. The extended fixture proves second-page retention, refresh clearing and late-response denial. Further final-head validation remains pending; no merge is claimed.
+
+The receiving reviewer re-read the access fix and closed the P2 with no further findings (static review only). Final focused compiled phone inspection and Site revocation tests pass 2/2, including exact issued HTML/PDF. Final focused desktop proof passes 3/3: all fifteen screen families, the rail first-paint/layout-shift budget and Site pagination/late-response denial. The rebuilt application, targeted lint and studio checks pass; final-head CI remains the merge gate.
+
 ## Site surveys CS-08 build and authorised short references — 21 October 2026
 
 Dean approved the [short reference approach](decisions/readable-reference-namespaces.md) and the required migration after the 20 October preflight. Draft PR #650 implements CS-08 on its isolated branch: new SYN-SRV-000nnn references, explicit planned visit/contact facts, the accepted compact register and six-section record, original photo retention, independent review/return and exact reviewed handover. Existing reference values and retained snapshots are preserved; no new capability, seed, dependency or document-store connection is introduced.

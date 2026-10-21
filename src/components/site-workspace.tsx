@@ -509,7 +509,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
                 complete history and controls.
               </p>
               <WorkRows sources={sources} />
-              {tab === "work" && <RelatedActivities type="Site" id={s.id} />}
+              {tab === "work" && sources.some(source => source.name === "Follow-ups" && ["Available", "Partial"].includes(source.state)) && <RelatedActivities type="Site" id={s.id} observation={data.observed_at} />}
             </RecordPanel>
             <RecordPanel id="site-record" tab="history" value={tab}>
               {tab === "history" && <SiteHistory id={s.id} />}

@@ -52,3 +52,5 @@ Work and visits retains the existing `RelatedActivities` owned follow-up list be
 Search accepts historical stored references and CS-05 Sites already stored with short references. The lookup projection supplies an alias for matching; storage, source references and permanent IDs are unchanged. The Sites database proof covers both populations.
 
 Source presence, design acceptance, owner visual review, functional proof and deployment are separate. Current checks and deviations are recorded in [Sites implementation](../../../delivery/sites-cs04-build.md) and [test evidence](../../../testing/evidence/sites-cs04/README.md). Guides remain Draft and review fingerprints/reviewer/dates remain empty. No deployment, physical-device acceptance or business acceptance is claimed.
+
+Owned follow-up reads refresh with each current Overview observation, preserving the selected page. Restricted/unavailable source evidence removes the child; an earlier pending response cannot restore it. Owner visual review remains pending.
