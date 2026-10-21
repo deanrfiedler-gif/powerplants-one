@@ -3009,7 +3009,7 @@
         "route:/schedule/policy-impact"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
-      "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
+      "mobile": "Popover stays within viewport bounds and closes through selection or dismissal. SV-04 retains the shared global More opener beside its record-action dock after the compact header becomes Back.",
       "keyboard": "Tab/Shift+Tab and visible focus throughout. Use arrows/Home/End in tabs or menus; Escape dismisses overlays.",
       "limitations": "Native popover support is required by the current runtime. Touch and assistive-technology review remain separate. Projects uses its own scoped Figma variant; see docs/decisions/projects-register-native.md and the native host fixture.",
       "gaps": [
@@ -6201,7 +6201,7 @@
         "route:/service/inspections"
       ],
       "desktop": "Full-bleed register at 1440 and 1024; record summary, ruled readings, readiness and tabs; shared shell and menu.",
-      "mobile": "Compact shared phone header, scrolling 390/320 capture, wrapping choices, submit sheet and original recovery.",
+      "mobile": "Compact shared phone header with a retained screen-reader list heading, scrolling 390/320 capture, wrapping choices, submit sheet and original recovery.",
       "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns. Attempt selection visibly follows the existing recovery guard; it cannot accept a click that the guard silently ignores.",
       "limitations": "The real workflow requires a permitted synthetic appointment/database/issued pack. Separate presentation fixtures exercise accepted frame states without granting authority. No offline queue. Owner/device/screen-reader acceptance pending.",
       "gaps": [

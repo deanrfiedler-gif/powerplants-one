@@ -49,3 +49,5 @@ The implementation retains explicit test-time, reason/observation, calibration a
 ## Verification and review
 
 [Build verification](../../../testing/evidence/service-inspections/accepted-design.md) records checks, viewport comparisons and limitations. [Earlier workflow evidence](../../../testing/evidence/service-inspections/README.md) remains historical evidence. Source presence, functional proof, code delivery, deployment and owner visual review are separate. Visual review remains pending.
+
+The phone My inspections list keeps its level-one heading available to assistive technology while the compact header supplies the visible title. Original-submit proof holds the request before commit, verifies recovery controls are disabled, then observes the committed response being lost before reloading for the exact receipt. The uncertainty banner alone does not establish transport completion. Owner visual/device acceptance remains pending.

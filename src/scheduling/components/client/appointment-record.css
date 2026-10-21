@@ -419,8 +419,36 @@
   }
 }
 @media (max-width: 780px) {
+  /* Keep the shared global menu reachable beside the record action dock. */
   .app-frame:has(#ppo-appointment) .mobile-navigation {
+    display: flex;
+    left: 16px;
+    right: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: var(--white);
+    z-index: 6;
+  }
+  .app-frame:has(#ppo-appointment) .mobile-navigation > :not(#navigation-toggle) {
     display: none;
+  }
+  .app-frame:has(#ppo-appointment) #navigation-toggle {
+    color: var(--ink);
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  .app-frame:has(#ppo-appointment) #navigation-toggle > span {
+    display: none;
+  }
+  #ppo-appointment:not(:has(.shared-record-sticky)) .shared-record-content {
+    padding-bottom: 72px;
   }
   .app-frame:has(#ppo-appointment) {
     padding-bottom: 0;
@@ -537,7 +565,7 @@
     bottom: 0;
     z-index: 5;
     gap: 8px;
-    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom)) 72px;
     border-top: 1px solid var(--line);
     background: var(--white);
   }

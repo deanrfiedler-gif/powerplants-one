@@ -141,6 +141,18 @@ test("SV04 retains the FI06 exact incident handover on desktop and both phones",
     await expect(page.getByRole("menuitem", { name: "Report an incident", exact: true })).toHaveAttribute(
       "href", `/service/incidents/new?appointment_id=${sv04Id(1)}&scope_item_id=${sv04Id(70)}&asset_id=${sv04Id(71)}`,
     );
+    await page.keyboard.press("Escape");
+    if (width <= 780) {
+      // Wait for the real record/header before using the shared global menu;
+      // a transient loading header must not be the only way to reach Account.
+      const more = page.locator("#navigation-toggle");
+      await expect(more).toBeVisible();
+      await more.click();
+      await expect(page.getByRole("dialog", { name: "More", exact: true })
+        .getByRole("button", { name: "Account", exact: true })).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(more).toBeFocused();
+    }
   }
   expect(reads).toBe(3);
 });
@@ -196,12 +208,17 @@ test("SV04 shared record fits desktop, tablet and both phones, with one content 
           .getByRole("button", { name: "Record contact", exact: true })
           .boundingBox())!.height,
       ).toBeGreaterThanOrEqual(44);
-      await expect(
-        page.getByRole("navigation", {
-          name: "Mobile navigation",
-          exact: true,
-        }),
-      ).toBeHidden();
+      const navigation = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
+      await expect(navigation).toBeVisible();
+      await expect(navigation.locator("a:visible")).toHaveCount(0);
+      await expect(navigation.locator("button:visible")).toHaveCount(1);
+      const more = (await page.locator("#navigation-toggle").boundingBox())!;
+      expect(more.width).toBeGreaterThanOrEqual(44);
+      expect(more.height).toBeGreaterThanOrEqual(44);
+      for (const action of await sticky.getByRole("button").all()) {
+        const actionBox = (await action.boundingBox())!;
+        expect(actionBox.x).toBeGreaterThanOrEqual(more.x + more.width);
+      }
       await expect(page.locator("#shell-header")).toContainText(
         "SYN-PPO-APT-000052",
       );
@@ -301,6 +318,7 @@ test("SV04 ready, supply hold, proposed and cancelled preserve dates and command
     page.getByRole("heading", { name: "Cancelled", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".shared-record-sticky")).toHaveCount(0);
+  await expect(page.locator("#navigation-toggle")).toBeVisible();
   await expect(
     page
       .getByRole("region", { name: "Dispatch checks", exact: true })

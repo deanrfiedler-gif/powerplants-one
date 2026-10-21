@@ -90,3 +90,5 @@ The accepted appointment record retains the FI-06 Visit more actions menu beside
 - **Evidence:** [phase 00 review, session 1](../../../testing/evidence/ui-review-phase-00-r01/README.md). Synthetic data; compiled build at `a52cb01`; 1440 × 900 and 390 × 844 headless Chromium, captures for this entry.
 - **Findings:** The action buttons touch the 'Current crew' heading; add the standard section gap. S5 and S6.
 - **Scope of this record:** visual review of the captured state only. Device, screen-reader, zoom and operational acceptance remain separate. A later source change marks this review stale.
+
+Phone integration adaptation: retain the shared global More opener beside the sticky record actions so Account, module navigation and guide access survive the loaded record header replacing its temporary menu with Back. Reserve a 44 px control and left action-bar space at 390/320; closed records reserve bottom content clearance. This restores shell access using the existing control; owner visual acceptance of the dock adaptation is pending. The exact incident/global-menu fixture verifies pointer access and Escape focus return after the record loads.

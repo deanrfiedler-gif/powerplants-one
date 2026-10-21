@@ -398,6 +398,11 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   ).toBeVisible();
   await page.unroute(`**/api/v1/${api}`);
   let submittedBody: Record<string, unknown> | null = null;
+  let releaseSubmission!: () => void;
+  const submissionHeld = new Promise<void>(resolve => { releaseSubmission = resolve; });
+  const submissionLost = page.waitForEvent("requestfailed", request =>
+    request.url().endsWith(`/api/v1/${api}`) && request.method() === "POST" &&
+    request.postDataJSON().action === "submit");
   await page.route(`**/api/v1/${api}`, async (route) => {
     if (
       route.request().method() === "POST" &&
@@ -405,6 +410,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
       !submittedBody
     ) {
       submittedBody = route.request().postDataJSON();
+      await submissionHeld;
       const result = await route.fetch();
       expect(result.status(), await result.text()).toBe(201);
       await route.abort("connectionreset");
@@ -422,6 +428,14 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
       exact: true,
     }),
   ).toBeVisible();
+  // The warning appears while the command is still in flight too. Prove that
+  // guard, then wait until the server committed and its response was lost.
+  // Reloading before that boundary could legitimately read an absent receipt.
+  try {
+    await expect(page.getByRole("button", { name: "Recover the original", exact: true })).toBeDisabled();
+  } finally { releaseSubmission(); }
+  await submissionLost;
+  await expect(page.getByRole("button", { name: "Recover the original", exact: true })).toBeEnabled();
   // A cold development route may compile the receipt lookup after the page
   // reload. Await that real boundary before asserting restored confirmation.
   await Promise.all([
