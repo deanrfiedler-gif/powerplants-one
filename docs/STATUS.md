@@ -15,6 +15,12 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Open pull request integration in progress — 21 October 2026
+
+Dean authorised repairing failures and conflicts in all currently open pull requests and merging them. The `codex/open-pr-integration-oct21` session owns the integration branch, cut from main `f13bd157`. Its initial scope is PRs #627, #634, #636, #640, #642, #645, #646, #647, #649, #651 and #654. Original contributor branches remain unchanged; their histories will be joined on this branch.
+
+Conflict resolution, combined-tree validation and required review remain in progress. No merge, complete CI pass, owner visual acceptance, deployment or production readiness is claimed.
+
 ## Field team PL-02 native accepted-design build — 21 October 2026
 
 The [Field team native build](decisions/field-team-native-build.md) implements the accepted PL-02 register and read-only person record in the existing routes. Technicians is the default; the compact grid/phone list, person snapshot, seven-day availability, competence evidence and person-filtered View visits reuse existing scoped reads and shared controls. Planner booked-hours semantics are reused, resource type substitutes for unpublished role, and reviewer IDs remain explicit. No migration, capability, source edits or Conversations action is added. The page contracts, three guide entries and component consumer bindings are updated together. [Execution evidence](testing/evidence/field-team-build/README.md) records checks and limitations. Column settings and undrawn responsive/menu compositions remain explicit gaps. Owner visual review is pending; deployment and business acceptance are not claimed.
