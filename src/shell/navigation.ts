@@ -135,7 +135,7 @@ export const destinations: ShellDestination[] = [
   {"id": "exceptions", "label": "Exceptions", "icon": "nav-exceptions", "readiness": "unavailable", "workspace": "finance"},
   {"id": "sites", "label": "Sites", "icon": "nav-sites", "readiness": "ready", "href": "/sites", "requires": ["shared.read"]},
   {"id": "facilities", "label": "Facilities & growing areas", "icon": "nav-facilities", "readiness": "ready", "href": "/facilities", "requires": ["shared.read"]},
-  {"id": "surveys", "label": "Site surveys & as-found", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
+  {"id": "surveys", "label": "Site surveys", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
   {"id": "equipment", "label": "Equipment", "icon": "nav-equipment", "readiness": "ready", "href": "/equipment", "requires": ["shared.read"]},
   {"id": "documents", "label": "Documents", "icon": "nav-documents", "readiness": "unavailable"},
   {"id": "approvals", "label": "Reviews & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},

@@ -285,7 +285,7 @@ export const meta = (p: Principal) => ({
   updated_by: p.actor_id,
 });
 export const reference = (kind: string, id: string) =>
-  `SYN-PPO-${kind}-${id.replaceAll("-", "").slice(0, 12).toUpperCase()}`;
+  `SYN-${kind}-${id.replaceAll("-", "").slice(0, 12).toUpperCase()}`;
 export async function event(
   c: QueryClient,
   p: Principal,

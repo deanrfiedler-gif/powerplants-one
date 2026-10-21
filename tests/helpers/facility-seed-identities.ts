@@ -1,5 +1,7 @@
 // Authored expectations for seed 41's additive showcase, independent of the SQL.
 // Existing identities remain byte-exact; only ORG/SITE/AST counters advance.
+// These upgrade consumers seed after the latest migration: new identities use SYN,
+// while the permanent SYN-PPO counter keys continue the existing sequence.
 import assert from "node:assert/strict";
 
 type Counter = { workspace_id: string; record_type: string; namespace: string; last_value: string | number };
@@ -20,7 +22,7 @@ export function facilitySeedIdentities(before: readonly Counter[]) {
   const number = (code: string, offset: number) => {
     const counter = before.find(row => row.workspace_id === workspace && row.namespace === "SYN-PPO" && row.record_type === code);
     assert.ok(counter, `Expected existing ${code} counter`);
-    return `SYN-PPO-${code}-${(BigInt(counter.last_value) + BigInt(offset)).toString().padStart(6, "0")}`;
+    return `SYN-${code}-${(BigInt(counter.last_value) + BigInt(offset)).toString().padStart(6, "0")}`;
   };
   const identity = (id: string, object_type: string, display_number: string | null = null) => ({ workspace_id: workspace, id, object_type, display_number, synthetic: true });
   return [

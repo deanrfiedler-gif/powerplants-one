@@ -4,7 +4,7 @@ import { database } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
 import { sharedOperation } from "../../platform/operations";
 import { documentStore, digest } from "../../documents/store";
-import { inspectPng } from "../../field/media";
+import { inspectSurveyImage } from "./survey-media";
 import { visible } from "../reads";
 import {
   common,
@@ -34,17 +34,23 @@ export async function addSurveyPhoto(p: Principal, id: string, input: unknown) {
     "method_source",
     "caption",
     "png_base64",
+    "file_base64",
+    "file_name",
   ]);
+  const encoded = r.file_base64 ?? r.png_base64;
   if (
-    typeof r.png_base64 !== "string" ||
-    r.png_base64.length > 5592408 ||
+    typeof encoded !== "string" ||
+    encoded.length > 1398104 ||
     !/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(
-      r.png_base64,
+      encoded,
     )
   )
-    invalid("png_base64", "Choose an original PNG image up to 4 MB.");
-  const bytes = Buffer.from(r.png_base64 as string, "base64");
-  inspectPng(bytes);
+    invalid(
+      "file_base64",
+      "Choose an original JPG, PNG or WebP image up to 1 MiB.",
+    );
+  const bytes = Buffer.from(encoded as string, "base64");
+  const mediaType = inspectSurveyImage(bytes);
   const command = {
     ...common(r),
     survey_id: uuid(id, "survey_id"),
@@ -57,6 +63,9 @@ export async function addSurveyPhoto(p: Principal, id: string, input: unknown) {
     method_source: narrative(r.method_source, "method_source", 2000),
     caption: narrative(r.caption, "caption", 2000),
     content_hash: digest(bytes),
+    file_name:
+      r.file_name == null ? null : label(r.file_name, "file_name", 200),
+    media_type: mediaType,
   };
   return sharedOperation(
     p,
@@ -71,6 +80,12 @@ export async function addSurveyPhoto(p: Principal, id: string, input: unknown) {
           "StateConflict",
           "Add evidence to a Draft survey revision.",
         );
+      const count = await c.query(
+        "SELECT count(*)::int AS n FROM ppo.cs_survey_photos WHERE workspace_id=$1 AND survey_id=$2",
+        [p.workspace_id, id],
+      );
+      if (count.rows[0].n >= 8)
+        invalid("photos", "A survey retains up to eight original photos.");
       const content = row.content as SurveyContent;
       await contentAuthority(c, p, "Survey", row, content);
       if (
@@ -97,7 +112,7 @@ export async function addSurveyPhoto(p: Principal, id: string, input: unknown) {
         command.content_hash,
       );
       await c.query(
-        "INSERT INTO ppo.cs_survey_photos(id,workspace_id,survey_id,facility_id,asset_id,observer,captured_on,method_source,storage_key,content_hash,byte_count,recorded_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+        "INSERT INTO ppo.cs_survey_photos(id,workspace_id,survey_id,facility_id,asset_id,observer,captured_on,method_source,storage_key,content_hash,byte_count,recorded_by,file_name,media_type) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)",
         [
           command.id,
           p.workspace_id,
@@ -111,6 +126,8 @@ export async function addSurveyPhoto(p: Principal, id: string, input: unknown) {
           command.content_hash,
           bytes.length,
           p.actor_id,
+          command.file_name,
+          command.media_type,
         ],
       );
       await c.query(
@@ -224,7 +241,12 @@ export async function surveyPhotoBytes(
       "ExactDocumentUnavailable",
       "The exact original photo is unavailable. Its reference is retained for recovery.",
     );
-  inspectPng(Buffer.from(bytes));
+  if (inspectSurveyImage(Buffer.from(bytes), true) !== photo.media_type)
+    throw new AppError(
+      503,
+      "ExactDocumentUnavailable",
+      "The original photo format does not match its recorded facts.",
+    );
   await csRecord(c, p, "Survey", id);
   return bytes;
 }

@@ -320,7 +320,7 @@ test("Work order register scopes rows, counts, evidence and direct history to cu
     await assert.rejects(readWorkOrderRecord(actor, wo()), denied);
   await assert.rejects(readWorkOrderRegister(systems), denied);
   assert.equal(
-    (await readWorkOrderRegister(other, { q: "SYN-PPO-WO-000001" })).items
+    (await readWorkOrderRegister(other, { q: "SYN-WO-000001" })).items
       .length,
     0,
   );

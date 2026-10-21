@@ -194,7 +194,7 @@ export async function createConfiguration(p: Principal, value: unknown) {
               g.company_id,
               g.id,
               input.option_id,
-              `SYN-PPO-CFG-${input.id}`,
+              `SYN-CFG-${input.id}`,
               input.name,
               p.actor_id,
               draftId,

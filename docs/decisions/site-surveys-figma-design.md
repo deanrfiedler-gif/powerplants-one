@@ -27,6 +27,8 @@ Scope:
 
 This is a design decision. It authorises no application code, route, read model, migration, permission, capability, document-storage connection or deployment.
 
+> Q1 amendment, 20 October 2026: [Dean adopted `SYN-SRV-000nnn` for new surveys](readable-reference-namespaces.md) and approved the prerequisite migration and CS-08 build. The accepted frames and original decision evidence below remain unchanged.
+
 ## 1. Decisions and evidence
 
 | Item | Classification | Evidence |

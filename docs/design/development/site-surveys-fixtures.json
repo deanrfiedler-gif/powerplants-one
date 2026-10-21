@@ -1,0 +1,53 @@
+{
+  "scope": "CS-08",
+  "source": "PPO - Design / Site surveys — accepted",
+  "owner_visual_review": "pending",
+  "synthetic_only": true,
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 760
+    }
+  ],
+  "states": [
+    "register",
+    "new-survey",
+    "submitted-scope",
+    "observations",
+    "original-photos",
+    "follow-up",
+    "independent-review",
+    "return-clarification",
+    "reviewed-handover",
+    "successor-observation",
+    "loading",
+    "empty-reviewed",
+    "unavailable",
+    "permission-denied",
+    "partial-page",
+    "changed-source",
+    "validation",
+    "dirty-discard",
+    "uncertain-save"
+  ],
+  "host_tests": [
+    "tests/browser/site-surveys.spec.ts",
+    "tests/browser/customer-location.spec.ts",
+    "tests/database/customer-location.test.ts",
+    "tests/database/site-surveys-upgrade.test.ts",
+    "tests/unit/site-surveys.test.ts"
+  ],
+  "retained_reference": "docs/reference/ui/customers/site-surveys-design-r01/README.md"
+}

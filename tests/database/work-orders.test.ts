@@ -220,7 +220,7 @@ test("typed work-order creation allocates permanent references and supports many
   assert.equal(b.replayed, true);
   assert.equal(a.receipt.state, "Draft");
   const w = (await readWorkOrder(p, payload.id)).items[0];
-  assert.match(w.display_number, /^SYN-PPO-WO-\d{6,}$/);
+  assert.match(w.display_number, /^SYN-WO-\d{6,}$/);
   assert.equal(w.tickets.length, 1);
   assert.equal(w.blockers[0].field, "scope");
   await assert.rejects(

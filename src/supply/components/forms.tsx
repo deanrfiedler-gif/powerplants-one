@@ -110,7 +110,7 @@ export function RecordForm({
   }));
   const [values, set] = useState<Record<string, string>>(() => ({
     reference:
-      record?.reference ?? `SYN-PPO-SC-${kind.toUpperCase()}-${id.slice(0, 8)}`,
+      record?.reference ?? `SYN-SC-${kind.toUpperCase()}-${id.slice(0, 8)}`,
     title: record?.title ?? "",
     company_id: record?.company_id ?? options.companies[0]?.id ?? "",
     site_id: record?.site_id ?? "",

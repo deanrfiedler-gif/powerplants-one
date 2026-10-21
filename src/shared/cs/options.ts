@@ -5,6 +5,7 @@ import { hasPermission, type Capability } from "../../platform/permissions";
 import { visible, listShared } from "../reads";
 import { companyContext, scopedOwner } from "../authority";
 import { listActivities } from "../../activities/activities";
+import { surveyContactSql } from "./survey-rules";
 import type { CsKind } from "./model";
 export async function csOptions(p: Principal, kind: CsKind, contextId: string) {
   const c = database(),
@@ -18,8 +19,12 @@ export async function csOptions(p: Principal, kind: CsKind, contextId: string) {
   await companyContext(c, p, context.company_id, site ?? null, "shared.read");
   const people = (
     await c.query(
-      "SELECT r.id,r.display_name FROM ppo.people r JOIN ppo.person_company_contexts pc ON (pc.workspace_id,pc.person_id)=(r.workspace_id,r.id) WHERE r.workspace_id=$1 AND pc.company_id=$2 AND r.active ORDER BY r.display_name,r.id LIMIT 101",
-      [p.workspace_id, context.company_id],
+      `SELECT r.id,r.display_name FROM ppo.people r JOIN ppo.person_company_contexts pc ON (pc.workspace_id,pc.person_id)=(r.workspace_id,r.id) ${kind === "Survey" ? "JOIN ppo.sites s ON (s.workspace_id,s.id)=(r.workspace_id,$3::uuid)" : ""} WHERE r.workspace_id=$1 AND pc.company_id=$2 AND r.active ${kind === "Survey" ? `AND ${surveyContactSql}` : ""} ORDER BY r.display_name,r.id LIMIT 101`,
+      [
+        p.workspace_id,
+        context.company_id,
+        ...(kind === "Survey" ? [site] : []),
+      ],
     )
   ).rows;
   const contacts = [];
@@ -123,6 +128,8 @@ export async function csOptions(p: Principal, kind: CsKind, contextId: string) {
     assets:
       assets?.items.map((a) => ({
         id: a.id,
+        facility_id:
+          "facility_id" in a ? (a.facility_id as string | null) : null,
         display_name: String("description" in a ? a.description : a.id),
       })) ?? [],
     sites: permittedSites,

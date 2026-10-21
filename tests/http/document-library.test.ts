@@ -159,7 +159,7 @@ test("DK-HTTP02 compiled exact download headers and unknown payloads; content ca
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   assert.match(
     response.headers.get("content-disposition")!,
-    /^attachment; filename="SYN-PPO-DOC-/,
+    /^attachment; filename="SYN-DOC-/,
   );
   assert.match(response.headers.get("content-security-policy")!, /sandbox/);
 });

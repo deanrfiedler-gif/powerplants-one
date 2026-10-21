@@ -21,6 +21,7 @@ import {
   correctSurveyCaption,
   surveyPhotoBytes,
 } from "./photos";
+import { inspectSurveyImage } from "./survey-media";
 type Context = {
   params: Promise<{ kind: string; id?: string; photoId?: string }>;
 };
@@ -51,10 +52,10 @@ export function csRoute(
         const bytes = await surveyPhotoBytes(p, id, params.photoId ?? "");
         return new NextResponse(new Uint8Array(bytes), {
           headers: {
-            "Content-Type": "image/png",
+            "Content-Type": inspectSurveyImage(Buffer.from(bytes), true),
             "Cache-Control": "private, no-store",
             "X-Content-Type-Options": "nosniff",
-            "Content-Disposition": 'inline; filename="survey-original.png"',
+            "Content-Disposition": 'inline; filename="survey-original"',
           },
         });
       }
@@ -77,7 +78,7 @@ export function csRoute(
         );
       const body = await jsonBody(
         request,
-        action === "photo" ? 5700000 : 262144,
+        action === "photo" ? 1500000 : 262144,
       );
       const result =
         action === "create"

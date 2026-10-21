@@ -23,7 +23,7 @@ export async function surveyReviewTasks(p: Principal, company: string | null) {
       module: "Customers & sites",
       record_id: record.id,
       company_id: record.company_id,
-      reference: record.name,
+      reference: record.display_number ?? record.name,
       revision: `Revision ${record.revision}`,
       version: record.version,
       kind: "Review",
@@ -48,7 +48,7 @@ export async function surveyReviewTasks(p: Principal, company: string | null) {
         (returned
           ? record.owner_id === p.actor_id
           : record.state === "Submitted" &&
-            submitted.recorded_by !== p.actor_id),
+            source.survey?.independent_reviewer === true),
       href: `/surveys/${record.id}?view=review`,
     });
   }

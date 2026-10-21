@@ -77,7 +77,7 @@ test("DK-B01 persisted identity, exact review, successor, retained links, histor
   assert.equal(created.receipt.record_version, 1);
   assert.match(
     (await readDocument(p, input.id)).document.display_number,
-    /^SYN-PPO-DOC-/,
+    /^SYN-DOC-/,
   );
   assert.deepEqual((await createDocument(p, input)).receipt, created.receipt);
   assert.deepEqual(await readOperation(p, input.operation_id), created.receipt);
@@ -661,7 +661,7 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113],
+      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 113, 114],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,

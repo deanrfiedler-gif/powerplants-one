@@ -113,3 +113,7 @@ PeopleRegister uses this control on `/people` and the People view of `/contacts`
 ## Discovery register ES-02 consumer
 
 The `/estimating/discovery` host reuses this component under the [native register record](../../../decisions/discovery-register-native.md). Page-specific 40 px rows and phone lists stay scoped to the register. Fixtures cover loading, no matches, empty, denied, failed/retried and view-only states; see `tests/browser/discovery-register.spec.ts` and `tests/helpers/discovery-register.ts`. Owner visual review is pending; the shared implementation is not granted new approval.
+
+## CS-08 Site surveys consumer
+
+The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. No new public control API is introduced for this consumer.
