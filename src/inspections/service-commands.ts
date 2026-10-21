@@ -12,6 +12,7 @@ import {
   optionalId,
   narrative,
   label,
+  invalid,
 } from "../shared/validation";
 import { parseInspectionCommand } from "../engineering/commissioning/validation";
 import {
@@ -65,6 +66,7 @@ function parse(input: unknown, id: string) {
     "findings",
     "readings",
     "instrument_ids",
+    "reading_instruments",
     "evidence",
     "evidence_id",
     "decision",
@@ -101,7 +103,7 @@ function parse(input: unknown, id: string) {
       binding_hash: label(initial.binding_hash, "binding_hash", 64),
     };
   }
-  if (initial.action === "release") {
+  if (initial.action === "release" || initial.action === "prepare") {
     object(input, [
       ...commonKeys,
       "action",
@@ -111,7 +113,7 @@ function parse(input: unknown, id: string) {
     ]);
     return {
       ...common(initial),
-      action: "release" as const,
+      action: initial.action as "release" | "prepare",
       id: uuid(initial.id, "id"),
       attempt_id: uuid(initial.attempt_id, "attempt_id"),
       decision_reason: narrative(
@@ -122,8 +124,22 @@ function parse(input: unknown, id: string) {
     };
   }
   // Shared parser owns raw readings, precision, evidence size/type and review commands.
-  const parsed = parseInspectionCommand({ ...initial, record_id: id });
+  const { reading_instruments, ...shared } = initial;
+  if (initial.action !== "save" && reading_instruments !== undefined)
+    invalid("reading_instruments", "Instrument attribution belongs to a saved reading.");
+  const parsed = parseInspectionCommand({ ...shared, record_id: id });
   if (parsed.action === "open") throw unavailable();
+  if (parsed.action === "save" && reading_instruments !== undefined) {
+    if (!Array.isArray(reading_instruments) || reading_instruments.length > 100)
+      invalid("reading_instruments", "Choose at most 100 reading instruments.");
+    const links = (reading_instruments as unknown[]).map(value => {
+      const link = object(value, ["check_key", "instrument_id"]);
+      return { check_key: label(link.check_key, "check_key", 80), instrument_id: uuid(link.instrument_id, "instrument_id") };
+    });
+    if (new Set(links.map(x=>x.check_key)).size !== links.length)
+      invalid("reading_instruments", "Name one instrument per reading.");
+    return { ...parsed, reading_instruments: links };
+  }
   return parsed;
 }
 export async function inspectionCommand(
@@ -135,7 +151,7 @@ export async function inspectionCommand(
   id = uuid(id, "appointment_id");
   const cmd = parse(input, id),
     h = serviceHost(id);
-  const reviewer = ["review", "release", "defect"].includes(cmd.action);
+  const reviewer = ["review", "release", "prepare", "defect"].includes(cmd.action);
   if ((mode === "review") !== reviewer) throw unavailable();
   const original = { ...cmd, appointment_id: id };
   return sharedOperation(
@@ -425,11 +441,16 @@ export async function inspectionCommand(
         await requireCapture(c, p, id);
         await verifyEvidence();
         for (const d of at.row.plan) {
+          const attributed = at.row.reading_instrument_version === 1
+            ? at.instruments.filter(i=>at.reading_instruments.some(link=>link.check_key===d.key && link.instrument_id===i.instrument_id))
+            : at.instruments;
+          if (d.instrument_required && at.results.find(r=>r.check_key===d.key)?.entry_state==="Recorded" && !attributed.length)
+            stop("ReadingInstrumentRequired", `Name the instrument actually used for ${d.name} before submitting.`);
           if (
             d.instrument_basis &&
             at.results.find((r) => r.check_key === d.key)?.entry_state ===
               "Recorded" &&
-            !at.instruments.some(
+            !attributed.some(
               (i) =>
                 i.snapshot.measurement_type ===
                   d.instrument_basis!.measurement_type &&
@@ -548,7 +569,7 @@ export async function inspectionCommand(
           at.row.version,
         );
       }
-      if (cmd.action !== "release") throw unavailable();
+      if (cmd.action !== "release" && cmd.action !== "prepare") throw unavailable();
       if ((await incidentHolds(c,p,id,at.binding)).length)
         stop("IncidentHold", "This exact inspection scope has an independent incident hold. Passing evidence does not clear it.");
       if (at.review !== "Accepted" || at.row.performer_id === p.actor_id)
@@ -614,6 +635,12 @@ export async function inspectionCommand(
         },
       };
       const manifest_hash = hash(manifest);
+      if (cmd.action === "release") {
+        const prepared = view.preparations.find(o=>o.id===cmd.id && o.attempt_id===at.row.id && o.review_id===review.id);
+        if (!prepared || prepared.manifest_hash !== manifest_hash)
+          return stop("PreparationRequired", "Prepare and inspect the exact current HTML and PDF before issuing this outcome.");
+        await readOutputBundle(p, prepared.bundle);
+      }
       const bundle = await prepareBundle(p, {
         output_id: cmd.id,
         kind: "OUT-12",
@@ -644,6 +671,10 @@ export async function inspectionCommand(
           "ReassessmentRequired",
           "The inspection basis changed while preparing this output. Retained evidence remains available; reassess before release.",
         );
+      if (cmd.action === "prepare") {
+        await remember({ output_id:cmd.id, attempt_id:at.row.id, review_id:review.id, manifest_hash, bundle, decision_reason:cmd.decision_reason });
+        return result("Prepared",at.row.version);
+      }
       await c.query(
         "INSERT INTO ppo.service_inspection_outputs(id,workspace_id,company_id,appointment_id,attempt_id,review_id,audience,manifest,manifest_hash,bundle,issued_by) VALUES($1,$2,$3,$4,$5,$6,'Internal',$7,$8,$9,$10)",
         [
@@ -707,7 +738,7 @@ export async function serviceInspectionReceiptAuthority(
     c,
     p,
     id,
-    ["review", "release", "defect"].includes(action) ? "review" : "capture",
+    ["review", "release", "prepare", "defect"].includes(action) ? "review" : "capture",
     action,
   );
 }

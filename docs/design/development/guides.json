@@ -15204,10 +15204,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-01",
+      "prepared_at": "2026-10-21",
       "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/accepted-design.md; earlier workflow evidence remains in docs/testing/evidence/service-inspections/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15234,7 +15234,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+            "Open My inspections for your assigned work, grouped into To do, Submitted and Finished. Open Inspection review for one row per submitted attempt. Use the review views and Performer or Site filter to find the record."
           ],
           "steps": [],
           "rows": [],
@@ -15244,8 +15244,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
-            "My inspections is a permitted Service destination; assigned-visit capture and contextual source paths remain authoritative."
+            "The record keeps visit and equipment context beside Checks or Readings on desktop. Use the record tabs for retained evidence, defects and retests, history and the internal outcome. The phone header identifies the record and moves between its attempts."
           ],
           "steps": [],
           "rows": [],
@@ -15255,8 +15254,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
-            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+            "Name the instrument actually used for each required reading. Saving retains its certificate snapshot; the server checks the exact measurement basis and calibration at test time before submission. Historical attempt-wide instruments are not inferred as reading attribution.",
+            "Record the actual test time. Only the procedure's listed units, conversions and precision apply. PNG originals up to 4 MiB and plain text up to 64 KiB remain supported; JPEG capture is outside this decision."
           ],
           "steps": [],
           "rows": [],
@@ -15266,8 +15265,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
-            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+            "Save draft before Submit inspection. The confirmation sheet shows passing and failing checks. Submission freezes the saved readings and evidence and creates or links required owned defects and corrective activities.",
+            "Choose Review attempt to record Accepted, Returned, Clarification required or On hold with a reason. The original remains frozen. Correction is recorded by its owner; a new linked retest has fresh readings and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -15277,8 +15276,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
-            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an activity alone does not close a defect.",
+            "After acceptance, enter the outcome reason and prepare the HTML and PDF. Inspect those exact files before Issue outcome. The server checks the current sources and blockers again and issues those same bytes. Issuing sends nothing to a customer and completes no appointment, work order, Project or Finance process."
           ],
           "steps": [],
           "rows": [],
@@ -15308,8 +15307,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
-            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+            "If submission is uncertain, keep the tab and choose Recover the original. Retry unchanged original only for that same retained command. Do not create another attempt to recover it. Same-tab reload retains recovery; closing the tab or clearing storage removes the browser copy.",
+            "A version conflict retains your entries. Inspect the changed saved record before choosing Use current version with my retained entries. If attendance or readiness prevents capture, open My jobs to resolve it."
           ],
           "steps": [],
           "rows": [],
@@ -15319,8 +15318,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
-            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+            "At 390 and 320 px, capture uses one scrolling form with Save draft and Submit inspection at the bottom. Qualitative choices wrap at 320 px. Tabs, labelled controls and dialogs support keyboard operation and visible focus.",
+            "Inspection capture is online only. Not connected shows the last saved time and disables new commands. Unsaved entries are only in memory; there is no offline inspection queue."
           ],
           "steps": [],
           "rows": [],
@@ -15330,8 +15329,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
-            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
+            "The owner-accepted Inspections design and its retained icon-free captures are the visual authority. Compare attempts, JPEG capture, new Evidence/Review history layouts, clarification reply design and Conversations remain outside this build."
           ],
           "steps": [],
           "rows": [],
@@ -15364,9 +15362,11 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
-      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
+      "change_summary": "Accepted Inspections layout, explicit reading instruments, submit confirmation, review register and prepared internal outcome; owner guide review pending.",
       "document_id": "PPO-GUIDE-FI-03",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15377,7 +15377,9 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md",
-        "docs/decisions/service-inspections.md"
+        "docs/decisions/service-inspections.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -15392,10 +15394,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-01",
+      "prepared_at": "2026-10-21",
       "source_commit": "feb01e57c1ffdab0a5f8d1a5664ab5144bd37ccd",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/accepted-design.md; earlier workflow evidence remains in docs/testing/evidence/service-inspections/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -15422,7 +15424,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+            "Open My inspections for your assigned work, grouped into To do, Submitted and Finished. Open Inspection review for one row per submitted attempt. Use the review views and Performer or Site filter to find the record."
           ],
           "steps": [],
           "rows": [],
@@ -15432,8 +15434,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
-            "Inspection review discovery requires report.read and service.work_order.edit together. Existing scoped per-visit checks remain; incompatible scopes reveal no record identity."
+            "The record keeps visit and equipment context beside Checks or Readings on desktop. Use the record tabs for retained evidence, defects and retests, history and the internal outcome. The phone header identifies the record and moves between its attempts."
           ],
           "steps": [],
           "rows": [],
@@ -15443,8 +15444,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
-            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+            "Name the instrument actually used for each required reading. Saving retains its certificate snapshot; the server checks the exact measurement basis and calibration at test time before submission. Historical attempt-wide instruments are not inferred as reading attribution.",
+            "Record the actual test time. Only the procedure's listed units, conversions and precision apply. PNG originals up to 4 MiB and plain text up to 64 KiB remain supported; JPEG capture is outside this decision."
           ],
           "steps": [],
           "rows": [],
@@ -15454,8 +15455,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
-            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+            "Save draft before Submit inspection. The confirmation sheet shows passing and failing checks. Submission freezes the saved readings and evidence and creates or links required owned defects and corrective activities.",
+            "Choose Review attempt to record Accepted, Returned, Clarification required or On hold with a reason. The original remains frozen. Correction is recorded by its owner; a new linked retest has fresh readings and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -15465,8 +15466,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
-            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an activity alone does not close a defect.",
+            "After acceptance, enter the outcome reason and prepare the HTML and PDF. Inspect those exact files before Issue outcome. The server checks the current sources and blockers again and issues those same bytes. Issuing sends nothing to a customer and completes no appointment, work order, Project or Finance process."
           ],
           "steps": [],
           "rows": [],
@@ -15496,8 +15497,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
-            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+            "If submission is uncertain, keep the tab and choose Recover the original. Retry unchanged original only for that same retained command. Do not create another attempt to recover it. Same-tab reload retains recovery; closing the tab or clearing storage removes the browser copy.",
+            "A version conflict retains your entries. Inspect the changed saved record before choosing Use current version with my retained entries. If attendance or readiness prevents capture, open My jobs to resolve it."
           ],
           "steps": [],
           "rows": [],
@@ -15507,8 +15508,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
-            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+            "At 390 and 320 px, capture uses one scrolling form with Save draft and Submit inspection at the bottom. Qualitative choices wrap at 320 px. Tabs, labelled controls and dialogs support keyboard operation and visible focus.",
+            "Inspection capture is online only. Not connected shows the last saved time and disables new commands. Unsaved entries are only in memory; there is no offline inspection queue."
           ],
           "steps": [],
           "rows": [],
@@ -15518,8 +15519,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
-            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
+            "The owner-accepted Inspections design and its retained icon-free captures are the visual authority. Compare attempts, JPEG capture, new Evidence/Review history layouts, clarification reply design and Conversations remain outside this build."
           ],
           "steps": [],
           "rows": [],
@@ -15549,9 +15549,11 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
-      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
+      "change_summary": "Accepted Inspections layout, explicit reading instruments, submit confirmation, review register and prepared internal outcome; owner guide review pending.",
       "document_id": "PPO-GUIDE-FI-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -15562,7 +15564,9 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "docs/delivery/p07-handover.md",
-        "docs/decisions/service-inspections.md"
+        "docs/decisions/service-inspections.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -68641,7 +68645,7 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+            "Open My inspections for your assigned work, grouped into To do, Submitted and Finished. Open Inspection review for one row per submitted attempt. Use the review views and Performer or Site filter to find the record."
           ],
           "steps": [],
           "headers": [],
@@ -68651,8 +68655,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
-            "My inspections is a permitted Service destination; assigned-visit capture and contextual source paths remain authoritative."
+            "The record keeps visit and equipment context beside Checks or Readings on desktop. Use the record tabs for retained evidence, defects and retests, history and the internal outcome. The phone header identifies the record and moves between its attempts."
           ],
           "steps": [],
           "rows": [],
@@ -68662,8 +68665,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
-            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+            "Name the instrument actually used for each required reading. Saving retains its certificate snapshot; the server checks the exact measurement basis and calibration at test time before submission. Historical attempt-wide instruments are not inferred as reading attribution.",
+            "Record the actual test time. Only the procedure's listed units, conversions and precision apply. PNG originals up to 4 MiB and plain text up to 64 KiB remain supported; JPEG capture is outside this decision."
           ],
           "steps": [],
           "rows": [],
@@ -68673,8 +68676,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
-            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+            "Save draft before Submit inspection. The confirmation sheet shows passing and failing checks. Submission freezes the saved readings and evidence and creates or links required owned defects and corrective activities.",
+            "Choose Review attempt to record Accepted, Returned, Clarification required or On hold with a reason. The original remains frozen. Correction is recorded by its owner; a new linked retest has fresh readings and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -68684,8 +68687,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
-            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an activity alone does not close a defect.",
+            "After acceptance, enter the outcome reason and prepare the HTML and PDF. Inspect those exact files before Issue outcome. The server checks the current sources and blockers again and issues those same bytes. Issuing sends nothing to a customer and completes no appointment, work order, Project or Finance process."
           ],
           "steps": [],
           "rows": [],
@@ -68715,8 +68718,8 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
-            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+            "If submission is uncertain, keep the tab and choose Recover the original. Retry unchanged original only for that same retained command. Do not create another attempt to recover it. Same-tab reload retains recovery; closing the tab or clearing storage removes the browser copy.",
+            "A version conflict retains your entries. Inspect the changed saved record before choosing Use current version with my retained entries. If attendance or readiness prevents capture, open My jobs to resolve it."
           ],
           "steps": [],
           "headers": [],
@@ -68726,8 +68729,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
-            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+            "At 390 and 320 px, capture uses one scrolling form with Save draft and Submit inspection at the bottom. Qualitative choices wrap at 320 px. Tabs, labelled controls and dialogs support keyboard operation and visible focus.",
+            "Inspection capture is online only. Not connected shows the last saved time and disables new commands. Unsaved entries are only in memory; there is no offline inspection queue."
           ],
           "steps": [],
           "rows": [],
@@ -68737,8 +68740,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
-            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
+            "The owner-accepted Inspections design and its retained icon-free captures are the visual authority. Compare attempts, JPEG capture, new Evidence/Review history layouts, clarification reply design and Conversations remain outside this build."
           ],
           "steps": [],
           "rows": [],
@@ -68755,11 +68757,13 @@
           "headers": []
         }
       ],
-      "prepared_at": "2026-10-01",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
-      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
+      "prepared_at": "2026-10-21",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/accepted-design.md; earlier workflow evidence remains in docs/testing/evidence/service-inspections/README.md.",
+      "change_summary": "Accepted Inspections layout, explicit reading instruments, submit confirmation, review register and prepared internal outcome; owner guide review pending.",
       "workflow_basis": [
-        "docs/decisions/service-inspections.md"
+        "docs/decisions/service-inspections.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "source_paths": [
         "src/inspections/service-screen.tsx",
@@ -68768,7 +68772,9 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ]
     },
     {
@@ -68809,7 +68815,7 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open My inspections for an assigned visit, or Inspection review for submitted permitted visits. Confirm identity and context. Choose exact procedure version, equipment/task and initial attempt or retained predecessor. Inspect the source and preparation before opening."
+            "Open My inspections for your assigned work, grouped into To do, Submitted and Finished. Open Inspection review for one row per submitted attempt. Use the review views and Performer or Site filter to find the record."
           ],
           "steps": [],
           "headers": [],
@@ -68819,8 +68825,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Visit context links to My Jobs and Preparation. Exact procedure sources, attempt history, evidence, owned defects and retained outputs remain distinct. Every record is checked against current server authority.",
-            "Inspection review discovery requires report.read and service.work_order.edit together. Existing scoped per-visit checks remain; incompatible scopes reveal no record identity."
+            "The record keeps visit and equipment context beside Checks or Readings on desktop. Use the record tabs for retained evidence, defects and retests, history and the internal outcome. The phone header identifies the record and moves between its attempts."
           ],
           "steps": [],
           "rows": [],
@@ -68830,8 +68835,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Record raw value, unit, actual test time and instrument. Only listed conversions and precision apply. Missing criteria and unknown applicability remain outstanding.",
-            "Retain a suitable instrument and exact calibration at use. Later renewal cannot repair historical evidence. Originals support verified PNG up to 4 MiB or plain text up to 64 KiB."
+            "Name the instrument actually used for each required reading. Saving retains its certificate snapshot; the server checks the exact measurement basis and calibration at test time before submission. Historical attempt-wide instruments are not inferred as reading attribution.",
+            "Record the actual test time. Only the procedure's listed units, conversions and precision apply. PNG originals up to 4 MiB and plain text up to 64 KiB remain supported; JPEG capture is outside this decision."
           ],
           "steps": [],
           "rows": [],
@@ -68841,8 +68846,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Save the draft before submitting. Attach originals to their exact checks. Submission freezes the attempt and atomically creates or reuses required owned defects and corrective Activities.",
-            "Review exact frozen evidence: accept, return, request clarification or hold with a reason and follow-up owner/date. A defect owner records correction; a fresh linked retest gets fresh readings/evidence and independent review."
+            "Save draft before Submit inspection. The confirmation sheet shows passing and failing checks. Submission freezes the saved readings and evidence and creates or links required owned defects and corrective activities.",
+            "Choose Review attempt to record Accepted, Returned, Clarification required or On hold with a reason. The original remains frozen. Correction is recorded by its owner; a new linked retest has fresh readings and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -68852,8 +68857,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an Activity alone closes no defect.",
-            "The permitted Service owner may issue an internal scoped HTML/PDF outcome. It completes no appointment, work order, Project, customer acceptance or Finance process. FI-06 incident clearance and general template authoring are unavailable."
+            "Only a correctly linked, passing, independently accepted retest closes its defect. Completing an activity alone does not close a defect.",
+            "After acceptance, enter the outcome reason and prepare the HTML and PDF. Inspect those exact files before Issue outcome. The server checks the current sources and blockers again and issues those same bytes. Issuing sends nothing to a customer and completes no appointment, work order, Project or Finance process."
           ],
           "steps": [],
           "rows": [],
@@ -68883,8 +68888,8 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "Keep the current tab after uncertain transport. Check the original receipt or retry the unchanged original; do not create another action. Same-tab reload retains recovery, but closing the tab or clearing storage removes that browser copy.",
-            "Conflict retains entries; compare the newer saved record before explicit version adoption. Resolve unreadable documents, preparation and authority before a new action."
+            "If submission is uncertain, keep the tab and choose Recover the original. Retry unchanged original only for that same retained command. Do not create another attempt to recover it. Same-tab reload retains recovery; closing the tab or clearing storage removes the browser copy.",
+            "A version conflict retains your entries. Inspect the changed saved record before choosing Use current version with my retained entries. If attendance or readiness prevents capture, open My jobs to resolve it."
           ],
           "steps": [],
           "headers": [],
@@ -68894,8 +68899,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Fields and evidence wrap at 390/320 px. Tab/Shift+Tab reach labelled controls; Enter operates native details/buttons. Closing the global guide returns focus.",
-            "Inspection capture is online only. Disconnection leaves unsent input in memory; reconnect and inspect saved state. Existing Offline workspace operations remain separately governed."
+            "At 390 and 320 px, capture uses one scrolling form with Save draft and Submit inspection at the bottom. Qualitative choices wrap at 320 px. Tabs, labelled controls and dialogs support keyboard operation and visible focus.",
+            "Inspection capture is online only. Not connected shows the last saved time and disables new commands. Unsaved entries are only in memory; there is no offline inspection queue."
           ],
           "steps": [],
           "rows": [],
@@ -68905,8 +68910,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the Service inspection decision, F02-A acceptance requirements, field programme handover and exact verification evidence. Retained Quality r01 is a proposed reference; accepted native desktop/phone images are missing.",
-            "While the original receipt is being checked or remains unresolved, attempt selection is disabled. Recover that original, then choose the intended attempt. This does not grant review authority or clear changed-source, incident or inspection controls. Record owner observations in the current Field Work walkthrough."
+            "The owner-accepted Inspections design and its retained icon-free captures are the visual authority. Compare attempts, JPEG capture, new Evidence/Review history layouts, clarification reply design and Conversations remain outside this build."
           ],
           "steps": [],
           "rows": [],
@@ -68923,11 +68927,13 @@
           "headers": []
         }
       ],
-      "prepared_at": "2026-10-01",
-      "runtime_evidence": "docs/testing/evidence/service-inspections/README.md Current held-receipt lookup and exact saved-read evidence: docs/testing/evidence/field-integrated-acceptance/README.md.",
-      "change_summary": "Reflect the existing original-command guard in attempt-selection availability; accepted references and owner review unchanged.",
+      "prepared_at": "2026-10-21",
+      "runtime_evidence": "docs/testing/evidence/service-inspections/accepted-design.md; earlier workflow evidence remains in docs/testing/evidence/service-inspections/README.md.",
+      "change_summary": "Accepted Inspections layout, explicit reading instruments, submit confirmation, review register and prepared internal outcome; owner guide review pending.",
       "workflow_basis": [
-        "docs/decisions/service-inspections.md"
+        "docs/decisions/service-inspections.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ],
       "source_paths": [
         "src/inspections/service-screen.tsx",
@@ -68936,7 +68942,9 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "docs/decisions/inspections-figma-design.md",
+        "docs/decisions/inspections-reading-instruments.md"
       ]
     },
     {

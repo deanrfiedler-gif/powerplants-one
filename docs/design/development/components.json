@@ -909,7 +909,11 @@
         "route:/facilities/new",
         "route:/sites",
         "route:/sites/[id]",
-        "route:/service/incidents"
+        "route:/service/incidents",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -3150,7 +3154,11 @@
         "scope:FI-06",
         "route:/service/incidents",
         "route:/service/incidents/[id]",
-        "route:/service/incidents/new"
+        "route:/service/incidents/new",
+        "scope:FI-03",
+        "scope:FI-04",
+        "route:/my-jobs/inspections",
+        "route:/service/inspections"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -6074,7 +6082,7 @@
       "title": "Service inspection journey",
       "category": "Forms",
       "module": "FI",
-      "purpose": "Exact appointment inspection drafts, independent review and retained retests.",
+      "purpose": "Accepted Inspections register and record layouts over the existing Service attempt, review and retest authority.",
       "owner": "Dean Fiedler",
       "example": null,
       "coverage": "Host example",
@@ -6118,6 +6126,16 @@
           "id": "recovering",
           "label": "Recovering original",
           "description": "Attempt selection is disabled while the existing original-command guard is busy or unresolved; a recovered original restores the permitted controls."
+        },
+        {
+          "id": "not-attending",
+          "label": "Cannot record yet",
+          "description": "Server capture gate explains missing attendance or readiness."
+        },
+        {
+          "id": "prepared",
+          "label": "Prepared outcome",
+          "description": "Exact retained HTML/PDF and hashes before separate issue."
         }
       ],
       "implementation": [
@@ -6133,12 +6151,16 @@
         "src/inspections/service-commands.ts",
         "docs/decisions/service-inspections.md",
         "docs/testing/evidence/service-inspections/README.md",
-        "docs/testing/evidence/field-integrated-acceptance/README.md"
+        "docs/testing/evidence/field-integrated-acceptance/README.md",
+        "src/inspections/service-register.ts",
+        "src/inspections/service-register-screen.tsx",
+        "docs/decisions/inspections-reading-instruments.md",
+        "docs/testing/evidence/service-inspections/accepted-design.md"
       ],
       "reference": {
         "path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
         "anchor": "inspection-form",
-        "status": "Proposed Quality reference; native Service adaptation pending independent review"
+        "status": "Historical Quality source; accepted Inspections frames and icon-free captures are linked from the page contracts."
       },
       "specification": "docs/design/development/components/service-inspections.md",
       "used_on": [
@@ -6147,16 +6169,16 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections"
       ],
-      "desktop": "Padded shell, wrapped cards and two-column fields at 1440/1024; one shell content scroll owner.",
-      "mobile": "Stack 390/320; 16 px inputs, 44 px controls; verify actual 200% zoom.",
+      "desktop": "Full-bleed register at 1440 and 1024; record summary, ruled readings, readiness and tabs; shared shell and menu.",
+      "mobile": "Compact shared phone header, scrolling 390/320 capture, wrapping choices, submit sheet and original recovery.",
       "keyboard": "Native labels, fieldsets, details and buttons; validation retains input; guide focus returns. Attempt selection visibly follows the existing recovery guard; it cannot accept a click that the guard silently ignores.",
-      "limitations": "Real permitted synthetic appointment/database/issued pack required. No isolated renderer or offline queue. Owner/device/screen-reader acceptance pending.",
+      "limitations": "The real workflow requires a permitted synthetic appointment/database/issued pack. Separate presentation fixtures exercise accepted frame states without granting authority. No offline queue. Owner/device/screen-reader acceptance pending.",
       "gaps": [
         {
           "id": "service-inspection-native-adaptation",
-          "expected": "Accepted native desktop/phone compositions.",
-          "actual": "Proposed Quality r01 adapted to existing shell; accepted images missing.",
-          "action": "Review compiled captures and states independently before adopting a baseline.",
+          "expected": "Implementation aligned with Inspections — accepted at all drawn sizes and states.",
+          "actual": "Accepted source and viewport comparisons exist; retained authority controls and shell differences are recorded in the verification record. Owner visual review is pending.",
+          "action": "Owner to review the recorded differences and current implementation without changing the reference.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         },

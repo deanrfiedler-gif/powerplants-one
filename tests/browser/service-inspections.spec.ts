@@ -12,7 +12,11 @@ import {
 } from "../helpers/service-inspections";
 import { startInput } from "../helpers/field";
 import type { loadServiceInspections } from "../../src/inspections/service-context";
-import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
+import {
+  openPageGuide,
+  phoneWidth,
+  phoneMenuOpener,
+} from "../helpers/phone-menu";
 type View = Awaited<ReturnType<typeof loadServiceInspections>>;
 
 test("FI03/FI04 retained proposed Quality and r20 references are compared with the native shell", async ({
@@ -81,8 +85,8 @@ test("FI03/FI04 retained proposed Quality and r20 references are compared with t
     ).toBe(true);
     await page.goto(`${baseURL}/service/inspections`);
     await expect(
-      page.getByRole("heading", { name: "Inspection review", exact: true }),
-    ).toBeVisible();
+      page.getByRole("region", { name: "Inspection review", exact: true }),
+    ).toBeVisible({ timeout: 30000 });
     const native = await tokens(page, "#ppo-service-inspections"),
       theme = references.find((x) => x.name === "theme-r20")!.tokens;
     expect(native["--line-strong"]).toBe(theme["--line-strong"]);
@@ -116,8 +120,30 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   request,
   baseURL,
 }, info) => {
-  test.setTimeout(180000);
+  test.setTimeout(300000);
   const origin = baseURL!;
+  const openTab = async (name: string) => {
+    const tab = page.getByRole("tab", { name, exact: true });
+    if (await tab.isVisible()) await tab.click();
+  };
+  const attemptButton = (n: number) =>
+    phoneWidth(page)
+      ? page.getByRole("button", {
+          name: n === 1 ? "Previous attempt" : "Next attempt",
+          exact: true,
+        })
+      : page.getByRole("button", { name: new RegExp(`^Attempt ${n} ·`) });
+  // Retained evidence never includes Font Awesome Pro artwork.
+  await page.addInitScript(() => {
+    const hide = () => {
+      if (!document.head) return;
+      const style = document.createElement("style");
+      style.textContent =
+        ".fa-light,.fa-kit,.fa-kit-duotone,svg[data-prefix],.ppo-product-icon,.ppo-shell-icon{visibility:hidden!important}";
+      document.head.append(style);
+    };
+    document.addEventListener("DOMContentLoaded", hide);
+  });
   const assertScrollOwner = async () => {
     const owners = await page.evaluate(() => {
       const root = document.querySelector("#ppo-service-inspections")!;
@@ -231,8 +257,11 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     review = `/service/inspections?appointment_id=${id}`,
     api = `my-jobs/${id}/inspections`;
   await page.goto(capture);
+  await expect(page.getByRole("combobox", { name: "Procedure", exact: true })).toBeVisible({ timeout: 30000 });
   // On a phone the guide opens from the header Menu by keyboard, and Escape returns focus to the Menu button.
-  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
+  const guide = phoneWidth(page)
+    ? phoneMenuOpener(page)
+    : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page, true);
   await expect(
     page.getByRole("dialog", { name: "Page guide", exact: true }),
@@ -261,41 +290,54 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     .getByLabel("SYN holding pressure reading", { exact: true })
     .fill("120");
   await page
-    .getByRole("combobox", { name: "Instrument", exact: true })
+    .getByRole("combobox", {
+      name: "SYN holding pressure instrument",
+      exact: true,
+    })
     .selectOption("e9550000-0000-4000-8000-000000000003");
+  await page.getByRole("radio", { name: "Clear", exact: true }).check();
+  await expect(
+    page
+      .getByLabel("SYN holding pressure unit", { exact: true })
+      .locator("option"),
+  ).not.toContainText(["psi"]);
   await page
-    .getByRole("combobox", { name: "Outcome", exact: true })
-    .selectOption("Clear");
-  await page.getByLabel("Unit", { exact: true }).fill("psi");
-  await page.getByRole("button", { name: "Save draft", exact: true }).click();
-  await expect(
-    page.getByText("That unit has no approved conversion", { exact: false }),
-  ).toBeVisible();
-  await expect(
-    page.getByLabel("SYN holding pressure reading", { exact: true }),
-  ).toHaveValue("120");
-  await page.getByLabel("Unit", { exact: true }).fill("kPa");
+    .getByLabel("SYN holding pressure unit", { exact: true })
+    .selectOption("kPa");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(
     page.getByText("Saved draft · version 3", { exact: true }),
   ).toBeVisible();
+  await openTab("Findings");
   await page
-    .getByLabel("Findings", { exact: true })
+    .getByLabel("What you found", { exact: true })
     .fill("SYN retained through an actual disconnected request.");
   await page.context().setOffline(true);
+  await expect(
+    page.getByRole("button", { name: "Save draft", exact: true }),
+  ).toBeDisabled();
+  await expect(page.getByText(/Not connected · last saved/)).toBeVisible();
+  await expect(
+    page.getByRole("textbox", { name: "What you found", exact: true }),
+  ).toHaveValue("SYN retained through an actual disconnected request.", {
+    timeout: 15000,
+  });
+  await page.context().setOffline(false);
+  let loseSave = true;
+  await page.route(`**/api/v1/${api}`, async (route) => {
+    if (
+      loseSave &&
+      route.request().method() === "POST" &&
+      route.request().postDataJSON().action === "save"
+    ) {
+      loseSave = false;
+      await route.abort("connectionreset");
+    } else await route.continue();
+  });
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(
-    page.getByText("Uncertain result — recover the unchanged original", {
-      exact: true,
-    }),
+    page.getByText("Submission not confirmed", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByLabel("Findings", { exact: true })).toHaveValue(
-    "SYN retained through an actual disconnected request.",
-  );
-  await page.context().setOffline(false);
-  await page
-    .getByRole("button", { name: "Refresh saved records", exact: true })
-    .click();
   // A receipt and its subsequent saved-record read are separate boundaries.
   // Wait for the exact recovered draft before the unchanged visible assertion;
   // an in-flight save must not consume that assertion's five-second window.
@@ -323,6 +365,8 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   expect((await own(api)).attempts[0].row.findings).toBe(
     "SYN retained through an actual disconnected request.",
   );
+  await openTab("Evidence");
+  await page.getByRole("button", { name: "Add evidence", exact: true }).click();
   await page.getByLabel("Original file", { exact: true }).setInputFiles({
     name: "SYN pressure original.png",
     mimeType: "image/png",
@@ -334,6 +378,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await expect(
     page.getByText("Saved draft · version 7", { exact: true }),
   ).toBeVisible();
+  await page.unroute(`**/api/v1/${api}`);
   let submittedBody: Record<string, unknown> | null = null;
   await page.route(`**/api/v1/${api}`, async (route) => {
     if (
@@ -348,19 +393,34 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     } else await route.continue();
   });
   await page
-    .getByRole("button", { name: "Submit exact attempt", exact: true })
+    .getByRole("button", { name: "Submit inspection", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Submit attempt", exact: true })
     .click();
   await expect(
-    page.getByText("Uncertain result — recover the unchanged original", {
+    page.getByText("Submission not confirmed", {
       exact: true,
     }),
   ).toBeVisible();
-  await page.reload();
+  // A cold development route may compile the receipt lookup after the page
+  // reload. Await that real boundary before asserting restored confirmation.
+  await Promise.all([
+    page.waitForResponse(
+      (response) =>
+        response.url().endsWith(`/api/v1/operations/${submittedBody!.operation_id}`) &&
+        response.request().method() === "GET" &&
+        response.status() === 200,
+      { timeout: 30000 },
+    ),
+    page.reload(),
+  ]);
   await expect(
     page.getByText("Submit exact inspection saved.", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("Uncertain result — recover the unchanged original", {
+    page.getByText("Submission not confirmed", {
       exact: true,
     }),
   ).toHaveCount(0);
@@ -377,7 +437,10 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await page.unroute(`**/api/v1/${api}`);
   await login(page.request, "coordinator");
   await page.goto(review);
-  await page.getByRole("button", { name: /^Attempt 1 ·/ }).click();
+  await page
+    .getByRole("button", { name: "Review attempt", exact: true })
+    .filter({ visible: true })
+    .click();
   await expect(
     page.getByRole("heading", { name: "Submitted readings", exact: true }),
   ).toBeVisible();
@@ -391,7 +454,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     .click();
   await expect(
     page.getByRole("button", { name: "Save review decision", exact: true }),
-  ).toBeDisabled();
+  ).toHaveCount(0);
   await login(page.request, "assigned-technician");
   await page.goto(capture);
   await page
@@ -405,6 +468,9 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await expect(
     page.getByText("CorrectionRecorded · owner", { exact: false }),
   ).toBeVisible();
+  await page
+    .getByRole("button", { name: "New attempt or retest", exact: true })
+    .click();
   await page
     .getByRole("combobox", { name: "Procedure", exact: true })
     .selectOption("e9550000-0000-4000-8000-000000000001");
@@ -425,17 +491,18 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await page
     .getByLabel("SYN holding pressure reading", { exact: true })
     .fill("2.1");
-  await page.getByLabel("Unit", { exact: true }).fill("bar");
   await page
-    .getByRole("combobox", { name: "Instrument", exact: true })
+    .getByLabel("SYN holding pressure unit", { exact: true })
+    .selectOption("bar");
+  await page
+    .getByRole("combobox", {
+      name: "SYN holding pressure instrument",
+      exact: true,
+    })
     .selectOption("e9550000-0000-4000-8000-000000000003");
-  await page
-    .getByRole("combobox", { name: "Outcome", exact: true })
-    .selectOption("Clear");
+  await page.getByRole("radio", { name: "Clear", exact: true }).check();
   const discard = page.waitForEvent("dialog");
-  const switchAttempt = page
-    .getByRole("button", { name: /^Attempt 1 ·/ })
-    .click();
+  const switchAttempt = attemptButton(1).click();
   const dialog = await discard;
   expect(dialog.message()).toBe("Switch attempt and discard unsaved changes?");
   await dialog.dismiss();
@@ -465,6 +532,8 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
       fullPage: true,
     });
   }
+  await openTab("Evidence");
+  await page.getByRole("button", { name: "Add evidence", exact: true }).click();
   await page.getByLabel("Original file", { exact: true }).setInputFiles({
     name: "SYN fresh retest.png",
     mimeType: "image/png",
@@ -474,9 +543,13 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     page.getByText("Saved draft · version 5", { exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Submit exact attempt", exact: true })
+    .getByRole("button", { name: "Submit inspection", exact: true })
     .focus();
   await page.keyboard.press("Enter");
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Submit attempt", exact: true })
+    .click();
   await expect(
     page.getByRole("heading", { name: "Submitted readings", exact: true }),
   ).toBeVisible();
@@ -489,21 +562,27 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   // must visibly honour that existing guard instead of swallowing an enabled
   // button's click. Hold the real lookup response, without fabricating a receipt.
   let releaseLookup!: () => void;
-  const heldLookup = new Promise<void>((resolve) => { releaseLookup = resolve; });
-  const lookupStarted = page.waitForRequest((request) =>
-    request.method() === "GET" && request.url().includes("/api/v1/operations/"),
+  const heldLookup = new Promise<void>((resolve) => {
+    releaseLookup = resolve;
+  });
+  const lookupStarted = page.waitForRequest(
+    (request) =>
+      request.method() === "GET" &&
+      request.url().includes("/api/v1/operations/"),
   );
-  const lookupFinished = page.waitForResponse((response) =>
-    response.request().method() === "GET" && response.url().includes("/api/v1/operations/"),
+  const lookupFinished = page.waitForResponse(
+    (response) =>
+      response.request().method() === "GET" &&
+      response.url().includes("/api/v1/operations/"),
   );
   await page.route("**/api/v1/operations/*", async (route) => {
     const response = await route.fetch();
     await heldLookup;
     await route.fulfill({ response });
   });
-  const secondAttempt = page.getByRole("button", { name: /^Attempt 2 ·/ });
+  const secondAttempt = attemptButton(2);
   try {
-    await page.goto(review);
+    await page.goto(review + "&attempt_id=" + first.row.id);
     await lookupStarted;
     await expect(secondAttempt).toBeDisabled();
   } finally {
@@ -513,6 +592,10 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   }
   await secondAttempt.click();
   await page
+    .getByRole("button", { name: "Review attempt", exact: true })
+    .filter({ visible: true })
+    .click();
+  await page
     .getByRole("combobox", { name: "Decision", exact: true })
     .selectOption("Accepted");
   await page
@@ -521,17 +604,23 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
   await page
     .getByRole("button", { name: "Save review decision", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", {
-      name: "Issue scoped inspection outcome",
-      exact: true,
-    }),
-  ).toBeVisible();
+  await openTab("Outcome");
   await page
-    .getByLabel("Decision reason", { exact: true })
+    .getByLabel("Outcome reason", { exact: true })
     .fill(
       "SYN release only this procedure and equipment occurrence, with other domains excluded.",
     );
+  await page
+    .getByRole("button", { name: "Prepare HTML and PDF", exact: true })
+    .click();
+  await expect(
+    page.getByRole("link", { name: "Open exact PDF", exact: true }),
+  ).toBeVisible({ timeout: 60000 });
+  const prepared: View = await own(`service/inspections/${id}`);
+  expect(prepared.outputs).toHaveLength(0);
+  await page
+    .getByRole("button", { name: "Issue outcome", exact: true })
+    .click();
   const releaseStarted = Date.now();
   const released = page.waitForResponse(
     (response) =>
@@ -540,10 +629,8 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
       response.request().postDataJSON().action === "release",
   );
   await page
-    .getByRole("button", {
-      name: "Issue scoped inspection outcome",
-      exact: true,
-    })
+    .getByRole("dialog")
+    .getByRole("button", { name: "Issue outcome", exact: true })
     .click();
   const releaseResponse = await released;
   expect(releaseResponse.status(), await releaseResponse.text()).toBe(201);

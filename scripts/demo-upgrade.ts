@@ -360,7 +360,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // surveys receive a first reference; photos gain original-format facts with historical PNG defaults.
   // No capability, grant, identity provider or operational namespace is enabled. Existing table
   // privileges cover the additive fields; the migration flushes deferred identity constraints.
-  if (latestMigrationVersion !== 114) throw Error("Review the existing-demo upgrade for this release.");
+  // 0115 adds explicit reading attribution. Existing attempts gain only a zero contract
+  // marker: hashes, readings, snapshots and issued output bytes are unchanged. The empty
+  // attribution table uses existing all-table runtime grants; no seed, user or grant changes.
+  if (latestMigrationVersion !== 115) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

@@ -33,6 +33,14 @@ Dean authorised repairing failures and conflicts in all currently open pull requ
 
 Conflict resolution, combined-tree validation and required review remain in progress. No merge, complete CI pass, owner visual acceptance, deployment or production readiness is claimed.
 
+## Inspections accepted-design implementation and authorised reading attribution — 21 October 2026
+
+Draft PR #647 implements the accepted FI-03 capture and FI-04 review register at the existing routes. The [design acceptance](decisions/inspections-figma-design.md) remains distinct from code delivery and owner visual review. The page contracts, register, Australian English guides and shared-component consumer bindings describe the compact register, record summary, saved checks, per-reading instruments, phone action bars, original-command recovery and separate outcome preparation/issue.
+
+Dean authorised the [reading-to-instrument extension and migration](decisions/inspections-reading-instruments.md). Reserved migration 0115 adds explicit attribution for new Service attempts without inferring links or changing the hashes of historical submitted attempts. Live schema was inspected in an isolated local `ppo_synthetic_test` database built from current-main migrations. The populated upgrade proof passed, retaining the original attempts, snapshots, hashes, grants, seed receipts and migration ledger. There is no new seed or capability.
+
+Functional and visual validation is recorded separately in the [verification record](testing/evidence/service-inspections/accepted-design.md). Owner visual review remains pending. No production integration, business transaction, deployment or business acceptance is claimed. The existing online-only capture contract and attempt/retest authority remain in force. Compare attempts, JPEG capture, new Evidence/Review history layouts, a new clarification reply design and Conversations remain outside this change.
+
 ## FI-06 accepted Figma page implementation — 21 October 2026
 
 The existing Incidents register, record and report form now implement the accepted **Incidents and corrective actions** design: a compact grid and counted views, shared record layout, triage, exact evidence decisions, a scoped closure summary, site-time inputs, the phone submit sheet and original-operation recovery. The visit More menu supplies current permitted reporting targets. [Implementation decisions](decisions/incidents-figma-build.md) retain Source reference and record the existing command limits. [Build evidence](testing/evidence/fi06-figma-build/README.md) distinguishes presentation fixtures, persisted checks and Windows/CI limits. The four page contracts, component bindings and guides are updated together. No migration, capability or dependency is added; owner visual review and deployment remain pending.

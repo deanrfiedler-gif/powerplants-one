@@ -73,3 +73,7 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 ## FI-06 consumer
 
 The accepted Incidents page reuses this control without changing its shared implementation. Host states and responsive examples: `tests/browser/incidents-design.spec.ts`, `tests/helpers/incident-design-fixture.ts`; actual commands: `tests/browser/field-incidents.spec.ts`. See [FI-06 working contract](../pages/scope-fi-06.md) for differences, handovers and pending owner review.
+
+## Inspections consumer — 21 October 2026
+
+FI-03 reuses WizardDialog for the saved-attempt submission confirmation, including failed checks and the owned-defect consequence. FI-04 reuses it for the separate internal outcome issue confirmation. Phone presentation is a bottom sheet; the existing focus trap, Escape handling and return to opener remain shared. Pending original commands disable dismissal and repeat submission. Owner visual review remains pending. See [Service inspections](service-inspections.md) and the four FI-03/FI-04 consumer bindings in components.json.

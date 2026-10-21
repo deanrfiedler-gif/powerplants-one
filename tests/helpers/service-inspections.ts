@@ -154,6 +154,7 @@ export async function saveInspection(
       expected_version: a.row.version,
       occurred_at: new Date().toISOString(),
       instrument_ids: ["e9550000-0000-4000-8000-000000000003"],
+      reading_instruments: a.row.plan.filter(d=>d.instrument_required).map(d=>({check_key:d.key,instrument_id:"e9550000-0000-4000-8000-000000000003"})),
       readings,
     },
     "capture",
