@@ -24,20 +24,20 @@ Five page contracts, register entries and guides describe the actual controls, d
 | --- | --- |
 | npm ci | Passed; lockfile and dependencies unchanged. |
 | npm run studio:check | Passed again after merging main at 06395e10: 366 entries, 49 components, no errors. Visual review remains separate. |
-| Focused ESLint on all changed TypeScript/TSX files | Passed. Full npm run lint was attempted but did not return a result during local resource pressure. |
-| npm run typecheck / tsc --noEmit | Two reported type errors were fixed. A subsequent Windows run was stopped without a result under memory pressure; no passing typecheck is claimed. |
+| Focused ESLint on all changed TypeScript/TSX files | Passed. The subsequent full npm run lint also completed with exit code 0 after the merge. |
+| npm run typecheck / tsc --noEmit | Passed after the merge: npm run typecheck completed with exit code 0. The earlier interrupted attempt and its two corrected errors are superseded by this completed run. |
 | Focused Facilities unit tests | Passed again after merging main: 5 tests, including Q3 completeness, null/zero measurements, filtered hierarchy and conflict proposal carry-forward. |
 | Full unit suite, serial equivalent of npm run test:unit | Partial run stopped after two operator CLI subprocesses exceeded their 15-second startup deadline. The two comparison tests passed in the primary checkout, but the isolated-branch retry timed out again. No passing full suite or confirmed non-regression is claimed. |
 | npm run build | Not run locally while the shared machine is under memory pressure; required in Application assurance. |
 | python scripts/check_naming.py | Passed again after merging main; no errors. |
-| python scripts/check_foundation.py | Passed before the merge (78 parent requirements, no errors); the post-merge run is in progress. |
+| python scripts/check_foundation.py | Passed after the merge: 78 parent requirements, 68 status fragments, 12,924 local links checked, no errors. |
 | python scripts/build-ui-sequence.py | Completed. |
 | python scripts/build_status.py | Completed; generated status refreshed from the new fragment. |
 | git diff --check | Passed before the implementation and refinement commits. |
 | Focused accepted-design browser check | Passed: view-only record at 1440/390/320 px, no horizontal overflow, no correction grant, Equipment groups and site/record handovers. |
 | Complete accepted-design browser suite | Passed: all 9 tests in 4.5 minutes at d30e9fb3, before the documentation conflict resolution. Covers register/snapshot/hierarchy/tablet, view-only/equipment, editable record/create/review, loading/no matches/error/denial, changed-version carry-forward and exact original-operation replay. Local one-worker configuration uses 300-second test and 60-second assertion deadlines because of Windows resource pressure. The standard CI deadlines were not changed. |
 | Native database/browser suites | Database-backed proof not run locally. The app's local session endpoint returned a connection failure; the shared synthetic test database was not reset. This was not compared with main and is not attributed to this change. |
-| CI | [Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39494672819) was queued for merged source 06395e10. The older run at 34dac8c7 failed already-corrected design-contract headings/dependency paths; it does not describe the current source. |
+| CI | [Final-head Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39495537502) failed at browser installation on 903256d3, before application proof. Its installer supplied Chrome 156.0.8078.47, which the existing major guard rejects. The same refusal was reproduced from unchanged main 4c1097cc; source/installer/dependency files are identical. [PR #643](https://github.com/deanrfiedler-gif/powerplants-one/pull/643) owns the shared runtime fix. Merged-tree TypeScript, design register, naming/foundation and dependency-audit CI passed on 903256d3. The older run at 34dac8c7 failed design-contract issues already fixed. |
 
 The local machine had about 1 GiB free of 16 GiB while several unrelated sessions were active. The task's own cold route compile took 112 seconds. Other sessions' processes and databases were left alone. Do not treat a local timeout, a queued workflow or a documentation check as a passing application proof.
 
@@ -66,3 +66,17 @@ Reloading an unsaved or uncertain proposal still loses in-tab recovery context; 
 ## Conflict resolution
 
 Merged current main (4c1097cc) in 06395e10. Preserved the Facilities, People, Service review and Discovery costing component consumers and alignment items. Regenerated status from all 68 fragments and regenerated the build-sequence report. No application source conflicted. GitHub reported the PR mergeable after the push.
+
+## CI failure diagnosis — 21 October 2026
+
+The current-head application jobs fail during `Install pinned controlled PDF renderer`, before their static, build, database or browser proof. The compiled-browser and Leads workflows show the same Chrome 156 refusal. This is the unchanged reviewed-major policy from main, not a Facilities-specific assertion. The browser module from main 4c1097cc was copied unchanged into ignored temporary storage and its `assertSupportedBrowser("156.0.8078.47")` produced the same error. The runtime module, installer and package files have no branch diff.
+
+The separate runtime repair in PR #643 retains earlier reviewed majors and adds the observed 156 floor. At diagnosis the repair was not part of this branch; rerunning the unchanged branch would encounter the same installation failure. Owner review and deployment remain separate.
+
+## Landed runtime integration — 21 October 2026
+
+PR #643 was repaired separately and merged at 00:12 UTC (10:12 am Brisbane). Its final head e89b6bbf passed documentation foundation and the merged-tree check with no failed or pending checks reported at integration. This session did not repair or merge that PR.
+
+Facilities now integrates main 78795dd6, retaining both PRs separately. The sole textual conflict was generated docs/STATUS.md; the main copy was selected and regenerated from all fragments. Shared component and page-register additions merged without conflict. No Facilities application source changed during this integration. Fresh Facilities branch checks and CI results are recorded below as they complete; the passing runtime-PR checks do not substitute for Facilities proof.
+
+On the integrated tree, `npm run studio:check`, `npm run typecheck`, `python scripts/build_status.py --check`, `python scripts/check_naming.py`, the seven browser-policy/Facilities unit tests and `git diff --check` passed. The fresh foundation check is still running at this commit; fresh CI, including the exact Linux Chrome 156 installation and persisted Facilities proof, remains pending.
