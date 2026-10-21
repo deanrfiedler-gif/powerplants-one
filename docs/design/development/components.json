@@ -73,7 +73,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Representative synthetic content and normal interaction. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "field-timer-host",
@@ -181,7 +181,8 @@
         "docs/decisions/access-team-inspection-current.md",
         "src/app/styles/projects-register.css",
         "src/components/projects-register.tsx",
-        "docs/design/projects-register/figma-measurements.json"
+        "docs/design/projects-register/figma-measurements.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -337,7 +338,10 @@
         "route:/estimating/cpq",
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
-        "route:/estimating/rules/[id]"
+        "route:/estimating/rules/[id]",
+        "scope:CS-08",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -519,6 +523,14 @@
           "action": "Review the source-bound Projects fixtures and explicit scoped adaptations; keep generic consumers unchanged.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -655,7 +667,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states."
+          "description": "A sorted column, one inspected row, one selected row, a removed row and all four chip tones. Products host fixture: tests/browser/products-discovery.spec.ts covers filtered, returned, empty, unavailable/recovered and changed-identity states. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "panel",
@@ -708,7 +720,8 @@
         "src/products/components/catalogue-register.tsx",
         "src/products/components/catalogue-register.css",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -729,7 +742,10 @@
         "route:/estimating/rules",
         "route:/products",
         "route:/customers",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-08",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -805,6 +821,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1445,7 +1469,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Representative synthetic content and normal interaction. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "disabled",
@@ -1555,7 +1579,8 @@
         "docs/decisions/access-team-creation.md",
         "src/components/current-location-search.ts",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -1681,7 +1706,8 @@
         "route:/admin/access/requests",
         "route:/admin/access/requests/[id]",
         "route:/admin/access/roles",
-        "route:/sales/opportunities"
+        "route:/sales/opportunities",
+        "scope:CS-08"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -1855,6 +1881,14 @@
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -1984,7 +2018,7 @@
         {
           "id": "invalid",
           "label": "Invalid",
-          "description": "Required-field errors with retained input."
+          "description": "Required-field errors with retained input. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "default",
@@ -2046,7 +2080,8 @@
         "src/components/opportunity-outcome-source.tsx",
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
-        "src/components/sales-followup.tsx"
+        "src/components/sales-followup.tsx",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2154,7 +2189,8 @@
         "route:/service/work-orders/new",
         "route:/sales/opportunities/new",
         "route:/work/[id]",
-        "route:/work/new"
+        "route:/work/new",
+        "scope:CS-08"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2272,6 +2308,14 @@
           "action": "Inspect retained evidence and pair with the accepted reference before design acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2300,7 +2344,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Representative synthetic content and normal interaction. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "cs-customer",
@@ -2348,7 +2392,8 @@
         "src/components/equipment-forms.tsx",
         "src/components/equipment-timeline.tsx",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2396,7 +2441,9 @@
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
         "route:/warranty/supplier-recovery/[id]",
-        "route:/estimating/fertigation/[id]"
+        "route:/estimating/fertigation/[id]",
+        "scope:CS-08",
+        "route:/surveys"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2464,6 +2511,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "tabs-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2790,7 +2845,7 @@
         {
           "id": "loading",
           "label": "Loading",
-          "description": "Read in progress; no success is inferred."
+          "description": "Read in progress; no success is inferred. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "empty",
@@ -2914,7 +2969,8 @@
         "src/components/projects-register.tsx",
         "docs/design/projects-register/figma-measurements.json",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3037,7 +3093,8 @@
         "route:/admin/access/requests/[id]",
         "route:/projects",
         "scope:CS-01",
-        "route:/customers/new"
+        "route:/customers/new",
+        "scope:CS-08"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3209,6 +3266,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3452,7 +3517,7 @@
         {
           "id": "default",
           "label": "Default",
-          "description": "Representative synthetic content and normal interaction."
+          "description": "Representative synthetic content and normal interaction. CS-08 host bindings and state inventory: docs/design/development/site-surveys-fixtures.json."
         },
         {
           "id": "invalid",
@@ -3483,7 +3548,8 @@
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
         "docs/design/development/maintenance-fixtures.json",
-        "src/app/leads.css"
+        "src/app/leads.css",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3526,7 +3592,8 @@
         "route:/warranty/cases/[id]",
         "scope:MA-07",
         "route:/warranty/supplier-recovery",
-        "route:/warranty/supplier-recovery/[id]"
+        "route:/warranty/supplier-recovery/[id]",
+        "scope:CS-08"
       ],
       "desktop": "Use the phone presets and a separate browser window. This is the same form component family at a real responsive viewport.",
       "mobile": "Check 390/320 px, 200% zoom, touch targets, keyboard occlusion and error focus. No scaled screenshot is used.",
@@ -3562,6 +3629,14 @@
           "expected": "Confirmed post-save routing and readable/reachable phone controls with unchanged pending recovery.",
           "actual": "Repair host fixtures and checks are recorded separately; owner/device acceptance remains pending.",
           "action": "Review PR #367 repair evidence, exact consumer journeys and 320/390 px screenshots before owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "mobile-form-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3748,6 +3823,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "cs08-survey",
+          "label": "Site survey host",
+          "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
         }
       ],
       "implementation": [
@@ -3860,7 +3940,8 @@
         "docs/decisions/phone-header-amendment.md",
         "docs/testing/evidence/phone-header/README.md",
         "src/app/styles/organisations.css",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -3910,7 +3991,10 @@
         "scope:CS-01",
         "route:/products",
         "route:/sales/leads",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-08",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4170,6 +4254,14 @@
           "expected": "CS-01 D1-D7 implementation paired with accepted captures.",
           "actual": "CS-01 consumes the shared component; unknown data and scoped layout adaptations recorded.",
           "action": "Review organisations-native-r01 evidence; do not infer owner acceptance from code or automated checks.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -7373,6 +7465,11 @@
           "id": "correction",
           "label": "Identity correction",
           "description": "Existing revise-identity command, expected version, retained entries and original-operation recovery; no other correction fields implied."
+        },
+        {
+          "id": "cs08-survey",
+          "label": "Site survey host",
+          "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
         }
       ],
       "implementation": [
@@ -7394,7 +7491,8 @@
         "src/components/customer-workspace.tsx",
         "src/components/organisation-correction.tsx",
         "src/shared/customer-360.ts",
-        "docs/design/development/organisations-native-fixtures.json"
+        "docs/design/development/organisations-native-fixtures.json",
+        "docs/design/development/site-surveys-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -7404,7 +7502,10 @@
       "specification": "docs/design/development/components/shared-record.md",
       "used_on": [
         "scope:CS-01",
-        "route:/customers/[id]"
+        "route:/customers/[id]",
+        "scope:CS-08",
+        "route:/surveys",
+        "route:/surveys/[id]"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
@@ -7416,6 +7517,14 @@
           "expected": "Owner review of accepted source and real desktop/phone state pairs.",
           "actual": "Implementation and local synthetic proof are separate from owner review; see the evidence pairing table.",
           "action": "Review the retained evidence and explicit data/layout adaptations before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-cs08-review",
+          "expected": "Accepted Site surveys composition using existing shared controls.",
+          "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
+          "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

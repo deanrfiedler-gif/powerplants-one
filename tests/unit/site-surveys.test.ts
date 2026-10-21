@@ -1,0 +1,148 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import {
+  parseContent,
+  type CsRow,
+  type SurveyContent,
+} from "../../src/shared/cs/model";
+import { inspectSurveyImage } from "../../src/shared/cs/survey-media";
+import { surveyReviewConflict } from "../../src/shared/cs/survey-rules";
+import type { QueryClient } from "../../src/platform/permissions";
+import type { Principal } from "../../src/platform/identity";
+import { png } from "../helpers/field";
+const id = (n: number) =>
+  "c5080000-0000-4000-8000-" + String(n).padStart(12, "0");
+const content = (): SurveyContent => ({
+  schema_version: 1,
+  purpose: "Synthetic survey",
+  facility_ids: [],
+  asset_ids: [],
+  observations: [
+    {
+      id: id(1),
+      title: "Measured zero",
+      kind: "Measured",
+      facility_id: null,
+      asset_id: null,
+      value: "0",
+      unit: "mm",
+      detail: "",
+      observer: "SYN recorder",
+      captured_on: "2026-10-20",
+      method_source: "Synthetic level",
+      significant: true,
+      insignificant_reason: null,
+      activity_id: null,
+    },
+  ],
+});
+test("survey measurements retain explicit zero; Unknown cannot carry numeric zero", () => {
+  const c = content();
+  assert.equal(
+    (parseContent("Survey", c) as SurveyContent).observations[0].value,
+    "0",
+  );
+  assert.throws(() =>
+    parseContent("Survey", {
+      ...c,
+      observations: [{ ...c.observations[0], kind: "Unknown" }],
+    }),
+  );
+  assert.throws(() =>
+    parseContent("Survey", {
+      ...c,
+      observations: [{ ...c.observations[0], unit: null }],
+    }),
+  );
+  const unknown = {
+    ...c.observations[0],
+    kind: "Unknown",
+    value: null,
+    unit: null,
+  };
+  assert.equal(
+    (parseContent("Survey", { ...c, observations: [unknown] }) as SurveyContent)
+      .observations[0].value,
+    null,
+  );
+});
+test("planned visit and contact are explicit recorded facts; legacy content acquires no invented visit", () => {
+  const c = content();
+  assert.ok(!("visit" in parseContent("Survey", c)));
+  const visit = {
+    planned_at: "2026-10-20T01:00:00Z",
+    ends_at: "2026-10-20T02:00:00Z",
+    contact_id: id(2),
+    recorder_id: id(3),
+  };
+  const parsed = parseContent("Survey", { ...c, visit }) as SurveyContent;
+  assert.equal(parsed.visit?.contact_id, id(2));
+  assert.equal(parsed.visit?.recorder_id, id(3));
+  assert.throws(() =>
+    parseContent("Survey", {
+      ...c,
+      visit: { ...visit, ends_at: "2026-10-20T00:00:00Z" },
+    }),
+  );
+  assert.throws(() =>
+    parseContent("Survey", {
+      ...c,
+      visit: { ...visit, contact_id: "person label" },
+    }),
+  );
+  assert.equal(
+    (parseContent("Survey", { ...c, purpose: "" }) as SurveyContent).purpose,
+    "",
+  );
+});
+test("successor observation carries an explicit answer identity without rewriting the previous observation", () => {
+  const c = content(),
+    old = structuredClone(c.observations[0]);
+  const next = { ...old, id: id(4), answers_observation_id: old.id };
+  const parsed = parseContent("Survey", {
+    ...c,
+    observations: [next],
+  }) as SurveyContent;
+  assert.equal(parsed.observations[0].answers_observation_id, old.id);
+  assert.deepEqual(c.observations[0], old);
+});
+test("owner, recorded visitor and submitter cannot review even when they differ", async () => {
+  const row = { id: id(8), owner_id: id(1) } as CsRow;
+  const snapshot = {
+    recorded_by: id(3),
+    basis: {
+      owner_id: id(1),
+      content: {
+        ...content(),
+        visit: {
+          planned_at: null,
+          ends_at: null,
+          contact_id: null,
+          recorder_id: id(2),
+        },
+      },
+    },
+  };
+  const c = {
+    query: async () => ({ rows: [{ recorded_by: id(4) }] }),
+  } as unknown as QueryClient;
+  const p = (actor_id: string) =>
+    ({ workspace_id: id(9), actor_id }) as Principal;
+  for (const actor of [id(1), id(2), id(3), id(4)])
+    assert.equal(await surveyReviewConflict(c, p(actor), row, snapshot), true);
+  assert.equal(await surveyReviewConflict(c, p(id(5)), row, snapshot), false);
+});
+test("original image validation refuses disguised and oversized files without altering PNG bytes", () => {
+  const image = png(),
+    before = Buffer.from(image);
+  assert.equal(inspectSurveyImage(image), "image/png");
+  assert.deepEqual(image, before);
+  assert.throws(() =>
+    inspectSurveyImage(Buffer.from('<svg onload="alert(1)"/>')),
+  );
+  assert.throws(() => inspectSurveyImage(Buffer.alloc(1048577)));
+  assert.throws(() => inspectSurveyImage(Buffer.from([255, 216, 255, 217])));
+  const bad = Buffer.from(image);
+  bad[20] ^= 1;
+  assert.throws(() => inspectSurveyImage(bad));
+});

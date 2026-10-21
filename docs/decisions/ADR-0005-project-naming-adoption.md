@@ -6,6 +6,8 @@
 
 Dean explicitly confirmed Powerplants One as the product and PPO as its short project code, clarified that the other project's STD-001 and identifiers do not govern this project, and then adopted naming standard r02 and requested repository implementation. He also requested instructions for his dedicated ChatGPT design/development project.
 
+> New-allocation prefix amended by [Dean’s 20 October 2026 decision](readable-reference-namespaces.md). Existing references and the historical adoption below remain unchanged.
+
 ## Decision
 
 Adopt the [independent naming standard](../standards/naming-conventions.md). Preserve the exact [accepted r02](../reference/baselines/PPO-STD-001-naming-conventions-r02.md); working r03 records administrative adoption and implemented documentation changes. The scheme itself remains the user-adopted r02 design.

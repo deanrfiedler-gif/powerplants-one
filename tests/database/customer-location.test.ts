@@ -322,7 +322,7 @@ test("CS08 original PNG bytes/hash are immutable; caption successors survive rev
     code("55000"),
   );
 });
-test("CS08 meaningful Unknown needs canonical owned Activity; stale source is returned then resubmitted", async () => {
+test("CS08 meaningful Unknown needs canonical owned Activity; changed source can be returned then resubmitted", async () => {
   const { p, id } = await create("Survey"),
     content = survey();
   content.observations = [
@@ -407,10 +407,9 @@ test("CS08 meaningful Unknown needs canonical owned Activity; stale source is re
     ),
   );
   await rows("UPDATE ppo.sites SET version=version+1 WHERE id=$1", [CRM.site]);
-  await assert.rejects(
-    action(reviewer, "Survey", id, "review", { snapshot_id: first.id }),
-    code("SourceChanged"),
-  );
+  const changed = await readCs(reviewer, "Survey", id);
+  assert.ok(changed.survey?.sources.some(s => s.changed));
+  assert.equal(changed.survey?.independent_reviewer, true);
   await action(reviewer, "Survey", id, "return", { snapshot_id: first.id });
   await action(p, "Survey", id, "revise");
   await action(p, "Survey", id, "submit");
@@ -584,4 +583,19 @@ test("CS07 plan revisions preserve Unknown segmentation and never create booking
     await rows("SELECT id,version FROM ppo.customer_plans ORDER BY id"),
     beforeSeed,
   );
+});
+
+test("CS08 owner and recorded visitor are excluded; independent review and handover acknowledge changed sources and preserve the exact snapshot",async()=>{
+ const {p,id}=await create("Survey"),q=await principal("cs-reviewer"),c=database(),third=randomUUID();
+ await c.query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,'SYN independent CS08 reviewer')",[third,p.workspace_id]);
+ await c.query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to) SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$3",[p.workspace_id,third,q.actor_id]);
+ const independent={...q,actor_id:third},content={...survey(),visit:{planned_at:'2026-10-20T01:00:00Z',ends_at:'2026-10-20T02:00:00Z',contact_id:null,recorder_id:q.actor_id}};
+ await save(p,"Survey",id,content);await action(p,"Survey",id,"submit");const before=await readCs(independent,"Survey",id),snapshot=before.snapshots[0];
+ await assert.rejects(action(p,"Survey",id,"review",{snapshot_id:snapshot.id}),code("IndependentReviewRequired"));
+ await assert.rejects(action(q,"Survey",id,"review",{snapshot_id:snapshot.id}),code("IndependentReviewRequired"));
+ await c.query("UPDATE ppo.sites SET version=version+1 WHERE id=$1",[CRM.site]);
+ const changed=await readCs(independent,"Survey",id);assert.ok(changed.survey?.sources.some(s=>s.changed));assert.equal(changed.survey?.independent_reviewer,true);
+ await action(independent,"Survey",id,"review",{snapshot_id:snapshot.id});await action(p,"Survey",id,"handover",{snapshot_id:snapshot.id,destination:"Estimating",receiving_owner_id:p.actor_id});
+ const after=await readCs(p,"Survey",id);assert.deepEqual(after.snapshots[0].basis,snapshot.basis);assert.equal(after.events.find(e=>e.kind==='Reviewed').details.source_changed,true);
+ const list=await listCs(p,"Survey",{state:"Reviewed",owner_id:p.actor_id});const entry=list.items.find(s=>s.id===id);assert.match(entry.display_number,/^SYN-SRV-\d{6,}$/);assert.equal(entry.observation_count,1);assert.equal(entry.planned_at,content.visit.planned_at);assert.equal(entry.handover,"Estimating");assert.ok(list.owner_options.some(o=>o.id===p.actor_id));
 });

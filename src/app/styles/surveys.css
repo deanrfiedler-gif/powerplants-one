@@ -1,0 +1,756 @@
+/* CS-08: accepted Site surveys composition. Shared shell/control tokens remain authoritative. */
+:is(#ppo-surveys, #ppo-survey-record, #ppo-survey-create) {
+  --paper: var(--ppo-shell-surface);
+  --line: var(--ppo-shell-line);
+  --muted: var(--ppo-shell-muted);
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+  min-width: 0;
+  width: 100%;
+}
+#ppo-surveys .mw-content {
+  padding: 0;
+  overflow: auto;
+  min-width: 0;
+}
+#ppo-surveys .mw-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#ppo-surveys .mw-menu li a > span:not(.mw-badge) {
+  flex: 1;
+}
+#ppo-surveys .mw-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.srv-register {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--white);
+}
+.srv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.srv-desktop-filters {
+  display: flex;
+  gap: 8px;
+}
+.srv-toolbar .field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+.srv-toolbar .field label {
+  font-weight: 400;
+}
+.srv-toolbar .field select {
+  width: auto;
+  max-width: 190px;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px;
+}
+.srv-read-time {
+  margin: 0 0 0 auto;
+  color: var(--text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.srv-toolbar .ppo-button {
+  min-height: 40px;
+  white-space: nowrap;
+}
+.srv-grid {
+  min-width: 0;
+  overflow: auto;
+  flex: 1;
+}
+#ppo-surveys .ppo-register {
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+}
+#ppo-surveys .ppo-register-table {
+  min-width: 1550px;
+  width: 100%;
+  table-layout: auto;
+  font-size: 14px;
+}
+#ppo-surveys .ppo-register-table :is(td, th) {
+  height: 40px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+#ppo-surveys .ppo-register-table a {
+  color: var(--ink);
+  text-decoration: none;
+}
+#ppo-surveys .ppo-register-table .srv-title {
+  min-width: 276px;
+  width: 276px;
+}
+#ppo-surveys .ppo-register-table td.srv-title a {
+  font-weight: 500;
+}
+#ppo-surveys .ppo-register-table .srv-select {
+  position: sticky;
+  left: 0;
+  width: 44px;
+  min-width: 44px;
+  z-index: 1;
+  background: var(--white);
+  text-align: center;
+  padding: 8px 12px;
+}
+:is(#ppo-surveys, #ppo-survey-record, #ppo-survey-create)
+  input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  accent-color: var(--navy);
+}
+#ppo-surveys .ppo-register-table .srv-end {
+  position: sticky;
+  right: 0;
+  width: 44px;
+  min-width: 44px;
+  background: var(--white);
+  padding: 0;
+}
+#ppo-surveys .srv-end a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+#ppo-surveys .srv-end svg {
+  width: 16px;
+  height: 16px;
+}
+.srv-number {
+  text-align: right;
+}
+.srv-phone-list,
+.srv-quick-add,
+.srv-phone-context {
+  display: none;
+}
+.srv-state {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+.srv-state h2 {
+  font-size: 18px;
+  color: var(--ink);
+}
+.srv-state .ppo-button {
+  margin-top: 12px;
+}
+.srv-skeleton {
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  margin: 12px 0;
+}
+.srv-partial,
+.srv-note {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.srv-partial {
+  padding: 8px 16px;
+  margin: 0;
+  background: var(--warning-surface);
+  color: var(--warning);
+}
+.srv-filter-dialog {
+  width: min(520px, 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  padding: 20px;
+}
+.srv-filter-dialog::backdrop {
+  background: color-mix(in srgb, var(--navy) 25%, transparent);
+}
+.srv-filter-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.srv-filter-dialog h2 {
+  margin: 0;
+}
+#ppo-survey-record .shared-record-header h1 {
+  letter-spacing: normal;
+  font-weight: 700;
+  line-height: 32px;
+}
+#ppo-survey-record .shared-record-sources {
+  padding: 10px 24px;
+  min-height: 40px;
+}
+#ppo-survey-record .shared-record-content {
+  padding: 24px;
+}
+#ppo-survey-record .record-tablist button {
+  white-space: nowrap;
+  padding: 12px;
+}
+#ppo-survey-record .shared-record-actions .ppo-button {
+  min-height: 40px;
+}
+.srv-section {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  margin: 0 0 20px;
+  overflow: hidden;
+}
+.srv-section > header,
+.srv-section-heading {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.srv-section > header h2,
+.srv-section-heading h2 {
+  font-size: 16px !important;
+  line-height: 24px;
+  margin: 0 !important;
+}
+.srv-section > p,
+.srv-section > form,
+.srv-section > .srv-kind-chips,
+.srv-section > .srv-facts,
+.srv-section > fieldset,
+.srv-section > .srv-photo-grid,
+.srv-section > .srv-form-grid,
+.srv-section > details {
+  margin: 16px;
+}
+.srv-section > header > .ppo-button {
+  min-height: 32px;
+  padding: 4px 10px;
+}
+.srv-facts {
+  margin: 0;
+}
+.srv-facts > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 12px;
+  margin: 12px 0;
+}
+.srv-facts dt {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.srv-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.srv-facts dd a {
+  display: block;
+}
+.srv-scope-rows article,
+.srv-follow-up {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.srv-scope-rows article p,
+.srv-follow-up p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.srv-scope-rows article a {
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+.srv-scope-rows article > span {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.srv-kind-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.srv-kind-chips > .ppo-button {
+  min-height: 32px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.srv-kind-chips > .ppo-button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--ppo-shell-selected);
+  border-color: var(--hairline);
+}
+#ppo-survey-record .ppo-register {
+  margin-bottom: 20px;
+}
+#ppo-survey-record .ppo-register-table {
+  width: 100%;
+  font-size: 13px;
+}
+#ppo-survey-record .ppo-register-table :is(th, td) {
+  padding: 10px 12px;
+  white-space: normal;
+  vertical-align: top;
+}
+.srv-text-button {
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  padding: 0;
+  min-height: 24px;
+  text-align: left;
+  justify-content: start;
+  font:
+    500 13px/20px Roboto,
+    sans-serif;
+  border-radius: 0;
+}
+.srv-notice {
+  padding: 12px 16px;
+  color: var(--warning);
+  background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-control);
+  font-size: 13px;
+}
+.srv-sources {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.srv-sources li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.srv-sources li > strong {
+  flex: 1;
+}
+.srv-sources li > span {
+  font-size: 12px;
+}
+.srv-decision {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.srv-decision p {
+  margin: 6px 0 0;
+}
+.srv-decision code,
+.srv-photo code {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+.srv-form {
+  min-width: 0;
+}
+.srv-form fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.srv-form .field {
+  margin: 0 0 16px;
+}
+.srv-form label,
+.srv-form .srv-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+.srv-form :is(input:not([type="checkbox"]), select, textarea) {
+  font:
+    14px/20px Roboto,
+    sans-serif;
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  margin: 6px 0 0;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  background: var(--white);
+}
+.srv-form .srv-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+.srv-form .cs-checks {
+  margin: 16px;
+  padding: 0;
+}
+.srv-form .cs-checks legend {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.srv-form .cs-checks label,
+.srv-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin: 0 8px 6px 0;
+  padding: 6px 10px;
+  background: var(--surface-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  font-size: 13px;
+}
+.srv-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+  padding: 16px 0;
+  margin: 0;
+}
+.srv-section > .srv-form-actions {
+  padding: 16px;
+}
+.srv-create {
+  height: 100%;
+  overflow: auto;
+  background: var(--paper);
+}
+.srv-create > .business-heading,
+.srv-create-context {
+  padding: 20px 24px;
+  margin: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+.srv-create > .business-heading h1 {
+  font-size: 24px;
+  letter-spacing: normal;
+  margin: 0;
+}
+.srv-create-context > .field {
+  max-width: 620px;
+}
+.srv-create-context select {
+  margin-bottom: 0;
+}
+.srv-create-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+.srv-create-body > .srv-form {
+  padding: 24px;
+}
+.srv-create-existing {
+  padding: 24px;
+  border-left: 1px solid var(--line);
+  background: var(--white);
+}
+.srv-create-existing h2 {
+  font-size: 16px;
+}
+.srv-create-existing article {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.srv-create-existing article p {
+  margin: 8px 0;
+}
+.srv-create-existing > p {
+  margin-top: 20px;
+  font-size: 12px;
+}
+.srv-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.srv-photo {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+}
+.srv-photo-original {
+  display: flex;
+  min-height: 130px;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+}
+.srv-photo > div {
+  padding: 12px;
+}
+.srv-photo h3 {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: normal;
+  margin-bottom: 8px;
+}
+.srv-photo p {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  margin: 4px 0;
+}
+:is(#ppo-surveys, #ppo-survey-record, #ppo-survey-create)
+  :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+@media (max-width: 1100px) {
+  .srv-read-time {
+    white-space: normal;
+  }
+  .srv-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .srv-create-body {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-surveys .mw-content {
+    overflow: auto;
+  }
+  .srv-toolbar {
+    display: none;
+  }
+  .srv-grid {
+    display: none;
+  }
+  .srv-phone-list {
+    display: block;
+  }
+  .srv-phone-list > a {
+    display: block;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .srv-phone-list > a > div {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .srv-phone-list strong {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  .srv-phone-list p {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 5px 0 0;
+    color: var(--text-secondary);
+  }
+  .srv-phone-list .ppo-register-chip {
+    flex: none;
+  }
+  .srv-quick-add {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 16px;
+    padding: 16px;
+    margin-top: auto;
+  }
+  .srv-filter-dialog {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    max-width: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  .srv-state {
+    padding: 48px 20px;
+  }
+  .srv-state h2 {
+    font-size: 18px;
+  }
+  #ppo-survey-record .shared-record-header {
+    padding: 12px 16px;
+  }
+  #ppo-survey-record .shared-record-header h1 {
+    font-size: 18px;
+    line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  #ppo-survey-record .shared-record-header .eyebrow {
+    display: none;
+  }
+  #ppo-survey-record .shared-record-actions {
+    display: none;
+  }
+  #ppo-survey-record .shared-record-facts {
+    display: none;
+  }
+  #ppo-survey-record .shared-record-body {
+    display: block;
+  }
+  #ppo-survey-record .shared-record-content {
+    padding: 16px;
+  }
+  #ppo-survey-record .shared-record-sources {
+    display: none;
+  }
+  #ppo-survey-record .record-tablist {
+    padding: 0;
+  }
+  #ppo-survey-record .record-tablist button {
+    min-height: 44px;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  #ppo-survey-record .shared-record-sticky {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+  }
+  #ppo-survey-record .shared-record-sticky > .ppo-button {
+    width: 100%;
+    min-height: 44px;
+  }
+  .srv-phone-context {
+    display: block;
+    padding: 16px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    margin-bottom: 16px;
+  }
+  .srv-phone-context p {
+    font-size: 12px;
+    margin: 6px 0;
+  }
+  .srv-phone-context a {
+    font-size: 13px;
+  }
+  .srv-scope-rows article {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .srv-facts > div {
+    grid-template-columns: 110px minmax(0, 1fr);
+  }
+  .srv-section > header {
+    padding: 12px 16px;
+  }
+  .srv-section > header h2 {
+    font-size: 15px !important;
+  }
+  .srv-section > p {
+    font-size: 13px;
+  }
+  .srv-form :is(input:not([type="checkbox"]), select, textarea) {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  .srv-form .srv-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .srv-kind-chips > .ppo-button {
+    min-height: 40px;
+  }
+  .srv-create-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .srv-create-body > .srv-form,
+  .srv-create-existing {
+    padding: 16px;
+  }
+  .srv-create > .business-heading {
+    display: none;
+  }
+  .srv-create-context {
+    padding: 16px;
+  }
+  .srv-create-existing {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .srv-photo-grid {
+    grid-template-columns: 1fr;
+  }
+  .srv-follow-up {
+    flex-direction: column;
+    align-items: start;
+  }
+  .srv-section-heading {
+    padding: 0 0 12px;
+    border: 0;
+  }
+  .srv-form-actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    padding: 12px 0;
+  }
+  .srv-form-actions > .ppo-button {
+    min-height: 44px;
+  }
+  .srv-sources li {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+/* The measured value and unit stay together at the drawn phone widths. */
+.srv-measurement-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.4fr);
+  gap: 12px;
+}
+.srv-recorded {
+  color: var(--text-secondary);
+  font-size: 12px;
+}

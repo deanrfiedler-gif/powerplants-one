@@ -15,6 +15,7 @@ export function SharedRecord({
   tabs,
   children,
   stickyAction,
+  sourceLabel = "Sources for this customer",
 }: {
   id: string;
   title: string;
@@ -27,6 +28,7 @@ export function SharedRecord({
   tabs: ReactNode;
   children: ReactNode;
   stickyAction?: ReactNode;
+  sourceLabel?: string;
 }) {
   return (
     <section id={id} className="shared-record" data-module-layout="full-bleed">
@@ -42,7 +44,7 @@ export function SharedRecord({
       </header>
       <div
         className="shared-record-sources"
-        aria-label="Sources for this customer"
+        aria-label={sourceLabel}
       >
         {sources}
       </div>

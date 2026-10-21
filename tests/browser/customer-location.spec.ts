@@ -159,74 +159,25 @@ test("CS02 contact correction persists and a competing writer keeps the unsaved 
     .getByRole("button", { name: "Cancel correction", exact: true })
     .click();
 });
-test("CS08 UI captures a measured zero with an explicit unit and independently reviews the exact submission", async ({
-  page,
-  baseURL,
-}) => {
-  const id = await survey(page, baseURL!);
-  await page.goto(`/surveys/${id}?view=observations`);
-  await page
-    .getByRole("button", { name: "Edit observations", exact: true })
-    .click();
-  await page
-    .getByLabel("Survey scope and purpose", { exact: true })
-    .fill("SYN inspect the water-line fall at this Site");
-  await page
-    .getByRole("button", { name: "Add observation", exact: true })
-    .click();
-  await page
-    .getByLabel("Observation", { exact: true })
-    .fill("SYN observed zero fall");
-  await page
-    .getByLabel("Observation basis", { exact: true })
-    .selectOption("Measured");
-  await page.getByLabel("Measured value", { exact: true }).fill("0");
-  await page.getByLabel("Explicit unit", { exact: true }).fill("mm");
-  await page
-    .getByLabel("Finding / missing information", { exact: true })
-    .fill("SYN zero explicitly measured, not unknown");
-  await page
-    .getByLabel("Observer or source person", { exact: true })
-    .fill("SYN field observer");
-  await page
-    .getByLabel("Method and source", { exact: true })
-    .fill("SYN spirit-level observation");
-  await page
-    .getByLabel("Reason for this revision", { exact: true })
-    .fill("SYN first capture");
-  await page
-    .getByRole("button", { name: "Save revision", exact: true })
-    .click();
-  await expect(page.getByText("0 mm", { exact: true })).toBeVisible();
-  await page
-    .getByRole("tab", { name: "Review & handover", exact: true })
-    .click();
-  await page
-    .getByLabel("Review, clarification or acknowledgement reason", {
-      exact: true,
-    })
-    .fill("SYN submission");
-  await page
-    .getByRole("button", { name: "Record action", exact: true })
-    .click();
-  await expect(page.getByText(/Submitted · revision 1/)).toBeVisible();
-  await login(page, baseURL!, "cs-reviewer");
-  await page.reload();
-  await page.getByLabel("Action", { exact: true }).selectOption("review");
-  const snapshots = page.getByLabel("Exact retained snapshot", { exact: true });
-  await snapshots.selectOption({ index: 1 });
-  await page
-    .getByLabel("Review, clarification or acknowledgement reason", {
-      exact: true,
-    })
-    .fill("SYN independent as-found review");
-  await page
-    .getByRole("button", { name: "Record action", exact: true })
-    .click();
-  await expect(page.getByText(/Reviewed · revision 1/)).toBeVisible();
-  await expect(
-    page.getByText(/does not certify design suitability/).first(),
-  ).toBeVisible();
+test("CS08 UI captures measured zero and independently reviews the exact submission",async({page,baseURL})=>{
+ const id=await survey(page,baseURL!);
+ await post(page,baseURL!,"cs/Survey/"+id+"/save",{...base(),expected_version:1,name:"SYN Native as-found brief",owner_id:owner,content:{schema_version:1,purpose:"SYN inspect the water-line fall",facility_ids:[],asset_ids:[],observations:[]}});
+ await page.goto("/surveys/"+id+"?view=observations");
+ await page.getByRole("button",{name:"Record observation",exact:true}).first().click();
+ await page.getByLabel("Title",{exact:true}).fill("SYN measured zero fall");
+ await page.getByLabel("Value",{exact:true}).fill("0");await page.getByLabel("Unit",{exact:true}).fill("mm");
+ await page.getByLabel("Method and source",{exact:true}).fill("SYN level observation");
+ await page.getByRole("button",{name:"Save observation",exact:true}).click();
+ await expect(page.getByText("0 mm",{exact:true}).first()).toBeVisible();
+ await page.getByRole("tab",{name:"Review & handover",exact:true}).click();
+ await page.getByRole("button",{name:"Submit for review",exact:true}).first().click();
+ await page.getByLabel("Reason",{exact:true}).fill("SYN submission");await page.locator('form button[type=submit]').click();
+ await expect(page.getByText("Submitted",{exact:true}).first()).toBeVisible();
+ await login(page,baseURL!,"cs-reviewer");await page.reload();
+ await page.getByRole("button",{name:"Review submission",exact:true}).first().click();
+ await page.getByLabel("Review note",{exact:true}).fill("SYN independent as-found review");
+ await page.locator('form button[type=submit]').click();await expect(page.getByText("Reviewed",{exact:true}).first()).toBeVisible();
+ await expect(page.getByText(/does not certify design suitability/).first()).toBeVisible();
 });
 
 async function ensurePlan(

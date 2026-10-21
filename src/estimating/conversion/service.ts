@@ -39,7 +39,7 @@ function targetCommands(b: PlanBasis, now: Date, reason: string) {
       kind: "Demand",
       company_id: b.target.company,
       site_id: b.target.site_id,
-      reference: `SYN-PPO-SC-${id}`,
+      reference: `SYN-SC-${id}`,
       title: l.label,
       item: l.item,
       unit: l.unit,

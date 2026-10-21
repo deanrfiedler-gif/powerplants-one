@@ -162,7 +162,7 @@ export function equipmentLabel(item: RegisterItem) {
 }
 
 export function workOrderLabel(order: RegisterItem["work_orders"][number]) {
-  return `${order.display_number.replace(/^SYN-PPO-/, "")} · ${order.status.toLowerCase()}`;
+  return `${order.display_number.replace(/^SYN-(?:PPO-)?/, "")} · ${order.status.toLowerCase()}`;
 }
 
 // Board moves offer only the transitions the native commands perform (D3): request information from New, and

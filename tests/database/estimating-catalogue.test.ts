@@ -329,7 +329,7 @@ test("ES02-CAT-07: populated 0084 upgrade preserves exact originals, explicit re
       .filter((r) => r.row.version >= 85)
       .map((r) => r.row.version)
       .sort((a, b) => a - b),
-    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
+    [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114],
   );
   await migrate();
   await seed();

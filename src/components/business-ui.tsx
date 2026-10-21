@@ -258,7 +258,7 @@ export function PageHeader({
   variant?: "record" | "register";
 }) {
   const register = variant === "register";
-  usePublishRecordIdentity(!register && /SYN-PPO-|PPO-/.test(eyebrow) ? eyebrow : null, title);
+  usePublishRecordIdentity(!register && /SYN-|PPO-/.test(eyebrow) ? eyebrow : null, title);
   usePublishPageDescription(register ? title : null, description);
   return (
     <div className={register ? "business-heading business-heading-register" : "business-heading"}>

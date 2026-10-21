@@ -42,6 +42,8 @@ import {
   type PreparationBasis,
 } from "./model";
 import { assessPreparation } from "./readiness";
+import { surveyDetails } from "./survey-read";
+import { validateSurveyVisit, surveyReviewConflict } from "./survey-rules";
 
 export const hash = (value: unknown) =>
   createHash("sha256").update(canonical(value)).digest("hex");
@@ -143,14 +145,33 @@ export async function contentAuthority(
       if (item.person_id) personIds.add(item.person_id);
   } else if (kind === "Survey") {
     const x = content as SurveyContent;
+    await validateSurveyVisit(c, p, row, x);
     if (
       submitting &&
-      (!x.purpose.trim() || x.purpose === "Record the survey scope before submission.")
+      (!x.purpose.trim() ||
+        x.purpose === "Record the survey scope before submission.")
     )
-      invalid("purpose", "Record the actual survey scope and purpose before submission.");
+      invalid(
+        "purpose",
+        "Record the actual survey scope and purpose before submission.",
+      );
+    if (x.visit?.contact_id) personIds.add(x.visit.contact_id);
     for (const id of x.facility_ids) facilityIds.add(id);
     for (const id of x.asset_ids) assetIds.add(id);
     for (const o of x.observations) {
+      if (
+        o.answers_observation_id &&
+        !(
+          await c.query(
+            "SELECT 1 FROM ppo.cs_record_revisions r CROSS JOIN LATERAL jsonb_array_elements(r.content->'content'->'observations') o WHERE r.workspace_id=$1 AND r.record_id=$2 AND r.revision<$3 AND o->>'id'=$4 AND o->>'kind'='Unknown' LIMIT 1",
+            [p.workspace_id, row.id, row.revision, o.answers_observation_id],
+          )
+        ).rowCount
+      )
+        invalid(
+          "answers_observation_id",
+          "Choose an Unknown retained in an earlier revision of this survey.",
+        );
       if (o.facility_id && !facilityIds.has(o.facility_id))
         invalid(
           "facility_id",
@@ -326,6 +347,7 @@ export async function createCs(p: Principal, kind: CsKind, input: unknown) {
       "context_id",
       "name",
       "owner_id",
+      ...(kind === "Survey" ? ["content"] : []),
     ]),
     command = {
       ...common(r),
@@ -334,6 +356,9 @@ export async function createCs(p: Principal, kind: CsKind, input: unknown) {
       name: label(r.name, "name", 200),
       owner_id: uuid(r.owner_id, "owner_id"),
       kind,
+      ...(kind === "Survey" && r.content !== undefined
+        ? { content: parseContent(kind, r.content) }
+        : {}),
     };
   return sharedOperation(
     p,
@@ -375,11 +400,13 @@ export async function createCs(p: Principal, kind: CsKind, input: unknown) {
             kind === "AccountPlan" ? context.id : null,
             command.name,
             command.owner_id,
-            emptyContent(kind),
+            "content" in command ? command.content : emptyContent(kind),
             p.actor_id,
           ],
         )
       ).rows[0];
+      if (kind === "Survey")
+        await contentAuthority(c, p, kind, row, row.content);
       await retain(c, p, row, command.reason);
       return row;
     },
@@ -749,12 +776,13 @@ export async function csAction(
             "StateConflict",
             "Select the exact current Submitted survey.",
           );
-        if (command.action === "review") snapshotCurrent();
-        if (snapshot.recorded_by === p.actor_id)
+        // Q4: a changed permitted source is shown, while this exact submission
+        // stays immutable. Current record/version and snapshot selection still bind.
+        if (await surveyReviewConflict(c, p, row, snapshot))
           throw new AppError(
             409,
             "IndependentReviewRequired",
-            "Another permitted editor must review or return this submission.",
+            "The survey owner, recorder and submitter cannot review or return their submission.",
           );
         const state = command.action === "return" ? "Returned" : "Reviewed";
         await event(
@@ -765,6 +793,23 @@ export async function csAction(
           {
             reason: command.reason,
             certification: "No design, safety, capacity or work certification",
+            ...(command.action === "review"
+              ? {
+                  acknowledged_gaps: (
+                    snapshot.basis.content as SurveyContent
+                  ).observations
+                    .filter(
+                      (o) =>
+                        o.significant &&
+                        ["Unknown", "Assumption"].includes(o.kind),
+                    )
+                    .map((o) => ({
+                      observation_id: o.id,
+                      activity_id: o.activity_id,
+                    })),
+                  source_changed: snapshot.content_hash !== hash(basis),
+                }
+              : {}),
           },
           snapshot.id,
         );
@@ -782,7 +827,12 @@ export async function csAction(
           ).rowCount
         )
           invalid("snapshot_id", "Choose an exact Reviewed survey snapshot.");
-        snapshotCurrent();
+        if (snapshot.revision !== row.revision || row.state !== "Reviewed")
+          invalid(
+            "snapshot_id",
+            "Choose the current Reviewed survey revision.",
+          );
+        await contentAuthority(c, p, kind, row, snapshot.basis.content);
         const destination = choice(command.destination, "destination", [
           "Estimating",
           "Engineering",
@@ -808,6 +858,7 @@ export async function csAction(
           {
             destination,
             receiving_owner_id: command.receiving_owner_id,
+            source_changed: snapshot.content_hash !== hash(basis),
             source_hash: snapshot.content_hash,
             source_revision: snapshot.revision,
             reason: command.reason,
@@ -829,7 +880,13 @@ export async function listCs(
   kind: CsKind,
   query: Record<string, string>,
 ) {
-  const q = object(query, ["context_id", "q", "cursor", "limit"]),
+  const q = object(query, [
+      "context_id",
+      "q",
+      "cursor",
+      "limit",
+      ...(kind === "Survey" ? ["state", "owner_id"] : []),
+    ]),
     contextId = optionalId(q.context_id, "context_id"),
     c = database();
   await requireCapability(c, p, "shared.read");
@@ -848,13 +905,42 @@ export async function listCs(
       kind === "AccountPlan" ? "Organisation" : "Site",
       contextId,
     );
+  const surveyColumns =
+    kind === "Survey"
+      ? `,r.display_number,context.display_name AS site_name,context.timezone,
+      r.content->'visit'->>'planned_at' AS planned_at,
+      jsonb_array_length(r.content->'observations') AS observation_count,
+      (SELECT count(*)::int FROM jsonb_array_elements(r.content->'observations') o
+       WHERE o->>'kind' IN ('Unknown','Assumption') AND (o->>'significant')::boolean
+       AND (o->>'activity_id' IS NULL OR EXISTS (SELECT 1 FROM ppo.activities a WHERE a.workspace_id=r.workspace_id AND a.id=(o->>'activity_id')::uuid AND a.status IN ('Open','InProgress')))) AS open_gaps,
+      (SELECT e.details->>'destination' FROM ppo.cs_record_events e WHERE e.workspace_id=r.workspace_id AND e.record_id=r.id AND e.snapshot_id IN (SELECT s.id FROM ppo.cs_snapshots s WHERE s.workspace_id=r.workspace_id AND s.record_id=r.id AND s.revision=r.revision) AND r.state='Reviewed' AND e.kind='Handover' ORDER BY e.recorded_at DESC,e.id LIMIT 1) AS handover`
+      : "";
+  const state =
+    kind === "Survey" && q.state
+      ? choice(q.state, "state", [
+          "Draft",
+          "Submitted",
+          "Returned",
+          "Reviewed",
+        ] as const)
+      : null;
+  const owner = kind === "Survey" ? optionalId(q.owner_id, "owner_id") : null;
   const rows = (
     await c.query(
-      `SELECT r.id,r.name,r.state,r.version,r.revision,r.site_id,r.organisation_id,r.company_id,r.owner_id,u.display_name AS owner_name
+      `SELECT r.id,r.name,r.state,r.version,r.revision,r.site_id,r.organisation_id,r.company_id,r.owner_id,u.display_name AS owner_name${surveyColumns}
     FROM ppo.${tables[kind]} r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.owner_id)
     JOIN ppo.${kind === "AccountPlan" ? "organisations" : "sites"} context ON (context.workspace_id,context.id)=(r.workspace_id,r.${kind === "AccountPlan" ? "organisation_id" : "site_id"})
-    WHERE r.workspace_id=$1 AND ${visibility(kind === "AccountPlan" ? "Organisation" : "Site", "context")} AND ${scopeSql("r.company_id", "r.site_id")} AND ($3::uuid IS NULL OR context.id=$3) AND ($4::uuid IS NULL OR r.id>$4) AND strpos(lower(r.name),lower($5))>0 ORDER BY r.id LIMIT $6`,
-      [p.workspace_id, p.actor_id, contextId, cursor, term, limit + 1],
+    WHERE r.workspace_id=$1 AND ${visibility(kind === "AccountPlan" ? "Organisation" : "Site", "context")} AND ${scopeSql("r.company_id", "r.site_id")} AND ($3::uuid IS NULL OR context.id=$3) AND ($4::uuid IS NULL OR r.id>$4) AND strpos(lower(r.name),lower($5))>0 AND ($7::text IS NULL OR r.state=$7) AND ($8::uuid IS NULL OR r.owner_id=$8) ORDER BY r.id LIMIT $6`,
+      [
+        p.workspace_id,
+        p.actor_id,
+        contextId,
+        cursor,
+        term,
+        limit + 1,
+        state,
+        owner,
+      ],
     )
   ).rows;
   const permitted = [];
@@ -866,7 +952,28 @@ export async function listCs(
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
   }
+  const ownerOptions =
+    kind === "Survey"
+      ? (
+          await c.query<{ id: string; display_name: string }>(
+            `SELECT DISTINCT u.id,u.display_name FROM ppo.site_surveys r JOIN ppo.users u ON (u.workspace_id,u.id)=(r.workspace_id,r.owner_id) JOIN ppo.sites context ON (context.workspace_id,context.id)=(r.workspace_id,r.site_id) WHERE r.workspace_id=$1 AND ${visibility("Site", "context")} AND ${scopeSql("r.company_id", "r.site_id")} AND ($3::uuid IS NULL OR r.site_id=$3) ORDER BY u.display_name,u.id`,
+            [p.workspace_id, p.actor_id, contextId],
+          )
+        ).rows
+      : [];
+  const counts =
+    kind === "Survey"
+      ? (
+          await c.query<{ state: string; count: number }>(
+            `SELECT r.state,count(*)::int AS count FROM ppo.site_surveys r JOIN ppo.sites context ON (context.workspace_id,context.id)=(r.workspace_id,r.site_id) WHERE r.workspace_id=$1 AND ${visibility("Site", "context")} AND ${scopeSql("r.company_id", "r.site_id")} AND ($3::uuid IS NULL OR r.site_id=$3) AND ($4::uuid IS NULL OR r.owner_id=$4) GROUP BY r.state`,
+            [p.workspace_id, p.actor_id, contextId, owner],
+          )
+        ).rows
+      : [];
   return {
+    owner_options: ownerOptions,
+    view_counts: Object.fromEntries(counts.map((x) => [x.state, x.count])),
+    total_count: counts.reduce((n, x) => n + x.count, 0),
     items: permitted,
     next_cursor: rows.length > limit ? (rows[limit - 1].id as string) : null,
     completeness: "Bounded permitted view",
@@ -936,6 +1043,10 @@ export async function readCs(p: Principal, kind: CsKind, id: string) {
     ),
     actor_id: p.actor_id,
     photos: basis.photos,
+    survey:
+      kind === "Survey"
+        ? await surveyDetails(c, p, row, permittedSnapshots, basis.dependencies)
+        : null,
     reviews: basis.reviews,
     evidence_status:
       kind === "Readiness"

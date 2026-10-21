@@ -594,17 +594,24 @@
     },
     {
       "key": "scope:CS-08",
-      "title": "Site survey and as-found brief",
+      "title": "Site surveys",
       "kind": "scope",
       "module": "CS",
-      "summary": "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover.",
+      "summary": "Record as-found scope and observations, retain original evidence, independently review exact submissions and record their receiving handover.",
       "path": "/surveys",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "src/components/cs-workspace.tsx",
         "src/components/cs-forms.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/photos.ts"
+        "src/shared/cs/photos.ts",
+        "src/components/surveys/survey-register.tsx",
+        "src/components/surveys/survey-record.tsx",
+        "src/components/surveys/survey-forms.tsx",
+        "src/components/surveys/survey-review.tsx",
+        "src/components/surveys/survey-photos.tsx",
+        "src/app/styles/surveys.css",
+        "src/shared/cs/survey-read.ts",
+        "src/shared/cs/survey-rules.ts"
       ],
       "guide_key": "guide.cs.08",
       "design_path": "docs/design/development/pages/scope-cs-08.md",
@@ -626,12 +633,14 @@
         "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-14-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/site-surveys-figma-design.md"
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/readable-reference-namespaces.md",
+        "docs/decisions/site-surveys-native-build.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-08 accepted design implementation; owner visual review pending",
+      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
+      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
@@ -10918,17 +10927,24 @@
     },
     {
       "key": "route:/surveys/[id]",
-      "title": "surveys /  id ",
+      "title": "Site survey record",
       "kind": "route",
       "module": "CS",
-      "summary": "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover.",
+      "summary": "Record as-found scope and observations, retain original evidence, independently review exact submissions and record their receiving handover.",
       "path": "/surveys/[id]",
       "source_paths": [
         "src/app/(business)/surveys/[id]/page.tsx",
-        "src/components/cs-workspace.tsx",
         "src/components/cs-forms.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/photos.ts"
+        "src/shared/cs/photos.ts",
+        "src/components/surveys/survey-register.tsx",
+        "src/components/surveys/survey-record.tsx",
+        "src/components/surveys/survey-forms.tsx",
+        "src/components/surveys/survey-review.tsx",
+        "src/components/surveys/survey-photos.tsx",
+        "src/app/styles/surveys.css",
+        "src/shared/cs/survey-read.ts",
+        "src/shared/cs/survey-rules.ts"
       ],
       "guide_key": "guide.route-surveys-id",
       "design_path": "docs/design/development/pages/route-surveys-id.md",
@@ -10948,12 +10964,14 @@
       "dependencies": [
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/site-surveys-figma-design.md"
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/readable-reference-namespaces.md",
+        "docs/decisions/site-surveys-native-build.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-08 accepted design implementation; owner visual review pending",
+      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
+      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "reviewer": null,
@@ -10966,17 +10984,24 @@
     },
     {
       "key": "route:/surveys",
-      "title": "surveys",
+      "title": "Site surveys",
       "kind": "route",
       "module": "CS",
-      "summary": "Retain an exact as-found survey scope, observations and original evidence for a controlled reviewed handover.",
+      "summary": "Record as-found scope and observations, retain original evidence, independently review exact submissions and record their receiving handover.",
       "path": "/surveys",
       "source_paths": [
         "src/app/(business)/surveys/page.tsx",
-        "src/components/cs-workspace.tsx",
         "src/components/cs-forms.tsx",
         "src/shared/cs/service.ts",
-        "src/shared/cs/photos.ts"
+        "src/shared/cs/photos.ts",
+        "src/components/surveys/survey-register.tsx",
+        "src/components/surveys/survey-record.tsx",
+        "src/components/surveys/survey-forms.tsx",
+        "src/components/surveys/survey-review.tsx",
+        "src/components/surveys/survey-photos.tsx",
+        "src/app/styles/surveys.css",
+        "src/shared/cs/survey-read.ts",
+        "src/shared/cs/survey-rules.ts"
       ],
       "guide_key": "guide.route-surveys",
       "design_path": "docs/design/development/pages/route-surveys.md",
@@ -10989,12 +11014,14 @@
         "docs/reference/ui/customers/site-surveys-design-r01/PPO-Site-Surveys-14-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/site-surveys-figma-design.md"
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/readable-reference-namespaces.md",
+        "docs/decisions/site-surveys-native-build.md"
       ],
-      "scope_status": "Native implementation; owner acceptance pending",
-      "visual_status": "Proposed native receiving treatment; synthetic viewport evidence inspected; owner review pending",
-      "functional_status": "Focused automated proof; see receiving handover",
-      "deployment_status": "Local compiled verification; not deployed",
+      "scope_status": "CS-08 accepted design implementation; owner visual review pending",
+      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
+      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "reviewer": null,

@@ -68,8 +68,8 @@ export function lookupIdentifier(
     return { value: text.toLowerCase(), kind: "id" };
   const link = new RegExp(`^/equipment/(${id})$`, "i").exec(text);
   if (link) return { value: link[1].toLowerCase(), kind: "id" };
-  if (/^SYN-PPO-AST-\d{6}$/.test(text))
+  if (/^SYN-(?:PPO-)?AST-\d{6,}$/.test(text))
     return { value: text, kind: "reference" };
-  if (/^(?:SYN-PPO-|https?:|javascript:|data:|\/)/i.test(text)) return null;
+  if (/^(?:SYN-|PPO-|https?:|javascript:|data:|\/)/i.test(text)) return null;
   return { value: text, kind: "serial" };
 }

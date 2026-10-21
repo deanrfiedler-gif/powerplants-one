@@ -157,7 +157,7 @@ test(
     );
     assert.deepEqual(
       next.filter((r) => r.version > 80).map((r) => r.version),
-      [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
+      [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114],
     );
     assertAccessInspectionSeedLedger(seeds, await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"));
     for (const f of fixtures) {

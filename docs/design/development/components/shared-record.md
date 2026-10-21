@@ -29,3 +29,7 @@ Mappings inherited from the catalogue: Components > Record / Field `224:12`, Vie
 Incoming: exact permitted organisation. Outgoing: existing source records, people/sites, stakeholders, account development and My Work. Correct details uses only the existing name-revision command, expected-version comparison and recoverable original operation. Additional correction fields are not inferred.
 
 No owner/device acceptance, deployment or production-readiness claim is recorded.
+
+## CS-08 Site surveys consumer
+
+The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. SharedRecord accepts optional sourceLabel for the source/check band; the default customer wording is preserved. The survey supplies its own accessible submission/handover label.
