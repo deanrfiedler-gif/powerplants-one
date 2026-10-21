@@ -1,2 +1,2 @@
-import { DiscoveryList } from "../../../../components/discovery-screens";
-export default function Page(){return <DiscoveryList/>;}
+import { DiscoveryRegister } from "../../../../components/discovery-register";
+export default function Page(){return <DiscoveryRegister/>;}

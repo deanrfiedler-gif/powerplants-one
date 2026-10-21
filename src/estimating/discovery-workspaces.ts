@@ -5,7 +5,8 @@ import { transaction } from "../platform/database";
 import { sharedOperation, canonical } from "../platform/operations";
 import { AppError, unavailable } from "../platform/errors";
 import { object, optionalId } from "../shared/validation";
-import { requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability } from "../platform/permissions";
+import { discoveryRegisterFields } from "./discovery-register-reads";
 import { visibleOpportunity } from "../crm/context";
 import { digest } from "../documents/store";
 import { reviewCreationContext } from "./discovery-creation-context";
@@ -771,10 +772,13 @@ export async function listDiscoveryWorkspaces(
           title: opportunity.title,
           display_number: opportunity.display_number,
           selected_option_id: workspace.selected_option_id,
+          ...await discoveryRegisterFields(c, p, workspace, opportunity, options.find(item => item.option.id === workspace.selected_option_id)!.revision.id),
           options: options.map(({ option, revision }) => ({
             id: option.id,
             label: option.label,
+            ordinal: option.ordinal,
             state: option.state,
+            kind: revision.kind,
             revision_id: revision.id,
             revision: revision.version,
             scope_readiness: revision.scope_readiness,
@@ -784,6 +788,6 @@ export async function listDiscoveryWorkspaces(
         if (!(error instanceof AppError) || error.status !== 404) throw error;
       }
     }
-    return { items, limit: 100, synthetic: true };
+    return { items, limit: 100, synthetic: true, as_at: new Date().toISOString(), can_create: await hasPermission(c, p, "estimating.edit") };
   });
 }
