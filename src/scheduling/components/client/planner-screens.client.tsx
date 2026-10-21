@@ -893,15 +893,7 @@ function CancelForm({ a, onSaved }: { a: Appointment; onSaved: () => void }) {
     </section>
   );
 }
-export function RequestDecision({
-  a,
-  request,
-  onSaved,
-}: {
-  a: Appointment;
-  request: Request;
-  onSaved: () => void;
-}) {
+export function useRequestDecision(a: Appointment, request: Request, onSaved: (action: string) => void) {
   const p = useIdentity(),
     [reason, setReason] = useState(""),
     command = useCommand();
@@ -928,8 +920,20 @@ export function RequestDecision({
         body,
       )
     )
-      onSaved();
+      onSaved(action);
   }
+  return { p, reason, setReason, command, resources, policyPreparation, resourceName, decide };
+}
+export function RequestDecision({
+  a,
+  request,
+  onSaved,
+}: {
+  a: Appointment;
+  request: Request;
+  onSaved: () => void;
+}) {
+  const { p, reason, setReason, command, policyPreparation, resourceName, decide } = useRequestDecision(a, request, onSaved);
   return (
     <article className="change-request">
       <div className="planner-card-head">
@@ -1012,7 +1016,7 @@ export function AppointmentScreen({ id }: { id: string }) {
   const resource = useResource<Envelope<Appointment>>(`appointments/${id}`);
   const a = resource.data?.items[0];
   const current = !resource.loading && !resource.error;
-  const [mode, setMode] = useState<AppointmentMode | null>(null);
+  const [mode, setMode] = useState<AppointmentMode | null>(() => search.get("action") === "contact" ? "contact" : search.get("action") === "move" ? "move" : null);
   const reload = useRef(resource.reload);
   useEffect(() => { reload.current = resource.reload; }, [resource.reload]);
   const acceptedOperation = recovery.accepted?.receipt.operation_id;

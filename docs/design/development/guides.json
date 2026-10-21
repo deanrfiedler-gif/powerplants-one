@@ -14452,17 +14452,17 @@
     {
       "guide_key": "guide.pl.04",
       "entry_key": "scope:PL-04",
-      "title": "Rescheduling and acknowledgement centre",
+      "title": "Changes and follow-up",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Native application workflow; owner acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-21",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "runtime_evidence": "See docs/testing/evidence/changes-follow-up-build/README.md for executed checks and limits. Design acceptance, functional proof, owner visual review and deployment remain separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14490,10 +14490,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
-            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
-            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
-            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
+            "Choose the period, site and queue. Menu counts follow that period and site; a policy hold alone does not add a visit to Needs review.",
+            "Open a visit row. Compare Booked now and Requested, including each crew member’s travel allowance, current versions and any named change since the request.",
+            "Enter Decision reason. Accept and check move rechecks the whole booking; Reject request is separate. Cancel request is in the request card’s More menu.",
+            "Use Follow-up for owned tasks and recorded contact. Record customer contact opens the existing appointment control. After an accepted move, fresh contact is the next action where required."
           ],
           "rows": [],
           "headers": []
@@ -14502,8 +14502,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
-            "Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract."
+            "The side menu holds five queues and separate review destinations. The grid shows Visit, Work, Needs review because, Booked, Requested, Customer, Follow-up and Site. Open a row for current booking and consequences beside Change request, Follow-up and History tabs.",
+            "An exact appointment stays visible outside the selected date or queue. Return to review queue restores the selected view; exact handovers do not alter menu counts."
           ],
           "steps": [],
           "rows": [],
@@ -14526,10 +14526,10 @@
             "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review."
           ],
           "steps": [
-            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
-            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
-            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
-            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
+            "Choose the period, site and queue. Menu counts follow that period and site; a policy hold alone does not add a visit to Needs review.",
+            "Open a visit row. Compare Booked now and Requested, including each crew member’s travel allowance, current versions and any named change since the request.",
+            "Enter Decision reason. Accept and check move rechecks the whole booking; Reject request is separate. Cancel request is in the request card’s More menu.",
+            "Use Follow-up for owned tasks and recorded contact. Record customer contact opens the existing appointment control. After an accepted move, fresh contact is the next action where required."
           ],
           "rows": [],
           "headers": []
@@ -14549,8 +14549,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading and failed reads remove prior results and counts. Retry loading asks for a current read. Empty queues offer History / all visits. View-only access removes booking decisions. Unavailable job-pack or dispatch evidence is labelled; site readiness gate P4 is not built.",
+            "A stale request is not automatically refused. Review the named history change and enter a reason; acceptance still requires current appointment, request, policy, resource, calendar, competence and reservation checks. An uncertain send retains the original operation for unchanged retry."
           ],
           "steps": [],
           "rows": [],
@@ -14582,9 +14582,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "On a phone, use the compact Changes header and its filter sheet for search, site and timezone. Select a list row to review the request first, then consequences, Booked now and history. At 320 px Move or reassign is in More.",
+            "Tab and Shift+Tab move between controls; arrow keys switch tabs and navigate menus, and Escape closes a menu or returns from the review. Dirty decisions ask before leaving; pending outcomes must be resolved. This is an online workspace; no offline booking support is implied."
           ],
           "steps": [],
           "rows": [],
@@ -14625,7 +14624,7 @@
         "docs/decisions/scheduling-resources-architecture.md",
         "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "change_summary": "Accepted PL-04 queue, request review, owned follow-up and temporary Policy impact composition; implementation owner review pending.",
       "document_id": "PPO-GUIDE-PL-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -63696,7 +63695,7 @@
     {
       "guide_key": "guide.route-schedule-changes",
       "entry_key": "route:/schedule/changes",
-      "title": "Rescheduling and acknowledgement centre",
+      "title": "Changes and follow-up",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
@@ -63734,10 +63733,10 @@
           "title": "Using this page",
           "paragraphs": [],
           "steps": [
-            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
-            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
-            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
-            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
+            "Choose the period, site and queue. Menu counts follow that period and site; a policy hold alone does not add a visit to Needs review.",
+            "Open a visit row. Compare Booked now and Requested, including each crew member’s travel allowance, current versions and any named change since the request.",
+            "Enter Decision reason. Accept and check move rechecks the whole booking; Reject request is separate. Cancel request is in the request card’s More menu.",
+            "Use Follow-up for owned tasks and recorded contact. Record customer contact opens the existing appointment control. After an accepted move, fresh contact is the next action where required."
           ],
           "headers": [],
           "rows": []
@@ -63746,8 +63745,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Work queue + persistent detail in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
-            "Scheduling change follow-up has its own breadcrumb and retains the shared secondary-menu view, day/timezone/site/resource query contract."
+            "The side menu holds five queues and separate review destinations. The grid shows Visit, Work, Needs review because, Booked, Requested, Customer, Follow-up and Site. Open a row for current booking and consequences beside Change request, Follow-up and History tabs.",
+            "An exact appointment stays visible outside the selected date or queue. Return to review queue restores the selected view; exact handovers do not alter menu counts."
           ],
           "steps": [],
           "rows": [],
@@ -63770,10 +63769,10 @@
             "Queue and selected appointment are retained in the page address and in the allowlisted return from appointment controls. Only Open and InProgress follow-up Activities enter Customer follow-up or contribute an outstanding task to Needs review; Completed and Cancelled remain history. An independent pending request, changed commitment or scope review can still require review."
           ],
           "steps": [
-            "Select the period, timezone and site, then Needs review, Change requests, Customer follow-up, Cancellations or History / all visits.",
-            "Select the exact appointment. Compare current versus requested interval, crew roles, explicit travel allowances/reasons and schedule/request versions.",
-            "Enter a decision reason and use existing Accept and check move, Reject request or Cancel request where permitted. Acceptance reruns booking guards; pending requests reserve nothing.",
-            "Open appointment controls for move/reassignment, customer contact or cancellation. Review owned follow-up, booking history and contact events separately."
+            "Choose the period, site and queue. Menu counts follow that period and site; a policy hold alone does not add a visit to Needs review.",
+            "Open a visit row. Compare Booked now and Requested, including each crew member’s travel allowance, current versions and any named change since the request.",
+            "Enter Decision reason. Accept and check move rechecks the whole booking; Reject request is separate. Cancel request is in the request card’s More menu.",
+            "Use Follow-up for owned tasks and recorded contact. Record customer contact opens the existing appointment control. After an accepted move, fresh contact is the next action where required."
           ],
           "rows": [],
           "headers": []
@@ -63793,8 +63792,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading and failed reads remove prior results and counts. Retry loading asks for a current read. Empty queues offer History / all visits. View-only access removes booking decisions. Unavailable job-pack or dispatch evidence is labelled; site readiness gate P4 is not built.",
+            "A stale request is not automatically refused. Review the named history change and enter a reason; acceptance still requires current appointment, request, policy, resource, calendar, competence and reservation checks. An uncertain send retains the original operation for unchanged retry."
           ],
           "steps": [],
           "rows": [],
@@ -63825,9 +63824,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "On a phone, use the compact Changes header and its filter sheet for search, site and timezone. Select a list row to review the request first, then consequences, Booked now and history. At 320 px Move or reassign is in More.",
+            "Tab and Shift+Tab move between controls; arrow keys switch tabs and navigate menus, and Escape closes a menu or returns from the review. Dirty decisions ask before leaving; pending outcomes must be resolved. This is an online workspace; no offline booking support is implied."
           ],
           "steps": [],
           "rows": [],
@@ -63854,9 +63852,9 @@
           "headers": []
         }
       ],
-      "prepared_at": "2026-09-24",
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Accepted PL-04 queue, request review, owned follow-up and temporary Policy impact composition; implementation owner review pending.",
+      "runtime_evidence": "See docs/testing/evidence/changes-follow-up-build/README.md for executed checks and limits. Design acceptance, functional proof, owner visual review and deployment remain separate.",
       "source_paths": [
         "src/app/(business)/schedule/changes/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
@@ -68487,6 +68485,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
+            "For a temporary comparison, enter the effective time, timezone and maximum visit minutes, optionally restrict the site, then choose Compare future bookings. Changing any input removes the previous result. Open an affected visit for an exact appointment review.",
             "The reviewer enters maximum visit minutes, an explicit local effective time/timezone and a reason. Save immutable proposal, then request a complete server review. Copy its stable review link for the distinct publisher to inspect and explicitly publish. Reopen saved records remains available after reload.",
             "Open Reopen saved records, then choose Proposals, Reviews or Publications. The list stays open after changing type or refreshing, once current access and records are loaded. Use the exact saved-record link. Keyboard activation also opens and closes the disclosure; unavailable access clears protected results."
           ],
@@ -68498,6 +68497,7 @@
           "section_id": "page-tour",
           "title": "Page tour",
           "paragraphs": [
+            "Published rule and Temporary comparison are paired cards, followed by the affected-booking register. Saved policy reviews, publication and holds are in a separate disclosure; exact saved-record links open it. A temporary comparison neither publishes policy nor changes a booking.",
             "Saved workflow contains the current publication head, exact source/fixed terms, editable unsaved proposal, saved evidence and action controls. Reopen saved records pages proposals, reviews and publications. Temporary scoped comparison and published holds remain separate sections.",
             "Scheduling policy impact has its own breadcrumb; review and publication duties remain separate."
           ],
@@ -68605,7 +68605,9 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "Step 6 integrated update/restart/compatible rollback and service-return evidence: docs/testing/evidence/scheduling-step6/README.md. Independent visual/owner/device acceptance remains pending. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed."
+      "runtime_evidence": "See docs/testing/evidence/changes-follow-up-build/README.md for executed checks and limits. Design acceptance, functional proof, owner visual review and deployment remain separate.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Accepted PL-04 queue, request review, owned follow-up and temporary Policy impact composition; implementation owner review pending."
     },
     {
       "guide_key": "guide.route-my-jobs-inspections",

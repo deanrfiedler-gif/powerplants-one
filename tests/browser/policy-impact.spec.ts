@@ -26,7 +26,7 @@ test("policy analysis is read-only, clears edited results and hands over the exa
   await expect(
     page.getByText("Visit exceeds the proposed duration limit").first(),
   ).toBeVisible();
-  const link = page.getByRole("link", { name: /^Review .*APT/ }).first();
+  const link = page.getByRole("link", { name: /^SYN-PPO-APT/ }).first();
   await expect(link).toHaveAttribute("href", /appointment_id=/);
   for (const width of info.project.name.includes("mobile")
     ? [390, 320]
@@ -56,7 +56,7 @@ test("policy analysis is read-only, clears edited results and hands over the exa
   await page.getByRole("button", { name: "Compare future bookings" }).click();
   await expect(
     page.getByText(
-      "No matching bookings require review under this comparison. This is not publication or dispatch approval.",
+      "No matching bookings require review. This is not publication or dispatch approval.",
     ),
   ).toBeVisible();
   await page.getByLabel("Proposed maximum visit (minutes)").fill("60");

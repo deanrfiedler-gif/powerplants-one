@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { notifyLocationSearchChanged, useCurrentLocationSearch } from "../../../components/current-location-search";
-import { useEffect, useRef, useState, type ComponentProps } from "react";
+import { useState, type ComponentProps } from "react";
 import {
   Field,
   SelectField,
@@ -12,24 +12,20 @@ import {
   type Envelope,
 } from "../../../components/business-ui";
 import { Button, ButtonLink } from "../../../components/ui/button";
-import type { Schedule, Appointment } from "../../index";
-import { RequestDecision } from "./planner-screens.client";
+import type { Schedule } from "../../index";
 import { SchedulingNavigation } from "./workspace-navigation.client";
 import {
   plannerContext,
   plannerZones,
-  safePlannerReturn,
-  reviewCriteria,
   demandCommitments,
+  reviewCriteria,
 } from "../../navigation";
 import { addDays, utcFromLocal } from "../../time";
 import {
   travelSequences,
   scenarioSummary,
-  hasOpenSchedulingFollowup,
   travelAvailabilityConflicts,
   type CapacityWorkspace,
-  type ChangesWorkspace,
 } from "../../workspace-model";
 
 function ReviewSelect(props: ComponentProps<typeof SelectField>) {
@@ -134,237 +130,6 @@ function WindowControls({
         <span>Site options unavailable. Refresh the page to retry.</span>
       )}
     </div>
-  );
-}
-function AppointmentReview({
-  a,
-  returnTo,
-  reload,
-}: {
-  a: Appointment;
-  returnTo: string;
-  reload: () => void;
-}) {
-  return (
-    <article
-      className="scheduling-card"
-      aria-label={"Review " + a.display_number}
-    >
-      <h2 id="scheduling-review-heading" tabIndex={-1}>
-        {a.display_number}
-      </h2>
-      <p>
-        {a.customer_name ?? "Customer unavailable"} ·{" "}
-        {a.work_order_display_number} · {a.site_name} · {a.scope_summary}
-      </p>
-      <p>
-        <Stamp value={a.start_at} timezone={a.site_timezone} /> to{" "}
-        <Stamp value={a.end_at} timezone={a.site_timezone} /> ·{" "}
-        {a.site_timezone}
-      </p>
-      <p>
-        Appointment v{a.version} · Schedule v{a.schedule_version} · Crew v
-        {a.assignment_version} · {a.status}
-      </p>
-      <p>
-        Customer commitment: <strong>{a.customer_commitment}</strong> ·
-        Preparation: {a.preparation_status} · Dispatch{" "}
-        {a.dispatch_hold ? "held" : "not held"} · Pack: {a.pack_requirement}
-      </p>
-      <p>
-        Current crew:{" "}
-        {a.assignments
-          .filter(
-            (x) => x.active && x.assignment_version === a.assignment_version,
-          )
-          .map((x) => x.name + " (" + x.crew_role + ")")
-          .join(", ") || "Unassigned"}
-      </p>
-      {a.cancellation_reason && (
-        <p>Cancellation reason: {a.cancellation_reason}</p>
-      )}
-      <p>
-        Changed booking facts require fresh contact. Contact is not message
-        delivery or crew pack acknowledgement.
-      </p>
-      {a.requests.map((r) => (
-        <RequestDecision
-          key={r.id + ":" + r.version}
-          a={a}
-          request={r}
-          onSaved={reload}
-        />
-      ))}
-      {!a.requests.length && (
-        <p>
-          No change requests. Use the appointment to propose a controlled move.
-        </p>
-      )}
-      <h3>Owned follow-up</h3>
-      {a.followups.map((f) => (
-        <p key={f.activity_id}>
-          <Link href={"/work/" + f.activity_id}>{f.summary}</Link> · {f.status}{" "}
-          · {f.due_at ? <Stamp value={f.due_at} /> : "Due date needed"}
-        </p>
-      ))}
-      {!a.followups.length && <p>No permitted follow-up returned.</p>}
-      <details>
-        <summary>Contact and booking history</summary>
-        {a.contacts.map((c) => (
-          <p key={c.id}>
-            {c.outcome} · {c.recipient_name} · {c.channel} · Schedule v
-            {c.schedule_version} · <Stamp value={c.occurred_at} />
-          </p>
-        ))}
-        {a.history.map((h) => (
-          <p key={h.version}>
-            v{h.version}: {h.snapshot.status} ·{" "}
-            <Stamp value={h.snapshot.start_at} timezone={a.site_timezone} /> ·
-            Customer {h.snapshot.customer_commitment}
-          </p>
-        ))}
-      </details>
-      <ButtonLink
-        href={
-          "/service/appointments/" +
-          a.id +
-          "?returnTo=" +
-          encodeURIComponent(returnTo)
-        }
-      >
-        Open appointment controls
-      </ButtonLink>
-      {!a.actions.can_manage && (
-        <p>
-          Read-only booking access. Only actions permitted to this identity are
-          available.
-        </p>
-      )}
-    </article>
-  );
-}
-export function ChangesWorkspaceScreen() {
-  const w = useReviewWindow("/schedule/changes"),
-    focus = w.search.get("appointment_id");
-  if (focus && /^[0-9a-f-]{36}$/i.test(focus))
-    w.query.set("appointment_id", focus);
-  const read = useResource<ChangesWorkspace>("schedule/changes?" + w.query),
-    data = !read.loading && !read.error ? read.data : null;
-  const focusReview = useRef(false);
-  useEffect(() => {
-    if (data && focusReview.current) {
-      document.getElementById("scheduling-review-heading")?.focus();
-      focusReview.current = false;
-    }
-  }, [data]);
-  const criteria = reviewCriteria(new URLSearchParams(w.search.toString())),
-    view = criteria.queue,
-    selected = criteria.selected;
-  const items =
-    data?.items.filter(
-      (a) =>
-        view === "history" ||
-        (view === "requests" && a.requests.length > 0) ||
-        (view === "cancellations" && a.status === "Cancelled") ||
-        (view === "contact" && hasOpenSchedulingFollowup(a)) ||
-        (view === "review" &&
-          (a.requests.some((r) => r.status === "Pending") ||
-            a.customer_commitment === "Changed" ||
-            a.scope_review_required ||
-            hasOpenSchedulingFollowup(a))),
-    ) ?? [];
-  const a = data?.focused
-    ? data.items[0]
-    : (items.find((a) => a.id === selected) ?? items[0]);
-  const returnQuery = new URLSearchParams(w.search.toString());
-  if (a) returnQuery.set("selected_id", a.id);
-  const returnTo = safePlannerReturn("/schedule/changes?" + returnQuery);
-  return (
-    <section className="scheduling-workspace">
-      <SchedulingNavigation />
-      <PageHeader
-        eyebrow="PL-04 · Scheduling"
-        title="Changes & follow-up"
-        description="Review proposed changes, customer contact and owned scheduling consequences."
-      />
-      <WindowControls w={w} />
-      <div className="scheduling-toolbar">
-        <ReviewSelect
-          name="change-view"
-          label="Queue"
-          value={view}
-          onChange={(queue) =>
-            w.update({ queue, selected_id: "", appointment_id: "" })
-          }
-          options={[
-            { id: "review", display_name: "Needs review" },
-            { id: "requests", display_name: "Change requests" },
-            { id: "contact", display_name: "Customer follow-up" },
-            { id: "cancellations", display_name: "Cancellations" },
-            { id: "history", display_name: "History / all visits" },
-          ]}
-        />
-        <Button onClick={read.reload}>Refresh review</Button>
-      </div>
-      <ReadState {...read} retry={read.reload} />
-      {data && (
-        <>
-          <p className="read-meta">
-            Read at <Stamp value={data.observed_at} /> ·{" "}
-            {data.focused
-              ? "Exact appointment handover; date and queue filters do not hide this record"
-              : data.completeness}
-            .
-          </p>
-          {data.focused && (
-            <Button onClick={() => w.update({ appointment_id: "" })}>
-              Return to review queue
-            </Button>
-          )}
-          <div className="scheduling-review-layout">
-            <div className="scheduling-queue" aria-label="Review queue">
-              {items.map((v) => (
-                <Button
-                  key={v.id}
-                  aria-pressed={a?.id === v.id}
-                  onClick={() => {
-                    w.update({ selected_id: v.id, appointment_id: "" });
-                  }}
-                >
-                  <span>
-                    <strong>{v.display_number}</strong>
-                    <br />
-                    {v.site_name}
-                    <br />
-                    {v.status} ·{" "}
-                    {v.requests.filter((r) => r.status === "Pending").length}{" "}
-                    pending requests
-                  </span>
-                </Button>
-              ))}
-              {!items.length && !data.focused && (
-                <p>
-                  {data.items.length
-                    ? "No visits match this queue. Choose History / all visits to review other states."
-                    : "No permitted visits in this period."}
-                </p>
-              )}
-            </div>
-            {a && (
-              <AppointmentReview
-                key={a.id + ":" + a.version}
-                a={a}
-                returnTo={returnTo}
-                reload={() => {
-                  focusReview.current = true;
-                  read.reload();
-                }}
-              />
-            )}
-          </div>
-        </>
-      )}
-    </section>
   );
 }
 export function TravelWorkspaceScreen() {

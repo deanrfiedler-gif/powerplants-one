@@ -34,7 +34,9 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -45,7 +47,9 @@
       "used_on": [
         "system:theme",
         "route:/sites",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Use semantic tokens and preserve the meaning of each colour.",
       "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
@@ -232,7 +236,9 @@
         "src/scheduling/components/client/resource-workspace.client.tsx",
         "src/app/styles/field-team.css",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -868,7 +874,9 @@
         "src/scheduling/components/client/resource-workspace.client.tsx",
         "src/app/styles/field-team.css",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -913,7 +921,9 @@
         "scope:FI-03",
         "scope:FI-04",
         "route:/my-jobs/inspections",
-        "route:/service/inspections"
+        "route:/service/inspections",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -2697,7 +2707,9 @@
         "docs/testing/evidence/discovery-register-native/README.md",
         "docs/design/development/site-surveys-fixtures.json",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2753,7 +2765,9 @@
         "scope:SV-02",
         "route:/service/tickets/[id]",
         "route:/sites",
-        "route:/service/incidents/[id]"
+        "route:/service/incidents/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2951,7 +2965,9 @@
         "src/scheduling/components/client/resource-workspace.client.tsx",
         "src/app/styles/field-team.css",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2988,7 +3004,9 @@
         "route:/service/incidents/new",
         "route:/my-jobs",
         "route:/my-jobs/[id]",
-        "route:/service/appointments/[id]"
+        "route:/service/appointments/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -3125,7 +3143,9 @@
         "src/components/discovery-register.css",
         "docs/testing/evidence/discovery-register-native/README.md",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3158,7 +3178,9 @@
         "scope:FI-03",
         "scope:FI-04",
         "route:/my-jobs/inspections",
-        "route:/service/inspections"
+        "route:/service/inspections",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -3471,7 +3493,9 @@
         "docs/design/development/organisations-native-fixtures.json",
         "docs/design/development/site-surveys-fixtures.json",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -4508,7 +4532,9 @@
         "src/scheduling/components/client/resource-workspace.client.tsx",
         "src/app/styles/field-team.css",
         "src/app/styles/sites.css",
-        "docs/design/development/sites-native-fixtures.json"
+        "docs/design/development/sites-native-fixtures.json",
+        "src/app/styles/changes-follow-up.css",
+        "docs/testing/evidence/changes-follow-up-build/README.md"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4574,7 +4600,9 @@
         "route:/service/tickets/[id]",
         "route:/service/tickets/new",
         "route:/sites",
-        "route:/sites/[id]"
+        "route:/sites/[id]",
+        "route:/schedule/changes",
+        "route:/schedule/policy-impact"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",

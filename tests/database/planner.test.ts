@@ -1114,3 +1114,33 @@ test("unchanged accepted operation recovers after connection restart and repeat 
   assert.deepEqual(await snapshot(6), before);
   assert.deepEqual(await readOperation(actor, input.operation_id), a.receipt);
 });
+
+
+test("PL-04 stale request can be reconsidered against the current complete booking", async () => {
+  const actor=await p(), a=await appointment(1), rid=randomUUID();
+  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:crew(1,2)});
+  await moveAppointment(actor,a.id,{...await cmd(1,crew(1,2)),start_at:"2031-09-23T00:00:00Z",end_at:"2031-09-23T02:00:00Z"});
+  const current=await appointment(1);
+  assert.notEqual(current.schedule_version,current.requests.find(r=>r.id===rid)!.expected_schedule_version);
+  const {crew:_crew,...decision}=await cmd(1);void _crew;
+  const receipt=await decideChangeRequest(actor,rid,{...decision,expected_request_version:1},"accept");
+  assert.equal(receipt.receipt.state,"Accepted");
+  const changed=await appointment(1);
+  assert.equal(new Date(changed.start_at).toISOString(),"2031-09-24T00:00:00.000Z");
+  assert.equal(changed.customer_commitment,"Changed");
+  assert.equal(changed.pack_requirement,"ReviewRequired");
+  assert.ok(changed.history.length>current.history.length);
+});
+
+test("PL-04 stale request still refuses changed appointment, request and resource evidence without reservation loss", async () => {
+  const actor=await p(), a=await appointment(1), rid=randomUUID();
+  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:crew(1,2)});
+  await moveAppointment(actor,a.id,{...await cmd(1,crew(1,2)),start_at:"2031-09-23T00:00:00Z",end_at:"2031-09-23T02:00:00Z"});
+  const before=await snapshot(1), {crew:_crew,...decision}=await cmd(1);void _crew;
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,expected_version:a.version,expected_request_version:1},"accept"),code("VersionConflict"));
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:2},"accept"),code("VersionConflict"));
+  await database().query("UPDATE ppo.resources SET version=version+1 WHERE id=$1",[id("a4",1)]);
+  await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:1},"accept"),code("VersionConflict"));
+  assert.deepEqual(await snapshot(1),before);
+  assert.equal((await appointment(1)).requests.find(r=>r.id===rid)?.status,"Pending");
+});

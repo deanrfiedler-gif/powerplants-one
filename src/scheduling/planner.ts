@@ -1092,12 +1092,9 @@ export async function decideChangeRequest(
         blocked("status", "This request already has a decision.");
       let changed: Awaited<ReturnType<typeof applyBooking>> | undefined;
       if (action === "accept") {
-        if (a.schedule_version !== request.expected_schedule_version)
-          throw new AppError(
-            409,
-            "VersionConflict",
-            "The booking changed after this request. Record a new request.",
-          );
+        // PL-04 D4: the request's original schedule is evidence, not a veto.
+        // The decision still binds the current appointment/request versions;
+        // applyBooking rechecks current scope, policy, crew and reservations.
         const crew = (
           await c.query(
             "SELECT resource_id,resource_version,calendar_version,crew_role,travel_before_minutes,travel_after_minutes,travel_reason FROM ppo.schedule_request_crew WHERE workspace_id=$1 AND request_id=$2 ORDER BY resource_id",

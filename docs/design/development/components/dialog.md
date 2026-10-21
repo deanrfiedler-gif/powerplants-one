@@ -77,3 +77,8 @@ The accepted Incidents page reuses this control without changing its shared impl
 ## Inspections consumer — 21 October 2026
 
 FI-03 reuses WizardDialog for the saved-attempt submission confirmation, including failed checks and the owned-defect consequence. FI-04 reuses it for the separate internal outcome issue confirmation. Phone presentation is a bottom sheet; the existing focus trap, Escape handling and return to opener remain shared. Pending original commands disable dismissal and repeat submission. Owner visual review remains pending. See [Service inspections](service-inspections.md) and the four FI-03/FI-04 consumer bindings in components.json.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

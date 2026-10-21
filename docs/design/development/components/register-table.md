@@ -142,3 +142,8 @@ The accepted Incidents page reuses this control without changing its shared impl
 ## Inspections consumer — 21 October 2026
 
 FI-04 uses RegisterTable, RegisterChip, RegisterEmpty and RegisterFooter for the accepted inspection review register, with a 40 px local row/header variant. It opens the permitted procedure/attempt and retains the shared horizontal scroller. FI-03 uses the shared state chip in its worklist. No bulk-selection or column-settings command is invented; those behaviours remain unspecified in the page contract. Owner visual review remains pending. See [Service inspections](service-inspections.md) and the four FI-03/FI-04 consumer bindings in components.json.
+
+
+## PL-04 consumer
+
+Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

@@ -1,0 +1,833 @@
+/* PL-04 consumes the shared shell/control tokens. Page layout only. */
+#ppo-schedule-changes .mw-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  overflow: auto;
+  background: var(--surface-white);
+}
+#ppo-schedule-changes :is(h2, h3, p) {
+  margin: 0;
+}
+#ppo-schedule-changes h2 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+#ppo-schedule-changes h3 {
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+#ppo-schedule-changes :is(input, select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
+  font: inherit;
+  padding: 8px 10px;
+  min-height: 40px;
+}
+#ppo-schedule-changes
+  :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-schedule-changes .changes-search {
+  display: flex;
+  align-items: center;
+  flex: 1 1 160px;
+  max-width: 220px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  padding-left: 12px;
+}
+#ppo-schedule-changes .changes-search input {
+  border: 0;
+  width: 100%;
+}
+#ppo-schedule-changes .changes-search .mw-icon {
+  width: 16px;
+}
+#ppo-schedule-changes .changes-site {
+  max-width: 166px;
+}
+#ppo-schedule-changes .changes-zone {
+  max-width: 120px;
+}
+#ppo-schedule-changes .changes-toolbar select {
+  width: 100%;
+}
+#ppo-schedule-changes .changes-read {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-schedule-changes .changes-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+#ppo-schedule-changes .changes-notice span {
+  flex: 1;
+}
+#ppo-schedule-changes .changes-state {
+  padding: 32px 24px;
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+#ppo-schedule-changes .changes-skeleton {
+  width: 100%;
+  min-width: 240px;
+  height: 56px;
+  background: var(--surface);
+  border-radius: var(--radius-control);
+}
+#ppo-schedule-changes .changes-desktop-grid {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+#ppo-schedule-changes .changes-desktop-grid .ppo-register {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+#ppo-schedule-changes .changes-desktop-grid table {
+  min-width: 1690px;
+  width: 100%;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td) {
+  padding: 10px 12px;
+  vertical-align: top;
+  white-space: normal;
+  height: 40px;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(1) {
+  min-width: 170px;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(2) {
+  min-width: 260px;
+  max-width: 260px;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(3) {
+  min-width: 240px;
+  max-width: 240px;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(4),
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(5) {
+  min-width: 190px;
+}
+#ppo-schedule-changes .changes-desktop-grid :is(th, td):nth-child(7) {
+  min-width: 260px;
+}
+#ppo-schedule-changes td small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+#ppo-schedule-changes td > span {
+  display: block;
+}
+#ppo-schedule-changes .changes-link {
+  border: 0;
+  padding: 0;
+  min-height: 0;
+  background: transparent;
+  color: var(--link);
+  text-align: left;
+}
+#ppo-schedule-changes .changes-attention,
+#ppo-schedule-changes .changes-stale,
+#ppo-schedule-changes [data-changed] {
+  color: var(--warning);
+}
+#ppo-schedule-changes .changes-queue-select,
+#ppo-schedule-changes .changes-phone-list {
+  display: none;
+}
+#ppo-schedule-changes .changes-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ppo-schedule-changes .changes-snapshot {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 46%) minmax(350px, 54%);
+  grid-template-rows: auto 1fr auto;
+  flex: 1;
+  min-height: 100%;
+}
+#ppo-schedule-changes .changes-snapshot-title {
+  grid-column: 1;
+  padding: 20px 24px 0;
+}
+#ppo-schedule-changes .changes-snapshot-title p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 4px 0;
+}
+#ppo-schedule-changes .changes-snapshot-title .changes-attention {
+  font-size: 12px;
+}
+#ppo-schedule-changes .changes-booking-column {
+  grid-column: 1;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#ppo-schedule-changes :is(.changes-booked, .changes-consequences) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#ppo-schedule-changes :is(.changes-booked, .changes-consequences) strong {
+  font-weight: 400;
+}
+#ppo-schedule-changes :is(.changes-booked, .changes-consequences) p {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--muted);
+}
+#ppo-schedule-changes .changes-booked strong span + span::before {
+  content: " · ";
+}
+#ppo-schedule-changes .changes-consequences strong {
+  color: var(--warning);
+}
+#ppo-schedule-changes .changes-note {
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-schedule-changes .changes-review-column {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  padding: 20px 24px;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  min-width: 0;
+}
+#ppo-schedule-changes .changes-tab-card {
+  background: var(--surface-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+#ppo-schedule-changes .record-tablist {
+  display: flex;
+  overflow: auto;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-schedule-changes .record-tablist button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  min-height: 48px;
+  background: transparent;
+  padding: 8px 10px;
+  white-space: nowrap;
+  font-weight: 400;
+}
+#ppo-schedule-changes .record-tablist button[aria-selected="true"] {
+  color: var(--link);
+  border-bottom-color: var(--link);
+  font-weight: 500;
+}
+#ppo-schedule-changes .record-panel {
+  padding: 0;
+}
+#ppo-schedule-changes .record-panel[hidden] {
+  display: none;
+}
+#ppo-schedule-changes .changes-request {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#ppo-schedule-changes .changes-request + .changes-request {
+  border-top: 1px solid var(--line);
+}
+#ppo-schedule-changes .changes-request header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+#ppo-schedule-changes .changes-request header > div {
+  flex: 1;
+}
+#ppo-schedule-changes .changes-request header strong {
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-request header p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+#ppo-schedule-changes .changes-request header button {
+  width: 36px;
+  padding: 4px;
+}
+#ppo-schedule-changes .changes-comparison {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+#ppo-schedule-changes .changes-comparison > div {
+  display: grid;
+  grid-template-columns: 20% 40% 40%;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-schedule-changes .changes-comparison > div:last-child {
+  border: 0;
+}
+#ppo-schedule-changes .changes-comparison > div > * {
+  padding: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-schedule-changes .changes-comparison [role="rowheader"] {
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-schedule-changes .changes-comparison-head {
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+}
+#ppo-schedule-changes .changes-comparison-head > span {
+  font-size: 0;
+}
+#ppo-schedule-changes .changes-comparison [role="cell"] > span {
+  display: block;
+}
+#ppo-schedule-changes .changes-comparison small {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+#ppo-schedule-changes
+  :is(.changes-stale, .changes-request-basis, .changes-decision)
+  p {
+  margin-top: 4px;
+  font-size: 12px;
+}
+#ppo-schedule-changes .changes-stale {
+  padding: 12px;
+  background: var(--warning-surface);
+  border-radius: var(--radius-control);
+}
+#ppo-schedule-changes .changes-success {
+  padding: 12px;
+  background: var(--success-surface);
+  color: var(--success);
+  border-radius: var(--radius-control);
+}
+#ppo-schedule-changes .changes-request fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+#ppo-schedule-changes .changes-request .field {
+  margin: 0;
+}
+#ppo-schedule-changes .changes-request textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 64px;
+}
+#ppo-schedule-changes .changes-decision-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-schedule-changes .changes-no-request {
+  padding: 16px;
+}
+#ppo-schedule-changes .changes-history-disclosure {
+  margin-top: 20px;
+}
+#ppo-schedule-changes summary {
+  padding: 4px 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+#ppo-schedule-changes :is(.changes-history, .changes-followup) {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#ppo-schedule-changes .changes-history article {
+  border-left: 2px solid var(--line);
+  padding-left: 12px;
+}
+#ppo-schedule-changes .changes-history p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+#ppo-schedule-changes .changes-followup article {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-schedule-changes .changes-followup article p {
+  margin: 4px 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+#ppo-schedule-changes .changes-followup article a {
+  display: block;
+  margin-top: 8px;
+}
+#ppo-schedule-changes .changes-snapshot-footer {
+  grid-column: 1;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--surface-white);
+}
+#ppo-schedule-changes .changes-snapshot-footer > button:first-child {
+  margin-right: auto;
+}
+#ppo-schedule-changes .changes-snapshot-nav {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  z-index: 2;
+  transform: translateX(-100%);
+  background: var(--surface-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+#ppo-schedule-changes .changes-snapshot-nav button {
+  display: block;
+  border: 0;
+  min-width: 36px;
+}
+#ppo-schedule-changes .changes-policy {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#ppo-schedule-changes .changes-policy h1 {
+  font-size: 18px;
+  margin: 0;
+}
+#ppo-schedule-changes .changes-policy-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+#ppo-schedule-changes .changes-policy-cards > * {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#ppo-schedule-changes .changes-policy .field {
+  margin: 0;
+}
+#ppo-schedule-changes .changes-policy .field :is(input, select) {
+  width: 100%;
+}
+#ppo-schedule-changes .changes-policy dl {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 12px;
+  margin: 0;
+}
+#ppo-schedule-changes .changes-policy dt {
+  color: var(--muted);
+}
+#ppo-schedule-changes .changes-policy dd {
+  margin: 0;
+}
+#ppo-schedule-changes .changes-policy .read-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+#ppo-schedule-changes .changes-policy-provenance {
+  overflow-wrap: anywhere;
+}
+#ppo-schedule-changes .changes-policy-saved {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+@media (max-width: 1199px) and (min-width: 781px) {
+  #ppo-schedule-changes .changes-snapshot-nav {
+    position: static;
+    transform: none;
+    grid-column: 1 / -1;
+    display: flex;
+    border-radius: 0;
+  }
+  #ppo-schedule-changes .changes-review-column {
+    grid-row: 2 / 5;
+  }
+  #ppo-schedule-changes .changes-snapshot {
+    grid-template-rows: auto auto 1fr auto;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-schedule-changes .mw-content {
+    overflow: auto;
+  }
+  #ppo-schedule-changes .changes-toolbar {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+  #ppo-schedule-changes .changes-queue-select {
+    display: block;
+    flex: 1 1 100%;
+  }
+  #ppo-schedule-changes .changes-search {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+  #ppo-schedule-changes .changes-site {
+    flex: 1;
+  }
+  #ppo-schedule-changes .changes-zone {
+    max-width: 100%;
+  }
+  #ppo-schedule-changes .changes-read {
+    width: calc(100% - 56px);
+    margin: 0;
+  }
+  #ppo-schedule-changes .changes-desktop-grid {
+    display: none;
+  }
+  #ppo-schedule-changes .changes-phone-list {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  #ppo-schedule-changes .changes-phone-list button {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+    text-align: left;
+    padding: 14px 16px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--surface-white);
+    color: var(--ink);
+  }
+  #ppo-schedule-changes .changes-phone-list button > span {
+    font-size: 12px;
+  }
+  #ppo-schedule-changes .changes-phone-list span > span + span::before {
+    content: " · ";
+  }
+  #ppo-schedule-changes .changes-snapshot {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #ppo-schedule-changes .changes-snapshot-nav {
+    position: static;
+    transform: none;
+    display: flex;
+    order: 0;
+    border: 0;
+  }
+  #ppo-schedule-changes .changes-snapshot-title {
+    order: 1;
+    padding: 8px 16px 16px;
+  }
+  #ppo-schedule-changes :is(.changes-booking-column, .changes-review-column) {
+    display: contents;
+  }
+  #ppo-schedule-changes .changes-tab-card {
+    order: 2;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+  }
+  #ppo-schedule-changes .changes-consequences {
+    order: 3;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-schedule-changes .changes-booked {
+    order: 4;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-schedule-changes .changes-history-disclosure {
+    order: 5;
+    margin: 0;
+    padding: 20px 16px;
+  }
+  #ppo-schedule-changes .changes-booking-column > .changes-note {
+    order: 6;
+    margin: 0 16px 16px;
+  }
+  #ppo-schedule-changes .changes-snapshot-footer {
+    order: 7;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    bottom: 0;
+  }
+  #ppo-schedule-changes .changes-comparison > div {
+    grid-template-columns: 1fr 1fr;
+  }
+  #ppo-schedule-changes .changes-comparison [role="rowheader"] {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+  }
+  #ppo-schedule-changes .changes-comparison-head > span {
+    display: none;
+  }
+  #ppo-schedule-changes .changes-comparison > div > * {
+    padding: 10px;
+  }
+  #ppo-schedule-changes .changes-decision-actions {
+    flex-direction: column;
+  }
+  #ppo-schedule-changes .changes-decision-actions button {
+    width: 100%;
+  }
+  #ppo-schedule-changes .changes-request header {
+    flex-wrap: wrap;
+  }
+  #ppo-schedule-changes .changes-request header > div {
+    min-width: 160px;
+  }
+  #ppo-schedule-changes .changes-policy {
+    padding: 16px;
+  }
+  #ppo-schedule-changes .changes-policy-cards {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 359px) {
+  #ppo-schedule-changes .changes-move {
+    display: none;
+  }
+  #ppo-schedule-changes .changes-comparison > div {
+    display: block;
+  }
+  #ppo-schedule-changes .changes-comparison-head {
+    display: none;
+  }
+  #ppo-schedule-changes .changes-comparison [role="cell"]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+}
+
+#ppo-schedule-changes .changes-filter-fields {
+  display: grid;
+  gap: 16px;
+}
+#ppo-schedule-changes .changes-filter-fields label {
+  display: grid;
+  gap: 6px;
+}
+@media (max-width: 780px) {
+  #ppo-schedule-changes
+    .changes-toolbar
+    :is(.changes-search, .changes-site, .changes-zone) {
+    display: none;
+  }
+}
+
+#ppo-schedule-changes .mw-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#ppo-schedule-changes .mw-menu li a {
+  text-decoration: none;
+}
+@media (min-width: 781px) {
+  #ppo-schedule-changes .mw-content:has(.changes-snapshot) {
+    overflow: visible;
+  }
+  #ppo-schedule-changes .changes-snapshot {
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  #ppo-schedule-changes .changes-booking-column {
+    overflow: auto;
+    min-height: 0;
+  }
+  #ppo-schedule-changes .changes-review-column {
+    overflow: auto;
+    min-height: 0;
+  }
+  #ppo-schedule-changes .changes-request textarea {
+    min-height: 40px;
+    height: 40px;
+  }
+}
+@media (min-width: 781px) and (max-width: 1199px) {
+  #ppo-schedule-changes .changes-snapshot {
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+  }
+}
+
+#ppo-schedule-changes {
+  font-family: PPOShellRoboto, Roboto, Arial, sans-serif;
+}
+#ppo-schedule-changes .changes-toolbar label {
+  margin: 0;
+  font-weight: 400;
+}
+#ppo-schedule-changes .changes-toolbar :is(input, select, button) {
+  margin: 0;
+}
+#ppo-schedule-changes .changes-toolbar > button {
+  min-height: 40px;
+}
+#ppo-schedule-changes .changes-search {
+  height: 40px;
+}
+#ppo-schedule-changes .changes-search input {
+  height: 38px;
+  min-height: 38px;
+  margin: 0;
+  font-weight: 400;
+}
+#ppo-schedule-changes .changes-desktop-grid td * {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#ppo-schedule-changes .changes-policy .field {
+  gap: 6px;
+}
+#ppo-schedule-changes .changes-policy .field label {
+  margin: 0;
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-policy .field :is(input, select) {
+  margin: 0;
+  font-weight: 400;
+}
+
+@media (max-width: 780px) {
+  #ppo-schedule-changes .changes-snapshot {
+    flex: 0 0 auto;
+    min-height: auto;
+    height: auto;
+  }
+  #ppo-schedule-changes
+    .changes-snapshot
+    :is(
+      .changes-snapshot-nav,
+      .changes-snapshot-title,
+      .changes-tab-card,
+      .changes-consequences,
+      .changes-booked,
+      .changes-history-disclosure,
+      .changes-note,
+      .changes-snapshot-footer
+    ) {
+    flex-shrink: 0;
+  }
+}
+
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(4) > span {
+  display: inline;
+}
+#ppo-schedule-changes
+  .changes-desktop-grid
+  td:nth-child(4)
+  > span
+  + span::before {
+  content: " · ";
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(2) strong {
+  display: block;
+  font-weight: 500;
+}
+
+#ppo-schedule-changes .changes-desktop-grid th {
+  background: var(--surface-white);
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-schedule-changes .changes-desktop-grid .changes-link {
+  font-weight: 500;
+}
+
+/* Keep the register compact; the snapshot carries the full multi-line evidence. */
+#ppo-schedule-changes .changes-desktop-grid td {
+  white-space: nowrap;
+  padding: 5px 12px;
+}
+#ppo-schedule-changes .changes-desktop-grid td * {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(5) span {
+  display: inline;
+}
+#ppo-schedule-changes .changes-requested > span + span::before {
+  content: " · ";
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) small {
+  display: inline;
+  margin: 0 0 0 6px;
+}
+#ppo-schedule-changes .changes-desktop-grid td:nth-child(7) > span {
+  display: inline;
+}
+#ppo-schedule-changes
+  .changes-desktop-grid
+  td:nth-child(7)
+  > span
+  + span::before {
+  content: " · ";
+}

@@ -137,9 +137,10 @@ export async function readPolicyImpact(
       await c.query(
         `SELECT a.id,a.display_number,a.version,a.schedule_version,a.assignment_version,a.scheduling_policy_id,
        a.start_at,a.end_at,a.site_id,s.display_name AS site_name,a.site_timezone,a.work_order_id,
-       w.version AS work_order_version,w.service_owner_id,u.display_name AS service_owner_name
+       w.version AS work_order_version,w.display_number AS work_order_display_number,sr.summary AS scope_summary,w.service_owner_id,u.display_name AS service_owner_name
        FROM ppo.appointments a
        JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(a.workspace_id,a.work_order_id)
+       JOIN ppo.scope_revisions sr ON (sr.workspace_id,sr.id)=(a.workspace_id,a.scope_revision_id)
        JOIN ppo.sites s ON (s.workspace_id,s.id)=(a.workspace_id,a.site_id)
        JOIN ppo.users u ON (u.workspace_id,u.id)=(w.workspace_id,w.service_owner_id)
        WHERE a.workspace_id=$1 AND a.scheduling_policy_id=$3 AND a.status='Confirmed'
