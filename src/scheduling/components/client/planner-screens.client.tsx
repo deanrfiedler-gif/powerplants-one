@@ -1011,7 +1011,8 @@ export function RequestDecision({
 }
 export function AppointmentScreen({ id }: { id: string }) {
   useIdentity();
-  const returnTo = safePlannerReturn(useSearchParams().get("returnTo"));
+  const search = useSearchParams();
+  const returnTo = safePlannerReturn(search.get("returnTo"));
   const recovery = useBookingCommand();
   const resource = useResource<Envelope<Appointment>>(`appointments/${id}`);
   const a = resource.data?.items[0];

@@ -4,12 +4,13 @@ import { migrate, seed } from "../../scripts/database";
 import { migrationFiles } from "../../scripts/migration-registry";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
+import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { confirmed, principal, base } from "../helpers/packs";
 import { readActivity, activityCommand } from "../../src/activities/activities";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database only");
 after(closeDatabase);
-for (const through of [109, 113])
+for (const through of [109, 113, 114, 115])
 test(`0111 preserves populated ${through} sources, Activities, grants and exact migration/seed ledgers`, async () => {
   const c = database();
   await c.query(
@@ -47,7 +48,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
       tables.map((t) =>
         c
           .query(
-            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ${through === 109 && t === "permission_grants" ? "WHERE capability<>'conversation.agent.ask'" : through === 109 && t === "seed_receipts" ? "WHERE version<=109" : ""} ORDER BY to_jsonb(x)::text`,
           )
           .then((r) => r.rows),
       ),
@@ -72,8 +73,14 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
   const accepted = await activityCommand(p, id, command, "update");
   const activity = await readActivity(p, id),
     before = await snapshot();
+  const originalGrants = (await c.query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
   await migrate();
   await seed();
+  const finalGrants = (await c.query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
+  const originalIds = new Set(originalGrants.map(g => g.id));
+  assert.deepEqual(finalGrants.filter(g => originalIds.has(g.id)), originalGrants);
+  assert.deepEqual(finalGrants.filter(g => !originalIds.has(g.id)), agentAskSeedGrants(originalGrants).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version")).rows, [{ version: 110 }]);
   assert.deepEqual(await snapshot(), before);
   // Unadopted native follow-ups retain the coordinator's existing editor.
   assert.deepEqual(await readActivity(p, id), activity);
@@ -95,7 +102,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.filter((row) => !versions.has(row.version)),
-    through === 109 ? [{ version: 111 }, { version: 113 }] : [{ version: 111 }],
+    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }] : through === 114 ? [{ version: 111 }, { version: 115 }] : [{ version: 111 }],
   );
   assert.equal(
     (
@@ -119,6 +126,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
+  assert.deepEqual((await c.query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows, finalGrants);
   assert.deepEqual(
     (await c.query("SELECT * FROM public.ppo_migrations ORDER BY version"))
       .rows,

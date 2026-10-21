@@ -1,5 +1,6 @@
 import { recordTicketStatement, ticketStatements } from "../../src/service/statements";
 import assert from "node:assert/strict";
+import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
 import {
@@ -1183,7 +1184,7 @@ test("SV-02 receipt failure rolls back assessment, clarification and retained st
   assert.equal((await readActivity(p, before.clarification_activity!.id)).status, "Open");
 });
 
-for (const through of [109, 113])
+for (const through of [109, 113, 114, 115])
 test(`SV-01 migration 112 preserves the ${through} history and legacy triage receipts without grants or seeds`, async () => {
   await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
@@ -1196,7 +1197,7 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   } finally {
     files.splice(index, 0, statementMigration);
   }
-  await seed();
+  await seed(through);
   const p = await principal(),
     input = ticket();
   await createTicket(p, input);
@@ -1205,21 +1206,29 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   const snapshot = async () => ({
     tickets: await rows("SELECT * FROM ppo.tickets ORDER BY id"),
     receipts: await rows("SELECT * FROM ppo.operation_receipts ORDER BY id"),
-    grants: await rows("SELECT * FROM ppo.permission_grants g ORDER BY to_jsonb(g)::text"),
-    seeds: await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),
+    grants: await rows("SELECT * FROM ppo.permission_grants g WHERE capability<>'conversation.agent.ask' ORDER BY to_jsonb(g)::text"),
+    seeds: await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"),
   });
   const before = await snapshot(),
     ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  const grantsBefore = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   await migrate();
   await seed();
+  const grantsAfter = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantIds = new Set(grantsBefore.map(g => g.id));
+  assert.deepEqual(grantsAfter.filter(g => grantIds.has(g.id)), grantsBefore);
+  assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id)), agentAskSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
   assert.deepEqual(await snapshot(), before);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const previousVersions = new Set(ledger.map((row) => row.version));
   assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
-  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [112, 113] : [112]);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115] : through === 113 ? [112, 114, 115] : through === 114 ? [112, 115] : [112]);
   assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
   assert.equal((await ticketStatements(p, input.id)).items.length, 0);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   await migrate();
+  await seed();
+  assert.deepEqual(await snapshot(), before);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantsAfter);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"), upgraded);
 });
