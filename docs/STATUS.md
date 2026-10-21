@@ -15,6 +15,10 @@ The [Field team native build](decisions/field-team-native-build.md) implements t
 
 CI repair follow-up: the shared Chrome maintenance repair landed separately on main in `36c55914` through PR #630. Field team uses that baseline and retains only its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
 
+## Chrome 156 compatibility maintenance — 21 October 2026
+
+Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.
+
 ## Chrome 156 compatibility repair for PR #630 — 21 October 2026
 
 Dean authorised repairing the shared browser-version mismatch that blocked PR #630 before its application checks. The [browser maintenance record](decisions/browser-runtime-maintenance.md) extends the existing ADR-0022 range to Chrome 156 from `156.0.8078.47`, the exact stable package observed in CI. Earlier major floors, earlier-build rejection and future-major rejection remain. Boundary regression cases accompany the change; actual Chrome 156 rendering and browser proof belong to the final commit's CI results on the PR.
