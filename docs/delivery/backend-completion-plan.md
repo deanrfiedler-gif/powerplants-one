@@ -1,8 +1,8 @@
 # Backend completion delivery plan
 
-## BC-06 Service findings read dependency — 20 October 2026
+## BC-06 Service findings reads and next action — 20 October 2026
 
-Dean authorised BC-06 continuation while another agent owns Conversations T2b. [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623) implements the first [SV-07 backend contract](../contracts/service-findings.md): source-owned inspection, incident, incomplete report, customer-response and scheduling findings, with bounded authorised-window counts and native Activity links. [Execution evidence](../testing/evidence/service-findings/README.md) records checks and independent review separately from acceptance and integration. No migration, capability, seed or T2b change is needed. SV-07 assignment/recurrence, SV-08 receiving, remaining PJ-06/PJ-07/PJ-08 work, Warranty-to-Supply and capacity/reservation rules remain open.
+Dean authorised BC-06 continuation while another agent owns Conversations T2b. Merged [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623) supplies R1: source-owned inspection, incident, incomplete report, customer-response and scheduling findings, with bounded authorised-window counts and native Activity links. [PR #634](https://github.com/deanrfiedler-gif/powerplants-one/pull/634) adds R2 next-action assignment/editing, required evidence, history, source authority and retry recovery under the [SV-07 contract](../contracts/service-findings.md), with migration 0111 and no new capabilities/seeds/grants. [Execution evidence](../testing/evidence/service-findings/README.md) records validation and independent review separately from acceptance and integration. SV-07 recurrence, page implementation, SV-08 receiving, remaining PJ-06/PJ-07/PJ-08 work, Warranty-to-Supply and capacity/reservation rules remain open. T2b is unchanged.
 
 ## PJ-06 work-evidence increment — 16 October 2026
 

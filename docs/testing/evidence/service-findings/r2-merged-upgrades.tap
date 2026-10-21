@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: 0111 preserves populated 109 sources, Activities, grants and exact migration/seed ledgers
+ok 1 - 0111 preserves populated 109 sources, Activities, grants and exact migration/seed ledgers
+  ---
+  duration_ms: 59696.2844
+  type: 'test'
+  ...
+# Subtest: 0111 preserves populated 113 sources, Activities, grants and exact migration/seed ledgers
+ok 2 - 0111 preserves populated 113 sources, Activities, grants and exact migration/seed ledgers
+  ---
+  duration_ms: 139187.2227
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 221821.0898

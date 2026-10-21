@@ -1,0 +1,55 @@
+{
+  "source_head": "6926accc94de9cf8a110fcef4784722bf3dbf314",
+  "application_assurance": "success",
+  "selected_native_proof": [
+    {
+      "job_id": 118419220753,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39356046740/job/118419220753",
+      "passing_log_lines": [
+        "2026-10-20T04:02:48.2007127Z ✔ SV07 R2 changes one scheduling Activity, retains history, retries and source bytes (6593.452729ms)",
+        "2026-10-20T04:02:58.8499367Z ✔ SV07 R2 creates only a missing inspection task; technician cannot set it and closure remains native (10649.230554ms)",
+        "2026-10-20T04:03:08.4823115Z ✔ SV07 R2 completion and response reuse native tasks and preserve immutable observations (9632.4885ms)",
+        "2026-10-20T04:03:19.2674432Z ✔ SV07 R2 incident action changes retain hold, accepted facts and source-authorised owner (10780.365318ms)"
+      ]
+    },
+    {
+      "job_id": 118419220761,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39356046740/job/118419220761",
+      "passing_log_lines": []
+    },
+    {
+      "job_id": 118419220780,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39356046740/job/118419220780",
+      "passing_log_lines": [
+        "2026-10-20T04:10:31.5273043Z ✔ 0111 preserves populated 0109 sources, Activities, grants and exact migration/seed ledgers (5594.872095ms)"
+      ]
+    },
+    {
+      "job_id": 118419220814,
+      "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39356046740/job/118419220814",
+      "passing_log_lines": [
+        "2026-10-20T03:46:28.7373334Z ✔ SV07 HTTP uses authenticated no-store reads and strict query validation (333.236656ms)",
+        "2026-10-20T03:46:28.7375055Z ✔ SV07 next-action HTTP keeps authentication, origin and strict source-bound validation (35.022916ms)",
+        "2026-10-20T03:51:21.9405826Z ✔ SV07 HTTP saves one source-bound Activity and recovers its original receipt (640.064795ms)"
+      ]
+    }
+  ],
+  "compiled_desktop": {
+    "url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39356046904/job/118415856383",
+    "result": "cancelled; not a passing proof",
+    "job_limit_minutes": 60,
+    "reported_passes": 493,
+    "reported_skips": 21,
+    "final_log_lines": [
+      "2026-10-20T03:48:16.0090641Z   ✓  515 [desktop-chromium] › tests/browser/my-work.spec.ts:234:1 › planning a next activity removes only that opportunity's gap; cancelling the form changes nothing (1.7s)",
+      "2026-10-20T03:48:17.5687314Z ##[error]The operation was canceled."
+    ],
+    "github_annotations": [
+      "The job has exceeded the maximum execution time of 1h0m0s",
+      "The operation was canceled."
+    ]
+  },
+  "compiled_mobile": "success",
+  "compiled_retained": "success",
+  "compiled_aggregate": "failure"
+}

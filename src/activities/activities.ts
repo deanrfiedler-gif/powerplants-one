@@ -1,3 +1,4 @@
+import { activityRequirements, isManagedFindingActivity, legacyFindingActivityAuthority, canEditFindingActivity } from "./requirements";
 import { activityIncidentSource } from "../incidents/context";
 import { activityReportSource } from "../reports/context";
 import { projectRow } from "../projects/service";
@@ -399,6 +400,66 @@ export async function activityLinks(
     )
   ).rows;
 }
+// Transaction-level primitive shared by native and source-bound Activity commands.
+// Callers authorise the current actor, proposed owner and retained links first.
+export async function mutateActivity(
+  c: PoolClient, p: Principal, a: Awaited<ReturnType<typeof visibleActivity>>,
+  expectedVersion: number,
+  changes: Partial<ActivityInput> & { outcome?: string; cancellation_reason?: string },
+  action: "update" | "start" | "complete" | "cancel",
+) {
+  if (a.version !== expectedVersion)
+    throw new AppError(
+      409,
+      "VersionConflict",
+      "This activity changed. Keep your entries and compare the current version.",
+    );
+  if (
+    !["Open", "InProgress"].includes(a.status) ||
+    (action === "start" && a.status !== "Open")
+  )
+    throw new AppError(
+      422,
+      "ACTIVITY_STATE_INVALID",
+      "This action is unavailable for the current activity state.",
+    );
+  const state = {
+    update: a.status,
+    start: "InProgress",
+    complete: "Completed",
+    cancel: "Cancelled",
+  }[action];
+  const entries = Object.entries({
+    ...changes,
+    ...(action === "update"
+      ? reconcileSchedule(a, changes as Partial<ActivityInput>)
+      : {}),
+    status: state,
+  }).filter(([, v]) => v !== undefined);
+  const row = (
+    await c.query(
+      `UPDATE ppo.activities SET ${entries.map(([k], i) => `${k}=$${i + 1}`).join(",")},version=version+1,updated_at=clock_timestamp(),updated_by=$${entries.length + 1} WHERE workspace_id=$${entries.length + 2} AND id=$${entries.length + 3} RETURNING *,status AS state`,
+      [...entries.map(([, v]) => v), p.actor_id, p.workspace_id, a.id],
+    )
+  ).rows[0];
+  return {
+    ...row,
+    audit_details: {
+      previous_version: a.version,
+      before: {
+        status: a.status,
+        owner_id: a.owner_id,
+        summary: a.summary,
+        due_at: a.due_at,
+        due_needed: a.due_needed,
+        activity_type: a.activity_type,
+        starts_at: a.starts_at,
+        due_date_only: a.due_date_only,
+      },
+      after: { ...Object.fromEntries(entries), status: state },
+    },
+  };
+}
 export async function activityCommand(
   p: Principal,
   id: string,
@@ -480,57 +541,14 @@ export async function activityCommand(
       return a;
     },
     async (c, a) => {
-      if (a.version !== command.expected_version)
-        throw new AppError(
-          409,
-          "VersionConflict",
-          "This activity changed. Keep your entries and compare the current version.",
-        );
-      if (
-        !["Open", "InProgress"].includes(a.status) ||
-        (action === "start" && a.status !== "Open")
-      )
-        throw new AppError(
-          422,
-          "ACTIVITY_STATE_INVALID",
-          "This action is unavailable for the current activity state.",
-        );
-      const state = {
-        update: a.status,
-        start: "InProgress",
-        complete: "Completed",
-        cancel: "Cancelled",
-      }[action];
-      const entries = Object.entries({
-        ...changes,
-        ...(action === "update"
-          ? reconcileSchedule(a, changes as Partial<ActivityInput>)
-          : {}),
-        status: state,
-      }).filter(([, v]) => v !== undefined);
-      const row = (
-        await c.query(
-          `UPDATE ppo.activities SET ${entries.map(([k], i) => `${k}=$${i + 1}`).join(",")},version=version+1,updated_at=clock_timestamp(),updated_by=$${entries.length + 1} WHERE workspace_id=$${entries.length + 2} AND id=$${entries.length + 3} RETURNING *,status AS state`,
-          [...entries.map(([, v]) => v), p.actor_id, p.workspace_id, id],
-        )
-      ).rows[0];
-      return {
-        ...row,
-        audit_details: {
-          previous_version: a.version,
-          before: {
-            status: a.status,
-            owner_id: a.owner_id,
-            summary: a.summary,
-            due_at: a.due_at,
-            due_needed: a.due_needed,
-            activity_type: a.activity_type,
-            starts_at: a.starts_at,
-            due_date_only: a.due_date_only,
-          },
-          after: { ...Object.fromEntries(entries), status: state },
-        },
-      };
+      // Recover an accepted original before this new-operation guard. Native
+      // owner start/complete/cancel remain available; adopted tasks use R2.
+      if (action === "update") {
+        if (await isManagedFindingActivity(c,p,a.id))
+          throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
+        await legacyFindingActivityAuthority(c,p,a,"owner_id" in changes ? changes.owner_id : undefined);
+      }
+      return mutateActivity(c, p, a, command.expected_version, changes, action);
     },
     "Activity",
     names[action][1],
@@ -571,6 +589,7 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     owner_id: a.owner_id,
     owner_name: owner.display_name,
     summary: a.summary,
+    required_evidence: await activityRequirements(c, p, id),
     status: a.status,
     due_at: a.due_at?.toISOString() ?? null,
     due_needed: a.due_needed,
@@ -588,6 +607,7 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     report_source: await activityReportSource(c,p,id),
     can_edit:
       ["Open", "InProgress"].includes(a.status) &&
+      (await canEditFindingActivity(c,p,a)) &&
       (await hasPermission(
         c,
         p,
@@ -619,7 +639,7 @@ export type ActivityHistoryEvent = {
   before: Record<string, unknown> | null;
   after: Record<string, unknown> | null;
 };
-const historyKeys = ["status", "owner_id", "due_at", "due_needed", "starts_at", "due_date_only", "activity_type", "summary", "outcome", "cancellation_reason"];
+const historyKeys = ["required_evidence", "status", "owner_id", "due_at", "due_needed", "starts_at", "due_date_only", "activity_type", "summary", "outcome", "cancellation_reason"];
 export async function activityHistory(p: Principal, id: string) {
   const c = database(),
     a = await visibleActivity(c, p, id);

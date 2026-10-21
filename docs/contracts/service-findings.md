@@ -1,4 +1,4 @@
-# SV-07 Service findings read contract
+# SV-07 Service findings contract
 
 <!-- versioning: git; committed history is authoritative -->
 
@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Date: 20 October 2026. Status: bounded synthetic backend co
 
 ## Reads and identity
 
-`GET /api/v1/service/findings` returns the permitted findings register. `GET /api/v1/service/findings/{source}:{source_id}` returns one exact source observation. Both use current server identity and private/no-store responses. There is no command endpoint, new finding record, migration, seed or grant.
+`GET /api/v1/service/findings` returns the permitted findings register. `GET /api/v1/service/findings/{source}:{source_id}` returns one exact source observation. Both use current server identity and private/no-store responses. R2 adds the next-action endpoint below and migration 0111. There is no new finding business record, capability, seed or grant.
 
 | Source key | Identity and owning record | Closure/disposition |
 |---|---|---|
@@ -34,8 +34,22 @@ Views: `open` (default), `all`, `needs_owner`, `overdue`, `waiting_review`, `fol
 
 Due times remain the native Activity deadline instants, accompanied by `due_date_only` and site timezone. Overdue means an active Activity's deadline has passed, strictly; completed/cancelled Activities and Closed/Superseded observations are never labelled overdue. No deadline, ownership, acceptance or customer-contact result is inferred from the source's title.
 
+## R2 next action
+
+`GET /api/v1/service/findings/{source}:{source_id}/next-action` accepts no query fields. It returns the permitted finding, an opaque `source_token`, `expected_version` (Activity version, or zero if missing), `can_edit` and `blocked_reason`. Reading does not create a binding or Activity. The token covers the exact native observation, source disposition, appointment/work-order context and equipment. It is a freshness check, never an access token. Due/overdue follows the same database-clock rule as the main read.
+
+`POST` to that same endpoint accepts only `schema_version: 1`, `operation_id`, `reason`, `source_token`, `expected_version`, `owner_id`, `due_at`, `instruction` and `required_evidence`. Owner, UTC due instant and instruction (1–2,000 characters) are required. Required evidence is 1–4,000 characters or explicit null. It is a request for evidence, not a record of its acceptance. The server derives the Activity identity and all company/site/source links; clients cannot target an arbitrary Activity. A successful save returns the standard Activity operation receipt, HTTP 200, also used for replay.
+
+Current native source access, scoped `service.work_order.edit` and `activity.edit` are required. The owner must be active, able to own/read the Activity and every retained link, and able to read the native finding. Exact source-token or Activity-version mismatch returns 409. Closed/Superseded sources and Completed/Cancelled Activities return 422 with a native disposition requirement, even if the finding is displayed in NeedsOwner. No silent reopen or replacement occurs.
+
+The native Activity is updated in place. Where the source has no task, one new restricted Service Activity is created and its source binding retained separately; the original source remains unchanged. The instruction is the Activity summary. `required_evidence` is exposed on the finding action and My Work detail, backed by one Activity extension row even when several native observations reference that Activity. My Work history includes before/after owner, due, instruction/summary and required evidence, author and reason. Audit, receipt, outbox, binding and evidence fields commit in the same transaction as the Activity.
+
+Once R2 binds an Activity, generic My Work updates expose `can_edit: false` and refuse new `UpdateActivity` commands with `SourceWorkflowRequired`, including when required evidence is null. Native tasks not yet adopted by R2 retain their existing coordinator editor: the actor needs scoped Service edit access and native read authority across every linked source, and the proposed owner needs Activity eligibility and the same native read authority. Technicians cannot use this path to bypass coordinator authority. These legacy edits retain Activity-version checks, including cleanup after a source observation is superseded; they do not acquire R2 source-token or source-state semantics. Owner start/complete/cancel keep their existing authority. Previously accepted generic updates remain recoverable. The R2 page remains a separate UI dependency.
+
+Exact retries return the original receipt after later edits or source disposition, provided the actor retains current source/Activity authority. Owner eligibility and freshness are revalidated only for new writes; they do not strand an already accepted original. Receipt lookup is actor-private and repeats current source write authority. Changed payloads cannot reuse an operation ID. No change here modifies native inspection/incident ownership, accepts evidence, closes findings, releases holds, changes bookings or messages a customer.
+
 ## Verification and limits
 
 Prove all five sources using native commands, count/search/detail isolation, working-company scope, field assignment and revoked source/Activity permissions, immutable original content, completion-versus-closure, correction/supersession, deterministic paging and absence of business writes. The [execution ledger](../testing/evidence/service-findings/README.md) records actual results and limits.
 
-This increment supplies no native page, write, recurrence match, escalation case, automatic message or operational integration. Existing source routes receive the handover. Source-specific closure gaps remain visible rather than being filled by a new workflow in this projection.
+This increment supplies no native page, recurrence match, escalation case, automatic message or operational integration. Existing source routes receive closure handovers; R2 adds only next-action assignment/editing. Source-specific closure gaps remain visible rather than being filled by a new workflow in this projection.

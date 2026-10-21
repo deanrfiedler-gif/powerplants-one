@@ -346,6 +346,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 110 replays as the owner: it copies only active PPO-LocalSynthetic posters' live grants
   // and inserts the workspace ceiling. Hosted testers gain no ask duty. Carl remains off there;
   // existing all-table runtime privileges cover these objects, with no provider or hosted worker.
+  // 0111 adds two initially empty Activity extension/binding tables and a binding
+  // validator. Existing rows, identities, grants, seeds and hosted users are unchanged;
+  // all-table runtime privileges cover both new tables. No external worker is added.
   // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
   // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
   // grants, users or seeds change; existing runtime privileges and historical receipts remain.
