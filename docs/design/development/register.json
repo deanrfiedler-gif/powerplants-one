@@ -15304,7 +15304,7 @@
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
+      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); exact top-bar desktop/phone destinations and verification limits in docs/testing/evidence/conversations-navigation/README.md. Acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
