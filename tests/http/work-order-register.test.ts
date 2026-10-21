@@ -155,7 +155,7 @@ test("Work order HTTP projections do not reveal direct records or counts across 
   assert.equal((await call(systems, "/register")).status, 403);
   assert.equal((await call(other, `/${wo}/record`)).status, 404);
   assert.equal((await call(other, `/${randomUUID()}/record`)).status, 404);
-  const r = await call(other, "/register?q=SYN-PPO-WO-000003");
+  const r = await call(other, "/register?q=SYN-WO-000003");
   assert.equal(r.status, 200);
   assert.equal(r.body.items.length, 0);
   assert.equal(r.body.counts.all, 0);

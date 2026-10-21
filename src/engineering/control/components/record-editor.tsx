@@ -98,7 +98,7 @@ export function RecordEditor({
       successor
         ? `${record!.reference}.r${record!.revision + 1}`
         : (record?.reference ??
-          `SYN-PPO-${kind.toUpperCase()}-${crypto.randomUUID().slice(0, 8)}`),
+          `SYN-${kind.toUpperCase()}-${crypto.randomUUID().slice(0, 8)}`),
     ),
     [title, setTitle] = useState(record?.title ?? ""),
     [owner, setOwner] = useState(record?.owner_id ?? data.actor_id),

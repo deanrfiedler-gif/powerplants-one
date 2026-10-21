@@ -248,7 +248,7 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
       // Figma's v2 / More panel draws no "N destinations" footer (Dean, 18 October 2026).
       await expect(actualPanel.locator("footer")).toHaveCount(0);
       await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
-      await expect(actualPanel.getByRole("link", { name: "Site surveys & as-found", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
+      await expect(actualPanel.getByRole("link", { name: "Site surveys", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
     }
     await page.bringToFront();
     await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });

@@ -109,7 +109,7 @@ test("P02 HTTP envelopes, exact retry status, validation and field/relationship 
     403,
   );
   const stored = await call(coordinator, `customers/${body.id}`);
-  assert.match(stored.body.items[0].display_number, /^SYN-PPO-ORG-\d{6,}$/);
+  assert.match(stored.body.items[0].display_number, /^SYN-ORG-\d{6,}$/);
   const update = {
     operation_id: randomUUID(),
     schema_version: 1,

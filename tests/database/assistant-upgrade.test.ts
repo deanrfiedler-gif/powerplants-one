@@ -18,7 +18,7 @@ async function atVersion(version: number) {
   await seed(version);
 }
 
-for (const through of [109, 113])
+for (const through of [109, 113, 114])
 test(`populated ${through} history installs 0110 with every original row and ledger retained; seed 110 and replay are exact`, async () => {
   if (through === 109) await atVersion(through);
   else {
@@ -48,8 +48,10 @@ test(`populated ${through} history installs 0110 with every original row and led
   const original = await snapshot();
   const ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const versions = new Set(ledger.map(r => r.version));
-  const newerGuard = through === 113
+  const newerGuard = through >= 113
     ? await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition") : null;
+  const newerAllocator = through >= 114
+    ? await rows("SELECT pg_get_functiondef('ppo.register_identity()'::regprocedure) AS definition") : null;
   const receipts = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   const grants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   await migrate();
@@ -57,9 +59,11 @@ test(`populated ${through} history installs 0110 with every original row and led
   assert.deepEqual(await snapshot(), original);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(migrated.filter(r => versions.has(r.version)), ledger);
-  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 113] : [110]);
+  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 113, 114] : through === 113 ? [110, 114] : [110]);
   if (newerGuard) assert.deepEqual(
     await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition"), newerGuard);
+  if (newerAllocator) assert.deepEqual(
+    await rows("SELECT pg_get_functiondef('ppo.register_identity()'::regprocedure) AS definition"), newerAllocator);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"), receipts);
   assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
   assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability<>'conversation.agent.ask' ORDER BY id"), grants);
@@ -95,7 +99,7 @@ test("0110 flushes pending identity_target events when upgrading populated estim
   await createEstimate(sam, input);
   const originals = await rows("SELECT to_jsonb(e) row FROM ppo.estimates e ORDER BY id");
   const ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
-  // migrate applies 0026 through 0113 in one transaction. 0026's backfill queues identity_target
+  // migrate applies 0026 through 0114 in one transaction. 0026's backfill queues identity_target
   // events for this real estimate, so 0110's identity ALTER must explicitly flush the deferred check.
   await migrate();
   await seed();

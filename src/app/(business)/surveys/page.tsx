@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { SurveyRegister } from "../../../components/cs-workspace";
+import { SurveyRegister } from "../../../components/surveys/survey-register";
 export default async function Page({
   searchParams,
 }: {

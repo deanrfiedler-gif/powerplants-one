@@ -78,7 +78,7 @@ for (const through of [25, 102])
     );
     assert.deepEqual(
       upgraded.filter((x) => x.version > through).map((x) => x.version),
-      through === 102 ? [103, 104, 105, 106, 107, 108, 109, 110, 113] : [...Array.from({ length: 85 }, (_, i) => i + 26), 113],
+      through === 102 ? [103, 104, 105, 106, 107, 108, 109, 110, 113, 114] : [...Array.from({ length: 85 }, (_, i) => i + 26), 113, 114],
     );
     for (const [i, t] of tables.entries()) {
       const actual = await rows(

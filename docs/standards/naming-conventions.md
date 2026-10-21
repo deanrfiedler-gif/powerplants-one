@@ -389,13 +389,18 @@ Reserve **PPO-STD** for project standards. This document is **PPO-STD-001**. The
 
 ### 10.1 Proposed local reference format
 
+**20 October 2026 amendment:** [Dean adopted shorter namespaces for new allocations](../decisions/readable-reference-namespaces.md): `SYN-<TYPE>-<SEQUENCE>` for synthetic records and `PPO-<TYPE>-<SEQUENCE>` for future operational records. Preserve every existing reference, including `SYN-PPO-…`. Existing longer examples below are retained legacy references; they do not prescribe the prefix for new allocations. Continue existing synthetic counters without resetting them. Operational naming does not enable operational data or integration.
+
+
 For platform-owned records use:
 
 `PPO-<TYPE>-<SEQUENCE>`
 
-For synthetic records use:
+For new synthetic records use:
 
-`SYN-PPO-<TYPE>-<SEQUENCE>`
+`SYN-<TYPE>-<SEQUENCE>`
+
+For future operational records use `PPO-<TYPE>-<SEQUENCE>`. The table below retains existing references as examples, not new-allocation templates. Survey type `SRV` uses `SYN-SRV-000001` for a new synthetic record.
 
 The sequence contains at least six digits, starts at 000001 and is allocated atomically. Use a separate counter for each workspace, record type and synthetic/operational namespace. Do not reset it annually. Reference gaps are acceptable; reused identities are not.
 

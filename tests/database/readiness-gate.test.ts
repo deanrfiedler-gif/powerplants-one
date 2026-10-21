@@ -93,7 +93,7 @@ test("P2 technician Return holds dispatch, tasks the preparer and service owner,
   assert.equal(preparer.due_at.getTime(), preparer.expected_due.getTime());
   assert.match(
     preparer.summary,
-    /^Revise job pack SYN-PPO-PACK-\d+ · r01 returned by .+: parts incorrect\. Note: SYN section 04/,
+    /^Revise job pack SYN-PACK-\d+ · r01 returned by .+: parts incorrect\. Note: SYN section 04/,
   );
   // The scheduler's at-risk task is the work order's service owner's (Q3).
   const [scheduler] = await rows(
@@ -254,7 +254,7 @@ test("P3 a checker Return tasks the preparer and the successor revision complete
   assert.equal(task.due_at, null);
   assert.match(
     task.summary,
-    /^Revise job pack SYN-PPO-PACK-\d+ · r01 returned at the check: SYN section 07/,
+    /^Revise job pack SYN-PACK-\d+ · r01 returned at the check: SYN section 07/,
   );
   const returned = (await readPack(p, pack.id)).items[0];
   assert.ok(returned.follow_ups.some((f: { activity_id: string }) => f.activity_id === task.id));

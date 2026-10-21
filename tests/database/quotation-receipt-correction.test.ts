@@ -67,6 +67,7 @@ const snapshot = async (table: string) =>
 
 test("ES07 Receipt correction requires every receiving decision, commits native predecessor/successor and honest shared shortfall, and recovers exact originals", async () => {
   const f = await receiptFixture();
+  assert.match(f.t.basis.conversion.target.reference, /^SYN-SC-/);
   let d = await readConversion(f.owner, f.id);
   await reviewDisposition(f.owner, f.id, dispositionReview(d.dispositions[0]));
   d = await readConversion(f.owner, f.id);
@@ -527,6 +528,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
     allocation = supplyApply(f.t);
   await applySupply(f.owner, f.id, allocation);
   const t = await currentFollowup(f);
+  assert.match(t.basis.conversion.target.reference, /^SYN-PPO-SC-/);
   await recordFact(
     f.owner,
     t.target_id,
@@ -580,7 +582,7 @@ test("ES07 Receipt populated 0064 upgrade preserves prior generations grants his
   );
   assert.deepEqual(
     after.filter((x) => x.version > 64).map((x) => x.version),
-    [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 113],
+    [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 113, 114],
   );
   assert.deepEqual(await draftBytes(f.owner, f.draft.id), draft);
   assert.deepEqual(await draftBytes(f.owner, f.id), issued);

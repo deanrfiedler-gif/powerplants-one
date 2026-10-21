@@ -59,3 +59,7 @@ CR-02/03/05 reuse these controls for Save, Submit, receiving decisions and recov
 MA-01–MA-07 now reuse this component through the native registers and record workspaces. Exact bindings are in components.json. Synthetic long labels, uncertain saves, stale versions and separate customer/recovery states are in docs/design/development/maintenance-fixtures.json and the Maintenance browser journeys. Review 1440/1024/390/320 px and guide draft retention before owner acceptance.
 
 NAV CI repair: the Lead creation opener is fixed above the persistent phone bar and safe area. At 320/390 px and short heights, verify one scroll body, visible fixed actions, focus return and Escape with `tests/browser/leads.spec.ts`. Retain the existing form and its original command recovery. The shell current-page label shares limited header width with Page hierarchy; the full path stays in the disclosure. Host fixtures and pending owner review are recorded in components.json/navigation-fixtures.json.
+
+## CS-08 Site surveys consumer
+
+The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. No new public control API is introduced for this consumer.

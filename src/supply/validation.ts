@@ -129,8 +129,8 @@ export function recordCommand(input: unknown, update = false) {
       "Shipment identity must be shared by its individual lines.",
     );
   const reference = label(r.reference, "reference", 90);
-  if (!/^SYN-PPO-SC-[A-Za-z0-9-]{1,64}$/.test(reference))
-    invalid("reference", "Use a SYN-PPO-SC- reference.");
+  if (!/^SYN-(?:PPO-)?SC-[A-Za-z0-9-]{1,64}$/.test(reference))
+    invalid("reference", "Use a SYN-SC- reference (existing SYN-PPO-SC- references are retained).");
   return {
     ...common(r),
     id: uuid(r.id, "id"),

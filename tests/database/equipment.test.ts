@@ -105,7 +105,11 @@ test("EQ-01/02 permission-scoped register, exact counts and read-only lookup out
   const register = await equipmentRegister(actor, { q: "SYN-DUPLICATE-45" });
   assert.equal(register.total, 2);
   assert.equal(register.items.length, 2);
-  assert.equal((await equipmentLookup(actor, { q: id })).outcome, "Exact");
+  const byId = await equipmentLookup(actor, { q: id });
+  assert.equal(byId.outcome, "Exact");
+  const byReference = await equipmentLookup(actor, { q: byId.items[0].display_number });
+  assert.equal(byReference.outcome, "Exact");
+  assert.equal(byReference.items[0].id, id);
   assert.equal(
     (await equipmentLookup(actor, { q: "SYN-DUPLICATE-45" })).outcome,
     "Ambiguous",
