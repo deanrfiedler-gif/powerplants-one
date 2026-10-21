@@ -158,7 +158,7 @@ test("0113 preserves populated original links, receipts, grants and migration le
   await migrate(); await seed(); await migrate(); await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 113 }]);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 113 }, { version: 114 }]);
   assert.deepEqual(await readOperation(f.receiver, legacy.operation_id), created.receipt);
   assert.deepEqual(await readOperation(f.receiver, link.operation_id), linked.receipt);
   const next = await setup(); await createDiscoveryWorkspace(next.creator, await proposed(next));

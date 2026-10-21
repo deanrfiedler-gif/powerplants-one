@@ -1,6 +1,6 @@
 # CS-08 Site surveys execution evidence
 
-Date: 21 October 2026. Branch codex/site-surveys-cs08; draft PR #650. Integrated main: 78795dd6. Owner visual review and independent pre-merge migration review are pending. No deployment or business acceptance is claimed.
+Date: 21 October 2026. Branch codex/site-surveys-cs08; draft PR #650. Integrated main: 78795dd6. Owner visual review remains pending. The independent migration review and its corrections are recorded below; the current commit review and CI outcome are tracked in PR #650. No deployment or business acceptance is claimed.
 
 ## Source and comparison
 
@@ -50,11 +50,21 @@ Initial installation refused local npm 11.19.1 because the repository pins 11.19
 
 The browser suite uses installed reviewed Chrome 155.0.8059.85 via an explicit executable path. The default local channel path did not exist; no runtime/browser policy was changed. Tests prove 390 and 320 px measurement layout, retained unsaved values across tabs, review/return in one form, changed-source visibility, owner/recorder exclusion, exact receiving destination/owner/snapshot payload, conflict retention, loading, empty, error, partial and denied reads. Separate database proofs verify the server authority checks and persisted handover. Earlier selector/envelope mistakes in the test harness were corrected and rerun. The last rebuild also exposed a test-launch race before the preview listener was ready; the browser suite was rerun after readiness.
 
-The full unit non-regressions are P06 private adapter write-once, P06 immutable source lookup and P12 private recovery-path checks. Each failed with the same Windows filesystem behaviour on an unmodified, clean main worktree. They are not counted as passes. Linux CI and a different-model pre-merge review remain separate from this local evidence.
+The full unit non-regressions are P06 private adapter write-once, P06 immutable source lookup and P12 private recovery-path checks. Each failed with the same Windows filesystem behaviour on an unmodified, clean main worktree. They are not counted as passes. Linux CI and the independent review remain separate from these builder-run local checks.
 
 The private PostgreSQL 16 cluster contained only ppo_synthetic_test. Local fixture seeding on unchanged 0109 exceeded its 120-second limit, so a temporary test-only preload extended statement/connection timing. Reset required a higher max_locks_per_transaction in that private cluster. Runtime timeout code is unchanged. A Windows ESM preload path error was corrected to a file URL before the final 8/8 run. No full repository database or HTTP suite has been claimed.
 
 The first PR CI run exposed an old-schema Supply conversion incompatibility and a stale shell label expectation. Plan creation now freezes the namespace supported by the installed migration, so pre-0114 plans keep their original references while new plans use SYN-SC-. The receipt suite asserts both formats; replay does not rename an existing plan. The shell check passed locally. The corresponding disposition suite passed on [unmodified main 78795dd6](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39519918810). A local baseline receipt-upgrade attempt stopped earlier with ExactDraftUnavailable in the existing Windows document-output path; it is not a passing receipt proof. Replacement PR CI remains separate from the successful local CS-08 and migration checks above.
+
+## Independent migration review and corrections
+
+A separate GPT-5.6-sol reviewer inspected commit 9a296d62 and the correction diff without editing the builder branch. Scope covered migration 0114, deferred identity constraints, counter continuation and existing-reference preservation, immutable survey/photo evidence, review/handover authority, the pre-0114 Supply-plan boundary and repository-wide upgrade assertions. It found no additional migration or server defects beyond these three test findings:
+
+- [Discovery upgrade ledger](https://github.com/deanrfiedler-gif/powerplants-one/pull/650#issuecomment-6306012651): preserve the original through-0109 ledger and expect both 0113 and 0114 as additions.
+- [Document download filename](https://github.com/deanrfiedler-gif/powerplants-one/pull/650#issuecomment-6306039054): expect SYN-DOC- for a newly allocated document.
+- [Job-pack return subjects](https://github.com/deanrfiedler-gif/powerplants-one/pull/650#issuecomment-6306058040): expect SYN-PACK- in both newly created return follow-ups.
+
+All three findings are corrected. Builder-run rechecks passed on a separate disposable ppo_synthetic_test instance: the populated Discovery upgrade (1 test), checker Return and successor revision (1 test), and both compiled document-library HTTP flows (2 tests). The technician Return path was not separately rerun locally; the complete readiness suite remains a CI check. The reviewer independently checked the minimal four-assertion correction diff; its final commit-specific outcome and the latest CI state are recorded on [PR #650](https://github.com/deanrfiedler-gif/powerplants-one/pull/650). These are static review and builder verification, not owner visual approval.
 
 ## Visual differences and open questions
 
