@@ -1,6 +1,6 @@
 # Canonical visit job pack handover
 
-Owner: Dean Fiedler. Catalogue key: job-pack-entry. Shared by Field Technicians and appointment detail; scope SV-05, receiving PL-02/SV-04. Reuses ReadState, Button and ButtonLink and the existing permission-filtered appointment pack endpoint.
+Owner: Dean Fiedler. Catalogue key: job-pack-entry. Used by Field Technicians; scope SV-05, receiving PL-02. Reuses ReadState, Button and ButtonLink and the existing permission-filtered appointment pack endpoint. SV-04 now composes the same canonical entry endpoint with pack details in its shared record host; it no longer imports this visual component. Its binding and state proof live under `shared-record` and `tests/browser/appointment-detail.spec.ts`.
 
 ## Figma components
 

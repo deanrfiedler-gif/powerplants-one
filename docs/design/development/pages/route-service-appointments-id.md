@@ -1,58 +1,56 @@
 # Appointment detail — design reference
 
-Stable entry: `route:/service/appointments/[id]`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Refine**.
+Stable entry: `route:/service/appointments/[id]`. Owner: Dean Fiedler. Status: **Owner visual review pending for this implementation** (prior 9 October Refine review retained below).
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/service/appointments/{id}`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
-## Purpose and task
+## SV-04 native implementation — 21 October 2026
 
-This page address exists in the inspected application source. Open it from a running app using an identity with the required access.
+**Owner visual review: pending.** Scope SV-04, r20 page type **Record detail**, route `/service/appointments/[id]`. The accepted source is the private Figma file **PPO - Design**, named version **Appointment detail — shared record layout, accepted**, authorised by [the accepted design decision](../../../decisions/appointment-detail-figma-design.md). Implementation was requested on 21 October; this does not grant review of the build.
 
-1. Confirm the record reference and customer/site context in this record workspace.
-2. Review the proposed visit and its contact/readiness evidence
-3. Confirm available crew through the scheduling workflow
-4. Track changes and individual acknowledgement
+### Source and layout contract
+
+Page `1187:50`; brief `1187:86`; notes `1195:267235`; File index `630:2` (row `1199:50`). Desktop confirmed/held `1191:50`; tablet `1193:264207`; phone 390 `1193:263684`; phone 320 `1193:263999`. State frames: ready `1195:1202`, site overdue `1195:1438`, site not ready `1195:1685`, supply rehold `1195:1930`, proposed `1195:2153`, cancelled `1195:2409`. Reused readiness dialog `963:10299`, page dialog `1195:266625`, phone sheet `1195:266814`. Work order shared record references `315:2094` and `326:53619` inform shared state treatment. No new state artwork is asserted for those reference IDs.
+
+Retained, unchanged source evidence: [seven icon-free captures](../../../reference/ui/service/appointment-detail-design-r01/README.md). Live frames, notes and variable definitions were inspected; capture 01 was cross-checked with the live desktop source. Native captures and exact verification results belong in [implementation evidence](../../../testing/evidence/appointment-detail-native/README.md), separate from the source images.
+
+- D1/D2: no tabs; shared record title with state and readiness chips, readiness strip and one scrolling body. Left Summary, Customer and site, Crew; main dispatch decision, checks, pack, contact, follow-ups, requests, collapsed integrity details.
+- Desktop 1440: 380 px facts; 24 px main gutters; compact ruled rows and token-based cards. Reuse the existing Service shell and Schedule rail context. No shell code changes.
+- D3/D5: tablet 1024 moves facts below the main workspace. Existing shared shell breadcrumbs remain; tablet page-name-only chrome is a documented difference rather than a global shell amendment.
+- D4: contact rows have a 176 px outcome column on desktop and stack on phone. No fabricated site-readiness contact is inserted into the date-contact history.
+- Phone 390/320: use the later [compact phone header amendment](../../../decisions/phone-header-amendment.md); status, decision and checks lead, Visit includes customer/site and a Crew and visit details disclosure, then pack/contact/tasks. Editable visits retain 44 px bottom actions; cancelled/closed visits do not. Text wraps, including identifiers; no deliberate clipping of the 320 px source.
 
 ## Desktop
 
-Accepted design: the [Appointment detail design decision](../../../decisions/appointment-detail-figma-design.md) of 17 October 2026, with captures 01–02 (desktop 1440) and 03 (tablet 1024) in [design r01](../../../reference/ui/service/appointment-detail-design-r01/README.md).
-
-- **Layout:** the Work order record's shared record layout with no view tabs. The record header carries a state Tag and a readiness Tag; the readiness bar lists Parts, Job pack acknowledged, Site readiness, Site and isolation controls and Crew competency; the left column holds Summary, Customer and site and Crew.
-- **Main column, one scroll:** Dispatch held (or Ready to dispatch) with its reasons, Dispatch checks derived from the records (field readiness gate P1 and P4), the job pack deadline, Job pack acknowledgements and Returns, Customer contact, Follow-ups, Schedule change requests and a collapsed Integrity details.
-- **Tablet:** the details column moves below the main column, and the top bar shows the page name only.
-- Nothing new is built; the gate criteria depend on PR #541 and a later P4 increment.
-
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Match `1191:50` at 1440 px and `1193:264207` at 1024 px using the layout contract above. Keep one content scroll, no record tabs, 380 px desktop facts, tablet facts after the main column, and visible derived dispatch reasons. The shared workspace token block now includes only this additional host ID; no token value or other consumer is changed.
 
 ## Mobile
 
-Accepted design: captures 04–07 in [design r01](../../../reference/ui/service/appointment-detail-design-r01/README.md). One column with status, the dispatch panel and checks first, then the visit, job pack, contacts and follow-ups, with Record contact and the primary action pinned at the bottom. Record customer site readiness opens as a full-screen sheet with stacked actions. Six phone states are drawn: ready, site readiness overdue, customer reports not ready, held again by a supply change, proposed and cancelled.
+Match the 390/320 source families above with the adopted compact phone header, stacked contact rows, accessible disclosures, readable inputs and persistent editable-visit actions. Site-readiness dialogs remain gated. Every fact hidden from the desktop aside remains in Visit or its Crew and visit details disclosure.
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+### Reuse, data and handovers
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Reuse `SharedRecord`, `RecordFactSection`, `PageHeader` identity publication, `Button`/`ButtonLink`, `RegisterChip`, `WorklistMenu`, `ProductIcon` (existing Font Awesome mapping), `ReadState`/`ErrorNotice`, `Stamp`, `usePhoneHeader`, the existing booking/contact/cancellation/request forms, `PolicyResolution`, `BookingRecovery` and `useBookingCommand`. Appointment-specific sections and scoped CSS are local composition, not new shared components. Shared record catalogue consumers, state fixture and alignment item are maintained in this change.
 
-## Shared components and states
+Incoming: exact appointment from Schedule, work-order visit or saved-command continuation. Outgoing: the exact work order, current visible pack or permitted preparation, visible follow-up Activity, customer/site and (only with existing scoped `supply.read`) the linked demand. Links grant no authority. The canonical pack endpoints are reused; the old `JobPackEntry` visual host is replaced here by a page-local read of the same entry plus its permitted pack details. The Field drawer's `JobPackEntry` remains unchanged.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+The appointment projection adds customer identity, visible contact name, service-owner name and the existing supply permission flag. Parts is server-derived P1 data; no checkbox grants a pass. Current issue acknowledgements match its exact output hash; prior returns remain historical. Appointment and pack reads have separate permission/failure boundaries. A late response is discarded when its appointment read changes. Failed refresh retains evidence without live actions; denial clears it. Existing immutable-original booking recovery is preserved. Online only; no offline claim or new grants, migrations, dependencies or business integrations.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+### Gated scope and explicit differences
 
-## Visual references
+1. P4 customer site readiness and P5 issue lead time are explicitly excluded by this implementation request. Their locations say **Not available yet**; overdue/not-ready P4 states and the drawn dialog/sheet are not executable. Date agreement is never substituted. A current **Ready to dispatch** result explicitly says P4 is not in the implemented gate.
+2. The undrawn Link a demand, Parts statement and permitted-exception dialogs are not built. Q2 enables navigation to an already linked demand for supply readers; creating a link still needs a separately drawn control. Existing server exceptions display their actual outcome.
+3. R2 current Parts/hold changes refresh without moving the booking. Existing R2 tasks have no structured appointment link or cause projection in this read model. The page does not infer that association from summary text, claim a previous promise or label a hold “held again” without evidence. Owner/cause/task details for that frame remain an open data-contract question.
+4. Crew confirmation is labelled **Checked at confirmation**, because no live independent CrewCompetency criterion is returned. No current Pass is invented. Older readiness policies without Parts say unavailable. The existing gate remains authoritative.
+5. The server does not expose record-position navigation, pack-follow-up due dates or full site-contact role fields here. Omit the invented position arrows; show exact available identity and an explicit missing value. Pack task due date is read on the task. Existing forms stay inline; no new dialog layout is invented.
+6. Current policy impacts, preparation warnings, authorisation blockers and other live criteria remain visible even when absent from the static fixture. Closed visits retain work-order handover and preparation/attendance distinctions. These additions are reviewable differences, not baseline acceptance.
 
-Accepted Figma design: [Appointment detail design r01 captures](../../../reference/ui/service/appointment-detail-design-r01/README.md) (seven icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/appointment-detail-figma-design.md). Images of loading, no access, stale save and uncertain save states, and of the Link a demand, Parts statement and permitted exception dialogs, are still missing.
+### Verification and open review
 
-## Behaviour, handovers and verification
+See [execution evidence](../../../testing/evidence/appointment-detail-native/README.md) for commands, results, screenshots, viewport comparisons and limitations. Synthetic UI fixtures exercise supported states, permissions and original-operation recovery; a database test is added for the projection, but local setup timed out before its assertions and also failed on unmodified main. The stable route and scope keys and all parent IDs remain unchanged. Build sequence and status are generated, not hand-edited.
 
-The draft User Guide `guide.page.service.appointments.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+Open for Dean: review the native visual differences; settle the undrawn demand/statement/exception controls before implementation; decide the later P4/P5 increments; provide a structured R2 cause/task association if the detailed rehold narrative is required. Owner visual, physical-device, screen-reader and business review remain pending. No deployment is claimed.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
-
-## Canonical Job Pack handover
-
-JobPackEntry reuses shared buttons and ReadState. The current server read chooses Open job pack or permitted Prepare job pack with the exact appointment identity. No visible pack is distinct from a denied read (access-unavailable status) and a failed request (shared error alert). Refresh hides prior links; no denial grants access. Desktop/phone text wraps and 44 px controls remain within the existing panel or trapped drawer. [I5 handover](../../../delivery/job-pack-integration-handover.md) records evidence; the existing appointment/booking authority is unchanged.
 
 ## Scheduling Step 4 integration
 

@@ -1,8 +1,12 @@
 # Appointment coordination detail — design reference
 
-Stable entry: `scope:SV-04`. Owner: Dean Fiedler. Status: **Owner visual review 9 October 2026: Refine**.
+Stable entry: `scope:SV-04`. Owner: Dean Fiedler. Status: **Owner visual review pending for this implementation** (prior 9 October Refine review retained below).
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/schedule`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+
+## Current implementation contract
+
+SV-04 uses the accepted shared record composition at `/service/appointments/[id]`. The [route contract](route-service-appointments-id.md) is the maintained source for Figma node IDs, named version, desktop/mobile requirements, gated P4/P5 scope, reused components, deviations and open questions. [Execution evidence](../../../testing/evidence/appointment-detail-native/README.md) records synthetic verification separately from owner review.
 
 ## Purpose and task
 
@@ -19,7 +23,7 @@ Accepted design: the [Appointment detail design decision](../../../decisions/app
 - **Layout:** the Work order record's shared record layout with no view tabs. The record header carries a state Tag and a readiness Tag; the readiness bar lists Parts, Job pack acknowledged, Site readiness, Site and isolation controls and Crew competency; the left column holds Summary, Customer and site and Crew.
 - **Main column, one scroll:** Dispatch held (or Ready to dispatch) with its reasons, Dispatch checks derived from the records (field readiness gate P1 and P4), the job pack deadline, Job pack acknowledgements and Returns, Customer contact, Follow-ups, Schedule change requests and a collapsed Integrity details.
 - **Tablet:** the details column moves below the main column, and the top bar shows the page name only.
-- Nothing new is built; the gate criteria depend on PR #541 and a later P4 increment.
+- The native implementation uses merged gate P1–P3. P4/P5 remain gated under the current task; the source dialog and site-readiness states are retained references.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -31,7 +35,7 @@ Accepted design: captures 04–07 in [design r01](../../../reference/ui/service/
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+The mobile source composition is accepted; owner review of the native implementation is pending. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 
@@ -49,7 +53,7 @@ It is a standalone, module-only design of 15 September 2026 (no application rail
 
 Its design record (`docs/decisions/scheduling-workspace-design.md`) and change record exist only inside the retained package [ppo-design-scheduling-r01-files.zip](../../../reference/ui/service/ppo-design-scheduling-r01-files.zip); neither was extracted into `docs/decisions/` or `docs/delivery/`. The change record leaves five owner decisions open, including confirmation of the ten r01 design decisions and whether an accepted revision would be registered with a governing route of `/service/schedule` (the application planner route is `/schedule`).
 
-No application image is linked. Keep this gap visible.
+Native captures and comparisons are tracked in the implementation evidence above; owner visual review remains pending.
 
 ## Behaviour, handovers and verification
 

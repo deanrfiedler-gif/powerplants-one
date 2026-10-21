@@ -145,6 +145,20 @@ async function snapshot(n: number) {
     ),
   };
 }
+test("SV04 detail projects permitted names and scoped supply navigation without granting authority", async () => {
+  const actor = await p(), a = await appointment();
+  const contact = (await rows("SELECT display_name FROM ppo.people WHERE workspace_id=$1 AND id=$2", [workspace, a.primary_contact_id]))[0];
+  const serviceOwner = (await rows("SELECT u.display_name FROM ppo.work_orders w JOIN ppo.users u ON (u.workspace_id,u.id)=(w.workspace_id,w.service_owner_id) WHERE w.workspace_id=$1 AND w.id=$2", [workspace,a.work_order_id]))[0];
+  assert.equal(a.primary_contact_name, contact.display_name);
+  assert.equal(a.service_owner_name, serviceOwner.display_name);
+  assert.equal(typeof a.customer_id, "string");
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='supply.read'", [workspace,actor.actor_id]);
+  assert.equal((await readAppointment(actor,a.id)).items[0].actions.can_read_supply,false);
+  await rows("UPDATE ppo.sites SET primary_contact_id=NULL WHERE workspace_id=$1 AND id=$2",[workspace,a.site_id]);
+  assert.equal((await readAppointment(actor,a.id)).items[0].primary_contact_name,null);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='shared.read'",[workspace,actor.actor_id]);
+  await assert.rejects(()=>readAppointment(actor,a.id),e => [403,404].includes((e as {status:number}).status));
+});
 test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source hashes and revoked grants; repeat seed preserves edits", async () => {
   await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");

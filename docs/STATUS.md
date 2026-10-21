@@ -65,6 +65,12 @@ Dean authorised repairing the shared browser-version mismatch that blocked PR #6
 
 No package dependency, installer, launch flag, permission, migration or deployment changes. The Discovery register remains pending owner visual review; passing runtime assurance is separate from business acceptance.
 
+## Appointment detail SV-04 native shared record — 21 October 2026
+
+The accepted Appointment detail design is implemented for review on the existing `/service/appointments/[id]` route: shared record layout, derived Parts/dispatch checks, current pack acknowledgements and returns, contact rows, follow-ups and controlled booking forms. P4 site readiness and P5 lead time remain visibly gated. No new migration, capability, dependency or integration is added. The [page contract](design/development/pages/route-service-appointments-id.md), scope contract, guides and shared-component bindings accompany the code.
+
+[Synthetic verification and deviations](testing/evidence/appointment-detail-native/README.md) distinguish code proof from the accepted Figma source. R2 historical cause/task context and undrawn Parts controls remain open. Owner visual review is pending; no deployment or business acceptance is claimed.
+
 ## Sites CS-04 implementation and short references — 20 October 2026
 
 The [Sites implementation](delivery/sites-cs04-build.md) continues the preflight-only PRs #626 and #635 in draft PR #640. It refines `/sites` and `/sites/[id]` around the accepted Sites register/record, with permission-scoped view counts, source summaries, installed/served equipment, current compact phone controls and explicit loading/empty/error/restricted states. Dean approved the shorter Site reference convention on 20 October. Its [reference decision](decisions/site-reference-convention.md) preserves immutable previous references and UUID links; both spellings are searchable. No migration or new capability is needed.

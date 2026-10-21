@@ -8,7 +8,7 @@
    also the rules of any other workspace that mounts the shell's shared secondary menu: those selectors name both scope
    ids through :is(), which keeps the specificity of an id, so nothing about My Work's cascade changes. Everything
    else in this file is My Work's alone. EN-06 (#ppo-materials) is the first other workspace and EN-07 (#ppo-changes) the second. */
-:is(#ppo-pack-register,#ppo-job-pack,#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation,#ppo-products:where([data-catalogue]),#ppo-projects,#ppo-cpq,#ppo-leads,#ppo-organisations,#ppo-surveys,#ppo-sites,#ppo-people,#ppo-discovery-register){
+:is(#ppo-appointment,#ppo-pack-register,#ppo-job-pack,#ppo-my-work,#ppo-engineering-control,#ppo-materials,#ppo-changes,#ppo-commissioning,#ppo-acceptance,#ppo-facilities,#ppo-estimate-wizard,#ppo-specialist,#ppo-fertigation,#ppo-products:where([data-catalogue]),#ppo-projects,#ppo-cpq,#ppo-leads,#ppo-organisations,#ppo-surveys,#ppo-sites,#ppo-people,#ppo-discovery-register){
  --navy:#242a37;--green:#62bb46;--ink:var(--navy);
  --paper:#f5f6f8;--surface-white:#fff;--surface:#f6f7f9;--surface-2:#f7f8fa;--surface-3:#fcfcfd;--surface-hover:#f0f2f5;
  --muted:#667181;--text-secondary:#596779;--link:#355b80;

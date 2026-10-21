@@ -41,3 +41,8 @@ The CS-06 host suppresses the second phone navigation bar while retaining the co
 ## CS-08 Site surveys consumer
 
 The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. SharedRecord accepts optional sourcesLabel for the source/check band; the default customer wording is preserved. The survey supplies its own accessible submission/handover label.
+
+
+## SV-04 appointment host
+
+The accepted Appointment detail composition reuses this API without changing it: title state/readiness chips, source strip, ruled facts, no tabs, and phone bottom actions. At tablet width its facts follow the workspace; phone shows Visit plus a crew/details disclosure. Scoped styles live in `src/scheduling/components/client/appointment-record.css`. Consumer keys are `scope:SV-04` and `route:/service/appointments/[id]`. Synthetic fixture/state examples are in `tests/helpers/appointment-detail-fixture.ts` and `tests/browser/appointment-detail.spec.ts`. The `shared-record-sv04-review` alignment item and [evidence](../../../testing/evidence/appointment-detail-native/README.md) retain gated P4/P5 and data gaps. Owner visual review is pending.

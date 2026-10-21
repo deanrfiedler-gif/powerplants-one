@@ -21,7 +21,7 @@ test("PL01 demand to readiness, contact, full crew confirmation and retained pla
   expect(a.start_at).toContain("04:00:00"); // Brisbane 14:00; device is Los Angeles.
   expect((await pl01Call(page, "schedule/demand")).items.some((r: { id: string }) => r.id === w.id)).toBe(false);
   await next.click();
-  await page.getByRole("link", { name: "Review readiness on the work order" }).click();
+  await page.getByRole("link", { name: "Review work-order readiness", exact: true }).click();
   const visit = page.locator(`#visit-${appointmentId}`);
   await visit.getByText("Review proposed visit preparation", { exact: true }).click();
   await visit.getByLabel("Readiness criterion").selectOption("ToolPreparation");
@@ -59,9 +59,10 @@ test("PL01 demand to readiness, contact, full crew confirmation and retained pla
   expect(booked.assignments.filter((r: { active: boolean }) => r.active)).toHaveLength(2);
   expect(booked.dispatch_hold).toBe(true); expect(booked.pack_requirement).toBe("PreparationRequired");
   await page.reload();
-  await expect(page.getByText("Dispatch held", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dispatch held", exact: true })).toBeVisible();
   await page.screenshot({ path: info.outputPath("confirmed.png"), fullPage: true });
-  await page.getByRole("link", { name: "Show its dates / View in planner" }).click();
+  await page.locator(".sv04-integrity summary").click();
+  await page.locator(".sv04-integrity").getByRole("link", { name: "View visit in planner", exact: true }).click();
   // The Week board shows the visit as a tile; the lane list (narrow screens, other zones) as a link.
   await expect(page.locator(`[data-appointment='${appointmentId}'], a[href='/service/appointments/${appointmentId}']`).first()).toBeVisible();
   await page.getByRole("link", { name: "Return to previous planner context" }).click();

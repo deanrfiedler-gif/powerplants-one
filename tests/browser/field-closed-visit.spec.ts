@@ -121,7 +121,7 @@ test("CV-05 work-order proposal keeps correctable input and recovers one origina
     new RegExp(`/service/appointments/${savedId}\\?returnTo=`),
   );
   await expect(
-    page.getByRole("region", { name: "Visit entry guidance" }),
+    page.getByRole("region", { name: "Other visit checks" }),
   ).toContainText("before Scheduling accepts");
   await writeFile(
     info.outputPath("closed-visit-proposal-recovery.json"),

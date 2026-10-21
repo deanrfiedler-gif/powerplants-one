@@ -5744,8 +5744,7 @@
       },
       "specification": "docs/design/development/components/job-pack-entry.md",
       "used_on": [
-        "route:/service/technicians",
-        "route:/service/appointments/[id]"
+        "route:/service/technicians"
       ],
       "desktop": "Shared ButtonLink and quiet refresh within the visit context.",
       "mobile": "Text wraps; 44 px actions stay within the drawer or appointment panel.",
@@ -8144,6 +8143,11 @@
           "id": "cs08-survey",
           "label": "Site survey host",
           "description": "CS-08 real host: register/read states, independent review, changed source, exact handover and phone 390/320. Fixture/state inventory: docs/design/development/site-surveys-fixtures.json; tests/browser/site-surveys.spec.ts."
+        },
+        {
+          "id": "appointment-dispatch",
+          "label": "Appointment dispatch",
+          "description": "SV-04 real host fixture: held, current ready, supply rehold, proposed, cancelled, empty, denied and failed refresh at 1440/1024/390/320. P4/P5 remain unavailable."
         }
       ],
       "implementation": [
@@ -8168,7 +8172,13 @@
         "docs/design/development/organisations-native-fixtures.json",
         "src/components/access-readiness-workspace.tsx",
         "src/app/styles/access-readiness.css",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/appointment-record.css",
+        "src/scheduling/appointment-presentation.ts",
+        "src/scheduling/planner.ts",
+        "docs/testing/evidence/appointment-detail-native/README.md",
+        "src/app/styles/my-work.css"
       ],
       "reference": {
         "path": "docs/reference/ui/customers/organisations-design-r01/PPO-Organisations-02-Desktop-Customer-360-Overview-r01.png",
@@ -8183,12 +8193,14 @@
         "route:/sites/[id]/readiness",
         "scope:CS-08",
         "route:/surveys",
-        "route:/surveys/[id]"
+        "route:/surveys/[id]",
+        "scope:SV-04",
+        "route:/service/appointments/[id]"
       ],
       "desktop": "Full-bleed record header/source bar; ruled 380 px facts column and remaining workspace; container-responsive 280 px facts on narrower interiors.",
       "mobile": "Compact header, accessible scrolling seven-tab strip (Overview, Sales, Service, Sites first), primary contact, source rows and sticky follow-up. Facts remain available below the workspace.",
       "keyboard": "Native links/buttons; RecordTabs arrow/Home/End; shared menus and modal Escape return focus; correction keeps uncertain operation locked.",
-      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern.",
+      "limitations": "Actual domain host, not an isolated fixture. Missing source fields are omitted or unknown; inherited Customer 360 per-record authorisation reads remain. No paired owner/device acceptance. CS-06 uses an explicit sourcesLabel and title status placement; requirements authoring remains a host concern. SV-04 uses no tabs, moves facts below the tablet workspace and puts visit facts in the phone flow. No shared component API changes.",
       "gaps": [
         {
           "id": "shared-record-cs01-review",
@@ -8211,6 +8223,14 @@
           "expected": "Accepted Site surveys composition using existing shared controls.",
           "actual": "Scoped CS-08 host implementation; owner visual and physical-device review pending.",
           "action": "Compare the current CS-08 evidence and exact Figma frames before recording owner review.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "shared-record-sv04-review",
+          "expected": "Owner review of accepted Appointment detail frames and the scoped native host.",
+          "actual": "Implementation and synthetic verification are separate from design acceptance; P4/P5 and undrawn controls remain gated.",
+          "action": "Review the SV-04 evidence pairing and listed source/data differences before adopting a UI baseline.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
