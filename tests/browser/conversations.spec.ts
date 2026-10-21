@@ -412,8 +412,8 @@ test.describe("T1c-1 final review fixes", () => {
 test.describe("T1c-2 top-bar Conversations action", () => {
   const badgeCount = async (page: Page) => (await api<{ unread_threads: number }>(page, "conversations/badge")).body.unread_threads;
 
-  test("T1c-2 the action sits left of the Page guide, counts unread threads and is current on /conversations", async ({ page, isMobile }) => {
-    const { thread } = await askedThread(page);
+  test("T1c-2 the action opens the preferred desktop thread or phone list, counts unread threads and stays current", async ({ page, isMobile }) => {
+    const { thread, title } = await askedThread(page);
     await signIn(page, asked);
     const unread = await badgeCount(page);
     expect(unread).toBeGreaterThan(0);
@@ -423,15 +423,28 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
     await expect(action.locator(".ppo-top-badge")).toHaveText(unread > 9 ? "9+" : String(unread));
     await expect(action).not.toHaveAttribute("aria-current", "page");
+    await expect(action).toHaveAttribute("href", "/conversations");
     // D1: immediately left of the information (Page guide) icon on desktop. The phone row hides the Page guide
     // button (phone header amendment P4: it is in the Menu), so only Conversations' place at the right is kept there.
     if (!isMobile) expect(await action.evaluate((link) => link.nextElementSibling?.getAttribute("aria-label"))).toBe("Page guide");
+    const markedRead = page.waitForResponse((response) => response.url().endsWith(`/api/v1/conversations/${thread}/read`) && response.request().method() === "POST");
     await action.click();
-    await expect(page).toHaveURL(/\/conversations$/);
-    await expect(banner.getByRole("link", { name: /^Conversations/ })).toHaveAttribute("aria-current", "page");
+    // T1c 5.2: desktop automatically opens the newest thread waiting on the viewer (this fixture).
+    // Phone stays on the populated list until the viewer chooses a thread; listing alone must not mark it read.
+    if (isMobile) {
+      const row = page.getByRole("navigation", { name: "Conversations" }).getByRole("link", { name: new RegExp(title) });
+      await expect(row).toBeVisible();
+      await expect(page).toHaveURL("/conversations");
+      await expect(action).toHaveAttribute("aria-current", "page");
+      await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
+      expect(await badgeCount(page)).toBe(unread);
+      await expect(row).toHaveAttribute("href", `/conversations/${thread}`);
+      await row.click();
+    }
+    await expect(page).toHaveURL(`/conversations/${thread}`);
     // Opening the thread marks it read; the badge re-reads on the Conversations change event.
-    await page.goto(`/conversations/${thread}`);
     await expect(page.getByText("SYN when does the controller arrive?")).toBeVisible();
+    expect((await markedRead).ok()).toBe(true);
     await expect.poll(() => badgeCount(page)).toBe(unread - 1);
     // A phone thread is a record page, whose compact header hides Conversations (phone header amendment P3); the
     // action keeps its name, badge and current state, so those are read from the hidden link there.

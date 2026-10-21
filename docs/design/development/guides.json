@@ -76720,8 +76720,8 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Written for Conversations T1c-1 (people-only threads); guide review remains separate.",
-      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; guide acceptance remains pending.",
+      "change_summary": "Clarified the accepted desktop preferred-thread destination and phone list-to-thread handover; guide review remains separate.",
+      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; exact desktop/phone navigation proof and limits in docs/testing/evidence/conversations-navigation/README.md. Guide acceptance remains pending.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
         "docs/decisions/conversations-t1-scope.md"
@@ -76756,7 +76756,7 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose Conversations in the top bar, left of the information icon. Its badge counts conversations with something new for you.",
+            "Choose Conversations in the top bar, left of the information icon. Its badge counts conversations with something new for you. On a wide screen a thread opens automatically; on a phone, choose a thread from the list.",
             "Choose New thread, pick the deal or project under About, and write your first message.",
             "Tag a person with @. To track a question, switch on Ask for them and write a short question; a reply-by date is optional. Choose Start thread."
           ],
@@ -76767,7 +76767,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The sidebar lists the conversations you take part in, grouped by record, newest first. Waiting on you and Mentions filter the list; Search narrows it by title or record number. On a wide screen the most urgent thread opens beside the list."
+            "The sidebar lists the conversations you take part in, grouped by record, newest first. Waiting on you and Mentions filter the list; Search narrows it by title or record number. On a wide screen the first open thread waiting on you opens beside the list, or the first thread if none is waiting on you. Opening a thread marks it read and updates the unread badge."
           ],
           "steps": [],
           "headers": [],
