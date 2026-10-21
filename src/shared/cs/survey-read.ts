@@ -17,10 +17,10 @@ export async function surveyDetails(
     basis: {
       owner_id: string;
       content: SurveyContent;
-      dependencies: Record<string, number>;
+      dependencies: Record<string, string | number>;
     };
   }[],
-  dependencies: Record<string, number>,
+  dependencies: Record<string, string | number>,
 ) {
   const content = row.content as SurveyContent;
   const site = await visible(c, p, "Site", row.site_id!);

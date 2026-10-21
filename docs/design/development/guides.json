@@ -2653,8 +2653,8 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "0ebb26a3",
+      "prepared_at": "2026-10-21",
+      "source_commit": "6110e28e",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
       "sections": [
@@ -2672,7 +2672,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Choose the exact site, areas and installed equipment. Record the owner, planned visit interval and contact on site; check Access & readiness separately. A survey does not authorise site work."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -2815,9 +2815,12 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
       "document_id": "PPO-GUIDE-CS-08",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -2827,7 +2830,10 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/customers/PPO-Site-Survey-and-As-Found-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -64193,7 +64199,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Accepted CS-08 design implementation; owner visual review pending",
-      "source_commit": "0ebb26a3",
+      "source_commit": "6110e28e",
       "related_entry_keys": [
         "scope:CS-08",
         "route:/surveys"
@@ -64213,7 +64219,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Choose the exact site, areas and installed equipment. Record the owner, planned visit interval and contact on site; check Access & readiness separately. A survey does not authorise site work."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -64345,7 +64351,19 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending."
+      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
+      "source_paths": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ]
     },
     {
       "guide_key": "guide.route-surveys",
@@ -64357,7 +64375,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Accepted CS-08 design implementation; owner visual review pending",
-      "source_commit": "0ebb26a3",
+      "source_commit": "6110e28e",
       "related_entry_keys": [
         "scope:CS-08",
         "route:/surveys/[id]"
@@ -64377,7 +64395,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Choose the exact site, areas and installed equipment. Record the owner, planned visit interval and contact on site; check Access & readiness separately. A survey does not authorise site work."
+            "Choose the exact site, areas and installed equipment. Record the owner, planned visit start and optional end and contact on site; check Access & readiness separately. A survey does not authorise site work."
           ],
           "steps": [],
           "headers": [],
@@ -64509,7 +64527,19 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending."
+      "runtime_evidence": "Current execution results and limits: docs/testing/evidence/site-surveys-native/README.md. Owner visual review pending.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "Replaced the legacy survey guide with the CS-08 register, recorded visit, observations, original photos, independent review/return and exact handover controls.",
+      "source_paths": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ],
+      "workflow_basis": [
+        "docs/decisions/site-surveys-figma-design.md",
+        "docs/decisions/site-surveys-native-build.md",
+        "docs/decisions/readable-reference-namespaces.md"
+      ]
     },
     {
       "guide_key": "guide.route-schedule-capacity",

@@ -55,6 +55,7 @@ DO $$ DECLARE survey record; allocated bigint; reference text; BEGIN
  END LOOP;
 END $$;
 ALTER TABLE ppo.business_identities ENABLE TRIGGER identity_append_only;
+SET CONSTRAINTS ppo.identity_target DEFERRED;
 ALTER TABLE ppo.site_surveys ENABLE TRIGGER protect_scope;
 DROP TRIGGER register_identity ON ppo.site_surveys;
 CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.site_surveys
@@ -70,4 +71,3 @@ ALTER TABLE ppo.cs_survey_photos ADD COLUMN file_name text
  CHECK(file_name IS NULL OR length(file_name) BETWEEN 1 AND 200);
 ALTER TABLE ppo.cs_survey_photos ADD COLUMN media_type text NOT NULL DEFAULT 'image/png'
  CHECK(media_type IN ('image/png','image/jpeg','image/webp'));
-SET CONSTRAINTS ppo.identity_target DEFERRED;

@@ -177,7 +177,7 @@ test("CS08 UI captures measured zero and independently reviews the exact submiss
  await page.getByRole("button",{name:"Review submission",exact:true}).first().click();
  await page.getByLabel("Review note",{exact:true}).fill("SYN independent as-found review");
  await page.locator('form button[type=submit]').click();await expect(page.getByText("Reviewed",{exact:true}).first()).toBeVisible();
- await expect(page.getByText(/does not certify design suitability/).first()).toBeVisible();
+ await expect(page.getByText(/does not certify design suitability/).filter({visible:true}).first()).toBeVisible();
 });
 
 async function ensurePlan(

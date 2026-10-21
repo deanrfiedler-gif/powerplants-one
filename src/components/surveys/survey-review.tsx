@@ -5,6 +5,7 @@ import { CommandStatus, type CsOptions } from "../cs-forms";
 import { useCrmCommand } from "../crm-state";
 import { Button } from "../ui/button";
 import {
+  useSurveyFormFocus,
   SurveySection,
   SurveyFacts,
   surveyDate,
@@ -39,6 +40,7 @@ export function SurveyActionForm({
     [note, setNote] = useState(""),
     [destination, setDestination] = useState("Estimating"),
     [owner, setOwner] = useState("");
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand(
     () => {
       onSaved();
@@ -66,10 +68,12 @@ export function SurveyActionForm({
         : "Start successor draft";
   return (
     <form
+      ref={formRef}
       className="srv-form"
       onChange={command.dirty}
       onSubmit={(e) => {
         e.preventDefault();
+        if (!canAct) return;
         void command.send("cs/Survey/" + base.record.id + "/actions", {
           expected_version: base.record.version,
           action: reviewing ? decision : action,
@@ -122,7 +126,7 @@ export function SurveyActionForm({
           </p>
         )}
         <ValidationFields error={command.error}>
-          <fieldset disabled={!canAct || command.busy || command.uncertain}>
+          <fieldset disabled={command.busy || command.uncertain}>
             {reviewing && (
               <div
                 className="srv-kind-chips"
@@ -227,7 +231,7 @@ export function SurveyActionForm({
               >
                 Cancel
               </Button>
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="primary" disabled={!canAct}>
                 {reviewing
                   ? decision === "return"
                     ? "Return with clarification"

@@ -78,7 +78,7 @@ test("CA-01/03 real atomic creation, competing identical retries, original hashe
   const o = await readOpportunity(p, input.id);
   assert.equal(o.stage_id, "Enquiry");
   assert.equal(o.close_outcome, "Open");
-  assert.match(o.display_number, /^SYN-PPO-OPP-000001$/);
+  assert.match(o.display_number, /^SYN-OPP-000001$/);
   assert.equal(o.actions.length, 1);
   assert.equal(o.events.length, 1);
   assert.equal(o.next_action_state, "DueNeeded");
@@ -141,7 +141,7 @@ test("CA-01 failure at final outbox insert rolls back every domain/link/identity
   await createOpportunity(p, input);
   assert.equal(
     (await readOpportunity(p, input.id)).display_number,
-    "SYN-PPO-OPP-000001",
+    "SYN-OPP-000001",
   );
 });
 test("CA-02 competing PostgreSQL qualification/action transactions block and accept exactly one expected version", async () => {

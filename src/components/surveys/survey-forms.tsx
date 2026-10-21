@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import type { SurveyContent, Observation } from "../../shared/cs/model";
 import type { listCs } from "../../shared/cs/service";
 import {
+  useSurveyFormFocus,
   SurveySection,
   SurveyTag,
   observationKinds,
@@ -217,6 +218,7 @@ function CreateAtSite({
   const [name, setName] = useState(""),
     [owner, setOwner] = useState(""),
     [content, setContent] = useState(empty);
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand((r) => router.push("/surveys/" + r.record_id));
   const cancel = () => {
     if (
@@ -238,6 +240,7 @@ function CreateAtSite({
         (options.data.can_create ? (
           <div className="srv-create-body">
             <form
+              ref={formRef}
               className="srv-form"
               onChange={command.dirty}
               onSubmit={(e) => {
@@ -290,7 +293,6 @@ function CreateAtSite({
                         options={options.data.owners.edit}
                         required
                       />
-                    </div>
                     <ScopeFields
                       part="visit"
                       requireVisit
@@ -301,6 +303,7 @@ function CreateAtSite({
                       }}
                       options={options.data}
                     />
+                    </div>
                   </SurveySection>
                   <SurveySection title="Scope">
                     <ScopeFields
@@ -385,6 +388,7 @@ export function SurveyScopeEditor({
     [owner, setOwner] = useState(base.owner_id),
     [content, setContent] = useState(base.content as SurveyContent),
     [reason, setReason] = useState("");
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand(
     () => {
       onSaved();
@@ -397,6 +401,7 @@ export function SurveyScopeEditor({
   );
   return (
     <form
+      ref={formRef}
       className="srv-form"
       onChange={command.dirty}
       onSubmit={(e) => {
@@ -505,6 +510,7 @@ export function ObservationEditor({
     activity_id: answer?.activity_id ?? null,
     ...(answer ? { answers_observation_id: answer.id } : {}),
   }));
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand(
     () => {
       onSaved();
@@ -529,7 +535,8 @@ export function ObservationEditor({
   ];
   return (
     <form
-      className="srv-form"
+      ref={formRef}
+      className="srv-form srv-observation-form"
       onChange={command.dirty}
       onSubmit={(e) => {
         e.preventDefault();
@@ -560,7 +567,10 @@ export function ObservationEditor({
     >
       <header>
         <h2>Record observation</h2>
-        <p>Revision {data.record.revision} · Draft</p>
+        <p>
+          <SurveyTag value="Draft" /> · Revision {data.record.revision}
+          {data.record.revision > 1 ? " · Successor draft" : ""}
+        </p>
       </header>
       {answer && (
         <p className="srv-notice">
@@ -570,6 +580,12 @@ export function ObservationEditor({
       )}
       <ValidationFields error={command.error}>
         <fieldset disabled={command.busy || command.uncertain}>
+          <p className="srv-label">Kind</p>
+          <p className="srv-note">
+            {observation.kind === "Measured"
+              ? "A measurement needs a number and a unit."
+              : "Record the method and source for this observation."}
+          </p>
           <div
             className="srv-kind-chips"
             role="group"

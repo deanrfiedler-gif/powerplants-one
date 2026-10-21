@@ -874,7 +874,7 @@ test("SV-01 I1 register read model: permitted context, a customer never guessed,
   const triaged = row(id(40, 20));
   assert.equal(triaged.triage_blocker_count, null);
   assert.equal(triaged.work_orders.length, 10);
-  assert.ok(triaged.work_orders.every((w) => /^SYN-PPO-WO-\d{6}$/.test(w.display_number) && ["Draft", "Authorised"].includes(w.status)));
+  assert.ok(triaged.work_orders.every((w) => /^SYN-WO-\d{6}$/.test(w.display_number) && ["Draft", "Authorised"].includes(w.status)));
   const noSite = row(id(40, 11));
   assert.equal(noSite.customer, null);
 

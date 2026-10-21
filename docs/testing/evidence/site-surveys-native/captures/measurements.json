@@ -1,0 +1,170 @@
+[
+  {
+    "name": "register-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "create-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1100
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "register-1024",
+    "viewport": {
+      "width": 1024,
+      "height": 900
+    },
+    "pageWidth": 1024
+  },
+  {
+    "name": "register-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "scope-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1234
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "observations-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1336
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "photos-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 977
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "follow-up-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 989
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "review-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1187
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "review-form-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1187
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "changed-source-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1187
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "changed-source-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "scope-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "scope-320",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "pageWidth": 320
+  },
+  {
+    "name": "handover-1440",
+    "viewport": {
+      "width": 1440,
+      "height": 1261
+    },
+    "pageWidth": 1440
+  },
+  {
+    "name": "observation-form-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "empty-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "error-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "denied-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "partial-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  },
+  {
+    "name": "loading-390",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageWidth": 390
+  }
+]

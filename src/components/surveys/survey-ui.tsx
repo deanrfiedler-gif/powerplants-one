@@ -1,5 +1,5 @@
 "use client";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { RegisterChip } from "../ui/register-table";
 import { Button } from "../ui/button";
 import { isDenied } from "../business-ui";
@@ -88,16 +88,23 @@ export function SurveyReadState({
 export function SurveySection({
   title,
   action,
+  description,
   children,
 }: {
   title: string;
   action?: ReactNode;
+  description?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <section className="srv-section">
       <header>
-        <h2>{title}</h2>
+        <div>
+          <h2>{title}</h2>
+          {description && (
+            <p className="srv-section-description">{description}</p>
+          )}
+        </div>
         {action}
       </header>
       {children}
@@ -132,3 +139,30 @@ export const surveyDate = (
         timeZone: timezone,
       }).format(new Date(value))
     : "Not recorded";
+
+/** Keep keyboard context when an inline survey form replaces its trigger. */
+export function useSurveyFormFocus() {
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    const previous = document.activeElement;
+    const heading = form.current?.querySelector<HTMLElement>("h2");
+    heading?.setAttribute("tabindex", "-1");
+    const target = heading?.getClientRects().length
+      ? heading
+      : form.current?.querySelector<HTMLElement>(
+          "button,input,select,textarea",
+        );
+    target?.focus({ preventScroll: true });
+    return () => {
+      requestAnimationFrame(() => {
+        if (
+          previous instanceof HTMLElement &&
+          previous.isConnected &&
+          previous.getClientRects().length
+        )
+          previous.focus({ preventScroll: true });
+      });
+    };
+  }, []);
+  return form;
+}

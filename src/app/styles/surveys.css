@@ -754,3 +754,236 @@
   color: var(--text-secondary);
   font-size: 12px;
 }
+
+/* Exact accepted register geometry, scoped to CS-08. */
+:is(#ppo-surveys, #ppo-survey-record, #ppo-survey-create) {
+  font-family: PPOShellRoboto, Roboto, sans-serif;
+}
+#ppo-surveys .mw-menu a {
+  text-decoration: none;
+}
+#ppo-surveys .srv-toolbar .field {
+  flex-direction: row;
+  gap: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  padding: 0 8px;
+  min-height: 40px;
+}
+#ppo-surveys .srv-toolbar .field label {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 400;
+}
+#ppo-surveys .srv-toolbar .field label::after {
+  content: ":";
+}
+#ppo-surveys .srv-toolbar .field select {
+  border: 0;
+  min-height: 38px;
+  max-width: 160px;
+  padding: 4px;
+  margin: 0;
+  font-weight: 400;
+  background: transparent;
+}
+#ppo-surveys .srv-toolbar {
+  height: 60px;
+  box-sizing: border-box;
+}
+#ppo-surveys .ppo-register-table {
+  table-layout: fixed;
+  width: 1462px;
+  min-width: 100%;
+}
+#ppo-surveys .ppo-register-table th {
+  height: 40px;
+  padding: 0 12px;
+  background: var(--white);
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+}
+#ppo-surveys .ppo-register-table th.srv-title {
+  padding: 0;
+}
+#ppo-surveys .ppo-register-sort {
+  height: 39px;
+  font-weight: 500;
+}
+#ppo-surveys .ppo-register-table :is(th, td) {
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(3) {
+  width: 100px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(4) {
+  width: 184px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(5) {
+  width: 106px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(6) {
+  width: 84px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(7) {
+  width: 124px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(8) {
+  width: 80px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(9) {
+  width: 140px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(10) {
+  width: 100px;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(11) {
+  width: 180px;
+}
+:is(#ppo-surveys, #ppo-survey-record) .ppo-register-chip {
+  padding: 2px 8px;
+  min-height: 22px;
+  font:
+    400 12px/16px PPOShellRoboto,
+    Roboto,
+    sans-serif;
+}
+#ppo-survey-record .record-tablist {
+  margin: 0;
+  padding: 0 10px;
+}
+#ppo-survey-record .record-tablist button {
+  min-height: 44px;
+  padding: 11px 12px;
+}
+#ppo-survey-record .shared-record-fact-section h2 {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+#ppo-survey-record .shared-record-fact-section .srv-facts > div {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+#ppo-survey-record .srv-facts dd a {
+  text-decoration: none;
+  color: var(--ppo-shell-link);
+}
+
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-survey-record) {
+    padding-bottom: 0;
+  }
+  .app-frame:has(#ppo-survey-record) .mobile-navigation {
+    display: none;
+  }
+  #ppo-survey-record:has(.srv-observation-form) .shared-record-header,
+  #ppo-survey-record:has(.srv-observation-form) .record-tablist {
+    display: none;
+  }
+  #ppo-survey-record:has(.srv-observation-form) .shared-record-workspace {
+    background: var(--white);
+  }
+  .srv-observation-form .srv-kind-chips .ppo-button {
+    border-radius: 20px;
+    min-height: 32px;
+    padding: 5px 12px;
+  }
+  .srv-observation-form .srv-measurement-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .srv-observation-form .srv-form-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .srv-observation-form .srv-form-actions > .ppo-button {
+    flex: 1;
+  }
+  .srv-observation-form > header h2 {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+#ppo-surveys .srv-toolbar .field {
+  width: 110px;
+}
+#ppo-surveys .srv-toolbar .field select {
+  min-width: 0;
+  width: 100%;
+}
+#ppo-surveys .ppo-register-table :is(th, td):nth-child(6) {
+  padding-inline: 6px;
+}
+.srv-observation-form textarea {
+  min-height: 64px;
+  resize: vertical;
+}
+
+#ppo-survey-record .shared-record-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+#ppo-survey-record .shared-record-title .business-heading {
+  margin: 0;
+}
+.srv-observation-form > .srv-notice {
+  color: var(--info);
+  background: var(--info-surface);
+  border-color: var(--info-border);
+}
+.srv-form :is(input, select, textarea),
+.srv-text-button {
+  font-family: PPOShellRoboto, Roboto, sans-serif;
+}
+.srv-scope-rows article {
+  padding-block: 8px;
+}
+#ppo-surveys .srv-end {
+  border-left: 1px solid var(--line);
+}
+.srv-section > header .srv-section-description {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.srv-form .field {
+  gap: 6px;
+}
+.srv-form .field :is(input, select, textarea) {
+  margin-top: 0;
+}
+.srv-section > .field {
+  margin: 16px;
+}
+.srv-create-body {
+  grid-template-columns: minmax(0, 1fr) 380px;
+}
+.srv-observation-form textarea {
+  height: 64px;
+}
+@media (max-width: 780px) {
+  .srv-observation-form > header > p {
+    margin: 0 0 16px;
+  }
+  .srv-observation-form label,
+  .srv-observation-form .srv-label {
+    font-size: 14px;
+  }
+  .srv-create-body {
+    display: flex;
+  }
+}
+
+.srv-section > fieldset {
+  padding: 16px;
+}
+
+.srv-form-grid > .srv-form-grid {display:contents;}

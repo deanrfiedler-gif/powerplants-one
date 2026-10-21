@@ -260,10 +260,11 @@ function LoadedSurvey({
       title={row.name}
       reference={row.display_number ?? "Site survey"}
       status={<SurveyTag value={row.state} />}
+      statusPlacement="title"
       meta={
         <>
           <span>
-            {details.site.name} · {owner}
+            {row.display_number} · {details.site.name} · {owner}
           </span>
           <span>Revision {row.revision}</span>
         </>
@@ -395,14 +396,14 @@ function LoadedSurvey({
         ) : (
           <>
             <SurveySection
-              title="Survey scope"
+              title="Exact survey scope"
+              description={content.purpose}
               action={
                 draft ? (
                   <Button onClick={() => setEditScope(true)}>Edit scope</Button>
                 ) : undefined
               }
             >
-              <p>{content.purpose}</p>
               <div className="srv-scope-rows">
                 {details.targets.map((t) => (
                   <article key={t.id}>
@@ -450,7 +451,20 @@ function LoadedSurvey({
               </p>
             </SurveySection>
             <SurveySection title="Visit context">
-              <p>{content.purpose}</p>
+              {content.observations
+                .filter((o) => !o.facility_id && !o.asset_id)
+                .map((o) => (
+                  <article className="srv-scope-rows" key={o.id}>
+                    <p>
+                      <strong>{o.title}</strong> · {o.observer} ·{" "}
+                      {o.captured_on}
+                    </p>
+                    <p>{o.method_source}</p>
+                  </article>
+                ))}
+              {!content.observations.some(
+                (o) => !o.facility_id && !o.asset_id,
+              ) && <p>No site-wide visit observations recorded.</p>}
               <p className="srv-note">
                 Observations retain their own recording date, method and source.
                 A planned visit does not confirm attendance or authorise work.

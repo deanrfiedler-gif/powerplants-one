@@ -616,7 +616,8 @@
         "src/components/surveys/survey-photos.tsx",
         "src/app/styles/surveys.css",
         "src/shared/cs/survey-read.ts",
-        "src/shared/cs/survey-rules.ts"
+        "src/shared/cs/survey-rules.ts",
+        "src/components/surveys/survey-ui.tsx"
       ],
       "guide_key": "guide.cs.08",
       "design_path": "docs/design/development/pages/scope-cs-08.md",
@@ -643,8 +644,8 @@
         "docs/decisions/site-surveys-native-build.md"
       ],
       "scope_status": "CS-08 accepted design implementation; owner visual review pending",
-      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
-      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "visual_status": "Application compared at drawn desktop, tablet and phone sizes; bounded deviations recorded; owner visual review pending",
+      "functional_status": "Focused unit, database and 14 desktop/phone checks executed; baseline Windows failures and final build limits recorded in evidence",
       "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11000,7 +11001,8 @@
         "src/components/surveys/survey-photos.tsx",
         "src/app/styles/surveys.css",
         "src/shared/cs/survey-read.ts",
-        "src/shared/cs/survey-rules.ts"
+        "src/shared/cs/survey-rules.ts",
+        "src/components/surveys/survey-ui.tsx"
       ],
       "guide_key": "guide.route-surveys-id",
       "design_path": "docs/design/development/pages/route-surveys-id.md",
@@ -11025,8 +11027,8 @@
         "docs/decisions/site-surveys-native-build.md"
       ],
       "scope_status": "CS-08 accepted design implementation; owner visual review pending",
-      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
-      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "visual_status": "Application compared at drawn desktop, tablet and phone sizes; bounded deviations recorded; owner visual review pending",
+      "functional_status": "Focused unit, database and 14 desktop/phone checks executed; baseline Windows failures and final build limits recorded in evidence",
       "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11057,7 +11059,8 @@
         "src/components/surveys/survey-photos.tsx",
         "src/app/styles/surveys.css",
         "src/shared/cs/survey-read.ts",
-        "src/shared/cs/survey-rules.ts"
+        "src/shared/cs/survey-rules.ts",
+        "src/components/surveys/survey-ui.tsx"
       ],
       "guide_key": "guide.route-surveys",
       "design_path": "docs/design/development/pages/route-surveys.md",
@@ -11075,8 +11078,8 @@
         "docs/decisions/site-surveys-native-build.md"
       ],
       "scope_status": "CS-08 accepted design implementation; owner visual review pending",
-      "visual_status": "Live Figma source read; application comparison in progress; owner review pending",
-      "functional_status": "New survey proofs in progress; see site-surveys-native execution evidence",
+      "visual_status": "Application compared at drawn desktop, tablet and phone sizes; bounded deviations recorded; owner visual review pending",
+      "functional_status": "Focused unit, database and 14 desktop/phone checks executed; baseline Windows failures and final build limits recorded in evidence",
       "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,

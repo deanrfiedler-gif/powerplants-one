@@ -1,13 +1,59 @@
 # CS-08 Site surveys execution evidence
 
-Date: 21 October 2026. Implementation in progress on codex/site-surveys-cs08, draft PR #628. Owner visual review pending; no deployment or business acceptance claimed.
+Date: 21 October 2026. Branch codex/site-surveys-cs08; draft PR #628. Integrated main: 78795dd6. Owner visual review and independent pre-merge migration review are pending. No deployment or business acceptance is claimed.
 
-## Source
+## Source and comparison
 
-PPO - Design, Site surveys — accepted; page 1464:2918, notes 1464:4164. Exact frame/capture mapping is in [the page contract](../../../design/development/pages/scope-cs-08.md). Issued icon-free references remain unchanged.
+PPO - Design, named version **Site surveys — accepted**, page 1464:2918, notes 1464:4164 and index 630:2. The [page contract](../../../design/development/pages/scope-cs-08.md) maps every live source and retained reference. Issued icon-free sources remain unchanged. Original live frames and the notes card were inspected outside Git.
 
-## Verification in progress
+The captures below are the running local application with bounded synthetic presentation fixtures. Font Awesome icons were hidden with visibility rules before capture, retaining their geometry. No private design link, raw export or Pro artwork is included. They document an author comparison, not owner approval or a pixel-identical assertion. [Measurements](captures/measurements.json) record 21 captures, all without horizontal page overflow. Register and tab-strip overflow is contained within its own control.
 
-Focused survey unit proof: 5 passed. Empty-schema migration from unchanged 0109 to 0114 passed. Populated upgrade, behaviour, full unit suite, current type/lint/build and browser comparisons are still being checked. A previous local run could not connect after the private database port was refused; the isolated cluster was restarted on a free port. A fresh private PostgreSQL cluster also required increased max_locks_per_transaction for the repository-wide reset. These attempts are not passes.
+| View/state | Live node | Application capture |
+| --- | --- | --- |
+| Desktop register, 1440×900 | 1464:2955 | [Register](captures/register-1440.png) |
+| New survey, 1440×1100 | 1464:3366 | [Create](captures/create-1440.png) |
+| Tablet register, 1024×900 | 1464:3695 | [Tablet](captures/register-1024.png) |
+| Phone list, 390×844 | 1464:3779 | [Phone list](captures/register-390.png) |
+| Scope, 1440×1234 | 1464:3055 | [Scope](captures/scope-1440.png) |
+| Observations, 1440×1336 | 1468:3554 | [Observations](captures/observations-1440.png) |
+| Photos, 1440×977 | 1470:2833 | [Photos](captures/photos-1440.png) |
+| Follow-up, 1440×989 | 1471:2847 | [Follow-up](captures/follow-up-1440.png) |
+| Review form, 1440×1187 | 1472:3102 | [Review](captures/review-form-1440.png) |
+| Handover, 1440×1261 | 1473:3371 | [Handover](captures/handover-1440.png) |
+| Scope, 390×844 / 320×844 | 1464:3821 / 1464:3890 | [390](captures/scope-390.png), [320](captures/scope-320.png) |
+| Successor observation, 390×844 | 1478:3552 | [Observation form](captures/observation-form-390.png) |
+| Loading / no reviewed surveys | 1464:3958 / 1464:4016 | [Loading](captures/loading-390.png), [Empty](captures/empty-390.png) |
+| Could not load / changed scope | 1464:4059 / 1464:4095 | [Error](captures/error-390.png), [Changed source](captures/changed-source-390.png) |
+| Additional runtime states | Existing read contract | [Denied](captures/denied-390.png), [Partial](captures/partial-390.png), [Review overview](captures/review-1440.png), [Desktop source comparison](captures/changed-source-1440.png) |
 
-The isolated database is ppo_synthetic_test. Unchanged 0109 fixture seeding hit its existing 120-second limit locally; extended test-only timing completed the baseline fixture seeds. Runtime source timeouts are unchanged.
+## Results
+
+| Check | Result |
+| --- | --- |
+| Focused survey unit suite | 6 passed, including measured zero, Unknown, visit interval validation and original PNG/JPEG/WebP bytes |
+| Full unit suite | 973 tests: 970 passed, 3 failed; all three reproduced on clean main 78795dd6 |
+| Typecheck | Passed |
+| Lint | Passed |
+| Browser state/permission/handovers | 12 passed across desktop and phone |
+| Browser real save → submit → independent review | 2 passed, desktop and phone |
+| Customer/location and populated survey upgrade | 8 passed against ppo_synthetic_test |
+| Historical populated 0025 estimate upgrade | Verification running |
+| Studio, naming, foundation and migration numbering | Final documentation check running |
+| Full application build | Verification running; compilation succeeded on the initial local dependency cache |
+
+The browser suite uses installed reviewed Chrome 155.0.8059.85 via an explicit executable path. The default local channel path did not exist; no runtime/browser policy was changed. Tests prove 390 and 320 px measurement layout, retained unsaved values across tabs, review/return in one form, changed-source visibility, owner/recorder exclusion, exact receiving destination/owner/snapshot payload, conflict retention, loading, empty, error, partial and denied reads. Separate database proofs verify the server authority checks and persisted handover. Earlier selector/envelope mistakes in the test harness were corrected and rerun.
+
+The full unit non-regressions are P06 private adapter write-once, P06 immutable source lookup and P12 private recovery-path checks. Each failed with the same Windows filesystem behaviour on an unmodified, clean main worktree. They are not counted as passes. Linux CI and a different-model pre-merge review remain separate from this local evidence.
+
+The private PostgreSQL 16 cluster contained only ppo_synthetic_test. Local fixture seeding on unchanged 0109 exceeded its 120-second limit, so a temporary test-only preload extended statement/connection timing. Reset required a higher max_locks_per_transaction in that private cluster. Runtime timeout code is unchanged. A Windows ESM preload path error was corrected to a file URL before the final 8/8 run. No full repository database or HTTP suite has been claimed.
+
+## Visual differences and open questions
+
+- New references use Dean's later approved SYN-SRV-000nnn format. Existing references and issued examples stay unchanged.
+- The shared compact phone record header keeps reference, Back and More; Record observation appears in the body. This adds vertical content compared with the dedicated close-only form header in 1478:3552. Save and Cancel remain reachable in the sticky form footer.
+- Native labelled start/end inputs replace the drawn combined visit interval control. Start is required for new surveys; end is optional and must follow start. A measurement unit is a labelled text field because no authoritative unit catalogue is defined. Observation recording preserves date precision, without inventing clock time.
+- The current Service rail follows actual permissions and the remembered department. Its available links differ from the illustrative rail. Register More/settings and bulk operations have no specified action; the trailing control opens the record. Additional required columns remain horizontally reachable. Title sorting applies to the loaded page and pagination is explicit.
+- Scope links, known gaps, original file metadata and caption correction records use current canonical data. Synthetic names, dates, row counts and retained history differ from the drawn examples; these captures are not replacements for the accepted reference. Visit context renders recorded site-wide observations without inventing arrival/access categories or attendance.
+- Existing Activity links handle follow-up; no inline Activity creation, Conversations or document-storage connection is introduced. Current synthetic photo limits are eight originals, 1 MiB per new file and bounded static PNG/JPEG/WebP dimensions.
+
+Open for Dean: specify register More/settings and any bulk actions; decide whether observation clock-time precision and a governed unit catalogue are needed; confirm photo limits for field use. Full-size History redesign stays outside scope. Owner visual review remains pending.

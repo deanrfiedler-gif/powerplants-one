@@ -32,7 +32,7 @@ PPO-STD-001/ADR-0005: Powerplants One (PPO), independent of STD-001/SOL008.
 
 Masters use stable names/Git history; review stays separate. Reserve rNN for controlled issues; separate software/API/schema versions. Preserve issued bytes, 78 parent IDs and requirement/decision/interface/test/work-package traceability.
 
-Keep UUIDs, references, labels, revisions and states distinct. New: SYN-<TYPE>-<NUMBER>; future operational: PPO-<TYPE>-<NUMBER>. Preserve old references and external keys. Use snake_case fields and PascalCase types/enums/events. Follow naming-sharepoint-handover N0–N6.
+Keep UUIDs, references, labels, revisions and states distinct. New: SYN-<TYPE>-<NUMBER>; operational: PPO-<TYPE>-<NUMBER>. Keep old references and external keys. Use snake_case fields and PascalCase types/enums/events. Follow naming-sharepoint-handover N0–N6.
 
 ## 6. Workflow
 

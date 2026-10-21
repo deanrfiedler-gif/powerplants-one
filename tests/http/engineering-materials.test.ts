@@ -61,7 +61,7 @@ test("EN06-A28 A41 HTTP: private envelopes, local-request guards, exact retry st
   const file = await exported(`kind=register&set=${ids.set}`, MATERIALS.viewer.profile);
   assert.equal(file.status, 200);
   assert.match(file.headers.get("content-type") ?? "", /^text\/csv/);
-  assert.match(file.headers.get("content-disposition") ?? "", /^attachment; filename="SYN-PPO-ENG-\d+-materials-A\.csv"$/);
+  assert.match(file.headers.get("content-disposition") ?? "", /^attachment; filename="SYN-ENG-\d+-materials-A\.csv"$/);
   assert.deepEqual([file.headers.get("cache-control"), file.headers.get("x-content-type-options")], ["private, no-store", "nosniff"]);
   const text = await file.text();
   assert.ok(text.includes(`"'=HYPERLINK(""http://example.invalid"",""SYN"")"`), "formula-leading description");

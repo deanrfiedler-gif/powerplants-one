@@ -22,7 +22,7 @@ Build from **PPO - Design**, named version **Site surveys — accepted**, page 1
 
 Capture numbers refer to [site-surveys-design-r01](../../../reference/ui/customers/site-surveys-design-r01/README.md). Those issued sources stay unchanged. No private file link or icon artwork belongs in Git. Shared ShellIcon maps through font-awesome-icons.ts under ADR-0050.
 
-## Desktop and shell
+## Desktop
 
 r20 page types: Register / worklist and Document & evidence workspace. Reuse the current PPO rail, top bar and compact phone header. The register has a flush secondary menu: Sites; Facilities & growing areas; All surveys, Drafts, Awaiting review, Returned, Reviewed; Access & readiness and Equipment. It uses a compact site/owner toolbar and ruled grid. Columns retain survey, status, site, visit, open gaps, handover, revision, owner, observation count and reference. Horizontal overflow belongs to the register, never the page. Selection currently has no adopted bulk action. Sorting is by title within the loaded page; pagination remains explicit.
 
@@ -30,13 +30,13 @@ The record has a full-width identity/action band, submission/handover checks, ru
 
 Shared components: SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, SharedRecord/RecordFactSection, PageHeader, RecordTabs/RecordPanel, RegisterTable/RegisterSortHeader/RegisterFooter, Button, Field/SelectField, LocalDateTimeField, MultiChoice, ValidationFields, ReadState/ErrorNotice, CommandStatus/useCrmCommand and ShellIcon. Survey-specific composition remains private to this page. SharedRecord reuses the accessible sourcesLabel added by the Sites/readiness handover. Styling uses shared shell/control tokens, including compact 40 px rows and ruled sections; no new shared component family, library or Pro artwork.
 
-## Phone, tablet and accessibility
+## Mobile
 
 Compare desktop 1440, tablet 1024, phone 390 and 320 CSS px with the exact frames. Phone uses the shared compact header with Choose view, New survey and Filter. Register rows keep title/status/site/owner/revision/gaps/visit or handover. Filters use a native modal with Escape and return focus. The record retains a scrolling keyboard-operated tab strip, contact/visit context and a reachable primary action. Measurement value and unit stay side by side at 320 px; other inputs reflow. Buttons and links have visible focus; required fields and errors are labelled; permission denial is never rendered as an empty success.
 
 ## Recorded facts, permissions and handovers
 
-New surveys allocate SYN-SRV-000nnn from the permanent counter with at least six digits. Existing references of every type remain unchanged. Migration 0114 gives previously unnumbered surveys their first reference without altering retained revision content, submission hashes or audit events. Planned start/end and contact on site are explicit recorded fields; historical missing values say Not recorded. They are never inferred from a revision timestamp. New-survey inputs require the visit interval; purpose and significant-gap follow-ups are required before submission.
+New surveys allocate SYN-SRV-000nnn from the permanent counter with at least six digits. Existing references of every type remain unchanged. Migration 0114 gives previously unnumbered surveys their first reference without altering retained revision content, submission hashes or audit events. Planned start/end and contact on site are explicit recorded fields; historical missing values say Not recorded. They are never inferred from a revision timestamp. New-survey inputs require a planned visit start; an optional end must follow it; purpose and significant-gap follow-ups are required before submission.
 
 Use existing cs permissions and canonical permitted Site/People/Facilities/Equipment reads. No new capability or grant. Owner, submitter and recorder cannot review. Recorder checks include retained observation authors and photo recorders, rather than relying only on an editable display name. Review and return share the same form, with a required decision note and an exact submitted revision. Changed scope sources remain visible to the reviewer and do not block an independent review. A handover records an exact Reviewed snapshot, destination Estimating or Engineering and permitted receiving owner; it neither sends communication nor replaces the receiving basis. A successor draft does not inherit a current handover indicator.
 
@@ -48,9 +48,11 @@ Loading, empty reviewed view, unavailable/retry, partial paginated data, permiss
 
 ## Unspecified behaviour and deviations
 
-The drawn More/settings and selection controls do not define bulk operations or column personalisation; none is invented. Local sorting and pagination are explicit adaptations of the existing read contract. Native labelled date/time inputs expose start and end separately. The observation UI retains the recorded date at the model's date precision; it does not fabricate the clock time drawn in the example. Existing Activity links provide follow-up creation and ownership; no new inline Activity command is introduced. Conversations and document-store connections are outside this page's scope.
+The shared compact phone record header retains the reference, Back and More controls; the observation form title appears in the body rather than replacing the shell with a separate close-only header. The Service rail follows current permissions and the remembered department. Synthetic fixture names, counts and dates differ from the drawn examples.
 
-Open for Dean: define register More/settings and any bulk actions; decide whether observations need persisted clock-time precision in a future change; confirm the existing synthetic photo size/format limits for field use. These questions do not undo accepted D1–D7/Q1–Q4. Any remaining visual mismatch belongs in the [execution evidence](../../../testing/evidence/site-surveys-native/README.md), not in an altered reference.
+The drawn More/settings and selection controls do not define bulk operations or column personalisation; none is invented. Local sorting and pagination are explicit adaptations of the existing read contract. Native labelled date/time inputs expose start and end separately. Units use a labelled text field because an authoritative unit catalogue is not specified. The observation UI retains the recorded date at the model's date precision; it does not fabricate the clock time drawn in the example. Existing Activity links provide follow-up creation and ownership; no new inline Activity command is introduced. Conversations and document-store connections are outside this page's scope.
+
+Open for Dean: define register More/settings and any bulk actions; decide whether observations need persisted clock-time precision and a governed unit catalogue in a future change; confirm the existing synthetic photo size/format limits for field use. These questions do not undo accepted D1–D7/Q1–Q4. Any remaining visual mismatch belongs in the [execution evidence](../../../testing/evidence/site-surveys-native/README.md), not in an altered reference.
 
 ## Verification
 

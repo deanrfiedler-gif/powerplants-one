@@ -9,7 +9,12 @@ import {
 import { CommandStatus, type CsOptions } from "../cs-forms";
 import { useCrmCommand } from "../crm-state";
 import { Button } from "../ui/button";
-import { SurveySection, surveyDate, type SurveyWorkspace } from "./survey-ui";
+import {
+  useSurveyFormFocus,
+  SurveySection,
+  surveyDate,
+  type SurveyWorkspace,
+} from "./survey-ui";
 import type { SurveyContent } from "../../shared/cs/model";
 export function SurveyPhotos({
   data,
@@ -151,6 +156,7 @@ function PhotoForm({
     [method, setMethod] = useState(""),
     [date, setDate] = useState(""),
     [target, setTarget] = useState("");
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand(
     () => {
       onSaved();
@@ -172,6 +178,7 @@ function PhotoForm({
   ];
   return (
     <form
+      ref={formRef}
       className="srv-form"
       onChange={command.dirty}
       onSubmit={(e) => {
@@ -333,6 +340,7 @@ function CaptionForm({
       String(base.photo.caption?.caption ?? ""),
     ),
     [reason, setReason] = useState("");
+  const formRef = useSurveyFormFocus();
   const command = useCrmCommand(
     () => {
       onSaved();
@@ -345,6 +353,7 @@ function CaptionForm({
   );
   return (
     <form
+      ref={formRef}
       className="srv-form"
       onChange={command.dirty}
       onSubmit={(e) => {

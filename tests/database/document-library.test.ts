@@ -77,7 +77,7 @@ test("DK-B01 persisted identity, exact review, successor, retained links, histor
   assert.equal(created.receipt.record_version, 1);
   assert.match(
     (await readDocument(p, input.id)).document.display_number,
-    /^SYN-PPO-DOC-/,
+    /^SYN-DOC-/,
   );
   assert.deepEqual((await createDocument(p, input)).receipt, created.receipt);
   assert.deepEqual(await readOperation(p, input.operation_id), created.receipt);

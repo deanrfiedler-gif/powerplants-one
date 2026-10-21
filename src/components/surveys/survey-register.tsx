@@ -107,7 +107,7 @@ export function SurveyRegister({ siteId = "" }: { siteId?: string }) {
           setSelection([]);
         }}
         options={sites.data?.items ?? []}
-        empty="All sites"
+        empty="All"
       />
       <SelectField
         name={prefix + "-owner"}
@@ -119,7 +119,7 @@ export function SurveyRegister({ siteId = "" }: { siteId?: string }) {
           setSelection([]);
         }}
         options={r.data?.owner_options ?? []}
-        empty="All owners"
+        empty="All"
       />
     </>
   );
