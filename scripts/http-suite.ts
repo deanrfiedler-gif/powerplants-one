@@ -4,6 +4,8 @@ import { spawn } from "node:child_process";
 // These proofs require a fresh database and compare complete business snapshots.
 // They must never reset or inspect that database alongside mutating HTTP files.
 const exclusive = new Set([
+  "crm-owner-transfer.test.ts",
+  "estimating-e2-verification.test.ts",
   "project-commercial.test.ts",
   "project-specialist.test.ts",
   "project-specialist-handover.test.ts",

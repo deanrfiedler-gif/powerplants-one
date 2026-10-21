@@ -121,6 +121,49 @@ async function blockedBy(pid: number, count = 1) {
 }
 // Registered by the existing CRM refinement suite so its focused CI runs every case.
 export function ownerTransferCases() {
+  test("HV-18 verification: origin failure, missing companions and immutable evidence mutations leave exact originals", async () => {
+    const { p, input } = await fixture();
+    await rows("CREATE FUNCTION ppo.verification_origin_failure() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN origin evidence failure' USING ERRCODE='23514'; END $$");
+    const beforeCreation = await snapshot();
+    await rows("CREATE TRIGGER verification_origin_failure BEFORE INSERT ON ppo.opportunity_origins FOR EACH ROW EXECUTE FUNCTION ppo.verification_origin_failure()");
+    try { await assert.rejects(createOpportunity(p, crmCreate()), code("InvalidRelationship")); }
+    finally { await rows("DROP TRIGGER verification_origin_failure ON ppo.opportunity_origins"); }
+    assert.deepEqual(await snapshot(), beforeCreation);
+    // Faults are injected into real writes; constraints and guards stay enabled.
+    for (const [table, change] of [
+      ["opportunity_events", "RETURN NULL;"],
+      ["opportunity_owner_transfers", "RETURN NULL;"],
+      ["opportunity_owner_transfers", "NEW.workspace_id:=gen_random_uuid(); RETURN NEW;"],
+      ["opportunity_owner_transfers", "NEW.company_id:='20000000-0000-4000-8000-000000000002'; RETURN NEW;"],
+      ["opportunity_owner_transfers", "NEW.opportunity_id:=gen_random_uuid(); RETURN NEW;"],
+      ["opportunity_owner_transfers", "NEW.event_id:=gen_random_uuid(); RETURN NEW;"],
+      ["opportunity_owner_transfers", "NEW.next_activity_id:=gen_random_uuid(); RETURN NEW;"],
+      ["opportunity_owner_transfers", "NEW.identification_activity_version:=1; RETURN NEW;"],
+    ]) {
+      const body = await intent(p, input.id), before = await snapshot();
+      await rows(`CREATE OR REPLACE FUNCTION ppo.verification_companion_fault() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN ${change} END $$`);
+      await rows(`CREATE TRIGGER verification_companion_fault BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.verification_companion_fault()`);
+      try { await assert.rejects(transferOpportunityOwner(p, input.id, body)); }
+      finally { await rows(`DROP TRIGGER verification_companion_fault ON ppo.${table}`); }
+      assert.deepEqual(await snapshot(), before, `${table}: ${change}`);
+    }
+    const body = await intent(p, input.id), accepted = await transferOpportunityOwner(p, input.id, body), original = await snapshot();
+    for (const [table, where, id, assignment] of [
+      ["opportunity_origins", "opportunity_id", input.id, "source_version=source_version+1"],
+      ["opportunity_owner_transfers", "opportunity_id", input.id, "opportunity_version=opportunity_version+1"],
+      ["opportunity_events", "opportunity_id", input.id, "reason='SYN rewritten evidence'"],
+      ["operation_receipts", "operation_id", body.operation_id, "record_version=record_version+1"],
+    ]) {
+      for (const sql of [`UPDATE ppo.${table} SET ${assignment} WHERE ${where}=$1`, `DELETE FROM ppo.${table} WHERE ${where}=$1`]) {
+        await assert.rejects(rows(sql, [id]), code("55000"));
+        assert.deepEqual(await snapshot(), original);
+      }
+    }
+    for (const table of ["opportunity_origins", "opportunity_owner_transfers"])
+      await assert.rejects(rows(`INSERT INTO ppo.${table} SELECT * FROM ppo.${table} WHERE opportunity_id=$1`, [input.id]), code("23505"));
+    assert.deepEqual(await snapshot(), original);
+    assert.deepEqual(await readOperation(p, body.operation_id), accepted.receipt);
+  });
   test("HV-01/02/09: one immediate owner change preserves Activity values; recipient has no onward or estimating grant", async () => {
     const { p, input, created } = await fixture(),
       body = await intent(p, input.id),
