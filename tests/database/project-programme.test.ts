@@ -405,7 +405,7 @@ test(`PJ03-C06 populated 00${through} upgrade retains exact original rows and le
     // Preserve every exact row without concurrent connection acquisition. The
     // test owns this disposable database; commands remain serial.
     for (const t of tables)
-      // Seeds 107 (SYN-PPO-P04 v2, field readiness gate) and 108 (Conversations grants) are the only later seeds; readiness-gate.test.ts and conversations-upgrade.test.ts prove them.
+      // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
       captured.push(await rows(`SELECT to_jsonb(r) value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`));
     return captured;
   };
