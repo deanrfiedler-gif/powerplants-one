@@ -1,24 +1,35 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { readFile } from "node:fs/promises";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
+import { migrationFiles, seedFiles } from "../../scripts/migration-registry";
 import { createEstimate } from "../../src/estimating/service";
 import { estimateInput } from "../helpers/estimating";
 import { begin, newDeal, person, post, principal, profiles, rows } from "../helpers/conversations";
+import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Only disposable ppo_synthetic_test");
 after(closeDatabase);
 async function atVersion(version: number) {
-  await database().query(await readFile("db/migrations/0001-recover.sql", "utf8"));
+  await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(version);
   await seed(version);
 }
 
-test("populated 0109 upgrade preserves every T1 row and ledger; seed 110 and repeated upgrade are exact", async () => {
-  await atVersion(109);
+for (const through of [109, 113])
+test(`populated ${through} history installs 0110 with every original row and ledger retained; seed 110 and replay are exact`, async () => {
+  if (through === 109) await atVersion(through);
+  else {
+    // Reproduce main with its reserved 0110 gap, as the Products late-install proof does.
+    const migrations = migrationFiles as unknown as string[], seeds = seedFiles as unknown as [number, string][];
+    const mi = migrations.indexOf("0110-conversation-agent.sql"), si = seeds.findIndex(([v]) => v === 110);
+    assert.ok(mi >= 0 && si >= 0);
+    const [migration] = migrations.splice(mi, 1), [fixture] = seeds.splice(si, 1);
+    try { await atVersion(through); }
+    finally { migrations.splice(mi, 0, migration); seeds.splice(si, 0, fixture); }
+  }
   const sam = await principal(profiles.coordinator), alex = await principal(profiles.dealReader);
   const deal = await newDeal(sam);
   const thread = await begin(sam, deal, {
@@ -36,13 +47,19 @@ test("populated 0109 upgrade preserves every T1 row and ledger; seed 110 and rep
      FROM ppo.${t} r ORDER BY 1`)));
   const original = await snapshot();
   const ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  const versions = new Set(ledger.map(r => r.version));
+  const newerGuard = through === 113
+    ? await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition") : null;
   const receipts = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   const grants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), original);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }]);
+  const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  assert.deepEqual(migrated.filter(r => versions.has(r.version)), ledger);
+  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 113] : [110]);
+  if (newerGuard) assert.deepEqual(
+    await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition"), newerGuard);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"), receipts);
   assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
   assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability<>'conversation.agent.ask' ORDER BY id"), grants);
@@ -78,7 +95,7 @@ test("0110 flushes pending identity_target events when upgrading populated estim
   await createEstimate(sam, input);
   const originals = await rows("SELECT to_jsonb(e) row FROM ppo.estimates e ORDER BY id");
   const ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
-  // migrate applies 0026 through 0110 in one transaction. 0026's backfill queues identity_target
+  // migrate applies 0026 through 0113 in one transaction. 0026's backfill queues identity_target
   // events for this real estimate, so 0110's identity ALTER must explicitly flush the deferred check.
   await migrate();
   await seed();

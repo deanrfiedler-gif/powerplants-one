@@ -346,7 +346,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // Seed 110 replays as the owner: it copies only active PPO-LocalSynthetic posters' live grants
   // and inserts the workspace ceiling. Hosted testers gain no ask duty. Carl remains off there;
   // existing all-table runtime privileges cover these objects, with no provider or hosted worker.
-  if (latestMigrationVersion !== 110) throw Error("Review the existing-demo upgrade for this release.");
+  // 0113 replaces the deferred Sales/Estimating binding guard only. It preserves the existing
+  // link command and permits exact evidence from reviewed workspace creation. No tables, rows,
+  // grants, users or seeds change; existing runtime privileges and historical receipts remain.
+  if (latestMigrationVersion !== 113) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

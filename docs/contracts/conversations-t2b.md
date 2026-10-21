@@ -100,7 +100,7 @@ A claim is withheld if the reader cannot currently open every source it cites: i
 
 ## Database and logging guards
 
-PostgreSQL guards the turn transitions, version increments, immutable final turns, one answer per turn, agent author shape, required acted-for participant and duties, matching audit/receipt, agent mention shape, append-only claims/sources, ledger transitions and monthly ceiling. Migration 0110 inspects live constraint/function definitions and refuses unexpected function shapes. Identity alterations drain and restore deferred `identity_target` checks, including the populated upgrade across 0026.
+PostgreSQL guards the turn transitions, version increments, immutable final turns, one answer per turn, agent author shape, required acted-for participant and duties, matching audit/receipt, agent mention shape, append-only claims/sources, ledger transitions and monthly ceiling. Migration 0110 inspects live constraint/function definitions and refuses unexpected function shapes. Identity alterations drain and restore deferred `identity_target` checks, including the populated upgrade across 0026. A populated late-install proof also applies reserved 0110 after 0113, preserves the original rows, grants and ledgers, and verifies that 0113's Sales/Estimating binding guard is unchanged.
 
 Audit events, receipts, outbox jobs, turns and ledger entries hold identifiers, hashes, fixed codes, counts and timing only. Prompt, evidence and answer text are absent from those records (T2-10). Published text belongs only in the conversation message and its claim rows; the envelope and raw adapter response remain in memory.
 

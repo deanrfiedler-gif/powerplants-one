@@ -1,2 +1,2 @@
-import { NewDiscovery } from "../../../../../components/discovery-screens";
-export default function Page(){return <NewDiscovery/>;}
+import { NewDiscoveryWorkspace } from "../../../../../components/discovery-creation";
+export default function Page(){return <NewDiscoveryWorkspace/>;}

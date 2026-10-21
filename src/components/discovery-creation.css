@@ -1,0 +1,314 @@
+/* ES-02 first creation: accepted composition, using the existing wizard tokens. */
+.app-frame:has(#ppo-estimate-wizard.es02-create-workspace) .module-navigation { display: none; }
+/* Adopt the shared Button tokens above the legacy wizard's ID-level reset. */
+#ppo-estimate-wizard.es02-create-workspace .ppo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ppo-control-gap);
+  min-height: 40px;
+  max-width: 100%;
+  padding: 8px var(--ppo-control-padding);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--navy);
+  font: 500 14px/1.35 Roboto, Verdana, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+}
+#ppo-estimate-wizard.es02-create-workspace .ppo-button--primary,
+#ppo-estimate-wizard.es02-create-workspace .ppo-button--primary:hover:not(:disabled) {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+#ppo-estimate-wizard.es02-create-workspace .ppo-button--quiet { border-color: transparent; background: transparent; }
+#ppo-estimate-wizard.es02-create-workspace .ppo-button:disabled {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  cursor: not-allowed;
+}
+#ppo-estimate-wizard.es02-create-workspace .es02-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+#ppo-estimate-wizard.es02-create-workspace .es02-main {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-side-summary {
+  flex: 0 0 380px;
+  overflow: auto;
+  border-left: 1px solid var(--line);
+}
+#ppo-estimate-wizard.es02-create-workspace .es02-summary {
+  width: auto;
+  min-height: 100%;
+  border: 0;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-summary-head h2 { margin: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-head button { flex: none; width: 32px; min-height: 32px; padding: 0; }
+#ppo-estimate-wizard.es02-create-workspace .es02-context { border-bottom: 1px solid var(--line); }
+#ppo-estimate-wizard.es02-create-workspace .es02-view-row { border-top: 0; }
+#ppo-estimate-wizard.es02-create-workspace .es02-step { min-width: 0; }
+#ppo-estimate-wizard.es02-create-workspace .es02-step strong {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-phone-status,
+#ppo-estimate-wizard.es02-create-workspace .create-phone-option,
+#ppo-estimate-wizard.es02-create-workspace .create-phone-label,
+#ppo-estimate-wizard.es02-create-workspace .create-phone-summary,
+#ppo-estimate-wizard.es02-create-workspace .create-step-select { display: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-choose { padding-top: 24px; }
+#ppo-estimate-wizard.es02-create-workspace .create-choose h2 { font-size: 16px; line-height: 21px; margin-bottom: 4px; }
+#ppo-estimate-wizard.es02-create-workspace .create-choose > p { color: var(--text-secondary); font-size: 14px; line-height: 20px; }
+#ppo-estimate-wizard.es02-create-workspace .create-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+}
+#ppo-estimate-wizard.es02-create-workspace .create-search input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 8px 0;
+  color: var(--ink);
+}
+#ppo-estimate-wizard.es02-create-workspace .create-search:focus-within { outline: 2px solid var(--navy); outline-offset: 2px; }
+#ppo-estimate-wizard.es02-create-workspace .create-search input:focus-visible { outline: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-editable, #ppo-estimate-wizard.es02-create-workspace .create-choices, #ppo-estimate-wizard.es02-create-workspace .create-review-fields {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  border: 0;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-choices { display: grid; gap: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-choice:hover { background: var(--surface-hover); }
+#ppo-estimate-wizard.es02-create-workspace .create-choice[data-selected="true"] {
+  border-color: var(--neutral);
+  background: var(--neutral-surface);
+}
+#ppo-estimate-wizard.es02-create-workspace .create-choice input { flex: none; width: 16px; height: 16px; accent-color: var(--navy); }
+#ppo-estimate-wizard.es02-create-workspace .create-choice > span { min-width: 0; overflow-wrap: anywhere; }
+#ppo-estimate-wizard.es02-create-workspace .create-choice strong { display: block; color: var(--ink); font-size: 14px; line-height: 20px; font-weight: 500; }
+#ppo-estimate-wizard.es02-create-workspace .create-choice small { display: block; margin-top: 2px; color: var(--text-secondary); font-size: 12px; line-height: 18px; }
+#ppo-estimate-wizard.es02-create-workspace .create-choice:focus-within { outline: 2px solid var(--navy); outline-offset: 2px; }
+#ppo-estimate-wizard.es02-create-workspace .create-count { margin-top: 16px; font-size: 12px !important; line-height: 18px !important; }
+#ppo-estimate-wizard.es02-create-workspace .create-empty { padding: 24px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-empty h3 { font-size: 16px; }
+#ppo-estimate-wizard.es02-create-workspace .create-empty p { margin: 8px 0 16px; line-height: 20px; color: var(--text-secondary); }
+#ppo-estimate-wizard.es02-create-workspace .create-empty > div { display: flex; flex-wrap: wrap; gap: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-skeletons { display: grid; gap: 8px; margin-top: 12px; }
+#ppo-estimate-wizard.es02-create-workspace .create-skeletons > div { border: 1px solid var(--line); border-radius: 8px; min-height: 80px; padding: 18px 16px 18px 44px; }
+#ppo-estimate-wizard.es02-create-workspace .create-skeletons span { display: block; height: 12px; width: 80%; border-radius: 3px; background: var(--neutral-surface); }
+#ppo-estimate-wizard.es02-create-workspace .create-skeletons span + span { width: 60%; margin-top: 10px; }
+#ppo-estimate-wizard.es02-create-workspace .create-callout, #ppo-estimate-wizard.es02-create-workspace .create-sales-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: 6px;
+  background: var(--neutral-surface);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 18px;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-callout > .es02-icon, #ppo-estimate-wizard.es02-create-workspace .create-sales-banner > .es02-icon { flex: none; width: 16px; height: 18px; }
+#ppo-estimate-wizard.es02-create-workspace .create-callout p, #ppo-estimate-wizard.es02-create-workspace .create-sales-banner p { flex: 1; margin: 0; min-width: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-warning { background: var(--warning-surface); border-color: var(--warning-border); }
+#ppo-estimate-wizard.es02-create-workspace .create-sales-banner { margin-bottom: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-sales-banner a { flex: none; color: var(--neutral); font-size: 12px; text-decoration: underline; }
+#ppo-estimate-wizard.es02-create-workspace .create-sales-disclosure { margin-bottom: 12px; font-size: 13px; line-height: 20px; }
+#ppo-estimate-wizard.es02-create-workspace .create-sales-disclosure summary { cursor: pointer; padding: 6px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-sales-disclosure > div { margin-top: 10px; }
+#ppo-estimate-wizard.es02-create-workspace .create-desktop-option { margin-left: auto; padding-bottom: 6px; max-width: 336px; }
+#ppo-estimate-wizard.es02-create-workspace .create-viewed-option { display: flex; align-items: center; gap: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-viewed-option label { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
+#ppo-estimate-wizard.es02-create-workspace .create-viewed-option select {
+  min-width: 0;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+  background: var(--surface-white);
+  color: var(--ink);
+  font-size: 13px;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-context-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+#ppo-estimate-wizard.es02-create-workspace .create-context-grid .field { margin: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-context-grid .field label, #ppo-estimate-wizard.es02-create-workspace .create-record-field > span { display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink); font-weight: 500; }
+#ppo-estimate-wizard.es02-create-workspace .create-record-field { min-width: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-record-field > a, #ppo-estimate-wizard.es02-create-workspace .create-record-field > button, #ppo-estimate-wizard.es02-create-workspace .create-record-field > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  background: var(--surface-white);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-record-field > a { background: var(--surface-3); text-decoration: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-record-field > a .es02-icon, #ppo-estimate-wizard.es02-create-workspace .create-record-field > button .es02-icon { flex: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-record-field small { display: block; font-size: 12px; line-height: 18px; color: var(--text-secondary); margin-top: 4px; }
+#ppo-estimate-wizard.es02-create-workspace .create-work-tags { display: flex; flex-wrap: wrap; gap: 8px 20px; border: 0; padding: 0; margin: 0 0 16px; }
+#ppo-estimate-wizard.es02-create-workspace .create-work-tags legend { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-work-tags label { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+#ppo-estimate-wizard.es02-create-workspace .create-work-tags input { accent-color: var(--navy); }
+#ppo-estimate-wizard.es02-create-workspace .create-work-tags small { flex-basis: 100%; font-size: 12px; color: var(--text-secondary); }
+#ppo-estimate-wizard.es02-create-workspace .create-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer { min-width: 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer[data-question="Q01"] { grid-column: 1 / -1; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer > div { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer label { font-weight: 500; font-size: 13px; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-answer-details .es02-icon { width: 12px; height: 12px; }
+#ppo-estimate-wizard.es02-create-workspace .create-answer small { font-size: 12px; color: var(--text-secondary); }
+#ppo-estimate-wizard.es02-create-workspace .create-answer-value {
+  display: block;
+  width: 100%;
+  min-height: 84px;
+  padding: 10px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 21px;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: inherit;
+  resize: vertical;
+}
+#ppo-estimate-wizard.es02-create-workspace .create-answer-value:hover { border-color: var(--neutral); }
+#ppo-estimate-wizard.es02-create-workspace .create-answer-value[aria-invalid="true"] { border-color: var(--danger); }
+#ppo-estimate-wizard.es02-create-workspace .create-empty-view { padding: 24px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-empty-view p { margin: 12px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-change-opportunity { margin-top: 24px; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-icon { display: inline-block; width: 16px; height: 16px; flex: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-dialog-foot { flex-wrap: wrap; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-dialog-foot > span { flex: 1 1 180px; color: var(--text-secondary); font-size: 12px; line-height: 18px; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-fields h3 { margin: 20px 0 8px; font-size: 14px; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-fields .field { margin-top: 20px; }
+#ppo-estimate-wizard.es02-create-workspace .create-review-fields .es02-confirm { margin-top: 16px; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .es02-summary { border: 0; width: auto; display: flex; flex-direction: column; gap: 8px; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .create-summary-head { display: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .es02-icon { width: 16px; height: 16px; flex: none; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .es02-summary-finding { width: 100%; display: flex; text-align: left; gap: 8px; padding: 10px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .es02-summary-finding span { flex: 1; }
+#ppo-estimate-wizard.es02-create-workspace .create-summary-dialog .es02-summary-finding small { display: block; }
+@media (max-width: 1199px) {
+  #ppo-estimate-wizard.es02-create-workspace .create-side-summary { display: none; }
+  #ppo-estimate-wizard.es02-create-workspace .create-desktop-option { max-width: 300px; }
+}
+@media (max-width: 780px) {
+  /* Creation uses the shared compact phone header, including its Back/More actions. */
+  .app-frame:has(#ppo-estimate-wizard.es02-create-workspace) .workspace > #shell-header.topbar.ppo-shell-header { display: flex; }
+  #ppo-estimate-wizard.es02-create-workspace .es02-context,
+  #ppo-estimate-wizard.es02-create-workspace .create-desktop-option,
+  #ppo-estimate-wizard.es02-create-workspace .create-desktop-label,
+  #ppo-estimate-wizard.es02-create-workspace .create-continue,
+  #ppo-estimate-wizard.es02-create-workspace .create-cancel { display: none; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-label { display: inline; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-summary { display: inline-flex; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-status { display: block; padding: 4px 16px 12px; font-size: 12px; line-height: 18px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-status p { color: var(--text-secondary); margin: 0 0 8px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-status > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-status > div > span { display: inline-flex; gap: 6px; align-items: center; }
+  #ppo-estimate-wizard.es02-create-workspace .create-phone-option { display: block; margin: 16px 0 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-viewed-option { display: block; }
+  #ppo-estimate-wizard.es02-create-workspace .create-viewed-option label { display: block; margin-bottom: 6px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-viewed-option select { min-height: 44px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-step-select { display: block; margin: 16px 0 20px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-step-select > small { display: block; color: var(--text-secondary); margin-bottom: 6px; font-size: 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-step-select > div { display: flex; gap: 8px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-step-select select { min-width: 0; flex: 1; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-white); color: var(--ink); padding: 8px 12px; font-size: 14px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-step-select button { min-height: 44px; flex: 0 0 44px; padding: 8px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-choose { padding-top: 16px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-choose h2 { font-size: 18px; line-height: 24px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-search { min-height: 44px; margin-top: 16px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-choice { min-height: 80px; align-items: flex-start; padding: 14px 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-choice input { margin-top: 4px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-choice-site { display: none; }
+  #ppo-estimate-wizard.es02-create-workspace .create-count { margin-bottom: 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-sales-banner { flex-wrap: wrap; margin-top: 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-sales-banner p { flex-basis: calc(100% - 32px); font-size: 12px; line-height: 18px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-sales-banner a { margin-left: 24px; min-height: 24px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-context-grid, #ppo-estimate-wizard.es02-create-workspace .create-answers { grid-template-columns: minmax(0, 1fr); }
+  #ppo-estimate-wizard.es02-create-workspace .create-context-grid { gap: 14px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-customer, #ppo-estimate-wizard.es02-create-workspace .create-routing { display: none; }
+  #ppo-estimate-wizard.es02-create-workspace .create-record-field > a, #ppo-estimate-wizard.es02-create-workspace .create-record-field > button { min-height: 44px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-answers { gap: 16px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-answer > div { align-items: flex-start; }
+  #ppo-estimate-wizard.es02-create-workspace .create-answer > div > small { flex-basis: 100%; }
+  #ppo-estimate-wizard.es02-create-workspace .create-answer-value { min-height: 96px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-work-tags { gap: 12px; }
+  #ppo-estimate-wizard.es02-create-workspace .es02-bottom { flex-wrap: nowrap; gap: 8px; padding: 12px 16px; }
+  #ppo-estimate-wizard.es02-create-workspace .es02-bottom .ppo-button { min-height: 44px; }
+  #ppo-estimate-wizard.es02-create-workspace .es02-bottom .ppo-button--primary { flex: 1; min-width: 0; white-space: normal; padding-inline: 10px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-dialog-foot { gap: 8px; }
+  #ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-dialog-foot > span { flex-basis: 100%; }
+  #ppo-estimate-wizard.es02-create-workspace .create-review-dialog .es02-dialog-foot .ppo-button--primary { flex: 1; white-space: normal; }
+}
+
+@media (max-width: 780px) {
+  #ppo-estimate-wizard.es02-create-workspace .create-choose h2 { display: none; }
+}
+
+#ppo-estimate-wizard.es02-create-workspace .create-choice small { font-weight: 400; }
+
+#ppo-estimate-wizard.es02-create-workspace .es02-summary .es02-subtle { font-size: 12px; line-height: 18px; }
+#ppo-estimate-wizard.es02-create-workspace .es02-summary .create-callout { text-align: left; margin: 8px 0 0; }
+#ppo-estimate-wizard.es02-create-workspace .es02-summary hr { margin: 8px 0; }
+#ppo-estimate-wizard.es02-create-workspace .create-editable > .es02-section:first-of-type { padding-top: 0; }

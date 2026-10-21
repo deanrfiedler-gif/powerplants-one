@@ -1,6 +1,14 @@
 import { expect, type Page } from "@playwright/test";
 import { keyActivate, keyType } from "./quality-keyboard";
 import { observedResponse } from "./observed-response";
+export function reportState(page: Page, state: string) {
+  return page.locator(".sv06-record-header .ppo-register-chip, .sv06-phone-status .ppo-register-chip").filter({ visible: true }).filter({ hasText: state });
+}
+export async function technicianEvidence(page: Page) {
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
+    await page.getByRole("tab", { name: "Details", exact: true }).click();
+  await page.getByRole("link", { name: "Technician evidence and correction", exact: true }).filter({ visible: true }).click();
+}
 export async function completion(page: Page, quantities = true) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
@@ -135,10 +143,12 @@ export async function submit(page: Page, recoverOwner = false) {
   await reportLink.click();
   expect((await reportRead).ok()).toBe(true);
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Submitted/ }),
+    reportState(page, "Submitted"),
   ).toBeVisible();
 }
 export async function review(page: Page, returned = false, commit = true) {
+  if (!(await page.getByLabel("Entry 1 review reason", { exact: true }).isVisible()))
+    await page.getByRole("button", { name: "Review submission", exact: true }).filter({ visible: true }).click();
   const fields = page.getByLabel(/Entry \d+ review reason/);
   await expect(fields.first()).toBeVisible();
   for (let n = 0; n < (await fields.count()); n++)
@@ -174,12 +184,11 @@ export async function review(page: Page, returned = false, commit = true) {
     .getByRole("button", { name: "Commit exact review", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", {
-      name: returned ? /Revision \d+ · Returned/ : /Revision \d+ · Reviewed/,
-    }),
+    reportState(page, returned ? "Returned" : "Reviewed"),
   ).toBeVisible();
 }
 export async function issue(page: Page) {
+  await page.getByRole("tab", { name: "Customer report", exact: true }).click();
   const requested = page.waitForResponse(
     (r) =>
       /\/api\/v1\/reports\/[^/]+\/issue$/.test(r.url()) &&
@@ -217,6 +226,6 @@ export async function issue(page: Page) {
   expect(output.output_available).toBe(true);
   expect(output.attempts).toBeGreaterThan(0);
   await expect(
-    page.getByRole("heading", { name: /Revision \d+ · Issued/ }),
+    reportState(page, "Issued"),
   ).toBeVisible();
 }

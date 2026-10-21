@@ -21,3 +21,7 @@ At 390/320 phone widths and actual 200% zoom, wrap identifiers, stack fields and
 Retained [Service Review & Reports r02](../../../reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html) and [theme r20](../../../reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html) are proposed references. Native uses in-flow retained evidence/history and both P09 presentation kinds, explicit attendance acknowledgement and original-command recovery. No accepted native FI-07 image exists.
 
 [Decision](../../../decisions/field-customer-response.md), [acceptance](../../../testing/field-customer-response-acceptance.md), [executed evidence](../../../testing/evidence/field-customer-response/README.md). Owner, physical-device, screen-reader and independent visual acceptance remain pending.
+
+## SV-06 host binding
+
+Service review and reports uses this existing component in `route:/service/reports/[id]`. The accepted source is PPO - Design, Service review and reports — accepted, page 1265:53; native owner visual review remains pending. Host states and synthetic fixtures are in `tests/browser/service-reports-design.spec.ts` and `tests/helpers/service-report-fixture.ts`; existing isolated examples are unchanged. See the [SV-06 contract](../pages/scope-sv-06.md) for alignment limits and [build evidence](../../../testing/evidence/service-review-build/README.md) for executed results.
