@@ -14365,20 +14365,20 @@
       "title": "Resource availability and competence",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native application workflow; owner acceptance pending",
+      "content_mode": "Native read-only workflow; owner visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-21",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "runtime_evidence": "See docs/testing/evidence/field-team-build/README.md for executed checks and limitations.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
+            "Inspect permitted technicians, their availability and competence evidence before following a controlled booking handover. This page is read-only."
           ],
           "steps": [],
           "rows": [],
@@ -14388,8 +14388,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
-            "Use synthetic records and inspect source-as-at and completeness before taking action."
+            "Use an identity with schedule.read and the required company, site and record scope. Check the selected day, display time zone and read time. Synthetic skills are not statutory certificates."
           ],
           "steps": [],
           "rows": [],
@@ -14400,10 +14399,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "rows": [],
           "headers": []
@@ -14412,7 +14411,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record detail with existing register in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Technicians is the default view. Visits and Needs preparation retain their existing controls in the Field team side menu. People shortcuts select Active, Away today, Inactive or Competence to review.",
+            "Desktop rows open a snapshot. Availability & competence opens the full person record. Phone rows open the person record directly. Column settings has no defined workflow and remains unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -14422,7 +14422,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
+            "Role shows the published resource type until a role is supplied. Hours use the planner rule: standard hours 08:00–17:00 less unavailable time, with all busy reservations including travel and anonymous bookings; proposed visits do not count.",
+            "Competence is evaluated over seven days from the chosen day. Missing evidence is Unknown. Reviewer IDs are shown without inferred names."
           ],
           "steps": [],
           "rows": [],
@@ -14431,14 +14432,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "rows": [],
           "headers": []
@@ -14447,8 +14446,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
-            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
+            "View visits opens the Visits view with this person in the URL. Open in planner retains the day, person, site and display time zone. Site and appointment links require their own access. No save or source editing action exists."
           ],
           "steps": [],
           "rows": [],
@@ -14458,8 +14456,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading, failed, denied and incomplete reads remove the previous rows, totals and evidence. Retry or Refresh reads again. No matching results offers removable filter chips and Clear filters.",
+            "View only can show anonymous busy time without appointment details. Extended hours 07:00–08:00 and 17:00–18:00 are shaded and carry a warning."
           ],
           "steps": [],
           "rows": [],
@@ -14469,7 +14467,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
+            "Synthetic example: select Tue 13 Oct to review Tue 13–Mon 19 Oct. A skill that expires on Friday is shown as expiring within the selected period. An anonymous reservation still contributes to the booked total."
           ],
           "steps": [],
           "rows": [],
@@ -14479,8 +14477,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "Use Retry loading or Refresh after a failed read. An incomplete result never proves a person is free; narrow the site or retry. A denied read needs an authorised identity, not a new grant from this page."
           ],
           "steps": [],
           "rows": [],
@@ -14490,8 +14487,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "At 390 and 320 px, use the compact phone header, Filters and date row. The person page shows controls, day strips, competence, visits, sites, then resource and calendar details.",
+            "Buttons and links work with the keyboard. Escape closes a snapshot or evidence panel and returns focus to its opener. These pages require an online read; the separate Offline workspace owns its documented offline operations."
           ],
           "steps": [],
           "rows": [],
@@ -14501,7 +14498,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
+            "Accepted source: PPO - Design, Field team — accepted; decision field-team-figma-design.md. Build interpretation: field-team-native-build.md. Scheduling authority remains PPO-SCHED-ADR, SVC-04/05."
           ],
           "steps": [],
           "rows": [],
@@ -14511,7 +14508,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
+            "Draft guide for the native implementation. Source presence, functional verification, owner visual acceptance and deployment are separate. Owner review remains pending."
           ],
           "steps": [],
           "rows": [],
@@ -14529,9 +14526,15 @@
         "docs/delivery/p05-handover.md",
         "src/app/(business)/service/technicians/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
-        "docs/delivery/scheduling-resources-handover.md"
+        "docs/delivery/scheduling-resources-handover.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ],
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "change_summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
       "document_id": "PPO-GUIDE-PL-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -45736,20 +45739,20 @@
       "title": "Field technicians",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Native application workflow; owner acceptance pending",
+      "content_mode": "Native read-only workflow; owner visual review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-21",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. I5: two component and 46 compiled browser cases passed, with four and seven deliberate skips respectively. Paired/print inspection recorded in docs/testing/evidence/job-pack-i5/README.md; owner/device acceptance separate.",
+      "runtime_evidence": "See docs/testing/evidence/field-team-build/README.md for executed checks and limitations.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
+            "Inspect permitted technicians, their availability and competence evidence before following a controlled booking handover. This page is read-only."
           ],
           "steps": [],
           "rows": [],
@@ -45759,8 +45762,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
-            "Use synthetic records and inspect source-as-at and completeness before taking action."
+            "Use an identity with schedule.read and the required company, site and record scope. Check the selected day, display time zone and read time. Synthetic skills are not statutory certificates."
           ],
           "steps": [],
           "rows": [],
@@ -45771,10 +45773,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "rows": [],
           "headers": []
@@ -45783,7 +45785,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record detail with existing register in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Technicians is the default view. Visits and Needs preparation retain their existing controls in the Field team side menu. People shortcuts select Active, Away today, Inactive or Competence to review.",
+            "Desktop rows open a snapshot. Availability & competence opens the full person record. Phone rows open the person record directly. Column settings has no defined workflow and remains unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -45793,7 +45796,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
+            "Role shows the published resource type until a role is supplied. Hours use the planner rule: standard hours 08:00–17:00 less unavailable time, with all busy reservations including travel and anonymous bookings; proposed visits do not count.",
+            "Competence is evaluated over seven days from the chosen day. Missing evidence is Unknown. Reviewer IDs are shown without inferred names."
           ],
           "steps": [],
           "rows": [],
@@ -45802,14 +45806,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "rows": [],
           "headers": []
@@ -45818,9 +45820,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
-            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority.",
-            "From appointment detail or the Field Technicians Job pack tab, open the current permitted pack. When no visible pack is returned and preparation is permitted, use Prepare job pack. Refresh pack status checks the current read; failed or denied reads remove earlier links. Preparation still checks visit and approved-scope authority on Save."
+            "View visits opens the Visits view with this person in the URL. Open in planner retains the day, person, site and display time zone. Site and appointment links require their own access. No save or source editing action exists."
           ],
           "steps": [],
           "rows": [],
@@ -45830,8 +45830,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading, failed, denied and incomplete reads remove the previous rows, totals and evidence. Retry or Refresh reads again. No matching results offers removable filter chips and Clear filters.",
+            "View only can show anonymous busy time without appointment details. Extended hours 07:00–08:00 and 17:00–18:00 are shaded and carry a warning."
           ],
           "steps": [],
           "rows": [],
@@ -45841,7 +45841,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
+            "Synthetic example: select Tue 13 Oct to review Tue 13–Mon 19 Oct. A skill that expires on Friday is shown as expiring within the selected period. An anonymous reservation still contributes to the booked total."
           ],
           "steps": [],
           "rows": [],
@@ -45851,8 +45851,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "Use Retry loading or Refresh after a failed read. An incomplete result never proves a person is free; narrow the site or retry. A denied read needs an authorised identity, not a new grant from this page."
           ],
           "steps": [],
           "rows": [],
@@ -45862,8 +45861,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "At 390 and 320 px, use the compact phone header, Filters and date row. The person page shows controls, day strips, competence, visits, sites, then resource and calendar details.",
+            "Buttons and links work with the keyboard. Escape closes a snapshot or evidence panel and returns focus to its opener. These pages require an online read; the separate Offline workspace owns its documented offline operations."
           ],
           "steps": [],
           "rows": [],
@@ -45873,7 +45872,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
+            "Accepted source: PPO - Design, Field team — accepted; decision field-team-figma-design.md. Build interpretation: field-team-native-build.md. Scheduling authority remains PPO-SCHED-ADR, SVC-04/05."
           ],
           "steps": [],
           "rows": [],
@@ -45883,7 +45882,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
+            "Draft guide for the native implementation. Source presence, functional verification, owner visual acceptance and deployment are separate. Owner review remains pending."
           ],
           "steps": [],
           "rows": [],
@@ -45898,9 +45897,15 @@
         "src/app/(business)/service/technicians/page.tsx",
         "docs/delivery/p05-handover.md",
         "docs/decisions/scheduling-resources-architecture.md",
-        "docs/delivery/scheduling-resources-handover.md"
+        "docs/delivery/scheduling-resources-handover.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ],
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries. First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-TECHNICIANS",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -65035,7 +65040,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native application workflow; owner acceptance pending",
+      "content_mode": "Native read-only workflow; owner visual review pending",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "related_entry_keys": [
         "scope:PL-02",
@@ -65046,7 +65051,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added."
+            "Inspect permitted technicians, their availability and competence evidence before following a controlled booking handover. This page is read-only."
           ],
           "steps": [],
           "headers": [],
@@ -65056,8 +65061,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use a current identity with schedule.read and the required company/site/record scope. Source-domain reads also require their own permissions. No browser link grants authority.",
-            "Use synthetic records and inspect source-as-at and completeness before taking action."
+            "Use an identity with schedule.read and the required company, site and record scope. Check the selected day, display time zone and read time. Synthetic skills are not statutory certificates."
           ],
           "steps": [],
           "rows": [],
@@ -65068,10 +65072,10 @@
           "title": "Using this page",
           "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "headers": [],
           "rows": []
@@ -65080,7 +65084,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Record detail with existing register in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity."
+            "Technicians is the default view. Visits and Needs preparation retain their existing controls in the Field team side menu. People shortcuts select Active, Away today, Inactive or Competence to review.",
+            "Desktop rows open a snapshot. Availability & competence opens the full person record. Phone rows open the person record directly. Column settings has no defined workflow and remains unavailable."
           ],
           "steps": [],
           "rows": [],
@@ -65090,7 +65095,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Keep the appointment/resource/source UUID, readable reference, version and explicit time basis together. Unknown quantities, unavailable domains and missing evidence are not zero."
+            "Role shows the published resource type until a role is supplied. Hours use the planner rule: standard hours 08:00–17:00 less unavailable time, with all busy reservations including travel and anonymous bookings; proposed visits do not count.",
+            "Competence is evaluated over seven days from the chosen day. Missing evidence is Unknown. Reviewer IDs are shown without inferred names."
           ],
           "steps": [],
           "rows": [],
@@ -65099,14 +65105,12 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [
-            "Field Team now honours incoming day, site and display timezone and retains those controls on reload. Its default without a date remains today. Availability & competence and Back to Field Team retain day/site/timezone. Resource detail exposes a Review timezone selector for its seven-day window; published calendar timezone remains explicit and unchanged. No source editor is added."
-          ],
+          "paragraphs": [],
           "steps": [
-            "Keep Field Team Visits, Technicians and Needs preparation views. In Technicians, choose Availability & competence; the resource name in Planner also opens detail.",
-            "Select a seven-day review window. Inspect permitted site eligibility, active/publication state, source-as-at, effective dates and calendar version/timezone.",
-            "Review weekly intervals, exceptions, unavailable/other-work blocks and anonymous busy reservations. Open permitted appointment records for commitments and retained history.",
-            "Check skill status, validity and review evidence. Expired, not-yet-valid, expiring-within-period and unknown evidence stay explicit."
+            "Choose Technicians and select the day, permitted site and display time zone. Search by name, resource type, zone or skill, or use a People shortcut.",
+            "Open a person. On desktop, choose Availability & competence in the snapshot for the full record.",
+            "Check the seven-day availability, source and calendar versions, then open Review evidence for a skill.",
+            "Use View visits or Open in planner to continue with the same person and date."
           ],
           "rows": [],
           "headers": []
@@ -65115,8 +65119,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Resource/calendar/competence mutation is unavailable. Synthetic skills are not statutory certificates; certificate/renewal evidence remains Unknown. No private HR fields are added.",
-            "Analytical comparison produces no source change. Saved commands retain their original operation receipt and current server authority."
+            "View visits opens the Visits view with this person in the URL. Open in planner retains the day, person, site and display time zone. Site and appointment links require their own access. No save or source editing action exists."
           ],
           "steps": [],
           "rows": [],
@@ -65126,8 +65129,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading, failed, denied and incomplete reads remove the previous rows, totals and evidence. Retry or Refresh reads again. No matching results offers removable filter chips and Clear filters.",
+            "View only can show anonymous busy time without appointment details. Extended hours 07:00–08:00 and 17:00–18:00 are shaded and carry a warning."
           ],
           "steps": [],
           "rows": [],
@@ -65137,7 +65140,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "SYN-PPO example: a two-person service booking retains both explicit travel buffers. A Project task with dates but no effort stays Unknown; its owner is not inferred to be a technician."
+            "Synthetic example: select Tue 13 Oct to review Tue 13–Mon 19 Oct. A skill that expires on Friday is shown as expiring within the selected period. An anonymous reservation still contributes to the booked total."
           ],
           "steps": [],
           "rows": [],
@@ -65147,8 +65150,7 @@
           "section_id": "recovery",
           "title": "If something is unavailable",
           "paragraphs": [
-            "For read failure, use Refresh or Retry. A denied source is unavailable, not empty capacity. Narrow the window/site when the bounded read refuses.",
-            "For stale booking/request versions, reopen the current record and compare before a new decision. The original failed move preserves the old booking. For uncertain sends keep the original operation and retry unchanged."
+            "Use Retry loading or Refresh after a failed read. An incomplete result never proves a person is free; narrow the site or retry. A denied read needs an authorised identity, not a new grant from this page."
           ],
           "steps": [],
           "headers": [],
@@ -65158,8 +65160,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations."
+            "At 390 and 320 px, use the compact phone header, Filters and date row. The person page shows controls, day strips, competence, visits, sites, then resource and calendar details.",
+            "Buttons and links work with the keyboard. Escape closes a snapshot or evidence panel and returns focus to its opener. These pages require an online read; the separate Offline workspace owns its documented offline operations."
           ],
           "steps": [],
           "rows": [],
@@ -65169,7 +65171,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related contracts: ADR-0010, ADR-0039, PPO-SCHED-ADR, SC-07/08 and the Scheduling & Resources handover. Operational SOP and source ownership approval remain separate."
+            "Accepted source: PPO - Design, Field team — accepted; decision field-team-figma-design.md. Build interpretation: field-team-native-build.md. Scheduling authority remains PPO-SCHED-ADR, SVC-04/05."
           ],
           "steps": [],
           "rows": [],
@@ -65179,20 +65181,26 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide for the implemented workflow. Actual verification is recorded in the evidence index; owner and physical-device acceptance remain pending. Stable article identity and Git history are retained."
+            "Draft guide for the native implementation. Source presence, functional verification, owner visual acceptance and deployment are separate. Owner review remains pending."
           ],
           "steps": [],
           "rows": [],
           "headers": []
         }
       ],
-      "prepared_at": "2026-09-24",
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits.",
+      "prepared_at": "2026-10-21",
+      "change_summary": "PL-02 accepted Field team design implemented: Technicians default, scoped people filters, desktop snapshot, read-only seven-day person record, competence evidence and person-filtered View visits. Owner visual review pending.",
+      "runtime_evidence": "See docs/testing/evidence/field-team-build/README.md for executed checks and limitations.",
       "source_paths": [
         "src/app/(business)/service/technicians/[id]/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
-        "docs/delivery/scheduling-resources-handover.md"
+        "docs/delivery/scheduling-resources-handover.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css",
+        "docs/decisions/field-team-native-build.md"
       ]
     },
     {

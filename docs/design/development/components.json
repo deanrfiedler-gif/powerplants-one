@@ -154,6 +154,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -197,7 +202,12 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -357,7 +367,8 @@
         "route:/estimating/discovery/[id]/costing",
         "route:/people",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "route:/service/technicians"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -555,6 +566,14 @@
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -722,6 +741,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -760,7 +784,12 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -785,7 +814,10 @@
         "route:/service/reports",
         "route:/people",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -877,6 +909,14 @@
           "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
           "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -2627,6 +2667,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -2653,7 +2698,12 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -2678,7 +2728,10 @@
         "route:/service/reports/[id]",
         "route:/people",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal.",
@@ -2738,6 +2791,14 @@
           "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
           "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3940,6 +4001,11 @@
           "id": "discovery-register-native",
           "label": "ES-02 Discovery register",
           "description": "Page host: tests/browser/discovery-register.spec.ts and docs/testing/evidence/discovery-register-native/README.md. All views, 390/320 phone rows, empty, no matches, loading, denied, failed/retried and view-only states. Owner visual review pending."
+        },
+        {
+          "id": "pl02-field-team",
+          "label": "PL-02 Field team host",
+          "description": "tests/browser/field-team.spec.ts with tests/helpers/field-team-fixture.ts: register, snapshot, person and evidence at 1440/1024/390/320; loading, no matches, failed, partial, denied and anonymous busy states. Owner review pending."
         }
       ],
       "implementation": [
@@ -4058,7 +4124,12 @@
         "src/app/styles/people-register.css",
         "src/components/discovery-register.tsx",
         "src/components/discovery-register.css",
-        "docs/testing/evidence/discovery-register-native/README.md"
+        "docs/testing/evidence/discovery-register-native/README.md",
+        "src/scheduling/field-team-model.ts",
+        "src/scheduling/components/client/field-team-screen.client.tsx",
+        "src/scheduling/components/client/field-team-parts.tsx",
+        "src/scheduling/components/client/resource-workspace.client.tsx",
+        "src/app/styles/field-team.css"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4111,7 +4182,10 @@
         "route:/customers/[id]",
         "route:/estimating/discovery/[id]/costing",
         "route:/contacts",
-        "route:/estimating/discovery"
+        "route:/estimating/discovery",
+        "scope:PL-02",
+        "route:/service/technicians",
+        "route:/service/technicians/[id]"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -4387,6 +4461,14 @@
           "expected": "Live accepted ES-02 register geometry and D1–D7, with owner review separate.",
           "actual": "Scoped 40px grid and phone rows, existing shell controls; verification and deviations are recorded in discovery-register-native evidence.",
           "action": "Review the running register and source captures; retain pending owner review until Dean records a result.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-pl02-review",
+          "expected": "Accepted Field team D1–D7 geometry and read-only handovers.",
+          "actual": "Page-scoped 40 px grid, phone list and record variants; shared implementation unchanged. Column settings unspecified.",
+          "action": "Review field-team-build evidence against the named accepted version; keep owner review pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

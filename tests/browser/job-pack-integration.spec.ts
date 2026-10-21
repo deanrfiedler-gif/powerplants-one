@@ -197,7 +197,7 @@ test("SV05-I5 field and appointment handovers use current pack identity and hide
           },
         }),
   );
-  await page.goto("/service/technicians");
+  await page.goto("/service/technicians?view=visits");
   await page.getByLabel("Visit date", { exact: true }).fill("2031-09-22");
   await page
     .getByRole("button", { name: /^Open visit:/ })

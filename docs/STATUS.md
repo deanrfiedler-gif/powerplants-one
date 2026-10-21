@@ -9,6 +9,14 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Field team PL-02 native accepted-design build — 21 October 2026
+
+The [Field team native build](decisions/field-team-native-build.md) implements the accepted PL-02 register and read-only person record in the existing routes. Technicians is the default; the compact grid/phone list, person snapshot, seven-day availability, competence evidence and person-filtered View visits reuse existing scoped reads and shared controls. Planner booked-hours semantics are reused, resource type substitutes for unpublished role, and reviewer IDs remain explicit. No migration, capability, source edits or Conversations action is added. The page contracts, three guide entries and component consumer bindings are updated together. [Execution evidence](testing/evidence/field-team-build/README.md) records checks and limitations. Column settings and undrawn responsive/menu compositions remain explicit gaps. Owner visual review is pending; deployment and business acceptance are not claimed.
+
+CI repair follow-up: the shared Chrome maintenance repair landed separately on main in `36c55914` through PR #630. Field team uses that baseline and retains only its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
+
+The later compiled desktop run reaches its job limit on both unchanged main and #648. Separate maintenance PR #652 partitions that existing suite; #648 temporarily targets it to keep infrastructure outside the page diff. Prior-head application, database and phone checks pass, but the final inherited-workflow result remains pending. The evidence records the original Reports/Specialist navigation failures without claiming that partitioning fixes them.
+
 ## Compiled desktop browser CI partition prepared — 21 October 2026
 
 Dean requested green CI for Field team #648 with unrelated infrastructure repairs kept separate. Codex owns separate maintenance PR #652. The compiled desktop job reached its 60-minute limit on unchanged main `78795dd6` and on #648; the complete suite no longer has reliable job margin. The [compiled-browser decision](decisions/ci-compiled-browser-suite.md) records the baseline and preserves all projects, original test deadlines, warm-up and retained restart proof.
