@@ -14,8 +14,9 @@ test("rendering refuses the affected Chromium build and unreviewed browser major
     "155.0.8059.0",
     "155.0.8058.999",
     "155.0.8059.38",
-    "156.0.8078.0",
+    "156.0.0.0",
     "156.0.8077.999",
+    "156.0.8078.0",
     "156.0.8078.46",
     // A major beyond the reviewed set stays refused until it is reviewed.
     "157.0.0.0",

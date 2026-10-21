@@ -39249,22 +39249,20 @@
       "title": "Discovery register",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Page workflow draft",
+      "content_mode": "Native Discovery register",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-20",
+      "source_commit": "971ac350",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/discovery-register-native/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Discovery register to work towards this outcome: A selected, traceable discovery basis with owned review items.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Find a permitted discovery workspace and check its selected scope and saved estimate basis. This register is read-only; Complete means scope readiness, not an approved price or quotation."
           ],
           "steps": [],
           "rows": [],
@@ -39274,9 +39272,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use an identity with estimating read permission and access to the related opportunity and source records. New discovery workspace also requires estimating edit permission. The existing form checks the chosen opportunity."
           ],
           "steps": [],
           "rows": [],
@@ -39285,56 +39281,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Review Requirements, Configuration, Scope & delivery, Pricing and Review",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose All workspaces, My workspaces or a readiness, costing or alternatives view. Use Estimator and Customer to narrow the current window. Open a desktop title for the snapshot; a phone row opens the wizard."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Discovery register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The rail and breadcrumb call this page Estimation wizard. The left menu groups overlapping views. The toolbar shows filters, a result count and the last successful read time. Scroll the desktop grid for the remaining columns."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Customer/site, growing areas, requirements, alternatives and selected scope.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Estimator is the saved workspace owner, not the opportunity owner or last person to save. Rows are most recently changed first. Counts cover the current window of up to 100 permitted workspaces, including archived alternatives. Unavailable cost evidence is not treated as no estimate."
           ],
           "steps": [],
           "rows": [],
@@ -39344,13 +39312,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Inspect the selected basis and its saved revision. Compare its readiness and cost basis; a newer revision never reprices an estimate automatically. Use Alternatives and Revisions in the desktop snapshot; use Older revisions and Latest revisions to navigate saved history."
           ],
-          "steps": [
-            "Review Requirements, Configuration, Scope & delivery, Pricing and Review",
-            "Keep alternatives and their exact revisions distinct",
-            "Check the saved cost basis before preparing a quotation"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -39358,10 +39322,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "A selected, traceable discovery basis with owned review items.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ.",
-            "Current native journey: Intake & workload opens the existing discovery workspace. The five steps, alternatives, exact revisions and saved-cost evidence remain. Screen Systems is integrated through explicit specialist run review/adoption; its presence does not permit automatic repricing. Supplier-price refresh and Excel import remain separate programme work."
+            "Open workspace hands over to the existing ES-02 wizard. Open estimate opens the exact permitted saved version. New discovery workspace opens the existing creation route. No register action saves scope, costs work, approves prices or issues a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -39370,45 +39331,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading shows no confirmed count. A failed or denied read clears rows and counts and offers Retry loading. No workspaces yet explains the entry from Sales or Intake; no matching workspaces names the current filters and offers Clear filters. View only hides creation. Partial cost/history reads say unavailable and do not infer readiness or counts."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare customer/site, growing areas, requirements, alternatives and selected scope. Follow the task sequence and check that a selected, traceable discovery basis with owned review items. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Discovery register has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A newer discovery revision does not automatically recost a saved estimate. The broader wizard design and implemented subset differ."
+            "Synthetic Northbank: selected option A has r03 Incomplete while estimate v4 used r02. The older estimate remains unchanged. Its row belongs to Latest not costed; Complete scope would still not approve a price."
           ],
           "steps": [],
           "rows": [],
@@ -39417,45 +39351,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "Retry loading after a connection failure. Clear filters when no workspace matches. Ask the administrator about denied access; do not infer that a hidden workspace has been deleted. A failed snapshot read withholds its source details and estimate action."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Phone rows open the wizard directly. The compact header menu contains Page guide; the title retains Estimation wizard. Filter opens a labelled panel. Tab reaches controls, arrows operate choices and tabs, and Escape closes the snapshot or active menu and returns focus. This page needs an online server read; it offers no offline discovery operations."
           ],
           "steps": [],
           "rows": [],
@@ -39465,8 +39372,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The page contract links the accepted live Figma node identities and unchanged icon-free captures. Creation, costing and the wizard remain separate pages and maintain their own guides."
           ],
           "steps": [],
           "rows": [],
@@ -39476,9 +39382,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Owner visual and device review remain pending. Source presence, test execution and deployment are separate; see the implementation evidence for actual checks and limits."
           ],
           "steps": [],
           "rows": [],
@@ -39492,9 +39396,11 @@
         "src/app/(business)/estimating/discovery/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/discovery-register.tsx",
+        "docs/decisions/discovery-register-native.md"
       ],
-      "change_summary": "Reconcile workload entry and native specialist integration without changing discovery or saved-cost authority.",
+      "change_summary": "Describe the accepted ES-02 register views, filters, saved evidence, states and phone handover.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING-DISCOVERY",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -39505,7 +39411,9 @@
         "src/app/(business)/estimating/discovery/page.tsx",
         "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
         "docs/delivery/es02-estimation-wizard-handover.md",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "src/components/discovery-register.tsx",
+        "docs/decisions/discovery-register-native.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

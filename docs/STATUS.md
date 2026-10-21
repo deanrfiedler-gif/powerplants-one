@@ -13,11 +13,13 @@ The build will reuse the shell secondary menu and compact phone header, shared r
 
 The [Field team native build](decisions/field-team-native-build.md) implements the accepted PL-02 register and read-only person record in the existing routes. Technicians is the default; the compact grid/phone list, person snapshot, seven-day availability, competence evidence and person-filtered View visits reuse existing scoped reads and shared controls. Planner booked-hours semantics are reused, resource type substitutes for unpublished role, and reviewer IDs remain explicit. No migration, capability, source edits or Conversations action is added. The page contracts, three guide entries and component consumer bindings are updated together. [Execution evidence](testing/evidence/field-team-build/README.md) records checks and limitations. Column settings and undrawn responsive/menu compositions remain explicit gaps. Owner visual review is pending; deployment and business acceptance are not claimed.
 
-CI repair follow-up: the separate Chrome maintenance PR #643 supplies the runtime prerequisite. Field team retains its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
+CI repair follow-up: the shared Chrome maintenance repair landed separately on main in `36c55914` through PR #630. Field team uses that baseline and retains only its own test/evidence repairs; ten selected desktop/phone backend browser cases pass against a separately created disposable synthetic database. Full CI status is recorded on #648, separately from owner visual review.
 
-## Chrome 156 compatibility maintenance — 21 October 2026
+## Chrome 156 compatibility repair for PR #630 — 21 October 2026
 
-Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduces on unchanged main `4c1097cc`. The [browser maintenance decision](decisions/browser-runtime-maintenance.md) extends the existing version floor while preserving majors 153–155 and refusing older 156 builds and unreviewed major 157. Boundary tests, actual browser/PDF execution and CI results remain distinct; final-head CI is pending. The existing stable-channel installer and exact dependency packages remain unchanged. No deployment, database change or business transaction is authorised by this repair.
+Dean authorised repairing the shared browser-version mismatch that blocked PR #630 before its application checks. The [browser maintenance record](decisions/browser-runtime-maintenance.md) extends the existing ADR-0022 range to Chrome 156 from `156.0.8078.47`, the exact stable package observed in CI. Earlier major floors, earlier-build rejection and future-major rejection remain. Boundary regression cases accompany the change; actual Chrome 156 rendering and browser proof belong to the final commit's CI results on the PR.
+
+No package dependency, installer, launch flag, permission, migration or deployment changes. The Discovery register remains pending owner visual review; passing runtime assurance is separate from business acceptance.
 
 ## Site surveys CS-08 build preflight awaits migration approval — 20 October 2026
 
@@ -56,6 +58,12 @@ PR #625's four full browser jobs failed the same new CS-02 assertion: the compac
 Current main `0ebb26a3` was integrated before the correction. The [page contract](design/development/pages/route-people.md) and [verification evidence](testing/evidence/people-native/README.md) record the source comparison and local database connection limitation. Full CI rerun results remain separate from earlier local passes. No reference, migration, permission, dependency or owner acceptance changes.
 
 At repair commit `53fb1a6a`, all four full browser suites pass the People cases: each desktop suite reports 503 passed / 21 skipped, and each mobile suite 445 passed / 79 skipped. CI also passes 950 unit tests, static/type/build checks, the PostgreSQL shards and other application lanes. The compiled desktop job nevertheless reaches its existing 60-minute job limit after reporting successful tests, leaving its aggregate red; a targeted retry was requested. Unchanged main's corresponding workflow passes, and no test or timeout was weakened. Current main `0909db97` adds claim/reservation records only; its generated-status conflict is resolved through the generator. Exact-run evidence and remaining gate results are distinguished on PR #625. Owner review remains pending.
+
+## Discovery register ES-02 native implementation — 20 October 2026
+
+The existing `/estimating/discovery` route now implements the accepted Discovery register design: compact desktop/tablet grid, responsive phone rows, overlapping saved-evidence views, owner/customer filters and read-only snapshot. Existing schema confirms a workspace owner, resolving Q2's Estimator label. The list read gains bounded authorised customer, owner, changed and selected-option cost fields; no migration, capability or dependency is added. The [implementation decision](decisions/discovery-register-native.md) distinguishes authorisation to build from UI acceptance and documents remaining activity and unspecified-control questions.
+
+The page contract, design/component register and guide are updated together. [Verification](testing/evidence/discovery-register-native/README.md) records checks and limitations. Native owner visual review, business approval and deployment remain pending; the accepted Figma design is not evidence of an accepted native baseline.
 
 ## ES-02 reviewed discovery creation prerequisite — 20 October 2026
 
