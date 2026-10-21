@@ -45,6 +45,10 @@ Dean explicitly waived the otherwise-required Claude review of assistant-core PR
 
 Combined-tree validation remains in progress. No merge, complete CI pass, owner visual acceptance, deployment or production readiness is claimed.
 
+The independent GPT-6-astra source review of Service statements/atomic triage (0112) and Inspection attribution (0115) found no actionable defects; it ran no tests or live-schema queries. Local lint, typecheck, build, foundation, naming, prototype, Contacts and studio checks passed. The 1,019-case unit run had 1,016 passes and three Windows failures reproduced on unmodified main. A populated-upgrade timeout and its dependent test-registry failures remain recorded; the isolated unchanged assistant rerun passed 5/5, and all six Products histories 110–115 passed. Service-request and next-action late installs and legacy inspection preservation passed.
+
+Combined CI exposed stale appointment-heading assertions and five host-layout records. The repairs verify the exact appointment URL/reference in the accepted desktop metadata or compact phone header, preserve booking/persistence and pack-denial checks, and align only the working Incidents/Inspections layout metadata with the implemented full-width hosts. Issued hashes and owner-review status are unchanged. The new reference/incident handover check passes locally at 1440/390/320; all module host contracts and retained source hashes are checked together. Fresh final-head CI remains the merge gate.
+
 ## Inspections accepted-design implementation and authorised reading attribution — 21 October 2026
 
 Draft PR #647 implements the accepted FI-03 capture and FI-04 review register at the existing routes. The [design acceptance](decisions/inspections-figma-design.md) remains distinct from code delivery and owner visual review. The page contracts, register, Australian English guides and shared-component consumer bindings describe the compact register, record summary, saved checks, per-reading instruments, phone action bars, original-command recovery and separate outcome preparation/issue.

@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { navigationForCapabilities } from "../../src/shell/navigation";
+import { expectAppointmentRecord } from "../helpers/appointment-record";
 import {
   appointmentFixture,
   appointmentPackFixture,
@@ -135,6 +136,7 @@ test("SV04 retains the FI06 exact incident handover on desktop and both phones",
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(path);
+    await expectAppointmentRecord(page, appointmentFixture());
     await page.getByRole("button", { name: "Visit more actions", exact: true }).click();
     await expect(page.getByRole("menuitem", { name: "Report an incident", exact: true })).toHaveAttribute(
       "href", `/service/incidents/new?appointment_id=${sv04Id(1)}&scope_item_id=${sv04Id(70)}&asset_id=${sv04Id(71)}`,

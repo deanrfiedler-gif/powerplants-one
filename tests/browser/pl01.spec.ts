@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { createDemand, openDemand, openDemandPanel, fillProposal, pl01Call, pl01Identity, fixtureId } from "../helpers/pl01";
 import { openAccountPanel } from "../helpers/phone-menu";
+import { expectAppointmentRecord } from "../helpers/appointment-record";
 
 // The device must not share the site's zone, or entry in device time would pass unnoticed.
 test.use({ timezoneId: "America/Los_Angeles" });
@@ -109,7 +110,7 @@ test("PL01 lost proposal response survives same-tab reload without repeating the
   const visits = (await pl01Call(page, `service/work-orders/${w.id}`)).items[0].visits;
   expect(visits).toHaveLength(1); expect(visits[0].id).toBe(original!.id);
   await page.getByRole("link", { name: "Continue booking / View appointment" }).click();
-  await expect(page.getByRole("heading", { name: visits[0].display_number, exact: true })).toBeVisible();
+  await expectAppointmentRecord(page, visits[0]);
 });
 
 test("PL01 unknown original offers only unchanged explicit retry, even if fields would change", async ({ page }) => {
