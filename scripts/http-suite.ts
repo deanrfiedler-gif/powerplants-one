@@ -5,6 +5,8 @@ import { spawn } from "node:child_process";
 // They must never reset or inspect that database alongside mutating HTTP files.
 const exclusive = new Set([
   "service-finding-next-action.test.ts",
+  "crm-owner-transfer.test.ts",
+  "estimating-e2-verification.test.ts",
   "project-commercial.test.ts",
   "project-specialist.test.ts",
   "project-specialist-handover.test.ts",
