@@ -9,6 +9,12 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Compiled desktop browser CI partition claimed — 21 October 2026
+
+Dean requested green CI for Field team #648 with unrelated infrastructure repairs kept separate. Codex owns this separate maintenance branch and draft PR. The compiled desktop job reached its 60-minute limit on unchanged main `78795dd6` and on #648; the complete suite no longer has reliable job margin. The [compiled-browser decision](decisions/ci-compiled-browser-suite.md) remains the authority for preserving all projects, original test deadlines, warm-up and retained restart proof.
+
+The planned change is limited to `.github/workflows/application-compiled.yml`, that maintenance record and this generated status entry: run the desktop project in two native Playwright shards, each with its own application and disposable `ppo_synthetic_test`, preserve serial execution within a shard, and keep both shards mandatory in the existing aggregate. Mobile and retained jobs stay intact. Compare complete test discovery with the disjoint shard union before execution. No application change, dependency, permission, migration, deployment or business acceptance is proposed. Verification is pending.
+
 ## Chrome 156 compatibility maintenance — 21 October 2026
 
 Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.
