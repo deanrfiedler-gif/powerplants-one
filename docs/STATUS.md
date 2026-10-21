@@ -15,6 +15,12 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Conversations navigation proof repair — 21 October 2026
+
+Dean authorised a separate investigation of the Conversations navigation failure blocking Facilities PR #627. Codex claims the repair on `codex/conversations-navigation-proof`, cut from current main `bd5d6e6c`. The accepted [T1c design](decisions/conversations-t1c-design.md#52-pages-and-components) opens the preferred thread on desktop and retains the list on phones; the failing browser assertion expected the list URL on both.
+
+The planned change is limited to the Conversations browser proof and its existing page contract/guide and verification evidence. It will assert the exact desktop thread destination, the phone list and subsequent thread handover, and retain badge/current-page and permission checks. No application behaviour, migration, capability, dependency, Facilities implementation or assistant-core work is proposed. Synthetic verification and CI are pending; owner review, deployment and business acceptance remain separate.
+
 ## Chrome 156 compatibility maintenance — 21 October 2026
 
 Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.
