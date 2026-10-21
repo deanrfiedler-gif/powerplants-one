@@ -58,6 +58,38 @@ async function fixtures(page: Page) {
     route.fulfill({ json: { items: equipmentFixture, total: 14 } }),
   );
 }
+test("CS04 Work and visits retains paginated site-owned follow-ups beyond the summary window", async ({ page }) => {
+  await fixtures(page);
+  await page.route(`**/api/v1/sites/${siteId}/overview`, route => route.fulfill({ json: {
+    site: siteFixture, sources: [{ name: "Follow-ups", state: "Partial", items: [] }],
+    observed_at: sitesFixture.observed_at,
+  } }));
+  const cursors: (string | null)[] = [];
+  const target = "85000000-0000-4000-8000-000000000001";
+  await page.route("**/api/v1/activities?**", route => {
+    const query = new URL(route.request().url()).searchParams;
+    expect(query.get("object_type")).toBe("Site");
+    expect(query.get("object_id")).toBe(siteId);
+    const cursor = query.get("cursor");
+    cursors.push(cursor);
+    return route.fulfill({ json: { items: [{
+      id: cursor ? target : "85000000-0000-4000-8000-000000000099",
+      summary: cursor ? "SYN retained OEM follow-up" : "SYN first follow-up",
+      status: "Open", owner_name: "SYN Coordinator", due_needed: true, due_at: null,
+    }], next_cursor: cursor ? null : "synthetic-next" } });
+  });
+  await page.goto(`/sites/${siteId}`);
+  await page.getByRole("tab", { name: "Work and visits", exact: true }).click();
+  const owned = page.locator(".detail-section").filter({ has: page.getByRole("heading", { name: "Owned follow-up", exact: true }) });
+  await expect(owned.getByRole("link", { name: "SYN first follow-up", exact: true })).toBeVisible();
+  await owned.getByRole("button", { name: "Next linked activities", exact: true }).click();
+  await expect(owned.getByRole("link", { name: "SYN retained OEM follow-up", exact: true })).toHaveAttribute("href", `/work/${target}`);
+  await expect(owned.getByRole("link", { name: "SYN first follow-up", exact: true })).toHaveCount(0);
+  // Development StrictMode may repeat the initial read. Only the selected
+  // cursor sequence matters; every request above still asserts exact Site scope.
+  expect([...new Set(cursors)]).toEqual([null, "synthetic-next"]);
+});
+
 test("CS04 live API short and legacy references retain the existing record", async ({
   page,
 }) => {

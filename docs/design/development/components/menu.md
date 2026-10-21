@@ -92,4 +92,6 @@ The accepted Incidents page reuses this control without changing its shared impl
 
 ## PL-04 consumer
 
+The integrated stylesheet keeps shared footer styling on `.mw-foot` in both workspace scopes. A root selector would prevent the My Work content scroller from shrinking with the viewport; `tests/browser/my-work.spec.ts` retains its original short-height scrolling and menu-collapse preservation proof. No menu behaviour or review acceptance changes.
+
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.

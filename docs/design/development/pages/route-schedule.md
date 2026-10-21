@@ -6,6 +6,8 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Native workflow
 
+Planner summary actions retain the same current company/Site-scoped Supply read flag as the appointment detail. This permits an exact summary/detail contract comparison without exposing Supply detail narratives or granting an action. `tests/database/quality-planner.test.ts` compares the complete action set for coordinator, Site observer and assigned technician and rechecks changed access.
+
 Page type: **Planning workspace**. Canonical destination: `/schedule`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
 1. Select a day/week, display timezone and permitted site or resource. Working hours, anonymous busy reservations and travel buffers remain separate from visit times.

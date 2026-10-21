@@ -3456,7 +3456,7 @@
         {
           "id": "cs04-native",
           "label": "Sites CS-04 host",
-          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+          "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment and paginated Site-owned follow-ups with exact later-page handovers. P11 observes Overview loading, failure, recovery and denial independently of History pagination. See tests/browser/sites-native.spec.ts; owner review pending."
         }
       ],
       "implementation": [
@@ -3466,6 +3466,9 @@
         }
       ],
       "dependencies": [
+        "src/scheduling/components/client/appointment-record.client.tsx",
+        "src/scheduling/components/client/policy-resolution.client.tsx",
+        "src/components/context-screens.tsx",
         "src/app/layout.tsx",
         "src/app/globals.css",
         "src/development/component-examples.tsx",

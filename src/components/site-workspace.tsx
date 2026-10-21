@@ -11,6 +11,7 @@ import { ProductIcon } from "./product-icons";
 import { SiteReadiness, SitesReadState } from "./sites-register";
 import { FacilityRegister } from "./facility-register";
 import { SitePrimaryContact } from "./site-primary-contact";
+import { RelatedActivities } from "./context-screens";
 import { ReadState, type Envelope } from "./business-ui";
 import { usePhoneHeader } from "../shell/phone-header";
 import { usePublishRecordIdentity } from "../shell/record-identity";
@@ -508,6 +509,7 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
                 complete history and controls.
               </p>
               <WorkRows sources={sources} />
+              {tab === "work" && <RelatedActivities type="Site" id={s.id} />}
             </RecordPanel>
             <RecordPanel id="site-record" tab="history" value={tab}>
               {tab === "history" && <SiteHistory id={s.id} />}

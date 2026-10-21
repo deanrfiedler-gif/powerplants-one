@@ -51,6 +51,17 @@ test("CS04 public and previous references resolve the same scoped site without r
   );
 });
 
+test("CS04 already-short facility Site references remain searchable without changing storage", async () => {
+  const p = (await createSession("coordinator")).principal;
+  const sites = (await database().query("SELECT id,display_number FROM ppo.sites WHERE workspace_id=$1 AND display_number LIKE 'SYN-SITE-%' ORDER BY id", [p.workspace_id])).rows;
+  assert.ok(sites.length, "CS-05 supplies Sites already stored with their short reference");
+  for (const row of sites) {
+    const found = await sitesRegister(p, { q: row.display_number });
+    assert.deepEqual(found.items.map(item => item.id), [row.id]);
+    assert.equal(found.items[0].legacy_display_number, row.display_number);
+  }
+});
+
 test("CS04 exact filtered counts, signed pagination and missing source facts", async () => {
   const p = (await createSession("coordinator")).principal;
   const all = await sitesRegister(p, { limit: 200 });

@@ -4,7 +4,8 @@ const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function appointmentMenuAction(page: Page, name: string) {
   const menu = page.getByRole("button", { name: "Appointment actions", exact: true });
-  if (await menu.isVisible()) await menu.click();
+  const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  if (!phone) { await expect(menu).toBeVisible(); await menu.click(); }
   else await page.locator("#shell-header").getByRole("button", { name: "More actions", exact: true }).click();
   await page.getByRole("button", { name, exact: true }).or(page.getByRole("menuitem", { name, exact: true })).click();
 }

@@ -131,8 +131,15 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
       ? page.getByRole("button", {
           name: n === 1 ? "Previous attempt" : "Next attempt",
           exact: true,
+          includeHidden: true,
         })
       : page.getByRole("button", { name: new RegExp(`^Attempt ${n} ·`) });
+  const selectAttempt = async (n: number) => {
+    if (phoneWidth(page) && (page.viewportSize()?.width ?? 390) <= 360) {
+      await page.locator("#shell-header").getByRole("button", { name: "More actions", exact: true }).click();
+      await page.getByRole("menuitem", { name: n === 1 ? "Previous attempt" : "Next attempt", exact: true }).click();
+    } else await attemptButton(n).click();
+  };
   // Retained evidence never includes Font Awesome Pro artwork.
   await page.addInitScript(() => {
     const hide = () => {
@@ -502,7 +509,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     .selectOption("e9550000-0000-4000-8000-000000000003");
   await page.getByRole("radio", { name: "Clear", exact: true }).check();
   const discard = page.waitForEvent("dialog");
-  const switchAttempt = attemptButton(1).click();
+  const switchAttempt = selectAttempt(1);
   const dialog = await discard;
   expect(dialog.message()).toBe("Switch attempt and discard unsaved changes?");
   await dialog.dismiss();
@@ -590,7 +597,7 @@ test("FI03/FI04 compiled exact failure, original recovery, owned correction, ret
     await lookupFinished;
     await page.unroute("**/api/v1/operations/*");
   }
-  await secondAttempt.click();
+  await selectAttempt(2);
   await page
     .getByRole("button", { name: "Review attempt", exact: true })
     .filter({ visible: true })

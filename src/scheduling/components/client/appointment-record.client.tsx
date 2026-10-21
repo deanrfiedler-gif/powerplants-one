@@ -353,6 +353,9 @@ export function AppointmentRecord({
         ) : undefined
       }
     >
+      <p className="sv04-note">
+        {link(returnTo, returnTo.startsWith("/schedule/changes") ? "Back to scheduling review" : "Back to planner")}
+      </p>
       <div className="sv04-phone-status">
         {status}
         <IncidentVisitMenu appointmentId={a.id} />
@@ -465,7 +468,7 @@ export function AppointmentRecord({
                   a.status !== "Cancelled" &&
                   current &&
                   link(
-                    `${workHref}?returnTo=${encodeURIComponent(`/service/appointments/${a.id}`)}#visit-${a.id}`,
+                    `${workHref}?returnTo=${encodeURIComponent(`/service/appointments/${a.id}?returnTo=${encodeURIComponent(returnTo)}`)}#visit-${a.id}`,
                     "Review work-order readiness",
                   )}
               </Check>
@@ -739,10 +742,11 @@ export function AppointmentRecord({
                 {impact.reason} · {impact.owner_name}
               </p>
               <p>{impact.next_action}</p>
-              {current && !closed && a.actions.can_resolve_policy && (
+              {(!closed || a.status === "Cancelled") && a.actions.can_resolve_policy && (
                 <PolicyResolution
                   impactId={impact.impact_id}
                   onSaved={onRefresh}
+                  current={current}
                 />
               )}
             </article>
@@ -791,7 +795,7 @@ export function AppointmentRecord({
         ))}
         <p>
           {link(showAppointmentDates(a, returnTo), "View visit in planner")} ·{" "}
-          {link(returnTo, "Back to planner")}
+          {link(returnTo, "Return context")}
         </p>
       </details>
     </SharedRecord>

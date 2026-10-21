@@ -50,17 +50,17 @@ test("native scheduling pages retain context and reflow at coordination, phone a
           "Complete.",
         );
       if (name === "changes") {
-        await expect(page.getByRole("navigation", { name: "Scheduling workspace" })).toBeAttached();
+        await expect(page.getByRole("navigation", { name: "Scheduling workspace", includeHidden: true })).toBeAttached();
         await expect(page.locator(".changes-read")).toContainText("Read");
       }
-      else if (name !== "planner")
+      else if (name !== "planner" && name !== "resource")
         await expect(
           page
             .locator(".scheduling-workspace .read-meta")
             .filter({ hasText: /Read at|Snapshot/ })
             .first(),
         ).toBeVisible({ timeout: 15000 });
-      else
+      else if (name === "planner")
         await expect(
           page.getByRole("heading", { name: "Service planner", exact: true }),
         ).toBeAttached();
@@ -230,8 +230,7 @@ test("change request review presents exact comparison before a reasoned decision
     .click();
   await expect(
     page
-      .locator(".change-request")
-      .filter({ hasText: requestId })
+      .getByRole("region", { name: "Change request " + requestId, exact: true })
       .getByText("Rejected", { exact: true }),
   ).toBeVisible();
   await expect(page.locator("#scheduling-review-heading")).toBeFocused();

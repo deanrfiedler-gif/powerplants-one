@@ -83,16 +83,19 @@ test("compiled Step 4: stale preparation, immediate field hold, controlled cance
   await expect(finishControl).toBeEnabled();
   await form.getByRole("button", { name: "Close proposal" }).click();
   await page.reload();
-  await expect(page.getByText(/Responsible owner:/).first()).toBeVisible();
-  await expect(page.getByText(/Source publication:/).first()).toBeVisible();
+  const appointment = (await call(page.request, `appointments/${id}`)).items[0];
+  const impact = appointment.policy_impacts.find((item: { publication_id: string }) => item.publication_id === published.record_id);
+  expect(impact).toBeTruthy();
+  const displayedImpact = page.getByRole("region", { name: "Other visit checks", exact: true }).locator("article").filter({ hasText: impact.publication_id });
+  await expect(displayedImpact).toContainText(impact.owner_name);
+  await expect(displayedImpact).toContainText(impact.reason);
+  await expect(displayedImpact).toContainText(impact.next_action);
+  await expect(displayedImpact.getByText(/Source publication:/)).toBeVisible();
   for (const width of info.project.name.includes("mobile")
     ? [390, 320]
     : [1440, 1024]) {
     await page.setViewportSize({ width, height: 960 });
-    await page
-      .getByText(/Responsible owner:/)
-      .first()
-      .scrollIntoViewIfNeeded();
+    await displayedImpact.scrollIntoViewIfNeeded();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -135,6 +138,7 @@ test("compiled Step 4: stale preparation, immediate field hold, controlled cance
   ).toBe(0);
   await call(page.request, "local-session", { profile: "coordinator" });
   await page.goto("/schedule/policy-impact");
+  await page.locator("details.changes-policy-saved > summary").click();
   await expect(
     page.getByRole("heading", {
       name: "Published scheduling impacts",
@@ -143,9 +147,14 @@ test("compiled Step 4: stale preparation, immediate field hold, controlled cance
   ).toBeVisible();
   await expect(page.getByText(/Responsible owner:/).first()).toBeVisible();
   await page.goto(`/service/appointments/${id}`);
-  await page
-    .getByRole("button", { name: "Cancel appointment", exact: true })
-    .click();
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.locator("#shell-header").getByRole("button", { name: "More actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Cancel appointment", exact: true }).click();
+  } else {
+    await page.getByRole("button", { name: "Appointment actions", exact: true }).click();
+    await page.getByRole("dialog", { name: "Appointment actions", exact: true })
+      .getByRole("button", { name: "Cancel appointment", exact: true }).click();
+  }
   await page
     .getByLabel("Cancellation reason", { exact: true })
     .fill("SYN controlled cancellation after published impact");
@@ -154,7 +163,7 @@ test("compiled Step 4: stale preparation, immediate field hold, controlled cance
     .click();
   await expect(
     page.getByText(
-      "Cancellation reason: SYN controlled cancellation after published impact",
+      "SYN controlled cancellation after published impact",
     ),
   ).toBeVisible();
   await page

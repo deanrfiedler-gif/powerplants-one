@@ -106,7 +106,14 @@ for (const firstIndex of [0, 1])
     assert.deepEqual(await effectCounts(winner.operation_id), [1, 1, 1]);
     assert.deepEqual(await effectCounts(loser.operation_id), [0, 0, 0]);
     assert.deepEqual((await call(s.cookie, `${s.path}/options`, winner)).body, accepted.body);
-    assert.equal((await call(s.cookie, `${s.path}/options`, { ...winner, option_id: loser.option_id })).status, 409);
+    assert.equal((await call(s.cookie, `${s.path}/options`, { ...winner, reason: "SYN altered original selection intent" })).status, 409);
+    // The other option with the winner's revision is an inaccessible target
+    // pair, checked before receipt recovery; it must disclose no original.
+    const mismatched = await call(s.cookie, `${s.path}/options`, { ...winner, option_id: loser.option_id });
+    assert.equal(mismatched.status, 404);
+    assert.equal(typeof accepted.body.receipt_id, "string");
+    assert.ok(!JSON.stringify(mismatched.body).includes(accepted.body.receipt_id));
+    assert.deepEqual(await effectCounts(winner.operation_id), [1, 1, 1]);
   });
 
 test("E2-A05 HTTP current read authority gates list, detail, history, selectors, preview, receipt and original replay", async () => {

@@ -193,36 +193,63 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       exact: true,
     }),
   ).toBeVisible();
-  // Site notes also arrive after navigation. Wait for this exact scoped read,
+  // The current Site overview arrives after navigation. Wait for this scoped read,
   // then keep the normal rendering assertion and verify the returned identity.
   const site = await observedResponse(page, "initial-site-read",
-    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}` &&
+    (response) => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}/overview` &&
       response.request().method() === "GET",
     () => page.goto(`/sites/${id("70")}`),
     {
-      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}` && request.method() === "GET",
+      request: (request) => new URL(request.url()).pathname === `/api/v1/sites/${id("70")}/overview` && request.method() === "GET",
       timeout: 60000,
     },
   );
   expect(site.status(), await site.text()).toBe(200);
   expect(site.headers()["cache-control"]).toBe("private, no-store");
-  expect((await site.json()).items[0].id).toBe(id("70"));
-  await expect(
-    page.getByText(
-      "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
-      { exact: true },
-    ),
-  ).toBeVisible();
+  expect((await site.json()).site.id).toBe(id("70"));
+  const history = await observedResponse(page, "initial-site-history-read",
+    response => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}/history` && response.request().method() === "GET",
+    () => keyActivate(page, page.getByRole("tab", { name: "History", exact: true })),
+  );
+  expect(history.status(), await history.text()).toBe(200);
+  expect(history.headers()["cache-control"]).toBe("private, no-store");
+  const originalNote = page.getByText(
+    "SYN OEM query remains unresolved; follow-up activity will be implemented in P03.",
+    { exact: true },
+  );
+  for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
+    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
+    if (await originalNote.isVisible()) break;
+    const next = page.getByRole("button", { name: "Next", exact: true });
+    await expect(next).toBeEnabled();
+    const result = page.waitForResponse(r =>
+      new URL(r.url()).pathname === `/api/v1/sites/${id("70")}/history` && r.request().method() === "GET");
+    await keyActivate(page, next);
+    expect((await result).ok()).toBe(true);
+  }
+  await expect(originalNote).toBeVisible();
+  await capture(page, info, "journey-existing-site-history");
+  const activities = await observedResponse(page, "initial-site-owned-follow-up-read",
+    response => {
+      const url = new URL(response.url());
+      return url.pathname === "/api/v1/activities" && response.request().method() === "GET" &&
+        url.searchParams.get("object_type") === "Site" && url.searchParams.get("object_id") === id("70");
+    },
+    () => keyActivate(page, page.getByRole("tab", { name: "Work and visits", exact: true })),
+  );
+  expect(activities.status(), await activities.text()).toBe(200);
+  expect(activities.headers()["cache-control"]).toBe("private, no-store");
   // Earlier retained suites add real linked follow-ups. Traverse the current
   // scoped pages without assuming this original must remain on page one.
-  const oem = page.getByRole("link", {
+  const owned = page.locator(".detail-section").filter({ has: page.getByRole("heading", { name: "Owned follow-up", exact: true }) });
+  const oem = owned.getByRole("link", {
     name: "SYN OEM query: intermittent sensor alarm remains unresolved",
     exact: true,
   });
   for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
     await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
     if (await oem.isVisible()) break;
-    const next = page.getByRole("button", { name: "Next linked activities", exact: true });
+    const next = owned.getByRole("button", { name: "Next linked activities", exact: true });
     await expect(next).toBeVisible();
     const result = page.waitForResponse((r) =>
       new URL(r.url()).pathname === "/api/v1/activities" &&

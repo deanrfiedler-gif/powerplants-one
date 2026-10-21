@@ -27,7 +27,13 @@ test("HV-15 loading, no candidates, unavailable, validation and Escape return ha
   await page.screenshot({ path: info.outputPath("transfer-empty.png") });
   await dialog.getByLabel("Find eligible owner").fill("");
   await expect(dialog.getByLabel("New deal owner").locator("option", { hasText: "SYN Sales receiver" })).toHaveCount(1);
+  // Isolate the missing-owner validation: the shared command validates its
+  // required reason before owner identity, and this form uses server validation.
+  await dialog.getByLabel("Transfer reason").fill("SYN compare the missing receiving owner without transferring");
   await dialog.getByRole("button", { name: "Confirm owner transfer", exact: true }).click();
+  const validation = dialog.getByRole("alert").filter({ has: page.locator('a[href="#new_owner_id"]') });
+  await expect(validation).toBeFocused();
+  await validation.locator('a[href="#new_owner_id"]').click();
   await expect(dialog.getByLabel("New deal owner")).toBeFocused();
   expect(await dialog.getByLabel("New deal owner").evaluate((element: HTMLSelectElement) => element.validity.valueMissing)).toBe(true);
   await page.route(pattern, route => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ code: "Unavailable", message: "SYN verification: temporary options outage" }) }), { times: 1 });

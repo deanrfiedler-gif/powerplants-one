@@ -23,9 +23,11 @@ import type { RegisterItem } from "../../ticket-register-view";
 import { ServiceDialog, TicketRecord } from "./ticket-record";
 export function TicketCreatePage({ siteId }: { siteId?: string }) {
   return (
+    <div className="sv-create-host" data-module-layout="full-bleed">
     <DeliveryCreation kind="Service" intake>
       {(sales) => <CreateContext siteId={siteId ?? sales?.source.site_id ?? undefined} sales={sales} />}
     </DeliveryCreation>
+    </div>
   );
 }
 function CreateContext({ siteId, sales }: { siteId?: string; sales?: SalesCreation }) {

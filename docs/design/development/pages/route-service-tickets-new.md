@@ -32,6 +32,8 @@ Existing scoped selectors, native intake commands, permission checks and revisio
 
 Site handover accepts site and site_id query parameters and derives the company from a permitted Site read. Existing Sales delivery handover binding is retained. Linked work opens native work orders with their own authorisation/readiness checks; none of the field readiness, quotation tracking, ADR-0058/0059 or MYOB authority rules is changed. Test data remains synthetic with stable internal IDs and explicit references.
 
+The Sales-context panel and native intake form share a vertical full-width host. They must not become competing columns in the shell's full-bleed flex row: that squeezed the form beneath its duplicate-check sidebar and blocked Create request. The existing LC-16 journey retains a real pointer submission, exact returned ticket and native work-order owner scope. Owner visual review of this receiving composition remains pending.
+
 ## Shared components and states
 
 Reuses SecondaryMenuFrame/useSecondaryMenu, usePhoneHeader, RegisterTable/RegisterChip, Button/ButtonLink, ProductIcon through font-awesome-icons.ts, Field/EnumField/SelectField, LocalDateTimeField, ValidationFields/ErrorNotice, ReadState, RecordTabs/RecordPanel, useResource/useCommand and existing IntakeForm/TriageActions. These are consumer bindings; no new shared component is introduced.

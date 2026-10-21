@@ -44044,7 +44044,9 @@
         {
           "section_id": "tasks",
           "title": "Complete the main task",
-          "paragraphs": [],
+          "paragraphs": [
+            "Use Back to scheduling review or Back to planner to retain the incoming selection and filters. Work-order readiness returns to this same appointment and planner context. After controlled cancellation, permitted policy resolution remains a separate online action; refresh disables saving while preserving the original proposal and receipt."
+          ],
           "steps": [
             "Read the dispatch decision and its reasons. Review Parts on the linked demand when you have supply access; otherwise ask the supply owner to review it.",
             "Open the current job pack to review the issued revision, individual acknowledgements and returned issues. An earlier issue acknowledgement does not acknowledge a replacement.",
@@ -45833,6 +45835,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
+            "When arriving from an accepted Sales handover, review its context above the full-width intake form. The duplicate check remains beside the form on desktop and below it on phone. Create request saves the exact request before returning to the independently authorised work-order form.",
             "Use Add as customer statement on a possible match to carry the caller’s words, name, time and channel into that existing request. Review them and record a reason. Saving adds attributed reported-symptom evidence and keeps the new-request draft; it creates no new request and changes no priority, owner or stage.",
             "If the issue is new, complete the required entries and select Create request. Successful creation opens the request at New. Cancelling unsaved work asks whether to discard it."
           ],
@@ -47047,7 +47050,7 @@
             "Check Site number, customer parties, primary contact, location and time zone.",
             "Use Access & readiness for the current visit context. Access notes do not authorise work.",
             "Open Equipment to compare installation and served areas. Show more opens the filtered equipment register.",
-            "Use Site actions → Site details and parties to change a permitted primary contact with a reason, add a party or record technical context. Existing save, validation and version-conflict controls apply."
+            "Use Site actions → Site details and parties to change a permitted primary contact with a reason, add a party or record technical context. Existing save, validation and version-conflict controls apply. Open Work and visits > Owned follow-up and use Next linked activities to reach older work beyond the summary. Open History and use Next for attributed technical records."
           ],
           "headers": [],
           "rows": []

@@ -86,12 +86,15 @@ test("P03 customer, shared contact, site/equipment attribution and My Work at de
   await expect(page.getByText(/Purchasing authority: Unknown/).first()).toBeVisible();
   await capture(page, info, "P03-contact.png");
   await page.goto(`/sites/${site}`);
+  const serviceRequest = page.getByRole("link", { name: /^(Start service request|Service request)$/ }).filter({ visible: true });
+  await expect(serviceRequest).toHaveAttribute("href", `/service/tickets/new?site=${site}`);
+  await page.getByRole("button", { name: "Site actions", exact: true }).filter({ visible: true }).click();
+  await page.getByRole("menuitem", { name: "Site details and parties", exact: true }).click();
+  const parties = page.getByRole("dialog", { name: "Site details and parties", exact: true });
   await expect(
-    page.getByRole("heading", { name: "Operator, owner and billing parties" }),
+    parties.getByRole("heading", { name: "Current and historical site parties", exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Start service intake" }),
-  ).toBeVisible();
+  await expect(parties.getByText(/Operator · Current/).first()).toBeVisible();
   await expect(
     page.getByText("Loading permitted records…", { exact: true }),
   ).toHaveCount(0);

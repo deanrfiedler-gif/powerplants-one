@@ -1132,15 +1132,20 @@ test("PL-04 stale request can be reconsidered against the current complete booki
   assert.ok(changed.history.length>current.history.length);
 });
 
-test("PL-04 stale request still refuses changed appointment, request and resource evidence without reservation loss", async () => {
+test("PL-04 stale request still refuses changed appointment, request and mismatched resource evidence without reservation loss", async () => {
   const actor=await p(), a=await appointment(1), rid=randomUUID();
-  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:crew(1,2)});
+  // Published resource evidence is immutable. Retain a request carrying a
+  // mismatched resource comparison, then prove acceptance rechecks the source.
+  const comparedCrew = crew(1,2).map((member,index) => index === 0 ? {...member,resource_version:member.resource_version+1} : member);
+  await createChangeRequest(actor,a.id,{...base(),id:rid,expected_version:a.version,source_type:"Manual",source_reference:"SYN-PL04-call",source_version:"1",start_at:"2031-09-24T00:00:00Z",end_at:"2031-09-24T02:00:00Z",crew:comparedCrew});
   await moveAppointment(actor,a.id,{...await cmd(1,crew(1,2)),start_at:"2031-09-23T00:00:00Z",end_at:"2031-09-23T02:00:00Z"});
   const before=await snapshot(1), {crew:_crew,...decision}=await cmd(1);void _crew;
   await assert.rejects(decideChangeRequest(actor,rid,{...decision,expected_version:a.version,expected_request_version:1},"accept"),code("VersionConflict"));
   await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:2},"accept"),code("VersionConflict"));
-  await database().query("UPDATE ppo.resources SET version=version+1 WHERE id=$1",[id("a4",1)]);
+  const resourceBefore = await rows("SELECT * FROM ppo.resources WHERE id=$1",[id("a4",1)]);
+  await assert.rejects(database().query("UPDATE ppo.resources SET version=version+1 WHERE id=$1",[id("a4",1)]),code("55000"));
   await assert.rejects(decideChangeRequest(actor,rid,{...decision,...base(),expected_request_version:1},"accept"),code("VersionConflict"));
   assert.deepEqual(await snapshot(1),before);
+  assert.deepEqual(await rows("SELECT * FROM ppo.resources WHERE id=$1",[id("a4",1)]),resourceBefore);
   assert.equal((await appointment(1)).requests.find(r=>r.id===rid)?.status,"Pending");
 });

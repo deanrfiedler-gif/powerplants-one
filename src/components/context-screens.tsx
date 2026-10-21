@@ -260,7 +260,7 @@ function LegacyContextList({
     </>
   );
 }
-function RelatedActivities({ type, id }: { type: string; id: string }) {
+export function RelatedActivities({ type, id }: { type: string; id: string }) {
   const [cursor, setCursor] = useState("");
   const r = useResource<
     Envelope<{

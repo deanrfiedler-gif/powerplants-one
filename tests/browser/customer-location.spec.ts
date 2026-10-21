@@ -288,12 +288,13 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
       ["customer", `/customers/${org}`, "Overview"],
       ["contact", `/people/${person}`, "Identity"],
       ["stakeholders", `/customers/${org}/stakeholders`, "Current"],
-      ["site", `/sites/${site}`, "Details"],
+      ["site", `/sites/${site}`, "Overview"],
       ["readiness", `/sites/${site}/readiness`, ""],
       ["plan", `/customers/${org}/development`, ""],
       ["survey", `/surveys/${surveyId}`, "Survey scope"],
     ] as const;
     for (const [name, path, tab] of screens) {
+      const siteRead = name === "site" ? page.waitForResponse(response => new URL(response.url()).pathname === `/api/v1/sites/${site}/overview` && response.request().method() === "GET" && response.status() === 200) : null;
       await page.goto(path);
       await expect(
         page.locator(".cs-workspace, .record-tablist").first(),
@@ -309,6 +310,11 @@ for (const width of [1440, 1280, 1024, 768, 430, 390, 320]) {
         await expect(
           page.locator("#ppo-readiness .shared-record-header"),
         ).toBeHidden();
+      } else if (name === "site") {
+        const currentSite = (await (await siteRead!).json()).site;
+        expect(currentSite.id).toBe(site);
+        await expect(page.getByRole("heading", { name: currentSite.display_name, exact: true })).toBeVisible();
+        await expect(page.locator("#ppo-sites .site-record-meta")).toContainText(currentSite.display_number);
       } else {
         await expect(page.locator(".business-heading h1").first()).toBeVisible();
       }

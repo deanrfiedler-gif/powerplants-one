@@ -257,7 +257,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
     {
       id: "SC-03",
       url: "/sites/70000000-0000-4000-8000-000000000001",
-      api: "sites/70000000-0000-4000-8000-000000000001",
+      api: "sites/70000000-0000-4000-8000-000000000001/overview",
       profile: "coordinator",
     },
     {
@@ -348,6 +348,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
   const proof: unknown[] = [];
   for (const s of matrix) {
     await test.step(`${s.id}: ${s.url}`, async () => {
+      const screenErrors = page.locator(s.id === "SC-03" ? '.sites-failure[role="alert"]' : '.business-error[role="alert"]');
       const screenLoading = page
         .locator("main")
         .getByText(/^(?:.*\s)?Loading .*…$/);
@@ -380,21 +381,23 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       expect(loaded.headers()["cache-control"]).toBe("private, no-store");
       await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
       await expect(identityToggle(page)).toBeEnabled();
-      await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+      await expect(screenErrors).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
       // Successful status alone is not populated proof. Assert a record from
       // this browser's exact response is actually rendered in the main region.
-      if (s.id !== "SC-13" && s.id !== "SC-14") expect(original.items.length, s.id).toBeGreaterThan(0);
+      if (s.id === "SC-03") expect(original.site.id).toBe("70000000-0000-4000-8000-000000000001");
+      else if (s.id !== "SC-13" && s.id !== "SC-14") expect(original.items.length, s.id).toBeGreaterThan(0);
       // A phone week can also contain visits on other days. Prove this fixture's
       // selected-day appointment is present in the response and on screen.
       const record = s.id === "SC-07"
         ? original.items.find((item: { id: string }) => item.id === appointment)
-        : original.items?.[0];
+        : s.id === "SC-03" ? original.site : original.items?.[0];
       if (s.id === "SC-07") expect(record, "SC-07: selected-day appointment").toBeTruthy();
       const populatedLabel: string = s.id === "SC-13" ? original.current.observations[0].id
         : s.id === "SC-14" ? original.filename
         : s.id === "SC-15" ? record.operation_id
         : s.id === "SC-01" ? record.summary
+        : s.id === "SC-03" ? record.display_name
         : record.display_number ?? record.reference ?? record.display_name;
       expect(populatedLabel, `${s.id}: visible source label`).toBeTruthy();
       await expect(page.locator("main")).toContainText(populatedLabel);
@@ -465,7 +468,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       await expect(
         page
           .getByRole("alert")
-          .filter({ hasText: `SYN ${s.id} current read unavailable` }),
+          .filter({ hasText: s.id === "SC-03" ? "Could not load sites" : `SYN ${s.id} current read unavailable` }),
       ).toBeVisible();
       await expect(screenLoading).toHaveCount(0);
       await expect(
@@ -493,7 +496,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         selectedRead(response) && response.status() === 200,
       { timeout: 60000 });
       await Promise.all([recoveredRead, page.reload({ waitUntil: "domcontentloaded" })]);
-      await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
+      await expect(screenErrors).toHaveCount(0);
       await expect(screenLoading).toHaveCount(0);
       if (s.id === "SC-01") {
         await capture(page, info, `${s.id}-recovered`);
@@ -628,7 +631,7 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
         await expect(
           page
             .getByRole("alert")
-            .filter({ hasText: "requested record is unavailable" }),
+            .filter({ hasText: s.id === "SC-03" ? "Sites unavailable with this access" : "requested record is unavailable" }),
         ).toBeVisible();
         await capture(page, info, `${s.id}-unavailable-record`);
         await page.unroute(match);
@@ -672,8 +675,8 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
       const deniedBody = await denied.json();
       await expect(
         page
-          .locator('.business-error[role="alert"]')
-          .filter({ hasText: deniedBody.message })
+          .locator(s.id === "SC-03" ? '.sites-failure[role="alert"]' : '.business-error[role="alert"]')
+          .filter({ hasText: s.id === "SC-03" ? "Sites unavailable with this access" : deniedBody.message })
           .first(),
       ).toBeVisible();
       await expect(screenLoading).toHaveCount(0);

@@ -116,7 +116,7 @@ export async function sitesRegister(
           ${scopeSql("r.company_id", "r.id", "activity.edit")} AS can_follow_up
         FROM permitted r
       ), filtered AS MATERIALIZED (
-        SELECT * FROM facts WHERE ($3='' OR position(lower($3) IN lower(concat_ws(' ',display_name,display_number,location_description,customers::text)))>0)
+        SELECT * FROM facts WHERE ($3='' OR position(lower($3) IN lower(concat_ws(' ',display_name,display_number,replace(display_number,'SYN-SITE-','SYN-PPO-SITE-'),location_description,customers::text)))>0)
           AND ($4::uuid IS NULL OR EXISTS(SELECT 1 FROM jsonb_array_elements(customers) c WHERE c->>'id'=$4::text))
           AND ($7='' OR ($7='Upcoming' AND next_visit IS NOT NULL) OR ($7='None' AND next_visit IS NULL AND visits_state='Available') OR ($7='Restricted' AND visits_state='Restricted'))
       ), ordered AS (

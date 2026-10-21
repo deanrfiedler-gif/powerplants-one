@@ -173,6 +173,7 @@ export function InspectionWorklist({ mode }: { mode: "capture" | "review" }) {
         </nav>
       }
     >
+      <h1 className="inspection-sr">Inspection review</h1>
       <div className="inspection-toolbar">
         <label>
           <span className="inspection-sr">Performer</span>

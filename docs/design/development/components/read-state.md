@@ -58,6 +58,10 @@ Changes to the source, styles, fixtures, specification or reference invalidate p
 
 ## CS native receiving
 
+CS-04 Work and visits reuses `RelatedActivities` with its existing loading/error/retry and empty states, retaining Next/First linked activities beyond the bounded overview. `tests/browser/sites-native.spec.ts` exercises exact Site scoping and later-page handovers on desktop and phone. P11 observes the actual Overview read, generic Sites failure/denial presentation and independently paged History. Source access and owner visual review remain separate.
+
+The appointment policy-resolution host retains its controlled input, open disclosure and original command through background appointment refresh; evaluation and saving are disabled until that parent read is current. Cancelled remains a permitted resolution outcome when the current server action set allows it. Denial still clears the protected record. `tests/scheduling-browser/enforcement.spec.ts` retains the exact lost-response retry and single saved-resolution proof; this is host behaviour, not a new catalogue renderer or visual acceptance.
+
 The maintained consumer bindings include the native Customer, Contact, Stakeholder, Readiness, Account Development and Survey pages where this control is actually used. Existing catalogue states illustrate the shared control; they do not reproduce the full CS workflow or server decisions. The [CS evidence](../../../testing/evidence/cs-native-completion/README.md) and owning page guides record real workflow checks and inspected widths. Owner/device comparison remains pending in the explicit CS alignment item.
 
 ## Scheduling consumers

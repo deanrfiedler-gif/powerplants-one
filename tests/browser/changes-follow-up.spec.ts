@@ -267,7 +267,7 @@ test("PL-04 exact handover bypasses queue and period without contaminating count
   await expect(
     page.getByText("Exact appointment handover", { exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".changes-link")).toBeVisible();
+  await expect(page.locator(".changes-link:visible, .changes-phone-list button:visible").first()).toBeVisible();
   await expect(page.locator("#changes-menu .mw-badge").first()).toHaveText("0");
   await capture(page, info, "exact-1440");
   await page

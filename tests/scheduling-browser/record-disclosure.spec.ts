@@ -18,6 +18,7 @@ test("saved record selection retains explicit disclosure intent before the queue
   });
   expect(login.ok()).toBeTruthy();
   await page.goto("/schedule/policy-impact");
+  await page.locator("details.changes-policy-saved > summary").click();
   const summary = page.getByText("Reopen saved records", { exact: true });
   await expect(summary).toBeVisible();
   // Native details toggle notification is queued. Make both user interactions

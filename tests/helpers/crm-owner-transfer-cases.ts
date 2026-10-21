@@ -152,7 +152,7 @@ export function ownerTransferCases() {
       ["opportunity_origins", "opportunity_id", input.id, "source_version=source_version+1"],
       ["opportunity_owner_transfers", "opportunity_id", input.id, "opportunity_version=opportunity_version+1"],
       ["opportunity_events", "opportunity_id", input.id, "reason='SYN rewritten evidence'"],
-      ["operation_receipts", "operation_id", body.operation_id, "record_version=record_version+1"],
+      ["operation_receipts", "operation_id", body.operation_id, "result=jsonb_set(result,'{record_version}',to_jsonb((result->>'record_version')::integer+1))"],
     ]) {
       for (const sql of [`UPDATE ppo.${table} SET ${assignment} WHERE ${where}=$1`, `DELETE FROM ppo.${table} WHERE ${where}=$1`]) {
         await assert.rejects(rows(sql, [id]), code("55000"));

@@ -1380,6 +1380,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
         customer_name: string;
         primary_contact_id: string | null;
         can_manage: boolean;
+        can_read_supply: boolean;
         can_request: boolean;
         can_contact: boolean;
         can_resolve_policy: boolean;
@@ -1391,6 +1392,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
          a.scope_revision_id IS DISTINCT FROM w.authorised_scope_revision_id OR a.scope_version<>sr.version) AS scope_review_required,
         site.display_name AS site_name,site.primary_contact_id,customer.display_name AS customer_name,
         ${scopeSql("a.company_id", "a.site_id", "schedule.manage")} AS can_manage,
+        ${scopeSql("a.company_id", "a.site_id", "supply.read")} AS can_read_supply,
         ${scopeSql("a.company_id", "a.site_id", "schedule.request")} AS can_request,
         ${scopeSql("a.company_id", "a.site_id", "schedule.contact")} AS can_contact,
         (${policyReads.map(cap => scopeSql("a.company_id", "a.site_id", cap)).join(" AND ")}
@@ -1450,7 +1452,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
     const affected = (await c.query("SELECT DISTINCT appointment_id FROM ppo.scheduling_policy_impacts WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])", [p.workspace_id, permitted])).rows;
     for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
   }
-  return rows.map(({ can_manage, can_request, can_contact, can_resolve_policy, ...a }) => ({
+  return rows.map(({ can_manage, can_read_supply, can_request, can_contact, can_resolve_policy, ...a }) => ({
     ...a,
     projection: "ScheduleSummary" as const,
     policy_impacts: impacts.get(a.id) ?? [],
@@ -1459,7 +1461,7 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
       .filter((x) => x.appointment_id === a.id)
       .map(({ id, status }) => ({ id, status })),
     policy: policies.get(a.scheduling_policy_id ?? SCHEDULING_POLICY_ID)!,
-    actions: { can_manage, can_request, can_contact, can_resolve_policy },
+    actions: { can_manage, can_read_supply, can_request, can_contact, can_resolve_policy },
   }));
 }
 export async function readAppointment(
