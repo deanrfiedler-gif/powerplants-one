@@ -29,6 +29,8 @@ Independent GPT-6-astra receiving review at 9f516a90 found a retained Site follo
 
 The receiving reviewer re-read the access fix and closed the P2 with no further findings (static review only). Final focused compiled phone inspection and Site revocation tests pass 2/2, including exact issued HTML/PDF. Final focused desktop proof passes 3/3: all fifteen screen families, the rail first-paint/layout-shift budget and Site pagination/late-response denial. The rebuilt application, targeted lint and studio checks pass; final-head CI remains the merge gate.
 
+The complete compiled desktop P11 Service-to-Finance and return-visit journey passes in 2.5 minutes after adapting Site navigation to the RecordTabs roving-keyboard contract and opening the current cancellation menu. Initial and return outputs, personal originals, exact response, Finance reconciliation and Travel no-posting assertions remain. The earlier local attempts failed at those outdated controls and are not passes. A complete phone rerun is in progress; no deadline changed.
+
 ## Site surveys CS-08 build and authorised short references — 21 October 2026
 
 Dean approved the [short reference approach](decisions/readable-reference-namespaces.md) and the required migration after the 20 October preflight. Draft PR #650 implements CS-08 on its isolated branch: new SYN-SRV-000nnn references, explicit planned visit/contact facts, the accepted compact register and six-section record, original photo retention, independent review/return and exact reviewed handover. Existing reference values and retained snapshots are preserved; no new capability, seed, dependency or document-store connection is introduced.

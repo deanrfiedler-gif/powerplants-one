@@ -10,6 +10,7 @@ import { call, capture, identity, saveOriginal } from "./quality-browser";
 
 import {
   keyActivate,
+  keyFocus,
   keyType,
   keySelect,
   keyAdvanceDays,
@@ -209,7 +210,12 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   expect((await site.json()).site.id).toBe(id("70"));
   const history = await observedResponse(page, "initial-site-history-read",
     response => new URL(response.url()).pathname === `/api/v1/sites/${id("70")}/history` && response.request().method() === "GET",
-    () => keyActivate(page, page.getByRole("tab", { name: "History", exact: true })),
+    async () => {
+      const tabs = page.getByRole("tablist", { name: "Site sections", exact: true });
+      await keyFocus(page, tabs.getByRole("tab", { selected: true }));
+      await page.keyboard.press("End");
+      await expect(tabs.getByRole("tab", { name: "History", exact: true })).toBeFocused();
+    },
   );
   expect(history.status(), await history.text()).toBe(200);
   expect(history.headers()["cache-control"]).toBe("private, no-store");
@@ -235,7 +241,12 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       return url.pathname === "/api/v1/activities" && response.request().method() === "GET" &&
         url.searchParams.get("object_type") === "Site" && url.searchParams.get("object_id") === id("70");
     },
-    () => keyActivate(page, page.getByRole("tab", { name: "Work and visits", exact: true })),
+    async () => {
+      const tabs = page.getByRole("tablist", { name: "Site sections", exact: true });
+      await keyFocus(page, tabs.getByRole("tab", { name: "History", exact: true }));
+      await page.keyboard.press("ArrowLeft");
+      await expect(tabs.getByRole("tab", { name: "Work and visits", exact: true })).toBeFocused();
+    },
   );
   expect(activities.status(), await activities.text()).toBe(200);
   expect(activities.headers()["cache-control"]).toBe("private, no-store");
@@ -254,7 +265,7 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     const result = page.waitForResponse((r) =>
       new URL(r.url()).pathname === "/api/v1/activities" &&
       r.request().method() === "GET");
-    await next.press("Enter");
+    await keyActivate(page, next);
     expect((await result).ok()).toBe(true);
   }
   await expect(oem).toBeVisible();
