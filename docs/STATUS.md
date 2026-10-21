@@ -25,6 +25,12 @@ The compiled desktop budget exhausted on unchanged main and the earlier #648 hea
 
 After #652 was externally merged into its infrastructure parent #653, Dean confirmed other merges were paused and requested separate scopes again, with both PRs left unmerged. Infrastructure-only #655 now targets main; #653 continues the same 30-file Field team change above it. Application and test bytes remain identical to green `b21c073a`; only restoration evidence and generated status change. Final-head checks are recorded on #653. A later authorised merge must land the infrastructure parent into main first and retarget Field team to main. Owner visual review remains pending.
 
+## Native database CI capacity repair claimed — 21 October 2026
+
+Dean authorised a separate repair for the database-2 job's 90-minute cancellation on Conversations #654. Codex owns `codex/database-ci-timeout`, cut from current main `f13bd157`. The claim covers the native database matrix in `.github/workflows/application.yml`, the existing [retained-suite isolation decision](decisions/ci-retained-suite-isolation.md), selection/workflow verification and execution evidence. Conversations #654 and Facilities #627 remain separate.
+
+The investigation compares the cancelled exact-source job with passing unchanged main. The repair must preserve every discovered database test, serial execution within each disposable `ppo_synthetic_test`, the existing test/job deadlines and mandatory aggregate. Verification is pending. No application, schema, permission, dependency, deployment or business acceptance is claimed.
+
 ## Compiled desktop browser CI partition prepared — 21 October 2026
 
 Dean requested green CI for Field team #648 with unrelated infrastructure repairs kept separate. Codex owns infrastructure-only #655 on `codex/ci-desktop-shards-review`; #653 is the Field team continuation after the externally merged #648 and #652. Dean paused other merges and requested both restored PRs remain unmerged for review. The compiled desktop job reached its 60-minute limit on unchanged main `78795dd6` and on #648; the complete suite no longer has reliable job margin. The [compiled-browser decision](decisions/ci-compiled-browser-suite.md) records the baseline and preserves all projects, original test deadlines, warm-up and retained restart proof.
