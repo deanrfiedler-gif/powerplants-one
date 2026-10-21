@@ -1,6 +1,6 @@
 # Native database CI capacity
 
-Scope: Dean's separate database-2 CI timeout repair, draft PR [#657](https://github.com/deanrfiedler-gif/powerplants-one/pull/657), branch `codex/database-ci-timeout`, based on main `f13bd157835c3fb511885cefae321ba98cc32d86`. The [existing isolation decision](../../../decisions/ci-retained-suite-isolation.md#native-database-capacity--21-october-2026) records the approach and alternatives. Conversations #654 and Facilities #627 remain independent.
+Scope: Dean's separate database-2 CI timeout repair, draft implementation PR [#658](https://github.com/deanrfiedler-gif/powerplants-one/pull/658), branch `codex/database-ci-timeout`, originally based on main `f13bd157835c3fb511885cefae321ba98cc32d86`. The documentation-only claim [#657](https://github.com/deanrfiedler-gif/powerplants-one/pull/657) was externally merged by the owner account before the implementation push. The branch then integrated current main `8da0762e`; that merge adds claim/integration documentation only. The [existing isolation decision](../../../decisions/ci-retained-suite-isolation.md#native-database-capacity--21-october-2026) records the approach and alternatives. Conversations #654 and Facilities #627 remain independent.
 
 ## Diagnosis
 
