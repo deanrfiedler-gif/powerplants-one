@@ -30,6 +30,7 @@ import {
   requireDraftGroup,
 } from "../../src/estimating/discovery-workspace-context";
 import {
+  listDiscoveryWorkspaces,
   createDiscoveryWorkspace,
   previewDiscoveryCreate,
   previewDiscoveryChange,
@@ -987,4 +988,28 @@ test("E2 application and SQL guards hold unsupported states anywhere in the grou
     }
   }
   assert.deepEqual(await businessSnapshot(), before);
+});
+
+// ES-02 register projection: derive the accepted fields from existing authorised records.
+test("Discovery register exposes recorded owner/customer and withholds denied workspaces", async () => {
+  const s = await saved();
+  const result = await listDiscoveryWorkspaces(s.p, { opportunity_id: s.o.id });
+  assert.equal(result.items.length, 1);
+  const row = result.items[0];
+  assert.equal(row.owner.id, s.view.workspace.owner_id);
+  assert.ok(row.owner.name);
+  assert.equal(row.customer.id, s.o.organisation_id);
+  assert.ok(row.customer.name);
+  assert.equal(row.company_id, s.o.company_id);
+  assert.equal(row.updated_at, s.view.workspace.updated_at.toISOString());
+  assert.equal(row.options[0].ordinal, 1);
+  assert.equal(row.options[0].kind, "Discovery");
+  assert.deepEqual(row.cost, { status: "NoEstimate" });
+  assert.equal(result.can_create, true);
+  assert.ok(Number.isFinite(Date.parse(result.as_at)));
+  assert.equal("lines" in row.cost, false);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='estimating.edit'", [s.p.workspace_id, s.p.actor_id]);
+  assert.equal((await listDiscoveryWorkspaces(s.p)).can_create, false);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='crm.opportunity.read'", [s.p.workspace_id, s.p.actor_id]);
+  assert.equal((await listDiscoveryWorkspaces(s.p)).items.some(item => item.id === row.id), false);
 });

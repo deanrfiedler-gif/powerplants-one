@@ -9,6 +9,16 @@ Codex is implementing the [owner-accepted PL-04 design](decisions/changes-follow
 
 The build will reuse the shell secondary menu and compact phone header, shared register table, buttons, record tabs and existing booking commands. Synthetic fixtures will exercise period/site counts, exact-appointment handovers, stale requests, permission and read states, and desktop/tablet/390/320 layouts. P4 site readiness remains gated and Conversations is excluded. No migration, new capability or dependency is proposed. Verification is pending; owner visual review, business acceptance and deployment remain separate.
 
+## Chrome 156 compatibility maintenance — 21 October 2026
+
+Dean authorised separate runtime maintenance PR #643 after Sites #640's CI began installing Chrome `156.0.8078.47` and rejecting it before application tests. The refusal reproduced on unchanged main `4c1097cc`. PR #630 subsequently merged the same browser repair into main at `f6d2cc7a`; #643 preserves that implementation and its tests, and now retains the parallel verification history only. Sites #640 can receive the fix directly from main. The [browser maintenance record](decisions/browser-runtime-maintenance.md) distinguishes exact-source browser/PDF and CI evidence from the reconciled documentation checks. No deployment, database change or business transaction was performed by this repair session.
+
+## Chrome 156 compatibility repair for PR #630 — 21 October 2026
+
+Dean authorised repairing the shared browser-version mismatch that blocked PR #630 before its application checks. The [browser maintenance record](decisions/browser-runtime-maintenance.md) extends the existing ADR-0022 range to Chrome 156 from `156.0.8078.47`, the exact stable package observed in CI. Earlier major floors, earlier-build rejection and future-major rejection remain. Boundary regression cases accompany the change; actual Chrome 156 rendering and browser proof belong to the final commit's CI results on the PR.
+
+No package dependency, installer, launch flag, permission, migration or deployment changes. The Discovery register remains pending owner visual review; passing runtime assurance is separate from business acceptance.
+
 ## Site surveys CS-08 build preflight awaits migration approval — 20 October 2026
 
 Dean requested implementation of the accepted Site surveys CS-08 register and record at `/surveys` and `/surveys/[id]` on 20 October 2026. Codex owns the isolated `codex/site-surveys-cs08` branch, cut from main `971ac350`. The [accepted design decision](decisions/site-surveys-figma-design.md) remains the authority for D1–D7 and Q1–Q4. Live Figma inspection confirmed the file-index entry, page structure and accepted notes card: file "PPO - Design", page `1464:2918`, notes `1464:4164`, named version "Site surveys — accepted". Full frame inspection and runtime comparison remain pending.
@@ -46,6 +56,12 @@ PR #625's four full browser jobs failed the same new CS-02 assertion: the compac
 Current main `0ebb26a3` was integrated before the correction. The [page contract](design/development/pages/route-people.md) and [verification evidence](testing/evidence/people-native/README.md) record the source comparison and local database connection limitation. Full CI rerun results remain separate from earlier local passes. No reference, migration, permission, dependency or owner acceptance changes.
 
 At repair commit `53fb1a6a`, all four full browser suites pass the People cases: each desktop suite reports 503 passed / 21 skipped, and each mobile suite 445 passed / 79 skipped. CI also passes 950 unit tests, static/type/build checks, the PostgreSQL shards and other application lanes. The compiled desktop job nevertheless reaches its existing 60-minute job limit after reporting successful tests, leaving its aggregate red; a targeted retry was requested. Unchanged main's corresponding workflow passes, and no test or timeout was weakened. Current main `0909db97` adds claim/reservation records only; its generated-status conflict is resolved through the generator. Exact-run evidence and remaining gate results are distinguished on PR #625. Owner review remains pending.
+
+## Discovery register ES-02 native implementation — 20 October 2026
+
+The existing `/estimating/discovery` route now implements the accepted Discovery register design: compact desktop/tablet grid, responsive phone rows, overlapping saved-evidence views, owner/customer filters and read-only snapshot. Existing schema confirms a workspace owner, resolving Q2's Estimator label. The list read gains bounded authorised customer, owner, changed and selected-option cost fields; no migration, capability or dependency is added. The [implementation decision](decisions/discovery-register-native.md) distinguishes authorisation to build from UI acceptance and documents remaining activity and unspecified-control questions.
+
+The page contract, design/component register and guide are updated together. [Verification](testing/evidence/discovery-register-native/README.md) records checks and limitations. Native owner visual review, business approval and deployment remain pending; the accepted Figma design is not evidence of an accepted native baseline.
 
 ## ES-02 reviewed discovery creation prerequisite — 20 October 2026
 
