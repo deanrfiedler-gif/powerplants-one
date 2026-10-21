@@ -412,7 +412,7 @@ function VisitDetails({ id, close, zone }: { id: string; close: () => void; zone
   );
 }
 
-export function FieldTechniciansScreen() {
+export function FieldTechniciansScreen({ embeddedView }: { embeddedView?: View } = {}) {
   const search = useSearchParams();
   const query = new URLSearchParams(search.toString());
   const selectedZone = plannerContext(query).zone;
@@ -423,7 +423,9 @@ export function FieldTechniciansScreen() {
     Object.entries(patch).forEach(([key, value]) => value ? q.set(key, value) : q.delete(key));
     window.history.replaceState(null, "", "/service/technicians?" + q);
   };
-  const [view, setView] = useState<View>("visits");
+  const [localView, setLocalView] = useState<View>("visits");
+  const view = embeddedView ?? localView;
+  const setView = (value: View) => embeddedView ? update({ view: value }) : setLocalView(value);
   const [filters, setFilters] = useState<Record<View, VisitFilters>>({
     visits: blank(),
     team: blank(),
@@ -454,9 +456,11 @@ export function FieldTechniciansScreen() {
   const data = available ? read.data : null;
   const visits = data?.items ?? [],
     resources = data?.resources ?? [];
-  const f = filters[view];
-  const change = (partial: Partial<VisitFilters>) =>
+  const f = { ...filters[view], ...(embeddedView ? { person: plannerContext(query).resource, search: query.get(`${view}_search`) ?? "", status: query.get(`${view}_status`) ?? "", sort: query.get(`${view}_sort`) ?? "time" } : {}) };
+  const change = (partial: Partial<VisitFilters>) => {
+    if (embeddedView) update(Object.fromEntries(Object.entries(partial).map(([key, value]) => [key === "person" ? "resource_id" : `${view}_${key}`, value])));
     setFilters((old) => ({ ...old, [view]: { ...old[view], ...partial } }));
+  };
   const filtered = filterVisits(visits, f, view === "attention");
   const team = resources
     .filter(
@@ -495,7 +499,10 @@ export function FieldTechniciansScreen() {
     setView("visits");
     document.getElementById("ft-view-visits")?.focus();
   };
-  const clear = () => setFilters((old) => ({ ...old, [view]: blank() }));
+  const clear = () => {
+    if (embeddedView) update({ resource_id: "", [`${view}_search`]: "", [`${view}_status`]: "", [`${view}_sort`]: "" });
+    setFilters((old) => ({ ...old, [view]: blank() }));
+  };
   const hasFilters = !!(f.search || f.person || f.status);
   return (
     <section
@@ -960,7 +967,7 @@ export function FieldTechniciansScreen() {
         <span>Powerplants One · Service</span>
         <Link href="/schedule">Open Service planner</Link>
       </footer>
-      {selected && data && (
+      {selected && data && view !== "team" && (
         <VisitDetails key={selected} id={selected} close={close} zone={zone} />
       )}
     </section>
