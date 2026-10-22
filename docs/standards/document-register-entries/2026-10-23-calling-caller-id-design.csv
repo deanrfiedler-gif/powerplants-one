@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CALLS-CALLER-ID-PROP,"Calling, caller ID and call logging design paper",docs/decisions/calling-and-caller-id-design.md,,Accepted by the owner 23 October 2026 (Q1–Q12 as recommended); stages 1a and 1b authorised,Dean Fiedler,926081f8,,,git,
+PPO-ADR-0063,One native Powerplants One phone app,docs/decisions/ADR-0063-native-phone-app.md,,Direction accepted 23 October 2026; Capacitor subject to spike; stage 2 not authorised; adds no dependency,Dean Fiedler,926081f8,,,git,
