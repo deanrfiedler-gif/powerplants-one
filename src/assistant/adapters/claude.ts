@@ -57,6 +57,7 @@ function usageFor(value: unknown, allowance: Usage): Usage | null {
     || (value.speed != null && value.speed !== "standard")) return null;
   // output_tokens includes reasoning; details are a decomposition, never an additional charge.
   if (value.output_tokens_details != null && (!record(value.output_tokens_details)
+    || Object.keys(value.output_tokens_details).some(key => key !== "thinking_tokens")
     || Object.values(value.output_tokens_details).some(n => n != null && (!count(n) || n > Number(value.output_tokens))))) return null;
   return { input_tokens: value.input_tokens, output_tokens: value.output_tokens };
 }

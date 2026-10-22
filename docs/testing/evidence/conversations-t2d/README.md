@@ -21,13 +21,23 @@ Provider tests use the actual pinned SDK with unmistakably dummy credentials and
 ## Local checks before implementation push
 
 - Assistant unit subset: 39/39 passed, including owned HTTPS restrictions, invalid empty-body status handling, returned-model mismatch, actual SDK timeout and exact allowance boundaries. Native Node HTTP/TLS debug/key-log settings were added to the guard test first; it failed on credential access, then passed after the guard correction.
-- Full serial unit inventory at that checkpoint: 1033 tests, 1030 pass, 3 fail. The two document-store cases fail with ExactDocumentUnavailable and recovery's path case expects /outside Git/ but receives Unsafe recovery directory. Both files were rerun in a clean detached worktree at unchanged main 002af00e4e19e9aa0d12f83d36199bebe6572a1b with its own npm ci: the identical three failures reproduce (1 pass/3 fail), and git status stays clean. Subsequent focused additions do not replace this full-inventory result.
+- Full serial unit inventory at the later d6291228 checkpoint: 1038 tests, 1035 pass, 3 fail. The two document-store cases fail with ExactDocumentUnavailable and recovery's path case expects /outside Git/ but receives Unsafe recovery directory. Both files were rerun in a clean detached worktree at unchanged main 002af00e4e19e9aa0d12f83d36199bebe6572a1b with its own npm ci: the identical three failures reproduce (1 pass/3 fail), and git status stays clean. The final nested-usage refinement subsequently passed the 39-case assistant subset and all seven persisted SDK cases; exact-head full checks are identified in the PR ledger.
 - 8 GB typecheck and full-tree lint pass. The typecheck also caught one new fixture missing NODE_ENV; corrected before the passing run.
 - Runtime dependency audit: zero vulnerabilities. Full locked-tree audit gate passes with the existing documented braces exception; no new exception.
 - Generated status/index check, naming, foundation and studio:check pass. Studio reports 340 unreviewed and 26 stale entries; no visual review was performed or credited. Foundation retains all 78 parent IDs.
 
 - After integrating main ab2142d12cce947483c8425c16e640e37f06e90e, all 22 documentation regressions, documentation scope, source generation, foundation, naming and prototype checks pass. Tracked status/index landing pages are unchanged; generated views are ignored.
 - The first CI audit attempt on implementation head dfb5775d failed because npm's advisory endpoint returned HTTP 503 after five minutes. An unchanged rerun passed. This was an unavailable audit result, not a vulnerability finding or an exception.
+
+## Later local execution and final usage refinement
+
+The focused database run completed 36 passing cases before free RAM fell to 569416 KB; the owned test/queued validation processes and PostgreSQL cluster were stopped. After memory recovered, the remaining files passed 52/52, including three repeats: **85 distinct affected cases passed**, including both managed-template manifest cases. This is focused local coverage; the full local database inventory was not run under that observed resource constraint. Complete eight-shard CI remains separate.
+
+The compiled Conversations HTTP suite passed 10/10. Controlled Chrome 156.0.8078.48 with Playwright 1.64.1 passed its offline renderer check. Compiled desktop/mobile Conversations passed 56 with seven existing viewport skips. The ordinary run reached its unchanged 900000 ms all-route warm-up deadline: one failed setup and 62 unrun browser cases. The unchanged-current-main comparison and its result belong to the PR ledger; no baseline classification is assumed here. Next's automatic tsconfig formatting/type-path edit was restored after its server stopped.
+
+A final test-first case exposed acceptance of an unknown nested output_tokens_details category. The validator now permits only the documented inclusive thinking_tokens detail. The assistant subset passes 39/39 after the change; all seven actual-SDK persisted cases pass again (106.2 seconds), including full Unknown reservation retention and one dispatch for the new category, and an explicit raw-question leakage assertion. Known reasoning still settles once through the inclusive output total. No API call, new schema or additional billing representation was introduced.
+
+The runtime/full-lock audit gate also hit npm HTTP 503 on the later d6291228 CI attempt; its unchanged rerun passed. Both unavailable audit attempts remain in GitHub history. No advisory exception was added.
 
 ## Exact-head execution ledger
 

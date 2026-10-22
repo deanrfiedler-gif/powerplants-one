@@ -69,7 +69,7 @@ test("T2d persisted service → queue → actual SDK/worker → immutable cited 
     await assert.rejects(database().query(sql, [stored[0].id]), code("55000"));
   for (const table of ["audit_events", "operation_receipts", "outbox_jobs", "assistant_turns", "assistant_budget_entries"]) {
     const data = JSON.stringify(await rows(`SELECT to_jsonb(t) AS data FROM ppo.${table} t`));
-    for (const secret of [claim, "SYN Delivery timing is unknown.", env.PPO_ANTHROPIC_API_KEY, "msg_SYN"])
+    for (const secret of [f.input.body, claim, "SYN Delivery timing is unknown.", env.PPO_ANTHROPIC_API_KEY, "msg_SYN"])
       assert.equal(data.includes(secret), false, table);
   }
 });
@@ -114,10 +114,13 @@ test("T2d citation/text failures settle known usage, and decline stores only the
 });
 
 test("T2d unexpected billing usage retains full reservation and stops", async () => {
-  const f = await fixture(); let calls = 0;
-  const adapter = createClaudeAdapter({ env, transport: async () => { calls++; return response({ usage: { ...usage, cache_read_input_tokens: 10 } }); } });
-  assert.equal((await runAssistantTurn(f.turn, { env, adapter })).reason, "MalformedOutput");
-  assert.equal(calls, 1); assert.equal((await ledger(f.turn))[0].state, "Unknown");
+  for (const reported of [{ ...usage, cache_read_input_tokens: 10 }, { ...usage, output_tokens_details: { future_billable_tokens: 1 } }]) {
+    const f = await fixture(); let calls = 0;
+    const adapter = createClaudeAdapter({ env, transport: async () => { calls++; return response({ usage: reported }); } });
+    assert.equal((await runAssistantTurn(f.turn, { env, adapter })).reason, "MalformedOutput");
+    assert.equal(calls, 1); assert.equal((await ledger(f.turn))[0].state, "Unknown");
+    assert.equal((await ledger(f.turn))[0].reserved_micro, 176000);
+  }
 });
 
 test("T2d reservation-first concurrency refuses a competing turn at the ceiling before transport", async () => {

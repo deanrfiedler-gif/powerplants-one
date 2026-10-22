@@ -130,7 +130,7 @@ test("T2d malformed/truncated/oversized/unexpected content preserves known usage
 
 test("T2d unrepresentable or missing usage never silently becomes zero/ordinary input", async () => {
   for (const u of [undefined, { ...usage, cache_read_input_tokens: 3 }, { ...usage, cache_creation_input_tokens: 4 },
-    { ...usage, server_tool_use: { web_search_requests: 1 } }, { ...usage, future_billable_tokens: 10 },
+    { ...usage, server_tool_use: { web_search_requests: 1 } }, { ...usage, future_billable_tokens: 10 }, { ...usage, output_tokens_details: { future_billable_tokens: 1 } },
     { ...usage, input_tokens: -1 }, { ...usage, output_tokens: 8001 }, { ...usage, service_tier: "priority" }]) {
     const adapter = createClaudeAdapter({ env, transport: async () => response(message({ usage: u })) });
     await assert.rejects(adapter.answer(request(), signal()), failure("MalformedOutput", true, false));
