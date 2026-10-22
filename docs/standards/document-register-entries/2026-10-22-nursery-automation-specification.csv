@@ -1,0 +1,8 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-NURSERY-AUTOMATION-SPEC-DEC,Nursery Automation Configurator specification scope,docs/decisions/nursery-automation-specification.md,,Documentation scope authorised; detailed design proposed,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-AUTOMATION-SPEC,Nursery Automation Configurator workbench specification,docs/blueprints/nursery-automation-configurator.md,,Draft for review,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-AUTOMATION-ACCEPTANCE,Nursery Automation Configurator acceptance catalogue,docs/testing/nursery-automation-acceptance.md,,Proposed tests; not executed,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-AUTOMATION-DESIGN,Nursery Automation Configurator working design note,docs/design/development/nursery-automation.md,,Proposed design; visuals missing,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-EQUIPMENT-DATA-GUIDE,Nursery Automation equipment-data template,docs/templates/nursery-automation/README.md,,Draft for review,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-EQUIPMENT-DATA,Nursery Automation equipment-data field dictionary,docs/templates/nursery-automation/equipment-data-template.json,,Draft for review,Dean Fiedler,bb5da7d1,,,git,
+PPO-NURSERY-EQUIPMENT-WORKBOOK,Nursery Automation equipment-data workbook,docs/templates/nursery-automation/equipment-data-template.xlsx,,Draft for review,Dean Fiedler,bb5da7d1,,,git,
