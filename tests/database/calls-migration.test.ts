@@ -73,7 +73,7 @@ test("0118 upgrades populated 0116 without changing any existing row and keeps e
   assert.equal((await rows("SELECT count(*)::int AS n FROM ppo.contact_numbers"))[0].n, 1);
 });
 
-test("0118 constraints refuse two primaries, two parties, unread numbers not needing checking, Logged events without an activity and any change to call details", async () => {
+test("0118 constraints refuse two primaries, two parties, unread numbers not needing checking, Logged events without an activity, events naming two parties and any change to call details", async () => {
   const [{ workspace_id, created_by }] = await rows("SELECT workspace_id,created_by FROM ppo.people WHERE id=$1", [person(1)]);
   const number = (values: Record<string, unknown>) =>
     database().query(
@@ -88,14 +88,14 @@ test("0118 constraints refuse two primaries, two parties, unread numbers not nee
   await number({});
   const event = (state: string) =>
     database().query(
-      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,started_at,state,resolved_at,resolved_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,clock_timestamp(),$6,clock_timestamp(),$3)",
+      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,started_at,state,resolved_at,resolved_by,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,clock_timestamp(),$6,clock_timestamp(),$3,$3)",
       [randomUUID(), workspace_id, created_by, randomUUID(), person(1), state],
     );
   await assert.rejects(event("Logged"), violates("23514"));
   await assert.rejects(
     database().query(
-      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,started_at) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',clock_timestamp())",
-      [randomUUID(), workspace_id, created_by, randomUUID()],
+      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,organisation_id,started_at,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,$6,clock_timestamp(),$3)",
+      [randomUUID(), workspace_id, created_by, randomUUID(), person(1), organisation],
     ),
     violates("23514"),
   );
