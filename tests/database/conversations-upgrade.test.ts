@@ -63,7 +63,7 @@ test("populated 0107 upgrade keeps every earlier row, adds exactly seed 108's gr
   await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual((await c.query("SELECT * FROM public.ppo_migrations WHERE version<=107 ORDER BY version")).rows, ledger);
-  assert.deepEqual((await c.query("SELECT version FROM public.ppo_migrations WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }]);
+  assert.deepEqual((await c.query("SELECT version FROM public.ppo_migrations WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 118 }]);
   assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 110 }]);
   // Exactly the live Opportunity and Project readers of active local profiles gain the two duties, in their own scopes.
   const added = (await c.query("SELECT * FROM ppo.permission_grants WHERE capability IN ('conversation.read','conversation.post') ORDER BY id")).rows;
