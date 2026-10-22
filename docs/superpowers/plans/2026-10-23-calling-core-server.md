@@ -7,7 +7,7 @@
 **Architecture:**
 - A new `src/calls/` module holds pure number reading, party numbers, lookup, call events and call logging.
 - Writes go through `sharedOperation` (receipts, audit, outbox). Reads reuse the existing visibility SQL.
-- Migration 0118 adds the tables, extends the audit and outbox constraints, and adds the company phone region. `people.phone` is kept as a mirror of the primary number, so existing screens keep working until stage 1c.
+- Migration 0118 adds the tables (including `ppo.company_phone_settings` for the region) and extends the audit, outbox and identity-type constraints. `people.phone` is kept as a mirror of the primary number, so existing screens keep working until stage 1c.
 
 **Tech Stack:** TypeScript, PostgreSQL 16, Next.js route handlers, `node:test`, and libphonenumber-js 1.13.15 (exact pin, `max` metadata).
 
@@ -25,7 +25,7 @@
 - **Labels:** `Mobile`, `Work`, `Home`, `Other`. **Results:** `Connected`, `NoAnswer`, `LeftVoicemail`, `Busy`, `WrongNumber`. **Skip reasons:** `Personal`, `NotBusiness`, `AlreadyLogged`. **Sources:** `ClickToCall`, `PhoneApp`, `Teams`.
 - **Retention:** skipped events are deleted 30 days after they were skipped (Q5). A logged event keeps only its activity link.
 - **Click-to-call prompt window:** two hours (Q8). This is client behaviour in stage 1c; the server exposes `started_at` so the client can apply it.
-- **Region:** `ppo.companies.default_phone_region`, default `AU` (Q9).
+- **Region:** `ppo.company_phone_settings.default_phone_region`, or `AU` when a company has no row (Q9). A new column on `ppo.companies` was rejected during the build because it would change rows that several upgrade suites snapshot.
 - **Scope:** no new capability, grant, seed, route page or UI. No change to `src/platform/operations.ts`, `src/shared/validation.ts` or any other DK06-OUT09-1 fingerprinted source file. The lockfile change does alter that fingerprint: record this in the ADR.
 - **Migration test duties:** follow every rule in `AGENTS.md`.
 
@@ -79,13 +79,14 @@
   - `ppo.contact_numbers(id, workspace_id, person_id?, organisation_id?, label, entered, e164?, region, needs_checking, is_primary, position, created_at/by, updated_at/by, synthetic)`. Exactly one party is set. `needs_checking` is true whenever `e164` is NULL. A partial unique index allows one primary per party. Index `(workspace_id, e164)`.
   - `ppo.call_events(id, workspace_id, user_id, source, source_reference, direction, number_e164, person_id?, organisation_id?, started_at, answered?, duration_seconds?, state, activity_id?, skip_reason?, resolved_at?, resolved_by?, version, created_at, synthetic)`. `UNIQUE(workspace_id, source, source_reference)`. The state CHECK ties `activity_id` to Logged and `resolved_*` to Logged or Skipped.
   - `ppo.call_details(activity_id PK, workspace_id, direction, result, number_entered?, number_e164?, person_id?, started_at, duration_seconds?, call_event_id? UNIQUE, created_at, created_by)`. Immutable through `ppo.immutable_evidence()` on UPDATE or DELETE.
-  - `ppo.companies.default_phone_region text NOT NULL DEFAULT 'AU'`.
+  - `ppo.company_phone_settings(workspace_id, company_id, default_phone_region)`.
+  - `CallEvent` becomes a business identity type, so receipts can reference events. This follows the `identity_target` rule; a purged event leaves only its id and type.
 - The constraints extend in the 0110 idiom:
   - `ck_audit_object_type` gains `CallEvent`;
   - `ck_outbox_kind` gains `CallEventRecorded`, `CallEventSkipped` and `CallLogged`.
 - Backfill: each person with a non-blank `phone` gets one primary `Other` row with entered text equal to `phone`, `e164` NULL and `needs_checking` true. SQL cannot read numbers; the next save re-reads them (contract note).
 
-- [ ] Test `0118 upgrade from 0116 keeps every person phone byte-for-byte as one primary Other number needing checking`. Seed two people with `0412 345 678` and `SYN phone` at version 116, upgrade, and assert the rows, `people.phone` unchanged and `companies.default_phone_region='AU'`.
+- [ ] Test `0118 upgrade from 0116 keeps every person phone byte-for-byte as one primary Other number needing checking`. Seed two people with `0412 345 678` and `SYN phone` at version 116, upgrade, and assert the rows, `people.phone` unchanged and the new tables empty.
 - [ ] Test `0118 constraints refuse two primaries, both parties, a Logged event without an activity, and any change to call_details`.
 - [ ] Test `0118 re-run is a no-op and the ledger is exact`.
 - [ ] Write the migration, registry entry and demo gate. Delete the reservation.
@@ -103,7 +104,7 @@
 - Produces `setPartyNumbers(p, party, id, input)`, where input is `{ operation_id, schema_version, reason, expected_version, numbers: { label, entered, is_primary }[] }`.
   - At most 10 numbers.
   - Exactly one primary when the list is not empty.
-  - Entered text 1–50 characters.
+  - Entered text 1–200 characters, matching the legacy field.
   - A number can be flagged by setting `needs_checking: true` on that entry, which stays true even when it reads.
   - The command replaces the whole list and bumps the party version.
   - For a Person, it sets `people.phone` to the primary's entered text, or NULL.
