@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: proposed design; no route, accepted baseline, visual review, functional proof or deployment. Scope: existing ES-02 discovery, ES-03 CPQ handover and ES-05 output. Basis: [specification](../../blueprints/nursery-automation-configurator.md) and [scope decision](../../decisions/nursery-automation-specification.md).
+Owner: Dean Fiedler. Status: N0 proposed design with an N1 native capture route added below; no accepted visual baseline or deployment. Scope: existing ES-02 discovery, ES-03 CPQ handover and ES-05 output. Basis: [specification](../../blueprints/nursery-automation-configurator.md) and [scope decision](../../decisions/nursery-automation-specification.md).
 
 ## Views and actions
 
@@ -17,7 +17,7 @@ Owner: Dean Fiedler. Status: proposed design; no route, accepted baseline, visua
 | Quantities and handover | Parts plus separately labelled labour facts; exact run/source versions, mappings, findings and receiving preview. Shared CPQ preview, if available, is labelled provisional until accepted. |
 | Outputs and history | Exact eligible documents, saved revision comparison and source/profile changes. |
 
-Reuse the application shell, SecondaryMenuFrame, shared Button, register/table, form, validation, dialog/drawer, status, evidence and history patterns already used by the specialist workbenches. Reuse the shared CPQ receiving preview and review flow. No component implementation or new consumer binding is introduced by this note; add actual bindings/fixtures to the component register in the implementation PR.
+Reuse the application shell, SecondaryMenuFrame, shared Button, register/table, form, validation, dialog/drawer, status, evidence and history patterns already used by the specialist workbenches. Reuse the shared CPQ receiving preview and review flow. N1 binds Button, Field and ErrorNotice in the component register; the other planned consumers remain reference-only.
 
 Incoming: saved Discovery/Express, exact Products/profile references and authorised evidence. Outgoing: unpriced material proposal, shared versioned labour-fact/delivery projection, findings and sealed output manifests. CPQ prices and resolves one activity ledger. Quotations consume exact saved scope/content. No editable cost/rate/margin master in this workbench.
 
@@ -35,4 +35,8 @@ Required states: loading, empty, filtered-empty, unknown data, conflicting sourc
 
 Exact Nursery mockups, HTML, desktop and phone images: **not supplied; missing**. Existing Screen/Priva patterns are reuse references, not accepted Nursery visuals. No fingerprint or reviewer attribution is created.
 
-This reference-only note is linked from `scope:ES-02` through its maintained design contract and register dependency. Do not register a fictional route or run route discovery to imply one exists. When implementation adds a real route, run studio:sync, complete page-specific guides/desktop/mobile contracts, bind reused components and fixture states, run studio:check and perform actual paired visual review. Any HTML package must select the applicable r20 page type under the existing conformance standard before baseline adoption.
+The N0 reference-only note was linked from `scope:ES-02` through its maintained design contract and register dependency. N1 now has an actual registered route, page-specific guide, component fixtures and evidence below. Future stages must update these alongside implementation. Any HTML package must select the applicable r20 page type under the existing conformance standard before baseline adoption.
+
+## N1 native implementation
+
+The first native capture route is now /estimating/discovery/[id]/nursery. Its [page contract](pages/route-estimating-discovery-id-nursery.md) records source binding, saved scenarios, conflicts and delivery decisions. The earlier no-route statements describe the N0 reference-only package. N2–N4 remain open; this addition grants no accepted visual baseline.

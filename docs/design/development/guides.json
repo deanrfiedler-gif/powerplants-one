@@ -75866,6 +75866,62 @@
           "rows": []
         }
       ]
+    },
+    {
+      "guide_key": "guide.route-estimating-discovery-id-nursery",
+      "entry_key": "route:/estimating/discovery/[id]/nursery",
+      "title": "Nursery Automation discovery",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native N1 capture; review pending",
+      "source_commit": "002af00e4e19e9aa0d12f83d36199bebe6572a1b",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Capture a nursery potting requirement against an exact saved Discovery alternative. Start with Javo Standard 2.0 and Plus as candidates, with supplier confirmation pending.",
+            "This stage saves discovery and scenarios. It does not assess suitability, calculate labour or transfer a priced estimate to CPQ."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Capture and save",
+          "paragraphs": [],
+          "steps": [
+            "From the saved Discovery Actions menu, open Nursery Automation discovery for the viewed alternative.",
+            "Review the source readiness, site, current revision and any source change notice. Choose Edit discovery.",
+            "Record project type, current process and candidate equipment; add a scenario for each crop/container/media combination and separate future phases.",
+            "For each observation choose its evidence state, value and source. Keep unknown values blank. For a conflict retain both values and sources and assign an owner/next action.",
+            "Record delivery applicability, selection, responsibility and coverage separately. Supplier responsibility does not prove that work is included.",
+            "Enter a save reason. Save a revision, then reopen it or inspect an earlier revision."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Changes and recovery",
+          "paragraphs": [
+            "A concurrent change retains your draft and refuses a stale save. Compare with current saved evidence before a new action; Cancel edits loads the current source.",
+            "If the save outcome is uncertain, keep the original request and use Confirm original save outcome. Do not start a duplicate save.",
+            "Failed or denied reads remove protected content. Retry after restoring access. Earlier revisions and source claims are retained; saving never grants review or marks Discovery Complete."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     }
   ]
 }

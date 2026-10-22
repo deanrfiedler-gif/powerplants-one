@@ -363,7 +363,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0115 adds explicit reading attribution. Existing attempts gain only a zero contract
   // marker: hashes, readings, snapshots and issued output bytes are unchanged. The empty
   // attribution table uses existing all-table runtime grants; no seed, user or grant changes.
-  if (latestMigrationVersion !== 115) throw Error("Review the existing-demo upgrade for this release.");
+  // 0116 adds empty Nursery discovery history, using existing all-table runtime grants.
+  // It changes no existing rows, identities, users, seeds or permissions.
+  if (latestMigrationVersion !== 116) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

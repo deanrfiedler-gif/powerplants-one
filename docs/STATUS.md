@@ -45,6 +45,14 @@ The detailed design and operating data remain proposed/unreviewed. The template 
 
 Dean subsequently requested completeness review, fixes and merge after passing checks. The review against the current adopted plan added exact saved estimate/quotation versions, company/source/driver context, separate profile publication, imported-labour reconciliation, concurrent-edit refusal, non-labour deliverables and production-target checks. The package now contains 28 proposed cases and a 171-field template; independent exported-file checks pass for 513 blank input cells and 200 dropdown cells. All original field keys remain. Local naming and design-register checks pass; final-head CI/current-main integration is the merge gate. The authoring-process and native Excel limitations are retained in the acceptance record. This review does not grant business approval or implement the workbench.
 
+## Nursery Automation N1 discovery implemented for review — 22 October 2026
+
+The user-authorised N1 increment is implemented in draft PR #662, starting with Javo Standard 2.0 and Plus. [ADR-0060](decisions/ADR-0060-nursery-discovery-foundation.md) bounds this to a source-qualified shortlist, saved current/future production scenarios, explicit unknown/conflicting evidence, separate delivery-scope decisions and immutable revisions attached to existing saved Discovery alternatives. Migration 0116 adds an empty child table; no new permissions, seeds, identities or dependencies.
+
+Focused unit, database and desktop/phone browser checks passed, including original-save recovery, stale source rejection, retained history and denied refresh. The final build, typecheck, full lint, design-register, foundation, naming and dependency checks passed. The full local unit run passed 1,020 tests with three existing Windows storage/recovery failures reproduced on unchanged main source; [execution evidence](testing/evidence/nursery-automation-n1/README.md) distinguishes those limits and remaining CI/review.
+
+Shared Products profiles, technical assessment and the paired parts/facts CPQ receiver remain subsequent stages. No labour standard, price, mapping or technical approval is invented. Supplier source review, owner design acceptance and different-model review remain open. This is draft code delivery, not business acceptance or deployment.
+
 ## Site surveys CS-08 build and authorised short references — 21 October 2026
 
 Dean approved the [short reference approach](decisions/readable-reference-namespaces.md) and the required migration after the 20 October preflight. Draft PR #650 implements CS-08 on its isolated branch: new SYN-SRV-000nnn references, explicit planned visit/contact facts, the accepted compact register and six-section record, original photo retention, independent review/return and exact reviewed handover. Existing reference values and retained snapshots are preserved; no new capability, seed, dependency or document-store connection is introduced.

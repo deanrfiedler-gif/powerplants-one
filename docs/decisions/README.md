@@ -5,6 +5,8 @@
 
 [Nursery Automation specification scope](nursery-automation-specification.md) (PPO-NURSERY-AUTOMATION-SPEC-DEC) records the requested Javo-first documentation package and dependency on the newer shared delivery-profile/fact model; detailed design and business review remain separate.
 
+[Nursery discovery foundation](ADR-0060-nursery-discovery-foundation.md) (ADR-0060) records the bounded PostgreSQL revision design for N1 under existing estimating authority, preserving shared Products/CPQ ownership for later stages.
+
 [Changes and follow-up implementation boundaries](changes-follow-up-implementation.md) records the D4 fresh-booking interpretation, permitted consequences read, retained policy workflows and explicit undrawn interactions. It grants no owner visual acceptance or production authority.
 
 Dean authorised explicit reading-to-instrument attribution and migration 0115 for FI-03/FI-04. The [decision](inspections-reading-instruments.md) requires immutable links for new Service attempts, no inferred historical attribution, preserved original hashes and populated-upgrade proof. Design acceptance and owner visual review remain separate.

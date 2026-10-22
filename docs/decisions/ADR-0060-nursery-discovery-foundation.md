@@ -11,7 +11,7 @@ Date: 22 October 2026. Owner: Dean Fiedler. Builder: Codex.
 
 ## Decision
 
-Use the existing TypeScript application, PostgreSQL, estimating workspace/alternative/source authority, shared command receipts and reusable form controls. Add a dedicated bounded Nursery discovery aggregate and immutable revisions, under existing estimating.read/edit permissions. Capture evidence, scenarios and candidate selections without a suitability or pricing engine. Reuse the source's exact company, option, site and revision; incomplete saved Discovery and Express remain visibly incomplete. Save does not make Discovery Complete.
+Use the existing TypeScript application, PostgreSQL, estimating workspace/alternative/source authority, shared command receipts and reusable form controls. Add bounded append-only Nursery discovery revisions as children of the existing workspace and alternative, under existing estimating.read/edit permissions. Capture evidence, scenarios and candidate selections without a suitability or pricing engine. Reuse the source's exact company, option, site and revision; incomplete saved Discovery and Express remain visibly incomplete. Save does not make Discovery Complete.
 
 Keep a versioned source-qualified starter equipment catalogue separate from Products publication. The two Javo entries have no approved numeric limits or invented Variant mapping. Synthetic examples are not manufacturer ratings. N1 does not publish Products or send parts, labour, facts or documents to CPQ. Future N3 must pair exact parts and delivery facts through the shared receiver and activity ledger; no parallel labour calculator is introduced.
 
@@ -23,6 +23,6 @@ Keep a versioned source-qualified starter equipment catalogue separate from Prod
 
 ## Consequences and validation
 
-Migration 0116 is reserved before implementation. No new grant, capability, framework or dependency. New tables require populated-upgrade, immutable history, original-operation recovery, stale source/target, cross-company/read-only and save/reopen tests. Native page and shared-component bindings require register and desktop/phone evidence. Supplier limits, product/profile bindings, N2 calculations and N3/N4 receiving/quotation remain separate dependencies.
+Migration 0116 was reserved in the early draft claim before implementation; this change consumes that reservation. No new grant, capability, framework or dependency. New tables require populated-upgrade, immutable history, original-operation recovery, stale source/target, cross-company/read-only and save/reopen tests. Native page and shared-component bindings require register and desktop/phone evidence. Supplier limits, product/profile bindings, N2 calculations and N3/N4 receiving/quotation remain separate dependencies.
 
 Different-model review is required before merge for the migration and access-sensitive service. This implementation request does not claim that review or authorise production deployment.

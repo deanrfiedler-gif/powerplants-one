@@ -1,5 +1,13 @@
-# Nursery Automation N1 implementation claimed — 22 October 2026
+---
+title: Nursery Automation N1 discovery implemented for review
+date: 2026-10-22
+---
 
-Codex owns the dedicated Nursery N1 branch/worktree, cut from main 002af00e. The user authorised the first implementation stage and selected Javo Standard 2.0 and Plus. The [architecture record](../decisions/ADR-0060-nursery-discovery-foundation.md) bounds this increment to source-qualified equipment data, saved discovery/scenarios, explicit unknown/conflicting evidence and immutable revision history under existing estimating authority.
+The user-authorised N1 increment is implemented in draft PR #662, starting with Javo Standard 2.0 and Plus. [ADR-0060](../decisions/ADR-0060-nursery-discovery-foundation.md) bounds this to a source-qualified shortlist, saved current/future production scenarios, explicit unknown/conflicting evidence, separate delivery-scope decisions and immutable revisions attached to existing saved Discovery alternatives. Migration 0116 adds an empty child table; no new permissions, seeds, identities or dependencies.
 
-Expected files: src/estimating/nursery-automation/, page-local UI and API routes, a narrow Discovery entry link, migration 0116 and exact migration-history proofs, focused unit/database/browser checks, and matching design/guide/status records. Shared Products/CPQ contracts remain owned by the parallel work; N2 calculations and N3 receiving are excluded. Implementation and verification are in progress; no business approval or deployment is claimed.
+Focused unit, database and desktop/phone browser checks passed, including original-save recovery, stale source rejection, retained history and denied refresh. The final build, typecheck, full lint, design-register, foundation, naming and dependency checks passed. The full local unit run passed 1,020 tests with three existing Windows storage/recovery failures reproduced on unchanged main source; [execution evidence](../testing/evidence/nursery-automation-n1/README.md) distinguishes those limits and remaining CI/review.
+
+Shared Products profiles, technical assessment and the paired parts/facts CPQ receiver remain subsequent stages. No labour standard, price, mapping or technical approval is invented. Supplier source review, owner design acceptance and different-model review remain open. This is draft code delivery, not business acceptance or deployment.
+
+<!-- decision-index -->
+[Nursery discovery foundation](../decisions/ADR-0060-nursery-discovery-foundation.md) (ADR-0060) records the bounded PostgreSQL revision design for N1 under existing estimating authority, preserving shared Products/CPQ ownership for later stages.
