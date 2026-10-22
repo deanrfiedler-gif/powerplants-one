@@ -90,6 +90,7 @@ The following are proposed PPO rules requiring reviewed editions and independent
 | NAC-R06 | Purchase count follows new selected instances. Options follow reviewed per-machine/per-line rules; shared items have one owner. | Reused/customer-supplied/stock items have explicit no-purchase disposition but may still require labour. |
 | NAC-R07 | Separate technical, installed, spare, waste and purchase-pack quantities. Convert to exact Variant units before emission. | Missing conversion/nonrepresentable quantity blocks generation; no rounding at receiving. |
 | NAC-R08 | Check mechanical, electrical, air, control/data and stop interfaces for each connection and direction. | Same supplier/nominal height does not prove compatibility; required confirmation blocks Use. |
+| NAC-R09 | Compare unrounded achievable good output with each required scenario's target on the same time, occupancy and quality basis. Evaluate phases separately. | A known shortfall blocks Use until the design or explicitly reviewed requirement changes. Missing comparable demand or capacity is Not assessable, never a pass. |
 
 Retain raw precision. Proposed display: whole units/hour and 0.1 hour; compare unrounded values. A displayed maximum whole output may be floored conservatively, but that is not the acceptance calculation. Emitted quantities follow adopted O2 after the shared numeric contract reconciles native 100,000 and the draft's larger envelope. Do not adopt the draft's larger limit by accident.
 
@@ -116,6 +117,10 @@ The alternative's activity ledger identifies activity instance, system/line owne
 
 Commercial quantity overrides do not rewrite engineering facts. Recompute dependent quantity-based activities through CPQ; require technical reassessment when adequacy changes. Profile/standard publication alerts draft owners but changes no saved estimate; explicit adoption compares affected quantities, effort and meaning.
 
+Use a generic effective driver quantity with its exact driver key/unit and fact reference for tests, training sessions and project activities; installed quantity is only one supported basis. Project-wide or Manual activities need a recorded scope/source basis but no fabricated workbench run. Keep company/workspace/alternative and source-instance identities explicit. Inherited profiles retain project-specific exceptions and replacement/addition decisions.
+
+Reuse the existing Materials/Labour rule phases and Product/Labour cost-source foundations. Current Products units are physical `each`, `m` and `kg`; hourly service units and typed profile support remain shared implementation dependencies. CPQ binds any charge to the verified company/entity/item/unit and exact cost-source/rate version; multiple activities may share an item only under approved aggregation retaining each activity's detail. Keep installation and commissioning totals separate. Pre-sales estimating effort remains overhead unless an explicit commercial policy makes it chargeable.
+
 ## 7. Shared CPQ handover
 
 | Contribution/control | Required treatment |
@@ -130,6 +135,10 @@ Commercial quantity overrides do not rewrite engineering facts. Recompute depend
 | Capacity | Keep O6's 100-active-line pilot; shared contract must define parked/retained counting. Refuse with counts/remediation, never truncate or split to evade limits. |
 
 If the fact receiver/profile engine is not ready, that is a delivery dependency. Do not add fields to schema 1 or omit labour silently. A material-only demonstration is partial and cannot count as the complete Nursery pilot.
+
+Preview is read-only. Accept validates the exact source hashes and current target revision atomically; stale previews refresh their differences and decisions before a new acceptance. Use separately binds the exact saved priced result and current estimate version. Concurrent edits cannot overwrite another estimator's work or partially accept materials without their required fact/scope contribution. Same-operation recovery follows O14 rather than attempting another write.
+
+Native Discovery, Express and optional workbook intake converge on this same activity ledger and quotation controls. Imported labour must be mapped to existing activity ownership or explicitly reconciled before new profile labour is applied; it cannot be charged a second time. The equipment-data workbook is an onboarding aid, never a required estimate-creation step or an implemented CPQ importer.
 
 ## 8. Findings and readiness
 
@@ -153,6 +162,10 @@ Seal a concept process diagram, selected equipment/option schedule, scenario ass
 Generate customer content at system/package level from resolved scope and approved library versions. Distinguish supply, installation, commissioning, training, prerequisites, exclusions, qualifications and handover. Profiles link content; they do not own every project clause. Editing prose cannot silently change structured scope.
 
 Before ES-05 approval, reconcile every promised service to its priced activity or evidenced supplier/assembly coverage. Internal hours, productivity, costs, margin and supplier correspondence remain Internal by default. Fixed-price wording does not imply an hour cap or duration promise. Offered services have separate complete commercial bases.
+
+Also reconcile non-labour deliverables to explicit commercial coverage, even where additional hours are zero. Certificates, warranties, test/acceptance commitments and performance promises require approved scope; no calculation result creates them. Time-and-materials or allowance disclosure requires an explicit commercial basis and approved wording. Keep mandatory qualifications in customer-safe wording. Show clause identity, scope, bound values and local edits; deduplicate by identity and coverage, not similar text alone.
+
+DP7 requires the saved estimate to retain exact scope/source/run lineage, selected services, fact/profile/standard/rule versions, rate and cost-source bindings, calculated and adjusted effort, reasons and coverage. The quotation adds exact clause and template versions, bound values, approved local amendments, selected appendix identities/hashes and approval/release evidence. No saved package resolves a reference as “latest”. Changed responsibility or promises cannot take the editorial-only path.
 
 Only outputs from runs adopted into the exact estimate may become appendices. O5 requires successor source/manifests for changed bytes, even with unchanged quantities. Pure clause/editorial changes follow the shared impact/reapproval route without fabricated technical reruns. Preserve issued bytes and approvals. MYOB Acumatica, SharePoint and native CAD retain their authorities.
 
@@ -179,3 +192,17 @@ N3 consumes the parallel shared CPQ/Products implementation. Recheck its merged 
 Use the [acceptance catalogue](../testing/nursery-automation-acceptance.md) and [working design note](../design/development/nursery-automation.md). Proposed test cases are not executed evidence.
 
 Open before dependent implementation: model shortlist/source owner, reviewed regional/options limits, supported topology, productivity/coverage standards, exact shared fact/profile/content contracts and numeric/count semantics, nominated reviewers and complete synthetic pilot data. Specification/template preparation can proceed while these remain open.
+
+## 12. Alignment and review boundaries
+
+The review uses the updated plan read on 22 October 2026 (O1–O15 and DP1–DP8; last update 01:51:56 UTC). No private link or original plan is copied into Git. Detailed implementation still requires the parallel shared contracts; merging this specification does not approve operating standards.
+
+| Adopted direction | Nursery treatment and acceptance |
+|---|---|
+| O1–O3 | Separate unpriced parts/facts, exact decimal/unit conversion and CPQ charge ownership; NAC-AT07/11/13/21. |
+| O4–O8 | Explicit empty/route-exit decisions, sealed successor outputs, capacity, complete options and exact mapping carry-forward; NAC-AT14–17/19/21. |
+| O9/O10 | Screen/Priva-specific emission and technical preservation remain owned by those workbenches. Nursery applies the shared invalid-quantity/required-output receipt gates, no-purchase dispositions and technical Use gates; it does not replace their technical features. NAC-AT07/13/19. |
+| O11/O12 | Saved Discovery/Express and company-scoped versioned registration, separate technical and mapping publication review; NAC-AT14/23/25. |
+| O13–O15 | Internal evidence, exact customer-safe content, atomic recovery and current source/target access; NAC-AT18–20/25/27. |
+| DP1–DP4 | Profiles, independent scope states, one activity ledger, generic drivers and governed labour; NAC-AT08–17/24. |
+| DP5–DP8 | Resolved narrative, coverage, saved versions, explicit adoption and retained technical depth; NAC-AT18/19/23/26/27. |

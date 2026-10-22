@@ -973,7 +973,7 @@
         },
         {
           "key": "review_state",
-          "label": "Review/publication state",
+          "label": "Profile technical review",
           "type": "enum",
           "unit": "",
           "required": "Required",
@@ -981,8 +981,7 @@
             "Draft",
             "Pending",
             "Reviewed",
-            "Published",
-            "Retired"
+            "Rejected"
           ],
           "synthetic_example": "Draft",
           "guidance": "Publishing is a separate governed action, not an Excel edit."
@@ -996,6 +995,30 @@
           "allowed_values": [],
           "synthetic_example": "",
           "guidance": "Actual attribution and evidence required."
+        },
+        {
+          "key": "company_key",
+          "label": "PPO company key",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-COMPANY",
+          "guidance": "Company-scoped registry; no cross-company lookup."
+        },
+        {
+          "key": "publication_state",
+          "label": "Publication state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Published",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Separate from technical review; an Excel entry publishes nothing."
         }
       ],
       "blank_record": {
@@ -1014,7 +1037,9 @@
         "effective_from": null,
         "effective_to": null,
         "review_state": null,
-        "reviewer": null
+        "reviewer": null,
+        "company_key": null,
+        "publication_state": null
       }
     },
     "Activity standards": {
@@ -1234,11 +1259,64 @@
             "Draft",
             "Pending",
             "Reviewed",
+            "Rejected"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Excel value does not authorise publication."
+        },
+        {
+          "key": "company_key",
+          "label": "PPO company key",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-COMPANY",
+          "guidance": "Company-scoped registry; no cross-company lookup."
+        },
+        {
+          "key": "publication_state",
+          "label": "Publication state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
             "Published",
             "Retired"
           ],
           "synthetic_example": "Draft",
-          "guidance": "Excel value does not authorise publication."
+          "guidance": "Separate from technical review; an Excel entry publishes nothing."
+        },
+        {
+          "key": "owner",
+          "label": "Standards owner",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Nominated accountable owner; not inferred from workbook editor."
+        },
+        {
+          "key": "included_subactivities",
+          "label": "Included subactivities",
+          "type": "text",
+          "unit": "",
+          "required": "Before review",
+          "allowed_values": [],
+          "synthetic_example": "Placement and levelling",
+          "guidance": "Identify exactly which work the standard covers."
+        },
+        {
+          "key": "excluded_scope",
+          "label": "Standard exclusions",
+          "type": "text",
+          "unit": "",
+          "required": "Before review",
+          "allowed_values": [],
+          "synthetic_example": "Electrical integration excluded",
+          "guidance": "Identify omitted work; blank does not confirm no exclusions."
         }
       ],
       "blank_record": {
@@ -1261,7 +1339,12 @@
         "covered_components": null,
         "replacement_activity_refs": null,
         "standard_source_id": null,
-        "review_state": null
+        "review_state": null,
+        "company_key": null,
+        "publication_state": null,
+        "owner": null,
+        "included_subactivities": null,
+        "excluded_scope": null
       }
     },
     "Delivery scope": {
@@ -1302,20 +1385,20 @@
           "label": "Exact workbench run ID",
           "type": "text",
           "unit": "",
-          "required": "Required",
+          "required": "When workbench-derived",
           "allowed_values": [],
           "synthetic_example": "SYN-RUN-001",
           "guidance": "Must match accepted parts/facts."
         },
         {
           "key": "source_content_hash",
-          "label": "Run content hash",
+          "label": "Source content hash",
           "type": "text",
           "unit": "",
           "required": "Before receiving",
           "allowed_values": [],
           "synthetic_example": "",
-          "guidance": "Verified SHA-256, never placeholder."
+          "guidance": "Exact workbench or saved Manual/project basis hash; never invent a run."
         },
         {
           "key": "profile_ref",
@@ -1415,10 +1498,10 @@
           "label": "Effective installed quantity",
           "type": "number",
           "unit": "driver unit",
-          "required": "When calculated",
+          "required": "For installation quantity basis",
           "allowed_values": [],
           "synthetic_example": 2.0,
-          "guidance": "Separate from spares, waste and purchase packs."
+          "guidance": "Use only with InstalledQuantity and its exact driver unit; leave blank for test/session drivers. Exclude spares and purchase packs."
         },
         {
           "key": "driver_unit",
@@ -1427,7 +1510,7 @@
           "unit": "",
           "required": "When calculated",
           "allowed_values": [],
-          "synthetic_example": "each",
+          "synthetic_example": "test",
           "guidance": "Exact dimensional basis."
         },
         {
@@ -1467,6 +1550,115 @@
           ],
           "synthetic_example": "Pending",
           "guidance": "Unknown required responsibility or coverage blocks Use."
+        },
+        {
+          "key": "company_key",
+          "label": "PPO company key",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-COMPANY",
+          "guidance": "Exact company context."
+        },
+        {
+          "key": "workspace_id",
+          "label": "Estimating workspace ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-WORKSPACE",
+          "guidance": "Exact workspace owning the alternative."
+        },
+        {
+          "key": "scope_revision_id",
+          "label": "Saved scope revision",
+          "type": "text",
+          "unit": "",
+          "required": "Before receiving",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SCOPE-001",
+          "guidance": "Immutable Discovery or Express revision."
+        },
+        {
+          "key": "workbench_instance_id",
+          "label": "Source workbench instance",
+          "type": "text",
+          "unit": "",
+          "required": "When workbench-derived",
+          "allowed_values": [],
+          "synthetic_example": "SYN-WB-001",
+          "guidance": "Instance identity distinct from system and run; leave blank for project Manual work."
+        },
+        {
+          "key": "driver_key",
+          "label": "Effective driver key",
+          "type": "text",
+          "unit": "",
+          "required": "When calculated",
+          "allowed_values": [],
+          "synthetic_example": "commissioning_scenario_count",
+          "guidance": "Use the selected standard driver: installed quantity, trials, sessions or project work."
+        },
+        {
+          "key": "fact_reference",
+          "label": "Exact fact reference",
+          "type": "text",
+          "unit": "",
+          "required": "Before calculation",
+          "allowed_values": [],
+          "synthetic_example": "SYN-FACT-001@1",
+          "guidance": "Exact derived fact ID/version and source; Manual/project basis must be evidenced."
+        },
+        {
+          "key": "project_exception_reference",
+          "label": "Project profile exception",
+          "type": "text",
+          "unit": "",
+          "required": "When overridden",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Record reviewed project-specific inheritance or coverage exception."
+        },
+        {
+          "key": "scope_source_kind",
+          "label": "Saved scope type",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Discovery",
+            "Express"
+          ],
+          "synthetic_example": "Discovery",
+          "guidance": "Do not fabricate Complete Discovery for Express."
+        },
+        {
+          "key": "quantity_basis",
+          "label": "Effective quantity basis",
+          "type": "enum",
+          "unit": "",
+          "required": "When calculated",
+          "allowed_values": [
+            "InstalledQuantity",
+            "TestCount",
+            "SessionCount",
+            "Project",
+            "Manual"
+          ],
+          "synthetic_example": "TestCount",
+          "guidance": "Installed quantity is one basis; packs/waste do not automatically drive effort."
+        },
+        {
+          "key": "effective_driver_quantity",
+          "label": "Effective driver quantity",
+          "type": "number",
+          "unit": "driver unit",
+          "required": "When calculated",
+          "allowed_values": [],
+          "synthetic_example": 2,
+          "guidance": "Tests, sessions or installed quantity in the exact driver unit; CPQ resolves the approved value."
         }
       ],
       "blank_record": {
@@ -1486,7 +1678,17 @@
         "driver_unit": null,
         "manual_basis_reference": null,
         "technical_review_state": null,
-        "commercial_review_state": null
+        "commercial_review_state": null,
+        "company_key": null,
+        "workspace_id": null,
+        "scope_revision_id": null,
+        "workbench_instance_id": null,
+        "driver_key": null,
+        "fact_reference": null,
+        "project_exception_reference": null,
+        "scope_source_kind": null,
+        "quantity_basis": null,
+        "effective_driver_quantity": null
       }
     },
     "Content links": {
@@ -1648,6 +1850,36 @@
           "allowed_values": [],
           "synthetic_example": "",
           "guidance": "Actual content owner approval."
+        },
+        {
+          "key": "content_owner",
+          "label": "Content owner",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Accountable clause owner from the approved library; not the workbook editor."
+        },
+        {
+          "key": "section_order",
+          "label": "Package section order",
+          "type": "number",
+          "unit": "position",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": 1,
+          "guidance": "Deterministic order within the package; no text-similarity deduplication."
+        },
+        {
+          "key": "content_hash",
+          "label": "Exact clause content hash",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Bind approved wording and typed fields from the library; no latest reference."
         }
       ],
       "blank_record": {
@@ -1664,7 +1896,10 @@
         "typed_fields": null,
         "edit_policy": null,
         "approval_state": null,
-        "approval_source_id": null
+        "approval_source_id": null,
+        "content_owner": null,
+        "section_order": null,
+        "content_hash": null
       }
     },
     "Evidence": {
@@ -1876,5 +2111,6 @@
     "All entry values are blank. Synthetic examples are guidance only, never active catalogue data.",
     "This is a staging template, not an importer, operational standard, published profile or CPQ calculation engine.",
     "Document lifecycle uses Git; schema_version describes this field dictionary only."
-  ]
+  ],
+  "maintenance_note": "PR 661 completeness review: added project/driver context and separate publication; existing field keys preserved. Template only, not an operational wire schema."
 }

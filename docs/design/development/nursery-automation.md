@@ -21,6 +21,8 @@ Reuse the application shell, SecondaryMenuFrame, shared Button, register/table, 
 
 Incoming: saved Discovery/Express, exact Products/profile references and authorised evidence. Outgoing: unpriced material proposal, shared versioned labour-fact/delivery projection, findings and sealed output manifests. CPQ prices and resolves one activity ledger. Quotations consume exact saved scope/content. No editable cost/rate/margin master in this workbench.
 
+Delivery scope distinguishes installed equipment from test/session/project drivers. Show inherited-profile exceptions, publication separately from review, and imported-versus-profile activity coverage. Handover preview is read-only and shows stale source/target conflicts before Accept or Use; it cannot silently overwrite concurrent edits. Quotation review exposes exact clause/template versions, bound fields and local amendments alongside non-labour deliverable coverage and scope/price reconciliation.
+
 ## Desktop and phone
 
 Desktop targets: 1440 × 960 and 1024 × 768. Keep one content scroll owner, stable source/alternative context and one primary action. Candidate comparison separates mandatory failures from missing evidence. Diagram nodes link to their stage forms; all tasks work from the table without dragging.

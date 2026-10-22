@@ -32,6 +32,10 @@ The JSON includes a `blank_record` for every record type, with all values null. 
 
 Fields marked Required identify the draft record. Conditional requirements name their gate (selection, mapped receiving, calculation, publication or quotation). The workbook's dropdowns assist entry; they do not enforce every cross-record, date, range, completeness, permission or publication rule. Numerical/date entry cells retain native Excel types. Duplicate a record sheet rather than extending a column with incompatible record meanings.
 
+The template now has 171 fields. All original field keys remain. Delivery scope records company, workspace, alternative, saved Discovery/Express revision and, when relevant, the workbench instance/run. Project-wide Manual work records its evidenced scope basis without inventing a run. Use effective driver quantity/key/unit for test counts and training sessions; installed quantity remains a separate physical basis. The standard and effective driver must agree before CPQ calculation; field examples illustrate shapes and are not a connected sample project.
+
+Profile/standard publication is separate from technical review. Content links point to governed library wording, owners and exact hashes; they do not author a new clause library. The saved estimate/quotation package, rate/cost bindings, calculated/adjusted hours and approved amendments belong to CPQ/ES-05, not this equipment collection form. The specification defines their required retention. No workbook upload is required to create a native estimate.
+
 ## Review checks before onboarding
 
 - IDs are unique, links resolve and exact company/provider/entity keys are recorded where applicable.
