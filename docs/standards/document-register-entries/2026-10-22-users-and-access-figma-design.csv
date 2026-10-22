@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-AD01-USERS-ACCESS-FIGMA-DEC,Users and access design (Figma) owner decision,docs/decisions/users-and-access-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,e9f28b6955d62cc33408e418f43f00ce5b937551,,,git,
+PPO-AD01-USERS-ACCESS-FIGMA-R01,Users and access design retained captures,docs/reference/ui/access-review/users-and-access-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,e9f28b6955d62cc33408e418f43f00ce5b937551,,,retained-record,

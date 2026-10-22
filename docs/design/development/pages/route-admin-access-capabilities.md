@@ -8,9 +8,13 @@ Read-only capability inspection using current Workspace admin.access.read author
 
 ## Desktop
 
+Accepted design: the [Users and access design decision](../../../decisions/users-and-access-figma-design.md) of 19 October 2026 draws the catalogue as a grid of key, current, recorded, label, domain, scheduled, expired, scopes in use, whether the capability can be requested and a note, sorted by current grants, with Find a capability and a Domain filter. Counts are grants, not people. Capture 05 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md).
+
 Reuse the application shell, PageHeader, Field/SelectField, Button, ReadState, Status and Stamp. At 1440 × 960 and 1024 × 768 use the existing record-grid/cards; wrap long keys. Keep company ERP keys and site numbers next to names. Retain a visible route back to the catalogue or people directory. The retained AD-01 design combines capabilities and proposed roles/teams in a work queue with a persistent inspector; separate native routes/cards are a proposed adaptation, not an accepted replacement.
 
 ## Mobile
+
+Accepted design: not drawn on phone.
 
 At 390 × 844 and 320 CSS px stack cards and labelled fields. No permission matrix or page-wide horizontal overflow. Preserve every scope/date fact, empty state and navigation control. Long capability keys wrap, key-first company text remains readable and shared focus/target styles apply. Check keyboard order, 200% zoom and device behaviour separately.
 
@@ -23,6 +27,8 @@ Loading hides prior records. Read failure offers Retry; permission loss or selec
 Existing [working AD-01 HTML](../../access-review/access-review.html), capabilities view; original [issued r01](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html). [Native decision](../../../decisions/access-review-native.md). Incoming: canonical capability keys and real workspace grant rows. Outgoing: person inspection with selected capability/company/site, followed by an explicit fresh eligibility check. No role/team membership is inferred.
 
 ## Evidence and open review
+
+Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). The Capability grants holder view is not drawn (Q5). Building it is not decided; the native page remains the built page.
 
 [Execution ledger](../../../testing/evidence/access-capabilities/README.md) records 16 database checks, 15 native browser checks and twelve source-bound native/reference captures at 1440/390/320 px, with explicit observed adaptations. Accepted native mockup images are missing. Owner visual review, physical-device, zoom and screen-reader acceptance remain pending. No review fingerprint is assigned by implementation and no deployment is claimed.
 
