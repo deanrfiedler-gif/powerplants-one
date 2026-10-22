@@ -15,6 +15,7 @@ import {
 // Persisted historical-answer fixture, never a mocked read. The worker is a separate non-production
 // local-synthetic process. The HTTP/compiled application keeps its own production/off guard intact.
 export async function storedAgentThread(enabled = true) {
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
   if (localConfig().database_name !== "ppo_synthetic_test")
     throw Error("Only disposable ppo_synthetic_test");
   const owner = await principal(profiles.coordinator),

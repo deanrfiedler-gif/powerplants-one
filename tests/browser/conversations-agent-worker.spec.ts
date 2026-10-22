@@ -101,4 +101,11 @@ test("T2c persisted UI post, original-operation recovery, existing worker, answe
     path: info.outputPath("persisted-worker-answer.png"),
     fullPage: true,
   });
+  const source = page.locator(".cv-agent-message").getByRole("link").last();
+  await source.scrollIntoViewIfNeeded();
+  await expect(source).toBeInViewport();
+  await page.screenshot({
+    path: info.outputPath("persisted-worker-sources.png"),
+    fullPage: true,
+  });
 });

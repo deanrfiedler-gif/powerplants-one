@@ -115,7 +115,8 @@ test("T2c R8 warning offers cancel, confirmed send and a new thread on the same 
 
 test("T2c keyboard picker distinguishes Agent and person, refuses duplication and keeps atomic editing", async ({
   page,
-}) => {
+  isMobile,
+}, info) => {
   const { thread, reader } = await fixture(page);
   let enabled = true;
   await page.route("**/api/v1/conversations/people?*", async (route) => {
@@ -141,6 +142,12 @@ test("T2c keyboard picker distinguishes Agent and person, refuses duplication an
   await expect(search).toBeFocused();
   await search.fill("Carl");
   await expect(page.getByRole("option")).toHaveCount(2);
+  const popup = await page.locator(".cv-composer > .cv-picker").boundingBox();
+  const editor = await message.boundingBox();
+  expect(popup!.y + popup!.height).toBeLessThanOrEqual(editor!.y);
+  const personRow = await page.getByRole("option", { name: /Carl Jensen/ }).boundingBox();
+  expect(personRow!.y + personRow!.height).toBeLessThanOrEqual(page.viewportSize()!.height - (isMobile ? 64 : 0));
+  await page.screenshot({ path: info.outputPath("mocked-agent-picker.png"), fullPage: true });
   await search.press("Enter");
   await expect(message).toBeFocused();
   await expect(message).toHaveValue("@Carl ");
@@ -160,6 +167,9 @@ test("T2c keyboard picker distinguishes Agent and person, refuses duplication an
     0,
   );
   await expect(page.getByRole("option", { name: /Carl Jensen/ })).toBeVisible();
+  await page.getByRole("button", { name: "Close picker", exact: true }).click();
+  await expect(search).toHaveCount(0);
+  await expect(message).toBeFocused();
 });
 
 test("T2c a changed draft invalidates an in-flight participant preflight", async ({ page }) => {

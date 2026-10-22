@@ -80,25 +80,30 @@ export function MentionPicker({
   const name = mode === "person" ? "People" : "Records";
   return (
     <div className="cv-picker">
-      <input
-        ref={input}
-        role="combobox"
-        aria-label={mode === "person" ? "Find a person" : "Find a record"}
-        aria-expanded="true"
-        aria-controls={listId}
-        aria-activedescendant={
-          options[current] ? `${listId}-${current}` : undefined
-        }
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActive(0);
-        }}
-        onKeyDown={keys}
-        placeholder={
-          mode === "person" ? "Find a person" : "Find a deal or project"
-        }
-      />
+      <div className="cv-picker-search">
+        <input
+          ref={input}
+          role="combobox"
+          aria-label={mode === "person" ? "Find a person" : "Find a record"}
+          aria-expanded="true"
+          aria-controls={listId}
+          aria-activedescendant={
+            options[current] ? `${listId}-${current}` : undefined
+          }
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setActive(0);
+          }}
+          onKeyDown={keys}
+          placeholder={
+            mode === "person" ? "Find a person" : "Find a deal or project"
+          }
+        />
+        <button className="cv-tool" type="button" aria-label="Close picker" onClick={onClose}>
+          ×
+        </button>
+      </div>
       {read.loading && <p className="cv-note">Loading…</p>}
       {!!read.error && (
         <div className="cv-picker-error">

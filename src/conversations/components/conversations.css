@@ -425,10 +425,30 @@
   background: var(--surface);
   box-shadow: 0 6px 20px rgb(0 0 0 / 12%);
 }
+.cv-composer > .cv-picker {
+  grid-row: 1;
+}
+.cv-thread-footer .cv-composer > .cv-picker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+.cv-picker-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.cv-thread-footer .cv-picker span {
+  margin-top: 0;
+}
 .cv-about {
   box-shadow: none;
 }
 .cv-picker input {
+  min-width: 0;
   min-height: 36px;
   border: 1px solid var(--control-border);
   border-radius: var(--radius-control);
