@@ -1,5 +1,5 @@
 ---
-document_id: PPO-ES02-CREATE-DISCOVERY-WORKSPACE-FIGMA-R02
+document_id: PPO-ES02-CREATE-WORKSPACE-FIGMA-R02
 revision: r02
 date: 2026-10-22
 owner: Dean Fiedler
