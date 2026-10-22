@@ -60,7 +60,8 @@ test("T2d guards refuse before key access and transport, including inherited end
     { NODE_ENV: "production" }, { VERCEL: "1" }, { WEBSITE_INSTANCE_ID: "1" }, { CONTAINER_APP_NAME: "1" },
     { RENDER_EXTERNAL_URL: "https://example.invalid" }, { PPO_ASSISTANT_MODEL: "" }, { PPO_ASSISTANT_MODEL: "unknown" },
     { ANTHROPIC_BASE_URL: "https://example.invalid" }, { NODE_TLS_REJECT_UNAUTHORIZED: "0" },
-    { HTTPS_PROXY: "https://example.invalid" },
+    { HTTPS_PROXY: "https://example.invalid" }, { NODE_DEBUG: "http,https" }, { NODE_DEBUG_NATIVE: "tls" },
+    { SSLKEYLOGFILE: "SYN-debug-output" }, { NODE_OPTIONS: "--tls-keylog=SYN-debug-output" },
   ]) {
     let calls = 0, reads = 0;
     const guarded = { ...env, ...extra };

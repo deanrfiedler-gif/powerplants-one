@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2D-DESIGN
 title: Conversations T2d local Claude adapter
 date: 2026-10-22
 owner: Dean Fiedler
-status: Authorised implementation in progress; Codex working for Dean; independent review and acceptance pending
+status: Implemented for review; Codex working for Dean; independent review and acceptance pending
 versioning: git
 ---
 
@@ -17,7 +17,7 @@ Governing records: [T2 scope](conversations-t2-scope.md) T2-1–T2-12/W1–W9; [
 
 Dedicated branch `codex/conversations-t2d-claude`, cut from `origin/main` `002af00e4e19e9aa0d12f83d36199bebe6572a1b`. T2b #642 and integration #659 are merged. Migration 0110 and seed 110 are reused. T2c #660 remains draft at `79092a4d245c4817ebec3968a0ea8fcedc1d215b`; no review submission or comment was visible at claim time. Its code and branch are untouched. T2d depends on T2b; T2e depends on T2c and T2d.
 
-Open PRs #660, #662 and #663 were inspected; no T2d claim, issue, branch or worktree was found. Nursery #662 claims ADR-0060; T2d will use ADR-0061. The documentation policy proposed in #663 is unmerged: current main's generation rules govern until integration changes them. Shared indexes are generated from narrowly added fragments/entries.
+Open PRs #660, #662 and #663 were inspected; no T2d claim, issue, branch or worktree was found. Nursery #662 claims ADR-0060; T2d will use ADR-0061. At claim time #663 was unmerged. It subsequently merged, and T2d integrated main `ab2142d12cce947483c8425c16e640e37f06e90e`: source fragments/entries are retained and generated status/index views stay under ignored `tmp/documentation/`. Shared landing pages are unchanged in this PR.
 
 ## Test-first implementation sequence
 
@@ -33,3 +33,7 @@ Expected files: new Claude adapter and tests under `src/assistant/adapters/` and
 ## Evidence boundaries
 
 Mocked SDK transport proves request/response handling. Persisted integration proves PPO's real service, runner and ledger lifecycle. Neither proves model quality or a live API request. T2e, business acceptance, visual review and production readiness remain separate.
+
+## Implementation checkpoint
+
+[ADR-0061](ADR-0061-local-claude-adapter.md) was written before the real exact-version SDK installation. The bounded adapter, pricing and provider preflight hook are implemented; the existing service/runner/ledger proof uses the actual SDK with injected mocked transport. See the [evidence record](../testing/evidence/conversations-t2d/README.md) for checks, failed attempts and remaining review gates. No shared interface change requested by T2c review was visible; #660 remains unchanged.

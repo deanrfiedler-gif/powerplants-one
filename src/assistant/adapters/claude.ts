@@ -38,7 +38,8 @@ function permitted(env: AssistantEnvironment) {
     && env.PPO_ASSISTANT_MODEL === claudeModel
     && !env.ANTHROPIC_BASE_URL && !env.ANTHROPIC_CUSTOM_HEADERS && env.NODE_TLS_REJECT_UNAUTHORIZED !== "0"
     && !env.HTTPS_PROXY && !env.HTTP_PROXY && !env.ALL_PROXY && !env.https_proxy && !env.http_proxy && !env.all_proxy
-    && !env.NODE_EXTRA_CA_CERTS && !env.SSL_CERT_FILE && !env.SSL_CERT_DIR;
+    && !env.NODE_EXTRA_CA_CERTS && !env.SSL_CERT_FILE && !env.SSL_CERT_DIR
+    && !env.NODE_DEBUG && !env.NODE_DEBUG_NATIVE && !env.SSLKEYLOGFILE && !/--tls-keylog(?:[=\s]|$)/.test(env.NODE_OPTIONS ?? "");
 }
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const count = (value: unknown): value is number => Number.isSafeInteger(value) && Number(value) >= 0;
