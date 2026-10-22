@@ -5806,7 +5806,20 @@
         "docs/testing/evidence/access-team-creation/native-320-form.png",
         "docs/testing/evidence/access-team-access/native-1440-member-access.png",
         "docs/testing/evidence/access-team-access/native-390-member-access.png",
-        "docs/testing/evidence/access-team-access/native-320-member-access.png"
+        "docs/testing/evidence/access-team-access/native-320-member-access.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-01-Desktop-Register-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-02-Desktop-Person-Grants-Full-Length-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-03-Desktop-Check-Eligibility-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-04-Desktop-Compare-Bundle-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-05-Desktop-Capability-Catalogue-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-06-Desktop-Access-Requests-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-07-Desktop-Independent-Decision-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-08-Desktop-Propose-Capability-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-09-Tablet-Register-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-10-Phone-Active-List-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-11-Phone-Person-Access-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-12-Phone-320-Person-Access-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/design/access-review/access-review.html",
@@ -5819,7 +5832,8 @@
         "docs/decisions/access-local-teams.md",
         "docs/decisions/access-team-creation.md",
         "docs/decisions/access-team-inspection-current.md",
-        "docs/decisions/access-review-attestations.md"
+        "docs/decisions/access-review-attestations.md",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -14613,13 +14627,18 @@
       "image_paths": [
         "docs/testing/evidence/access-inspection/native-1440-person.png",
         "docs/testing/evidence/access-inspection/native-390-person.png",
-        "docs/testing/evidence/access-inspection/native-320-person.png"
+        "docs/testing/evidence/access-inspection/native-320-person.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-02-Desktop-Person-Grants-Full-Length-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-03-Desktop-Check-Eligibility-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-11-Phone-Person-Access-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-12-Phone-320-Person-Access-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -14659,13 +14678,18 @@
       "image_paths": [
         "docs/testing/evidence/access-inspection/native-1440-people.png",
         "docs/testing/evidence/access-inspection/native-390-people.png",
-        "docs/testing/evidence/access-inspection/native-320-people.png"
+        "docs/testing/evidence/access-inspection/native-320-people.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-01-Desktop-Register-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-09-Tablet-Register-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-10-Phone-Active-List-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-13-Phone-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -14750,14 +14774,16 @@
       "image_paths": [
         "docs/testing/evidence/access-capabilities/native-1440-catalogue.png",
         "docs/testing/evidence/access-capabilities/native-390-catalogue.png",
-        "docs/testing/evidence/access-capabilities/native-320-catalogue.png"
+        "docs/testing/evidence/access-capabilities/native-320-catalogue.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-05-Desktop-Capability-Catalogue-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
-        "docs/decisions/access-review-attestations.md"
+        "docs/decisions/access-review-attestations.md",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -14794,14 +14820,16 @@
       "image_paths": [
         "docs/testing/evidence/access-roles/native-1440-comparison.png",
         "docs/testing/evidence/access-roles/native-390-comparison.png",
-        "docs/testing/evidence/access-roles/native-320-comparison.png"
+        "docs/testing/evidence/access-roles/native-320-comparison.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-04-Desktop-Compare-Bundle-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-review-native.md",
         "src/platform/permissions.ts",
         "docs/design/access-review/model.js",
         "src/components/business-ui.tsx",
-        "src/components/ui/button.tsx"
+        "src/components/ui/button.tsx",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -14937,7 +14965,8 @@
         "docs/testing/evidence/access-withdrawal/native-390-withdrawal-control.png",
         "docs/testing/evidence/access-withdrawal/native-390-withdrawn-handover.png",
         "docs/testing/evidence/access-withdrawal/native-320-withdrawal-control.png",
-        "docs/testing/evidence/access-withdrawal/native-320-withdrawn-handover.png"
+        "docs/testing/evidence/access-withdrawal/native-320-withdrawn-handover.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-07-Desktop-Independent-Decision-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-change-requests.md",
@@ -14946,7 +14975,8 @@
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
         "docs/decisions/access-request-application.md",
-        "docs/decisions/access-request-withdrawal.md"
+        "docs/decisions/access-request-withdrawal.md",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -14981,7 +15011,9 @@
       "image_paths": [
         "docs/testing/evidence/access-requests/native-1440-form.png",
         "docs/testing/evidence/access-requests/native-390-form.png",
-        "docs/testing/evidence/access-requests/native-320-form.png"
+        "docs/testing/evidence/access-requests/native-320-form.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-06-Desktop-Access-Requests-r01.png",
+        "docs/reference/ui/access-review/users-and-access-design-r01/PPO-Users-And-Access-08-Desktop-Propose-Capability-r01.png"
       ],
       "dependencies": [
         "docs/decisions/access-change-requests.md",
@@ -14990,7 +15022,8 @@
         "src/components/business-ui.tsx",
         "src/components/ui/button.tsx",
         "docs/decisions/access-request-application.md",
-        "docs/decisions/access-request-withdrawal.md"
+        "docs/decisions/access-request-withdrawal.md",
+        "docs/decisions/users-and-access-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
