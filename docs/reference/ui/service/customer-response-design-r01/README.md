@@ -48,7 +48,7 @@ Image 14 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Customer response — accepted" waits for Dean's explicit yes |
+| Named version | "Customer response — accepted", saved 22 October 2026 at Dean's request and confirmed in version history |
 | Accepted frames | Page "Customer response · FI-07" `1490:70`, in image order:<br>• `1490:111`, `1491:393540`, `1490:311`, `1490:411`, `1490:511`, `1490:611`, `1490:711`;<br>• `1495:393233`;<br>• `1490:870`, `1490:938`, `1490:960`, `1490:1028`, `1496:2772`;<br>• the phone states: `1490:1118`, `1490:1186`, `1490:1254`, `1490:1322`, `1490:1390` |
 | Capture copies | Page "Captures (icon-free)", from y = 340,000, images in order: `2016:224849`, `2016:224984`, `2016:225023`, `2016:225166`, `2016:225299`, `2016:225435`, `2016:225569`, `2016:225687`, `2016:225821`, `2016:225877`, `2016:225950`, `2016:226007`, `2016:226064`, `2016:226137` |
 

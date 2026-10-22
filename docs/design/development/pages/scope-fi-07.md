@@ -46,7 +46,7 @@ Retained proposed [Service Review & Reports r02](../../../reference/ui/service-r
 
 The draft User Guide `guide.fi.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Accepted Figma design: [Customer response design r01 captures](../../../reference/ui/service/customer-response-design-r01/README.md) and its [decision](../../../decisions/customer-response-figma-design.md). A Declined or Customer unavailable response, the signature mark viewer, desktop presentation of draft evidence, the Finance handoff and 200% zoom are not drawn. The named Figma version waits for Dean's explicit yes.
+Accepted Figma design: [Customer response design r01 captures](../../../reference/ui/service/customer-response-design-r01/README.md) and its [decision](../../../decisions/customer-response-figma-design.md). A Declined or Customer unavailable response, the signature mark viewer, desktop presentation of draft evidence, the Finance handoff and 200% zoom are not drawn. Named Figma version: "Customer response — accepted", saved 22 October 2026.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
 

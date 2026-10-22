@@ -21,7 +21,7 @@ Claude drew the page from these sources:
 - the built report page: `src/components/report-screens.tsx` (the response form, its labels and status lines), `src/reports/service.ts`, `src/reports/validation.ts`, `src/reports/response-context.ts` and the offline capture in `src/offline/app.ts`;
 - copies of accepted designs: the Service review and reports SV-06 record and phone frames, the Access & readiness CS-06 form card, and the My jobs FI-01 response options, segmented choice and signature pad.
 
-Before deciding, Dean asked for an audit: "Give the FI-07 page an audit and polish first, then ask me again." After a later audit of every page he accepted the design: "I accept the Customer response FI-07 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 and the recommended answers to Q1–Q4.
+Before deciding, Dean asked for an audit: "Give the FI-07 page an audit and polish first, then ask me again." After a later audit of every page he accepted the design: "I accept the Customer response FI-07 design with your recommendations, including D1–D7 and Q1–Q4." That adopts D1–D7 and the recommended answers to Q1–Q4. Dean then asked for the named version: "Yes, save the named Figma version "Customer response — accepted"." Claude saved it in the Figma desktop app (section 7).
 
 Scope:
 - `scope:FI-07` "Customer attendance and report response", hosted by `route:/service/reports/[id]`.
@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 SV-06 respondent | Resolved as recommended and done | The accepted SV-06 frames named Priya Shah, whom People CS-02 records as Hillview Growers' contact, as the SYN Isolation Nursery respondent. On 22 October 2026, as audit recommendation 4, SV-06 was corrected to Dana Brooks, grower; the SV-06 notes card records it |
 | Q4 Follow-up due date | Resolved as recommended | The response form does not ask for a due date. The follow-up stays "Due date needed" for the current Service owner to set from My Work, as built |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean's explicit yes | Section 7 |
+| Named Figma version | User decision, 22 October 2026 | Saved as "Customer response — accepted" at Dean's request: "Yes, save the named Figma version "Customer response — accepted"." Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 22 October 2026 |
 | Decision record | This file |
-| Named version | "Customer response — accepted" waits for Dean's explicit yes |
+| Named version | "Customer response — accepted", saved 22 October 2026 |
 
 ## 4. What the design shows
 
@@ -154,6 +154,6 @@ The audit is recorded on the notes card `1490:1458`.
   - none of 1,031 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and no flow starting point was added to the Captures page.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/service/customer-response-design-r01/README.md).
-- The named Figma version "Customer response — accepted" has not been saved; it waits for Dean's explicit yes.
+- The named Figma version "Customer response — accepted" was saved on 22 October 2026 in the Figma desktop app, through the save-version dialog, at Dean's request. Claude confirmed the entry at the top of version history. The page header and notes card were then updated to record it.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
