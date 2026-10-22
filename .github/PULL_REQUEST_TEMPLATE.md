@@ -8,6 +8,7 @@ Explain the problem, what changes and the resulting behaviour.
 - Requirement/decision IDs:
 - Source/specification:
 - Prototype or operational scope:
+- Task owner, expected files and any coordinated shared-file changes:
 
 ## Validation
 
@@ -21,6 +22,7 @@ Explain effects on data, interfaces, permissions, documents, offline operations 
 
 - [ ] Scope and evidence are explicit; source facts and proposals remain distinct.
 - [ ] Relevant documentation and register links are current.
+- [ ] Status/index updates are source fragments only; no generated views are committed. Any shared landing-page correction has a new exact-path maintenance declaration under `docs/maintenance/`.
 - [ ] Page/shell/theme changes update the working design register, guide and desktop/mobile reference; `npm run studio:check` passes. Any missing image or pending/stale review is reported.
 - [ ] Applicable checks passed, or a specific unresolved failure is explained.
 - [ ] No credentials or unauthorised operational data are included.

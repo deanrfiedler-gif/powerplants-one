@@ -14,7 +14,7 @@ Follow P01–P12, BP-03 §0, BP-04; PPO-009 CRM differs from P09.
 
 ## 3. Sources
 
-Read AGENTS.md, README, docs/STATUS.md and ADRs.
+Read AGENTS.md, README, docs/STATUS.md, newest docs/status/ fragments and ADRs.
 
 User decisions govern. [CREMS is historical](../decisions/product-direction-quality.md); define and test PPO rules independently.
 
@@ -22,7 +22,7 @@ User decisions govern. [CREMS is historical](../decisions/product-direction-qual
 
 BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and adapters. Pin dependencies; record ADR rationale/options.
 
-MYOB Acumatica: intended ERP authority; SharePoint: business documents; native CAD: authoring/dependencies. Verify interfaces, ownership and operating rules before integration.
+MYOB Acumatica: intended ERP authority; SharePoint: documents; native CAD: authoring. Verify interfaces/ownership/rules before integration.
 
 Synthetic fixtures. Decide service-order/appointment/labour ownership and build/configure/integrate/retain per capability; test before cutover.
 
@@ -60,13 +60,13 @@ HTML: html-module-conformance.md.
 
 Finish authorised work; flag blockers.
 
-Independent PR review (file/line defects), research; Claude builds, Dean decides. Keep unrelated work; one task/owner: draft PR, own worktree. Merge: authority/checks/review. Update specs/registers.
+One task/owner/worktree; draft PR first. Preserve unrelated work; coordinate shared edits. Keep chapters/fragments current; render to tmp/. Landing-page rules: docs/maintenance/README.md. Independent review: CONTRIBUTING.md; Dean decides.
 
 Repo work grants no paid service, deployment, access, transactions, migration or messaging. Secrets/operational data stay outside Git; use synthetic/redacted fixtures.
 
 ## 9. Verification
 
-Run foundation/prototype/naming; test authority, conflicts/replay, integrity/reconciliation. Check screens/environment; recheck access after storage, before metadata/bytes.
+Run foundation/prototype/naming/status/scope checks. Test authority, replay and integrity; recheck access before metadata/bytes.
 
 ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; CPQ: cpq-{rule-packages,release-quality}.md, estimating-configurator-model.md; retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike: reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R2. ES-02: ADR-0054 r02 catalogue, r01 kept; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Keep owner consent, receipts, unmet Demand, holds and fresh disposition.
 
