@@ -15319,7 +15319,7 @@
     },
     {
       "key": "route:/estimating/discovery/[id]/nursery",
-      "title": "Nursery Automation discovery",
+      "title": "Automation discovery",
       "kind": "route",
       "module": "Estimating",
       "summary": "N1 source-qualified equipment candidates, saved production scenarios and owned clarifications. No technical or pricing result.",
@@ -15337,7 +15337,7 @@
         "src/estimating/nursery-automation/screen.tsx",
         "src/estimating/nursery-automation/screen.css"
       ],
-      "scope_status": "N1 implementation; technical assessment and CPQ handover remain later stages",
+      "scope_status": "N1 discovery with separate N2 assessment; N3 shared CPQ handover remains open",
       "visual_status": "Needs review",
       "functional_status": "4 unit, 3 database and 4 desktop/phone browser cases passed locally; exact recovery, history, source conflicts, stale edits and denied refresh. Evidence: docs/testing/evidence/nursery-automation-n1/README.md. Supplier/business acceptance and CI remain separate.",
       "deployment_status": "Not verified",
@@ -15348,7 +15348,44 @@
       "build_rank": null,
       "related_keys": [
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/[id]/nursery/assessment"
+      ]
+    },
+    {
+      "key": "route:/estimating/discovery/[id]/nursery/assessment",
+      "title": "Automation technical assessment",
+      "kind": "route",
+      "module": "Estimating",
+      "summary": "N2 scenario-qualified compatibility, sequential capacity, separate quantity bases and immutable internal study outputs.",
+      "path": "/estimating/discovery/[id]/nursery/assessment",
+      "source_paths": [
+        "src/app/(business)/estimating/discovery/[id]/nursery/assessment/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-discovery-id-nursery-assessment",
+      "design_path": "docs/design/development/pages/route-estimating-discovery-id-nursery-assessment.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "docs/blueprints/nursery-automation-configurator.md",
+        "docs/decisions/ADR-0061-nursery-technical-assessment.md",
+        "docs/decisions/automation-configurator-name.md",
+        "src/estimating/nursery-automation/assessment-screen.tsx",
+        "src/estimating/nursery-automation/assessment-fields.tsx",
+        "src/estimating/nursery-automation/fields.tsx"
+      ],
+      "scope_status": "N2 technical assessment; N3 Products/shared CPQ handover remains separate",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see docs/testing/evidence/nursery-automation-n2/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]/nursery"
       ]
     }
   ]

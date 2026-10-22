@@ -1,4 +1,4 @@
-# Nursery Automation Configurator workbench specification
+# Automation Configurator workbench specification
 
 <!-- versioning: git; committed history is authoritative -->
 
@@ -7,7 +7,7 @@ Review: proposed detailed design; owner, engineering and commercial review pendi
 
 ## 1. Purpose and authority
 
-Turn a nursery production requirement into a reviewed equipment configuration, explicit delivery scope and a traceable contribution to CPQ. Start with Javo potting lines; keep the model supplier-neutral for later families.
+Turn an automation equipment requirement into a reviewed equipment configuration, explicit delivery scope and a traceable contribution to CPQ. Start with Javo potting lines; keep the model supplier-neutral for later families.
 
 The [scope decision](../decisions/nursery-automation-specification.md) records the request and subsequent instruction to follow the updated **Powerplants One estimating and quotation implementation plan**, with O1–O15 and DP1–DP8 adopted on 22 October 2026. The private plan link and source content are not published here. Its newer direction governs this specification where the repository's proposed [parts-proposal schema 1](../contracts/workbench-parts-proposal.md) still lists those decisions as open. This package consumes the planned shared contracts; it neither amends them nor claims they are implemented.
 
@@ -206,3 +206,7 @@ The review uses the updated plan read on 22 October 2026 (O1–O15 and DP1–DP8
 | O13–O15 | Internal evidence, exact customer-safe content, atomic recovery and current source/target access; NAC-AT18–20/25/27. |
 | DP1–DP4 | Profiles, independent scope states, one activity ledger, generic drivers and governed labour; NAC-AT08–17/24. |
 | DP5–DP8 | Resolved narrative, coverage, saved versions, explicit adoption and retained technical depth; NAC-AT18/19/23/26/27. |
+
+## N2 implementation and current name
+
+The [Automation naming decision](../decisions/automation-configurator-name.md) preserves all NAC and EST identifiers and stable technical paths. N2 implements the bounded sequential technical assessment, independent quantity bases, immutable saved source/results and internal study outputs. Shared Products publication, delivery profiles/person-hours and paired CPQ receiving remain N3 work. Internal review never grants supplier approval. See the N2 execution evidence for tested boundaries.

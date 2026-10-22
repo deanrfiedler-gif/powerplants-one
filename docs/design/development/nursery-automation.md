@@ -1,4 +1,4 @@
-# Nursery Automation Configurator working design note
+# Automation Configurator working design note
 
 <!-- versioning: git; committed history is authoritative -->
 
@@ -40,3 +40,7 @@ The N0 reference-only note was linked from `scope:ES-02` through its maintained 
 ## N1 native implementation
 
 The first native capture route is now /estimating/discovery/[id]/nursery. Its [page contract](pages/route-estimating-discovery-id-nursery.md) records source binding, saved scenarios, conflicts and delivery decisions. The earlier no-route statements describe the N0 reference-only package. N2–N4 remain open; this addition grants no accepted visual baseline.
+
+## N2 native assessment
+
+The Automation technical assessment now extends N1 through the [N2 page contract](pages/route-estimating-discovery-id-nursery-assessment.md). Existing source IDs and nursery paths remain stable. N3–N4 and owner visual acceptance remain open.

@@ -75870,7 +75870,7 @@
     {
       "guide_key": "guide.route-estimating-discovery-id-nursery",
       "entry_key": "route:/estimating/discovery/[id]/nursery",
-      "title": "Nursery Automation discovery",
+      "title": "Automation discovery",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
@@ -75887,7 +75887,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Capture a nursery potting requirement against an exact saved Discovery alternative. Start with Javo Standard 2.0 and Plus as candidates, with supplier confirmation pending.",
+            "Capture a automation equipment requirement against an exact saved Discovery alternative. Start with Javo Standard 2.0 and Plus as candidates, with supplier confirmation pending.",
             "This stage saves discovery and scenarios. It does not assess suitability, calculate labour or transfer a priced estimate to CPQ."
           ],
           "steps": [],
@@ -75915,7 +75915,156 @@
           "paragraphs": [
             "A concurrent change retains your draft and refuses a stale save. Compare with current saved evidence before a new action; Cancel edits loads the current source.",
             "If the save outcome is uncertain, keep the original request and use Confirm original save outcome. Do not start a duplicate save.",
-            "Temporary refresh failures retain your draft and original save recovery. Retry loading before a new save. Denied access removes protected content. Earlier revisions show their original Discovery context; editing a successor uses the current source and requires review of any removed system binding. Saving never grants review or marks Discovery Complete."
+            "Temporary refresh failures retain your draft and original save recovery. Retry loading before a new save. Denied access removes protected content. Earlier revisions show their original Discovery context; editing a successor uses the current source and requires review of any removed system binding. Saving never grants review or marks Discovery Complete.",
+            "Open technical assessment after saving to evaluate an exact N2 concept. N1 capture itself still grants no technical pass."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-discovery-id-nursery-assessment",
+      "entry_key": "route:/estimating/discovery/[id]/nursery/assessment",
+      "title": "Automation technical assessment",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native N2 technical study; review pending",
+      "source_commit": "e9f28b6955d62cc33408e418f43f00ce5b937551",
+      "related_entry_keys": [
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]/nursery"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Assess an Automation concept against exact saved production scenarios. Javo Standard 2.0 and Plus are the first equipment candidates; limits require source evidence and review."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before starting",
+          "paragraphs": [
+            "Save Automation discovery against the current Discovery alternative. Editing requires current workspace and exact source permission. No workbook is required."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Assess a concept",
+          "paragraphs": [
+            "Open technical assessment from saved Automation discovery. Choose Edit assessment; add ordered stages including manual and retained work. Record scenario rates, reviewed boundaries, operator allocations and directed interfaces. Enter a reason and choose Save and assess."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Source context and revision history precede process stages, scenario evidence, connections and saved results. Expand details to edit the complete evidence."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Evidence and quantities",
+          "paragraphs": [
+            "Unknown is distinct from zero. Preserve conflicting claims. Technical, installation, spare, waste and pack quantities are independent. Internal reviewer names do not grant manufacturer approval."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Main tasks",
+          "paragraphs": [
+            "Use Move earlier/later to change flow order and review connections afterwards. Use Current assessment to edit a successor; explicitly selected history is read-only. A changed Nursery source requires Start new assessment from latest source."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "handover",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Save creates exact immutable inputs, results and two internal HTML downloads. Products publication, shared delivery facts, installation/commissioning costing and CPQ receiving remain N3 work."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Results and states",
+          "paragraphs": [
+            "NotSuitable records a known mandatory failure; NeedsConfirmation retains unresolved evidence. ChecksSatisfied applies only to recorded technical rules. Target comparison and quantity blockers remain separate."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "A complete sequential line limited to 2,400 pots/hour, six running hours and a 0.95 good fraction produces 13,680 good pots. A 14,000-pot target is a shortfall. These are test values, not Javo ratings."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Changes and recovery",
+          "paragraphs": [
+            "Transient refresh failures retain your draft and block new saves until retry succeeds. Stale source or commercial hold retains the draft and original operation. Confirm original save outcome after an uncertain response. Denied read access clears protected content."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Expand stages/scenarios, use labelled controls and reorder buttons. No dragging is required. Saving and downloads require connectivity. Physical-device and screen-reader acceptance remain pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "References",
+          "paragraphs": [
+            "See the Automation specification, ADR-0061, the N2 page contract and execution evidence. The nursery route and NAC IDs are stable compatibility references."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guide. Owner visual, supplier and production acceptance are not granted by implementation or automated tests."
           ],
           "steps": [],
           "headers": [],

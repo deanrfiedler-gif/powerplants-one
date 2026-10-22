@@ -1,8 +1,12 @@
 ---
-title: Nursery Automation N2 technical assessment claimed
+title: Automation N2 technical assessment implementation
 date: 2026-10-22
 ---
 
-The user authorised N2 after N1 merged in PR #662. This contribution claims process stages and connections, source-qualified technical checks, exact quantity/rate calculations, phase-specific findings and immutable estimating-study outputs under the [merged specification](../blueprints/nursery-automation-configurator.md). The initial shortlist remains Javo Standard 2.0 and Plus; unconfirmed manufacturer limits cannot become approved ratings.
+N2 adds ordered process stages, phase-specific compatibility and exact capacity/quantity rules, explicit manual staffing, directed interfaces and buffers, immutable source-bound assessment history and two retained internal HTML outputs. Javo Standard 2.0 and Plus remain the initial candidates; no manufacturer rating is approved or seeded. The [merged specification](../blueprints/nursery-automation-configurator.md) and [ADR-0061](../decisions/ADR-0061-nursery-technical-assessment.md) retain all EST and NAC identifiers.
 
-The branch starts from main e9f28b69. Migration 0117 is reserved before implementation. Existing estimating authority and recovery will be reused. Shared Products publication, labour/activity pricing and paired CPQ receiving remain their owning N3 dependencies. No new dependency, framework, external integration or production deployment is planned. Implementation, independent rule review and validation are pending.
+Dean's [Automation naming direction](../decisions/automation-configurator-name.md) broadens the current display name beyond nurseries while preserving stable routes, database names and issued evidence. The native page, guide and shared-control bindings are maintained in the design register; accepted Automation mockups and owner visual review remain missing.
+
+Migration 0117 adds empty immutable child history without seed or grant changes. Exact upgrade ledgers retain their earlier cases and add the new version, including late reserved Products installation. Initial N1/N2 persistence and upgrade tests passed; strengthened exact-source permission tests also passed. Final validation and independent review are in progress in PR #665; see [execution evidence](../testing/evidence/nursery-automation-n2/README.md).
+
+Shared Products publication, delivery profiles/person-hours, installation and commissioning costing, paired CPQ receiving and quotation release remain N3/shared dependencies. N2 grants neither business acceptance nor production readiness and is not deployed by this change.

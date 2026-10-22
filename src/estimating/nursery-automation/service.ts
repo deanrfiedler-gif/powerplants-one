@@ -26,7 +26,7 @@ import { bounded, parseStudy } from "./validation";
 export const hash = (v: unknown) =>
   createHash("sha256").update(canonical(v)).digest("hex");
 export const catalogueHash = hash(catalogue);
-type Saved = {
+export type Saved = {
   id: string;
   workspace_id: string;
   company_id: string;
@@ -57,7 +57,7 @@ async function available(c: QueryClient) {
       "Nursery discovery requires the compatible database upgrade.",
     );
 }
-function digestBasis(
+export function digestBasis(
   row: Pick<
     Saved,
     | "estimating_workspace_id"

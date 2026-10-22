@@ -74,7 +74,7 @@ Mail: preserve private mailboxes and body separation (demo-email-crm-integration
 
 CS: follow ADR-0042 and cs-native-completion-handover.md. Preserve CS-05 identities, Grouping, service links and E2 snapshots. Readiness grants no work authority; survey handovers bind exact reviewed snapshots. Account plans create no bookings/forecasts. Reuse SH and Activity; Finance /account stays Finance.
 
-Configurators: fertigation-figma-implementation.md; nursery-automation-specification.md; exact scopes, neutral context, unverified supplier claims.
+Configurators: fertigation-figma-implementation.md; nursery-automation-specification.md; automation-configurator-name.md (Automation is the current name; preserve existing nursery paths and NAC IDs); exact scopes, neutral context, unverified supplier claims.
 
 Scheduling: scheduling-policy-publication.md. Bind exact policy/head, immutable proposals, complete reviews and distinct publication duties. Recover originals; use typed Activity links. Preserve pins/reservations. Holds govern readiness/Start, including offline Start. Resolution needs controlled change/cancellation/replacement and fresh evidence; acknowledgement/Activity completion cannot clear it. Rollback needs Step 4 enforcement/parsers. PT-28 synthetic pass; PT-30 continuous; human acceptance open. Retain #330, installed SQL.
 
