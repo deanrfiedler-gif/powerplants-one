@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Who sends M1–M3 | Resolved as recommended | The supply coordinator who records a dispatch may also send it when he or she holds the customer send duty: M1–M3 have no second-person rule, and the sender is named either way. M4 keeps its rule that the drafter cannot send |
 | Q4 Outlook fallback | Resolved as recommended | No "Send from Outlook" in the app. The owned follow-up tells the owner to reach the customer another way, and Check Sent Items stays the only recovery for an unknown outcome (ADR-0058 option E stays outside PPO) |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | Waits for Dean's explicit yes (section 7) |
+| Named Figma version | User decision, 22 October 2026 | Saved as "Customer messages — accepted" at Dean's request: "Yes, save the named Figma version "Customer messages — accepted"." Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 22 October 2026 |
 | Decision record | This file |
-| Named version | "Customer messages — accepted", to be saved on Dean's yes |
+| Named version | "Customer messages — accepted", saved 22 October 2026 |
 
 ## 4. What the design shows
 
@@ -143,5 +143,5 @@ The audit is recorded on the notes card `1513:401800`.
   - none of 1,779 visible texts with a stored colour that differs from its bound variable;
   - no text below its WCAG contrast threshold except the shell's decorative breadcrumb separator (section 5).
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder; the hashes are in the [captures README](../reference/ui/email-calendar/customer-messages-design-r01/README.md).
-- The named version "Customer messages — accepted" waits for Dean's explicit yes. The pull request stays a draft until it is saved.
+- The named version "Customer messages — accepted" was saved on 22 October 2026 in the Figma desktop app at Dean's request: "Yes, save the named Figma version "Customer messages — accepted"." Claude used Ctrl+Alt+S, checked the typed title in the save dialog, and confirmed the entry at the top of version history. The version was saved after the lock-in, so it contains the capture copies and the File index row. The page header and notes card were then updated to record the save.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

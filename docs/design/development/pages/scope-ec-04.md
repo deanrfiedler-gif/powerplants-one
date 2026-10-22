@@ -40,7 +40,7 @@ Accepted Figma design: [Customer messages design r01 captures](../../../referenc
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: see the [decision](../../../decisions/customer-messages-figma-design.md). SMS, M3 visit confirmations, correction messages, template publishing, My Work follow-up cards, phone records for M4 and follow-up messages, phone states and 200% zoom are not drawn. The named Figma version "Customer messages — accepted" waits for Dean.
+Accepted Figma design: see the [decision](../../../decisions/customer-messages-figma-design.md). SMS, M3 visit confirmations, correction messages, template publishing, My Work follow-up cards, phone records for M4 and follow-up messages, phone states and 200% zoom are not drawn. The named Figma version "Customer messages — accepted" was saved on 22 October 2026.
 
 The draft User Guide `guide.ec.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
