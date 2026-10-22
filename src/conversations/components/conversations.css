@@ -1,5 +1,8 @@
 /* Conversations T1c-1 (PPO-CONV-T1C-DESIGN 5.3, 5.6; accepted T1 frames). Shared tokens only. */
 .cv-workspace {
+  --surface: var(--white);
+  --border: var(--line);
+  --text: var(--ink);
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   min-height: calc(100vh - 64px);
@@ -330,6 +333,9 @@
   color: var(--text-secondary);
 }
 .cv-thread-footer {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
   padding: 12px 24px 16px;
   border-top: 1px solid var(--border);
 }
@@ -419,10 +425,30 @@
   background: var(--surface);
   box-shadow: 0 6px 20px rgb(0 0 0 / 12%);
 }
+.cv-composer > .cv-picker {
+  grid-row: 1;
+}
+.cv-thread-footer .cv-composer > .cv-picker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+.cv-picker-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.cv-thread-footer .cv-picker span {
+  margin-top: 0;
+}
 .cv-about {
   box-shadow: none;
 }
 .cv-picker input {
+  min-width: 0;
   min-height: 36px;
   border: 1px solid var(--control-border);
   border-radius: var(--radius-control);
@@ -447,8 +473,179 @@
   background: var(--surface-hover);
 }
 .cv-option-detail {
+  display: block;
   font-size: 12px;
   color: var(--text-secondary);
+}
+/* T2c: accepted answer/card geometry, using the current shared palette (PPO-CONV-T2C-DESIGN). */
+.cv-agent-message,
+.cv-turn {
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-card);
+  background: var(--info-surface);
+}
+.cv-agent-avatar {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: var(--navy);
+  color: var(--surface);
+}
+.cv-agent-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+}
+.cv-agent-message .cv-message-content {
+  flex: 1;
+}
+.cv-agent-message .cv-message-header {
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+.cv-agent-message .cv-message-header strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.cv-simulated {
+  display: inline-block;
+  margin: 4px 0 6px;
+  padding: 2px 8px;
+  border: 1px solid var(--info-border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.cv-agent-message .cv-message-body {
+  font-size: 14px;
+  line-height: 20px;
+}
+.cv-agent-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 10px;
+  min-width: 0;
+}
+.cv-source-heading {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cv-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 32px;
+  font-size: 13px;
+}
+a.cv-source {
+  background: var(--surface);
+  text-decoration: none;
+}
+a.cv-source:hover {
+  text-decoration: underline;
+}
+.cv-source-number {
+  flex: none;
+}
+.cv-source-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cv-agent-mention {
+  font-weight: 600;
+}
+.cv-turn > div {
+  min-width: 0;
+}
+.cv-turn p {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cv-turn[data-state="Unavailable"],
+.cv-turn[data-state="Failed"],
+.cv-turn[data-state="Discarded"] {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.cv-picker [role="option"] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.cv-picker-heading {
+  padding: 8px 12px 4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.cv-option-copy {
+  min-width: 0;
+}
+.cv-participant-warning {
+  max-width: 520px;
+  width: calc(100% - 32px);
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  color: var(--text);
+  background: var(--surface);
+}
+.cv-participant-warning::backdrop {
+  background: rgb(0 0 0 / 35%);
+}
+.cv-participant-warning h2 {
+  font-size: 18px;
+  margin-top: 0;
+}
+.cv-warning-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.cv-warning-original {
+  max-height: 180px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  padding: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+@media (max-width: 780px) {
+  .cv-warning-actions button { min-height: 44px; }
+  .cv-source,
+  .cv-tool {
+    min-height: 44px;
+  }
+  .cv-tool {
+    min-width: 44px;
+  }
+}
+@media (max-width: 360px) {
+  .cv-agent-message .cv-message-header {
+    display: grid;
+    gap: 2px;
+  }
+  .cv-source-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 .cv-picker-error {
   display: flex;

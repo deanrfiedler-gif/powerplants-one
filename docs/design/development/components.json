@@ -419,6 +419,8 @@
         "route:/facilities/new",
         "route:/sites",
         "route:/sites/[id]",
+        "route:/conversations",
+        "route:/conversations/[id]",
         "route:/estimating/discovery/[id]/nursery"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
@@ -5072,7 +5074,7 @@
       "desktop": "Read the retained reference and resolve intended scope before implementing.",
       "mobile": "No mobile implementation is asserted. Specify responsive transformation before adoption.",
       "keyboard": "Keyboard and assistive-technology rules must be defined before adoption.",
-      "limitations": "No adopted shared application component is mapped to the retained AI examples.",
+      "limitations": "Retained r22 examples remain reference-only. The separate conversations-agent host covers implemented T2c; later AI patterns are not adopted.",
       "gaps": [
         {
           "id": "ai-assistance-implementation",
@@ -8502,6 +8504,126 @@
           }
         ],
         "note": "Page-local grid parts. Record and form layouts reuse accepted shared components; named version Facilities and growing areas — accepted."
+      },
+      "review": null
+    },
+    {
+      "id": "conversations-agent",
+      "title": "Conversations assistant and composer",
+      "category": "Boards & cards",
+      "module": "AI",
+      "purpose": "T2c atomic Agent tags, per-reader simulated answer cards, trigger-adjacent turn states and count-only participant warning in the existing Conversations host.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "picker",
+          "label": "Agent and people",
+          "description": "Server availability, authority, same-name disambiguation, keyboard selection and duplicate refusal."
+        },
+        {
+          "id": "answer",
+          "label": "Projected answer",
+          "description": "AI/Simulated/acted-for labels, gaps, coverage, wrapping and withheld sources; mocked layout fixture at 1440/1024/390/320."
+        },
+        {
+          "id": "turn",
+          "label": "Turn outcomes",
+          "description": "Every lifecycle outcome; reasons projected only for the tagger."
+        },
+        {
+          "id": "warning",
+          "label": "New participant",
+          "description": "Cancel, exact acknowledgement and existing new-thread alternative; review of a retained original after changed warning preserves operation, newer draft and focus return."
+        },
+        {
+          "id": "persisted",
+          "label": "Real worker and recovery",
+          "description": "Real UI post through existing worker; persisted historical answer also renders with the application off."
+        },
+        {
+          "id": "denied",
+          "label": "Revoked or stale reads",
+          "description": "Existing read guards clear inaccessible content and preserve drafts. A retained-original review requires every tagged person in the fresh projection; missing candidates keep both drafts and focus without confirmation."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/conversations/components/message.tsx",
+          "symbol": "Message"
+        },
+        {
+          "path": "src/conversations/components/message.tsx",
+          "symbol": "AssistantTurnStatus"
+        },
+        {
+          "path": "src/conversations/components/composer.tsx",
+          "symbol": "Composer"
+        },
+        {
+          "path": "src/conversations/components/mention-picker.tsx",
+          "symbol": "MentionPicker"
+        },
+        {
+          "path": "src/conversations/components/participant-warning.tsx",
+          "symbol": "ParticipantWarning"
+        },
+        {
+          "path": "src/conversations/components/agent-avatar.tsx",
+          "symbol": "AgentAvatar"
+        }
+      ],
+      "dependencies": [
+        "src/conversations/components/conversations.css",
+        "src/conversations/composition.ts",
+        "src/conversations/picker-options.ts",
+        "src/conversations/reviewed-retry.ts",
+        "src/shared/lib/command-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts",
+        "src/conversations/participant-warning.ts",
+        "src/conversations/reads.ts",
+        "docs/testing/evidence/conversations-t2c/README.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-1440.png",
+        "anchor": "",
+        "status": "Accepted T2 design with approved W3 correction; implementation owner review pending"
+      },
+      "specification": "docs/design/development/components/conversations-agent.md",
+      "used_on": [
+        "scope:AI-01",
+        "route:/conversations",
+        "route:/conversations/[id]"
+      ],
+      "desktop": "Existing thread/context layout, blue cards, 32 px AI mark and wrapping sources at 1440/1024.",
+      "mobile": "At 320 px attribution stacks and source labels truncate. Source/tagging targets at least 44 px. Warning stays within viewport.",
+      "keyboard": "Combobox Arrow keys/Enter/Escape; atomic tag removal; focus returns to composer. Native warning modal restores focus. Ctrl+Enter shares Send readiness guards.",
+      "limitations": "Synthetic host/database required. Offline AI mark replaces the private Kit glyph. Assigned roles are not stored. Owner/device review pending.",
+      "gaps": [
+        {
+          "id": "conversations-agent-owner-review",
+          "expected": "Owner comparison against accepted T2 frames and W3 amendment.",
+          "actual": "Codex inspected responsive captures and synthetic flows; independent review and Dean acceptance remain separate.",
+          "action": "Review PR evidence and the disclosed role/offline-mark adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Conversations",
+        "components": [
+          {
+            "node": "1144:181",
+            "name": "Conversations / Message (proposed)"
+          },
+          {
+            "node": "1144:55",
+            "name": "Conversations / Avatar (proposed)"
+          }
+        ],
+        "note": "Frames use Author=Carl 1144:172 and Kind=Carl 1144:52. Current P3 states and R8 confirmation follow decision records; no accepted warning frame exists."
       },
       "review": null
     }

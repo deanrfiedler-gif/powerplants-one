@@ -30,11 +30,21 @@ export function readJournal(storage: StoragePort, key: string, scope: CommandSco
     throw Error("The same-tab recovery record is unreadable. No new command has been sent. Inspect the saved record before clearing recovery data.");
   }
 }
-export function writeJournal(storage: StoragePort, key: string, entry: JournalEntry, accepts: (entry: JournalEntry) => boolean, limit = 32768) {
+export function writeJournal(storage: StoragePort, key: string, entry: JournalEntry, accepts: (entry: JournalEntry) => boolean, limit = 32768, expected?: JournalEntry) {
   const raw = JSON.stringify(entry);
   if (raw.length > limit || !accepts(entry)) throw Error("The recovery record exceeds its supported bounds. No command was sent.");
+  if (expected && !sameScope(expected.scope, entry.scope)) throw Error("The original pending operation changed. No reviewed retry was sent.");
   const previous = readJournal(storage, key, entry.scope, accepts, limit);
-  if (previous && JSON.stringify(previous) !== raw) throw Error("Resolve the original pending operation before starting another saved action.");
+  if (expected) {
+    // Explicit compare-and-replace for reviewed metadata only. The caller must
+    // establish a command-specific refusal; this never changes operation identity.
+    if (!previous || JSON.stringify(previous) !== JSON.stringify(expected) ||
+      previous.phase !== "pending" || entry.phase !== "pending" ||
+      !sameScope(previous.scope, entry.scope) || previous.path !== entry.path ||
+      previous.target !== entry.target || previous.label !== entry.label || previous.record_id !== entry.record_id ||
+      previous.body.operation_id !== entry.body.operation_id || previous.body.schema_version !== entry.body.schema_version)
+      throw Error("The original pending operation changed. No reviewed retry was sent.");
+  } else if (previous && JSON.stringify(previous) !== raw) throw Error("Resolve the original pending operation before starting another saved action.");
   storage.setItem(key, raw);
   if (storage.getItem(key) !== raw) throw Error("Same-tab recovery storage could not be verified. No command was sent.");
   // JSON copy freezes caller-owned arrays/objects as well as generated IDs.

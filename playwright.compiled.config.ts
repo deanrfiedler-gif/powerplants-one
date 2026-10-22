@@ -9,10 +9,14 @@ const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 // the control measurement: compiled first-request timings beside dev-server ones.
 export default defineConfig({
   ...base,
+  // The compiled loopback launcher defaults to NODE_ENV=test. Keep this proof off
+  // explicitly; enabled worker flows belong to the separate non-production harness.
+  metadata: { ...base.metadata, conversationsAgentOff: true },
   use: { ...base.use, baseURL: origin },
   webServer: {
     ...base.webServer,
     command: "npm run serve:compiled",
     url: origin,
+    env: { PPO_ASSISTANT: "off" },
   },
 });

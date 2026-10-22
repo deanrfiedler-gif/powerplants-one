@@ -1,7 +1,7 @@
 # Conversation thread — design reference
 
 Stable entry: `route:/conversations/[id]`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Scope: PPO-AI-THREADS-PROP, step T1, slices T1c-1 and T1c-3 ([T1c design](../../../decisions/conversations-t1c-design.md), section 11 for the context panel; [T1 scope](../../../decisions/conversations-t1-scope.md)). People-only; no Carl, AI, voice, branches, sharing, pins or exclusions.
+Scope: PPO-AI-THREADS-PROP, step T1, slices T1c-1 and T1c-3 ([T1c design](../../../decisions/conversations-t1c-design.md), section 11 for the context panel; [T1 scope](../../../decisions/conversations-t1-scope.md)). Human threads plus the authorised T2c simulated assistant; no voice, branches, sharing, pins or exclusions.
 
 ## Purpose and task
 
@@ -33,3 +33,23 @@ At 780 px and narrower the thread is full screen with "Back to conversations"; a
 ## Behaviour, handovers and verification
 
 The record link opens `/crm/opportunities/{id}` or `/projects/{id}`. Reading marks the thread read for participants only. The context panel is a view rebuilt for the viewer on every read (S5) from existing reads only, and leaves out anything the viewer cannot open, title included. Its record link opens `/sales/opportunities/{id}` or `/projects/{id}`; a quotation opens `/estimating/quotes/{id}`; a library document opens its linked revision from the document library; a contact opens `/people/{id}` with phone and email only when the viewer may read the person. Tests: `tests/unit/conversations-asks.test.ts`, `tests/unit/conversations-composer.test.ts`, `tests/unit/conversations-context.test.ts`, `tests/database/conversations-context.test.ts`, `tests/http/conversations.test.ts`, `tests/browser/conversations.spec.ts` (desktop, 1024 and phone). No review fingerprint or owner acceptance is claimed; the article `guide.route-conversations-id` remains Draft.
+
+## T2c — Carl in Conversations
+
+Scope: PPO-AI-THREADS-PROP T2c; [T2c design and owner decisions](../../../decisions/conversations-t2c-design.md), [T2b contract](../../../contracts/conversations-t2b.md). Accepted source: T2 section 1310:307862 and [W3 correction captures](../../../reference/ui/my-work/conversations-t2-w3-r01/README.md). The W3 amendment and new-thread alternative were approved on 22 October 2026. Implementation acceptance remains pending.
+
+The server includes Carl in the @ picker only when enabled and the viewer holds conversation.agent.ask on this record. Carl has an AI assistant group and avatar. People retain their stored full name and "Person · Role not recorded" because assigned job roles are not stored. One atomic Agent tag is allowed; it has no Ask switch. Human messages, person tags, tracked asks and original-operation recovery continue independently.
+
+The thread consumes the server's per-reader projection. Answered and CannotAnswer render immutable checked plain text, Carl · AI assistant, Acting for, a conspicuous Simulated label and safe source chips. Gaps, coverage and count-only omissions come from that projection. Inaccessible sources have no name, link, tooltip or accessible-name leak. Queued/Answering and terminal states sit beside the triggering message; only the tagger sees a reason. Pending turns refresh every two seconds while visible, idle threads every thirty seconds. Denied reads clear the thread through existing resource guards.
+
+Before adding a new person, the count-only R8 dialog explains when earlier cited sources are inaccessible. Cancel retains the draft; Add and send confirms the current evidence basis; Start a new thread opens the existing flow on the same record. Cancelling that flow returns to the original thread and draft. Changed history/access refuses an outdated confirmation. No access is granted.
+
+Desktop/tablet retain existing navigation and context breakpoints. Cards have a 32 px AI avatar, 12 px spacing, blue background and wrapping source chips. At 320 px attribution stacks and source labels truncate; permitted accessible labels remain complete. Phone source links and tagging tools are at least 44 px. Keyboard selection, Escape and focus return use the existing composer flow; the warning is a native modal dialog. The offline avatar is a white AI mark; the private Kit supplies sparkles online. The later compact phone header remains in use.
+
+Host fixtures: tests/browser/conversations-agent.spec.ts (mocked presentation/privacy projections), conversations-agent-worker.spec.ts (real UI post, recovery and existing worker), conversations-agent-stored.spec.ts (persisted historical answers and compiled/off rendering), and conversations.spec.ts (human behaviour and exact navigation). Executed checks and captures are in [T2c evidence](../../../testing/evidence/conversations-t2c/README.md). Browser emulation and Codex inspection do not grant owner/device acceptance. No review fingerprint is recorded.
+
+The @/# thread picker opens above the composer with an internally scrolling list. Its Close picker button supports touch dismissal as well as Escape; both restore focus to the message field without changing the draft. Responsive geometry tests keep the human and AI Carl options clear of the phone bottom navigation.
+
+If a retained original is refused because its earlier participant warning changed, choose Review current warning. The dialog previews that original message and its asks, with fresh count-only warnings. Cancel keeps both the original and any newer draft. Send original message keeps the same operation and content, updates only the reviewed acknowledgement, and returns focus to Message after confirmation. An already accepted original receipt wins without another post. This recovery state reuses the native warning and has no separately accepted Figma frame.
+
+A retained-original review requires every originally tagged person in the fresh people projection. If anyone cannot be rechecked, no confirmation dialog or post is offered; both the original and newer draft remain, and focus returns to Review current warning. A missing person is never described as having no source-access warnings.

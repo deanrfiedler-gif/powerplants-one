@@ -1,0 +1,53 @@
+{
+  "source_commit": "c544daee69f824d1b425c39ab8463ec016a0254d",
+  "source_note": "Application and test source captured in the final focused replay; later commit adds only these evidence assets and links.",
+  "date": "2026-10-22",
+  "browser": "Chrome 156.0.8078.48",
+  "playwright": "1.64.1",
+  "harness": "Enabled non-production local-synthetic development server; the desktop framework indicator remains visible.",
+  "review": "Codex inspected all three rendered captures. No accepted Figma frame exists for this recovery state; Dean acceptance, physical-device and screen-reader review remain pending.",
+  "captures": [
+    {
+      "file": "recovery-original-1440.png",
+      "kind": "mocked restart warning; persisted post and receipt verified separately",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "2cb1783d32ec8a8364d0bd91fcbec1df8670deaea181ffca737f3222ee5b4056",
+      "origin": "tmp/t2c/browser-followup-final-desktop/conversations-agent-T2c-an-b040f--rotation-late-receipt-none-desktop-chromium/mocked-original-warning.png"
+    },
+    {
+      "file": "recovery-original-390.png",
+      "kind": "mocked restart warning; persisted post and receipt verified separately",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "dc99c1ec00e7c1c4d75f102f9d2014968aadba98965de5fdac20bee08be9c93b",
+      "origin": "tmp/t2c/browser-followup-final-phone/conversations-agent-T2c-an-b040f--rotation-late-receipt-none-mobile-chromium/mocked-original-warning.png"
+    },
+    {
+      "file": "recovery-original-320.png",
+      "kind": "mocked restart warning; persisted post and receipt verified separately",
+      "viewport": [
+        320,
+        844
+      ],
+      "png_dimensions": [
+        320,
+        844
+      ],
+      "sha256": "cbeb46f951c3f9386fce75f26475874ea7a425c48eb1060a032a41f80db0b0d0",
+      "origin": "tmp/t2c/browser-followup-final-phone/conversations-agent-T2c-an-1103b--late-receipt-before-review-mobile-chromium/mocked-original-warning.png"
+    }
+  ]
+}

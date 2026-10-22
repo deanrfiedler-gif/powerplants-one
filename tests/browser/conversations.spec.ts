@@ -17,19 +17,30 @@ async function signIn(page: Page, profile: string) {
   expect(r.ok()).toBe(true);
   return ((await r.json()) as { actor_id: string }).actor_id;
 }
-async function api<T = Record<string, unknown>>(page: Page, path: string, body?: unknown): Promise<{ status: number; body: T }> {
+async function api<T = Record<string, unknown>>(
+  page: Page,
+  path: string,
+  body?: unknown,
+): Promise<{ status: number; body: T }> {
   const origin = new URL(test.info().project.use.baseURL!).origin;
-  const r = await page.request.fetch(`/api/v1/${path}`, { method: body ? "POST" : "GET", headers: { Origin: origin }, data: body });
+  const r = await page.request.fetch(`/api/v1/${path}`, {
+    method: body ? "POST" : "GET",
+    headers: { Origin: origin },
+    data: body,
+  });
   return { status: r.status(), body: (await r.json()) as T };
 }
 const base = (reason: string) => ({ schema_version: 1, operation_id: randomUUID(), reason });
 
 // A fresh deal and a thread on it, started by the asker, tagging and asking the asked person.
-async function askedThread(page: Page, title = `SYN T1c-1 ${randomUUID().slice(0, 8)}`) {
-  const askedId = await signIn(page, asked);
-  await signIn(page, asker);
-  const deal = crmCreate();
-  expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
+async function askedThread(
+  page: Page,
+  title = `SYN T1c-1 ${randomUUID().slice(0, 8)}`,
+) {
+    const askedId = await signIn(page, asked);
+    await signIn(page, asker);
+    const deal = crmCreate();
+    expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
   const started = await api<{ record_id: string }>(page, "conversations", {
     ...base("Start a conversation"),
     anchor_type: "Opportunity",
@@ -39,7 +50,7 @@ async function askedThread(page: Page, title = `SYN T1c-1 ${randomUUID().slice(0
     mentions: [{ ordinal: 1, kind: "Person", person_id: askedId }],
     asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" }],
   });
-  expect(started.status).toBe(201);
+    expect(started.status).toBe(201);
   return { thread: started.body.record_id, title, dealId: deal.id };
 }
 
@@ -66,7 +77,10 @@ test.describe("T1c-1 conversations list", () => {
     await expect(sidebar.getByRole("link")).toHaveCount(0);
   });
 
-  test("T1c-1 no rail item is current and no horizontal scroll at 320 px", async ({ page, isMobile }) => {
+  test("T1c-1 no rail item is current and no horizontal scroll at 320 px", async ({
+    page,
+    isMobile,
+  }) => {
     await askedThread(page, `SYN long ${"title ".repeat(30)}`.slice(0, 200));
     await signIn(page, asked);
     if (!isMobile) {
@@ -99,7 +113,14 @@ test.describe("T1c-1 thread view", () => {
   test("T1c-1 the asked person's reply closes the ask", async ({ page }) => {
     const { thread } = await askedThread(page);
     await signIn(page, asked);
-    expect((await api(page, `conversations/${thread}/messages`, { ...base("Post a message"), body: "SYN 30 October" })).status).toBe(201);
+    expect(
+      (
+        await api(page, `conversations/${thread}/messages`, {
+          ...base("Post a message"),
+          body: "SYN 30 October",
+        })
+      ).status,
+    ).toBe(201);
     await page.goto(`/conversations/${thread}`);
     await expect(page.getByText(/^Answered by /)).toBeVisible();
     await expect(page.getByRole("button", { name: "No answer needed" })).toHaveCount(0);
@@ -123,7 +144,14 @@ test.describe("T1c-1 thread view", () => {
         await api(page, `conversations/${thread}/messages`, {
           ...base("Post a message"),
           body: "SYN see #{1}",
-          mentions: [{ ordinal: 1, kind: "Record", record_type: "Opportunity", record_id: dealId }],
+          mentions: [
+            {
+              ordinal: 1,
+              kind: "Record",
+              record_type: "Opportunity",
+              record_id: dealId,
+            },
+          ],
         })
       ).status,
     ).toBe(201);
@@ -132,7 +160,12 @@ test.describe("T1c-1 thread view", () => {
       try {
         const response = await route.fetch();
         const body = await response.json();
-        for (const m of body.messages) m.mentions = m.mentions.map((x: { kind: string; ordinal: number }) => (x.kind === "Record" ? { ordinal: x.ordinal, kind: "Record", can_open: false } : x));
+        for (const m of body.messages)
+          m.mentions = m.mentions.map((x: { kind: string; ordinal: number }) =>
+            x.kind === "Record"
+              ? { ordinal: x.ordinal, kind: "Record", can_open: false }
+              : x,
+          );
         await route.fulfill({ response, json: body });
       } catch {
         // The page cancelled this read (a superseded or repeated request); the next read is intercepted the same way.
@@ -150,7 +183,13 @@ test.describe("T1c-1 thread view", () => {
     await page.goto(`/conversations/${thread}`);
     await expect(page.getByRole("log").getByText(/when does the controller arrive/)).toBeVisible();
     await page.route(`**/api/v1/conversations/${thread}`, (route) =>
-      route.fulfill({ status: 404, json: { code: "RecordUnavailable", message: "This record is unavailable." } }),
+      route.fulfill({
+        status: 404,
+        json: {
+          code: "RecordUnavailable",
+          message: "This record is unavailable.",
+        },
+      }),
     );
     await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(page.getByText("This conversation isn't available to you")).toBeVisible();
@@ -171,17 +210,25 @@ test.describe("T1c-1 thread view", () => {
     await expect(page.getByText("This conversation isn't available to you")).toBeVisible();
   });
 
-  test("T1c-1 sidebar marks the open thread and the desktop opens one", async ({ page, isMobile }) => {
+  test("T1c-1 sidebar marks the open thread and the desktop opens one", async ({
+    page,
+    isMobile,
+  }) => {
     const { thread } = await askedThread(page);
     await signIn(page, asked);
     await page.goto(`/conversations/${thread}`);
-    await expect(page.locator(`.cv-sidebar a[href="/conversations/${thread}"]`)).toHaveAttribute("aria-current", "page");
+    await expect(
+      page.locator(`.cv-sidebar a[href="/conversations/${thread}"]`),
+    ).toHaveAttribute("aria-current", "page");
     if (isMobile) return;
     await page.goto("/conversations");
     await expect(page).toHaveURL(/\/conversations\/[0-9a-f-]{36}$/);
   });
 
-  test("T1c-1 phone thread has Back to the list", async ({ page, isMobile }) => {
+  test("T1c-1 phone thread has Back to the list", async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(!isMobile, "the desktop shows the list beside the thread");
     const { thread } = await askedThread(page);
     await signIn(page, asked);
@@ -207,7 +254,14 @@ test.describe("T1c-1 thread view", () => {
 test.describe("T1c-1 composer and New thread", () => {
   async function askedName(page: Page) {
     const id = await signIn(page, asked);
-    return { id, name: ((await (await page.request.get("/api/v1/local-session")).json()) as { display_name: string }).display_name };
+    return {
+      id,
+      name: (
+        (await (await page.request.get("/api/v1/local-session")).json()) as {
+          display_name: string;
+        }
+      ).display_name,
+    };
   }
 
   test("T1c-1 New thread with an ask", async ({ page }) => {
@@ -215,7 +269,12 @@ test.describe("T1c-1 composer and New thread", () => {
     await signIn(page, asker);
     const deal = crmCreate();
     expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
-    const number = (await api<{ items: { display_number: string }[] }>(page, `crm/opportunities/${deal.id}`)).body.items[0].display_number;
+    const number = (
+      await api<{ items: { display_number: string }[] }>(
+        page,
+        `crm/opportunities/${deal.id}`,
+      )
+    ).body.items[0].display_number;
     await page.goto("/conversations?new=1");
     const dialog = page.getByRole("dialog", { name: "New thread" });
     await dialog.getByRole("combobox", { name: "About" }).fill(number);
@@ -224,29 +283,48 @@ test.describe("T1c-1 composer and New thread", () => {
     await message.fill("Where is the controller? ");
     await dialog.getByRole("button", { name: "Tag a person" }).click();
     await dialog.getByRole("option", { name: person.name }).click();
-    await expect(message).toHaveValue(`Where is the controller? @${person.name} `);
-    const askSwitch = dialog.getByRole("switch", { name: `Ask ${person.name}` });
+    await expect(message).toHaveValue(
+      `Where is the controller? @${person.name} `,
+    );
+    const askSwitch = dialog.getByRole("switch", {
+      name: `Ask ${person.name}`,
+    });
     await expect(askSwitch).toHaveAttribute("aria-checked", "false");
     await askSwitch.click();
-    await dialog.getByRole("textbox", { name: `Question for ${person.name}` }).fill("SYN delivery date");
+    await dialog
+      .getByRole("textbox", { name: `Question for ${person.name}` })
+      .fill("SYN delivery date");
     await dialog.getByLabel(`Reply by for ${person.name}`).fill("2026-10-30");
     await expect(dialog.getByText("Title: Where is the controller?")).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Edit" })).toBeVisible();
     await expect(dialog.getByText("Switch on Ask for anyone you're asking a question; you can add a reply-by date.")).toBeVisible();
     await dialog.getByRole("button", { name: "Start thread" }).click();
     await expect(page).toHaveURL(/\/conversations\/[0-9a-f-]{36}$/);
-    await expect(page.getByText(`Waiting on ${person.name} · SYN delivery date`)).toBeVisible();
+    await expect(
+      page.getByText(`Waiting on ${person.name} · SYN delivery date`),
+    ).toBeVisible();
   });
 
-  test("T1c-1 the @ picker lists only people who can read the record", async ({ page }) => {
+  test("T1c-1 the @ picker lists only people who can read the record", async ({
+    page,
+  }) => {
     const { thread, dealId } = await askedThread(page);
     await signIn(page, asker);
-    const people = (await api<{ items: { display_name: string }[] }>(page, `conversations/people?anchor_type=Opportunity&anchor_id=${dealId}`)).body.items;
+    const people = (
+      await api<{ items: { display_name: string }[] }>(
+        page,
+        `conversations/people?anchor_type=Opportunity&anchor_id=${dealId}`,
+      )
+    ).body.items;
     await page.goto(`/conversations/${thread}`);
     await page.getByRole("button", { name: "Tag a person" }).click();
-    const options = page.getByRole("listbox", { name: "People" }).getByRole("option");
+    const options = page
+      .getByRole("listbox", { name: "People" })
+      .locator('[role="option"][data-mention-kind="Person"]');
     await expect(options).toHaveCount(people.length);
-    await expect(options).toHaveText(people.map((p) => p.display_name));
+    await expect(options).toHaveText(
+      people.map((p) => `${p.display_name}Person · Role not recorded`),
+    );
   });
 
   test("T1c-1 pickers and the Ask switch are accessible", async ({ page }) => {
@@ -272,9 +350,17 @@ test.describe("T1c-1 composer and New thread", () => {
     const message = page.getByRole("textbox", { name: "Message" });
     await message.fill("Draft in progress ");
     await page.getByRole("button", { name: "Tag a person" }).click();
-    await page.getByRole("listbox", { name: "People" }).getByRole("option").first().click();
+    await page
+      .getByRole("listbox", { name: "People" })
+      .locator('[role="option"][data-mention-kind="Person"]')
+      .first()
+      .click();
     const typed = await message.inputValue();
-    const reread = page.waitForResponse((r) => r.url().endsWith(`/api/v1/conversations/${thread}`) && r.request().method() === "GET");
+    const reread = page.waitForResponse(
+      (r) =>
+        r.url().endsWith(`/api/v1/conversations/${thread}`) &&
+        r.request().method() === "GET",
+    );
     await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await reread;
     await expect(message).toHaveValue(typed);
@@ -285,7 +371,9 @@ test.describe("T1c-1 composer and New thread", () => {
     const { thread } = await askedThread(page);
     await signIn(page, asker);
     await page.goto(`/conversations/${thread}`);
-    await page.route(`**/api/v1/conversations/${thread}/messages`, (route) => route.abort());
+    await page.route(`**/api/v1/conversations/${thread}/messages`, (route) =>
+      route.abort(),
+    );
     const message = page.getByRole("textbox", { name: "Message" });
     await message.fill("SYN kept after a failure");
     await page.getByRole("button", { name: "Send" }).click();
@@ -313,14 +401,19 @@ test.describe("T1c-1 composer and New thread", () => {
 });
 
 test.describe("T1c-1 final review fixes", () => {
-  test("T1c-1 a failed re-read keeps the thread and the draft", async ({ page }) => {
+  test("T1c-1 a failed re-read keeps the thread and the draft", async ({
+    page,
+  }) => {
     const { thread } = await askedThread(page);
     await signIn(page, asker);
     await page.goto(`/conversations/${thread}`);
     const message = page.getByRole("textbox", { name: "Message" });
     await message.fill("Draft kept through a failed read");
     await page.route(`**/api/v1/conversations/${thread}`, (route) =>
-      route.fulfill({ status: 503, json: { code: "DependencyUnavailable", message: "Try again." } }),
+      route.fulfill({
+        status: 503,
+        json: { code: "DependencyUnavailable", message: "Try again." },
+      }),
     );
     await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(page.getByText("This conversation could not be refreshed.")).toBeVisible();
@@ -328,7 +421,9 @@ test.describe("T1c-1 final review fixes", () => {
     await expect(message).toHaveValue("Draft kept through a failed read");
   });
 
-  test("T1c-1 the draft survives a resolve elsewhere and a refused post re-reads", async ({ page }) => {
+  test("T1c-1 the draft survives a resolve elsewhere and a refused post re-reads", async ({
+    page,
+  }) => {
     const { thread } = await askedThread(page);
     await signIn(page, asker);
     await page.goto(`/conversations/${thread}`);
@@ -336,15 +431,28 @@ test.describe("T1c-1 final review fixes", () => {
     await message.fill("Draft kept through a resolve");
     // Until the refused post goes out, the page's own re-reads see the thread as it was, so the race with the
     // 30-second refresh cannot hide the composer first.
-    const stale = await (await page.request.get(`/api/v1/conversations/${thread}`)).json();
+    const stale = await (
+      await page.request.get(`/api/v1/conversations/${thread}`)
+    ).json();
     let posted = false;
-    await page.route(`**/api/v1/conversations/${thread}`, (route) => (posted ? route.fallback() : route.fulfill({ json: stale })));
+    await page.route(`**/api/v1/conversations/${thread}`, (route) =>
+      posted ? route.fallback() : route.fulfill({ json: stale }),
+    );
     await page.route(`**/api/v1/conversations/${thread}/messages`, (route) => {
       posted = true;
       return route.fallback();
     });
-    const version = (await api<{ version: number }>(page, `conversations/${thread}`)).body.version;
-    expect((await api(page, `conversations/${thread}/resolve`, { ...base("Resolve conversation"), expected_version: version })).status).toBe(200);
+    const version = (
+      await api<{ version: number }>(page, `conversations/${thread}`)
+    ).body.version;
+    expect(
+      (
+        await api(page, `conversations/${thread}/resolve`, {
+          ...base("Resolve conversation"),
+          expected_version: version,
+        })
+      ).status,
+    ).toBe(200);
     await page.getByRole("button", { name: "Send" }).click();
     await expect(page.getByText("Reopen this conversation to reply")).toBeVisible();
     await page.getByRole("button", { name: "Reopen" }).click();
@@ -355,7 +463,9 @@ test.describe("T1c-1 final review fixes", () => {
     const { thread } = await askedThread(page);
     await signIn(page, asker);
     await page.goto(`/conversations/${thread}`);
-    await page.route(`**/api/v1/conversations/${thread}/resolve`, (route) => route.abort());
+    await page.route(`**/api/v1/conversations/${thread}/resolve`, (route) =>
+      route.abort(),
+    );
     await page.getByRole("button", { name: "Resolve" }).click();
     await expect(page.getByText("Resolve conversation has not been confirmed.")).toBeVisible();
     await expect(page.getByRole("button", { name: "Resolve" })).toBeDisabled();
@@ -364,7 +474,9 @@ test.describe("T1c-1 final review fixes", () => {
     await expect(page.getByText("Reopen this conversation to reply")).toBeVisible();
   });
 
-  test("T1c-1 a pending New thread is shown when the dialog opens again", async ({ page }) => {
+  test("T1c-1 a pending New thread is shown when the dialog opens again", async ({
+    page,
+  }) => {
     await signIn(page, asker);
     const deal = crmCreate();
     expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
@@ -372,7 +484,9 @@ test.describe("T1c-1 final review fixes", () => {
     const dialog = page.getByRole("dialog", { name: "New thread" });
     await expect(dialog.locator(".cv-about-chosen")).toBeVisible();
     await dialog.getByRole("textbox", { name: "Message" }).fill("SYN pending start");
-    await page.route("**/api/v1/conversations", (route) => (route.request().method() === "POST" ? route.abort() : route.fallback()));
+    await page.route("**/api/v1/conversations", (route) =>
+      route.request().method() === "POST" ? route.abort() : route.fallback(),
+    );
     await dialog.getByRole("button", { name: "Start thread" }).click();
     await expect(dialog.getByRole("button", { name: "Retry" })).toBeVisible();
     await dialog.getByRole("button", { name: "Cancel" }).click();
@@ -383,16 +497,25 @@ test.describe("T1c-1 final review fixes", () => {
     await expect(page).toHaveURL(/\/conversations\/[0-9a-f-]{36}$/);
   });
 
-  test("T1c-1 New thread pre-fills a newly created record", async ({ page }) => {
+  test("T1c-1 New thread pre-fills a newly created record", async ({
+    page,
+  }) => {
     await signIn(page, asker);
     const deal = crmCreate();
     expect((await api(page, "crm/opportunities", deal)).status).toBe(201);
-    const number = (await api<{ items: { display_number: string }[] }>(page, `crm/opportunities/${deal.id}`)).body.items[0].display_number;
+    const number = (
+      await api<{ items: { display_number: string }[] }>(
+        page,
+        `crm/opportunities/${deal.id}`,
+      )
+    ).body.items[0].display_number;
     await page.goto(`/conversations?new=1&record=Opportunity:${deal.id}`);
     await expect(page.getByRole("dialog", { name: "New thread" }).locator(".cv-about-chosen")).toContainText(number);
   });
 
-  test("T1c-1 a typed # stays when the picker is dismissed", async ({ page }) => {
+  test("T1c-1 a typed # stays when the picker is dismissed", async ({
+    page,
+  }) => {
     const { thread } = await askedThread(page);
     await signIn(page, asker);
     await page.goto(`/conversations/${thread}`);
@@ -412,7 +535,10 @@ test.describe("T1c-1 final review fixes", () => {
 test.describe("T1c-2 top-bar Conversations action", () => {
   const badgeCount = async (page: Page) => (await api<{ unread_threads: number }>(page, "conversations/badge")).body.unread_threads;
 
-  test("T1c-2 the action opens the preferred desktop thread or phone list, counts unread threads and stays current", async ({ page, isMobile }) => {
+  test("T1c-2 the action opens the preferred desktop thread or phone list, counts unread threads and stays current", async ({
+    page,
+    isMobile,
+  }) => {
     const { thread, title } = await askedThread(page);
     await signIn(page, asked);
     const unread = await badgeCount(page);
@@ -420,14 +546,20 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await page.goto("/work");
     const banner = page.getByRole("banner");
     const action = banner.getByRole("link", { name: /^Conversations/ });
-    await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
+    await expect(action).toHaveAccessibleName(
+      `Conversations, ${unread} unread`,
+    );
     await expect(action.locator(".ppo-top-badge")).toHaveText(unread > 9 ? "9+" : String(unread));
     await expect(action).not.toHaveAttribute("aria-current", "page");
     await expect(action).toHaveAttribute("href", "/conversations");
     // D1: immediately left of the information (Page guide) icon on desktop. The phone row hides the Page guide
     // button (phone header amendment P4: it is in the Menu), so only Conversations' place at the right is kept there.
     if (!isMobile) expect(await action.evaluate((link) => link.nextElementSibling?.getAttribute("aria-label"))).toBe("Page guide");
-    const markedRead = page.waitForResponse((response) => response.url().endsWith(`/api/v1/conversations/${thread}/read`) && response.request().method() === "POST");
+    const markedRead = page.waitForResponse(
+      (response) =>
+        response.url().endsWith(`/api/v1/conversations/${thread}/read`) &&
+        response.request().method() === "POST",
+    );
     await action.click();
     // T1c 5.2: desktop automatically opens the newest thread waiting on the viewer (this fixture).
     // Phone stays on the populated list until the viewer chooses a thread; listing alone must not mark it read.
@@ -436,7 +568,9 @@ test.describe("T1c-2 top-bar Conversations action", () => {
       await expect(row).toBeVisible();
       await expect(page).toHaveURL("/conversations");
       await expect(action).toHaveAttribute("aria-current", "page");
-      await expect(action).toHaveAccessibleName(`Conversations, ${unread} unread`);
+      await expect(action).toHaveAccessibleName(
+        `Conversations, ${unread} unread`,
+      );
       expect(await badgeCount(page)).toBe(unread);
       await expect(row).toHaveAttribute("href", `/conversations/${thread}`);
       await row.click();
@@ -493,7 +627,10 @@ test.describe("T1c-2 top-bar Conversations action", () => {
     await expect(page.locator("#shell-phone-menu")).toBeFocused();
   });
 
-  test("T1c-2 a phone record row has no Menu button: its More starts with Open menu and Conversations, and focus returns to More", async ({ page, isMobile }) => {
+  test("T1c-2 a phone record row has no Menu button: its More starts with Open menu and Conversations, and focus returns to More", async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(!isMobile, "Phone header record row");
     const { thread } = await askedThread(page);
     await signIn(page, asked);
@@ -547,15 +684,25 @@ test.describe("T1c-3 context panel", () => {
       body: "@{1} SYN when does the controller arrive? See #{2}",
       mentions: [
         { ordinal: 1, kind: "Person", person_id: askedId },
-        { ordinal: 2, kind: "Record", record_type: "Project", record_id: project.id },
+        {
+          ordinal: 2,
+          kind: "Record",
+          record_type: "Project",
+          record_id: project.id,
+        },
       ],
-      asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" }],
+      asks: [
+        { ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" },
+      ],
     });
     expect(started.status).toBe(201);
     return { thread: started.body.record_id, dealId: deal.id, project };
   }
 
-  test("T1c-3 desktop docks the panel; every item says why; close and reopen", async ({ page, isMobile }) => {
+  test("T1c-3 desktop docks the panel; every item says why; close and reopen", async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(isMobile, "the docked panel is a desktop layout");
     const { thread, dealId, project } = await contextThread(page);
     await page.goto(`/conversations/${thread}`);
@@ -582,8 +729,7 @@ test.describe("T1c-3 context panel", () => {
     await expect(panel.getByText("Deal owner")).toBeHidden();
     await panel.getByRole("button", { name: "Close context" }).click();
     await expect(panel).toHaveCount(0);
-    await expect(page.getByRole("button", { name: "Context", exact: true })).toBeFocused();
-    await page.getByRole("button", { name: "Context", exact: true }).click();
+    await expect(page.getByRole("button", { name: "Context", exact: true })).toBeFocused(); await page.getByRole("button", { name: "Context", exact: true }).click();
     await expect(page.getByRole("complementary", { name: "Context", exact: true })).toBeVisible();
     // A second close makes a fresh focus request; keyboard users can reopen without searching for the button.
     await panel.getByRole("button", { name: "Close context" }).click();
@@ -598,7 +744,10 @@ test.describe("T1c-3 context panel", () => {
     await expect(title).toBeFocused();
   });
 
-  test("T1c-3 an item the viewer cannot open is absent, title included", async ({ page, isMobile }) => {
+  test("T1c-3 an item the viewer cannot open is absent, title included", async ({
+    page,
+    isMobile,
+  }) => {
     const { thread, project } = await contextThread(page);
     await signIn(page, asked);
     await page.goto(`/conversations/${thread}`);
@@ -612,7 +761,10 @@ test.describe("T1c-3 context panel", () => {
     expect(await panel.evaluate((node, id) => node.innerHTML.includes(id), project.id)).toBe(false);
   });
 
-  test("T1c-3 at 1024 px the panel is behind the Context button, as a drawer", async ({ page, isMobile }) => {
+  test("T1c-3 at 1024 px the panel is behind the Context button, as a drawer", async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(isMobile, "tablet width is a desktop-browser layout");
     const { thread } = await contextThread(page);
     await page.setViewportSize({ width: 1024, height: 768 });
@@ -632,7 +784,10 @@ test.describe("T1c-3 context panel", () => {
     await expect(button).toBeFocused();
   });
 
-  test("T1c-3 phone opens the context as a sheet, icon-only at 320 px", async ({ page, isMobile }) => {
+  test("T1c-3 phone opens the context as a sheet, icon-only at 320 px", async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(!isMobile, "the sheet is the phone layout");
     const { thread } = await contextThread(page);
     await page.goto(`/conversations/${thread}`);

@@ -59,3 +59,7 @@ The accepted scope did not decide these five points, so T1b built them as assump
 ## Boundaries
 
 No email (T1-8), attachments, formatting, retraction, sharing, branches, watches, Carl or AI. Synthetic data only (T1-9). Business acceptance, production readiness and the Figma lock-in remain separate.
+
+## T2c compatibility
+
+The [T2c extension](conversations-t2b.md#t2c-ui-extension--22-october-2026) adds server-derived Agent availability and count-only participant confirmation to existing routes. Human tags, asks, navigation and original-operation recovery retain this contract. There is no generic picker endpoint or broader participant-management surface.
