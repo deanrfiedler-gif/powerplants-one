@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner/decider: Dean Fiedler. Date: 22 October 2026. Status: authorised T2d implementation choice; independent review and owner acceptance pending. Codex working for Dean. [T2d plan](conversations-t2d-design.md), [T2 scope](conversations-t2-scope.md) T2-1–12/W5/W9, [A1/A2](ppo-assistant-direction.md), [ADR-0056](ADR-0056-dependency-update-and-audit-gates.md).
+Owner/decider: Dean Fiedler. Date: 22 October 2026. Status: authorised T2d implementation choice; independent review received at 829ae67c; corrective follow-up review and owner acceptance pending. Codex working for Dean. [T2d plan](conversations-t2d-design.md), [T2 scope](conversations-t2-scope.md) T2-1–12/W5/W9, [A1/A2](ppo-assistant-direction.md), [ADR-0056](ADR-0056-dependency-update-and-audit-gates.md).
 
 ## Decision and alternatives
 
@@ -38,3 +38,16 @@ Documented billing errors/spend exhaustion stop without retry/fallback. Authenti
 The lockfile remains part of DK-06 managed OUT-09 definition fingerprints (`src/documents/publication/definition.ts`). Existing managed publications can become DefinitionChanged and require normal republication before new Job pack preparation. Legacy v1–2 and OUT-10/14 remain outside that fingerprint. T2d does not repair the template system or publish business outputs.
 
 All automated provider proof uses unmistakably dummy credentials and the actual pinned SDK with intercepted transport. No real key is inspected, no provider request is made. Persisted integration, live model quality, Dean's acceptance and production readiness are separate. Independent different-model review is required before merge. No migration, capability or grant is added.
+
+
+## Independent review corrections — 22 October 2026
+
+[Claude's review](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849) at 829ae67c found two defects, both accepted after source verification and failing regression tests. Codex's corrections require independent follow-up; this is not reviewer acceptance.
+
+**Request fitting.** Before each Claude dispatch, the runner projects the current access-checked envelope and measures the full serialized request against the remaining input allowance. If it is too large, remove complete oldest history messages until it fits, retaining the newest message, the exact question and all source items. Increment left_out for each omission and keep an internal history_left_out subtotal so the fixed answer footer distinguishes history limits from access exclusions. Coverage reports the actual history count and more=true. Re-fit on retry against the newly reduced allowance. This does not lower the 48000-token ceiling or substitute the simulated meter. An irreducible question/source request that still exceeds the bound remains an unsent TurnLimit; no content is silently truncated. The simulation path is unchanged. The 8192 overhead allowance remains an estimate, not a proven tokenizer bound or live calibration result.
+
+**TLS trust.** The owned HTTPS request explicitly supplies tls.getCACertificates("bundled"). It cannot inherit additional platform/OpenSSL roots even if the process default trust changes. Runtime guards also reject NODE_USE_SYSTEM_CA, OPENSSL_CONF, relevant NODE_OPTIONS and process.execArgv flags (system/OpenSSL CA, OpenSSL configuration and TLS key logging) before key access. [Node's TLS documentation](https://nodejs.org/api/tls.html#tlsgetcacertificatestype) distinguishes bundled roots from default/system/extra trust; the API was added in Node 22.15 and is available in the pinned Node 24 runtime. No machine trust store or real credential was inspected for this correction.
+
+**Request/usage ambiguity.** Omit the unnecessary speed request option: [fast mode](https://platform.claude.com/docs/en/build-with-claude/fast-mode) is opt-in and supports specified Opus models; PPO does not request it or a fast-mode header. Returned fast usage still fails closed. [Messages examples](https://platform.claude.com/docs/en/api/messages/create) show usage.inference_geo="global"; [residency guidance](https://platform.claude.com/docs/en/manage-claude/data-residency) describes the value as where inference ran. Keep the strict global-only billing guard and explicitly test non-global rejection; do not infer a regional rate or relax accounting based on that ambiguity. The live response contract remains a separate T2e verification item, with no call performed here. These public sources were rechecked 22 October 2026.
+
+**HTTP errors and reservations.** An HTTP status without trustworthy usage does not establish zero billing. Sent 400/401/402/403/429 responses retain the full Unknown reservation and stop, even where the provider may charge nothing. This can consume available PPO budget through retained reservations; no automatic reconciliation or operator release path is supplied. The existing retry rule applies only to safely accounted/unsent calls. Preserve this conservative choice; the T2b state table now explicitly includes Unknown for Unavailable.

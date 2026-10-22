@@ -1,4 +1,5 @@
 import https from "node:https";
+import { getCACertificates } from "node:tls";
 import { AdapterError } from "../model";
 
 export const anthropicMessagesURL = "https://api.anthropic.com/v1/messages";
@@ -14,7 +15,7 @@ export const anthropicHTTPS: ClaudeTransport = async (url, init) => {
   return new Promise<Response>((resolve, reject) => {
     const req = https.request(anthropicMessagesURL, {
       method: "POST", headers: Object.fromEntries(new Headers(init.headers)),
-      agent: false, rejectUnauthorized: true, minVersion: "TLSv1.2", signal: init.signal ?? undefined,
+      ca: getCACertificates("bundled"), agent: false, rejectUnauthorized: true, minVersion: "TLSv1.2", signal: init.signal ?? undefined,
     }, res => {
       const chunks: Buffer[] = [];
       let bytes = 0;

@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import https from "node:https";
+import { getCACertificates } from "node:tls";
+import { EventEmitter } from "node:events";
+import type { IncomingMessage } from "node:http";
 import { after, before, beforeEach, mock, test } from "node:test";
 import { reset } from "../../scripts/database";
 import { localConfig } from "../../src/platform/config";
@@ -146,4 +149,70 @@ test("T2d access loss after SDK response settles cost and prevents publication; 
   const other = await readThread(f.other, f.thread);
   assert.equal(JSON.stringify(other).includes("ActorLostAccess"), false);
   await post(f.p, f.thread);
+});
+
+
+test("T2d worker default factory → actual SDK → owned HTTPS transport persists once without adapter injection", async () => {
+  const f = await fixture(); let calls = 0; const errors: unknown[] = [];
+  const intercepted = mock.method(https, "request", (...args: unknown[]) => {
+    calls++;
+    const options = args[1] as https.RequestOptions;
+    const req = Object.assign(new EventEmitter(), { end(wire: string) {
+      void (async () => {
+        assert.equal(args[0], "https://api.anthropic.com/v1/messages");
+        assert.equal(options.rejectUnauthorized, true); assert.equal(options.agent, false);
+        assert.ok(JSON.stringify(options.ca) === JSON.stringify(getCACertificates("bundled")));
+        assert.equal((options.headers as Record<string, string>)["x-api-key"], env.PPO_ANTHROPIC_API_KEY);
+        const body = JSON.parse(wire); assert.equal(body.model, claudeModel); assert.equal(body.speed, undefined);
+        assert.deepEqual((await ledger(f.turn)).map(e => [e.state, e.reserved_micro]), [["Reserved", 176000]]);
+        for (const secret of [f.p.actor_id, f.other.actor_id, f.deal, f.thread]) assert.equal(wire.includes(secret), false);
+        const res = Object.assign(new EventEmitter(), { statusCode: 200, headers: { "content-type": "application/json" } });
+        const payload = await response().text();
+        (args[2] as (res: IncomingMessage) => void)(res as unknown as IncomingMessage);
+        res.emit("data", Buffer.from(payload)); res.emit("end");
+      })().catch(e => { errors.push(e); req.emit("error", e); });
+    } });
+    return req as unknown as ReturnType<typeof https.request>;
+  });
+  try {
+    await Promise.all([runAssistantTurns(10, { env }), runAssistantTurns(10, { env })]);
+    assert.deepEqual(errors, []); assert.equal(calls, 1);
+    assert.deepEqual((await ledger(f.turn)).map(e => [e.state, e.settled_micro]), [["Settled", 3698]]);
+    assert.equal((await messages(f.turn)).length, 1);
+    await postMessage(f.p, f.thread, f.input); await closeDatabase();
+    await runAssistantTurns(10, { env }); await runAssistantTurn(f.turn, { env });
+    assert.equal(calls, 1); assert.equal((await messages(f.turn)).length, 1);
+    const view = await readThread(f.p, f.thread);
+    assert.ok(view.messages.some(m => "agent" in m && m.agent?.label === "Claude" && m.agent.sources[0]?.can_open));
+  } finally { intercepted.mock.restore(); }
+});
+
+test("T2d long persisted history trims again on retry, settles fresh reservations and retains truthful immutable footer", async () => {
+  const p = await principal(profiles.coordinator), deal = await newDeal(p), thread = await begin(p, deal);
+  for (let i = 0; i < 19; i++) await post(p, thread, { body: `SYN history ${i} ` + "x".repeat(3980) });
+  const trigger = await post(p, thread, { body: "SYN @{1} what is recorded?", mentions: [{ ordinal: 1, kind: "Agent" }] });
+  const turn = (await rows("SELECT id FROM ppo.assistant_turns WHERE trigger_message_id=$1", [trigger]))[0].id;
+  const history: { size: number; left_out: number }[] = [];
+  const adapter = createClaudeAdapter({ env, transport: async (_url, init) => {
+    const body = JSON.parse(String(init.body)), projected = JSON.parse(body.messages[0].content);
+    const e = projected.envelope;
+    history.push({ size: e.messages.length, left_out: e.left_out });
+    assert.equal(e.messages.at(-1).text, projected.question.text);
+    assert.equal(e.coverage.messages.returned, e.messages.length); assert.equal(e.coverage.messages.more, true);
+    assert.equal(e.left_out, 20 - e.messages.length);
+    assert.ok(e.messages[0].text.startsWith(`SYN history ${19 - (e.messages.length - 1)} `));
+    assert.equal(e.items[0].source_id, "S1");
+    if (history.length === 1) return response({ usage: { input_tokens: 18000, output_tokens: 100 }, content: [{ type: "text", text: "{" }] });
+    return response();
+  } });
+  assert.equal((await runAssistantTurn(turn, { env, adapter })).state, "Answered");
+  assert.equal(history.length, 2); assert.ok(history[1].size < history[0].size); assert.ok(history[0].size < 20);
+  assert.deepEqual((await ledger(turn)).map(e => [e.state, e.reserved_micro, e.settled_micro]), [["Settled", 176000, 37000], ["Settled", 139000, 3698]]);
+  const stored = (await rows("SELECT id,body,left_out_count FROM ppo.conversation_messages WHERE turn_id=$1", [turn]))[0];
+  assert.equal(stored.left_out_count, history[1].left_out);
+  assert.match(stored.body, /earlier messages left out to fit the request allowance/);
+  assert.doesNotMatch(stored.body, /not everyone here/);
+  const view = await readThread(p, thread);
+  assert.equal(view.messages.find(m => m.id === stored.id)!.body, stored.body);
+  await runAssistantTurn(turn, { env, adapter }); assert.equal(history.length, 2);
 });

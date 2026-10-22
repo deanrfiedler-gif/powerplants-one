@@ -24,7 +24,7 @@ const schema = {
 function bodyFor(request: AdapterRequest): Anthropic.MessageCreateParamsNonStreaming {
   return {
     model: claudeModel, max_tokens: request.allowance.output_tokens, stream: false,
-    thinking: { type: "between_tools" }, service_tier: "standard_only", inference_geo: "global", speed: "standard",
+    thinking: { type: "between_tools" }, service_tier: "standard_only", inference_geo: "global",
     system, output_config: { format: { type: "json_schema", schema }, effort: "low" },
     messages: [{ role: "user", content: JSON.stringify({ question: request.question, envelope: request.envelope }) }],
   };
@@ -33,13 +33,15 @@ function bodyFor(request: AdapterRequest): Anthropic.MessageCreateParamsNonStrea
 // overhead headroom. This is not an exact tokenizer; ADR-0061 records the T2e calibration gate.
 export const claudeInputTokens = (request: AdapterRequest) => Buffer.byteLength(JSON.stringify(bodyFor(request)), "utf8") + 8192;
 const quiet = { debug() {}, info() {}, warn() {}, error() {} };
+const unsafeNodeOptions = /(?:^|[\s"'])--(?:tls-keylog|use-system-ca|use-openssl-ca|openssl-config|openssl-shared-config)(?=[=\s"']|$)/;
 function permitted(env: AssistantEnvironment) {
   return typeof window === "undefined" && assistantEnabled(env) && env.PPO_ASSISTANT_PROVIDER === "claude"
     && env.PPO_ASSISTANT_MODEL === claudeModel
     && !env.ANTHROPIC_BASE_URL && !env.ANTHROPIC_CUSTOM_HEADERS && env.NODE_TLS_REJECT_UNAUTHORIZED !== "0"
     && !env.HTTPS_PROXY && !env.HTTP_PROXY && !env.ALL_PROXY && !env.https_proxy && !env.http_proxy && !env.all_proxy
-    && !env.NODE_EXTRA_CA_CERTS && !env.SSL_CERT_FILE && !env.SSL_CERT_DIR
-    && !env.NODE_DEBUG && !env.NODE_DEBUG_NATIVE && !env.SSLKEYLOGFILE && !/--tls-keylog(?:[=\s]|$)/.test(env.NODE_OPTIONS ?? "");
+    && !env.NODE_EXTRA_CA_CERTS && !env.SSL_CERT_FILE && !env.SSL_CERT_DIR && !env.NODE_USE_SYSTEM_CA && !env.OPENSSL_CONF
+    && !env.NODE_DEBUG && !env.NODE_DEBUG_NATIVE && !env.SSLKEYLOGFILE && !unsafeNodeOptions.test(env.NODE_OPTIONS ?? "")
+    && !unsafeNodeOptions.test(process.execArgv.join(" "));
 }
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const count = (value: unknown): value is number => Number.isSafeInteger(value) && Number(value) >= 0;

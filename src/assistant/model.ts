@@ -38,6 +38,8 @@ export type EvidenceEnvelope = {
   items: EvidenceItem[];
   coverage: Partial<Record<keyof typeof envelopeLimits | "acceptance_stages", Coverage>>;
   left_out: number;
+  /** Included in left_out; kept separate internally for truthful rendered omission reasons. */
+  history_left_out?: number;
 };
 // Internal record IDs, routes and reader identities never cross the adapter boundary.
 export type AdapterRequest = {

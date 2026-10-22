@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import https from "node:https";
+import { getCACertificates } from "node:tls";
 import { EventEmitter } from "node:events";
 import type { IncomingMessage } from "node:http";
 import { anthropicHTTPS } from "../../src/assistant/adapters/claude-transport";
 import { after, before, mock, test } from "node:test";
 import { adapterFor } from "../../src/assistant/adapters";
 import { createClaudeAdapter, claudeInputTokens, claudeModel } from "../../src/assistant/adapters/claude";
-import { AdapterError, type AdapterRequest } from "../../src/assistant/model";
+import { AdapterError, type AdapterRequest, type EvidenceEnvelope } from "../../src/assistant/model";
 import { costMicro, priceFor } from "../../src/assistant/pricing";
 
 // This file must never reach a network, including when an assertion fails.
@@ -61,6 +62,9 @@ test("T2d guards refuse before key access and transport, including inherited end
     { RENDER_EXTERNAL_URL: "https://example.invalid" }, { PPO_ASSISTANT_MODEL: "" }, { PPO_ASSISTANT_MODEL: "unknown" },
     { ANTHROPIC_BASE_URL: "https://example.invalid" }, { NODE_TLS_REJECT_UNAUTHORIZED: "0" },
     { HTTPS_PROXY: "https://example.invalid" }, { NODE_DEBUG: "http,https" }, { NODE_DEBUG_NATIVE: "tls" },
+    { NODE_USE_SYSTEM_CA: "1" }, { OPENSSL_CONF: "SYN-openssl-config" },
+    { NODE_OPTIONS: "--use-system-ca" }, { NODE_OPTIONS: "--use-openssl-ca" },
+    { NODE_OPTIONS: "--openssl-config=SYN-openssl-config" }, { NODE_OPTIONS: "--openssl-shared-config" },
     { SSLKEYLOGFILE: "SYN-debug-output" }, { NODE_OPTIONS: "--tls-keylog=SYN-debug-output" },
   ]) {
     let calls = 0, reads = 0;
@@ -93,7 +97,7 @@ test("T2d actual SDK builds one bounded structured Messages request with no tool
     assert.match(body.system, /untrusted/i);
     assert.deepEqual(JSON.parse(body.messages[0].content), { question: request().question, envelope: request().envelope });
     for (const key of ["tools", "tool_choice", "metadata", "container", "cache_control", "betas"]) assert.equal(body[key], undefined);
-    assert.equal(body.service_tier, "standard_only"); assert.equal(body.inference_geo, "global");
+    assert.equal(body.service_tier, "standard_only"); assert.equal(body.inference_geo, "global"); assert.equal(body.speed, undefined);
     return response(message());
   } });
   assert.deepEqual(await adapter.answer(request(), signal()), { ...answer, usage }); assert.equal(calls, 1);
@@ -131,7 +135,7 @@ test("T2d malformed/truncated/oversized/unexpected content preserves known usage
 test("T2d unrepresentable or missing usage never silently becomes zero/ordinary input", async () => {
   for (const u of [undefined, { ...usage, cache_read_input_tokens: 3 }, { ...usage, cache_creation_input_tokens: 4 },
     { ...usage, server_tool_use: { web_search_requests: 1 } }, { ...usage, future_billable_tokens: 10 }, { ...usage, output_tokens_details: { future_billable_tokens: 1 } },
-    { ...usage, input_tokens: -1 }, { ...usage, output_tokens: 8001 }, { ...usage, service_tier: "priority" }]) {
+    { ...usage, inference_geo: "us" }, { ...usage, speed: "fast" }, { ...usage, input_tokens: -1 }, { ...usage, output_tokens: 8001 }, { ...usage, service_tier: "priority" }]) {
     const adapter = createClaudeAdapter({ env, transport: async () => response(message({ usage: u })) });
     await assert.rejects(adapter.answer(request(), signal()), failure("MalformedOutput", true, false));
   }
@@ -212,6 +216,7 @@ test("T2d owned HTTPS transport pins destination, verifies TLS, disables inherit
     const options = args[1] as https.RequestOptions;
     assert.equal(options.rejectUnauthorized, true); assert.equal(options.agent, false);
     assert.equal(options.minVersion, "TLSv1.2");
+    assert.ok(JSON.stringify(options.ca) === JSON.stringify(getCACertificates("bundled")), "only bundled CAs");
     const req = Object.assign(new EventEmitter(), { end() {
       const res = Object.assign(new EventEmitter(), { statusCode: 307, headers: { location: "https://example.invalid" } });
       (args[2] as (res: IncomingMessage) => void)(res as unknown as IncomingMessage);
@@ -277,4 +282,75 @@ test("T2d invalid empty-body HTTP status cannot escape the transport as an uncau
   try {
     await assert.rejects(anthropicHTTPS("https://api.anthropic.com/v1/messages", { method: "POST", body: "{}" }), failure("MalformedOutput", true, false));
   } finally { intercepted.mock.restore(); }
+});
+
+
+test("T2d command-line TLS/OpenSSL overrides refuse before credential access", async () => {
+  const previous = process.execArgv;
+  try {
+    for (const flag of ["--tls-keylog=SYN-never-created", "--use-system-ca", "--use-openssl-ca", "--openssl-config=SYN-config", "--openssl-shared-config"]) {
+      process.execArgv = [flag];
+      const guarded = { ...env };
+      Object.defineProperty(guarded, "PPO_ANTHROPIC_API_KEY", { get() { assert.fail("credential access"); } });
+      await assert.rejects(createClaudeAdapter({ env: guarded, transport: async () => assert.fail("transport") }).answer(request(), signal()), failure("Unavailable", false, false));
+    }
+  } finally { process.execArgv = previous; }
+});
+
+test("T2d long history fits remaining allowance oldest-first with truthful omissions and unchanged question/sources", async () => {
+  const { prepareRequest } = await import("../../src/assistant/request");
+  for (const size of [10, 20]) {
+    const r = request();
+    const history = Array.from({ length: size }, (_, i) => ({ text: `SYN history ${i} ` + "x".repeat(3980), untrusted: true as const }));
+    const envelope: EvidenceEnvelope = { ...r.envelope, readers: ["SYN-private-reader"], question: r.question,
+      messages: history, coverage: { messages: { returned: size, limit: 20, more: false } }, left_out: 2,
+      items: [{ ...r.envelope.items[0], type: "Opportunity", record_id: "SYN-private-record", route: "/SYN-private-route", source_version: "1", retrieved_at: "SYN-time" }] };
+    const original = structuredClone(envelope);
+    const first = prepareRequest(envelope, r.allowance, claudeInputTokens);
+    assert.ok(claudeInputTokens(first.request) <= 48000);
+    assert.ok(first.envelope.messages.length < size);
+    const dropped = size - first.envelope.messages.length;
+    assert.deepEqual(first.envelope.messages, history.slice(dropped));
+    assert.equal(first.envelope.left_out, 2 + dropped);
+    assert.deepEqual(first.envelope.coverage.messages, { returned: size - dropped, limit: 20, more: true });
+    assert.deepEqual(first.request.question, r.question); assert.deepEqual(first.envelope.items, envelope.items);
+    assert.deepEqual(envelope, original); // no mutation of the access-checked input snapshot
+    const retry = prepareRequest(first.envelope, { input_tokens: 30000, output_tokens: 7800 }, claudeInputTokens);
+    assert.ok(claudeInputTokens(retry.request) <= 30000);
+    assert.ok(retry.envelope.messages.length < first.envelope.messages.length);
+    assert.equal(retry.envelope.left_out, 2 + size - retry.envelope.messages.length);
+    assert.equal(JSON.stringify(retry.request).includes("SYN-private"), false);
+    const unchanged = prepareRequest(envelope, r.allowance);
+    assert.deepEqual(unchanged.envelope, envelope); // simulation's existing fixture meter/window
+    const exhausted = prepareRequest(envelope, { input_tokens: 1, output_tokens: 8000 }, claudeInputTokens);
+    assert.deepEqual(exhausted.envelope.messages, history.slice(-1));
+    assert.deepEqual(exhausted.request.question, r.question);
+    assert.ok(claudeInputTokens(exhausted.request) > 1); // irreducible request still fails closed
+  }
+});
+
+test("T2d owned transport caps bytes, aborts mid-response and contains stream errors as sent unknown", async () => {
+  for (const mode of ["cap", "abort", "stream"] as const) {
+    const controller = new AbortController(); let destroyed = 0;
+    const intercepted = mock.method(https, "request", (...args: unknown[]) => {
+      const options = args[1] as https.RequestOptions;
+      const req = Object.assign(new EventEmitter(), { destroy() { destroyed++; }, end() {
+        const res = Object.assign(new EventEmitter(), { statusCode: 200, headers: {}, destroy() { destroyed++; } });
+        (args[2] as (res: IncomingMessage) => void)(res as unknown as IncomingMessage);
+        options.signal!.addEventListener("abort", () => req.emit("error", Error("SYN raw abort")), { once: true });
+        queueMicrotask(() => {
+          res.emit("data", Buffer.from("{"));
+          if (mode === "cap") res.emit("data", Buffer.alloc(131072));
+          else if (mode === "abort") controller.abort();
+          else res.emit("error", Error("SYN raw stream error"));
+        });
+      } });
+      return req as unknown as ReturnType<typeof https.request>;
+    });
+    try {
+      await assert.rejects(anthropicHTTPS("https://api.anthropic.com/v1/messages", { method: "POST", body: "{}", signal: controller.signal }),
+        failure(mode === "cap" ? "MalformedOutput" : mode === "abort" ? "Timeout" : "Unavailable", true, false));
+      if (mode === "cap") assert.equal(destroyed, 2);
+    } finally { intercepted.mock.restore(); }
+  }
 });

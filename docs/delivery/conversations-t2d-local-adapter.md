@@ -19,3 +19,12 @@ The SDK installation changes package-lock.json. DK-06 includes that file in mana
 ## Separate T2e gate — not executed
 
 After T2c and T2d are accepted/integrated and independent review is resolved, Dean approves a concrete synthetic evaluation and its maximum cost. Recheck model availability/rates, provider workspace limits, credit-only/no-auto-reload controls, permitted synthetic fixtures and the US$30 PPO ledger. Confirm local-only runtime and private credential delivery without printing the key. Measure actual provider token overhead, latency and factual grounding; compare refusals and quality separately from mocked integration. Any paid smoke check counts as that authorised run and reserves before dispatch. No live call is needed to finish T2d's mocked implementation proof, and none was made here.
+
+
+## Review follow-up behavior
+
+Long Claude histories are reduced oldest-first to fit the remaining request allowance, including on retries. The exact question, newest history entry and source evidence remain intact. Answers disclose how many earlier messages were omitted for the request limit separately from access exclusions. An irreducible question/source request that is still too large fails without dispatch. Existing answers remain immutable.
+
+Transport trust is explicitly Node's bundled CA set. System/OpenSSL CA or configuration overrides and TLS key-log flags in NODE_OPTIONS or the node command line are refused before credential access. NODE_USE_SYSTEM_CA and OPENSSL_CONF are included; this may truthfully refuse a worker inheriting such settings from its launcher. No machine trust setting is changed by this contribution.
+
+The optional speed request field is omitted; fast mode is not requested. Unexpected regional/speed billing metadata retains Unknown. A sent HTTP rejection with no known usage also retains the reservation, including authentication/rate/credit errors. Retained reservations can exhaust available PPO budget even when a provider may have billed nothing; there is no automatic reconciliation or manual-release workflow. Do not clear them to force retries. T2e must separately verify the live usage metadata contract and overhead, under explicit live-call authorization.

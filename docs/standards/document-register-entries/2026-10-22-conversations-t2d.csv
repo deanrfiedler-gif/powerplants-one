@@ -1,5 +1,5 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
-PPO-ADR-0061,Local Claude Messages adapter,docs/decisions/ADR-0061-local-claude-adapter.md,,Authorised implementation; independent review and acceptance pending,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
-PPO-CONV-T2D-DESIGN,Conversations T2d local Claude adapter,docs/decisions/conversations-t2d-design.md,,Implementation and validation in progress,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
+PPO-ADR-0061,Local Claude Messages adapter,docs/decisions/ADR-0061-local-claude-adapter.md,,Independent review received; correction follow-up and acceptance pending,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
+PPO-CONV-T2D-DESIGN,Conversations T2d local Claude adapter,docs/decisions/conversations-t2d-design.md,,Review corrections under validation,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
 PPO-CONV-T2D-OPS,Local Claude adapter operation,docs/delivery/conversations-t2d-local-adapter.md,,Implementation under review; no live evaluation,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
-PPO-CONV-T2D-EVIDENCE,Conversations T2d verification evidence,docs/testing/evidence/conversations-t2d/README.md,,Validation in progress; mocked provider transport only,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
+PPO-CONV-T2D-EVIDENCE,Conversations T2d verification evidence,docs/testing/evidence/conversations-t2d/README.md,,Review-correction evidence; mocked provider transport only,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,

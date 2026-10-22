@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Executor: Codex, working for Dean. Date: 22 October 2026. Status: implementation under review; independent review/acceptance pending. The final execution ledger and exact-head CI disposition are maintained on the linked draft PR; this source records the reproducible proof and checkpoint evidence. [Design](../../../decisions/conversations-t2d-design.md), [ADR-0061](../../../decisions/ADR-0061-local-claude-adapter.md), [draft PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664).
+Owner: Dean Fiedler. Executor: Codex, working for Dean. Date: 22 October 2026. Status: Claude review received at 829ae67c; corrections under validation; independent follow-up and Dean acceptance pending. The final execution ledger and exact-head CI disposition are maintained on the linked draft PR; this source records the reproducible proof and checkpoint evidence. [Design](../../../decisions/conversations-t2d-design.md), [ADR-0061](../../../decisions/ADR-0061-local-claude-adapter.md), [draft PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664).
 
 ## Environment and boundaries
 
@@ -44,3 +44,14 @@ The runtime/full-lock audit gate also hit npm HTTP 503 on the later d6291228 CI 
 The [draft PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664) records the final head, integrated main, full local unit outcome, affected database/HTTP/browser/build counts and complete required CI/database/compiled-browser group results after those runs finish. Check that exact head rather than treating an earlier green checkpoint or skipped docs-only job as implementation proof. Keep failed attempts and confirmed baseline comparisons in that ledger. No test deadline, inventory, assertion or production guard is weakened.
 
 Reproduction uses the repository's normal scripts: an owned disposable PostgreSQL 16 database with the configuration above; serial tests/database/assistant*.test.ts and conversations*.test.ts plus template-manifest-drift; the real service/worker proof in assistant-claude.test.ts; Conversations HTTP and ordinary/compiled Playwright suites with only the owned port changed in ignored launcher configuration; 8 GB typecheck, full-tree lint, full unit inventory, build and both dependency gates. Every provider test intercepts networking. Resource-limited local coverage must be distinguished from all eight CI database shards. A mocked response is not evidence of live-model factual accuracy, latency, tokenizer behaviour or provider billing. The explicit input-overhead headroom is conservative engineering, not a measured provider token count; T2e must calibrate it. No visual/business acceptance is claimed.
+
+
+## Claude review corrections — 22 October 2026
+
+Independent review [received from Claude](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849) at 829ae67c: two actionable findings, no secret-leak/retry/ledger-integrity defect found. Codex verified and accepted both findings. Corrected code is not independently accepted merely because these tests pass.
+
+Test-first evidence: four red tests covered the existing long-history projection exceeding its allowance, missing bundled CA pin, environment overrides and command-line overrides reaching credential access. After correction, the expanded assistant subset passed 43/43. Two further red assertions established truthful history-limit footer rendering and omission of the unnecessary speed option before those changes. No real key was inspected and no provider request was made. Tests use dummy credentials, block global fetch/HTTPS, and intercept HTTPS only for the owned transport proof.
+
+The expanded persisted suite adds the runner's default adapterFor(env) path through the actual SDK and anthropicHTTPS, intercepting only https.request, with reservation, concurrent-worker, replay/reload, citation and settlement assertions. A long-thread case verifies oldest-first fitting, additional fitting on known-malformed retry, separate reservations and preserved reader-visible omission grammar. Transport byte cap, mid-response abort and stream errors are tested as sent/unknown. Non-global billing metadata and fast usage fail closed. Execution results and final-head CI belong to the PR ledger after completion; earlier checkpoint counts are not evidence for this correction.
+
+Expanded persisted actual-SDK suite: **9/9 passed** (343.9 seconds) on integrated main 612ebecbfc328a20a035b71c363729f3223efe7f. This includes the default factory/owned HTTPS path and long-history retry case above. The broader regression run and exact-head CI are reported separately in the PR ledger.

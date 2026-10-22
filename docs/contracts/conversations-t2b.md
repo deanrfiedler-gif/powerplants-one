@@ -128,3 +128,12 @@ The Messages transport uses fixed HTTPS destination/TLS verification and refuses
 | Full lifecycle, six calls, timeout, retries, access revocation, concurrency, recovery, no text in audit and hostile evidence | `assistant-turns.test.ts` |
 
 The draft PR records exact local check results, confirmed baseline failures and CI-only checks. The migration, capability and grants require review by a model other than the author's before merge. That review has not happened; Dean decides acceptance and merges.
+
+
+## T2d independent-review follow-up — 22 October 2026
+
+[Claude reviewed T2d at 829ae67c](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849); the two verified findings have corrective implementation and tests, with independent follow-up and Dean's acceptance pending. This does not replace the historical T2b review record.
+
+Before Claude dispatch or retry, prepareRequest removes complete oldest history entries to fit that provider's preflight estimate within the remaining input allowance. It preserves the newest history entry, exact question, access-checked source items and reader set. Every removal increments left_out; coverage.messages reports the reduced returned count and more=true. The internal history_left_out subtotal permits a separate fixed history-limit footer, while access exclusions retain their existing count-only wording. Stored left_out_count is the total; history reasons survive reader projection through the fixed footer grammar. Existing immutable answer bytes and old footer grammar remain valid. No new DTO identity, database field or endpoint is introduced. Requests still too large after history fitting fail before dispatch; simulation keeps its previous behavior.
+
+TLS uses explicit bundled Node roots, independent of process trust defaults, plus pre-credential refusal of system/OpenSSL trust/configuration and command-line key-log overrides. The speed field is omitted; non-standard speed or non-global reported billing usage retains Unknown. Sent HTTP rejection without known usage retains the reservation and is not retried; no automatic reconciliation exists. See ADR-0061 for sources and rationale.
