@@ -7,7 +7,7 @@ import { assistantEnabled } from "../../src/assistant/config";
 
 // Explicit enabled local-synthetic proof. Compiled/ordinary off-state suites do not pretend to execute Carl.
 test.skip(
-  ({ browserName: _browserName }, info) => Boolean(info.config.metadata.conversationsAgentOff) || !assistantEnabled(),
+  !assistantEnabled(),
   "Requires the enabled non-production local-synthetic harness; the production guard remains intact.",
 );
 const worker = () =>
@@ -28,6 +28,7 @@ async function api(page: Page, path: string, body?: unknown) {
 test("T2c persisted UI post, original-operation recovery, existing worker, answer and human ask", async ({
   page,
 }, info) => {
+  test.skip(Boolean(info.config.metadata.conversationsAgentOff), "The compiled application keeps Carl off; stored-answer rendering has its own proof.");
   const reader = await api(page, "local-session", { profile: "crm-receiver" });
   await api(page, "local-session", { profile: "coordinator" });
   const deal = crmCreate();
