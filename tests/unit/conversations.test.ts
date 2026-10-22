@@ -24,8 +24,46 @@ const start = (extra: Record<string, unknown> = {}) => ({
 });
 const invalid = (field?: string) => (error: unknown) => {
   const e = error as { code?: string; field_errors?: { field: string }[] };
-  return e.code === "InvalidData" && (!field || e.field_errors?.some((f) => f.field === field) === true);
+  return (
+    e.code === "InvalidData" &&
+    (!field || e.field_errors?.some((f) => f.field === field) === true)
+  );
 };
+
+test("R8 acknowledgements bind to tagged people and omission preserves historical input", () => {
+  const tagged = person(),
+    thread = randomUUID();
+  const input = { ...common(), body: "SYN @{1}", mentions: [tagged] };
+  assert.equal(
+    "participant_acknowledgements" in postMessageInput(thread, input),
+    false,
+  );
+  const acknowledgement = {
+    person_id: tagged.person_id,
+    basis: "a".repeat(64),
+  };
+  assert.deepEqual(
+    postMessageInput(thread, {
+      ...input,
+      participant_acknowledgements: [acknowledgement],
+    }).participant_acknowledgements,
+    [acknowledgement],
+  );
+  for (const invalidAcknowledgements of [
+    [{ ...acknowledgement, person_id: randomUUID() }],
+    [acknowledgement, acknowledgement],
+    [{ ...acknowledgement, basis: "old" }],
+  ]) {
+    assert.throws(
+      () =>
+        postMessageInput(thread, {
+          ...input,
+          participant_acknowledgements: invalidAcknowledgements,
+        }),
+      invalid("participant_acknowledgements"),
+    );
+  }
+});
 
 test("a message can tag Carl once without a user or record identity", () => {
   const mentions = [{ ordinal: 1, kind: "Agent" }];

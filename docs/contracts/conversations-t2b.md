@@ -124,3 +124,11 @@ There are no write tools, provider credentials, Claude implementation, new depen
 | Full lifecycle, six calls, timeout, retries, access revocation, concurrency, recovery, no text in audit and hostile evidence | `assistant-turns.test.ts` |
 
 The draft PR records exact local check results, confirmed baseline failures and CI-only checks. The migration, capability and grants require review by a model other than the author's before merge. That review has not happened; Dean decides acceptance and merges.
+
+## T2c UI extension — 22 October 2026
+
+[T2c design](../decisions/conversations-t2c-design.md) adds no migration, grant, capability or worker endpoint. Existing people GET returns items with truthful role text and optional agent `{ name, label } | null`, derived from assistantEnabled and anchor-scoped conversation.agent.ask. Optional thread_id must identify a readable thread on the same anchor. Candidate history_warning `{ count, basis }` contains no source name or identifier. Its opaque basis binds actor, thread, candidate, cited history and readable-source set.
+
+Existing message POST accepts optional participant_acknowledgements `[{ person_id, basis }]` for tagged people only. Before adding a new person, the server recomputes warnings. Missing/stale basis returns 409 ParticipantWarningRequired before message/participant writes. Confirmation grants no access. Omitting the field preserves historical normalised command hashes and original-operation recovery. New thread retains its existing contract.
+
+The UI consumes readThread's existing P1 projection and P3 turns as checked plain text. It does not execute adapters. Visible pending turns poll through guarded reads; the existing document worker performs the lifecycle. The production/off guard is unchanged. Compiled historical-answer fixtures use a separate non-production local-synthetic worker.

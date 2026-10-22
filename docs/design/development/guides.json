@@ -75560,14 +75560,16 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Written for Conversations T1c-1 (people-only threads); the context panel added for T1c-3; guide review remains separate.",
-      "runtime_evidence": "T1c-1 and T1c-3 tests in tests/unit, tests/database, tests/http and tests/browser; guide acceptance remains pending.",
+      "change_summary": "T2c available Carl tags, simulated answer labels, source access, truthful states and participant warning; guide review remains separate.",
+      "runtime_evidence": "docs/testing/evidence/conversations-t2c/README.md; real persisted worker proof is distinct from mocked presentation fixtures.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
-        "docs/decisions/conversations-t1-scope.md"
+        "docs/decisions/conversations-t1-scope.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "workflow_basis": [
-        "docs/decisions/conversations-t1c-design.md"
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "title": "Conversation thread",
       "sections": [
@@ -75704,6 +75706,27 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "carl",
+          "title": "Ask Carl",
+          "paragraphs": [
+            "Choose Carl · AI assistant from @ when available. Carl has no Ask switch; a person also tagged keeps their own tracked question. The message stays posted if Carl cannot answer.",
+            "Every simulated answer says Simulated and identifies the person acted for. Read its sources, gaps and coverage. An inaccessible source is not named. Carl does not save or edit business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "participant-warning",
+          "title": "Adding someone",
+          "paragraphs": [
+            "If a new person cannot open sources cited earlier, review the count-only warning. Cancel keeps your draft. Add and send confirms without granting access. Start a new thread uses the same deal or project; cancelling returns to the original draft. If Retry asks you to Review current warning, check the original message and its asks in the dialog. Send original message sends that original once and keeps any newer draft; Cancel retains both. If the original already saved, its receipt is recovered. If the tagged people cannot all be rechecked, the original and your current draft stay retained; try the review again."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ]
     },
@@ -75720,14 +75743,16 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Clarified the accepted desktop preferred-thread destination and phone list-to-thread handover; guide review remains separate.",
-      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; exact desktop/phone navigation proof and limits in docs/testing/evidence/conversations-navigation/README.md. Guide acceptance remains pending.",
+      "change_summary": "T2c available Carl tags, simulated answer labels, source access, truthful states and participant warning; guide review remains separate.",
+      "runtime_evidence": "docs/testing/evidence/conversations-t2c/README.md; real persisted worker proof is distinct from mocked presentation fixtures.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
-        "docs/decisions/conversations-t1-scope.md"
+        "docs/decisions/conversations-t1-scope.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "workflow_basis": [
-        "docs/decisions/conversations-t1c-design.md"
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "title": "Conversations",
       "sections": [
@@ -75745,7 +75770,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "You need read access to the deal or project. You can tag only people who can already open that record; there is no sharing in this version. There is no AI assistant here yet."
+            "You need read access to the deal or project. You can tag only people who can already open that record; there is no sharing in this version. When Carl is available for this record, choose Carl · AI assistant in the @ picker. Carl is distinct from a person with the same name."
           ],
           "steps": [],
           "headers": [],
@@ -75864,6 +75889,27 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "carl",
+          "title": "Ask Carl",
+          "paragraphs": [
+            "Choose Carl · AI assistant from @ when available. Carl has no Ask switch; a person also tagged keeps their own tracked question. The message stays posted if Carl cannot answer.",
+            "Every simulated answer says Simulated and identifies the person acted for. Read its sources, gaps and coverage. An inaccessible source is not named. Carl does not save or edit business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "participant-warning",
+          "title": "Adding someone",
+          "paragraphs": [
+            "If a new person cannot open sources cited earlier, review the count-only warning. Cancel keeps your draft. Add and send confirms without granting access. Start a new thread uses the same deal or project; cancelling returns to the original draft. If Retry asks you to Review current warning, check the original message and its asks in the dialog. Send original message sends that original once and keeps any newer draft; Cancel retains both. If the original already saved, its receipt is recovered. If the tagged people cannot all be rechecked, the original and your current draft stay retained; try the review again."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ]
     },
@@ -75887,7 +75933,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Capture a automation equipment requirement against an exact saved Discovery alternative. Start with Javo Standard 2.0 and Plus as candidates, with supplier confirmation pending.",
+            "Capture an automation equipment requirement against an exact saved Discovery alternative. Start with Javo Standard 2.0 and Plus as candidates, with supplier confirmation pending.",
             "This stage saves discovery and scenarios. It does not assess suitability, calculate labour or transfer a priced estimate to CPQ."
           ],
           "steps": [],
@@ -75994,7 +76040,7 @@
           "section_id": "tasks",
           "title": "Main tasks",
           "paragraphs": [
-            "Use Move earlier/later to change flow order and review connections afterwards. Use Current assessment to edit a successor; explicitly selected history is read-only. A changed Nursery source requires Start new assessment from latest source."
+            "Use Move earlier/later to change flow order and review connections afterwards. Use Current assessment to edit a successor; explicitly selected history is read-only. A changed Automation source requires Start new assessment from latest source."
           ],
           "steps": [],
           "headers": [],

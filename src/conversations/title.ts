@@ -3,13 +3,21 @@
 // readers who cannot open that record (T1-4). People keep their names. Tags are replaced by position, never by
 // searching for their text.
 import { visibleToken, type Draft } from "./composition";
+import { agentName } from "../assistant/model";
 
 const maxLength = 80;
 
 export function deriveTitle(d: Draft, anchorNumber: string): string {
   let text = d.text;
   for (const t of [...d.mentions].sort((a, b) => b.at - a.at))
-    text = text.slice(0, t.at) + (t.kind === "Person" ? t.display_name : "") + text.slice(t.at + visibleToken(t).length);
+    text =
+      text.slice(0, t.at) +
+      (t.kind === "Agent"
+        ? agentName
+        : t.kind === "Person"
+          ? t.display_name
+          : "") +
+      text.slice(t.at + visibleToken(t).length);
   text = text.replace(/[ \t]+/g, " ");
   const sentence = /^[\s\S]*?(?:[.?!](?=\s|$)|\n|$)/.exec(text.trim())?.[0].trim() ?? "";
   const clean = sentence.replace(/\s+/g, " ").replace(/\s+([.?!,;:])/g, "$1").trim();

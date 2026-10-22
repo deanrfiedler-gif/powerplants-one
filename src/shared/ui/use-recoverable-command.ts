@@ -10,12 +10,15 @@ type Options = {
   // Opt-in for commands whose result identity is allocated by the server.
   acceptsReceipt?: (entry: JournalEntry, receipt: Receipt) => boolean;
   journalLimit?: number;
+  // Opt-in command-specific proof of an uncommitted original. Return reviewed
+  // metadata only; business content and the operation identity must stay fixed.
+  reviewedRetry?: (entry: JournalEntry, failure: Failure, review: unknown) => Record<string, unknown> | null;
 };
 const changed = "ppo-command-journal-changed";
 
 // Opt-in, one unresolved operation per key and tab. Only explicit retry sends
 // a retained body. Every restoration first reads the actor-bound server receipt.
-export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true, acceptsReceipt, journalLimit = 32768 }: Options) {
+export function useRecoverableCommand({ key, scope, accepts, transport, enabled = true, acceptsReceipt, journalLimit = 32768, reviewedRetry }: Options) {
   const [pending, setPending] = useState<JournalEntry | null>(null);
   const [accepted, setAccepted] = useState<{ entry: JournalEntry; receipt: Receipt } | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -27,15 +30,16 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
   const inflight = useRef<number | null>(null);
   const flying = () => inflight.current !== null && inflight.current === generation.current;
   const scopeKey = `${scope.workspace_id}:${scope.actor_id}`;
-  const options = useRef({ scope, accepts, transport });
-  useEffect(() => { options.current = { scope, accepts, transport }; }, [scope, accepts, transport]);
+  const options = useRef({ scope, accepts, transport, reviewedRetry });
+  useEffect(() => { options.current = { scope, accepts, transport, reviewedRetry }; }, [scope, accepts, transport, reviewedRetry]);
+  const lastFailure = useRef<{ entry: JournalEntry; failure: Failure; recover: boolean; token: number } | null>(null);
   const lastLookup = useRef("");
   const publish = () => window.dispatchEvent(new Event(changed));
 
   async function execute(entry: JournalEntry, recover = false, firstSend = false): Promise<Receipt | null> {
     if (flying() || !live.current || !enabled || (!recover && entry.phase !== "pending")) return null;
     const token = generation.current;
-    inflight.current = token; setBusy(true); setError(null);
+    inflight.current = token; lastFailure.current = null; setBusy(true); setError(null);
     try {
       const result = await options.current.transport<Receipt>(recover ? `operations/${entry.body.operation_id}` : entry.path, recover ? undefined : entry.body);
       if (!live.current || token !== generation.current) return null;
@@ -58,6 +62,7 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
     } catch (e) {
       if (!live.current || token !== generation.current) return null;
       const failure = e as Failure;
+      lastFailure.current = { entry, failure, recover, token };
       // A later denial after a lost response cannot prove the original never ran.
       if (firstSend && failure.status && failure.status < 500 && !failure.retryable && failure.code !== "OperationConflict") {
         try { sessionStorage.removeItem(key); setPending(null); publish(); }
@@ -125,8 +130,40 @@ export function useRecoverableCommand({ key, scope, accepts, transport, enabled 
       return null;
     }
   }
+  async function retryOriginal(): Promise<Receipt | null> {
+    if (!pending) return null;
+    const receipt = await execute(pending);
+    // A previously accepted payload can win before reviewed metadata is posted.
+    // Only the opt-in command reconciles that same operation's receipt here.
+    if (!receipt && options.current.reviewedRetry && lastFailure.current?.failure.code === "OperationConflict")
+      return execute(pending, true);
+    return receipt;
+  }
+  async function retryReviewed(review: unknown, expected: JournalEntry): Promise<Receipt | null> {
+    const refused = lastFailure.current;
+    if (!refused || refused.recover || refused.token !== generation.current || !live.current || flying() || JSON.stringify(refused.entry) !== JSON.stringify(expected)) return null;
+    const patch = options.current.reviewedRetry?.(refused.entry, refused.failure, review);
+    if (!patch || Object.hasOwn(patch, "operation_id") || Object.hasOwn(patch, "schema_version")) return null;
+    // A delayed original may have committed since the refusal. Its receipt wins.
+    const receipt = await execute(refused.entry, true);
+    if (receipt) return receipt;
+    const lookup = lastFailure.current;
+    if (!live.current || refused.token !== generation.current || !lookup?.recover || lookup.failure.status !== 404) return null;
+    try {
+      const next = writeJournal(sessionStorage, key, { ...refused.entry, body: { ...refused.entry.body, ...patch } }, options.current.accepts, journalLimit, refused.entry);
+      setPending(next);
+      const promise = execute(next); publish();
+      const saved = await promise;
+      if (!saved && lastFailure.current?.failure.code === "OperationConflict") return execute(next, true);
+      return saved;
+    } catch (e) {
+      if (live.current && refused.token === generation.current)
+        setError({ message: e instanceof Error ? e.message : "The original could not be reviewed. No command was sent." });
+      return null;
+    }
+  }
   return { send, pending, accepted, error, busy, ready, saved: accepted ? `${accepted.entry.label} saved.` : "",
-    retry: () => pending ? execute(pending) : Promise.resolve(null),
+    retry: retryOriginal, retryReviewed,
     recover: () => pending ? execute(pending, true) : Promise.resolve(null),
     clear: () => { if (!pending && !flying()) setError(null); },
   };
