@@ -1,0 +1,7 @@
+# Customer messages (EC-04)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Customer messages — `/email/customer-messages`, `/email/customer-messages/[id]` (Email workspace, proposed) | [Design r01 captures](../email-calendar/customer-messages-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 22 October 2026 | [Decision](../../../decisions/customer-messages-figma-design.md). EC-04; not built. The outbound queue for the D-025 customer notices: a register of messages with plain states, the exact email beside the facts it was built from, Confirm and send through a dialog that names the sender, a second person to approve M4, held, outcome-unknown and failed follow-ups with no resend, class switches, and phone views with the compact header. Every outcome shown is simulated |
+
+**Customer messages design, 22 October 2026:** Dean accepted the Figma design for EC-04, the screens for the D-025 S2 communication core, with departures D1–D8 and the recommended answers to Q1–Q4. The [decision](../../../decisions/customer-messages-figma-design.md) records it, and the [retained captures](../email-calendar/customer-messages-design-r01/README.md) are 28 icon-free PNGs with hashes. The named Figma version "Customer messages — accepted" was saved the same day. Nothing is built. Listing it here does not repeat the dated inventory audit.
