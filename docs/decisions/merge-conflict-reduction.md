@@ -19,6 +19,10 @@ On 17 and 18 October 2026 more than twenty pull requests were open at once. They
 
 Dean asked for the most professional approach. This record is the repository part: conventions and tooling that remove the avoidable conflicts. The [parallel contribution rules](parallel-contribution-rules.md) already set claim-first, one task per branch and narrow edits to shared files; they did not stop the collisions, because "narrow edits to a shared file" still means every pull request edits the same lines at the top of the same file.
 
+## Subsequent source-isolation decision — 22 October 2026
+
+The [documentation source-isolation decision](documentation-source-isolation.md) supersedes the per-PR generated-output requirement in section 1 and resolves open decision 2 using ignored local views and read-only CI artifacts. The tracked landing pages preserve navigation and legacy history; contributors submit source fragments. The original reasoning and observations below remain historical.
+
 ## What is adopted
 
 ### 1. Status and decision-index fragments

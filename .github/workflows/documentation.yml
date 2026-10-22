@@ -24,10 +24,28 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
+      - name: Check shared documentation boundaries
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/check_documentation_scope.py --base "$PR_BASE" --head "$PR_HEAD"
+      - name: Test documentation fragment and scope controls
+        run: python3 -m unittest discover -s scripts -p 'test_documentation*.py'
       - name: Validate references and registers
         run: python3 scripts/check_foundation.py
       - name: Validate prototype contracts and traceability
         run: python3 scripts/check_prototype.py
       - name: Validate naming adoption and project instructions
         run: python3 scripts/check_naming.py
+      - name: Render source-bound status and decision views
+        run: python3 scripts/build_status.py --web-ref "$(git rev-parse HEAD)"
+      - name: Publish documentation views
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: documentation-views-${{ github.sha }}
+          path: tmp/documentation/
+          if-no-files-found: error
+          retention-days: 30

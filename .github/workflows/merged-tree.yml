@@ -34,6 +34,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Check the contribution's shared documentation boundaries
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/check_documentation_scope.py --base "$PR_BASE" --head "$PR_HEAD"
       - name: Merge current origin/main into the pull request head
         env:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
@@ -64,7 +69,7 @@ jobs:
         run: python3 scripts/check_naming.py
       - name: Validate migration and seed numbering
         run: python3 scripts/check_migrations.py
-      - name: Check the rendered status and decision index
+      - name: Validate status and decision sources without tracked output
         run: python3 scripts/build_status.py --check
       # A documentation-only change cannot alter the type check, so it skips the install.
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
