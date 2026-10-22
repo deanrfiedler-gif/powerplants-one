@@ -3,13 +3,13 @@ document_id: PPO-USER-GUIDE-PROP
 title: Powerplants One user guide, direction paper
 date: 2026-10-23
 owner: Dean Fiedler
-status: Proposed; awaiting the owner's answers to Q1–Q11. No guide content, application change, image storage or Help Centre build is authorised by this record
+status: Accepted by the owner 23 October 2026 (Q1–Q11 as recommended). Stage 1 and later stages are not authorised by this record; no guide content, application change, image storage or Help Centre build is authorised
 versioning: git
 ---
 
 # Powerplants One user guide, direction paper
 
-**Owner:** Dean Fiedler. **State:** Proposed, 23 October 2026. Nothing here is adopted until Dean answers the eleven questions in section 11.
+**Owner:** Dean Fiedler. **State:** Accepted by the owner, 23 October 2026: "Proceed: I accept Q1–Q11 as recommended. Record my decision in the paper and mark PR #674 ready for review." The acceptance covers the direction and the recommended answers in section 11. Each stage in section 10 still needs its own go-ahead, and stage 1 begins with the parser ADR (section 4.2).
 
 **Raised by:** Dean, 23 October 2026: "I will eventually need to design and develop a very extensive user guide for the entire Powerplants One app. The guide should include all modules, workflows, procedures, screenshots, instructions, etc." He suggested starting it as a Claude Design artifact board, beginning with the board's style and a table of contents, and asked: "What is your professional recommendation relating to designing and developing the user guide for the Powerplants One app?"
 
@@ -24,7 +24,7 @@ Claude recommended against keeping the guide in a design board. Dean then asked 
 - Requirements: DOC-04 (owned, reviewed knowledge and SOP links), NFR-01 (server authorisation; here, guide content limited to what the reader may see), NFR-05 (useful unavailable states), NFR-07 (offline field work), NFR-08 (accessible, readable guidance). No parent requirement ID is added or changed.
 - Scopes: `scope:DK-07` Page guides and contextual help coverage (`/help`); `scope:AD-10` User onboarding, learning and support (`/help/onboarding`); `scope:SH-04` Search. Both help scopes already exist in the design register, so this paper adds no scope ID.
 
-Everything below is a PPO proposal. It explains how the user guide is written, kept and delivered. It writes no guide content.
+Everything below was written as a PPO proposal and is now the accepted direction. It explains how the user guide is written, kept and delivered. It writes no guide content.
 
 ## 1. What this builds on
 
@@ -66,7 +66,7 @@ Also relevant:
 - **Quick Help is separate.** It remains a separate header panel (keyboard shortcuts and support).
 - **The roles are only proposed.** AD-01's role bundles are proposals, not adopted roles. Only service, field, finance, observer and hosted-demo bundles exist; there are none for sales, estimating, engineering or projects. D-020 is still open.
 
-## 3. The proposed shape
+## 3. The guide's shape
 
 **One guide, written once, delivered in three places.**
 
@@ -193,7 +193,7 @@ The issued workflow maps under `docs/reference/ui/module-workflow-maps/` are a c
 
 | Stage | Outcome | Not included |
 |---|---|---|
-| 0. This paper | Direction and table of contents for Dean's decision | Any content, code or tooling |
+| 0. This paper | Direction and table of contents, accepted 23 October 2026 | Any content, code or tooling |
 | 1. Source and tooling | ADR for the Markdown parser and sanitiser; build plan; one status vocabulary; move the released TypeScript guides into Markdown; rewrite the CRM pilot for five stages | New chapters |
 | 2. Help Centre design | Help Centre page, contents, search and print layout drawn in Figma (ADR-0053), using the PPO design tokens | Build |
 | 3. Help Centre build | `/help` with contents, search across published guides and journeys; HELP-01–HELP-14 run | Screenshots |
@@ -201,6 +201,8 @@ The issued workflow maps under `docs/reference/ui/module-workflow-maps/` are a c
 | 5. Images, onboarding, offline | Screenshot capture and private storage (with its ADR); What's new and onboarding (AD-10); cached field guides | Customer portal guide |
 
 ## 11. Questions for Dean, with recommended answers
+
+**Decision:** Dean accepted every recommended answer below on 23 October 2026 ("I accept Q1–Q11 as recommended"). The alternatives are kept as a record of what was considered.
 
 | # | Question | Recommended answer | Alternative |
 |---|---|---|---|
@@ -218,7 +220,8 @@ The issued workflow maps under `docs/reference/ui/module-workflow-maps/` are a c
 
 ## 12. Limits of this record
 
-- **It is a proposal.** Nothing is adopted until Dean answers section 11.
+- **It sets direction only.** Dean accepted the direction and Q1–Q11. Each stage in section 10 still needs its own go-ahead.
+- **One action is Dean's.** Asking Font Awesome about screenshots (section 5.3, point 4).
 - **It changes nothing in the app or guides.** It changes no application code, guide content, `guides.json`, TypeScript guide, route, permission or CI job.
 - **The licence point is unconfirmed.** It has not been confirmed with Font Awesome or against the full licence text.
 - **The facts are a snapshot.** Counts and states are as of `main` at `01cef391` and will drift as work lands.

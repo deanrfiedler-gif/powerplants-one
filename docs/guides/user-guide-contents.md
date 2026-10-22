@@ -3,13 +3,13 @@ document_id: PPO-USER-GUIDE-TOC
 title: Powerplants One user guide, table of contents
 date: 2026-10-23
 owner: Dean Fiedler
-status: Draft outline, proposed with PPO-USER-GUIDE-PROP; not adopted; no chapter is written
+status: Accepted outline (owner, 23 October 2026, with PPO-USER-GUIDE-PROP Q4); living master; no chapter is written
 versioning: git
 ---
 
 # Powerplants One user guide, table of contents
 
-**State:** Draft outline, 23 October 2026. It is proposed together with the [user guide direction paper](../decisions/user-guide-direction.md) (PPO-USER-GUIDE-PROP) and is not adopted until Dean answers that paper's questions. No chapter below has been written.
+**State:** Accepted outline, 23 October 2026. Dean accepted it together with the [user guide direction paper](../decisions/user-guide-direction.md) (PPO-USER-GUIDE-PROP, Q4) when he accepted Q1–Q11 as recommended. It is a living master: chapters, titles and build states change as modules are built. No chapter below has been written.
 
 This is the planned structure of the whole Powerplants One user guide for Powerplants staff. It covers every module in the design register and every journey between them. Its nine parts follow the direction paper, section 3.
 
