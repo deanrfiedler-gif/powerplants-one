@@ -113,6 +113,151 @@ test("T2c R8 warning offers cancel, confirmed send and a new thread on the same 
   await expect(warning).toHaveCount(0);
 });
 
+for (const late of ["none", "before-review", "before-repost"] as const) {
+  test(`T2c an uncommitted R8 original can be reviewed after key rotation; late receipt ${late}`, async ({
+    page,
+    isMobile,
+  }, info) => {
+    if (isMobile && late === "before-review")
+      await page.setViewportSize({ width: 320, height: 844 });
+    const { thread, reader } = await fixture(page);
+    let posts = 0;
+    let original!: Record<string, unknown>, retried!: Record<string, unknown>;
+    await page.route("**/api/v1/conversations/people?*", async (route) => {
+      const response = await route.fetch();
+      await route.fulfill({
+        response,
+        json: {
+          agent: { name: "Carl", label: "Carl · AI assistant" },
+          items: [
+            {
+              id: reader,
+              display_name: "Carl Jensen",
+              role: "Role not recorded",
+              history_warning: {
+                count: posts ? 1 : 2,
+                basis: (posts ? "b" : "a").repeat(64),
+              },
+            },
+          ],
+        },
+      });
+    });
+    await page.route(
+      `**/api/v1/conversations/${thread}/messages`,
+      async (route) => {
+        posts++;
+        const body = route.request().postDataJSON();
+        if (posts === 1) {
+          original = body;
+          // Uncommitted original: no route.fetch, no server mutation.
+          return route.abort("failed");
+        }
+        if (posts === 2) {
+          expect(body).toEqual(original);
+          // Mocked restart response. Actual different-process HMAC refusal has an HTTP proof.
+          return route.fulfill({
+            status: 409,
+            json: {
+              code: "ParticipantWarningRequired",
+              message: "Review the current warning before sending.",
+            },
+          });
+        }
+        retried = body;
+        if (late === "before-repost")
+          await api(page, `conversations/${thread}/messages`, original);
+        return route.continue();
+      },
+    );
+    await page.goto(`/conversations/${thread}`);
+    const message = page.getByRole("textbox", { name: "Message", exact: true });
+    await message.fill("SYN original delivery question ");
+    await page
+      .getByRole("button", { name: "Tag a person", exact: true })
+      .click();
+    await page.getByRole("option", { name: /AI assistant/ }).click();
+    await page
+      .getByRole("button", { name: "Tag a person", exact: true })
+      .click();
+    await page.getByRole("option", { name: /Carl Jensen/ }).click();
+    await page.getByRole("switch", { name: "Ask Carl Jensen" }).click();
+    await page
+      .getByRole("textbox", { name: "Question for Carl Jensen", exact: true })
+      .fill("SYN delivery date?");
+    await page.getByRole("button", { name: "Send", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Add and send", exact: true })
+      .click();
+    await expect(
+      page.getByText(/The original message is retained/),
+    ).toBeVisible();
+    await page.reload();
+    await expect(
+      page.getByRole("button", { name: "Retry", exact: true }),
+    ).toBeEnabled();
+    await message.fill("SYN newer draft must survive");
+    await page.getByRole("button", { name: "Retry", exact: true }).click();
+    const reviewButton = page.getByRole("button", {
+      name: "Review current warning",
+      exact: true,
+    });
+    await expect(reviewButton).toBeVisible();
+    await reviewButton.click();
+    const warning = page.getByRole("dialog", {
+      name: "Review original message",
+      exact: true,
+    });
+    await expect(warning).toContainText("SYN original delivery question");
+    await expect(warning).toContainText("Carl Jensen: 1 source");
+    await expect(warning).not.toContainText("SYN newer draft");
+    await expect(warning.getByRole("button", { name: "Cancel", exact: true })).toBeFocused();
+    if (isMobile)
+      for (const button of await warning.getByRole("button").all())
+        expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(page.viewportSize()!.width);
+    await page.screenshot({
+      path: info.outputPath("mocked-original-warning.png"),
+      fullPage: true,
+    });
+    await warning.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(reviewButton).toBeFocused();
+    await expect(message).toHaveValue("SYN newer draft must survive");
+    expect(posts).toBe(2);
+    await reviewButton.click();
+    if (late === "before-review") {
+      // A delayed original wins the race before reconfirmation. Receipt lookup must win over replacement.
+      await api(page, `conversations/${thread}/messages`, original);
+    }
+    await warning
+      .getByRole("button", { name: "Send original message", exact: true })
+      .click();
+    await expect(
+      page.getByText(/The original message is retained/),
+    ).toHaveCount(0);
+    await expect(message).toHaveValue("SYN newer draft must survive");
+    await expect(message).toBeFocused();
+    if (late === "before-review") expect(posts).toBe(2);
+    else {
+      expect(posts).toBe(3);
+      expect(retried).toEqual({
+        ...original,
+        participant_acknowledgements: [
+          { person_id: reader, basis: "b".repeat(64) },
+        ],
+      });
+    }
+    const view = await api(page, `conversations/${thread}`);
+    expect(
+      view.messages.filter((m: { body: string }) => m.body === (original.body as string).trim()),
+    ).toHaveLength(1);
+    expect(view.turns).toHaveLength(1);
+    expect(view.asks[0].state).toBe("Open");
+  });
+}
+
 test("T2c keyboard picker distinguishes Agent and person, refuses duplication and keeps atomic editing", async ({
   page,
   isMobile,

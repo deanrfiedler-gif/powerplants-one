@@ -9,12 +9,14 @@ export function ParticipantWarning({
   onConfirm,
   onNewThread,
   returnFocus,
+  originalMessage,
 }: {
   people: Person[];
   onCancel: () => void;
   onConfirm: () => void;
   onNewThread: () => void;
   returnFocus: HTMLElement | null;
+  originalMessage?: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null),
     heading = useId();
@@ -37,8 +39,23 @@ export function ParticipantWarning({
         onCancel();
       }}
     >
-      <h2 id={heading}>Some earlier sources are unavailable</h2>
-      <p>Earlier {agentName} answers cite records these people cannot open:</p>
+      <h2 id={heading}>
+        {originalMessage !== undefined
+          ? "Review original message"
+          : "Some earlier sources are unavailable"}
+      </h2>
+      {originalMessage !== undefined && (
+        <p className="cv-warning-original">{originalMessage}</p>
+      )}
+      <p>
+        {people.length ? (
+          <>
+            Earlier {agentName} answers cite records these people cannot open:
+          </>
+        ) : (
+          "No earlier cited sources are currently unavailable to the tagged people."
+        )}
+      </p>
       <ul>
         {people.map((p) => (
           <li key={p.id}>
@@ -48,15 +65,22 @@ export function ParticipantWarning({
         ))}
       </ul>
       <p>
-        They will see withheld statements and sources. Adding them does not
-        grant access. You can start a new thread on the same record without the
-        earlier answers.
+        {people.length > 0 && (
+          <>
+            They will see withheld statements and sources. Adding them does not
+            grant access.{" "}
+          </>
+        )}
+        You can start a new thread on the same record without the earlier
+        answers.
       </p>
       <div className="cv-warning-actions">
         <Button onClick={onCancel}>Cancel</Button>
         <Button onClick={onNewThread}>Start a new thread</Button>
         <Button variant="primary" onClick={onConfirm}>
-          Add and send
+          {originalMessage !== undefined
+            ? "Send original message"
+            : "Add and send"}
         </Button>
       </div>
     </dialog>

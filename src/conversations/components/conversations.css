@@ -617,6 +617,15 @@ a.cv-source:hover {
   gap: 8px;
   justify-content: flex-end;
 }
+.cv-warning-original {
+  max-height: 180px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  padding: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
 @media (max-width: 780px) {
   .cv-warning-actions button { min-height: 44px; }
   .cv-source,

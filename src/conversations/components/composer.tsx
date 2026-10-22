@@ -1,6 +1,6 @@
 // The composer (PPO-CONV-T1C-DESIGN 5.4) and its thread wrapper. The draft lives here, outside the thread's read, so a
 // re-read never clears what someone is typing.
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { useRouter } from "next/navigation";
 import { api, ErrorNotice } from "../../components/business-ui";
 import { useIdentity } from "../../components/business-session";
@@ -24,6 +24,8 @@ import type { Thread } from "./thread-view";
 import type { PeopleRead, Person } from "../picker-options";
 import type { ParticipantAcknowledgement } from "../participant-warning";
 import { ParticipantWarning } from "./participant-warning";
+import { originalPostPreview, retainedPost, reviewedParticipantPatch } from "../reviewed-retry";
+import type { JournalEntry } from "../../shared/lib/command-journal";
 
 type Anchor = { type: AnchorType; id: string };
 export const serverAllocated = (_entry: unknown, receipt: Receipt) => /^[0-9a-f-]{36}$/.test(receipt.record_id);
@@ -37,6 +39,7 @@ export function Composer({
   blocked = false,
   localError,
   placeholder,
+  fieldRef,
 }: {
   anchor: Anchor | null;
   draft: Draft;
@@ -46,9 +49,11 @@ export function Composer({
   blocked?: boolean;
   localError: string;
   placeholder: string;
+  fieldRef?: RefObject<HTMLTextAreaElement | null>;
 }) {
   const [picker, setPicker] = useState<"person" | "record" | null>(null);
-  const field = useRef<HTMLTextAreaElement>(null);
+  const ownField = useRef<HTMLTextAreaElement>(null);
+  const field = fieldRef ?? ownField;
   const caret = useRef(0);
   // The @ or # the person typed stays in the text until a tag replaces it; Escape leaves it as typed.
   const trigger = useRef(false);
@@ -179,9 +184,11 @@ export function ThreadComposer({
     draft: Draft;
     input: Extract<MessageInput, { ok: true }>;
     opener: HTMLElement | null;
+    original?: { entry: JournalEntry; preview: string };
   } | null>(null);
   const submittedDraft = useRef<Draft | null>(null),
     handledReceipt = useRef("");
+  const messageField = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     currentDraft.current = draft;
   }, [draft]);
@@ -208,6 +215,7 @@ export function ThreadComposer({
     accepts,
     transport: api,
     acceptsReceipt: serverAllocated,
+    reviewedRetry: reviewedParticipantPatch,
   });
   // A post refused because the thread changed meanwhile re-reads it, so the page shows why (5.8).
   const errorCode = (command.error as { code?: string } | null)?.code;
@@ -292,6 +300,33 @@ export function ThreadComposer({
       if (token === generation.current.value) setChecking(false);
     }
   };
+  const reviewOriginal = async () => {
+    if (checkingRef.current || command.busy || !command.pending) return;
+    const entry = command.pending, input = retainedPost(entry);
+    if (!input) return setLocalError("The original message could not be checked. No replacement was sent.");
+    const heldDraft = currentDraft.current,
+      token = generation.current.value,
+      opener = document.activeElement as HTMLElement | null;
+    checkingRef.current = true; setChecking(true); setLocalError("");
+    try {
+      const people = await api<PeopleRead>(`conversations/people?anchor_type=${thread.anchor.type}&anchor_id=${thread.anchor.id}&thread_id=${thread.id}`);
+      if (token !== generation.current.value || currentDraft.current !== heldDraft) return;
+      const candidates = input.mentions.flatMap((m) => m.kind === "Person" ? [m.person_id] : []);
+      setReview({
+        people: people.items.filter((p) => candidates.includes(p.id) && p.history_warning),
+        draft: heldDraft, input: { ok: true, body: input.body, mentions: input.mentions, asks: input.asks },
+        opener, original: { entry, preview: originalPostPreview(input, people.items) },
+      });
+    } catch (error) {
+      if (token === generation.current.value) {
+        setLocalError("The current warning could not be checked. The original and your current draft are retained; try again.");
+        if ([401, 403, 404].includes((error as { status?: number }).status ?? 0)) reload();
+      }
+    } finally {
+      checkingRef.current = false;
+      if (token === generation.current.value) setChecking(false);
+    }
+  };
   const mode = composerMode(thread.state, command.error as { status?: number } | null);
   if (mode === "read-only")
     return (
@@ -314,11 +349,13 @@ export function ThreadComposer({
         blocked={!!command.pending || !command.ready}
         localError={localError}
         placeholder={`${others.length ? `Reply to ${others.join(", ")}. ` : ""}Type @ to tag, # to link a record`}
+        fieldRef={messageField}
       />
       {review && (
         <ParticipantWarning
           people={review.people}
           returnFocus={review.opener}
+          originalMessage={review.original?.preview}
           onCancel={() => setReview(null)}
           onNewThread={() => {
             setReview(null);
@@ -327,7 +364,15 @@ export function ThreadComposer({
             );
           }}
           onConfirm={() => {
-            if (currentDraft.current === review.draft)
+            if (currentDraft.current !== review.draft) return;
+            if (review.original !== undefined) {
+              const token = generation.current.value;
+              setReview(null);
+              void command.retryReviewed(review.people.map((p) => ({ person_id: p.id, basis: p.history_warning!.basis })), review.original.entry).then((receipt) => {
+                if (receipt && token === generation.current.value)
+                  requestAnimationFrame(() => { if (token === generation.current.value) messageField.current?.focus({ preventScroll: true }); });
+              });
+            } else
               void submit(
                 review.input,
                 review.draft,
@@ -345,8 +390,8 @@ export function ThreadComposer({
             The original message is retained until its outcome is confirmed.
             Retry sends that same operation, including its tags and asks.
           </p>
-          <Button busy={command.busy} onClick={() => void command.retry()}>
-            Retry
+          <Button busy={command.busy || checking} onClick={() => void (errorCode === "ParticipantWarningRequired" ? reviewOriginal() : command.retry())}>
+            {errorCode === "ParticipantWarningRequired" ? "Review current warning" : "Retry"}
           </Button>
         </div>
       )}

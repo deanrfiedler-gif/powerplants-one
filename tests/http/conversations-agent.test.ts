@@ -65,15 +65,15 @@ test("T2c R8 HTTP accepts its server's opaque basis, refuses another process's b
     c = database(),
     owner = await login("coordinator");
   const grants = (
-    await c.query<{ id: string; valid_until: Date | null }>(
-      "SELECT id,valid_until FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.read'",
+    await c.query<{ id: string; valid_from: string; valid_to: string | null }>(
+      "SELECT id,valid_from::text AS valid_from,valid_to::text AS valid_to FROM ppo.permission_grants WHERE user_id=$1 AND capability='activity.read'",
       [f.reader.actor_id],
     )
   ).rows;
   assert.ok(grants.length);
   try {
     await c.query(
-      "UPDATE ppo.permission_grants SET valid_until=clock_timestamp() WHERE user_id=$1 AND capability='activity.read'",
+      "UPDATE ppo.permission_grants SET valid_from=LEAST(valid_from,clock_timestamp()-interval '1 second'),valid_to=clock_timestamp() WHERE user_id=$1 AND capability='activity.read'",
       [f.reader.actor_id],
     );
     const people = await read(
@@ -145,8 +145,8 @@ test("T2c R8 HTTP accepts its server's opaque basis, refuses another process's b
   } finally {
     for (const grant of grants)
       await c.query(
-        "UPDATE ppo.permission_grants SET valid_until=$2 WHERE id=$1",
-        [grant.id, grant.valid_until],
+        "UPDATE ppo.permission_grants SET valid_from=$2,valid_to=$3 WHERE id=$1",
+        [grant.id, grant.valid_from, grant.valid_to],
       );
   }
 });

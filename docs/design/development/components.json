@@ -8535,7 +8535,7 @@
         {
           "id": "warning",
           "label": "New participant",
-          "description": "Cancel, exact acknowledgement and existing new-thread alternative; draft and focus return."
+          "description": "Cancel, exact acknowledgement and existing new-thread alternative; review of a retained original after changed warning preserves operation, newer draft and focus return."
         },
         {
           "id": "persisted",
@@ -8578,6 +8578,9 @@
         "src/conversations/components/conversations.css",
         "src/conversations/composition.ts",
         "src/conversations/picker-options.ts",
+        "src/conversations/reviewed-retry.ts",
+        "src/shared/lib/command-journal.ts",
+        "src/shared/ui/use-recoverable-command.ts",
         "src/conversations/participant-warning.ts",
         "src/conversations/reads.ts",
         "docs/testing/evidence/conversations-t2c/README.md"
