@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-22",
+  "base_commit": "002af00e4e19e9aa0d12f83d36199bebe6572a1b",
+  "environment": {
+    "node": "24.22.0",
+    "playwright": "1.64.1",
+    "chrome": "156.0.8078.48",
+    "database": "isolated PostgreSQL 16 ppo_synthetic_test",
+    "browser_mode": "local development build"
+  },
+  "browser_cases": 4,
+  "widths": [
+    1440,
+    1024,
+    390,
+    320
+  ],
+  "source_hashes": {
+    "src/estimating/nursery-automation/catalogue.ts": "81768af083bb70b939d468ba7b7c0beea8e4d0034fdb59840422816e8c6c1292",
+    "src/estimating/nursery-automation/model.ts": "58d6e50eace22d3bebbb01613d350d1afc36cbe112278af401916abce5ac1ec1",
+    "src/estimating/nursery-automation/screen.css": "a5873dd6886d37a3a6959b57908a4c4b728ec3f6ea2901fa0f234eb114b75b40",
+    "src/estimating/nursery-automation/screen.tsx": "d2227a16875790825aa33689378db62a660b7abbc6f74aec9e23cd20a155dc4a",
+    "src/estimating/nursery-automation/service.ts": "60a0b780b7d75c62b52db544f96774a760481612f5533d673a61afe8d8e09775",
+    "src/estimating/nursery-automation/validation.ts": "2874e838a31fb2534898f4064335d2c02545cbc504e3ffb50f0fcdc36dc1e52b",
+    "db/migrations/0116-nursery-discovery.sql": "e55a7e28228bd0b88cf37cb20f012a04fb40407805208327e7f89cff635bf8a2",
+    "src/components/estimation-wizard.tsx": "34a0d7eb3138e0cbb35eba3c9743dd45c5701d743a1b8e203b2160401904aaff",
+    "src/app/(business)/estimating/discovery/[id]/nursery/page.tsx": "b6e269fa81b3f937f06d3803ba3449eed0f69f957c2359411cb7206c38e267a5",
+    "src/app/api/v1/estimating/workspaces/[id]/nursery/route.ts": "892aacb50a2164fd80d571f5f6535892d812118bfd6aacc96aabb688cd71ec79",
+    "tests/browser/nursery-automation.spec.ts": "e4bcc53ab904775c9b16858148dcc4d0c07e9b9918019517c11aa0c736e2bbbb",
+    "tests/database/nursery-automation.test.ts": "4f5fe3d618b2af759761dd5de5ab3c5d453325ef35ffad3f54e56bbaa38f02f3",
+    "tests/helpers/nursery-automation.ts": "f802c9e4fb1a56074cac5caaae4564621ac1d2826cfd907b52a46a0ec8e5fb2d",
+    "tests/unit/nursery-automation.test.ts": "dcd68e952a5358cfec06c66f8089342f02d348aea7600220a35b0b914b514bda"
+  },
+  "images": {
+    "nursery-1024.png": "20363562fde2c9d66fb9bfe997a5e4aa30420531ad2403c858d6eefbc3586cd8",
+    "nursery-1440.png": "24ec4b9e25accf31e1013ead486d9d81bdab0b808d5bff9c44b160dd3471dc79",
+    "nursery-320.png": "f3165ef4e50565f44986b105b8fc47d6a297d68927b1d0839413ec52014a6580",
+    "nursery-390.png": "19db84c6f193e216efeb56b5995bf31ae8a57f363aa1bec33901d81aa18e6f23",
+    "nursery-conflict-1024.png": "fa1c822169f2cf555c51035be89e46ed9f8f2fa19a8c54a670e5bb65a790f6ec",
+    "nursery-conflict-1440.png": "bfade1c7d9f3c928e5d9929ddef731412524777d0e434857392d08b0529024c5",
+    "nursery-conflict-320.png": "cef3feeb7dd0dbf2acddbb61c38604a506db72b66179bfebe5728bf99d74e59a",
+    "nursery-conflict-390.png": "65fc7ed2d5a43233220f1828281292353a21122c6c8efd265a72498de83ffa6f"
+  },
+  "review": "Builder inspected desktop context and 320px conflict capture for clipping/wrapping. No owner, supplier or independent review; no accepted visual fingerprint."
+}

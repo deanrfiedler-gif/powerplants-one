@@ -185,6 +185,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "nursery-n1",
+          "label": "Nursery N1 host",
+          "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
         }
       ],
       "implementation": [
@@ -415,7 +420,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/conversations",
-        "route:/conversations/[id]"
+        "route:/conversations/[id]",
+        "route:/estimating/discovery/[id]/nursery"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -651,6 +657,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-nursery-n1-review",
+          "expected": "Review Nursery N1 desktop/phone controls against its proposed page contract.",
+          "actual": "Native host supplied; no accepted Nursery mockup or owner review.",
+          "action": "Review the N1 execution evidence before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1790,6 +1804,11 @@
           "id": "cs01-native",
           "label": "CS-01 accepted-design implementation",
           "description": "Actual host fixture in tests/browser/organisations-native.spec.ts; source widths, keyboard/focus, source failure and retained command authority. Review pending."
+        },
+        {
+          "id": "nursery-n1",
+          "label": "Nursery N1 host",
+          "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
         }
       ],
       "implementation": [
@@ -1961,7 +1980,8 @@
         "route:/facilities",
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
-        "route:/facilities/new"
+        "route:/facilities/new",
+        "route:/estimating/discovery/[id]/nursery"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2159,6 +2179,14 @@
           "action": "Review cs05-accepted-build evidence and listed adaptations.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-nursery-n1-review",
+          "expected": "Review Nursery N1 desktop/phone controls against its proposed page contract.",
+          "actual": "Native host supplied; no accepted Nursery mockup or owner review.",
+          "action": "Review the N1 execution evidence before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2342,6 +2370,11 @@
           "id": "sales-followup-host",
           "label": "Reviewed return to Sales",
           "description": "LC-17 host scenarios: Project/Service source, separate Internal review, native Lead/Deal create-return, fixed comparison, denied refresh and original recovery. tests/browser/sales-followup.spec.ts; no isolated renderer."
+        },
+        {
+          "id": "nursery-n1",
+          "label": "Nursery N1 host",
+          "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
         }
       ],
       "implementation": [
@@ -2478,7 +2511,8 @@
         "route:/facilities",
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
-        "route:/facilities/new"
+        "route:/facilities/new",
+        "route:/estimating/discovery/[id]/nursery"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2610,6 +2644,14 @@
           "expected": "CS-05 accepted design paired with the native page at desktop, tablet and phone widths.",
           "actual": "Facilities consumes the existing control; owner visual review remains pending.",
           "action": "Review cs05-accepted-build evidence and listed adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-nursery-n1-review",
+          "expected": "Review Nursery N1 desktop/phone controls against its proposed page contract.",
+          "actual": "Native host supplied; no accepted Nursery mockup or owner review.",
+          "action": "Review the N1 execution evidence before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

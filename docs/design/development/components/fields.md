@@ -204,3 +204,7 @@ ES-02 `route:/estimating/discovery/[id]/costing` reuses this family. The page-lo
 ## CS-08 Site surveys consumer
 
 The existing control is reused by /surveys and /surveys/[id]. Host states and widths are declared in [site-surveys-fixtures.json](../site-surveys-fixtures.json); see [page contract](../pages/scope-cs-08.md) and [execution evidence](../../../testing/evidence/site-surveys-native/README.md). No owner review is inferred. No new public control API is introduced for this consumer.
+
+## Nursery N1 consumer
+
+The Nursery discovery route consumes the unchanged shared control. Host states and synthetic fixture: tests/browser/nursery-automation.spec.ts. Unknown/conflict, stale edits, read-only history and original-save recovery remain explicit. Owner visual review and exact Nursery mockups are pending; no baseline fingerprint is adopted.

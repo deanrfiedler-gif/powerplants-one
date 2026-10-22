@@ -269,3 +269,7 @@ Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy
 ## Conversations T2c consumer
 
 The two Conversations routes use the existing Button for Send, original-operation Retry and R8 warning choices. Shared implementation is unchanged. Host fixtures and [T2c evidence](../../../testing/evidence/conversations-t2c/README.md) record verification; owner review remains separate.
+
+## Nursery N1 consumer
+
+The Nursery discovery route consumes the unchanged shared control. Host states and synthetic fixture: tests/browser/nursery-automation.spec.ts. Unknown/conflict, stale edits, read-only history and original-save recovery remain explicit. Owner visual review and exact Nursery mockups are pending; no baseline fingerprint is adopted.
