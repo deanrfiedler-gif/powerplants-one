@@ -25,14 +25,14 @@ This is the planned structure of the whole Powerplants One user guide for Powerp
   The register lags behind some recent work, so each chapter checks the current build when it is written.
 - **Writing rule** (direction paper, section 9): the shared parts (front matter and parts 1, 2, 7 and 8) can be written now. A module chapter is written after its page design is accepted and built. A journey is written once every module it crosses has a published chapter.
 - **Page guides are the module chapters.** Each scope in part 4 is one page guide, written to the [page guide template](../standards/page-guide-template.md). Its pages (routes) are sections inside it, and the in-app information icon opens the same text.
-- **Stable keys.** Scope IDs and guide keys stay as registered. This outline adds no scope ID.
+- **Stable keys, working titles.** Scope IDs and guide keys stay as registered, and this outline adds no scope ID. Chapter titles are working titles. Some use the names on screen rather than the register's internal titles; for example, CR-01 is "Opportunity detail and internal work" in the register but is shown here as "Deal detail", because the screen says Deals. Final titles follow the terminology sheet (direction paper, section 8).
 
 ## Front matter
 
 | Section | Kind | Contents |
 |---|---|---|
 | About this guide | Reference | Who it is for, how it is organised, which release it describes, and the conventions used: on-screen labels in bold, synthetic examples, phone notes |
-| Getting help and giving feedback | How-to | The information icon, the Help Centre (DK-07, partly built), search, Quick Help, and how to report a wrong or missing instruction |
+| Getting help and giving feedback | How-to | The information icon, the Help Centre (DK-07; the page guide panel exists, the `/help` page is not built), search, Quick Help, and how to report a wrong or missing instruction |
 
 ## Part 1. Getting started
 
@@ -97,7 +97,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Sales-to-Estimating handover | CR-02 | Built |
 | Won-deal receiving | CR-03 | Built |
 | Sales aftercare and renewals | CR-05 | Built |
-| Sales pulse and sales tasks | — (routes `/sales/pulse`, `/sales/tasks`) | Built |
+| Sales pulse and sales tasks | — (routes `/sales/pulse`, `/sales/tasks`) | Partly built |
 
 ### 4.2 Customers, contacts and sites
 
@@ -120,10 +120,11 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Estimation Wizard: discovery, alternatives and revisions | ES-02 | Partly built |
 | Cost sources and supplier prices | ES-03 | Built |
 | Saved estimate review | ES-04 | Built |
-| Quotation release | ES-05 | Built |
+| Quotation approval, issue and distribution | ES-05 | Built |
 | Quotation response and negotiation | ES-06 | Built |
 | Receiving, one-off items and conversion | ES-07 | Built |
-| Specialist configuration workbench (including fertigation) | ES-08 | Built |
+| Specialist configuration workbench | ES-08 | Built |
+| Priva fertigation configurator | — (route `/estimating/fertigation`) | Partly built |
 | Configure & price, and the Rules studio | — (routes `/estimating/cpq`, `/estimating/rules`) | Built |
 | Excel estimate import | excel-import | Not built |
 | Estimate-to-actual outcome review | ES-09 | Not built |
@@ -302,7 +303,7 @@ Written only if Dean adopts them. They stay in the register as conditional scope
 
 ## Part 5. Tasks and procedures
 
-A task index, not new content. Kind: How-to. Each entry links to the page guide section that explains the task, and to the approved SharePoint SOP where one exists. Where none is linked, it says "No approved SOP linked yet", as r01 requires. The index is built from the published page guides' task sections, grouped as:
+A task index, not new content. Kind: How-to. Each entry links to the page guide section that explains the task, and to the approved SharePoint SOP where one exists. Where none is linked, it says "No approved SOP linked yet", as the contextual help design (PPO-HELP-DES, section 4.1) allows. The index is built from the published page guides' task sections, grouped as:
 
 1. Finding and opening records
 2. Creating and updating records
@@ -320,8 +321,8 @@ For administrators and access approvers. Kind: How-to and reference.
 | Page guide | Scope | Build state |
 |---|---|---|
 | Users, roles, teams and access review | AD-01 | Partly built |
-| Settings hub and business configuration | AD-02 | Not built (design accepted 22 October 2026) |
-| My account | — (part of the Settings hub decision, WS-D6) | Not built |
+| Settings hub and business configuration | AD-02 | Not built (design lock-in is in open PR #670) |
+| My account and preferences | — ([WS-D7](../decisions/workshop-settings-preferences-scope.md)) | Not built |
 | Data-quality workbench | AD-03 | Not built |
 | Integration health and exception recovery | AD-04 | Partly built |
 | External mapping and reconciliation | AD-05 | Not built |
