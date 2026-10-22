@@ -1,3 +1,4 @@
+import { emptyConfiguration } from "../../src/estimating/configuration-definition";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -12,6 +13,7 @@ import {
 } from "../../src/estimating/nursery-automation/service";
 import { nurseryFixture, nurseryCommand } from "../helpers/nursery-automation";
 import { crmBase } from "../helpers/crm";
+import { structuredDiscovery } from "../helpers/estimating-configuration";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import {
   previewDiscoveryChange,
@@ -27,13 +29,17 @@ after(closeDatabase);
 const code = (wanted: string) => (e: unknown) =>
   (e as { code: string }).code === wanted;
 test("NAC N1 saved Express scenarios, conflicts and immutable history survive reconnect; originals recover after successors", async () => {
-  const f = await nurseryFixture(),
+  const f = await nurseryFixture(false, structuredDiscovery(true)),
     input = { ...nurseryCommand(f.detail), proposal: f.proposal };
   const first = await saveNursery(f.p, f.id, input);
   const d = await readNursery(f.p, f.id);
   assert.deepEqual(d.proposal, f.proposal);
   assert.equal(d.source.effort, "Express");
   assert.equal(d.selected?.version, 1);
+  assert.equal(
+    (await readNursery(f.p, f.id, { revision_id: d.selected!.id })).can_edit,
+    false,
+  );
   assert.equal(d.proposal.scenarios[0].facts.target_good_pots.value, null);
   const next = nurseryCommand(d);
   next.proposal.scenarios[0].name = "SYN changed name";
@@ -72,7 +78,7 @@ test("NAC N1 saved Express scenarios, conflicts and immutable history survive re
     option_id: f.option_id,
     expected_version: beforeSourceChange.workspace.version,
     expected_revision_id: f.revision_id,
-    discovery: discoveryInput(),
+    discovery: { ...discoveryInput(), configuration: emptyConfiguration() },
     branch_mode: null,
     copy_follow_up: null,
   };
@@ -90,6 +96,13 @@ test("NAC N1 saved Express scenarios, conflicts and immutable history survive re
   const changedSource = await readNursery(p, f.id);
   assert.equal(changedSource.source_changed, true);
   assert.equal(changedSource.source.id, sourceId);
+  assert.deepEqual(changedSource.selected_source, beforeSourceChange.source);
+  assert.ok(
+    changedSource.selected_source.systems.some(
+      (s) => s.id === f.proposal.system_id,
+    ),
+  );
+  assert.deepEqual(changedSource.source.systems, []);
   assert.equal(changedSource.selected!.source_revision_id, f.revision_id);
   // Even an updated workspace version cannot legitimise the old source.
   await assert.rejects(
@@ -100,7 +113,13 @@ test("NAC N1 saved Express scenarios, conflicts and immutable history survive re
     code("NurseryBasisChanged"),
   );
   assert.deepEqual((await saveNursery(p, f.id, input)).receipt, first.receipt);
-  await saveNursery(p, f.id, nurseryCommand(changedSource));
+  await assert.rejects(
+    saveNursery(p, f.id, nurseryCommand(changedSource)),
+    code("InvalidData"),
+  );
+  const rebind = nurseryCommand(changedSource);
+  rebind.proposal.system_id = null; // Explicitly clear the removed system on the successor only.
+  await saveNursery(p, f.id, rebind);
   const rebound = await readNursery(p, f.id);
   assert.equal(rebound.source_changed, false);
   assert.equal(rebound.selected!.source_revision_id, sourceId);
@@ -108,6 +127,9 @@ test("NAC N1 saved Express scenarios, conflicts and immutable history survive re
     (await readNursery(p, f.id, { revision_id: d.selected!.id })).proposal,
     f.proposal,
   );
+  const retained = await readNursery(p, f.id, { revision_id: d.selected!.id });
+  assert.deepEqual(retained.selected_source, beforeSourceChange.source);
+  assert.equal(retained.source.id, sourceId);
   const incomplete = await nurseryFixture(true);
   assert.equal(incomplete.detail.source.readiness, "Incomplete");
   await saveNursery(

@@ -9,13 +9,15 @@ import { readNursery } from "../../src/estimating/nursery-automation/service";
 import { blankScenario } from "../../src/estimating/nursery-automation/model";
 import { crmCreate, crmBase } from "./crm";
 import { discoveryInput } from "./estimating-discovery";
-export async function nurseryFixture(incomplete = false) {
+export async function nurseryFixture(
+  incomplete = false,
+  discovery = discoveryInput(),
+) {
   const session = await createSession("coordinator"),
     p = session.principal,
     opportunity = crmCreate();
   opportunity.title = "SYN Nursery potting discovery";
   await createOpportunity(p, opportunity);
-  const discovery = discoveryInput();
   if (incomplete)
     discovery.answers[0] = {
       question_id: "Q01",
@@ -49,6 +51,7 @@ export async function nurseryFixture(incomplete = false) {
   });
   const detail = await readNursery(p, id, { option_id });
   const proposal = structuredClone(detail.proposal);
+  proposal.system_id = detail.source.systems[0]?.id ?? null;
   proposal.name = "SYN Standard and Plus study";
   proposal.candidate_ids = ["javo-standard-2-0", "javo-plus"];
   proposal.scenarios = [blankScenario(randomUUID())];

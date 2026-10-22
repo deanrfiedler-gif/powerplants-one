@@ -186,7 +186,6 @@ export function NurseryScreen({ id }: { id: string }) {
   const path = `estimating/workspaces/${id}/nursery`;
   const data = useCrmResource<Detail>(
     `${path}?${new URLSearchParams({ ...(option ? { option_id: option } : {}), ...(historyId ? { revision_id: historyId } : {}) })}`,
-    true,
   );
   return (
     <>
@@ -197,7 +196,13 @@ export function NurseryScreen({ id }: { id: string }) {
       {!!data.error && (
         <Button onClick={() => data.reload()}>Try loading again</Button>
       )}
-      {data.data && !data.error && (
+      {data.data && !!data.error && (
+        <p role="status">
+          Refresh failed. Your draft and original save recovery are retained.
+          Retry loading before a new save.
+        </p>
+      )}
+      {data.data && (
         <NurseryBody
           key={data.data.reader_id + ":" + data.data.can_edit}
           id={id}
@@ -243,6 +248,7 @@ function NurseryBody({
     }
   };
   const study = editor?.study ?? d?.proposal;
+  const displaySource = editor?.basis.source ?? d?.selected_source;
   const changed =
     !!editor &&
     !!d &&
@@ -257,20 +263,13 @@ function NurseryBody({
         eyebrow="Estimating · Synthetic"
       />
       <Link href={`/estimating/discovery/${id}`}>Return to Discovery</Link>
-      <ErrorNotice error={data.error} />
-      {data.loading && (
-        <p role="status">Loading permitted Nursery discovery…</p>
-      )}
-      {!!data.error && (
-        <Button onClick={() => data.reload()}>Try loading again</Button>
-      )}
-      {d && !data.error && study && (
+      {d && study && displaySource && (
         <>
           <section className="nac-context">
-            <h2>Saved scope</h2>
+            <h2>{editor ? "Source for this edit" : "Saved scope"}</h2>
             <p>
-              Alternative {d.option.label} · {d.source.effort} · Discovery{" "}
-              {d.source.readiness}
+              Alternative {d.option.label} · {displaySource.effort} · Discovery{" "}
+              {displaySource.readiness}
             </p>
             <p>
               Nursery revision {d.selected?.version ?? "not yet saved"} ·
@@ -282,8 +281,9 @@ function NurseryBody({
             </p>
             {d.source_changed && (
               <p role="status">
-                Discovery changed since this study was saved. Editing uses the
-                displayed current source; review the scope before saving.
+                Discovery changed since this study was saved. Saved history
+                retains its original source. Editing starts from current
+                Discovery; review the source and system binding before saving.
               </p>
             )}
             {d.catalogue_changed && (
@@ -295,8 +295,8 @@ function NurseryBody({
             <details>
               <summary>Exact source references</summary>
               <p>Company {d.workspace.company_id}</p>
-              <p>Discovery revision {d.source.id}</p>
-              <p>Site {d.source.site_id ?? "Not recorded"}</p>
+              <p>Discovery revision {displaySource.id}</p>
+              <p>Site {displaySource.site_id ?? "Not recorded"}</p>
               <p>
                 Saved study source{" "}
                 {d.selected?.source_revision_id ?? "Not saved"}
@@ -360,7 +360,7 @@ function NurseryBody({
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (editor)
+                  if (editor && !changed && !data.error && !frozen)
                     void command.send(path, {
                       option_id: editor.basis.option.id,
                       source_revision_id: editor.basis.source.id,
@@ -410,7 +410,16 @@ function NurseryBody({
                       }
                     >
                       <option value="">Not yet bound</option>
-                      {d.source.systems.map((s) => (
+                      {study.system_id &&
+                        !displaySource.systems.some(
+                          (s) => s.id === study.system_id,
+                        ) && (
+                          <option value={study.system_id}>
+                            Previous system {study.system_id} — select a current
+                            system or clear the binding
+                          </option>
+                        )}
+                      {displaySource.systems.map((s) => (
                         <option key={s.id} value={s.id}>
                           {s.name}
                         </option>
@@ -434,39 +443,38 @@ function NurseryBody({
                     Shortlisting is not a suitability decision. No approved
                     limits or published Product Variants are assigned.
                   </p>
-                  {(editor ? d.current_catalogue : d.catalogue).entries.map(
-                    (e) => (
-                      <article className="nac-card" key={e.id}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={study.candidate_ids.includes(e.id)}
-                            onChange={(event) =>
-                              set({
-                                ...study,
-                                candidate_ids: event.target.checked
-                                  ? [...study.candidate_ids, e.id]
-                                  : study.candidate_ids.filter(
-                                      (x) => x !== e.id,
-                                    ),
-                              })
-                            }
-                          />
-                          {e.supplier} {e.model}
-                        </label>
-                        <p>{e.note}</p>
-                        <a href={e.source_url} target="_blank" rel="noreferrer">
-                          Supplier reference: {e.model}
-                        </a>
-                        {e.source_claims.map((claim, i) => (
-                          <p key={i}>
-                            {claim.source_section}: {claim.topic} {claim.value}{" "}
-                            — unreviewed
-                          </p>
-                        ))}
-                      </article>
-                    ),
-                  )}
+                  {(editor
+                    ? editor.basis.current_catalogue
+                    : d.catalogue
+                  ).entries.map((e) => (
+                    <article className="nac-card" key={e.id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={study.candidate_ids.includes(e.id)}
+                          onChange={(event) =>
+                            set({
+                              ...study,
+                              candidate_ids: event.target.checked
+                                ? [...study.candidate_ids, e.id]
+                                : study.candidate_ids.filter((x) => x !== e.id),
+                            })
+                          }
+                        />
+                        {e.supplier} {e.model}
+                      </label>
+                      <p>{e.note}</p>
+                      <a href={e.source_url} target="_blank" rel="noreferrer">
+                        Supplier reference: {e.model}
+                      </a>
+                      {e.source_claims.map((claim, i) => (
+                        <p key={i}>
+                          {claim.source_section}: {claim.topic} {claim.value} —
+                          unreviewed
+                        </p>
+                      ))}
+                    </article>
+                  ))}
                   <h2>Production scenarios</h2>
                   <p>
                     Capture each crop/container/media combination. Unknown is
@@ -656,7 +664,9 @@ function NurseryBody({
                 {editor && (
                   <Button
                     type="submit"
-                    disabled={frozen || changed || !reason.trim()}
+                    disabled={
+                      frozen || changed || !!data.error || !reason.trim()
+                    }
                   >
                     Save discovery revision
                   </Button>

@@ -18,6 +18,7 @@ import {
   revisionAuthority,
   requireActiveOption,
   requireDraftGroup,
+  type DiscoveryRevision,
 } from "../discovery-workspace-context";
 import { catalogue } from "./catalogue";
 import { blankStudy, findings, type Study } from "./model";
@@ -89,6 +90,20 @@ async function history(
     )
   ).rows;
 }
+function sourceContext(source: DiscoveryRevision) {
+  return {
+    id: source.id,
+    hash: source.context_hash,
+    site_id: source.site_id,
+    readiness: source.scope_readiness,
+    effort: source.input?.effort.value ?? "Unknown",
+    systems:
+      source.input?.configuration?.systems.map((s) => ({
+        id: s.id,
+        name: s.name,
+      })) ?? [],
+  };
+}
 export async function readNursery(
   p: Principal,
   id: string,
@@ -105,9 +120,11 @@ export async function readNursery(
     );
     const source = await revisionAuthority(c, p, g, option.current_revision_id);
     const rows = await history(c, p, g.id, option.id);
+    const sources = new Map([[source.id, source]]);
     // Every disclosed historical revision retains current source authority, even after rebinding.
     for (const row of rows) {
       const original = await revisionAuthority(c, p, g, row.source_revision_id);
+      sources.set(original.id, original);
       if (
         original.option_id !== option.id ||
         original.context_hash !== row.source_hash ||
@@ -129,24 +146,16 @@ export async function readNursery(
     const canEdit =
       editable &&
       option.state === "Active" &&
-      (!selected || selected.id === rows[0]?.id) &&
+      !q.revision_id &&
       source.kind === "Discovery";
     return {
       reader_id: p.actor_id,
       workspace: { id: g.id, company_id: g.company_id, version: g.version },
       option: { id: option.id, label: option.label, state: option.state },
-      source: {
-        id: source.id,
-        hash: source.context_hash,
-        site_id: source.site_id,
-        readiness: source.scope_readiness,
-        effort: source.input?.effort.value ?? "Unknown",
-        systems:
-          source.input?.configuration?.systems.map((s) => ({
-            id: s.id,
-            name: s.name,
-          })) ?? [],
-      },
+      source: sourceContext(source),
+      selected_source: sourceContext(
+        selected ? sources.get(selected.source_revision_id)! : source,
+      ),
       current_revision_id: rows[0]?.id ?? null,
       current_version: rows[0]?.version ?? 0,
       selected: selected ?? null,

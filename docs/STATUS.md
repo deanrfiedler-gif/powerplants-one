@@ -53,6 +53,12 @@ Focused unit, database and desktop/phone browser checks passed, including origin
 
 Shared Products profiles, technical assessment and the paired parts/facts CPQ receiver remain subsequent stages. No labour standard, price, mapping or technical approval is invented. Supplier source review, owner design acceptance and different-model review remain open. This is draft code delivery, not business acceptance or deployment.
 
+## Nursery Automation N1 independent review corrections — 22 October 2026
+
+PR #662's separate gpt-6-astra review identified transient-refresh draft/recovery loss and historical views displaying current Discovery attributes. A follow-up identified editing an explicitly selected latest history revision as another recovery edge. The correction preserves transient working state under current authority, separates saved source context from successor editing, and makes explicit history selections read-only. The live page contract and guide explain these behaviours.
+
+The extended history database proof passed with the existing structured-configuration contract preserved; the other two Nursery database cases passed. New desktop/phone regression coverage exercises refresh failures during editing and uncertain-save recovery, source-system removal and explicit history views. [Execution evidence](testing/evidence/nursery-automation-n1/README.md) distinguishes initial captures from the correction; final independent re-review, current-head browser/build and all CI gates are recorded in PR #662 before merge. Supplier/owner acceptance and N2–N4 remain separate and are not granted by code review.
+
 ## Site surveys CS-08 build and authorised short references — 21 October 2026
 
 Dean approved the [short reference approach](decisions/readable-reference-namespaces.md) and the required migration after the 20 October preflight. Draft PR #650 implements CS-08 on its isolated branch: new SYN-SRV-000nnn references, explicit planned visit/contact facts, the accepted compact register and six-section record, original photo retention, independent review/return and exact reviewed handover. Existing reference values and retained snapshots are preserved; no new capability, seed, dependency or document-store connection is introduced.
