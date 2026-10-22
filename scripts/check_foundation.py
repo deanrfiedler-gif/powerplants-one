@@ -262,7 +262,7 @@ def check_ui_index_frozen():
 
 
 def check_conflict_controls():
-    """STATUS.md and the decisions index must match docs/status/; migration numbers must be unique.
+    """Status sources must render without tracked output; migration numbers must be unique.
 
     Both checks live in their own scripts so contributors can run them directly. See
     docs/decisions/merge-conflict-reduction.md for why they exist.

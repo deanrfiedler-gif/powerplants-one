@@ -1,0 +1,6 @@
+{
+  "kind": "documentation-maintenance",
+  "reason": "Replace per-feature generated index commits with stable navigation and ignored rendered views, and stabilise the repository introduction.",
+  "decision": "docs/decisions/documentation-source-isolation.md",
+  "paths": ["README.md", "docs/STATUS.md", "docs/decisions/README.md"]
+}

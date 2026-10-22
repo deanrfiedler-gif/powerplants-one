@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-DOCUMENTATION-SOURCE-ISOLATION-DEC,Documentation sources without shared generated diffs,docs/decisions/documentation-source-isolation.md,,Implementation authorised; pull request review pending,Dean Fiedler,002af00e4e19e9aa0d12f83d36199bebe6572a1b,,,git,
