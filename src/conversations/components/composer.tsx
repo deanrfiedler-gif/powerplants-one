@@ -189,6 +189,7 @@ export function ThreadComposer({
   const submittedDraft = useRef<Draft | null>(null),
     handledReceipt = useRef("");
   const messageField = useRef<HTMLTextAreaElement>(null);
+  const reviewReturnFocus = useRef<{ opener: HTMLElement | null; token: number } | null>(null);
   useEffect(() => {
     currentDraft.current = draft;
   }, [draft]);
@@ -216,6 +217,15 @@ export function ThreadComposer({
     transport: api,
     acceptsReceipt: serverAllocated,
     reviewedRetry: reviewedParticipantPatch,
+  });
+  // The pending button is disabled during preflight. Restore focus only after
+  // React commits its enabled state; an animation frame can run before that commit.
+  useEffect(() => {
+    if (checking || command.busy) return;
+    const request = reviewReturnFocus.current;
+    reviewReturnFocus.current = null;
+    if (request?.token === generation.current.value && request.opener?.isConnected)
+      request.opener.focus({ preventScroll: true });
   });
   // A post refused because the thread changed meanwhile re-reads it, so the page shows why (5.8).
   const errorCode = (command.error as { code?: string } | null)?.code;
@@ -314,7 +324,7 @@ export function ThreadComposer({
       const warnings = originalParticipantWarnings(input, people.items);
       if (!warnings) {
         setLocalError("The original’s tagged people could not all be checked. The original and your current draft are retained; try again.");
-        requestAnimationFrame(() => { if (token === generation.current.value) opener?.focus({ preventScroll: true }); });
+        reviewReturnFocus.current = { opener, token };
         return;
       }
       setReview({
@@ -325,6 +335,7 @@ export function ThreadComposer({
     } catch (error) {
       if (token === generation.current.value) {
         setLocalError("The current warning could not be checked. The original and your current draft are retained; try again.");
+        reviewReturnFocus.current = { opener, token };
         if ([401, 403, 404].includes((error as { status?: number }).status ?? 0)) reload();
       }
     } finally {
