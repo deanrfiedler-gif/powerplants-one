@@ -258,8 +258,11 @@ export async function readOperation(
         row.site_id,
         "shared.create",
       );
-  } else if (r.command === "RevisePerson") {
+  } else if (r.command === "RevisePerson" || (r.command === "SetPartyNumbers" && r.object_type === "Person")) {
     await personEditAuthority(client, p, r.record_id);
+  } else if (r.command === "SetPartyNumbers" && r.object_type === "Organisation") {
+    const row = await visible(client, p, "Organisation", r.record_id);
+    await companyContext(client, p, row.company_id, null, "shared.edit");
   } else if (
     r.command === "EndAffiliation" ||
     r.command === "SetSitePrimaryContact"
