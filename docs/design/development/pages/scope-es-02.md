@@ -10,6 +10,8 @@ The [Figma implementation decision](../../../decisions/es02-wizard-figma-impleme
 
 ## Purpose and task
 
+Reference-only future extension: [Nursery Automation working design](../nursery-automation.md) and [specification](../../../blueprints/nursery-automation-configurator.md), starting with Javo potting lines and consuming the shared parts/facts/delivery-profile handover. No Nursery route or implemented capability is registered; exact mockup/HTML and desktop/phone images are missing, and review remains pending.
+
 Retain the native five-step wizard delivered by PR #272, including exact revision comparison, structured multi-area scope, source-change handling, immutable alternatives and saved-cost reads. The 24 September reconciliation updates the workload return link and removes obsolete wording that denied the now-native ES-08 specialist integration. No discovery DTO, hash, command, schema or costing guarantee changes.
 
 1. Review Requirements, Configuration, Scope & delivery, Pricing and Review

@@ -1395,6 +1395,7 @@
         "src/components/estimation-catalogue-ui.tsx",
         "src/components/estimation-wizard-changes.ts",
         "docs/decisions/es02-wizard-figma-implementation.md",
+        "docs/design/development/nursery-automation.md",
         "docs/decisions/discovery-register-figma-design.md",
         "docs/decisions/create-discovery-workspace-figma-design.md"
       ],

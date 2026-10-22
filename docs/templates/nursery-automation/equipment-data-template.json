@@ -1,0 +1,1880 @@
+{
+  "template_id": "PPO-NURSERY-EQUIPMENT-DATA",
+  "schema_version": 1,
+  "status": "Draft for review",
+  "owner": "Dean Fiedler",
+  "basis": "Nursery Automation specification; user-supplied estimating plan O1-O15 and DP1-DP8 adopted 2026-10-22",
+  "record_types": {
+    "Equipment": {
+      "purpose": "One exact supplier model and options variant. Duplicate this sheet for another equipment record.",
+      "fields": [
+        {
+          "key": "equipment_id",
+          "label": "Equipment record ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-EQ-001",
+          "guidance": "Stable staging ID; runtime UUID assigned through governed onboarding."
+        },
+        {
+          "key": "company_key",
+          "label": "PPO company key",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-COMPANY",
+          "guidance": "Company scope; never infer from supplier name."
+        },
+        {
+          "key": "supplier_entity_key",
+          "label": "Supplier entity key",
+          "type": "text",
+          "unit": "",
+          "required": "Before publication",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SUPPLIER",
+          "guidance": "Exact provider/company/entity identity when verified."
+        },
+        {
+          "key": "manufacturer",
+          "label": "Manufacturer",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic supplier",
+          "guidance": "Enter Javo for real Javo evidence; example is fictional."
+        },
+        {
+          "key": "model_name",
+          "label": "Model name",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic potter",
+          "guidance": "Preserve supplier spelling."
+        },
+        {
+          "key": "variant_code",
+          "label": "Variant or configuration code",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "SYN-VAR-A",
+          "guidance": "Region, revision and installed options matter."
+        },
+        {
+          "key": "record_version",
+          "label": "Record version",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Data version independent of document title."
+        },
+        {
+          "key": "family",
+          "label": "Equipment family",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Potting",
+            "MediaHandling",
+            "Conveying",
+            "TakeOff",
+            "TrayAutomation",
+            "Other"
+          ],
+          "synthetic_example": "Potting",
+          "guidance": "First release supports reviewed Javo potting-line configurations."
+        },
+        {
+          "key": "region",
+          "label": "Applicable region",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic AU configuration",
+          "guidance": "No assumed global electrical or option compatibility."
+        },
+        {
+          "key": "operations",
+          "label": "Supported operations",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "Fill; Dibble",
+          "guidance": "Semicolon-separated staging list; no executable rules."
+        },
+        {
+          "key": "container_geometry",
+          "label": "Container shapes and constraints",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "Round rigid pots only",
+          "guidance": "Include nesting, material and sample restrictions."
+        },
+        {
+          "key": "diameter_min_mm",
+          "label": "Minimum container diameter",
+          "type": "number",
+          "unit": "mm",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": 90.0,
+          "guidance": "Synthetic example only; verify inclusive/exclusive limit."
+        },
+        {
+          "key": "diameter_max_mm",
+          "label": "Maximum container diameter",
+          "type": "number",
+          "unit": "mm",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": 180.0,
+          "guidance": "Do not substitute nominal volume for geometry."
+        },
+        {
+          "key": "height_max_mm",
+          "label": "Maximum container height",
+          "type": "number",
+          "unit": "mm",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": 220.0,
+          "guidance": "State options and scope in evidence."
+        },
+        {
+          "key": "mass_max_kg",
+          "label": "Maximum handled mass",
+          "type": "number",
+          "unit": "kg",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": 4.0,
+          "guidance": "Specify empty/filled pot and plant mass basis."
+        },
+        {
+          "key": "media_conditions",
+          "label": "Compatible media conditions",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "Trial required for fibrous media",
+          "guidance": "Particle size, moisture, bridging and conditioning."
+        },
+        {
+          "key": "capacity_value",
+          "label": "Published capacity observation",
+          "type": "number",
+          "unit": "pots/hour",
+          "required": "When available",
+          "allowed_values": [],
+          "synthetic_example": 3200.0,
+          "guidance": "Not a sustained line guarantee; retain conditions and rate basis."
+        },
+        {
+          "key": "capacity_basis",
+          "label": "Capacity basis",
+          "type": "enum",
+          "unit": "",
+          "required": "Before use of capacity",
+          "allowed_values": [
+            "GrossRunning",
+            "NetGood",
+            "Unknown"
+          ],
+          "synthetic_example": "GrossRunning",
+          "guidance": "Do not apply quality/downtime twice."
+        },
+        {
+          "key": "capacity_conditions",
+          "label": "Capacity conditions",
+          "type": "text",
+          "unit": "",
+          "required": "Before use of capacity",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic round-pot trial",
+          "guidance": "Exact container, media, options, staffing and test method."
+        },
+        {
+          "key": "footprint_length_mm",
+          "label": "Machine footprint length",
+          "type": "number",
+          "unit": "mm",
+          "required": "Before layout",
+          "allowed_values": [],
+          "synthetic_example": 3600.0,
+          "guidance": "Transport envelope and maintenance clearance are separate."
+        },
+        {
+          "key": "footprint_width_mm",
+          "label": "Machine footprint width",
+          "type": "number",
+          "unit": "mm",
+          "required": "Before layout",
+          "allowed_values": [],
+          "synthetic_example": 1400.0,
+          "guidance": "Record installed option envelope."
+        },
+        {
+          "key": "height_mm",
+          "label": "Machine height",
+          "type": "number",
+          "unit": "mm",
+          "required": "Before layout",
+          "allowed_values": [],
+          "synthetic_example": 2000.0,
+          "guidance": "Separate required clear height."
+        },
+        {
+          "key": "service_clearance",
+          "label": "Maintenance and access clearance",
+          "type": "text",
+          "unit": "",
+          "required": "Before layout",
+          "allowed_values": [],
+          "synthetic_example": "Supplier confirmation required",
+          "guidance": "Never infer safe clearance from machine dimensions."
+        },
+        {
+          "key": "electrical_supply",
+          "label": "Electrical supply requirements",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic 400 V; 50 Hz; 3 phase",
+          "guidance": "Confirm voltage, frequency, phase, current, connector and protection."
+        },
+        {
+          "key": "air_requirements",
+          "label": "Compressed air requirements",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "Pressure and flow unconfirmed",
+          "guidance": "Record pressure and flow with basis; availability is not capacity."
+        },
+        {
+          "key": "water_drainage",
+          "label": "Water and drainage requirements",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "Not assessed",
+          "guidance": "Preserve hygiene/washdown conditions."
+        },
+        {
+          "key": "controls_interface",
+          "label": "Controls and stop interface",
+          "type": "text",
+          "unit": "",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": "Handshake to be confirmed",
+          "guidance": "Protocol version, signals and safe stop boundary require review."
+        },
+        {
+          "key": "product_variant_id",
+          "label": "Products Variant ID",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PRODUCT-VARIANT",
+          "guidance": "Example is not a runtime UUID or mapping."
+        },
+        {
+          "key": "product_revision_id",
+          "label": "Products revision ID",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PRODUCT-REVISION",
+          "guidance": "Exact published revision, never latest by label."
+        },
+        {
+          "key": "product_content_hash",
+          "label": "Products content hash",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Exact verified SHA-256; no invented hash."
+        },
+        {
+          "key": "variant_unit",
+          "label": "Exact Variant unit",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "each",
+          "guidance": "No guessed unit conversion at receiving."
+        },
+        {
+          "key": "delivery_profile_refs",
+          "label": "Delivery profile references",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolved delivery",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PROFILE-001@1",
+          "guidance": "Profiles are defaults; services need explicit selection and coverage."
+        },
+        {
+          "key": "review_state",
+          "label": "Record review state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Reviewed",
+            "Rejected",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Reviewed is not manufacturer or operational approval."
+        },
+        {
+          "key": "reviewer",
+          "label": "Reviewing owner",
+          "type": "text",
+          "unit": "",
+          "required": "Before publication",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Named authorised role/person and evidence."
+        },
+        {
+          "key": "review_date",
+          "label": "Review date",
+          "type": "date",
+          "unit": "",
+          "required": "Before publication",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Enter a real Excel date; display YYYY-MM-DD."
+        }
+      ],
+      "blank_record": {
+        "equipment_id": null,
+        "company_key": null,
+        "supplier_entity_key": null,
+        "manufacturer": null,
+        "model_name": null,
+        "variant_code": null,
+        "record_version": null,
+        "family": null,
+        "region": null,
+        "operations": null,
+        "container_geometry": null,
+        "diameter_min_mm": null,
+        "diameter_max_mm": null,
+        "height_max_mm": null,
+        "mass_max_kg": null,
+        "media_conditions": null,
+        "capacity_value": null,
+        "capacity_basis": null,
+        "capacity_conditions": null,
+        "footprint_length_mm": null,
+        "footprint_width_mm": null,
+        "height_mm": null,
+        "service_clearance": null,
+        "electrical_supply": null,
+        "air_requirements": null,
+        "water_drainage": null,
+        "controls_interface": null,
+        "product_variant_id": null,
+        "product_revision_id": null,
+        "product_content_hash": null,
+        "variant_unit": null,
+        "delivery_profile_refs": null,
+        "review_state": null,
+        "reviewer": null,
+        "review_date": null
+      }
+    },
+    "Options": {
+      "purpose": "One selectable accessory or tooling option linked to an equipment record. Duplicate for further options.",
+      "fields": [
+        {
+          "key": "option_id",
+          "label": "Option record ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-OPT-001",
+          "guidance": "Stable option identity."
+        },
+        {
+          "key": "equipment_id",
+          "label": "Parent equipment ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-EQ-001",
+          "guidance": "Reference an exact Equipment record."
+        },
+        {
+          "key": "supplier_option_code",
+          "label": "Supplier option code",
+          "type": "text",
+          "unit": "",
+          "required": "Before selection",
+          "allowed_values": [],
+          "synthetic_example": "SYN-TOOL-A",
+          "guidance": "Preserve external code; not a PPO Product ID."
+        },
+        {
+          "key": "description",
+          "label": "Option description",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic pot holder set",
+          "guidance": "State function and applicable variant."
+        },
+        {
+          "key": "option_version",
+          "label": "Option definition version",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Retain historical definitions."
+        },
+        {
+          "key": "applicability",
+          "label": "Applicability condition",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Selected container scenario",
+          "guidance": "Plain-language reviewed predicate; not executable text."
+        },
+        {
+          "key": "requires_option_ids",
+          "label": "Required option IDs",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "SYN-OPT-002",
+          "guidance": "Check dependency closure; cycles require resolution."
+        },
+        {
+          "key": "excludes_option_ids",
+          "label": "Incompatible option IDs",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Do not sum incompatible choices."
+        },
+        {
+          "key": "quantity_basis",
+          "label": "Quantity basis",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "PerMachine",
+            "PerLine",
+            "PerScenario",
+            "Manual"
+          ],
+          "synthetic_example": "PerMachine",
+          "guidance": "Reviewed rule determines quantity; unknown is not one."
+        },
+        {
+          "key": "quantity_per_basis",
+          "label": "Quantity per basis",
+          "type": "number",
+          "unit": "each/basis",
+          "required": "When rule applies",
+          "allowed_values": [],
+          "synthetic_example": 1.0,
+          "guidance": "Synthetic quantity; preserve decimal and unit basis."
+        },
+        {
+          "key": "shared_owner",
+          "label": "Shared item owner",
+          "type": "text",
+          "unit": "",
+          "required": "When shared",
+          "allowed_values": [],
+          "synthetic_example": "SYN-LINE-001",
+          "guidance": "One owner across equipment instances."
+        },
+        {
+          "key": "product_variant_id",
+          "label": "Products Variant ID",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "SYN-OPTION-VARIANT",
+          "guidance": "Separate exact Variant/revision/hash."
+        },
+        {
+          "key": "product_revision_id",
+          "label": "Products revision ID",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "SYN-OPTION-REVISION",
+          "guidance": "No automatic latest revision."
+        },
+        {
+          "key": "product_content_hash",
+          "label": "Products content hash",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Verified SHA-256 only."
+        },
+        {
+          "key": "variant_unit",
+          "label": "Exact Variant unit",
+          "type": "text",
+          "unit": "",
+          "required": "Before mapped receiving",
+          "allowed_values": [],
+          "synthetic_example": "each",
+          "guidance": "Must match mapped unit."
+        },
+        {
+          "key": "delivery_profile_refs",
+          "label": "Delivery profiles",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PROFILE-001@1",
+          "guidance": "Check assembly versus component coverage."
+        },
+        {
+          "key": "review_state",
+          "label": "Review state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Reviewed",
+            "Rejected",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "No published option rule inferred from a catalogue description."
+        }
+      ],
+      "blank_record": {
+        "option_id": null,
+        "equipment_id": null,
+        "supplier_option_code": null,
+        "description": null,
+        "option_version": null,
+        "applicability": null,
+        "requires_option_ids": null,
+        "excludes_option_ids": null,
+        "quantity_basis": null,
+        "quantity_per_basis": null,
+        "shared_owner": null,
+        "product_variant_id": null,
+        "product_revision_id": null,
+        "product_content_hash": null,
+        "variant_unit": null,
+        "delivery_profile_refs": null,
+        "review_state": null
+      }
+    },
+    "Interfaces": {
+      "purpose": "One connection requirement between exact proposed equipment instances. Duplicate for every connection.",
+      "fields": [
+        {
+          "key": "connection_id",
+          "label": "Connection ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-CONN-001",
+          "guidance": "Stable connection identity."
+        },
+        {
+          "key": "source_instance_id",
+          "label": "Upstream instance ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-STAGE-001",
+          "guidance": "Project instance, not supplier model name."
+        },
+        {
+          "key": "target_instance_id",
+          "label": "Downstream instance ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-STAGE-002",
+          "guidance": "Retained equipment can be the target."
+        },
+        {
+          "key": "scenario_id",
+          "label": "Production scenario ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SCENARIO-001",
+          "guidance": "Validate all required scenarios separately."
+        },
+        {
+          "key": "transfer_direction",
+          "label": "Transfer direction",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Left to right",
+          "guidance": "State viewing reference; do not assume orientation."
+        },
+        {
+          "key": "transfer_height_mm",
+          "label": "Transfer height",
+          "type": "number",
+          "unit": "mm",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": 900.0,
+          "guidance": "Confirm both sides and allowable tolerance."
+        },
+        {
+          "key": "transfer_width_mm",
+          "label": "Usable transfer width",
+          "type": "number",
+          "unit": "mm",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": 250.0,
+          "guidance": "Include pot/tray clearance and guides."
+        },
+        {
+          "key": "pitch_mm",
+          "label": "Container pitch",
+          "type": "number",
+          "unit": "mm",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": 250.0,
+          "guidance": "Different pitch may require accumulation or metering."
+        },
+        {
+          "key": "rate_value",
+          "label": "Required transfer rate",
+          "type": "number",
+          "unit": "pots/hour",
+          "required": "Before sizing",
+          "allowed_values": [],
+          "synthetic_example": 2400.0,
+          "guidance": "Same units and gross/net basis as scenario."
+        },
+        {
+          "key": "mechanical_adapter",
+          "label": "Required transfer adapter",
+          "type": "text",
+          "unit": "",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": "Transfer plate unconfirmed",
+          "guidance": "Link selected option/part where known."
+        },
+        {
+          "key": "control_handshake",
+          "label": "Control handshake",
+          "type": "text",
+          "unit": "",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": "Ready; Run; Fault to confirm",
+          "guidance": "Signal types, protocol and responsibility."
+        },
+        {
+          "key": "stop_restart_boundary",
+          "label": "Stop and restart boundary",
+          "type": "text",
+          "unit": "",
+          "required": "Before integration",
+          "allowed_values": [],
+          "synthetic_example": "Engineering review required",
+          "guidance": "No safety compliance inferred by this template."
+        },
+        {
+          "key": "integration_owner",
+          "label": "Integration responsibility",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "PPO",
+            "Supplier",
+            "Customer",
+            "ThirdParty",
+            "Unknown"
+          ],
+          "synthetic_example": "Unknown",
+          "guidance": "Unknown responsibility blocks resolved scope."
+        },
+        {
+          "key": "compatibility_state",
+          "label": "Compatibility assessment",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Unknown",
+            "Candidate",
+            "Confirmed",
+            "Incompatible"
+          ],
+          "synthetic_example": "Unknown",
+          "guidance": "Confirmed requires applicable evidence, not matching dimensions alone."
+        },
+        {
+          "key": "confirmation_source_id",
+          "label": "Confirmation source",
+          "type": "text",
+          "unit": "",
+          "required": "Before Confirmed",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SRC-001",
+          "guidance": "Exact supplier or engineering evidence."
+        },
+        {
+          "key": "review_state",
+          "label": "Review state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Reviewed",
+            "Rejected"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Separate internal review from supplier confirmation."
+        }
+      ],
+      "blank_record": {
+        "connection_id": null,
+        "source_instance_id": null,
+        "target_instance_id": null,
+        "scenario_id": null,
+        "transfer_direction": null,
+        "transfer_height_mm": null,
+        "transfer_width_mm": null,
+        "pitch_mm": null,
+        "rate_value": null,
+        "mechanical_adapter": null,
+        "control_handshake": null,
+        "stop_restart_boundary": null,
+        "integration_owner": null,
+        "compatibility_state": null,
+        "confirmation_source_id": null,
+        "review_state": null
+      }
+    },
+    "Delivery profiles": {
+      "purpose": "One reusable delivery profile. Link activities/content; do not price work or assume service inclusion.",
+      "fields": [
+        {
+          "key": "profile_id",
+          "label": "Profile ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PROFILE-001",
+          "guidance": "Stable shared profile identity."
+        },
+        {
+          "key": "profile_version",
+          "label": "Profile version",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Explicit adoption; publishing does not refresh saved work."
+        },
+        {
+          "key": "attachment_kind",
+          "label": "Profile attaches to",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Product",
+            "Assembly",
+            "Service",
+            "System",
+            "Project"
+          ],
+          "synthetic_example": "System",
+          "guidance": "Shared project work must not repeat per machine."
+        },
+        {
+          "key": "attachment_id",
+          "label": "Attachment identity",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-LINE-FAMILY",
+          "guidance": "Exact product/assembly/system scope."
+        },
+        {
+          "key": "owner",
+          "label": "Profile owner",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Nominated owner; no assumed approval."
+        },
+        {
+          "key": "applicability",
+          "label": "Applicability conditions",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Selected connected potting line",
+          "guidance": "Include regional, phase and delivery restrictions."
+        },
+        {
+          "key": "inherited_profile_refs",
+          "label": "Inherited profiles",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Exact versions with explicit precedence."
+        },
+        {
+          "key": "merge_policy",
+          "label": "Inheritance policy",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Additive",
+            "Replacement",
+            "NoInheritance"
+          ],
+          "synthetic_example": "NoInheritance",
+          "guidance": "Never silently add overlapping setup or component work."
+        },
+        {
+          "key": "activity_refs",
+          "label": "Activity standard references",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolution",
+          "allowed_values": [],
+          "synthetic_example": "SYN-ACT-001@1",
+          "guidance": "Exact IDs/versions; missing required standards need reviewed Manual basis."
+        },
+        {
+          "key": "covered_scope",
+          "label": "Covered equipment and work",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolution",
+          "allowed_values": [],
+          "synthetic_example": "Line setup only",
+          "guidance": "Define assembly/component boundaries."
+        },
+        {
+          "key": "excluded_scope",
+          "label": "Work not covered by profile",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolution",
+          "allowed_values": [],
+          "synthetic_example": "Site enabling works",
+          "guidance": "Profile coverage is not commercial exclusion."
+        },
+        {
+          "key": "content_refs",
+          "label": "Approved content references",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "SYN-CLAUSE-001@1",
+          "guidance": "Content has its own review/publication owner."
+        },
+        {
+          "key": "effective_from",
+          "label": "Effective from",
+          "type": "date",
+          "unit": "",
+          "required": "Before publication",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Real date; applicable period."
+        },
+        {
+          "key": "effective_to",
+          "label": "Effective to",
+          "type": "date",
+          "unit": "",
+          "required": "When bounded",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Blank means unspecified, not automatically current forever."
+        },
+        {
+          "key": "review_state",
+          "label": "Review/publication state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Reviewed",
+            "Published",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Publishing is a separate governed action, not an Excel edit."
+        },
+        {
+          "key": "reviewer",
+          "label": "Reviewer",
+          "type": "text",
+          "unit": "",
+          "required": "Before publication",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Actual attribution and evidence required."
+        }
+      ],
+      "blank_record": {
+        "profile_id": null,
+        "profile_version": null,
+        "attachment_kind": null,
+        "attachment_id": null,
+        "owner": null,
+        "applicability": null,
+        "inherited_profile_refs": null,
+        "merge_policy": null,
+        "activity_refs": null,
+        "covered_scope": null,
+        "excluded_scope": null,
+        "content_refs": null,
+        "effective_from": null,
+        "effective_to": null,
+        "review_state": null,
+        "reviewer": null
+      }
+    },
+    "Activity standards": {
+      "purpose": "One governed effort standard. Reusable standards are separate from resolved project selection and from monetary rates.",
+      "fields": [
+        {
+          "key": "activity_id",
+          "label": "Activity ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-ACT-001",
+          "guidance": "Stable shared activity identity."
+        },
+        {
+          "key": "standard_version",
+          "label": "Standard version",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Retain original standard after newer publication."
+        },
+        {
+          "key": "category",
+          "label": "Activity category",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Installation",
+            "Commissioning",
+            "Training",
+            "Integration",
+            "Setup",
+            "Handover",
+            "Other"
+          ],
+          "synthetic_example": "Installation",
+          "guidance": "Separate installation and commissioning totals."
+        },
+        {
+          "key": "description",
+          "label": "Activity description",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic machine placement",
+          "guidance": "Identify measurable work."
+        },
+        {
+          "key": "driver_key",
+          "label": "Technical driver key",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "installed_machine_count",
+          "guidance": "Candidate shared fact key; final contract must confirm."
+        },
+        {
+          "key": "driver_unit",
+          "label": "Driver unit",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "each",
+          "guidance": "Installed quantities, not purchased packs by default."
+        },
+        {
+          "key": "effort_basis",
+          "label": "Effort basis",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "PersonHoursPerUnit",
+            "UnitsPerPersonHour",
+            "CrewHoursPerUnit",
+            "FixedPersonHours",
+            "Manual"
+          ],
+          "synthetic_example": "PersonHoursPerUnit",
+          "guidance": "Inverse productivity and crew conversions occur once."
+        },
+        {
+          "key": "standard_value",
+          "label": "Standard value",
+          "type": "number",
+          "unit": "basis above",
+          "required": "Before calculation",
+          "allowed_values": [],
+          "synthetic_example": 3.0,
+          "guidance": "Invented example only; no operational default."
+        },
+        {
+          "key": "fixed_setup_person_hours",
+          "label": "Fixed setup effort",
+          "type": "number",
+          "unit": "person-hour",
+          "required": "When included",
+          "allowed_values": [],
+          "synthetic_example": 2.0,
+          "guidance": "Separate ownership prevents repeated setup."
+        },
+        {
+          "key": "crew_composition",
+          "label": "Crew composition",
+          "type": "text",
+          "unit": "",
+          "required": "For crew basis",
+          "allowed_values": [],
+          "synthetic_example": "2 installers",
+          "guidance": "Required only for crew conversion; no double multiplier."
+        },
+        {
+          "key": "role_skill",
+          "label": "Required role/skill",
+          "type": "text",
+          "unit": "",
+          "required": "Before costing",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic installer",
+          "guidance": "Exact rate binding is resolved in CPQ."
+        },
+        {
+          "key": "applicability",
+          "label": "Conditions",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic level-access case",
+          "guidance": "Review height/access/handling conditions."
+        },
+        {
+          "key": "factor_policy_ref",
+          "label": "Factors and order reference",
+          "type": "text",
+          "unit": "",
+          "required": "When adjusted",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Factors apply only to declared portions; no universal multiplier."
+        },
+        {
+          "key": "minimum_policy_ref",
+          "label": "Minimum effort rule",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "State where the minimum applies in calculation order."
+        },
+        {
+          "key": "rounding_policy_ref",
+          "label": "Rounding rule reference",
+          "type": "text",
+          "unit": "",
+          "required": "Before calculation",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Retain unrounded detail; governed precision/order."
+        },
+        {
+          "key": "coverage_key",
+          "label": "Activity coverage key",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolution",
+          "allowed_values": [],
+          "synthetic_example": "SYN-INSTALL-SETUP",
+          "guidance": "Identify overlap across profiles, assemblies and project work."
+        },
+        {
+          "key": "covered_components",
+          "label": "Covered component IDs",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "SYN-EQ-001",
+          "guidance": "Evidence needed for assembly coverage."
+        },
+        {
+          "key": "replacement_activity_refs",
+          "label": "Replaced activities",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Explicit precedence; otherwise unresolved conflict."
+        },
+        {
+          "key": "standard_source_id",
+          "label": "Standard evidence source",
+          "type": "text",
+          "unit": "",
+          "required": "Before review",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SRC-001",
+          "guidance": "Source standard and independent expected examples."
+        },
+        {
+          "key": "review_state",
+          "label": "Standard review state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Reviewed",
+            "Published",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Excel value does not authorise publication."
+        }
+      ],
+      "blank_record": {
+        "activity_id": null,
+        "standard_version": null,
+        "category": null,
+        "description": null,
+        "driver_key": null,
+        "driver_unit": null,
+        "effort_basis": null,
+        "standard_value": null,
+        "fixed_setup_person_hours": null,
+        "crew_composition": null,
+        "role_skill": null,
+        "applicability": null,
+        "factor_policy_ref": null,
+        "minimum_policy_ref": null,
+        "rounding_policy_ref": null,
+        "coverage_key": null,
+        "covered_components": null,
+        "replacement_activity_refs": null,
+        "standard_source_id": null,
+        "review_state": null
+      }
+    },
+    "Delivery scope": {
+      "purpose": "One project activity selection. Keep independent applicability, selection, responsibility and review fields.",
+      "fields": [
+        {
+          "key": "activity_instance_id",
+          "label": "Activity instance ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-ACTIVITY-001",
+          "guidance": "Stable resolved-ledger position."
+        },
+        {
+          "key": "alternative_id",
+          "label": "Estimate alternative ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-ALT-A",
+          "guidance": "One ledger per alternative; never combine competitors."
+        },
+        {
+          "key": "system_instance_id",
+          "label": "System/line instance ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-LINE-001",
+          "guidance": "Shared work has one accountable owner."
+        },
+        {
+          "key": "source_run_id",
+          "label": "Exact workbench run ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-RUN-001",
+          "guidance": "Must match accepted parts/facts."
+        },
+        {
+          "key": "source_content_hash",
+          "label": "Run content hash",
+          "type": "text",
+          "unit": "",
+          "required": "Before receiving",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Verified SHA-256, never placeholder."
+        },
+        {
+          "key": "profile_ref",
+          "label": "Profile ID and version",
+          "type": "text",
+          "unit": "",
+          "required": "When used",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PROFILE-001@1",
+          "guidance": "No automatic latest version."
+        },
+        {
+          "key": "activity_standard_ref",
+          "label": "Activity standard reference",
+          "type": "text",
+          "unit": "",
+          "required": "When used",
+          "allowed_values": [],
+          "synthetic_example": "SYN-ACT-001@1",
+          "guidance": "Manual basis is separately reviewed."
+        },
+        {
+          "key": "applicability",
+          "label": "Applicability",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Applicable",
+            "NotApplicable",
+            "Unknown"
+          ],
+          "synthetic_example": "Applicable",
+          "guidance": "Not a commercial selection."
+        },
+        {
+          "key": "commercial_selection",
+          "label": "Commercial selection",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Base",
+            "SelectedOption",
+            "OfferedOption",
+            "Excluded",
+            "Parked",
+            "Unknown"
+          ],
+          "synthetic_example": "Base",
+          "guidance": "Offered option is separately priced, not added to base."
+        },
+        {
+          "key": "responsibility",
+          "label": "Delivery responsibility",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "PPO",
+            "Supplier",
+            "Customer",
+            "ThirdParty",
+            "Unknown"
+          ],
+          "synthetic_example": "Supplier",
+          "guidance": "By others does not by itself mean excluded."
+        },
+        {
+          "key": "coverage_basis",
+          "label": "Coverage basis",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "OwnActivity",
+            "SupplierIncluded",
+            "AssemblyCovered",
+            "ByOthers",
+            "Unknown"
+          ],
+          "synthetic_example": "SupplierIncluded",
+          "guidance": "Coverage evidence required; do not charge twice."
+        },
+        {
+          "key": "coverage_reference",
+          "label": "Coverage evidence/owner",
+          "type": "text",
+          "unit": "",
+          "required": "Before resolution",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SRC-001",
+          "guidance": "Exact supplier quote/assembly or accountable activity reference."
+        },
+        {
+          "key": "installed_quantity",
+          "label": "Effective installed quantity",
+          "type": "number",
+          "unit": "driver unit",
+          "required": "When calculated",
+          "allowed_values": [],
+          "synthetic_example": 2.0,
+          "guidance": "Separate from spares, waste and purchase packs."
+        },
+        {
+          "key": "driver_unit",
+          "label": "Effective driver unit",
+          "type": "text",
+          "unit": "",
+          "required": "When calculated",
+          "allowed_values": [],
+          "synthetic_example": "each",
+          "guidance": "Exact dimensional basis."
+        },
+        {
+          "key": "manual_basis_reference",
+          "label": "Manual effort basis",
+          "type": "text",
+          "unit": "",
+          "required": "When Manual",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Reasoned evidence and applicable review; no silent zero."
+        },
+        {
+          "key": "technical_review_state",
+          "label": "Technical review",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Pending",
+            "Reviewed",
+            "Rejected"
+          ],
+          "synthetic_example": "Pending",
+          "guidance": "Separate from commercial review."
+        },
+        {
+          "key": "commercial_review_state",
+          "label": "Commercial scope review",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Pending",
+            "Reviewed",
+            "Rejected"
+          ],
+          "synthetic_example": "Pending",
+          "guidance": "Unknown required responsibility or coverage blocks Use."
+        }
+      ],
+      "blank_record": {
+        "activity_instance_id": null,
+        "alternative_id": null,
+        "system_instance_id": null,
+        "source_run_id": null,
+        "source_content_hash": null,
+        "profile_ref": null,
+        "activity_standard_ref": null,
+        "applicability": null,
+        "commercial_selection": null,
+        "responsibility": null,
+        "coverage_basis": null,
+        "coverage_reference": null,
+        "installed_quantity": null,
+        "driver_unit": null,
+        "manual_basis_reference": null,
+        "technical_review_state": null,
+        "commercial_review_state": null
+      }
+    },
+    "Content links": {
+      "purpose": "One profile-to-content link. Approved clause text stays in the shared content library.",
+      "fields": [
+        {
+          "key": "content_link_id",
+          "label": "Content link ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-CONTENT-001",
+          "guidance": "Stable link; not the clause identity."
+        },
+        {
+          "key": "profile_ref",
+          "label": "Profile ID and version",
+          "type": "text",
+          "unit": "",
+          "required": "When profile-linked",
+          "allowed_values": [],
+          "synthetic_example": "SYN-PROFILE-001@1",
+          "guidance": "Project clauses need not belong to a Product."
+        },
+        {
+          "key": "clause_id",
+          "label": "Content clause ID",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "SYN-CLAUSE-001",
+          "guidance": "Reference approved content, not ad hoc boilerplate."
+        },
+        {
+          "key": "clause_version",
+          "label": "Clause version",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Exact version bound at quotation preparation."
+        },
+        {
+          "key": "category",
+          "label": "Content category",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Installation",
+            "Commissioning",
+            "Training",
+            "Handover",
+            "Deliverable",
+            "Exclusion",
+            "Responsibility",
+            "Qualification"
+          ],
+          "synthetic_example": "Commissioning",
+          "guidance": "Keep promises and qualifications distinguishable."
+        },
+        {
+          "key": "audience",
+          "label": "Audience",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Internal",
+            "CustomerEligible"
+          ],
+          "synthetic_example": "Internal",
+          "guidance": "Default Internal until permitted review/selection."
+        },
+        {
+          "key": "applicability",
+          "label": "Content applicability",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Selected commissioning with supplier responsibility",
+          "guidance": "Must follow resolved structured scope."
+        },
+        {
+          "key": "package_key",
+          "label": "Quotation package",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "SYN-LINE-PACKAGE",
+          "guidance": "Group at system/package level, not repeated per SKU."
+        },
+        {
+          "key": "deduplication_key",
+          "label": "Deduplication key",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "SYN-COMMISSIONING",
+          "guidance": "One applicable block per declared coverage."
+        },
+        {
+          "key": "conflict_group",
+          "label": "Contradiction group",
+          "type": "text",
+          "unit": "",
+          "required": "When applicable",
+          "allowed_values": [],
+          "synthetic_example": "SYN-INCLUDE-EXCLUDE",
+          "guidance": "Detect included service versus exclusion conflicts."
+        },
+        {
+          "key": "typed_fields",
+          "label": "Allowed merge fields",
+          "type": "text",
+          "unit": "",
+          "required": "When templated",
+          "allowed_values": [],
+          "synthetic_example": "system_name; responsibility",
+          "guidance": "No costs, margin or productivity by default."
+        },
+        {
+          "key": "edit_policy",
+          "label": "Permitted edit policy",
+          "type": "text",
+          "unit": "",
+          "required": "Before quotation",
+          "allowed_values": [],
+          "synthetic_example": "Approved local amendments require review",
+          "guidance": "Prose edits cannot silently change delivery scope."
+        },
+        {
+          "key": "approval_state",
+          "label": "Clause approval state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Draft",
+            "Pending",
+            "Approved",
+            "Retired"
+          ],
+          "synthetic_example": "Draft",
+          "guidance": "Must match actual library approval; not conferred here."
+        },
+        {
+          "key": "approval_source_id",
+          "label": "Approval evidence",
+          "type": "text",
+          "unit": "",
+          "required": "Before Approved",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Actual content owner approval."
+        }
+      ],
+      "blank_record": {
+        "content_link_id": null,
+        "profile_ref": null,
+        "clause_id": null,
+        "clause_version": null,
+        "category": null,
+        "audience": null,
+        "applicability": null,
+        "package_key": null,
+        "deduplication_key": null,
+        "conflict_group": null,
+        "typed_fields": null,
+        "edit_policy": null,
+        "approval_state": null,
+        "approval_source_id": null
+      }
+    },
+    "Evidence": {
+      "purpose": "One source or review evidence record. Use controlled private references for operational material.",
+      "fields": [
+        {
+          "key": "source_id",
+          "label": "Evidence source ID",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SRC-001",
+          "guidance": "Stable reference used by field-level source cells."
+        },
+        {
+          "key": "source_type",
+          "label": "Evidence type",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "ManufacturerPage",
+            "SupplierDocument",
+            "CustomerStatement",
+            "SiteObservation",
+            "Trial",
+            "InternalStandard",
+            "Synthetic"
+          ],
+          "synthetic_example": "Synthetic",
+          "guidance": "Public catalogue data is not trial confirmation."
+        },
+        {
+          "key": "title",
+          "label": "Source title",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic demonstration source",
+          "guidance": "No copied confidential supplier data in public examples."
+        },
+        {
+          "key": "source_reference",
+          "label": "Exact document/reference",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-DOCUMENT-001",
+          "guidance": "Private document-store identity when operational; no credentials."
+        },
+        {
+          "key": "source_revision",
+          "label": "Source revision",
+          "type": "text",
+          "unit": "",
+          "required": "When available",
+          "allowed_values": [],
+          "synthetic_example": "1",
+          "guidance": "Preserve original external identity/version."
+        },
+        {
+          "key": "source_hash",
+          "label": "Retained source hash",
+          "type": "text",
+          "unit": "",
+          "required": "When captured",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Verified bytes hash only; blank is unknown."
+        },
+        {
+          "key": "retrieved_at",
+          "label": "Retrieved/observed date",
+          "type": "date",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Real date in YYYY-MM-DD display."
+        },
+        {
+          "key": "applicable_model_options",
+          "label": "Applicable model/options",
+          "type": "text",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [],
+          "synthetic_example": "SYN-EQ-001; SYN-OPT-001",
+          "guidance": "Do not generalise between generations or regional variants."
+        },
+        {
+          "key": "applicable_scenario",
+          "label": "Applicable test scenario",
+          "type": "text",
+          "unit": "",
+          "required": "When relevant",
+          "allowed_values": [],
+          "synthetic_example": "SYN-SCENARIO-001",
+          "guidance": "Container/media/staffing and rate basis."
+        },
+        {
+          "key": "source_locator",
+          "label": "Page/section/table",
+          "type": "text",
+          "unit": "",
+          "required": "When relevant",
+          "allowed_values": [],
+          "synthetic_example": "Synthetic example row",
+          "guidance": "Locate the exact claim or standard."
+        },
+        {
+          "key": "conflict_description",
+          "label": "Contradictory evidence",
+          "type": "text",
+          "unit": "",
+          "required": "When conflicted",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Retain both claims; no quiet selection of favourable value."
+        },
+        {
+          "key": "resolution_reference",
+          "label": "Conflict resolution",
+          "type": "text",
+          "unit": "",
+          "required": "Before conflict cleared",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Reviewer, reason and exact replacement evidence."
+        },
+        {
+          "key": "review_state",
+          "label": "Evidence review state",
+          "type": "enum",
+          "unit": "",
+          "required": "Required",
+          "allowed_values": [
+            "Pending",
+            "Reviewed",
+            "Rejected",
+            "Superseded"
+          ],
+          "synthetic_example": "Pending",
+          "guidance": "Review does not imply manufacturer confirmation."
+        },
+        {
+          "key": "reviewer",
+          "label": "Reviewer",
+          "type": "text",
+          "unit": "",
+          "required": "Before Reviewed",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Actual reviewer and scope of review."
+        },
+        {
+          "key": "reviewed_at",
+          "label": "Review date",
+          "type": "date",
+          "unit": "",
+          "required": "Before Reviewed",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Real date; do not prefill acceptance."
+        },
+        {
+          "key": "next_action_owner",
+          "label": "Clarification owner",
+          "type": "text",
+          "unit": "",
+          "required": "When unresolved",
+          "allowed_values": [],
+          "synthetic_example": "",
+          "guidance": "Named owner/role; no automatic customer message."
+        }
+      ],
+      "blank_record": {
+        "source_id": null,
+        "source_type": null,
+        "title": null,
+        "source_reference": null,
+        "source_revision": null,
+        "source_hash": null,
+        "retrieved_at": null,
+        "applicable_model_options": null,
+        "applicable_scenario": null,
+        "source_locator": null,
+        "conflict_description": null,
+        "resolution_reference": null,
+        "review_state": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "next_action_owner": null
+      }
+    }
+  },
+  "evidence_states": [
+    "Unknown",
+    "NotApplicable",
+    "Assumed",
+    "CustomerAdvised",
+    "SupplierDocumented",
+    "TrialMeasured"
+  ],
+  "notes": [
+    "All entry values are blank. Synthetic examples are guidance only, never active catalogue data.",
+    "This is a staging template, not an importer, operational standard, published profile or CPQ calculation engine.",
+    "Document lifecycle uses Git; schema_version describes this field dictionary only."
+  ]
+}
