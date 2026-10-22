@@ -265,3 +265,7 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 ## PL-04 consumer
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
+
+## Conversations T2c consumer
+
+The two Conversations routes use the existing Button for Send, original-operation Retry and R8 warning choices. Shared implementation is unchanged. Host fixtures and [T2c evidence](../../../testing/evidence/conversations-t2c/README.md) record verification; owner review remains separate.

@@ -19,14 +19,14 @@ The [T2 scope](conversations-t2-scope.md), [T2b design](conversations-t2b-design
 
 Fresh origin/main is `bb5da7d148fe60ef3cf28d1666cd41aee51e6d46`. GitHub confirms #642 and #659 merged. Migration 0110 and seed 110 already supply the assistant core; integrated history reaches 0115. Older "not built", draft and ownership-stop statements are dated evidence. No open PR or T2c issue/branch was found at the claim check. The #659 cross-model waiver applied only to that merge; no Claude review is claimed here.
 
-## Open owner decisions
+## Owner decisions, 22 October 2026
 
-Asked once at the start of this contribution; dependent work waits for Dean's response.
+Asked once at the start of this contribution. Dean replied: "Approve CRM Activity replacement (recommended)" and "Confirm warning and new-thread alternative (recommended)". These approve the two recommendations below; implementation and visual review remain separate.
 
 | Decision | Recommendation | Current state |
 |---|---|---|
-| W3 accepted Figma correction | Replace PO-2281 with an allowed CRM Activity across desktop 1310:307977, tablet 1310:308091, phone 1310:308170 and 1310:308185, checking related state frames before new lock-in captures | Awaiting Dean; no accepted frame edited |
-| R8/U1 | Warn before adding a person unable to read earlier cited sources; offer a new thread on the same record because branches belong to T5 | Awaiting Dean; alternative not implemented |
+| W3 accepted Figma correction | Replace PO-2281 with an allowed CRM Activity across desktop 1310:307977, tablet 1310:308091, phone 1310:308170 and 1310:308185, checking related state frames before new lock-in captures | Applied; named version verified and eight icon-free captures retained |
+| R8/U1 | Warn before adding a person unable to read earlier cited sources; offer a new thread on the same record because branches belong to T5 | Implemented; count-only warning and existing new-thread flow |
 
 Issued captures and historical named versions remain unchanged. The accepted visual reference is "Conversations T2 — Carl answers, accepted"; the 320 px stacking and source-title truncation departure is already accepted. W3 controls the implementation regardless of the invalid purchase-order illustration.
 
@@ -39,6 +39,10 @@ The answer card consumes only the server's P1 reader projection: immutable check
 Posting continues to create the human message and queued turn atomically. The existing document worker runs turns; no adapter executes in the browser or a new UI command endpoint. This follows Dean's current instruction over the historical T2b note proposing a direct runner call after post. Refresh observes persisted state and preserves drafts, human asks, recovery, navigation, context and unread behaviour.
 
 Expected files: `src/conversations/composition.ts`, composer/picker/message/thread/workspace components and CSS; narrow `src/conversations/reads.ts` and existing route DTO support; focused unit, database, HTTP and browser tests; both Conversations page contracts, affected component/guide records, contract and status/register fragments. Final scope follows inspected interfaces. No shared shell redesign.
+
+R8 is enforced in the existing post command, before a newly tagged person is added. The existing people read can take a thread ID and return a count-only warning with an opaque basis for each candidate. Confirmation is bound to the current cited history and that candidate's source access; a changed basis refuses the post and asks for a fresh review. Original receipts keep their existing hashes when the new acknowledgement field is omitted. No access is granted by confirmation. The fresh-thread alternative opens the existing New thread flow on the same record.
+
+The user schema stores a display name but no assigned job role. Proposed AD-01 role bundles are explicitly not assignments. The picker therefore uses each person's stored full display name and the truthful secondary label "Person · Role not recorded", rather than inventing a role or changing the schema. This is a disclosed C5 presentation limitation; Carl remains separately labelled and identified as an AI assistant.
 
 ## Test-first sequence
 
@@ -56,3 +60,13 @@ Expected files: `src/conversations/composition.ts`, composer/picker/message/thre
 Dedicated worktree from current origin/main, branch `codex/conversations-t2c-ui`; no shared-checkout edits, branch switching or stash. Node 24.22.0 and npm 11.19.0 satisfy the current engines (`>=24.21.0 <25`, npm 11.19.0), so ordinary `npm ci` is appropriate. A private disposable PostgreSQL 16 cluster will use a free port other than 5433, 55432 or 51407, database `ppo_synthetic_test`, and `max_locks_per_transaction=1024`. Heavy checks run serially after checking host load.
 
 Implementation and validation are not complete. No visual acceptance, review fingerprint, production readiness, deployment or business transaction is claimed.
+
+## Approved amendment and implementation adaptations
+
+The named version **Conversations T2 — W3 CRM Activity correction, approved** was saved and verified on 22 October 2026. Sixteen text nodes replace PO-2281 and matching purchase-order wording with CRM Activity · Supplier call. Source frame IDs remain unchanged. [Eight icon-free captures and hashes](../reference/ui/my-work/conversations-t2-w3-r01/README.md) were inspected; the File index and section label identify the accepted design and W3 correction. Historical versions and issued references remain intact.
+
+The implementation keeps the current shell/context and follows P3 over historical partial-answer, broad-reason and automatic-retry illustrations. Source chips use validated citation numbers. People use stored names and Role not recorded. The private Kit provides sparkles; offline evidence uses a white AI mark. No separate accepted warning frame exists; its native modal and bounded copy implement Dean's confirmed R8/U1 interpretation. These adaptations do not grant implementation acceptance.
+
+Observed Conversations CSS defects were repaired locally: surface/border/text aliases now resolve to white/line/ink, and the composer footer restores block layout and 14 px text instead of inheriting the generic site's flex/10 px footer. Geometry/colour assertions and inspected captures cover the repair.
+
+Node 24.22.0/npm 11.19.0 satisfy engines; ordinary npm ci installed 238 packages without override. Own PostgreSQL 16.15 cluster uses port 51427, ppo_synthetic_test, max_locks_per_transaction=1024 and disposable durability settings; server port 3147. [Execution evidence](../testing/evidence/conversations-t2c/README.md) records checks and limits. Claude review has not occurred; the T2b waiver is not reused.

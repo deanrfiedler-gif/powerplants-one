@@ -1,9 +1,15 @@
 import { transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
-import { requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability } from "../platform/permissions";
 import { opportunityVisibility } from "../crm/context";
 import { projectVisibility } from "../projects/visibility";
-import { choice, uuid } from "../shared/validation";
+import { choice, object, uuid } from "../shared/validation";
+import { unavailable } from "../platform/errors";
+import { assistantEnabled } from "../assistant/config";
+import {
+  participantWarnings,
+  type HistoryWarning,
+} from "./participant-warning";
 import { anchorInput, listInput } from "./validation";
 import {
   personCanReadThread,
@@ -27,7 +33,12 @@ const anchorSql = `LEFT JOIN LATERAL (
 export type ThreadSummary = {
   id: string;
   title: string;
-  anchor: { type: AnchorType; id: string; display_number: string; title: string };
+  anchor: {
+    type: AnchorType;
+    id: string;
+    display_number: string;
+    title: string;
+  };
   is_main: boolean;
   state: "Open" | "Resolved";
   version: number;
@@ -61,20 +72,34 @@ export async function listThreads(p: Principal, value: unknown = {}) {
           AND ($3::text IS NOT NULL OR part.user_id IS NOT NULL)
           AND ($5='All' OR ($5='WaitingOnYou' AND coalesce(w.n,0)>0) OR ($5='Mentions' AND coalesce(mn.n,0)>0))
          ORDER BY coalesce(m.last_at,t.created_at) DESC,t.id LIMIT $6`,
-        [p.workspace_id, p.actor_id, q.anchor?.type ?? null, q.anchor?.id ?? null, q.filter, q.limit],
+        [
+          p.workspace_id,
+          p.actor_id,
+          q.anchor?.type ?? null,
+          q.anchor?.id ?? null,
+          q.filter,
+          q.limit,
+        ],
       )
     ).rows;
     const items: ThreadSummary[] = rows.map((r) => ({
       id: r.id,
       title: r.title,
-      anchor: { type: r.anchor_type, id: r.anchor_id, display_number: r.display_number, title: r.anchor_title },
+      anchor: {
+        type: r.anchor_type,
+        id: r.anchor_id,
+        display_number: r.display_number,
+        title: r.anchor_title,
+      },
       is_main: r.is_main,
       state: r.state,
       version: r.version,
       last_sequence: Number(r.last_sequence),
       last_message_at: iso(r.last_at),
       participating: r.participating,
-      unread: r.participating && Number(r.last_sequence) > Number(r.last_read_sequence),
+      unread:
+        r.participating &&
+        Number(r.last_sequence) > Number(r.last_read_sequence),
       waiting_on_you: Number(r.waiting),
       mentions_you: Number(r.mentioned) > 0,
     }));
@@ -142,16 +167,32 @@ export async function readThread(p: Principal, id: string) {
         [p.workspace_id, t.id],
       )
     ).rows;
-    const openable = new Map<string, { display_number: string; title: string } | null>();
+    const openable = new Map<
+      string,
+      { display_number: string; title: string } | null
+    >();
     const drawn = new Map<string, unknown[]>();
     for (const m of mentionRows) {
       let entry: unknown;
-      if (m.kind === "Person") entry = { ordinal: m.ordinal, kind: "Person", person_id: m.person_id, display_name: m.person_name };
-      else if (m.kind === "Agent") entry = { ordinal: m.ordinal, kind: "Agent", display_name: agentName };
+      if (m.kind === "Person")
+        entry = {
+          ordinal: m.ordinal,
+          kind: "Person",
+          person_id: m.person_id,
+          display_name: m.person_name,
+        };
+      else if (m.kind === "Agent")
+        entry = { ordinal: m.ordinal, kind: "Agent", display_name: agentName };
       else {
         const key = `${m.record_type}:${m.record_id}`;
         if (!openable.has(key)) {
-          const can = await recordOpenable(c, p.workspace_id, p.actor_id, m.record_type, m.record_id);
+          const can = await recordOpenable(
+            c,
+            p.workspace_id,
+            p.actor_id,
+            m.record_type,
+            m.record_id,
+          );
           openable.set(
             key,
             can
@@ -168,7 +209,14 @@ export async function readThread(p: Principal, id: string) {
         }
         const found = openable.get(key);
         entry = found
-          ? { ordinal: m.ordinal, kind: "Record", can_open: true, record_type: m.record_type, record_id: m.record_id, ...found }
+          ? {
+              ordinal: m.ordinal,
+              kind: "Record",
+              can_open: true,
+              record_type: m.record_type,
+              record_id: m.record_id,
+              ...found,
+            }
           : { ordinal: m.ordinal, kind: "Record", can_open: false };
       }
       drawn.set(m.message_id, [...(drawn.get(m.message_id) ?? []), entry]);
@@ -183,41 +231,70 @@ export async function readThread(p: Principal, id: string) {
         [p.workspace_id, t.id],
       )
     ).rows;
-    const turns = (await c.query<{
-      id: string; trigger_message_id: string; state: TurnState; acted_for_id: string; reason: TurnReason | null;
-    }>(
-      `SELECT id,trigger_message_id,state,acted_for_id,CASE WHEN acted_for_id=$3 THEN reason END AS reason
+    const turns = (
+      await c.query<{
+        id: string;
+        trigger_message_id: string;
+        state: TurnState;
+        acted_for_id: string;
+        reason: TurnReason | null;
+      }>(
+        `SELECT id,trigger_message_id,state,acted_for_id,CASE WHEN acted_for_id=$3 THEN reason END AS reason
        FROM ppo.assistant_turns WHERE workspace_id=$1 AND thread_id=$2 ORDER BY created_at,id`,
-      [p.workspace_id, t.id, p.actor_id],
-    )).rows;
+        [p.workspace_id, t.id, p.actor_id],
+      )
+    ).rows;
     const drawnMessages = [];
     for (const m of messages) {
       const common = {
-        id: m.id, sequence: m.sequence, author_kind: m.author_kind as "Person" | "Agent",
+        id: m.id,
+        sequence: m.sequence,
+        author_kind: m.author_kind as "Person" | "Agent",
         author_id: m.author_id as string | null,
         author_name: m.author_kind === "Agent" ? agentLabel : m.author_name,
-        created_at: m.created_at.toISOString(), mentions: drawn.get(m.id) ?? [],
+        created_at: m.created_at.toISOString(),
+        mentions: drawn.get(m.id) ?? [],
       };
       if (m.author_kind === "Person") {
         drawnMessages.push({ ...common, body: m.body as string });
         continue;
       }
-      const claims = (await c.query<StoredClaim>(
-        "SELECT ordinal,kind,text,source_numbers FROM ppo.conversation_message_claims WHERE workspace_id=$1 AND message_id=$2 ORDER BY ordinal",
-        [p.workspace_id, m.id],
-      )).rows;
-      const sources = (await c.query<StoredSource>(
-        "SELECT number,record_type AS type,record_id,source_version,retrieved_at FROM ppo.conversation_message_sources WHERE workspace_id=$1 AND message_id=$2 ORDER BY number",
-        [p.workspace_id, m.id],
-      )).rows;
-      const view = await readerView(c, p.workspace_id, p.actor_id, claims, sources);
+      const claims = (
+        await c.query<StoredClaim>(
+          "SELECT ordinal,kind,text,source_numbers FROM ppo.conversation_message_claims WHERE workspace_id=$1 AND message_id=$2 ORDER BY ordinal",
+          [p.workspace_id, m.id],
+        )
+      ).rows;
+      const sources = (
+        await c.query<StoredSource>(
+          "SELECT number,record_type AS type,record_id,source_version,retrieved_at FROM ppo.conversation_message_sources WHERE workspace_id=$1 AND message_id=$2 ORDER BY number",
+          [p.workspace_id, m.id],
+        )
+      ).rows;
+      const view = await readerView(
+        c,
+        p.workspace_id,
+        p.actor_id,
+        claims,
+        sources,
+      );
       drawnMessages.push({
         ...common,
-        body: m.agent_outcome === "CannotAnswer" ? declineBody() : view.body + answerFooter(m.body, claims),
-        acted_for: { user_id: m.acted_for_id as string, display_name: m.acted_for_name as string },
+        body:
+          m.agent_outcome === "CannotAnswer"
+            ? declineBody()
+            : view.body + answerFooter(m.body, claims),
+        acted_for: {
+          user_id: m.acted_for_id as string,
+          display_name: m.acted_for_name as string,
+        },
         agent: {
-          outcome: m.agent_outcome as "Answered" | "CannotAnswer", adapter: m.adapter as "Simulated" | "Claude",
-          label: m.adapter as string, claims: view.claims, sources: view.sources, left_out: m.left_out_count as number,
+          outcome: m.agent_outcome as "Answered" | "CannotAnswer",
+          adapter: m.adapter as "Simulated" | "Claude",
+          label: m.adapter as string,
+          claims: view.claims,
+          sources: view.sources,
+          left_out: m.left_out_count as number,
         },
       });
     }
@@ -262,9 +339,28 @@ export async function readThread(p: Principal, id: string) {
 
 // T1-3: the `@` picker lists only people who can already read the record and hold the read capability.
 export async function mentionablePeople(p: Principal, value: unknown) {
-  const anchor = anchorInput(value);
+  const input = object(value, ["anchor_type", "anchor_id", "thread_id"]);
+  const anchor = anchorInput({
+    anchor_type: input.anchor_type,
+    anchor_id: input.anchor_id,
+  });
+  const thread =
+    input.thread_id === undefined ? null : uuid(input.thread_id, "thread_id");
   return transaction(async (c) => {
-    await readableAnchor(c, p, anchor.type, anchor.id, "conversation.post");
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
+    const scope = await readableAnchor(
+      c,
+      p,
+      anchor.type,
+      anchor.id,
+      "conversation.post",
+    );
+    await readableAnchor(c, p, anchor.type, anchor.id, "conversation.read");
+    if (thread) {
+      const row = await visibleThread(c, p, thread);
+      if (row.anchor_type !== anchor.type || row.anchor_id !== anchor.id)
+        throw unavailable();
+    }
     const candidates = (
       await c.query(
         `SELECT u.id,u.display_name FROM ppo.users u WHERE u.workspace_id=$1 AND u.active AND u.id<>$2
@@ -274,22 +370,68 @@ export async function mentionablePeople(p: Principal, value: unknown) {
         [p.workspace_id, p.actor_id],
       )
     ).rows;
-    const items: { id: string; display_name: string }[] = [];
+    const items: {
+      id: string;
+      display_name: string;
+      role: string;
+      history_warning?: HistoryWarning;
+    }[] = [];
     for (const u of candidates)
-      if (await personCanReadThread(c, p.workspace_id, u.id, anchor.type, anchor.id)) items.push({ id: u.id, display_name: u.display_name });
-    return { items };
+      if (
+        await personCanReadThread(
+          c,
+          p.workspace_id,
+          u.id,
+          anchor.type,
+          anchor.id,
+        )
+      )
+        items.push({
+          id: u.id,
+          display_name: u.display_name,
+          role: "Role not recorded",
+        });
+    if (thread) {
+      const warnings = await participantWarnings(
+        c,
+        p,
+        thread,
+        items.map((item) => item.id),
+      );
+      for (const item of items)
+        if (warnings.has(item.id)) item.history_warning = warnings.get(item.id);
+    }
+    const agent =
+      assistantEnabled() &&
+      (await hasPermission(
+        c,
+        p,
+        "conversation.agent.ask",
+        scope.company_id,
+        scope.site_id ?? undefined,
+      ))
+        ? { name: agentName, label: agentLabel }
+        : null;
+    return { items, agent };
   });
 }
 
 // The `#` picker: deals and projects the sender can open, matched on number or title. With record_type and record_id it
 // returns that one record if the sender can open it (New thread's ?record= prefill, PPO-CONV-T1C-DESIGN 5.5).
 export async function linkableRecords(p: Principal, value: unknown = {}) {
-  const v = (value ?? {}) as { q?: unknown; record_type?: unknown; record_id?: unknown };
+  const v = (value ?? {}) as {
+    q?: unknown;
+    record_type?: unknown;
+    record_id?: unknown;
+  };
   const text = typeof v.q === "string" ? v.q.trim().slice(0, 100) : "";
   const exact =
     v.record_type === undefined && v.record_id === undefined
       ? null
-      : { type: choice(v.record_type, "record_type", anchorTypes), id: uuid(v.record_id, "record_id") };
+      : {
+          type: choice(v.record_type, "record_type", anchorTypes),
+          id: uuid(v.record_id, "record_id"),
+        };
   return transaction(async (c) => {
     await requireCapability(c, p, "conversation.post");
     const rows = (
@@ -301,7 +443,13 @@ export async function linkableRecords(p: Principal, value: unknown = {}) {
          (SELECT 'Project',pj.id,pj.display_number,pj.title FROM ppo.projects pj WHERE pj.workspace_id=$1 AND ${projectVisibility("pj")}
            AND ($3='' OR position(lower($3) in lower(pj.title))>0 OR position(lower($3) in lower(pj.display_number))>0)
            AND ($4::text IS NULL OR ($4='Project' AND pj.id=$5::uuid)) ORDER BY pj.display_number LIMIT 20)`,
-        [p.workspace_id, p.actor_id, text, exact?.type ?? null, exact?.id ?? null],
+        [
+          p.workspace_id,
+          p.actor_id,
+          text,
+          exact?.type ?? null,
+          exact?.id ?? null,
+        ],
       )
     ).rows;
     return { items: rows };

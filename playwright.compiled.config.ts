@@ -9,6 +9,8 @@ const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 // the control measurement: compiled first-request timings beside dev-server ones.
 export default defineConfig({
   ...base,
+  // The compiled server is production-mode: Carl stays off even with local flags.
+  metadata: { ...base.metadata, conversationsAgentOff: true },
   use: { ...base.use, baseURL: origin },
   webServer: {
     ...base.webServer,

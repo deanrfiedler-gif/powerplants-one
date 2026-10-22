@@ -75560,14 +75560,16 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Written for Conversations T1c-1 (people-only threads); the context panel added for T1c-3; guide review remains separate.",
-      "runtime_evidence": "T1c-1 and T1c-3 tests in tests/unit, tests/database, tests/http and tests/browser; guide acceptance remains pending.",
+      "change_summary": "T2c available Carl tags, simulated answer labels, source access, truthful states and participant warning; guide review remains separate.",
+      "runtime_evidence": "docs/testing/evidence/conversations-t2c/README.md; real persisted worker proof is distinct from mocked presentation fixtures.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
-        "docs/decisions/conversations-t1-scope.md"
+        "docs/decisions/conversations-t1-scope.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "workflow_basis": [
-        "docs/decisions/conversations-t1c-design.md"
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "title": "Conversation thread",
       "sections": [
@@ -75704,6 +75706,27 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "carl",
+          "title": "Ask Carl",
+          "paragraphs": [
+            "Choose Carl · AI assistant from @ when available. Carl has no Ask switch; a person also tagged keeps their own tracked question. The message stays posted if Carl cannot answer.",
+            "Every simulated answer says Simulated and identifies the person acted for. Read its sources, gaps and coverage. An inaccessible source is not named. Carl does not save or edit business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "participant-warning",
+          "title": "Adding someone",
+          "paragraphs": [
+            "If a new person cannot open sources cited earlier, review the count-only warning. Cancel keeps your draft. Add and send confirms without granting access. Start a new thread uses the same deal or project; cancelling returns to the original draft."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ]
     },
@@ -75720,14 +75743,16 @@
       "related_entry_keys": [
         "scope:AI-01"
       ],
-      "change_summary": "Clarified the accepted desktop preferred-thread destination and phone list-to-thread handover; guide review remains separate.",
-      "runtime_evidence": "T1c-1 tests in tests/unit, tests/http and tests/browser; exact desktop/phone navigation proof and limits in docs/testing/evidence/conversations-navigation/README.md. Guide acceptance remains pending.",
+      "change_summary": "T2c available Carl tags, simulated answer labels, source access, truthful states and participant warning; guide review remains separate.",
+      "runtime_evidence": "docs/testing/evidence/conversations-t2c/README.md; real persisted worker proof is distinct from mocked presentation fixtures.",
       "source_paths": [
         "docs/decisions/conversations-t1c-design.md",
-        "docs/decisions/conversations-t1-scope.md"
+        "docs/decisions/conversations-t1-scope.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "workflow_basis": [
-        "docs/decisions/conversations-t1c-design.md"
+        "docs/decisions/conversations-t1c-design.md",
+        "docs/decisions/conversations-t2c-design.md"
       ],
       "title": "Conversations",
       "sections": [
@@ -75745,7 +75770,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "You need read access to the deal or project. You can tag only people who can already open that record; there is no sharing in this version. There is no AI assistant here yet."
+            "You need read access to the deal or project. You can tag only people who can already open that record; there is no sharing in this version. When Carl is available for this record, choose Carl · AI assistant in the @ picker. Carl is distinct from a person with the same name."
           ],
           "steps": [],
           "headers": [],
@@ -75860,6 +75885,27 @@
           "title": "Guide review and feedback",
           "paragraphs": [
             "This guide is a draft for the private synthetic prototype. It has not been reviewed; record questions for Dean Fiedler."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "carl",
+          "title": "Ask Carl",
+          "paragraphs": [
+            "Choose Carl · AI assistant from @ when available. Carl has no Ask switch; a person also tagged keeps their own tracked question. The message stays posted if Carl cannot answer.",
+            "Every simulated answer says Simulated and identifies the person acted for. Read its sources, gaps and coverage. An inaccessible source is not named. Carl does not save or edit business records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "participant-warning",
+          "title": "Adding someone",
+          "paragraphs": [
+            "If a new person cannot open sources cited earlier, review the count-only warning. Cancel keeps your draft. Add and send confirms without granting access. Start a new thread uses the same deal or project; cancelling returns to the original draft."
           ],
           "steps": [],
           "headers": [],

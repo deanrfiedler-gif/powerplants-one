@@ -32,32 +32,52 @@ function composition(body: string, mentionsValue: unknown, asksValue: unknown) {
   const rawMentions = mentionsValue ?? [];
   if (!Array.isArray(rawMentions) || rawMentions.length > maxMentions)
     invalid("mentions", `Use at most ${maxMentions} mentions.`);
-  const mentions: MentionInput[] = (rawMentions as unknown[]).map((raw, index) => {
+  const mentions: MentionInput[] = (rawMentions as unknown[]).map(
+    (raw, index) => {
     const m = object(raw, ["ordinal", "kind", "person_id", "record_type", "record_id"]);
     const ordinal = Number(m.ordinal);
-    if (!Number.isInteger(ordinal) || ordinal < 1 || ordinal > maxMentions)
-      invalid(`mentions.${index}`, `Number mentions from 1 to ${maxMentions}.`);
-    const kind = choice(m.kind, `mentions.${index}.kind`, ["Person", "Record", "Agent"] as const);
-    if (kind === "Agent") {
-      if ("person_id" in m || "record_type" in m || "record_id" in m)
-        invalid(`mentions.${index}`, "An assistant tag has no user or record identity.");
+      if (!Number.isInteger(ordinal) || ordinal < 1 || ordinal > maxMentions)
+        invalid(
+          `mentions.${index}`,
+          `Number mentions from 1 to ${maxMentions}.`,
+        );
+      const kind = choice(m.kind, `mentions.${index}.kind`, [
+        "Person",
+        "Record",
+        "Agent",
+      ] as const);
+      if (kind === "Agent") {
+        if ("person_id" in m || "record_type" in m || "record_id" in m)
+          invalid(
+            `mentions.${index}`,
+            "An assistant tag has no user or record identity.",
+          );
       return { ordinal, kind };
-    }
-    if (kind === "Person") {
+      }
+      if (kind === "Person") {
       if ("record_type" in m || "record_id" in m)
         invalid(`mentions.${index}`, "A person mention names a person only.");
-      return { ordinal, kind, person_id: uuid(m.person_id, `mentions.${index}.person_id`) };
-    }
+        return {
+          ordinal,
+          kind,
+          person_id: uuid(m.person_id, `mentions.${index}.person_id`),
+        };
+      }
     if ("person_id" in m) invalid(`mentions.${index}`, "A record link names a record only.");
-    return {
-      ordinal,
-      kind,
-      record_type: choice(m.record_type, `mentions.${index}.record_type`, anchorTypes),
-      record_id: uuid(m.record_id, `mentions.${index}.record_id`),
-    };
-  });
+      return {
+        ordinal,
+        kind,
+        record_type: choice(
+          m.record_type,
+          `mentions.${index}.record_type`,
+          anchorTypes,
+        ),
+        record_id: uuid(m.record_id, `mentions.${index}.record_id`),
+      };
+    },
+  );
   const seen = new Set<number>();
-  if (mentions.filter(m => m.kind === "Agent").length > 1)
+  if (mentions.filter((m) => m.kind === "Agent").length > 1)
     invalid("mentions", "Tag the assistant at most once in a message.");
   for (const m of mentions) {
     if (seen.has(m.ordinal)) invalid("mentions", "Each mention number is used once.");
@@ -117,13 +137,60 @@ export function startThreadInput(value: unknown) {
   };
 }
 export function postMessageInput(thread: string, value: unknown) {
-  const r = object(value, [...commonKeys, "body", "mentions", "asks"]);
+  const r = object(value, [
+    ...commonKeys,
+    "body",
+    "mentions",
+    "asks",
+    "participant_acknowledgements",
+  ]);
   const body = narrative(r.body, "body", 4000);
+  const composed = composition(body, r.mentions, r.asks);
+  const acknowledgements = r.participant_acknowledgements;
+  if (
+    acknowledgements !== undefined &&
+    (!Array.isArray(acknowledgements) || acknowledgements.length > maxMentions)
+  )
+    invalid(
+      "participant_acknowledgements",
+      "Confirm only the people tagged in this message.",
+    );
+  const checked = (acknowledgements as unknown[] | undefined)?.map((raw) => {
+    const a = object(raw, ["person_id", "basis"]);
+    if (typeof a.basis !== "string" || !/^[a-f0-9]{64}$/.test(a.basis))
+      invalid(
+        "participant_acknowledgements",
+        "Review the current participant warning before sending.",
+      );
+    return {
+      person_id: uuid(a.person_id, "person_id"),
+      basis: a.basis as string,
+    };
+  });
+  if (
+    checked &&
+    new Set(checked.map((a) => a.person_id)).size !== checked.length
+  )
+    invalid("participant_acknowledgements", "Confirm each person once.");
+  if (
+    checked?.some(
+      (a) =>
+        !composed.mentions.some(
+          (m) => m.kind === "Person" && m.person_id === a.person_id,
+        ),
+    )
+  )
+    invalid(
+      "participant_acknowledgements",
+      "Confirm only the people tagged in this message.",
+    );
   return {
     ...common(r),
     thread_id: uuid(thread, "thread_id"),
     body,
-    ...composition(body, r.mentions, r.asks),
+    ...composed,
+    // Omission preserves historical command hashes for original-operation recovery.
+    ...(checked === undefined ? {} : { participant_acknowledgements: checked }),
   };
 }
 export function readThroughInput(thread: string, value: unknown) {

@@ -37,6 +37,12 @@ At b54c44bf, all eight database shards, full HTTP, both compiled desktop groups 
 
 The inspection heading/original-submit cases pass on compiled phone 2/2 and desktop 2/2. The real phone planner rejection/acceptance/technician-boundary case passes after the shared menu repair. The final rebuilt appointment fixture run passes 2/2 across desktop/tablet/390/320, retaining exact incident targets, pointer opening, Escape focus return, 44 px global control and non-overlapping record actions. The separate ready/held/proposed/cancelled case passes with More retained on the closed record. Build, targeted lint, studio and foundation checks pass. A fresh full CI run remains required before merge.
 
+## Conversations T2c Carl UI implementation — 22 October 2026
+
+Codex is implementing the authorised T2c slice in draft PR [#660](https://github.com/deanrfiedler-gif/powerplants-one/pull/660), owned by Codex working for Dean. Carl has a server-authorised picker option, atomic Agent tags, projected simulated answer cards and truthful turn states. A count-only warning precedes adding a person who cannot read earlier cited sources; the confirmed alternative uses the existing new-thread flow on the same record. No migration, grant, capability, provider or production integration is added.
+
+Dean approved the W3 CRM Activity correction and R8 interpretation on 22 October 2026. The new named Figma version and [eight icon-free captures](reference/ui/my-work/conversations-t2-w3-r01/README.md) preserve historical evidence. Both page records, component bindings, guides and contracts are updated. Verification and baseline comparison are in progress; actual commands, counts and inspected captures are tracked in [T2c evidence](testing/evidence/conversations-t2c/README.md). Dean decides acceptance and merges. Independent review has not occurred; the T2b waiver is not reused.
+
 ## Site surveys CS-08 build and authorised short references — 21 October 2026
 
 Dean approved the [short reference approach](decisions/readable-reference-namespaces.md) and the required migration after the 20 October preflight. Draft PR #650 implements CS-08 on its isolated branch: new SYN-SRV-000nnn references, explicit planned visit/contact facts, the accepted compact register and six-section record, original photo retention, independent review/return and exact reviewed handover. Existing reference values and retained snapshots are preserved; no new capability, seed, dependency or document-store connection is introduced.

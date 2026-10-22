@@ -12,7 +12,13 @@ import type { AnchorType } from "../model";
 import type { ThreadAsk } from "../ask-model";
 import { AskCard } from "./ask-card";
 import { announceConversationsChanged, useVisibleRefresh } from "./conversations-workspace";
-import { initials, Message, type ThreadMessage } from "./message";
+import {
+  initials,
+  Message,
+  AssistantTurnStatus,
+  type ThreadMessage,
+  type ThreadTurn,
+} from "./message";
 
 export type Thread = {
   id: string;
@@ -20,13 +26,24 @@ export type Thread = {
   state: "Open" | "Resolved";
   version: number;
   is_main: boolean;
-  anchor: { type: AnchorType; id: string; display_number: string; title: string };
+  anchor: {
+    type: AnchorType;
+    id: string;
+    display_number: string;
+    title: string;
+  };
   created_by: string;
   created_at: string;
   resolved_at: string | null;
-  participants: { user_id: string; display_name: string; role: string; last_read_sequence: number }[];
+  participants: {
+    user_id: string;
+    display_name: string;
+    role: string;
+    last_read_sequence: number;
+  }[];
   messages: ThreadMessage[];
   asks: ThreadAsk[];
+  turns?: ThreadTurn[];
 };
 
 type Failure = { status?: number; code?: string; message?: string };
@@ -44,7 +61,6 @@ export function ThreadView({
   headerAction?: React.ReactNode;
 }) {
   const read = usePlatformResource<Thread>(`conversations/${id}`);
-  useVisibleRefresh(read.reload);
   const identity = useIdentity();
   const viewer = identity.actor_id;
   // A re-read briefly has no data; keep showing the last thread so the page and any draft stay in place (5.7). Once
@@ -54,9 +70,20 @@ export function ThreadView({
   if (read.data && read.data !== kept) setKept(read.data);
   if (gone && kept) setKept(undefined);
   const thread = gone ? undefined : (read.data ?? kept);
+  useVisibleRefresh(
+    read.reload,
+    thread?.turns?.some((t) => t.state === "Queued" || t.state === "Answering")
+      ? 2000
+      : 30000,
+  );
   const staleError = !gone && !!read.error;
   const accepts = useCallback((entry: { path: string }) => entry.path.startsWith("conversations/"), []);
-  const command = useRecoverableCommand({ key: `ppo:conversations:${id}:state`, scope: identity, accepts, transport: api });
+  const command = useRecoverableCommand({
+    key: `ppo:conversations:${id}:state`,
+    scope: identity,
+    accepts,
+    transport: api,
+  });
   const acceptedOperation = command.accepted?.receipt.operation_id;
   const { reload } = read;
   useEffect(() => {
@@ -118,7 +145,11 @@ export function ThreadView({
   const changeState = (to: "resolve" | "reopen") =>
     void command.send(
       `conversations/${id}/${to}`,
-      { reason: to === "resolve" ? "Resolve conversation" : "Reopen conversation", expected_version: thread.version },
+      {
+        reason:
+          to === "resolve" ? "Resolve conversation" : "Reopen conversation",
+        expected_version: thread.version,
+      },
       `/conversations/${id}`,
       to === "resolve" ? "Resolve conversation" : "Reopen conversation",
       id,
@@ -134,21 +165,41 @@ export function ThreadView({
 
   return (
     <div className="cv-thread">
-      <RecordIdentity reference={thread.anchor.display_number} title={thread.title} />
+      <RecordIdentity
+        reference={thread.anchor.display_number}
+        title={thread.title}
+      />
       <header className="cv-thread-header">
         <Link className="cv-back" href="/conversations">
           Back to conversations
         </Link>
         <div className="cv-title-row">
           <h1>{thread.title}</h1>
-          <span className="cv-participants" aria-label={`Participants: ${thread.participants.map((p) => p.display_name).join(", ")}`}>
+          <span
+            className="cv-participants"
+            aria-label={`Participants: ${thread.participants.map((p) => p.display_name).join(", ")}`}
+          >
             {thread.participants.map((p) => (
-              <span key={p.user_id} className="cv-avatar" title={p.display_name} aria-hidden="true">
+              <span
+                key={p.user_id}
+                className="cv-avatar"
+                title={p.display_name}
+                aria-hidden="true"
+              >
                 {initials(p.display_name)}
               </span>
             ))}
           </span>
-          <span className="cv-state-tag" data-tone={stateTag === "Waiting on you" ? "waiting" : stateTag === "Resolved" ? "resolved" : "open"}>
+          <span
+            className="cv-state-tag"
+            data-tone={
+              stateTag === "Waiting on you"
+                ? "waiting"
+                : stateTag === "Resolved"
+                  ? "resolved"
+                  : "open"
+            }
+          >
             {stateTag}
           </span>
         </div>
@@ -159,13 +210,20 @@ export function ThreadView({
             </span>
           </RecordLink>
           <span className="cv-thread-meta">
-            {thread.is_main ? "Main thread" : "Thread"} · started by {creator}, {formatTimestamp(thread.created_at)}
+            {thread.is_main ? "Main thread" : "Thread"} · started by {creator},{" "}
+            {formatTimestamp(thread.created_at)}
           </span>
         </p>
         {(canChangeState || headerAction) && (
           <div className="cv-actions">
             {canChangeState && (
-              <Button busy={command.busy} disabled={!!command.pending} onClick={() => changeState(thread.state === "Open" ? "resolve" : "reopen")}>
+              <Button
+                busy={command.busy}
+                disabled={!!command.pending}
+                onClick={() =>
+                  changeState(thread.state === "Open" ? "resolve" : "reopen")
+                }
+              >
                 {thread.state === "Open" ? "Resolve" : "Reopen"}
               </Button>
             )}
@@ -174,7 +232,10 @@ export function ThreadView({
         )}
         {staleError && (
           <div className="cv-banner" role="status">
-            <p>This conversation could not be refreshed. Showing what was last loaded.</p>
+            <p>
+              This conversation could not be refreshed. Showing what was last
+              loaded.
+            </p>
             <Button onClick={read.reload}>Retry</Button>
           </div>
         )}
@@ -187,22 +248,49 @@ export function ThreadView({
           </div>
         )}
         {note && <p role="status">{note}</p>}
-        {!!command.error && !changedElsewhere && <ErrorNotice error={command.error} />}
+        {!!command.error && !changedElsewhere && (
+          <ErrorNotice error={command.error} />
+        )}
       </header>
-      <div className="cv-messages" role="log" aria-live="polite" aria-label="Messages">
+      <div
+        className="cv-messages"
+        role="log"
+        aria-live="polite"
+        aria-label="Messages"
+      >
         {thread.messages.map((m) => (
           <div key={m.id} className="cv-message-group">
             <Message message={m} />
+            {thread.turns
+              ?.filter((t) => t.trigger_message_id === m.id)
+              .map((t) => (
+                <AssistantTurnStatus
+                  key={t.id}
+                  turn={t}
+                  actedFor={m.author_name}
+                />
+              ))}
             {thread.asks
               .filter((a) => a.message_id === m.id)
               .map((a) => (
-                <AskCard key={a.id} ask={a} viewerId={viewer} busy={command.busy} disabled={!!command.pending} onDecline={decline} />
+                <AskCard
+                  key={a.id}
+                  ask={a}
+                  viewerId={viewer}
+                  busy={command.busy}
+                  disabled={!!command.pending}
+                  onDecline={decline}
+                />
               ))}
           </div>
         ))}
       </div>
       <footer className="cv-thread-footer">
-        {thread.state === "Resolved" ? <p className="cv-note">Reopen this conversation to reply</p> : footer?.(thread, read.reload)}
+        {thread.state === "Resolved" ? (
+          <p className="cv-note">Reopen this conversation to reply</p>
+        ) : (
+          footer?.(thread, read.reload)
+        )}
       </footer>
     </div>
   );

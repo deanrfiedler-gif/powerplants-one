@@ -12,7 +12,12 @@ import { conversationsChanged } from "../events";
 export { conversationsChanged, announceConversationsChanged } from "../events";
 
 type ThreadList = { items: ThreadSummary[]; count: number };
-type Workspace = { items: ThreadSummary[] | undefined; loading: boolean; error: unknown; reload: () => void };
+type Workspace = {
+  items: ThreadSummary[] | undefined;
+  loading: boolean;
+  error: unknown;
+  reload: () => void;
+};
 const WorkspaceContext = createContext<Workspace>({ items: undefined, loading: true, error: undefined, reload: () => {} });
 export const useConversationList = () => useContext(WorkspaceContext);
 
@@ -30,7 +35,11 @@ export function useVisibleRefresh(reload: () => void, every = 30000) {
   }, [reload, every]);
 }
 
-export function ConversationsWorkspace({ children }: { children: React.ReactNode }) {
+export function ConversationsWorkspace({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const read = usePlatformResource<ThreadList>("conversations?filter=All&limit=100");
   useVisibleRefresh(read.reload);
   const path = usePathname();
@@ -41,11 +50,33 @@ export function ConversationsWorkspace({ children }: { children: React.ReactNode
   if (read.data && read.data !== kept) setKept(read.data);
   const items = read.error ? undefined : (read.data ?? kept)?.items;
   return (
-    <WorkspaceContext.Provider value={{ items, loading: read.loading, error: read.error, reload: read.reload }}>
-      <div className="cv-workspace" data-thread-open={current ? "true" : "false"} data-has-threads={items?.length ? "true" : "false"}>
-        <ThreadSidebar items={items} loading={read.loading && !items} error={read.error} reload={read.reload} current={current} />
+    <WorkspaceContext.Provider
+      value={{
+        items,
+        loading: read.loading,
+        error: read.error,
+        reload: read.reload,
+      }}
+    >
+      <div
+        className="cv-workspace"
+        data-thread-open={current ? "true" : "false"}
+        data-has-threads={items?.length ? "true" : "false"}
+      >
+        <ThreadSidebar
+          items={items}
+          loading={read.loading && !items}
+          error={read.error}
+          reload={read.reload}
+          current={current}
+        />
         <section className="cv-main">{children}</section>
-        {params.get("new") === "1" && <NewThreadDialog initialRecord={params.get("record")} />}
+        {params.get("new") === "1" && (
+          <NewThreadDialog
+            initialRecord={params.get("record")}
+            returnTo={current ? `/conversations/${current}` : "/conversations"}
+          />
+        )}
       </div>
     </WorkspaceContext.Provider>
   );
