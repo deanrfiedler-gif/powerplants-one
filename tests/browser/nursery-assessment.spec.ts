@@ -5,6 +5,7 @@ import { discoveryInput } from "../helpers/estimating-discovery";
 import { assessmentCase } from "../helpers/nursery-assessment-case";
 import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
 test.setTimeout(180000);
+test.use({ actionTimeout: 15000 });
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch("/api/v1/" + path, {
     method: body === undefined ? "GET" : "POST",
@@ -106,9 +107,6 @@ test("N2 edit, known target shortfall, saved outputs, read-only history and narr
     .getByLabel("Assessment name", { exact: true })
     .fill("SYN reviewed potting line");
   await page
-    .getByText("SYN Planting — scenario evidence", { exact: true })
-    .count(); // scoped disclosures below
-  await page
     .locator("summary")
     .filter({ hasText: /scenario.*Current/i })
     .first()
@@ -143,14 +141,15 @@ test("N2 edit, known target shortfall, saved outputs, read-only history and narr
   );
   expect(r.ok()).toBe(true);
   expect(r.headers()["x-content-sha256"]).toBe(d.selected.outputs.study.hash);
-  expect(await r.text()).toContain("Estimating study");
+  expect(await r.text()).toMatch(/estimating study — not for fabrication/i);
   await page
-    .getByLabel("Saved assessment history", { exact: true })
+    .getByRole("combobox", { name: "Saved assessment history", exact: true })
     .selectOption(d.history[1].id);
   await expect(
     page.getByRole("button", { name: "Edit assessment", exact: true }),
   ).toHaveCount(0);
   await expect(page.getByText(/Good output 13680/)).toBeVisible();
+  await page.screenshot({path:test.info().outputPath("assessment-default.png"),fullPage:true});
   await page.setViewportSize({ width: 320, height: 844 });
   expect(
     await page.evaluate(

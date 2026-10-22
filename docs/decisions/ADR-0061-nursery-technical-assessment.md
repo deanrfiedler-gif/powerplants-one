@@ -1,13 +1,13 @@
-# ADR-0061: Nursery technical assessment and retained studies
+# ADR-0061: Automation technical assessment and retained studies
 
 <!-- versioning: git; committed history is authoritative -->
 
-Status: implementation choice for the user-authorised N2 increment; independent review and business validation pending.
+Status: implementation choice for the user-authorised N2 increment; independent software review completed with no remaining actionable findings. Business validation remains pending; see [execution evidence](../testing/evidence/nursery-automation-n2/README.md).
 Date: 22 October 2026. Owner: Dean Fiedler. Builder: Codex.
 
 ## Context
 
-The user requested N2 after N1 merged in PR #662. The [Nursery specification](../blueprints/nursery-automation-configurator.md) defines NAC-R01–R09 and N2 stages, checks and outputs. The shared plan retains O1–O15 / DP1–DP8; Products publication and paired CPQ receiving are separate dependencies. No manufacturer rating, operating standard or supplier approval is supplied by this instruction.
+The user requested N2 after N1 merged in PR #662. The [Automation specification](../blueprints/nursery-automation-configurator.md) defines NAC-R01–R09 and N2 stages, checks and outputs. The shared plan retains O1–O15 / DP1–DP8; Products publication and paired CPQ receiving are separate dependencies. No manufacturer rating, operating standard or supplier approval is supplied by this instruction.
 
 ## Decision
 

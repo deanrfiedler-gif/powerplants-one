@@ -25,7 +25,7 @@ Reuse PageHeader, Field, Button, ErrorNotice, useCrmResource/useCrmCommand, shel
 
 ## State and recovery
 
-Explicit history is read-only, including the latest revision. Current assessment permits a successor when authorised. A changed Nursery source requires explicit Start new assessment from latest source; no automatic remapping of removed scenarios or silent reuse of old ratings. Prior outputs stay byte-identical. Changed Discovery requires refreshing the Automation discovery first.
+Explicit history is read-only, including the latest revision. Current assessment permits a successor when authorised. A changed Automation discovery source requires explicit Start new assessment from latest source; no automatic remapping of removed scenarios or silent reuse of old ratings. Prior outputs stay byte-identical. Changed Discovery requires refreshing the Automation discovery first.
 
 Transient refresh retains draft and original operation, blocks a new save, and offers retry. Definitive read denial clears protected content; identity/edit-authority changes clear the editor. Source changes or commercial holds preserve the draft and uncertain operation while blocking new acceptance. An uncertain save freezes inputs and offers original outcome recovery. A saved result shown during editing is explicitly labelled as the earlier revision's result.
 
@@ -33,4 +33,4 @@ ChecksSatisfied means only the recorded technical checks satisfy this rule editi
 
 ## Evidence
 
-Functional fixtures: tests/unit/nursery-assessment.test.ts, tests/database/nursery-assessment.test.ts and tests/browser/nursery-assessment.spec.ts. N1 extraction regression: tests/browser/nursery-automation.spec.ts. Execution and outstanding acceptance are recorded in docs/testing/evidence/nursery-automation-n2/README.md. No accepted fingerprint, deployment or supplier sign-off is inferred.
+Functional fixtures: tests/unit/nursery-assessment.test.ts, tests/database/nursery-assessment.test.ts and tests/browser/nursery-assessment.spec.ts. N1 extraction regression: tests/browser/nursery-automation.spec.ts. Execution and outstanding acceptance are recorded in docs/testing/evidence/nursery-automation-n2/README.md. Runtime desktop/phone screenshots are retained with that evidence; they are not accepted design references. No accepted fingerprint, deployment or supplier sign-off is inferred.

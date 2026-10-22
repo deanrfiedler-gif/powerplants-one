@@ -15376,7 +15376,7 @@
       ],
       "scope_status": "N2 technical assessment; N3 Products/shared CPQ handover remains separate",
       "visual_status": "Needs review",
-      "functional_status": "Validation in progress; see docs/testing/evidence/nursery-automation-n2/README.md",
+      "functional_status": "N2 unit/database/desktop/phone checks and build passed; baseline Windows full-suite exceptions documented in docs/testing/evidence/nursery-automation-n2/README.md",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
