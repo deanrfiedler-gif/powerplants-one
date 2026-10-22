@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2C-DESIGN
 title: Conversations T2c design and implementation
 date: 2026-10-22
 owner: Dean Fiedler
-status: Implemented in draft PR 660; independent review and Dean's acceptance pending
+status: Implemented in draft PR 660; independent review at 79092a4d completed; review-fix follow-up and Dean's acceptance pending
 versioning: git
 ---
 
@@ -75,4 +75,14 @@ The compiled loopback launcher defaults to NODE_ENV=test. The compiled browser c
 
 During delivery Dean merged main 002af00e (Nursery documentation #661) and resolved the shared-index conflict in 614834bc. Codex preserved that merge and regenerated the status and decision indexes from both fragment sets. The application/test/runtime tree is unchanged; merged documentation checks and final-head CI are recorded in the execution evidence.
 
-Node 24.22.0/npm 11.19.0 satisfy engines; ordinary npm ci installed 238 packages without override. Own PostgreSQL 16.15 cluster uses port 51427, ppo_synthetic_test, max_locks_per_transaction=1024 and disposable durability settings; server port 3147. [Execution evidence](../testing/evidence/conversations-t2c/README.md) records checks and limits. Claude review has not occurred; the T2b waiver is not reused.
+Node 24.22.0/npm 11.19.0 satisfy engines; ordinary npm ci installed 238 packages without override. Own PostgreSQL 16.15 cluster uses port 51427, ppo_synthetic_test, max_locks_per_transaction=1024 and disposable durability settings; server port 3147. [Execution evidence](../testing/evidence/conversations-t2c/README.md) records checks and limits. The T2b waiver is not reused.
+
+## Independent review and R8 correction — 22 October 2026
+
+Claude (Opus 5.5) independently reviewed `79092a4d245c4817ebec3968a0ea8fcedc1d215b`, merge-base `002af00e`, on 22 October 2026. The review found [one Low privacy defect](https://github.com/deanrfiedler-gif/powerplants-one/pull/660#discussion_r4345608937): the unkeyed R8 digest could be reproduced by enumerating the readable-source subsets consistent with the public count. It disclosed a colleague's source-access pattern, without exposing record content. Codex reproduced and accepted the finding with a failing regression.
+
+The basis now uses HMAC-SHA-256 with a random 256-bit server key. The key is held only in server memory and shared across route bundles/development reloads in the same process. The existing actor/workspace/thread/person/history/access binding and 64-character DTO remain. A server restart rotates the key, so an unspent older preflight requires a fresh warning; original-operation receipt recovery remains unchanged. No environment credential, migration, capability, grant or dependency is added. This ephemeral key serves the current local synthetic process; a future distributed/hosted design needs its own key-lifetime decision.
+
+Claude reported no other defects in P1/P3/P4 projection, availability, composition, lifecycle or R8 enforcement. The reviewer confirmed 72 passing CI checks and one intentional skip at that head and ran 19 focused unit cases successfully; database, HTTP and browser suites were not rerun locally because of host load. Those conclusions cover the reviewed commit only. The HMAC correction and later main integration have not received independent follow-up review; Dean's acceptance and production readiness remain separate.
+
+Current main `ab2142d1` brings the adopted documentation-source isolation rule. The branch retains its fragments and current main's protected landing pages; generated combined views now remain ignored under `tmp/documentation/`.

@@ -14,7 +14,7 @@ import {
 
 // Persisted historical-answer fixture, never a mocked read. The worker is a separate non-production
 // local-synthetic process. The HTTP/compiled application keeps its own production/off guard intact.
-export async function storedAgentThread(enabled = true) {
+export async function storedAgentThread(enabled = true, includeReader = true) {
   if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
   if (localConfig().database_name !== "ppo_synthetic_test")
     throw Error("Only disposable ppo_synthetic_test");
@@ -22,8 +22,8 @@ export async function storedAgentThread(enabled = true) {
     reader = await principal(profiles.dealReader);
   const deal = await newDeal(owner);
   const thread = await begin(owner, deal, {
-    body: "SYN @{1} recorded history",
-    mentions: [person(reader.actor_id)],
+    body: includeReader ? "SYN @{1} recorded history" : "SYN recorded history",
+    mentions: includeReader ? [person(reader.actor_id)] : [],
   });
   await post(owner, thread, {
     body: "SYN @{1} what is recorded?",

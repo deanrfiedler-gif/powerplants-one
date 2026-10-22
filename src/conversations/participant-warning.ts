@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHmac, randomBytes } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
 import { canonical } from "../platform/operations";
@@ -10,6 +10,13 @@ import {
 
 export type HistoryWarning = { count: number; basis: string };
 export type ParticipantAcknowledgement = { person_id: string; basis: string };
+
+// Share one ephemeral server key across route bundles and development reloads.
+// Restart rotates it; an old preflight then requires a fresh warning, never grants access.
+const server = globalThis as typeof globalThis & {
+  ppoConversationWarningKey?: Buffer;
+};
+const warningKey = (server.ppoConversationWarningKey ??= randomBytes(32));
 
 // R8/U1: callers first check thread and candidate access. Return counts and an opaque basis only; never source labels.
 // A basis changes when the cited history or the candidate's access changes. It grants no access and stores no copy.
@@ -46,7 +53,7 @@ export async function participantWarnings(
     if (hidden.size)
       result.set(person, {
         count: hidden.size,
-        basis: createHash("sha256")
+        basis: createHmac("sha256", warningKey)
           .update(
             canonical({
               workspace: p.workspace_id,
