@@ -786,7 +786,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118],
+    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118],
   );
   await migrate();
   await seed();
@@ -898,7 +898,7 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   );
   assert.deepEqual(
     current.filter((r) => r.version > 86).map((r) => r.version),
-    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118],
+    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118],
   );
   await migrate();
   await seed();

@@ -190,6 +190,11 @@
           "id": "nursery-n1",
           "label": "Nursery N1 host",
           "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
+        },
+        {
+          "id": "automation-n2",
+          "label": "Automation N2 host",
+          "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
         }
       ],
       "implementation": [
@@ -421,7 +426,8 @@
         "route:/sites/[id]",
         "route:/conversations",
         "route:/conversations/[id]",
-        "route:/estimating/discovery/[id]/nursery"
+        "route:/estimating/discovery/[id]/nursery",
+        "route:/estimating/discovery/[id]/nursery/assessment"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -665,6 +671,14 @@
           "expected": "Review Nursery N1 desktop/phone controls against its proposed page contract.",
           "actual": "Native host supplied; no accepted Nursery mockup or owner review.",
           "action": "Review the N1 execution evidence before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-automation-n2-review",
+          "expected": "Review N2 controls against the proposed technical-assessment contract.",
+          "actual": "Native composition; accepted Automation mockups are missing.",
+          "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1809,6 +1823,11 @@
           "id": "nursery-n1",
           "label": "Nursery N1 host",
           "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
+        },
+        {
+          "id": "automation-n2",
+          "label": "Automation N2 host",
+          "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
         }
       ],
       "implementation": [
@@ -1981,7 +2000,8 @@
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
         "route:/facilities/new",
-        "route:/estimating/discovery/[id]/nursery"
+        "route:/estimating/discovery/[id]/nursery",
+        "route:/estimating/discovery/[id]/nursery/assessment"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2187,6 +2207,14 @@
           "action": "Review the N1 execution evidence before baseline adoption.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "fields-automation-n2-review",
+          "expected": "Review N2 controls against the proposed technical-assessment contract.",
+          "actual": "Native composition; accepted Automation mockups are missing.",
+          "action": "Review N2 execution evidence and obtain owner visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2375,6 +2403,11 @@
           "id": "nursery-n1",
           "label": "Nursery N1 host",
           "description": "Saved/current history, unknown/conflicting observations, read-only/denied, stale draft and uncertain-save recovery; tests/browser/nursery-automation.spec.ts."
+        },
+        {
+          "id": "automation-n2",
+          "label": "Automation N2 host",
+          "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
         }
       ],
       "implementation": [
@@ -2512,7 +2545,8 @@
         "route:/facilities/[id]",
         "route:/facilities/[id]/edit",
         "route:/facilities/new",
-        "route:/estimating/discovery/[id]/nursery"
+        "route:/estimating/discovery/[id]/nursery",
+        "route:/estimating/discovery/[id]/nursery/assessment"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2652,6 +2686,14 @@
           "expected": "Review Nursery N1 desktop/phone controls against its proposed page contract.",
           "actual": "Native host supplied; no accepted Nursery mockup or owner review.",
           "action": "Review the N1 execution evidence before baseline adoption.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "validation-automation-n2-review",
+          "expected": "Review N2 controls against the proposed technical-assessment contract.",
+          "actual": "Native composition; accepted Automation mockups are missing.",
+          "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

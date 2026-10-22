@@ -27,11 +27,11 @@ const snapshot = async (names: string[]) =>
   );
 const violates = (code: string) => (e: unknown) => (e as { code?: string }).code === code;
 
-test("0118 upgrades populated 0116 without changing any existing row and keeps each phone as one primary number needing checking", async () => {
+test("0118 upgrades populated 0117 without changing any existing row and keeps each phone as one primary number needing checking", async () => {
   await recoverSchema();
   await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
-  await migrate(116);
-  await seed(116);
+  await migrate(117);
+  await seed(117);
   await database().query("UPDATE ppo.people SET phone=' 0412 345 678 ' WHERE id=$1", [person(1)]);
   await database().query("UPDATE ppo.people SET phone='   ' WHERE id=$1", [person(2)]);
   const tables = (await rows("SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename")).map(

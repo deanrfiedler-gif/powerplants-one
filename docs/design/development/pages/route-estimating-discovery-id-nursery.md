@@ -1,4 +1,4 @@
-# Nursery Automation discovery — N1 design contract
+# Automation discovery — N1 design contract
 
 <!-- versioning: git; committed history is authoritative -->
 
