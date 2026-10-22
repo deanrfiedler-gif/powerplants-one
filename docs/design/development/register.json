@@ -15316,6 +15316,40 @@
         "scope:AI-01",
         "route:/conversations/[id]"
       ]
+    },
+    {
+      "key": "route:/estimating/discovery/[id]/nursery",
+      "title": "Nursery Automation discovery",
+      "kind": "route",
+      "module": "Estimating",
+      "summary": "N1 source-qualified equipment candidates, saved production scenarios and owned clarifications. No technical or pricing result.",
+      "path": "/estimating/discovery/[id]/nursery",
+      "source_paths": [
+        "src/app/(business)/estimating/discovery/[id]/nursery/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-discovery-id-nursery",
+      "design_path": "docs/design/development/pages/route-estimating-discovery-id-nursery.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [
+        "docs/blueprints/nursery-automation-configurator.md",
+        "docs/decisions/ADR-0060-nursery-discovery-foundation.md",
+        "src/estimating/nursery-automation/screen.tsx",
+        "src/estimating/nursery-automation/screen.css"
+      ],
+      "scope_status": "N1 implementation; technical assessment and CPQ handover remain later stages",
+      "visual_status": "Needs review",
+      "functional_status": "4 unit, 3 database and 4 desktop/phone browser cases passed locally; exact recovery, history, source conflicts, stale edits and denied refresh. Evidence: docs/testing/evidence/nursery-automation-n1/README.md. Supplier/business acceptance and CI remain separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]"
+      ]
     }
   ]
 }
