@@ -22,7 +22,7 @@ User decisions govern. [CREMS is historical](../decisions/product-direction-qual
 
 BP-02/ADR-0003: TypeScript/Next.js, PostgreSQL, domain services, server permissions, durable operations/outbox and adapters. Pin dependencies; record ADR rationale/options.
 
-MYOB Acumatica: ERP authority; SharePoint: documents; native CAD: authoring. Verify interfaces/rules before integration.
+MYOB Acumatica: intended ERP authority; SharePoint: documents; native CAD: authoring. Verify interfaces/ownership/rules before integration.
 
 Synthetic fixtures. Decide service-order/appointment/labour ownership and build/configure/integrate/retain per capability; test before cutover.
 
@@ -60,7 +60,7 @@ HTML: html-module-conformance.md.
 
 Finish authorised work; flag blockers.
 
-One task/owner/worktree; claim by draft PR. Coordinate shared specs/registers. Update canonical chapters and status fragments; generated views stay in tmp/. Leave README/indexes alone; maintenance exceptions: docs/maintenance/README.md. Merge: authority/checks/review.
+One task/owner/worktree; draft PR first. Preserve unrelated work; coordinate shared edits. Keep chapters/fragments current; render to tmp/. Landing-page rules: docs/maintenance/README.md. Independent review: CONTRIBUTING.md; Dean decides.
 
 Repo work grants no paid service, deployment, access, transactions, migration or messaging. Secrets/operational data stay outside Git; use synthetic/redacted fixtures.
 
