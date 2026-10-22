@@ -73,4 +73,6 @@ A failing phone geometry test demonstrated the legacy picker appearing below the
 
 The compiled loopback launcher defaults to NODE_ENV=test. The compiled browser configuration therefore explicitly sets PPO_ASSISTANT=off and records off-state metadata. Historical-answer fixtures run the existing worker in a separate, explicitly non-production synthetic process; enabled UI-to-worker tests use the development harness. The assistant production guard is unchanged.
 
+During delivery Dean merged main 002af00e (Nursery documentation #661) and resolved the shared-index conflict in 614834bc. Codex preserved that merge and regenerated the status and decision indexes from both fragment sets. The application/test/runtime tree is unchanged; merged documentation checks and final-head CI are recorded in the execution evidence.
+
 Node 24.22.0/npm 11.19.0 satisfy engines; ordinary npm ci installed 238 packages without override. Own PostgreSQL 16.15 cluster uses port 51427, ppo_synthetic_test, max_locks_per_transaction=1024 and disposable durability settings; server port 3147. [Execution evidence](../testing/evidence/conversations-t2c/README.md) records checks and limits. Claude review has not occurred; the T2b waiver is not reused.
