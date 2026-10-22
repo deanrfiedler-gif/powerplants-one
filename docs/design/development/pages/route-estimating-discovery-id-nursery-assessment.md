@@ -18,7 +18,7 @@ Reuse PageHeader, Field, Button, ErrorNotice, useCrmResource/useCrmCommand, shel
 
 ## Desktop
 
-1440 × 960 and 1024 × 768: one bounded content scroll, source context, history/actions, ordered process, scenario evidence, interfaces and saved results. 
+1440 × 960 and 1024 × 768: one bounded content scroll, source context, history/actions, ordered process, scenario evidence, interfaces and saved results.
 ## Mobile
 
 390 × 844 and 320 CSS px: stack fieldsets; retain 16 px inputs, 44 px actions, wrapping narratives/IDs and every task. Long engineering inputs are disclosed by stage and scenario rather than compressed tables. The ordered list is the initial accessible concept diagram; a spatial layout, site drawing and approved Figma design remain future work.
