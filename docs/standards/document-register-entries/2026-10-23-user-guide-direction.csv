@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-USER-GUIDE-PROP,"Powerplants One user guide, direction paper",docs/decisions/user-guide-direction.md,,Proposed 23 October 2026; awaiting the owner's answers to Q1–Q10; builds on PPO-HELP-DEC r01 without changing it,Dean Fiedler,01cef391,,,git,
+PPO-USER-GUIDE-TOC,"Powerplants One user guide, table of contents",docs/guides/user-guide-contents.md,,Draft outline proposed with PPO-USER-GUIDE-PROP; not adopted; no chapter written,Dean Fiedler,01cef391,,,git,
