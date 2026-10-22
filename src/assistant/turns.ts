@@ -63,7 +63,7 @@ export async function runAssistantTurn(id: string, deps: Deps = {}): Promise<Out
   let turn = await findTurn(c, id);
   if (terminal(turn.state)) return status(turn);
   const p = { workspace_id: turn.workspace_id, actor_id: turn.acted_for_id, display_name: "Assistant's tagger" };
-  const adapter = deps.adapter ?? adapterFor(), price = priceFor(adapter.label, adapter.model);
+  const adapter = deps.adapter ?? adapterFor(deps.env), price = priceFor(adapter.label, adapter.model);
   let possiblySent = false;
   const refresh = async () => { turn = await findTurn(c, id); return turn; };
   const finish = async (state: "Unavailable" | "Failed" | "Discarded", reason: TurnReason, open: "Released" | "Unknown" = "Released") => {
@@ -101,7 +101,7 @@ export async function runAssistantTurn(id: string, deps: Deps = {}): Promise<Out
         }
         const allowance = { input_tokens: turnLimits.input_tokens - turn.input_tokens, output_tokens: turnLimits.output_tokens - turn.output_tokens };
         const request = requestFor(envelope, allowance);
-        if (turn.model_calls >= turnLimits.calls || allowance.output_tokens <= 0 || requestTokens(request) > allowance.input_tokens)
+        if (turn.model_calls >= turnLimits.calls || allowance.output_tokens <= 0 || (adapter.inputTokens?.(request) ?? requestTokens(request)) > allowance.input_tokens)
           return finish("Failed", "TurnLimit");
         const entry = await dispatchCall(p, turn, envelope, price);
         await refresh();

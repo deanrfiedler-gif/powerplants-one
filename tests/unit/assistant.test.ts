@@ -158,7 +158,7 @@ test("T2-6 full allowance reservation is 176000 micro-USD at the synthetic test 
   assert.equal(costMicro(price, { input_tokens: 0, output_tokens: 0 }), 0);
 });
 
-test("T2-6 unknown prices fail closed and only the simulated model is priced", () => {
+test("T2-6 unknown prices fail closed and simulation retains its zero price", () => {
   assert.equal(priceFor("Claude", "x"), null);
   assert.equal(priceFor("Simulated", "SYN-unknown"), null);
   const p = priceFor("Simulated", "simulated-1");

@@ -69,6 +69,8 @@ export class AdapterError extends Error {
 export interface AssistantAdapter {
   readonly label: AdapterLabel;
   readonly model: string;
+  /** Provider-specific pre-dispatch bound; simulation retains its fixture meter. */
+  inputTokens?(request: AdapterRequest): number;
   answer(request: AdapterRequest, signal: AbortSignal): Promise<AdapterResult>;
 }
 export const requestTokens = (request: Pick<AdapterRequest, "question" | "envelope">) =>
