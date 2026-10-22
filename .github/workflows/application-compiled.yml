@@ -70,8 +70,8 @@ jobs:
     runs-on: ubuntu-24.04
     # Each browser project/shard keeps its warm-up dependency and original deadlines.
     # Each matrix job owns a separate app and disposable database; tests within
-    # a shard remain serial. Desktop has two native shards; mobile retains its
-    # complete project. Retained fixtures/restarts stay independent.
+    # a shard remain serial. Desktop and mobile each use two native shards.
+    # Retained fixtures/restarts stay independent.
     timeout-minutes: ${{ matrix.timeout_minutes }}
     strategy:
       fail-fast: false
@@ -87,11 +87,16 @@ jobs:
             shard: 2/2
             timeout_minutes: 60
             artifact_name: compiled-application-browser-desktop-2-evidence
-          - suite: browser-mobile
+          - suite: browser-mobile-1
             project: mobile-chromium
-            shard: 1/1
+            shard: 1/2
             timeout_minutes: 60
-            artifact_name: compiled-application-browser-mobile-evidence
+            artifact_name: compiled-application-browser-mobile-1-evidence
+          - suite: browser-mobile-2
+            project: mobile-chromium
+            shard: 2/2
+            timeout_minutes: 60
+            artifact_name: compiled-application-browser-mobile-2-evidence
           - suite: retained
             timeout_minutes: 25
             artifact_name: compiled-application-retained-evidence

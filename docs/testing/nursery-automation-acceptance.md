@@ -1,4 +1,4 @@
-# Nursery Automation Configurator acceptance catalogue
+# Automation Configurator acceptance catalogue
 
 <!-- versioning: git; committed history is authoritative -->
 
