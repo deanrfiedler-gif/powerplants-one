@@ -8,9 +8,13 @@ Inspect current workspace identities and grants using an active Workspace admin.
 
 ## Desktop
 
+Accepted design: the [Users and access design decision](../../../decisions/users-and-access-figma-design.md) of 19 October 2026 draws person access as the shared record layout with a Grant states bar, grants grouped by company (with its ERP key) and by site, and Check eligibility that names the nearest current grant when a check fails (D3–D5, Q2). Check eligibility is the primary action (Q4). Captures 02 and 03 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md).
+
 Use the application shell, PageHeader, native record cards, Field/SelectField, ReadState, Status and shared Button. At 1440 × 960 and 1024 × 768, keep clear identity, grant scope and validity; wrap long capability keys and show exact ERP company keys beside same-name companies. The directory searches literal name text, filters active/inactive and pages in groups of 50. The person route is the proposed native adaptation of the reference's persistent inspector.
 
 ## Mobile
+
+Accepted design: captures 11 and 12 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md): grants by scope as counts with Check eligibility as the one main action; Compare bundle and Propose access change move into More.
 
 At 390 × 844 and 320 px, stack labelled grant cards and controls. Keep company key, site number, validity and eligibility result available without a wide permission matrix. Shared controls retain focus indicators, 16 px inputs and phone targets. Verify no horizontal page overflow, keyboard order and readable long keys.
 
@@ -23,6 +27,8 @@ Loading hides prior records; error offers the existing retry; denied or expired 
 Existing reference: [AD-01 working HTML](../../access-review/access-review.html); original [issued r01](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html). Native scope [decision](../../../decisions/access-review-native.md). Incoming: users, exact grants and company/site keys; outgoing: current grant eligibility only. Draft guide is linked in the live register.
 
 ## Evidence and open review
+
+Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). The Requests and Teams tabs are not drawn at full size. Building it is not decided; the native page remains the built page.
 
 [Execution ledger](../../../testing/evidence/access-inspection/README.md). The execution ledger links source-bound native and reference captures at 1440/390/320 px and records the observed layout differences. These are implementation/reference evidence, not accepted mockups. Owner, physical-device, keyboard/zoom and screen-reader review remain open; accepted native images are still missing. No review fingerprint is set by implementation.
 

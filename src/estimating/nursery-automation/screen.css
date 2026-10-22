@@ -1,0 +1,83 @@
+.nac-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-6, 24px);
+  overflow-wrap: anywhere;
+}
+.nac-page h2 {
+  margin-top: 24px;
+}
+.nac-page input:not([type="checkbox"]),
+.nac-page select,
+.nac-page textarea {
+  max-width: 100%;
+  width: 100%;
+  font-size: 16px;
+  min-height: 44px;
+}
+.nac-page input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+.nac-page label {
+  display: block;
+}
+.nac-page fieldset {
+  min-width: 0;
+}
+.nac-editor {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+}
+.nac-context,
+.nac-card,
+.nac-fact {
+  border: 1px solid var(--ppo-shell-line);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  margin: 16px 0;
+  background: var(--ppo-shell-surface);
+}
+.nac-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 16px;
+}
+.nac-field {
+  margin: 12px 0;
+}
+.nac-actions {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.nac-page summary {
+  cursor: pointer;
+  min-height: 44px;
+  font-weight: 600;
+}
+.nac-page a {
+  overflow-wrap: anywhere;
+}
+.nac-page :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .nac-page {
+    padding: 12px;
+  }
+  .nac-context,
+  .nac-card,
+  .nac-fact {
+    padding: 12px;
+  }
+  .nac-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
