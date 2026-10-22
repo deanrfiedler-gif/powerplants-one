@@ -473,6 +473,17 @@ export function assess(source: Study, input: Assessment): AssessmentResult {
           maxNA = l.maximum.knowledge === "NotApplicable";
         const minKnown = reviewed(l.review) && !!min && confirmed(l.minimum);
         const maxKnown = reviewed(l.review) && !!max && confirmed(l.maximum);
+        // Contradictory confirmed limits cannot establish equipment unsuitability.
+        if (minKnown && maxKnown && min!.cmp(max!) > 0) {
+          comparable = false;
+          finding(
+            key + ":" + l.dimension + ":range",
+            "NAC-R01",
+            stage.name,
+            "The recorded minimum exceeds the maximum.",
+          );
+          continue;
+        }
         // A missing opposite bound must never hide an established mandatory failure.
         if (
           raw &&
@@ -512,16 +523,6 @@ export function assess(source: Study, input: Assessment): AssessmentResult {
             stage.name,
             l.dimension +
               " needs reviewed, source-qualified limits or an explicit applicability reason.",
-          );
-          continue;
-        }
-        if (min && max && min.cmp(max) > 0) {
-          comparable = false;
-          finding(
-            key + ":" + l.dimension + ":range",
-            "NAC-R01",
-            stage.name,
-            "The recorded minimum exceeds the maximum.",
           );
           continue;
         }

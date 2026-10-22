@@ -80,6 +80,24 @@ test("N2 known lower/upper failures survive unknown opposite bound; boundaries a
   l.maximum = na();
   assert.equal(assess(f.source, f.input).technical_state, "ChecksSatisfied");
 });
+test("N2 contradictory confirmed intervals need confirmation without hiding other established failures", () => {
+  for (const dimension of ["diameter_mm", "height_mm", "filled_mass_kg"] as const) {
+    const f = assessmentCase();
+    const limit = f.input.scenarios[0].stages[2].limits.find(l => l.dimension === dimension)!;
+    limit.minimum = documented("150");
+    limit.maximum = documented("1");
+    const result = assess(f.source, parseAssessment(f.input));
+    assert.equal(result.technical_state, "NeedsConfirmation");
+    assert.equal(result.scenarios[0].target_state, "NotAssessable");
+    assert.ok(result.findings.some(f => f.key.endsWith(dimension + ":range")));
+    assert.ok(!result.findings.some(f => f.key.endsWith(dimension + ":outside")));
+    limit.minimum = documented("0");
+    assert.equal(assess(f.source, f.input).technical_state, "NotSuitable");
+    limit.minimum = documented("150");
+    f.input.connections[0].checks[0].state = "Incompatible";
+    assert.equal(assess(f.source, f.input).technical_state, "NotSuitable");
+  }
+});
 test("N2 unsupported topology, incomplete manual stages and assumed counts cannot confirm capacity", () => {
   for (const topology of [
     "Branched",

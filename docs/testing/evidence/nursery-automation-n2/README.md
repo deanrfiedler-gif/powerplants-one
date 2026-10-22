@@ -8,7 +8,7 @@ Implementation: [ADR-0061](../../../decisions/ADR-0061-nursery-technical-assessm
 
 ## Executed checks
 
-Executed on 22 October 2026 against the N2 implementation at 97d5580a9d01d0216376c534171792d8efd487b5, with subsequent documentation and browser-harness corrections only. Local environment: Windows, Node 24.22.0, Playwright 1.64.1 and Chrome 156.0.8078.48. Database cases use a dedicated loopback-only ppo_synthetic_test cluster.
+Initial checks executed on 22 October 2026 against the N2 implementation at 97d5580a9d01d0216376c534171792d8efd487b5, with documentation and browser-harness corrections through d7543ea1. The subsequent pre-merge rule correction and its validation are recorded separately below. Local environment: Windows, Node 24.22.0, Playwright 1.64.1 and Chrome 156.0.8078.48. Database cases use a dedicated loopback-only ppo_synthetic_test cluster.
 
 - All ten N2 unit cases passed, including exact independent rate/quantity cases, known-bound failure precedence, source-qualified counts and simultaneous manual staffing.
 - Full local unit suite: 1,030 passed, three failed. The same three private-document/recovery filesystem failures reproduced on the unchanged merged N1 tree (b7b4336f; no tree difference from origin/main e9f28b69). These Windows environment failures are not attributed to this change; the full suite is not reported as a local pass.
@@ -28,3 +28,13 @@ Independent gpt-6-astra review of 97d5580a9d01d0216376c534171792d8efd487b5 found
 The [desktop](assessment-desktop.png), [390-pixel phone](assessment-phone.png) and [320-pixel phone](assessment-320.png) screenshots show the read-only saved-history view from the passing focused browser run. These were visually inspected for text wrapping, control placement and visible overlap. The browser assertion also confirmed no document-wide horizontal overflow at 320 pixels. The shell owns the content scroll, so these images show the visible top of the page rather than every lower field. They are runtime evidence, not an accepted Figma baseline or a comprehensive accessibility review.
 
 Owner visual review, 1024-pixel/200% zoom review, physical-device and screen-reader acceptance remain open. See PR #665 for live CI results; local results here do not imply that every remote check has completed. No deployment, supplier sign-off or business acceptance is asserted.
+
+## Pre-merge completeness review
+
+Review of d7543ea1 against the merged N2 specification and the updated O1–O15 / DP1–DP8 plan found one P2 classification defect: confirmed minimum/maximum bounds in an inverted interval could mark equipment NotSuitable before recording the conflicting range. The correction checks a confirmed contradictory interval first and retains NeedsConfirmation with a blocking clarification. Known failures with an unknown opposite bound, valid out-of-range failures and unrelated established incompatibilities still retain NotSuitable.
+
+The new regression failed before the correction and passed afterward across diameter, height and filled mass. All eleven N2 unit cases then passed. Independent gpt-6-astra follow-up reviewed the correction, independently passed all eleven N2 unit tests and found no additional actionable findings. Final committed-head confirmation and CI remain merge gates; the earlier clean review is evidence for its recorded head, not a waiver for this correction.
+
+The review found no missing N2 Products/CPQ handover requirement: technical, installation, spare, waste and pack bases remain separate; no authoritative labour, price or service-coverage calculation is duplicated here. Shared parts/facts receiving, exact published Variant/unit bindings and the activity ledger remain explicit N3 dependencies.
+
+History loading currently reads and verifies every full assessment revision, so work increases with revision count and retained output size. The reviewer recorded this as a nonblocking prototype scaling limitation without an established latency failure. Future bounded metadata history, exact selected-revision reads and latest-only save lookup must preserve current source authority and immutable evidence. This is not production capacity acceptance.
