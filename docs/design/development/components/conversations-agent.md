@@ -14,6 +14,8 @@ Figma mapping is Partial, Components › Conversations, private PPO - Design: Co
 
 The @ picker separates AI assistant and People. Server-derived anchor authority controls Carl's availability. One atomic Agent tag is allowed, without Ask. People retain their own IDs and asks, including a person named Carl. Roles are not stored, so the secondary label says Role not recorded.
 
+The thread picker opens above the composer, keeping its scrollable list clear of phone bottom navigation. The new-thread dialog keeps the picker in its own scrolling layout above the message field. Escape or Close picker returns focus to the message field and preserves its draft; the phone Close target is at least 44 px.
+
 Answered/CannotAnswer cards render only the safe server projection as plain text, with AI/Simulated/acted-for labels and validated sources. Withheld sources have no name, link or tooltip. Queued/Answering and terminal states appear beside the trigger; only the tagger gets a reason. Worker/current-reader definitions remain unchanged.
 
 ## Desktop

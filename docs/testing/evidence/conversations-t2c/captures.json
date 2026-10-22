@@ -1,0 +1,205 @@
+{
+  "source_commit": "556355218102e18c6512fa6369164ba7d3fe3263",
+  "source_note": "Application and test source in this commit; later delivery edits are documentation only. Core formatting cleanup was verified to emit identical JavaScript.",
+  "browser": "Chrome 156.0.8078.48",
+  "playwright": "1.64.1",
+  "date": "2026-10-22",
+  "review": "Codex inspected rendered captures and geometry; Dean acceptance, physical-device and screen-reader review are pending.",
+  "captures": [
+    {
+      "file": "mocked-answer-1440.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "7d5dea274a59fe42e67e40c8a3df07fe93a3e9cc60038f9b54d9cefd2335ac1b",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-an-87b24-s-at-all-four-review-widths-desktop-chromium/mocked-answer-1440.png",
+      "note": "Projected answer and terminal-state layout fixture; not a persisted assistant result."
+    },
+    {
+      "file": "mocked-answer-1024.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        1024,
+        1000
+      ],
+      "png_dimensions": [
+        1024,
+        1000
+      ],
+      "sha256": "215a51ac19f3e6940479452e05511e5c0fdd75afa44804e9dd93e812527ef773",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-an-87b24-s-at-all-four-review-widths-desktop-chromium/mocked-answer-1024.png",
+      "note": "Projected answer and terminal-state layout fixture; not a persisted assistant result."
+    },
+    {
+      "file": "mocked-answer-390.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "1c4cacd042f87c04e33e2b6aeba916f910fea59e0a0b2c5ed05eaa3cac041ee1",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-an-87b24-s-at-all-four-review-widths-mobile-chromium/mocked-answer-390.png",
+      "note": "Projected answer and terminal-state layout fixture; not a persisted assistant result."
+    },
+    {
+      "file": "mocked-answer-320.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        320,
+        844
+      ],
+      "png_dimensions": [
+        320,
+        844
+      ],
+      "sha256": "fd03db91735c4d8c88f4f6b5a651cd72a20b517296b1a704d1f1887e7999e46d",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-an-87b24-s-at-all-four-review-widths-mobile-chromium/mocked-answer-320.png",
+      "note": "Projected answer and terminal-state layout fixture; not a persisted assistant result."
+    },
+    {
+      "file": "mocked-picker-1440.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "6df8bd4fa1c6c9b3afd596854e27707affe90e5dccaffeebf3b115637cd51dce",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-ke-d69f7-on-and-keeps-atomic-editing-desktop-chromium/mocked-agent-picker.png",
+      "note": "Mocked AI/human Carl disambiguation; above-composer geometry and focus/keyboard assertions pass."
+    },
+    {
+      "file": "mocked-warning-1440.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "382868e9cde355253b777f40902de840e1c1f9560d405423dbf5e504ee964ff4",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-R8-150e6-w-thread-on-the-same-record-desktop-chromium/mocked-participant-warning.png",
+      "note": "Mocked count-only warning; real database enforcement is separately proved."
+    },
+    {
+      "file": "persisted-stored-1440.png",
+      "kind": "real persisted historical answer",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "d713da77e6ce64130b81174dce728a3e137aa93ed3b4362d36e3f0270a5106eb",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-stored-e0629-inal-reasons-remain-private-desktop-chromium/persisted-stored-answer.png",
+      "note": "Existing worker creates stored answer; compiled application runs with Carl explicitly off."
+    },
+    {
+      "file": "persisted-worker-1440.png",
+      "kind": "real UI post and worker",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "png_dimensions": [
+        1440,
+        1000
+      ],
+      "sha256": "795d3f6d65052ecb12f771df58d7ac6e708cb86ce5110d6023851ca92a18c7d5",
+      "origin": "tmp/t2c/browser-worker-scroll-final/conversations-agent-worker-32bc5-worker-answer-and-human-ask-desktop-chromium/persisted-worker-answer.png",
+      "note": "Enabled non-production UI post, original-operation recovery, worker, replay and human ask Open."
+    },
+    {
+      "file": "mocked-picker-390.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "29146361f0b292446df68d83a00ffb9fe06830644154e01cb1ccb0e3f3aa7bed",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-ke-d69f7-on-and-keeps-atomic-editing-mobile-chromium/mocked-agent-picker.png",
+      "note": "Mocked AI/human Carl disambiguation; above-composer geometry and focus/keyboard assertions pass."
+    },
+    {
+      "file": "mocked-warning-320.png",
+      "kind": "mocked presentation",
+      "viewport": [
+        320,
+        844
+      ],
+      "png_dimensions": [
+        320,
+        844
+      ],
+      "sha256": "07ae336a0fcb16559e7e5de08b4ea5040b584b235652aa02ce74de3db893bdca",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-T2c-R8-150e6-w-thread-on-the-same-record-mobile-chromium/mocked-participant-warning.png",
+      "note": "Mocked count-only warning; real database enforcement is separately proved."
+    },
+    {
+      "file": "persisted-stored-390.png",
+      "kind": "real persisted historical answer",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "67bae3c341999f57249c83cc3295a4bdb6c43aa05985c7e2509c27f949d9aab7",
+      "origin": "tmp/t2c/browser-compiled-delivery-correct-port/conversations-agent-stored-e0629-inal-reasons-remain-private-mobile-chromium/persisted-stored-answer.png",
+      "note": "Existing worker creates stored answer; compiled application runs with Carl explicitly off."
+    },
+    {
+      "file": "persisted-worker-390.png",
+      "kind": "real UI post and worker",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "34533d7b016a3e186fc7407b8f0efe1b6079ab35f2b2df01cf99d9bf0e1cc329",
+      "origin": "tmp/t2c/browser-worker-scroll-final/conversations-agent-worker-32bc5-worker-answer-and-human-ask-mobile-chromium/persisted-worker-answer.png",
+      "note": "Enabled non-production UI post, original-operation recovery, worker, replay and human ask Open."
+    },
+    {
+      "file": "persisted-worker-sources-390.png",
+      "kind": "real UI post and worker",
+      "viewport": [
+        390,
+        844
+      ],
+      "png_dimensions": [
+        390,
+        844
+      ],
+      "sha256": "de77b38a5e5bec7211df43bf9f01e8f134d66d2a66f73088a4a98b509f1beb71",
+      "origin": "tmp/t2c/browser-worker-scroll-final/conversations-agent-worker-32bc5-worker-answer-and-human-ask-mobile-chromium/persisted-worker-sources.png",
+      "note": "Same persisted answer after scrolling to citations; last source is asserted in viewport."
+    }
+  ]
+}

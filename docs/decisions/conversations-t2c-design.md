@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2C-DESIGN
 title: Conversations T2c design and implementation
 date: 2026-10-22
 owner: Dean Fiedler
-status: Build authorised by Dean; implementation in progress; design amendment, independent review and acceptance separate
+status: Implemented in draft PR 660; independent review and Dean's acceptance pending
 versioning: git
 ---
 
@@ -57,9 +57,9 @@ The user schema stores a display name but no assigned job role. Proposed AD-01 r
 
 ## Environment and evidence
 
-Dedicated worktree from current origin/main, branch `codex/conversations-t2c-ui`; no shared-checkout edits, branch switching or stash. Node 24.22.0 and npm 11.19.0 satisfy the current engines (`>=24.21.0 <25`, npm 11.19.0), so ordinary `npm ci` is appropriate. A private disposable PostgreSQL 16 cluster will use a free port other than 5433, 55432 or 51407, database `ppo_synthetic_test`, and `max_locks_per_transaction=1024`. Heavy checks run serially after checking host load.
+Dedicated worktree from current origin/main, branch `codex/conversations-t2c-ui`; no shared-checkout edits, branch switching or stash. Node 24.22.0 and npm 11.19.0 satisfy the current engines (`>=24.21.0 <25`, npm 11.19.0), so ordinary `npm ci` was used. The private disposable PostgreSQL 16 cluster uses port 51427, database `ppo_synthetic_test`, and `max_locks_per_transaction=1024`. Heavy checks ran serially after checking host load.
 
-Implementation and validation are not complete. No visual acceptance, review fingerprint, production readiness, deployment or business transaction is claimed.
+The implementation is in draft PR [#660](https://github.com/deanrfiedler-gif/powerplants-one/pull/660). [Execution evidence](../testing/evidence/conversations-t2c/README.md) distinguishes completed checks, original failed attempts, unchanged-main Windows baselines and remaining CI/review requirements. No visual acceptance, review fingerprint, production readiness, deployment or business transaction is claimed.
 
 ## Approved amendment and implementation adaptations
 
@@ -68,5 +68,9 @@ The named version **Conversations T2 — W3 CRM Activity correction, approved** 
 The implementation keeps the current shell/context and follows P3 over historical partial-answer, broad-reason and automatic-retry illustrations. Source chips use validated citation numbers. People use stored names and Role not recorded. The private Kit provides sparkles; offline evidence uses a white AI mark. No separate accepted warning frame exists; its native modal and bounded copy implement Dean's confirmed R8/U1 interpretation. These adaptations do not grant implementation acceptance.
 
 Observed Conversations CSS defects were repaired locally: surface/border/text aliases now resolve to white/line/ink, and the composer footer restores block layout and 14 px text instead of inheriting the generic site's flex/10 px footer. Geometry/colour assertions and inspected captures cover the repair.
+
+A failing phone geometry test demonstrated the legacy picker appearing below the composer and behind bottom navigation. The thread picker now opens above the composer as drawn in the accepted T2 reference; the existing new-thread dialog uses an in-flow picker above its message field. A Close picker control adds touch dismissal with the same draft/caret/focus behaviour as Escape.
+
+The compiled loopback launcher defaults to NODE_ENV=test. The compiled browser configuration therefore explicitly sets PPO_ASSISTANT=off and records off-state metadata. Historical-answer fixtures run the existing worker in a separate, explicitly non-production synthetic process; enabled UI-to-worker tests use the development harness. The assistant production guard is unchanged.
 
 Node 24.22.0/npm 11.19.0 satisfy engines; ordinary npm ci installed 238 packages without override. Own PostgreSQL 16.15 cluster uses port 51427, ppo_synthetic_test, max_locks_per_transaction=1024 and disposable durability settings; server port 3147. [Execution evidence](../testing/evidence/conversations-t2c/README.md) records checks and limits. Claude review has not occurred; the T2b waiver is not reused.

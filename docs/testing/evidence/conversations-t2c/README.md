@@ -2,4 +2,68 @@
 
 Owner: Dean Fiedler. Builder: Codex. Implementation authorised; owner acceptance and cross-model review remain separate.
 
-Validation is in progress. This record will contain actual commands, counts, failed attempts, baseline comparisons and inspected responsive captures before delivery.
+Draft delivery: [PR #660](https://github.com/deanrfiedler-gif/powerplants-one/pull/660), branch `codex/conversations-t2c-ui`, based on main `bb5da7d148fe60ef3cf28d1666cd41aee51e6d46`. [T2c design and test-first plan](../../../decisions/conversations-t2c-design.md) records authority, approved W3/R8 decisions and adaptations. No migration, capability, grant, dependency, provider or production integration is added.
+
+## Environment and reproducibility
+
+Windows; Node 24.22.0, npm 11.19.0, real `npm ci` (238 installed, 239 audited), no engine override. PostgreSQL 16.15 in an owned disposable cluster, port 51427, database `ppo_synthetic_test`, `max_locks_per_transaction=1024`, 128 MB shared buffers and disposable durability settings. Server port 3147; explicitly local-synthetic, loopback and synthetic identity. Private configuration and raw diagnostic logs remain ignored under the task worktree. Neither credentials nor the private Figma link are published.
+
+Heavy checks ran serially after inspecting PC load. The broad local database attempt was stopped when available RAM approached 1 GB. It is an incomplete attempt, not a pass; the complete affected inventory ran serially instead. No process belonging to another contribution was stopped. The shared checkout was not edited or switched; no stash, rebase or force push was used.
+
+The compiled loopback launcher defaults to NODE_ENV=test; it is not a production runtime. `playwright.compiled.config.ts` explicitly sets PPO_ASSISTANT=off. Enabled end-to-end proof uses a separate non-production development server. The production refusal in `assistantEnabled()` is unchanged. Historical fixtures invoke the existing document worker in a separate, explicitly non-production synthetic process; no browser adapter or runner endpoint exists.
+
+## Executed local checks
+
+| Check | Actual result |
+|---|---|
+| Full unit suite, `npm run test:unit` | 1,030 cases: 1,027 pass, three Windows baseline failures reproduced on unchanged main |
+| Affected unit presentation/composition/picker/validation | 19/19 pass; development workspace/catalogue checks also pass |
+| Complete affected Conversations/assistant database inventory | 78/78 pass across ten files, serial, unchanged 120-second per-test deadline; 34 minutes |
+| Conversations HTTP suites | 11/11 pass, including persisted worker answer, no-store reads and different-reader reason privacy |
+| Enabled T2c browser suite | 16/16 pass on desktop and phone after routes were warm; includes real UI post → queued turn → existing worker → simulated answer with citations |
+| Additional real worker scroll proof | 2/2 pass, verifying citations enter the viewport on desktop and phone |
+| Compiled/off final browser proof | 69 pass, nine intentional skips across the complete four-file desktop/phone inventory; compiled server explicitly off; test process starts without env preloading, matching CI |
+| 8 GB application typecheck and focused browser harness typecheck | Pass after picker/fixture changes |
+| Full tracked-tree lint and build | Pass after picker/fixture changes; zero lint errors or warnings |
+| Status, foundation, naming, migration collision and studio assurance | Pass: 78 parent IDs, 22 issued sources, 13,216 links, 7,002 text files, 91 status fragments; 749 document records; migrations unique/registered/unreserved with open-PR check; studio 366 pages/entries and 50 components, all reviews still pending (340 unreviewed, 26 stale entries) |
+| Runtime dependency audit | Zero runtime vulnerabilities; existing dev-only braces-chain findings remain covered by ADR-0056, no lockfile change |
+
+Database command: `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000` with `tests/database/assistant-{budget,evidence,schema,thread,turns,upgrade}.test.ts`, `conversations-agent-ui.test.ts`, `conversations-context.test.ts`, `conversations-upgrade.test.ts` and `conversations.test.ts`. The braces here abbreviate the six explicitly supplied assistant files, not a change to test inventory. This proves scoped authority, warning refusal/confirmation/replay, permission revocation, P1 withholding, P3 privacy, concurrent runners, upgrades and existing human behaviour. The full local database suite did not complete; all eight CI database shards remain separately required.
+
+Browser commands use the locked Playwright CLI and stable Chrome channel, one worker, existing 45-second case deadline and five-second assertions. Local ignored configs point the existing two projects at port 3147 and an owned server. `tests/browser/conversations-agent.spec.ts` intercepts presentation/read responses and is explicitly mocked. `conversations-agent-worker.spec.ts` posts through the real UI and existing HTTP command, deliberately loses the accepted response, reloads the original receipt, runs `scripts/document-worker.ts`, observes one persisted answer, reruns/reloads without duplicates and verifies the human ask remains Open. `conversations-agent-stored.spec.ts` creates real historical answers through that same worker and checks off-state rendering and different-reader terminal reasons. Existing `conversations.spec.ts` supplies human navigation and context regression proof.
+
+## Failed attempts and baseline comparison
+
+Meaningful red tests preceded implementation: Agent composition/duplication/serialisation cases failed; picker and presentation exports did not exist; server availability/R8 cases lacked their DTO/enforcement; the warning browser case posted without a dialog. The new warning validation case failed before its strict acknowledgement schema existed. A later phone geometry test failed with the picker bottom at 843.7 px below the editor at 412.1 px; the above-composer picker and touch Close control now pass it.
+
+The first full unit run also exposed a contribution-owned catalogue dependency binding, fixed without hiding fixtures or weakening the allowlist. The final run has only these three failures: P06 private adapter write-once/exact hashes and source lookup (`ExactDocumentUnavailable`), and P12 recovery path ordering (`Unsafe recovery directory` instead of the expected outside-Git reason). A fresh worktree at unchanged main `bb5da7d1`, real `npm ci`, and `node --import tsx --test tests/unit/document-store.test.ts tests/unit/recovery.test.ts` reproduced exactly those three failures (one pass, three fail); its Git tree remained clean. No aggregate local unit pass is claimed.
+
+Other contribution/setup corrections are retained: the first database fixture revoked an unrelated shared capability instead of Activity read; initial human browser selectors assumed every option was a person; a browser skip callback had an invalid two-argument signature; and the stored-answer helper omitted loading `.env.local` when the test process did not receive it. The last issue was found by [compiled desktop CI](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39714138308/job/119612777373), not attributed to main. The helper now loads the ignored local file only when DATABASE_URL is absent and retains the disposable-database guard.
+
+The first compiled local attempt inherited assistant-on from local flags: 67 pass, nine skip, two off-state assertion failures. Explicitly setting the compiled server off produced 69 pass, nine skip before the final picker amendment. No production guard or launcher was weakened. A cold development rerun after that amendment had 14 pass and two desktop assertion timeouts while routes compiled; the unchanged warm rerun passed 16/16, followed by the citation scroll proof. The final compiled run without env preloading initially defaulted the ignored local config to port 3000 instead of the owned server's 3147; that connection-refused setup attempt was stopped and retained as `browser-compiled-delivery.log`. The same inventory then passed 69 cases with nine intentional skips using an explicit local base URL. An accidental broad browser filename match and the memory-stopped full database attempt remain incomplete attempts. No deadlines, assertions or inventory were relaxed.
+
+Raw original attempts are retained in ignored `tmp/t2c/`: `unit-full.log`, `unit-final.log`, `baseline-unit.log`, `database-full.log`, `database-focused.log`, `http-focused.log`, `browser-r8-red.log`, `browser-picker-position-red.log`, `browser-agent-first.log`, `browser-compiled.log`, `browser-compiled-final.log`, `browser-enabled-final.log`, `browser-enabled-warm-final.log`, `browser-worker-scroll-final.log` and CI diagnostic logs. Local paths are provenance, not public evidence links or secret-bearing log exports.
+
+## Visual evidence and limits
+
+Codex inspected browser-rendered 1440, 1024, 390 and 320 px captures. Cards, attribution, sources, gaps/coverage and count-only omissions were checked against the [approved W3 amendment captures](../../../reference/ui/my-work/conversations-t2-w3-r01/README.md). At 320 px attribution stacks and a long source label truncates with its permitted accessible name intact. The picker opens above the composer; warning buttons, source links and tagging tools have phone touch targets of at least 44 px. Keyboard selection, atomic backspace, Escape, focus return, warning cancellation, draft changes during preflight, wrong-thread late reads, denied refreshes, scrolling and no horizontal overflow have browser assertions.
+
+Thirteen unmodified PNGs and exact SHA-256 hashes are retained in [captures.json](captures.json), linked to application/test source `556355218102e18c6512fa6369164ba7d3fe3263`. The compiled captures contain mocked presentation fixtures and real stored answers; the enabled worker captures show a real UI post and recovery. Phone screenshots are viewports of the scrolling workspace, not stitched pages. The worker has separate answer-top and source-scrolled views.
+
+| Evidence | Captures |
+|---|---|
+| Mocked answer, turn states and responsive source projection | [1440](mocked-answer-1440.png), [1024](mocked-answer-1024.png), [390](mocked-answer-390.png), [320](mocked-answer-320.png) |
+| Mocked AI/human Carl picker | [1440](mocked-picker-1440.png), [390](mocked-picker-390.png) |
+| Mocked count-only participant warning | [1440](mocked-warning-1440.png), [320](mocked-warning-320.png) |
+| Real stored answer, compiled/off application | [1440](persisted-stored-1440.png), [390](persisted-stored-390.png) |
+| Real enabled UI post, original recovery, worker and human ask | [1440](persisted-worker-1440.png), [390 answer top](persisted-worker-390.png), [390 sources after scrolling](persisted-worker-sources-390.png) |
+
+The current T1 shell/context breakpoints and compact phone header remain. People have stored names and Role not recorded because no assigned role exists. Public/offline captures use the white AI fallback, with the private Kit disabled. P3 takes precedence over outdated partial-answer/reason/automatic-retry illustrations. These are disclosed implementation adaptations, not new acceptance. No page/component review fingerprint was copied or marked accepted. Guides remain Draft; physical-device, screen-reader and Dean's visual acceptance are not claimed.
+
+## CI and review
+
+CI results belong to the published head: use [PR checks](https://github.com/deanrfiedler-gif/powerplants-one/pull/660/checks) and the delivery snapshot in the PR description for final counts and links. Earlier head `d548ccb0` passed the merged-tree check; its compiled stored-answer fixture failure above has a concrete fix and a successful final local replay without env preloading. The locked npm advisory job timed out twice at the registry bulk endpoint (five-minute timeout); a local runtime audit succeeded. [Original/retried advisory run](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/39714138229). No failing external check is called passed.
+
+The seven configured branch-protection contexts were read during delivery: documentation foundation; CRM desktop/mobile persistence; CRM header/board visuals; compiled desktop/mobile aggregate; E1 manual estimate/output/restart; Email Calendar persisted journey/permissions; and P01–P11/CRM application/PostgreSQL aggregate. The application aggregate retains all eight database shards plus ordinary desktop/phone and HTTP/restart groups. CI inventory, assertions and deadlines are unchanged.
+
+The PR remains draft. Independent Claude review has not occurred; CONTRIBUTING requires different-model review before merging security-control changes. The T2b waiver is not reused. Dean decides acceptance and merges; simulated implementation delivery establishes neither business acceptance nor production readiness.
