@@ -8,9 +8,13 @@ Use r20 Register / worklist with a single-add submission form. Reuse PageHeader,
 
 ## Desktop
 
+Accepted design: the [Users and access design decision](../../../decisions/users-and-access-figma-design.md) of 19 October 2026 draws a requests grid with the request number `SYN-PPO-ACR-000nnn` (Q3), person, capability, state, named reviewer, last change, scope, start, requester and version under the built boundary, and Propose as a dialog with the UTC start beside its Brisbane reading and the checks before submission (D6, D7). Captures 06 and 08 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md).
+
 At 1440 × 960 and 1024 × 768 use current shell spacing, type, card and field tokens. Keep names with exact ERP company keys and site numbers. Proposal fields precede the queue; detail identifies the exact UUID, version, parties, dates and reason. Display Approved as awaiting application and Applied as an installed grant, whose future validity is distinct from effective access. Show grant UUID, application actor/time/reason through the saved record and history, and the current Person access handover. Preserve operation IDs and reasons in saved history. Long UUIDs and capability names wrap; there is no invented human reference.
 
 ## Mobile
+
+Accepted design: not drawn on phone.
 
 At 390 × 844 and 320 CSS px stack fields/cards. Keep return and recovery controls visible in flow, preserve labels and keyboard focus, and prevent page-wide overflow. Inputs are UTC and results identify Australia/Brisbane display time. Do not hide grant-scope widening behind colour. Physical device, zoom and screen-reader acceptance remain separate.
 
@@ -23,6 +27,8 @@ Loading or failed reads hide stale content. Permission/working-company command r
 [Working AD-01 HTML](../../access-review/access-review.html), Access changes view; [issued r01](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html); [request decision](../../../decisions/access-change-requests.md) and [application contract](../../../decisions/access-request-application.md). Incoming: exact local identities, current administrative duties and company/site keys. Outgoing: immutable proposal, independent decision and separate exact local grant application evidence. Current Person access must be inspected afresh. Parent IDs NFR-01–NFR-12, CRM-08 and FIN-06 remain unchanged. D-020 stays open.
 
 ## Evidence and review
+
+Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). Building it is not decided; the native page remains the built page.
 
 [Execution ledger](../../../testing/evidence/access-requests/README.md). Host fixture: tests/browser/access-requests.spec.ts. Accepted native and mobile mockup images are missing. Functional proof, implementation/reference captures, owner visual approval and deployment are separate. No review fingerprint is assigned by this implementation.
 

@@ -14,11 +14,15 @@ Implement users, roles, teams and access-review pages; current server permission
 
 ## Desktop
 
+Accepted design: the [Users and access design decision](../../../decisions/users-and-access-figma-design.md) of 19 October 2026 covers the identity register, person access with Check eligibility and Compare bundle, the capability catalogue, and access requests with the independent decision and Propose, with thirteen icon-free captures in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md). Departures D1–D8 and answers Q1–Q6 are recorded there. Nothing new is built; the native pages remain the built pages.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 10–13 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md): the Active list, person access at 390 and 320, and five phone states.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -35,6 +39,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 - [PPO-Users-Roles-and-Access-Review-r01.html](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html)
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). Role bundles, Local teams, the Capability grants view, request apply, return and withdraw states, review attestations and 200% zoom are not drawn. Building it is not decided; the native page remains the built page.
 
 The draft User Guide `guide.ad.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
