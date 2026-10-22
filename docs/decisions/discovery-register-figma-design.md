@@ -46,6 +46,7 @@ This is a design decision. It authorises none of the following:
 | Accept the design | User decision, 18 October 2026 | Quoted above |
 | Named Figma version | User decision, 18 October 2026 | "Yes, save the named version "Discovery register — Pipedrive pattern, accepted" in the Figma desktop app." Saved in the Figma desktop app by a Claude session on Dean's yes and seen in version history at about 18:24 AEST as Dean Fiedler's entry. Afterwards only the page header's Status and Named version fields were updated; no frame changed |
 | Opportunity number format | User decision, 18 October 2026, after acceptance | "Yes, correct the Discovery register frames to SYN-PPO-OPP- numbers and refresh the captures." The frames were corrected and the captures remade (section 6) |
+| Opportunity number prefix | User decision, 22 October 2026 | "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." Then: "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The frames show `SYN-OPP-…`; r02 captures replace the changed images (section 8) |
 | Proposed list-read fields | Build work, not confirmed data | Section 5 |
 | Building the page | Not decided | Section 5 |
 
@@ -61,8 +62,8 @@ This is a design decision. It authorises none of the following:
 | States | Phone 390: loading `1400:355914`; no matching workspaces `1400:356040`; could not load `1400:356154`. Desktop 1440: no workspaces yet `1402:3944`; view only, no create permission `1402:4539` |
 | Page parts | Section "Parts (proposal)" `1400:345375`: Discovery grid header `1400:345376` and Discovery grid row `1400:345440` (row set). They stay on the page, as the Sites and People parts do |
 | Flow | "Discovery register — desktop (proposal)", starting at `1400:345640`: the Northbank row opens the snapshot and Close returns |
-| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (SYN-PPO-OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Northbank's number is SYN-PPO-OPP-000326, the app's synthetic display number format (section 6). Titles, customers and estimate versions follow Intake & workload's saved estimates |
-| Retained captures | [Discovery register design r01](../reference/ui/estimating/discovery-register-figma-design-r01/README.md): eight icon-free PNGs with hashes |
+| Story | Synthetic, as at Tue 13 Oct 2026 09:00, signed in as Dean Fiedler. Eight workspaces. Northbank (SYN-OPP-000326) matches the accepted wizard: alternatives A Base scope (selected), B Reduced scope and C Staged delivery; A r03 saved 20 Sep 2026, Incomplete with two systems to confirm; estimate v04 AUD 58,400.00 costed on r02. Northbank's number is SYN-OPP-000326 (section 8; it read SYN-PPO-OPP-000326 after the section 6 correction). Titles, customers and estimate versions follow Intake & workload's saved estimates |
+| Retained captures | [Discovery register design r01](../reference/ui/estimating/discovery-register-figma-design-r01/README.md): eight icon-free PNGs with hashes; [r02](../reference/ui/estimating/discovery-register-figma-design-r02/README.md) replaces images 02, 06 and 07 for the `SYN-OPP-` numbers (section 8) |
 
 ## 3. Conformance declaration
 
@@ -79,7 +80,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
 | Proposed departures | The list read gains customer, estimator, last changed and cost-basis state (today it returns number, title and options only); the heading "Scope and options" becomes the rail label; D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Discovery register — Pipedrive pattern, accepted", saved 18 October 2026 |
+| Named version | "Discovery register — Pipedrive pattern, accepted", saved 18 October 2026; "Discovery register — Pipedrive pattern, accepted (SYN-OPP- numbers)", saved 22 October 2026 (section 8) |
 
 ## 4. What the design shows
 
@@ -170,3 +171,11 @@ At 320 the second lines keep the number and customer, and "SYN Greenhouse Demons
 - The frames were then changed by the number correction in section 6, so the named version "Discovery register — Pipedrive pattern, accepted" shows the earlier `OPP-` numbers. The captures show the corrected frames. A later named version for the corrected frames is saved only on Dean's yes.
 - The page has one prototype flow. Claude did not play it in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 8. Number prefix change, 22 October 2026
+
+Dean: "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." The application already allocates new references as `SYN-<TYPE>-…` since migration 0114 (#650); existing `SYN-PPO-` references stay permanent there. Every `SYN-PPO-` text in the Discovery register frames, parts and icon-free capture copies became `SYN-`. Layout, content, decisions and stories are otherwise unchanged; the notes card keeps Dean's earlier words verbatim and adds a dated line.
+
+- Captures: [Discovery register design r02](../reference/ui/estimating/discovery-register-figma-design-r02/README.md) holds the three changed images (02 Northbank snapshot, 06 phone list, 07 phone 320 list). Every re-export was compared by SHA-256 with r01; images that came out identical, or hold no number, keep r01 as their reference. r01 is retained byte for byte.
+- Named version: "Discovery register — Pipedrive pattern, accepted (SYN-OPP- numbers)", saved 22 October 2026 at Dean's "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The earlier named versions show the earlier numbers: "Discovery register — Pipedrive pattern, accepted" (`OPP-`), and "Discovery register — SYN-PPO numbers, accepted" (`SYN-PPO-OPP-`), which the page header records as saved on 18 October 2026 after the section 6 correction. That second version was not recorded here before, and this change did not check it in version history.
+- No application code, migration or test changed.
