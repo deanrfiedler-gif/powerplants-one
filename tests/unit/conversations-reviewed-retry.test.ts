@@ -8,6 +8,7 @@ import {
 } from "../../src/shared/lib/command-journal";
 import {
   originalPostPreview,
+  originalParticipantWarnings,
   retainedPost,
   reviewedParticipantPatch,
 } from "../../src/conversations/reviewed-retry";
@@ -202,4 +203,14 @@ test("storage failure cannot silently replace the original pending command", () 
     /quota/,
   );
   assert.deepEqual(readJournal(storage, "key", scope, accepts), before);
+});
+
+test("reviewing the original requires every tagged person in the current people projection", () => {
+  const input = retainedPost(original())!;
+  const person = { id: id(5), display_name: "SYN Original person", role: "Role not recorded" };
+  assert.equal(originalParticipantWarnings(input, []), null);
+  assert.equal(originalParticipantWarnings(input, [{ ...person, id: id(6) }]), null);
+  assert.deepEqual(originalParticipantWarnings(input, [person]), []);
+  const warned = { ...person, history_warning: { count: 1, basis: "b".repeat(64) } };
+  assert.deepEqual(originalParticipantWarnings(input, [warned]), [warned]);
 });

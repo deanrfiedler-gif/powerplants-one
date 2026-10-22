@@ -24,7 +24,7 @@ import type { Thread } from "./thread-view";
 import type { PeopleRead, Person } from "../picker-options";
 import type { ParticipantAcknowledgement } from "../participant-warning";
 import { ParticipantWarning } from "./participant-warning";
-import { originalPostPreview, retainedPost, reviewedParticipantPatch } from "../reviewed-retry";
+import { originalPostPreview, originalParticipantWarnings, retainedPost, reviewedParticipantPatch } from "../reviewed-retry";
 import type { JournalEntry } from "../../shared/lib/command-journal";
 
 type Anchor = { type: AnchorType; id: string };
@@ -311,9 +311,14 @@ export function ThreadComposer({
     try {
       const people = await api<PeopleRead>(`conversations/people?anchor_type=${thread.anchor.type}&anchor_id=${thread.anchor.id}&thread_id=${thread.id}`);
       if (token !== generation.current.value || currentDraft.current !== heldDraft) return;
-      const candidates = input.mentions.flatMap((m) => m.kind === "Person" ? [m.person_id] : []);
+      const warnings = originalParticipantWarnings(input, people.items);
+      if (!warnings) {
+        setLocalError("The original’s tagged people could not all be checked. The original and your current draft are retained; try again.");
+        requestAnimationFrame(() => { if (token === generation.current.value) opener?.focus({ preventScroll: true }); });
+        return;
+      }
       setReview({
-        people: people.items.filter((p) => candidates.includes(p.id) && p.history_warning),
+        people: warnings,
         draft: heldDraft, input: { ok: true, body: input.body, mentions: input.mentions, asks: input.asks },
         opener, original: { entry, preview: originalPostPreview(input, people.items) },
       });

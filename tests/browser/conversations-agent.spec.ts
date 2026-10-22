@@ -113,7 +113,7 @@ test("T2c R8 warning offers cancel, confirmed send and a new thread on the same 
   await expect(warning).toHaveCount(0);
 });
 
-for (const late of ["none", "before-review", "before-repost"] as const) {
+for (const late of ["none", "before-review", "before-repost", "no-current-warning"] as const) {
   test(`T2c an uncommitted R8 original can be reviewed after key rotation; late receipt ${late}`, async ({
     page,
     isMobile,
@@ -122,6 +122,7 @@ for (const late of ["none", "before-review", "before-repost"] as const) {
       await page.setViewportSize({ width: 320, height: 844 });
     const { thread, reader } = await fixture(page);
     let posts = 0;
+    let peopleVisible = true;
     let original!: Record<string, unknown>, retried!: Record<string, unknown>;
     await page.route("**/api/v1/conversations/people?*", async (route) => {
       const response = await route.fetch();
@@ -129,17 +130,17 @@ for (const late of ["none", "before-review", "before-repost"] as const) {
         response,
         json: {
           agent: { name: "Carl", label: "Carl · AI assistant" },
-          items: [
+          items: peopleVisible ? [
             {
               id: reader,
               display_name: "Carl Jensen",
               role: "Role not recorded",
-              history_warning: {
+              history_warning: posts && late === "no-current-warning" ? undefined : {
                 count: posts ? 1 : 2,
                 basis: (posts ? "b" : "a").repeat(64),
               },
             },
-          ],
+          ] : [],
         },
       });
     });
@@ -203,13 +204,23 @@ for (const late of ["none", "before-review", "before-repost"] as const) {
       exact: true,
     });
     await expect(reviewButton).toBeVisible();
+    peopleVisible = false;
+    await reviewButton.click();
+    await expect(page.getByText(/The original’s tagged people could not all be checked/)).toBeVisible();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(message).toHaveValue("SYN newer draft must survive");
+    await expect(reviewButton).toBeFocused();
+    expect(posts).toBe(2);
+    peopleVisible = true;
     await reviewButton.click();
     const warning = page.getByRole("dialog", {
       name: "Review original message",
       exact: true,
     });
     await expect(warning).toContainText("SYN original delivery question");
-    await expect(warning).toContainText("Carl Jensen: 1 source");
+    if (late === "no-current-warning")
+      await expect(warning).toContainText("No new source warning is currently needed");
+    else await expect(warning).toContainText("Carl Jensen: 1 source");
     await expect(warning).not.toContainText("SYN newer draft");
     await expect(warning.getByRole("button", { name: "Cancel", exact: true })).toBeFocused();
     if (isMobile)
@@ -244,7 +255,7 @@ for (const late of ["none", "before-review", "before-repost"] as const) {
       expect(posts).toBe(3);
       expect(retried).toEqual({
         ...original,
-        participant_acknowledgements: [
+        participant_acknowledgements: late === "no-current-warning" ? [] : [
           { person_id: reader, basis: "b".repeat(64) },
         ],
       });

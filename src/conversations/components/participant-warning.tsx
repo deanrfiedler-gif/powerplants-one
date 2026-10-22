@@ -53,7 +53,7 @@ export function ParticipantWarning({
             Earlier {agentName} answers cite records these people cannot open:
           </>
         ) : (
-          "No earlier cited sources are currently unavailable to the tagged people."
+          "No new source warning is currently needed for the tagged people."
         )}
       </p>
       <ul>

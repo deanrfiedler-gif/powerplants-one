@@ -76,3 +76,12 @@ export function originalPostPreview(
       .join("")
   );
 }
+
+export function originalParticipantWarnings(
+  input: NonNullable<ReturnType<typeof retainedPost>>,
+  people: PeopleRead["items"],
+) {
+  const candidates = input.mentions.flatMap((m) => m.kind === "Person" ? [m.person_id] : []);
+  if (candidates.some((id) => !people.some((p) => p.id === id))) return null;
+  return people.filter((p) => candidates.includes(p.id) && p.history_warning);
+}
