@@ -3,13 +3,13 @@ document_id: PPO-CALLS-CALLER-ID-PROP
 title: Calling, caller ID and call logging, design paper
 date: 2026-10-23
 owner: Dean Fiedler
-status: Direction accepted by the owner 23 October 2026; Q1–Q12 await his decision; nothing is built, and no route, migration, capability, dependency, provider connection or app-store listing is authorised by this record
+status: Accepted by the owner 23 October 2026 (direction, and Q1–Q12 as recommended); stage 1a and 1b authorised; stages 1c, 2, 3 and 4 not authorised; no provider connection or app-store listing is authorised by this record
 versioning: git
 ---
 
 # Calling, caller ID and call logging, design paper
 
-**Owner:** Dean Fiedler. **State:** Direction accepted by the owner, 23 October 2026: "Proceed: write the calling spec and the native app ADR on the recommended basis, and start with stage 1." That acceptance covers the shape in section 3 and the stage order in section 7. The detailed rules in sections 4–6 are proposed, and Q1–Q12 in section 8 carry recommended answers that wait for his decision. Each stage still needs its own authorisation and its own pull requests.
+**Owner:** Dean Fiedler. **State:** Direction accepted by the owner, 23 October 2026: "Proceed: write the calling spec and the native app ADR on the recommended basis, and start with stage 1." That acceptance covers the shape in section 3 and the stage order in section 7. After asking for the reasoning behind each recommendation, he accepted the rest the same day: "Proceed with your recommended answers to Q1 to Q12 of the calling paper, and start stage 1 (1a Figma proposal and 1b server core)." The rules in sections 4–6 and the answers in section 8 are therefore adopted. Stages 1a and 1b are authorised. Stage 1c, which builds the web UI, waits for the 1a design to be accepted. Stages 2, 3 and 4 each still need their own authorisation and pull requests.
 
 **Raised by:** Dean, 23 October 2026: "The Pipedrive CRM platform has a feature that allows it to connect to the users phone, contacts, etc., for making calls. For example, if someone calls the users mobile file, it will show that it is a Pipedrive contact, along with the details of the contact. After the call is finished, the user can then record the activity, notes relating to the call, and schedule the next activity. I want to make sure we include a feature like this in the Powerplants One app."
 
@@ -200,7 +200,9 @@ Stages 1a and 1b can run at the same time because they touch different files. St
 
 ## 8. Questions for Dean, with recommended answers
 
-| # | Question | Recommended answer |
+Dean accepted every recommended answer on 23 October 2026 (see the State paragraph above).
+
+| # | Question | Recommended answer (accepted) |
 |---|---|---|
 | Q1 | Can a person have several numbers? | **Yes.** Labels Mobile, Work, Home and Other, with one primary. The existing number moves across as primary, labelled Other, unchanged. |
 | Q2 | Do organisations get main numbers? | **Yes**, so calls from reception lines are recognised. |
