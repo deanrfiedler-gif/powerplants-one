@@ -15,6 +15,9 @@ test("T2e catalogue: exact 9+108 combinations, separate ten offline proofs, sour
   assert.equal(c.offline_proofs.length, 10);
   for (const change of [
     (c: ReturnType<typeof catalogue>) => { c.cases[0].id = "O01"; },
+    (c: ReturnType<typeof catalogue>) => { c.record_sets.deal.stage_id = "Won"; },
+    (c: ReturnType<typeof catalogue>) => { c.record_sets.activities[1].summary = "SYN contradictory source"; },
+    (c: ReturnType<typeof catalogue>) => { c.cases[0].gold[0].support[0].equals = "Won"; },
     (c: ReturnType<typeof catalogue>) => { c.models.pop(); },
     (c: ReturnType<typeof catalogue>) => { c.repetitions.Calibration = 2; },
     (c: ReturnType<typeof catalogue>) => { c.cases[0].requirements.push("AIA-99"); },
