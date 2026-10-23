@@ -87,4 +87,55 @@ The first new persisted attempts found fixture errors (site-party date needed a 
 
 Evidence classes: **Persisted synthetic integration** for preparation, **offline pure construction** for request fitting/hash/catalogue, **Actual SDK / mocked transport** for inherited provider regression. No Live model evidence exists. Source/gold factual comparisons do not execute the human answer rubric. Corpus approval, exact-run/spending authority, calibration acceptance, model selection and production readiness remain pending.
 
-Exact proposed inventory, numeric forecast and current-head validation are recorded below after the final export. No approval_reference, calibration acceptance or live-run manifest is issued.
+No approval_reference, calibration acceptance or live-run manifest is issued.
+
+### Retained proposed inventory
+
+Materialised once from implementation commit `ef93b007443229cdd0100d2942dba429f97abfa1` on a separate task-owned PostgreSQL 16 loopback cluster (51483). This is a newly prepared, never-run synthetic workspace. It has no evaluation run binding and has never been reset. The regression cluster uses 51481. Both are stopped after validation; the proposed cluster and its original attempt/state/inventory files are retained outside Git. Restart that same cluster for later read-only verification, never replace it to evade an outcome.
+
+The [complete proposed inventory](proposed-inventory.json) retains one member per line for review; [numeric fitting/cost CSV](offline-bounds.csv) has all 117 exact rows. The public copy was checked against the generated object, inspected for the allowed synthetic-only projection and confirmed to exclude prohibited source values, message/provider bodies and approval fields. Private operator/approval mappings are absent. IDs and source facts here are synthetic; no real account material is included.
+
+- Catalogue canonical hash: `1ff49b02b4a3df59ccd090cc4f74a5ba9a1bb98184aa20df01ffe7e6b8900b3b`.
+- Proposed inventory canonical hash: `510fd742699194ca019a6e6742aa9591696eacf6fe40e84ce016a3cc07e816ac`.
+- Canonical preparation/request source hash: `63ead2097143a50aacad268711ab4057b0a07f1a71b02570e6a2992ff9fbcf76`.
+- **117 members = 9 calibration + 108 main**, 39 per model; 117 distinct organisations/sites/threads/triggers; **483 human messages**, **642 included source entries**, **315 exact gold-field support mappings**. O01–O10 remain ten offline proof definitions, not live members or additional turns.
+- All 117 turns Queued; no assistant answers or budget entries. A second command reconstructed every unfitted envelope and matched the same inventory hash. Rerunning materialisation is refused; export does not overwrite or manufacture replacement state.
+
+Each member binds model/stage/repetition, tagger/current company/readers, generated aliases and human-message IDs, source IDs/versions/fields, exact gold support, excluded-source mappings, evidence hash and request bounds. `evaluationEvidenceHash` covers the full unfitted envelope, including history/question/readers; retrieval times/routes are excluded by its existing semantics. `evaluationHash(report)` is the inventory hash, independent of JSON formatting. No file-byte hash is substituted for either.
+
+### Offline fitting and price scenarios
+
+All 117 first requests fit under the existing 48,000-input allowance; **zero irreducible first requests**. An artificially insufficient allowance is separately proved irreducible/unsent in unit tests. No network/token-count API was used. The exact question, newest entry and source items are asserted unchanged during fitting.
+
+| Model | Turns | Request-byte range | Sum of conservative input estimates | First-call scenario with assumed 1,000 inclusive output per turn |
+|---|---:|---:|---:|---:|
+| Sonnet 5.5 | 39 | 3,116–37,022 | 614,075 | $1.618150 |
+| Haiku 5.5 | 39 | 3,129–37,035 | 614,555 | $0.080977 |
+| Opus 5.5 | 39 | 3,127–37,033 | 614,450 | $3.237800 |
+| Total | 117 | | 1,843,080 | **$4.936927** |
+
+Prices are the committed dated versions recorded in every CSV row; integer micro-USD rounding applies per turn. Calibration contributes $0.507901 and main $4.429026 to that scenario. It is an **offline estimate with an output assumption**, not actual tokenizer usage, structured-output overhead or billing. With 8,000 inclusive output per first call instead, calibration is $1.148401 and main $12.115026, total **$13.263427**. Full-turn reservations still total $20.9352. A 50% planning contingency on the 1,000-output scenario is $7.4053905, beyond the proposed $5 cap. Reservation-first admission may stop before all members even when the eventual scenario total is below $5. The corpus is not promised to finish at that cap; no cap increase or spending permission is implied.
+
+C03 starts with 22 canonical human messages including kickoff/trigger, and L12 does likewise: the existing retrieval window returns 20, then fitting omits 9 and retains 11. C03 first-repetition bytes/input are Sonnet 37,018/45,210, Haiku 37,031/45,223 and Opus 37,029/45,221. L12 is 37,022/45,214, 37,035/45,227 and 37,033/45,225 respectively. The first two stored messages, including L12's earliest conflicting Won text, are outside the bounded retrieval window; this fixture therefore tests truthful incomplete history and current source grounding, not model resolution of a conflict it never sees. This limitation is explicit for Dean's corpus review. L04 remains the case with both conflicting current sources visible. L06 returns 10 siblings/20 Activities with both more flags true; L10 has exactly one count-only access omission.
+
+### Validation and remaining gates
+
+- Assistant unit regression **52/52 passed** in one final controlled-launch run; preparation adds four unit cases.
+- Existing persisted SDK/evaluation/evidence regression **28/28 passed** (459.5 seconds), using intercepted transport/dummy values only.
+- New persisted preparation suite **4/4 passed** (94.1 seconds); actual canonical materialise plus independent repeat-export commands also passed against the separately retained proposed corpus.
+- Typecheck and affected-file ESLint passed. Foundation, naming, status and development-register integrity passed; **342 unreviewed / 26 stale** entries remain, with no visual acceptance granted. Remaining repository checks and exact-head CI are recorded on the draft PR.
+- Initial claim commit `85922fd` failed documentation/merged-tree checks because its new status fragment lacked required front matter. The implementation commit corrects the fragment, and local foundation/status checks pass. No test or check was weakened.
+- Independent review of this new contribution is **pending**. Codex inspection and CI do not constitute Claude review. Historical #679 review applies only to its named head.
+
+| Gate | Disposition |
+|---|---|
+| Catalogue structure/counts/traceability/sentinels | Tooling and deterministic checks delivered; corrected recipe/claim meaning awaits Dean's review |
+| Canonical isolated materialisation | Delivered; exact proposed instances retained; all turns queued |
+| Read-only hashes/gold export | Delivered; repeat-read hash matches; source/access/context/membership negative proof passes |
+| Request bounds/cost | Delivered offline; no tokenizer/overhead/actual billing or quality evidence |
+| Exclusive workers | Current clients observed; separate owned cluster stopped and retained; future ownership remains procedural |
+| Corpus/run/cost approval | Pending Dean; no manifest, run UUID, approval reference or acceptance hash issued |
+| Billing/credit/backstops/region/retention/private key procedure | Pending non-secret confirmation for a later separately authorised run |
+| Independent review and merge | Pending; PR remains draft and unmerged; #679 merge permission does not extend to it |
+| Calibration/live evaluation/owner acceptance/production | Not performed or granted |
+
