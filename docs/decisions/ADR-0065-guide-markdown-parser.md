@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Status: proposed. Nothing is installed until Dean accepts this record. The user guide direction ([PPO-USER-GUIDE-PROP](user-guide-direction.md), Q2 and section 4.2) requires this ADR before stage 1 builds anything. Dean asked for it on 23 October 2026: "Proceed with stage 1: write the ADR for the Markdown parser and sanitiser, then the build plan."
+Status: accepted by the owner on 23 October 2026: "Proceed: I accept ADR-0065 as written. Record my decision and start the stage 1 build using the plan, subagent-driven." The stage 1 build follows the [build plan](../superpowers/plans/2026-10-23-user-guide-stage-1.md). The user guide direction ([PPO-USER-GUIDE-PROP](user-guide-direction.md), Q2 and section 4.2) required this ADR before stage 1 built anything. Dean asked for it on 23 October 2026: "Proceed with stage 1: write the ADR for the Markdown parser and sanitiser, then the build plan."
 Date: 23 October 2026. Owner: Dean Fiedler. Builder: Claude.
 
 Related:

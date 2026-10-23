@@ -37,7 +37,7 @@ Not done:
 - **Dependency gates.** Installing the packages changes `package-lock.json`. Managed DK-06 templates then need republishing (ADR-0056), and the build PR must report the audit gates.
 - **Reviews will go stale.** All 26 register entries with a recorded visual review will show as changed since review, because the guide modules are shared sources. No fingerprint will be refreshed without a review.
 - **Departure.** Carrying the released guides over removes their keys' `guides.json` drafts in stage 1, rather than at each module's rewrite (direction paper, section 4.3). Their text stays in Git history.
-- **Decision pending.** ADR-0065 awaits Dean's acceptance.
+- **Decision.** Dean accepted ADR-0065 on 23 October 2026: "Proceed: I accept ADR-0065 as written. Record my decision and start the stage 1 build using the plan, subagent-driven." The build's own fragment records its progress.
 
 <!-- decision-index -->
-[ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) (PPO-ADR-0065) proposes marked's lexer and yaml for user guide Markdown, compiled at build time to an allowlisted model and rendered by React without HTML strings. Proposed; awaiting the owner.
+[ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) (PPO-ADR-0065) adopts marked's lexer and yaml for user guide Markdown, compiled at build time to an allowlisted model and rendered by React without HTML strings. Accepted by the owner 23 October 2026.
