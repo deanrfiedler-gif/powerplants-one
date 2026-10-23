@@ -19,7 +19,7 @@ Build from **PPO - Design**, page `1414:356570`, named version **Create discover
 | Needs attention / no eligible opportunities / phone loading | `1416:359389`, `1416:359903`, `1416:365050` |
 | Parts / Opportunity choice row / notes | `1415:360239`, `1415:360253`, `1416:366159` |
 
-The [eleven retained icon-free captures](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md) remain immutable evidence. Live frames supply layout and variants; the captures cross-check provenance. The older [wizard HTML](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is historical context.
+The [eleven retained icon-free captures](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md) remain immutable evidence; [r02](../../../reference/ui/estimating/create-discovery-workspace-figma-design-r02/README.md) replaces nine of them for the `SYN-OPP-…` numbers shown since 22 October 2026. Live frames supply layout and variants; the captures cross-check provenance. The older [wizard HTML](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is historical context.
 
 The later [reviewed creation direction](../../../decisions/discovery-creation-journey.md) authorises initial estimator assignment and saving the exact accepted Sales link in the creation transaction. [Creation contract](../../../contracts/discovery-creation.md) and [LC-13](../../../contracts/lead-to-delivery-continuity.md) govern the relationship. Sales receiver, creator and assigned estimator remain distinct. This page introduces no migration, capability, dependency or operating rule; it depends on the separate prerequisite.
 

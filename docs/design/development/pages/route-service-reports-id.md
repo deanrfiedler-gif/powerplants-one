@@ -24,6 +24,23 @@ Source: **PPO - Design**, page **1265:53**, named version **Service review and r
 
 Page parts: **1265:122**. Binding notes: **1271:299637**. Index: **630:2**, SV-06 row **1277:298201**. Captures 01–12 are in [Service review design r01](../../../reference/ui/service/service-review-design-r01/README.md); they remain unchanged. Live frames, not retained HTML or generated code, supply the composition.
 
+**FI-07 Customer response tab, accepted 22 October 2026.** Page **1490:70**; [decision](../../../decisions/customer-response-figma-design.md) (D1–D7, Q1–Q4); captures in [Customer response design r01](../../../reference/ui/service/customer-response-design-r01/README.md). Not built: the embedded response form below remains the built tab.
+
+| View | Figma node | FI-07 capture |
+| --- | --- | --- |
+| No response yet | 1490:111 | 01 |
+| Presenting the issued report | 1491:393540 | 02 |
+| Record customer response | 1490:311 | 03 |
+| Responses recorded | 1490:411 | 04 |
+| Correct or clarify | 1490:511 | 05 |
+| After correction | 1490:611 | 06 |
+| Save not confirmed | 1490:711 | 07 |
+| Tablet, after correction | 1495:393233 | 08 |
+| Phone Response view | 1490:870 | 09 |
+| Phone record response sheet / 320 | 1490:938 / 1496:2772 | 10 / 13 |
+| Phone waiting to send / recorded | 1490:960 / 1490:1028 | 11 / 12 |
+| Phone states | 1490:1118, 1490:1186, 1490:1254, 1490:1322, 1490:1390 | 14 |
+
 ## Desktop
 
 D1: a flush register with the shared Service rail and 240 px secondary menu. All reports / My reviews; Review: To review, Returned to technician, Ready to issue; After issue: Awaiting response, Response not accepted, Remaining work open. My reviews means the currently owned work order, not a new assignment grant. Counts and filters cover only the permitted members of the existing latest-200 candidate window (Q1); older reports remain linked from attendance.

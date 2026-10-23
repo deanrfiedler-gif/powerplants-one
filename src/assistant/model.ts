@@ -38,6 +38,8 @@ export type EvidenceEnvelope = {
   items: EvidenceItem[];
   coverage: Partial<Record<keyof typeof envelopeLimits | "acceptance_stages", Coverage>>;
   left_out: number;
+  /** Included in left_out; kept separate internally for truthful rendered omission reasons. */
+  history_left_out?: number;
 };
 // Internal record IDs, routes and reader identities never cross the adapter boundary.
 export type AdapterRequest = {
@@ -69,6 +71,8 @@ export class AdapterError extends Error {
 export interface AssistantAdapter {
   readonly label: AdapterLabel;
   readonly model: string;
+  /** Provider-specific pre-dispatch bound; simulation retains its fixture meter. */
+  inputTokens?(request: AdapterRequest): number;
   answer(request: AdapterRequest, signal: AbortSignal): Promise<AdapterResult>;
 }
 export const requestTokens = (request: Pick<AdapterRequest, "question" | "envelope">) =>

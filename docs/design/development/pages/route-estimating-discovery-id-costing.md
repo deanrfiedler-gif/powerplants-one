@@ -16,7 +16,7 @@ Stable entry: `route:/estimating/discovery/[id]/costing`. Scope: **ES-02**. Owne
 | Adopting / uncertain / original retained / denied | `1433:376501`, `1431:2114`, `1431:2129`, `1431:2143` |
 | Loading / notes | `1431:2157`, `1431:2195` |
 
-The ten icon-free retained captures are in `docs/reference/ui/estimating/discovery-costing-figma-design-r01/`, numbered 01–10; exact filenames remain in this entry's `image_paths`. These source bytes are unchanged. The earlier container HTML is `docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html`; it is historical context. No dedicated line-editor, Cost types, costing Alternatives/Revisions, or phone review-dialog image is supplied. The notes card supplies Q4's phone-editor authority.
+The ten icon-free retained captures are in `docs/reference/ui/estimating/discovery-costing-figma-design-r01/`, numbered 01–10; exact filenames remain in this entry's `image_paths`. These source bytes are unchanged; `discovery-costing-figma-design-r02/` replaces images 01–08 for the `SYN-OPP-…` numbers shown since 22 October 2026. The earlier container HTML is `docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html`; it is historical context. No dedicated line-editor, Cost types, costing Alternatives/Revisions, or phone review-dialog image is supplied. The notes card supplies Q4's phone-editor authority.
 
 ## Workflow and handovers
 

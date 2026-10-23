@@ -14,18 +14,34 @@ import { Composer, serverAllocated } from "./composer";
 import { announceConversationsChanged } from "./conversations-workspace";
 import type { LinkableRecord } from "./mention-picker";
 
-type Chosen = { type: AnchorType; id: string; display_number: string; title: string };
+type Chosen = {
+  type: AnchorType;
+  id: string;
+  display_number: string;
+  title: string;
+};
 
 const parseRecord = (value: string | null) => {
   const [type, id] = (value ?? "").split(":");
   return anchorTypes.includes(type as AnchorType) && /^[0-9a-f-]{36}$/.test(id ?? "") ? { type: type as AnchorType, id: id! } : null;
 };
 
-function AboutPicker({ chosen, onChoose }: { chosen: Chosen | null; onChoose: (c: Chosen | null) => void }) {
+function AboutPicker({
+  chosen,
+  onChoose,
+}: {
+  chosen: Chosen | null;
+  onChoose: (c: Chosen | null) => void;
+}) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const listId = useId();
-  const read = usePlatformResource<{ items: LinkableRecord[] }>(chosen ? null : `conversations/records?q=${encodeURIComponent(query.trim())}`, false);
+  const read = usePlatformResource<{ items: LinkableRecord[] }>(
+    chosen
+      ? null
+      : `conversations/records?q=${encodeURIComponent(query.trim())}`,
+    false,
+  );
   const items = read.data?.items ?? [];
   const current = Math.min(active, Math.max(items.length - 1, 0));
   const choose = (r: LinkableRecord) => onChoose({ type: r.record_type, id: r.id, display_number: r.display_number, title: r.title });
@@ -47,7 +63,9 @@ function AboutPicker({ chosen, onChoose }: { chosen: Chosen | null; onChoose: (c
         aria-label="About"
         aria-expanded="true"
         aria-controls={listId}
-        aria-activedescendant={items[current] ? `${listId}-${current}` : undefined}
+        aria-activedescendant={
+          items[current] ? `${listId}-${current}` : undefined
+        }
         placeholder="Find a deal or project"
         value={query}
         onChange={(e) => {
@@ -72,7 +90,14 @@ function AboutPicker({ chosen, onChoose }: { chosen: Chosen | null; onChoose: (c
       )}
       <ul id={listId} role="listbox" aria-label="Records">
         {items.map((r, i) => (
-          <li key={r.id} id={`${listId}-${i}`} role="option" aria-selected={i === current} onMouseDown={(e) => e.preventDefault()} onClick={() => choose(r)}>
+          <li
+            key={r.id}
+            id={`${listId}-${i}`}
+            role="option"
+            aria-selected={i === current}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => choose(r)}
+          >
             {r.display_number} · {r.title}
           </li>
         ))}
@@ -81,14 +106,22 @@ function AboutPicker({ chosen, onChoose }: { chosen: Chosen | null; onChoose: (c
   );
 }
 
-export function NewThreadDialog({ initialRecord }: { initialRecord: string | null }) {
+export function NewThreadDialog({
+  initialRecord,
+  returnTo = "/conversations",
+}: {
+  initialRecord: string | null;
+  returnTo?: string;
+}) {
   const router = useRouter();
   const identity = useIdentity();
   const titleId = useId();
   const preset = parseRecord(initialRecord);
   // A record named in the address is looked up among the records the sender can link before it is shown (T1-4).
   const lookup = usePlatformResource<{ items: LinkableRecord[] }>(
-    preset ? `conversations/records?record_type=${preset.type}&record_id=${preset.id}` : null,
+    preset
+      ? `conversations/records?record_type=${preset.type}&record_id=${preset.id}`
+      : null,
     false,
   );
   const found = lookup.data?.items.find((r) => preset && r.id === preset.id && r.record_type === preset.type);
@@ -114,7 +147,7 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
     router.push(`/conversations/${accepted.receipt.record_id}`);
   }, [accepted, router]);
   const pendingTitle = command.pending ? String(command.pending.body.title ?? "") : "";
-  const close = () => router.replace("/conversations");
+  const close = () => router.replace(returnTo);
   const start = async () => {
     if (!chosen) return setLocalError("Choose the deal or project this conversation is about.");
     const input = toMessageInput(draft);
@@ -140,7 +173,13 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
   };
   return (
     <div className="cv-dialog-backdrop">
-      <div className="cv-dialog" role="dialog" aria-modal="true" aria-labelledby={titleId} onKeyDown={(e) => e.key === "Escape" && close()}>
+      <div
+        className="cv-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        onKeyDown={(e) => e.key === "Escape" && close()}
+      >
         <header className="cv-dialog-head">
           <h2 id={titleId}>New thread</h2>
           <Button variant="quiet" aria-label="Close" onClick={close}>
@@ -148,8 +187,8 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
           </Button>
         </header>
         <p className="cv-dialog-body">
-          Every thread is about one deal or project, so the people you ask can see what you mean. Only people who can
-          open the record can be asked.
+          Every thread is about one deal or project, so the people you ask can
+          see what you mean. Only people who can open the record can be asked.
         </p>
         <div className="cv-field">
           <span className="cv-field-label">About</span>
@@ -178,12 +217,19 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
             ) : (
               <label className="cv-field">
                 <span className="cv-field-label">Title</span>
-                <input maxLength={200} value={customTitle} onChange={(e) => setCustomTitle(e.target.value)} />
+                <input
+                  maxLength={200}
+                  value={customTitle}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                />
               </label>
             )}
           </div>
         )}
-        <p className="cv-hint">Switch on Ask for anyone you&apos;re asking a question; you can add a reply-by date.</p>
+        <p className="cv-hint">
+          Switch on Ask for anyone you&apos;re asking a question; you can add a
+          reply-by date.
+        </p>
         {localError && (
           <p className="cv-field-error" role="alert">
             {localError}
@@ -191,18 +237,29 @@ export function NewThreadDialog({ initialRecord }: { initialRecord: string | nul
         )}
         {command.pending && (
           <p className="cv-banner" role="status">
-            “{pendingTitle}” has not been confirmed. Retry to confirm it before starting another conversation.
+            “{pendingTitle}” has not been confirmed. Retry to confirm it before
+            starting another conversation.
           </p>
         )}
-        {!!command.error && <ErrorNotice error={command.error} focusOnError={false} />}
+        {!!command.error && (
+          <ErrorNotice error={command.error} focusOnError={false} />
+        )}
         <footer className="cv-dialog-actions">
           <Button onClick={close}>Cancel</Button>
           {command.pending ? (
-            <Button variant="primary" busy={command.busy} onClick={() => void command.retry()}>
+            <Button
+              variant="primary"
+              busy={command.busy}
+              onClick={() => void command.retry()}
+            >
               Retry
             </Button>
           ) : (
-            <Button variant="primary" busy={command.busy} onClick={() => void start()}>
+            <Button
+              variant="primary"
+              busy={command.busy}
+              onClick={() => void start()}
+            >
               Start thread
             </Button>
           )}
