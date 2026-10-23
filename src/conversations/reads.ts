@@ -1,9 +1,15 @@
 import { transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
-import { requireCapability } from "../platform/permissions";
+import { hasPermission, requireCapability } from "../platform/permissions";
 import { opportunityVisibility } from "../crm/context";
 import { projectVisibility } from "../projects/visibility";
-import { choice, uuid } from "../shared/validation";
+import { choice, object, uuid } from "../shared/validation";
+import { unavailable } from "../platform/errors";
+import { assistantEnabled } from "../assistant/config";
+import {
+  participantWarnings,
+  type HistoryWarning,
+} from "./participant-warning";
 import { anchorInput, listInput } from "./validation";
 import {
   personCanReadThread,
@@ -262,9 +268,28 @@ export async function readThread(p: Principal, id: string) {
 
 // T1-3: the `@` picker lists only people who can already read the record and hold the read capability.
 export async function mentionablePeople(p: Principal, value: unknown) {
-  const anchor = anchorInput(value);
+  const input = object(value, ["anchor_type", "anchor_id", "thread_id"]);
+  const anchor = anchorInput({
+    anchor_type: input.anchor_type,
+    anchor_id: input.anchor_id,
+  });
+  const thread =
+    input.thread_id === undefined ? null : uuid(input.thread_id, "thread_id");
   return transaction(async (c) => {
-    await readableAnchor(c, p, anchor.type, anchor.id, "conversation.post");
+    await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
+    const scope = await readableAnchor(
+      c,
+      p,
+      anchor.type,
+      anchor.id,
+      "conversation.post",
+    );
+    await readableAnchor(c, p, anchor.type, anchor.id, "conversation.read");
+    if (thread) {
+      const row = await visibleThread(c, p, thread);
+      if (row.anchor_type !== anchor.type || row.anchor_id !== anchor.id)
+        throw unavailable();
+    }
     const candidates = (
       await c.query(
         `SELECT u.id,u.display_name FROM ppo.users u WHERE u.workspace_id=$1 AND u.active AND u.id<>$2
@@ -274,10 +299,49 @@ export async function mentionablePeople(p: Principal, value: unknown) {
         [p.workspace_id, p.actor_id],
       )
     ).rows;
-    const items: { id: string; display_name: string }[] = [];
+    const items: {
+      id: string;
+      display_name: string;
+      role: string;
+      history_warning?: HistoryWarning;
+    }[] = [];
     for (const u of candidates)
-      if (await personCanReadThread(c, p.workspace_id, u.id, anchor.type, anchor.id)) items.push({ id: u.id, display_name: u.display_name });
-    return { items };
+      if (
+        await personCanReadThread(
+          c,
+          p.workspace_id,
+          u.id,
+          anchor.type,
+          anchor.id,
+        )
+      )
+        items.push({
+          id: u.id,
+          display_name: u.display_name,
+          role: "Role not recorded",
+        });
+    if (thread) {
+      const warnings = await participantWarnings(
+        c,
+        p,
+        thread,
+        items.map((item) => item.id),
+      );
+      for (const item of items)
+        if (warnings.has(item.id)) item.history_warning = warnings.get(item.id);
+    }
+    const agent =
+      assistantEnabled() &&
+      (await hasPermission(
+        c,
+        p,
+        "conversation.agent.ask",
+        scope.company_id,
+        scope.site_id ?? undefined,
+      ))
+        ? { name: agentName, label: agentLabel }
+        : null;
+    return { items, agent };
   });
 }
 

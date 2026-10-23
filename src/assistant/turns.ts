@@ -5,6 +5,7 @@ import { adapterFor } from "./adapters";
 import { checkAnswer, declineBody, renderAnswer } from "./answer";
 import { assistantEnabled } from "./config";
 import { buildEnvelope } from "./evidence";
+import { prepareRequest } from "./request";
 import { dispatchCall, endTurn, findTurn, postAnswer, recordCall, retryAccess, startTurn } from "./commands";
 import { priceFor } from "./pricing";
 import { AdapterError, requestTokens, turnLimits, type AdapterRequest, type AdapterResult, type AssistantAdapter, type EvidenceEnvelope, type TurnReason, type TurnState, type Usage } from "./model";
@@ -19,21 +20,6 @@ function validUsage(value: unknown, allowance: Usage): value is Usage {
   const u = value as Usage;
   return Number.isSafeInteger(u.input_tokens) && u.input_tokens >= 0 && u.input_tokens <= allowance.input_tokens
     && Number.isSafeInteger(u.output_tokens) && u.output_tokens >= 0 && u.output_tokens <= allowance.output_tokens;
-}
-function requestFor(envelope: EvidenceEnvelope, allowance: Usage): AdapterRequest {
-  // Explicit copies enforce the boundary at runtime; a structural TypeScript type alone would not.
-  return {
-    question: { text: envelope.question.text, untrusted: true },
-    envelope: {
-      anchor_type: envelope.anchor_type,
-      messages: envelope.messages.map(m => ({ text: m.text, untrusted: true })),
-      coverage: structuredClone(envelope.coverage), left_out: envelope.left_out,
-      items: envelope.items.map(s => ({
-        source_id: s.source_id, fields: structuredClone(s.fields), untrusted_fields: [...s.untrusted_fields],
-      })),
-    },
-    allowance: { ...allowance },
-  };
 }
 async function invoke(adapter: AssistantAdapter, request: AdapterRequest, remaining: number) {
   const controller = new AbortController();
@@ -63,7 +49,7 @@ export async function runAssistantTurn(id: string, deps: Deps = {}): Promise<Out
   let turn = await findTurn(c, id);
   if (terminal(turn.state)) return status(turn);
   const p = { workspace_id: turn.workspace_id, actor_id: turn.acted_for_id, display_name: "Assistant's tagger" };
-  const adapter = deps.adapter ?? adapterFor(), price = priceFor(adapter.label, adapter.model);
+  const adapter = deps.adapter ?? adapterFor(deps.env), price = priceFor(adapter.label, adapter.model);
   let possiblySent = false;
   const refresh = async () => { turn = await findTurn(c, id); return turn; };
   const finish = async (state: "Unavailable" | "Failed" | "Discarded", reason: TurnReason, open: "Released" | "Unknown" = "Released") => {
@@ -100,8 +86,10 @@ export async function runAssistantTurn(id: string, deps: Deps = {}): Promise<Out
           return status(await refresh());
         }
         const allowance = { input_tokens: turnLimits.input_tokens - turn.input_tokens, output_tokens: turnLimits.output_tokens - turn.output_tokens };
-        const request = requestFor(envelope, allowance);
-        if (turn.model_calls >= turnLimits.calls || allowance.output_tokens <= 0 || requestTokens(request) > allowance.input_tokens)
+        const prepared = prepareRequest(envelope, allowance, adapter.inputTokens);
+        envelope = prepared.envelope;
+        const request = prepared.request;
+        if (turn.model_calls >= turnLimits.calls || allowance.output_tokens <= 0 || (adapter.inputTokens?.(request) ?? requestTokens(request)) > allowance.input_tokens)
           return finish("Failed", "TurnLimit");
         const entry = await dispatchCall(p, turn, envelope, price);
         await refresh();

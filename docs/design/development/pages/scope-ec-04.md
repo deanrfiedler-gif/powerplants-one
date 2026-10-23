@@ -14,11 +14,15 @@ Implement communication drafting, review, exact attachments, delivery status and
 
 ## Desktop
 
+Accepted design: the [Customer messages design decision](../../../decisions/customer-messages-figma-design.md) of 22 October 2026 covers the outbound queue for customer notices at desktop, tablet and phone, with 28 icon-free captures in [design r01](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md). Departures D1–D8 and answers Q1–Q4 are recorded there: a Customer messages group in the Email side menu (proposed route `/email/customer-messages`, D1), a register of messages with plain states, a snapshot with the recipient, the source facts and the exact email, Confirm and send through a dialog that names the sender, a second person to approve M4, held, outcome-unknown and failed follow-ups without a resend, and the class switches. Nothing new is built; the S2 API remains the only implementation.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 13–21 in [design r01](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md): the compact phone header (D8, since adopted for every phone page), the To send and Needs follow-up lists at 390 and 320, the message with one full-width Confirm and send in a sticky bar, and the confirm, view and filter sheets.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,9 +36,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design: [Customer messages design r01 captures](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md) (28 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/customer-messages-figma-design.md). No HTML reference exists.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: see the [decision](../../../decisions/customer-messages-figma-design.md). SMS, M3 visit confirmations, correction messages, template publishing, My Work follow-up cards, phone records for M4 and follow-up messages, phone states and 200% zoom are not drawn. The named Figma version "Customer messages — accepted" was saved on 22 October 2026.
 
 The draft User Guide `guide.ec.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

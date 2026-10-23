@@ -208,3 +208,7 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 ## Nursery N1 consumer
 
 The Nursery discovery route consumes the unchanged shared control. Host states and synthetic fixture: tests/browser/nursery-automation.spec.ts. Unknown/conflict, stale edits, read-only history and original-save recovery remain explicit. Owner visual review and exact Nursery mockups are pending; no baseline fingerprint is adopted.
+
+## Automation N2 consumer
+
+The N2 technical assessment reuses this control without API changes. Local FactFields/Pick are extracted unchanged from N1. Host fixtures cover source evidence, saved results/history, stale/uncertain recovery and narrow layouts. Owner visual review and approved Automation frames remain pending. See the N2 page contract and tests/browser/nursery-assessment.spec.ts.

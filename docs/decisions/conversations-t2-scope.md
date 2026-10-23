@@ -179,3 +179,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 ## 10. What this record does not do
 
 Accepting the scope, rules and answers is a design decision. It authorises no application code, dependency, migration, seed, capability, route, deployment or paid model request, and reserves no migration or capability number. It does not settle Carl's agreement (C2), the billing owner for operational use, real data, the hosted demo's credential, or the AD-01 sharing, speech and driving decisions; none of them blocks T2 as proposed.
+
+## W3 amendment — 22 October 2026
+
+Dean approved CRM Activity replacement and confirmed R8 warning/new-thread interpretation. Accepted frames were amended with a new named version and [eight icon-free captures](../reference/ui/my-work/conversations-t2-w3-r01/README.md). Earlier named versions and issued captures remain unchanged; the dated PO-2281 finding above records that earlier state. [T2c design](conversations-t2c-design.md) records exact changes and implementation adaptations. The File index and section label were updated after saving the version. P1–P4 govern over older state illustrations.

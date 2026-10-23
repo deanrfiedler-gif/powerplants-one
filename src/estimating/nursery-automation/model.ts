@@ -167,7 +167,7 @@ export const blankScenario = (id: string): Scenario => ({
 });
 export const blankStudy = (): Study => ({
   schema_version: 1,
-  name: "Nursery automation study",
+  name: "Automation study",
   project_type: "Unknown",
   system_id: null,
   current_process: null,

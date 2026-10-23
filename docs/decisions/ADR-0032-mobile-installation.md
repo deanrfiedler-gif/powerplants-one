@@ -6,6 +6,8 @@
 **Owner:** Dean Fiedler
 **Source commit:** e6492a7f75632957633bf765f007b12137c0d6fb
 
+> **23 October 2026 note:** [ADR-0063](ADR-0063-native-phone-app.md) (proposed) amends this decision for phones. Caller ID and call logging need a native app, so on phones one native Powerplants One app is to replace the installed web app. This record's manifest, icons and installation help remain for desktops. The text below is unchanged.
+
 ## Reason and decision
 
 Dean wants the existing Azure-hosted prototype to open from a device icon in its own window: Chrome on an Android phone, and Safari Add to Home Screen on iPhone and iPad. Installation is a browser and operating-system capability that needs a web app manifest, real icons and a document that the device can read before a session exists. Nothing about the business application needs to change to get it.
