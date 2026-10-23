@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CONV-T2C-DESIGN,Conversations T2c design and implementation,docs/decisions/conversations-t2c-design.md,,Implementation authorised; owner acceptance and independent review pending,Dean Fiedler,bb5da7d148fe60ef3cf28d1666cd41aee51e6d46,,,git,

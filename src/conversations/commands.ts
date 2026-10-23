@@ -5,6 +5,7 @@ import { AppError, unavailable } from "../platform/errors";
 import { sharedOperation, type OperationResult } from "../platform/operations";
 import { hasPermission } from "../platform/permissions";
 import { conversationOutboxKind, type AskInput, type MentionInput } from "./model";
+import { participantWarnings } from "./participant-warning";
 import {
   askDeadlineInput,
   closeAskInput,
@@ -206,6 +207,23 @@ export async function postMessage(p: Principal, thread: string, value: unknown) 
       if (row.state !== "Open")
         throw new AppError(409, "ThreadResolved", "Reopen the thread before posting in it.");
       await checkComposition(c, p, { type: row.anchor_type, id: row.anchor_id }, input);
+      const taggedPeople = input.mentions.flatMap((m) =>
+        m.kind === "Person" ? [m.person_id] : [],
+      );
+      const warnings = await participantWarnings(c, p, row.id, taggedPeople);
+      if (
+        [...warnings].some(
+          ([person, warning]) =>
+            !input.participant_acknowledgements?.some(
+              (a) => a.person_id === person && a.basis === warning.basis,
+            ),
+        )
+      )
+        throw new AppError(
+          409,
+          "ParticipantWarningRequired",
+          "Earlier assistant answers cite records a new participant cannot open. Review the current warning before sending.",
+        );
       const sequence =
         Number(
           (

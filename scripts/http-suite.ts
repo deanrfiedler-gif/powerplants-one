@@ -35,6 +35,8 @@ const exclusive = new Set([
   "template-use.test.ts",
   // D-025 S2 resets and grants default-denied customer message duties.
   "customer-communications.test.ts",
+  // R8 temporarily revokes a participant's source access to prove a private acknowledgement.
+  "conversations-agent.test.ts",
 ]);
 const files = (await readdir(new URL("../tests/http/", import.meta.url)))
   .filter((name) => name.endsWith(".test.ts"))

@@ -14,7 +14,7 @@ On 22 October 2026 Dean asked for the UI page of the new specialist workbench: "
 Claude drew the page from these sources:
 - the [Nursery Automation Configurator specification](../blueprints/nursery-automation-configurator.md) (PPO-NURSERY-AUTOMATION-SPEC, rules NAC-R01–R09) and its [scope decision](nursery-automation-specification.md);
 - the [working design note](../design/development/nursery-automation.md) and the [N1 design contract](../design/development/pages/route-estimating-discovery-id-nursery.md);
-- [ADR-0060](ADR-0060-nursery-discovery-foundation.md) and the N1 build (PR #661 specification, PR #662 N1, both merged), and the open N2 technical assessment (PR #665, with ADR-0061 and the Automation Configurator naming direction);
+- [ADR-0060](ADR-0060-nursery-discovery-foundation.md) and the N1 build (PR #661 specification, PR #662 N1, both merged), and the N2 technical assessment (PR #665, with ADR-0061 and the Automation Configurator naming direction; open while the page was drawn, merged into main on 23 October 2026 after acceptance);
 - the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (CM1–CM11);
 - the accepted ES-02 Priva Fertigation Workbench Figma page and the ES-08 Screen Configurator page (proposal), which the design follows;
 - public Javo product information, shown only as unreviewed source observations (section 4).
@@ -24,7 +24,7 @@ Dean then asked for an audit and extensions ("Give the pages an audit and polish
 Asked "Accept the design with the recommended answers to D1–D15 and Q1–Q6?", Dean replied: "Proceed". That accepts the design, adopts D1–D15 and adopts the recommended answers to Q1–Q6.
 
 Scope:
-- `scope:ES-02` (Discovery) with `route:/estimating/discovery/[id]/nursery`; CPQ receiving is `scope:ES-03` and quotation output `scope:ES-05`, which this design feeds but does not change. The proposed workbench type `nursery-automation` remains a registration candidate with no ES number; ES-08 remains Screen systems.
+- `scope:ES-02` (Discovery) with `route:/estimating/discovery/[id]/nursery` and `route:/estimating/discovery/[id]/nursery/assessment`; CPQ receiving is `scope:ES-03` and quotation output `scope:ES-05`, which this design feeds but does not change. The proposed workbench type `nursery-automation` remains a registration candidate with no ES number; ES-08 remains Screen systems.
 - Parent requirements EST-01 to EST-09, unchanged. No parent requirement ID is added or renamed.
 - User-facing name "Automation" (PR #665 direction); routes, NAC identifiers, filenames and saved identities keep "nursery".
 
@@ -71,12 +71,12 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 | Field | Declaration |
 |---|---|
-| Scope identity | `scope:ES-02` and `route:/estimating/discovery/[id]/nursery` (and the N2 assessment route when PR #665 merges); ES-03 receiving and ES-05 output fed, not changed; EST-01–EST-09 unchanged; capabilities unchanged |
+| Scope identity | `scope:ES-02` and `route:/estimating/discovery/[id]/nursery` and `route:/estimating/discovery/[id]/nursery/assessment`; ES-03 receiving and ES-05 output fed, not changed; EST-01–EST-09 unchanged; capabilities unchanged |
 | Page type (r20) | Specialist workbench: form and guided workflow with review and comparison views, the page type of the accepted ES-02 Priva Fertigation Workbench |
 | Reused components | v2 / Rail (Configure & price on), Shell / Top bar with the Conversations action (detached), v2 / Menu strip, Menu edge and Menu heading, Fertigation / Section menu, Section item, Severity badge, Scope readiness, Context strip, Section head, Metric tile, Token, Next action row, Concept node and Headroom row, Record / Header, Banner, View tab and Filter chip, Grid header and cells, Wizard / Context header and Finding link, Button, Tag, Icon/*, and the ES-08 proposal parts Workbench / Field, Segment, Sheet header and Sheet title block. New, proposed: Automation / Gate card, Stage card and System route card |
 | Incoming handovers | Entered from the Discovery Configuration tab (confirmed System route card or Actions › Open in a workbench) with the saved Discovery or Express alternative read-only; Javo catalogue snapshot and source observations read-only; questionnaire answers and evidence editable in Requirements |
 | Outgoing handovers | Unpriced parts proposal (schema 1) and a separate versioned delivery-fact projection to the shared CPQ receiving preview; sealed drawings, equipment schedule and internal supplier enquiry pack. Never prices, labour hours, approved limits, Products publication or any message to a supplier |
-| Source authority | The specification and scope decision above, the working design note, ADR-0060, the open N2 work in PR #665 and the estimating configurator model |
+| Source authority | The specification and scope decision above, the working design note, ADR-0060, the N2 work in PR #665 and the estimating configurator model |
 | Proposed departures | D1–D15 in section 4, accepted |
 | Status | Owner-accepted design, 22 October 2026 |
 | Decision record | This file |
@@ -127,9 +127,8 @@ The Javo Standard 2.0 product page (consulted 21–22 October 2026) gives about 
 
 ## 5. Not decided and not drawn
 
-- **Building the page.** The built N1 route keeps its native page, and the N2 assessment remains in PR #665. The build order is not decided.
+- **Building the page.** The built N1 and N2 routes keep their native pages (N2 merged in PR #665 on 23 October 2026). The build order is not decided.
 - **Prerequisites for a build:**
-  - PR #665 (N2 technical assessment) merged;
   - the `AUT` record type allocated (Q3) and the rail placement changed (Q1);
   - equipment geometry fields in the equipment-data template, populated for Standard 2.0 and Plus from reviewed supplier sources, and a written drawing standard (D13);
   - the company-scoped workbench registry before the category map can suggest a route (D15);

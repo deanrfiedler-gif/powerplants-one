@@ -266,6 +266,14 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
 
+## Conversations T2c consumer
+
+The two Conversations routes use the existing Button for Send, original-operation Retry and R8 warning choices. Shared implementation is unchanged. Host fixtures and [T2c evidence](../../../testing/evidence/conversations-t2c/README.md) record verification; owner review remains separate.
+
 ## Nursery N1 consumer
 
 The Nursery discovery route consumes the unchanged shared control. Host states and synthetic fixture: tests/browser/nursery-automation.spec.ts. Unknown/conflict, stale edits, read-only history and original-save recovery remain explicit. Owner visual review and exact Nursery mockups are pending; no baseline fingerprint is adopted.
+
+## Automation N2 consumer
+
+The N2 technical assessment reuses this control without API changes. Local FactFields/Pick are extracted unchanged from N1. Host fixtures cover source evidence, saved results/history, stale/uncertain recovery and narrow layouts. Owner visual review and approved Automation frames remain pending. See the N2 page contract and tests/browser/nursery-assessment.spec.ts.

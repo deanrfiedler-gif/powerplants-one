@@ -1,4 +1,4 @@
-# Nursery Automation discovery — N1 design contract
+# Automation discovery — N1 design contract
 
 <!-- versioning: git; committed history is authoritative -->
 
@@ -32,6 +32,6 @@ Unknown, Assumed and Conflict remain findings with owner/next action. Conflict r
 
 ## Departures and evidence
 
-Accepted Figma design: [Automation Configurator design r01 captures](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md) (twenty-one icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/automation-configurator-figma-design.md). Entry from Discovery moves from the Actions menu item "Nursery Automation discovery" to a confirmed System route card and an "Open in a workbench" menu group (D15). Building it is not decided; PR #665 (N2), the `AUT` record type and equipment geometry fields are prerequisites.
+Accepted Figma design: [Automation Configurator design r01 captures](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md) (twenty-one icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/automation-configurator-figma-design.md). Entry from Discovery moves from the Actions menu item "Nursery Automation discovery" to a confirmed System route card and an "Open in a workbench" menu group (D15). Building it is not decided; the `AUT` record type and equipment geometry fields are prerequisites.
 
 This is a proposed composition using shared controls; it is not copied from an accepted Nursery mockup. No visual fingerprint or approval is assigned. The N1 fixture is tests/browser/nursery-automation.spec.ts; persistence and boundary tests are tests/database/nursery-automation.test.ts and tests/unit/nursery-automation.test.ts. [Execution evidence](../../../testing/evidence/nursery-automation-n1/README.md) records actual runs separately from business acceptance and deployment.

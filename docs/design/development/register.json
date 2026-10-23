@@ -5184,8 +5184,39 @@
       "guide_key": "guide.ec.04",
       "design_path": "docs/design/development/pages/scope-ec-04.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-01-Desktop-All-Messages-Register-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-02-Desktop-To-Send-M1-Exact-Message-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-03-Desktop-Confirm-And-Send-Dialog-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-04-Desktop-Sent-Delivery-Not-Confirmed-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-05-Desktop-M4-Approve-And-Send-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-06-Desktop-Held-Do-Not-Notify-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-07-Desktop-Outcome-Unknown-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-08-Desktop-Failed-Bounce-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-09-Desktop-Message-Classes-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-10-Desktop-Turn-Off-Class-Dialog-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-11-Desktop-Classes-After-Turn-Off-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-12-Tablet-To-Send-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-13-Phone-To-Send-List-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-14-Phone-Needs-Follow-Up-List-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-15-Phone-320-Needs-Follow-Up-List-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-16-Phone-Message-Full-Length-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-17-Phone-320-Message-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-18-Phone-Confirm-Sheet-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-19-Phone-Choose-View-Sheet-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-20-Phone-Filter-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-21-Phone-320-Search-And-Filter-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-22-State-Content-Changed-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-23-State-Independent-Sender-Required-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-24-State-View-Only-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-25-State-Held-On-Confirm-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-26-State-Send-Not-Confirmed-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-27-State-Nothing-To-Send-r01.png",
+        "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-28-State-Could-Not-Load-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/customer-messages-figma-design.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -15267,7 +15298,7 @@
       "title": "Conversation thread",
       "kind": "route",
       "module": "AI",
-      "summary": "One people-only thread (Conversations T1c-1): header with record link and Resolve or Reopen, messages with @ tags and # record links drawn from each reader's access, tracked ask cards, and the composer with ask rows. T1c-3 adds the context panel (Record, Files and documents, Contacts, Related records, This thread), rebuilt per viewer: docked at 320 px from 1280 px, a drawer behind Context below that, a sheet on phones.",
+      "summary": "Human threads on deals and projects with server-authorised Carl tags and simulated answers (T2c). Existing sidebar, human asks, navigation and context; per-reader answer cards, truthful turn states and a count-only participant warning.",
       "path": "/conversations/[id]",
       "source_paths": [
         "src/app/(business)/conversations/[id]/page.tsx"
@@ -15275,7 +15306,12 @@
       "guide_key": "guide.route-conversations-id",
       "design_path": "docs/design/development/pages/route-conversations-id.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-1440.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-1024.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-390.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-320.png"
+      ],
       "dependencies": [
         "src/conversations/components/conversations-workspace.tsx",
         "src/conversations/components/thread-sidebar.tsx",
@@ -15295,11 +15331,16 @@
         "src/conversations/components/context-panel.tsx",
         "src/conversations/context-model.ts",
         "src/conversations/context.ts",
-        "src/app/api/v1/conversations/[id]/context/route.ts"
+        "src/app/api/v1/conversations/[id]/context/route.ts",
+        "docs/decisions/conversations-t2c-design.md",
+        "src/conversations/picker-options.ts",
+        "src/conversations/participant-warning.ts",
+        "src/conversations/components/agent-avatar.tsx",
+        "src/conversations/components/participant-warning.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "T1c-1 and T1c-3 unit, database, HTTP-route and desktop/tablet/phone browser tests (tests/unit/conversations-*.test.ts, tests/database/conversations-context.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); acceptance remains separate.",
+      "functional_status": "T1 regression and T2c unit/database/HTTP/browser proof; executed counts and limits in docs/testing/evidence/conversations-t2c/README.md. Owner acceptance separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -15316,7 +15357,7 @@
       "title": "Conversations",
       "kind": "route",
       "module": "AI",
-      "summary": "People-only threads on deals and projects (Conversations T1c-1): the thread sidebar with Waiting on you and Mentions, the empty and loading states, and New thread. No Carl, AI, voice, branches or sharing; the top-bar entry is T1c-2 and the context panel T1c-3.",
+      "summary": "Human threads on deals and projects with server-authorised Carl tags and simulated answers (T2c). Existing sidebar, human asks, navigation and context; per-reader answer cards, truthful turn states and a count-only participant warning.",
       "path": "/conversations",
       "source_paths": [
         "src/app/(business)/conversations/page.tsx"
@@ -15324,7 +15365,12 @@
       "guide_key": "guide.route-conversations",
       "design_path": "docs/design/development/pages/route-conversations.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-1440.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-1024.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-390.png",
+        "docs/reference/ui/my-work/conversations-t2-w3-r01/answer-320.png"
+      ],
       "dependencies": [
         "src/conversations/components/conversations-workspace.tsx",
         "src/conversations/components/thread-sidebar.tsx",
@@ -15338,11 +15384,16 @@
         "src/conversations/components/mention-picker.tsx",
         "src/conversations/components/ask-rows.tsx",
         "src/conversations/composition.ts",
-        "src/conversations/title.ts"
+        "src/conversations/title.ts",
+        "docs/decisions/conversations-t2c-design.md",
+        "src/conversations/picker-options.ts",
+        "src/conversations/participant-warning.ts",
+        "src/conversations/components/agent-avatar.tsx",
+        "src/conversations/components/participant-warning.tsx"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "T1c-1 unit, HTTP-route and desktop/phone browser tests (tests/unit/conversations-*.test.ts, tests/http/conversations.test.ts, tests/browser/conversations.spec.ts); exact top-bar desktop/phone destinations and verification limits in docs/testing/evidence/conversations-navigation/README.md. Acceptance remains separate.",
+      "functional_status": "T1 regression and T2c unit/database/HTTP/browser proof; executed counts and limits in docs/testing/evidence/conversations-t2c/README.md. Owner acceptance separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -15356,7 +15407,7 @@
     },
     {
       "key": "route:/estimating/discovery/[id]/nursery",
-      "title": "Nursery Automation discovery",
+      "title": "Automation discovery",
       "kind": "route",
       "module": "Estimating",
       "summary": "N1 source-qualified equipment candidates, saved production scenarios and owned clarifications. No technical or pricing result.",
@@ -15397,7 +15448,7 @@
         "src/estimating/nursery-automation/screen.css",
         "docs/decisions/automation-configurator-figma-design.md"
       ],
-      "scope_status": "N1 implementation; technical assessment and CPQ handover remain later stages",
+      "scope_status": "N1 discovery with separate N2 assessment; N3 shared CPQ handover remains open",
       "visual_status": "Needs review",
       "functional_status": "4 unit, 3 database and 4 desktop/phone browser cases passed locally; exact recovery, history, source conflicts, stale edits and denied refresh. Evidence: docs/testing/evidence/nursery-automation-n1/README.md. Supplier/business acceptance and CI remain separate.",
       "deployment_status": "Not verified",
@@ -15408,7 +15459,52 @@
       "build_rank": null,
       "related_keys": [
         "scope:ES-02",
-        "route:/estimating/discovery/[id]"
+        "route:/estimating/discovery/[id]",
+        "route:/estimating/discovery/[id]/nursery/assessment"
+      ]
+    },
+    {
+      "key": "route:/estimating/discovery/[id]/nursery/assessment",
+      "title": "Automation technical assessment",
+      "kind": "route",
+      "module": "Estimating",
+      "summary": "N2 scenario-qualified compatibility, sequential capacity, separate quantity bases and immutable internal study outputs.",
+      "path": "/estimating/discovery/[id]/nursery/assessment",
+      "source_paths": [
+        "src/app/(business)/estimating/discovery/[id]/nursery/assessment/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-discovery-id-nursery-assessment",
+      "design_path": "docs/design/development/pages/route-estimating-discovery-id-nursery-assessment.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-04-Desktop-Process-And-Equipment-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-05-Desktop-Line-Capacity-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-06-Desktop-Interfaces-And-Site-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-07-Desktop-Layout-And-Drawings-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-11-Desktop-Calculation-Trace-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-12-Desktop-Resolve-Source-Conflict-r01.png"
+      ],
+      "dependencies": [
+        "docs/blueprints/nursery-automation-configurator.md",
+        "docs/decisions/ADR-0061-nursery-technical-assessment.md",
+        "docs/decisions/automation-configurator-name.md",
+        "src/estimating/nursery-automation/assessment-screen.tsx",
+        "src/estimating/nursery-automation/assessment-fields.tsx",
+        "src/estimating/nursery-automation/fields.tsx",
+        "docs/decisions/automation-configurator-figma-design.md"
+      ],
+      "scope_status": "N2 technical assessment; N3 Products/shared CPQ handover remains separate",
+      "visual_status": "Needs review",
+      "functional_status": "N2 unit/database/desktop/phone checks and build passed; baseline Windows full-suite exceptions documented in docs/testing/evidence/nursery-automation-n2/README.md",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-02",
+        "route:/estimating/discovery/[id]/nursery"
       ]
     }
   ]
