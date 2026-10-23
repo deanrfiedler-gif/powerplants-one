@@ -24,7 +24,7 @@ Claude drew the page from these sources:
 - the `settings` entry in `src/shell/navigation.ts` (readiness `unavailable`, no page);
 - copies of the accepted Users and access AD-01 frames, the adopted compact phone header and the Field team phone row.
 
-Before deciding, Dean asked for an audit: "Give the Settings · AD-02 page an audit and polish before I decide." He then accepted the design: "I accept the Settings AD-02 design with your recommendations, including D1–D8 and Q1–Q6." That adopts D1–D8 and the recommended answers to Q1–Q6.
+Before deciding, Dean asked for an audit: "Give the Settings · AD-02 page an audit and polish before I decide." He then accepted the design: "I accept the Settings AD-02 design with your recommendations, including D1–D8 and Q1–Q6." That adopts D1–D8 and the recommended answers to Q1–Q6. On 23 October 2026, at his "Yes, save the named Figma version "Settings — accepted" and finish locking in the AD-02 design.", the named version was saved (section 7).
 
 Scope:
 - `scope:AD-02` "Business configuration and policy publication", with `/admin/policies`, and the hub of WS-D6. No new scope is added; the hub is AD-02's entry page.
@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 References | Resolved as recommended | Policies and proposals take no readable reference. People quote the policy name, its version and the proposal revision; the UUID stays the technical identity |
 | Q6 Next frames | Resolved as recommended | The History and Affected work tabs, the field readiness record and the phone propose and publish sheets are drawn after this page as AD-02 amendments. The Integrations area and My account and preferences (WS-D7) are separate designs |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Settings — accepted" waits for Dean's yes. Section 7 |
+| Named Figma version | Saved, 23 October 2026 | "Settings — accepted", at Dean's yes quoted above. Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -79,7 +79,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 22 October 2026 |
 | Decision record | This file |
-| Named version | "Settings — accepted", not yet saved |
+| Named version | "Settings — accepted", saved 23 October 2026 |
 
 ## 4. What the design shows
 
@@ -170,6 +170,6 @@ The audit is recorded on the notes card `2049:13083`.
   - none of 1,352 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the Captures page keeps its 105 flow starting points.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/settings/settings-hub-design-r01/README.md).
-- The named Figma version "Settings — accepted" is not yet saved; it waits for Dean's yes.
+- The named Figma version "Settings — accepted" was saved in the Figma desktop app on 23 October 2026 at Dean's yes and confirmed at the top of version history. The page header and notes card were then updated with the lock-in details.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

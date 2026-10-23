@@ -49,7 +49,7 @@ Image 13 holds, left to right:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Settings — accepted", not yet saved; it waits for Dean's yes |
+| Named version | "Settings — accepted", saved 23 October 2026 at Dean's request and confirmed in version history |
 | Accepted frames | Page "Settings · AD-02" `2049:11645`, in image order:<br>• `2049:11682`, `2049:11796`, `2049:11910`, `2050:510998`, `2052:506644`, `2052:507029`, `2052:505135`, `2050:511240`;<br>• `2049:12799`;<br>• `2049:12895`, `2049:12910`, `2049:12961`;<br>• the phone states: `2049:13013`, `2049:13045`, `2049:13062`, `2049:13072` |
 | Capture copies | Page "Captures (icon-free)", from y = 360,000, images in order: `2055:505208`, `2055:505296`, `2055:505391`, `2055:505512`, `2055:505678`, `2055:505857`, `2055:506094`, `2055:506265`, `2055:506403`, `2055:506468`, `2055:506496`, `2055:506552`, `2055:506608` |
 
