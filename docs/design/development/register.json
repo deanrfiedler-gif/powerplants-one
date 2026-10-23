@@ -3478,7 +3478,22 @@
       "guide_key": "guide.fi.07",
       "design_path": "docs/design/development/pages/scope-fi-07.md",
       "html_path": "docs/reference/ui/service-review/PPO-Service-Review-and-Reports-Workspace-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-01-Desktop-No-Response-Yet-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-02-Desktop-Presenting-Issued-Report-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-03-Desktop-Record-Response-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-04-Desktop-Responses-Recorded-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-05-Desktop-Correct-Or-Clarify-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-06-Desktop-After-Correction-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-07-Desktop-Save-Not-Confirmed-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-08-Tablet-After-Correction-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-09-Phone-Response-View-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-10-Phone-Record-Response-Sheet-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-11-Phone-Waiting-To-Send-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-12-Phone-Recorded-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-13-Phone-320-Record-Response-Sheet-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-14-Phone-States-r01.png"
+      ],
       "dependencies": [
         "src/components/report-screens.tsx",
         "src/reports/service.ts",
@@ -3487,7 +3502,8 @@
         "src/shared/ui/use-recoverable-command.ts",
         "src/offline/app.ts",
         "docs/decisions/field-customer-response.md",
-        "docs/testing/evidence/field-customer-response/README.md"
+        "docs/testing/evidence/field-customer-response/README.md",
+        "docs/decisions/customer-response-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Deferred to phase 04, with SV-06 (owner decision 9 Oct 2026; docs/testing/evidence/ui-review-phase-00-r01)",
@@ -8331,7 +8347,21 @@
         "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-06-Desktop-Customer-Response-r01.png",
         "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-10-Phone-Report-Evidence-r01.png",
         "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-11-Phone-Customer-Response-Sheet-r01.png",
-        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png"
+        "docs/reference/ui/service/service-review-design-r01/PPO-Service-Review-12-Phone-States-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-01-Desktop-No-Response-Yet-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-02-Desktop-Presenting-Issued-Report-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-03-Desktop-Record-Response-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-04-Desktop-Responses-Recorded-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-05-Desktop-Correct-Or-Clarify-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-06-Desktop-After-Correction-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-07-Desktop-Save-Not-Confirmed-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-08-Tablet-After-Correction-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-09-Phone-Response-View-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-10-Phone-Record-Response-Sheet-Full-Length-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-11-Phone-Waiting-To-Send-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-12-Phone-Recorded-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-13-Phone-320-Record-Response-Sheet-r01.png",
+        "docs/reference/ui/service/customer-response-design-r01/PPO-Customer-Response-14-Phone-States-r01.png"
       ],
       "dependencies": [
         "src/components/report-screens.tsx",
@@ -8352,7 +8382,8 @@
         "src/components/report-workspace.tsx",
         "src/reports/register-model.ts",
         "src/app/styles/service-reports.css",
-        "docs/testing/evidence/service-review-build/README.md"
+        "docs/testing/evidence/service-review-build/README.md",
+        "docs/decisions/customer-response-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Owner visual review pending; accepted Figma source is separate from native review.",
