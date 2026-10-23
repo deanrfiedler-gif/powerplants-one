@@ -1,0 +1,14 @@
+---
+title: Conversations T2d integrates merged T2c and resolves the contract conflict
+date: 2026-10-23
+---
+
+Codex, working for Dean, integrated main `926081f8d6db27bbdaa6fc65231c32e463b59f62` into [PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664) after Dean requested conflict resolution. T2c merged through #660 at `64da2de4`; this integration uses that merged implementation, with no edits to its former branch. The only textual conflict was the appended sections in the [T2b contract](../contracts/conversations-t2b.md). Both complete T2c and T2d sections are retained verbatim. The adapter, SDK/model/price pins, transport controls and reservation logic are unchanged by this merge.
+
+The PR is restored to draft, remains unmerged and has no auto-merge. No real API key was inspected and no live provider request was made. Provider proofs use dummy credentials and intercepted networking. This is combined implementation regression evidence, not T2e or live-model evaluation. Independent follow-up of the T2d corrections and Dean's acceptance remain separate requirements.
+
+Validation results are recorded in the PR's integration ledger. The preceding `aad8013e` checkpoint has now completed with 71 successful checks and one intentional skip; those results are historical evidence, not CI for this merge.
+
+Local combined-tree validation: 105/105 assistant and Conversations unit tests; 11/11 persisted database cases (nine actual-SDK mocked-transport cases plus two T2c participant-warning cases; 418.5 seconds); 12/12 compiled HTTP cases; compiled desktop/mobile browser 78 passed and nine existing viewport/off-state skips (6.8 minutes), including the full route warm-up. Studio, the documented 8 GB typecheck, full-tree lint, build, status sources, foundation, naming, migration/open-PR collisions and 22 documentation regression tests pass. Both appended contract sections were compared with their parent versions and are preserved verbatim. No application source correction was needed.
+
+The first compiled HTTP launcher reached its unchanged 120-second readiness deadline before assertions. Its owned server was stopped; one unchanged retry passed, followed by the browser run. Free RAM fell to approximately 550 MB during the first attempt. The cause is unconfirmed, not established as a baseline defect. Logs remain under ignored `tmp/t2d/merge-*`. No assertion, route inventory, deadline or guard was weakened. Owned PostgreSQL and application services are stopped. The full local unit/database inventory, ordinary development-browser suite and dependency audits were not repeated for this contract-only conflict resolution; dependencies are unchanged and exact-head CI remains separate. Studio still reports 341 unreviewed and 26 stale entries; no visual acceptance is credited.

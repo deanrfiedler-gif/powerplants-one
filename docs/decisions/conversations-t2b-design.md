@@ -58,7 +58,7 @@ Every write is a typed command through the shared operation path (T1-6), so each
 | `Answering` | Started; evidence and model calls in progress | "Carl is answering for Sam" | Each call reserved before it is made |
 | `Answered` | An agent message with cited claims was posted | The answer card | Settled from usage |
 | `CannotAnswer` | The model declined (W6) or the records hold nothing relevant; an agent message says Carl can't help with that request, with no partial text | That message | Settled; a decline counts (W6) |
-| `Unavailable` | Carl is off, the budget is spent, the price is missing or the provider is unavailable or out of credit (T2-6, R9) | Carl's unavailable state; people keep messaging | Released, or settled if a call was billed |
+| `Unavailable` | Carl is off, the budget is spent, the price is missing or the provider is unavailable or out of credit (T2-6, R9) | Carl's unavailable state; people keep messaging | Released if confirmed unsent, settled from known usage, or kept as `Unknown` if sent without trustworthy usage |
 | `Failed` | Invalid citations, unsafe output, a turn limit, a timeout, an interruption or an internal error | A truthful error state | Settled, or kept as `Unknown` |
 | `Discarded` | The answer could not be posted: access changed twice, the thread was resolved, or the tagger lost access | Nothing from Carl; the reason is in the turn | Settled from usage |
 
