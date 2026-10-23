@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2E-EVALUATION
 title: Conversations T2e evaluation prerequisites and plan
 date: 2026-10-23
 owner: Dean Fiedler
-status: Offline prerequisites authorised; Claude review received and author disposition recorded; draft; no live authority
+status: Offline prerequisites and merge subject to checks authorised; Claude review and author disposition recorded; no live authority
 versioning: git
 ---
 
@@ -11,7 +11,9 @@ versioning: git
 
 Dean authorised the offline prerequisites on 23 October 2026: "Proceed with the offline prerequisites for T2e in a dedicated worktree and draft PR. Use mocked transport only; do not inspect credentials or make live API calls. Leave the PR unmerged for review."
 
-Codex owns [draft PR #679](https://github.com/deanrfiedler-gif/powerplants-one/pull/679), based on main d3ccc0b79f8182fb1cd1498196f4aa2564818c0a. This is the working source of the T2E-P1 proposal. Its exact Git commit, catalogue hash and instantiated fixture manifest identify the revision approved for a later run. An edit grants no review or paid-use authority.
+On 23 October 2026 Dean subsequently authorised following CI, fixing failures and merging once all required checks pass. This supersedes the initial draft/unmerged restriction only; calibration and live evaluation remain unauthorised. The [merge-authority record](../status/2026-10-23-conversations-t2e-merge-authority.md) records the exact instruction and observed required checks.
+
+Codex owns [PR #679](https://github.com/deanrfiedler-gif/powerplants-one/pull/679), based on main d3ccc0b79f8182fb1cd1498196f4aa2564818c0a. This is the working source of the T2E-P1 proposal. Its exact Git commit, catalogue hash and instantiated fixture manifest identify the revision approved for a later run. An edit grants no review or paid-use authority.
 
 ## Governing evidence and reconciliation
 
@@ -143,7 +145,7 @@ Stop immediately for privacy/access/action/invalid-citation breach, unsupported 
 | Gate | Existing evidence | Remaining evidence | Owner / method | Approval? |
 |---|---|---|---|---|
 | T2c/T2d integrated | PR/commit/CI above | Refresh execution main/CI | Implementer: ancestry/GitHub | Merge separate |
-| Offline controls | Claude review at 99721da6, author [disposition](../testing/evidence/conversations-t2e/README.md#independent-review-and-author-disposition--23-october-2026); reviewed-head CI green | Checks for correction head; Dean's merge decision | Implementer/Dean; no later independent pass claimed | **Yes**, merge |
+| Offline controls | Claude review at 99721da6, author [disposition](../testing/evidence/conversations-t2e/README.md#independent-review-and-author-disposition--23-october-2026); reviewed-head CI green | Current-head checks and current-main integration; Dean authorised merge subject to passing required checks | Implementer/Dean; no later independent pass claimed | **Yes**, merge |
 | Corpus | T2E-SYN-01 definitions/oracles; hashing functions only | Reviewed reproducible preparation/checking, canonical inventory, exact gold mappings/hashes, fitted bounds and sentinel/requirement checks; exclusive worker procedure | Dean/evaluator inspects synthetic artifacts | **Yes** |
 | Run cap | Per-manifest ledger/cap tests; cross-run limit disclosed | Approve exact run ID/membership/caps and prohibition on bypass via new runs; no workspace-wide stop claimed | Dean/operator | **Yes**, max cost and run |
 | Billing/credit | A1/historical setup | Billing owner, plan/linked-organisation owner, available unexpired credit, remaining PPO commitment, dedicated workspace≤$30, no purchased credits/auto-reload | Dean non-secret private confirmation | **Yes**, refresh |
@@ -160,7 +162,7 @@ Stop immediately for privacy/access/action/invalid-citation breach, unsupported 
 
 [Offline evidence](../testing/evidence/conversations-t2e/README.md) holds the current checkpoint. Eventual live records use that folder with reviewed run inventory, numeric measurement CSV, rubric scores and disposition. Rows name run/manifest/case/repetition/model, code/fixture hashes, evidence class, fixed outcome, counts, duration and micro-USD. No raw provider payload/header/credential/request identifier/error text in logs, receipts, audit or public diagnostics. Only specifically reviewed synthetic answers/oracles enter any retained artifact; do not export entire logs/database. Private approval/operator mapping remains outside public Git. A2's stored synthetic messages remain until explicit reset; reset cannot be used to erase unresolved budget commitments.
 
-Update this record, T2b contract and T2d operator chapter narrowly; append status/register entries. Generated combined views stay ignored under tmp/documentation. Claude independently reviewed 99721da67f28d9726ade8f3d186b044c8b9880e0; Dean supplied that review in this task on 23 October 2026. The linked evidence records author verification and disposition, also carried into the PR description. No formal GitHub review submission or subsequent independent review of the corrections is claimed. Self-inspection and CI are not independent review. Current policy does not automatically require a second pass after every fix and provides no invented waiver. Leave #679 draft and unmerged.
+Update this record, T2b contract and T2d operator chapter narrowly; append status/register entries. Generated combined views stay ignored under tmp/documentation. Claude independently reviewed 99721da67f28d9726ade8f3d186b044c8b9880e0; Dean supplied that review in this task on 23 October 2026. The linked evidence records author verification and disposition, also carried into the PR description. No formal GitHub review submission or subsequent independent review of the corrections is claimed. Self-inspection and CI are not independent review. Current policy does not automatically require a second pass after every fix and provides no invented waiver. Dean subsequently authorised merge subject to passing required checks; the initial draft-only restriction is historical. Calibration and live evaluation remain unauthorised.
 
 **Proposed later approval, granting no authority until Dean issues exact values:**
 

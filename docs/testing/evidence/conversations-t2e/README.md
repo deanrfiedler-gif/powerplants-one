@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Executor: Codex. Date: 23 October 2026. Status: offline contribution in [draft PR #679](https://github.com/deanrfiedler-gif/powerplants-one/pull/679); Claude review of 99721da6 received via Dean; author disposition below; no live-call/cost authority or result. [Plan and gate register](../../../decisions/conversations-t2e-evaluation.md), [operator chapter](../../../delivery/conversations-t2d-local-adapter.md), [contract](../../../contracts/conversations-t2b.md).
+Owner: Dean Fiedler. Executor: Codex. Date: 23 October 2026. Status: offline contribution in [PR #679](https://github.com/deanrfiedler-gif/powerplants-one/pull/679); Claude review of 99721da6 received via Dean; author disposition below; no live-call/cost authority or result. [Plan and gate register](../../../decisions/conversations-t2e-evaluation.md), [operator chapter](../../../delivery/conversations-t2d-local-adapter.md), [contract](../../../contracts/conversations-t2b.md).
 
 ## Environment and evidence classes
 
@@ -65,7 +65,7 @@ Dean supplied Claude's independent review of commit **99721da67f28d9726ade8f3d18
 
 The corrective pass changes documentation and one explanatory pricing comment only. No adapter, accounting, access, stop or test behavior is changed. Documentation validation and the exact correction commit/CI are recorded in the PR. No application/database/provider tests are repeated for this prose/comment correction. The reviewed-head application evidence above remains the relevant behavior proof.
 
-The review and disposition are recorded in the PR description and this evidence record. No formal GitHub review submission, later independent pass, merge permission, calibration authority, live result or Dean acceptance is claimed. Current policy does not automatically require independent re-review after every correction; no waiver is invented. PR #679 remains draft and unmerged.
+The review and disposition are recorded in the PR description and this evidence record. No formal GitHub review submission or later independent pass is claimed. That review grants no merge permission, calibration authority, live result or Dean acceptance. Current policy does not automatically require independent re-review after every correction; no waiver is invented. Dean subsequently authorised following CI, fixing failures and merging once all required checks pass, as recorded in the [merge-authority fragment](../../../status/2026-10-23-conversations-t2e-merge-authority.md). The earlier draft-only restriction is historical; calibration and live evaluation remain unauthorised. Final-head CI and merge outcome are recorded on PR #679, separately from reviewed-head evidence.
 
 ## Safe retained artifacts
 

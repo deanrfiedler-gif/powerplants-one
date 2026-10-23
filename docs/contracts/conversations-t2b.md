@@ -148,7 +148,7 @@ The UI consumes readThread's existing P1 projection and P3 turns as checked plai
 
 ## T2e offline extension — 23 October 2026
 
-The [T2e decision and gate register](../decisions/conversations-t2e-evaluation.md) governs the new draft extension. T2c and T2d are merged; earlier review/draft wording above is checkpoint history, not a live-call approval. Claude reviewed 99721da6; the [T2e evidence](../testing/evidence/conversations-t2e/README.md#independent-review-and-author-disposition--23-october-2026) records the user-supplied review and author disposition. No subsequent independent pass or live authority is claimed.
+The [T2e decision and gate register](../decisions/conversations-t2e-evaluation.md) governs the offline extension. T2c and T2d are merged; earlier review/draft wording above is checkpoint history, not a live-call approval. Claude reviewed 99721da6; the [T2e evidence](../testing/evidence/conversations-t2e/README.md#independent-review-and-author-disposition--23-october-2026) records the user-supplied review and author disposition. No subsequent independent pass or live authority is claimed.
 
 Runtime Claude turns require a bounded manifest tied to an exact clean execution commit, workspace, immutable human-message IDs, model/stage/case/repetition and reviewed evidence hashes. Explicit model choices are Sonnet, Haiku and Opus 5.5 under W5; Sonnet and SDK pins stay unchanged. The worker selects the configured model/stage before its limit and admits at most one evaluation turn per invocation. Nine Answered/settled calibrations and a separate acceptance hash gate the main stage. Hashes bind content, not approval identity.
 

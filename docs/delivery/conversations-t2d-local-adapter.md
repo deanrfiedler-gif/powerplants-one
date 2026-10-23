@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: T2d merged in PR #664; T2e offline extension in draft PR #679; no live evaluation performed. [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md), [contract](../contracts/conversations-t2b.md), [evidence](../testing/evidence/conversations-t2d/README.md).
+Owner: Dean Fiedler. Status: T2d merged in PR #664; T2e offline extension in PR #679 with merge authorised subject to checks; calibration and live evaluation remain unauthorised and unperformed. [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md), [contract](../contracts/conversations-t2b.md), [evidence](../testing/evidence/conversations-t2d/README.md).
 
 Carl remains off by default. With the existing local-synthetic/loopback/synthetic-identity/non-production settings, `PPO_ASSISTANT=on` uses Simulated unless `PPO_ASSISTANT_PROVIDER` explicitly selects another provider. A key alone changes nothing. Simulation retains its visible label.
 
