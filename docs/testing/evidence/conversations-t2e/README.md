@@ -138,4 +138,3 @@ C03 starts with 22 canonical human messages including kickoff/trigger, and L12 d
 | Billing/credit/backstops/region/retention/private key procedure | Pending non-secret confirmation for a later separately authorised run |
 | Independent review and merge | Pending; PR remains draft and unmerged; #679 merge permission does not extend to it |
 | Calibration/live evaluation/owner acceptance/production | Not performed or granted |
-
