@@ -2,12 +2,12 @@
 document_id: PPO-CALLS-FIGMA-DEC
 date: 2026-10-23
 owner: Dean Fiedler
-status: Proposal for owner review, 23 October 2026; not accepted; no named version; nothing is built from it
+status: Owner-accepted design, 23 October 2026; native implementation (stage 1c) and UI baseline acceptance separate
 source_commit: 01cef3916c874159a9404f737065292ae2466046
 versioning: git
 ---
 
-# Calling stage 1a design (Figma) — proposal
+# Calling stage 1a design (Figma) — owner decision
 
 On 23 October 2026 Dean accepted the [calling design paper](calling-and-caller-id-design.md) (PPO-CALLS-CALLER-ID-PROP) and its recommended answers, and authorised stage 1a: "Proceed with your recommended answers to Q1 to Q12 of the calling paper, and start stage 1 (1a Figma proposal and 1b server core)." Section 5.7 of the paper lists what stage 1a draws:
 
@@ -16,7 +16,7 @@ On 23 October 2026 Dean accepted the [calling design paper](calling-and-caller-i
 - the Call control and its states;
 - the phone numbers editor on person and organisation pages.
 
-Claude drew them in Dean's Figma file as a **proposal**. This record lists the frames, the departures they make and the open questions, each with a recommended answer. Dean has not accepted the design. Stage 1c, which builds the web UI, waits for that acceptance and for the stage 1b server core.
+Claude drew them in Dean's Figma file as a proposal, with departures D1–D8 and open questions Q1–Q8, each with a recommended answer. Dean accepted the design the same day: "I accept the Calling stage 1a design with your recommendations, including D1–D8 and Q1–Q8." That adopts D1–D8 and the recommended answers to Q1–Q8. Stage 1c, which builds the web UI, also depends on the stage 1b server core merging, and the paper still lists it as not authorised.
 
 Claude drew the design from these sources:
 - the paper's rules R1–R9 (section 4) and stage 1 (section 5), and [ADR-0063](ADR-0063-native-phone-app.md) for what later stages add;
@@ -27,7 +27,7 @@ Scope:
 - Stage 1 adds no route and no scope ID (paper section 1). The surfaces live inside existing pages: My Work (`/work`), People `scope:CS-02` (`/people/[id]`), Organisations `scope:CS-01` (`/customers/[id]`), Leads (`/sales/leads/[id]`) and Deals `scope:CR-01` (`/sales/opportunities/[id]`).
 - Parent requirements CRM-02, CRM-03, CRM-08 and PAR-05; NFR-01, NFR-02, NFR-05, NFR-08 and NFR-09. No parent requirement ID is added or renamed.
 
-This is a design proposal. It authorises no application code, route, read model, migration, permission, dependency, provider connection or call. It does not edit `src/`, `db/`, `tests/` or the design-development register: stage 1b builds the server in its own pull request, and stage 1c updates the register and components when it builds the UI.
+This is a design decision. It authorises no application code, route, read model, migration, permission, dependency, provider connection or call. It does not edit `src/`, `db/`, `tests/` or the design-development register: stage 1b builds the server in its own pull request, and stage 1c updates the register and components when it builds the UI.
 
 ## 1. Decisions and evidence
 
@@ -35,24 +35,24 @@ This is a design proposal. It authorises no application code, route, read model,
 |---|---|---|
 | Draw the stage 1a proposal | User decision, 23 October 2026 | Dean's words quoted above |
 | Rules R1–R9, Q1–Q12 of the paper | Accepted by the owner, 23 October 2026 | [Calling design paper](calling-and-caller-id-design.md), sections 4, 5 and 8 |
-| Departures D1–D8 (section 4) | Proposed design | Drawn on the page; not accepted |
-| Q1–Q8 (section 5) | Open questions with recommended answers | Not answered |
-| Accept the design | Not decided | Waits for Dean |
-| Named Figma version | Not saved | Proposed title "Calling — call core, accepted", saved only at acceptance |
-| Building the UI (stage 1c) | Not authorised | Waits for acceptance and for stage 1b |
+| Departures D1–D8 (section 4) | Accepted as recommended, 23 October 2026 | Dean's acceptance, quoted above |
+| Q1–Q8 (section 5) | Resolved as recommended, 23 October 2026 | Dean's acceptance, quoted above |
+| Accept the design | User decision, 23 October 2026 | "I accept the Calling stage 1a design with your recommendations, including D1–D8 and Q1–Q8." |
+| Named Figma version | Not yet saved | Title "Calling — call core, accepted", saved by Dean or by Claude on his yes |
+| Building the UI (stage 1c) | Not authorised | The [calling design paper](calling-and-caller-id-design.md) lists stage 1c as not authorised. It depends on this acceptance and on stage 1b merging (section 7) |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
 | Design file | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository ([ADR-0053](ADR-0053-figma-page-design.md)) |
-| Page | "Calling and call logging · CS-01 · CS-02 · CR-01" `2125:688373`, under "— My Work —", after Search · SH-04. Duplicated from the Template `626:20` ([ADR-0055](ADR-0055-figma-file-structure.md)). The page header `2125:688374` holds the conformance declaration. No File index row yet: rows are added at acceptance |
+| Page | "Calling and call logging · CS-01 · CS-02 · CR-01" `2125:688373`, under "— My Work —", after Search · SH-04. Duplicated from the Template `626:20` ([ADR-0055](ADR-0055-figma-file-structure.md)). The page header `2125:688374` holds the conformance declaration and Dean's acceptance. File index row "Row / Calling and call logging · CS-01 · CS-02 · CR-01" `2158:9931` on Start here, in the My Work group after Conversations |
 | Desktop 1440 | My Work Overview with Calls to log `2125:688442`; Skip a call, reasons menu `2127:689333`; Log call from Calls to log with several matches (R5) `2128:9831`; Log call from click to call, full length `2128:9258`; Log a call by hand from My Work `2125:688581`; Call saved, next activity failed `2128:10600`; Log call, Wrong number offers Number needs checking `2128:11085`; Person phone numbers editor `2134:4550`; Organisation main numbers editor `2134:4838`; Call control states and where it replaces `tel:` links `2134:4252` |
 | Tablet 1024 | Not drawn (Q8) |
 | Phone 390 and 320 | My Work with Calls to log `2125:688978`; Skip a call, reasons sheet `2130:4613`; Log call sheet from click to call `2130:4022`; Log call sheet, several matches `2130:4455`; Log call sheet at 320 `2130:4311`; Phone numbers editor sheet `2135:4889`; Log call sheet, full length `2130:4167` |
 | States | Calls to log empty `2127:689731`; call source outage (R9) `2127:690121` |
-| Notes | "Proposal notes · Calling" `2135:4947` in Flows and notes: story, D1–D8, Q1–Q8 and what is not drawn |
-| Proposed part | Component set "Call / Control (proposed)" `2134:4251`, ten variants `2134:4201`–`2134:4248` (Default, Hover, Focus, Opening, Several numbers, Needs checking, Unreadable, No number, Icon only, Icon unavailable) with a Number text property. It stays on the page until acceptance; the build registers it as a shared component |
+| Notes | "Proposal notes · Calling" `2135:4947` in Flows and notes: Dean's acceptance, story, D1–D8, Q1–Q8 and what is not drawn |
+| New part | Component set "Call / Control" `2134:4251`, ten variants `2134:4201`–`2134:4248` (Default, Hover, Focus, Opening, Several numbers, Needs checking, Unreadable, No number, Icon only, Icon unavailable) with a Number text property. Drawn on the page as "Call / Control (proposed)"; at acceptance it moved to Components › Controls `1095:257405` (same node ID, instances kept, the board re-checked by screenshot) and lost the "(proposed)" suffix. Stage 1c registers it as a shared component |
 | Reused parts | The desktop frames are clones of accepted My Work, People CS-02 and Organisations CS-01 frames. The two My Work desktop clones had their top bar replaced with the PL-04 top bar with the Conversations action `1326:4564`; the People and Organisations clones already had it, and the My Work phone frame already uses Shell / Phone header · compact `1530:110`. Button `3:41`, Tag `3:13`, My Work / Summary cell `408:368` and existing icons, including Icon/phone `196:47`. No new icon was added |
 | Story | Synthetic, as at Tue 13 Oct 2026, signed in as Jamie Park (JP), sales. Priya Shah, SYN Hillview Growers: mobile 0491 570 806, work (02) 5550 1840. That work number is also the organisation's main number and Ellis Grant's work number, so a call to it has three matches. Dana Brooks, SYN Isolation Nursery: 0491 570 159. Deals `SYN-OPP-000118` Glasshouse 4 shade screen upgrade and `SYN-OPP-000131` Propagation house irrigation review, project `SYN-PRJ-000014` Glasshouse 4 screen controls, deal `SYN-OPP-000026` Substrate store dosing review. Phone numbers are in ACMA's fictional ranges |
 | Retained captures | [Calling design r01](../reference/ui/crm/calling-design-r01/README.md): 19 icon-free PNGs with hashes, from capture copies `2135:693792`–`2135:701905` on "Captures (icon-free)" from y 373,000 |
@@ -69,10 +69,10 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Incoming handovers | Call events from Click to call in stage 1; Phone app and Teams events in stages 2 and 3 through the same interface. The read-only number lookup supplies Who and the Linked to suggestions, for permitted records only (R4) |
 | Outgoing handovers | Saving creates one completed Call activity with its links and marks the event Logged, in one command. Plan the next activity uses the parent's own next-action command, as Record outcome does. Wrong number can flag the number Number needs checking on the person or organisation. Skip marks the event Skipped with an optional reason |
 | Source authority | PPO-CALLS-CALLER-ID-PROP sections 4 and 5; ADR-0063; Record outcome in `src/activities/components/client/my-work-dialogs.tsx`; CRM feature report r02 section 10 |
-| Proposed departures | D1–D8 in section 4 |
-| Status | Proposal, 23 October 2026; not accepted |
+| Proposed departures | D1–D8 in section 4, accepted |
+| Status | Owner-accepted design, 23 October 2026 |
 | Decision record | This file |
-| Named version | Not saved |
+| Named version | "Calling — call core, accepted", not yet saved |
 
 ## 4. What the design shows
 
@@ -107,7 +107,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - **Organisation.** "Main numbers" with the same labels, and a note that a call to or from a main number lists every record that holds it.
 - **Phone.** A full-screen sheet with one card per number and a sticky Save phone numbers.
 
-### Departures, proposed
+### Departures, accepted
 
 | ID | Departure | Current pattern |
 |---|---|---|
@@ -120,9 +120,11 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | D7 | One Call control with ten states replaces six separate `tel:` links | Six hand-built `tel:` links that record nothing |
 | D8 | Phone numbers editor with labels, primary, the number as entered, a "Read as" line and the flag, for people and organisations | One free-text phone per person; none for organisations |
 
-## 5. Open questions, with recommended answers
+## 5. Questions, resolved as recommended
 
-| # | Question | Recommended answer |
+Dean's acceptance adopted every recommended answer below.
+
+| # | Question | Answer (recommended, accepted) |
 |---|---|---|
 | Q1 | The Result now records what the three Call presets record. What are the Log call presets? | Purpose presets: Agreed a next step, Sent information, Waiting on them, No change. Completing a planned Call activity in My Work opens the same Log call sheet, so there is one way to record a call |
 | Q2 | Which suggested links start ticked? | The record the call started from (a deal, lead or project page, or a My Work activity). From a person or organisation page, the open deal with the nearest next activity. Never more than one ticked automatically |
@@ -146,6 +148,6 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - The 19 capture copies have every icon swapped to `Icon/placeholder` `67:77` (862 swaps); a scan of each copy found none left. The PNGs are exported at scale 1 at each frame's size.
 - The prototype was not wired or played.
 
-## 8. Acceptance
+## 8. Acceptance and lock-in
 
-When Dean accepts, the lock-in adds his words to section 1, saves the named version, adds the File index row, and moves the Call / Control set to the Components page. Until then this record stays a proposal.
+Dean accepted the design on 23 October 2026 (section 1). At lock-in Claude recorded his words on the page header and the notes card, added the File index row `2158:9931`, and moved the Call / Control set to Components › Controls. The retained r01 captures were exported before acceptance from the same frames, which did not change; only the page header, the notes card and the component's page changed afterwards. The named version "Calling — call core, accepted" is saved by Dean, or by Claude on his explicit yes, and this pull request stays a draft until it is.

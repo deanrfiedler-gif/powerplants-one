@@ -3,15 +3,15 @@ document_id: PPO-CALLS-FIGMA-R01
 revision: r01
 date: 2026-10-23
 owner: Dean Fiedler
-status: Retained design proposal reference; icon-free; not accepted; not an application capture or UI baseline
+status: Retained owner-accepted design reference; icon-free; not an application capture or UI baseline
 source_commit: 01cef3916c874159a9404f737065292ae2466046
 ---
 
 # Calling stage 1a design r01 — retained captures
 
-These 19 images retain the stage 1a calling design that Claude drew on 23 October 2026 as a proposal for Dean's review. **Dean has not accepted it.** They cover the Log call sheet (from click to call, from Calls to log with several matches, by hand, next activity failed and Wrong number), Calls to log in My Work with Skip and its reasons, the empty and source-outage states, the shared Call control and its states, and the phone numbers editor for people and organisations, at desktop 1440 and phone 390 and 320.
+These 19 images retain the stage 1a calling design that Claude drew on 23 October 2026 and Dean accepted the same day. They were exported before his acceptance from frames that did not change afterwards. They cover the Log call sheet (from click to call, from Calls to log with several matches, by hand, next activity failed and Wrong number), Calls to log in My Work with Skip and its reasons, the empty and source-outage states, the shared Call control and its states, and the phone numbers editor for people and organisations, at desktop 1440 and phone 390 and 320.
 
-The frames, departures D1–D8 and open questions Q1–Q8 are in [the proposal record](../../../../decisions/calling-figma-design.md). Retain these bytes unchanged; a revised design receives a new revision folder.
+The frames, departures D1–D8 and the answers to Q1–Q8 are in [the design decision](../../../../decisions/calling-figma-design.md). Retain these bytes unchanged; a revised design receives a new revision folder.
 
 Each image is one Figma frame exported at scale 1 at its exact frame size. Images 04, 07 and 19 are full length, so the whole sheet shows; images 03 and 05 are taller than 900 px for the same reason.
 
