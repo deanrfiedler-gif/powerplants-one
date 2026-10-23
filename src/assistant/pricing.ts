@@ -13,6 +13,9 @@ const claude: Price = Object.freeze({
   adapter: "Claude", model: "claude-sonnet-5-5", input_micro_per_mtok: 2_000_000, output_micro_per_mtok: 10_000_000,
   version: "anthropic-sonnet-5-5-global-2026-10-22", checked: "2026-10-22",
 });
+// Haiku's low tier applies only to prompts <=100,000 tokens (official pricing, 2026-10-23).
+// model.ts turnLimits.input_tokens=48,000 bounds every request below it. Revisit price
+// selection/accounting before increasing that limit; this table is not a long-context rate.
 const comparison: Price[] = [
   Object.freeze({ adapter: "Claude", model: "claude-haiku-5-5", input_micro_per_mtok: 100_000, output_micro_per_mtok: 500_000,
     version: "anthropic-haiku-5-5-global-2026-10-23", checked: "2026-10-23" }),
