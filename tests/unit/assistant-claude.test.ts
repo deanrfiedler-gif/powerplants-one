@@ -100,7 +100,9 @@ test("T2d actual SDK builds one bounded structured Messages request with no tool
     assert.equal(body.service_tier, "standard_only"); assert.equal(body.inference_geo, "global"); assert.equal(body.speed, undefined);
     return response(message());
   } });
-  assert.deepEqual(await adapter.answer(request(), signal()), { ...answer, usage }); assert.equal(calls, 1);
+  const { measurement, ...result } = await adapter.answer(request(), signal());
+  assert.deepEqual(result, { ...answer, usage }); assert.equal(calls, 1);
+  assert.equal(measurement?.estimated_input_tokens, claudeInputTokens(request()));
 });
 
 test("T2d input bound includes serialized system/schema overhead and UTF-8, before dispatch", async () => {
@@ -117,7 +119,9 @@ test("T2d refusals and structured declines discard all partial model text, with 
   for (const data of [message({ stop_reason: "refusal", content: [{ type: "text", text: "SYN raw refusal" }] }),
     message({ content: [{ type: "text", text: JSON.stringify({ kind: "Decline", claims: [], gaps: [] }) }] })]) {
     const adapter = createClaudeAdapter({ env, transport: async () => response(data) });
-    assert.deepEqual(await adapter.answer(request(), signal()), { kind: "Decline", usage });
+    const { measurement, ...result } = await adapter.answer(request(), signal());
+    assert.deepEqual(result, { kind: "Decline", usage });
+    assert.equal(measurement?.unsupported_usage, false);
   }
 });
 

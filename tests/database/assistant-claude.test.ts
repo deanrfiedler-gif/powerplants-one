@@ -11,6 +11,8 @@ import { postMessage } from "../../src/conversations/commands";
 import { readThread } from "../../src/conversations/reads";
 import { createClaudeAdapter, claudeModel } from "../../src/assistant/adapters/claude";
 import { runAssistantTurn, runAssistantTurns } from "../../src/assistant/turns";
+import { evaluationEvidenceHash, evaluationHash, parseEvaluation } from "../../src/assistant/evaluation";
+import { buildEnvelope } from "../../src/assistant/evidence";
 import { begin, code, messageInput, newDeal, person, post, principal, profiles, rows } from "../helpers/conversations";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Only disposable ppo_synthetic_test");
@@ -154,6 +156,12 @@ test("T2d access loss after SDK response settles cost and prevents publication; 
 
 test("T2d worker default factory → actual SDK → owned HTTPS transport persists once without adapter injection", async () => {
   const f = await fixture(); let calls = 0; const errors: unknown[] = [];
+  const manifest = { schema_version: 1, run_id: "10000000-0000-4000-8000-000000000099", workspace_id: f.p.workspace_id,
+    source_commit: "d".repeat(40), fixture_hash: "a".repeat(64), approval_reference: "b".repeat(64), cap_micro: 5000000, calibration_cap_micro: 1650000,
+    turns: [{ message_id: f.posted.receipt.record_id,
+      evidence_hash: evaluationEvidenceHash(await buildEnvelope(f.p, { thread_id: f.thread, trigger_message_id: f.posted.receipt.record_id })),
+      model: claudeModel, stage: "Calibration", case_id: "C01", repetition: 1 }] };
+  const evaluation = parseEvaluation(manifest, evaluationHash(manifest), "Calibration");
   const intercepted = mock.method(https, "request", (...args: unknown[]) => {
     calls++;
     const options = args[1] as https.RequestOptions;
@@ -167,7 +175,7 @@ test("T2d worker default factory → actual SDK → owned HTTPS transport persis
         assert.deepEqual((await ledger(f.turn)).map(e => [e.state, e.reserved_micro]), [["Reserved", 176000]]);
         for (const secret of [f.p.actor_id, f.other.actor_id, f.deal, f.thread]) assert.equal(wire.includes(secret), false);
         const res = Object.assign(new EventEmitter(), { statusCode: 200, headers: { "content-type": "application/json" } });
-        const payload = await response().text();
+        const payload = await response({ usage: { ...usage, inference_geo: "global", speed: "standard", service_tier: "standard" } }).text();
         (args[2] as (res: IncomingMessage) => void)(res as unknown as IncomingMessage);
         res.emit("data", Buffer.from(payload)); res.emit("end");
       })().catch(e => { errors.push(e); req.emit("error", e); });
@@ -175,12 +183,12 @@ test("T2d worker default factory → actual SDK → owned HTTPS transport persis
     return req as unknown as ReturnType<typeof https.request>;
   });
   try {
-    await Promise.all([runAssistantTurns(10, { env }), runAssistantTurns(10, { env })]);
+    await Promise.all([runAssistantTurns(10, { env, evaluation }), runAssistantTurns(10, { env, evaluation })]);
     assert.deepEqual(errors, []); assert.equal(calls, 1);
     assert.deepEqual((await ledger(f.turn)).map(e => [e.state, e.settled_micro]), [["Settled", 3698]]);
     assert.equal((await messages(f.turn)).length, 1);
     await postMessage(f.p, f.thread, f.input); await closeDatabase();
-    await runAssistantTurns(10, { env }); await runAssistantTurn(f.turn, { env });
+    await runAssistantTurns(10, { env, evaluation }); await runAssistantTurn(f.turn, { env, evaluation });
     assert.equal(calls, 1); assert.equal((await messages(f.turn)).length, 1);
     const view = await readThread(f.p, f.thread);
     assert.ok(view.messages.some(m => "agent" in m && m.agent?.label === "Claude" && m.agent.sources[0]?.can_open));

@@ -3,6 +3,8 @@ import { Buffer } from "node:buffer";
 import { assistantEnabled, type AssistantEnvironment } from "../config";
 import { AdapterError, answerLimits, turnLimits, type AdapterRequest, type AdapterResult, type AssistantAdapter, type Usage } from "../model";
 import { anthropicHTTPS, anthropicMessagesURL, type ClaudeTransport } from "./claude-transport";
+import { isClaudeModel, type ClaudeModel } from "../claude-models";
+import type { CallMeasurement } from "../model";
 
 export const claudeModel = "claude-sonnet-5-5";
 const system = `You are PPO's read-only synthetic record assistant. Answer only from the supplied evidence.
@@ -21,10 +23,10 @@ const schema = {
     gaps: { type: "array", items: { type: "string" } },
   },
 };
-function bodyFor(request: AdapterRequest): Anthropic.MessageCreateParamsNonStreaming {
+function bodyFor(request: AdapterRequest, model: ClaudeModel = claudeModel): Anthropic.MessageCreateParamsNonStreaming {
   return {
-    model: claudeModel, max_tokens: request.allowance.output_tokens, stream: false,
-    thinking: { type: "between_tools" }, service_tier: "standard_only", inference_geo: "global",
+    model, max_tokens: request.allowance.output_tokens, stream: false,
+    thinking: model === claudeModel ? { type: "between_tools" } : { type: "adaptive", display: "omitted" }, service_tier: "standard_only", inference_geo: "global",
     system, output_config: { format: { type: "json_schema", schema }, effort: "low" },
     messages: [{ role: "user", content: JSON.stringify({ question: request.question, envelope: request.envelope }) }],
   };
@@ -36,7 +38,7 @@ const quiet = { debug() {}, info() {}, warn() {}, error() {} };
 const unsafeNodeOptions = /(?:^|[\s"'])--(?:tls-keylog|use-system-ca|use-openssl-ca|openssl-config|openssl-shared-config)(?=[=\s"']|$)/;
 function permitted(env: AssistantEnvironment) {
   return typeof window === "undefined" && assistantEnabled(env) && env.PPO_ASSISTANT_PROVIDER === "claude"
-    && env.PPO_ASSISTANT_MODEL === claudeModel
+    && isClaudeModel(env.PPO_ASSISTANT_MODEL)
     && !env.ANTHROPIC_BASE_URL && !env.ANTHROPIC_CUSTOM_HEADERS && env.NODE_TLS_REJECT_UNAUTHORIZED !== "0"
     && !env.HTTPS_PROXY && !env.HTTP_PROXY && !env.ALL_PROXY && !env.https_proxy && !env.http_proxy && !env.all_proxy
     && !env.NODE_EXTRA_CA_CERTS && !env.SSL_CERT_FILE && !env.SSL_CERT_DIR && !env.NODE_USE_SYSTEM_CA && !env.OPENSSL_CONF
@@ -93,20 +95,23 @@ function errorCode(error: unknown): AdapterError["code"] {
 export function createClaudeAdapter(options: { env?: AssistantEnvironment; transport?: ClaudeTransport } = {}): AssistantAdapter {
   const environment = () => options.env ?? Reflect.get(process, "env") as AssistantEnvironment;
   // A fixed sentinel keeps arbitrary environment text out of turns/audit diagnostics.
-  const model = environment().PPO_ASSISTANT_MODEL === claudeModel ? claudeModel : "unconfigured";
+  const selected = environment().PPO_ASSISTANT_MODEL;
+  const model = isClaudeModel(selected) ? selected : "unconfigured";
+  const inputTokens = (request: AdapterRequest) => Buffer.byteLength(JSON.stringify(bodyFor(request, isClaudeModel(model) ? model : claudeModel)), "utf8") + 8192;
   return {
-    label: "Claude", model, inputTokens: claudeInputTokens,
+    label: "Claude", model, inputTokens,
     async answer(request, signal) {
       const env = environment();
-      if (!permitted(env) || model !== claudeModel) throw new AdapterError("Unavailable");
+      if (!permitted(env) || !isClaudeModel(model) || env.PPO_ASSISTANT_MODEL !== model) throw new AdapterError("Unavailable");
       if (signal.aborted) throw new AdapterError("Timeout");
       if (!count(request.allowance.input_tokens) || request.allowance.input_tokens > turnLimits.input_tokens
         || !count(request.allowance.output_tokens) || request.allowance.output_tokens < 1 || request.allowance.output_tokens > turnLimits.output_tokens
-        || claudeInputTokens(request) > request.allowance.input_tokens) throw new AdapterError("MalformedOutput");
+        || inputTokens(request) > request.allowance.input_tokens) throw new AdapterError("MalformedOutput");
       // The only credential read, after local/runtime/model/request guards and before a reserved dispatch.
       const apiKey = env.PPO_ANTHROPIC_API_KEY;
       if (!apiKey?.trim()) throw new AdapterError("Unavailable");
-      let sent = false, transportError: AdapterError | undefined;
+      let sent = false, transportError: AdapterError | undefined, measurement: CallMeasurement | undefined;
+      const started = performance.now();
       try {
         const client = new Anthropic({
           apiKey, authToken: null, webhookKey: null, baseURL: "https://api.anthropic.com",
@@ -132,21 +137,37 @@ export function createClaudeAdapter(options: { env?: AssistantEnvironment; trans
             }
           },
         });
-        const result = await client.messages.create(bodyFor(request), { signal, maxRetries: 0, timeout: 55_000 });
-        if (result.model !== claudeModel) throw new AdapterError("MalformedOutput", null, sent);
+        const result = await client.messages.create(bodyFor(request, model), { signal, maxRetries: 0, timeout: 55_000 });
+        if (result.model !== model) throw new AdapterError("MalformedOutput", null, sent);
         const usage = usageFor(result.usage, request.allowance);
+        const u = result.usage as unknown as Record<string, unknown>;
+        const detail = record(u?.output_tokens_details) ? u.output_tokens_details : {};
+        measurement = {
+          request_bytes: inputTokens(request) - 8192, estimated_input_tokens: inputTokens(request),
+          duration_ms: Math.max(0, Math.round(performance.now() - started)),
+          inference_geo: u?.inference_geo == null ? "Missing" : u.inference_geo === "global" ? "global" : "Unsupported",
+          speed: u?.speed == null ? "Missing" : u.speed === "standard" ? "standard" : "Unsupported",
+          service_tier: u?.service_tier == null ? "Missing" : u.service_tier === "standard" ? "standard" : "Unsupported",
+          thinking_tokens: count(detail.thinking_tokens) && detail.thinking_tokens <= Number(u?.output_tokens) ? detail.thinking_tokens : null,
+          unsupported_usage: !usage,
+        };
         if (signal.aborted) throw new AdapterError("Timeout", usage, sent);
         if (!usage) throw new AdapterError("MalformedOutput", null, sent);
-        if (result.stop_reason === "refusal") return { kind: "Decline", usage };
-        if (result.stop_reason !== "end_turn" || !Array.isArray(result.content)
-          || result.content.length !== 1 || result.content[0].type !== "text" || result.content[0].text.length > 32_000)
+        const details = (result as unknown as Record<string, unknown>).stop_details;
+        if (result.stop_reason === "refusal" || (record(details) && details.type === "refusal"))
+          return { kind: "Decline", usage, measurement };
+        const text = Array.isArray(result.content) ? result.content.filter(block => block.type === "text") : [];
+        const acceptable = Array.isArray(result.content) && result.content.every(block => block.type === "text"
+          || (model !== claudeModel && (block.type === "thinking" || block.type === "redacted_thinking")));
+        if (result.stop_reason !== "end_turn" || !acceptable
+          || text.length !== 1 || text[0].text.length > 32_000)
           throw new AdapterError("MalformedOutput", usage, true);
         let parsed: unknown;
-        try { parsed = JSON.parse(result.content[0].text); }
+        try { parsed = JSON.parse(text[0].text); }
         catch { throw new AdapterError("MalformedOutput", usage, true); }
-        return parsedAnswer(parsed, usage);
+        return { ...parsedAnswer(parsed, usage), measurement };
       } catch (error) {
-        if (error instanceof AdapterError) throw error;
+        if (error instanceof AdapterError) throw new AdapterError(error.code, error.usage, error.sent, measurement ?? error.measurement);
         if (transportError) throw transportError;
         throw new AdapterError(signal.aborted ? "Timeout" : errorCode(error), null, sent);
       }
