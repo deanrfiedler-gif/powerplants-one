@@ -58,7 +58,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Page parts | Quotation detail / Lifecycle step `2145:107` (Done, Now, Not yet, Attention), Customer views line `2145:108`, Linked chain row `2158:700213` (Done, Current, Next) and Document view switch `2159:3604`. At acceptance they moved to the Components page `1:4`, section "Components · Estimating parts" |
 | Shared parts | Record / Header, View tab, Field, Section heading, History item, Filter chip and Banner; Grid / Header cell and Cell; Tag; Button; Brand / Logo; Shell / Phone header · compact; the A1 Sales rail with its Quotations item and the Estimating rail from the Quotations page; the top bar with the Conversations action (badge 3), detached as on the other proposals |
 | Prototype | Flows "Quotation — desktop" and "Quotation — phone": tabs, the Customer views line, the Document view switch, Compare with r1 and back, and the phone document links |
-| Retained captures | [Quotation detail design r01](../reference/ui/estimating/quotation-detail-design-r01/README.md): 22 icon-free PNGs at exact frame size, with hashes |
+| Retained captures | [Quotation detail design r01](../reference/ui/estimating/quotation-detail-design-r01/README.md): 22 icon-free PNGs at exact frame size, with hashes. The capture copies are `2172:4492`–`2172:7905` on the Captures page, from y = 410,000; the File index row is `2173:83` |
 
 ## 3. Conformance declaration
 
