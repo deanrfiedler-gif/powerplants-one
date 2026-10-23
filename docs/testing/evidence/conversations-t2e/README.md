@@ -93,11 +93,13 @@ No approval_reference, calibration acceptance or live-run manifest is issued.
 
 Materialised once from implementation commit `ef93b007443229cdd0100d2942dba429f97abfa1` on a separate task-owned PostgreSQL 16 loopback cluster (51483). This is a newly prepared, never-run synthetic workspace. It has no evaluation run binding and has never been reset. The regression cluster uses 51481. Both are stopped after validation; the proposed cluster and its original attempt/state/inventory files are retained outside Git. Restart that same cluster for later read-only verification, never replace it to evade an outcome.
 
+At validator correction commit `e2bf9f7bf65ecba6318c721ecf921d70509bbd94`, catalogue-only checks were tightened to reject unsupported canonical field values and gold/definition contradictions. Read-only reinspection of the same 117 members proved that only the tool-source hash changed: all IDs, sources, gold, evidence hashes and request bounds were identical. The original private export remains intact (inventory hash `510fd742699194ca019a6e6742aa9591696eacf6fe40e84ce016a3cc07e816ac`); the corrected export is retained separately with explicit provenance. No messages, run or approval were replaced.
+
 The [complete proposed inventory](proposed-inventory.json) retains one member per line for review; [numeric fitting/cost CSV](offline-bounds.csv) has all 117 exact rows. The public copy was checked against the generated object, inspected for the allowed synthetic-only projection and confirmed to exclude prohibited source values, message/provider bodies and approval fields. Private operator/approval mappings are absent. IDs and source facts here are synthetic; no real account material is included.
 
 - Catalogue canonical hash: `1ff49b02b4a3df59ccd090cc4f74a5ba9a1bb98184aa20df01ffe7e6b8900b3b`.
-- Proposed inventory canonical hash: `510fd742699194ca019a6e6742aa9591696eacf6fe40e84ce016a3cc07e816ac`.
-- Canonical preparation/request source hash: `63ead2097143a50aacad268711ab4057b0a07f1a71b02570e6a2992ff9fbcf76`.
+- Proposed inventory canonical hash: `669cc3d259225413498aedf388a9911c26d89f2e13ef26f91f4159e021e4773c`.
+- Canonical preparation/request source hash: `17e8dc0c92f7ea37c1a0a7dd398dfc3ab46df0a40998250b97c168bb847ed9fd`.
 - **117 members = 9 calibration + 108 main**, 39 per model; 117 distinct organisations/sites/threads/triggers; **483 human messages**, **642 included source entries**, **315 exact gold-field support mappings**. O01–O10 remain ten offline proof definitions, not live members or additional turns.
 - All 117 turns Queued; no assistant answers or budget entries. A second command reconstructed every unfitted envelope and matched the same inventory hash. Rerunning materialisation is refused; export does not overwrite or manufacture replacement state.
 
@@ -122,8 +124,8 @@ C03 starts with 22 canonical human messages including kickoff/trigger, and L12 d
 
 - Assistant unit regression **52/52 passed** in one final controlled-launch run; preparation adds four unit cases.
 - Existing persisted SDK/evaluation/evidence regression **28/28 passed** (459.5 seconds), using intercepted transport/dummy values only.
-- New persisted preparation suite **4/4 passed** (94.1 seconds); actual canonical materialise plus independent repeat-export commands also passed against the separately retained proposed corpus.
-- Typecheck and affected-file ESLint passed. Foundation, naming, status and development-register integrity passed; **342 unreviewed / 26 stale** entries remain, with no visual acceptance granted. Remaining repository checks and exact-head CI are recorded on the draft PR.
+- New persisted preparation suite **4/4 passed** (94.1 seconds), then **4/4 passed** again after the stricter catalogue validation (77.6 seconds); actual canonical materialise plus independent repeat-export commands also passed against the separately retained proposed corpus.
+- The four preparation unit cases, typecheck and affected-file ESLint passed again after that correction. Foundation, naming, status and development-register integrity passed; **342 unreviewed / 26 stale** entries remain, with no visual acceptance granted. Remaining repository checks and exact-head CI are recorded on the draft PR.
 - Initial claim commit `85922fd` failed documentation/merged-tree checks because its new status fragment lacked required front matter. The implementation commit corrects the fragment, and local foundation/status checks pass. No test or check was weakened.
 - Independent review of this new contribution is **pending**. Codex inspection and CI do not constitute Claude review. Historical #679 review applies only to its named head.
 
