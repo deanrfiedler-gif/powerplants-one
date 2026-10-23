@@ -126,7 +126,9 @@ export async function checkEvaluationReservation(c: PoolClient, workspace: strin
   const committed = state.reduce((n, r) => n + Number(r.committed ?? 0), 0);
   const calibration = state.filter(r => calibrationIds.has(r.trigger_message_id)).reduce((n, r) => n + Number(r.committed ?? 0), 0);
   const added = prior ? 0 : amount;
-  if (added > m.cap_micro - committed || (member.stage === "Calibration" && added > m.calibration_cap_micro - calibration)) throw new AppError(409, "BudgetSpent", "The evaluation budget is unavailable or spent.");
+  // BudgetSpent's accepted UI specifically means the monthly ceiling. A smaller run cap
+  // makes this evaluation unavailable; it must not falsely report monthly exhaustion.
+  if (added > m.cap_micro - committed || (member.stage === "Calibration" && added > m.calibration_cap_micro - calibration)) throw refused();
   if (member.stage === "Evaluation") {
     if (!run.acceptance || calibrationIds.size !== 9 || [...calibrationIds].some(id => !state.some(r => r.trigger_message_id === id && r.state === "Answered" && r.ledger_state === "Settled"))) throw refused();
   }

@@ -130,6 +130,9 @@ test("T2e manifest replacement, missing runtime configuration and an explicit pe
   const guarded = { ...env };
   Object.defineProperty(guarded, "PPO_ANTHROPIC_API_KEY", { get() { reads++; throw Error("SYN forbidden key read"); } });
   assert.equal((await runAssistantTurn(h.turns[0], { env: guarded })).state, "Unavailable"); assert.equal(reads, 0);
+  const off = { ...env, PPO_ASSISTANT: "off" };
+  Object.defineProperty(off, "PPO_ANTHROPIC_API_KEY", { get() { reads++; throw Error("SYN forbidden key read"); } });
+  assert.deepEqual(await runAssistantTurn(h.turns[1], { env: off }), { state: "Unavailable", reason: "FeatureOff" }); assert.equal(reads, 0);
 });
 
 test("T2e main stage refuses without all nine settled Answered calibrations", async () => {
@@ -156,10 +159,10 @@ test("T2e calibration sub-cap includes prior-month committed usage; a smaller ca
   } });
   assert.equal((await runAssistantTurn(f.turns[0], { env, adapter, evaluation: evaluation(f.manifest) })).state, "Answered");
   assert.equal((await monthSpend(database(), f.p.workspace_id)).committed, 3698);
-  assert.deepEqual(await runAssistantTurn(f.turns[1], { env, adapter, evaluation: evaluation(f.manifest) }), { state: "Unavailable", reason: "BudgetSpent" });
+  assert.deepEqual(await runAssistantTurn(f.turns[1], { env, adapter, evaluation: evaluation(f.manifest) }), { state: "Unavailable", reason: "ProviderUnavailable" });
   assert.equal(calls, 1); assert.equal((await ledger(f.turns[1])).length, 0);
   const g = await fixture(); g.manifest.calibration_cap_micro = 175999;
-  assert.deepEqual(await runAssistantTurn(g.turns[0], { env, adapter, evaluation: evaluation(g.manifest) }), { state: "Unavailable", reason: "BudgetSpent" });
+  assert.deepEqual(await runAssistantTurn(g.turns[0], { env, adapter, evaluation: evaluation(g.manifest) }), { state: "Unavailable", reason: "ProviderUnavailable" });
   assert.equal(calls, 1);
 });
 

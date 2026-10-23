@@ -83,7 +83,7 @@ async function executeAssistantTurn(id: string, deps: Deps): Promise<Outcome> {
     }
     // Runtime Claude dispatch requires a separately supplied run manifest. Injected adapters
     // remain the existing code-only test seam; no environment mock switch is introduced.
-    if (adapter.label === "Claude" && !deps.adapter && !evaluationContext.getStore())
+    if (adapter.label === "Claude" && !deps.adapter && !evaluationContext.getStore() && assistantEnabled(deps.env))
       return finish("Unavailable", "ProviderUnavailable");
     const started = await startTurn(p, turn, {
       enabled: assistantEnabled(deps.env), adapter: adapter.label, model: adapter.model, price,

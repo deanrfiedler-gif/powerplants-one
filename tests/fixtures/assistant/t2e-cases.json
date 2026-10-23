@@ -3,7 +3,7 @@
   "fixture_set": "T2E-SYN-01",
   "status": "Proposed synthetic definitions; no approved run or live results",
   "preparation": [
-    "Create each case via canonical services in a fresh thread per case/model/repetition; local seeded synthetic tagger/participants only.",
+    "Create each case via canonical services with a fresh organisation/site (and project when applicable) and thread per case/model/repetition; use local seeded synthetic tagger/participants only. Do not inherit other seeded or evaluation records as sibling evidence.",
     "Create all human messages before running the existing document worker; use Agent mentions, never direct provider invocation.",
     "Map aliases to generated IDs and source versions in a reviewed instance inventory. Verify its full allowlisted envelope and gold assertions.",
     "Record evaluationEvidenceHash per trigger, hash the reviewed inventory, then obtain separate cost/fixture approval. This catalogue alone is not a run manifest."

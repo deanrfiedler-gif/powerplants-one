@@ -32,11 +32,22 @@ Checkpoint: assistant unit subset **48/48 passed**, including five new evaluatio
 
 Two local setup/test corrections remain visible: the first document storage path was inside Git, so seeding refused ExactDocumentUnavailable before tests; using owned storage outside Git fixed setup. A new derived-Project test incorrectly assumed saveTask leaves the Project row version unchanged; the canonical task service increments it. The fixture was corrected to add a RAID entry (a derived aggregate change without that row-version increment). This is a test-fixture correction, not a claimed baseline failure or weakened source guard.
 
-Final head, integrated main, CI disposition and owned-service shutdown belong to the PR execution ledger. No independent review is claimed. Existing T2d historical CI is separate from this contribution's checks.
+Local completion results (the exact delivery head and CI disposition are recorded in the PR ledger):
+
+- **48/48 assistant unit tests passed** again after the implementation refinements.
+- The complete affected assistant database inventory ran **74 cases: 73 passed and the one new Project fixture failed** as explained above. The corrected actual-SDK/evaluation subset then passed **21/21** (318.8 seconds), including all 12 evaluation cases. A final focused rerun passed **1/1** after preserving FeatureOff on an unconfigured runtime-Claude path; its dummy-key getter was never read. All 74 distinct database cases therefore have passing coverage across these runs, not a claimed single green 74-case rerun.
+- Final 8GB typecheck, full-tree lint plus affected-file lint after the last edit, and application build passed. Carl was explicitly off during the build; no worker/server was launched by that compile check.
+- A last self-inspection found the smaller run cap was reusing the accepted UI's specifically monthly BudgetSpent reason. It now uses generic ProviderUnavailable, with no UI change. The two affected cap/concurrency cases passed **2/2** afterward; this reason-only refinement did not require another full build. Self-inspection is not independent review.
+- Foundation, naming, prototype, status sources/generated view, migration numbering, documentation scope and all **22 documentation regressions passed**. All 78 parent requirement IDs remain. Generated views remain ignored; protected landing pages are unchanged.
+- Development-register integrity passed; **342 unreviewed and 26 stale** entries remain visible. No visual/owner acceptance was performed or credited.
+- Runtime dependency audit: **zero vulnerabilities**. Full locked-tree gate passed with the existing documented braces exception only; no new exception or dependency change.
+- Full repository unit/database/HTTP/browser inventories were not repeated locally. The affected suites above and compile checks cover this contribution; complete GitHub inventories remain separate and were still running at the implementation checkpoint.
+
+The task-owned PostgreSQL cluster was stopped after validation. No independent review is claimed. Existing T2d historical CI is separate from this contribution's checks. No real credentials were inspected and no live API calls were made.
 
 ## Safe retained artifacts
 
-The [T2E-SYN-01 catalogue](../../../../tests/fixtures/assistant/t2e-cases.json) is reviewed source material, not an approved instantiated run. Do not manufacture a live result from the mocked payloads. A later run needs Dean's approved canonical instance inventory, exact gold source/claim mappings, evidence hashes and private manifest/approval references.
+The [T2E-SYN-01 catalogue](../../../../tests/fixtures/assistant/t2e-cases.json) is proposed synthetic source material, not an approved instantiated run. Do not manufacture a live result from the mocked payloads. A later run needs Dean's approved canonical instance inventory, exact gold source/claim mappings, evidence hashes and private manifest/approval references.
 
 Retain numeric token/byte/duration/cost measurements, fixed outcomes, model/price/commit/case/repetition/hash references and scored assertions. Raw requests/responses, provider headers/errors/identifiers, thinking/signatures, credentials and full environment dumps never enter logs, receipts, audit events or public diagnostics. Only specifically reviewed synthetic answer/oracle artifacts may enter an evaluation record; do not publish full local test logs or database dumps. Preserve failed-attempt history and Unknown reservations. No reset or release is a permission to retry.
 

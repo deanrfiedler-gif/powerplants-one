@@ -59,11 +59,11 @@ Measurements contain only bytes, estimated input, duration, fixed geo/speed/tier
 | E: evaluation | L01–L12 ×3 repetitions ×3 models = **108 turns**, 108 first calls, at most 648 including PPO retries. Fresh isolated case threads, fixed model per turn. | Same aggregate cap, including calibration/Unknown; stop early and report incomplete coverage. |
 | D: adjudication | Score against gold assertions; compare models; review failures and cost/latency. | Suitability/business acceptance/final model pin are Dean's separate decisions; no production claim. |
 
-Calibration order: C01/C02/C03 Sonnet, then Haiku, then Opus. Main: repetition 1–3, each L01–L12, cycling Sonnet/Haiku/Opus per case. Use the existing worker/runner with single-turn observation (runner batch limit1), stopping between model/stage selections. Never bypass human message → queued turn → existing worker → validated persisted answer/citations → ledger. No paid request deliberately provokes an offline-proven failure.
+Calibration order: C01/C02/C03 Sonnet, then Haiku, then Opus. Main: repetition 1–3, each L01–L12, cycling Sonnet/Haiku/Opus per case. The existing document worker processes at most one manifest turn per invocation; inspect its result before invoking it again, stopping between model/stage selections. Never bypass human message → queued turn → existing worker → validated persisted answer/citations → ledger. No paid request deliberately provokes an offline-proven failure.
 
 ## Fixture matrix and rubric
 
-[T2E-SYN-01 catalogue](../../tests/fixtures/assistant/t2e-cases.json) contains literal SYN records, questions, setup and gold assertions. The reviewed instance inventory supplies generated IDs, versions and exact source mappings; canonical validation must agree with the catalogue before approval. C/L/O IDs are derived evaluation labels, not new parent IDs.
+[T2E-SYN-01 catalogue](../../tests/fixtures/assistant/t2e-cases.json) contains literal SYN records, questions, setup and gold assertions. Give each case/model/repetition its own organisation/site, project where applicable and thread, so unrelated seeded or evaluation records cannot enter sibling retrieval. The reviewed instance inventory supplies generated IDs, versions and exact source mappings; canonical validation must agree with the catalogue before approval. C/L/O IDs are derived evaluation labels, not new parent IDs.
 
 | Cases | Question / expected behavior | Governing IDs | Evidence / stop |
 |---|---|---|---|

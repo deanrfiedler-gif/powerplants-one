@@ -40,7 +40,7 @@ The private run manifest is a bounded JSON file (maximum 64,000 bytes) with exac
 | schema_version | Integer 1 |
 | run_id / workspace_id | Lowercase UUIDs; one approved run/workspace |
 | source_commit | Full 40-character SHA of the clean execution checkout |
-| fixture_hash / approval_reference | SHA-256 of reviewed instance inventory / separately held approval record; no raw payload or identity in the manifest |
+| fixture_hash / approval_reference | SHA-256 of reviewed instance inventory / separately held approval record; no raw payload or approver details in the manifest |
 | cap_micro / calibration_cap_micro | Positive integer micro-USD, at most 5,000,000 / 1,650,000; calibration cannot exceed total |
 | turns | At most 117 entries; each exactly message_id, evidence_hash, model, stage, case_id, repetition |
 | member fields | Immutable trigger UUID, reviewed evidence SHA-256, exact supported model, Calibration or Evaluation, C01–C03 or L01–L12, repetition 1 for calibration or 1–3 for evaluation |
