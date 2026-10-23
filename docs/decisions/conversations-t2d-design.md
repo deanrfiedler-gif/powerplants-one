@@ -3,7 +3,7 @@ document_id: PPO-CONV-T2D-DESIGN
 title: Conversations T2d local Claude adapter
 date: 2026-10-22
 owner: Dean Fiedler
-status: Implemented for review; Codex working for Dean; independent review received; corrective follow-up and acceptance pending
+status: Implemented; independent review findings corrected; Dean authorised merge subject to checks on 23 October 2026; no live evaluation
 versioning: git
 ---
 
@@ -36,9 +36,14 @@ Mocked SDK transport proves request/response handling. Persisted integration pro
 
 ## Implementation checkpoint
 
-[ADR-0061](ADR-0061-local-claude-adapter.md) was written before the real exact-version SDK installation. The bounded adapter, pricing and provider preflight hook are implemented; the existing service/runner/ledger proof uses the actual SDK with injected mocked transport. See the [evidence record](../testing/evidence/conversations-t2d/README.md) for checks, failed attempts and remaining review gates. The later T2c check found Claude’s review at 79092a4d and one Low R8 enumerable-digest finding. T2c’s separate correction at 6ed76b12 uses a server-held HMAC key and awaits independent follow-up. The inspected correction changes no adapter interface; this contribution does not edit #660 or claim its review.
+[ADR-0062](ADR-0062-local-claude-adapter.md) was written before the real exact-version SDK installation. The bounded adapter, pricing and provider preflight hook are implemented; the existing service/runner/ledger proof uses the actual SDK with injected mocked transport. See the [evidence record](../testing/evidence/conversations-t2d/README.md) for checks, failed attempts and remaining review gates. The later T2c check found Claude’s review at 79092a4d and one Low R8 enumerable-digest finding. T2c’s separate correction at 6ed76b12 uses a server-held HMAC key and awaits independent follow-up. The inspected correction changes no adapter interface; this contribution does not edit #660 or claim its review.
 
 
 ## Independent review and corrective scope
 
-[Claude's independent review](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849) of 829ae67c reported one Medium history-bound defect and one Low inherited-TLS-trust defect. Both were verified and addressed in this contribution. The correction also adds owned-transport cap/abort/error tests, non-global/speed usage checks and a persisted default-factory → SDK → owned-HTTPS proof. ADR-0061 owns the updated decisions. The backend fixed omission grammar changes without a UI component or route change; no unmerged T2c UI/catalogue files are copied or edited. T2c remains independently owned. Correction validation and exact-head CI are recorded in the evidence record and draft PR; the corrected head still needs independent follow-up.
+[Claude's independent review](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849) of 829ae67c reported one Medium history-bound defect and one Low inherited-TLS-trust defect. Both were verified and addressed in this contribution. The correction also adds owned-transport cap/abort/error tests, non-global/speed usage checks and a persisted default-factory → SDK → owned-HTTPS proof. ADR-0062 owns the updated decisions. The backend fixed omission grammar changes without a UI component or route change; no unmerged T2c UI/catalogue files are copied or edited. T2c remains independently owned. Correction validation and exact-head CI are recorded in the evidence record and draft PR; the corrected head still needs independent follow-up.
+
+
+## Merge instruction and ADR collision — 23 October 2026
+
+Dean subsequently requested following PR #664 through checks/conflicts and merging when ready. The earlier claim and correction-review checkpoint above remain historical. Claude reviewed 829ae67c and both verified findings were corrected; no subsequent independent review is claimed. The repository rule requires different-model review and author disposition, which are recorded separately from CI and owner authorisation. T2e, live-provider evaluation and production readiness remain outside this merge. Automation N2 merged with ADR-0061, so this adapter now uses ADR-0062 as anticipated by the merged calling integration record; the original claim number above is preserved for traceability.

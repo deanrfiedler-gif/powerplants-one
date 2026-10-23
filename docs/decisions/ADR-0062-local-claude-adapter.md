@@ -1,8 +1,10 @@
-# ADR-0061 — Local Claude Messages adapter
+# ADR-0062 — Local Claude Messages adapter
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner/decider: Dean Fiedler. Date: 22 October 2026. Status: authorised T2d implementation choice; independent review received at 829ae67c; corrective follow-up review and owner acceptance pending. Codex working for Dean. [T2d plan](conversations-t2d-design.md), [T2 scope](conversations-t2-scope.md) T2-1–12/W5/W9, [A1/A2](ppo-assistant-direction.md), [ADR-0056](ADR-0056-dependency-update-and-audit-gates.md).
+Owner/decider: Dean Fiedler. Date: 22 October 2026. Status: authorised T2d implementation choice; independent review received at 829ae67c and findings corrected; Dean authorised merge subject to checks on 23 October 2026; no subsequent independent review or live evaluation claimed. Codex working for Dean. [T2d plan](conversations-t2d-design.md), [T2 scope](conversations-t2-scope.md) T2-1–12/W5/W9, [A1/A2](ppo-assistant-direction.md), [ADR-0056](ADR-0056-dependency-update-and-audit-gates.md).
+
+Renumbered on 23 October 2026 from the ADR-0061 identifier used in PR #664: merged Automation N2 owns ADR-0061, and the [calling integration record](../status/2026-10-23-calling-and-caller-id-design-paper-and-native-phone-app-adr.md) explicitly leaves ADR-0062 for this collision. The original T2d claim remains in Git history and the design chronology; this changes no technical decision.
 
 ## Decision and alternatives
 

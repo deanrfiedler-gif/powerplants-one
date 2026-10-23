@@ -23,7 +23,7 @@ Migration 0110 and seed 110 support `src/assistant/`, the conversation service a
 | Agent message | Immutable plain text, authored by `Agent` with no `author_id`; carries the acted-for person, turn, outcome, adapter and left-out count. The simulated adapter is labelled `Simulated` |
 | Claims and sources | Append-only factual claims and gaps, with numbered source references, source type and ID, version and retrieval time. Only validated citations can be posted |
 | Budget | A ceiling row per workspace and one reservation per call. Integer micro-USD, UTC calendar month, maximum US$30 |
-| Worker | `scripts/document-worker.ts` calls `runAssistantTurns(10)`. Default adapter is deterministic `Simulated/simulated-1`, with zero prices and no network request. T2d adds explicit local-only Claude selection under [ADR-0061](../decisions/ADR-0061-local-claude-adapter.md) |
+| Worker | `scripts/document-worker.ts` calls `runAssistantTurns(10)`. Default adapter is deterministic `Simulated/simulated-1`, with zero prices and no network request. T2d adds explicit local-only Claude selection under [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md) |
 
 ## Access and evidence (T2-2 to T2-4, P2, P4)
 
@@ -88,7 +88,7 @@ Known usage settles even if validation or posting later fails. A confirmed unsen
 | Access rebuilds | 1 |
 | Safe retries for unavailable/rate-limited/malformed responses | At most two for each error type, within all turn limits |
 
-Sent calls with unknown usage are not retried. Input estimates are checked before each call, and reported usage must fit the remaining allowance. Simulated usage is the JSON character count divided by four, rounded up. This is a deterministic fixture meter; T2d uses a provider-specific full-request UTF-8 byte bound plus explicit schema/system overhead headroom, not this simulation meter. Reported unsupported billing categories retain Unknown and stop; see [ADR-0061](../decisions/ADR-0061-local-claude-adapter.md) for its calibration limit.
+Sent calls with unknown usage are not retried. Input estimates are checked before each call, and reported usage must fit the remaining allowance. Simulated usage is the JSON character count divided by four, rounded up. This is a deterministic fixture meter; T2d uses a provider-specific full-request UTF-8 byte bound plus explicit schema/system overhead headroom, not this simulation meter. Reported unsupported billing categories retain Unknown and stop; see [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md) for its calibration limit.
 
 ## Answer checks and reads (T2-5, T2-8, T2-9, P1)
 
@@ -136,7 +136,7 @@ The draft PR records exact local check results, confirmed baseline failures and 
 
 Before Claude dispatch or retry, prepareRequest removes complete oldest history entries to fit that provider's preflight estimate within the remaining input allowance. It preserves the newest history entry, exact question, access-checked source items and reader set. Every removal increments left_out; coverage.messages reports the reduced returned count and more=true. The internal history_left_out subtotal permits a separate fixed history-limit footer, while access exclusions retain their existing count-only wording. Stored left_out_count is the total; history reasons survive reader projection through the fixed footer grammar. Existing immutable answer bytes and old footer grammar remain valid. No new DTO identity, database field or endpoint is introduced. Requests still too large after history fitting fail before dispatch; simulation keeps its previous behavior.
 
-TLS uses explicit bundled Node roots, independent of process trust defaults, plus pre-credential refusal of system/OpenSSL trust/configuration and command-line key-log overrides. The speed field is omitted; non-standard speed or non-global reported billing usage retains Unknown. Sent HTTP rejection without known usage retains the reservation and is not retried; no automatic reconciliation exists. See ADR-0061 for sources and rationale.
+TLS uses explicit bundled Node roots, independent of process trust defaults, plus pre-credential refusal of system/OpenSSL trust/configuration and command-line key-log overrides. The speed field is omitted; non-standard speed or non-global reported billing usage retains Unknown. Sent HTTP rejection without known usage retains the reservation and is not retried; no automatic reconciliation exists. See ADR-0062 for sources and rationale.
 
 ## T2c UI extension — 22 October 2026
 

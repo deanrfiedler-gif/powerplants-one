@@ -64,7 +64,7 @@ async function fixture(page: Page, structured = false) {
     `/estimating/discovery/${input.id}/nursery?option=${input.option_id}`,
   );
   await expect(
-    page.getByRole("heading", { name: "Nursery Automation", exact: true }),
+    page.getByRole("heading", { name: "Automation Configurator", exact: true }),
   ).toBeVisible();
   return { id: input.id, path: `estimating/workspaces/${input.id}/nursery` };
 }

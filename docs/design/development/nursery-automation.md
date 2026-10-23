@@ -1,8 +1,8 @@
-# Nursery Automation Configurator working design note
+# Automation Configurator working design note
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Status: N0 proposed design with an N1 native capture route added below; no accepted visual baseline or deployment. Scope: existing ES-02 discovery, ES-03 CPQ handover and ES-05 output. Basis: [specification](../../blueprints/nursery-automation-configurator.md) and [scope decision](../../decisions/nursery-automation-specification.md).
+Owner: Dean Fiedler. Status: proposed design with N1 native capture and N2 technical assessment implemented below; no accepted visual baseline or deployment. Scope: existing ES-02 discovery, ES-03 CPQ handover and ES-05 output. Basis: [specification](../../blueprints/nursery-automation-configurator.md) and [scope decision](../../decisions/nursery-automation-specification.md).
 
 ## Views and actions
 
@@ -33,10 +33,14 @@ Required states: loading, empty, filtered-empty, unknown data, conflicting sourc
 
 ## References and registration
 
-Exact Nursery mockups, HTML, desktop and phone images: **not supplied; missing**. Existing Screen/Priva patterns are reuse references, not accepted Nursery visuals. No fingerprint or reviewer attribution is created.
+Exact Automation mockups, HTML, desktop and phone images: **not supplied; missing**. Existing Screen/Priva patterns are reuse references, not accepted Automation visuals. No fingerprint or reviewer attribution is created.
 
 The N0 reference-only note was linked from `scope:ES-02` through its maintained design contract and register dependency. N1 now has an actual registered route, page-specific guide, component fixtures and evidence below. Future stages must update these alongside implementation. Any HTML package must select the applicable r20 page type under the existing conformance standard before baseline adoption.
 
 ## N1 native implementation
 
-The first native capture route is now /estimating/discovery/[id]/nursery. Its [page contract](pages/route-estimating-discovery-id-nursery.md) records source binding, saved scenarios, conflicts and delivery decisions. The earlier no-route statements describe the N0 reference-only package. N2–N4 remain open; this addition grants no accepted visual baseline.
+The first native capture route is now /estimating/discovery/[id]/nursery. Its [page contract](pages/route-estimating-discovery-id-nursery.md) records source binding, saved scenarios, conflicts and delivery decisions. The earlier no-route statements describe the N0 reference-only package. N2 is implemented below; N3–N4 remain open. This addition grants no accepted visual baseline.
+
+## N2 native assessment
+
+The Automation technical assessment now extends N1 through the [N2 page contract](pages/route-estimating-discovery-id-nursery-assessment.md). Existing source IDs and nursery paths remain stable. N3–N4 and owner visual acceptance remain open.

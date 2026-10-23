@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Executor: Codex, working for Dean. Date: 22 October 2026. Status: Claude review received at 829ae67c; corrections under validation; independent follow-up and Dean acceptance pending. The final execution ledger and exact-head CI disposition are maintained on the linked draft PR; this source records the reproducible proof and checkpoint evidence. [Design](../../../decisions/conversations-t2d-design.md), [ADR-0061](../../../decisions/ADR-0061-local-claude-adapter.md), [draft PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664).
+Owner: Dean Fiedler. Executor: Codex, working for Dean. Date: 22 October 2026. Status: Claude review received at 829ae67c; findings corrected; Dean authorised merge subject to checks on 23 October 2026; no subsequent independent review claimed. The final execution ledger and exact-head CI disposition are maintained on the linked draft PR; this source records the reproducible proof and checkpoint evidence. [Design](../../../decisions/conversations-t2d-design.md), [ADR-0062](../../../decisions/ADR-0062-local-claude-adapter.md), [draft PR #664](https://github.com/deanrfiedler-gif/powerplants-one/pull/664).
 
 ## Environment and boundaries
 

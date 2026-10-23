@@ -8,7 +8,7 @@ const simulated: Price = Object.freeze({
   adapter: "Simulated", model: "simulated-1", input_micro_per_mtok: 0, output_micro_per_mtok: 0,
   version: "simulated-1-zero", checked: "2026-10-20",
 });
-// ADR-0061: global standard, no cache/tools; checked against official pricing 2026-10-22.
+// ADR-0062: global standard, no cache/tools; checked against official pricing 2026-10-22.
 const claude: Price = Object.freeze({
   adapter: "Claude", model: "claude-sonnet-5-5", input_micro_per_mtok: 2_000_000, output_micro_per_mtok: 10_000_000,
   version: "anthropic-sonnet-5-5-global-2026-10-22", checked: "2026-10-22",

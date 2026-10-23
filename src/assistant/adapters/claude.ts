@@ -30,7 +30,7 @@ function bodyFor(request: AdapterRequest): Anthropic.MessageCreateParamsNonStrea
   };
 }
 // Conservative byte accounting includes the full wire schema/system and explicit provider
-// overhead headroom. This is not an exact tokenizer; ADR-0061 records the T2e calibration gate.
+// overhead headroom. This is not an exact tokenizer; ADR-0062 records the T2e calibration gate.
 export const claudeInputTokens = (request: AdapterRequest) => Buffer.byteLength(JSON.stringify(bodyFor(request)), "utf8") + 8192;
 const quiet = { debug() {}, info() {}, warn() {}, error() {} };
 const unsafeNodeOptions = /(?:^|[\s"'])--(?:tls-keylog|use-system-ca|use-openssl-ca|openssl-config|openssl-shared-config)(?=[=\s"']|$)/;

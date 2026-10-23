@@ -2041,7 +2041,7 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                 >
                   Priva Fertigation Configurator
                 </Link>
-                {current.revision.kind === "Discovery" && <Link role="menuitem" href={`/estimating/discovery/${id}/nursery?option=${current.option.id}`}>Nursery Automation discovery</Link>}
+                {current.revision.kind === "Discovery" && <Link role="menuitem" href={`/estimating/discovery/${id}/nursery?option=${current.option.id}`}>Automation discovery</Link>}
               </RowMenu>
             </div>
             {changesOpen && dirty && (
