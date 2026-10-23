@@ -74,3 +74,17 @@ The [T2E-SYN-01 catalogue](../../../../tests/fixtures/assistant/t2e-cases.json) 
 Retain numeric token/byte/duration/cost measurements, fixed outcomes, model/price/commit/case/repetition/hash references and scored assertions. Raw requests/responses, provider headers/errors/identifiers, thinking/signatures, credentials and full environment dumps never enter logs, receipts, audit events or public diagnostics. Only specifically reviewed synthetic answer/oracle artifacts may enter an evaluation record; do not publish full local test logs or database dumps. Preserve failed-attempt history and Unknown reservations. No reset or release is a permission to retry.
 
 Planning delivery, code merge, execution permission, live result, Dean's acceptance and production readiness remain separate claims.
+
+## Offline fixture preparation — 24 October 2026
+
+[Draft PR #680](https://github.com/deanrfiedler-gif/powerplants-one/pull/680) addresses findings 5/6 with machine-checked catalogue schema 2 and canonical preparation/export. Owner: Dean; author: Codex. It remains unmerged, with no independent review of this contribution. The historical #679 review and merge evidence above do not apply to this new head.
+
+Dedicated worktree `codex/t2e-fixture-preparation`, based on verified current main `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`. Shared checkout untouched. The [plan](../../../decisions/conversations-t2e-evaluation.md#offline-fixture-preparation-follow-up--24-october-2026) records catalogue corrections and architectural choices; the [operator chapter](../../../delivery/conversations-t2d-local-adapter.md#offline-fixture-preparation-commands) owns reproducible commands and exclusive-worker limitations.
+
+Local validation uses Node 24.22.1, exact npm 11.19.0, unchanged lockfile, empty task-owned npm configuration and a new explicit child environment. Installed npm 11.19.1 initially failed the engine gate; the required version was installed only in task storage, with no engine override. One existing unit case initially could not find Git in the minimal PATH; adding its executable directory yielded 5/5 in that family. No inherited environment/secret file or machine TLS setting was read or changed.
+
+The first new persisted attempts found fixture errors (site-party date needed a UTC instant; per-member email/ERP uniqueness needed suffixes). These were corrected in the new preparation code, not attributed to main. Final preparation proof is 4/4: all 117 canonical members, exact gold checks, repeat hashes, unchanged turns/messages/audit/receipts/outbox/budget fingerprints, no answers/ledger, wrong principal, membership/context/source drift and actual ask-duty revocation. Tests block fetch and HTTPS. The test cluster is separate from the retained proposed corpus; no bound evaluation workspace is reset.
+
+Evidence classes: **Persisted synthetic integration** for preparation, **offline pure construction** for request fitting/hash/catalogue, **Actual SDK / mocked transport** for inherited provider regression. No Live model evidence exists. Source/gold factual comparisons do not execute the human answer rubric. Corpus approval, exact-run/spending authority, calibration acceptance, model selection and production readiness remain pending.
+
+Exact proposed inventory, numeric forecast and current-head validation are recorded below after the final export. No approval_reference, calibration acceptance or live-run manifest is issued.

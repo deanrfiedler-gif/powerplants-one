@@ -1,4 +1,7 @@
-## T2e offline fixture preparation claimed — 24 October 2026
+---
+title: T2e offline fixture preparation
+date: 2026-10-24
+---
 
 Owner: Codex for Dean. Dedicated branch `codex/t2e-fixture-preparation`, based on current main `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`. GitHub inspection confirmed PR #679 merged at that commit with final head `37603e08cad9f1a7bf6097ca273aebbd0830a9fb`; its 72 checks comprise 71 successes and the intentional PT-27 skip. The refreshed merged-tree check used `adef52b6c9667cf1a90298796b16fe32612acedb`. Claude reviewed `99721da67f28d9726ade8f3d186b044c8b9880e0`; no subsequent independent review is claimed. Prior setup/mobile failures passed unchanged retries with causes unconfirmed.
 
