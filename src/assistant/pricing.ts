@@ -13,8 +13,14 @@ const claude: Price = Object.freeze({
   adapter: "Claude", model: "claude-sonnet-5-5", input_micro_per_mtok: 2_000_000, output_micro_per_mtok: 10_000_000,
   version: "anthropic-sonnet-5-5-global-2026-10-22", checked: "2026-10-22",
 });
+const comparison: Price[] = [
+  Object.freeze({ adapter: "Claude", model: "claude-haiku-5-5", input_micro_per_mtok: 100_000, output_micro_per_mtok: 500_000,
+    version: "anthropic-haiku-5-5-global-2026-10-23", checked: "2026-10-23" }),
+  Object.freeze({ adapter: "Claude", model: "claude-opus-5-5", input_micro_per_mtok: 4_000_000, output_micro_per_mtok: 20_000_000,
+    version: "anthropic-opus-5-5-global-2026-10-23", checked: "2026-10-23" }),
+];
 export function priceFor(adapter: string, model: string): Price | null {
-  return [simulated, claude].find(p => p.adapter === adapter && p.model === model) ?? null;
+  return [simulated, claude, ...comparison].find(p => p.adapter === adapter && p.model === model) ?? null;
 }
 function integer(value: number): bigint {
   if (!Number.isSafeInteger(value) || value < 0) throw new RangeError("Invalid price or token count");

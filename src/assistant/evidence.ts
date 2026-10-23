@@ -131,6 +131,21 @@ async function sourceFields(c: QueryClient, workspace: string, source: SourceKey
   };
 }
 
+// Evaluation-only freshness gate: derived Project fields can change without its row version.
+// Re-read the same allowlist inside the dispatch/post transaction; never expose a stale answer.
+export async function sourcesUnchanged(c: QueryClient, workspace: string, envelope: EvidenceEnvelope) {
+  const retrieved = (await c.query("SELECT clock_timestamp() AS at")).rows[0].at.toISOString();
+  const anchor = envelope.items[0];
+  const nextAction = anchor?.type === "Opportunity" ? (await c.query(
+    "SELECT next_activity_id FROM ppo.opportunities WHERE workspace_id=$1 AND id=$2", [workspace, anchor.record_id],
+  )).rows[0]?.next_activity_id ?? null : null;
+  for (const item of envelope.items) {
+    const current = await sourceFields(c, workspace, item, retrieved, nextAction);
+    if (current.source_version !== item.source_version || canonical(current.fields) !== canonical(item.fields)) return false;
+  }
+  return true;
+}
+
 async function messagesFor(c: QueryClient, p: Principal, thread: string, trigger: string, readers: string[]) {
   const through = (await c.query(
     "SELECT sequence FROM ppo.conversation_messages WHERE workspace_id=$1 AND thread_id=$2 AND id=$3",

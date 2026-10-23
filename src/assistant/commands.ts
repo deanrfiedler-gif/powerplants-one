@@ -8,10 +8,13 @@ import { loadWorkingCompany, withWorkingCompany } from "../platform/working-comp
 import { readableAnchor, visibleThread } from "../conversations/access";
 import { conversationOutboxKind } from "../conversations/model";
 import { keepUnknown, releaseCall, reserveCall, settleCall } from "./budget";
-import { envelopeHash, turnReaders } from "./evidence";
+import { envelopeHash, sourcesUnchanged, turnReaders } from "./evidence";
 import { readableSources, sourceKey } from "./source-access";
 import { turnLimits, type AdapterLabel, type EvidenceEnvelope, type StoredClaim, type StoredSource, type TurnReason, type TurnState, type Usage } from "./model";
 import type { Price } from "./pricing";
+import { assertEvaluationRunning, evaluationDetails, evaluationContext } from "./evaluation";
+import { safeMeasurement } from "./measurements";
+import type { CallMeasurement } from "./model";
 
 export type Turn = {
   id: string; workspace_id: string; thread_id: string; trigger_message_id: string; acted_for_id: string;
@@ -77,6 +80,8 @@ async function evidenceAccess(c: PoolClient, p: Principal, t: Turn, envelope: Ev
       const open = await readableSources(c, p.workspace_id, reader, envelope.items);
       if (envelope.items.some(s => !open.has(sourceKey(s)))) throw stopped("AccessChanged");
     }
+    if (evaluationContext.getStore() && !await sourcesUnchanged(c, p.workspace_id, envelope)) throw stopped("ProviderUnavailable");
+    await assertEvaluationRunning(c, p.workspace_id);
   });
 }
 const input = (t: Pick<Turn, "id" | "attempt">, step: string) => ({
@@ -88,7 +93,7 @@ function result(t: Turn, updated: Date, extra: Record<string, unknown> = {}): Op
     audit_details: {
       turn_id: t.id, thread_id: t.thread_id, attempt: t.attempt, model_calls: t.model_calls,
       input_tokens: t.input_tokens, output_tokens: t.output_tokens,
-      evidence_count: t.evidence_count, left_out_count: t.left_out_count, ...extra,
+      evidence_count: t.evidence_count, left_out_count: t.left_out_count, ...evaluationDetails(), ...extra,
     },
   };
 }
@@ -153,8 +158,9 @@ export async function dispatchCall(p: Principal, turn: Turn, envelope: EvidenceE
   return entry;
 }
 
-export async function recordCall(p: Principal, turn: Turn, entry: string, price: Price, usage: Usage | null, sent: boolean) {
-  const command = { ...input(turn, `Usage:${turn.model_calls}`), entry, usage, sent };
+export async function recordCall(p: Principal, turn: Turn, entry: string, price: Price, usage: Usage | null, sent: boolean, measurement?: CallMeasurement) {
+  const metrics = safeMeasurement(measurement);
+  const command = { ...input(turn, `Usage:${turn.model_calls}`), entry, usage, sent, ...(metrics ? { measurement: metrics } : {}) };
   return sharedOperation(p, command, "Assistant:RecordCall",
     c => owned(c, p, turn), async (c, t) => {
       // Billing belongs to this acted-for turn even if its person has just lost record access.
@@ -166,7 +172,7 @@ export async function recordCall(p: Principal, turn: Turn, entry: string, price:
          WHERE id=$1 RETURNING ${columns},clock_timestamp() AS at`,
         [t.id, usage?.input_tokens ?? 0, usage?.output_tokens ?? 0],
       )).rows[0];
-      return result(row, row.at, { budget_entry_id: entry });
+      return result(row, row.at, { budget_entry_id: entry, ...(metrics ? { measurement: metrics } : {}) });
     }, "AssistantTurn", conversationOutboxKind);
 }
 
@@ -250,4 +256,17 @@ export async function endTurn(p: Principal, turn: Turn, outcome: {
       }
       return finish(c, t, outcome.state, outcome.reason);
     }, "AssistantTurn", conversationOutboxKind);
+}
+
+// Server-only evaluation stop; no route. Keep the immutable turn/answer/ledger unchanged.
+export async function stopEvaluation(p: Principal, turn: Turn) {
+  if (!evaluationContext.getStore()) throw stopped("ProviderUnavailable");
+  return sharedOperation(p, input(turn, "EvaluationStop"), "Assistant:EvaluationStop", async c => {
+    const t = await locked(c, p, turn.id);
+    if (await actorAccess(c, p, t)) throw stopped("ActorLostAccess");
+    const binding = (await c.query("SELECT 1 FROM ppo.audit_events WHERE workspace_id=$1 AND object_id=$2 AND details->>'evaluation_manifest_hash'=$3 LIMIT 1",
+      [p.workspace_id, t.id, evaluationContext.getStore()!.hash])).rowCount;
+    if (!binding) throw stopped("ProviderUnavailable");
+    return t;
+  }, async (_c, t) => result(t, new Date(), { evaluation_stopped: true }), "AssistantTurn", conversationOutboxKind);
 }
