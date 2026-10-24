@@ -427,7 +427,8 @@
         "route:/conversations",
         "route:/conversations/[id]",
         "route:/estimating/discovery/[id]/nursery",
-        "route:/estimating/discovery/[id]/nursery/assessment"
+        "route:/estimating/discovery/[id]/nursery/assessment",
+        "route:/estimating/reviews"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -953,7 +954,8 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/estimating/reviews"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -3097,7 +3099,8 @@
         "route:/my-jobs/[id]",
         "route:/service/appointments/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/estimating/reviews"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal. SV-04 retains the shared global More opener beside its record-action dock after the compact header becomes Back.",
@@ -3271,7 +3274,8 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/estimating/reviews"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -4696,7 +4700,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/estimating/reviews"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -6620,6 +6625,11 @@
           "id": "denied",
           "label": "Unavailable",
           "description": "Protected forms and evidence removed."
+        },
+        {
+          "id": "queue-successor",
+          "label": "Superseded queue handover",
+          "description": "Exact old submission never silently becomes a decision on its successor."
         }
       ],
       "implementation": [
@@ -8671,6 +8681,130 @@
           }
         ],
         "note": "Frames use Author=Carl 1144:172 and Kind=Carl 1144:52. Current P3 states and R8 confirmation follow decision records; no accepted warning frame exists."
+      },
+      "review": null
+    },
+    {
+      "id": "estimate-reviews-register",
+      "title": "Reviews and approvals register",
+      "category": "Tables & grids",
+      "module": "ES",
+      "purpose": "Permission-scoped ES-04/ES-05 register with exact native snapshots, candidate-window counts and review/release handovers.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No unconfirmed rows or totals."
+        },
+        {
+          "id": "window",
+          "label": "Candidate window",
+          "description": "Three review kinds can share one estimate candidate."
+        },
+        {
+          "id": "partial",
+          "label": "Partial or denied",
+          "description": "Restricted sources are explicit without hidden counts."
+        },
+        {
+          "id": "empty",
+          "label": "Filtered empty",
+          "description": "Continuation remains reachable."
+        },
+        {
+          "id": "returned",
+          "label": "Returned / successor",
+          "description": "Original findings and recorded responses."
+        },
+        {
+          "id": "changed",
+          "label": "Source changed",
+          "description": "No inherited decision authority."
+        },
+        {
+          "id": "selection",
+          "label": "Selection",
+          "description": "Sequence and rechecked selected CSV only."
+        },
+        {
+          "id": "snapshot",
+          "label": "Exact snapshot",
+          "description": "Current native authority and precise handovers."
+        },
+        {
+          "id": "recovery",
+          "label": "Unavailable",
+          "description": "Protected evidence cleared; retry current read."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimate-reviews-register.tsx",
+          "symbol": "EstimateReviewsRegister"
+        },
+        {
+          "path": "src/components/estimate-reviews-snapshot.tsx",
+          "symbol": "ReviewQueueSnapshot"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimate-reviews-register.tsx",
+        "src/components/estimate-reviews-snapshot.tsx",
+        "src/components/estimate-reviews-register.css",
+        "src/estimating/review/queue.ts",
+        "src/estimating/review/queue-snapshot.ts",
+        "docs/decisions/estimating-review-queue.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/reviews-approvals-design-r01/README.md",
+        "anchor": "",
+        "status": "Accepted design reference; application review pending"
+      },
+      "specification": "docs/design/development/components/estimate-reviews-register.md",
+      "used_on": [
+        "route:/estimating/reviews",
+        "scope:ES-04",
+        "scope:ES-05"
+      ],
+      "desktop": "Accepted 40 px full-width grid, fixed edges, 240 px menu, 360 px selection and overlapping exact snapshot.",
+      "mobile": "Flush rows, labelled selection, full-screen exact snapshot at 390/320 px.",
+      "keyboard": "Labelled checkboxes, native buttons, visible focus, Escape return and evidence-tab arrow keys.",
+      "limitations": "Native synthetic read projection; candidate-window counts; no bulk decisions, SLA, live business integration or application acceptance.",
+      "gaps": [
+        {
+          "id": "reviews-visual-acceptance",
+          "expected": "Owner-reviewed application comparison, physical-device and screen-reader evidence.",
+          "actual": "Implementation and automated evidence remain separate from acceptance. Missing design states use documented adaptations.",
+          "action": "Review application captures and the page contract.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Estimating parts",
+        "components": [
+          {
+            "node": "75:679",
+            "name": "Review grid header"
+          },
+          {
+            "node": "75:678",
+            "name": "Review grid row"
+          },
+          {
+            "node": "104:1786",
+            "name": "Review list row (phone)"
+          },
+          {
+            "node": "104:1654",
+            "name": "Review snapshot (phone)"
+          }
+        ],
+        "note": "Register parts from Reviews & approvals (56:2). The review and correction form itself has no component."
       },
       "review": null
     }

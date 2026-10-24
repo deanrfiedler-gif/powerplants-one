@@ -6,6 +6,7 @@ export const moduleWorkspaces = [
   { route: "/service/packs/new", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-preparation" },
   { route: "/service/packs", moduleId: "SV-05", scope: "ppo-pack-register", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-register" },
   { route: "/service/packs/[id]", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-record" },
+  { route: "/estimating/reviews", moduleId: "ES-04", scope: "ppo-estimate-reviews", layout: "full-bleed", navigation: "workspace", baseline: "estimate-reviews-figma-register" },
   {route:"/estimating/cpq",moduleId:"ES-02",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-configure-implementation"},
   {route:"/estimating/rules",moduleId:"ES-03",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-rules-implementation"},
   {route:"/maintenance/agreements",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-native-r01"},
