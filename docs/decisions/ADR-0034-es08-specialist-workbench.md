@@ -10,6 +10,8 @@ status: Implemented for synthetic review; owner acceptance pending
 
 > **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **supersedes** direct specialist adoption into the native estimate and the synthetic AUD pricing pinned by `SYN-ES08-RECEIVE-01` (CM6, CM7): ES-08 sends a price-free parts proposal to CPQ, and CPQ alone prices it. Lineage manifests and generated baselines are kept and re-homed on the CPQ side. The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
 
+> **Amended by [ADR-0066](ADR-0066-configuration-rule-sets.md) — 24 October 2026:** Dean accepted configuration rule sets. The rejection of a generic formula evaluator below no longer applies to ES-08's parts and quantity rules: they move into a published rule set, run by the restricted CPQ interpreter, so engineers can edit them in the app. ES-08 keeps its screens, drawings, evidence and any engineering calculations as typed code, and the rejection still stands for engineering design calculations. Running behaviour changes only when ADR-0066 build step R5 is delivered.
+
 Dean requested execution of the Specialist Configuration Workbench implementation
 prompt and native build plan r02. Their normative contract bodies are identical.
 This work is ES-08 / EST-06 / E5, tracing CRE-13–CRE-17, EA-16/17, AT-04/28,
