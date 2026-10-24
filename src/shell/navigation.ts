@@ -89,7 +89,7 @@ export const destinations: ShellDestination[] = [
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "pricing", "label": "Cost sources", "icon": "nav-pricing", "readiness": "ready", "href": "/estimating/cost-sources", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "quotations", "label": "Quotations", "icon": "nav-quotation", "readiness": "ready", "href": "/estimating/quotes", "workspace": "estimate", "requires": ["estimating.quote.read"], "requiresAll": ["estimating.read"]},
-  {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "unavailable", "workspace": "estimate"},
+  {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "ready", "href": "/estimating/reviews", "requires": ["estimating.read"], "workspace": "estimate"},
   {"id": "fertigation", "label": "Priva Fertigation Configurator", "icon": "nav-fertigation", "readiness": "ready", "href": "/estimating/fertigation", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "engineering", "label": "Engineering workload", "icon": "nav-workload", "readiness": "ready", "href": "/engineering", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "basis", "label": "Design basis & interfaces", "icon": "nav-interfaces", "readiness": "ready", "href": "/engineering/basis", "requires": ["engineering.read"], "workspace": "engineering"},

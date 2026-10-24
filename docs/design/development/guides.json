@@ -76117,6 +76117,154 @@
           "rows": []
         }
       ]
+    },
+    {
+      "guide_key": "guide.route-estimating-reviews",
+      "entry_key": "route:/estimating/reviews",
+      "title": "Reviews & approvals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:ES-04",
+        "scope:ES-05"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Find exact submitted estimate reviews and prepared quotation approvals you may read. Decisions remain in the owning native workflow."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "prerequisites",
+          "title": "Before you start",
+          "paragraphs": [
+            "You need estimating.read and current related-record access. Quotation rows also need estimating.quote.read. A review duty is separate from reading; authors, owners and submitters cannot review their own work."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Choose a view, optionally filter by review kind or site, inspect a snapshot and open its native review or approval. Use Next window to inspect older candidates."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The menu chooses overlapping views; the toolbar filters, refreshes and opens selection actions. The desktop grid has fixed selection/action edges; phones use compact rows."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Understand the information",
+          "paragraphs": [
+            "References and revisions identify saved evidence. Waiting is elapsed time since the recorded submission at the displayed observation time. No due date, SLA or overdue rule is configured. Values are AUD excluding tax under the synthetic source basis; Not recorded is not zero."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Working with selections",
+          "paragraphs": [
+            "Select visible rows with checkboxes. Open in sequence inspects oldest selected submissions first. Export list rechecks the exact readable rows and writes a selected-only CSV; it never exports a global backlog or approves anything."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "handover",
+          "title": "Complete the handover",
+          "paragraphs": [
+            "Open review carries the exact submission and kind. A superseded submission requires an explicit Open current review. Open approval uses the exact prepared quotation revision. Open estimate retains the saved estimate version."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "Read the state",
+          "paragraphs": [
+            "Pending, Returned, Reviewed, Changed basis, Output pending, Approved and Issued stay distinct. Carried forward means an earlier applicable review, not a new approval. Returned findings retain original text and successor responses."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "One estimate may produce Completeness, Technical and Source & price rows. Twenty-five candidates can yield seventy-five review rows. A view can show zero matches and still offer Next window."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recover or refresh",
+          "paragraphs": [
+            "A failed or denied read removes evidence and counts. Retry loading or Retry snapshot rechecks current access. Refresh clears selections. When evidence changes, select the current rows again; do not treat an inaccessible record as no work."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile-keyboard-offline",
+          "title": "Phone, keyboard and offline",
+          "paragraphs": [
+            "Use labelled checkboxes on narrow phones, keyboard Tab and visible focus. Escape closes a snapshot and restores focus; left/right arrows change its evidence tab. Review commands require online native workflows."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related records",
+          "paragraphs": [
+            "See the exact-estimate review contract, synthetic quotation release contract, accepted Reviews & approvals design and queue evidence in the development register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review and limits",
+          "paragraphs": [
+            "This guide is Draft. Functional tests, application visual comparison, owner/device acceptance and deployment are separate. Synthetic rules are not operational approval policy."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ]
     }
   ]
 }

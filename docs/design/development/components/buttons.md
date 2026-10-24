@@ -277,3 +277,6 @@ The Nursery discovery route consumes the unchanged shared control. Host states a
 ## Automation N2 consumer
 
 The N2 technical assessment reuses this control without API changes. Local FactFields/Pick are extracted unchanged from N1. Host fixtures cover source evidence, saved results/history, stale/uncertain recovery and narrow layouts. Owner visual review and approved Automation frames remain pending. See the N2 page contract and tests/browser/nursery-assessment.spec.ts.
+
+
+Reviews & approvals consumes this shared control at `route:/estimating/reviews`; see the [page-specific composition and states](../pages/route-estimating-reviews.md). Existing consumers and review records remain independent.

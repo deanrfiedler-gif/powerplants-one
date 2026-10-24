@@ -453,12 +453,12 @@ function ProductNavigationView({
         </dialog>
       )}
       <nav
-        className={`mobile-navigation${workspace.id === "sales" || workspace.id === "projects" ? " ppo-phone-bar-r07" : ""}${workspace.id === "projects" ? " pj-phone-navigation" : ""}`}
+        className={`mobile-navigation${workspace.id === "sales" || workspace.id === "projects" || workspace.id === "estimate" ? " ppo-phone-bar-r07" : ""}${workspace.id === "projects" ? " pj-phone-navigation" : ""}`}
         aria-label="Mobile navigation"
       >
         {workspace.id === "sales"
           ? salesPhoneBar.filter((entry) => allowed(destination(entry.id))).map(phoneCell)
-          : (workspace.id === "projects" ? [destination("work"), destination("projects"), destination("programme"), destination("acceptance")] : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)])
+          : (workspace.id === "estimate" ? [destination("work"), destination("estimates"), destination("wizard"), destination("estimate-reviews")] : workspace.id === "projects" ? [destination("work"), destination("projects"), destination("programme"), destination("acceptance")] : [destination("work"), workspaceLanding(workspace.id, permitted, shell.hosted), destination(workspace.secondary)])
               .filter((item): item is ShellDestination => !!item && allowed(item))
               .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
               .map((item) => link(item, true))}

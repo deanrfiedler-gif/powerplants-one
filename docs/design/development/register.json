@@ -1493,7 +1493,8 @@
         "src/components/estimate-review.css",
         "src/estimating/review/service.ts",
         "src/estimating/review/reads.ts",
-        "docs/contracts/estimating-review.md"
+        "docs/contracts/estimating-review.md",
+        "src/components/estimate-reviews-register.tsx"
       ],
       "scope_status": "Bounded native review; commercial approval not configured",
       "visual_status": "Needs review",
@@ -1506,7 +1507,8 @@
       "related_keys": [
         "route:/estimating/estimates/[id]/review",
         "scope:ES-03",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/reviews"
       ],
       "reviewer": null
     },
@@ -1532,7 +1534,8 @@
         "src/estimating/release/reads.ts",
         "docs/contracts/quotation-release.md",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "src/components/estimate-reviews-register.tsx"
       ],
       "scope_status": "Bounded native synthetic release",
       "visual_status": "Needs review",
@@ -1548,7 +1551,8 @@
         "scope:DK-03",
         "scope:DK-06",
         "route:/estimating/quotes/[id]/release",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/reviews"
       ],
       "reviewer": null
     },
@@ -15549,6 +15553,52 @@
       "related_keys": [
         "scope:ES-02",
         "route:/estimating/discovery/[id]/nursery"
+      ]
+    },
+    {
+      "key": "route:/estimating/reviews",
+      "title": "Reviews & approvals",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Permission-scoped ES-04/ES-05 register with exact native snapshots, candidate-window counts and review/release handovers.",
+      "path": "/estimating/reviews",
+      "source_paths": [
+        "src/app/(business)/estimating/reviews/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-reviews",
+      "design_path": "docs/design/development/pages/route-estimating-reviews.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-02-Desktop-Record-Snapshot-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-03-Desktop-Selection-Small-Snapshot-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-04-Desktop-More-Slide-Out-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-05-Desktop-Collapsed-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-06-Phone-Review-List-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-07-Phone-Record-Snapshot-r01.png"
+      ],
+      "dependencies": [
+        "src/components/estimate-reviews-register.tsx",
+        "src/components/estimate-reviews-snapshot.tsx",
+        "src/components/estimate-reviews-register.css",
+        "src/estimating/review/queue.ts",
+        "src/estimating/review/queue-snapshot.ts",
+        "docs/decisions/estimating-review-queue.md",
+        "src/shell/module-workspaces.ts"
+      ],
+      "scope_status": "Implemented in PR; acceptance separate",
+      "visual_status": "Needs review",
+      "functional_status": "Focused validation recorded in queue evidence",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-04",
+        "scope:ES-05",
+        "route:/estimating/estimates/[id]/review"
       ]
     }
   ]

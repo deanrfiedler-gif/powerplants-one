@@ -40,3 +40,6 @@ The draft guide `guide.route-estimating-estimates-id-review` contains prerequisi
 ## Inspected synthetic viewport captures
 
 [Desktop reviewed overview](../../../testing/evidence/estimating-review/reviewed-overview-desktop.png) and [320px review basis](../../../testing/evidence/estimating-review/review-basis-320.png) were inspected against native source `8e3d348`; [provenance and limits](../../../testing/evidence/estimating-review/manifest.json). These are runtime captures, not adopted reference designs. Full visual/owner review stays pending.
+
+
+Queue handovers carry `submission_id` and `kind`. A superseded submission shows an explicit current-review link and withholds the decision form until that deliberate navigation. Native commands and recovery remain unchanged.
