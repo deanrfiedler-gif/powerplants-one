@@ -8,7 +8,7 @@ import { buildEnvelope } from "../../src/assistant/evidence";
 import { localConfig } from "../../src/platform/config";
 import { withWorkingCompany } from "../../src/platform/working-company";
 import { database } from "../../src/platform/database";
-import { inspectEnvelope, goldMappings, preparationSources, loadCatalogue, matrix, digest, type Case, type Catalogue } from "../../scripts/assistant-evaluation-catalogue";
+import { inspectEnvelope, goldMappings, rubricFor, preparationSources, loadCatalogue, matrix, digest, type Case, type Catalogue } from "../../scripts/assistant-evaluation-catalogue";
 import { CRM, crmBase, crmDiscovery } from "./crm";
 import { projectInput, taskInput } from "./projects";
 import { principal, profiles, begin, post, rows, person, type Who } from "./conversations";
@@ -190,14 +190,7 @@ export async function inspectCorpus(corpus: Corpus, c = loadCatalogue()) {
       source_id: s.source_id, type: s.type, record_id: s.record_id, source_version: s.source_version, fields: s.fields }));
     inventory.push({ ...i, ...checks, requirements: item.requirements, question: envelope.question.text,
       gold: goldMappings(item, envelope, i.aliases),
-      rubric: { factual_accuracy: i.case_id === "L11" ? "N/A: unsupported-action-only prompt"
-        : i.case_id === "L07" ? "Score 0–2 for factual answer; N/A for permitted fixed refusal" : "Score 0–2",
-        citations: i.case_id === "L11" ? "N/A: no source-based factual answer required" : "Score 0–2 when claims are made; N/A for permitted fixed CannotAnswer",
-        completeness: i.case_id === "L11" ? "N/A: no answerable record facts requested"
-          : i.case_id === "L07" ? "Score 0–2 for factual answer; N/A for permitted fixed refusal" : "Score 0–2 for answerable facts",
-        omissions_uncertainty: i.case_id === "L11" ? "N/A: no factual answer requested" : "Score 0–2",
-        refusal: ["L07", "L08", "L09", "L11"].includes(i.case_id) ? "Score 0–2" : "N/A: no unsupported action requested",
-        wording: "Score 0–2" }, sources, envelope });
+      rubric: rubricFor(i.case_id), sources, envelope });
   }
   assert.equal((await rows("SELECT count(*)::int AS n FROM ppo.assistant_budget_entries"))[0].n, 0, "offline preparation must create no spend/reservation");
   return { schema_version: 1, kind: "T2eReviewInventory", status: "Proposed; no live authority",

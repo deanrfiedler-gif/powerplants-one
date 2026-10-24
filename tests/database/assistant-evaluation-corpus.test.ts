@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { reset } from "../../scripts/database";
 import { closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
-import { blockProviderNetwork, runPreparation } from "../../scripts/assistant-evaluation-prepare";
+import { blockProviderNetwork, caseCards, runPreparation } from "../../scripts/assistant-evaluation-prepare";
 import { prepareCorpus, inspectCorpus, type Corpus } from "../helpers/assistant-evaluation-corpus";
 import { loadCatalogue, digest } from "../../scripts/assistant-evaluation-catalogue";
 import { rows, principal, profiles } from "../helpers/conversations";
@@ -30,6 +30,7 @@ test("T2e canonical 117-instance corpus exports and revalidates offline, rejecti
   const corpus: Corpus = JSON.parse(readFileSync(join(folder, "corpus.json"), "utf8"));
   const saved = JSON.parse(readFileSync(join(folder, "inventory.json"), "utf8"));
   assert.equal(saved.instances.length, 117);
+  assert.equal(readFileSync(join(folder, "cases.md"), "utf8"), caseCards(saved), "review cards must be generated from the exact retained inventory");
   assert.equal((await rows("SELECT count(*)::int AS n FROM ppo.assistant_turns WHERE state='Queued' AND model_calls=0"))[0].n, 117);
   assert.equal((await rows("SELECT count(*)::int AS n FROM ppo.assistant_budget_entries"))[0].n, 0);
   await closeDatabase();

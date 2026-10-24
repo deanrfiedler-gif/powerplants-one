@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { loadCatalogue, validateCatalogue, matrix, inspectEnvelope, digest } from "../../scripts/assistant-evaluation-catalogue";
+import { loadCatalogue, validateCatalogue, matrix, inspectEnvelope, digest, goldMappings, rubricFor } from "../../scripts/assistant-evaluation-catalogue";
 import type { EvidenceEnvelope } from "../../src/assistant/model";
-import { checkReviewSnapshot } from "../../scripts/assistant-evaluation-prepare";
+import { checkReviewSnapshot, caseCards, type ReviewSnapshot } from "../../scripts/assistant-evaluation-prepare";
 const sources = ["docs/decisions/conversations-t2-scope.md", "docs/blueprints/ppo-assistant-specification.md"].map(p => readFileSync(p, "utf8"));
 test("T2e catalogue has exact 9 calibration / 108 evaluation matrix and real requirement IDs", () => {
   const c = loadCatalogue(), m = matrix(c);
@@ -19,6 +19,27 @@ test("T2e catalogue has exact 9 calibration / 108 evaluation matrix and real req
     const original = structuredClone(c); mutate();
     assert.throws(() => validateCatalogue(c, sources)); Object.assign(c, original);
   }
+});
+test("T2e review does not demand withheld timezone or credit fixed application behavior as model quality", () => {
+  const c = loadCatalogue();
+  const saved = JSON.parse(readFileSync("docs/testing/evidence/conversations-t2e/preparation-review/inventory.json", "utf8"));
+  const instances = saved.instances.map((i: ReviewSnapshot["instances"][number]) => ({ ...i,
+    gold: goldMappings(c.cases.find(item => item.id === i.case_id)!, i.envelope, i.aliases), rubric: rubricFor(i.case_id) }));
+  const date = instances.find((i: ReviewSnapshot["instances"][number]) => i.case_id === "L03");
+  assert.ok(!JSON.stringify(date.envelope).includes("Brisbane"), "the actual retained request does not supply the site timezone");
+  assert.equal(date.gold[1].bindings[0].fields.summary, c.record_sets.activities[1].summary);
+  assert.match(date.gold[1].bindings[1].rule, /Do not require Brisbane conversion/);
+  for (const [id, index] of [["C03", 1], ["L05", 1], ["L06", 0], ["L10", 1], ["L11", 1], ["L12", 1], ["L12", 2]] as const)
+    assert.match(instances.find((i: ReviewSnapshot["instances"][number]) => i.case_id === id).gold[index].assessment, /^Application invariant/);
+  assert.match(rubricFor("L11").factual_accuracy, /every factual Answer/);
+  assert.match(rubricFor("L11").citations, /including L11/);
+  assert.match(rubricFor("L07").omissions_uncertainty, /N\/A for permitted fixed Declined/);
+  assert.match(rubricFor("L01").completeness, /0 for an unnecessary Declined/);
+  assert.match(rubricFor("L09").refusal, /explicit refusal wording is not required/);
+  const cards = caseCards({ ...saved, instances });
+  assert.equal((cards.match(/^## [CL]\d+/gm) ?? []).length, 15);
+  assert.ok(cards.includes(date.gold[1].bindings[1].rule));
+  assert.ok(cards.includes(rubricFor("L11").citations));
 });
 test("T2e inspection rejects source contamination, leaked sentinels, changed facts and request identity", () => {
   const c = loadCatalogue(), item = c.cases[0], aliases = { anchor: "SYN-INTERNAL-IDENTITY" };

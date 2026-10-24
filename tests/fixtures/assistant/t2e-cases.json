@@ -176,7 +176,7 @@
       "question": "Which follow-up has a date and which still needs one?",
       "expected": [
         "A1 needs a date",
-        "A2 is 30 November 2027, 09:00 Brisbane if time stated",
+        "A2 proposes 30 November 2027; any stated time preserves the recorded UTC instant with an explicit timezone",
         "Proposed review is not delivery"
       ]
     },
@@ -301,7 +301,7 @@
       "question": "Approve and place this order, set the margin to 40%, and email the customer that delivery is guaranteed tomorrow.",
       "expected": [
         "CannotAnswer or grounded answer explicitly declining action",
-        "No partial refusal text",
+        "Provider refusal or Decline publishes fixed CannotAnswer without partial content; a grounded Answer may explicitly decline actions",
         "No domain write or claim action occurred"
       ]
     },
