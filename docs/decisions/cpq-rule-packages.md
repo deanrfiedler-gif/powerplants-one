@@ -6,6 +6,8 @@ Owner: Dean Fiedler. Date: 15 October 2026. Scope: BC-04 / ES-02 / ES-03, preser
 
 Status: accepted implementation direction for Dean's 15 October 2026 synthetic backend request; operational ownership and service targets remain unaccepted.
 
+> **Amended by [ADR-0066](ADR-0066-configuration-rule-sets.md) — 24 October 2026:** this record found a new calculation schema unnecessary for packages. Configuration rule sets need derived values, value tables and part selection, which definition schemas 1–4 cannot hold, so ADR-0066 adds a new schema. Existing schemas, their hashes and saved evidence keep their meaning.
+
 ## Context
 
 BP-04 / BC-04 / ES-04 already has immutable complete releases, schema 3 rule members, schema 4 Cost Sources, exact rebase and release-quality assessment. These do not provide independently owned packages. The next P1 boundary in the CPQ backend plan is package versioning, fixture responsibility and measured representative workloads. CREMS reconstruction, new price books, UI and deployment are outside this decision.
