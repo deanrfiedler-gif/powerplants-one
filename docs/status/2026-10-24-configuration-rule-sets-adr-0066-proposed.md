@@ -13,13 +13,14 @@ The model covers:
 - labour from quantities;
 - reference cases compared line by line;
 - coverage checks;
-- an Excel round trip.
+- an Excel round trip;
+- several rule sets working together on one job, such as Priva fertigation and Priva control.
 
 An offline prototype reproduced a private screen estimator workbook across eight Excel-recalculated cases: 544 line comparisons, 0 differences. A second proof against the synthetic fertigation design engine showed that design calculations need a programming-grade language. The ADR therefore keeps them as typed workbench modules, whose results feed rule sets. The prototype and the workbook data stay outside the repository.
 
 The Figma proposal and the [engineer walkthrough plan](../testing/rule-sets-engineer-walkthrough.md) are ready for review. Not done:
 
-- owner acceptance of the model, amendments and Q1–Q10;
+- owner acceptance of the model, amendments and Q1–Q11;
 - the walkthrough with an engineer;
 - the authority decision for real rule sets;
 - build steps R1–R6.

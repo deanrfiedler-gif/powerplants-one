@@ -70,6 +70,11 @@ A **rule set** is the versioned unit for one product family. It holds:
   - a unit mismatch between a rule and its part.
 
   Blocking findings stop submission unless the rule set owner accepts them with a written reason. The reason is shown on the review.
+- **Rule sets that work together:** one job can use more than one rule set.
+  - A rule set can pass named values to another as its inputs. For example, Priva fertigation passes water systems, dosing channels and valve groups to Priva control, which owns the controller, I/O and licences.
+  - Each part belongs to one rule set only. A part produced by two rule sets in the same job is flagged.
+  - Items that belong to the whole job, such as coordination, travel and freight, are counted once, by a rule the owners of both families agree.
+  - The parts proposal records the version of every rule set used.
 
 ### Governance
 
@@ -98,7 +103,7 @@ The second-family proof below drew this line. Expressing a design engine needed 
 - **[ADR-0034](ADR-0034-es08-specialist-workbench.md):** the rejection of a generic formula evaluator no longer applies to ES-08's parts and quantity rules. Those move into a published rule set run by the restricted interpreter, to meet the owner's requirement for in-app editing. ES-08 keeps its screens, drawings, evidence and any engineering calculations as typed code. The rejection still stands for engineering design calculations in every workbench (see the scope boundary).
 - **[CPQ rule packages](cpq-rule-packages.md):** that record found a new calculation schema unnecessary for packages. The rule set model needs derived values, value tables and part selection, which schemas 1–4 cannot hold, so a new schema is needed. It leaves existing schemas and hashes untouched.
 - **[CPQ native runtime](cpq-native-runtime.md):** "full no-code rule authoring" moves from tracked work to this design.
-- **[Estimating hub, CPQ and workbench model](estimating-configurator-model.md):** the parts proposal (B0) carries the rule set identity and version.
+- **[Estimating hub, CPQ and workbench model](estimating-configurator-model.md):** the parts proposal (B0) carries the identity and version of every rule set used.
 
 ## Options considered
 
@@ -137,6 +142,7 @@ A prototype evaluator implemented the model with exact fractions. It covered ord
   - **Quantity rules hold across deals.** For example, dosing-channel licences = units × channels held in 11 of 13 deals, and the per-unit commissioning kit in 19–22 of 23.
   - **No repeating groups needed.** Multi-unit fertigation jobs repeat identical units, so a quantity input is enough.
   - **Control systems** follow fixed per-controller packages and one-for-one function licences. I/O module sizing needs engineering tables (outputs per function, built-in I/O per controller) expressed as derived values and range tables.
+  - **Two families that share jobs.** Many fertigation jobs also supply or extend a controller, but many control jobs have no fertigation. So fertigation and control are separate rule sets that work together on a shared job, rather than one combined rule set.
   - **Gaps the review exposed.** For example, the acid tank connection kit was absent from 11 of 18 fertigation quotes with fertiliser kits. This is the kind of omission coverage checks are meant to catch.
 
 ## Consequences and build steps
@@ -167,6 +173,7 @@ Other consequences:
 - **Q8** Should Excel imports accept values and new rows, but never new columns? Yes.
 - **Q9** Keep engineering design calculations as typed workbench modules whose results feed rule sets, rather than extending rule sets into a programming language? Yes.
 - **Q10** Add repeating groups to rule sets, so that one rule set can quote several units or zones each with their own inputs? Not now. The Priva deal review found identical repeated units, so a quantity input covers them. Revisit if a family needs per-unit variation.
+- **Q11** Let one job use several rule sets that pass values to each other, with each part owned by one rule set? Yes. Priva control jobs often, but not always, include fertigation, so neither family should copy the other's rules.
 
 ## Verification of this record
 
