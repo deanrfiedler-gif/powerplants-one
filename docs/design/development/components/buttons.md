@@ -277,3 +277,7 @@ The Nursery discovery route consumes the unchanged shared control. Host states a
 ## Automation N2 consumer
 
 The N2 technical assessment reuses this control without API changes. Local FactFields/Pick are extracted unchanged from N1. Host fixtures cover source evidence, saved results/history, stale/uncertain recovery and narrow layouts. Owner visual review and approved Automation frames remain pending. See the N2 page contract and tests/browser/nursery-assessment.spec.ts.
+
+## AD-01 identity register host
+
+The `/admin/access` register reuses this component with the accepted 60 px toolbar, 40 px grid and compact phone rows. Host states and consumer bindings are in [the fixture inventory](../access-identity-register-fixtures.json); [execution evidence](../../../testing/evidence/access-identity-register/README.md) distinguishes real database/HTTP checks from the visual-only Figma fixture. Existing component behaviour and review records remain unchanged. Owner/device/screen-reader acceptance is pending.

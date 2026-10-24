@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
-import { phoneWidth } from "../helpers/phone-menu";
+import { phoneWidth, openSecondaryMenu } from "../helpers/phone-menu";
 
 test("AD-01 returning to earlier selections waits for a fresh comparison or explanation", async ({
   page,
@@ -77,9 +77,13 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
     baseURL!,
   );
   await page.goto("/admin/access");
-  await page
-    .getByRole("link", { name: "Browse proposed role bundles" })
-    .click();
+  await expect(page.locator("#ppo-access-register")).toBeVisible();
+  const bundles = page.getByRole("link", {
+    name: "Role bundles (proposed)",
+    exact: true,
+  });
+  if (!(await bundles.isVisible())) await openSecondaryMenu(page);
+  await bundles.click();
   // The phone header draws the page name as its title and no breadcrumb (phone header amendment P1, P2).
   await expect(
     phoneWidth(page)

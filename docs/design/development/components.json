@@ -20,6 +20,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -36,7 +41,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -49,7 +59,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Use semantic tokens and preserve the meaning of each colour.",
       "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
@@ -69,6 +80,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "foundations-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -195,6 +214,11 @@
           "id": "automation-n2",
           "label": "Automation N2 host",
           "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -248,7 +272,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -681,6 +710,14 @@
           "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -858,6 +895,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -906,7 +948,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -953,7 +1000,8 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -1085,6 +1133,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3023,6 +3079,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -3058,7 +3119,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3097,7 +3163,8 @@
         "route:/my-jobs/[id]",
         "route:/service/appointments/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal. SV-04 retains the shared global More opener beside its record-action dock after the compact header becomes Back.",
@@ -3175,6 +3242,14 @@
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3214,6 +3289,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -3236,7 +3316,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3271,7 +3356,8 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -3307,6 +3393,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3548,6 +3642,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment and paginated Site-owned follow-ups with exact later-page handovers. P11 observes Overview loading, failure, recovery and denial independently of History pagination. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -3589,7 +3688,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3916,6 +4020,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4500,6 +4612,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -4628,7 +4745,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4696,7 +4818,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -5004,6 +5127,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
