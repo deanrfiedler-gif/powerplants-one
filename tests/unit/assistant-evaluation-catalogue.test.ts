@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, mkdtempSync, writeFileSync, unlinkSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 import { loadCatalogue, validateCatalogue, matrix, inspectEnvelope, digest, goldMappings, rubricFor } from "../../scripts/assistant-evaluation-catalogue";
 import type { EvidenceEnvelope } from "../../src/assistant/model";
-import { checkReviewSnapshot, caseCards, type ReviewSnapshot } from "../../scripts/assistant-evaluation-prepare";
+import { checkReviewSnapshot, checkReviewArtifacts, caseCards, reviewTable, type ReviewSnapshot } from "../../scripts/assistant-evaluation-prepare";
 const sources = ["docs/decisions/conversations-t2-scope.md", "docs/blueprints/ppo-assistant-specification.md"].map(p => readFileSync(p, "utf8"));
 test("T2e catalogue has exact 9 calibration / 108 evaluation matrix and real requirement IDs", () => {
   const c = loadCatalogue(), m = matrix(c);
@@ -71,4 +73,23 @@ test("T2e review hash binds preparation metadata as well as canonical inventory 
     { ...saved, status: "Approved" },
     { ...saved, inventory_hash: "e".repeat(64) },
   ]) assert.throws(() => checkReviewSnapshot(current, changed));
+});
+
+
+test("T2e verification rejects changed or missing human review files", () => {
+  const saved: ReviewSnapshot = JSON.parse(readFileSync("docs/testing/evidence/conversations-t2e/scoring-review/inventory.json", "utf8"));
+  const folder = mkdtempSync(join(tmpdir(), "ppo-t2e-review-artifacts-"));
+  try {
+    const files = { "cases.md": caseCards(saved), "review.md": reviewTable(saved) };
+    for (const [name, contents] of Object.entries(files)) writeFileSync(join(folder, name), contents);
+    assert.doesNotThrow(() => checkReviewArtifacts(folder, saved));
+    for (const [name, contents] of Object.entries(files)) {
+      writeFileSync(join(folder, name), contents + "\nSYN tampered approval\n");
+      assert.throws(() => checkReviewArtifacts(folder, saved), /must match the retained inventory/);
+      unlinkSync(join(folder, name));
+      assert.throws(() => checkReviewArtifacts(folder, saved), /ENOENT/);
+      writeFileSync(join(folder, name), contents.replaceAll("\n", "\r\n"));
+      assert.doesNotThrow(() => checkReviewArtifacts(folder, saved), "Git CRLF checkout conversion is harmless");
+    }
+  } finally { rmSync(folder, { recursive: true, force: true }); }
 });

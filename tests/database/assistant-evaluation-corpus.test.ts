@@ -38,6 +38,12 @@ test("T2e canonical 117-instance corpus exports and revalidates offline, rejecti
   const beforeVerify = await readOnlyCounts();
   assert.deepEqual(await runPreparation("verify", folder), result);
   assert.deepEqual(await readOnlyCounts(), beforeVerify, "inspection must not create sessions, audit or receipts");
+  for (const name of ["cases.md", "review.md"]) {
+    const path = join(folder, name), originalReview = readFileSync(path, "utf8");
+    writeFileSync(path, originalReview + "\nSYN tampered approval\n");
+    await assert.rejects(runPreparation("verify", folder), /must match the retained inventory/);
+    writeFileSync(path, originalReview);
+  }
   await assert.rejects(runPreparation("prepare", folder));
   await assert.rejects(prepareCorpus());
   const bad = structuredClone(corpus); bad.instances[0].message_id = bad.instances[1].message_id;

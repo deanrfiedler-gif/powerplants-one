@@ -32,13 +32,7 @@ export async function runPreparation(command: string, folder: string, corpusPath
       tracked_changes_at_preparation: execFileSync("git", ["diff", "--name-only", "HEAD"], { encoding: "utf8" }).trim().split("\n").filter(Boolean) };
     const review = { ...content, inventory_hash: digest(content) };
     writeFileSync(resolve(output, "inventory.json"), JSON.stringify(review, null, 2) + "\n", { flag: "wx" });
-    const lines = ["# T2e synthetic case review", "", "Proposed offline instances; no approved run, live results or model scores.",
-      "", `Inventory hash: ${review.inventory_hash}`, "", "| Case | Model | Repeat | Sources | Input bound | History omitted |", "|---|---|---:|---:|---:|---:|",
-      ...review.instances.map(i => `| ${i.case_id} | ${i.model} | ${i.repetition} | ${i.sources.length} | ${i.estimated_input_tokens} | ${i.history_left_out} |`),
-      "", "Inspect inventory.json for exact questions, expected assertions, proposed source mappings, canonical fields, source versions, participants, excluded sentinel placement and rubric applicability.",
-      "Input bounds are the existing conservative byte meter, not measured tokens. Review the corpus and source mappings before any approval.",
-      "No approval_reference, run_id or usable live manifest is emitted. Re-verify against the retained database before review or later run preparation.", ""];
-    writeFileSync(resolve(output, "review.md"), lines.join("\n"), { flag: "wx" });
+    writeFileSync(resolve(output, "review.md"), reviewTable(review), { flag: "wx" });
     writeFileSync(resolve(output, "cases.md"), caseCards(review), { flag: "wx" });
     return { cases: review.instances.length, inventory_hash: review.inventory_hash };
   }
@@ -47,10 +41,28 @@ export async function runPreparation(command: string, folder: string, corpusPath
   const saved = JSON.parse(readFileSync(resolve(output, "inventory.json"), "utf8"));
   const current = await inspectCorpus(corpus);
   checkReviewSnapshot(current, saved);
+  checkReviewArtifacts(output, saved);
   return { cases: current.instances.length, inventory_hash: saved.inventory_hash };
 }
 type Inventory = Awaited<ReturnType<typeof inspectCorpus>>;
 export type ReviewSnapshot = Inventory & { preparation_commit: string; tracked_changes_at_preparation: string[]; inventory_hash: string };
+export function reviewTable(review: ReviewSnapshot) {
+  const lines = ["# T2e synthetic case review", "", "Proposed offline instances; no approved run, live results or model scores.",
+      "", `Inventory hash: ${review.inventory_hash}`, "", "| Case | Model | Repeat | Sources | Input bound | History omitted |", "|---|---|---:|---:|---:|---:|",
+      ...review.instances.map(i => `| ${i.case_id} | ${i.model} | ${i.repetition} | ${i.sources.length} | ${i.estimated_input_tokens} | ${i.history_left_out} |`),
+      "", "Inspect inventory.json for exact questions, expected assertions, proposed source mappings, canonical fields, source versions, participants, excluded sentinel placement and rubric applicability.",
+      "Input bounds are the existing conservative byte meter, not measured tokens. Review the corpus and source mappings before any approval.",
+      "No approval_reference, run_id or usable live manifest is emitted. Re-verify against the retained database before review or later run preparation.", ""];
+  return lines.join("\n");
+}
+
+// Verify the human-readable projections too: a valid JSON inventory alone does not
+// establish that the cards/table presented for approval still describe that inventory.
+export function checkReviewArtifacts(folder: string, review: ReviewSnapshot) {
+  for (const [name, expected] of [["cases.md", caseCards(review)], ["review.md", reviewTable(review)]])
+    assert.equal(readFileSync(resolve(folder, name), "utf8").replace(/\r\n/g, "\n"), expected, `${name} must match the retained inventory`);
+}
+
 export function caseCards(review: ReviewSnapshot) {
   const lines = ["# T2e synthetic cases for review", "", "Proposed offline review material; no model results, owner acceptance or live authority.", "",
     `Preparation commit: ${review.preparation_commit}. Inventory hash: ${review.inventory_hash}.`, "",
