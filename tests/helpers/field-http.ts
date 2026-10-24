@@ -1,3 +1,4 @@
+import { siteContactInput } from "./site-readiness";
 import { randomUUID } from "node:crypto";
 import { base, id, content } from "./packs";
 export async function prepareFieldAppointment(
@@ -11,6 +12,7 @@ export async function prepareFieldAppointment(
     scope_revision_id: id("aa"),
     scope_version: 1,
   },
+  crew = [id("a4", 9), id("a4", 2)],
 ) {
   const order = (await call(`service/work-orders/${source.work_order_id}`)).items[0],
     aid = crypto.randomUUID();
@@ -89,8 +91,8 @@ export async function prepareFieldAppointment(
     policy_version_id: a.policy_version_id,
     scheduling_policy_id: id("a0"),
     scheduling_policy_version: 1, scheduling_policy_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44", publication_head_version: 1, selected_policy: {id: "a0000000-0000-4000-8000-000000000001", version: 1, content_hash: "130d586ec49c5e23dffd49916148babc6ddf329a442e054ecc1c29f9089cca44"},
-    crew: [9, 2].map((n, i) => ({
-      resource_id: id("a4", n),
+    crew: crew.map((resource_id, i) => ({
+      resource_id,
       resource_version: 1,
       calendar_version: 1,
       crew_role: i ? "Technician" : "Lead",
@@ -100,6 +102,9 @@ export async function prepareFieldAppointment(
         "SYN explicit zero travel allowance at the same fictional site",
     })),
   });
+  a = (await call(`appointments/${aid}`)).items[0];
+  if (a.preparation)
+    await call(`appointments/${aid}/contacts`, siteContactInput(a.version));
   const appointment = (await call(`appointments/${aid}`)).items[0],
     pid = randomUUID();
   await call("packs", {

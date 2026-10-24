@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { beforeEach, after, test } from "node:test";
 import { reset } from "../../scripts/database";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import {
   recordContact,
@@ -12,6 +16,18 @@ import {
 import { prepareBookingPolicy } from "../../src/scheduling/booking-policy";
 import { appointmentPreparation } from "../../src/scheduling/site-readiness";
 import { runPreparationDeadlines } from "../../src/scheduling/preparation-worker";
+import {
+  acknowledgePack,
+  checkPack,
+  requestIssue,
+  readPack,
+  dispatchReadiness,
+} from "../../src/documents/packs";
+import { processRenderJob, readBundle } from "../../src/documents/worker";
+import { noPartsNeeded, recipientFields } from "../helpers/readiness-gate";
+import { readFieldJob } from "../../src/field/reads";
+import { startAttendance } from "../../src/field/start";
+import { startInput } from "../helpers/field";
 import { siteChecks } from "../../src/scheduling/site-readiness-model";
 import { readOperation } from "../../src/shared/receipts";
 import { assessWorkReadiness } from "../../src/service/work-orders";
@@ -78,7 +94,7 @@ test("P4 persists typed current-schedule evidence, recovers one original, refuse
   assert.equal(before.preparation?.outcome, "Unknown");
   await assert.rejects(
     database().query(
-      "UPDATE ppo.appointments SET dispatch_hold=false,version=version+1 WHERE id=$1",
+      "UPDATE ppo.appointments SET dispatch_hold=false,pack_requirement='Acknowledged',version=version+1 WHERE id=$1",
       [f.aid],
     ),
     /Current customer site readiness/,
@@ -176,8 +192,11 @@ test("P4 persists typed current-schedule evidence, recovers one original, refuse
     code("55000"),
   );
   const a = (await readAppointment(f.co, f.aid)).items[0];
-  const interval = {start_at:new Date(a.start_at.getTime()+3600000).toISOString(),end_at:new Date(a.end_at.getTime()+3600000).toISOString()};
-  const selection=await prepareBookingPolicy(f.co,f.aid,interval);
+  const interval = {
+    start_at: new Date(a.start_at.getTime() + 3600000).toISOString(),
+    end_at: new Date(a.end_at.getTime() + 3600000).toISOString(),
+  };
+  const selection = await prepareBookingPolicy(f.co, f.aid, interval);
   await moveAppointment(f.co, f.aid, {
     ...base(),
     expected_version: a.version,
@@ -275,4 +294,105 @@ test("deadline worker retries create exactly one owned task per missed deadline"
     )[0].customer_commitment,
     "Confirmed",
   );
+});
+
+test("P4 gates attendance after issue and acknowledgement; P5 overdue follow-ups preserve dispatch and exact bytes", async () => {
+  const f = await preparedGateVisit(nextWorkingVisit());
+  await checkPack(f.co, f.pid, {
+    ...base(),
+    expected_version: f.pack.version,
+    decision: "Checked",
+  });
+  let pack = (await readPack(f.co, f.pid)).items[0];
+  await requestIssue(f.co, f.pid, {
+    ...base(),
+    expected_version: pack.version,
+  });
+  pack = (await readPack(f.co, f.pid)).items[0];
+  const due = await appointmentPreparation(
+    database(),
+    f.co.workspace_id,
+    f.aid,
+  );
+  assert.ok(due?.issue_due_at);
+  const clock = async () =>
+    new Date(
+      Math.max(
+        Date.parse(due.issue_due_at!),
+        Date.parse(due.confirmation_due_at),
+      ) + 1,
+    );
+  await runPreparationDeadlines(clock);
+  const tasks = await rows(
+    "SELECT * FROM ppo.preparation_deadline_follow_ups WHERE appointment_id=$1 ORDER BY kind,owner_id",
+    [f.aid],
+  );
+  assert.equal(tasks.filter((t) => t.kind === "PackIssueDue").length, 1);
+  const rendered = await processRenderJob(pack.jobs[0].id);
+  assert.ok("issue_id" in rendered, JSON.stringify(rendered));
+  pack = (await readPack(f.co, f.pid)).items[0];
+  const issue = pack.issues[0];
+  const bytes = await readBundle(f.co, issue.manifest);
+  await noPartsNeeded(f.co, f.wid, f.aid);
+  const tech = await principal("assigned-technician");
+  for (const actor of [tech, await principal("second-technician")])
+    await acknowledgePack(actor, issue.id, recipientFields(pack, actor));
+  const readiness = () => transaction((c) => dispatchReadiness(c, f.co, f.aid));
+  let ready = await readiness();
+  assert.equal(ready.component_ready, false);
+  assert.equal(ready.reasons.length, 1);
+  assert.match(ready.reasons[0], /Customer site readiness: Unknown/);
+  let job = (await readFieldJob(tech, f.aid)).items[0];
+  await assert.rejects(
+    startAttendance(tech, f.aid, startInput(job)),
+    code("StartBlocked"),
+  );
+  await recordContact(f.co, f.aid, await command(f.aid));
+  ready = await readiness();
+  assert.deepEqual(ready.reasons, []);
+  // Clear the durable hold only after the derived pass, then prove a later
+  // negative contact reholds the same issued pack without changing its bytes.
+  await rows(
+    "UPDATE ppo.appointments SET dispatch_hold=false,pack_requirement='Acknowledged',version=version+1 WHERE id=$1",
+    [f.aid],
+  );
+  const negative = await command(f.aid);
+  negative.site_checks.access.status = "NotReady";
+  await recordContact(f.co, f.aid, negative);
+  assert.equal(
+    (
+      await rows("SELECT dispatch_hold FROM ppo.appointments WHERE id=$1", [
+        f.aid,
+      ])
+    )[0].dispatch_hold,
+    true,
+  );
+  assert.equal((await readiness()).preparation?.outcome, "Blocked");
+  await recordContact(f.co, f.aid, await command(f.aid));
+  ready = await readiness();
+  assert.equal(ready.component_ready, true);
+  assert.equal(ready.preparation?.issue_deadline_blocks_dispatch, false);
+  // The missed-deadline Activity remains owned evidence, never a start criterion.
+  assert.equal((await runPreparationDeadlines(clock)).created, 0);
+  assert.deepEqual(
+    await rows(
+      "SELECT * FROM ppo.preparation_deadline_follow_ups WHERE appointment_id=$1 ORDER BY kind,owner_id",
+      [f.aid],
+    ),
+    tasks,
+  );
+  assert.equal((await readiness()).component_ready, true);
+  assert.deepEqual(await readBundle(f.co, issue.manifest), bytes);
+  job = (await readFieldJob(tech, f.aid)).items[0];
+  await startAttendance(tech, f.aid, startInput(job));
+  assert.equal(
+    (await rows("SELECT status FROM ppo.appointments WHERE id=$1", [f.aid]))[0]
+      .status,
+    "InProgress",
+  );
+  await assert.rejects(
+    recordContact(f.co, f.aid, await command(f.aid)),
+    code("BookingBlocked"),
+  );
+  assert.equal((await runPreparationDeadlines()).created, 0);
 });

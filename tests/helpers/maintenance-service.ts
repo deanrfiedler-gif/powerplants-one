@@ -1,3 +1,5 @@
+import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
+import { nextWorkingVisit, siteContactInput } from "./site-readiness";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../src/platform/identity";
 import { triageTicket, saveIntake } from "../../src/service/intake";
@@ -175,8 +177,8 @@ export async function serviceResult(
     id: appointment,
     scope_revision_id: s.id,
     scope_version: s.version,
-    start_at: "2031-09-25T00:00:00Z",
-    end_at: "2031-09-25T02:00:00Z",
+    start_at: nextWorkingVisit(),
+    end_at: new Date(Date.parse(nextWorkingVisit()) + 2 * 3600000).toISOString(),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -208,7 +210,9 @@ export async function serviceResult(
     occurred_at: new Date().toISOString(),
     notes: "SYN retained fictional contact; no message sent",
   });
-  const q = await queued(n);
+  a = (await readAppointment(p, appointment)).items[0];
+  await recordContact(p, appointment, siteContactInput(a.version));
+  const q = await queued(n, undefined, await siteReadinessFixtureCrew());
   const issued = await processRenderJob(q.pack.jobs[0].id);
   if (!("issue_id" in issued)) throw Error(JSON.stringify(issued));
   for (const profile of ["assigned-technician", "second-technician"]) {
