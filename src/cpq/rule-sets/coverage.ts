@@ -48,9 +48,11 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
     // The value each case ran with: an input that was not asked took its default, and a case that
     // stopped before reaching the input used none.
     const used = new Set(traces.map((t) => t.inputs.find((x) => x.key === input.key)?.value));
-    for (const option of input.choices)
+    // Each untested option is its own finding, so one accepted reason never covers another option.
+    input.choices.forEach((option, i) => {
       if (!used.has(option))
-        add("Blocking", "OPTION_UNTESTED", input.key, `Option “${option}” of ${input.label} is in no reference case`);
+        add("Blocking", "OPTION_UNTESTED", `${input.key}[${i}]`, `Option “${option}” of ${input.label} is in no reference case`);
+    });
   }
 
   // A rule whose unit differs from its part's unit: its fixed part, a part its formula always chooses,
@@ -69,7 +71,7 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
     );
     for (const part of parts)
       if (partUnit.get(part) !== r.unit)
-        add("Blocking", "UNIT_MISMATCH", r.key, `Rule ${r.key} counts in ${r.unit}, but ${part} is sold in ${partUnit.get(part)}`);
+        add("Blocking", "UNIT_MISMATCH", `${r.key}/${part}`, `Rule ${r.key} counts in ${r.unit}, but ${part} is sold in ${partUnit.get(part)}`);
   }
 
   // A table row no reference case reads.

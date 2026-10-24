@@ -4,7 +4,7 @@
 
 Owner: Dean Fiedler. Implementation contract for build step R1 of [ADR-0066](../decisions/ADR-0066-configuration-rule-sets.md), which Dean accepted on 24 October 2026. Traceability: EST-02 to EST-07, ES-02, ES-03 and ES-08.
 
-Status: R1 engine implemented with synthetic fixtures only. It stores nothing and adds no route, screen, permission, migration or seed. Storage and versioning (R2), Rules studio screens (R3), the Excel round trip (R4) and ES-08 on rule sets (R5) are later changes. Passing reference cases is software evidence, not engineering approval. Real rule sets with real part identities still need the authority decision in ADR-0066 Q6.
+Status: R1 engine and R2 storage implemented with synthetic data only. Rules studio screens (R3), the Excel round trip (R4) and ES-08 on rule sets (R5) are later changes. Passing reference cases is software evidence, not engineering approval. Real rule sets with real part identities still need the authority decision in ADR-0066 Q6, so every stored rule set is marked synthetic and the database refuses anything else.
 
 ## Where it lives
 
@@ -36,7 +36,8 @@ Validation refuses a definition with every problem it finds, each with a path su
 - a part with an invalid ordering size or group;
 - reference cases that name unknown inputs, parts or derived values, or an expected line quantity that is not a non-negative number (a decimal such as `6.1`, a long whole number or an exact fraction such as `1/3`);
 - every formula error below;
-- the limits: 524,288 characters, 100 inputs, 100 derived values, 50 tables of up to 20 columns and 2,000 rows, 1,000 parts, 500 rules, 200 reference cases and 50 passed values.
+- text containing a NUL character, which PostgreSQL cannot store;
+- the limits: 524,288 bytes of UTF-8 JSON, 100 inputs, 100 derived values, 50 tables of up to 20 columns and 2,000 rows, 1,000 parts, 500 rules, 200 reference cases and 50 passed values.
 
 ## The formula language
 
@@ -96,15 +97,46 @@ Coverage findings:
 | Warning | `RULE_NEVER_APPLIES` | A rule applies in no reference case |
 | Warning | `DERIVED_UNREAD` | A derived value is read by nothing |
 
-Accepting a blocking finding with a written reason belongs to storage and review (R2).
+Each finding names its subject, so one acceptance covers exactly one thing: an untested option is `input[index]` (for example `edge_fixing[2]`), and a unit mismatch is `rule/part`. The others name the rule set, rule, table or derived value. Accepting a blocking finding with a written reason belongs to storage and review (R2).
 
 ## Rule sets on one job
 
 `runTogether` runs up to 20 rule set steps in order on one job, and refuses more with `STEP_LIMIT` (and a repeated step name with `STEP_DUPLICATE`). A step can receive inputs from an earlier step's passed values, and the same rule set may run more than once, for example once per controller. A number passes exactly, so one third arrives as one third; the receiving input still checks its type, whole-number rule and bounds. A step whose received name is not one of its inputs stops with `INPUT_UNKNOWN`. A step whose source stopped, ran later or does not pass the named value stops with `UPSTREAM_STOPPED`, `STEP_ORDER` or `PASS_MISSING`. Every part produced by more than one step is listed in `shared_parts`. The engine never merges shared parts: how they count is each family's policy (for Priva, question J2 in the control decisions).
 
+## Storage and governance (R2)
+
+Migration 0119 stores rule sets per company. Each rule set has a key that is unique in its company, a label, a family and a named engineering owner (ADR-0066 Q2). The company, key and owner never change.
+
+| Table | Holds |
+|---|---|
+| `ppo.cpq_rule_sets` | The rule set, its current revision and its state: `Draft`, `Reviewed`, `Rejected` or `Published` |
+| `ppo.cpq_rule_set_revisions` | Immutable revisions: the schema 5 definition, its content hash and the `testRuleSet` result at save |
+| `ppo.cpq_rule_set_acceptances` | The owner's written acceptance of a blocking finding of one revision (Q5) |
+| `ppo.cpq_rule_set_reviews` | One independent review of the exact content hash per revision, with its test result |
+| `ppo.cpq_rule_set_publications`, `ppo.cpq_rule_set_heads` | Numbered, immutable publications and the current one |
+
+The existing duties govern; there is no new capability, grant or seed.
+
+| Command | Route | Rule |
+|---|---|---|
+| Save | POST `/api/v1/cpq/rule-sets` | `cpq.author`. A new rule set names its owner, who must be able to author or review for the company. Each save is a new Draft revision with `expected_version`. A definition that fails validation is refused with every problem (`RuleSetInvalid`, one field error per problem). Failing cases and findings are saved, so work in progress is never lost. Unchanged content is refused. |
+| Accept a finding | POST `/api/v1/cpq/rule-sets/[id]/acceptances` | Owner only, while they can still author or review for the company (`RuleSetOwnerUnauthorised` otherwise), on the current Draft. Exact revision, finding `code` and `subject` (up to 200 characters), and a reason. |
+| Review | POST `/api/v1/cpq/rule-sets/[id]/review` | `cpq.review`, not the author, with the owner as author or reviewer. Exact revision and hash. The cases and coverage rerun in the worker. Approval needs every case passing and every blocking finding accepted. |
+| Publish | POST `/api/v1/cpq/rule-sets/[id]/publish` | `cpq.publish`, neither the author nor the reviewer. The reviewer must still hold `cpq.review`; otherwise `RuleSetReviewerUnauthorised` (409) asks for a fresh review. Exact reviewed revision and hash, and `expected_publication_version`. Moves the head; earlier publications never change. |
+| List, read | GET `/api/v1/cpq/rule-sets?company_id=`, GET `/api/v1/cpq/rule-sets/[id]?revision_id=` | `cpq.read`. A read returns the rule set, the owner, the selected revision, its acceptances and review, the revision and publication history, the head and the reader's capabilities. |
+
+Commands use the shared operation conventions: operation identity, reason, receipts, audit (`CpqRuleSet`) and the `CpqChanged` outbox kind. A replayed receipt is returned only to someone who still holds the duty the command needed. Triggers enforce the same governance when the service is bypassed:
+- owner-only acceptance of a real blocking finding;
+- an independent review of the exact content of the current Draft revision, with the owner taking part;
+- for approval, both the test result stored at save and the one rerun at review must pass (`ppo.cpq_rule_set_test_passes`, which compares exact JSON values and never casts), and every blocking finding in either must be accepted;
+- a third-person publisher of the current Reviewed revision;
+- a head that only moves forward to a later publication of the same rule set and is never deleted;
+- immutable revisions, acceptances, reviews and publications;
+- a stored definition of at most 1 MiB of jsonb text, above the 524,288-byte validation limit because jsonb text adds spacing.
+
 ## Evidence
 
-`tests/unit/cpq-rule-sets.test.ts` covers the language, validation, evaluation, ordering, reference cases, coverage, rule sets together and the worker. The fixtures in `tests/fixtures/rule-sets/` are fictional SYN families:
+`tests/database/cpq-rule-sets.test.ts` covers storage: the lifecycle, owner acceptance, every governance refusal, the triggers when the service is bypassed, immutability and receipts. `tests/unit/cpq-rule-sets.test.ts` covers the language, validation, evaluation, ordering, reference cases, coverage, rule sets together and the worker. The fixtures in `tests/fixtures/rule-sets/` are fictional SYN families:
 - **Screens:** ported from the structures the offline proof found in a private screen workbook.
 - **Fertigation and control:** working together on one job.
 

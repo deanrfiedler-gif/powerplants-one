@@ -90,14 +90,19 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     if (issues.length < LIMITS.issues) issues.push({ path, code, message });
   };
 
-  let size = 0;
+  let json = "";
   try {
-    size = JSON.stringify(raw)?.length ?? 0;
+    json = JSON.stringify(raw) ?? "";
   } catch {
     throw new RuleSetInvalid([{ path: "", code: "SHAPE", message: "The rule set is not plain data" }]);
   }
+  // PostgreSQL text cannot hold a NUL character, so it is refused here rather than failing on save.
+  // JSON escapes NUL as \u0000; an even run of backslashes before it is typed text, not a NUL.
+  if (/(?<!\\)(?:\\\\)*\\u0000/.test(json))
+    throw new RuleSetInvalid([{ path: "", code: "SHAPE", message: "Text cannot contain a NUL character" }]);
+  const size = Buffer.byteLength(json, "utf8");
   if (size > LIMITS.bytes)
-    throw new RuleSetInvalid([{ path: "", code: "LIMIT", message: `The rule set is ${size} characters; the limit is ${LIMITS.bytes}` }]);
+    throw new RuleSetInvalid([{ path: "", code: "LIMIT", message: `The rule set is ${size} bytes; the limit is ${LIMITS.bytes}` }]);
   if (!isObject(raw)) throw new RuleSetInvalid([{ path: "", code: "SHAPE", message: "Expected a rule set object" }]);
 
   const text = (v: unknown, path: string, opts: { empty?: boolean; max?: number } = {}): string => {

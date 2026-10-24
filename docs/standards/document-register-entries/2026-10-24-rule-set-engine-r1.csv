@@ -1,2 +1,2 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
-PPO-RULE-SET-DEFINITION-CONTRACT,Configuration rule set definition (schema 5),docs/contracts/rule-set-definition.md,,R1 engine implemented with synthetic fixtures; storage and screens not built,Dean Fiedler,ab18a604bd726a6f1e1a1d40a25f52802bcec0a0,,,git,
+PPO-RULE-SET-DEFINITION-CONTRACT,Configuration rule set definition (schema 5),docs/contracts/rule-set-definition.md,,R1 engine and R2 storage implemented with synthetic data; screens not built,Dean Fiedler,ab18a604bd726a6f1e1a1d40a25f52802bcec0a0,,,git,
