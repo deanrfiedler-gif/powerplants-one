@@ -26,4 +26,15 @@ Main findings:
 - The Controls library has no form controls.
 - Ten scope IDs have no design.
 
-The counts are scripted measurements, not visual review. Decisions R1–R11 in the report wait for Dean, and stage 2 (clean-up) has not started. No build, review, acceptance or deployment status changes.
+The counts are scripted measurements, not visual review.
+
+Dean adopted the recommended answers to R1–R11 the same day: "Proceed with your recommendations for R1–R11 and start stage 2 with the safe fixes first." The safe fixes are done and listed in section 12 of the report. They cover:
+
+- the SC-04, FN-05, EQ-06 · EQ-07, CP-06 and EN-04 page headers
+- duplicate and generic flow names that no record cites
+- four empty nodes
+- template layout passes on CP-06 and EQ-06 · EQ-07
+- section fits on five proposal pages
+- the File index subtitle and a Reporting group
+
+The remaining stage 2 steps wait for Dean's named version. No build, review, acceptance or deployment status changes.

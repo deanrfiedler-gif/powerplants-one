@@ -3,7 +3,7 @@ document_id: PPO-FIGMA-FILE-AUDIT-2026-10-24
 title: Figma design file audit, stage 1 (read-only)
 date: 2026-10-24
 owner: Dean Fiedler
-status: Findings for owner review; nothing in the design file was changed; every recommendation waits for Dean's decision
+status: Stage 1 findings; Dean adopted the recommended answers to R1–R11 on 24 October 2026; stage 2 in progress (section 12)
 versioning: git
 ---
 
@@ -198,6 +198,8 @@ CX-01 and CX-03 to CX-06 are "conditional" in the register, and Dean set the oth
 
 Question 7 asked for improvements. Each improvement below is put as a decision with a recommended answer; "Proceed with your recommendations" adopts them all.
 
+**Owner decision, 24 October 2026.** Dean: "Proceed with your recommendations for R1–R11 and start stage 2 with the safe fixes first." The recommended answers below are adopted as written. Adoption authorises the stage 2 work in the design file and the repository changes each answer names; it does not accept any page design.
+
 | ID | Decision | Recommended answer |
 |---|---|---|
 | R1 | Page names without a scope ID (section 3) | Allow a one-time rename to "[Page name] · [scope ID]" for the 20 pages in section 3 that have a scope ID, and normalise the three non-standard names (ID first or stale suffix), dropping the "(accepted)" and "(proposal)" suffixes, in one maintenance PR that updates every citing record and keeps the old name in a File index "Former name" column. Leave Conversations, Leads, Lead record page and Excel estimate import until those scopes get IDs, and leave the three system pages as they are. |
@@ -230,6 +232,39 @@ Stage 2 needs roughly 60 to 100 plugin calls. At the seat's limit of about 10 ca
 - Page headers were read at their first eight fields, and status was taken from the header and the File index. A page whose header is wrong (C1) shows why the two can disagree.
 - Repository state is `main` at `a06f3d41` and the open pull requests on 24 Oct 2026. Draft lock-ins may change the picture.
 - Other sessions may have been drawing during the audit (RP-06 and AD-08 were active on 24 Oct), so pages changed after about 20:30 AEDT are not reflected.
+
+## 12. Stage 2 progress
+
+### 12.1 Safe fixes, 24 October 2026
+
+Done in the design file under R9 and R5. No design, component or variable changed, no accepted page's frames moved, and no page was renamed. The named version recommended in section 10 step 1 had not been saved before these fixes; they are text, flow-name and layout corrections only, and Figma's autosaved history holds the prior state.
+
+| Fix | Pages and nodes | Result |
+|---|---|---|
+| Page header corrected | Receiving · SC-04 (`2089:540378`) | It now reads as a draft in progress for scope:SC-04, not an accepted CX-02 page. The 23 "TMP …" frames are unedited Workshop builds copies, and the header says so. |
+| Template placeholders replaced | Cash outlook · FN-05 (`2097:681763`) | Scope identity and draft status are filled in. The undeclared fields read "Not declared yet". |
+| Header and notes written | Bulletins & lifecycle · EQ-06 · EQ-07 (`2280:86`, notes card `2553:86`) | Uses the header and notes text its drawing session had prepared but not run, with the status amended to say the layout pass, flows and checks are unfinished. |
+| Placeholder fields | Quotations & account · CP-06 (`2281:181`, `2281:184`) | The record and named version fields read "None yet". |
+| Header labels aligned with the template | Technical queries · EN-04 | "Scope identity", "Page type (r20)" and "Proposed departures" |
+| Flows renamed or deduplicated | Calling (8 flows, all named "My Work — …"); Phone header amendment (2 named "PL-04 — phone"); Quotations & account · CP-06 (27 starting points named "CP-04 — …", now 4 named "CP-06 — …"); Products · PD-01 (7 to 3, dropping copied Leads and Projects names and the superseded and evidence-copy starts); Quotations (accepted) "Flow 1–3"; CPQ · 6 "Flow 1" | Each flow has a unique, descriptive name. No decision record cites any of the renamed names. |
+| Empty nodes removed | Product publication · PD-02 (2 empty frames); Drafting & domain help · AI-04 (2 empty text layers) | Removed |
+| Template layout pass | Quotations & account · CP-06 (91 overlapping frames); Bulletins & lifecycle · EQ-06 · EQ-07 (19 frames outside their sections) | Frames are gridded with labels (up to three desktop frames per row, phone frames side by side), two template placeholder frames are removed, and sections are fitted and restacked. Checked afterwards: no overlaps and nothing outside a section. |
+| Sections fitted and restacked | Returns & claims · SC-08, Dispatch & delivery · SC-06 · SC-07, Test instruments · EQ-09, Knowledge authoring · DK-05, Warranty cases · MA-06 · MA-07 | One spill or section overlap each, now none |
+| File index | Subtitle; new "Group / Reporting" (`2553:6326`) | The subtitle now says "Every accepted and reference page" and that proposals are added at acceptance. The Reporting group lists no accepted page yet. |
+
+### 12.2 Corrections to the stage 1 findings
+
+- **C2 and C1.** Receiving · SC-04, Cash outlook · FN-05 and Bulletins & lifecycle · EQ-06 · EQ-07 are unfinished drafts whose drawing stopped at the Figma call limit on 23 October. A wrong or empty header was a symptom; finishing those pages is page work, not audit clean-up.
+- **C9.** 17 decision records cite the "… (proposal)" flow names of their pages (for example leads-design.md, quotations-design.md and service-requests-figma-design.md), and access-readiness-figma-design.md cites its "Flow 1" residue. Those flow names stay as recorded, under the same rule as page names.
+- **New layout check.** Stage 1 did not measure overlaps. A read-only pass over all 150 design pages on 24 October found the cases fixed above, plus some left as they are:
+  - Report definitions · RP-06: in progress in another session; its "Shell master (delete before presenting)" frame is that session's to remove.
+  - Rules studio · ES-02 · ES-03: two rule-set frames loose on the page.
+  - Accepted pages: Shell top bar amendment (12 overlapping annotation frames), Discovery register, Automation Configurator (lock-in in progress) and Portal home & access CP-01 (one each).
+  - Pre-template layouts: Customer 360, CPQ, ES-08 and Quotations.
+
+### 12.3 Not done yet
+
+R1 renames, R2 shell merge, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R7 token and text-style binding, R8 variable names, R10 new pages and R11 phone checks. Section 10 step 1 applies before R2 and R7: Dean saves a named version first.
 
 ## Appendix A: per-page measurements
 
