@@ -14,9 +14,11 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+**Status:** Partial · **Location:** Deals · CR-04 549:2 › Page components (proposal), in the private "PPO - Design" Figma file
 
-No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+- Deals/Forecast card (proposal) `2362:63788`
+
+The forecast card of the accepted Deals Forecast view (24 October 2026, [decision](../../../decisions/deals-figma-design.md#acceptance--24-october-2026)). The month lanes and stage groups are drawn in the page frame `2362:63797`, not as components. The card stays on the Deals page; moving it to Components `1:4` is separate work. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
