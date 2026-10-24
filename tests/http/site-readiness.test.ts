@@ -63,8 +63,7 @@ test("P4 HTTP records typed evidence, recovers the original and enforces current
     call(co, path + "/contacts", cmd),
     call(co, path + "/contacts", cmd),
   ]);
-  assert.equal(one.status, 200, JSON.stringify(one.body));
-  assert.equal(two.status, 200);
+  assert.deepEqual([one.status, two.status].sort((a,b) => a-b), [200,201], JSON.stringify([one.body,two.body]));
   assert.deepEqual(one.body, two.body);
   assert.deepEqual(
     (await call(co, `operations/${cmd.operation_id}`)).body,

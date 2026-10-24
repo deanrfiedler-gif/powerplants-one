@@ -10,7 +10,7 @@ import { readActivity, activityCommand } from "../../src/activities/activities";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database only");
 after(closeDatabase);
-for (const through of [109, 113, 114, 115, 116, 117, 120])
+for (const through of [109, 113, 114, 115, 116, 117, 118, 120])
 test(`0111 preserves populated ${through} sources, Activities, grants and exact migration/seed ledgers`, async () => {
   const c = database();
   await c.query(
@@ -102,7 +102,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.filter((row) => !versions.has(row.version)),
-    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 120 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 120 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 120 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }, { version: 120 }] : through === 116 ? [{ version: 111 }, { version: 117 }, { version: 120 }] : through === 117 ? [{ version: 111 }, { version: 120 }] : [{ version: 111 }],
+    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 120 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 120 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 120 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 120 }] : through === 116 ? [{ version: 111 }, { version: 117 }, { version: 118 }, { version: 120 }] : through === 117 ? [{ version: 111 }, { version: 118 }, { version: 120 }] : through === 118 ? [{ version: 111 }, { version: 120 }] : [{ version: 111 }],
   );
   assert.equal(
     (

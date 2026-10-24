@@ -18,7 +18,7 @@ async function atVersion(version: number) {
   await seed(version);
 }
 
-for (const through of [109, 113, 114, 115, 116, 117, 120])
+for (const through of [109, 113, 114, 115, 116, 117, 118, 120])
 test(`populated ${through} history installs 0110 with every original row and ledger retained; seed 110 and replay are exact`, async () => {
   if (through === 109) await atVersion(through);
   else {
@@ -59,7 +59,7 @@ test(`populated ${through} history installs 0110 with every original row and led
   assert.deepEqual(await snapshot(), original);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(migrated.filter(r => versions.has(r.version)), ledger);
-  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 120] : through === 113 ? [110, 114, 115, 116, 117, 120] : through === 114 ? [110, 115, 116, 117, 120] : through === 115 ? [110, 116, 117, 120] : through === 116 ? [110, 117, 120] : through === 117 ? [110, 120] : [110]);
+  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 120] : through === 113 ? [110, 114, 115, 116, 117, 118, 120] : through === 114 ? [110, 115, 116, 117, 118, 120] : through === 115 ? [110, 116, 117, 118, 120] : through === 116 ? [110, 117, 118, 120] : through === 117 ? [110, 118, 120] : through === 118 ? [110, 120] : [110]);
   if (newerGuard) assert.deepEqual(
     await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition"), newerGuard);
   if (newerAllocator) assert.deepEqual(
