@@ -9,6 +9,8 @@ versioning: git
 
 # Estimating hub, CPQ and specialist workbench model — decision
 
+> **Amended by [ADR-0066](ADR-0066-configuration-rule-sets.md) — 24 October 2026:** workbenches run published configuration rule sets, and the parts proposal (B0) carries the identity and version of every rule set used. One job can use several rule sets that pass values to each other, such as Priva fertigation and Priva control.
+
 On 17 October 2026 Dean asked how the Estimation Wizard, CPQ, the Screen Configurator Workbench, the Priva Fertigation Configurator Workbench and Estimation Discovery fit between a Deal handover and the quotation. A walk-through of the current source showed that the modules are joined differently from how he intended. Dean then set out his intended model and asked for a professional opinion. He accepted the recommendation to record it, in these words: "Yes, draft a proposed decision record for the hub, CPQ and workbench model, including the shared workbench output contract, and identify which existing decisions it would change."
 
 The draft classified each item as a **user direction** (Dean's stated intent), a **proposal** (Claude's recommendation for carrying it out) or an **open question** for Dean.
