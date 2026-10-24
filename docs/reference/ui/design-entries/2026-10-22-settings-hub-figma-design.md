@@ -1,0 +1,7 @@
+# Settings hub (AD-02)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Settings hub and Business policies — `/admin/settings`, `/admin/policies`, `/admin/policies/[id]` (proposed routes) | [Design r01 captures](../settings/settings-hub-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 22 October 2026 | [Decision](../../../decisions/settings-hub-figma-design.md). AD-02 with the WS-D6 hub; not built. A Settings overview with Needs attention and nine configuration-area cards, a register across every policy family, and a policy record with terms, a version-by-version proposal, the frozen independent review and the bookings it affects, Propose and Publish dialogs, and a plain refusal when a review no longer covers the latest revision |
+
+**Settings hub design, 22 October 2026:** Dean accepted the Figma design for the Settings hub around AD-02, business configuration and policy publication (WS-D6), at desktop, tablet and phone, with four phone states. Every configuration area keeps its own page and permission; a policy changes only through a saved proposal, an independent review and a separate publisher, and publishing never re-pins or rewrites a booking. The [decision](../../../decisions/settings-hub-figma-design.md) records it, and the [retained captures](../settings/settings-hub-design-r01/README.md) are thirteen icon-free PNGs with hashes. The app still lists Settings as unavailable. Listing it here does not repeat the dated inventory audit.
