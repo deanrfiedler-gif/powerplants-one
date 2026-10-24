@@ -26,7 +26,7 @@ Claude drew the page from these sources:
 - the T2 assistant core on `main` (`src/assistant/`: the evidence envelope with its returned, limit and "more" coverage, the budget reservations and the adapters);
 - copies of the Hillview Growers record on Organisations CS-01 and of the Deal record CR-01.
 
-Before deciding, Dean asked for an audit: "Give all the pages an audit and polish to ensure the are correct, there are not gaps, and they are as professional as possible.  I will then accept." He then accepted the design: "I accept the Assistant AI-01 design as drawn, with D1–D18 and the recommended answers to Q1–Q7. Proceed with the lock-in." That adopts D1–D18 and the recommended answers to Q1–Q7.
+Before deciding, Dean asked for an audit: "Give all the pages an audit and polish to ensure the are correct, there are not gaps, and they are as professional as possible.  I will then accept." He then accepted the design: "I accept the Assistant AI-01 design as drawn, with D1–D18 and the recommended answers to Q1–Q7. Proceed with the lock-in." That adopts D1–D18 and the recommended answers to Q1–Q7. On 25 October 2026 Dean saved the named version "Assistant — accepted" himself and confirmed it: "I have saved it." (section 8).
 
 Scope:
 - `scope:AI-01` "Assistant workspace and docked/mobile conversation", with the proposed route `/assistant`. No new scope is added. AI-02 (proposal review) and AI-03 (evidence inspection) are reached from this page and are designed on their own pages.
@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Keep as a thread on an organisation | Resolved as recommended; keeps PPO-AI-THREADS-PROP Q3 | Threads belong to deals and projects first. On an organisation the sheet lists that customer's deals the person can open, and organisation threads wait for their own decision |
 | Q7 The rail while the panel is open | Resolved as recommended | At 1440 the rail collapses to icons while the panel is open, so a record keeps about 964 px, its tablet width; closing the panel restores it |
 | Accept the design | User decision, 24 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Assistant — accepted" waits for Dean's yes. Section 8 |
+| Named Figma version | Saved by Dean, 25 October 2026 | "Assistant — accepted": "I have saved it." Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -83,7 +83,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Five, accepted: section 4 |
 | Status | Owner-accepted design, 24 October 2026 |
 | Decision record | This file |
-| Named version | "Assistant — accepted", not yet saved |
+| Named version | "Assistant — accepted", saved by Dean on 25 October 2026 |
 
 ## 4. What the design shows
 
@@ -189,6 +189,6 @@ After the polish no text overflows its container (2,383 text layers, all Roboto)
   - none of 2,184 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the Captures page keeps its 115 flow starting points.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/my-work/assistant-design-r01/README.md).
-- The named Figma version "Assistant — accepted" is not yet saved; it waits for Dean's yes.
+- Dean saved the named Figma version "Assistant — accepted" in the Figma desktop app on 25 October 2026 and confirmed it: "I have saved it." Claude did not open the version history to check it. The page header, the notes card and the File index row were updated afterwards to record it, so those three text changes post-date the named version.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

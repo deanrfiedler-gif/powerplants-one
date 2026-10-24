@@ -63,7 +63,7 @@ Image 15 holds, in rows of three:
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Assistant — accepted", not yet saved; it waits for Dean's yes |
+| Named version | "Assistant — accepted", saved by Dean on 25 October 2026 ("I have saved it."). The captures were made from the accepted frames before it was saved, and the frames did not change in between |
 | Accepted frames | Page "Assistant · AI-01" `2367:85`, in image order:<br>• `2369:814129`, `2369:814476`, `2370:820498`, `2370:821082`, `2371:1628`, `2371:2224`, `2371:822871`, `2374:2964`, `2375:3322`, `2375:3899`;<br>• `2378:4080`, `2378:4449`;<br>• phone 390: `2379:861166`, `2379:4401`, `2379:4458`, `2379:4658`, `2379:861397`, `2379:861292`;<br>• phone 320: `2385:5574`, `2379:861543`, `2379:861677`, `2385:5715`;<br>• states: `2379:886482`, `2379:886534`, `2379:886583`, `2379:886644`, `2379:886693`, `2379:886740`, `2379:886801`, `2379:901249`, `2379:901300`, `2379:901355`, `2379:901444`, `2386:5660`, `2379:901492`, `2379:901550`, `2386:5710` |
 | Capture copies | Page "Captures (icon-free)", from y = 460,000, images in order: `2389:265318`, `2389:265464`, `2389:265635`, `2389:265804`, `2389:265981`, `2389:266167`, `2389:266348`, `2389:266545`, `2389:266751`, `2389:266918`, `2389:267081`, `2389:267237`, `2389:267400`, `2389:267692`, `2389:267874` |
 
