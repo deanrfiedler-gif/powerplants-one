@@ -129,7 +129,15 @@ A prototype evaluator implemented the model with exact fractions. It covered ord
   - **The cost of those extensions.** They turned the model into a small relational, fold-capable language: 243 calculation steps and 57 checks. Expressing the engine needed programmer-level care, and two semantic traps came to light (a name shadowing a field, and null-equality).
   - **Conclusion: the scope boundary above.** The engine stays a typed module; its results feed rule sets.
   - **Still demonstrated in the base model:** choosing a unit by range from a two-key table, and labour from installation minutes, on synthetic catalogue data.
-  - **Still untested:** a family that repeats per unit or zone and also produces parts. A review of real Priva fertigation and control deals is under way to inform that.
+  - **Still untested:** a family that repeats per unit or zone and also produces parts. The Priva deal review below informs that.
+- **Review of real Priva deals (private, 24 October 2026).**
+  - **What was reviewed.** The quote lines and specifications of 39 Priva fertigation deals and 73 Priva control-system deals, from the project library. The analysis and data stay outside this repository.
+  - **Fertigation fits the model as proposed.** About ten inputs drive almost every line. They include family and configuration, units, mainline flow, channels and channel sizes, controller, valve groups and valves, and wireless sensors.
+  - **Range tables choose the model.** For example, the NutriJet model and configuration follow mainline flow in every deal with a stated flow.
+  - **Quantity rules hold across deals.** For example, dosing-channel licences = units × channels held in 11 of 13 deals, and the per-unit commissioning kit in 19–22 of 23.
+  - **No repeating groups needed.** Multi-unit fertigation jobs repeat identical units, so a quantity input is enough.
+  - **Control systems** follow fixed per-controller packages and one-for-one function licences. I/O module sizing needs engineering tables (outputs per function, built-in I/O per controller) expressed as derived values and range tables.
+  - **Gaps the review exposed.** For example, the acid tank connection kit was absent from 11 of 18 fertigation quotes with fertiliser kits. This is the kind of omission coverage checks are meant to catch.
 
 ## Consequences and build steps
 
@@ -158,7 +166,7 @@ Other consequences:
 - **Q7** Who supplies engineering values marked "to confirm" (for example torque per m²)? The family's engineering owner, with the source recorded on the value.
 - **Q8** Should Excel imports accept values and new rows, but never new columns? Yes.
 - **Q9** Keep engineering design calculations as typed workbench modules whose results feed rule sets, rather than extending rule sets into a programming language? Yes.
-- **Q10** Add repeating groups to rule sets, so that one rule set can quote several units or zones each with their own inputs? Decide once the Priva deal review is complete. Add them only if quotes need per-unit variation that a quantity input cannot express.
+- **Q10** Add repeating groups to rule sets, so that one rule set can quote several units or zones each with their own inputs? Not now. The Priva deal review found identical repeated units, so a quantity input covers them. Revisit if a family needs per-unit variation.
 
 ## Verification of this record
 

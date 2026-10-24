@@ -19,7 +19,7 @@ An offline prototype reproduced a private screen estimator workbook across eight
 
 The Figma proposal and the [engineer walkthrough plan](../testing/rule-sets-engineer-walkthrough.md) are ready for review. Not done:
 
-- owner acceptance of the model, amendments and Q1–Q8;
+- owner acceptance of the model, amendments and Q1–Q10;
 - the walkthrough with an engineer;
 - the authority decision for real rule sets;
 - build steps R1–R6.
