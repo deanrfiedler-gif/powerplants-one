@@ -302,3 +302,14 @@ Questions that only Dean can answer, all answered on 17 October 2026:
   - any real customer data.
 
 None of this is a production claim.
+
+
+## 24 October 2026 — S3 synthetic implementation authority
+
+Dean authorised the bounded S3 slice: “Proceed with D-025 S3 as recommended, using the synthetic carrier/platform catalogue and delay reasons. Recheck main and open claims first, and take it through to a review-ready PR without merging or deploying.” The implementation claim is [PR #695](https://github.com/deanrfiedler-gif/powerplants-one/pull/695), owned by Codex for Dean.
+
+This supplies S3's carrier/platform and delay-reason prerequisite **for synthetic implementation only**. The fictional catalogue is not an operational carrier list, freight platform choice or verified customer-delay policy. Actual carrier/platform details remain open before operational use. S2's merged Queued, contact-change hold, Off-drafts-nothing and sibling-template behavior is retained. No live channel, provider call, mailbox, customer communication, UI, merge or deployment is authorised.
+
+M1 derives from an exact native PPO Dispatch marked Moved. MYOB shipment observations never trigger it. The named delivery contact and explicit customer ETA are versioned on the customer Demand; supplier ETA and required-on dates remain separate. M2 requires a later explicit date than an ETA actually included in a message with Sent evidence to that same contact. A prepared, queued, submitted or uncertain message is not that baseline. A correction whose predecessor is Submitted or OutcomeUnknown is held until its outcome is resolved, then withdrawn and prepared again against the resolved evidence.
+
+The [communications contract](../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) defines the precise API, snapshot, refusal and recovery rules. No new technology or operational calculation is adopted. Business acceptance and independent review remain separate from code delivery.

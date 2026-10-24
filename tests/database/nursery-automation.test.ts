@@ -225,7 +225,7 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
         async (table) =>
           (
             await database().query(
-              `SELECT to_jsonb(t) AS row FROM ${table} t ORDER BY to_jsonb(t)::text`,
+              `SELECT to_jsonb(t) AS row FROM ${table} t${table === "ppo.seed_receipts" ? " WHERE t.version<>121" : ""} ORDER BY to_jsonb(t)::text`,
             )
           ).rows,
       ),
@@ -239,6 +239,7 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
+  assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=121")).rows, [{ version: 121 }]);
   const afterLedger = (
     await database().query(
       "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -247,7 +248,7 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
   assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
   assert.deepEqual(
     afterLedger.slice(ledger.length).map((r) => r.version),
-    [116, 117, 118],
+    [116, 117, 118, 121],
   );
   assert.equal((await readNursery(p, id)).selected, null);
   await migrate();

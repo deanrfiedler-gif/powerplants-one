@@ -1,3 +1,4 @@
+import { customerDeliveryBindings } from "../helpers/customer-delivery-contract";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { randomBytes, randomUUID } from "node:crypto";
@@ -41,10 +42,17 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
     ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(tables), before);
+  const afterRows = await snapshot(tables);
+  assert.deepEqual(afterRows.seed_receipts.filter((r: { version: number }) => r.version !== 121), before.seed_receipts);
+  assert.deepEqual(afterRows.seed_receipts.filter((r: { version: number }) => r.version === 121).map((r: { version: number }) => r.version), [121]);
+  const oldBindings = new Set(before.customer_email_bindings.map((r: { message_class: string; binding: string }) => `${r.message_class}:${r.binding}`));
+  assert.deepEqual(afterRows.customer_email_bindings.filter((r: { message_class: string; binding: string }) => oldBindings.has(`${r.message_class}:${r.binding}`)), before.customer_email_bindings);
+  const shape = (rs: { message_class: string; binding: string }[]) => rs.map(r => `${r.message_class}:${r.binding}`).sort(new Intl.Collator("en").compare);
+  assert.deepEqual(shape(afterRows.customer_email_bindings.filter((r: { message_class: string; binding: string }) => !oldBindings.has(`${r.message_class}:${r.binding}`))), shape(customerDeliveryBindings));
+  assert.deepEqual({ ...afterRows, seed_receipts: before.seed_receipts, customer_email_bindings: before.customer_email_bindings }, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 121]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",

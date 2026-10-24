@@ -370,7 +370,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0118 adds the call core using existing all-table runtime grants. No existing rows, users, seeds
   // or permissions change; CallEvent becomes an identity type under the identity_target rule, and
   // each non-blank Person phone is copied, unread and flagged as needing checking, into contact numbers.
-  if (latestMigrationVersion !== 118) throw Error("Review the existing-demo upgrade for this release.");
+  // 0121 adds immutable native dispatch/customer-ETA source evidence and extends the CUS-EMAIL
+  // allowlist. Seed 121 inserts seven fictional catalogue choices only. No user/grant, existing
+  // payload, source snapshot, identity or switch changes; existing all-table runtime privileges
+  // cover these tables. The hosted worker still does not drain customer communications.
+  if (latestMigrationVersion !== 121) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
