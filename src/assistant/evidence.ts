@@ -13,7 +13,7 @@ import { readableSources, sourceKey, type SourceKey } from "./source-access";
 import { agentName, envelopeLimits, type EvidenceEnvelope, type EvidenceItem, type EvidenceValue, type SourceType, type StoredClaim } from "./model";
 
 // SQL and DTO allowlists are paired: additions to a domain row cannot enter an adapter request.
-const fields: Record<SourceType, readonly string[]> = {
+export const evidenceFields: Record<SourceType, readonly string[]> = {
   Opportunity: ["display_number", "title", "stage_id", "close_outcome", "need_summary", "qualification_note", "expected_close_date"],
   Organisation: ["display_number", "display_name", "relationship_status", "sector"],
   Activity: ["kind", "activity_type", "summary", "status", "due_at", "due_needed", "starts_at", "outcome", "is_next_action"],
@@ -118,7 +118,7 @@ async function sourceFields(c: QueryClient, workspace: string, source: SourceKey
       ? [workspace, source.record_id, nextAction, SALES_KINDS] : [workspace, source.record_id])).rows[0];
   if (!row) throw unavailable();
   const projected: Record<string, EvidenceValue> = {};
-  for (const key of fields[source.type]) {
+  for (const key of evidenceFields[source.type]) {
     const value = row[key];
     projected[key] = value instanceof Date ? value.toISOString() : value;
   }

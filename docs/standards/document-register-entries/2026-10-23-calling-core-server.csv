@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-ADR-0064,Reading phone numbers with libphonenumber-js,docs/decisions/ADR-0064-phone-number-library.md,,Implemented with calling stage 1b; adopted as Q7 on 23 October 2026,Dean Fiedler,926081f8,,,git,
+PPO-CALLS-CONTRACT,Calling core contract (stage 1b),docs/contracts/calls.md,,Synthetic stage 1b server core; no UI; owner acceptance and deployment separate,Dean Fiedler,926081f8,,,git,

@@ -2,6 +2,7 @@ import type { Principal } from "../../platform/identity";
 import { AppError, unavailable } from "../../platform/errors";
 import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { sharedOperation } from "../../platform/operations";
+import { syncLegacyPhone } from "../../calls/legacy-phone";
 import { companyContext } from "../authority";
 import { visible } from "../reads";
 import {
@@ -88,6 +89,7 @@ export async function revisePerson(p: Principal, id: string, input: unknown) {
     (c) => personEditAuthority(c, p, command.id),
     async (c, before) => {
       currentVersion(before.version, command.expected_version);
+      if (command.phone !== before.phone) await syncLegacyPhone(c, p, command.id, command.phone);
       const row = (
         await c.query(
           `UPDATE ppo.people SET display_name=$3,email=$4,phone=$5,contact_preference=$6,active=$7,

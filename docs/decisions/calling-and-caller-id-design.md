@@ -82,7 +82,7 @@ Stage 1 is useful on its own, on any device, and every later stage builds on it.
 - Each number keeps the entered text, the E.164 form or a **Number needs checking** flag (R6), and the country used to read it.
 - **Country:** a number written without a country code is read using the company's country, which is Australia for Powerplants companies (Q9). Nothing hard-codes +61.
 - **Reading numbers** uses a maintained phone-number library rather than PPO's own rules (Q7). Adding it is a new dependency, which stage 1 records in its own ADR before use.
-- Leads keep their contact phone, which is read the same way so that lead contacts can be matched too.
+- Leads have no phone field of their own. A lead is matched through its primary person or its organisation (correction recorded during stage 1b, 23 October 2026).
 
 ### 5.2 Number lookup
 

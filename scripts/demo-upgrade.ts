@@ -367,7 +367,10 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // It changes no existing rows, identities, users, seeds or permissions.
   // 0117 adds empty immutable assessment history and retained HTML outputs under the
   // same runtime table grants. No existing rows, seeds, identities or permissions change.
-  if (latestMigrationVersion !== 117) throw Error("Review the existing-demo upgrade for this release.");
+  // 0118 adds the call core using existing all-table runtime grants. No existing rows, users, seeds
+  // or permissions change; CallEvent becomes an identity type under the identity_target rule, and
+  // each non-blank Person phone is copied, unread and flagged as needing checking, into contact numbers.
+  if (latestMigrationVersion !== 118) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

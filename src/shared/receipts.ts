@@ -1,4 +1,5 @@
 import { conversationReceiptAuthority } from "../conversations/access";
+import { callEventReceiptAuthority } from "../calls/events";
 import { conversationObjectTypes } from "../conversations/model";
 import { receiptAuthority as specialistWorkReceiptAuthority } from "../projects/specialist/work/context";
 import { packageReceiptAuthority } from "../cpq/package-context";
@@ -258,8 +259,14 @@ export async function readOperation(
         row.site_id,
         "shared.create",
       );
-  } else if (r.command === "RevisePerson") {
+  } else if (r.command === "RevisePerson" || (r.command === "SetPartyNumbers" && r.object_type === "Person")) {
     await personEditAuthority(client, p, r.record_id);
+  } else if (r.object_type === "CallEvent") {
+    // A call event is its owner's alone; a purged skipped event has no receipt left to disclose.
+    await callEventReceiptAuthority(client, p, r.record_id);
+  } else if (r.command === "SetPartyNumbers" && r.object_type === "Organisation") {
+    const row = await visible(client, p, "Organisation", r.record_id);
+    await companyContext(client, p, row.company_id, null, "shared.edit");
   } else if (
     r.command === "EndAffiliation" ||
     r.command === "SetSitePrimaryContact"
