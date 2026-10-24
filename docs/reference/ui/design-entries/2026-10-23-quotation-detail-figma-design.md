@@ -1,0 +1,7 @@
+# Quotation detail (ES-05 · ES-06)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Quotation detail — `/estimating/quotes/[id]` (Sales and Estimating rails) | [Design r01 captures](../estimating/quotation-detail-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 23 October 2026 | [Decision](../../../decisions/quotation-detail-figma-design.md). ES-05, ES-06 and ES-07 handovers; not built. The hub of one quotation: an eight-step lifecycle bar, a primary action that follows state, the Customer views line, a linked-records chain, and Document (with a Customer page preview), Revisions (with compare), Distribution, Customer views, Response, Follow-up and History tabs. Decisions stay on the release, response and conversion pages; every outcome shown is synthetic |
+
+**Quotation detail design, 23 October 2026:** Dean accepted the Figma design for `/estimating/quotes/[id]`, with departures D1–D16 and the recommended answers to Q1–Q11. The [decision](../../../decisions/quotation-detail-figma-design.md) records it, and the [retained captures](../estimating/quotation-detail-design-r01/README.md) are 22 icon-free PNGs with hashes. The named Figma version "Quotation detail — shared record layout, accepted" waits for Dean. Nothing is built. Listing it here does not repeat the dated inventory audit.
