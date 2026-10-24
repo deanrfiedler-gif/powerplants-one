@@ -201,6 +201,19 @@ test("validation: size and list limits refuse oversized rule sets", () => {
   const huge = clone(synScreen());
   huge.padding = "x".repeat(600_000);
   assert.ok(codes(huge).includes("LIMIT"));
+  // 200,000 three-byte characters are under the limit in characters but over it in UTF-8 bytes.
+  const wide = clone(synScreen());
+  wide.padding = "…".repeat(200_000);
+  assert.ok(issues(wide).some((i) => i.code === "LIMIT" && /bytes/.test(i.message)));
+});
+
+test("validation: a NUL character is refused by name; typed backslash text is not", () => {
+  const nul = clone(synScreen());
+  nul.label = "SYN screens\u0000";
+  assert.deepEqual(issues(nul), [{ path: "", code: "SHAPE", message: "Text cannot contain a NUL character" }]);
+  const typed = clone(synScreen());
+  typed.label = "SYN screens \\u0000";
+  assert.ok(!issues(typed).some((i) => /NUL/.test(i.message)));
 });
 
 test("evaluation: the baseline case, line by line, with exact values", () => {
@@ -394,8 +407,8 @@ test("coverage: each finding fires when it should", () => {
   const got = t.coverage.map((f) => [f.severity, f.code, f.subject]);
   for (const want of [
     ["Blocking", "DUPLICATE_RULE", "hooks_again"],
-    ["Blocking", "OPTION_UNTESTED", "edge_fixing"],
-    ["Blocking", "UNIT_MISMATCH", "ls_wire"],
+    ["Blocking", "OPTION_UNTESTED", "edge_fixing[2]"],
+    ["Blocking", "UNIT_MISMATCH", "ls_wire/SYN-SCR-LSWIRE"],
     ["Warning", "RULE_NEVER_APPLIES", "never"],
     ["Warning", "DERIVED_UNREAD", "unused"],
   ])

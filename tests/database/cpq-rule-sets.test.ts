@@ -114,10 +114,10 @@ test("only the owner accepts a blocking finding, and approval waits for it", asy
   await save(author, id, def, 0, author.actor_id);
   const draft = await current(author, id);
   const blocking = draft.r.revision.test.coverage.filter((f) => f.severity === "Blocking");
-  assert.deepEqual(blocking.map((f) => [f.code, f.subject]), [["OPTION_UNTESTED", "edge_fixing"]]);
+  assert.deepEqual(blocking.map((f) => [f.code, f.subject]), [["OPTION_UNTESTED", "edge_fixing[2]"]]);
 
   await assert.rejects(reviewRuleSet(reviewer, id, { ...crmBase(), ...draft.base, outcome: "Approved" }), code("RuleSetFindingsOpen"));
-  const accept = { ...crmBase(), expected_version: draft.base.expected_version, revision_id: draft.base.revision_id, code: "OPTION_UNTESTED", subject: "edge_fixing" };
+  const accept = { ...crmBase(), expected_version: draft.base.expected_version, revision_id: draft.base.revision_id, code: "OPTION_UNTESTED", subject: "edge_fixing[2]" };
   await assert.rejects(acceptRuleSetFinding(reviewer, id, accept), code("RuleSetOwnerOnly"));
   await assert.rejects(acceptRuleSetFinding(author, id, { ...accept, operation_id: randomUUID(), code: "ROW_UNREAD", subject: "bay_sizes" }), code("RuleSetFindingUnknown"));
   await acceptRuleSetFinding(author, id, accept);
@@ -240,4 +240,100 @@ test("receipts replay to people who still hold the duty, and reads need cpq.read
   await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='cpq.author'", [CRM.workspace, author.actor_id]);
   await assert.rejects(readOperation(author, body.operation_id));
   await assert.rejects(save(author, id, synScreen(), 1), code("RecordUnavailable"));
+});
+
+test("review: each untested option needs its own acceptance, and only an owner who still holds a duty accepts", async () => {
+  const { author, reviewer } = await people();
+  const id = randomUUID();
+  const def = clone(synScreen());
+  def.inputs[5].choices = ["Hooks", "Quad Clip", "Clips", "Wire"];
+  await save(author, id, def, 0, author.actor_id);
+  const draft = await current(author, id);
+  const subjects = draft.r.revision.test.coverage.filter((f) => f.severity === "Blocking").map((f) => f.subject);
+  assert.deepEqual(subjects, ["edge_fixing[2]", "edge_fixing[3]"]);
+  const accept = (subject: string, v: number) => ({ ...crmBase(), expected_version: v, revision_id: draft.base.revision_id, code: "OPTION_UNTESTED", subject });
+  await acceptRuleSetFinding(author, id, accept("edge_fixing[2]", draft.base.expected_version));
+  const one = await current(author, id);
+  await assert.rejects(reviewRuleSet(reviewer, id, { ...crmBase(), ...one.base, outcome: "Approved" }), code("RuleSetFindingsOpen"));
+  await assert.rejects(acceptRuleSetFinding(author, id, accept("edge_fixing[3]", one.base.expected_version - 1)), code("VersionConflict"));
+
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='cpq.author'", [CRM.workspace, author.actor_id]);
+  await assert.rejects(acceptRuleSetFinding(author, id, accept("edge_fixing[3]", one.base.expected_version)), code("RuleSetOwnerUnauthorised"));
+});
+
+test("review: stale revisions, a reviewer who lost the duty, and forged or malformed test results are refused", async () => {
+  const { author, reviewer, publisher } = await people();
+  const id = randomUUID();
+  await save(author, id, synScreen(), 0, author.actor_id);
+  const first = await current(author, id);
+
+  // A re-save makes the earlier revision stale for review and for direct inserts.
+  const changed = clone(synScreen());
+  changed.label = "SYN screens, second draft";
+  await save(author, id, changed, first.base.expected_version);
+  await assert.rejects(reviewRuleSet(reviewer, id, { ...crmBase(), ...first.base, expected_version: first.base.expected_version + 1, outcome: "Approved" }), code("RuleSetRevisionChanged"));
+  await assert.rejects(
+    rows("INSERT INTO ppo.cpq_rule_set_reviews(id,workspace_id,revision_id,reviewer_id,outcome,content_hash,test,reason) VALUES($1,$2,$3,$4,'Approved',$5,$6,'x')", [
+      randomUUID(), CRM.workspace, first.r.revision.id, reviewer.actor_id, first.r.revision.content_hash, JSON.stringify(first.r.revision.test),
+    ]),
+    pgCode("23514"),
+  );
+
+  // A forged passing result cannot approve a revision whose stored result fails.
+  const failing = clone(synScreen());
+  failing.key = "syn_screen_failing";
+  (failing.reference_cases[0].expected as { lines: { part: string; quantity: string }[] }).lines[0].quantity = "1";
+  const failingId = randomUUID();
+  await save(author, failingId, failing, 0, author.actor_id);
+  const bad = await current(author, failingId);
+  for (const forged of [
+    { valid: true, summary: { cases: 3, failed: 0 }, coverage: [] },
+    { valid: true, summary: { cases: 3 }, coverage: [] },
+    { valid: true, summary: { cases: "x", failed: 0 }, coverage: [] },
+  ])
+    await assert.rejects(
+      rows("INSERT INTO ppo.cpq_rule_set_reviews(id,workspace_id,revision_id,reviewer_id,outcome,content_hash,test,reason) VALUES($1,$2,$3,$4,'Approved',$5,$6,'x')", [
+        randomUUID(), CRM.workspace, bad.r.revision.id, reviewer.actor_id, bad.r.revision.content_hash, JSON.stringify(forged),
+      ]),
+      pgCode("23514"),
+    );
+
+  // A reviewer who loses the duty before publication must review again.
+  const second = await current(author, id);
+  await reviewRuleSet(reviewer, id, { ...crmBase(), ...second.base, outcome: "Approved" });
+  const reviewed = await current(author, id);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='cpq.review'", [CRM.workspace, reviewer.actor_id]);
+  await assert.rejects(publishRuleSet(publisher, id, { ...crmBase(), ...reviewed.base, expected_publication_version: 0 }), code("RuleSetReviewerUnauthorised"));
+  await grant(reviewer.actor_id, ["cpq.review"]);
+  await publishRuleSet(publisher, id, { ...crmBase(), ...reviewed.base, expected_publication_version: 0 });
+
+  // The head only moves forward and is never removed.
+  await assert.rejects(rows("DELETE FROM ppo.cpq_rule_set_heads WHERE rule_set_id=$1", [id]), pgCode("23514"));
+  await assert.rejects(rows("UPDATE ppo.cpq_rule_set_heads SET publication_id=publication_id WHERE rule_set_id=$1", [id]), pgCode("23514"));
+});
+
+test("review: receipts for acceptance, review and publication replay, and other companies cannot read", async () => {
+  const { author, reviewer, publisher } = await people();
+  const id = randomUUID();
+  const def = clone(synScreen());
+  def.inputs[5].choices = ["Hooks", "Quad Clip", "Clips"];
+  await save(author, id, def, 0, author.actor_id);
+  const draft = await current(author, id);
+  const acceptBody = { ...crmBase(), expected_version: draft.base.expected_version, revision_id: draft.base.revision_id, code: "OPTION_UNTESTED", subject: "edge_fixing[2]" };
+  const accepted = await acceptRuleSetFinding(author, id, acceptBody);
+  assert.deepEqual((await acceptRuleSetFinding(author, id, acceptBody)).receipt, accepted.receipt);
+  await assert.rejects(readOperation(reviewer, acceptBody.operation_id));
+  const ready = await current(author, id);
+  const reviewBody = { ...crmBase(), ...ready.base, outcome: "Approved" };
+  const reviewedReceipt = await reviewRuleSet(reviewer, id, reviewBody);
+  assert.deepEqual((await reviewRuleSet(reviewer, id, reviewBody)).receipt, reviewedReceipt.receipt);
+  assert.equal((await readOperation(reviewer, reviewBody.operation_id)).record_id, id);
+  const done = await current(author, id);
+  const publishBody = { ...crmBase(), ...done.base, expected_publication_version: 0 };
+  await publishRuleSet(publisher, id, publishBody);
+  assert.equal((await readOperation(publisher, publishBody.operation_id)).record_id, id);
+
+  const other = (await createSession("second-company")).principal;
+  await assert.rejects(readRuleSet(other, id));
+  await assert.rejects(listRuleSets(other, { company_id: CRM.company }));
 });

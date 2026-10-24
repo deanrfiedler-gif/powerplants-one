@@ -50,7 +50,7 @@ CREATE TRIGGER cpq_rule_set_fixed BEFORE UPDATE ON ppo.cpq_rule_sets FOR EACH RO
 CREATE TABLE ppo.cpq_rule_set_revisions (
  id uuid PRIMARY KEY, workspace_id uuid NOT NULL, company_id uuid NOT NULL, rule_set_id uuid NOT NULL,
  version integer NOT NULL CHECK(version>0), predecessor_id uuid,
- definition jsonb NOT NULL CHECK(jsonb_typeof(definition)='object' AND (definition->>'schema_version')='5' AND octet_length(definition::text)<=600000),
+ definition jsonb NOT NULL CHECK(jsonb_typeof(definition)='object' AND (definition->>'schema_version')='5' AND octet_length(definition::text)<=1048576),
  content_hash text NOT NULL CHECK(content_hash~'^[a-f0-9]{64}$'),
  test jsonb NOT NULL CHECK(jsonb_typeof(test)='object' AND (test->>'valid')='true'),
  reason text NOT NULL CHECK(length(reason) BETWEEN 1 AND 2000),
@@ -64,7 +64,7 @@ ALTER TABLE ppo.cpq_rule_sets ADD FOREIGN KEY(workspace_id,id,current_revision_i
 
 CREATE TABLE ppo.cpq_rule_set_acceptances (
  id uuid PRIMARY KEY, workspace_id uuid NOT NULL, revision_id uuid NOT NULL,
- code text NOT NULL CHECK(code ~ '^[A-Z_]{1,40}$'), subject text NOT NULL CHECK(length(subject) BETWEEN 1 AND 64),
+ code text NOT NULL CHECK(code ~ '^[A-Z_]{1,40}$'), subject text NOT NULL CHECK(length(subject) BETWEEN 1 AND 200),
  reason text NOT NULL CHECK(length(reason) BETWEEN 1 AND 2000),
  accepted_by uuid NOT NULL, created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
  UNIQUE(workspace_id,id), UNIQUE(workspace_id,revision_id,code,subject),
@@ -108,6 +108,13 @@ DO $$ DECLARE t text; BEGIN
  END LOOP;
 END $$;
 
+-- A stored test result passes only when it has cases, none failed, and a coverage list.
+-- Malformed JSON never passes: every comparison is on exact JSON values, never a cast.
+CREATE FUNCTION ppo.cpq_rule_set_test_passes(t jsonb) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+ SELECT COALESCE(jsonb_typeof(t->'summary'->'cases')='number' AND (t->'summary'->'cases')<>'0'::jsonb
+  AND (t->'summary'->'failed')='0'::jsonb AND jsonb_typeof(t->'coverage')='array', false)
+$$;
+
 -- Governance holds even when the service is bypassed.
 CREATE FUNCTION ppo.check_cpq_rule_set_governance() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE r ppo.cpq_rule_set_revisions; s ppo.cpq_rule_sets; review ppo.cpq_rule_set_reviews; finding jsonb;
@@ -122,11 +129,13 @@ BEGIN
  ELSIF TG_TABLE_NAME='cpq_rule_set_reviews' THEN
   IF NEW.reviewer_id=r.created_by OR NEW.content_hash<>r.content_hash THEN RAISE EXCEPTION 'Independent review of exact rule set content required' USING ERRCODE='23514'; END IF;
   IF s.owner_id NOT IN (r.created_by, NEW.reviewer_id) THEN RAISE EXCEPTION 'The rule set owner must author or review the revision' USING ERRCODE='23514'; END IF;
+  IF s.current_revision_id<>r.id OR s.state<>'Draft' THEN RAISE EXCEPTION 'Review the current draft revision' USING ERRCODE='23514'; END IF;
   IF NEW.outcome='Approved' THEN
-   IF COALESCE((NEW.test->'summary'->>'cases')::int,0)=0 OR (NEW.test->'summary'->>'failed')::int<>0 THEN
+   -- Both the result stored at save and the rerun at review must pass; neither is taken on trust alone.
+   IF NOT ppo.cpq_rule_set_test_passes(r.test) OR NOT ppo.cpq_rule_set_test_passes(NEW.test) THEN
     RAISE EXCEPTION 'Every reference case must pass before approval' USING ERRCODE='23514';
    END IF;
-   FOR finding IN SELECT f FROM jsonb_array_elements(NEW.test->'coverage') f WHERE f->>'severity'='Blocking' LOOP
+   FOR finding IN SELECT f FROM jsonb_array_elements((r.test->'coverage') || (NEW.test->'coverage')) f WHERE f->>'severity'='Blocking' LOOP
     IF NOT EXISTS(SELECT 1 FROM ppo.cpq_rule_set_acceptances a WHERE a.workspace_id=NEW.workspace_id AND a.revision_id=r.id AND a.code=finding->>'code' AND a.subject=finding->>'subject') THEN
      RAISE EXCEPTION 'Every blocking finding must be accepted by the owner before approval' USING ERRCODE='23514';
     END IF;
@@ -134,7 +143,8 @@ BEGIN
   END IF;
  ELSE
   SELECT * INTO STRICT review FROM ppo.cpq_rule_set_reviews WHERE workspace_id=NEW.workspace_id AND id=NEW.review_id;
-  IF review.revision_id<>r.id OR review.outcome<>'Approved' OR NEW.created_by IN (r.created_by, review.reviewer_id) OR NEW.rule_set_id<>r.rule_set_id THEN
+  IF review.revision_id<>r.id OR review.outcome<>'Approved' OR NEW.created_by IN (r.created_by, review.reviewer_id) OR NEW.rule_set_id<>r.rule_set_id
+     OR s.current_revision_id<>r.id OR s.state<>'Reviewed' THEN
    RAISE EXCEPTION 'Independent publication of the exact approved revision required' USING ERRCODE='23514';
   END IF;
  END IF;
@@ -144,3 +154,15 @@ CREATE TRIGGER cpq_rule_set_acceptance_integrity BEFORE INSERT ON ppo.cpq_rule_s
 CREATE TRIGGER cpq_rule_set_review_integrity BEFORE INSERT ON ppo.cpq_rule_set_reviews FOR EACH ROW EXECUTE FUNCTION ppo.check_cpq_rule_set_governance();
 CREATE TRIGGER cpq_rule_set_publication_integrity BEFORE INSERT ON ppo.cpq_rule_set_publications FOR EACH ROW EXECUTE FUNCTION ppo.check_cpq_rule_set_governance();
 CREATE INDEX cpq_rule_sets_company ON ppo.cpq_rule_sets(workspace_id,company_id,key);
+
+-- A head only moves forward to a later publication of the same rule set, and is never removed.
+CREATE FUNCTION ppo.cpq_rule_set_head_forward() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE before_version integer; after_version integer;
+BEGIN
+ IF TG_OP='DELETE' THEN RAISE EXCEPTION 'A rule set head is retained' USING ERRCODE='23514'; END IF;
+ SELECT version INTO STRICT before_version FROM ppo.cpq_rule_set_publications WHERE workspace_id=OLD.workspace_id AND id=OLD.publication_id;
+ SELECT version INTO STRICT after_version FROM ppo.cpq_rule_set_publications WHERE workspace_id=NEW.workspace_id AND id=NEW.publication_id;
+ IF NEW.rule_set_id<>OLD.rule_set_id OR after_version<=before_version THEN RAISE EXCEPTION 'A rule set head only moves forward' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER cpq_rule_set_head_forward BEFORE UPDATE OR DELETE ON ppo.cpq_rule_set_heads FOR EACH ROW EXECUTE FUNCTION ppo.cpq_rule_set_head_forward();

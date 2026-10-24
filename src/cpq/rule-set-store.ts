@@ -99,6 +99,10 @@ const currentDraft = (r: RuleSetRoot, revisionId: string, states: RuleSetRoot["s
     throw new AppError(409, "RuleSetRevisionChanged", "Act on the current revision of the rule set.");
 };
 
+/** The owner of a rule set must still be able to author or review for its company. */
+const ownerDuty = async (c: QueryClient, p: Principal, company: string) =>
+  (await hasPermission(c, p, "cpq.author", company)) || (await hasPermission(c, p, "cpq.review", company));
+
 const blocking = (t: ValidTest) => t.coverage.filter((f) => f.severity === "Blocking");
 
 async function acceptedFindings(c: QueryClient, p: Principal, revisionId: string) {
@@ -202,7 +206,7 @@ export async function acceptRuleSetFinding(p: Principal, id: string, value: unkn
     expected_version: version(r.expected_version),
     revision_id: uuid(r.revision_id, "revision_id"),
     code: typeof r.code === "string" && /^[A-Z_]{1,40}$/.test(r.code) ? r.code : invalid("code", "Use the finding code."),
-    subject: typeof r.subject === "string" && r.subject.length > 0 && r.subject.length <= 64 ? r.subject : invalid("subject", "Use the finding subject."),
+    subject: typeof r.subject === "string" && r.subject.length > 0 && r.subject.length <= 200 ? r.subject : invalid("subject", "Use the finding subject."),
   };
   return sharedOperation(
     p,
@@ -213,6 +217,8 @@ export async function acceptRuleSetFinding(p: Principal, id: string, value: unkn
       expected(rs.version, input.expected_version);
       if (rs.owner_id !== p.actor_id)
         throw new AppError(403, "RuleSetOwnerOnly", "Only the rule set owner can accept a blocking finding.");
+      if (!(await ownerDuty(c, p, rs.company_id)))
+        throw new AppError(403, "RuleSetOwnerUnauthorised", "The owner must still be able to author or review rule sets for this company.");
       currentDraft(rs, input.revision_id);
       const v = await revisionOf(c, p, rs, input.revision_id);
       if (!blocking(v.test).some((f) => f.code === input.code && f.subject === input.subject))
@@ -322,7 +328,8 @@ export async function publishRuleSet(p: Principal, id: string, value: unknown) {
         throw new AppError(409, "RuleSetReviewRequired", "An approved review is required.");
       if ([v.created_by, review.reviewer_id].includes(p.actor_id))
         throw new AppError(403, "RuleSetIndependentPublication", "A third authorised person must publish this rule set.");
-      await duty(c, { ...p, actor_id: review.reviewer_id }, rs.company_id, "cpq.review");
+      if (!(await hasPermission(c, { ...p, actor_id: review.reviewer_id }, "cpq.review", rs.company_id)))
+        throw new AppError(409, "RuleSetReviewerUnauthorised", "The reviewer no longer holds the review duty. Review the revision again.");
       const head = await headOf(c, p, rs.id);
       expected(head?.version ?? 0, input.expected_publication_version);
       const publication_id = randomUUID();
@@ -440,5 +447,5 @@ export async function ruleSetReceiptAuthority(c: QueryClient, p: Principal, id: 
   const cap: Duty =
     command === "Cpq:RuleSet:Save" ? "cpq.author" : command === "Cpq:RuleSet:Review" ? "cpq.review" : command === "Cpq:RuleSet:Publish" ? "cpq.publish" : "cpq.read";
   const rs = await root(c, p, id, cap);
-  if (command === "Cpq:RuleSet:AcceptFinding" && rs.owner_id !== p.actor_id) throw unavailable();
+  if (command === "Cpq:RuleSet:AcceptFinding" && (rs.owner_id !== p.actor_id || !(await ownerDuty(c, p, rs.company_id)))) throw unavailable();
 }
