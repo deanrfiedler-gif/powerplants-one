@@ -144,12 +144,14 @@ At Dean's request Claude audited every frame and extended the page.
 - **Added:** the Layout & drawings section, what-if levers, material flow per shift, the electrical load estimate and handshake list, alternatives compared, the trial plan, the supplier enquiry preview, the drawing-generation model (D13), the entry forms (D14) and the entry from Discovery (D15).
 - **Checked:** no clipped or truncated text, no unformatted numbers, no overlaps and nothing outside its section, no drawn element outside its sheet, and no prototype link to another page.
 
+- **Post-acceptance audit, 24 October 2026** (Dean: "Carry out an audit and polish on the pages to ensure they are accurate and as professional as possible."): one findings model across every frame — 7 open findings, of which 6 block Use (3 technical: the C-03 interface, the dispenser air demand and S2 not assessable; 1 unmapped part P-03; 2 responsibility or coverage: the integration owner and supplier commissioning coverage), while the S3 minimum-diameter conflict is Phase 2 and does not block Use. The Technical suitability and CPQ Use gates, the receiving preview, the confirmed System route card and the receipt state were corrected; the Interfaces & site badge reads Conflict 2 on every menu and phone sheet; the Overview frame grew 32 px so its footer is no longer cut off. The captures were re-exported before merge.
+
 The audit is recorded on the notes card `2046:499139`.
 
 ## 7. Verification
 
 - Claude checked the frames with screenshots taken inside Figma while drawing and auditing, and measured every single-line text against its rendered width.
-- The twenty-one captures are copies of the accepted frames on the "Captures (icon-free)" page from y = 364,000. Images 19 and 20 are frames holding copies of the phone frames. The 89 prototype reactions were removed and the 1,051 Font Awesome icon instances were swapped for `Icon/placeholder`. Scans then found:
+- The twenty-one captures are copies of the accepted frames, as corrected on 24 October 2026, on the "Captures (icon-free)" page from y = 364,000. Images 19 and 20 are frames holding copies of the phone frames. The 89 prototype reactions were removed and the 1,051 Font Awesome icon instances were swapped for `Icon/placeholder`. Scans then found:
   - no Font Awesome instance left, and no visible vector outside a placeholder, the logo or a drawing sheet;
   - none of 4,571 visible texts with a stored colour that differs from its bound variable;
   - no copy with a prototype link; the flow starting points that cloning added were removed, and the Captures page keeps its 105.
