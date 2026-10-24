@@ -94,7 +94,9 @@ export async function logCall(p: Principal, input: unknown) {
       );
       if (event)
         await c.query(
-          "UPDATE ppo.call_events SET state='Logged',activity_id=$3,resolved_at=clock_timestamp(),resolved_by=$4,version=version+1 WHERE workspace_id=$1 AND id=$2",
+          `UPDATE ppo.call_events SET state='Logged',activity_id=$3,resolved_at=clock_timestamp(),resolved_by=$4,version=version+1,
+           source=NULL,direction=NULL,number_e164=NULL,person_id=NULL,organisation_id=NULL,started_at=NULL,answered=NULL,duration_seconds=NULL
+           WHERE workspace_id=$1 AND id=$2`,
           [p.workspace_id, event.id, command.activity_id, p.actor_id],
         );
       return {

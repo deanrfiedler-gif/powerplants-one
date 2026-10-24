@@ -67,7 +67,7 @@ A hidden party behaves exactly as no match. Lookup is the read that the stage 2 
 A call event is the fact that a call happened, reported by a source: `ClickToCall` now, and `PhoneApp` or `Teams` later. It is a business identity, so its commands carry ordinary receipts.
 
 - **Stored only on a match (R3).** An event is stored only when its number matches a party the user may read. A number nobody visible holds is discarded, and nothing is written.
-- **Once per source reference (R8).** A repeated `(source, source_reference)` returns the event already recorded.
+- **Once per source reference (R8).** A repeated `(source, source_reference)` returns the event already recorded only after checking its owner and current access to any stored party and linked activity. The stored key is a SHA-256 digest of the canonical source/reference pair; the raw provider reference is never retained. All sources take the workspace mutation lock. A previously used event identity cannot be recreated after purge.
 - **No guessing (R5).** The party is recorded only when it is unambiguous.
 - **Internal entry point.** `ingestCallEvent(client, principal, call)` is the single entry point every source must use.
 
@@ -77,7 +77,9 @@ A call event is the fact that a call happened, reported by a source: `ClickToCal
 | `GET /api/v1/calls/to-log` | `{items, count}`: the caller's own To log events, newest first. A party the caller can no longer read shows as `party: null`, and `match_count` says how many people or organisations the caller can see holding that number. |
 | `POST /api/v1/calls/events/[id]/skip` | `{operation_id, schema_version: 1, reason, expected_version, skip_reason?}`, where `skip_reason` is `Personal`, `NotBusiness` or `AlreadyLogged`. Own events only (`RecordUnavailable` otherwise). Stale versions are `VersionConflict`, and an event already Logged or Skipped is `409 CallAlreadyResolved`. |
 
-**Retention (Q5).** Skipped events are deleted 30 days after they were skipped. The purge runs inside click-to-call and skip commands for the same workspace. The append-only identity keeps only the id and type. A purged event's receipt is no longer disclosed. To log events are never purged. A Logged event stays with the activity it became and follows activity retention (D-012).
+**Retention (Q5).** Skipped events are deleted 30 days after they were skipped. The purge runs inside click-to-call and skip commands for the same workspace. The append-only identity keeps only the id and type. A purged event's receipt is no longer disclosed through either receipt GET or command replay. To log events are never purged. When logged, an event discards its source label, direction, number, person/organisation, call start, answered flag and duration; a database constraint enforces this. Its retained activity link follows activity retention (D-012). Only the opaque deduplication key and ordinary ownership/version/resolution metadata accompany that link; call facts live in the activity's immutable call details. Duplicate reads also require access to that activity.
+
+Call-event audit details retain command/version evidence, without copied number values, contact-number IDs or skip reasons. Outbox messages contain only the existing minimal record identity/version. The common caller-supplied audit reason remains under the existing audit policy; this change does not claim to erase arbitrary text a caller puts in that reason. The unmerged 0118 migration is corrected before issue, rather than adding a new migration to repair an unissued schema.
 
 ## Log call
 
