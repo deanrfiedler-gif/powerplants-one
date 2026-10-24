@@ -3,14 +3,14 @@ document_id: PPO-MIGRATION-EXPECTATIONS-DEC
 date: 2026-10-24
 owner: Dean Fiedler
 status: Recommendations approved; implementation on hold
-review: Claude findings verified and corrected; follow-up review pending
+review: Claude findings verified and corrected; owner waived further Claude review
 source_commit: 79bef1d32f42cd2dcdbf04ce0f30a4374199db2e
 versioning: git
 ---
 
 # Independent migration test expectations
 
-**Recommendations approved by Dean on 24 October 2026; implementation on hold.** Owner: Dean Fiedler. Author: Codex for Dean. Originally issued as **Proposed: owner decision required**, this paper now records his explicit yes to all five recommendations. Claude reviewed the original head; verified findings and corrections are recorded in section 11, with follow-up review pending. PR #692 remains a draft. Approval of the recommendations does not authorise implementation or merging this PR.
+**Recommendations approved by Dean on 24 October 2026; implementation on hold.** Owner: Dean Fiedler. Author: Codex for Dean. Originally issued as **Proposed: owner decision required**, this paper now records his explicit yes to all five recommendations. Claude reviewed the original head; verified findings and corrections are recorded in section 11. On 24 October 2026 Dean waived further Claude review and expressly authorised merging documentation PR #692 after CI passes. Implementation remains on hold; this authorisation applies only to the three documentation files.
 
 ## 1. Recommendation and ownership
 
@@ -202,7 +202,7 @@ This is an explicit supplement, not a claim that four files exhaust replay/rollb
 
 ### Stages and quiet window
 
-1. **Retain the owner decision and complete review.** Dean approved all five recommendations; implementation remains explicitly on hold. Claude's original review and the author's verified corrections are recorded in section 11; obtain follow-up review. Neither this approval nor publishing the paper starts implementation. Await separate authorisation before creating an implementation change.
+1. **Retain the owner decision and complete review.** Dean approved all five recommendations; implementation remains explicitly on hold. Claude's original review and the author's verified corrections are recorded in section 11. Dean waived further Claude review of this paper and authorised its documentation-only merge after CI passes. Neither this waiver nor publishing the paper starts implementation. Await separate authorisation before creating an implementation change.
 2. **Clear the migration queue.** Start only with no open PR adding, changing or reserving a migration. Check paginated PR paths and check_migrations.py --open-prs, including reservations. Ideally start immediately after the last migration merges. Use the current PR states, not the original #673/#689 snapshot; at the dated observation above #690 remained open. All migration work must first land or be withdrawn before conversion starts; sequencing cannot waive the no-open-migration condition. This refactor adds no SQL and needs no migration number.
 3. **Freeze source and complete inventory.** Record main SHA, migration/seed versions, each assertion, every through value/conditional branch, query ordering, original-row comparison and late gap. Re-run these searches; 117 is a measured baseline, not a future constant. Include all six setup families above, every replay/rollback comparison, prefix preconditions and absent Products addition branches. Capture old evaluated values before editing.
 4. **Introduce independent data and pure checks.** Transcribe the reviewed sparse history once. Check against separately captured old expectations and production registry. Add tests/unit/migration-expectations.test.ts and run `node --import tsx --test tests/unit/migration-expectations.test.ts`. Add negative/mutation cases; do not generate the expectation from production code.
@@ -231,7 +231,7 @@ This deliberately corrects the old direction to “extend each … preserved led
 
 ## 7. Questions and Dean's recorded answers
 
-Dean explicitly answered **yes to all five recommendations on 24 October 2026**, then required this PR to remain draft pending Claude review and implementation to stay on hold. The questions and recommended answers are retained for traceability:
+Dean explicitly answered **yes to all five recommendations on 24 October 2026**. He initially required this PR to remain draft pending Claude review. He subsequently waived further Claude review and authorised merging the documentation PR after CI passes, while expressly retaining the implementation hold. The questions and recommended answers are retained for traceability:
 
 1. **Adopt D for stage one?** Recommended: yes, one manually maintained test-side migration list and independent registry comparison; defer seed/grant consolidation.
 2. **Retain deliberate historical case additions despite remaining edits?** Recommended: yes. Keep every case and add the newest late-install cases explicitly. Any later scenario-manifest design needs separate coverage/equivalence proof.
@@ -239,7 +239,7 @@ Dean explicitly answered **yes to all five recommendations on 24 October 2026**,
 4. **Require a quiet window and complete equivalence/mutation evidence?** Recommended: yes. No open migration/reservation PR, one conversion owner, full CI and different-model review before a separately authorised merge.
 5. **Keep seed/grant consolidation outside stage one?** Recommended: yes. Measure residual edits first, then propose an independently specified stateful contract if justified.
 
-These answers come from Dean's explicit instruction, not from green CI or authorisation to write a paper. They approve the recommendations; they do not approve an implementation start or merge.
+These answers come from Dean's explicit instruction, not from green CI or authorisation to write a paper. They approve the recommendations. The subsequent authorisation permits the documentation-only merge after CI passes; an implementation start or implementation merge still needs separate authorisation.
 
 ## 8. Complete 117 source-line inventory
 
@@ -563,9 +563,9 @@ Only this paper, its dated status fragment and document-register entry change. N
 
 Migration numbering, checksums, transaction boundaries, database safety guards, schema, all 78 parent IDs, historical evidence, hosted identity and the release-review gate remain. This paper neither adopts a business rule nor establishes production readiness.
 
-Requested validation: check_foundation.py, check_naming.py, build_status.py --check, test_documentation*.py unit tests; after committing, check_documentation_scope.py --base origin/main --head HEAD. Fetch/merge origin/main before every push. Retain head-specific local and CI results in the draft PR. No local database, server, browser suite or npm run build is run for this paper.
+Requested validation: check_foundation.py, check_naming.py, build_status.py --check, test_documentation*.py unit tests; after committing, check_documentation_scope.py --base origin/main --head HEAD. Fetch/merge origin/main before every push. Retain head-specific local and CI results in PR #692. No local database, server, browser suite or npm run build is run for this paper.
 
-**Claude review received and verified.** The [review comment](https://github.com/deanrfiedler-gif/powerplants-one/pull/692#issuecomment-6382123817), posted 2026-10-24T08:42:21Z, reviewed b7afa1bc760d44906122d9dd233c00ebf00ac4e5. It explicitly was neither approval nor request for changes. The author read the affected source, commit diffs/parents, failed-run logs and PR metadata; dispositions follow. No expression-equivalence or mutation harness has been executed, and the corrected paper awaits Claude's follow-up review.
+**Claude review received and verified.** The [review comment](https://github.com/deanrfiedler-gif/powerplants-one/pull/692#issuecomment-6382123817), posted 2026-10-24T08:42:21Z, reviewed b7afa1bc760d44906122d9dd233c00ebf00ac4e5. It explicitly was neither approval nor request for changes. The author read the affected source, commit diffs/parents, failed-run logs and PR metadata; dispositions follow. No expression-equivalence or mutation harness has been executed. Dean waived further Claude review on 24 October 2026; the corrections remain author-verified, with no claim that Claude approved the corrected head.
 
 | Finding | Disposition | Verification and correction |
 |---|---|---|
@@ -585,4 +585,4 @@ Requested validation: check_foundation.py, check_naming.py, build_status.py --ch
 | L7: check and suite pointers | Accepted | Proposed unit-test path and Node/tsx command named; FI-01, FI-07, both Estimating suites and demo added-user count pointers retained. |
 | L8: prefix assumption | Accepted as a conditional risk | Prefix checks require originals to remain a prefix; late interleaving needs explicit detection and separately reviewed identity-based full-row preservation. No unverified approximate count is promoted to a measurement; no-reservation files do not establish a quiet window. |
 
-The review's closing statement that Dean's decision remains open is superseded by his explicit approval of all five recommendations. Review remains a separate matter. Leave PR #692 draft pending follow-up; do not merge, enable auto-merge or begin implementation. Record head-specific validation and the next Claude prompt in the PR.
+The review's closing statement that Dean's decision remains open is superseded by his explicit approval of all five recommendations. Dean subsequently instructed: **merge the documentation PR after CI passes; keep implementation on hold**. His waiver removes the remaining Claude follow-up requirement for this paper only; it does not fabricate review approval, waive CI, or change the separate implementation conditions. Merge PR #692 only after its current head passes CI. Do not enable auto-merge or begin implementation. Record the owner waiver and head-specific validation in the PR.
