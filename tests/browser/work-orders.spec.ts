@@ -34,7 +34,7 @@ test("P04 SC-05 draft, authority refusal, dispute, identity limits, mandatory bl
   await page.goto("/service/work-orders");
   await identity(page);
   await expect(
-    page.getByRole("heading", { name: "Work orders", exact: true }),
+    page.getByRole("heading", { name: "Work orders register", exact: true }),
   ).toBeVisible();
   await capture(page, info, "P04-list.png");
   for (const [n, name] of [

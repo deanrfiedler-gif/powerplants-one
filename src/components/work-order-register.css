@@ -23,6 +23,7 @@
   position: relative;
   padding: 0;
 }
+#ppo-work-orders .mw-sr,
 #ppo-work-orders .mw-live {
   position: absolute;
   width: 1px;

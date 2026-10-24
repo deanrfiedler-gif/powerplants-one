@@ -11,6 +11,8 @@ test.beforeEach(async ({ page, baseURL }) => {
 test("SV-03 register retains view context, selects, exports and opens source-labelled snapshots", async ({
   page,
 }, info) => {
+  if (!info.project.name.includes("mobile"))
+    await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/service/work-orders?sort=reference_asc");
   await expect(
     page.getByRole("heading", { name: "Work orders register", exact: true }),
@@ -75,6 +77,7 @@ test("SV-03 register retains view context, selects, exports and opens source-lab
       .getByRole("link", { name: /^Scope needed/ })
       .click();
     await expect(page).toHaveURL(/view=scope_needed/);
+    await page.goto("/service/work-orders?q=SYN-NO-MATCH-WORK-ORDER-REGISTER");
     await expect(
       page.getByText("No work orders in this view", { exact: true }).first(),
     ).toBeVisible();
