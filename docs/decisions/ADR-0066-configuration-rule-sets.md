@@ -2,10 +2,10 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Status: proposed for Dean's review. Dean decided on 24 October 2026 to build the module in Powerplants One rather than buy one (quoted below). The model, the amendments and the open questions in this record still await his acceptance. This record adds no code, migration, seed, permission, capability or route.
+Status: accepted by the owner on 24 October 2026: "I accept ADR-0066 in PR deanrfiedler-gif/powerplants-one#681". The acceptance covers the model, the amendments and the recommended answer to each of Q1–Q11. Earlier the same day Dean decided to build the module in Powerplants One rather than buy one (quoted below). Build steps R1–R6 are separate changes, and this record authorises none of them. It adds no code, migration, seed, permission, capability or route.
 Date: 24 October 2026. Owner: Dean Fiedler. Builder: Claude.
 
-Related: [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC, CM1 and build steps B0–B6); [CPQ native runtime](cpq-native-runtime.md); [CPQ rule packages](cpq-rule-packages.md); [CPQ Figma design](cpq-figma-design.md); [rule editor alignment](cpq-rule-editor-design-alignment.md); [ADR-0034](ADR-0034-es08-specialist-workbench.md), which this would amend; [ADR-0048](ADR-0048-products-native-catalogue.md), under which Products keeps part identity; [workbench parts proposal contract](../contracts/workbench-parts-proposal.md); parent requirements EST-02 to EST-07. Design proposal: Figma file "PPO - Design", page "Rules studio · rule sets, derived values & tables · ES-02 · ES-03" (node 2315:792701). It is not yet accepted and has no named version. Usability check: [engineer walkthrough](../testing/rule-sets-engineer-walkthrough.md).
+Related: [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC, CM1 and build steps B0–B6); [CPQ native runtime](cpq-native-runtime.md); [CPQ rule packages](cpq-rule-packages.md); [CPQ Figma design](cpq-figma-design.md); [rule editor alignment](cpq-rule-editor-design-alignment.md); [ADR-0034](ADR-0034-es08-specialist-workbench.md), which this amends; [ADR-0048](ADR-0048-products-native-catalogue.md), under which Products keeps part identity; [workbench parts proposal contract](../contracts/workbench-parts-proposal.md); parent requirements EST-02 to EST-07. Design proposal: Figma file "PPO - Design", page "Rules studio · rule sets, derived values & tables · ES-02 · ES-03" (node 2315:792701). It is not yet accepted and has no named version. Usability check: [engineer walkthrough](../testing/rule-sets-engineer-walkthrough.md).
 
 ## Context
 
@@ -37,7 +37,7 @@ Dean then asked how such rules should be built, whether they would be editable i
 
 Dean replied on 24 October 2026: "Taking into account those areas that you are not satisfied with, proceed with the improvements so you are satisfied. I definitely want to build my on module, and not buy Tacton."
 
-## Decision (proposed)
+## Decision
 
 **Extend the existing CPQ interpreter with a rule set model under a new definition schema.** Workbenches run published rule sets, and engineers edit rule sets in an extended Rules studio.
 
@@ -98,7 +98,9 @@ The second-family proof below drew this line. Expressing a design engine needed 
 - The interpreter stays restricted and deterministic, inside the existing worker limits ([CPQ native runtime](cpq-native-runtime.md)).
 - Definition schemas 1–4, their hashes and saved evidence keep their meaning.
 
-## Amendments if accepted
+## Amendments
+
+Each amended record carries a note pointing here.
 
 - **[ADR-0034](ADR-0034-es08-specialist-workbench.md):** the rejection of a generic formula evaluator no longer applies to ES-08's parts and quantity rules. Those move into a published rule set run by the restricted interpreter, to meet the owner's requirement for in-app editing. ES-08 keeps its screens, drawings, evidence and any engineering calculations as typed code. The rejection still stands for engineering design calculations in every workbench (see the scope boundary).
 - **[CPQ rule packages](cpq-rule-packages.md):** that record found a new calculation schema unnecessary for packages. The rule set model needs derived values, value tables and part selection, which schemas 1–4 cannot hold, so a new schema is needed. It leaves existing schemas and hashes untouched.
@@ -161,7 +163,9 @@ Other consequences:
 - **Synthetic-only stance.** Real rule sets with real part identities need an authority decision before they are stored (Q6). Until then, rule sets in the repository and the hosted demo stay synthetic.
 - **Engineering approval.** Passing reference cases is software evidence, not engineering approval. Each family needs a named engineering owner (Q2).
 
-## Open questions (recommendation first)
+## Questions and accepted answers
+
+Dean accepted the recommended answer to each question on 24 October 2026.
 
 - **Q1** Keep rule sets in Rules studio? Yes. Products keeps part identity and the MYOB mapping.
 - **Q2** Should each product family have a named engineering owner who takes part in every review? Yes.
@@ -177,4 +181,4 @@ Other consequences:
 
 ## Verification of this record
 
-Documentation checks only: `python3 scripts/build_status.py --check` and `python3 scripts/check_naming.py`. Owner acceptance, the engineer walkthrough and every build step remain open.
+Documentation checks only: `python3 scripts/build_status.py --check` and `python3 scripts/check_naming.py`. Still open: the engineer walkthrough, the authority decision for real rule sets (Q6), acceptance of the Figma design, and every build step.
