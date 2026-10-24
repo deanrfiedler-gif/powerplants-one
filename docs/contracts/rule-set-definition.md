@@ -10,6 +10,8 @@ Status: R1 engine and R2 storage implemented with synthetic data only. Rules stu
 
 - `src/cpq/rule-sets/` is a pure engine. It reuses the exact `Fraction` from `src/cpq/expression.ts` but has its own parser, so definition schemas 1–4, their hashes and saved evidence keep their meaning.
 - The isolated CPQ worker (`scripts/cpq-worker.mjs`) runs it with the existing memory and five-second limits, through `ruleSetTestIsolated`, `ruleSetRunIsolated` and `ruleSetJobIsolated` in `src/cpq/runner.ts`. Definitions arrive as untrusted data and are checked inside the worker.
+- The runner copies each request as plain data (objects, lists, text, numbers, true/false and null) and sends that copy to the worker. It refuses with `PayloadTooLarge`, before it starts a worker, a request of more than 12,582,912 JSON characters, nested more than 32 deep, or holding anything else, such as a Map, buffer, date, class instance, accessor or proxy. The worker's memory limit does not cover copying the request in: an 80 MB input value aborted the whole process in a probe.
+- The worker refuses any kind other than `rule-set-test`, `rule-set-run` and `rule-set-job` (`KIND`). It refuses supplied inputs that are not an object of text values, more than 100 of them, or a value over 300 characters, each with a path. A Map or other container is refused rather than read as empty. A name echoed in a path or message, by the worker or by validation, is shortened to 64 characters.
 
 ## The definition
 
@@ -25,14 +27,14 @@ Status: R1 engine and R2 storage implemented with synthetic data only. Rules stu
 | `reference_cases` | Inputs with either expected lines and values, or an expected stop code, and the `source` the expected values came from. They come from outside the rules (ADR-0066 Q3). |
 | `passes` | Named values another rule set on the same job may receive (ADR-0066 Q11). |
 
-Validation refuses a definition with every problem it finds, each with a path such as `rules[3].when` and a code. The refusals include:
+Validation refuses a definition with every problem it finds, each with a path such as `rules[3].when` and a code. It lists the first 200 problems in the order found, then one `ISSUE_LIMIT` entry counting the rest. The refusals include:
 - an invalid or duplicate key (inputs, derived values and tables share one namespace), or a key that is a word the language uses (`true`, `false`, `and`, `or`, `not` or a function name);
 - an input type, option list, bound or default that does not fit;
 - an optional or sometimes-asked input with no default;
 - a rule with both or neither of `part` and `choose`, or a fixed part that does not exist;
-- a table whose key column is missing, with more than one range key (a grid is split into one table per exact value), a range key on a text column, or range rows out of order within each group of equal exact keys;
+- a column declared twice (the first declaration is the column; the second is reported and never read), a table whose key column is missing, with more than one range key (a grid is split into one table per exact value), a range key on a text column, or range rows out of order within each group of equal exact keys (number keys are equal by value, so `1` and `1.0` are one group);
 - a part with an invalid ordering size or group;
-- reference cases that name unknown inputs, parts or derived values;
+- reference cases that name unknown inputs, parts or derived values, or an expected line quantity that is not a non-negative number (a decimal such as `6.1`, a long whole number or an exact fraction such as `1/3`);
 - every formula error below;
 - text containing a NUL character, which PostgreSQL cannot store;
 - the limits: 524,288 bytes of UTF-8 JSON, 100 inputs, 100 derived values, 50 tables of up to 20 columns and 2,000 rows, 1,000 parts, 500 rules, 200 reference cases and 50 passed values.
@@ -60,7 +62,7 @@ Formulas are type-checked when the rule set is saved. The types are Number, Text
 
 ## Working out a case
 
-1. **Inputs.** Each input is coerced in order: Number and WholeNumber are bounded decimals within their bounds, YesNo is `Yes` or `No`, and a Choice is one of its options. An input whose `asked_when` is false takes its default and is reported as not asked. A required input with no value stops the case.
+1. **Inputs.** Each input is coerced in order: Number and WholeNumber are bounded decimals within their bounds, YesNo is `Yes` or `No`, and a Choice is one of its options. An input whose `asked_when` is false takes its default and is reported as not asked. Only a missing value takes the default: a supplied value that is not text stops the case with `INPUT_INVALID`. A required input with no value stops the case.
 2. **Derived values** are worked out in list order, then the passed values.
 3. **Rules.** Materials rules run in list order, then Labour rules. `qty` reads the materials quantity of a part, and `minutes` sums materials quantity × installation minutes, optionally for one part group.
 4. **Lines** sum per part. A zero quantity produces no line. The order quantity rounds up to whole units, stock lengths or packs.
@@ -71,7 +73,7 @@ A case stops with a code rather than guessing:
 
 | Code | When |
 |---|---|
-| `INPUT_MISSING`, `INPUT_INVALID`, `INPUT_UNKNOWN` | A required input has no value, a value does not fit its input, or a value names no input |
+| `INPUT_MISSING`, `INPUT_INVALID`, `INPUT_UNKNOWN` | A required input has no value, a value does not fit its input or is not text, or a given or received value names no input |
 | `LOOKUP_NO_ROW` | A table has no row for the keys; the message names the table and keys |
 | `CHOSEN_PART_UNKNOWN` | A `choose` formula names a part that is not in the rule set |
 | `QUANTITY_NEGATIVE` | A rule gives a negative quantity |
@@ -79,7 +81,9 @@ A case stops with a code rather than guessing:
 
 ## Reference cases and coverage
 
-`testRuleSet` runs every reference case. A case passes when every expected line equals the result exactly, no unexpected line appears and every expected value matches. A case that expects a stop passes when it stops with that code. Each line is reported with the expected and actual quantity.
+`testRuleSet` runs every reference case. A case passes when every expected line equals the result exactly, no unexpected line appears and every expected value matches. Quantities and Number values are equal by value (`6.10` is `6.1`, `2/6` is `1/3`); Text and YesNo values must match as written, so `01` is not `1`. A case that expects a stop passes when it stops with that code. Each line is reported with the expected and actual quantity.
+
+A stopped case keeps a `trace` of the inputs it used, the rules it applied, the table rows it read and the part each applied rule gave, up to where it stopped. Coverage counts that trace, never the inputs as written in the case.
 
 Coverage findings:
 
@@ -88,7 +92,7 @@ Coverage findings:
 | Blocking | `NO_REFERENCE_CASES` | The rule set has no reference cases |
 | Blocking | `DUPLICATE_RULE` | Two rules give the same fixed part under the same condition |
 | Blocking | `OPTION_UNTESTED` | A choice option is in no reference case |
-| Blocking | `UNIT_MISMATCH` | A rule counts in a unit different from its part's unit |
+| Blocking | `UNIT_MISMATCH` | A rule counts in a unit different from its part's unit: its fixed part, a part its `choose` formula always gives, or any part it chose in a case, even with a zero quantity |
 | Warning | `ROW_UNREAD` | A table row is read by no reference case |
 | Warning | `RULE_NEVER_APPLIES` | A rule applies in no reference case |
 | Warning | `DERIVED_UNREAD` | A derived value is read by nothing |
@@ -97,7 +101,7 @@ Each finding names its subject, so one acceptance covers exactly one thing: an u
 
 ## Rule sets on one job
 
-`runTogether` runs up to 20 rule set steps in order on one job. A step can receive inputs from an earlier step's passed values, and the same rule set may run more than once, for example once per controller. A step whose source stopped, ran later or does not pass the named value stops with `UPSTREAM_STOPPED`, `STEP_ORDER` or `PASS_MISSING`. Every part produced by more than one step is listed in `shared_parts`. The engine never merges shared parts: how they count is each family's policy (for Priva, question J2 in the control decisions).
+`runTogether` runs up to 20 rule set steps in order on one job, and refuses more with `STEP_LIMIT` (and a repeated step name with `STEP_DUPLICATE`). A step can receive inputs from an earlier step's passed values, and the same rule set may run more than once, for example once per controller. A number passes exactly, so one third arrives as one third; the receiving input still checks its type, whole-number rule and bounds. A step whose received name is not one of its inputs stops with `INPUT_UNKNOWN`. A step whose source stopped, ran later or does not pass the named value stops with `UPSTREAM_STOPPED`, `STEP_ORDER` or `PASS_MISSING`. Every part produced by more than one step is listed in `shared_parts`. The engine never merges shared parts: how they count is each family's policy (for Priva, question J2 in the control decisions).
 
 ## Storage and governance (R2)
 

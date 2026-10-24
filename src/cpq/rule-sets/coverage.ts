@@ -40,18 +40,14 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
     else seen.set(sig, r.key);
   }
 
+  // What each case actually used, whether it finished or stopped part-way.
+  const traces = cases.flatMap((c) => (c.run.status === "Done" ? [c.run] : c.run.trace ? [c.run.trace] : []));
+
   // A choice option no reference case selects.
   for (const input of def.inputs.filter((i) => i.type === "Choice")) {
-    // The value each case actually ran with: an input that was not asked takes its default.
-    const used = new Set(
-      cases.map((c, i) =>
-        c.run.status === "Done"
-          ? c.run.inputs.find((x) => x.key === input.key)?.value
-          : Object.hasOwn(def.reference_cases[i].inputs, input.key)
-            ? def.reference_cases[i].inputs[input.key]
-            : input.default,
-      ),
-    );
+    // The value each case ran with: an input that was not asked took its default, and a case that
+    // stopped before reaching the input used none.
+    const used = new Set(traces.map((t) => t.inputs.find((x) => x.key === input.key)?.value));
     // Each untested option is its own finding, so one accepted reason never covers another option.
     input.choices.forEach((option, i) => {
       if (!used.has(option))
@@ -59,19 +55,27 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
     });
   }
 
-  // A rule whose unit differs from its part's unit.
+  // A rule whose unit differs from its part's unit: its fixed part, a part its formula always chooses,
+  // and every part it chose in a case, even with a zero quantity.
   const partUnit = new Map(def.parts.map((p) => [p.key, p.unit]));
-  const runs = cases.map((c) => c.run).filter((r) => r.status === "Done");
   for (const r of def.rules) {
     if (r.unit === null) continue;
-    const parts = new Set<string>(r.part ? [r.part] : runs.flatMap((run) => run.lines.filter((l) => l.rules.includes(r.key)).map((l) => l.part)));
+    const literal = checked.rules.get(r.key)!.choose?.tree;
+    const parts = new Set<string>(
+      r.part
+        ? [r.part]
+        : [
+            ...(literal?.k === "text" && partUnit.has(literal.value) ? [literal.value] : []),
+            ...traces.flatMap((t) => t.chosen.filter((x) => x.rule === r.key).map((x) => x.part)),
+          ],
+    );
     for (const part of parts)
       if (partUnit.get(part) !== r.unit)
         add("Blocking", "UNIT_MISMATCH", `${r.key}/${part}`, `Rule ${r.key} counts in ${r.unit}, but ${part} is sold in ${partUnit.get(part)}`);
   }
 
   // A table row no reference case reads.
-  const read = new Set(runs.flatMap((run) => run.rows_read.map((x) => `${x.table}\u0000${x.row}`)));
+  const read = new Set(traces.flatMap((t) => t.rows_read.map((x) => `${x.table}\u0000${x.row}`)));
   for (const t of def.tables) {
     const unread = t.rows.map((_, i) => i).filter((i) => !read.has(`${t.key}\u0000${i}`));
     if (unread.length)
@@ -79,7 +83,7 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
   }
 
   // A rule that applies in no reference case.
-  const applied = new Set(runs.flatMap((run) => run.applied));
+  const applied = new Set(traces.flatMap((t) => t.applied));
   for (const r of def.rules)
     if (!applied.has(r.key)) add("Warning", "RULE_NEVER_APPLIES", r.key, `Rule ${r.key} applies in no reference case`);
 

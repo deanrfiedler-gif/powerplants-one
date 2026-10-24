@@ -1,9 +1,8 @@
 // Reference cases: expected values from outside the rules (ADR-0066 Q3), compared line by line.
-import { Fraction } from "../expression";
 import { coverage, type Finding } from "./coverage";
 import { newBudget, tryRunRuleSet, type Budget, type RunResult, type RunStopped } from "./evaluate";
-import { DECIMAL, RuleSetInvalid, type Issue, type ReferenceCase } from "./model";
-import { validateRuleSet, type CheckedRuleSet } from "./validate";
+import { RuleSetInvalid, type Issue, type ReferenceCase } from "./model";
+import { exactValue, validateRuleSet, type CheckedRuleSet } from "./validate";
 
 export type LineComparison = { part: string; expected: string; got: string; match: boolean };
 export type ValueComparison = { key: string; expected: string; got: string; match: boolean };
@@ -29,18 +28,9 @@ export type RuleSetTest =
     }
   | { valid: false; issues: Issue[] };
 
-/** Parses a shown value ("6.1", "1/3") back to an exact number, or null for text. */
-export function exactValue(v: string): Fraction | null {
-  try {
-    if (DECIMAL.test(v)) return Fraction.fromDecimal(v);
-    const m = /^(-?\d{1,512})\/(\d{1,512})$/.exec(v);
-    return m ? new Fraction(BigInt(m[1]), BigInt(m[2])) : null;
-  } catch {
-    // "1/0" or an oversized fraction is not a number, so it is compared as text.
-    return null;
-  }
-}
+export { exactValue };
 
+/** Two shown numbers are the same when they are equal exactly ("6.10" and "6.1"); anything else must match as written. */
 export function sameValue(a: string, b: string): boolean {
   const x = exactValue(a);
   const y = exactValue(b);
@@ -66,7 +56,8 @@ export function compareCase(checked: CheckedRuleSet, c: ReferenceCase, budget: B
   });
   const values = Object.entries(c.expected.values).map(([key, e]) => {
     const g = run.values[key];
-    return { key, expected: e, got: g, match: sameValue(e, g) };
+    // Only a Number compares by value: Text such as "01" and "1" are different codes, and YesNo is Yes or No.
+    return { key, expected: e, got: g, match: checked.types.get(key) === "Number" ? sameValue(e, g) : e === g };
   });
   const pass = lines.every((l) => l.match) && values.every((v) => v.match);
   return { ...base, status: pass ? "Pass" : "Fail", lines, values, expected_stop: null };

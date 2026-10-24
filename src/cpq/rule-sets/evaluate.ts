@@ -1,10 +1,13 @@
 // Works out one case of a checked rule set with exact arithmetic.
 import { CceError, Fraction } from "../expression";
 import type { Node } from "./language";
-import { LIMITS, RuleSetStop, type Ordering, type RuleSetTable } from "./model";
+import { brief, LIMITS, RuleSetStop, type Ordering, type RuleSetTable, type Trace } from "./model";
 import { inputValueProblem, type CheckedRuleSet } from "./validate";
 
 type Value = Fraction | string | boolean;
+
+/** A value given for an input: text an engineer typed, or an exact number received from an earlier rule set. */
+export type Given = string | Fraction;
 
 export type RunLine = {
   part: string;
@@ -18,15 +21,13 @@ export type RunLine = {
 
 export type RunResult = {
   status: "Done";
-  inputs: { key: string; value: string; asked: boolean; from: "Given" | "Default" }[];
   values: Record<string, string>;
   passes: Record<string, string>;
   lines: RunLine[];
-  applied: string[];
-  rows_read: { table: string; row: number }[];
-};
+} & Trace;
 
-export type RunStopped = { status: "Stopped"; code: string; message: string };
+/** A stopped case keeps what it had used, so coverage counts it; a job-level stop has no trace. */
+export type RunStopped = { status: "Stopped"; code: string; message: string; trace?: Trace };
 
 /** Steps left for every case in one test or job. */
 export type Budget = { remaining: number };
@@ -61,10 +62,24 @@ export function orderQuantity(q: Fraction, ordering: Ordering): Fraction {
 }
 
 /** Runs one case; stops with a reason instead of guessing when something is missing. */
-export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string>, budget: Budget = newBudget()): RunResult {
+export function runRuleSet(checked: CheckedRuleSet, given: Record<string, Given>, budget: Budget = newBudget()): RunResult {
   const def = checked.definition;
   const values = new Map<string, Value>();
   const rowsRead = new Set<string>();
+  const inputs: Trace["inputs"] = [];
+  const applied: string[] = [];
+  const chosen: Trace["chosen"] = [];
+  const trace = (): Trace => ({
+    inputs,
+    applied,
+    rows_read: [...rowsRead]
+      .map((r) => {
+        const [table, row] = r.split("\u0000");
+        return { table, row: Number(row) };
+      })
+      .sort((a, b) => (a.table === b.table ? a.row - b.row : a.table < b.table ? -1 : 1)),
+    chosen,
+  });
   const tables = new Map<string, RuleSetTable>(def.tables.map((t) => [t.key, t]));
   const partMap = new Map(def.parts.map((p) => [p.key, p]));
   let steps = 0;
@@ -194,16 +209,17 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
   try {
     // 1. Inputs, in order, so that asked_when can read earlier inputs.
     const known = new Set(def.inputs.map((i) => i.key));
-    for (const k of Object.keys(given)) if (!known.has(k)) stop("INPUT_UNKNOWN", `“${k}” is not an input of this rule set`);
-    const inputs: RunResult["inputs"] = [];
+    for (const k of Object.keys(given)) if (!known.has(k)) stop("INPUT_UNKNOWN", `“${brief(k)}” is not an input of this rule set`);
     for (const input of def.inputs) {
       const askedWhen = checked.asked.get(input.key);
       const asked = askedWhen ? (evaluate(askedWhen.tree) as boolean) : true;
-      let raw: string;
+      let raw: Given;
       let from: "Given" | "Default";
-      if (asked && Object.hasOwn(given, input.key) && typeof given[input.key] === "string") {
+      // Only a missing value falls back to the default; a value of the wrong kind stops the case.
+      if (asked && Object.hasOwn(given, input.key) && given[input.key] !== undefined) {
         raw = given[input.key];
         from = "Given";
+        if (typeof raw !== "string" && !(raw instanceof Fraction)) stop("INPUT_INVALID", `${input.label} must be given as text`);
       } else if ((!asked || !input.required) && input.default !== null) {
         raw = input.default;
         from = "Default";
@@ -212,8 +228,9 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
       }
       const problem = inputValueProblem(input, raw);
       if (problem) stop("INPUT_INVALID", `${input.label} ${problem}`);
-      values.set(input.key, input.type === "YesNo" ? raw === "Yes" : input.type === "Choice" ? raw : Fraction.fromDecimal(raw));
-      inputs.push({ key: input.key, value: raw, asked, from });
+      const value = raw instanceof Fraction ? raw : input.type === "YesNo" ? raw === "Yes" : input.type === "Choice" ? raw : Fraction.fromDecimal(raw);
+      values.set(input.key, value);
+      inputs.push({ key: input.key, value: typeof raw === "string" ? raw : show(raw), asked, from });
     }
 
     // 2. Derived values in list order.
@@ -230,7 +247,6 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
     const lineQty = new Map<string, Fraction>();
     const lineRules = new Map<string, string[]>();
     const linePhase = new Map<string, "Materials" | "Labour">();
-    const applied: string[] = [];
     for (const current of ["Materials", "Labour"] as const) {
       phase = current;
       for (const rule of def.rules.filter((r) => r.phase === current)) {
@@ -238,7 +254,8 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
         if (!(evaluate(c.when.tree) as boolean)) continue;
         applied.push(rule.key);
         const part = rule.part ?? (evaluate(c.choose!.tree) as string);
-        if (!partMap.has(part)) stop("CHOSEN_PART_UNKNOWN", `Rule ${rule.key} chose “${part}”, which is not a part of this rule set`);
+        if (!partMap.has(part)) stop("CHOSEN_PART_UNKNOWN", `Rule ${rule.key} chose “${brief(part)}”, which is not a part of this rule set`);
+        chosen.push({ rule: rule.key, part });
         const q = evaluate(c.quantity.tree) as Fraction;
         if (q.numerator < 0n) stop("QUANTITY_NEGATIVE", `Rule ${rule.key} gave a negative quantity (${show(q)})`);
         if (q.numerator === 0n) continue;
@@ -260,15 +277,13 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
         order_quantity: show(orderQuantity(lineQty.get(p.key)!, p.ordering)),
         rules: lineRules.get(p.key)!,
       }));
-    const rows_read = [...rowsRead]
-      .map((r) => {
-        const [table, row] = r.split("\u0000");
-        return { table, row: Number(row) };
-      })
-      .sort((a, b) => (a.table === b.table ? a.row - b.row : a.table < b.table ? -1 : 1));
-    return { status: "Done", inputs, values: derivedOut, passes, lines, applied, rows_read };
+    return { status: "Done", values: derivedOut, passes, lines, ...trace() };
   } catch (e) {
-    if (e instanceof CceError) throw new RuleSetStop(e.code, e.message);
+    const stopped = e instanceof CceError ? new RuleSetStop(e.code, e.message) : e;
+    if (stopped instanceof RuleSetStop) {
+      stopped.trace = trace();
+      throw stopped;
+    }
     throw e;
   }
 }
@@ -276,13 +291,13 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
 /** Runs one case and reports a stop as a result rather than an error. */
 export function tryRunRuleSet(
   checked: CheckedRuleSet,
-  given: Record<string, string>,
+  given: Record<string, Given>,
   budget: Budget = newBudget(),
 ): RunResult | RunStopped {
   try {
     return runRuleSet(checked, given, budget);
   } catch (e) {
-    if (e instanceof RuleSetStop) return { status: "Stopped", code: e.code, message: e.message };
+    if (e instanceof RuleSetStop) return { status: "Stopped", code: e.code, message: e.message, ...(e.trace ? { trace: e.trace } : {}) };
     throw e;
   }
 }
