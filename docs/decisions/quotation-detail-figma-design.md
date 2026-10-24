@@ -138,4 +138,5 @@ The audit added D13–D16: the linked-records chain, the Customer page preview, 
 - Every text uses Roboto or Roboto Mono on PPO text styles, and every text colour is bound to a PPO colour variable. A scripted check found no overlapping frame, nothing outside its section and no clipped text.
 - The prototype has 75 links and two flows. It was not played in Present mode before acceptance.
 - The 22 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`; a check after the swap found no Font Awesome instance left. They were exported at scale 1 with the Figma connector. Hashes are in the [captures README](../reference/ui/estimating/quotation-detail-design-r01/README.md).
+- Dean saved the named Figma version "Quotation detail — shared record layout, accepted" on 25 October 2026.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.

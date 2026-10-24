@@ -41,7 +41,7 @@ Accepted Figma design: [Quotation detail design r01 captures](../../../reference
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: see the [decision](../../../decisions/quotation-detail-figma-design.md). Declined, Clarification, Negotiation, Returned, Held and Converted states, the record "…" menu, phone sub-pages for the other tabs and 200% zoom are not drawn. Customer views need quote view tracking stage QV-S1, and real send outcomes need ADR-0059 and QV-S2. The named Figma version "Quotation detail — shared record layout, accepted" waits for Dean.
+Accepted Figma design: see the [decision](../../../decisions/quotation-detail-figma-design.md). Declined, Clarification, Negotiation, Returned, Held and Converted states, the record "…" menu, phone sub-pages for the other tabs and 200% zoom are not drawn. Customer views need quote view tracking stage QV-S1, and real send outcomes need ADR-0059 and QV-S2. Dean saved the named Figma version "Quotation detail — shared record layout, accepted" on 25 October 2026.
 
 The draft User Guide `guide.page.estimating.quotes.id` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
