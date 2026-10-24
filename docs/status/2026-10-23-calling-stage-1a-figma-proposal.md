@@ -12,7 +12,7 @@ Claude drew stage 1a of the [calling design paper](../decisions/calling-and-call
 
 Dean accepted it the same day: "I accept the Calling stage 1a design with your recommendations, including D1–D8 and Q1–Q8." The [design decision](../decisions/calling-figma-design.md) lists the frames and node IDs, departures D1–D8 and the answers to Q1–Q8. The [retained captures](../reference/ui/crm/calling-design-r01/README.md) are 19 icon-free PNGs. At lock-in the File index gained a row and the Call / Control component moved to the Components page. Every frame was checked with screenshots inside Figma; the prototype was not wired or played.
 
-The named Figma version "Calling — call core, accepted" is not yet saved. Nothing is built: stage 1c depends on the stage 1b server core merging, and the paper still lists it as not authorised.
+The named Figma version "Calling — call core, accepted" was saved on 24 October 2026 at Dean's request. Nothing is built: stage 1c depends on the stage 1b server core merging, and the paper still lists it as not authorised.
 
 <!-- decision-index -->
 [Calling stage 1a design (Figma)](../decisions/calling-figma-design.md) (PPO-CALLS-FIGMA-DEC) records Dean's 23 October 2026 acceptance of the Log call sheet, Calls to log, the Call control and the phone numbers editor, with D1–D8 and Q1–Q8 as recommended.

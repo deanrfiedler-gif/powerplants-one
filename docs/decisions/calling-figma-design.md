@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Departures D1–D8 (section 4) | Accepted as recommended, 23 October 2026 | Dean's acceptance, quoted above |
 | Q1–Q8 (section 5) | Resolved as recommended, 23 October 2026 | Dean's acceptance, quoted above |
 | Accept the design | User decision, 23 October 2026 | "I accept the Calling stage 1a design with your recommendations, including D1–D8 and Q1–Q8." |
-| Named Figma version | Not yet saved | Title "Calling — call core, accepted", saved by Dean or by Claude on his yes |
+| Named Figma version | Saved 24 October 2026 at Dean's request | Dean: "Yes, save the named Figma version "Calling — call core, accepted" and mark PR #676 ready." Claude saved it in the Figma desktop app (version history, +) and saw it at the top of the history after reopening the panel |
 | Building the UI (stage 1c) | Not authorised | The [calling design paper](calling-and-caller-id-design.md) lists stage 1c as not authorised. It depends on this acceptance and on stage 1b merging (section 7) |
 
 ## 2. Design reference
@@ -72,7 +72,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 23 October 2026 |
 | Decision record | This file |
-| Named version | "Calling — call core, accepted", not yet saved |
+| Named version | "Calling — call core, accepted", saved 24 October 2026 |
 
 ## 4. What the design shows
 
@@ -150,4 +150,4 @@ Dean's acceptance adopted every recommended answer below.
 
 ## 8. Acceptance and lock-in
 
-Dean accepted the design on 23 October 2026 (section 1). At lock-in Claude recorded his words on the page header and the notes card, added the File index row `2158:9931`, and moved the Call / Control set to Components › Controls. The retained r01 captures were exported before acceptance from the same frames, which did not change; only the page header, the notes card and the component's page changed afterwards. The named version "Calling — call core, accepted" is saved by Dean, or by Claude on his explicit yes, and this pull request stays a draft until it is.
+Dean accepted the design on 23 October 2026 (section 1). At lock-in Claude recorded his words on the page header and the notes card, added the File index row `2158:9931`, and moved the Call / Control set to Components › Controls. The retained r01 captures were exported before acceptance from the same frames, which did not change; only the page header, the notes card and the component's page changed afterwards. On 24 October 2026, at Dean's request, Claude saved the named version "Calling — call core, accepted" in the Figma desktop app and confirmed it in the version history. The page header's Named version field was updated just after, so the saved version still shows it as waiting.
