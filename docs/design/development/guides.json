@@ -30115,10 +30115,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-10-11",
+      "prepared_at": "2026-10-24",
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/access-inspection/README.md; owner review pending",
+      "runtime_evidence": "See docs/testing/evidence/access-identity-register/README.md; owner review pending",
       "sections": [
         {
           "section_id": "purpose",
@@ -30167,7 +30167,9 @@
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
+          "paragraphs": [
+            "The identity register now follows the accepted desktop grid and compact phone list. Grant states, recorded scope, local teams and open requests come from current reads. See the Users and access route guide for filters, counts and timestamp limits."
+          ],
           "steps": [],
           "rows": [
             [
@@ -73807,7 +73809,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "Native read-only inspection; remaining AD-01 workflow pending",
+      "content_mode": "Native read-only identity register",
       "source_commit": "0e1045903ce335020abf8efd11b09154345c5013",
       "related_entry_keys": [
         "route:/admin/access/capabilities",
@@ -73822,7 +73824,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Inspect an identity's recorded grants and explain its eligibility for a capability and exact company/site. This does not change access."
+            "Find an identity and inspect its recorded grant states, scope, local teams and open requests. This register changes no access. Open a person for the existing grant details and fresh eligibility check."
           ],
           "steps": [],
           "rows": [],
@@ -73832,7 +73834,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Use the synthetic Systems identity with current Workspace inspection access. Clear the working company in the account panel."
+            "Use current Workspace admin.access.read authority and clear your working company in the account panel. Hosted names and identity-provider details stay masked."
           ],
           "steps": [],
           "rows": [],
@@ -73842,9 +73844,7 @@
           "section_id": "quick-start",
           "title": "Inspect access",
           "paragraphs": [
-            "Open More → Users and access. Search by name or filter identity status, then open a person. Inspect capability, scope and validity. Enter the capability key and choose the exact ERP company key and site; select Check grant eligibility.",
-            "Browse proposed role bundles from Users and access. On Person access, choose Compare proposed role bundle, then select an exact revision and company/site and explicitly compare current grants. This assigns nothing.",
-            "Access-change requests now supports local synthetic single-add submission and independent review. Approval never applies grants. Other retained change/campaign controls remain proposed."
+            "Open More → Administration & support → Users and access. Choose All identities, Active, Inactive or Hosted (masked). Type a visible name and press Enter, or select Status and Company. Open the identity name to inspect its existing person record."
           ],
           "steps": [],
           "rows": [],
@@ -73854,7 +73854,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The directory shows identity name, active status and recorded grant count. Open a person to inspect individual grant cards and the eligibility form."
+            "Desktop shows a compact table with current, scheduled and expired grants, recorded scope reach, local teams, open requests and last recorded change. The menu links to capabilities, proposed role bundles, saved local teams and requests. Column settings changes visible columns for this visit; selection is local and changes no grant."
           ],
           "steps": [],
           "rows": [],
@@ -73864,7 +73864,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Use an exact capability key, company ERP key and optional site. Counts include scheduled and expired grants; they do not measure effective business access."
+            "Counts describe all recorded grants for each matching identity at the displayed read time. Inactive identities have zero Current, Scheduled and Expired counts because their state is Inactive identity. Scope reach includes scheduled and expired grants; it is not effective access.",
+            "Company selects identities with a recorded grant at that company or one of its sites, or a Workspace grant. ERP keys distinguish same-name companies. Last recorded change is the latest applied access request; original grants have no recorded creation time."
           ],
           "steps": [],
           "rows": [],
@@ -73874,8 +73875,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Search or filter the directory, open the person, inspect grant validity, and check a capability against the exact company/site. Changing an explanation input clears the old result.",
-            "Browse the capability catalogue to search permissions across people, then filter holders by scope/state. Opening a holder preselects the capability and matching company/site; submit a fresh eligibility check."
+            "Search names literally, choose a view or company, and sort Name, Current, Scheduled, Expired or Last recorded change. Paging shows 50 identities at a time. Tick a row to select it, then Open selected identity when exactly one is selected. No bulk access command exists.",
+            "Use Refresh identities to re-read current data and authority. About these counts explains scope, inactive identities, local-only team/request metadata and timestamp limitations."
           ],
           "steps": [],
           "rows": [],
@@ -73885,7 +73886,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The result is an inspection explanation only. No access change, approval, attestation or session is created. Refresh reads the current state again."
+            "Open a person to inspect grants or perform a fresh eligibility check. The register itself makes no business decision. Submitted and Approved requests remain ineffective until a separately authorised application. Teams grant no access or review routing."
           ],
           "steps": [],
           "rows": [],
@@ -73895,7 +73896,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading and failed reads hide retained data. Empty filters have an explicit message. Denied inspection clears protected details; grants separately show Current, Scheduled, Expired or Inactive identity."
+            "Loading, failed and denied reads hide the previous identities, counts and company choices. Empty filters show No identities match these filters and Clear filters. Scheduled and expired grants remain visible in their respective counts."
           ],
           "steps": [],
           "rows": [],
@@ -73905,7 +73906,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "In synthetic fixtures, SYN Site observer can read shared records for SYN-A at its granted site. Another site or SYN-B does not inherit that site grant."
+            "A synthetic identity may have one current grant at SYN-A, one future grant at SYN-B and an expired site grant. Filtering Company SYN-B includes that identity while keeping all three grant counts visible; it does not assert current access at SYN-B."
           ],
           "steps": [],
           "rows": [],
@@ -73915,7 +73916,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "For a transient read failure, use Retry. For a selected working company, clear it in the account panel before retrying workspace inspection. Permission refusal requires current authorised access; refreshing does not grant it."
+            "Use Retry or Refresh identities after a read failure. If Working company selected is shown, clear the company in the account panel and retry. A permission refusal requires restored inspection authority; refreshing never grants it."
           ],
           "steps": [],
           "rows": [],
@@ -73925,7 +73926,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use the same labelled fields and stacked cards on a phone. Tab through the native form controls and submit buttons. This inspection page requires an online server; cached data is not offline authority. Physical-device, zoom and screen-reader acceptance remain pending."
+            "Phone opens the Active view, newest recorded change first. Each compact row opens the same person access page. The header view chooser opens views and navigation; Search and Filter open a labelled panel. Explicit URL filters and sorting survive reload.",
+            "Tab and Enter operate names, filters, column selection and sorting. Escape closes menus and panels. This page requires an online server. Physical-device and screen-reader acceptance remain pending."
           ],
           "steps": [],
           "rows": [],
@@ -73935,7 +73937,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "See the AD-01 scope guide, native inspection decision, retained working HTML and access-inspection execution ledger linked from this register."
+            "See the accepted Users and access design, native access-inspection decision and identity-register execution record linked in the design register. Person details, capability and request pages retain their existing presentation."
           ],
           "steps": [],
           "rows": [],
@@ -73945,15 +73947,15 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide and proposed native layout. Functional checks do not grant owner acceptance, operational policy authority or deployment status."
+            "Draft guide. The Figma design is accepted; owner review of this implementation, business acceptance and deployment are separate."
           ],
           "steps": [],
           "rows": [],
           "headers": []
         }
       ],
-      "prepared_at": "2026-10-11",
-      "runtime_evidence": "See docs/testing/evidence/access-inspection/README.md; owner review pending"
+      "prepared_at": "2026-10-24",
+      "runtime_evidence": "See docs/testing/evidence/access-identity-register/README.md; owner review pending"
     },
     {
       "guide_key": "guide.route-admin-access-capabilities-id",

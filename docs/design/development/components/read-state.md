@@ -240,3 +240,7 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
 
 The CS-04 paginated owned-follow-up host remounts the page read on fresh Overview evidence while retaining its cursor. A Restricted/unavailable Follow-ups source unmounts it; cleanup ignores prior replies. This is host access behavior, not owner visual acceptance.
+
+## AD-01 identity register host
+
+The `/admin/access` register reuses this component with the accepted 60 px toolbar, 40 px grid and compact phone rows. Host states and consumer bindings are in [the fixture inventory](../access-identity-register-fixtures.json); [execution evidence](../../../testing/evidence/access-identity-register/README.md) distinguishes real database/HTTP checks from the visual-only Figma fixture. Existing component behaviour and review records remain unchanged. Owner/device/screen-reader acceptance is pending.
