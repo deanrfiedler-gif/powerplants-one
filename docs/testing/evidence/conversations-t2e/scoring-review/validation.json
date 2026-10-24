@@ -17,5 +17,7 @@
     "creation-proof.json": "81632ba700633edbb827fb7ad28103c3bfbf60082dd21f3aa9f00463c34c4eb4",
     "inventory.json": "b91050e673fd9b41595cf2ba9b1047101db097206cc64dea61c246530690425f",
     "review.md": "7edc8671469ae0bf5095d2f40a95006b9a740197417cb9b0f5b44791318bfe67"
-  }
+  },
+  "typecheck": "tsc --noEmit --incremental false passed",
+  "packaged_copy_verification": "117 instances verified; same inventory hash; five artifact byte hashes match Git bytes"
 }
