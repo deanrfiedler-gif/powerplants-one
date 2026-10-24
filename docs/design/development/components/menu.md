@@ -97,3 +97,7 @@ The integrated stylesheet keeps shared footer styling on `.mw-foot` in both work
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
 
 SV-04 retains the existing global More control beside its phone record-action dock. It must remain reachable after the header becomes Back; Account and module navigation cannot depend on clicking a temporary loading header. Exact host fixture: tests/browser/appointment-detail.spec.ts at 390/320, including pointer opening and Escape focus return. Owner visual review of this host adaptation remains pending.
+
+## Outputs consumer — DK-03
+
+The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.
