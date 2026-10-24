@@ -800,7 +800,7 @@
             "name": "Grid / Row actions cell"
           }
         ],
-        "note": "The Deals register is a proposal (Deals page 549:2); its list parts moved to Components because the accepted Deal record uses them. Sorting and column resizing are not drawn."
+        "note": "The Deals register design is accepted (Deals · CR-04 549:2, 24 October 2026); its list parts moved to Components because the accepted Deal record uses them. The accepted List adds the Leads fixed Select and Settings columns and a column chooser (departures D4 and D9 in docs/decisions/deals-figma-design.md). Sorting and column resizing are not drawn."
       },
       "review": null
     },
@@ -1287,22 +1287,22 @@
         {
           "id": "sales-board-figma-r37",
           "expected": "Review the user-requested r37 Figma board, list and phone component references with the owning Deals page.",
-          "actual": "Six editable Figma views were created on 13 October. The 14 October user-directed refinement corrects stage/card geometry, removes the module container and reuses accepted Leads grid components; all five desktop views were visually inspected. A follow-up pass uses 8px gutters/insets, whole-pixel 264px columns and 248px cards, uniform 1px borders and a taller stack to avoid final-card clipping; the four affected board views were recaptured and inspected. See docs/testing/evidence/deals-figma/README.md. No runtime change or owner acceptance.",
-          "action": "Review proposed shell/mobile adaptations and resolve runtime r38 alignment before adopting the design.",
+          "actual": "Six editable Figma views were created on 13 October and refined on 14 October (docs/testing/evidence/deals-figma/README.md). On 24 October 2026 the page was renamed \"Deals · CR-04\", reconciled with the code (Default card variant only, the app's next-action labels, Change stage replacing the email shortcut, 212 px cards in 228 px stages beside the labelled rail) and accepted by Dean (docs/decisions/deals-figma-design.md; captures docs/reference/ui/crm/deals-design-r02). The runtime board does not yet match it.",
+          "action": "Build the board to the accepted design and compare it with the r02 captures at the same viewports (ADR-0053 rule 7); the Rotting variant stays a proposal.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
       ],
       "figma": {
-        "status": "Proposal only",
-        "location": "Deals (proposal) 549:2",
+        "status": "Mapped",
+        "location": "Deals · CR-04 549:2 › Page components (proposal)",
         "components": [
           {
             "node": "551:947",
             "name": "Deals/Card"
           }
         ],
-        "note": "Board card from the r37 reference; stays on the proposal page until the Deals design is accepted."
+        "note": "Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses (no rotting rule in the app). It stays on the Deals page; moving it to Components 1:4 is separate work."
       },
       "review": null
     },
@@ -1369,10 +1369,15 @@
         }
       ],
       "figma": {
-        "status": "None",
-        "location": "Components",
-        "components": [],
-        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+        "status": "Partial",
+        "location": "Deals · CR-04 549:2 › Page components (proposal)",
+        "components": [
+          {
+            "node": "2362:63788",
+            "name": "Deals/Forecast card (proposal)"
+          }
+        ],
+        "note": "The forecast card of the accepted Deals Forecast view (24 October 2026). The month lanes and stage groups are drawn in the page frame 2362:63797, not as components. It stays on the Deals page; moving it to Components 1:4 is separate work."
       },
       "review": null
     },
