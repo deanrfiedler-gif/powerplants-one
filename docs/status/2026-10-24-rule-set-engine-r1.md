@@ -17,6 +17,6 @@ Build step R1 of [ADR-0066](../decisions/ADR-0066-configuration-rule-sets.md) ad
 
 The isolated CPQ worker runs it through three new kinds. Definition schemas 1–4, their hashes and saved evidence are unchanged.
 
-Evidence: 22 unit tests on fictional SYN screen, fertigation and control families, with expected values worked by hand. The existing CPQ unit tests still pass.
+Evidence: 30 unit tests on fictional SYN screen, fertigation and control families, with expected values worked by hand, including the eight cases an independent review found. The existing CPQ unit tests still pass.
 
 Not done: storage and versioning (R2), the Rules studio screens (R3, which wait for the Figma design to be accepted), the Excel round trip (R4) and ES-08 on rule sets (R5). This change adds no migration, seed, permission, route or dependency.
