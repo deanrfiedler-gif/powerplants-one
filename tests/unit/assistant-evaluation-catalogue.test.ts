@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { loadCatalogue, validateCatalogue, matrix, inspectEnvelope, digest } from "../../scripts/assistant-evaluation-catalogue";
 import type { EvidenceEnvelope } from "../../src/assistant/model";
+import { checkReviewSnapshot } from "../../scripts/assistant-evaluation-prepare";
 const sources = ["docs/decisions/conversations-t2-scope.md", "docs/blueprints/ppo-assistant-specification.md"].map(p => readFileSync(p, "utf8"));
 test("T2e catalogue has exact 9 calibration / 108 evaluation matrix and real requirement IDs", () => {
   const c = loadCatalogue(), m = matrix(c);
@@ -36,4 +37,17 @@ test("T2e inspection rejects source contamination, leaked sentinels, changed fac
     assert.throws(() => inspectEnvelope(c, item, copy, aliases));
   }
   assert.notEqual(digest(envelope), digest({ ...envelope, left_out: 1 }));
+});
+test("T2e review hash binds preparation metadata as well as canonical inventory content", () => {
+  const current = { schema_version: 1, kind: "T2eReviewInventory", status: "Proposed; no live authority",
+    catalogue_hash: "a".repeat(64), corpus_hash: "b".repeat(64), preparation_sources: {}, instances: [] };
+  const content = { ...current, preparation_commit: "c".repeat(40), tracked_changes_at_preparation: [] as string[] };
+  const saved = { ...content, inventory_hash: digest(content) };
+  assert.doesNotThrow(() => checkReviewSnapshot(current, saved));
+  for (const changed of [
+    { ...saved, preparation_commit: "d".repeat(40) },
+    { ...saved, tracked_changes_at_preparation: ["SYN-changed.ts"] },
+    { ...saved, status: "Approved" },
+    { ...saved, inventory_hash: "e".repeat(64) },
+  ]) assert.throws(() => checkReviewSnapshot(current, changed));
 });

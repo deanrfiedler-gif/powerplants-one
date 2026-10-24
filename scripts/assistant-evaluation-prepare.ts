@@ -28,9 +28,9 @@ export async function runPreparation(command: string, folder: string, corpusPath
     const corpus: Corpus = corpusPath ? JSON.parse(readFileSync(corpusPath, "utf8")) : await prepareCorpus();
     writeFileSync(resolve(output, "corpus.json"), JSON.stringify(corpus, null, 2) + "\n", { flag: "wx" });
     const inventory = await inspectCorpus(corpus);
-    const review = { ...inventory, preparation_commit: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
-      tracked_changes_at_preparation: execFileSync("git", ["diff", "--name-only", "HEAD"], { encoding: "utf8" }).trim().split("\n").filter(Boolean),
-      inventory_hash: digest(inventory) };
+    const content = { ...inventory, preparation_commit: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+      tracked_changes_at_preparation: execFileSync("git", ["diff", "--name-only", "HEAD"], { encoding: "utf8" }).trim().split("\n").filter(Boolean) };
+    const review = { ...content, inventory_hash: digest(content) };
     writeFileSync(resolve(output, "inventory.json"), JSON.stringify(review, null, 2) + "\n", { flag: "wx" });
     const lines = ["# T2e synthetic case review", "", "Proposed offline instances; no approved run, live results or model scores.",
       "", `Inventory hash: ${review.inventory_hash}`, "", "| Case | Model | Repeat | Sources | Input bound | History omitted |", "|---|---|---:|---:|---:|---:|",
@@ -45,16 +45,23 @@ export async function runPreparation(command: string, folder: string, corpusPath
   const corpus: Corpus = JSON.parse(readFileSync(resolve(output, "corpus.json"), "utf8"));
   const saved = JSON.parse(readFileSync(resolve(output, "inventory.json"), "utf8"));
   const current = await inspectCorpus(corpus);
+  checkReviewSnapshot(current, saved);
+  return { cases: current.instances.length, inventory_hash: saved.inventory_hash };
+}
+type Inventory = Awaited<ReturnType<typeof inspectCorpus>>;
+export type ReviewSnapshot = Inventory & { preparation_commit: string; tracked_changes_at_preparation: string[]; inventory_hash: string };
+export function checkReviewSnapshot(current: Inventory, saved: ReviewSnapshot) {
   // Retrieved-at timestamps change on each read; the runtime evidence hash deliberately excludes them.
   // Compare exact stable facts/membership/request bounds and proposal content, not those read timestamps.
-  const stable = (x: typeof current) => ({ ...x, instances: x.instances.map(i => ({ ...i,
+  const stable = (x: Inventory) => ({ ...x, instances: x.instances.map(i => ({ ...i,
     envelope: { ...i.envelope, items: i.envelope.items.map(({ retrieved_at: _, ...s }) => s) },
   })) });
-  const { preparation_commit: _, tracked_changes_at_preparation: __, inventory_hash: savedHash, ...savedInventory } = saved;
-  assert.equal(typeof _, "string"); assert.ok(Array.isArray(__));
+  const { inventory_hash: savedHash, ...signedContent } = saved;
+  const { preparation_commit, tracked_changes_at_preparation, ...savedInventory } = signedContent;
+  assert.match(preparation_commit, /^[0-9a-f]{40}$/);
+  assert.ok(Array.isArray(tracked_changes_at_preparation) && tracked_changes_at_preparation.every(p => typeof p === "string"));
   assert.equal(digest(stable(current)), digest(stable(savedInventory)), "prepared source or review material changed");
-  assert.equal(savedHash, digest(savedInventory));
-  return { cases: current.instances.length, inventory_hash: saved.inventory_hash };
+  assert.equal(savedHash, digest(signedContent), "review content and preparation metadata must match their retained hash");
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   blockProviderNetwork();
