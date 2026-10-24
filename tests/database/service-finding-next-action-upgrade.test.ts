@@ -80,7 +80,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
   const originalIds = new Set(originalGrants.map(g => g.id));
   assert.deepEqual(finalGrants.filter(g => originalIds.has(g.id)), originalGrants);
   assert.deepEqual(finalGrants.filter(g => !originalIds.has(g.id)), agentAskSeedGrants(originalGrants).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
-  assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version")).rows, [{ version: 110 }]);
+  assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version")).rows, [{ version: 110 }, { version: 121 }]);
   assert.deepEqual(await snapshot(), before);
   // Unadopted native follow-ups retain the coordinator's existing editor.
   assert.deepEqual(await readActivity(p, id), activity);
@@ -102,7 +102,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.filter((row) => !versions.has(row.version)),
-    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }, { version: 118 }] : through === 116 ? [{ version: 111 }, { version: 117 }, { version: 118 }] : through === 117 ? [{ version: 111 }, { version: 118 }] : [{ version: 111 }],
+    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 121 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 121 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 121 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 121 }] : through === 116 ? [{ version: 111 }, { version: 117 }, { version: 118 }, { version: 121 }] : through === 117 ? [{ version: 111 }, { version: 118 }, { version: 121 }] : [{ version: 111 }, { version: 121 }],
   );
   assert.equal(
     (

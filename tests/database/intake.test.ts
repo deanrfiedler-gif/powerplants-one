@@ -1217,12 +1217,12 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   const grantsAfter = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantIds = new Set(grantsBefore.map(g => g.id));
   assert.deepEqual(grantsAfter.filter(g => grantIds.has(g.id)), grantsBefore);
   assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id)), agentAskSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }]);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 121 }]);
   assert.deepEqual(await snapshot(), before);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const previousVersions = new Set(ledger.map((row) => row.version));
   assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
-  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118] : through === 113 ? [112, 114, 115, 116, 117, 118] : through === 114 ? [112, 115, 116, 117, 118] : through === 115 ? [112, 116, 117, 118] : through === 116 ? [112, 117, 118] : through === 117 ? [112, 118] : [112]);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 121] : through === 113 ? [112, 114, 115, 116, 117, 118, 121] : through === 114 ? [112, 115, 116, 117, 118, 121] : through === 115 ? [112, 116, 117, 118, 121] : through === 116 ? [112, 117, 118, 121] : through === 117 ? [112, 118, 121] : [112, 121]);
   assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
   assert.equal((await ticketStatements(p, input.id)).items.length, 0);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");

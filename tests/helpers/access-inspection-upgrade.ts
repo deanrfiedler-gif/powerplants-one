@@ -108,7 +108,7 @@ export function assertAccessInspectionSeedLedger(
   // Snapshots order rows by their JSON text, where 107 sorts before 78; compare the versions as numbers.
   assert.deepEqual(
     added.map((r) => Number(r.version)).sort((a, b) => a - b),
-    [78, 79, 80, 83, 84, 107, 108, 110].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84, 107, 108, 110, 121].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);
