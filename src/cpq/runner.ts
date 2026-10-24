@@ -46,7 +46,16 @@ export const testIsolated = (definition: Definition) =>
   run<ReturnType<typeof testDefinition>>({ kind: "fixtures", definition });
 export const packageIsolated = (content: import("./package-model").PackageContent) =>
   run<ReturnType<typeof import("./package-model").measurePackage>>({kind:"package",content});
-export const qualityIsolated = (work: import("./quality-model").QualityWork) =>
+// Configuration rule sets (ADR-0066): definitions arrive as untrusted data and are checked in the worker.
+type RuleSetWork = import("./rule-sets/entry").RuleSetWork;
+type RuleSetWorkResult = import("./rule-sets/entry").RuleSetWorkResult;
+export const ruleSetTestIsolated = (definition: unknown) =>
+  run<RuleSetWorkResult>({ kind: "rule-set-test", definition } satisfies RuleSetWork);
+export const ruleSetRunIsolated = (definition: unknown, inputs: Record<string, string>) =>
+  run<RuleSetWorkResult>({ kind: "rule-set-run", definition, inputs } satisfies RuleSetWork);
+export const ruleSetJobIsolated = (steps: Extract<RuleSetWork, { kind: "rule-set-job" }>["steps"]) =>
+  run<RuleSetWorkResult>({ kind: "rule-set-job", steps } satisfies RuleSetWork);
+export const qualityIsolated =(work: import("./quality-model").QualityWork) =>
   run<ReturnType<typeof import("./quality-model").qualityResults>>({ kind: "quality", work });
 export const rebaseIsolated = (
   definition: Definition,
