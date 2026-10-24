@@ -367,7 +367,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // It changes no existing rows, identities, users, seeds or permissions.
   // 0117 adds empty immutable assessment history and retained HTML outputs under the
   // same runtime table grants. No existing rows, seeds, identities or permissions change.
-  if (latestMigrationVersion !== 117) throw Error("Review the existing-demo upgrade for this release.");
+  // 0119 (ADR-0066 R2) adds empty synthetic rule set roots, revisions, acceptances, reviews,
+  // publications and heads, the CpqRuleSet identity and audit type, and governance triggers.
+  // No seed, grant, user, capability or existing row changes; the existing cpq duties govern
+  // and all-table runtime privileges cover the new tables. The migration flushes deferred
+  // identity constraints before altering the identity type check.
+  if (latestMigrationVersion !== 119) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
