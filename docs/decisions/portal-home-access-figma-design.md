@@ -47,7 +47,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Next page | Resolved as recommended | Support · CP-02 |
 | Q8 Calendar file or live feed | Resolved as recommended | One calendar file per confirmed visit, not a live subscription feed |
 | Accept the design | User decision, 23 October 2026 | Quoted above |
-| Named Figma version | Not saved | Waits for Dean's explicit yes (section 7) |
+| Named Figma version | Saved by Dean | Dean saved the named version "Portal home & access — accepted" himself and reported it: “I have saved it.” (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -80,7 +80,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D19 in section 4, accepted |
 | Status | Owner-accepted design, 23 October 2026 |
 | Decision record | This file |
-| Named version | Not saved (section 7) |
+| Named version | "Portal home & access — accepted", saved by Dean (section 7) |
 
 ## 4. What the design shows
 
@@ -164,5 +164,5 @@ The audit is recorded on the notes card `2132:2453`.
   - none of 1,283 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the Captures page keeps its 113 flow starting points.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/customer-portal/portal-home-access-design-r01/README.md).
-- The named Figma version "Portal home & access — accepted" has not been saved; it waits for Dean's explicit yes.
+- Dean saved the named Figma version "Portal home & access — accepted" in the Figma desktop app after the captures were made and reported it: “I have saved it.” Claude did not check version history. The page header's Named version field was then updated.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline. CPA-01–CPA-16 remain Not run.

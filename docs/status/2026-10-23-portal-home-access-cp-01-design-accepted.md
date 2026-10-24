@@ -19,8 +19,9 @@ Checked:
 - No text colour differs from its bound variable, and no copy carries a prototype link.
 - All three prototype flows were played in Figma Present mode.
 
+Dean saved the named Figma version "Portal home & access — accepted" himself: “I have saved it.”
+
 Not done:
-- The named Figma version waits for Dean's yes.
 - `/portal` is not built.
 
 No application code, route, migration, permission, grant, identity provider, invitation or parent ID changes.
