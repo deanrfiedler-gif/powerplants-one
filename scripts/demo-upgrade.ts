@@ -367,7 +367,13 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // It changes no existing rows, identities, users, seeds or permissions.
   // 0117 adds empty immutable assessment history and retained HTML outputs under the
   // same runtime table grants. No existing rows, seeds, identities or permissions change.
-  if (latestMigrationVersion !== 117) throw Error("Review the existing-demo upgrade for this release.");
+  // 0120 adds immutable preparation terms and deadline-task mappings, plus typed
+  // SiteReadiness evidence. Existing contacts gain DateAgreement/null defaults;
+  // old receipts, scheduling policies, issued snapshots and hashes are preserved.
+  // Seed 120 adds P04 v3 and synthetic preparation terms only. Existing scopes
+  // remain pinned; no user, identity, capability or grant is added. Existing
+  // all-table runtime privileges cover the new objects; no external sender is enabled.
+  if (latestMigrationVersion !== 120) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

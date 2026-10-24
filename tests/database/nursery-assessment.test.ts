@@ -166,17 +166,20 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   await seed();
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
   assert.deepEqual(await rows("ppo.permission_grants"), grants);
-  assert.deepEqual(await rows("ppo.seed_receipts"), seeds);
+  const upgradedSeeds = await rows("ppo.seed_receipts");
+  assert.deepEqual(upgradedSeeds.filter(r => r.version !== 120), seeds);
+  assert.deepEqual(upgradedSeeds.filter(r => r.version === 120).map(r => r.version), [120]);
   const after = await rows("public.ppo_migrations");
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [117],
+    [117, 120],
   );
   assert.equal((await readAssessment(f.p, f.id)).selected, null);
   await migrate();
   await seed();
   assert.deepEqual(await rows("public.ppo_migrations"), after);
+  assert.deepEqual(await rows("ppo.seed_receipts"), upgradedSeeds);
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
 });
 

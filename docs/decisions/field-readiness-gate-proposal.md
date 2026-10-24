@@ -322,3 +322,11 @@ Build report departure DP-20 ("No parts criterion exists") is closed for visits 
 ## Note, 18 October 2026: P4 on Access & readiness
 
 The accepted [Access & readiness design](access-readiness-figma-design.md) (PPO-CS06-ACCESS-READINESS-FIGMA-DEC, CS-06) shows the P4 customer site-readiness confirmation beside the preparation check. Dean's acceptance adopted two answers that bear on P4: Q1, the confirmation is recorded from that page and from the appointment as one record on the appointment's schedule version; and Q4, the planner and the job pack show "Recheck required" from the latest check as a read-only signal once P4 is built. P4 itself, as specified above, is not built and is unchanged.
+
+## Implementation note — 24 October 2026: P4/P5 backend
+
+Dean replied **"Proceed."** to Codex's Phase 1 recommendation to build P4/P5 as a backend/API slice, with UI wiring separately. Codex for Dean claimed migration 0120 in [PR #690](https://github.com/deanrfiedler-gif/powerplants-one/pull/690). The [plan](../superpowers/plans/2026-10-24-field-readiness-p4-p5.md) records implementation and proof obligations. This note records authorised work in progress, not completed delivery, review, acceptance or production readiness.
+
+The implementation uses SYN-PPO-P04 v3 and a separate immutable scheduling-preparation policy, SYN-POL-000001 v1. This is a bounded departure from placing the window/lead time in the existing scheduling duration family: that family's adopted publication contract permits only duration/effectivity changes and fixes all other canonical terms. Preserving its historical hashes, reviews and booking pins rules out silently extending old content or fabricating a publication review. The new timing terms are bound explicitly to v3; existing scopes remain on v1/v2.
+
+For the synthetic previous-working-day rule, the assigned Lead's published calendar supplies working intervals and closures; the deadline remains noon in Site time. Missing calendar authority is explicit. Real policy values and the operating calendar choice remain Service's under D-015. No new capability, grant, user, Activity kind or identity type is planned. All four contact checks, receipt recovery, reholding before attendance, deadline Activities and upgrade preservation require proof before this draft is ready.
