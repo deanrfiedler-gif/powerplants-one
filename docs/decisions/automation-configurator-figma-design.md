@@ -45,7 +45,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Tray automation | Resolved as recommended | Captured as a parked Phase 2 stage; sizing returns Not assessable and nothing is quoted |
 | Q6 Menu wording | Resolved as recommended | The middle group reads "Assess the line" while Javo potting lines are the only equipment family |
 | Accept the design | User decision, 22 October 2026 | "Proceed", quoted above |
-| Named Figma version | Not yet saved | "Automation Configurator — workbench pattern, accepted" waits for Dean's save or his explicit yes. Section 7 |
+| Named Figma version | Saved by Dean, 25 October 2026 | "Automation Configurator — workbench pattern, accepted". Dean confirmed: "I have saved it." Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -80,7 +80,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D15 in section 4, accepted |
 | Status | Owner-accepted design, 22 October 2026 |
 | Decision record | This file |
-| Named version | "Automation Configurator — workbench pattern, accepted", not yet saved |
+| Named version | "Automation Configurator — workbench pattern, accepted", saved by Dean on 25 October 2026 |
 
 ## 4. What the design shows
 
@@ -156,6 +156,6 @@ The audit is recorded on the notes card `2046:499139`.
   - none of 4,571 visible texts with a stored colour that differs from its bound variable;
   - no copy with a prototype link; the flow starting points that cloning added were removed, and the Captures page keeps its 105.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder, at their exact frame sizes. The hashes are in the [captures README](../reference/ui/estimating/automation-configurator-figma-design-r01/README.md).
-- The named Figma version is not yet saved; the page header says so.
+- Dean saved the named Figma version "Automation Configurator — workbench pattern, accepted" himself, after the 24 October re-export, and confirmed on 25 October 2026: "I have saved it." It therefore includes the audit corrections shown in the captures.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility, supplier or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

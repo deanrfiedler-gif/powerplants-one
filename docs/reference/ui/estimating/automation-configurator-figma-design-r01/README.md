@@ -48,7 +48,7 @@ Image 19 holds, left to right: Overview at 390, the Process & equipment stage li
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Automation Configurator — workbench pattern, accepted", not yet saved at the time of capture |
+| Named version | "Automation Configurator — workbench pattern, accepted", saved by Dean after these captures were exported and confirmed on 25 October 2026 |
 | Accepted frames | Page "Automation Configurator · ES-02" `2043:80`, in image order: `2043:149`, `2044:492280`, `2044:492858`, `2044:493432`, `2044:494006`, `2044:494580`, `2048:497757`, `2044:495158`, `2044:495732`, `2044:496310`, `2046:495252`, `2046:495663`, `2068:4939`, `2069:5435`, `2075:509480`, `2075:509879`, `2076:6366`, `2050:509999`; image 19: `2046:497557`, `2046:497895`, `2046:498209`, `2046:498414`; image 20: `2070:5771`, `2070:5976`, `2070:5875`; image 21: `2046:498880` |
 | Capture copies | Page "Captures (icon-free)", from y = 364,000, images in order: `2543:280972`, `2543:281328`, `2543:281749`, `2543:282136`, `2543:282504`, `2543:282891`, `2543:283283`, `2543:283842`, `2543:284152`, `2543:284501`, `2544:427875`, `2544:428203`, `2544:428637`, `2544:429119`, `2544:429606`, `2544:429758`, `2544:429910`, `2544:430098`, `2544:906252`, `2544:906931`, `2544:907027` |
 
