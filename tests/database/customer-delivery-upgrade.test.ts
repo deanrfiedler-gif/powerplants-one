@@ -33,7 +33,7 @@ const tables = async () =>
       "SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename",
     )
   ).map((r) => r.tablename as string);
-const snapshot = async (names: string[]) =>
+const captureOriginalRows = async (names: string[]): Promise<Record<string, { row: Record<string, unknown> }[]>> =>
   Object.fromEntries(
     await Promise.all(
       names.map(async (name) => [
@@ -86,13 +86,13 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
   await send(actor, legacy.id);
   const sent = await message(legacy.id);
   const oldTables = await tables(),
-    before = await snapshot(oldTables);
+    before = await captureOriginalRows(oldTables);
   const ledger = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   await migrate();
   await seed();
-  const afterRows = await snapshot(oldTables);
+  const afterRows = await captureOriginalRows(oldTables);
   const bindings = afterRows.customer_email_bindings.map((r) => r.row);
   const old = new Set(
     before.customer_email_bindings.map(
@@ -105,7 +105,7 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     ),
     before.customer_email_bindings,
   );
-  const shape = (rs: { message_class: string; binding: string }[]) =>
+  const shape = (rs: Record<string, unknown>[]) =>
     rs
       .map((r) => `${r.message_class}:${r.binding}`)
       .sort(new Intl.Collator("en").compare);
@@ -165,7 +165,7 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     await recover(actor, movement.cmd.operation_id),
     movement.result.receipt,
   );
-  const complete = await snapshot(await tables());
+  const complete = await captureOriginalRows(await tables());
   await migrate();
   await seed();
   await database().query(
@@ -174,7 +174,7 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
       "utf8",
     ),
   );
-  assert.deepEqual(await snapshot(await tables()), complete);
+  assert.deepEqual(await captureOriginalRows(await tables()), complete);
   assert.deepEqual(
     await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),
     upgradedLedger,

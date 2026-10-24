@@ -48,7 +48,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
       tables.map((t) =>
         c
           .query(
-            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ${through === 109 && t === "permission_grants" ? "WHERE capability<>'conversation.agent.ask'" : through === 109 && t === "seed_receipts" ? "WHERE version<=109" : ""} ORDER BY to_jsonb(x)::text`,
+            `SELECT to_jsonb(x) AS row FROM ppo.${t} x ${through === 109 && t === "permission_grants" ? "WHERE capability<>'conversation.agent.ask'" : through === 109 && t === "seed_receipts" ? "WHERE version<=109" : t === "seed_receipts" ? "WHERE version<>121" : ""} ORDER BY to_jsonb(x)::text`,
           )
           .then((r) => r.rows),
       ),
