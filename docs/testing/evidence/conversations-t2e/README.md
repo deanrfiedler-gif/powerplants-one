@@ -138,7 +138,7 @@ C03 starts with 22 canonical human messages including kickoff/trigger, and L12 d
 | Exclusive workers | Current clients observed; separate owned cluster stopped and retained; future ownership remains procedural |
 | Corpus/run/cost approval | Pending Dean; no manifest, run UUID, approval reference or acceptance hash issued |
 | Billing/credit/backstops/region/retention/private key procedure | Pending non-secret confirmation for a later separately authorised run |
-| Independent review and merge | Claude reviews at f6f76648 and f8a4481c received with separate scope/limits; author dispositions below. PR remains draft and unmerged; #679 merge permission does not extend to it |
+| Independent review and merge | Claude reviews at f6f76648 and f8a4481c received with separate scope/limits; author dispositions below. Dean later granted [conditional #680 merge authority](../../../status/2026-10-24-conversations-t2e-fixture-merge-authority.md) after reviews/checks pass; the coordination chat handles merge. PR remains draft while gates are pending; corpus/run/spending approval is separate |
 | Calibration/live evaluation/owner acceptance/production | Not performed or granted |
 
 
