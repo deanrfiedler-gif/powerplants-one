@@ -4,6 +4,7 @@ import type { Principal } from "../platform/identity";
 import { hasPermission, requireCapability } from "../platform/permissions";
 import { AppError, unavailable } from "../platform/errors";
 import { sharedOperation } from "../platform/operations";
+import { syncLegacyPhone } from "../calls/legacy-phone";
 import { visible, type SharedKind } from "./reads";
 import { scopedOwner } from "./authority";
 import {
@@ -262,6 +263,7 @@ export async function createPerson(p: Principal, input: unknown) {
           "INSERT INTO ppo.person_company_contexts VALUES($1,$2,$3)",
           [p.workspace_id, id, command.id],
         );
+      if (command.phone) await syncLegacyPhone(c, p, command.id, command.phone);
       return row;
     },
     "Person",

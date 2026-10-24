@@ -258,8 +258,15 @@ export async function readOperation(
         row.site_id,
         "shared.create",
       );
-  } else if (r.command === "RevisePerson") {
+  } else if (r.command === "RevisePerson" || (r.command === "SetPartyNumbers" && r.object_type === "Person")) {
     await personEditAuthority(client, p, r.record_id);
+  } else if (r.object_type === "CallEvent") {
+    // A call event is its owner's alone; a purged skipped event has no receipt left to disclose.
+    if (!(await client.query("SELECT 1 FROM ppo.call_events WHERE workspace_id=$1 AND id=$2 AND user_id=$3", [p.workspace_id, r.record_id, p.actor_id])).rowCount)
+      throw unavailable();
+  } else if (r.command === "SetPartyNumbers" && r.object_type === "Organisation") {
+    const row = await visible(client, p, "Organisation", r.record_id);
+    await companyContext(client, p, row.company_id, null, "shared.edit");
   } else if (
     r.command === "EndAffiliation" ||
     r.command === "SetSitePrimaryContact"
