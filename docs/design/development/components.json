@@ -7884,6 +7884,11 @@
       "coverage": "Host example",
       "states": [
         {
+          "id": "working-preview-refresh",
+          "label": "Working waits for current calculation",
+          "description": "tests/browser/specialist-workbench.spec.ts holds the real saved preview response: the stale notice remains and Working is disabled until the response settles, then the exact phone panel opens and Escape restores focus. Dean approved the temporary disabled state on 24 October 2026; visual review remains separate."
+        },
+        {
           "id": "seven-views",
           "label": "Seven workbench views",
           "description": "Synthetic Northbank at desktop/phone widths; menu sections/filters, all sheets, live results, pricing, comparison, findings and immutable history."
@@ -7900,6 +7905,10 @@
         }
       ],
       "implementation": [
+        {
+          "path": "src/components/specialist-parts.tsx",
+          "symbol": "PartsView"
+        },
         {
           "path": "src/components/specialist-workbench.tsx",
           "symbol": "SpecialistWorkspace"
@@ -7953,7 +7962,7 @@
         {
           "id": "es08-figma-owner-review",
           "expected": "Owner comparison with the private Figma named version and retained icon-free source captures.",
-          "actual": "Direct implementation request recorded; version/captures and owner acceptance are not recorded.",
+          "actual": "Direct implementation request recorded; version/captures and owner visual acceptance are not recorded. Dean separately approved temporarily disabled Working buttons during preview refresh on 24 October 2026.",
           "action": "Review application evidence against the named private Figma source and record the result separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
