@@ -335,3 +335,7 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 ## PL-04 consumer
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
+
+## SV-03 register consumer — 24 October 2026
+
+The Work orders register composes this existing control with local SV-03 geometry and native permission-scoped reads. The host state binding covers queues, filtering, selection, snapshot, denied/empty/error/partial states and 390/320 px. The shell adds only a neutral work-order count mount; its established rail and phone controls remain shared. See [work-order evidence](../../../testing/evidence/work-order-register/README.md). Owner visual review is pending; no review fingerprint is changed.

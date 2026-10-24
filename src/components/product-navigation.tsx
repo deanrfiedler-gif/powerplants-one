@@ -385,6 +385,7 @@ function ProductNavigationView({
               <ProductIcon name={item.icon} active={activeId === item.id} />
               <span className="ppo-rail-label">{item.railLabel ?? item.label}</span>
               {item.id === "projects" && <span id="header-project-count" />}
+              {item.id === "orders" && <span id="header-work-order-count" />}
             </Link>);
             // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.
             return section.label ? <div key={section.label} role="group" aria-label={section.label} className="ppo-rail-group">

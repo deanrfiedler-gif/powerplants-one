@@ -195,6 +195,11 @@
           "id": "automation-n2",
           "label": "Automation N2 host",
           "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -248,7 +253,8 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -427,7 +433,8 @@
         "route:/conversations",
         "route:/conversations/[id]",
         "route:/estimating/discovery/[id]/nursery",
-        "route:/estimating/discovery/[id]/nursery/assessment"
+        "route:/estimating/discovery/[id]/nursery/assessment",
+        "route:/service/work-orders"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -681,6 +688,14 @@
           "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -858,6 +873,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -906,7 +926,8 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -953,7 +974,8 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/service/work-orders"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -1085,6 +1107,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4500,6 +4530,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -4628,7 +4663,8 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4696,7 +4732,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/service/work-orders"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -5004,6 +5041,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
