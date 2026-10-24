@@ -78,6 +78,14 @@ A **rule set** is the versioned unit for one product family. It holds:
 - **Immutable versions.** Published versions never change. Estimates, parts proposals and quotations keep the version they used.
 - **Excel round trip.** Tables can be exported to Excel and imported back. An import is reviewed value by value, invalid values are refused, the effect on the reference cases is shown, and only the draft changes.
 
+### Scope boundary: rules versus engineering calculations
+
+Rule sets hold **configuration rules**: which parts a system needs, how many, chosen by range or condition, and the labour that follows from them.
+
+**Engineering design calculations** stay as typed, tested calculation modules inside their workbenches. These are calculations that repeat over records, simulate over time or schedule events, such as fertigation hydraulics, irrigation cycle timing and storage balance. A workbench passes their results to the rule set as inputs; the required duty in m³/h and the number of valve groups are examples.
+
+The second-family proof below drew this line. Expressing a design engine needed a programming-grade language that estimators could not maintain. Configuration rules did not need one.
+
 ### What does not change
 
 - Rule sets carry no prices. Workbenches send a price-free parts proposal (B0) that records the rule set version, and CPQ prices it.
@@ -87,7 +95,7 @@ A **rule set** is the versioned unit for one product family. It holds:
 
 ## Amendments if accepted
 
-- **[ADR-0034](ADR-0034-es08-specialist-workbench.md):** the rejection of a generic formula evaluator no longer applies to ES-08 calculations. ES-08 keeps its screens, drawings and evidence, but calculates through a published rule set run by the restricted interpreter. This is the owner's requirement for in-app editing; the interpreter is typed and bounded, not arbitrary code.
+- **[ADR-0034](ADR-0034-es08-specialist-workbench.md):** the rejection of a generic formula evaluator no longer applies to ES-08's parts and quantity rules. Those move into a published rule set run by the restricted interpreter, to meet the owner's requirement for in-app editing. ES-08 keeps its screens, drawings, evidence and any engineering calculations as typed code. The rejection still stands for engineering design calculations in every workbench (see the scope boundary).
 - **[CPQ rule packages](cpq-rule-packages.md):** that record found a new calculation schema unnecessary for packages. The rule set model needs derived values, value tables and part selection, which schemas 1–4 cannot hold, so a new schema is needed. It leaves existing schemas and hashes untouched.
 - **[CPQ native runtime](cpq-native-runtime.md):** "full no-code rule authoring" moves from tracked work to this design.
 - **[Estimating hub, CPQ and workbench model](estimating-configurator-model.md):** the parts proposal (B0) carries the rule set identity and version.
@@ -113,7 +121,15 @@ A prototype evaluator implemented the model with exact fractions. It covered ord
   - Result: **544 line comparisons, 0 differences.**
   - A circular derived value and a missing table row were both refused with a reason.
   - The coverage checks independently found an option no case tested and table rows no case read.
-- **Second family.** See the section below; it is completed when that proof finishes.
+- **Second family: the fertigation design engine** (`src/estimating/fertigation/engine.ts`, synthetic fixtures).
+  - **Expected values.** They come from running the repository engine on 73 synthetic cases: 60 repository fixtures and test variants, plus 13 labelled variations that reach untested branches. The captured outputs reproduce all 28 assertion groups in the repository's tests.
+  - **The model as proposed falls short.** It could express about 24% of the engine's outputs, and only for one fixed layout. 20 of the 73 cases could not be represented at all. Events, varying numbers of valves and groups, and a storage balance with refill are all out of reach.
+  - **With eight prototype extensions it matched exactly:** 12,771 line comparisons, 0 differences, plus a 1,000-valve case with 8,531 comparisons and 0 differences. The extensions are repeating collections with aggregates, references between records, a propagating unknown value, generated collections, a running scan, text functions, findings as outputs, and reference cases on derived values.
+  - **Errors are caught.** All 16 deliberately introduced formula errors were detected.
+  - **The cost of those extensions.** They turned the model into a small relational, fold-capable language: 243 calculation steps and 57 checks. Expressing the engine needed programmer-level care, and two semantic traps came to light (a name shadowing a field, and null-equality).
+  - **Conclusion: the scope boundary above.** The engine stays a typed module; its results feed rule sets.
+  - **Still demonstrated in the base model:** choosing a unit by range from a two-key table, and labour from installation minutes, on synthetic catalogue data.
+  - **Still untested:** a family that repeats per unit or zone and also produces parts. A review of real Priva fertigation and control deals is under way to inform that.
 
 ## Consequences and build steps
 
@@ -141,6 +157,8 @@ Other consequences:
 - **Q6** Record an authority decision for real rule sets before storing any? Yes.
 - **Q7** Who supplies engineering values marked "to confirm" (for example torque per m²)? The family's engineering owner, with the source recorded on the value.
 - **Q8** Should Excel imports accept values and new rows, but never new columns? Yes.
+- **Q9** Keep engineering design calculations as typed workbench modules whose results feed rule sets, rather than extending rule sets into a programming language? Yes.
+- **Q10** Add repeating groups to rule sets, so that one rule set can quote several units or zones each with their own inputs? Decide once the Priva deal review is complete. Add them only if quotes need per-unit variation that a quantity input cannot express.
 
 ## Verification of this record
 

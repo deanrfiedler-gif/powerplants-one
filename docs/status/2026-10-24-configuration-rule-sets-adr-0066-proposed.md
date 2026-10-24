@@ -15,7 +15,7 @@ The model covers:
 - coverage checks;
 - an Excel round trip.
 
-An offline prototype reproduced a private screen estimator workbook across eight Excel-recalculated cases: 544 line comparisons, 0 differences. The evidence section records a second-family proof. The prototype and the workbook data stay outside the repository.
+An offline prototype reproduced a private screen estimator workbook across eight Excel-recalculated cases: 544 line comparisons, 0 differences. A second proof against the synthetic fertigation design engine showed that design calculations need a programming-grade language. The ADR therefore keeps them as typed workbench modules, whose results feed rule sets. The prototype and the workbook data stay outside the repository.
 
 The Figma proposal and the [engineer walkthrough plan](../testing/rule-sets-engineer-walkthrough.md) are ready for review. Not done:
 
