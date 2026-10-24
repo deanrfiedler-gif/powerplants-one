@@ -17,6 +17,8 @@ Build step R1 of [ADR-0066](../decisions/ADR-0066-configuration-rule-sets.md) ad
 
 The isolated CPQ worker runs it through three new kinds. Definition schemas 1–4, their hashes and saved evidence are unchanged.
 
-Evidence: 30 unit tests on fictional SYN screen, fertigation and control families, with expected values worked by hand, including the eight cases an independent review found. The existing CPQ unit tests still pass.
+Evidence: 43 unit tests on fictional SYN screen, fertigation and control families, with expected values worked by hand. They include the eight cases a first independent review found, and the twelve (F1–F12) that Codex's review of `ddf3283f` found. Each of those twelve fails on `ddf3283f` and passes after the fixes. The existing CPQ unit tests still pass.
+
+A probe for F9 showed that copying an 80 MB input value into the worker aborted the whole Node process, because the worker's memory limit does not cover the copy. The rule set runner now refuses an oversized request before it starts a worker. The older runner kinds are unchanged; whether every path to them bounds its request was not checked in this change.
 
 Not done: storage and versioning (R2), the Rules studio screens (R3, which wait for the Figma design to be accepted), the Excel round trip (R4) and ES-08 on rule sets (R5). This change adds no migration, seed, permission, route or dependency.

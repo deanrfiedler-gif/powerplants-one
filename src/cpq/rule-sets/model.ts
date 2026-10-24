@@ -107,6 +107,11 @@ export const LIMITS = Object.freeze({
   /** Shared by every case in one test or job, so a large rule set stops cleanly inside the worker's time limit. */
   totalSteps: 2_000_000,
   jobSteps: 20,
+  /**
+   * A whole request to the worker, measured as JSON before it is copied in: room for a full job of the
+   * largest rule sets, and far below the worker's memory, which does not cover the copy itself.
+   */
+  requestCharacters: 12_582_912,
 });
 
 /** Words the formula language uses, which cannot name an input, derived value or table. */
@@ -116,8 +121,22 @@ export const KEY = /^[a-z][a-z0-9_]{0,47}$/;
 export const PART_KEY = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 export const DECIMAL = /^-?\d{1,18}(?:\.\d{1,12})?$/;
 
+/** Shortens a name echoed in a message or path, so an oversized untrusted key cannot make an oversized result. */
+export const brief = (s: string) => (s.length > 64 ? `${s.slice(0, 64)}…` : s);
+
+/** What a case used, kept when it stops as well as when it finishes, so coverage never guesses. */
+export type Trace = {
+  inputs: { key: string; value: string; asked: boolean; from: "Given" | "Default" }[];
+  applied: string[];
+  rows_read: { table: string; row: number }[];
+  /** The part each applied rule gave, including a rule whose quantity was zero. */
+  chosen: { rule: string; part: string }[];
+};
+
 /** Why a case could not be worked out, with a reason an engineer can act on. */
 export class RuleSetStop extends Error {
+  /** What the case had used when it stopped; absent when it stopped before running (a job-level stop). */
+  trace?: Trace;
   constructor(
     readonly code: string,
     message: string,

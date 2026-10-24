@@ -2,6 +2,7 @@
 import { Fraction } from "../expression";
 import { compile, FormulaError, type Compiled, type Scope } from "./language";
 import {
+  brief,
   DECIMAL,
   KEY,
   LIMITS,
@@ -41,22 +42,40 @@ const isObject = (v: unknown): v is Raw => typeof v === "object" && v !== null &
 export const inputValueType = (i: Pick<RuleSetInput, "type">): ValueType =>
   i.type === "YesNo" ? "YesNo" : i.type === "Choice" ? "Text" : "Number";
 
-const compareDecimal = (a: string, b: string) => {
-  const x = Fraction.fromDecimal(a);
-  const y = Fraction.fromDecimal(b);
+const compareFraction = (x: Fraction, y: Fraction) => {
   const l = x.numerator * y.denominator;
   const r = y.numerator * x.denominator;
   return l < r ? -1 : l > r ? 1 : 0;
 };
+const compareDecimal = (a: string, b: string) => compareFraction(Fraction.fromDecimal(a), Fraction.fromDecimal(b));
 
-/** Checks a value an engineer typed for an input; returns a reason or null. */
-export function inputValueProblem(input: RuleSetInput, value: string): string | null {
-  if (input.type === "YesNo") return value === "Yes" || value === "No" ? null : "must be Yes or No";
-  if (input.type === "Choice") return input.choices.includes(value) ? null : `“${value}” is not one of its options`;
-  if (!DECIMAL.test(value)) return "must be a number";
-  if (input.type === "WholeNumber" && value.includes(".") && !/\.0+$/.test(value)) return "must be a whole number";
-  if (input.minimum !== null && compareDecimal(value, input.minimum) < 0) return `is below its minimum of ${input.minimum}`;
-  if (input.maximum !== null && compareDecimal(value, input.maximum) > 0) return `is above its maximum of ${input.maximum}`;
+/** Parses an exact number as the engine shows it ("6.1", "1/3", or a whole number longer than an input allows), or null. */
+export function exactValue(v: string): Fraction | null {
+  try {
+    const d = /^(-?\d{1,512})(?:\.(\d{1,12}))?$/.exec(v);
+    if (d) return new Fraction(BigInt(d[1] + (d[2] ?? "")), 10n ** BigInt((d[2] ?? "").length));
+    const m = /^(-?\d{1,512})\/(\d{1,512})$/.exec(v);
+    return m ? new Fraction(BigInt(m[1]), BigInt(m[2])) : null;
+  } catch {
+    // "1/0" or an oversized fraction is not a number.
+    return null;
+  }
+}
+
+/**
+ * Checks a value for an input; returns a reason or null. Text is what an engineer typed; an exact
+ * number is a value received from an earlier rule set on the same job, which may be a fraction.
+ */
+export function inputValueProblem(input: RuleSetInput, value: string | Fraction): string | null {
+  if (typeof value === "string") {
+    if (input.type === "YesNo") return value === "Yes" || value === "No" ? null : "must be Yes or No";
+    if (input.type === "Choice") return input.choices.includes(value) ? null : `“${brief(value)}” is not one of its options`;
+    if (!DECIMAL.test(value)) return "must be a number";
+  } else if (input.type === "YesNo" || input.type === "Choice") return "must be text, not a number";
+  const n = typeof value === "string" ? Fraction.fromDecimal(value) : value;
+  if (input.type === "WholeNumber" && n.denominator !== 1n) return "must be a whole number";
+  if (input.minimum !== null && compareFraction(n, Fraction.fromDecimal(input.minimum)) < 0) return `is below its minimum of ${input.minimum}`;
+  if (input.maximum !== null && compareFraction(n, Fraction.fromDecimal(input.maximum)) > 0) return `is above its maximum of ${input.maximum}`;
   return null;
 }
 
@@ -227,12 +246,20 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     });
     if (!rows.length) add(`${p}.rows`, "REQUIRED", "A table needs at least one row");
     // Range keys are checked from the top, so they must run in order within each group of equal exact keys.
-    for (const rk of keys.filter((x) => x.match !== "Exact")) {
+    // Only a valid number column is compared: a range key on any other column is already reported above.
+    const columnType = new Map(columns.map((c) => [c.key, c.type]));
+    // Lookups compare number keys by value, so "1" and "1.0" are one group here too.
+    const groupKey = (column: string, v: string) => {
+      if (columnType.get(column) !== "Number") return v;
+      const f = Fraction.fromDecimal(v);
+      return `${f.numerator}/${f.denominator}`;
+    };
+    for (const rk of keys.filter((x) => x.match !== "Exact" && columnType.get(x.column) === "Number")) {
       const exactCols = keys.filter((x) => x.match === "Exact").map((x) => x.column);
       const last = new Map<string, { value: string; row: number }>();
       rows.forEach((row, i) => {
         if (exactCols.some((c) => row[c] === undefined) || row[rk.column] === undefined) return;
-        const group = JSON.stringify(exactCols.map((c) => row[c]));
+        const group = JSON.stringify(exactCols.map((c) => groupKey(c, row[c])));
         const prev = last.get(group);
         if (prev) {
           const cmp = compareDecimal(row[rk.column], prev.value);
@@ -391,7 +418,11 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         if (!partSeen.has(part)) add(`${lp}.part`, "CASE_LINE", `“${part}” is not a part of this rule set`);
         if (lineParts.has(part)) add(`${lp}.part`, "DUPLICATE", `“${part}” is listed twice`);
         lineParts.add(part);
-        return [{ part, quantity: decimal(l.quantity, `${lp}.quantity`, { nonNegative: true }) ?? "0" }];
+        // The engine shows a quantity that is not exact to 12 places as a fraction, so an expected line may be one too.
+        const quantity = typeof l.quantity === "string" ? exactValue(l.quantity) : null;
+        if (!quantity) add(`${lp}.quantity`, "DECIMAL", "Expected a number written as text, such as \"6.1\", or an exact fraction such as \"1/3\"");
+        else if (quantity.numerator < 0n) add(`${lp}.quantity`, "DECIMAL", "Must not be negative");
+        return [{ part, quantity: quantity ? (l.quantity as string) : "0" }];
       });
       const values = Object.create(null) as Record<string, string>;
       if (exp.values !== undefined && !isObject(exp.values)) add(`${p}.expected.values`, "SHAPE", "Expected an object");

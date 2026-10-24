@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { AppError } from "../platform/errors";
 import type { Calculation, CalculationInput, Definition } from "./types";
 import type { testDefinition } from "./engine";
+import { LIMITS as RULE_SET_LIMITS } from "./rule-sets/model";
 
 function run<T>(data: unknown): Promise<T> {
   return new Promise((resolveResult, reject) => {
@@ -49,13 +50,27 @@ export const packageIsolated = (content: import("./package-model").PackageConten
 // Configuration rule sets (ADR-0066): definitions arrive as untrusted data and are checked in the worker.
 type RuleSetWork = import("./rule-sets/entry").RuleSetWork;
 type RuleSetWorkResult = import("./rule-sets/entry").RuleSetWorkResult;
-export const ruleSetTestIsolated = (definition: unknown) =>
-  run<RuleSetWorkResult>({ kind: "rule-set-test", definition } satisfies RuleSetWork);
+// The worker's memory limit does not cover copying a request into it: an 80 MB input value aborted the
+// whole process in a probe for the PR #688 review (F9). So a request is measured here first.
+const ruleSetRun = (work: RuleSetWork) => {
+  let size: number;
+  try {
+    size = JSON.stringify(work)?.length ?? 0;
+  } catch {
+    size = Infinity;
+  }
+  if (size > RULE_SET_LIMITS.requestCharacters)
+    return Promise.reject(
+      new AppError(422, "PayloadTooLarge", "The rule set request is too large or is not plain data. Reduce its size and retry."),
+    );
+  return run<RuleSetWorkResult>(work);
+};
+export const ruleSetTestIsolated = (definition: unknown) => ruleSetRun({ kind: "rule-set-test", definition });
 export const ruleSetRunIsolated = (definition: unknown, inputs: Record<string, string>) =>
-  run<RuleSetWorkResult>({ kind: "rule-set-run", definition, inputs } satisfies RuleSetWork);
+  ruleSetRun({ kind: "rule-set-run", definition, inputs });
 export const ruleSetJobIsolated = (steps: Extract<RuleSetWork, { kind: "rule-set-job" }>["steps"]) =>
-  run<RuleSetWorkResult>({ kind: "rule-set-job", steps } satisfies RuleSetWork);
-export const qualityIsolated =(work: import("./quality-model").QualityWork) =>
+  ruleSetRun({ kind: "rule-set-job", steps });
+export const qualityIsolated = (work: import("./quality-model").QualityWork) =>
   run<ReturnType<typeof import("./quality-model").qualityResults>>({ kind: "quality", work });
 export const rebaseIsolated = (
   definition: Definition,
