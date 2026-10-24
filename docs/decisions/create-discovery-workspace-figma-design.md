@@ -43,10 +43,11 @@ This is a design decision. It authorises none of the following:
 | Departures D1–D7 | Accepted as drawn, 18 October 2026 | Dean's acceptance, quoted above. Section 4 |
 | Q1 Accepted brief shortcut | Resolved as recommended | Choosing an opportunity that has an accepted Sales brief attaches that brief automatically, with the D3 banner, so the link is never forgotten. Today the link exists only when the flow starts from the Sales handover |
 | Q2 When create is allowed | Resolved as recommended | Create is allowed from any step once the built minimum is met: one work tag, a Site declaration, and an owner and reason for each unknown. All five steps are not required first |
-| Q3 Opportunity numbers | Resolved as recommended | The app and the accepted Sales briefs page use `SYN-PPO-OPP-…`. The Discovery register frames, which showed `OPP-…`, were corrected to `SYN-PPO-OPP-…` in that page's lock-in (#590). This page already uses the app format |
+| Q3 Opportunity numbers | Resolved as recommended | The app and the accepted Sales briefs page use `SYN-PPO-OPP-…`. The Discovery register frames, which showed `OPP-…`, were corrected to `SYN-PPO-OPP-…` in that page's lock-in (#590). This page already uses the app format. Superseded on the prefix only by section 8: both pages now show `SYN-OPP-…` |
 | Q4 Estimating owner | Resolved as recommended | The estimating owner defaults to the person creating the workspace and can be changed to another eligible estimator before create. The owner becomes the register's Estimator |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
 | Named Figma version | User decision, 18 October 2026 | "Yes, save the named version "Create discovery workspace — accepted" in the Figma desktop app." Saved in the Figma desktop app by this Claude session on Dean's yes (Ctrl+Alt+S, title checked in the dialog) and seen at the top of version history as Dean Fiedler's entry, "just now". Afterwards only the page header's Status, Named version and Decision record fields and the notes card's Accepted paragraph changed; no frame changed |
+| Opportunity number prefix | User decision, 22 October 2026 | "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." Then: "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The frames show `SYN-OPP-…`; r02 captures replace the changed images (section 8) |
 | Q1 and Q2 behaviour | Build work, not decided | Section 5 |
 | Building the page | Not decided | Section 5 |
 
@@ -62,8 +63,8 @@ This is a design decision. It authorises none of the following:
 | States | Dialog states: creating `1416:7553`; outcome not confirmed `1416:7630`; workspace already exists `1416:7715`; not permitted `1416:7799`. Phone 390: loading eligible opportunities `1416:365050` |
 | Page parts | Section "Parts (proposal)" `1415:360239`: Opportunity choice row (proposed) `1415:360253`, Default and Selected. It stays on the page, as the Sites, People and Discovery register parts do |
 | Flow | "Create discovery workspace — desktop (proposal)", starting at `1415:1065`: Continue to discovery opens the first discovery, Create discovery workspace opens the dialog, and Cancel or Close returns |
-| Story | Synthetic, Tue 13 Oct 2026 09:12, signed in as Dean Fiedler. SYN-PPO-OPP-000026 Substrate store dosing review for SYN Isolation Nursery at SYN Isolation House, from the accepted Sales brief r1 (receiving owner Jamie Park, 7 October), as on the Sales briefs page. Q01 comes from the brief as Answered, Q02 has an owned follow-up, Q03 is Assumed; one Water system (fertigation dosing) is to confirm. Jordan Kim appears only in the "already exists" state |
-| Retained captures | [Create discovery workspace design r01](../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md): eleven icon-free PNGs with hashes |
+| Story | Synthetic, Tue 13 Oct 2026 09:12, signed in as Dean Fiedler. SYN-OPP-000026 Substrate store dosing review for SYN Isolation Nursery at SYN Isolation House, from the accepted Sales brief r1 (receiving owner Jamie Park, 7 October), as on the Sales briefs page. Q01 comes from the brief as Answered, Q02 has an owned follow-up, Q03 is Assumed; one Water system (fertigation dosing) is to confirm. Jordan Kim appears only in the "already exists" state |
+| Retained captures | [Create discovery workspace design r01](../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md): eleven icon-free PNGs with hashes; [r02](../reference/ui/estimating/create-discovery-workspace-figma-design-r02/README.md) replaces nine of them for the `SYN-OPP-` numbers (section 8) |
 
 ## 3. Conformance declaration
 
@@ -80,7 +81,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
 | Proposed departures | The built page is one long form (picker, all fields, Compare, then Create). The design has a choose step, the wizard layout for the first discovery and a review dialog; D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Create discovery workspace — accepted", saved 18 October 2026 |
+| Named version | "Create discovery workspace — accepted", saved 18 October 2026; "Create discovery workspace — accepted (SYN-OPP- numbers)", saved 22 October 2026 (section 8) |
 
 ## 4. What the design shows
 
@@ -175,3 +176,11 @@ The audit is recorded on the notes card `1416:366159`.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/estimating/create-discovery-workspace-figma-design-r01/README.md).
 - The page has one prototype flow. Claude did not play it in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 8. Number prefix change, 22 October 2026
+
+Dean: "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." The application already allocates new references as `SYN-<TYPE>-…` since migration 0114 (#650); existing `SYN-PPO-` references stay permanent there. Every `SYN-PPO-` text in the Create discovery workspace frames, parts and icon-free capture copies became `SYN-`. Layout, content, decisions and stories are otherwise unchanged; the notes card keeps Dean's earlier words verbatim and adds a dated line.
+
+- Captures: [Create discovery workspace design r02](../reference/ui/estimating/create-discovery-workspace-figma-design-r02/README.md) holds the nine changed images (all except 05 no eligible opportunities and 11 phone loading). Every re-export was compared by SHA-256 with r01; images that came out identical, or hold no number, keep r01 as their reference. r01 is retained byte for byte.
+- Named version: "Create discovery workspace — accepted (SYN-OPP- numbers)", saved 22 October 2026 at Dean's "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The earlier named version "Create discovery workspace — accepted" shows the earlier numbers.
+- No application code, migration or test changed.

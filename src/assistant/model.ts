@@ -17,6 +17,14 @@ export const monthlyCeilingMicro = 30_000_000;
 export type SourceType = "Opportunity" | "Organisation" | "Activity" | "Project" | "ProjectTask" | "ProjectRaid" | "AcceptanceStage";
 export type AdapterLabel = "Simulated" | "Claude";
 export type Usage = { input_tokens: number; output_tokens: number };
+// Numeric measurements and fixed enums only; never provider text or dynamic field names.
+export type CallMeasurement = {
+  request_bytes: number; estimated_input_tokens: number; duration_ms: number;
+  inference_geo: "global" | "Missing" | "Unsupported";
+  speed: "standard" | "Missing" | "Unsupported";
+  service_tier: "standard" | "Missing" | "Unsupported";
+  thinking_tokens: number | null; unsupported_usage: boolean;
+};
 export type UntrustedText = { text: string; untrusted: true };
 export type EvidenceValue = string | number | boolean | null | EvidenceValue[] | { [key: string]: EvidenceValue };
 export type EvidenceItem = {
@@ -38,6 +46,8 @@ export type EvidenceEnvelope = {
   items: EvidenceItem[];
   coverage: Partial<Record<keyof typeof envelopeLimits | "acceptance_stages", Coverage>>;
   left_out: number;
+  /** Included in left_out; kept separate internally for truthful rendered omission reasons. */
+  history_left_out?: number;
 };
 // Internal record IDs, routes and reader identities never cross the adapter boundary.
 export type AdapterRequest = {
@@ -49,8 +59,8 @@ export type AdapterRequest = {
 };
 export type CheckedClaim = { text: string; source_ids: string[] };
 export type AdapterResult =
-  | { kind: "Answer"; claims: CheckedClaim[]; gaps: string[]; usage: Usage }
-  | { kind: "Decline"; usage: Usage };
+  | { kind: "Answer"; claims: CheckedClaim[]; gaps: string[]; usage: Usage; measurement?: CallMeasurement }
+  | { kind: "Decline"; usage: Usage; measurement?: CallMeasurement };
 export type StoredClaim = { ordinal: number; kind: "Fact" | "Gap"; text: string; source_numbers: number[] };
 export type StoredSource = {
   number: number; type: SourceType; record_id: string; source_version: string; retrieved_at: string;
@@ -60,6 +70,7 @@ export class AdapterError extends Error {
     readonly code: "Unavailable" | "CreditExhausted" | "RateLimited" | "MalformedOutput" | "Timeout",
     readonly usage: Usage | null = null,
     readonly sent = false,
+    readonly measurement?: CallMeasurement,
   ) {
     // Fixed codes only: provider text, questions and evidence do not belong in error logs.
     super(code);
@@ -69,6 +80,8 @@ export class AdapterError extends Error {
 export interface AssistantAdapter {
   readonly label: AdapterLabel;
   readonly model: string;
+  /** Provider-specific pre-dispatch bound; simulation retains its fixture meter. */
+  inputTokens?(request: AdapterRequest): number;
   answer(request: AdapterRequest, signal: AbortSignal): Promise<AdapterResult>;
 }
 export const requestTokens = (request: Pick<AdapterRequest, "question" | "envelope">) =>

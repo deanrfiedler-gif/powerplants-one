@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CONV-T2E-EVALUATION,Conversations T2e evaluation prerequisites and plan,docs/decisions/conversations-t2e-evaluation.md,,Offline prerequisites; merge subject to checks authorised; Claude review and disposition recorded; no live authority,Dean Fiedler,d3ccc0b79f8182fb1cd1498196f4aa2564818c0a,,,git,
+PPO-CONV-T2E-EVIDENCE,Conversations T2e offline evidence,docs/testing/evidence/conversations-t2e/README.md,,Mocked transport only; Claude review at 99721da6 and author disposition; no live results,Dean Fiedler,d3ccc0b79f8182fb1cd1498196f4aa2564818c0a,,,git,

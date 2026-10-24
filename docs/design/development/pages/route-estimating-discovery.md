@@ -8,7 +8,7 @@ Find a permitted discovery workspace, understand its selected option's saved rea
 
 Authority: [accepted design and D1–D7/Q1–Q4](../../../decisions/discovery-register-figma-design.md), [native implementation](../../../decisions/discovery-register-native.md), [accepted ES-02 wizard](../../../decisions/es02-wizard-figma-design.md). Page type: r20 register/worklist with large snapshot. Legacy CREMS behaviour is not a prerequisite.
 
-Figma **PPO - Design**, named version **Discovery register — Pipedrive pattern, accepted**; use live corrected SYN-PPO-OPP numbers. File index `630:2`, row `1414:357730`; page `1400:345306`; notes `1402:350109`. Retained references: [eight icon-free captures](../../../reference/ui/estimating/discovery-register-figma-design-r01/README.md), unchanged, plus historical [wizard container r03](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html).
+Figma **PPO - Design**, named version **Discovery register — Pipedrive pattern, accepted (SYN-OPP- numbers)**. Since 22 October 2026 the frames show `SYN-OPP-…` numbers (Dean: "I have been removing PPO from the numbers."); the app shows each record's stored reference, so older records keep `SYN-PPO-OPP-…`. File index `630:2`, row `1414:357730`; page `1400:345306`; notes `1402:350109`. Retained references: [eight icon-free captures](../../../reference/ui/estimating/discovery-register-figma-design-r01/README.md), unchanged, with [r02](../../../reference/ui/estimating/discovery-register-figma-design-r02/README.md) replacing images 02, 06 and 07 for the new numbers, plus historical [wizard container r03](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html).
 
 ## Desktop
 

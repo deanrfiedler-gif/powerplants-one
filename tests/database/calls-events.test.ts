@@ -49,6 +49,8 @@ test("click to call stores one Outgoing To log event for the chosen person and r
   );
   const [audit] = await rows("SELECT object_type,details FROM ppo.audit_events WHERE operation_id=$1", [command.operation_id]);
   assert.equal(audit.object_type, "CallEvent");
+  assert.deepEqual(Object.keys(audit.details).sort(), ["command", "record_version"]);
+  await assert.rejects(database().query("UPDATE ppo.call_events SET source=NULL WHERE id=$1", [command.id]), code("23514"));
   assert.equal((await rows("SELECT status FROM ppo.activities WHERE created_at>now()-interval '1 minute' AND activity_type='Call'")).length, 0);
 });
 
@@ -105,6 +107,7 @@ test("another user's event is not listed and cannot be skipped; skip records the
   await assert.rejects(skipCallEvent(p, command.id, { ...skip, operation_id: randomUUID(), expected_version: 2 }), code("CallAlreadyResolved"));
   const [row] = await rows("SELECT state,skip_reason,resolved_by FROM ppo.call_events WHERE id=$1", [command.id]);
   assert.deepEqual([row.state, row.skip_reason, row.resolved_by], ["Skipped", "Personal", p.actor_id]);
+  await assert.rejects(database().query("UPDATE ppo.call_events SET number_e164=NULL WHERE id=$1", [command.id]), code("23514"));
   assert.ok(!(await listCallsToLog(p)).items.some((e) => e.id === command.id));
 });
 
@@ -125,6 +128,20 @@ test("skipped events are deleted 30 days after skipping; recent skips and calls 
     { object_type: "CallEvent", display_number: null },
   ]);
   await assert.rejects(readOperation(p, old.operation_id), code("RecordUnavailable"));
+  await assert.rejects(recordClickToCall(p, old), code("RecordUnavailable"));
+  await assert.rejects(recordClickToCall(p, { ...old, operation_id: randomUUID() }), code("RecordUnavailable"));
+  await assert.rejects(transaction((c) => ingestCallEvent(c, p, {
+    id: old.id, source: "Teams", source_reference: randomUUID(), direction: "Incoming",
+    number_e164: alex.number.e164!, answered: null, duration_seconds: null,
+  })), code("RelationshipConflict"));
+  assert.deepEqual(await rows("SELECT id FROM ppo.call_events WHERE id=$1", [old.id]), []);
+  const retained = await rows("SELECT details FROM ppo.audit_events WHERE object_id=$1", [old.id]);
+  assert.ok(retained.length >= 2);
+  for (const audit of retained) {
+    assert.ok(!JSON.stringify(audit.details).includes(alex.number.e164!));
+    assert.ok(!JSON.stringify(audit.details).includes(alex.number.id));
+    assert.ok(!("skip_reason" in audit.details));
+  }
   assert.ok(await readOperation(p, recent.operation_id));
 });
 
@@ -137,4 +154,24 @@ test("an event whose person became hidden still lists, without the person, and c
   const listed = (await listCallsToLog(p)).items.find((e) => e.id === command.id);
   assert.deepEqual([listed?.party, listed?.match_count, listed?.number_e164], [null, 0, "+61412100204"]);
   await skipCallEvent(p, command.id, { ...crmBase(), expected_version: 1, skip_reason: "NotBusiness" });
+});
+
+test("duplicate source ingest rechecks owner and the visibility of the stored party", async () => {
+  const p = await principal(), hidden = await personWithNumber("0412 100 205"),
+    visible = await personWithNumber("0412 100 205");
+  const call = { id: randomUUID(), source: "Teams" as const, source_reference: randomUUID(),
+    direction: "Incoming" as const, number_e164: hidden.number.e164!,
+    party: { type: "Person" as const, id: hidden.id }, answered: true, duration_seconds: 10 };
+  const event = await transaction((c) => ingestCallEvent(c, p, call));
+  assert.equal(event.person_id, hidden.id);
+  const observer = await principal("site-observer");
+  await database().query("UPDATE ppo.call_events SET user_id=$2 WHERE id=$1", [event.id, observer.actor_id]);
+  await assert.rejects(transaction((c) => ingestCallEvent(c, p, { ...call, id: randomUUID() })), code("RecordUnavailable"));
+  await database().query("UPDATE ppo.call_events SET user_id=$2 WHERE id=$1", [event.id, p.actor_id]);
+  await database().query("DELETE FROM ppo.person_company_contexts WHERE person_id=$1", [hidden.id]);
+  const { party: _party, ...retry } = call;
+  void _party;
+  await assert.rejects(transaction((c) => ingestCallEvent(c, p, { ...retry, id: randomUUID() })), code("RecordUnavailable"));
+  assert.equal((await readPartyNumbers(p, "Person", visible.id)).numbers[0].e164, call.number_e164);
+  assert.equal((await rows("SELECT count(*)::int AS n FROM ppo.call_events WHERE id=$1", [event.id]))[0].n, 1);
 });

@@ -1,5 +1,5 @@
 -- PPO-CALLS-CALLER-ID-PROP stage 1b / ADR-0064: the call core (numbers, call events, call details).
--- No capability, grant, seed, identity type or route change, and no existing row changes. Each
+-- No capability, grant or seed changes, and no existing row changes. Each
 -- non-blank people.phone is copied into one primary Other number that needs checking: SQL cannot
 -- read numbers, so the text is kept and read when the numbers are next saved (R6).
 -- A call event is a business identity so its commands carry ordinary receipts. Purging a skipped
@@ -63,12 +63,13 @@ FROM ppo.people pe WHERE length(btrim(coalesce(pe.phone,''))) BETWEEN 1 AND 200;
 -- the command), once per source reference. The party is recorded only when it was unambiguous (R5).
 CREATE TABLE ppo.call_events (
  id uuid PRIMARY KEY, workspace_id uuid NOT NULL, user_id uuid NOT NULL,
- source text NOT NULL CHECK(source IN ('ClickToCall','PhoneApp','Teams')),
- source_reference text NOT NULL CHECK(length(source_reference) BETWEEN 1 AND 200),
- direction text NOT NULL CHECK(direction IN ('Outgoing','Incoming')),
- number_e164 text NOT NULL CHECK(number_e164 ~ '^\+[1-9][0-9]{3,14}$'),
+ source text CHECK(source IN ('ClickToCall','PhoneApp','Teams')),
+ -- Opaque source/reference digest supports deduplication after the call facts are discarded.
+ source_key text NOT NULL CHECK(source_key ~ '^[0-9a-f]{64}$'),
+ direction text CHECK(direction IN ('Outgoing','Incoming')),
+ number_e164 text CHECK(number_e164 ~ '^\+[1-9][0-9]{3,14}$'),
  person_id uuid, organisation_id uuid,
- started_at timestamptz NOT NULL CHECK(isfinite(started_at)),
+ started_at timestamptz CHECK(isfinite(started_at)),
  answered boolean, duration_seconds integer CHECK(duration_seconds BETWEEN 0 AND 86400),
  state text NOT NULL DEFAULT 'ToLog' CHECK(state IN ('ToLog','Logged','Skipped')),
  activity_id uuid, skip_reason text CHECK(skip_reason IN ('Personal','NotBusiness','AlreadyLogged')),
@@ -76,11 +77,14 @@ CREATE TABLE ppo.call_events (
  version integer NOT NULL DEFAULT 1 CHECK(version>0),
  created_at timestamptz NOT NULL DEFAULT clock_timestamp(), created_by uuid NOT NULL,
  synthetic boolean NOT NULL DEFAULT true CHECK(synthetic),
- UNIQUE(workspace_id,id), UNIQUE(workspace_id,source,source_reference), UNIQUE(workspace_id,activity_id),
+ UNIQUE(workspace_id,id), UNIQUE(workspace_id,source_key), UNIQUE(workspace_id,activity_id),
  CHECK(num_nonnulls(person_id,organisation_id)<=1),
  CHECK((state='ToLog' AND activity_id IS NULL AND skip_reason IS NULL AND resolved_at IS NULL AND resolved_by IS NULL)
   OR (state='Logged' AND activity_id IS NOT NULL AND skip_reason IS NULL AND resolved_at IS NOT NULL AND resolved_by IS NOT NULL)
   OR (state='Skipped' AND activity_id IS NULL AND resolved_at IS NOT NULL AND resolved_by IS NOT NULL)),
+ CHECK((state='Logged' AND source IS NULL AND direction IS NULL AND number_e164 IS NULL
+   AND person_id IS NULL AND organisation_id IS NULL AND started_at IS NULL AND answered IS NULL AND duration_seconds IS NULL)
+  OR (state<>'Logged' AND source IS NOT NULL AND direction IS NOT NULL AND number_e164 IS NOT NULL AND started_at IS NOT NULL)),
  FOREIGN KEY(workspace_id,id) REFERENCES ppo.business_identities(workspace_id,id),
  FOREIGN KEY(workspace_id,user_id) REFERENCES ppo.users(workspace_id,id),
  FOREIGN KEY(workspace_id,created_by) REFERENCES ppo.users(workspace_id,id),

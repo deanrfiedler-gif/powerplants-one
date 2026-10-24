@@ -83,3 +83,22 @@ test("lookup writes nothing", async () => {
   await lookupNumber(p, { number: "+61412000111" });
   assert.deepEqual(await counts(), before);
 });
+
+test("organisation-only and mixed person/organisation matches return without an unused SQL parameter", async () => {
+  const p = await principal();
+  await setPartyNumbers(p, "Organisation", CRM.org, {
+    ...crmBase(), expected_version: await version("organisations", CRM.org),
+    numbers: [{ label: "Work", entered: "0412 000 112", is_primary: true }],
+  });
+  const only = await lookupNumber(p, { number: "+61412000112" });
+  assert.deepEqual(only.matches.map((m) => [m.party_type, m.party.id]), [["Organisation", CRM.org]]);
+  assert.deepEqual(only.matches[0].organisations.map((o) => o.id), [CRM.org]);
+  assert.ok(only.matches[0].open_opportunities.some((o) => o.id === deal.id));
+  await setPartyNumbers(p, "Organisation", CRM.org, {
+    ...crmBase(), expected_version: await version("organisations", CRM.org),
+    numbers: [{ label: "Work", entered: shared, is_primary: true }],
+  });
+  const mixed = await lookupNumber(p, { number: "+61412000111" });
+  assert.deepEqual(mixed.matches.map((m) => m.party.id).sort(), [alex, blair, CRM.org].sort());
+  assert.deepEqual((await lookupNumber(await principal("other-workspace"), { number: "+61412000111" })).matches, []);
+});

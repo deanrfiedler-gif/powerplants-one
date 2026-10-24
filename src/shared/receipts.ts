@@ -1,4 +1,5 @@
 import { conversationReceiptAuthority } from "../conversations/access";
+import { callEventReceiptAuthority } from "../calls/events";
 import { conversationObjectTypes } from "../conversations/model";
 import { receiptAuthority as specialistWorkReceiptAuthority } from "../projects/specialist/work/context";
 import { packageReceiptAuthority } from "../cpq/package-context";
@@ -262,8 +263,7 @@ export async function readOperation(
     await personEditAuthority(client, p, r.record_id);
   } else if (r.object_type === "CallEvent") {
     // A call event is its owner's alone; a purged skipped event has no receipt left to disclose.
-    if (!(await client.query("SELECT 1 FROM ppo.call_events WHERE workspace_id=$1 AND id=$2 AND user_id=$3", [p.workspace_id, r.record_id, p.actor_id])).rowCount)
-      throw unavailable();
+    await callEventReceiptAuthority(client, p, r.record_id);
   } else if (r.command === "SetPartyNumbers" && r.object_type === "Organisation") {
     const row = await visible(client, p, "Organisation", r.record_id);
     await companyContext(client, p, row.company_id, null, "shared.edit");

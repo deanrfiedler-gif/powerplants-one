@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { randomUUID } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import { migrate, seed } from "../../scripts/database";
 import { closeDatabase, database } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
@@ -88,14 +88,14 @@ test("0118 constraints refuse two primaries, two parties, unread numbers not nee
   await number({});
   const event = (state: string) =>
     database().query(
-      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,started_at,state,resolved_at,resolved_by,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,clock_timestamp(),$6,clock_timestamp(),$3,$3)",
-      [randomUUID(), workspace_id, created_by, randomUUID(), person(1), state],
+      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_key,direction,number_e164,person_id,started_at,state,resolved_at,resolved_by,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,clock_timestamp(),$6,clock_timestamp(),$3,$3)",
+      [randomUUID(), workspace_id, created_by, randomBytes(32).toString("hex"), person(1), state],
     );
   await assert.rejects(event("Logged"), violates("23514"));
   await assert.rejects(
     database().query(
-      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,organisation_id,started_at,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,$6,clock_timestamp(),$3)",
-      [randomUUID(), workspace_id, created_by, randomUUID(), person(1), organisation],
+      "INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_key,direction,number_e164,person_id,organisation_id,started_at,created_by) VALUES($1,$2,$3,'ClickToCall',$4,'Outgoing','+61412345679',$5,$6,clock_timestamp(),$3)",
+      [randomUUID(), workspace_id, created_by, randomBytes(32).toString("hex"), person(1), organisation],
     ),
     violates("23514"),
   );

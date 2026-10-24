@@ -47,7 +47,7 @@ async function context(c: QueryClient, p: Principal, party: PartyType, id: strin
   const args = [p.workspace_id, p.actor_id, id];
   const organisations =
     party === "Organisation"
-      ? (await c.query(`SELECT o.id,o.display_name FROM ppo.organisations o WHERE o.workspace_id=$1 AND o.id=$3`, args)).rows
+      ? (await c.query(`SELECT o.id,o.display_name FROM ppo.organisations o WHERE o.workspace_id=$1 AND o.id=$2`, [p.workspace_id, id])).rows
       : (
           await c.query(
             `SELECT DISTINCT o.id,o.display_name FROM ppo.relationships r JOIN ppo.organisations o ON (o.workspace_id,o.id)=(r.workspace_id,r.organisation_id)

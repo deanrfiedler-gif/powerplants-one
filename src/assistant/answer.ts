@@ -40,11 +40,14 @@ const coverageNames = {
   opportunities: "opportunities", activities: "Internal Activities", tasks: "tasks",
   raid: "open RAID entries", messages: "thread messages", acceptance_stages: "acceptance stages",
 } as const;
-export function coverageLines(envelope: Pick<EvidenceEnvelope, "coverage" | "left_out">): string[] {
+export function coverageLines(envelope: Pick<EvidenceEnvelope, "coverage" | "left_out" | "history_left_out">): string[] {
   const lines = Object.entries(envelope.coverage).flatMap(([key, c]) => c.more
     ? [`Coverage: ${c.returned} ${coverageNames[key as keyof typeof coverageNames]} shown (limit ${c.limit}; more exist).`] : []);
-  if (envelope.left_out > 0)
-    lines.push(`${envelope.left_out} ${envelope.left_out === 1 ? "source" : "sources"} left out because not everyone here can see them.`);
+  const history = envelope.history_left_out ?? 0, access = envelope.left_out - history;
+  if (access > 0)
+    lines.push(`${access} ${access === 1 ? "source" : "sources"} left out because not everyone here can see them.`);
+  if (history > 0)
+    lines.push(`${history} earlier ${history === 1 ? "message" : "messages"} left out to fit the request allowance.`);
   return lines;
 }
 export function claimLine(claim: Pick<StoredClaim, "kind" | "text" | "source_numbers">): string {
@@ -59,7 +62,8 @@ export function answerFooter(body: string, claims: StoredClaim[]): string {
   const names = Object.values(coverageNames).join("|");
   const coverage = new RegExp(`^Coverage: \\d+ (${names}) shown \\(limit \\d+; more exist\\)\\.$`);
   return suffix.slice(1).split("\n").every(line => coverage.test(line)
-    || /^\d+ sources? left out because not everyone here can see them\.$/.test(line)) ? suffix : "";
+    || /^\d+ sources? left out because not everyone here can see them\.$/.test(line)
+    || /^\d+ earlier messages? left out to fit the request allowance\.$/.test(line)) ? suffix : "";
 }
 export function renderAnswer(checked: CheckedAnswer, envelope: EvidenceEnvelope): {
   body: string; claims: StoredClaim[]; sources: StoredSource[];

@@ -1,11 +1,13 @@
+import { createHash } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
 import { AppError, unavailable } from "../platform/errors";
-import { sharedOperation } from "../platform/operations";
+import { canonical, sharedOperation } from "../platform/operations";
+import { visibleActivity } from "../activities/activities";
 import { requireCapability, type QueryClient } from "../platform/permissions";
 import { visible } from "../shared/reads";
-import { choice, common, commonKeys, object, uuid, version } from "../shared/validation";
+import { choice, common, commonKeys, invalid, object, uuid, version } from "../shared/validation";
 import { matchingParties } from "./lookup";
 import { skipReasons, type PartyType, callDirections, callSources } from "./numbers";
 
@@ -34,6 +36,13 @@ export async function purgeSkippedCallEvents(c: QueryClient, p: Principal) {
 // R3: a number matching nobody this user may read stores nothing. R8: a repeated source reference
 // returns the event already recorded. R5: the party is recorded only when it is unambiguous.
 export async function ingestCallEvent(c: PoolClient, p: Principal, e: IncomingCall) {
+  await requireCapability(c, p, "shared.read");
+  if (typeof e.source_reference !== "string" || !e.source_reference.length || e.source_reference.length > 200)
+    invalid("source_reference", "Provide a source reference of 1–200 characters.");
+  // Retain only an opaque deduplication key, never a provider reference that may contain call data.
+  const sourceKey = createHash("sha256").update(canonical({ source: e.source, reference: e.source_reference })).digest("hex");
+  // Every source is serialised here, including future callers that do not use sharedOperation.
+  await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [p.workspace_id]);
   const matches = await matchingParties(c, p, e.number_e164);
   if (!matches.length) return null;
   const party =
@@ -42,19 +51,26 @@ export async function ingestCallEvent(c: PoolClient, p: Principal, e: IncomingCa
   // Look before inserting: the identity trigger runs before any ON CONFLICT clause, so a skipped
   // duplicate insert would leave an identity without its event. Callers hold the workspace lock.
   const existing = (
-    await c.query(`SELECT ${eventColumns} FROM ppo.call_events WHERE workspace_id=$1 AND source=$2 AND source_reference=$3`, [
+    await c.query(`SELECT ${eventColumns} FROM ppo.call_events WHERE workspace_id=$1 AND source_key=$2`, [
       p.workspace_id,
-      e.source,
-      e.source_reference,
+      sourceKey,
     ])
   ).rows[0];
-  if (existing) return existing;
+  if (existing) {
+    if (existing.user_id !== p.actor_id) throw unavailable();
+    if (existing.person_id) await visible(c, p, "Person", existing.person_id);
+    if (existing.organisation_id) await visible(c, p, "Organisation", existing.organisation_id);
+    if (existing.activity_id) await visibleActivity(c, p, existing.activity_id);
+    return existing;
+  }
+  if ((await c.query("SELECT 1 FROM ppo.business_identities WHERE workspace_id=$1 AND id=$2", [p.workspace_id, e.id])).rowCount)
+    throw new AppError(409, "RelationshipConflict", "This call event identity has already been used.");
   return (
     await c.query(
-      `INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_reference,direction,number_e164,person_id,organisation_id,started_at,answered,duration_seconds,created_by)
+      `INSERT INTO ppo.call_events(id,workspace_id,user_id,source,source_key,direction,number_e164,person_id,organisation_id,started_at,answered,duration_seconds,created_by)
        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,coalesce($10::timestamptz,clock_timestamp()),$11,$12,$3) RETURNING ${eventColumns}`,
       [
-        e.id, p.workspace_id, p.actor_id, e.source, e.source_reference, e.direction, e.number_e164,
+        e.id, p.workspace_id, p.actor_id, e.source, sourceKey, e.direction, e.number_e164,
         party?.type === "Person" ? party.id : null, party?.type === "Organisation" ? party.id : null,
         e.started_at ?? null, e.answered, e.duration_seconds,
       ],
@@ -71,6 +87,9 @@ export async function recordClickToCall(p: Principal, input: unknown) {
     command,
     "RecordClickToCall",
     async (c) => {
+      // Authorisation precedes receipt replay: a purged identity can never resurrect its receipt.
+      const priorIdentity = (await c.query("SELECT 1 FROM ppo.business_identities WHERE workspace_id=$1 AND id=$2", [p.workspace_id, command.id])).rowCount;
+      if (priorIdentity) await callEventReceiptAuthority(c, p, command.id);
       const number = (
         await c.query("SELECT * FROM ppo.contact_numbers WHERE workspace_id=$1 AND id=$2", [p.workspace_id, command.number_id])
       ).rows[0];
@@ -82,7 +101,7 @@ export async function recordClickToCall(p: Principal, input: unknown) {
       return { number, type };
     },
     async (c, { number, type }) => {
-      if ((await c.query("SELECT 1 FROM ppo.call_events WHERE workspace_id=$1 AND id=$2", [p.workspace_id, command.id])).rowCount)
+      if ((await c.query("SELECT 1 FROM ppo.business_identities WHERE workspace_id=$1 AND id=$2", [p.workspace_id, command.id])).rowCount)
         throw new AppError(409, "RelationshipConflict", "This call event already exists.");
       await purgeSkippedCallEvents(c, p);
       const event = await ingestCallEvent(c, p, {
@@ -98,7 +117,8 @@ export async function recordClickToCall(p: Principal, input: unknown) {
       if (!event) throw unavailable();
       if (event.id !== command.id)
         throw new AppError(409, "RelationshipConflict", "This call event already exists.");
-      return { ...event, audit_details: { number_id: number.id, number_e164: number.e164 } };
+      // Call facts live only on the purgeable event, not in append-only audit/outbox evidence.
+      return event;
     },
     "CallEvent",
     "CallEventRecorded",
@@ -147,6 +167,13 @@ export async function ownEvent(c: QueryClient, p: Principal, id: string) {
   return event;
 }
 
+export async function callEventReceiptAuthority(c: QueryClient, p: Principal, id: string) {
+  await requireCapability(c, p, "shared.read");
+  const event = (await c.query("SELECT user_id,activity_id FROM ppo.call_events WHERE workspace_id=$1 AND id=$2", [p.workspace_id, id])).rows[0];
+  if (!event || event.user_id !== p.actor_id) throw unavailable();
+  if (event.activity_id) await visibleActivity(c, p, event.activity_id);
+}
+
 export function openEvent(event: { version: number; state: string }, expectedVersion?: number) {
   if (expectedVersion !== undefined && event.version !== expectedVersion)
     throw new AppError(409, "VersionConflict", "This call changed. Reload Calls to log and try again.");
@@ -180,7 +207,7 @@ export async function skipCallEvent(p: Principal, id: string, input: unknown) {
         )
       ).rows[0];
       await purgeSkippedCallEvents(c, p);
-      return { ...row, audit_details: { previous_version: event.version, skip_reason: command.skip_reason } };
+      return { ...row, audit_details: { previous_version: event.version } };
     },
     "CallEvent",
     "CallEventSkipped",
