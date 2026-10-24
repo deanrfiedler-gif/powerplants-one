@@ -99,7 +99,7 @@ test("logging a clicked call completes one Call activity with its details and ma
     await assert.rejects(ingestCallEvent(c, p, {
       id: randomUUID(), source: "ClickToCall", source_reference: event.id, direction: "Outgoing",
       number_e164: "+61412555000", answered: null, duration_seconds: null,
-    }), code("RecordUnavailable"));
+    }), code("Forbidden"));
     throw rollback;
   }), (error) => error === rollback);
   await assert.rejects(database().query("UPDATE ppo.call_events SET number_e164='+61412555000' WHERE id=$1", [event.id]), code("23514"));
