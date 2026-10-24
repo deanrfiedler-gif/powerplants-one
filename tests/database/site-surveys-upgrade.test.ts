@@ -106,7 +106,7 @@ test("0114 preserves populated 0109 references, ledgers and immutable survey sna
       assert.deepEqual(shape(afterGrants.filter(g => !ids.has(g.id))), shape(agentAskSeedGrants(originalGrants)));
     } else if (table === "seed_receipts") {
       assert.deepEqual(upgraded[i].filter(x => x.row.version <= 109), originals[i]);
-      assert.deepEqual(upgraded[i].filter(x => x.row.version > 109).map(x => x.row.version), [110]);
+      assert.deepEqual(upgraded[i].filter(x => x.row.version > 109).map(x => x.row.version), [110, 120]);
     } else assert.deepEqual(upgraded[i], originals[i]);
   }
   assert.deepEqual(
@@ -145,7 +145,7 @@ test("0114 preserves populated 0109 references, ledgers and immutable survey sna
         "SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version",
       )
     ).rows,
-    [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }],
+    [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 120 }],
   );
   const orgId = randomUUID();
   await createOrganisation(p, {

@@ -1,3 +1,6 @@
+import { nextWorkingVisit, siteContactInput } from "./site-readiness";
+import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
+import { addDays } from "../../src/scheduling/time";
 import { showPackReadiness } from "./job-pack-design";
 import { observedResponse } from "./observed-response";
 import {
@@ -167,12 +170,17 @@ export async function issuePack(page: Page, pid: string) {
   ).toBeVisible({ timeout: 60000 });
 }
 
-// Every creation, scope/readiness decision, booking, contact and pack mutation
-// below uses the actual UI. HTTP reads only inspect what those commands saved.
+// The retained creation, authorisation, booking, date-contact and pack journey
+// uses the actual UI. P4 has no implemented UI yet: its prerequisite is recorded
+// explicitly through the real contact API and is not claimed as a UI proof.
+// Its isolated synthetic crew/calendar evidence is test setup, never a waiver.
 export async function prepareJourney(page: Page, info: TestInfo) {
   const mobile = info.project.name.startsWith("mobile");
-  const day = mobile ? "2031-11-11" : "2031-11-10";
-  const movedDay = mobile ? "2031-11-13" : "2031-11-12";
+  const day = nextWorkingVisit().slice(0,10);
+  let movedDay = addDays(day, 1);
+  while ([0,6].includes(new Date(`${movedDay}T12:00:00Z`).getUTCDay())) movedDay = addDays(movedDay,1);
+  const moveDays = Math.round((Date.parse(movedDay)-Date.parse(day))/86400000);
+  const crew = await siteReadinessFixtureCrew();
   const summary = `SYN P11 integrated inspection ${info.project.name}`;
   // The document load event precedes the actor-scoped customer read. Observe
   // that real response within the existing action budget before asserting its UI.
@@ -536,14 +544,14 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     name: "Confirm appointment",
     exact: true,
   });
-  for (const [i, resource] of [9, 2].entries()) {
+  for (const [i, resource] of crew.entries()) {
     if (i)
       await booking
         .getByRole("button", { name: "Add crew member", exact: true })
         .click();
     await booking
       .getByLabel(`Resource ${i + 1}`, { exact: true })
-      .selectOption(id("a4", resource));
+      .selectOption(resource);
     await booking
       .getByLabel(`Travel before ${i + 1} (minutes)`, { exact: true })
       .fill("30");
@@ -571,6 +579,8 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       (a: { active: boolean }) => a.active,
     ),
   ).toHaveLength(2);
+  const current = (await call(page, `appointments/${aid}`)).items[0];
+  await call(page, `appointments/${aid}/contacts`, siteContactInput(current.version));
   await page.goto(`/service/packs/new?appointment_id=${aid}`);
   await page.getByRole("checkbox", { name: /SYN visual inspection/ }).check();
   for (const k of [
@@ -682,12 +692,12 @@ export async function prepareJourney(page: Page, info: TestInfo) {
     await keyAdvanceDays(
       page,
       move.getByLabel("Start (site time)", { exact: true }),
-      2,
+      moveDays,
     );
     await keyAdvanceDays(
       page,
       move.getByLabel("Finish (site time)", { exact: true }),
-      2,
+      moveDays,
     );
     await expect(
       move.getByLabel("Start (site time)", { exact: true }),
@@ -708,6 +718,8 @@ export async function prepareJourney(page: Page, info: TestInfo) {
       ),
     );
     await contact(page, aid, "Confirmed");
+    const moved = (await call(page, `appointments/${aid}`)).items[0];
+    await call(page, `appointments/${aid}/contacts`, siteContactInput(moved.version));
     await capture(page, info, "journey-controlled-move");
     await page.goto(`/service/packs/${pid}`);
     await page

@@ -56,7 +56,7 @@ test("Populated 0102 upgrade retains an assigned DK06-OUT09-1 publication and qu
       tables.map((t) =>
         rows(
           // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110,120)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );
@@ -71,7 +71,7 @@ test("Populated 0102 upgrade retains an assigned DK06-OUT09-1 publication and qu
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
   assert.deepEqual(
     upgraded.slice(ledger.length).map((r) => r.version),
-    [103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118],
+    [103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120],
   );
   await migrate();
   await seed();
