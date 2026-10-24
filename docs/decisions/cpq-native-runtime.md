@@ -2,6 +2,8 @@
 
 > **Direction change — 17 October 2026:** Dean adopted the [estimating hub, CPQ and workbench model](estimating-configurator-model.md) (PPO-EST-CONFIGURATOR-MODEL-DEC). It **amends** this record (CM2, CM3): CPQ becomes the single priced line table. Each line has one origin (Rule, Workbench or Manual), each with its own replacement rule. An Express workspace can run CPQ without a Complete discovery (Q1). The text below is retained as written; running behaviour changes only when the matching build step (B0–B6) is delivered.
 
+> **Amended by [ADR-0066](ADR-0066-configuration-rule-sets.md) — 24 October 2026:** "full no-code rule authoring" moves from tracked work in this record to configuration rule sets, which extend this interpreter with a new definition schema. The interpreter stays restricted and deterministic, inside the existing worker limits.
+
 <!-- versioning: git; committed history is authoritative -->
 
 Owner: Dean Fiedler. Implementation authorised in the 12 October 2026 CPQ conversation. Technical choice recorded before implementation; owner visual and operational acceptance remain pending.
