@@ -1,7 +1,7 @@
 // Several rule sets on one job (ADR-0066 Q11): values pass from earlier rule sets to later ones,
 // and a part produced by more than one is flagged. How a flagged part is counted is each family's
 // policy, so the engine never merges it.
-import { tryRunRuleSet, type RunResult, type RunStopped } from "./evaluate";
+import { newBudget, tryRunRuleSet, type RunResult, type RunStopped } from "./evaluate";
 import { RuleSetStop } from "./model";
 import type { CheckedRuleSet } from "./validate";
 
@@ -23,6 +23,7 @@ export function runTogether(steps: JobStep[]): JobResult {
   const names = new Set<string>();
   const done = new Map<string, RunResult | RunStopped>();
   const out: JobResult["steps"] = [];
+  const budget = newBudget();
   for (const step of steps) {
     if (names.has(step.name)) throw new RuleSetStop("STEP_DUPLICATE", `Step “${step.name}” appears twice in the job`);
     names.add(step.name);
@@ -38,13 +39,13 @@ export function runTogether(steps: JobStep[]): JobResult {
         result = { status: "Stopped", code: "UPSTREAM_STOPPED", message: `${step.name} needs ${from.step}, which stopped: ${source.message}` };
         break;
       }
-      if (!(from.value in source.passes)) {
+      if (!Object.hasOwn(source.passes, from.value)) {
         result = { status: "Stopped", code: "PASS_MISSING", message: `${from.step} does not pass a value called ${from.value}` };
         break;
       }
       inputs[input] = source.passes[from.value];
     }
-    result ??= tryRunRuleSet(step.rule_set, inputs);
+    result ??= tryRunRuleSet(step.rule_set, inputs, budget);
     done.set(step.name, result);
     out.push({ name: step.name, rule_set: step.rule_set.definition.key, result });
   }

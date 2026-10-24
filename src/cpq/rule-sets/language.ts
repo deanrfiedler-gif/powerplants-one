@@ -124,21 +124,22 @@ export function parse(source: string): Node {
     if (depth > LIMITS.formulaDepth) fail("FORMULA_LIMIT", `A formula can nest at most ${LIMITS.formulaDepth} deep`);
   };
 
+  // Depth counts brackets, function arguments, minus signs and "not", not grammar levels.
   const or = (d: number): Node => {
     guard(d);
-    let a = and(d + 1);
+    let a = and(d);
     while (isWord("or")) {
       i++;
-      a = { k: "or", a, b: and(d + 1) };
+      a = { k: "or", a, b: and(d) };
     }
     return a;
   };
   const and = (d: number): Node => {
     guard(d);
-    let a = not(d + 1);
+    let a = not(d);
     while (isWord("and")) {
       i++;
-      a = { k: "and", a, b: not(d + 1) };
+      a = { k: "and", a, b: not(d) };
     }
     return a;
   };
@@ -148,15 +149,15 @@ export function parse(source: string): Node {
       i++;
       return { k: "not", a: not(d + 1) };
     }
-    return compare(d + 1);
+    return compare(d);
   };
   const compare = (d: number): Node => {
     guard(d);
-    const a = sum(d + 1);
+    const a = sum(d);
     const t = peek();
     if (t?.kind === "symbol" && ["=", "<>", "<", "<=", ">", ">="].includes(t.text)) {
       i++;
-      const node: Node = { k: "compare", op: t.text as CompareOp, a, b: sum(d + 1) };
+      const node: Node = { k: "compare", op: t.text as CompareOp, a, b: sum(d) };
       const after = peek();
       if (after?.kind === "symbol" && ["=", "<>", "<", "<=", ">", ">="].includes(after.text))
         fail("FORMULA_SYNTAX", `Comparisons cannot be chained; use “and” (character ${after.at + 1})`);
@@ -166,19 +167,19 @@ export function parse(source: string): Node {
   };
   const sum = (d: number): Node => {
     guard(d);
-    let a = product(d + 1);
+    let a = product(d);
     while (isSymbol("+") || isSymbol("-")) {
       const op = tokens[i++].text as "+" | "-";
-      a = { k: "arith", op, a, b: product(d + 1) };
+      a = { k: "arith", op, a, b: product(d) };
     }
     return a;
   };
   const product = (d: number): Node => {
     guard(d);
-    let a = unary(d + 1);
+    let a = unary(d);
     while (isSymbol("*") || isSymbol("/")) {
       const op = tokens[i++].text as "*" | "/";
-      a = { k: "arith", op, a, b: unary(d + 1) };
+      a = { k: "arith", op, a, b: unary(d) };
     }
     return a;
   };
@@ -188,7 +189,7 @@ export function parse(source: string): Node {
       i++;
       return { k: "negate", a: unary(d + 1) };
     }
-    return primary(d + 1);
+    return primary(d);
   };
   const primary = (d: number): Node => {
     guard(d);
@@ -363,7 +364,9 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
         if (args.length - 2 !== table.keys.length)
           fail("FORMULA_ARGUMENT", `Table “${tableKey}” is looked up by ${table.keys.length} key${table.keys.length === 1 ? "" : "s"}`);
         table.keys.forEach((k, idx) => {
-          const keyType = table.columns.find((c) => c.key === k.column)!.type;
+          const keyType =
+            table.columns.find((c) => c.key === k.column)?.type ??
+            fail("FORMULA_TABLE", `Table “${tableKey}” has a key with no column`);
           need(args[idx + 2], keyType, `Key ${idx + 1} of “${tableKey}” (${k.column})`);
         });
         tables.add(tableKey);

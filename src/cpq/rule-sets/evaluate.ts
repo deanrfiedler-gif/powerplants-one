@@ -28,6 +28,10 @@ export type RunResult = {
 
 export type RunStopped = { status: "Stopped"; code: string; message: string };
 
+/** Steps left for every case in one test or job. */
+export type Budget = { remaining: number };
+export const newBudget = (): Budget => ({ remaining: LIMITS.totalSteps });
+
 const ZERO = new Fraction(0n);
 
 /** An exact decimal where one exists to 12 places, otherwise a fraction such as "1/3". */
@@ -57,7 +61,7 @@ export function orderQuantity(q: Fraction, ordering: Ordering): Fraction {
 }
 
 /** Runs one case; stops with a reason instead of guessing when something is missing. */
-export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string>): RunResult {
+export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string>, budget: Budget = newBudget()): RunResult {
   const def = checked.definition;
   const values = new Map<string, Value>();
   const rowsRead = new Set<string>();
@@ -71,8 +75,13 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
     throw new RuleSetStop(code, message);
   };
 
-  const evaluate = (n: Node): Value => {
+  const step = () => {
     if (++steps > LIMITS.evaluationSteps) stop("COMPUTATION_LIMIT", "The case needs too many steps to work out");
+    if (--budget.remaining < 0) stop("COMPUTATION_LIMIT", "The cases together need too many steps to work out");
+  };
+
+  const evaluate = (n: Node): Value => {
+    step();
     switch (n.k) {
       case "number":
         return Fraction.fromDecimal(n.value);
@@ -150,7 +159,7 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
         const keys = args.slice(2).map(evaluate);
         const types = new Map(table.columns.map((c) => [c.key, c.type]));
         for (let i = 0; i < table.rows.length; i++) {
-          if (++steps > LIMITS.evaluationSteps) stop("COMPUTATION_LIMIT", "The case needs too many steps to work out");
+          step();
           const row = table.rows[i];
           const hit = table.keys.every((k, idx) => {
             const want = keys[idx];
@@ -192,7 +201,7 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
       const asked = askedWhen ? (evaluate(askedWhen.tree) as boolean) : true;
       let raw: string;
       let from: "Given" | "Default";
-      if (asked && typeof given[input.key] === "string") {
+      if (asked && Object.hasOwn(given, input.key) && typeof given[input.key] === "string") {
         raw = given[input.key];
         from = "Given";
       } else if ((!asked || !input.required) && input.default !== null) {
@@ -208,13 +217,13 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
     }
 
     // 2. Derived values in list order.
-    const derivedOut: Record<string, string> = {};
+    const derivedOut = Object.create(null) as Record<string, string>;
     for (const d of def.derived) {
       const v = evaluate(checked.derived.get(d.key)!.tree);
       values.set(d.key, v);
       derivedOut[d.key] = show(v);
     }
-    const passes: Record<string, string> = {};
+    const passes = Object.create(null) as Record<string, string>;
     for (const p of def.passes) passes[p.key] = show(evaluate(checked.passes.get(p.key)!.tree));
 
     // 3. Materials rules, then Labour rules, each in list order.
@@ -265,9 +274,13 @@ export function runRuleSet(checked: CheckedRuleSet, given: Record<string, string
 }
 
 /** Runs one case and reports a stop as a result rather than an error. */
-export function tryRunRuleSet(checked: CheckedRuleSet, given: Record<string, string>): RunResult | RunStopped {
+export function tryRunRuleSet(
+  checked: CheckedRuleSet,
+  given: Record<string, string>,
+  budget: Budget = newBudget(),
+): RunResult | RunStopped {
   try {
-    return runRuleSet(checked, given);
+    return runRuleSet(checked, given, budget);
   } catch (e) {
     if (e instanceof RuleSetStop) return { status: "Stopped", code: e.code, message: e.message };
     throw e;

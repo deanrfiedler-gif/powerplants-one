@@ -531,3 +531,137 @@ test("the isolated CPQ worker checks and runs rule sets as data", async () => {
   const badStep = await ruleSetJobIsolated([{ name: "control", definition: broken, inputs: {}, receive: {} }]);
   assert.ok(!badStep.valid && "step" in badStep && badStep.step === "control");
 });
+
+test("review: a half-invalid table is reported, never thrown", () => {
+  const missing = clone(synControl());
+  missing.tables[0].keys[0].column = "nope";
+  const a = issues(missing);
+  assert.ok(a.some((i) => i.path === "tables[0].keys[0].column" && i.code === "TABLE"));
+  assert.ok(a.some((i) => i.code === "FORMULA_TABLE"));
+
+  const untyped = clone(synControl());
+  (untyped.tables[0].columns[0] as { type: unknown }).type = undefined;
+  assert.ok(issues(untyped).some((i) => i.path === "tables[0].columns[0].type"));
+
+  const ctor = clone(synFertigation());
+  ctor.tables[0].columns[1].key = "constructor";
+  ctor.tables[0].keys[1].column = "constructor";
+  for (const row of ctor.tables[0].rows) delete row.max_flow;
+  ctor.derived[0].formula = 'lookup("unit_by_flow", "part", family, mainline_flow)';
+  const c = issues(ctor);
+  assert.ok(c.some((i) => i.code === "TABLE" && /constructor/.test(i.message)));
+});
+
+test("review: a column called constructor works like any other", () => {
+  const raw = clone(synFertigation());
+  raw.tables[0].columns[1].key = "constructor";
+  raw.tables[0].keys[1].column = "constructor";
+  raw.tables[0].rows = raw.tables[0].rows.map(({ max_flow, ...rest }) => ({ ...rest, constructor: max_flow }));
+  const run = runRuleSet(validateRuleSet(raw), { family: "SynJet", mainline_flow: "50", units: "1" });
+  assert.equal(run.values.unit_part, "SYN-FERT-JET600");
+});
+
+test("review: odd expected values are compared, never thrown", () => {
+  const raw = clone(synScreen());
+  lines(raw.reference_cases[0]).values.drives = "1/0";
+  lines(raw.reference_cases[1]).values.drives = `1/${"9".repeat(290)}`;
+  const t = testRuleSet(raw);
+  assert.ok(t.valid);
+  if (!t.valid) return;
+  assert.equal(t.cases[0].status, "Fail");
+  assert.equal(t.cases[1].status, "Fail");
+  lines(raw.reference_cases[0]).values.drives = "x".repeat(301);
+  assert.ok(codes(raw).includes("LIMIT"));
+});
+
+test("review: malformed jobs and inherited names are refused cleanly", async () => {
+  const { ruleSetWork } = await import("../../src/cpq/rule-sets/entry");
+  const def = synControl();
+  const bad = (steps: unknown) => ruleSetWork({ kind: "rule-set-job", steps } as never);
+  assert.equal(bad("x").valid, false);
+  assert.equal(bad([null]).valid, false);
+  assert.equal(bad([{ name: "a", definition: def, inputs: {}, receive: { x: null } }]).valid, false);
+  assert.equal(bad(Array.from({ length: 21 }, (_, i) => ({ name: `s${i}`, definition: def, inputs: {}, receive: {} }))).valid, false);
+
+  const fert = validateRuleSet(synFertigation());
+  const ctrl = validateRuleSet(synControl());
+  const job = runTogether([
+    { name: "fertigation", rule_set: fert, inputs: { family: "SynOne", mainline_flow: "5", units: "1" }, receive: {} },
+    { name: "control", rule_set: ctrl, inputs: { controller: "Compact", relay_outputs_needed: "1" }, receive: { water_systems: { step: "fertigation", value: "constructor" } } },
+  ]);
+  const r = job.steps[1].result;
+  assert.equal(r.status === "Stopped" && r.code, "PASS_MISSING");
+
+  const inherited = tryRunRuleSet(ctrl, Object.assign(Object.create({ water_systems: "5" }), { controller: "Compact", relay_outputs_needed: "1" }));
+  assert.ok(inherited.status === "Done" && inherited.inputs.find((i) => i.key === "water_systems")?.from === "Default");
+});
+
+test("review: realistic nesting is allowed and the depth limit counts brackets", () => {
+  for (const ok of ["((((1))))", "max(1, min(2, ceil(floor(a))))", "round(max(0, ceil((a - 1) / 2)) * 3, 2)", "not not not flag"])
+    assert.equal(formulaCode(ok), "OK", ok);
+  assert.equal(formulaCode("(".repeat(33) + "1" + ")".repeat(33)), "FORMULA_LIMIT");
+});
+
+test("review: one range key per table, and reserved words are not keys", () => {
+  const grid = clone(synFertigation());
+  grid.tables[0].columns.push({ key: "pressure", type: "Number" });
+  grid.tables[0].keys.push({ column: "pressure", match: "AtLeast" });
+  grid.tables[0].rows = grid.tables[0].rows.map((r) => ({ ...r, pressure: "5" }));
+  assert.ok(issues(grid).some((i) => i.path === "tables[0].keys" && /only one range key/.test(i.message)));
+
+  for (const word of ["true", "and", "lookup"]) {
+    const raw = clone(synControl());
+    raw.derived[1].key = word;
+    assert.ok(issues(raw).some((i) => i.path === "derived[1].key" && i.code === "RESERVED"), word);
+  }
+});
+
+test("review: coverage reads the values cases ran with, and compares parsed conditions", () => {
+  const raw = clone(synScreen());
+  raw.inputs.push({
+    key: "seal",
+    label: "Seal colour",
+    question: "Seal colour?",
+    unit: "",
+    type: "Choice",
+    choices: ["Grey", "Black"],
+    minimum: null,
+    maximum: null,
+    default: "Grey",
+    required: false,
+    asked_when: "spans > 5",
+  });
+  raw.reference_cases[0].inputs.seal = "Black";
+  raw.rules.push({ ...raw.rules[5], key: "hooks_spaced", when: 'edge_fixing="Hooks"' });
+  const t = testRuleSet(raw);
+  assert.ok(t.valid);
+  if (!t.valid) return;
+  assert.ok(t.coverage.some((f) => f.code === "OPTION_UNTESTED" && /Black/.test(f.message)));
+  assert.ok(t.coverage.some((f) => f.code === "DUPLICATE_RULE" && f.subject === "hooks_spaced"));
+});
+
+test("review: every case in one test shares a step budget", () => {
+  const raw = clone(synControl());
+  const rows = Array.from({ length: 1997 }, (_, i) => ({ controller: `C${i}`, relay_outputs: "1", part: "SYN-CTRL-C2" }));
+  raw.tables[0].rows = [...rows, ...raw.tables[0].rows];
+  for (let i = 0; i < 30; i++)
+    raw.derived.push({
+      key: `heavy_${i}`,
+      label: `Heavy ${i}`,
+      unit: "",
+      formula: Array.from({ length: 3 }, () => 'lookup("builtin_io", "relay_outputs", controller)').join(" + "),
+    });
+  raw.reference_cases = Array.from({ length: 12 }, (_, i) => ({
+    key: `case_${i}`,
+    label: `Case ${i}`,
+    source: "Budget test",
+    inputs: { controller: "Compact", relay_outputs_needed: "1" },
+    expected: { stop: "NONE" },
+  }));
+  const t = testRuleSet(raw);
+  assert.ok(t.valid);
+  if (!t.valid) return;
+  assert.equal(t.cases[0].run.status, "Done");
+  const last = t.cases[11].run;
+  assert.ok(last.status === "Stopped" && last.code === "COMPUTATION_LIMIT" && /together/.test(last.message));
+});

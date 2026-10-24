@@ -6,6 +6,7 @@ import {
   KEY,
   LIMITS,
   PART_KEY,
+  RESERVED,
   RuleSetInvalid,
   type Issue,
   type Ordering,
@@ -70,7 +71,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     throw new RuleSetInvalid([{ path: "", code: "SHAPE", message: "The rule set is not plain data" }]);
   }
   if (size > LIMITS.bytes)
-    throw new RuleSetInvalid([{ path: "", code: "LIMIT", message: `The rule set is ${size} bytes; the limit is ${LIMITS.bytes}` }]);
+    throw new RuleSetInvalid([{ path: "", code: "LIMIT", message: `The rule set is ${size} characters; the limit is ${LIMITS.bytes}` }]);
   if (!isObject(raw)) throw new RuleSetInvalid([{ path: "", code: "SHAPE", message: "Expected a rule set object" }]);
 
   const text = (v: unknown, path: string, opts: { empty?: boolean; max?: number } = {}): string => {
@@ -177,7 +178,9 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     formula: text(o.formula, `${p}.formula`, { max: LIMITS.formulaCharacters }),
   }));
 
+  const brokenTables = new Set<string>();
   const tables: RuleSetTable[] = keyed(list(raw.tables, "tables", LIMITS.tables), "tables", KEY, names, (o, p, k) => {
+    const before = issues.length;
     const colSeen = new Map<string, string>();
     const columns = keyed(list(o.columns, `${p}.columns`, LIMITS.columns), `${p}.columns`, KEY, colSeen, (c, cp, ck) => {
       if (c.type !== "Number" && c.type !== "Text") add(`${cp}.type`, "TYPE", "Use Number or Text");
@@ -202,6 +205,8 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
       return [{ column, match }];
     });
     if (!keys.length) add(`${p}.keys`, "REQUIRED", "A table needs at least one key column");
+    if (keys.filter((x) => x.match !== "Exact").length > 1)
+      add(`${p}.keys`, "TABLE", "A table can have only one range key; split a grid into one table per exact value");
     if (keys.length >= columns.length && columns.length) add(`${p}.keys`, "TABLE", "A table needs a value column as well as its keys");
     const rows = list(o.rows, `${p}.rows`, LIMITS.rows).flatMap((r, i) => {
       const rp = `${p}.rows[${i}]`;
@@ -209,9 +214,10 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         add(rp, "SHAPE", "Expected an object");
         return [];
       }
-      const row: Record<string, string> = {};
+      // Rows have no prototype, so a column named like an Object property ("constructor") reads only its own value.
+      const row = Object.create(null) as Record<string, string>;
       for (const c of columns) {
-        const v = r[c.key];
+        const v = Object.hasOwn(r, c.key) ? r[c.key] : undefined;
         if (typeof v !== "string") add(`${rp}.${c.key}`, "TABLE", `Row ${i + 1} has no value for “${c.key}”`);
         else if (c.type === "Number" && !DECIMAL.test(v)) add(`${rp}.${c.key}`, "DECIMAL", `“${v}” is not a number`);
         else row[c.key] = v;
@@ -236,8 +242,13 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         last.set(group, { value: row[rk.column], row: i });
       });
     }
-    return { key: k, label: text(o.label, `${p}.label`), source: text(o.source, `${p}.source`), columns, keys, rows };
+    const table = { key: k, label: text(o.label, `${p}.label`), source: text(o.source, `${p}.source`), columns, keys, rows };
+    if (issues.length !== before) brokenTables.add(k);
+    return table;
   });
+
+  for (const [name, path] of names)
+    if (RESERVED.has(name)) add(`${path}.key`, "RESERVED", `“${name}” is a word the formula language uses; choose another key`);
 
   const partSeen = new Map<string, string>();
   const parts: RuleSetPart[] = keyed(list(raw.parts, "parts", LIMITS.parts), "parts", PART_KEY, partSeen, (o, p, k) => {
@@ -283,7 +294,8 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
   const types = new Map<string, ValueType>();
   const choices = new Map<string, ReadonlySet<string>>();
   for (const i of inputs) if (i.type === "Choice") choices.set(i.key, new Set(i.choices));
-  const tableMap = new Map(tables.map((t) => [t.key, t]));
+  // A table with problems is reported above and left out, so formulas never read a half-checked table.
+  const tableMap = new Map(tables.filter((t) => !brokenTables.has(t.key)).map((t) => [t.key, t]));
   const groups = new Set(parts.map((p) => p.group));
   const partKeys = new Set(parts.map((p) => p.key));
   const scope = (visible: Map<string, ValueType>, later: Iterable<string>, labour = false): Scope => ({
@@ -351,7 +363,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
   const derivedKeys = new Set(derivedRaw.map((d) => d.key));
   const inputMap = new Map(inputs.map((i) => [i.key, i]));
   const cases: ReferenceCase[] = keyed(list(raw.reference_cases, "reference_cases", LIMITS.cases), "reference_cases", KEY, caseSeen, (o, p, k) => {
-    const caseInputs: Record<string, string> = {};
+    const caseInputs = Object.create(null) as Record<string, string>;
     if (!isObject(o.inputs)) add(`${p}.inputs`, "SHAPE", "Expected an object of input values");
     else
       for (const [ik, iv] of Object.entries(o.inputs)) {
@@ -381,12 +393,13 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         lineParts.add(part);
         return [{ part, quantity: decimal(l.quantity, `${lp}.quantity`, { nonNegative: true }) ?? "0" }];
       });
-      const values: Record<string, string> = {};
+      const values = Object.create(null) as Record<string, string>;
       if (exp.values !== undefined && !isObject(exp.values)) add(`${p}.expected.values`, "SHAPE", "Expected an object");
       else
         for (const [vk, vv] of Object.entries(exp.values ?? {})) {
           if (!derivedKeys.has(vk)) add(`${p}.expected.values.${vk}`, "CASE_VALUE", `“${vk}” is not a derived value`);
           else if (typeof vv !== "string") add(`${p}.expected.values.${vk}`, "SHAPE", "Expected text");
+          else if (vv.length > LIMITS.text) add(`${p}.expected.values.${vk}`, "LIMIT", `At most ${LIMITS.text} characters`);
           else values[vk] = vv;
         }
       expected = { lines, values };

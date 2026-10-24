@@ -26,15 +26,15 @@ Status: R1 engine implemented with synthetic fixtures only. It stores nothing an
 | `passes` | Named values another rule set on the same job may receive (ADR-0066 Q11). |
 
 Validation refuses a definition with every problem it finds, each with a path such as `rules[3].when` and a code. The refusals include:
-- an invalid or duplicate key (inputs, derived values and tables share one namespace);
+- an invalid or duplicate key (inputs, derived values and tables share one namespace), or a key that is a word the language uses (`true`, `false`, `and`, `or`, `not` or a function name);
 - an input type, option list, bound or default that does not fit;
 - an optional or sometimes-asked input with no default;
 - a rule with both or neither of `part` and `choose`, or a fixed part that does not exist;
-- a table whose key column is missing, a range key on a text column, or range rows out of order within each group of equal exact keys;
+- a table whose key column is missing, with more than one range key (a grid is split into one table per exact value), a range key on a text column, or range rows out of order within each group of equal exact keys;
 - a part with an invalid ordering size or group;
 - reference cases that name unknown inputs, parts or derived values;
 - every formula error below;
-- the limits: 512 KB, 100 inputs, 100 derived values, 50 tables of up to 20 columns and 2,000 rows, 1,000 parts, 500 rules, 200 reference cases and 50 passed values.
+- the limits: 524,288 characters, 100 inputs, 100 derived values, 50 tables of up to 20 columns and 2,000 rows, 1,000 parts, 500 rules, 200 reference cases and 50 passed values.
 
 ## The formula language
 
@@ -55,7 +55,7 @@ Formulas are type-checked when the rule set is saved. The types are Number, Text
 - Comparing a Choice input with an option it does not have is refused.
 - `lookup` takes quoted table and column names and one key per table key, each of the key column's type.
 - `qty` and `minutes` appear only in Labour rules.
-- Limits are 2,048 characters, 256 tokens and nesting depth 32 per formula, and 200,000 evaluation steps per case.
+- Limits are 2,048 characters, 256 tokens and 32 levels of brackets, function arguments, minus signs and `not` per formula; 200,000 evaluation steps per case; and 2,000,000 steps across all the cases of one test or job, so a large rule set stops with `COMPUTATION_LIMIT` inside the worker's time limit.
 
 ## Working out a case
 
@@ -96,7 +96,7 @@ Accepting a blocking finding with a written reason belongs to storage and review
 
 ## Rule sets on one job
 
-`runTogether` runs rule sets in order on one job. A step can receive inputs from an earlier step's passed values, and the same rule set may run more than once, for example once per controller. A step whose source stopped, ran later or does not pass the named value stops with `UPSTREAM_STOPPED`, `STEP_ORDER` or `PASS_MISSING`. Every part produced by more than one step is listed in `shared_parts`. The engine never merges shared parts: how they count is each family's policy (for Priva, question J2 in the control decisions).
+`runTogether` runs up to 20 rule set steps in order on one job. A step can receive inputs from an earlier step's passed values, and the same rule set may run more than once, for example once per controller. A step whose source stopped, ran later or does not pass the named value stops with `UPSTREAM_STOPPED`, `STEP_ORDER` or `PASS_MISSING`. Every part produced by more than one step is listed in `shared_parts`. The engine never merges shared parts: how they count is each family's policy (for Priva, question J2 in the control decisions).
 
 ## Evidence
 

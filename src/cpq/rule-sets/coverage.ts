@@ -32,7 +32,8 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
   const seen = new Map<string, string>();
   for (const r of def.rules) {
     if (r.part === null) continue;
-    const sig = `${r.phase}\u0000${r.part}\u0000${r.when.replace(/\s+/g, "")}`;
+    // Compare parsed conditions, so spacing never makes two conditions look different or alike.
+    const sig = `${r.phase}\u0000${r.part}\u0000${JSON.stringify(checked.rules.get(r.key)!.when.tree)}`;
     const first = seen.get(sig);
     if (first)
       add("Blocking", "DUPLICATE_RULE", r.key, `Rules ${first} and ${r.key} give ${r.part} under the same condition`);
@@ -41,7 +42,16 @@ export function coverage(checked: CheckedRuleSet, cases: CaseResult[]): Finding[
 
   // A choice option no reference case selects.
   for (const input of def.inputs.filter((i) => i.type === "Choice")) {
-    const used = new Set(def.reference_cases.map((c) => c.inputs[input.key] ?? input.default));
+    // The value each case actually ran with: an input that was not asked takes its default.
+    const used = new Set(
+      cases.map((c, i) =>
+        c.run.status === "Done"
+          ? c.run.inputs.find((x) => x.key === input.key)?.value
+          : Object.hasOwn(def.reference_cases[i].inputs, input.key)
+            ? def.reference_cases[i].inputs[input.key]
+            : input.default,
+      ),
+    );
     for (const option of input.choices)
       if (!used.has(option))
         add("Blocking", "OPTION_UNTESTED", input.key, `Option “${option}” of ${input.label} is in no reference case`);

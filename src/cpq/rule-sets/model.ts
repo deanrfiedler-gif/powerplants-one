@@ -104,7 +104,13 @@ export const LIMITS = Object.freeze({
   formulaTokens: 256,
   formulaDepth: 32,
   evaluationSteps: 200_000,
+  /** Shared by every case in one test or job, so a large rule set stops cleanly inside the worker's time limit. */
+  totalSteps: 2_000_000,
+  jobSteps: 20,
 });
+
+/** Words the formula language uses, which cannot name an input, derived value or table. */
+export const RESERVED = new Set(["true", "false", "and", "or", "not", "if", "ceil", "floor", "round", "min", "max", "lookup", "qty", "minutes"]);
 
 export const KEY = /^[a-z][a-z0-9_]{0,47}$/;
 export const PART_KEY = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;

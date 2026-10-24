@@ -1,7 +1,7 @@
 // Reference cases: expected values from outside the rules (ADR-0066 Q3), compared line by line.
 import { Fraction } from "../expression";
 import { coverage, type Finding } from "./coverage";
-import { tryRunRuleSet, type RunResult, type RunStopped } from "./evaluate";
+import { newBudget, tryRunRuleSet, type Budget, type RunResult, type RunStopped } from "./evaluate";
 import { DECIMAL, RuleSetInvalid, type Issue, type ReferenceCase } from "./model";
 import { validateRuleSet, type CheckedRuleSet } from "./validate";
 
@@ -31,9 +31,14 @@ export type RuleSetTest =
 
 /** Parses a shown value ("6.1", "1/3") back to an exact number, or null for text. */
 export function exactValue(v: string): Fraction | null {
-  if (DECIMAL.test(v)) return Fraction.fromDecimal(v);
-  const m = /^(-?\d+)\/(\d+)$/.exec(v);
-  return m ? new Fraction(BigInt(m[1]), BigInt(m[2])) : null;
+  try {
+    if (DECIMAL.test(v)) return Fraction.fromDecimal(v);
+    const m = /^(-?\d{1,512})\/(\d{1,512})$/.exec(v);
+    return m ? new Fraction(BigInt(m[1]), BigInt(m[2])) : null;
+  } catch {
+    // "1/0" or an oversized fraction is not a number, so it is compared as text.
+    return null;
+  }
 }
 
 export function sameValue(a: string, b: string): boolean {
@@ -43,8 +48,8 @@ export function sameValue(a: string, b: string): boolean {
   return a === b;
 }
 
-export function compareCase(checked: CheckedRuleSet, c: ReferenceCase): CaseResult {
-  const run = tryRunRuleSet(checked, c.inputs);
+export function compareCase(checked: CheckedRuleSet, c: ReferenceCase, budget: Budget = newBudget()): CaseResult {
+  const run = tryRunRuleSet(checked, c.inputs, budget);
   const base = { key: c.key, label: c.label, source: c.source, run };
   if ("stop" in c.expected) {
     const match = run.status === "Stopped" && run.code === c.expected.stop;
@@ -76,7 +81,8 @@ export function testRuleSet(raw: unknown): RuleSetTest {
     if (e instanceof RuleSetInvalid) return { valid: false, issues: e.issues };
     throw e;
   }
-  const cases = checked.definition.reference_cases.map((c) => compareCase(checked, c));
+  const budget = newBudget();
+  const cases = checked.definition.reference_cases.map((c) => compareCase(checked, c, budget));
   const findings = coverage(checked, cases);
   const lines = cases.flatMap((c) => c.lines);
   return {
