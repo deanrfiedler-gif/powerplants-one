@@ -25,7 +25,7 @@ The application implementation and exact consumer bindings are maintained in `..
 - Grid / Checkbox cell `74:48`
 - Grid / Row actions cell `74:50`
 
-The Deals register is a proposal (Deals page 549:2); its list parts moved to Components because the accepted Deal record uses them. Sorting and column resizing are not drawn. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+The Deals register design is accepted (Deals · CR-04 549:2, 24 October 2026); its list parts moved to Components because the accepted Deal record uses them. The accepted List adds the Leads fixed Select and Settings columns and a column chooser (departures D4 and D9 in the [Deals design decision](../../../decisions/deals-figma-design.md#departures)). Sorting and column resizing are not drawn. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
