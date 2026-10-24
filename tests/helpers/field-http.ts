@@ -47,7 +47,7 @@ export async function prepareFieldAppointment(
       },
     },
   });
-  // A visit on a new scope binds SYN-PPO-P04 v2: record the preparer's "No parts needed" statement
+  // A visit on a new scope binds SYN-PPO-P04 v2 or later: record the preparer's "No parts needed" statement
   // (field readiness gate R1), or dispatch waits on Parts. Seeded visits keep v1 and skip this.
   a = (await call(`appointments/${aid}`)).items[0];
   if (a.readiness?.some((x: { criterion_code: string }) => x.criterion_code === "PartsReadiness"))

@@ -83,7 +83,12 @@ test("P4 HTTP records typed evidence, recovers the original and enforces current
   const absent = await call(other, `appointments/${randomUUID()}`),
     hidden = await call(other, path);
   assert.equal(hidden.status, 404);
-  assert.deepEqual(hidden.body, absent.body);
+  assert.equal(absent.status, 404);
+  for (const response of [hidden, absent])
+    assert.match(response.body.correlation_id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+  assert.notEqual(hidden.body.correlation_id, absent.body.correlation_id);
+  // Each request has its own correlation identity; the public refusal is identical.
+  assert.deepEqual({ ...hidden.body, correlation_id: null }, { ...absent.body, correlation_id: null });
   await rows(
     "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='schedule.contact'",
     [f.co.actor_id],

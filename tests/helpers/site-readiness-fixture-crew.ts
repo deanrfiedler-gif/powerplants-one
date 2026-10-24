@@ -8,6 +8,8 @@ import { id } from "./packs";
 // published calendar and verified skill evidence. Existing resources and their
 // reservations remain untouched; no production source or clock is overridden.
 export async function siteReadinessFixtureCrew() {
+  // Browser workers do not inherit the server launcher's env-file loading.
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
   if (localConfig().database_name !== "ppo_synthetic_test")
     throw Error("Disposable test database only");
   return transaction(async (c) => {

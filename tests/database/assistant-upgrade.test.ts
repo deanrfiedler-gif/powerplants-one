@@ -64,7 +64,8 @@ test(`populated ${through} history installs 0110 with every original row and led
     await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition"), newerGuard);
   if (newerAllocator) assert.deepEqual(
     await rows("SELECT pg_get_functiondef('ppo.register_identity()'::regprocedure) AS definition"), newerAllocator);
-  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>110 ORDER BY version"), receipts);
+  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>110 AND version<=$1 ORDER BY version", [through]), receipts);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version=110 OR version>$1 ORDER BY version", [through]), through < 120 ? [{ version: 110 }, { version: 120 }] : [{ version: 110 }]);
   assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }]);
   assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability<>'conversation.agent.ask' ORDER BY id"), grants);
   assert.deepEqual(await rows("SELECT DISTINCT author_kind FROM ppo.conversation_messages"), [{ author_kind: "Person" }]);

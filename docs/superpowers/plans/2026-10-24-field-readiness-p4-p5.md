@@ -2,7 +2,7 @@
 document_id: PPO-FIELD-READINESS-P4-P5-PLAN
 date: 2026-10-24
 owner: Dean Fiedler
-status: Authorised implementation in progress; independent review pending
+status: Authorised implementation validation; owner waived independent review for PR 690
 source_commit: 79bef1d32f42cd2dcdbf04ce0f30a4374199db2e
 versioning: git
 ---
@@ -28,7 +28,7 @@ The existing scheduling publication family permits only duration and effectivity
 5. Add focused unit, database, populated-upgrade and HTTP proofs alongside the implementation. Fixture design uses explicit relative-to-server visit instants for P4 boundaries, and historical pins for existing older-policy journeys. Never relax the window for distant fixtures.
 6. Dean explicitly authorised narrow shared-file edits with **"Allow narrow edits on #690"**. Make additive migration registry, demo gate and exact upgrade/seed ledger changes on #690; reconcile #673/#689 through merges from main. Do not modify either contributor's branch. Preserve original populated ledgers and add the late reserved Products case.
 7. Maintain service API/data-dictionary chapters, dated decision notes, exact document-register/status fragments and narrow design-register entries. Preserve all protected landing pages and generated views.
-8. Run the complete requested local validation on a disposable PostgreSQL 16 cluster, follow final-head CI, then obtain and disposition a different-model review. Mark ready only after both are complete; do not merge.
+8. Run the complete requested local validation on a disposable PostgreSQL 16 cluster and follow final-head CI. The original plan required a different-model review; Dean later waived it for #690 as recorded below. Mark ready only after final-head checks pass; do not merge.
 
 ## Proof obligations
 
@@ -43,8 +43,14 @@ The existing scheduling publication family permits only duration and effectivity
 
 Implementation is at PR #690. The first checkpoint, `199a0408c15bd0490a72b3b91f3fdc8731425642`, passed local foundation, naming, prototype, status, documentation unit checks (22), migration reservations, studio, lint, TypeScript, eight focused units and the full build. The populated 0117-to-0120 upgrade proof passed with its original 120-second test budget; it preserves full original rows, receipts and exact issued bundle bytes. Three new persistence cases passed across targeted reruns. The additional issued-pack/attendance proof passed locally: missing readiness blocks start, a later NotReady contact reholds dispatch, exact issued bytes remain unchanged, and confirmation permits start despite owned overdue follow-ups. HTTP validation remains in progress.
 
-`npm run test:unit` locally reported 1,082 passes and six failures. The three extra execution-budget/process-start failures in `cpq-packages` and `foundation` passed unchanged when rerun separately on both unmodified main and this branch (eight tests each). The other three Windows document-store/recovery failures were reproduced on unmodified main. Linux CI ran all 1,088 unit tests successfully at the checkpoint. Final-head CI and independent review are still pending.
+`npm run test:unit` locally reported 1,082 passes and six failures. The three extra execution-budget/process-start failures in `cpq-packages` and `foundation` passed unchanged when rerun separately on both unmodified main and this branch (eight tests each). The other three Windows document-store/recovery failures were reproduced on unmodified main. Linux CI ran all 1,088 unit tests successfully at the checkpoint. Final-head CI remains pending; the later owner review waiver is recorded below.
 
 CI exposed retained journeys that create new scopes and therefore correctly acquire v3, but used 2031 dates and omitted P4 evidence before attendance. Their fixture setup now selects a visit inside the confirmation window and records typed evidence. Parallel HTTP/browser journeys receive independent synthetic resource records with the original test identities and published calendar/skill evidence; no existing resource, reservation, issued artifact or original assertion is weakened. The P11 UI journey records its P4 prerequisite through the API and explicitly does not claim P4 UI coverage. Existing seeded/historical v1/v2 records retain their dates and pins. The historical P1 proof publishes seed 120 only after obtaining its v2 pin and original issue.
 
 Local component results, CI, independent review, executed acceptance and business approval remain separate claims. No production readiness is claimed.
+
+## Owner review waiver and integrated corrections
+
+On 24 October 2026 Dean instructed: **"You can proceed without the review."** This explicitly waives the independent-model review for #690 only. No independent review is claimed; final-head validation and CI remain required, and merge/deployment remain unauthorised.
+
+The integrated 0117/0118-to-0120 populated proofs and Products 0025/0118/0120 proofs passed. Calling's upgrade and constraint proof passed unchanged on an isolated rerun after a resource-related timeout. CI then identified a missing seed-120 exclusion in the late-0110 original-receipt proof, maintenance evidence recorded before confirmation established the current schedule version, and a return-visit fixture still using a distant date without P4 evidence. The corrections retain the original assertions and add exact new-receipt checks, current-version evidence and an in-window return after the first planned visit. Browser fixture setup now loads the worktree configuration before retaining the existing local-only/test-database guard. The HTTP same-404 proof verifies distinct valid per-request correlation IDs and otherwise identical refusal bodies.
