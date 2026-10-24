@@ -50,6 +50,7 @@ test("click to call stores one Outgoing To log event for the chosen person and r
   const [audit] = await rows("SELECT object_type,details FROM ppo.audit_events WHERE operation_id=$1", [command.operation_id]);
   assert.equal(audit.object_type, "CallEvent");
   assert.deepEqual(Object.keys(audit.details).sort(), ["command", "record_version"]);
+  await assert.rejects(database().query("UPDATE ppo.call_events SET source=NULL WHERE id=$1", [command.id]), code("23514"));
   assert.equal((await rows("SELECT status FROM ppo.activities WHERE created_at>now()-interval '1 minute' AND activity_type='Call'")).length, 0);
 });
 
@@ -106,6 +107,7 @@ test("another user's event is not listed and cannot be skipped; skip records the
   await assert.rejects(skipCallEvent(p, command.id, { ...skip, operation_id: randomUUID(), expected_version: 2 }), code("CallAlreadyResolved"));
   const [row] = await rows("SELECT state,skip_reason,resolved_by FROM ppo.call_events WHERE id=$1", [command.id]);
   assert.deepEqual([row.state, row.skip_reason, row.resolved_by], ["Skipped", "Personal", p.actor_id]);
+  await assert.rejects(database().query("UPDATE ppo.call_events SET number_e164=NULL WHERE id=$1", [command.id]), code("23514"));
   assert.ok(!(await listCallsToLog(p)).items.some((e) => e.id === command.id));
 });
 

@@ -103,10 +103,6 @@ export async function logCall(p: Principal, input: unknown) {
         ...row,
         audit_details: {
           call_event_id: event?.id ?? null,
-          direction: command.direction,
-          result: command.result,
-          person_id: command.person_id,
-          number_e164: number.e164,
         },
       };
     },

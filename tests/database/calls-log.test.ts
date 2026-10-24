@@ -9,7 +9,7 @@ import { createPerson } from "../../src/shared/commands";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { readActivity } from "../../src/activities/activities";
 import { readPartyNumbers, setPartyNumbers } from "../../src/calls/party-numbers";
-import { ingestCallEvent, listCallsToLog, recordClickToCall } from "../../src/calls/events";
+import { callEventReceiptAuthority, ingestCallEvent, listCallsToLog, recordClickToCall } from "../../src/calls/events";
 import { logCall } from "../../src/calls/log-call";
 import { readOperation } from "../../src/shared/receipts";
 import { CRM, crmBase, crmCreate } from "../helpers/crm";
@@ -92,21 +92,24 @@ test("logging a clicked call completes one Call activity with its details and ma
   assert.equal(duplicate.id, event.id);
   assert.equal(duplicate.activity_id, command.activity_id);
   assert.equal(duplicate.number_e164, null);
-  // A logged duplicate must not disclose an activity after its read duty is withdrawn.
+  // Both the overall duty and the linked Internal activity's current visibility are rechecked.
   const rollback = new Error("SYN restore activity grants");
-  await assert.rejects(transaction(async (c) => {
-    await c.query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='activity.read'", [p.workspace_id, p.actor_id]);
-    await assert.rejects(ingestCallEvent(c, p, {
-      id: randomUUID(), source: "ClickToCall", source_reference: event.id, direction: "Outgoing",
-      number_e164: "+61412555000", answered: null, duration_seconds: null,
-    }), code("Forbidden"));
-    throw rollback;
-  }), (error) => error === rollback);
+  for (const [capability, expected] of [["activity.read", "Forbidden"], ["shared.internal.read", "RecordUnavailable"]])
+    await assert.rejects(transaction(async (c) => {
+      await c.query("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability=$3", [p.workspace_id, p.actor_id, capability]);
+      await assert.rejects(ingestCallEvent(c, p, {
+        id: randomUUID(), source: "ClickToCall", source_reference: event.id, direction: "Outgoing",
+        number_e164: "+61412555000", answered: null, duration_seconds: null,
+      }), code(expected));
+      await assert.rejects(callEventReceiptAuthority(c, p, event.id), code(expected));
+      throw rollback;
+    }), (error) => error === rollback);
   await assert.rejects(database().query("UPDATE ppo.call_events SET number_e164='+61412555000' WHERE id=$1", [event.id]), code("23514"));
   assert.ok(!(await listCallsToLog(p)).items.some((e) => e.id === event.id));
   assert.deepEqual(await readOperation(p, command.operation_id), result.receipt);
   const [audit] = await rows("SELECT object_type,details FROM ppo.audit_events WHERE operation_id=$1", [command.operation_id]);
   assert.deepEqual([audit.object_type, audit.details.command, audit.details.call_event_id], ["Activity", "LogCall", event.id]);
+  assert.deepEqual(Object.keys(audit.details).sort(), ["call_event_id", "command", "record_version"]);
 });
 
 test("an exact replay returns the receipt; logging the same call again is refused and writes nothing", async () => {
