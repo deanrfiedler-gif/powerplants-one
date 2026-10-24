@@ -2,7 +2,7 @@
 // inside the worker's memory and time limits, before anything is worked out.
 import { testRuleSet, type RuleSetTest } from "./cases";
 import { tryRunRuleSet, type RunResult, type RunStopped } from "./evaluate";
-import { brief, KEY, LIMITS, RuleSetInvalid, RuleSetStop, type Issue } from "./model";
+import { brief, isPlainObject, KEY, LIMITS, RuleSetInvalid, RuleSetStop, shownIssues, type Issue } from "./model";
 import { runTogether, type JobResult } from "./together";
 import { validateRuleSet } from "./validate";
 
@@ -20,7 +20,8 @@ export type RuleSetWorkResult =
   | { valid: true; job: JobResult | RunStopped }
   | { valid: false; issues: Issue[]; step?: string };
 
-const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+// A Map or other container is refused, never read as an empty object.
+const isObject = isPlainObject;
 
 /**
  * Checks supplied input values without dropping any: a value of the wrong kind is reported here, and a
@@ -76,12 +77,12 @@ export function ruleSetWork(work: RuleSetWork): RuleSetWorkResult {
         return testRuleSet(work.definition);
       case "rule-set-run": {
         const shape = inputIssues(work.inputs, "inputs");
-        if (shape.length) return { valid: false, issues: shape };
+        if (shape.length) return { valid: false, issues: shownIssues(shape) };
         return { valid: true, result: tryRunRuleSet(validateRuleSet(work.definition), own(work.inputs)) };
       }
       case "rule-set-job": {
         const shape = jobIssues(work.steps);
-        if (shape.length) return { valid: false, issues: shape };
+        if (shape.length) return { valid: false, issues: shownIssues(shape) };
         const steps = work.steps.map((s) => {
           try {
             return { name: s.name, rule_set: validateRuleSet(s.definition), inputs: own(s.inputs), receive: own(s.receive) };

@@ -1,6 +1,6 @@
 // The rule set formula language (ADR-0066): parsed and type-checked when a rule set is saved.
 // Only the grammar below is accepted; there are no loops, user functions, files or network.
-import { LIMITS, DECIMAL, type RuleSetTable, type ValueType } from "./model";
+import { brief, LIMITS, DECIMAL, type RuleSetTable, type ValueType } from "./model";
 
 export type CompareOp = "=" | "<>" | "<" | "<=" | ">" | ">=";
 export type FunctionName =
@@ -198,7 +198,7 @@ export function parse(source: string): Node {
     if (t.kind === "number") {
       i++;
       if (!DECIMAL.test(t.text))
-        fail("FORMULA_NUMBER", `${t.text} has too many digits (at most 18 before and 12 after the point)`);
+        fail("FORMULA_NUMBER", `${brief(t.text)} has too many digits (at most 18 before and 12 after the point)`);
       return { k: "number", value: t.text };
     }
     if (t.kind === "text") {
@@ -216,10 +216,10 @@ export function parse(source: string): Node {
       i++;
       if (t.text === "true" || t.text === "false") return { k: "yesno", value: t.text === "true" };
       if (["and", "or", "not"].includes(t.text))
-        fail("FORMULA_SYNTAX", `“${t.text}” at character ${t.at + 1} needs a value before it`);
+        fail("FORMULA_SYNTAX", `“${brief(t.text)}” at character ${t.at + 1} needs a value before it`);
       if (isSymbol("(")) {
         if (!FUNCTIONS.has(t.text as FunctionName))
-          fail("FORMULA_FUNCTION", `“${t.text}” is not a function. Use if, ceil, floor, round, min, max, lookup, qty or minutes`);
+          fail("FORMULA_FUNCTION", `“${brief(t.text)}” is not a function. Use if, ceil, floor, round, min, max, lookup, qty or minutes`);
         i++;
         const args: Node[] = [];
         if (!isSymbol(")")) {
@@ -234,11 +234,11 @@ export function parse(source: string): Node {
       }
       return { k: "name", name: t.text };
     }
-    return fail("FORMULA_SYNTAX", `“${t.text}” at character ${t.at + 1} is not expected here`);
+    return fail("FORMULA_SYNTAX", `“${brief(t.text)}” at character ${t.at + 1} is not expected here`);
   };
 
   const tree = or(0);
-  if (i < tokens.length) fail("FORMULA_SYNTAX", `Unexpected “${tokens[i].text}” at character ${tokens[i].at + 1}`);
+  if (i < tokens.length) fail("FORMULA_SYNTAX", `Unexpected “${brief(tokens[i].text)}” at character ${tokens[i].at + 1}`);
   return deepFreeze(tree);
 }
 
@@ -286,8 +286,8 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
           return t;
         }
         if (scope.later.has(n.name))
-          fail("FORMULA_FORWARD", `“${n.name}” is worked out later in the order, so it cannot be used here (a forward or circular reference)`);
-        return fail("FORMULA_NAME", `“${n.name}” is not an input or derived value`);
+          fail("FORMULA_FORWARD", `“${brief(n.name)}” is worked out later in the order, so it cannot be used here (a forward or circular reference)`);
+        return fail("FORMULA_NAME", `“${brief(n.name)}” is not an input or derived value`);
       }
       case "negate":
         need(n.a, "Number", "A minus sign");
@@ -325,7 +325,7 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
     if (name.k !== "name" || literal.k !== "text") return;
     const options = scope.choices.get(name.name);
     if (options && !options.has(literal.value))
-      fail("FORMULA_CHOICE", `“${literal.value}” is not an option of “${name.name}”`);
+      fail("FORMULA_CHOICE", `“${brief(literal.value)}” is not an option of “${brief(name.name)}”`);
   }
 
   function call(fn: FunctionName, args: readonly Node[]): ValueType {
@@ -358,9 +358,9 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
       case "lookup": {
         if (args.length < 3) fail("FORMULA_ARGUMENT", 'Use lookup("table", "column", key, ...)');
         const tableKey = textLiteral(args[0], "The table name");
-        const table = scope.tables.get(tableKey) ?? fail("FORMULA_TABLE", `There is no table “${tableKey}”`);
+        const table = scope.tables.get(tableKey) ?? fail("FORMULA_TABLE", `There is no table “${brief(tableKey)}”`);
         const column = textLiteral(args[1], "The column name");
-        const col = table.columns.find((c) => c.key === column) ?? fail("FORMULA_TABLE", `Table “${tableKey}” has no column “${column}”`);
+        const col = table.columns.find((c) => c.key === column) ?? fail("FORMULA_TABLE", `Table “${tableKey}” has no column “${brief(column)}”`);
         if (args.length - 2 !== table.keys.length)
           fail("FORMULA_ARGUMENT", `Table “${tableKey}” is looked up by ${table.keys.length} key${table.keys.length === 1 ? "" : "s"}`);
         table.keys.forEach((k, idx) => {
@@ -376,7 +376,7 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
         if (!scope.labour) fail("FORMULA_LABOUR_ONLY", "qty() can only be used by Labour rules");
         arity(1, 1, 'qty("part")');
         const part = textLiteral(args[0], "The part");
-        if (!scope.parts.has(part)) fail("FORMULA_PART", `“${part}” is not a part of this rule set`);
+        if (!scope.parts.has(part)) fail("FORMULA_PART", `“${brief(part)}” is not a part of this rule set`);
         return "Number";
       }
       case "minutes": {
@@ -384,7 +384,7 @@ export function compile(source: string, scope: Scope, expected?: ValueType): Com
         arity(0, 1, 'minutes() or minutes("group")');
         if (args.length) {
           const group = textLiteral(args[0], "The part group");
-          if (!scope.groups.has(group)) fail("FORMULA_GROUP", `No part is in group “${group}”`);
+          if (!scope.groups.has(group)) fail("FORMULA_GROUP", `No part is in group “${brief(group)}”`);
         }
         return "Number";
       }

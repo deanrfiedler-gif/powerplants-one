@@ -10,8 +10,8 @@ Status: R1 engine implemented with synthetic fixtures only. It stores nothing an
 
 - `src/cpq/rule-sets/` is a pure engine. It reuses the exact `Fraction` from `src/cpq/expression.ts` but has its own parser, so definition schemas 1–4, their hashes and saved evidence keep their meaning.
 - The isolated CPQ worker (`scripts/cpq-worker.mjs`) runs it with the existing memory and five-second limits, through `ruleSetTestIsolated`, `ruleSetRunIsolated` and `ruleSetJobIsolated` in `src/cpq/runner.ts`. Definitions arrive as untrusted data and are checked inside the worker.
-- The runner refuses a request larger than 12,582,912 characters of JSON, or one that is not plain data, with `PayloadTooLarge` before it starts a worker. The worker's memory limit does not cover copying the request in: an 80 MB input value aborted the whole process in a probe.
-- The worker refuses any kind other than `rule-set-test`, `rule-set-run` and `rule-set-job` (`KIND`). It refuses supplied inputs that are not an object of text values, more than 100 of them, or a value over 300 characters, each with a path. A name echoed in a path or message is shortened to 64 characters.
+- The runner copies each request as plain data (objects, lists, text, numbers, true/false and null) and sends that copy to the worker. It refuses with `PayloadTooLarge`, before it starts a worker, a request of more than 12,582,912 JSON characters, nested more than 32 deep, or holding anything else, such as a Map, buffer, date, class instance, accessor or proxy. The worker's memory limit does not cover copying the request in: an 80 MB input value aborted the whole process in a probe.
+- The worker refuses any kind other than `rule-set-test`, `rule-set-run` and `rule-set-job` (`KIND`). It refuses supplied inputs that are not an object of text values, more than 100 of them, or a value over 300 characters, each with a path. A Map or other container is refused rather than read as empty. A name echoed in a path or message, by the worker or by validation, is shortened to 64 characters.
 
 ## The definition
 
@@ -27,12 +27,12 @@ Status: R1 engine implemented with synthetic fixtures only. It stores nothing an
 | `reference_cases` | Inputs with either expected lines and values, or an expected stop code, and the `source` the expected values came from. They come from outside the rules (ADR-0066 Q3). |
 | `passes` | Named values another rule set on the same job may receive (ADR-0066 Q11). |
 
-Validation refuses a definition with every problem it finds, each with a path such as `rules[3].when` and a code. The refusals include:
+Validation refuses a definition with every problem it finds, each with a path such as `rules[3].when` and a code. It lists the first 200 problems in the order found, then one `ISSUE_LIMIT` entry counting the rest. The refusals include:
 - an invalid or duplicate key (inputs, derived values and tables share one namespace), or a key that is a word the language uses (`true`, `false`, `and`, `or`, `not` or a function name);
 - an input type, option list, bound or default that does not fit;
 - an optional or sometimes-asked input with no default;
 - a rule with both or neither of `part` and `choose`, or a fixed part that does not exist;
-- a table whose key column is missing, with more than one range key (a grid is split into one table per exact value), a range key on a text column, or range rows out of order within each group of equal exact keys (number keys are equal by value, so `1` and `1.0` are one group);
+- a column declared twice (the first declaration is the column; the second is reported and never read), a table whose key column is missing, with more than one range key (a grid is split into one table per exact value), a range key on a text column, or range rows out of order within each group of equal exact keys (number keys are equal by value, so `1` and `1.0` are one group);
 - a part with an invalid ordering size or group;
 - reference cases that name unknown inputs, parts or derived values, or an expected line quantity that is not a non-negative number (a decimal such as `6.1`, a long whole number or an exact fraction such as `1/3`);
 - every formula error below;

@@ -4,11 +4,13 @@ import { compile, FormulaError, type Compiled, type Scope } from "./language";
 import {
   brief,
   DECIMAL,
+  isPlainObject,
   KEY,
   LIMITS,
   PART_KEY,
   RESERVED,
   RuleSetInvalid,
+  shownIssues,
   type Issue,
   type Ordering,
   type ReferenceCase,
@@ -37,7 +39,7 @@ export type CheckedRuleSet = Readonly<{
 }>;
 
 type Raw = Record<string, unknown>;
-const isObject = (v: unknown): v is Raw => typeof v === "object" && v !== null && !Array.isArray(v);
+const isObject = (v: unknown): v is Raw => isPlainObject(v);
 
 export const inputValueType = (i: Pick<RuleSetInput, "type">): ValueType =>
   i.type === "YesNo" ? "YesNo" : i.type === "Choice" ? "Text" : "Number";
@@ -80,8 +82,13 @@ export function inputValueProblem(input: RuleSetInput, value: string | Fraction)
 }
 
 export function validateRuleSet(raw: unknown): CheckedRuleSet {
+  // Every problem is counted, but only the first are kept, so a refusal stays small whatever was sent.
   const issues: Issue[] = [];
-  const add = (path: string, code: string, message: string) => issues.push({ path, code, message });
+  let found = 0;
+  const add = (path: string, code: string, message: string) => {
+    found++;
+    if (issues.length < LIMITS.issues) issues.push({ path, code, message });
+  };
 
   let size = 0;
   try {
@@ -127,7 +134,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         return [];
       }
       const key = typeof item.key === "string" ? item.key : "";
-      if (!pattern.test(key)) add(`${p}.key`, "KEY", `“${key}” is not a valid key`);
+      if (!pattern.test(key)) add(`${p}.key`, "KEY", `“${brief(key)}” is not a valid key`);
       else if (seen.has(key)) add(`${p}.key`, "DUPLICATE", `“${key}” is already used by ${seen.get(key)}`);
       else seen.set(key, p);
       return [build(item, p, key)];
@@ -136,7 +143,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
   if (raw.schema_version !== 5) add("schema_version", "SCHEMA", "Rule sets use definition schema 5");
   if (raw.kind !== "RuleSet") add("kind", "SCHEMA", "Expected kind “RuleSet”");
   const key = text(raw.key, "key");
-  if (!KEY.test(key)) add("key", "KEY", `“${key}” is not a valid key`);
+  if (!KEY.test(key)) add("key", "KEY", `“${brief(key)}” is not a valid key`);
   const label = text(raw.label, "label");
   const family = text(raw.family, "family");
 
@@ -199,13 +206,16 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
 
   const brokenTables = new Set<string>();
   const tables: RuleSetTable[] = keyed(list(raw.tables, "tables", LIMITS.tables), "tables", KEY, names, (o, p, k) => {
-    const before = issues.length;
+    const before = found;
     const colSeen = new Map<string, string>();
     const columns = keyed(list(o.columns, `${p}.columns`, LIMITS.columns), `${p}.columns`, KEY, colSeen, (c, cp, ck) => {
       if (c.type !== "Number" && c.type !== "Text") add(`${cp}.type`, "TYPE", "Use Number or Text");
       return { key: ck, type: c.type as "Number" | "Text" };
     });
     if (!columns.length) add(`${p}.columns`, "REQUIRED", "A table needs at least one column");
+    // A column declared twice is reported above; its first declaration is the column everywhere below.
+    const columnType = new Map<string, "Number" | "Text">();
+    for (const c of columns) if (!columnType.has(c.key)) columnType.set(c.key, c.type);
     const keyCols = new Set<string>();
     const keys = list(o.keys, `${p}.keys`, LIMITS.columns).flatMap((kk, i) => {
       const kp = `${p}.keys[${i}]`;
@@ -215,8 +225,8 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
       }
       const column = typeof kk.column === "string" ? kk.column : "";
       const col = columns.find((c) => c.key === column);
-      if (!col) add(`${kp}.column`, "TABLE", `There is no column “${column}”`);
-      if (keyCols.has(column)) add(`${kp}.column`, "DUPLICATE", `“${column}” is already a key`);
+      if (!col) add(`${kp}.column`, "TABLE", `There is no column “${brief(column)}”`);
+      if (keyCols.has(column)) add(`${kp}.column`, "DUPLICATE", `“${brief(column)}” is already a key`);
       keyCols.add(column);
       const match = kk.match as "Exact" | "AtLeast" | "AtMost";
       if (!["Exact", "AtLeast", "AtMost"].includes(match)) add(`${kp}.match`, "TABLE", "Use Exact, AtLeast or AtMost");
@@ -235,19 +245,18 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
       }
       // Rows have no prototype, so a column named like an Object property ("constructor") reads only its own value.
       const row = Object.create(null) as Record<string, string>;
-      for (const c of columns) {
-        const v = Object.hasOwn(r, c.key) ? r[c.key] : undefined;
-        if (typeof v !== "string") add(`${rp}.${c.key}`, "TABLE", `Row ${i + 1} has no value for “${c.key}”`);
-        else if (c.type === "Number" && !DECIMAL.test(v)) add(`${rp}.${c.key}`, "DECIMAL", `“${v}” is not a number`);
-        else row[c.key] = v;
+      for (const [ck, type] of columnType) {
+        const v = Object.hasOwn(r, ck) ? r[ck] : undefined;
+        if (typeof v !== "string") add(`${rp}.${brief(ck)}`, "TABLE", `Row ${i + 1} has no value for “${brief(ck)}”`);
+        else if (type === "Number" && !DECIMAL.test(v)) add(`${rp}.${brief(ck)}`, "DECIMAL", `“${brief(v)}” is not a number`);
+        else row[ck] = v;
       }
-      for (const extra of Object.keys(r)) if (!colSeen.has(extra)) add(`${rp}.${extra}`, "TABLE", `“${extra}” is not a column`);
+      for (const extra of Object.keys(r)) if (!colSeen.has(extra)) add(`${rp}.${brief(extra)}`, "TABLE", `“${brief(extra)}” is not a column`);
       return [row];
     });
     if (!rows.length) add(`${p}.rows`, "REQUIRED", "A table needs at least one row");
     // Range keys are checked from the top, so they must run in order within each group of equal exact keys.
     // Only a valid number column is compared: a range key on any other column is already reported above.
-    const columnType = new Map(columns.map((c) => [c.key, c.type]));
     // Lookups compare number keys by value, so "1" and "1.0" are one group here too.
     const groupKey = (column: string, v: string) => {
       if (columnType.get(column) !== "Number") return v;
@@ -264,13 +273,13 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
         if (prev) {
           const cmp = compareDecimal(row[rk.column], prev.value);
           if ((rk.match === "AtLeast" && cmp <= 0) || (rk.match === "AtMost" && cmp >= 0))
-            add(`${p}.rows[${i}].${rk.column}`, "TABLE_ORDER", `Rows must run ${rk.match === "AtLeast" ? "upwards" : "downwards"} in “${rk.column}”: row ${i + 1} is out of order after row ${prev.row + 1}`);
+            add(`${p}.rows[${i}].${brief(rk.column)}`, "TABLE_ORDER", `Rows must run ${rk.match === "AtLeast" ? "upwards" : "downwards"} in “${brief(rk.column)}”: row ${i + 1} is out of order after row ${prev.row + 1}`);
         }
         last.set(group, { value: row[rk.column], row: i });
       });
     }
     const table = { key: k, label: text(o.label, `${p}.label`), source: text(o.source, `${p}.source`), columns, keys, rows };
-    if (issues.length !== before) brokenTables.add(k);
+    if (found !== before) brokenTables.add(k);
     return table;
   });
 
@@ -286,7 +295,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     else if (ord.kind === "Pack") ordering = { kind: "Pack", size: decimal(ord.size, `${p}.ordering.size`, { positive: true }) ?? "1" };
     else add(`${p}.ordering.kind`, "ORDERING", "Use AsCalculated, Whole, StockLength or Pack");
     const group = typeof o.group === "string" ? o.group : "";
-    if (!KEY.test(group)) add(`${p}.group`, "KEY", `“${group}” is not a valid group`);
+    if (!KEY.test(group)) add(`${p}.group`, "KEY", `“${brief(group)}” is not a valid group`);
     return {
       key: k,
       description: text(o.description, `${p}.description`),
@@ -304,7 +313,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     const part = o.part === null || o.part === undefined ? null : text(o.part, `${p}.part`);
     const choose = o.choose === null || o.choose === undefined ? null : text(o.choose, `${p}.choose`, { max: LIMITS.formulaCharacters });
     if ((part === null) === (choose === null)) add(p, "RULE_PART", "A rule has either a fixed part or a formula that chooses its part");
-    if (part !== null && !partSeen.has(part)) add(`${p}.part`, "RULE_PART", `“${part}” is not a part of this rule set`);
+    if (part !== null && !partSeen.has(part)) add(`${p}.part`, "RULE_PART", `“${brief(part)}” is not a part of this rule set`);
     return {
       key: k,
       description: text(o.description, `${p}.description`),
@@ -395,7 +404,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     else
       for (const [ik, iv] of Object.entries(o.inputs)) {
         const input = inputMap.get(ik);
-        if (!input) add(`${p}.inputs.${ik}`, "CASE_INPUT", `“${ik}” is not an input`);
+        if (!input) add(`${p}.inputs.${brief(ik)}`, "CASE_INPUT", `“${brief(ik)}” is not an input`);
         else if (typeof iv !== "string") add(`${p}.inputs.${ik}`, "SHAPE", "Expected text");
         else {
           const problem = inputValueProblem(input, iv);
@@ -415,8 +424,8 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
           return [];
         }
         const part = typeof l.part === "string" ? l.part : "";
-        if (!partSeen.has(part)) add(`${lp}.part`, "CASE_LINE", `“${part}” is not a part of this rule set`);
-        if (lineParts.has(part)) add(`${lp}.part`, "DUPLICATE", `“${part}” is listed twice`);
+        if (!partSeen.has(part)) add(`${lp}.part`, "CASE_LINE", `“${brief(part)}” is not a part of this rule set`);
+        if (lineParts.has(part)) add(`${lp}.part`, "DUPLICATE", `“${brief(part)}” is listed twice`);
         lineParts.add(part);
         // The engine shows a quantity that is not exact to 12 places as a fraction, so an expected line may be one too.
         const quantity = typeof l.quantity === "string" ? exactValue(l.quantity) : null;
@@ -428,7 +437,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
       if (exp.values !== undefined && !isObject(exp.values)) add(`${p}.expected.values`, "SHAPE", "Expected an object");
       else
         for (const [vk, vv] of Object.entries(exp.values ?? {})) {
-          if (!derivedKeys.has(vk)) add(`${p}.expected.values.${vk}`, "CASE_VALUE", `“${vk}” is not a derived value`);
+          if (!derivedKeys.has(vk)) add(`${p}.expected.values.${brief(vk)}`, "CASE_VALUE", `“${brief(vk)}” is not a derived value`);
           else if (typeof vv !== "string") add(`${p}.expected.values.${vk}`, "SHAPE", "Expected text");
           else if (vv.length > LIMITS.text) add(`${p}.expected.values.${vk}`, "LIMIT", `At most ${LIMITS.text} characters`);
           else values[vk] = vv;
@@ -438,7 +447,7 @@ export function validateRuleSet(raw: unknown): CheckedRuleSet {
     return { key: k, label: text(o.label, `${p}.label`), source: text(o.source, `${p}.source`), inputs: caseInputs, expected };
   });
 
-  if (issues.length) throw new RuleSetInvalid(issues);
+  if (found) throw new RuleSetInvalid(shownIssues(issues, found));
 
   const definition = deepFreeze<RuleSetDefinition>({
     schema_version: 5,

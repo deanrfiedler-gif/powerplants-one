@@ -108,10 +108,15 @@ export const LIMITS = Object.freeze({
   totalSteps: 2_000_000,
   jobSteps: 20,
   /**
-   * A whole request to the worker, measured as JSON before it is copied in: room for a full job of the
-   * largest rule sets, and far below the worker's memory, which does not cover the copy itself.
+   * A whole request to the worker, counted as JSON characters while the runner copies it as plain data:
+   * room for a full job of the largest rule sets, and far below the worker's memory, which does not cover
+   * the copy itself.
    */
   requestCharacters: 12_582_912,
+  /** Nesting a request may have: a job of rule sets needs about ten levels. */
+  requestDepth: 32,
+  /** Problems listed in one refusal; the rest are counted, so a refusal stays small whatever was sent. */
+  issues: 200,
 });
 
 /** Words the formula language uses, which cannot name an input, derived value or table. */
@@ -123,6 +128,13 @@ export const DECIMAL = /^-?\d{1,18}(?:\.\d{1,12})?$/;
 
 /** Shortens a name echoed in a message or path, so an oversized untrusted key cannot make an oversized result. */
 export const brief = (s: string) => (s.length > 64 ? `${s.slice(0, 64)}…` : s);
+
+/** An object of named values as JSON gives it; a Map, buffer, date or class instance is not one. */
+export const isPlainObject = (v: unknown): v is Record<string, unknown> => {
+  if (typeof v !== "object" || v === null || Array.isArray(v)) return false;
+  const proto = Object.getPrototypeOf(v);
+  return proto === Object.prototype || proto === null;
+};
 
 /** What a case used, kept when it stops as well as when it finishes, so coverage never guesses. */
 export type Trace = {
@@ -147,6 +159,12 @@ export class RuleSetStop extends Error {
 }
 
 export type Issue = { path: string; code: string; message: string };
+
+/** The first problems in the order found, then one ISSUE_LIMIT entry counting the rest. */
+export function shownIssues(issues: Issue[], found = issues.length): Issue[] {
+  if (found <= LIMITS.issues) return issues;
+  return [...issues.slice(0, LIMITS.issues), { path: "", code: "ISSUE_LIMIT", message: `${found - LIMITS.issues} more problems are not shown` }];
+}
 
 /** The rule set could not be saved: every problem found, each with a path and a code. */
 export class RuleSetInvalid extends Error {

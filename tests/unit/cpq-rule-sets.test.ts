@@ -955,3 +955,150 @@ test("review 2: duplicate rules are found by parsed condition, so spaces inside 
     .map((f) => f.subject);
   assert.deepEqual(dup, ["respaced"]);
 });
+
+// Codex's follow-up review of PR #688 at 3cf8bebc: F4 follow-up, F9-a and F9-b. Each test below fails on that head.
+const rejectsAsTooLarge = (p: Promise<unknown>, why: string) =>
+  assert.rejects(p, (e: { code?: string }) => e.code === "PayloadTooLarge", why);
+
+test("review 3 F4: a column declared twice with different types is reported, never thrown", async () => {
+  const def = (first: string, second: string) =>
+    probe({
+      tables: [
+        {
+          key: "t",
+          label: "T",
+          source: "SYN",
+          columns: [
+            { key: "k", type: first },
+            { key: "k", type: second },
+            { key: "v", type: "Text" },
+          ],
+          keys: [{ column: "k", match: "AtLeast" }],
+          rows: [
+            { k: "a", v: "A" },
+            { k: "b", v: "B" },
+          ],
+        },
+      ],
+    });
+  // The first declaration is the column; the second is only reported.
+  const textFirst = testRuleSet(def("Text", "Number"));
+  assert.ok(!textFirst.valid);
+  const found = textFirst.issues.map((i) => `${i.path} ${i.code}`);
+  assert.ok(found.includes("tables[0].columns[1].key DUPLICATE"), found.join("\n"));
+  assert.ok(found.includes("tables[0].keys[0].match TABLE"), found.join("\n"));
+  const numberFirst = testRuleSet(def("Number", "Text"));
+  assert.ok(!numberFirst.valid);
+  const again = numberFirst.issues.map((i) => `${i.path} ${i.code}`);
+  assert.ok(again.includes("tables[0].columns[1].key DUPLICATE") && again.includes("tables[0].rows[0].k DECIMAL"), again.join("\n"));
+
+  const { ruleSetTestIsolated } = await import("../../src/cpq/runner");
+  const worker = await ruleSetTestIsolated(def("Text", "Number"));
+  assert.ok(!worker.valid && worker.issues.some((i) => i.path === "tables[0].columns[1].key" && i.code === "DUPLICATE"));
+});
+
+test("review 3 F9-a: only plain data reaches the worker, and what is measured is what is sent", async () => {
+  const { ruleSetJobIsolated, ruleSetRunIsolated, ruleSetTestIsolated } = await import("../../src/cpq/runner");
+  const def = probe({ inputs: [input("n", { default: "2", required: false })], derived: [derived("answer", "n")] });
+  class Inputs {
+    n = "999";
+  }
+  const getter = Object.defineProperty({}, "n", { enumerable: true, get: () => "999" });
+  const odd: [string, unknown][] = [
+    ["Map", new Map([["n", "999"]])],
+    ["ArrayBuffer", new ArrayBuffer(16)],
+    ["Date", new Date(0)],
+    ["class instance", new Inputs()],
+    ["accessor", getter],
+    ["proxy", new Proxy({ n: "999" }, {})],
+  ];
+  for (const [why, value] of odd) {
+    await rejectsAsTooLarge(ruleSetRunIsolated(def, value as never), `run inputs: ${why}`);
+    await rejectsAsTooLarge(ruleSetTestIsolated(probe({ reference_cases: [refCase({ lines: [], values: {} }, value as never)] })), `test: ${why}`);
+    await rejectsAsTooLarge(ruleSetJobIsolated([{ name: "a", definition: def, inputs: value as never, receive: {} }]), `job: ${why}`);
+  }
+  await rejectsAsTooLarge(ruleSetTestIsolated(new Map([["schema_version", 5]])), "a Map definition");
+  // A request too deep to be a rule set is refused before it is copied.
+  let deep: unknown = "x";
+  for (let i = 0; i < LIMITS.requestDepth + 1; i++) deep = [deep];
+  await rejectsAsTooLarge(ruleSetTestIsolated(probe({ extra: deep })), "too deep");
+  // Plain data still runs, and a name such as __proto__ stays an ordinary name in the copy.
+  const plain = await ruleSetRunIsolated(def, { n: "5" });
+  assert.ok("result" in plain && plain.result.status === "Done" && plain.result.values.answer === "5", JSON.stringify(plain));
+  const proto = await ruleSetRunIsolated(def, JSON.parse('{"__proto__":"1"}'));
+  assert.ok("result" in proto && proto.result.status === "Stopped" && proto.result.code === "INPUT_UNKNOWN", JSON.stringify(proto));
+
+  // Called in-process, the worker's entry refuses the same containers instead of reading them as empty.
+  const { ruleSetWork } = await import("../../src/cpq/rule-sets/entry");
+  const direct = ruleSetWork({ kind: "rule-set-run", definition: def, inputs: new Map([["n", "999"]]) as never });
+  assert.ok(!direct.valid && direct.issues.some((i) => i.path === "inputs" && i.code === "SHAPE"), JSON.stringify(direct));
+  assert.ok(issues(probe({ reference_cases: [refCase({ lines: [], values: {} }, new Map() as never)] })).some((i) => i.path === "reference_cases[0].inputs" && i.code === "SHAPE"));
+});
+
+test("review 3 F9-b: definition problems echo short names, and only so many are listed", async () => {
+  const short = (list: { path: string; message: string }[]) => list.every((i) => i.path.length < 200 && i.message.length < 300);
+  const huge = "x".repeat(100_000);
+  const { ruleSetTestIsolated } = await import("../../src/cpq/runner");
+  const caseInput = await ruleSetTestIsolated(probe({ reference_cases: [refCase({ lines: [], values: {} }, { [huge]: "1" })] }));
+  assert.ok(!caseInput.valid && caseInput.issues[0].code === "CASE_INPUT" && short(caseInput.issues), JSON.stringify(caseInput).slice(0, 300));
+
+  // Every other place a definition's own names are echoed, within the definition size limit.
+  const long = "x".repeat(20_000);
+  const echoed = issues(
+    probe({
+      key: long,
+      inputs: [input(long)],
+      derived: [derived("d", `${"y".repeat(2_000)} + 1`)],
+      tables: [
+        {
+          key: "t",
+          label: "T",
+          source: "SYN",
+          columns: [
+            { key: long, type: "Text" },
+            { key: "n", type: "Number" },
+            { key: "v", type: "Text" },
+          ],
+          keys: [{ column: long, match: "Exact" }],
+          rows: [{ n: long, v: "a", [long]: "a" }],
+        },
+      ],
+      parts: [{ ...part(), group: long }],
+      rules: [rule("r", "1", { part: long })],
+      reference_cases: [refCase({ lines: [{ part: long, quantity: "1" }], values: { [long]: "1" } })],
+    }),
+  );
+  assert.ok(echoed.length > 10 && short(echoed), JSON.stringify(echoed).slice(0, 600));
+
+  // Codex's amplification probe: one long column name and 20 rows without it.
+  const amplified = probe({
+    tables: [
+      {
+        key: "t",
+        label: "T",
+        source: "SYN",
+        columns: [
+          { key: "y".repeat(1_000), type: "Text" },
+          { key: "v", type: "Text" },
+        ],
+        keys: [{ column: "v", match: "Exact" }],
+        rows: Array.from({ length: 20 }, () => ({ v: "a" })),
+      },
+    ],
+  });
+  assert.ok(JSON.stringify(testRuleSet(amplified)).length < 5_000);
+
+  // However many problems there are, the list stops at the limit and says how many more there were.
+  const columns = Array.from({ length: LIMITS.columns }, (_, i) => ({ key: `c${i}`, type: "Text" }));
+  const many = issues(
+    probe({
+      tables: [{ key: "t", label: "T", source: "SYN", columns, keys: [{ column: "c0", match: "Exact" }], rows: Array.from({ length: LIMITS.rows }, () => ({})) }],
+    }),
+  );
+  assert.equal(many.length, LIMITS.issues + 1);
+  const last = many[LIMITS.issues];
+  assert.equal(last.code, "ISSUE_LIMIT");
+  assert.equal(last.message, `${LIMITS.columns * LIMITS.rows - LIMITS.issues} more problems are not shown`);
+  const worker = await ruleSetTestIsolated(probe({ tables: [{ key: "t", label: "T", source: "SYN", columns, keys: [{ column: "c0", match: "Exact" }], rows: Array.from({ length: LIMITS.rows }, () => ({})) }] }));
+  assert.ok(!worker.valid && worker.issues.length === LIMITS.issues + 1 && JSON.stringify(worker).length < 50_000);
+});
