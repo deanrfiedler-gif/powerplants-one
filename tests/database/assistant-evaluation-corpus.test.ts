@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { after, mock, test } from "node:test";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { reset } from "../../scripts/database";
 import { closeDatabase } from "../../src/platform/database";
@@ -22,7 +21,10 @@ after(async () => { mock.restoreAll(); await closeDatabase(); });
 // then verifies every sample twice. It has its own bounded deadline; no existing suite is relaxed.
 test("T2e canonical 117-instance corpus exports and revalidates offline, rejecting reuse, tamper and source drift", { timeout: 900000 }, async () => {
   await reset();
-  const root = mkdtempSync(join(tmpdir(), "ppo-t2e-proof-")), folder = join(root, "review");
+  // The existing CI review-artifact step retains this explicitly synthetic material.
+  // No workflow or provider payload capture is added.
+  mkdirSync("verification-evidence/t2e-preparation", { recursive: true });
+  const root = mkdtempSync(join("verification-evidence/t2e-preparation", "corpus-")), folder = join(root, "review");
   const result = await runPreparation("prepare", folder);
   assert.equal(result.cases, 117);
   const corpus: Corpus = JSON.parse(readFileSync(join(folder, "corpus.json"), "utf8"));
@@ -61,4 +63,9 @@ test("T2e canonical 117-instance corpus exports and revalidates offline, rejecti
   const next = await runPreparation("export", refreshed, join(folder, "corpus.json"));
   assert.notEqual(next.inventory_hash, result.inventory_hash);
   assert.deepEqual(await runPreparation("verify", refreshed), next);
+  writeFileSync(join(root, "proof.json"), JSON.stringify({ evidence_class: "Persisted synthetic integration",
+    cases: 117, calibration: 9, evaluation: 108, provider_calls: 0, budget_entries: 0,
+    initial_inventory_hash: result.inventory_hash, refreshed_inventory_hash: next.inventory_hash,
+    verified: ["matrix", "sentinels", "gold", "fitting", "read-only", "reopen", "reuse refusal", "tamper refusal", "source drift", "re-export"],
+    acceptance: "Proposed review material only; no live authority" }, null, 2) + "\n");
 });
