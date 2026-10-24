@@ -2,7 +2,7 @@
 document_id: PPO-CRM-DEALS-FIGMA-DEC
 date: 2026-10-24
 owner: Dean Fiedler
-status: Owner-accepted design, 24 October 2026; named Figma version, native implementation and UI baseline acceptance separate
+status: Owner-accepted design, 24 October 2026; named Figma version saved; native implementation and UI baseline acceptance separate
 source_commit: 0691b661bf00ee8ce1c71d247ecf472ff93142ec
 versioning: git
 ---
@@ -70,7 +70,7 @@ This is a design decision. It authorises no application code, read, route change
 | V1 Pipeline settings | Claude's verdict, adopted (Q3) | Kept only as a labelled proposal (capture 14): pipeline creation and editing, stage deletion and remapping and rotting configuration "need their own versioned services" ([r38 integration](crm-deals-r38-integration.md)) |
 | V2 Rotting | Claude's verdict, adopted (Q6) | The code has no rotting rule, so rotting is removed from every card. The Rotting card variant stays on the page only as a labelled proposal, as [Deal record](deal-record-page-design.md) Q2 left it |
 | D1–D15 and Q1–Q9 | Claude's recommendations, adopted | The acceptance words above |
-| Named version | Not yet saved | "Deals · CR-04 — Pipedrive pattern, accepted", to be saved by Dean in the file's version history |
+| Named version | User decision, 24 October 2026 | "Yes, save the named Figma version "Deals · CR-04 — Pipedrive pattern, accepted" and finish the lock-in." Claude saved "Deals · CR-04 — Pipedrive pattern, accepted" in the Figma desktop app the same day and confirmed it in the file's version history |
 
 ### The rename
 
@@ -92,7 +92,7 @@ Read from `main` on 24 October 2026: `src/components/crm-worklist.tsx`, `crm-wor
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Deals · CR-04 — Pipedrive pattern, accepted" (saved 24 October 2026). The file's link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, [ADR-0053](ADR-0053-figma-page-design.md)) |
 | Page | "Deals · CR-04" `549:2`, under "— Sales —". Page header `2349:9650`; Sections Desktop 1440 `2349:9685`, Tablet 1024 `2349:9689`, Phone 390 and 320 `2349:9693`, States `2349:9700`, Flows and notes `2349:9704`, Page components (proposal) `2349:9708` |
 | Desktop frames | <ul><li>01 Board `549:3`, 02 List `555:5333`, 03 Forecast `2362:63797`;</li><li>04 Archive `2366:6346`, 05 Snapshot `555:6027`, 06 Filters `555:6470`;</li><li>07 Two selected with the small panel `2367:7589`, 08 Column settings `2367:8772`, 09 Add deal `2368:8381`;</li><li>10 Record Won `2369:11867`, 11 Won recorded with the handover prompt `2368:8653`, 12 Record Lost `2369:12101`;</li><li>13 Refused stage move `2368:10058`, 14 Pipeline settings (proposal, not in the app) `555:6765`.</li></ul> |
 | Tablet and phone | Tablet 1024 Board `2369:815641` and List `2369:815999`; Phone 390 list `555:7107`, Phone 320 list `2361:6377`, Phone 320 Search and filter `2369:818269` |
@@ -178,7 +178,6 @@ The deals other pages rely on stay as they were: LED propagation lighting (close
 ### Not decided
 
 - **Building the page.** The labelled rail, the toolbar, the fixed columns, the Forecast stage groups, the Archive bands, the selection panel, the column chooser, the Add deal panel, the Won notice and the phone header each need their own pull request; the snapshot's follow-through is a new read.
-- **The named version.** Dean saves "Deals · CR-04 — Pipedrive pattern, accepted"; the lock-in pull request is marked ready after that.
 - **Not drawn:** the phone Board with stage navigation (the app's phone default), the Choose view sheet, phone selection, tablet Forecast and Archive, the open Pipeline totals, Views and Sort menus, a drag in progress with the drop targets, and the Transfer deal owner and Edit deal dialogs (Deal record CR-01 keeps today's).
 - **Components.** Deals/Card, Deals/Form field, Deals/Checkbox option and Deals/Forecast card stay on this page; moving them to Components `1:4` is separate work.
 

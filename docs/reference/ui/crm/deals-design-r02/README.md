@@ -61,7 +61,7 @@ Every Font Awesome icon was replaced by a plain placeholder square before export
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Deals · CR-04 — Pipedrive pattern, accepted", to be saved by Dean; not yet in version history when these images were exported |
+| Named version | "Deals · CR-04 — Pipedrive pattern, accepted", saved 24 October 2026 at Dean's request, just after these images were exported, and confirmed in version history |
 | Accepted frames | Page "Deals · CR-04" `549:2`, in image order:<br>• `549:3`, `555:5333`, `2362:63797`, `2366:6346`, `555:6027`, `555:6470`, `2367:7589`, `2367:8772`, `2368:8381`, `2369:11867`, `2368:8653`, `2369:12101`, `2368:10058`, `555:6765`;<br>• `2369:815641`, `2369:815999`;<br>• `555:7107`, `2361:6377`, `2369:818269`;<br>• the states: `2370:16205`, `2370:17646`, `2370:17876`, `2370:19278`, `2371:818632`, `2371:818894`, `2371:819118`, `2371:820229`, `2371:821611` |
 | Capture copies | Page "Captures (icon-free)", under the heading `2379:823283` at y = 430,000, images in order: `2379:861980`, `2379:863607`, `2379:864993`, `2379:865499`, `2379:866198`, `2379:867949`, `2379:869833`, `2379:871278`, `2379:872802`, `2379:874567`, `2379:876284`, `2379:877854`, `2379:879566`, `2379:881208`, `2379:883091`, `2379:884720`, `2379:886106`, `2379:886258`, `2379:886410`, `2379:887863`, `2379:889540`, `2379:890941`, `2379:892593`, `2379:893993`, `2379:895386`, `2379:896780`, `2379:898184`, `2379:899813` |
 
