@@ -262,9 +262,31 @@ Done in the design file under R9 and R5. No design, component or variable change
   - Accepted pages: Shell top bar amendment (12 overlapping annotation frames), Discovery register, Automation Configurator (lock-in in progress) and Portal home & access CP-01 (one each).
   - Pre-template layouts: Customer 360, CPQ, ES-08 and Quotations.
 
-### 12.3 Not done yet
+### 12.3 R2: Conversations action merged into the shared top bar, 25 October 2026
 
-R1 renames, R2 shell merge, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R7 token and text-style binding, R8 variable names, R10 new pages and R11 phone checks. Section 10 step 1 applies before R2 and R7: Dean saves a named version first.
+Dean: "Yes, save the named Figma version "Before audit clean-up — 2026-10-25" in the desktop app, then continue with R2." The named version was saved first and checked in version history.
+
+**Correction to stage 1.** The R1–R9 top-bar amendment was already merged into `Shell / Top bar` `35:138` on 17 October ([shell top bar amendment](../../decisions/shell-top-bar-amendment.md), section 6). Its proposed components stay on the amendment page by that decision, so decision D5 is effectively closed. What was missing was the Conversations action. The [Conversations T1 scope](../../decisions/conversations-t1-scope.md) planned to add it to `Shell / Top bar` and `Shell / Phone header` "so that every accepted page changes in one reviewed step". The phone header (`Shell / Phone header · compact` `1530:110`) already carried it.
+
+The work, in order:
+
+1. **Captures protected.** The 30 linked top bars on Captures (icon-free) `115:2` were detached first, so issued evidence keeps its look, as the 17 October lock-in did.
+2. **Component changed.** `Shell / Top bar` `35:138` gained the Conversations action, left of Page guide (Actions: Design and build workspace, Conversations, Page guide, Quick Help, Notifications). The action's component set moved from the Conversations page to Components › Shell and navigation, renamed "Shell / Top bar action · Conversations" without "(proposed)".
+3. **Existing linked instances.** The other 323 linked instances now show the action, including those on accepted pages, as the T1 scope intended. On their 25 tablet-width (948 px) instances the builder icon and the shortcut hint are hidden (the 1024 px departure accepted in the T1 scope), so the same number of items shows as before.
+4. **Detached copies relinked.** 937 detached top-bar copies on 70 proposal pages were replaced by linked instances carrying the same breadcrumb, initials, menu toggle, visibility, nested properties and prototype reactions. Page titles move 12 px right to the component's accepted spacing. On the 70 relinked tablet copies, the side zones hug and the search fills, with the builder icon, shortcut hint and spacer hidden, as the drawn copies did.
+5. **Checks.** Screenshots of a desktop register bar, a record bar with a parent breadcrumb and a tablet bar matched the drawn copies apart from that spacing. `35:138` now has 1,252 linked instances.
+
+**Left detached by design:**
+
+- accepted pages (to change at their next amendment), including those whose lock-in is still open
+- the unfinished drafts Receiving · SC-04, Cash outlook · FN-05 and Report definitions · RP-06
+- the 329 capture copies
+
+**Repository work not done here.** The T1c-2 lock-in also asks for icon-free captures of the accepted T1 frames, and the application change belongs to the T1c-2 pull request. Both remain with that work.
+
+### 12.4 Not done yet
+
+R1 renames, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R7 token and text-style binding, R8 variable names, R10 new pages and R11 phone checks. Section 10 step 1 applies before R2 and R7: Dean saves a named version first.
 
 ## Appendix A: per-page measurements
 
