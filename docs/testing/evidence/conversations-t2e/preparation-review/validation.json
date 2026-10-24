@@ -1,0 +1,19 @@
+{
+  "evidence_class": "Persisted synthetic integration; no live model",
+  "preparation_commit": "8e96eb944a7e312a90806074de933917d808dbcf",
+  "inventory_hash": "e42e4a08be573e15c2dc2764b73f1cbed43d10c5797280d8856aba5604d58c6b",
+  "cases": 117,
+  "calibration": 9,
+  "evaluation": 108,
+  "verification": "Final committed exporter read and verified all 117 retained Queued/zero-call instances with zero budget entries",
+  "unit_tests": "3/3 passed, including preparation-metadata tamper rejection",
+  "focused_lint": "Passed",
+  "review_status": "Proposed; no independent or owner acceptance; no live authority",
+  "files": {
+    "cases.md": "de4414fe494725fc56c3cb33b9a9c7660dfefba0b5357ba2eaea87ebe254c51c",
+    "corpus.json": "e1536891fae99b6588820eddda0f360a54465f64eadb2a6f8d3b63ed1b6b3380",
+    "creation-proof.json": "49d424278e62eeaf951c8d816a0b32787b65f6002e72d2ccb561be400e714ba4",
+    "inventory.json": "56fda7b6382b8873acace48f79faa3b19debeab4f35a3970920abc0b6e8065e0",
+    "review.md": "e54c3972fa5bdc85b835572ac58ef381f5ca08bb7b4724a4cdfd603825dc8962"
+  }
+}

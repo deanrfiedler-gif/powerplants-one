@@ -1,0 +1,23 @@
+{
+  "evidence_class": "Persisted synthetic integration; no live model",
+  "preparation_commit": "de30d09ec10cef1f602f9f044a59b4d7dec1d330",
+  "inventory_hash": "fde9375bce0ebb2c837c02d8b379bcde75e5d7461025faa87658da581de7a00f",
+  "cases": 117,
+  "calibration": 9,
+  "evaluation": 108,
+  "creation_test_ms": 233546.9501,
+  "runner_ms": 237077.3788,
+  "unit_tests": "4/4 passed",
+  "focused_lint": "Passed",
+  "verification": "Full persisted proof verified final refreshed export; all 117 Queued with zero calls and budget entries",
+  "review_status": "Author review and corrected proposal; no independent or owner acceptance; no live authority",
+  "files": {
+    "cases.md": "284528450243904c5e2f39892575d71ac36c16d8815e49acaa073d525869495a",
+    "corpus.json": "87f70d03f0c0e40d671d415cbf1e2006e56335d40dbdb41eabe6a373d9b2fd06",
+    "creation-proof.json": "81632ba700633edbb827fb7ad28103c3bfbf60082dd21f3aa9f00463c34c4eb4",
+    "inventory.json": "b91050e673fd9b41595cf2ba9b1047101db097206cc64dea61c246530690425f",
+    "review.md": "7edc8671469ae0bf5095d2f40a95006b9a740197417cb9b0f5b44791318bfe67"
+  },
+  "typecheck": "tsc --noEmit --incremental false passed",
+  "packaged_copy_verification": "117 instances verified; same inventory hash; five artifact byte hashes match Git bytes"
+}
