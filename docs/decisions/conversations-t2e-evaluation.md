@@ -29,6 +29,18 @@ The [T2 scope](conversations-t2-scope.md) records the historical 18 October "not
 
 ## Questions and limits
 
+### Offline corpus preparation — 24 October 2026
+
+Dean instructed: "Proceed with the remaining T2e offline test preparation in a dedicated worktree and draft PR. Prepare and validate the synthetic cases for review, but don't inspect credentials or make live API calls." Codex owns [draft PR #686](https://github.com/deanrfiedler-gif/powerplants-one/pull/686). #679 is merged; its earlier pending-merge checkpoint is historical. This instruction authorises offline preparation only, not calibration, merge or deployment.
+
+The existing Node/TypeScript, canonical domain services, evidence projection, request fitter and per-model byte meters are reused. No new technology, dependency, migration, production grant, SDK/model/price pin or runtime assistant behavior is introduced. The test-only participant fixture narrows the seeded CRM receiver's Activity access to the created sites in a dedicated disposable database. Other duties remain; an Internal Activity without a site is readable by the coordinator but excluded for that participant. This is a synthetic access setup, not an operational role decision.
+
+The [operator procedure](../delivery/conversations-t2d-local-adapter.md#offline-corpus-preparation-and-review) and [evidence](../testing/evidence/conversations-t2e/README.md#offline-corpus-preparation--24-october-2026) replace the earlier missing-exporter/catalogue-checker checkpoint. Preparation builds 117 independent threads/questions without running a worker. Each instance records its context, source identities/versions, exact field-to-gold mappings, excluded sentinel placement, full allowlisted evidence hash, fitted request hash, per-model conservative input bound and proposed rubric applicability. Review and verification remain separate from authoring and approval.
+
+The proposed catalogue now uses canonical organisation status Active (Customer was invalid), includes every deal's mandatory initial follow-up reused as A1/A2, and repeats the old Won narrative in L12's newest padding so it survives fitting. L06 creates 21 newer Activities after sibling deals' mandatory follow-ups, giving deterministic latest-20 coverage. Each excluded ERP sentinel has an instance-specific suffix to satisfy external-key uniqueness. These are disclosed synthetic fixture corrections, not changes to T2 rules or operating authority.
+
+The tooling emits proposed corpus/review files, never a usable evaluation manifest or approval hash. Re-export creates a separate snapshot and preserves original source revisions and artifacts. A changed review, source version, membership, catalogue, access or turn state needs renewed review. Exact-run, billing/credit, retention/region, exclusive-worker and strict nullable-metadata gates remain before live work.
+
 T2e must establish live compatibility of the fixed SDK/model/options/structured-output contract; observed token usage versus the conservative estimate and 8,192 allowance; inclusive reasoning and complete billing accounting; and useful grounded answers within cost/latency limits.
 
 It cannot establish operational-data authority, production security, rare-event reliability, real-world agronomic/technical correctness, comprehensive prompt-injection resistance, hosted authentication, Australian residency, zero retention, final model choice or business acceptance. No L2 action, equipment advice, provider tool, external retrieval or customer communication is evaluated.

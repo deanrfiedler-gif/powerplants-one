@@ -31,7 +31,7 @@ The optional speed request field is omitted; fast mode is not requested. Unexpec
 
 ## Preparing an evaluation without authorising one
 
-The source catalogue is `tests/fixtures/assistant/t2e-cases.json` (T2E-SYN-01). Materialise it through ordinary local synthetic record/message services in isolated threads, with all human messages queued before any worker starts. Review the allowlisted evidence and gold assertions; use `evaluationEvidenceHash` on each complete unfitted envelope. Record generated IDs/versions and those hashes in the reviewed instance inventory. This is read-only evidence preparation after synthetic fixture creation; it makes no provider call. No operator exporter or catalogue validator is supplied yet: review a reproducible preparation procedure or separately tested read-only helper before approving actual instances. Use the correct tagger and working-company context; validate case/requirement IDs and sentinel placement, and record fitted request bounds rather than treating the 6,000-input-token forecast as measured.
+The source catalogue is `tests/fixtures/assistant/t2e-cases.json` (T2E-SYN-01). The [offline preparation procedure](#offline-corpus-preparation-and-review) materialises it through ordinary local synthetic record/message services in isolated threads, with all human messages queued before any worker starts. The exporter records `evaluationEvidenceHash` on each complete unfitted envelope, IDs/versions and fitted request bounds. Catalogue checks validate case/requirement IDs; persisted checks validate sentinel placement and exclusion under the explicit tagger and company. Review the evidence and gold assertions separately. The 6,000-input-token forecast remains an assumption, not measured live usage.
 
 Use a dedicated synthetic evaluation database with the existing schema and retained ledger. Dedicated means exclusive worker ownership, not a new empty accounting history: preserve the workspace identity and all existing commitments; never reset or clone a database to replenish budget. From materialisation through completion or abandonment, no ordinary/background worker may run against it without the exact manifest, including between calibration and Dean's decision. A manifest-less worker selects Queued turns regardless of intended evaluation membership: Carl off can terminally mark them FeatureOff, while Simulated can consume them with unbound ledger history. These unstarted turns have no durable evaluation-reservation marker. An invalidated corpus needs review and renewed approval; do not recreate it to bypass a stop. Database isolation is a preparation requirement, not authority to provision anything in this offline correction.
 
@@ -58,3 +58,37 @@ Stopping: cease all future worker invocations first; do not remove the manifest 
 Restarting the same manifest cannot replenish its cap. Counts include its members across all months, settled usage and retained reservations. A new run ID with entirely fresh messages has separate caps and does not inherit an earlier run's Unknown/failed-member/stop gate; only the separate monthly ceiling still spans runs within its month. Each exact run needs Dean's approval, and using a replacement run to evade the existing stop is prohibited. The $30 monthly ceiling remains authoritative alongside the smaller run/sub-cap. SDK 1.1.0 permits null geo/speed/tier metadata; this implementation still records Missing, settles representable known usage and stops. A first-call stop for this reason is a disclosed calibration risk requiring Dean's acknowledgement. Source or approved-evidence drift, missing metadata, unknown billing and unsupported request options require stopping and a separate corrected implementation/review, not weaker TLS, a larger budget or forced release. Evaluation contains source changes by suppression; full stale-answer/refresh UX remains the separate specification gap named in the plan.
 
 Retain only safe numeric/fixed-enum measurements and specifically reviewed synthetic artifacts per the [T2e evidence record](../testing/evidence/conversations-t2e/README.md). SDK/provider payloads, thinking/signatures, errors and credentials do not enter logs, audit, receipts or public diagnostics.
+
+## Offline corpus preparation and review
+
+Use `scripts/assistant-evaluation-prepare.ts` from the dedicated worktree with pinned dependencies. It invokes no worker or provider answer method and blocks fetch/HTTP/HTTPS. Per-model meters receive a code-created off-state configuration whose credential getter throws. Do not load an existing environment file. Supply only the local synthetic database configuration created for this preparation and the usual loopback/synthetic-identity/non-production settings; set `PPO_ASSISTANT=off` and `PPO_T2E_PREPARATION=exclusive-offline-synthetic`.
+
+Use `ppo_synthetic_test` on a task-owned loopback cluster, freshly migrated and seeded through the existing tools, with document storage outside the checkout. The full repository reset needs sufficient PostgreSQL lock capacity (local proof uses `max_locks_per_transaction=1024`). This is a new offline fixture environment, not a replacement for an existing evaluation workspace/ledger. Never reset or clone a funded run to bypass reservations. Preparation performs no reset and refuses existing assistant turns, budget entries or partial T2e threads. Database tests retain their separate explicitly disposable reset contract.
+
+Stop ordinary/background workers and retain exclusive ownership throughout review. The environment acknowledgement is an operator prerequisite, not a cross-process worker lock. No durable reservation marker is added. An ordinary worker could consume Queued turns; verification refuses changed states and never repairs or requeues them.
+
+Run from the worktree root with a new output directory whose parent exists:
+
+```sh
+node --import tsx scripts/assistant-evaluation-prepare.ts prepare tmp/t2e-review
+node --import tsx scripts/assistant-evaluation-prepare.ts verify tmp/t2e-review
+```
+
+Preparation creates all 117 independent samples through canonical services. Its sole direct permission fixture edit narrows the seeded CRM receiver's `activity.read` to synthetic L05/L10 sites. L10's other Internal Activity has no site, proving an intersection exclusion while the visible Activity remains readable. No capability or production seed changes.
+
+- `corpus.json` contains exact sample IDs, models/stages/repetitions, tagger/workspace/company context, aliases and excluded sentinel placements. It is not an evaluation manifest.
+- `inventory.json` contains canonical fields/versions, complete pre-fit envelopes/hashes, per-model fitted request hashes/bounds, explicit gold bindings and proposed scoring applicability. Retrieval timestamps are retained; verification compares stable evidence plus the original file digest.
+- `review.md` provides a compact sample table. No answer scores or measured provider usage are manufactured.
+
+Verify reconstructs every envelope under its original tagger/company. It checks the exact 9/108 matrix, unique messages/threads, Queued state/zero calls, canonical facts, participant omissions, ordering/coverage, sentinels in their actual excluded fields, identity stripping, question/newest-history retention, long-case fitting and zero budget entries. Altered artifacts, facts/versions or access invalidate the snapshot.
+
+To create a new proposed snapshot of retained unconsumed instances after a correction, use a new directory:
+
+```sh
+node --import tsx scripts/assistant-evaluation-prepare.ts export tmp/t2e-review/corpus.json tmp/t2e-review-corrected
+node --import tsx scripts/assistant-evaluation-prepare.ts verify tmp/t2e-review-corrected
+```
+
+Export is read-only against business records and preserves original files. It still validates catalogue facts and requires every turn Queued with zero spending. A changed hash is new review material, not continuation permission. Failed/partial preparation is retained for diagnosis; overwrite is refused. Do not edit ledger, answer or turn rows to force it through.
+
+Review the 15 definitions and every instance mapping, particularly A2's Brisbane date, L04's conflicting narratives, L06's bounded coverage, L09/L10's excluded fields and C03/L12's retained question/history. Gold/rubric applicability needs explicit review before execution; deterministic preparation cannot judge future answers. Bind the exact clean execution revision and fixture hashes after final implementation review. These commands provide no run ID, private approval reference, credential delivery or live authority.
