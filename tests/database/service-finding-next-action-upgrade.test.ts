@@ -102,7 +102,7 @@ test(`0111 preserves populated ${through} sources, Activities, grants and exact 
         "SELECT version FROM public.ppo_migrations ORDER BY version",
       )
     ).rows.filter((row) => !versions.has(row.version)),
-    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }] : through === 116 ? [{ version: 111 }, { version: 117 }] : [{ version: 111 }],
+    through === 109 ? [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 119 }] : through === 113 ? [{ version: 111 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 119 }] : through === 114 ? [{ version: 111 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 119 }] : through === 115 ? [{ version: 111 }, { version: 116 }, { version: 117 }, { version: 119 }] : through === 116 ? [{ version: 111 }, { version: 117 }, { version: 119 }] : [{ version: 111 }, { version: 119 }],
   );
   assert.equal(
     (

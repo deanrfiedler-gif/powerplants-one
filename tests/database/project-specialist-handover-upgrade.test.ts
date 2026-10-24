@@ -120,8 +120,8 @@ for (const through of [103, 104])
         )
       ).rows,
       through === 103
-        ? [{ version: 104 }, { version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }]
-        : [{ version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }],
+        ? [{ version: 104 }, { version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 119 }]
+        : [{ version: 105 }, { version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 119 }],
     );
     assert.deepEqual(
       (
