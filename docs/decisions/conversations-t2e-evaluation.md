@@ -166,7 +166,7 @@ Update this record, T2b contract and T2d operator chapter narrowly; append statu
 
 ## Offline fixture preparation follow-up — 24 October 2026
 
-Dean authorised inspection, canonical synthetic preparation, offline tests, an early draft PR, push and CI repair. **PR #680 must remain draft and unmerged.** The earlier merge authority applied to #679 only. Current main was verified as its merge `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`; final head `37603e08` had 71 successful checks plus the intentional PT-27 skip, all seven required contexts, and refreshed merged-tree proof against `adef52b6`. Earlier pending wording is historical. No independent review of #680 exists yet.
+Dean authorised inspection, canonical synthetic preparation, offline tests, an early draft PR, push and CI repair. **PR #680 must remain draft and unmerged.** The earlier merge authority applied to #679 only. Current main was verified as its merge `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`; final head `37603e08` had 71 successful checks plus the intentional PT-27 skip, all seven required contexts, and refreshed merged-tree proof against `adef52b6`. Earlier pending wording is historical. Claude independently reviewed #680 at `f6f766482e63e0c002e5df1b90d52e8c0b2b6d96`; see the [author disposition](../testing/evidence/conversations-t2e/README.md#independent-review-of-offline-preparation--24-october-2026). Later author corrections are not independently reviewed by that report.
 
 Architecture: reuse the existing TypeScript/Node scripts, PostgreSQL test infrastructure and canonical record/message services. Extract pure Claude body construction/metering from its adapter so preparation never constructs a provider adapter or reads a key. Expose the existing source field allowlist for catalogue checks. These extend ADR-0062 without a new technology or dependency. A parallel fixture database schema, new worker/UI route, separate ledger and a fabricated live manifest were rejected as unnecessary or contrary to the execution boundary.
 
@@ -175,3 +175,31 @@ Catalogue schema 2 preserves T2E-SYN-01 and all C/L/O IDs. Corrections requiring
 One member owns one organisation/site/thread (and Project where needed). Seeded synthetic identities are reused only inside the exclusively owned database. The initial preparation refuses existing T2e/partial-preparation audit or thread history, existing turns or budget entries. The CLI first creates an exclusive attempt marker; an interrupted attempt is preserved and cannot silently restart. Export verifies original membership, correct principal/current working company and ask authority, current readers, queued state, human-only message identities, source membership/fields and gold mappings. The complete unfitted evidence uses `evaluationEvidenceHash`; inventory uses `evaluationHash`, with canonical tool-source binding. Repeat export checks the original inventory hash and refuses drift. There is no replacement-run or approval generation command.
 
 Exclusivity has a procedural component: preparation checks that all database clients belong to its own pool, but cannot prevent a future ordinary worker from connecting. The operator must own the entire loopback cluster, run no server/background worker and stop the retained cluster after export. An ordinary worker can consume the queue even with Carl off or Simulated. No durable queued-member reservation or cross-run stop is claimed. Full source-membership freshness, stale-answer UX and stop-control redesign remain separate.
+
+
+### Derived T2/W parent mappings
+
+**Proposed derived traceability, authored by Codex for Dean's review; not an additional owner decision or business acceptance.** The source rules are [T2 scope §§5/7](conversations-t2-scope.md), the parent definitions are [BP-01 §§requirements](../blueprints/BP-01-master-blueprint.md), and AIA references below are the explicit parent mappings in [assistant specification §10](../blueprints/ppo-assistant-specification.md). The catalogue validator checks this table's IDs and consistency; that does not establish the proposed rationale as approved. All existing parent IDs are preserved.
+
+| Rule | Proposed parents | Source and rationale |
+|---|---|---|
+| T2-2 | NFR-01 | T2-2's tagger identity and dispatch access elaborate server authorisation |
+| T2-3 | NFR-01 | T2-3's all-participant access intersection elaborates record authorisation |
+| T2-4 | CRM-06; NFR-01; NFR-03 | T2-4 bounds permitted CRM visibility and excludes confidential fields; source allowlist protects information |
+| T2-5 | CRM-06; NFR-02 | T2-5 source chips expose permitted records and retain attributable source/version evidence; AIA-04 has these parents |
+| T2-6 | NFR-11; NFR-12 | T2-6 explicitly cites AIA-17; inherit its existing budget-control test mapping, not a new financial authority |
+| T2-7 | NFR-05 | T2-7 requires truthful bounded partial/error outcomes, consistent with AIA-16's degraded-operation parent |
+| T2-10 | NFR-03 | T2-10's server/provider/credential boundary elaborates information protection |
+| T2-12 | NFR-01 | T2-12's answer-only boundary prohibits unauthorised business actions |
+| W3 | PRJ-02 | Proposed project-specific link: W3 permits bounded project status, including tasks and forecasts. This does not cover all W3 CRM sources or claim project acceptance |
+| W4 | CRM-06 | Proposed visibility link: W4 separates what visible records answer from the person's unresolved ask; no ask-closing authority inferred |
+| W5 | NFR-12 | Proposed maintainability link: W5 requires evidence-based model selection and a maintained pin; no model suitability inferred |
+| W6 | NFR-05 | W6's explicit refusal without fallback elaborates truthful degraded operation |
+
+### Review corrections and retained corpus
+
+L12 is explicitly an **omitted-history grounding repetition overlapping C03**, not a visible-conflict case. The recipe label is `omitted-history-padding`; the historical Won message remains outside retrieval. Its setup annotation now says so. All questions, expected/gold claims and materialised messages remain unchanged. Dean may later reduce the repetition or request a separate visible-conflict corpus, but this task does not replace existing members to create one; L04 remains the visible-conflict case.
+
+The [operator chapter](../delivery/conversations-t2d-local-adapter.md#offline-fixture-preparation-commands) now supports explicit baseline selection and a proposed re-recording command after a tooling/annotation-only correction. Re-recording is read-only against the retained database and creates a separate once-only output directory. It compares every instance, source, message identity, evidence hash, gold mapping, request bound and forecast with the previous inventory; only tool-source/catalogue hashes may differ. Catalogue changes are restricted to setup annotations and the legacy L12 label. The original files and corpus remain intact. No approval or run is created, and a changed corpus still requires separate review and authority.
+
+Preparation now requires full PostgreSQL statistics visibility before counting clients; it neither grants that privilege nor treats client observation as a durable worker lock. Excluded record IDs are rejected at the envelope boundary, independently of sentinel text. Member-decorated organisation names are not supported as literal catalogue gold values: validation refuses them rather than promising an equality that materialisation cannot preserve.

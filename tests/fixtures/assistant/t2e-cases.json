@@ -1024,7 +1024,7 @@
         "T2-7",
         "AIA-05"
       ],
-      "setup": "Deal and padding history as C03; early history says Won, current structured source remains Discovery/Open. Every deal requires its initial Activity (A0 where no named Activity is specified); never delete it.",
+      "setup": "Repeated bounded-history grounding case (overlaps C03): the earliest stored Won text is outside retrieval and never reaches the provider; current structured source remains Discovery/Open. This tests truthful history limits, not visible-conflict resolution. Every deal requires its initial Activity (A0 where no named Activity is specified); never delete it.",
       "question": "State the current recorded stage and any evidence limitations.",
       "expected": [
         "Discovery/Open from source",
@@ -1037,7 +1037,7 @@
         "activities": [
           "A0"
         ],
-        "history": "conflicting-padding",
+        "history": "omitted-history-padding",
         "siblings": 0,
         "additional_activities": 0,
         "participant": false,

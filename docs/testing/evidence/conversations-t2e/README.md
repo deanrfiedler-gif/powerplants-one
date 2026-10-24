@@ -77,7 +77,7 @@ Planning delivery, code merge, execution permission, live result, Dean's accepta
 
 ## Offline fixture preparation — 24 October 2026
 
-[Draft PR #680](https://github.com/deanrfiedler-gif/powerplants-one/pull/680) addresses findings 5/6 with machine-checked catalogue schema 2 and canonical preparation/export. Owner: Dean; author: Codex. It remains unmerged, with no independent review of this contribution. The historical #679 review and merge evidence above do not apply to this new head.
+[Draft PR #680](https://github.com/deanrfiedler-gif/powerplants-one/pull/680) addresses findings 5/6 with machine-checked catalogue schema 2 and canonical preparation/export. Owner: Dean; author: Codex. It remains unmerged. Claude subsequently reviewed this contribution at `f6f766482e63e0c002e5df1b90d52e8c0b2b6d96`; the disposition below distinguishes that review from later corrections. The historical #679 review and merge evidence above do not apply to this new head.
 
 Dedicated worktree `codex/t2e-fixture-preparation`, based on verified current main `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`. Shared checkout untouched. The [plan](../../../decisions/conversations-t2e-evaluation.md#offline-fixture-preparation-follow-up--24-october-2026) records catalogue corrections and architectural choices; the [operator chapter](../../../delivery/conversations-t2d-local-adapter.md#offline-fixture-preparation-commands) owns reproducible commands and exclusive-worker limitations.
 
@@ -127,7 +127,7 @@ C03 starts with 22 canonical human messages including kickoff/trigger, and L12 d
 - New persisted preparation suite **4/4 passed** (94.1 seconds), then **4/4 passed** again after the stricter catalogue validation (77.6 seconds); actual canonical materialise plus independent repeat-export commands also passed against the separately retained proposed corpus.
 - The four preparation unit cases, typecheck and affected-file ESLint passed again after that correction. Foundation, naming, status and development-register integrity passed; **342 unreviewed / 26 stale** entries remain, with no visual acceptance granted. Remaining repository checks and exact-head CI are recorded on the draft PR.
 - Initial claim commit `85922fd` failed documentation/merged-tree checks because its new status fragment lacked required front matter. The implementation commit corrects the fragment, and local foundation/status checks pass. No test or check was weakened.
-- Independent review of this new contribution is **pending**. Codex inspection and CI do not constitute Claude review. Historical #679 review applies only to its named head.
+- Claude independently reviewed head `f6f766482e63e0c002e5df1b90d52e8c0b2b6d96`. Codex inspection and CI of later corrections are author evidence, not a later Claude review. Historical #679 review remains separate.
 
 | Gate | Disposition |
 |---|---|
@@ -138,5 +138,25 @@ C03 starts with 22 canonical human messages including kickoff/trigger, and L12 d
 | Exclusive workers | Current clients observed; separate owned cluster stopped and retained; future ownership remains procedural |
 | Corpus/run/cost approval | Pending Dean; no manifest, run UUID, approval reference or acceptance hash issued |
 | Billing/credit/backstops/region/retention/private key procedure | Pending non-secret confirmation for a later separately authorised run |
-| Independent review and merge | Pending; PR remains draft and unmerged; #679 merge permission does not extend to it |
+| Independent review and merge | Claude review at f6f76648 received; author corrections documented below, no subsequent independent pass claimed. PR remains draft and unmerged; #679 merge permission does not extend to it |
 | Calibration/live evaluation/owner acceptance/production | Not performed or granted |
+
+
+## Independent review of offline preparation — 24 October 2026
+
+[Claude Opus 5.5 review](https://github.com/deanrfiedler-gif/powerplants-one/pull/680#pullrequestreview-5635846279), posted on PR #680 at exact head `f6f766482e63e0c002e5df1b90d52e8c0b2b6d96` against main `e1aeb1ad539afa10eccf46e89c2c188af8bc80a5`. Dean pointed the author to it. The review independently recomputed the hashes, 117/483/642/315 counts and prices, checked runtime equivalence and unchanged adapter controls, and reported four local unit passes plus the CI persisted test job. It grants no corpus, merge, calibration or spending authority. The following is Codex's verified author disposition; no later independent review is claimed.
+
+| Finding | Author disposition |
+|---|---|
+| 1 — baseline re-verification/re-recording | Accepted reproducibility/documentation gap. The separately retained corrected directory had passed the normal export command, but its creation was ad hoc. Added explicit `--baseline` selection and tested `rerecord` producing a separate proposed output with provenance. Original files and all corpus identities remain intact; differing instance/evidence/gold/bounds are refused. |
+| 2 — L12 conflict omitted | Accepted semantic limitation. Re-described L12 and renamed its recipe to omitted-history padding; explicitly disclose its overlap with C03. No message is moved/replaced and no visible-conflict claim remains. Setup-only reannotation is proven against the exact retained evidence; any later different corpus needs separate review. |
+| 3 — unsourced T2/W mapping | Accepted. The plan now records the complete proposed derived mapping with rule/parent sources and rationale. The validator checks that source table's consistency, without presenting the derivation as approved authority. |
+| 4 — ineffective exclusions | Accepted. The allowed membership set excludes all excluded aliases, and record IDs are checked directly against envelope items. A negative test injects each excluded ID without sentinel text and must fail. |
+| 5 — thin negative proofs | Accepted. Added an interrupted canonical preparation audit case, explicit persisted blocker counts for turns/history/commitments, Unknown-preservation proof, `wx` marker refusal and exact missing/duplicate-member error matchers. Regression fixtures remain separate from retained proposed data. |
+| 6 — member-suffixed organisation gold | Accepted. Literal `organisation.display_name` gold is refused during catalogue validation; no current gold mapping changes. Future member-dependent assertions need an explicit supported representation. |
+| Unverified PostgreSQL visibility note | Confirmed on task-owned PostgreSQL: the built-in non-statistics role sees NULL backend type for another role's session. Preparation now requires effective `pg_read_all_stats` privileges (`USAGE`, not merely membership) or superuser before counting clients; it makes no grant. The persisted visibility and foreign-client tests passed. |
+
+At reviewed head, final CI was 72 checks: 71 successful and one intentional PT-27 skip, including all seven required contexts. Compiled mobile attempt 1 timed out awaiting a specialist-workbench dialog; attempt 2 passed it but failed a PL01 return-context assertion; attempt 3 passed unchanged (286 cases, 28 intentional case skips). Causes remain unconfirmed. The review observed unrelated shard failures elsewhere but neither that observation nor the retries proves a cause. Later correction-head CI is recorded separately on the PR.
+
+
+Correction validation: six preparation unit cases and the initial typecheck/lint passed. Local persisted attempts with the unchanged 120-second CI timeout did not complete: combined setup first exceeded it, then full 117-member materialisation exceeded it after splitting distinct proof cases. Dependent cases consequently could not run; these are not reported as passes or attributed to a proven baseline cause. Interrupted-preparation preservation and statistics/foreign-client visibility proofs passed in the split runs. Assertions and timeout limits remain unchanged; final correction-head CI and retained-corpus command results are recorded separately.

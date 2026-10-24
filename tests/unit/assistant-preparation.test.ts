@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve, sep } from "node:path";
 import { readCatalogue, validateCatalogue, expandCatalogue, catalogueHash } from "../../scripts/t2e-catalogue";
-import { requestBounds, validateMembers, type Preparation } from "../../scripts/t2e-preparation";
+import { requestBounds, validateMembers, assertSourceMembership, claimPreparationAttempt, assertCatalogueReannotation, type Preparation } from "../../scripts/t2e-preparation";
 import { evaluationHash, evaluationEvidenceHash, parseEvaluation } from "../../src/assistant/evaluation";
 import { prepareRequest } from "../../src/assistant/request";
 import { claudeInputTokens, bodyFor } from "../../src/assistant/claude-request";
@@ -18,6 +21,7 @@ test("T2e catalogue: exact 9+108 combinations, separate ten offline proofs, sour
     (c: ReturnType<typeof catalogue>) => { c.record_sets.deal.stage_id = "Won"; },
     (c: ReturnType<typeof catalogue>) => { c.record_sets.activities[1].summary = "SYN contradictory source"; },
     (c: ReturnType<typeof catalogue>) => { c.cases[0].gold[0].support[0].equals = "Won"; },
+    (c: ReturnType<typeof catalogue>) => { c.cases[0].gold[0].support = [{ alias: "organisation", field: "display_name", equals: c.record_sets.organisation.display_name }]; },
     (c: ReturnType<typeof catalogue>) => { c.models.pop(); },
     (c: ReturnType<typeof catalogue>) => { c.repetitions.Calibration = 2; },
     (c: ReturnType<typeof catalogue>) => { c.cases[0].requirements.push("AIA-99"); },
@@ -67,4 +71,26 @@ test("T2e proposed inventories are not installable manifests; missing/duplicate/
     const p = structuredClone(prep); change(p); assert.throws(() => validateMembers(c, p));
   }
   assert.throws(() => parseEvaluation(prep, evaluationHash(prep), "Calibration"));
+});
+
+test("T2e exclusion checks reject source IDs even without a sentinel and the attempt marker refuses overwrite", () => {
+  const e = envelope(); assertSourceMembership(e, { deal: "SYN id" });
+  for (const alias of ["contact", "erp_mapping", "finance", "hidden_activity", "hidden_project"])
+    assert.throws(() => assertSourceMembership(e, { deal: "other", [alias]: "SYN id" }), /Excluded record entered envelope/);
+  assert.throws(() => assertSourceMembership(e, { deal: "other" }), /Seed or sibling contamination/);
+  const dir = mkdtempSync(join(tmpdir(), "ppo-t2e-attempt-")), path = join(dir, "preparation-started.json");
+  try {
+    claimPreparationAttempt(path, { kind: "SYN interrupted attempt" }); const original = readFileSync(path, "utf8");
+    assert.throws(() => claimPreparationAttempt(path, { kind: "SYN replacement" }), { code: "EEXIST" });
+    assert.equal(readFileSync(path, "utf8"), original);
+  } finally { assert.ok(resolve(dir).startsWith(resolve(tmpdir()) + sep + "ppo-t2e-attempt-")); rmSync(dir, { recursive: true }); } // Test-owned temporary directory only; never a preparation workspace.
+});
+test("T2e catalogue reannotation permits disclosed setup wording only, not question, gold or recipe changes", () => {
+  const current = catalogue(), old = catalogue(); old.cases.at(-1)!.recipe.history = "conflicting-padding";
+  old.cases.at(-1)!.setup = "SYN historical wording"; assertCatalogueReannotation(old, current);
+  for (const edit of [(c: ReturnType<typeof catalogue>) => { c.cases[0].question += " altered"; },
+    (c: ReturnType<typeof catalogue>) => { c.cases[0].gold[0].support[0].equals = "Won"; },
+    (c: ReturnType<typeof catalogue>) => { c.cases[0].recipe.participant = true; }]) {
+    const changed = catalogue(); edit(changed); assert.throws(() => assertCatalogueReannotation(current, changed), /Only setup annotations/);
+  }
 });

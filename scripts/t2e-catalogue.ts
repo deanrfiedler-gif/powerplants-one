@@ -14,11 +14,14 @@ export function readCatalogue(root = process.cwd()): Catalogue {
 const aliases: Record<string, SourceType> = { deal: "Opportunity", organisation: "Organisation", A0: "Activity", A1: "Activity", A2: "Activity", A3: "Activity", project: "Project", task1: "ProjectTask", task2: "ProjectTask" };
 export function parentRequirements(requirements: string[], root: string) {
   const spec = readFileSync(resolve(root, "docs/blueprints/ppo-assistant-specification.md"), "utf8");
+  // Proposed derived mapping, rationale and sources: T2e plan § Derived T2/W parent mappings.
   const t2: Record<string, string[]> = {
     "T2-2": ["NFR-01"], "T2-3": ["NFR-01"], "T2-4": ["CRM-06", "NFR-01", "NFR-03"],
     "T2-5": ["CRM-06", "NFR-02"], "T2-6": ["NFR-11", "NFR-12"], "T2-7": ["NFR-05"],
     "T2-10": ["NFR-03"], "T2-12": ["NFR-01"], W3: ["PRJ-02"], W4: ["CRM-06"], W5: ["NFR-12"], W6: ["NFR-05"],
   };
+  const plan = readFileSync(resolve(root, "docs/decisions/conversations-t2e-evaluation.md"), "utf8");
+  for (const [rule, parents] of Object.entries(t2)) assert.ok(plan.includes(`| ${rule} | ${parents.join("; ")} |`), `Missing proposed mapping source ${rule}`);
   return [...new Set(requirements.flatMap(r => {
     if (r.startsWith("AIA-")) {
       const line = spec.split(/\r?\n/).find(l => l.startsWith(`| ${r} |`));
@@ -90,7 +93,7 @@ export function validateCatalogue(value: unknown, root = process.cwd()): Catalog
         const taskDates = c.record_sets.project.tasks.map(t => t.finish_date);
         const definitions: Record<string, Record<string, unknown>> = {
           deal: { ...c.record_sets.deal, need_summary: c.record_sets.deal.need_summary + (k.recipe.unicode ? " SYN café — 温室 🌱" : "") },
-          organisation: c.record_sets.organisation, project: { title: c.record_sets.project.title,
+          organisation: { relationship_status: c.record_sets.organisation.relationship_status, sector: c.record_sets.organisation.sector }, project: { title: c.record_sets.project.title,
             task_count: c.record_sets.project.tasks.length, completed_tasks: c.record_sets.project.tasks.filter(t => t.status === "Complete").length,
             forecast_finish: c.record_sets.project.tasks.some(t => t.start_date === null || t.finish_date === null) ? null : [...taskDates].sort().at(-1) },
           task1: c.record_sets.project.tasks[0], task2: c.record_sets.project.tasks[1],
@@ -104,7 +107,7 @@ export function validateCatalogue(value: unknown, root = process.cwd()): Catalog
     const activityRecipes: Record<string, string[]> = { C02: ["A1", "A2"], L01: ["A1"], L02: [], L03: ["A1", "A2"], L04: ["A2", "A3"], L05: ["A1"], L07: ["A1"], L09: ["A1"], L10: ["A1"] };
     assert.deepEqual(k.recipe.activities, activityRecipes[k.id] ?? ["A0"]);
     assert.equal(k.recipe.anchor, k.id === "L02" ? "Project" : "Opportunity");
-    assert.equal(k.recipe.history, k.id === "C03" ? "padding" : k.id === "L12" ? "conflicting-padding" : k.id === "L08" ? "hostile" : "none");
+    assert.equal(k.recipe.history, k.id === "C03" ? "padding" : k.id === "L12" ? "omitted-history-padding" : k.id === "L08" ? "hostile" : "none");
     assert.equal(k.recipe.siblings, k.id === "L06" ? 11 : 0);
     assert.equal(k.recipe.additional_activities, k.id === "L06" ? 9 : 0);
     for (const [key, ids] of Object.entries({ participant: ["L05", "L10"], human_ask: ["L05"], sentinels: ["L09"], hidden_project_activity: ["L10"], unicode: ["C02"] }))
