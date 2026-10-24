@@ -120,6 +120,7 @@ export const migrationFiles = [
   "0115-inspection-reading-instruments.sql",
   "0116-nursery-discovery.sql",
   "0117-nursery-technical-assessments.sql",
+  "0118-calling-core.sql",
   "0119-cpq-rule-sets.sql",
 ] as const;
 export const seedFiles = [

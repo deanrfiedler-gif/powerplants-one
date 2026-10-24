@@ -367,6 +367,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // It changes no existing rows, identities, users, seeds or permissions.
   // 0117 adds empty immutable assessment history and retained HTML outputs under the
   // same runtime table grants. No existing rows, seeds, identities or permissions change.
+  // 0118 adds the call core using existing all-table runtime grants. No existing rows, users, seeds
+  // or permissions change; CallEvent becomes an identity type under the identity_target rule, and
+  // each non-blank Person phone is copied, unread and flagged as needing checking, into contact numbers.
   // 0119 (ADR-0066 R2) adds empty synthetic rule set roots, revisions, acceptances, reviews,
   // publications and heads, the CpqRuleSet identity and audit type, and governance triggers.
   // No seed, grant, user, capability or existing row changes; the existing cpq duties govern
