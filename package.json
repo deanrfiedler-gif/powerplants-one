@@ -31,8 +31,10 @@
     "browser:check": "node --import tsx scripts/check-browser.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "1.1.0",
     "@azure/storage-blob": "12.34.0",
     "fast-xml-parser": "5.11.2",
+    "libphonenumber-js": "1.13.15",
     "next": "16.4.2",
     "openid-client": "6.8.8",
     "pg": "8.23.1",

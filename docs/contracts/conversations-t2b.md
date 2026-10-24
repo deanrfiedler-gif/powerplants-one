@@ -23,7 +23,7 @@ Migration 0110 and seed 110 support `src/assistant/`, the conversation service a
 | Agent message | Immutable plain text, authored by `Agent` with no `author_id`; carries the acted-for person, turn, outcome, adapter and left-out count. The simulated adapter is labelled `Simulated` |
 | Claims and sources | Append-only factual claims and gaps, with numbered source references, source type and ID, version and retrieval time. Only validated citations can be posted |
 | Budget | A ceiling row per workspace and one reservation per call. Integer micro-USD, UTC calendar month, maximum US$30 |
-| Worker | `scripts/document-worker.ts` calls `runAssistantTurns(10)`. The only implemented adapter is deterministic `Simulated/simulated-1`, with zero prices and no network request |
+| Worker | `scripts/document-worker.ts` calls `runAssistantTurns(10)`. Default adapter is deterministic `Simulated/simulated-1`, with zero prices and no network request. T2d adds explicit local-only Claude selection under [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md) |
 
 ## Access and evidence (T2-2 to T2-4, P2, P4)
 
@@ -88,7 +88,7 @@ Known usage settles even if validation or posting later fails. A confirmed unsen
 | Access rebuilds | 1 |
 | Safe retries for unavailable/rate-limited/malformed responses | At most two for each error type, within all turn limits |
 
-Sent calls with unknown usage are not retried. Input estimates are checked before each call, and reported usage must fit the remaining allowance. Simulated usage is the JSON character count divided by four, rounded up. This is a deterministic fixture meter; a future provider's pricing, model pin and adapter belong to T2d.
+Sent calls with unknown usage are not retried. Input estimates are checked before each call, and reported usage must fit the remaining allowance. Simulated usage is the JSON character count divided by four, rounded up. This is a deterministic fixture meter; T2d uses a provider-specific full-request UTF-8 byte bound plus explicit schema/system overhead headroom, not this simulation meter. Reported unsupported billing categories retain Unknown and stop; see [ADR-0062](../decisions/ADR-0062-local-claude-adapter.md) for its calibration limit.
 
 ## Answer checks and reads (T2-5, T2-8, T2-9, P1)
 
@@ -108,7 +108,11 @@ Audit events, receipts, outbox jobs, turns and ledger entries hold identifiers, 
 
 `PPO_ASSISTANT=on` is effective only with `PPO_ENV=local-synthetic`, `PPO_EXPOSURE=loopback`, `PPO_IDENTITY=synthetic`, and a non-production, non-hosted environment. It is server-side and off by default. Human threads remain available while Carl is off; a permitted tag ends `Unavailable/FeatureOff`.
 
-There are no write tools, provider credentials, Claude implementation, new dependencies or model network calls. T2b does not add a route, picker, answer card, hosted grants, reminder scheduling, Figma changes or deployment. T2c, the W3 Figma correction, T2d and the reminder decision remain separate work requiring Dean's direction.
+T2b itself adds no write tools, provider dependency, route, picker, answer card, hosted grants, reminder scheduling or deployment. T2d now adds the separately authorised official SDK adapter; T2c's UI/review remains independent.
+
+T2d selection initially required `PPO_ASSISTANT_PROVIDER=claude` and `PPO_ASSISTANT_MODEL=claude-sonnet-5-5` in addition to every existing guard. The T2e extension below adds explicit comparison pins and a required runtime evaluation manifest. The factory never reads a key; the adapter reads `PPO_ANTHROPIC_API_KEY` only after guards. Key presence never enables Carl. Unsupported configuration fails closed without simulation fallback. Existing runner injection remains a test seam, not a production mock switch.
+
+The Messages transport uses fixed HTTPS destination/TLS verification and refuses redirects. SDK automatic retries, logging and telemetry are disabled. The runner retains ownership of retries/reservations/deadlines; `AssistantAdapter.inputTokens` optionally supplies the provider-specific pre-dispatch bound while simulation keeps its existing fixture meter. No worker-bypass endpoint is added. Foreground structured JSON is independently checked by PPO; refusal discards all partial model text. Known usage settles even after malformed/citation/post failures, while unknown or unrepresentable billing usage retains the full reservation and prevents retry. [Operator guidance](../delivery/conversations-t2d-local-adapter.md) and [mocked/persisted evidence](../testing/evidence/conversations-t2d/README.md) separate implementation from live evaluation.
 
 ## Proof and review
 
@@ -125,6 +129,15 @@ There are no write tools, provider credentials, Claude implementation, new depen
 
 The draft PR records exact local check results, confirmed baseline failures and CI-only checks. The migration, capability and grants require review by a model other than the author's before merge. That review has not happened; Dean decides acceptance and merges.
 
+
+## T2d independent-review follow-up — 22 October 2026
+
+[Claude reviewed T2d at 829ae67c](https://github.com/deanrfiedler-gif/powerplants-one/pull/664#issuecomment-6339292849); the two verified findings have corrective implementation and tests, with independent follow-up and Dean's acceptance pending. This does not replace the historical T2b review record.
+
+Before Claude dispatch or retry, prepareRequest removes complete oldest history entries to fit that provider's preflight estimate within the remaining input allowance. It preserves the newest history entry, exact question, access-checked source items and reader set. Every removal increments left_out; coverage.messages reports the reduced returned count and more=true. The internal history_left_out subtotal permits a separate fixed history-limit footer, while access exclusions retain their existing count-only wording. Stored left_out_count is the total; history reasons survive reader projection through the fixed footer grammar. Existing immutable answer bytes and old footer grammar remain valid. No new DTO identity, database field or endpoint is introduced. Requests still too large after history fitting fail before dispatch; simulation keeps its previous behavior.
+
+TLS uses explicit bundled Node roots, independent of process trust defaults, plus pre-credential refusal of system/OpenSSL trust/configuration and command-line key-log overrides. The speed field is omitted; non-standard speed or non-global reported billing usage retains Unknown. Sent HTTP rejection without known usage retains the reservation and is not retried; no automatic reconciliation exists. See ADR-0062 for sources and rationale.
+
 ## T2c UI extension — 22 October 2026
 
 [T2c design](../decisions/conversations-t2c-design.md) adds no migration, grant, capability or worker endpoint. Existing people GET returns items with truthful role text and optional agent `{ name, label } | null`, derived from assistantEnabled and anchor-scoped conversation.agent.ask. Optional thread_id must identify a readable thread on the same anchor. Candidate history_warning `{ count, basis }` contains no source name or identifier. Its opaque basis binds actor, thread, candidate, cited history and readable-source set.
@@ -132,3 +145,15 @@ The draft PR records exact local check results, confirmed baseline failures and 
 Existing message POST accepts optional participant_acknowledgements `[{ person_id, basis }]` for tagged people only. Before adding a new person, the server recomputes warnings. Missing/stale basis returns 409 ParticipantWarningRequired before message/participant writes. Confirmation grants no access. Omitting the field preserves historical normalised command hashes and original-operation recovery. New thread retains its existing contract.
 
 The UI consumes readThread's existing P1 projection and P3 turns as checked plain text. It does not execute adapters. Visible pending turns poll through guarded reads; the existing document worker performs the lifecycle. The production/off guard is unchanged. Compiled historical-answer fixtures use a separate non-production local-synthetic worker.
+
+## T2e offline extension — 23 October 2026
+
+The [T2e decision and gate register](../decisions/conversations-t2e-evaluation.md) governs the offline extension. T2c and T2d are merged; earlier review/draft wording above is checkpoint history, not a live-call approval. Claude reviewed 99721da6; the [T2e evidence](../testing/evidence/conversations-t2e/README.md#independent-review-and-author-disposition--23-october-2026) records the user-supplied review and author disposition. No subsequent independent pass or live authority is claimed.
+
+Runtime Claude turns require a bounded manifest tied to an exact clean execution commit, workspace, immutable human-message IDs, model/stage/case/repetition and reviewed evidence hashes. Explicit model choices are Sonnet, Haiku and Opus 5.5 under W5; Sonnet and SDK pins stay unchanged. The worker selects the configured model/stage before its limit and admits at most one evaluation turn per invocation. Nine Answered/settled calibrations and a separate acceptance hash gate the main stage. Hashes bind content, not approval identity.
+
+Run and calibration caps are checked under the existing workspace budget lock against all member ledger entries across all months. Settled actual amounts, Reserved and Unknown maxima count; Released amounts do not. Unknown/failure/stop or a changed manifest cannot be bypassed by restarting the same bound run/members. A fresh run ID with entirely fresh messages has separate caps and does not inherit earlier runs' stop/Unknown gate; the T2e plan's exact-run approval and prohibition on evasion are procedural, not workspace-wide enforcement. Run-cap refusal uses generic ProviderUnavailable: BudgetSpent remains exclusive to the monthly ceiling because its accepted UI explicitly names this month. The monthly ceiling, six calls, 48,000 input/8,000 inclusive output and 60 seconds remain. There is no reservation-release or reconciliation workflow.
+
+The existing audit metadata now includes only run/hash references and validated numeric/fixed-enum measurements. Known usage settles before parsing, citation, posting, metadata or freshness rejection; unsupported billing remains Unknown. Both documented refusal discriminators discard partial content. Evaluation checks approved evidence before fitting and current source versions/projected fields before dispatch/post; changed content is unavailable and never published. The full stale-answer/refresh UX from specification §6 remains a separate gap. P1/P3 and immutable stored answers are unchanged.
+
+No schema, grant, capability, UI DTO or endpoint changes. Existing code-only mock injection remains a test seam. See the [operator chapter](../delivery/conversations-t2d-local-adapter.md) and [T2e offline evidence](../testing/evidence/conversations-t2e/README.md); no live-model result is implied.

@@ -4,6 +4,7 @@ import { AppError } from "../platform/errors";
 import type { QueryClient } from "../platform/permissions";
 import { turnLimits, type Usage } from "./model";
 import { costMicro, maxCallMicro, type Price } from "./pricing";
+import { checkEvaluationReservation } from "./evaluation";
 
 const spent = () => new AppError(409, "BudgetSpent", "The assistant budget is unavailable or spent.");
 const invalid = () => new AppError(409, "InvalidReservation", "This reservation cannot make that transition.");
@@ -67,6 +68,7 @@ export async function reserveCall(c: PoolClient, workspace: string, turn: string
     `SELECT ${projection} FROM ppo.assistant_budget_entries WHERE workspace_id=$1 AND turn_id=$2 AND call_index=$3`,
     [workspace, turn, call],
   )).rows[0];
+  await checkEvaluationReservation(c, workspace, turn, price.model, call, amount, !!prior);
   if (prior) {
     matches(prior, price, allowance);
     if (prior.state !== "Reserved") throw invalid();

@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-FI07-CUSTOMER-RESPONSE-FIGMA-DEC,Customer response design (Figma) owner decision,docs/decisions/customer-response-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,e9f28b6955d62cc33408e418f43f00ce5b937551,,,git,
+PPO-FI07-CUSTOMER-RESPONSE-FIGMA-R01,Customer response design retained captures,docs/reference/ui/service/customer-response-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,e9f28b6955d62cc33408e418f43f00ce5b937551,,,retained-record,

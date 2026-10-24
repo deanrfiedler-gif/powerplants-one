@@ -13,7 +13,7 @@ import { readableSources, sourceKey, type SourceKey } from "./source-access";
 import { agentName, envelopeLimits, type EvidenceEnvelope, type EvidenceItem, type EvidenceValue, type SourceType, type StoredClaim } from "./model";
 
 // SQL and DTO allowlists are paired: additions to a domain row cannot enter an adapter request.
-const fields: Record<SourceType, readonly string[]> = {
+export const evidenceFields: Record<SourceType, readonly string[]> = {
   Opportunity: ["display_number", "title", "stage_id", "close_outcome", "need_summary", "qualification_note", "expected_close_date"],
   Organisation: ["display_number", "display_name", "relationship_status", "sector"],
   Activity: ["kind", "activity_type", "summary", "status", "due_at", "due_needed", "starts_at", "outcome", "is_next_action"],
@@ -118,7 +118,7 @@ async function sourceFields(c: QueryClient, workspace: string, source: SourceKey
       ? [workspace, source.record_id, nextAction, SALES_KINDS] : [workspace, source.record_id])).rows[0];
   if (!row) throw unavailable();
   const projected: Record<string, EvidenceValue> = {};
-  for (const key of fields[source.type]) {
+  for (const key of evidenceFields[source.type]) {
     const value = row[key];
     projected[key] = value instanceof Date ? value.toISOString() : value;
   }
@@ -129,6 +129,21 @@ async function sourceFields(c: QueryClient, workspace: string, source: SourceKey
     route: sourceRoute(source.type, source.record_id, row.project_id),
     fields: projected, untrusted_fields: untrusted[source.type] ?? [],
   };
+}
+
+// Evaluation-only freshness gate: derived Project fields can change without its row version.
+// Re-read the same allowlist inside the dispatch/post transaction; never expose a stale answer.
+export async function sourcesUnchanged(c: QueryClient, workspace: string, envelope: EvidenceEnvelope) {
+  const retrieved = (await c.query("SELECT clock_timestamp() AS at")).rows[0].at.toISOString();
+  const anchor = envelope.items[0];
+  const nextAction = anchor?.type === "Opportunity" ? (await c.query(
+    "SELECT next_activity_id FROM ppo.opportunities WHERE workspace_id=$1 AND id=$2", [workspace, anchor.record_id],
+  )).rows[0]?.next_activity_id ?? null : null;
+  for (const item of envelope.items) {
+    const current = await sourceFields(c, workspace, item, retrieved, nextAction);
+    if (current.source_version !== item.source_version || canonical(current.fields) !== canonical(item.fields)) return false;
+  }
+  return true;
 }
 
 async function messagesFor(c: QueryClient, p: Principal, thread: string, trigger: string, readers: string[]) {

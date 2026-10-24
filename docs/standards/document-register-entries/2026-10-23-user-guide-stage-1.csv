@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-ADR-0065,Reading user guide Markdown with marked and yaml,docs/decisions/ADR-0065-guide-markdown-parser.md,,Accepted by the owner 23 October 2026; stage 1 build authorised; adds marked 18.1.0 and yaml 2.9.1,Dean Fiedler,01cef391,,,git,

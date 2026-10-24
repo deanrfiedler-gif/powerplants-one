@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { checkAnswer, declineBody, renderAnswer } from "../../src/assistant/answer";
+import { answerFooter, checkAnswer, declineBody, renderAnswer } from "../../src/assistant/answer";
 import { assistantEnabled } from "../../src/assistant/config";
 import {
   agentLabel, agentName, answerLimits, envelopeLimits, monthlyCeilingMicro, turnLimits,
@@ -158,7 +158,7 @@ test("T2-6 full allowance reservation is 176000 micro-USD at the synthetic test 
   assert.equal(costMicro(price, { input_tokens: 0, output_tokens: 0 }), 0);
 });
 
-test("T2-6 unknown prices fail closed and only the simulated model is priced", () => {
+test("T2-6 unknown prices fail closed and simulation retains its zero price", () => {
   assert.equal(priceFor("Claude", "x"), null);
   assert.equal(priceFor("Simulated", "SYN-unknown"), null);
   const p = priceFor("Simulated", "simulated-1");
@@ -188,4 +188,20 @@ test("T2-11 Carl is off unless every local synthetic switch is explicit", () => 
     { PPO_ENV: "azure-demo" }, { PPO_EXPOSURE: "public" }, { PPO_IDENTITY: "oidc" },
     { VERCEL: "1" }, { WEBSITE_INSTANCE_ID: "SYN hosted" }, { CONTAINER_APP_NAME: "SYN hosted" }, { RENDER_EXTERNAL_URL: "SYN hosted" },
   ]) assert.equal(assistantEnabled({ ...local, ...extra }), false);
+});
+
+
+test("T2d trimmed history is disclosed separately from access exclusions and survives immutable reader projection", () => {
+  const e = { ...envelope({ left_out: 5 }), history_left_out: 3 };
+  const checked = checkAnswer(answer(), e); assert.ok(checked.ok);
+  const rendered = renderAnswer(checked, e);
+  assert.match(rendered.body, /2 sources left out because not everyone here can see them/);
+  assert.match(rendered.body, /3 earlier messages left out to fit the request allowance/);
+  assert.match(answerFooter(rendered.body, rendered.claims), /3 earlier messages/);
+  assert.equal(answerFooter(rendered.body + "\nSYN arbitrary trailing payload", rendered.claims), "");
+  const old = renderAnswer(checked, envelope({ left_out: 2 }));
+  assert.match(answerFooter(old.body, old.claims), /2 sources left out/);
+  const historyOnly = renderAnswer(checked, { ...envelope({ left_out: 1 }), history_left_out: 1 });
+  assert.match(historyOnly.body, /1 earlier message left out/);
+  assert.doesNotMatch(historyOnly.body, /not everyone here/);
 });

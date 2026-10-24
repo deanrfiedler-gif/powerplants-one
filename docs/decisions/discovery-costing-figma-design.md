@@ -56,6 +56,7 @@ This is a design decision. It authorises none of the following:
 | Q4 Phone | Resolved as recommended | Review and adoption are allowed on phone. Each line is edited in a full-screen line editor, which is not drawn |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
 | Named Figma version | User decision, 18 October 2026 | "Yes, save the named Figma version "Discovery costing — accepted"." Saved in the Figma desktop app at about 20:02 by a Claude session on Dean's yes, and seen in version history as Dean Fiedler's "just now" entry after the panel was reopened |
+| Opportunity number prefix | User decision, 22 October 2026 | "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." Then: "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The frames show `SYN-OPP-…`; r02 captures replace the changed images (section 8) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -69,8 +70,8 @@ This is a design decision. It authorises none of the following:
 | Phone 390 and 320 | Cost lines at 390 `1433:2403`, at full length `1431:1921` (390 × 1694), and at 320 `1433:2492` |
 | States | Dialog states: adopting `1433:376501`; outcome not confirmed `1431:2114`; original estimate kept `1431:2129`; not permitted `1431:2143`. Phone 390: loading the saved scope `1431:2157` |
 | Page parts | None. The page reuses existing components only |
-| Story | Synthetic, Tue 13 Oct 2026, 09:30, signed in as Dean Fiedler. SYN-PPO-OPP-000334 Shade screen replacement, Block B for SYN Systems, matching the Discovery register. Option B — Motorised screens is selected. Discovery r02 was saved Wed 7 Oct by estimator Alex Nguyen and is Complete; estimate v2 is still on r01. r02 adds Bays 5–6 (six motors, 3,600 m² of cloth) and a rain sensor. The v3 proposal has six lines, four of them different from v2, with cost AUD 34,084.00 and sell AUD 46,210.00; v2's sell is AUD 31,210.00. The not-ready frame uses Northbank (SYN-PPO-OPP-000326): r03 is Incomplete with two systems to confirm, and estimate v04 (AUD 58,400.00) stays on r02, as on the register and the accepted wizard |
-| Retained captures | [Discovery costing design r01](../reference/ui/estimating/discovery-costing-figma-design-r01/README.md): ten icon-free PNGs with hashes |
+| Story | Synthetic, Tue 13 Oct 2026, 09:30, signed in as Dean Fiedler. SYN-OPP-000334 Shade screen replacement, Block B for SYN Systems, matching the Discovery register. Option B — Motorised screens is selected. Discovery r02 was saved Wed 7 Oct by estimator Alex Nguyen and is Complete; estimate v2 is still on r01. r02 adds Bays 5–6 (six motors, 3,600 m² of cloth) and a rain sensor. The v3 proposal has six lines, four of them different from v2, with cost AUD 34,084.00 and sell AUD 46,210.00; v2's sell is AUD 31,210.00. The not-ready frame uses Northbank (SYN-OPP-000326): r03 is Incomplete with two systems to confirm, and estimate v04 (AUD 58,400.00) stays on r02, as on the register and the accepted wizard |
+| Retained captures | [Discovery costing design r01](../reference/ui/estimating/discovery-costing-figma-design-r01/README.md): ten icon-free PNGs with hashes; [r02](../reference/ui/estimating/discovery-costing-figma-design-r02/README.md) replaces images 01–08 for the `SYN-OPP-` numbers (section 8) |
 
 ## 3. Conformance declaration
 
@@ -87,7 +88,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md), as
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | "Discovery costing — accepted", saved 18 October 2026 |
+| Named version | "Discovery costing — accepted", saved 18 October 2026; "Discovery costing — accepted (SYN-OPP- numbers)", saved 22 October 2026 (section 8) |
 
 ## 4. What the design shows
 
@@ -194,3 +195,11 @@ The audit and the acceptance are recorded on the notes card `1431:2195`.
 - Before the captures were made, the notes card's Accepted paragraph and the page header's Status field were updated. The header's Decision record and Named version fields were then pointed at this lock-in. The frames themselves were not changed.
 - The page has no prototype flow. The review dialog's Close and Cancel return to the cost lines frame; Claude did not play them in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 8. Number prefix change, 22 October 2026
+
+Dean: "I have been removing PPO from the numbers. So it would just be "SYN-OPP-"." The application already allocates new references as `SYN-<TYPE>-…` since migration 0114 (#650); existing `SYN-PPO-` references stay permanent there. Every `SYN-PPO-` text in the Discovery costing frames, parts and icon-free capture copies became `SYN-`. Layout, content, decisions and stories are otherwise unchanged; the notes card keeps Dean's earlier words verbatim and adds a dated line.
+
+- Captures: [Discovery costing design r02](../reference/ui/estimating/discovery-costing-figma-design-r02/README.md) holds the eight changed images (01–08; 09 dialog states and 10 phone loading hold no number). Every re-export was compared by SHA-256 with r01; images that came out identical, or hold no number, keep r01 as their reference. r01 is retained byte for byte.
+- Named version: "Discovery costing — accepted (SYN-OPP- numbers)", saved 22 October 2026 at Dean's "Yes: add r02 capture sets and update the three decision records for SYN-OPP-, then save new named versions of the three Discovery pages." The earlier named version "Discovery costing — accepted" shows the earlier numbers.
+- No application code, migration or test changed.
