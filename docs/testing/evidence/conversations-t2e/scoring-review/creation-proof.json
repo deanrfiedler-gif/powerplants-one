@@ -1,0 +1,23 @@
+{
+  "evidence_class": "Persisted synthetic integration",
+  "cases": 117,
+  "calibration": 9,
+  "evaluation": 108,
+  "provider_calls": 0,
+  "budget_entries": 0,
+  "initial_inventory_hash": "32423497ad91419e38b14f1b8dc2dae75a5fd182721bbc85159c27a42e3eb724",
+  "refreshed_inventory_hash": "fde9375bce0ebb2c837c02d8b379bcde75e5d7461025faa87658da581de7a00f",
+  "verified": [
+    "matrix",
+    "sentinels",
+    "gold",
+    "fitting",
+    "read-only",
+    "reopen",
+    "reuse refusal",
+    "tamper refusal",
+    "source drift",
+    "re-export"
+  ],
+  "acceptance": "Proposed review material only; no live authority"
+}

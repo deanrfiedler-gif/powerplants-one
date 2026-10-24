@@ -1,0 +1,2810 @@
+{
+  "schema_version": 1,
+  "kind": "T2eOfflineCorpus",
+  "status": "Proposed; no live authority",
+  "catalogue_hash": "bbdd7eeabc2a5440c5e735bcb346052001c742dee6cb1215dd5ddb387821571f",
+  "instances": [
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "C01",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "ac716ba7-7e03-4a7e-bb87-c61019597775",
+      "message_id": "e8f960e9-5336-4e88-9f33-c879bca3e516",
+      "aliases": {
+        "organisation": "fcfa4012-51d9-455c-a64a-7db93bed1d8a",
+        "site": "9ba7a44f-2bc6-4345-aabe-e8b746fd2596",
+        "anchor": "48d97be0-db97-44b2-98d3-a30ddc100261",
+        "A1": "a0f4e78b-af90-4617-98c9-0d0a34566188"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "C02",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f4ce3e21-c0e8-4705-a8f8-5c42976ba2c0",
+      "message_id": "a3a593f2-10c2-4f03-ad08-934fecd6eab7",
+      "aliases": {
+        "organisation": "78a99008-0aca-4b38-8aa0-9c4735a5b389",
+        "site": "31ed8939-7029-44a6-9dc5-96b336b60910",
+        "anchor": "ea11d06f-ebb4-48fe-babe-caefa7f1754b",
+        "A1": "cf9e4dda-213f-4831-855f-10525fa130d2",
+        "A2": "6075f46c-7c76-4be6-ba4a-8c224916d322"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "C03",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b5c40f39-4b31-4a8e-8c4c-7c6f6d075329",
+      "message_id": "53fd8572-b3fb-408c-9fbf-d447296c7b01",
+      "aliases": {
+        "organisation": "c4a57f26-731d-4c11-953f-c11344e0ac6e",
+        "site": "6405796f-b4bd-4518-842f-7c9b06799837",
+        "anchor": "926e931f-398c-4fd3-a6ea-14b1efbe2eb7",
+        "A1": "95145617-670c-4bb8-8aa8-92367bb819e4"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "49c237ee-636d-4c09-a6d8-efdcf386e7f1",
+      "message_id": "0b4faca3-7871-4d56-8881-a6017f5afbfb",
+      "aliases": {
+        "organisation": "11198cc5-5fe2-4847-a222-b714ab3df3e4",
+        "site": "60d47c63-e349-4b90-a02b-2c4661642e6e",
+        "anchor": "cfcb3626-9662-4a10-b748-5ae3b4cdb9e0",
+        "A1": "c7c8972d-04ff-4333-958f-480321e593a6"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "3bbc53d5-388e-4279-85d1-3a38a1009393",
+      "message_id": "18f3b4f6-28f2-4171-87e5-36d2d3adb1e3",
+      "aliases": {
+        "organisation": "0a2dcfca-fad1-402e-ba11-f73a57f3db48",
+        "site": "ffe106e8-b399-40a8-b9d8-3744a5b472eb",
+        "anchor": "fa259e10-c695-431d-9b2b-d9ec2d5a1943",
+        "A1": "330a40b3-6403-43ac-83f9-91809f2de39f"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "ff537b46-abfe-46e3-8939-5700e4225622",
+      "message_id": "3d45ac52-3e0f-49dc-b3a1-889b3ca4d64f",
+      "aliases": {
+        "organisation": "a3e9fcfc-affb-4042-bf35-8af77ab1f399",
+        "site": "0e3626ac-6973-4e05-9598-7037ea2dbbb0",
+        "anchor": "713b1876-28bf-4242-a7a1-3bb5af2e4179",
+        "A1": "c36ab930-ec66-41fb-b890-18ecedcb2fa7"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "be46497c-ae67-4f82-9293-1ed8e2bf9465",
+      "message_id": "31623687-f9f5-49e4-b1dc-a641b8622d9e",
+      "aliases": {
+        "organisation": "7473b2cd-6c5e-432a-9122-c399dd0c7ed5",
+        "site": "0ec7a6d2-add1-4289-a8b0-cd5384061fd1",
+        "anchor": "787f5d7b-7c7a-4fba-9444-2f61916126fe",
+        "task-1": "f56880d7-463d-4a02-8793-232e451ce690",
+        "task-2": "405d4529-5dfa-4c91-a93e-ccb6a105fe66"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "6144fe30-9c4b-46b4-a720-e665d4c56b7e",
+      "message_id": "73c98014-43b7-4abf-894a-33136b43a29d",
+      "aliases": {
+        "organisation": "3e841c06-152c-43f5-8442-005515abfb24",
+        "site": "72e660b5-275f-4bf0-98a4-bea9b5490883",
+        "anchor": "beb4a58f-f7f4-4ca5-8a7b-085abf05e477",
+        "task-1": "09cd4d40-cee3-4a9c-8270-6898cdb1dd65",
+        "task-2": "7e83c674-ad29-4958-9572-174d55a5ecd1"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1fd780c6-7676-4a1d-b6a8-160f64ef64fc",
+      "message_id": "aef62d71-edec-4394-82f1-d2e470507ac5",
+      "aliases": {
+        "organisation": "6e384e01-2f09-42fc-b451-d8bcd09f76f6",
+        "site": "fb70033a-5d3a-450c-82bd-b3e3380af982",
+        "anchor": "2dd23d7c-6d7e-4c87-8154-3a4b12512652",
+        "task-1": "f9cb15f9-9c2f-414b-8dca-40ff748f7ba2",
+        "task-2": "447251c7-9f8a-47a5-a201-24aaa8209e22"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "7b088864-b1b2-44a3-b051-f750a2ffabe9",
+      "message_id": "66893adc-93df-470d-bd73-eae3e39c6ee1",
+      "aliases": {
+        "organisation": "f886b49a-6690-45d7-9122-fb7ab1065b15",
+        "site": "bae5156c-82d0-4fc5-b3f3-264ff1eb24a5",
+        "anchor": "5c58afd7-e462-4163-9f89-3844a291ad94",
+        "A1": "933765ac-8ecd-4667-9f6a-c36b729d5e50",
+        "A2": "9bebe532-49e9-450d-b4ff-9747819155fb"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "55da2cd6-9a75-4d14-861b-60219df8dcff",
+      "message_id": "1cba690a-6e2d-4f26-858d-208dfa5a6782",
+      "aliases": {
+        "organisation": "008b42de-fcd5-4e8d-bdec-b8337ecf19a2",
+        "site": "280cb678-e2c0-4ec8-82c8-0bc435fb5c29",
+        "anchor": "74383a54-37dd-45aa-ba9b-57bef9a72d8c",
+        "A1": "bdf4e478-4e1e-4047-b556-c183e8df3b1d",
+        "A2": "83313ad6-639f-4815-afbb-df3e461d214d"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "2484cd8f-7573-47f3-ab76-2e200a1b10e9",
+      "message_id": "8e22c99d-23b4-4619-abd1-72ca9cb76c82",
+      "aliases": {
+        "organisation": "1b2e06e5-2ab5-4bab-86f7-6e25c5355a1e",
+        "site": "3b55cf07-d0b9-40a2-9e2d-bc056787951d",
+        "anchor": "c152ea03-25a2-4195-b3bc-3e7e38d6d0b0",
+        "A1": "d1fef5c2-5c53-4de3-8b52-34da99eefbff",
+        "A2": "3c47be71-a948-4f9f-bf03-c98dca77340b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "4e54ec4d-490f-49cb-ad02-891e4af9613b",
+      "message_id": "ba9abe33-8a37-4688-b1a1-e0b9d76e2121",
+      "aliases": {
+        "organisation": "e8bd0337-8e03-4e05-bf00-8449e684353a",
+        "site": "4ebcbbff-61d3-45c2-8086-3aa2e32ed34d",
+        "anchor": "4a85fd91-be9d-4b17-9749-0d547bcc9d27",
+        "A2": "23db6dde-8765-4236-947f-d14dda8cc936",
+        "A3": "d871b7ba-b471-42b6-b928-8c603678c954"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "95c2c2a5-d074-4cd0-a129-340540035513",
+      "message_id": "a4a8b597-bdd4-4b53-a33d-235433ee524b",
+      "aliases": {
+        "organisation": "5bc9b759-bcef-44c4-aa5b-fc0d5a19b4b6",
+        "site": "af15cbe5-8c75-418f-ac8a-1cbe190ee2f2",
+        "anchor": "eccebf95-9718-4da7-af57-5ca586e80563",
+        "A2": "010375e3-6628-4695-a84e-3cbb25b1a028",
+        "A3": "ef1ffb61-9d14-4f9e-a9fa-5c4ab943bfa3"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "39461264-93f7-4bd5-b64c-6ff8aa2ed8ac",
+      "message_id": "46705344-6a52-4163-8ba2-25d719d53bd4",
+      "aliases": {
+        "organisation": "8f91255c-5863-4a9a-a654-8f21928f01fd",
+        "site": "ffb6db6d-630f-4f69-9eb6-d393fa2b9c10",
+        "anchor": "b63fbe9a-81af-46da-b0fb-d9f4c8e75401",
+        "A2": "730a6705-8af1-4146-bf66-988d9c2d1439",
+        "A3": "e66034c3-e7c4-49e7-a7eb-7c0fbe7f0345"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "7e1a523a-677c-48a5-84c9-3934e4816d29",
+      "message_id": "a628e55f-a302-488b-9d24-d5af1ecd6509",
+      "aliases": {
+        "organisation": "2f59d0a3-0ec6-47b7-b714-b5f5468e6e10",
+        "site": "128aaa36-1a56-42b3-b0eb-b242ecd0a0c3",
+        "anchor": "74a50622-152b-4d1c-9f11-03ce86562250",
+        "A1": "49555c34-17b9-44f8-8a93-5cc7b64fb528"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "19c7e202-d8e2-4cbf-8e54-681f957fd06d",
+      "message_id": "cfa5dcf2-8046-413b-bea2-ee9386c9260f",
+      "aliases": {
+        "organisation": "22d3a697-5a0a-4e62-bc45-88f5d5e911a2",
+        "site": "cd458bda-1d46-4022-9583-4e29d5b5e315",
+        "anchor": "d96978f3-6b77-438f-9f3d-3e13f4dc2f78",
+        "A1": "fb7dffdd-6ab0-4278-b119-389f4bb2ee08"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "d3a31d02-341f-4ea4-bdf6-401177c53b13",
+      "message_id": "a2a804d2-a826-4f21-acc5-eb426422f553",
+      "aliases": {
+        "organisation": "6d6519ee-4ac7-420d-bb2b-6531dddb7cb4",
+        "site": "9070c256-fb2d-4368-a8df-1794e2e8d9e5",
+        "anchor": "0ff54753-192e-49c2-a6b6-a05d3045b71c",
+        "A1": "f965bc53-913e-4bd6-b676-f2dc3b94c069"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f864c753-1430-4c7e-a16f-8ba2bb29f233",
+      "message_id": "011b08e6-ca0d-45c6-9281-fe0e596a0d94",
+      "aliases": {
+        "organisation": "e28404e8-700e-4294-8503-7fae551ae6a0",
+        "site": "34364550-f003-4920-9fbe-2f6620201fb2",
+        "anchor": "1172e8c6-4743-464d-9d7d-edc42ff2dd9a",
+        "A1": "a0959001-4bd9-41e2-936f-1d6d55bff95e",
+        "sibling-1": "d2d20a3f-3f61-4536-9c09-392507be457b",
+        "sibling-follow-up-1": "2de46b29-918c-4955-ac16-1420d717efa2",
+        "sibling-2": "69f9856e-560d-4da6-8728-5ee3c58dfa3c",
+        "sibling-follow-up-2": "85a72cc9-ac05-40cc-a793-a691b1358e47",
+        "sibling-3": "edfcba6c-9246-42f7-af97-87ea19b02c03",
+        "sibling-follow-up-3": "e30adb9d-345e-46b1-86a3-4a13edec2eaf",
+        "sibling-4": "0f713588-ac75-4c4a-92ba-c2171be917a0",
+        "sibling-follow-up-4": "530bf578-5e50-4af1-a1f5-8a3101533931",
+        "sibling-5": "5db06826-c663-47c7-a73e-1a9e027c93ab",
+        "sibling-follow-up-5": "e98ca179-980e-48c4-93ec-c1ba813590a8",
+        "sibling-6": "d91c037b-1412-4abc-b44f-8184b9616619",
+        "sibling-follow-up-6": "6190e604-ec50-4299-afdb-acb72ebd1d66",
+        "sibling-7": "61bac405-100b-4bff-9cd3-8309a75cd5a5",
+        "sibling-follow-up-7": "2b6a81c1-f0df-464d-abcc-91de56c103ac",
+        "sibling-8": "87d64c04-4519-42da-b2ac-cbaa13caa0cb",
+        "sibling-follow-up-8": "f422c710-5993-4569-82e4-c4b36a43abb8",
+        "sibling-9": "572c7e04-548e-4bca-9f1e-e4c8361af7a4",
+        "sibling-follow-up-9": "6c0b98c9-b596-4427-b399-a9ee05e85060",
+        "sibling-10": "4ecfe0af-0637-430a-a9a5-07301e05245b",
+        "sibling-follow-up-10": "ced85c82-6e9a-4927-8cab-12836b6322e2",
+        "sibling-11": "a3f86d4d-53ad-45e8-a737-d4dd35e34fdb",
+        "sibling-follow-up-11": "b6f564e3-512f-4dd7-9ab5-4a5602ff5af3",
+        "recent-1": "863e786e-ec24-42db-9171-0bca5f72fdc9",
+        "recent-2": "14d3d326-f42c-489e-967c-01f3c440215f",
+        "recent-3": "8833b179-fa37-4725-8399-0cad4ee2bc4f",
+        "recent-4": "89152000-0acd-4780-b776-23a68c7e3cd5",
+        "recent-5": "9ad422ec-c1cb-4085-97dd-fc268aecd44e",
+        "recent-6": "fb96fefd-66e5-43d4-86d0-b6dc9a8e698e",
+        "recent-7": "3e426c0c-465b-4b50-8fff-47e3866f2d44",
+        "recent-8": "0c7110f4-612e-4dad-81b3-aa2ee68ea476",
+        "recent-9": "f2b84dae-fbb2-4307-bb25-9f9b03c3f852",
+        "recent-10": "f2e015f8-79bf-4869-a397-c61e291b6ed7",
+        "recent-11": "b99c688f-de81-46aa-9d22-e8d91ae170f2",
+        "recent-12": "b31cdb60-3322-4859-b9d1-cc869032f1ff",
+        "recent-13": "75927fe7-43d6-482b-9feb-2399147506eb",
+        "recent-14": "a81ff7b4-f5fc-43b6-98d6-3677bd3f52cd",
+        "recent-15": "1ac8df39-b5a8-4ee7-865e-3b5e95b50af6",
+        "recent-16": "8a0a4f57-8a17-473e-acc9-563d5571731c",
+        "recent-17": "d3c1f319-a8bd-43f7-b52d-ec5790b6df2f",
+        "recent-18": "89420bc9-7de6-49e4-ac74-6c72219ee585",
+        "recent-19": "54c25c49-903d-4212-9434-e537551d85b8",
+        "recent-20": "cefb335a-53db-4f24-a2bb-1a19e91efde5",
+        "recent-21": "540dbef1-44ef-4f54-abe6-9b45536e81dd"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "179754a1-7411-492a-915c-bc1dd3f87003",
+      "message_id": "9a583743-294c-4082-8674-975c76229578",
+      "aliases": {
+        "organisation": "1954583f-1eba-426e-977b-4ba018c89f01",
+        "site": "138e10de-4cbc-4838-b3fe-fa808ce82eb1",
+        "anchor": "d1096bdb-ac3e-4ea1-ae13-0774a6d6a561",
+        "A1": "c3bb984c-f626-4e32-a4af-1e053c2cab16",
+        "sibling-1": "2537a31a-9e35-47db-a320-719395c83fcc",
+        "sibling-follow-up-1": "d380e5a2-d983-4c71-b273-276f8d4fe459",
+        "sibling-2": "bc60e839-13e9-4d5a-a331-5cd691df6488",
+        "sibling-follow-up-2": "5916073b-74d2-41c9-b0d3-e3d9c5c10635",
+        "sibling-3": "fab7ebf7-66d3-4f3a-afda-8e43dd44ea7f",
+        "sibling-follow-up-3": "c200fb18-9263-42d6-825c-cb43c3e8ef46",
+        "sibling-4": "4721895e-883d-4f45-8504-f55bd6d35426",
+        "sibling-follow-up-4": "fa1645f7-7ffc-47e5-a506-7c2d5b91d76d",
+        "sibling-5": "cfb7c8be-63a6-48a0-ab28-ca902b4a7d03",
+        "sibling-follow-up-5": "202795e4-6e51-4746-9e14-6586ef36a015",
+        "sibling-6": "47bc9baf-addc-4adc-b556-24e87c65016e",
+        "sibling-follow-up-6": "fa161e8c-cac9-409e-8bd6-fde5c4ac1045",
+        "sibling-7": "ebad60ee-4d8a-4903-b83b-fb4fd6e65404",
+        "sibling-follow-up-7": "50f58c25-bd5c-4929-856d-f994275d83b0",
+        "sibling-8": "a7a60835-9f0f-46b4-acaa-66b0153e743e",
+        "sibling-follow-up-8": "10dacb2e-b552-4a4f-835e-4834c82e2d52",
+        "sibling-9": "9065476e-59f8-474f-afed-71de01bfdfca",
+        "sibling-follow-up-9": "89ddbfee-4716-4885-9808-81f4d4ca725d",
+        "sibling-10": "cad300de-a16b-4eb8-a936-e8aa5060f610",
+        "sibling-follow-up-10": "52b4f636-6d07-4750-ba43-f4fd1970d91f",
+        "sibling-11": "fa8711da-d6d3-4187-b34a-fbf5a8edd00e",
+        "sibling-follow-up-11": "c0eb27b5-a732-4863-8532-eb68a2db22b2",
+        "recent-1": "30bb1bb7-d432-4351-83f4-682bd331e3f0",
+        "recent-2": "638df659-9730-46c2-8d5e-4e959cda7b97",
+        "recent-3": "d7b62e1b-4910-428c-ba1a-da16fa8e54ef",
+        "recent-4": "5bbe250d-ae06-48ad-879b-c7995186a35a",
+        "recent-5": "aef4fceb-d66b-4cc3-8cee-a7a5a7fd81af",
+        "recent-6": "a89988b5-8ddd-4737-a9d6-d25ffa8566b4",
+        "recent-7": "336f8d5c-9dd5-4817-9cd6-38e86389dc0f",
+        "recent-8": "2c8d82b5-447f-4f9d-bf0d-558a85a34d6b",
+        "recent-9": "0a53be5f-e2e1-4b10-b2d2-c843104f9ea5",
+        "recent-10": "35c80a5f-7e6a-4dcd-9dd9-8b6eeca3f945",
+        "recent-11": "088671ff-c70c-49a4-8fe0-7a551f2e8d32",
+        "recent-12": "50c8842d-c520-4316-8289-d369bb8ddaa9",
+        "recent-13": "431fcd11-00e7-4b89-90da-2f3efaea2ced",
+        "recent-14": "50ad729c-62a8-4360-ac74-19c750fb65b1",
+        "recent-15": "098590fd-1d01-4205-8f99-8c19730fdfee",
+        "recent-16": "664605e5-b750-42d4-b950-263721f15f92",
+        "recent-17": "4639d35e-63cc-44bd-a775-6326817cc61f",
+        "recent-18": "8a9cbd2b-61dc-4d1b-a1c0-e09885c8a0e1",
+        "recent-19": "fd1a4a19-68a2-4199-b65b-b22e1be08fc6",
+        "recent-20": "fc45e980-65cc-41c1-afc8-789b00792b0e",
+        "recent-21": "585d92bf-030b-4f26-9e2a-a7750b31ac29"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "70c2a513-b988-4340-b5b6-43b9a9412604",
+      "message_id": "66a28450-ce2a-43bd-8f40-c5a2a7c4272a",
+      "aliases": {
+        "organisation": "5fec9bf3-95a9-4120-804e-31643004f2da",
+        "site": "f2b09f9d-51e7-4ead-ae1e-0cd214af153f",
+        "anchor": "ccc8195d-2ee2-406b-aad5-c325a3a85c44",
+        "A1": "19cd5954-0eb1-4bcc-ba97-85b05e6a25c0",
+        "sibling-1": "35b263fe-db2d-474a-b881-ba47ce35a6aa",
+        "sibling-follow-up-1": "8e0cd4ae-7211-4e71-afae-4780a1e487c5",
+        "sibling-2": "609b8833-0bd7-4bf1-9326-df3006441d73",
+        "sibling-follow-up-2": "9362c17b-504f-48d8-a4a3-a9753d5d9d3f",
+        "sibling-3": "9f02d127-dae6-4293-8292-7211d28e1000",
+        "sibling-follow-up-3": "da0b7f69-c930-4d00-ad16-44ebba614885",
+        "sibling-4": "e124d48c-b3db-462b-b19a-cba97b01c36c",
+        "sibling-follow-up-4": "d5aef7d6-7805-4c74-8d3c-6addc92d6646",
+        "sibling-5": "0904308e-5c11-4a7b-8e0f-37d6d423e142",
+        "sibling-follow-up-5": "469e6505-c0f1-42e9-81f9-17236656653f",
+        "sibling-6": "0a5efd6f-95fa-444c-870c-c386de25972c",
+        "sibling-follow-up-6": "d7b0150e-f0bd-4815-9632-a23c5297aada",
+        "sibling-7": "7984fac0-d87c-4f79-9387-597433235037",
+        "sibling-follow-up-7": "6f28599e-1264-452f-aa17-389a45a34026",
+        "sibling-8": "2df6651e-302a-4efb-926a-8a134bdbfc90",
+        "sibling-follow-up-8": "803c1bb3-9a95-4b4d-a716-dbe3e418a7e5",
+        "sibling-9": "82388f37-27d0-4a86-8236-d63c92917b54",
+        "sibling-follow-up-9": "9f6a63f7-0144-4695-9799-77a131a5b704",
+        "sibling-10": "0b2d227a-926d-4996-8ceb-30c6aa1a13f3",
+        "sibling-follow-up-10": "b06035f2-0e90-4ced-8ac4-9e4e5bf42cf4",
+        "sibling-11": "81095acf-495c-4133-b9a8-55bc8a25c8ef",
+        "sibling-follow-up-11": "b82f7be8-b384-4cff-98ff-6a8d0b00692e",
+        "recent-1": "08a83899-c1ea-4250-accb-27b2bd043e24",
+        "recent-2": "223a7635-35bd-43db-9460-65504d7fceb8",
+        "recent-3": "54fa3dcc-51e5-415b-9086-6c62e4a013ae",
+        "recent-4": "1657633e-009d-444b-a9e8-031eb8d1be05",
+        "recent-5": "50c8a9f3-933f-4dd8-bfcf-d6cbd4bdd5b4",
+        "recent-6": "a4007799-712f-4012-8dfe-dc79718cb091",
+        "recent-7": "88af6338-b910-45af-9aa9-a46c0fea728b",
+        "recent-8": "270e5941-4a7d-4ca2-b6d1-347242d0fb68",
+        "recent-9": "6a7f9c78-a3e1-4239-94ab-cf79e36886b6",
+        "recent-10": "e648ea44-50c7-4292-a781-426685685350",
+        "recent-11": "eeae2933-2132-4828-8a0d-650843b1b917",
+        "recent-12": "2668d09e-fbdb-46f8-a6e6-88004cf31aa5",
+        "recent-13": "8484d3fd-1492-4d48-b18b-e88ade0cf4dd",
+        "recent-14": "35d46726-4178-45cc-a884-7683ba412d15",
+        "recent-15": "afb1180a-bcef-4b88-a427-9dddc9ae75e2",
+        "recent-16": "35d71c4a-420e-4214-95eb-cc1af599141c",
+        "recent-17": "7a1b93b6-8e9f-414d-836f-46cc0320f924",
+        "recent-18": "2f843fa8-a59c-4e52-b50c-ca6b602ae649",
+        "recent-19": "73e356c9-ccc9-473b-a212-d1cf06734c9f",
+        "recent-20": "6dfecc34-e967-4657-8634-e71d9d2d188b",
+        "recent-21": "b2505fa0-2d55-4e64-b03e-b9f8f8340a1a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "3ea21529-5c8a-456d-bda3-7a51686de0dc",
+      "message_id": "dfbd8587-1826-4f97-9de9-d2617a87e04d",
+      "aliases": {
+        "organisation": "32f1dd84-fe98-49e4-8b31-d15e9dbcb3f7",
+        "site": "17a94451-89cd-40d1-82f1-66013fa571c9",
+        "anchor": "7b861ded-0d61-4d80-981f-b6b3dcdeb9c0",
+        "A1": "2dc30b04-e0bf-43c7-9fc7-7992bbf80716"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "149e6dce-844d-48e1-8ce7-6cf065d2e203",
+      "message_id": "7ab3f6eb-fdaa-4659-8ab6-19e4e85d913b",
+      "aliases": {
+        "organisation": "48af9229-5ff7-4f57-964f-897da647a9c2",
+        "site": "6cff2169-1448-4edf-bbe8-9757e560f11b",
+        "anchor": "26305a44-b45f-48bd-9169-220737c59379",
+        "A1": "25615e28-5c8a-4627-810c-ac151828fdfc"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "8b5cdaa5-0569-4b54-a000-cf48e8c06e79",
+      "message_id": "097ca381-4727-4019-80b7-0637ce55be27",
+      "aliases": {
+        "organisation": "845ca991-b100-4d66-ac3d-81655b770e8f",
+        "site": "764472dc-d44d-47ae-baa4-46e8be1fe4a5",
+        "anchor": "4b9d22dc-aeb9-455f-91b1-086d916c5041",
+        "A1": "d4f53edc-f8ef-4d6e-b019-8f2a1bf2e021"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "6ba01212-c05e-43e7-b1b2-8b07f640cbe5",
+      "message_id": "e6fa7f96-2415-41b2-896c-87ba4804f8da",
+      "aliases": {
+        "organisation": "de017c6d-c04d-49c5-9cbc-c41385dbd858",
+        "site": "db5c191c-b9f1-4715-9c73-008ad36ec2d1",
+        "anchor": "635f8e93-f2a8-46f8-9446-c2984ac20186",
+        "A1": "74ad9388-8ee3-41be-abc1-40e8676305f6"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "0a239c4e-47df-4db6-8686-fdebf2908008",
+      "message_id": "55f2ba3d-09ee-406a-8c06-1bf2fdc21b20",
+      "aliases": {
+        "organisation": "981eada1-bf7e-4e09-98d4-caf5afbf4498",
+        "site": "db491dc4-a460-44ec-8e0f-16c65994d48f",
+        "anchor": "b6ab7de4-4384-493f-9573-c0675fbf1517",
+        "A1": "5ce53d2c-1a39-46d5-8f1f-9f3bcdba5bf7"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "2dc57960-df67-4b4e-ac48-dbc25c8c73d8",
+      "message_id": "a3c54dc2-d321-4219-a164-e4bb01527a10",
+      "aliases": {
+        "organisation": "fc24d58e-b98d-412b-bcb5-9be7e28ea712",
+        "site": "466ff3f3-3358-46e3-a8a2-824e5eb38030",
+        "anchor": "b23517d1-393d-4a92-a5b0-c434b8a07386",
+        "A1": "150c1460-4fcd-4eef-a188-4ae02f654aee"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "2e9f8ff2-5ac0-40e7-902f-381f03cd7966",
+      "message_id": "b97bfbc7-6b93-4605-8fc9-f67596d62329",
+      "aliases": {
+        "organisation": "26cf2524-50ab-4994-9424-2f09647b658b",
+        "site": "86f822e4-0737-434e-a999-4528162ab177",
+        "contact": "7384270a-1563-482e-86d2-19499b161a26",
+        "anchor": "39f98843-12b6-4444-a784-4e90d3bfcd6f",
+        "A1": "62266cff-dc81-4914-9522-a85a05954e5e",
+        "excluded_finance": "16dea097-16d6-47bc-ae81-88c30d934b32",
+        "excluded_restricted": "c80d1f0c-2fdb-4105-a1a2-7292246aee8c"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-26cf2524-50ab-4994-9424-2f09647b658b"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c6cc163d-0ee6-491c-9b1e-eecfe6147475",
+      "message_id": "f50439dc-454e-4964-b5f1-a0f76ad724df",
+      "aliases": {
+        "organisation": "a295e69c-a490-48de-89c6-1c551da380e7",
+        "site": "e0c84ca3-3a6a-4818-a928-9112860beef4",
+        "contact": "c17876e0-0397-4050-82fb-9652112a5450",
+        "anchor": "a59ff1b1-cf03-40f5-934e-94f1ffe036bd",
+        "A1": "d84c18e5-eb38-4648-9c70-3525ddee687c",
+        "excluded_finance": "8dd5c4b2-9e8a-466a-977d-e7f58c8d6f95",
+        "excluded_restricted": "32f30108-c2b7-48e4-91c3-68e8fa4d16bb"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-a295e69c-a490-48de-89c6-1c551da380e7"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "d152731d-39be-46b0-83b4-17bce93c8a8d",
+      "message_id": "4fe5018e-fa9c-4dca-9eee-e651489b0d85",
+      "aliases": {
+        "organisation": "72931706-1923-4cdc-9a11-b02c997e5118",
+        "site": "2861075e-c5b4-49e7-ac9b-93abd2815607",
+        "contact": "21709563-32ee-4ef0-bfc0-7076337e8a89",
+        "anchor": "bc3739c3-eac5-416e-ab07-b6e55bd725db",
+        "A1": "4e69b473-79a8-44a1-ba02-f7c4c04e136a",
+        "excluded_finance": "e0d048da-b186-42b0-8b99-5ba50367bc22",
+        "excluded_restricted": "5b7eb4bd-e126-40aa-9af3-e0714f1e7233"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-72931706-1923-4cdc-9a11-b02c997e5118"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b2651af3-5d8f-4c78-816c-21fc77b6b4ea",
+      "message_id": "096471a2-e259-41cb-b45a-9e8e3835d159",
+      "aliases": {
+        "organisation": "8e8a48a4-c678-44fa-85d5-abc99d2fb041",
+        "site": "4bb9d295-e3a0-4e41-bd40-2c64c143f915",
+        "anchor": "de9a9c81-c65b-4f89-acec-a984be44d66b",
+        "A1": "6140bad4-245f-41a0-8c09-c2639c348398",
+        "hidden_activity": "8317b17c-ec78-434a-8a00-6c8aa6d8f6d4"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "60ec6eb4-f4e9-41be-a60a-d0365e9f96f6",
+      "message_id": "404ef8e6-4ab9-4814-b2f4-db76e84e36b7",
+      "aliases": {
+        "organisation": "92b38e1b-41c6-4b74-95e3-737454d97aaa",
+        "site": "30ee732e-e304-44ad-8018-cd6b0ded918b",
+        "anchor": "219ec565-1a0c-482a-9505-0bf29284a021",
+        "A1": "8016f8ac-ea3b-4676-8492-1e772d6c79a4",
+        "hidden_activity": "267f0370-7206-47ce-9d7b-1d16c9b2b119"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5e886509-462c-479e-a119-e4b3042fabb5",
+      "message_id": "d31a0402-61fa-4b6a-a430-405a88be0384",
+      "aliases": {
+        "organisation": "608e262c-8442-4c65-b145-cbf76952d394",
+        "site": "58c9ed17-f46a-4981-961a-65fb85179e95",
+        "anchor": "2fe7ce01-52b1-4ddf-8d90-644ef591aa59",
+        "A1": "5c9540d3-aa3a-44b1-a794-a370aaafb955",
+        "hidden_activity": "5f719484-0630-4fbd-b236-35d28a74b000"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "9fc11098-5cb0-4849-8fc5-8ef92de37a36",
+      "message_id": "b2a47d5b-7235-4fce-835e-4ddebfbb6829",
+      "aliases": {
+        "organisation": "b5b7dcb4-60f9-4f87-a531-f4fc010fba37",
+        "site": "7b4d320d-8cdb-4c01-a1ad-e0579a1083cc",
+        "anchor": "6b421a04-f1df-442a-81d5-13eca0dbd49e",
+        "A1": "1995ee38-b072-4344-b60c-e5163db7f2f7"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "fc693edb-cc5b-4bfd-b1bf-2fcff8aafe74",
+      "message_id": "2edf475c-1507-4d8d-ab73-0c4b334e5254",
+      "aliases": {
+        "organisation": "a0552d65-3d11-4383-9ba7-38d98fe87137",
+        "site": "e565e924-3b07-40d7-9e7e-5d0264021132",
+        "anchor": "8a44acc3-4972-49a1-ab67-b412a9fc33f7",
+        "A1": "7a6dd4db-1803-463c-b317-623ff54b2e67"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "84d0a66e-45a8-488a-bffa-73c8a490666b",
+      "message_id": "2a6a0c8b-7b81-4878-a9a1-aa908c9202da",
+      "aliases": {
+        "organisation": "1180d6d4-3e5b-457a-ab6b-d553f73cbec1",
+        "site": "8b70c44c-ec15-4a20-8ff8-1c47408e354a",
+        "anchor": "ba3ceb44-7903-4fce-a576-5bd2544a1b03",
+        "A1": "de249c32-e161-4bf2-9b2a-500946cbd2ab"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "ce9a834e-df95-44e2-b2e4-2390742bfe5f",
+      "message_id": "5d025093-5784-4109-90df-4f8d5f8e8460",
+      "aliases": {
+        "organisation": "671653f0-3a9f-4a36-a643-d406f97b0b4e",
+        "site": "caed31af-8164-46ed-add5-1f6fc47a3312",
+        "anchor": "bdfce05c-8bf8-4159-b908-a0430654da25",
+        "A1": "7221f170-0ba6-4daf-90ac-d438c25a1615"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "8c1dcd42-1e8e-48e1-9a15-8bc15720adb5",
+      "message_id": "2c01da67-8215-408a-8e29-d3bbcc2f4563",
+      "aliases": {
+        "organisation": "23054927-af15-4373-b8f0-18b667f9c8a4",
+        "site": "f7311649-c6d6-4ae3-837f-7099e76eefbe",
+        "anchor": "7f81ef86-3a92-4bc0-9862-d4f689ae0509",
+        "A1": "4e2ddb06-8ba7-49a3-8582-320dfc0c5e9d"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "a47171f3-a69b-4c31-8185-2f46c4e4c0ab",
+      "message_id": "1dc84da4-ea21-4b08-b427-24fc427c8d1a",
+      "aliases": {
+        "organisation": "645617bd-5238-428e-995c-a79e2387a3f8",
+        "site": "cc2fc553-2797-40dd-b700-e430d91dbc60",
+        "anchor": "54d3855d-0e38-423d-b0c5-ecd6d5a58fc0",
+        "A1": "720b5141-9c21-4b87-a499-ee5589298746"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "C01",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c13baaf2-5c87-496a-91c3-eea2b9f2a6ce",
+      "message_id": "f75994f2-382f-4c09-a3c5-c3fdf10fe855",
+      "aliases": {
+        "organisation": "72b54a20-41ac-4caf-aec2-39c37448fa87",
+        "site": "3497d1ce-6851-45bd-a6be-972c5389789f",
+        "anchor": "bd1207ce-e035-462d-93bb-4b78e6b8ec43",
+        "A1": "95a96d70-c428-4911-b576-eef6a23c43b1"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "C02",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f1c487af-ef36-48da-82e5-e3d8c2a6505a",
+      "message_id": "09011745-c978-4d1a-999e-d390c6d55597",
+      "aliases": {
+        "organisation": "f951771a-49c4-4030-bb60-08cef77104ea",
+        "site": "dc7ad70a-5546-4da2-8997-26575f168089",
+        "anchor": "c9cb177d-1d16-4136-add7-7c32a31d4a6b",
+        "A1": "72584d8a-3e40-40bf-92d4-5d0835e89703",
+        "A2": "eeaebc28-7057-4567-a38a-71fd2680b2de"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "C03",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5d893532-150c-4c6c-8cb5-eb6c3501d612",
+      "message_id": "b2e95e4d-bc88-41d1-927c-8ebcfcfd431c",
+      "aliases": {
+        "organisation": "69c6a0bc-34d8-4d6f-8858-932f05a1053c",
+        "site": "d612ba60-cde2-4bbc-ac90-026217a493d4",
+        "anchor": "dd6ec5ce-e52f-4502-98b9-1f9409c3fd81",
+        "A1": "bd149b6d-88f5-4bd6-8106-4f8d72ab83ac"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c5465b26-3114-42ab-aeb1-b6cc263a507f",
+      "message_id": "82a69f9f-b0c4-4d34-a4a6-e61b5697ca91",
+      "aliases": {
+        "organisation": "fa1a88b8-16bf-44e9-8e0a-0df94ab547ed",
+        "site": "22471aab-52d5-4215-a586-bcd2e63a0970",
+        "anchor": "199b15c7-f2cf-4627-b3d7-4a2c5e289d80",
+        "A1": "22a23bc8-f324-41d0-a19d-ee5ca24a7e09"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "23f9e261-e74b-413c-9fa3-f4cc671c12c3",
+      "message_id": "4806ed83-c95e-4a1e-a020-aed10fb8526f",
+      "aliases": {
+        "organisation": "d9a15a52-bb6e-4602-b62e-0b6fa5c0cf84",
+        "site": "ca62780b-6120-4ccb-add5-d68e4722cd82",
+        "anchor": "52ac2aec-0246-4d61-9ce8-b92548fb9ee3",
+        "A1": "5b31cc6c-3b52-42c4-828c-bbc9ad8d8ba5"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "29e10f72-3951-465c-a46c-19ab6f9bc43f",
+      "message_id": "46712abb-37d0-4934-a4f5-5d9e45fa82ee",
+      "aliases": {
+        "organisation": "4204cde4-d72b-4426-8631-7fd34f620e76",
+        "site": "c2fba7f1-6d19-462a-b35b-2123ab876d89",
+        "anchor": "15072567-4d08-4d4c-9391-085d7d403703",
+        "A1": "2e1ab1e7-fc48-4673-9132-d61e220b275b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "3d55644a-3398-4379-8d42-04fd0edd3098",
+      "message_id": "615f949a-259c-4ed6-b9e7-3c0afa29cebb",
+      "aliases": {
+        "organisation": "e2d0747d-3e42-4d3b-9e86-353e611aada1",
+        "site": "7892ab1a-7876-4889-9e5a-33faea2c82ef",
+        "anchor": "f45f70de-3e34-463e-aef4-aed7e183e410",
+        "task-1": "4d71886a-dd1d-413d-a4f4-5729d8184b03",
+        "task-2": "d3534d4d-0dcc-4b64-bc75-347275140668"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "588e265b-381d-4f30-93ac-df13fb36429b",
+      "message_id": "8efbc310-e534-4a18-bc13-9f0a16188c86",
+      "aliases": {
+        "organisation": "d4e09ff5-17a0-4d1c-9b9c-5b84b6dd8a4d",
+        "site": "e91b2595-7e7e-4529-aa3e-5f6fea2c7f57",
+        "anchor": "4d092f47-1b8d-4a92-9333-2af380f9d6d2",
+        "task-1": "e0b01be2-9aa2-442b-8aef-599d04e8b133",
+        "task-2": "4e1c4d05-9ba5-4e84-a7f3-c63acfffe0cc"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "be9619cd-241b-485e-a493-9febecbef465",
+      "message_id": "f948dde9-0229-411e-997c-df5f69c17eaf",
+      "aliases": {
+        "organisation": "ec3b7922-9859-4985-9e01-4a80175c09ee",
+        "site": "6fe7cb03-116f-4428-bf29-e57a42d6f521",
+        "anchor": "76bc9bc4-e079-4781-8b7c-d7a941daf4e6",
+        "task-1": "d93be6e4-583d-4f7b-ab39-e5c6cf68b50f",
+        "task-2": "3d6ba6e8-8eb3-48d6-8f8e-fe9b222a3041"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "03175545-bd5f-48f0-a545-358c4fe62d13",
+      "message_id": "3d5c2612-f81c-4a28-8494-d6963f7a9364",
+      "aliases": {
+        "organisation": "23d418b6-ed7d-425f-b089-2197604f4ef7",
+        "site": "a1442af0-cc55-4701-b4b7-e6f4511ebb9d",
+        "anchor": "659b5f4e-1aae-44f7-9bec-6f7817fe1420",
+        "A1": "ceca374a-a13e-4d38-bd75-198ecce51399",
+        "A2": "809dcfd3-360b-4c21-b77f-63b06b8a7d26"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "817f72a9-3758-4978-b48b-087abc3a9fb6",
+      "message_id": "dcc7d2ec-ff37-40fe-8ffd-408fc707e585",
+      "aliases": {
+        "organisation": "927e1b91-2c41-4e03-a12f-826d40ad5536",
+        "site": "ad9f837a-a21d-4150-b6ca-a425bdcdea51",
+        "anchor": "4978cc34-911b-47ba-826c-152aebc4a502",
+        "A1": "e4b9038a-f848-41c0-91ff-6ef57838cb81",
+        "A2": "c0c7ca5c-ac96-44e6-8272-648c30ac6011"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "adff9d45-d8ca-406c-b09b-8ff3f069ae71",
+      "message_id": "b6c672b2-53db-450a-a2be-8aedb90dc311",
+      "aliases": {
+        "organisation": "f79b6798-2b45-4640-b821-1c8f94c950bd",
+        "site": "f1af92cb-75e8-452f-8e28-7113a7adcc84",
+        "anchor": "2a4e6e0d-1dd7-4d6b-b88b-3f8a56ac24d9",
+        "A1": "8620d7af-9320-4cbf-9fcf-d36c296ce20d",
+        "A2": "b8422534-bef7-447c-9526-1224b0c740ff"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "d5cdfd7e-459b-4432-80e5-e56f93c3271d",
+      "message_id": "4d25b9a8-200e-41a3-a245-51b7f550480c",
+      "aliases": {
+        "organisation": "76c7c13b-38b4-4abe-be44-f9460f799161",
+        "site": "c909fe2b-8f52-4746-bc7c-20d39b98ee08",
+        "anchor": "bc8f02f6-ddd6-427a-a224-2b50636fcb91",
+        "A2": "b4c173c6-78aa-4b6c-9201-f26782838102",
+        "A3": "e7c797b8-51b8-4b0e-8d49-a71b32701ac0"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1ec7ecea-f342-449e-a921-2a2b40b3866c",
+      "message_id": "209f9612-10fe-4c0f-b447-89e55113889a",
+      "aliases": {
+        "organisation": "22c74056-b903-4ea2-8e46-a724f07e2c8f",
+        "site": "edc9fe13-a3ad-40b4-b3bf-b26240fa43aa",
+        "anchor": "9121c558-0483-4d10-8fe7-f423fc5df0a4",
+        "A2": "2d2d227a-7705-4431-822b-a8b6535a21a9",
+        "A3": "129206ab-5aec-436c-b4fc-234e22964a2a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "ab8544c1-4be8-427e-aca0-e550f544d0a8",
+      "message_id": "ccf4db87-12aa-445d-a03a-1805d5e580c7",
+      "aliases": {
+        "organisation": "0f248021-bc7f-4b6a-9055-a952f87e253a",
+        "site": "7d3ed0e2-37b8-46a7-812f-9e6fd2663348",
+        "anchor": "9d39d853-59d6-4f00-a704-4588b39eeb7b",
+        "A2": "f32d1591-f488-4222-bed8-a8bbb96cd29c",
+        "A3": "88e26606-bb39-44e5-86b3-eee52f05fb44"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c3f096ce-e3be-4437-8555-a63ed0528d57",
+      "message_id": "bd660bd9-384d-47a0-9a8a-12655fa04ffa",
+      "aliases": {
+        "organisation": "83f91f4b-6245-43ed-b75c-1a2bddeae20d",
+        "site": "386e3e06-bace-4be9-843a-feeff1d05491",
+        "anchor": "1c3ea305-378a-4ff5-a71c-64eac1d37850",
+        "A1": "ca65981c-efed-41d3-b804-df6b98355c40"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "7f6dbba9-a4b1-4775-bc14-bb322be64220",
+      "message_id": "0a9b8607-12fe-48f6-9a74-a362ece3a7b8",
+      "aliases": {
+        "organisation": "5f49b771-3e92-4f8c-aee9-1b2caed99375",
+        "site": "a87e0b0c-b495-40cf-937b-01cac6445612",
+        "anchor": "7a13c39b-779b-4c42-8225-23d7c50c9573",
+        "A1": "70fd2e8d-7330-471f-8d3f-3090d4fbc12b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b032a277-a41d-4d1d-8b01-d082fdaae98a",
+      "message_id": "4cbf0c01-3e9e-44c3-bcab-342c238c0091",
+      "aliases": {
+        "organisation": "5ea34d88-5a96-453b-b4d4-fc2178b4c258",
+        "site": "8196d9f7-3ac4-4f3b-8414-37a02c28275f",
+        "anchor": "f4856b2a-6b2a-4f32-b7af-5b537aaea39e",
+        "A1": "7a6af383-8afe-496f-80a7-978d39ed53d3"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "807e1f2a-a5f3-46be-8d03-d48c573130da",
+      "message_id": "dc24f9d7-1e44-44eb-a353-81c5fa6d5a7e",
+      "aliases": {
+        "organisation": "606ab66b-78f2-4100-b96f-d0f84287564f",
+        "site": "78941405-3000-4f69-b0ca-4790f906f189",
+        "anchor": "47b3c464-09f7-409d-816e-b0e76472ca9a",
+        "A1": "384192a6-497a-4a69-82a9-7da9857860cd",
+        "sibling-1": "24d21286-83d8-4670-9e09-9128a42aff5d",
+        "sibling-follow-up-1": "17eb386f-7b72-4ab5-90a9-313a206b5bc3",
+        "sibling-2": "c5d806c3-eb4f-404b-ac9c-358ff98034fd",
+        "sibling-follow-up-2": "12d9b9e0-067f-4e3f-9277-7ae28acead9e",
+        "sibling-3": "51440c9e-da4e-48e5-a57e-c8444cb08430",
+        "sibling-follow-up-3": "188538b9-1fea-44cc-8c5a-f75663ad6f75",
+        "sibling-4": "4ea08468-7ec3-4f9b-afa7-44a19defa1aa",
+        "sibling-follow-up-4": "87f3ede5-b6cc-4d79-8985-cffa7d4874b2",
+        "sibling-5": "27943c47-7a46-4ce8-8e65-f2a79dff1b2f",
+        "sibling-follow-up-5": "552470f4-079c-4cf5-b11f-1224211cb460",
+        "sibling-6": "b2bd57a7-47e5-406e-9cee-3476adf84e96",
+        "sibling-follow-up-6": "e2e0eae9-fec1-44e0-98a0-c0e6dc29f2cc",
+        "sibling-7": "67904bfe-e4de-43f7-a122-6f27d9465ec3",
+        "sibling-follow-up-7": "9b124d8f-5c7e-4b19-969b-ac2b94f99a35",
+        "sibling-8": "b1f7080b-f5f7-4790-9099-c864ae373df3",
+        "sibling-follow-up-8": "c368c14b-7113-41cf-b4a0-67b75f045534",
+        "sibling-9": "0b0e5ef7-d797-4759-8239-b948c2e0be2c",
+        "sibling-follow-up-9": "09f78cf2-2b98-45b3-b830-f080a5f06f14",
+        "sibling-10": "90320b89-f020-4f2f-8053-68b01e3b7849",
+        "sibling-follow-up-10": "4d142cb4-b0b3-4d23-a80d-2f3e5859666c",
+        "sibling-11": "37a97b67-c27b-4da5-a718-ce3c40d74d61",
+        "sibling-follow-up-11": "ce2dda54-aeea-4c87-a5b0-09ddf9f63202",
+        "recent-1": "f0efb727-212d-45e0-861d-c3ef6b177c22",
+        "recent-2": "a44424e4-f40a-4fda-b355-b39561ea6a43",
+        "recent-3": "5fd74f18-2569-4e08-bf95-f5b40c9ce331",
+        "recent-4": "5873aebb-8cc2-4f17-8941-53e616312542",
+        "recent-5": "52c5183c-6a39-452d-8fb2-8966bb746498",
+        "recent-6": "7c9a151e-87f8-4d30-8eac-dbd1ff90693e",
+        "recent-7": "3fbefcab-7fc5-4b86-9331-d3cf8e214292",
+        "recent-8": "4a5d104a-52e4-4256-b602-ea722c13a062",
+        "recent-9": "a7eeb2a6-1637-4989-a240-f60865d381fa",
+        "recent-10": "6987862d-70e5-4e87-9c3e-6764ec26ad71",
+        "recent-11": "7b848209-51df-4188-9475-4886b0dc9707",
+        "recent-12": "fea9663e-244e-4bb6-b166-780a4707bbde",
+        "recent-13": "a207d225-c575-4a40-a549-4e98ef9a1dc1",
+        "recent-14": "3ac7f8ce-6324-4b6c-9a9c-2dd77acd9fe2",
+        "recent-15": "77eec1fe-9309-43f2-b7e1-6f8da54fff2e",
+        "recent-16": "706a61f1-11ad-4f4c-956c-356687584440",
+        "recent-17": "ddafac4f-f619-4ad7-a02a-cfdd434a6f54",
+        "recent-18": "b7fa8984-8fae-459f-8b07-0ee49adb70f5",
+        "recent-19": "8a241824-b5ad-4cdb-b0ca-ad20b530af84",
+        "recent-20": "1ec9bbc3-5ca0-474b-996d-d7922004b4e0",
+        "recent-21": "7fd549bc-97c1-4144-8dbc-826577398c29"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "82c39c66-3c16-46f0-b22c-f93663bdcef0",
+      "message_id": "e9ccd2b2-b98a-4336-a70a-f73a0d2e0470",
+      "aliases": {
+        "organisation": "c4c5bb2e-bb2e-4998-89e6-648b29b0ce0b",
+        "site": "004219f0-ef5c-4650-94b9-c0f30b341147",
+        "anchor": "3a6aefa9-d80c-4255-9882-b0866227fe75",
+        "A1": "7b1a41ac-2553-49c8-ac95-346e4a5db073",
+        "sibling-1": "73b6f809-9bb9-4625-8a78-b3dc319b2c3e",
+        "sibling-follow-up-1": "990f4a86-0e23-45e1-a9e3-b04d7001b09a",
+        "sibling-2": "3ddf556d-7a33-4c83-b0e9-66c77dbc8074",
+        "sibling-follow-up-2": "7a94ec8b-02c4-43c5-a14b-d6c890833570",
+        "sibling-3": "4793463c-065e-4e89-a798-50fda6eaa58d",
+        "sibling-follow-up-3": "5a2bf5c8-3810-4107-a6b8-39ba6ff286d6",
+        "sibling-4": "03535de3-e8ed-491e-91e4-be9a4265677a",
+        "sibling-follow-up-4": "c8d08375-1c32-42a0-ac69-28a6e96cfa50",
+        "sibling-5": "fc2089fa-d5a5-4429-8c89-550c0246de20",
+        "sibling-follow-up-5": "887c1e88-b2df-462c-8782-45bf3848eb9a",
+        "sibling-6": "6a34f05d-a3f8-4bb3-8909-2401867e4e26",
+        "sibling-follow-up-6": "4a5affda-4e81-430b-a928-db563318977f",
+        "sibling-7": "984436f6-8f41-426f-8242-d30af36b382d",
+        "sibling-follow-up-7": "542e7f00-a50c-402d-b456-ea19f181e781",
+        "sibling-8": "f402ba09-8c87-4f63-8eb4-a241ac338b2e",
+        "sibling-follow-up-8": "e9ffe681-8fc2-4786-896c-fd843f1d7298",
+        "sibling-9": "571982d1-a341-40b9-b29f-60ca9458e8bc",
+        "sibling-follow-up-9": "e835b2c3-76de-4842-a239-b177562a508a",
+        "sibling-10": "a8f2556c-2133-4152-b901-5c8cb638ddb5",
+        "sibling-follow-up-10": "d91de9ad-5b62-4812-9225-2f533ead2c5f",
+        "sibling-11": "90058a39-8210-4141-a7cf-0598d17f1d7b",
+        "sibling-follow-up-11": "60b77210-b900-482e-9aa5-1b006195b047",
+        "recent-1": "9d182b7a-de4d-4cc7-9cd4-e94074170fc7",
+        "recent-2": "7f4e0ace-cab4-48bc-8afc-262b92f17e15",
+        "recent-3": "322739b7-db4a-498d-82ef-7aae3e9aa686",
+        "recent-4": "7f809c3c-7b8e-40c3-b9d7-eac5be9e96e4",
+        "recent-5": "8fbf874c-c53e-4a04-8837-18935ca78dc9",
+        "recent-6": "11361305-efab-41a9-a2ee-1fbdb499eeee",
+        "recent-7": "f6751b4c-8e40-48d4-b1fd-3a909cf45469",
+        "recent-8": "633419b5-d371-4919-9950-5ae91cb0cc5c",
+        "recent-9": "47c86b28-287a-4265-bbce-55dcbfc8fdcc",
+        "recent-10": "de616da4-c04d-4dd6-ad3d-f02b7d597d3b",
+        "recent-11": "7d423796-8edd-46a8-a96d-72d79e8c9370",
+        "recent-12": "f731835c-853d-4849-8834-a4c4ce6db837",
+        "recent-13": "2d4cd78f-90ef-449b-95e2-0f06fe840a48",
+        "recent-14": "26f510ce-9baa-4a25-bf85-570e36d46f42",
+        "recent-15": "d71f0576-74aa-4990-bc67-ad89b273b313",
+        "recent-16": "2762cda5-8fa6-4c30-9a1c-6ff7f4607571",
+        "recent-17": "5fc0255d-48db-4230-b130-acaa5ce69701",
+        "recent-18": "c9b92815-4be8-41b1-ac91-975dae76a23d",
+        "recent-19": "33155d99-7580-4e1a-8ada-c18b643d299a",
+        "recent-20": "257be42b-1c36-4534-b89b-f15f5e7b5f88",
+        "recent-21": "fdf69959-a736-4213-9cbf-13de6b6e3d79"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "861f2483-e40a-40aa-a443-0be087287def",
+      "message_id": "ce5e03ba-09e0-4846-834f-9acf7e35f6ac",
+      "aliases": {
+        "organisation": "7e92a255-1414-40b0-ac22-8892d7c32305",
+        "site": "d7ff1e4a-b937-48cb-8f0f-7366d2500873",
+        "anchor": "84340f21-738b-4e4c-bb86-9088020bc8a3",
+        "A1": "70e0b6f2-dffc-40da-a4bf-e0522646b27d",
+        "sibling-1": "7eff1938-02dd-4073-8374-61918f366e5c",
+        "sibling-follow-up-1": "de384b2f-e9d0-4769-8842-000ef0fb16ff",
+        "sibling-2": "ccfee0a2-a5df-46c1-a3c8-0b1fbfeea583",
+        "sibling-follow-up-2": "e3f813a4-ec45-4608-a34b-381d2d7dbcbc",
+        "sibling-3": "ed97a071-e411-43ba-8bf1-8e68fe4d5a3a",
+        "sibling-follow-up-3": "da97b319-0d60-478a-83c2-2da240e7c79c",
+        "sibling-4": "81e03d34-ec0c-4973-9d20-5494cc860a73",
+        "sibling-follow-up-4": "cc8d5008-ff29-4e9c-911c-85fffec5ea1e",
+        "sibling-5": "4821d2c3-d150-4103-86fd-ff82101c6111",
+        "sibling-follow-up-5": "c119bc85-0702-468c-808c-2e5bdf729ee8",
+        "sibling-6": "b62e7d42-ec12-40ec-adcb-362bd9761cdd",
+        "sibling-follow-up-6": "ab93c7ed-8c0d-454c-9160-3c726a997807",
+        "sibling-7": "4b9afd00-ad59-4c31-861f-f7550801cede",
+        "sibling-follow-up-7": "0bd20d2a-3a3a-433e-8363-89199b02c503",
+        "sibling-8": "f89815ac-e20d-4f99-b7c4-11493ea503a3",
+        "sibling-follow-up-8": "53aedb7d-162f-448b-a3ce-ba5d24f6596f",
+        "sibling-9": "1a1b8dd8-8992-4f3a-b349-4fd9d8a777d5",
+        "sibling-follow-up-9": "7ac77ffe-080d-4b74-897b-bcc01676f0ff",
+        "sibling-10": "f7f12bc4-db76-4663-8c81-4836e9ae162f",
+        "sibling-follow-up-10": "187b1fde-d00d-4025-bb9f-77a319aee396",
+        "sibling-11": "937af009-f2f5-4716-9e22-b770d55bab16",
+        "sibling-follow-up-11": "30bcb425-c5a4-40b3-abd9-4906a36407c3",
+        "recent-1": "2e35dc87-a4ef-42ef-8ee0-f936d6b5e76d",
+        "recent-2": "9f35f935-e6da-4129-9e79-ea7bbbd47bfd",
+        "recent-3": "ae00ff09-1ee1-43cf-9789-e361ade84b40",
+        "recent-4": "c7225af3-8b39-45fe-8e5e-1aae60178be8",
+        "recent-5": "5545e6a3-3d8a-411f-877f-318ba09f2efb",
+        "recent-6": "a7a7e66c-959e-40cc-92bc-a64a8504025d",
+        "recent-7": "c8d0d87f-6f12-4ab6-941d-a5733db3afa7",
+        "recent-8": "a0e38a36-4bda-4410-916e-9263a103eec0",
+        "recent-9": "267f2651-8397-48f2-aead-cc4c09b52f89",
+        "recent-10": "70289325-2b88-485c-aaa3-cb21343c11bb",
+        "recent-11": "3e06671f-fa15-46bf-ac03-b2db18d58d4d",
+        "recent-12": "114df578-ac47-4ddf-88e7-eb8244e76400",
+        "recent-13": "b80d8ac5-11d9-4175-ad08-01536e34f715",
+        "recent-14": "53ac0d86-c269-449b-b28f-f0cdac1eb79a",
+        "recent-15": "19c30117-1fa6-4c0c-a761-d5ce6010f0c1",
+        "recent-16": "7af1f51f-287f-4e8c-9042-26dac0afaa6d",
+        "recent-17": "52f0c527-0927-4b6f-8016-9cdc3be0d145",
+        "recent-18": "1795bbe0-5f28-4dbd-8d7a-2db04f085841",
+        "recent-19": "51ee2f9d-9802-4619-b4f1-c87405f72a5d",
+        "recent-20": "5b4db807-15d0-4d01-ab9d-5023bdd5b88c",
+        "recent-21": "50b5f968-3cad-47a0-837e-baaa1500160a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b9861ff8-608d-449c-b4f6-af3db40b3d96",
+      "message_id": "b01b5101-1d4b-4f77-959f-52ce52a1ea03",
+      "aliases": {
+        "organisation": "90d1f366-22df-4865-9497-a5c950252426",
+        "site": "e87b8469-1c82-4730-b94d-1ab0bec96420",
+        "anchor": "8f9b1040-500d-4260-a4ce-56c531f64e65",
+        "A1": "f7121fc2-d82a-4a11-862c-1ab4f4dcb369"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "8691a517-77fd-424d-ab30-5238ac577d52",
+      "message_id": "6a8096c6-64e4-45b6-a8c3-5dca3fc4f5c0",
+      "aliases": {
+        "organisation": "26e2a3d6-62ee-4cde-bbe4-e8a86bcd8396",
+        "site": "0956b44a-32f3-49f9-8637-6a2e5061f331",
+        "anchor": "2993747c-a4d4-4184-89f8-ab9fcab97309",
+        "A1": "ac22e6ad-db24-4c0c-98ef-af64d213bd0a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "4e48366c-7e51-47ed-b125-c7c23f9933a9",
+      "message_id": "a7e00ccc-884a-4408-90dd-7b1241a05d6d",
+      "aliases": {
+        "organisation": "99fc4aff-bb1d-47aa-80cc-a6f5c330765a",
+        "site": "2efa1b4b-159e-4496-b2a3-d52fdd522db6",
+        "anchor": "16230bf3-c122-4f40-a65b-912595f42fbb",
+        "A1": "ff825642-4a07-4444-b537-6eb6e57f55b6"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f93214c0-6d03-49c0-89eb-a3ae1362c373",
+      "message_id": "a5a7876c-7340-41a8-a1ea-daa864838597",
+      "aliases": {
+        "organisation": "169620bd-9a53-4bd9-a78b-9f1bcde0ce75",
+        "site": "9d5ad079-55a7-46ee-8f5b-625a420e0a75",
+        "anchor": "716cac66-2dd1-4fa1-bfe6-80a3f68db8a5",
+        "A1": "e698be91-22f7-436d-b777-25094701f9fd"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "e0b2414c-2f77-48ca-90ce-b542a92c5db5",
+      "message_id": "5896317b-bc0d-4fce-9339-12dec554e5f4",
+      "aliases": {
+        "organisation": "3101a8b3-ee2c-4794-ac5f-5bab990b886a",
+        "site": "ced8369a-ed1f-4a3e-b5f4-a19fbc7db867",
+        "anchor": "68d481f8-3358-4392-84c6-0dcb225bed49",
+        "A1": "4921b1a7-4d66-4146-ba81-c191cb4134de"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "af35fc81-5d03-4781-b5aa-88b69b22d3a6",
+      "message_id": "f3c82db4-cf20-432b-a07c-f22f5c555488",
+      "aliases": {
+        "organisation": "82f1c6ab-e532-482d-b8a2-ab99232751bc",
+        "site": "1d60cb03-3ece-4633-8851-5911ff6e00d4",
+        "anchor": "0027b4f4-9391-4b7b-8b8d-5581459674cc",
+        "A1": "99662367-ddd6-40f0-adc1-b573a8ef0e93"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5b5286ec-c151-4dda-b219-6b92e496f3da",
+      "message_id": "6caa2363-357d-4c78-8a3e-7dfd233fef5c",
+      "aliases": {
+        "organisation": "c7ba367a-177e-4652-98a1-d7bc93311ec5",
+        "site": "52819257-1ea3-4ade-a70c-47494e6e3f2d",
+        "contact": "9ab49ddc-540b-466c-9df9-eaae5a5c7422",
+        "anchor": "df010a25-e05f-4257-821f-72cef49079e5",
+        "A1": "eb1c3875-2921-4898-a511-4c8ec78b4ee8",
+        "excluded_finance": "abbe5acb-66c2-4875-9554-c4f5977e484b",
+        "excluded_restricted": "7979e90d-689b-451c-bf3e-a114dceda93b"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-c7ba367a-177e-4652-98a1-d7bc93311ec5"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1c64053e-6b96-4e62-a24c-910b8de27cf1",
+      "message_id": "81b4c06d-c37a-43a8-8714-1289bdb9b26a",
+      "aliases": {
+        "organisation": "267edcb0-8421-4cf7-bccf-f5d5842ae011",
+        "site": "49362f2a-ca96-4f1e-ae6a-5b53becf8809",
+        "contact": "4a967af4-8ad4-4c97-8ad2-6df751d84b3f",
+        "anchor": "66a55d33-49db-45d7-8c58-a01944c1cbab",
+        "A1": "6d66a540-520f-4fb9-a6b4-998bc6ef0905",
+        "excluded_finance": "3f0c1ed0-688a-441c-834b-ef9ee91169ca",
+        "excluded_restricted": "f504f2e0-b6cc-4ae9-a69d-104f41ea0959"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-267edcb0-8421-4cf7-bccf-f5d5842ae011"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b3127056-0d6a-4ec0-a206-f0e0a502d42e",
+      "message_id": "412568ba-fd34-48c8-96b5-f22c103ea381",
+      "aliases": {
+        "organisation": "87fa6cde-0f2f-410c-86b2-678757cd720e",
+        "site": "3b9a5a26-9b3b-434d-ba67-84551627a2d4",
+        "contact": "b5ab4a5a-07ad-4ddf-9af4-bbe2e0dfe68d",
+        "anchor": "0a3714b2-259e-40a3-b2bb-aeb4eafeb224",
+        "A1": "581719f8-8792-457a-9476-a53cd3580d4b",
+        "excluded_finance": "2453d6bc-3078-4d8e-80a8-7a3bf8926f96",
+        "excluded_restricted": "8747548b-b6c6-4146-b21d-a84b2b389bad"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-87fa6cde-0f2f-410c-86b2-678757cd720e"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5d29bb40-106f-4f76-8da6-6b35baaa59fd",
+      "message_id": "b1cd9343-f218-4e3b-989d-214aa71f39f8",
+      "aliases": {
+        "organisation": "824d0595-0c66-4b9a-ab2c-a824459569cc",
+        "site": "20caaea1-30c4-4a49-a3f2-99672994f28d",
+        "anchor": "22161284-6e06-476c-8a63-9c1652ee5d6f",
+        "A1": "ef372c4c-0bc1-4b73-baf1-8ddedad2ec0e",
+        "hidden_activity": "641f3217-dade-438b-9ea2-c3acfd15313d"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "fe6111d4-b34d-4eb8-ab84-4f495d4470eb",
+      "message_id": "1940a9e6-172c-424c-9598-93b064480cd1",
+      "aliases": {
+        "organisation": "aa32749d-eab5-4544-a3ef-871eaec2b8fd",
+        "site": "6d2d4864-5fa3-468c-88f8-e43a723a5cc6",
+        "anchor": "6379c3c6-7caa-474b-bd37-d7f6aaf4ccef",
+        "A1": "a2d5e02a-79c8-41e1-88fd-775e4e5486e1",
+        "hidden_activity": "81ae661a-c799-4515-a641-2820e3ed9aa6"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "13d3d6e2-8729-44c7-a88a-8b3f81c6d76d",
+      "message_id": "83cbaf7f-8e0c-4ecc-b304-e1cd6b877522",
+      "aliases": {
+        "organisation": "d440e24f-59fd-4c73-8aa1-9fba5e7e820b",
+        "site": "f78b9509-c559-4304-befc-82611ed46fef",
+        "anchor": "0588845e-1289-417a-8495-bfe75e2f6d9b",
+        "A1": "956e019d-27ac-4a25-be8d-abbd43fd9f21",
+        "hidden_activity": "bbcf4bde-f961-43e9-99a7-d4a55db4e454"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "536a0722-5f39-4add-a278-c61b97bb5974",
+      "message_id": "e48707d4-b6c7-4cd3-b868-b82f474b9ce9",
+      "aliases": {
+        "organisation": "f7cc7329-2179-473c-810d-145811aeb5db",
+        "site": "ca3aa31f-70d5-466d-97d7-67d076b42fbe",
+        "anchor": "79a2f905-794d-40ba-a766-4884f4f65847",
+        "A1": "92e9efb5-97bc-4b3b-8540-3f1989d415b0"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "0759c26c-35c7-4e84-9f61-e093ed6d115c",
+      "message_id": "3cf92cf6-a9c5-4fcd-a19c-d1ee7a4a4033",
+      "aliases": {
+        "organisation": "69eaee85-064c-437f-99c0-3a404f15c2dc",
+        "site": "4038df54-8ca9-4467-8677-0193759b07a7",
+        "anchor": "e6d382a6-a68f-4cdc-bc9b-5be4e1b519ef",
+        "A1": "abc85549-f910-46e1-9403-fb112c72fca6"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1fee0e76-8681-4470-b8db-cdd6c1f88bb5",
+      "message_id": "61c83853-47a1-45a9-b913-f5c242f7922f",
+      "aliases": {
+        "organisation": "c7e128a4-a0ac-469e-84d8-8e02b011865b",
+        "site": "1f6b2938-d26d-4f80-a02d-25c4dcc0ec9f",
+        "anchor": "c420f617-6418-46c1-bf16-2d609fc42143",
+        "A1": "5694dd24-d7ab-4ccb-892e-a008b2e7e504"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c9324f7b-eb5d-4964-b96f-16d134f25047",
+      "message_id": "77b7a938-5d81-4c44-9b17-75fa3058519e",
+      "aliases": {
+        "organisation": "a7b3ba41-2b71-4d98-8350-e64a42d64c6b",
+        "site": "39c0cf3a-9f0a-42f2-9daa-acd11aa5fe8d",
+        "anchor": "37c442b0-4877-4822-be9f-9355757df80f",
+        "A1": "de60a2a1-419b-44a0-9fc7-baaa2fb1dcb7"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "744ba925-f805-4999-a204-54781bbc91b4",
+      "message_id": "c6fac234-84e5-4c5f-9101-07205506e17e",
+      "aliases": {
+        "organisation": "3c3d674c-ea21-4ab2-9a99-689b099d0a5b",
+        "site": "90ac14e9-d029-40e3-b203-ce46bb4c98be",
+        "anchor": "b5c0e3c3-bba9-44e3-b70e-bbc1f631020b",
+        "A1": "1fbb755c-9064-42c8-aaea-d1f458154f2b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1fa2f509-9622-43e6-af7e-6c7fefb9a4cd",
+      "message_id": "5d810cbb-dd95-4a6e-894a-e84d8e978f46",
+      "aliases": {
+        "organisation": "3395d593-3c25-42ad-8f42-e8a2cc3f1495",
+        "site": "86687b6a-d68f-40c8-8d78-ab416da93ccd",
+        "anchor": "6cd423ed-fa96-43ce-b96e-a93f0cc0b365",
+        "A1": "5115ddee-ca98-498d-b549-bca6a93ae682"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "C01",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "66fd83d7-6398-4c6c-8f97-bbbfe40ce60c",
+      "message_id": "e4b7d6c6-a444-4743-9205-c6c70d07bd42",
+      "aliases": {
+        "organisation": "fc0250d9-6907-46b6-9801-832f0c7ed977",
+        "site": "b5111a3c-9313-4a32-8c16-1beb2dd2db36",
+        "anchor": "4d6c6ad5-428c-40e3-b43d-acab5020714c",
+        "A1": "4f4c69b7-7e11-4c97-967b-8ad93ba4fcb0"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "C02",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "0550a4d4-e39f-4cdb-b1c4-ec2feaea6853",
+      "message_id": "769cd2e2-ba0f-458a-bdbf-0f6215146a4d",
+      "aliases": {
+        "organisation": "d2365004-e57e-4420-a9a8-5459c09d58ec",
+        "site": "048d9a4e-5321-453e-957a-3c9831a421e3",
+        "anchor": "744496f8-6195-4179-afb8-a2c1722df32b",
+        "A1": "50ee32ff-487a-4e1f-9dde-8065d54b479d",
+        "A2": "8a86d14b-0983-42d5-8452-44e503e464d1"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "C03",
+      "stage": "Calibration",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "6ef3a96e-6353-489a-b518-56b753b9453b",
+      "message_id": "a50c04a4-8f35-45d7-95fe-e6eda8a18402",
+      "aliases": {
+        "organisation": "c6f1866d-ee3f-4bac-9a16-f15c4b7da43e",
+        "site": "11f59b46-8cd5-4e04-9378-23ba0fbb5a21",
+        "anchor": "ed4c79c8-9c33-4a08-9427-affc19111585",
+        "A1": "b3243f2c-fb66-46c4-b458-92a11ffabfa7"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1d8d19df-3c2d-4b53-8d98-c9befae382ae",
+      "message_id": "fb941e43-5b02-4b8b-9b1c-f133d1d23d00",
+      "aliases": {
+        "organisation": "0ef036dc-d707-4d7e-b8b4-818b10f615e2",
+        "site": "ef5bffba-d14b-41cd-8847-1e04fb3d58f3",
+        "anchor": "3d349920-313d-4ae8-aecf-75564cd1b017",
+        "A1": "f2d583ca-2de9-46a4-902a-0b5c33cce3bc"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "db8c958d-a081-414f-8aa1-dc0b52190732",
+      "message_id": "a0ee9ce6-af3f-4a3d-a958-7c732fee49bd",
+      "aliases": {
+        "organisation": "bbee6634-3615-44e4-84d1-98469c6bdde5",
+        "site": "9056f2ab-07ee-438c-ba2b-a9815cc9348d",
+        "anchor": "ca4eb8e1-d999-4f39-9a25-1f47221c8910",
+        "A1": "0d20b2a6-5982-4ddc-b887-3b29ff76daf2"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L01",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "474d5f5e-0b33-4ff0-b27d-14fba4b1cbc1",
+      "message_id": "635be052-9cc3-4dac-8039-61a5bcbdf059",
+      "aliases": {
+        "organisation": "7368cf1c-fd46-4026-ba91-72bc9f2accfe",
+        "site": "6f0be31a-6a29-4e73-91fd-ac57fa6887d8",
+        "anchor": "a6ec4498-4816-47a8-8eee-5a890e743896",
+        "A1": "67843099-fb05-48e5-972e-b2b822f088e5"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "bf692188-8726-463d-80d9-9a8e83983440",
+      "message_id": "8085bc4f-203f-418d-9b30-f623fc3e8087",
+      "aliases": {
+        "organisation": "c60e3d94-03a7-4d6b-81f1-03c6fde35cef",
+        "site": "a7c8cf45-04b3-4315-91ea-62be7ec43f3a",
+        "anchor": "8f0d5bcc-3cc2-4435-94f4-9c7ab9950a84",
+        "task-1": "8c5d2e55-e909-45ed-b8b4-14025ad85854",
+        "task-2": "28b8829c-f774-4004-9ee9-83e4d656c06a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "67f73d53-57d5-4fbd-b7a0-a58e1a5d8434",
+      "message_id": "2da82f1f-6e8e-4195-976c-42bf30504e1a",
+      "aliases": {
+        "organisation": "d0055bca-392b-4292-9352-36d1f7a7da47",
+        "site": "39710fe8-4fe4-430f-b43b-d4a02963fe54",
+        "anchor": "8b8e02b7-1a94-4e1d-bcda-6c9aac39af2c",
+        "task-1": "efd0bdd9-bad7-4c03-a9c8-861b98acbab2",
+        "task-2": "4262cb84-699f-4aec-909e-8c4dcaf2c6cc"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L02",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b1c8dc85-ab87-443f-b103-07ca5d88c76c",
+      "message_id": "7e8e3c94-32a5-4c60-840e-cadac54a882f",
+      "aliases": {
+        "organisation": "dfcd6bd8-2a39-48b8-8acf-eea739243565",
+        "site": "f563dcf7-46bf-4da0-92a7-3aab4b6cc0b5",
+        "anchor": "341ee107-1e99-4c75-8cf4-9cb59fca4c3a",
+        "task-1": "a4fa21fd-69e3-43d2-b0a3-dfcce7901c58",
+        "task-2": "25d52807-bcf0-4452-9833-6a80cb39c50e"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "4928a3e7-e318-4e80-9cb7-8e7127f0e5a8",
+      "message_id": "df32c508-2cf8-483d-9294-2de2efbbf3a1",
+      "aliases": {
+        "organisation": "279c28ff-f08a-4700-9ce8-92a81b9f7f88",
+        "site": "8f167565-febd-415a-bdfe-c5aba0700d8e",
+        "anchor": "862dae70-db8e-4159-82b4-a8bebe71763b",
+        "A1": "c211f3c7-d7a0-42fb-8604-b7a441702e2a",
+        "A2": "1ec20302-c616-48f2-aaba-9dde06583c7a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "d2da43ec-e48f-4591-8988-08c3a1f1780d",
+      "message_id": "40787d0f-3f10-44be-bc90-d3be8b341014",
+      "aliases": {
+        "organisation": "28d4b0fd-d30d-43f9-9007-9a4ff1388f43",
+        "site": "20daa844-d6c2-427c-95ec-7d87c9e7d4d7",
+        "anchor": "568e66bf-e148-40b6-bed3-3d09673af808",
+        "A1": "29268a07-d1cf-4bf9-a8b7-388117265e78",
+        "A2": "9271da4e-cb0b-495d-a24f-6097142c347b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L03",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "be72d554-3857-4033-bb90-a62210753f3e",
+      "message_id": "9c6b6ef5-10d0-468a-a875-1ca242a95978",
+      "aliases": {
+        "organisation": "50bca59d-9466-483a-af9a-b36fcc2df711",
+        "site": "2d0d8cba-dfb4-4e48-a7fd-a830c71b0ac6",
+        "anchor": "e87f7940-9718-46ca-a961-b246f77f9a9b",
+        "A1": "5216da52-c196-489d-a706-d6e1cdebd3ec",
+        "A2": "85b4ee81-c0b5-4f48-8432-110460dfa52d"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "bb9226fb-99d0-4662-b49a-831db4699b17",
+      "message_id": "cec6e690-691d-429b-aa85-ad82f649b41a",
+      "aliases": {
+        "organisation": "da9b1628-22d2-4dcd-99bd-c9eff2c5a1be",
+        "site": "5610f468-3012-42f5-ad63-166b1d4ce9bd",
+        "anchor": "e64f8343-294a-4a07-a2f8-c3bacfbd7b83",
+        "A2": "c6bc5bd1-7b42-480c-a065-7b2a4cb86f7f",
+        "A3": "400774fe-33ed-4f8d-8c83-02ba6067b424"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "3ea8e3b1-616e-4ca6-821b-5e2732af50a6",
+      "message_id": "05b136bb-b6fb-4182-9e46-dff7ef25518e",
+      "aliases": {
+        "organisation": "eb0fc1ba-cb1f-4e17-b4d5-04c44cc67aaf",
+        "site": "e322ccde-8da4-4da8-a4fa-f39351ef716b",
+        "anchor": "5e5a2956-6f65-47dd-8ff8-17bd297bba9b",
+        "A2": "cbe5aca2-fb62-4ac4-ad4b-e4a39cd8762c",
+        "A3": "ceadb408-d142-4350-b2e6-681d0b8519f5"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L04",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "b348cc36-42b5-43e1-aede-9b961dc7d171",
+      "message_id": "c3fc1dfc-3c21-4a80-a31d-468a1f1f622a",
+      "aliases": {
+        "organisation": "a4ba8a86-35aa-4901-9f18-fee1096dc3e2",
+        "site": "0150f18e-34f5-4ad7-8684-099db4ea204c",
+        "anchor": "96afd8d1-40ed-43d5-a2ed-b2fb94a7e3c7",
+        "A2": "f650869b-6ad0-4dc8-9a93-7fcc0bb853b0",
+        "A3": "b1c69078-c865-4a43-8f6d-211ab98e5564"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "6533cfc6-ed95-4d43-b2ca-1b15ab83a575",
+      "message_id": "6fe69d79-d7b8-44f2-8f0a-1079816d2cc8",
+      "aliases": {
+        "organisation": "1c61ba82-0ae1-449c-bd90-3acf811fbccc",
+        "site": "5d68197b-8448-4f9d-9670-ad4f05374530",
+        "anchor": "949afc59-e9f1-42ce-bdca-ff443d1c627c",
+        "A1": "ab4f8e5e-5906-442b-bf13-66f063185160"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f78fae1d-c118-4cef-a368-2fc2b84616b7",
+      "message_id": "19041b56-48b7-46cb-8889-df4c7a7a2325",
+      "aliases": {
+        "organisation": "667c336d-895c-4b29-8b03-13d58591e5be",
+        "site": "88658003-75cd-41c0-a985-5821834cbeb2",
+        "anchor": "f21fcb96-3251-4f47-b35a-dcd9f04b3a8e",
+        "A1": "1489df09-fc1d-4a93-b099-a09448f3698f"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L05",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5ce2c2bc-fbd8-4dbb-85b8-e023aa814034",
+      "message_id": "6883d08d-f4b0-4e09-8b20-d42d46fba88e",
+      "aliases": {
+        "organisation": "cf837e7b-d3dd-48b5-ae1f-33b46533540f",
+        "site": "64b5e32c-9f81-4b30-bc10-2b573129c730",
+        "anchor": "5af239af-2587-40a4-b011-5e286d85e48d",
+        "A1": "53b313f1-25ce-4e1b-a482-6753c6d50a2d"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "687769c2-9ef9-45af-8644-0a816760398e",
+      "message_id": "2e45f4e6-85d1-4d1f-8cb4-6d58c1f4b748",
+      "aliases": {
+        "organisation": "54071ac6-57f3-4e6c-a1d5-a3dd55009ded",
+        "site": "82abc6f9-076d-4485-bb4d-fa18e3d89b68",
+        "anchor": "5c99564f-61d3-4731-bbb7-117f0ea06a2e",
+        "A1": "4a2beda3-28c2-4081-a230-2304fa08562a",
+        "sibling-1": "3a682d0a-9806-458c-9875-10d11c9b933f",
+        "sibling-follow-up-1": "00ea2dfd-3e59-4929-bf6e-d2d9818b3a0d",
+        "sibling-2": "158f0d96-1eba-4c36-a494-3a6491b4dd4c",
+        "sibling-follow-up-2": "6d7cf667-f7f8-4802-a3b5-642134e548b6",
+        "sibling-3": "1759b9e4-b6f0-473f-b450-759d82d84ba8",
+        "sibling-follow-up-3": "d5756150-ca4f-4264-b902-0877f2745df0",
+        "sibling-4": "a2e854a2-47fc-4c72-96b0-20477fca4621",
+        "sibling-follow-up-4": "5f490a06-fe93-4f15-af75-45642018e6cc",
+        "sibling-5": "ad903ae4-ad23-4def-9a3d-9031aad77928",
+        "sibling-follow-up-5": "15f0dd50-1fe5-4900-a68f-a86afe799ff1",
+        "sibling-6": "f5a9fc78-08d6-4ec9-a8e1-94ba8bf2c7f5",
+        "sibling-follow-up-6": "b7de728f-ffbf-42ef-825f-cf36dbb118e5",
+        "sibling-7": "ba11713f-f6d1-4ccc-994d-24077afaa358",
+        "sibling-follow-up-7": "837be717-0389-47c4-b742-618b8891c76a",
+        "sibling-8": "e71fbdfd-52c1-43ef-a335-1b226579114e",
+        "sibling-follow-up-8": "f7d2000d-07f8-4519-9884-42fa3d60207d",
+        "sibling-9": "1784ae2c-d70e-48b6-b557-931c8a49e964",
+        "sibling-follow-up-9": "2d88c167-10e2-4715-a77c-f509816c9258",
+        "sibling-10": "e9682ba3-5f46-4c2b-91f3-f8268eb424cc",
+        "sibling-follow-up-10": "f4507e20-1323-44aa-9f26-6bf35fb7cc84",
+        "sibling-11": "fa2e854f-3ce7-4d97-b40b-10a97cd1a51a",
+        "sibling-follow-up-11": "f7bf2359-b0e0-40cc-bee0-a0f2ff1b171e",
+        "recent-1": "6899743c-c4a4-4593-9504-810e77ac54f0",
+        "recent-2": "331334e7-1b24-44a0-8114-f2267bbb9299",
+        "recent-3": "b6b783ae-9d5a-4443-a44d-ed484f40b352",
+        "recent-4": "5e78b5a1-2860-4ed3-af50-55a52b3d2087",
+        "recent-5": "06f7438c-f3c1-49e5-a3af-50a78563270d",
+        "recent-6": "c7491521-41be-43b6-a39e-e6e401d9c333",
+        "recent-7": "469e7f1d-8b42-43ed-a135-dac5ab5edf49",
+        "recent-8": "2b098d4c-590f-42a1-b9c2-44ff069bc02a",
+        "recent-9": "8b7debc0-e02b-4bfb-b472-3d433e781966",
+        "recent-10": "acf359c5-c6ab-4534-bfe3-000d8a95033f",
+        "recent-11": "826ce9f4-c0db-48e7-836d-97851955050f",
+        "recent-12": "8c438220-a57a-465e-867b-f540796e56ed",
+        "recent-13": "6f019c2d-0a74-40b4-b021-40b7096cc951",
+        "recent-14": "240e276d-5516-446d-8430-977fa434c66e",
+        "recent-15": "790a330a-c7e1-49c5-abf7-d6c3c8c1c5af",
+        "recent-16": "92d61608-cc9a-4fbb-9a8c-3d65830cadd9",
+        "recent-17": "833703d0-c81d-43e0-861f-a7e6ff9e47f9",
+        "recent-18": "d6b6a7d2-914e-41c8-b464-2ec425db8ef2",
+        "recent-19": "34051658-9281-4eeb-be8e-be062cc88224",
+        "recent-20": "fce9a07c-e5a0-4183-ab97-0e69b0117cca",
+        "recent-21": "d4d84459-3b77-4211-a7e8-ba6d42440f2a"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "66a9c965-f6c8-4122-8da7-6a25a1078ce1",
+      "message_id": "33dd55a4-a78c-4cce-b0c3-b3896996c441",
+      "aliases": {
+        "organisation": "3f07ed1a-42a4-4157-8069-85fb26852823",
+        "site": "31930f1c-0b02-462c-aeab-376bf4ee43ac",
+        "anchor": "04d2ea4a-139e-45eb-9d30-6950bf0fca20",
+        "A1": "0963b3be-875c-4321-a9c6-582603463766",
+        "sibling-1": "23fe362e-dfb8-42ea-b18d-3a5c2f1fb8f2",
+        "sibling-follow-up-1": "43a23aa4-665a-4928-910d-a55755e55e44",
+        "sibling-2": "9b557efc-8797-4e78-9522-cd38b9c084b7",
+        "sibling-follow-up-2": "19b5b8ef-de15-4c3a-8527-da5e6eaf0dd6",
+        "sibling-3": "c5f92392-e13c-4c2b-8033-bfa1318e724a",
+        "sibling-follow-up-3": "53d05289-bb84-4c64-97bd-cdd5c93bf0ef",
+        "sibling-4": "ad31fc27-e8cc-448c-ac89-9c3152d5ea97",
+        "sibling-follow-up-4": "4cc6842d-027b-4e4f-afdf-60fcc6448442",
+        "sibling-5": "e72d414b-884a-4b7d-b9b3-3bded16f1303",
+        "sibling-follow-up-5": "d4e939df-7138-4c57-a00c-1d84df3be5f1",
+        "sibling-6": "c2c23551-043d-4740-b98e-4def08a66cfb",
+        "sibling-follow-up-6": "2c29b4d3-5e73-494c-95dd-2a7a9853f357",
+        "sibling-7": "dc98eb42-54ef-4377-9d7f-d16450e45df4",
+        "sibling-follow-up-7": "3cfa9120-4082-4bf8-af5c-b11c8fae9588",
+        "sibling-8": "091b7a5c-a9d6-4318-8a57-be699198b46c",
+        "sibling-follow-up-8": "1a0df233-959b-4a16-824c-20e97219b519",
+        "sibling-9": "ea043a5a-490c-4d37-9e32-16eb8cb0902d",
+        "sibling-follow-up-9": "b0e4e3e3-77a4-40ce-a5f7-5e5292de4b1c",
+        "sibling-10": "eced4787-5bea-406d-a325-dbd60e95eb11",
+        "sibling-follow-up-10": "4dfff35d-2d7d-44ba-ade3-7b2f30157abf",
+        "sibling-11": "cad76e50-5d98-4efd-a6d4-1e527acad43c",
+        "sibling-follow-up-11": "19feb1c2-2edf-4146-863f-a5606ad4d773",
+        "recent-1": "56070437-20d9-41ee-b098-e59bb582608e",
+        "recent-2": "745148dd-b233-4c92-845d-253174b8ff75",
+        "recent-3": "d7f3757a-3008-4c34-965f-cc77ef095b58",
+        "recent-4": "c0dd92ac-e65b-4d09-9b35-cb93ec532d51",
+        "recent-5": "d2b26b8f-605a-4c8b-9ab4-3ae5b98517e0",
+        "recent-6": "588390a6-ad2a-4fa1-afa8-5a0b9ac3293a",
+        "recent-7": "a738dfb5-61d5-45cb-bdf9-2f4a42815e42",
+        "recent-8": "6f6f7092-336e-4dfc-9086-bd5e625c846b",
+        "recent-9": "35b322ba-6a98-45de-8141-b3f67c6aeb25",
+        "recent-10": "ceca17f5-d788-45ba-90a0-70cec25b5134",
+        "recent-11": "87c7ee62-e547-4d72-87e6-465f85ef92c7",
+        "recent-12": "77062c75-620d-4102-b42b-81d64440fab0",
+        "recent-13": "ffa21675-68cb-40ef-babb-8b27158ffca7",
+        "recent-14": "1425350d-4562-4c81-bf9e-9532b87bde8c",
+        "recent-15": "9baf48b4-e514-4a7f-968a-6bca11eb4fed",
+        "recent-16": "c220dcdb-bcf1-45cc-9b22-0f699a9a802e",
+        "recent-17": "8dafe05a-2955-4058-9ca6-16c452bdb765",
+        "recent-18": "08a4d541-093f-4a9a-8427-23d1dfb95b2a",
+        "recent-19": "d8627da5-8368-414d-a8bb-7170f7f023af",
+        "recent-20": "cc2778da-9a17-4bdf-9b4f-aa179ca21a08",
+        "recent-21": "db6e3908-b51c-402a-963a-2d39abe6556d"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L06",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "3d7ec8ad-c74d-4753-86d4-2eca5a91ba7f",
+      "message_id": "65cfca0b-6168-402f-b979-244e12b0ba61",
+      "aliases": {
+        "organisation": "cf156b83-1103-4faa-ab46-2ad24925ada0",
+        "site": "05226907-df64-44c6-968e-430f49c54dc1",
+        "anchor": "726a3a1b-802a-4cd5-ba54-0d92c08969dd",
+        "A1": "16f53cc0-6159-450e-82b2-b9c0d29a9a37",
+        "sibling-1": "e34914f1-d684-4dd0-962b-e46eeb3797f2",
+        "sibling-follow-up-1": "a66e8286-9269-4a14-a0f9-32f0331ec1b5",
+        "sibling-2": "093ea37c-3104-4b92-8e8a-22d24a38d66b",
+        "sibling-follow-up-2": "03d25d43-0a5b-45fc-95e1-fdd656212075",
+        "sibling-3": "bf99cc8f-ec13-4c09-98a4-3f1298a066ba",
+        "sibling-follow-up-3": "820084c5-2d6e-4511-bcbb-6a790b5dd787",
+        "sibling-4": "c3508529-1a60-4fec-bc4d-8edf660f987e",
+        "sibling-follow-up-4": "44216903-f125-4c7c-8372-71b91cd184d8",
+        "sibling-5": "a2689ad0-0370-409a-8a0f-bb471977277e",
+        "sibling-follow-up-5": "e925d4a1-f6bf-465b-92cb-4d3593868b80",
+        "sibling-6": "0f1ad857-b613-47c4-9142-46f6ccf94774",
+        "sibling-follow-up-6": "f4ad15ff-5c77-4cbd-b1a0-139d64eb3788",
+        "sibling-7": "77081a6e-8aed-4305-a724-032308fbe236",
+        "sibling-follow-up-7": "bceb14f2-7a80-4af8-be5a-28901dc4bbb5",
+        "sibling-8": "121c8a68-a5fb-4192-a05d-8c85b1bbfcda",
+        "sibling-follow-up-8": "49cc7662-1a7a-47d4-8514-5c5e26afb400",
+        "sibling-9": "2320be0a-36f1-4837-93ab-07685f4e4b9c",
+        "sibling-follow-up-9": "1fec9aa5-7dd0-402d-9f63-73ea514da75a",
+        "sibling-10": "e914535d-c4ce-4aed-b801-14ea723d8722",
+        "sibling-follow-up-10": "67af3ea4-1e0d-4f93-a4ae-7b4ca0759be8",
+        "sibling-11": "e98d7b1b-f144-4e2a-b53e-69bbdc5d6ce5",
+        "sibling-follow-up-11": "726ca37f-29ad-4289-94bf-b5090a4f23c1",
+        "recent-1": "f6675876-659d-47a9-b306-8c83ed6ab06a",
+        "recent-2": "b1757504-ada1-4663-9408-1f180f6de19b",
+        "recent-3": "0cf8ada6-3af5-430e-a8fc-6562c9b136f1",
+        "recent-4": "00fcb879-343b-4995-b670-989522805621",
+        "recent-5": "2142899e-a6d6-438a-955c-79f6fa3ee7c4",
+        "recent-6": "dfd455a6-a744-4317-a808-1c2de0833489",
+        "recent-7": "8c3cc66d-1b32-4379-beba-2b5eb83d00fd",
+        "recent-8": "a4ad3655-2c8b-4a6b-81b7-d7d43e1394a0",
+        "recent-9": "10c83d65-c954-4f53-897d-8d478baaa7d1",
+        "recent-10": "755158f2-7de7-4eb1-bf25-887716254090",
+        "recent-11": "adfbd5d8-ba1c-4df9-b766-e89a77b3db35",
+        "recent-12": "e38f8d3a-f74e-46ef-8173-43b5856cf5e3",
+        "recent-13": "5cbbcbc1-6b4c-4eab-ab67-3b72e981d3ef",
+        "recent-14": "a6f45e2d-753d-4f3c-8f09-889b02b1f047",
+        "recent-15": "261d008c-beaf-464c-af32-96737c77cd88",
+        "recent-16": "c90f3d91-234a-40e9-b39b-da516a27f0b4",
+        "recent-17": "c8537af8-ca21-465e-9331-e0ae9c8f5381",
+        "recent-18": "024c4345-2ac2-4abf-b016-f9052dae1db1",
+        "recent-19": "b979a7a8-5990-48a5-89ad-658f65170f2d",
+        "recent-20": "d77c54f4-f394-4270-8e85-e4ca108a1e8b",
+        "recent-21": "514289d9-e376-46a0-8bb0-fd0c6f6c86e3"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c6a75a7d-c91d-4a10-a9fc-0cb551d728fb",
+      "message_id": "74479580-a9bd-460f-a544-e0c875aecb83",
+      "aliases": {
+        "organisation": "31824082-6aac-4626-8470-2399a3c0dd7f",
+        "site": "f045091b-8d19-4bd8-9fbe-99eede8238fc",
+        "anchor": "cf3a3e6d-394a-4800-8e73-98b02c0989e9",
+        "A1": "bcdcfd3f-00d1-445a-8a3b-bd79e8177385"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "40de5f16-81a0-43a7-b05a-e6de4bd877c4",
+      "message_id": "ba2d3c28-2c2b-492d-88d2-38e157f756d3",
+      "aliases": {
+        "organisation": "444971e7-b63c-4924-84c9-890ce44041e7",
+        "site": "4a57d882-016b-45ac-a51c-948c16ff63f8",
+        "anchor": "81628540-2945-473c-aa44-8d8ee574fb9f",
+        "A1": "5d807dea-4afd-41c6-84a6-057263b911d1"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L07",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "55353b51-e387-4869-b494-3396cee7494d",
+      "message_id": "646ce146-f50f-4df1-9987-c1fbab2b98fd",
+      "aliases": {
+        "organisation": "be60241e-9c6a-4c65-aad2-2b8cbf87c031",
+        "site": "c5220370-598b-4f7d-821c-3b3b51b99578",
+        "anchor": "667c6aaa-24ab-48b8-9bb4-8eccd75c0e29",
+        "A1": "0a5f9074-4d10-4824-a8ef-c9a1cb594057"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "e157757d-8fbe-4444-b56b-f3243bc3ce01",
+      "message_id": "c1f444dc-af16-4dc6-b6b8-48cfc3483f9b",
+      "aliases": {
+        "organisation": "8848d3df-f3e7-4fdc-b38e-477725e2c1ed",
+        "site": "99849e80-461a-428b-a484-d08656cf8d82",
+        "anchor": "0c142eea-6f9a-4320-a1ce-cdc4d0c5bd5a",
+        "A1": "a8e6f8b5-d661-489e-82ae-bf6f048c9e8c"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f3c96eb7-bacb-4896-afea-e419ac378321",
+      "message_id": "53afe697-4803-4cce-bcc9-e8d00f1d6dfc",
+      "aliases": {
+        "organisation": "7146939f-2525-48f9-877f-1e1248003a18",
+        "site": "9e87a7d2-0617-4d53-92a6-bec1b30d1b74",
+        "anchor": "65d777bb-5e9a-4295-a5e3-4b5c709888eb",
+        "A1": "95b8feb9-1ed3-4808-b8d4-36ae8480ca5b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L08",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "e6643f56-4e50-4786-95d4-57741cae1c2a",
+      "message_id": "e671692c-20e7-41ae-b16e-cbc5de604fb8",
+      "aliases": {
+        "organisation": "539ef61c-d729-4232-bf34-c74835425b21",
+        "site": "c5c895f0-2eea-48dd-b5c3-28e7c888d64a",
+        "anchor": "5740c278-8075-4253-8d1f-b8b05b0bbd4e",
+        "A1": "0479fee2-0fc4-44f3-a014-8ec04413cf08"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "c4e4f708-50f1-438c-b32c-7807e6710576",
+      "message_id": "34c6c718-4c54-4e3a-9c42-2daaf2fe57e2",
+      "aliases": {
+        "organisation": "2e8cfeab-cb4a-4b05-a311-e733f8004c5a",
+        "site": "279a5594-3e53-4936-8c4e-aca97e2f49d4",
+        "contact": "d230f965-6293-449b-9109-dfb5f7ddc0f5",
+        "anchor": "61aa4c11-7449-4094-a590-3ea95985a182",
+        "A1": "25be263c-7eff-4ab3-bef8-d7e4cf9826e8",
+        "excluded_finance": "8a6fab23-9e25-4914-a557-47f3bf235422",
+        "excluded_restricted": "bd606026-3d04-4d6d-8714-4ce6d8720fd7"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-2e8cfeab-cb4a-4b05-a311-e733f8004c5a"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "5a0bf09a-b7ff-41cd-82a1-3ccc7452a68b",
+      "message_id": "b1085751-1e01-4c74-ac45-4744381795da",
+      "aliases": {
+        "organisation": "00a60027-9201-449b-a0f0-f6048d9f520a",
+        "site": "b8a19df2-46e1-4f8a-b2f4-dc7b6689410b",
+        "contact": "fff01e9e-8b75-423c-be87-9ed482b24fd5",
+        "anchor": "91c13a3e-eb92-4883-871e-560f845cbfe0",
+        "A1": "978eb31f-2abd-417d-8250-da679fefa2bd",
+        "excluded_finance": "794208db-2337-4659-ad3a-ab16aa4bc2de",
+        "excluded_restricted": "ebd54c1a-42f6-4b7b-b9fd-7c758200a77d"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-00a60027-9201-449b-a0f0-f6048d9f520a"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L09",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "1432acb9-e808-4528-90b6-51bd0598e2aa",
+      "message_id": "f76afa00-359a-42b1-a7c1-e03f2e6beadd",
+      "aliases": {
+        "organisation": "20806c65-3d74-4b2a-a16d-96b617bc071f",
+        "site": "523c8ec7-cd37-4f65-905a-ee993640c8c6",
+        "contact": "17769603-ebce-4711-a6e9-6be80bca7add",
+        "anchor": "bdbd170b-a710-40b3-bf97-1465dd91aaba",
+        "A1": "52c33161-3a58-4677-8c5c-e6952aba6a91",
+        "excluded_finance": "cc57b986-e9f5-465e-9f35-3bde2f2e262d",
+        "excluded_restricted": "1994082e-3e21-4b9f-8f09-32e90aa1fb0d"
+      },
+      "excluded": [
+        {
+          "alias": "contact",
+          "field": "people.email",
+          "value": "SYN-EXCLUDED-EMAIL@example.invalid"
+        },
+        {
+          "alias": "organisation",
+          "field": "erp_account_mappings.customer_id",
+          "value": "SYN-EXCLUDED-ERP-20806c65-3d74-4b2a-a16d-96b617bc071f"
+        },
+        {
+          "alias": "excluded_finance",
+          "field": "activities.summary (RestrictedFinance)",
+          "value": "SYN-EXCLUDED-FINANCE"
+        },
+        {
+          "alias": "excluded_restricted",
+          "field": "activities.summary (RestrictedService)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "56c81080-1c4a-49bd-8329-0b644bf9cbf5",
+      "message_id": "715ff7ef-9b9d-4b7d-a287-3d441d6fe19b",
+      "aliases": {
+        "organisation": "025781bf-c29f-473d-b9e2-82dfb6528f71",
+        "site": "53b9db7d-63d1-42f4-b777-af28dd27d435",
+        "anchor": "1043c94e-f1bb-4816-8b06-0d3610767114",
+        "A1": "a2f04b43-6b42-4858-9dd8-59116d38d81b",
+        "hidden_activity": "79d02c39-93ce-48dc-ad98-da49ec91e1b9"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "9afd6567-2765-492d-b86a-5979500ed2f8",
+      "message_id": "48e7ccd3-e62d-4f6c-a894-fa968589c001",
+      "aliases": {
+        "organisation": "e05ea384-81b9-44e3-a5f7-f79b4ebd3aff",
+        "site": "b58cb658-db26-4a1f-9b0f-b24f419fd2c9",
+        "anchor": "99d591c3-48a0-4494-ad12-5b1eba5d24a3",
+        "A1": "b0901a0e-647c-4904-a946-edd7b90533a0",
+        "hidden_activity": "7178fe83-56b5-44cb-a48c-7902cf5be037"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L10",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "9d325747-a1b8-4a46-b43f-dc19e5bc10b2",
+      "message_id": "e140d423-8956-467f-a972-a51d18cbe73f",
+      "aliases": {
+        "organisation": "c0bd9a2c-d358-40dd-b653-726a7262dda8",
+        "site": "027e3287-4c66-41e2-9dae-fc037e327a2c",
+        "anchor": "56fedbc7-c661-435f-90dc-7567e1881373",
+        "A1": "891e089d-5a95-43a5-9a61-1037967ddbfe",
+        "hidden_activity": "290aece5-c1e9-4b96-b6ea-27dd31a38985"
+      },
+      "excluded": [
+        {
+          "alias": "hidden_activity",
+          "field": "activities.summary (Internal, outside participant site scope)",
+          "value": "SYN-RESTRICTED-ACTIVITY"
+        }
+      ]
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "4dc0b33f-de49-4e7a-b567-2b086d4e4adb",
+      "message_id": "09111d49-5966-498f-a484-7e5449151951",
+      "aliases": {
+        "organisation": "2a0766e0-97db-4e0e-bcff-a7d459693ed5",
+        "site": "dab1e832-e2a6-4624-bca2-91c3ace03d35",
+        "anchor": "0851956a-2145-47aa-a152-46fbfe6d961e",
+        "A1": "e18e1a61-17cb-42aa-bb2b-3241a887cbe1"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "45b881c5-a699-4e85-98cd-a022b051309b",
+      "message_id": "8d3c135f-d1a7-4dd6-afe1-605e2258fb36",
+      "aliases": {
+        "organisation": "8544d12e-cb82-4bea-a05f-fedd78ec3eee",
+        "site": "817f9101-331e-4bce-9e7b-a3013dbede47",
+        "anchor": "9b70c8d3-3f96-4c83-be71-ad38c369114d",
+        "A1": "63fdbedc-ac0d-463d-aec5-7a921abb7bd3"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L11",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "ac5db42d-e27e-40c4-8eb5-71a201da2065",
+      "message_id": "f0942ff7-9263-474a-aae1-a40780c13eca",
+      "aliases": {
+        "organisation": "06158783-7ae6-4eeb-8380-403a8a5c5cab",
+        "site": "eab04ab4-0ec0-4803-afde-5e861bffcadc",
+        "anchor": "306efcfb-1fdd-4996-bd42-49e8f1050ef9",
+        "A1": "99cebb4e-df2a-409d-a268-c4dd70b74147"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 1,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f7012904-a492-41b1-8d8d-bf37c4f5c6dc",
+      "message_id": "1ccf4ddf-7d13-45df-bbca-32bfd1fe0615",
+      "aliases": {
+        "organisation": "c58631eb-2661-4529-97de-d7511e9516d2",
+        "site": "66f0f58e-5bd2-4aea-b196-2ede225cbe43",
+        "anchor": "88b4b6d7-4119-4b23-82c8-c7c302c02eeb",
+        "A1": "12e57e17-cbdd-4eff-bee3-391f85641a3b"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 2,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "12855875-7b7f-466d-80fd-5e7834408fea",
+      "message_id": "c4cca671-31f1-46c8-9aa3-766e36b4bb87",
+      "aliases": {
+        "organisation": "1eb60c1f-5164-4aad-888b-6f56b21d1449",
+        "site": "da5e6941-3809-4a16-9975-de70aef84488",
+        "anchor": "9e2f0296-8bc0-4c6e-9574-2e88ba4814f1",
+        "A1": "81176de5-d445-4e79-a831-af5bc97fd1b2"
+      },
+      "excluded": []
+    },
+    {
+      "model": "claude-opus-5-5",
+      "case_id": "L12",
+      "stage": "Evaluation",
+      "repetition": 3,
+      "workspace_id": "10000000-0000-4000-8000-000000000001",
+      "company_id": "20000000-0000-4000-8000-000000000001",
+      "tagger_id": "30000000-0000-4000-8000-000000000001",
+      "thread_id": "f538cd3b-bbce-4261-8e76-a3d600f28217",
+      "message_id": "3a053f81-b8d4-47e0-9e37-f4c85b37386f",
+      "aliases": {
+        "organisation": "56878570-d84b-4f45-8a22-06c05edc2f27",
+        "site": "f14decbc-e647-448e-83b1-baa9470d7591",
+        "anchor": "c3d08b51-f06f-4de9-95af-f71541a2008e",
+        "A1": "1926c561-7c32-4c97-b73b-1d5eac8144e5"
+      },
+      "excluded": []
+    }
+  ]
+}

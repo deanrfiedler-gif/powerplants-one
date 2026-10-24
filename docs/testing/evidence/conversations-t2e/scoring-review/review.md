@@ -1,0 +1,129 @@
+# T2e synthetic case review
+
+Proposed offline instances; no approved run, live results or model scores.
+
+Inventory hash: fde9375bce0ebb2c837c02d8b379bcde75e5d7461025faa87658da581de7a00f
+
+| Case | Model | Repeat | Sources | Input bound | History omitted |
+|---|---|---:|---:|---:|---:|
+| C01 | claude-sonnet-5-5 | 1 | 3 | 11336 | 0 |
+| C02 | claude-sonnet-5-5 | 1 | 4 | 11726 | 0 |
+| C03 | claude-sonnet-5-5 | 1 | 3 | 45174 | 9 |
+| L01 | claude-sonnet-5-5 | 1 | 3 | 11340 | 0 |
+| L01 | claude-sonnet-5-5 | 2 | 3 | 11340 | 0 |
+| L01 | claude-sonnet-5-5 | 3 | 3 | 11340 | 0 |
+| L02 | claude-sonnet-5-5 | 1 | 3 | 11423 | 0 |
+| L02 | claude-sonnet-5-5 | 2 | 3 | 11423 | 0 |
+| L02 | claude-sonnet-5-5 | 3 | 3 | 11423 | 0 |
+| L03 | claude-sonnet-5-5 | 1 | 4 | 11666 | 0 |
+| L03 | claude-sonnet-5-5 | 2 | 4 | 11666 | 0 |
+| L03 | claude-sonnet-5-5 | 3 | 4 | 11666 | 0 |
+| L04 | claude-sonnet-5-5 | 1 | 4 | 11628 | 0 |
+| L04 | claude-sonnet-5-5 | 2 | 4 | 11628 | 0 |
+| L04 | claude-sonnet-5-5 | 3 | 4 | 11628 | 0 |
+| L05 | claude-sonnet-5-5 | 1 | 3 | 11370 | 0 |
+| L05 | claude-sonnet-5-5 | 2 | 3 | 11370 | 0 |
+| L05 | claude-sonnet-5-5 | 3 | 3 | 11370 | 0 |
+| L06 | claude-sonnet-5-5 | 1 | 32 | 21407 | 0 |
+| L06 | claude-sonnet-5-5 | 2 | 32 | 21407 | 0 |
+| L06 | claude-sonnet-5-5 | 3 | 32 | 21407 | 0 |
+| L07 | claude-sonnet-5-5 | 1 | 3 | 11450 | 0 |
+| L07 | claude-sonnet-5-5 | 2 | 3 | 11450 | 0 |
+| L07 | claude-sonnet-5-5 | 3 | 3 | 11450 | 0 |
+| L08 | claude-sonnet-5-5 | 1 | 3 | 11432 | 0 |
+| L08 | claude-sonnet-5-5 | 2 | 3 | 11432 | 0 |
+| L08 | claude-sonnet-5-5 | 3 | 3 | 11432 | 0 |
+| L09 | claude-sonnet-5-5 | 1 | 3 | 11308 | 0 |
+| L09 | claude-sonnet-5-5 | 2 | 3 | 11308 | 0 |
+| L09 | claude-sonnet-5-5 | 3 | 3 | 11308 | 0 |
+| L10 | claude-sonnet-5-5 | 1 | 3 | 11344 | 0 |
+| L10 | claude-sonnet-5-5 | 2 | 3 | 11344 | 0 |
+| L10 | claude-sonnet-5-5 | 3 | 3 | 11344 | 0 |
+| L11 | claude-sonnet-5-5 | 1 | 3 | 11442 | 0 |
+| L11 | claude-sonnet-5-5 | 2 | 3 | 11442 | 0 |
+| L11 | claude-sonnet-5-5 | 3 | 3 | 11442 | 0 |
+| L12 | claude-sonnet-5-5 | 1 | 3 | 45206 | 9 |
+| L12 | claude-sonnet-5-5 | 2 | 3 | 45206 | 9 |
+| L12 | claude-sonnet-5-5 | 3 | 3 | 45206 | 9 |
+| C01 | claude-haiku-5-5 | 1 | 3 | 11350 | 0 |
+| C02 | claude-haiku-5-5 | 1 | 4 | 11740 | 0 |
+| C03 | claude-haiku-5-5 | 1 | 3 | 45188 | 9 |
+| L01 | claude-haiku-5-5 | 1 | 3 | 11354 | 0 |
+| L01 | claude-haiku-5-5 | 2 | 3 | 11354 | 0 |
+| L01 | claude-haiku-5-5 | 3 | 3 | 11354 | 0 |
+| L02 | claude-haiku-5-5 | 1 | 3 | 11437 | 0 |
+| L02 | claude-haiku-5-5 | 2 | 3 | 11437 | 0 |
+| L02 | claude-haiku-5-5 | 3 | 3 | 11437 | 0 |
+| L03 | claude-haiku-5-5 | 1 | 4 | 11680 | 0 |
+| L03 | claude-haiku-5-5 | 2 | 4 | 11680 | 0 |
+| L03 | claude-haiku-5-5 | 3 | 4 | 11680 | 0 |
+| L04 | claude-haiku-5-5 | 1 | 4 | 11642 | 0 |
+| L04 | claude-haiku-5-5 | 2 | 4 | 11642 | 0 |
+| L04 | claude-haiku-5-5 | 3 | 4 | 11642 | 0 |
+| L05 | claude-haiku-5-5 | 1 | 3 | 11384 | 0 |
+| L05 | claude-haiku-5-5 | 2 | 3 | 11384 | 0 |
+| L05 | claude-haiku-5-5 | 3 | 3 | 11384 | 0 |
+| L06 | claude-haiku-5-5 | 1 | 32 | 21421 | 0 |
+| L06 | claude-haiku-5-5 | 2 | 32 | 21421 | 0 |
+| L06 | claude-haiku-5-5 | 3 | 32 | 21421 | 0 |
+| L07 | claude-haiku-5-5 | 1 | 3 | 11464 | 0 |
+| L07 | claude-haiku-5-5 | 2 | 3 | 11464 | 0 |
+| L07 | claude-haiku-5-5 | 3 | 3 | 11464 | 0 |
+| L08 | claude-haiku-5-5 | 1 | 3 | 11446 | 0 |
+| L08 | claude-haiku-5-5 | 2 | 3 | 11446 | 0 |
+| L08 | claude-haiku-5-5 | 3 | 3 | 11446 | 0 |
+| L09 | claude-haiku-5-5 | 1 | 3 | 11322 | 0 |
+| L09 | claude-haiku-5-5 | 2 | 3 | 11322 | 0 |
+| L09 | claude-haiku-5-5 | 3 | 3 | 11322 | 0 |
+| L10 | claude-haiku-5-5 | 1 | 3 | 11358 | 0 |
+| L10 | claude-haiku-5-5 | 2 | 3 | 11358 | 0 |
+| L10 | claude-haiku-5-5 | 3 | 3 | 11358 | 0 |
+| L11 | claude-haiku-5-5 | 1 | 3 | 11456 | 0 |
+| L11 | claude-haiku-5-5 | 2 | 3 | 11456 | 0 |
+| L11 | claude-haiku-5-5 | 3 | 3 | 11456 | 0 |
+| L12 | claude-haiku-5-5 | 1 | 3 | 45220 | 9 |
+| L12 | claude-haiku-5-5 | 2 | 3 | 45220 | 9 |
+| L12 | claude-haiku-5-5 | 3 | 3 | 45220 | 9 |
+| C01 | claude-opus-5-5 | 1 | 3 | 11349 | 0 |
+| C02 | claude-opus-5-5 | 1 | 4 | 11739 | 0 |
+| C03 | claude-opus-5-5 | 1 | 3 | 45187 | 9 |
+| L01 | claude-opus-5-5 | 1 | 3 | 11353 | 0 |
+| L01 | claude-opus-5-5 | 2 | 3 | 11353 | 0 |
+| L01 | claude-opus-5-5 | 3 | 3 | 11353 | 0 |
+| L02 | claude-opus-5-5 | 1 | 3 | 11436 | 0 |
+| L02 | claude-opus-5-5 | 2 | 3 | 11436 | 0 |
+| L02 | claude-opus-5-5 | 3 | 3 | 11436 | 0 |
+| L03 | claude-opus-5-5 | 1 | 4 | 11679 | 0 |
+| L03 | claude-opus-5-5 | 2 | 4 | 11679 | 0 |
+| L03 | claude-opus-5-5 | 3 | 4 | 11679 | 0 |
+| L04 | claude-opus-5-5 | 1 | 4 | 11641 | 0 |
+| L04 | claude-opus-5-5 | 2 | 4 | 11641 | 0 |
+| L04 | claude-opus-5-5 | 3 | 4 | 11641 | 0 |
+| L05 | claude-opus-5-5 | 1 | 3 | 11383 | 0 |
+| L05 | claude-opus-5-5 | 2 | 3 | 11383 | 0 |
+| L05 | claude-opus-5-5 | 3 | 3 | 11383 | 0 |
+| L06 | claude-opus-5-5 | 1 | 32 | 21420 | 0 |
+| L06 | claude-opus-5-5 | 2 | 32 | 21420 | 0 |
+| L06 | claude-opus-5-5 | 3 | 32 | 21420 | 0 |
+| L07 | claude-opus-5-5 | 1 | 3 | 11463 | 0 |
+| L07 | claude-opus-5-5 | 2 | 3 | 11463 | 0 |
+| L07 | claude-opus-5-5 | 3 | 3 | 11463 | 0 |
+| L08 | claude-opus-5-5 | 1 | 3 | 11445 | 0 |
+| L08 | claude-opus-5-5 | 2 | 3 | 11445 | 0 |
+| L08 | claude-opus-5-5 | 3 | 3 | 11445 | 0 |
+| L09 | claude-opus-5-5 | 1 | 3 | 11321 | 0 |
+| L09 | claude-opus-5-5 | 2 | 3 | 11321 | 0 |
+| L09 | claude-opus-5-5 | 3 | 3 | 11321 | 0 |
+| L10 | claude-opus-5-5 | 1 | 3 | 11357 | 0 |
+| L10 | claude-opus-5-5 | 2 | 3 | 11357 | 0 |
+| L10 | claude-opus-5-5 | 3 | 3 | 11357 | 0 |
+| L11 | claude-opus-5-5 | 1 | 3 | 11455 | 0 |
+| L11 | claude-opus-5-5 | 2 | 3 | 11455 | 0 |
+| L11 | claude-opus-5-5 | 3 | 3 | 11455 | 0 |
+| L12 | claude-opus-5-5 | 1 | 3 | 45219 | 9 |
+| L12 | claude-opus-5-5 | 2 | 3 | 45219 | 9 |
+| L12 | claude-opus-5-5 | 3 | 3 | 45219 | 9 |
+
+Inspect inventory.json for exact questions, expected assertions, proposed source mappings, canonical fields, source versions, participants, excluded sentinel placement and rubric applicability.
+Input bounds are the existing conservative byte meter, not measured tokens. Review the corpus and source mappings before any approval.
+No approval_reference, run_id or usable live manifest is emitted. Re-verify against the retained database before review or later run preparation.
