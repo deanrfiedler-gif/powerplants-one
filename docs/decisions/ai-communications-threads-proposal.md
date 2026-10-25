@@ -400,3 +400,7 @@ Dean replied: "I accept the AI and internal communications threads proposal and 
   - the Figma design under ADR-0053, then Dean's named version and lock-in;
   - real retention of threads (Q8), which is the company's decision.
 - **Unchanged:** this record still authorises no application code, migration, seed, permission, capability, route or deployment. Each build step follows `AGENTS.md` in its own pull request.
+
+## Q2 amendment — 24 October 2026
+
+Dean accepted the [assistant design](assistant-figma-design.md) (PPO-AI01-ASSISTANT-FIGMA-DEC) on 24 October 2026 with the recommended answer to its Q5, which amends Q2 above: `/assistant` stays on phones as the page-memory form of the AI1 side panel, opened from a record's More menu, and Carl's stored threads stay in `/conversations`. A side-panel or `/assistant` conversation becomes a stored thread only when a person chooses Keep as a thread (A2 point 2); on an organisation it is kept on one of that customer's deals, as Q3 requires. The original Q2 answer above is kept as the earlier record.
