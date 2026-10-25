@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
 import { randomUUID } from "node:crypto";
+import { isDeepStrictEqual } from "node:util";
 import { database } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 import type { Principal } from "../src/platform/identity";
@@ -260,26 +261,45 @@ export async function verifyPreparation(value: unknown, prep: Preparation, expec
   return current;
 }
 
-// Re-recording is a proposal only. It cannot replace any source, message, evidence, gold or bound.
+// Re-recording is a proposal only. It cannot replace any source, message, evidence, gold support or bound.
+// Reviewer annotations never reach a provider: setup prose, claim wording, assessment class and scoring declarations.
+const legacyHistory = (history: string) => history === "conflicting-padding" ? "omitted-history-padding" : history;
 export function assertCatalogueReannotation(previous: Catalogue, current: Catalogue) {
-  const comparable = (c: Catalogue) => ({ ...c, cases: c.cases.map(k => ({ ...k, setup: undefined,
-    recipe: { ...k.recipe, history: k.recipe.history === "conflicting-padding" ? "omitted-history-padding" : k.recipe.history } })) });
-  assert.deepEqual(comparable(previous), comparable(current), "Only setup annotations and the legacy history label may change");
+  const comparable = (c: Catalogue) => ({ ...c, schema_version: undefined, cases: c.cases.map(k => ({ ...k, setup: undefined, expected: undefined, scoring: undefined,
+    gold: k.gold.map(g => g.support), recipe: { ...k.recipe, history: legacyHistory(k.recipe.history) } })) });
+  assert.deepEqual(comparable(previous), comparable(current), "Only reviewer annotations and the legacy history label may change");
 }
+export function catalogueAnnotationChanges(previous: Catalogue, current: Catalogue) {
+  assertCatalogueReannotation(previous, current);
+  const change = (field: string, before: unknown, after: unknown, case_id?: string) =>
+    isDeepStrictEqual(before, after) ? [] : [{ ...(case_id ? { case_id } : {}), field, previous: before, current: after }];
+  return [...change("schema_version", previous.schema_version, current.schema_version), ...current.cases.flatMap((k, n) => {
+    const old = previous.cases[n] as Case & { scoring?: Case["scoring"] };
+    return [...change("setup", old.setup, k.setup, k.id), ...change("recipe.history", old.recipe.history, k.recipe.history, k.id),
+      ...k.gold.flatMap((g, m) => [...change(`gold[${m}].claim`, old.gold[m].claim, g.claim, k.id), ...change(`gold[${m}].assessment`, old.gold[m].assessment, g.assessment, k.id)]),
+      ...change("scoring", old.scoring ?? null, k.scoring, k.id)];
+  })];
+}
+const goldAnnotations = (gold: { claim: string; assessment: string }[]) => gold.map(({ claim, assessment }) => ({ claim, assessment }));
 export async function rerecordPreparation(value: unknown, prep: Preparation, expected: Awaited<ReturnType<typeof exportPreparation>>, previousCatalogue?: Catalogue) {
   const c = validateCatalogue(value);
   assert.equal(evaluationHash(expected.report), expected.inventory_hash, "Corrupt baseline");
   assert.equal(prep.catalogue_hash, expected.report.catalogue_hash, "Original catalogue binding mismatch");
+  let prior = c;
   if (prep.catalogue_hash !== catalogueHash(c)) {
     assert.ok(previousCatalogue, "Previous catalogue required");
     assert.equal(catalogueHash(previousCatalogue), prep.catalogue_hash, "Previous catalogue hash mismatch");
-    assertCatalogueReannotation(previousCatalogue, c);
+    assertCatalogueReannotation(previousCatalogue, c); prior = previousCatalogue;
   }
+  assert.ok(expected.report.instances.every(i => isDeepStrictEqual(goldAnnotations(i.gold), goldAnnotations(prior.cases.find(k => k.id === i.case_id)?.gold ?? []))),
+    "Baseline gold annotations differ from its catalogue");
   const preparation = { ...prep, catalogue_hash: catalogueHash(c) };
   const current = await exportPreparation(c, preparation);
-  assert.deepEqual({ ...current.report, tool_source_hash: expected.report.tool_source_hash, catalogue_hash: expected.report.catalogue_hash },
-    expected.report, "Re-recording changed instances, sources, gold, evidence or bounds");
+  const corpus = (r: typeof expected.report) => ({ ...r, tool_source_hash: undefined, catalogue_hash: undefined,
+    instances: r.instances.map(i => ({ ...i, gold: i.gold.map(g => g.support) })) });
+  assert.deepEqual(corpus(current.report), corpus(expected.report), "Re-recording changed instances, sources, gold support, evidence or bounds");
   return { preparation, current, provenance: { kind: "T2eProposedRerecording", authority: "Proposed; owner review pending; no run or approval",
     previous_inventory_hash: expected.inventory_hash, inventory_hash: current.inventory_hash,
-    previous_catalogue_hash: prep.catalogue_hash, catalogue_hash: preparation.catalogue_hash } };
+    previous_catalogue_hash: prep.catalogue_hash, catalogue_hash: preparation.catalogue_hash,
+    annotation_changes: prior === c ? [] : catalogueAnnotationChanges(prior, c) } };
 }

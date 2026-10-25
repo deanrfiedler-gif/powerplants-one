@@ -66,16 +66,22 @@ test("T2e explicit re-recording preserves every instance and refuses evidence dr
   assert.equal(recorded.provenance.previous_inventory_hash, prior.inventory_hash);
   assert.deepEqual(await snapshot(), before);
 });
-test("T2e setup-only reannotation retains the exact prior instance evidence", async () => {
+test("T2e reviewer reannotation retains the exact prior instance evidence", async () => {
   const before = await snapshot();
   const prior = structuredClone(exported);
   const oldCatalogue = structuredClone(c); oldCatalogue.cases.at(-1)!.recipe.history = "conflicting-padding";
-  oldCatalogue.cases.at(-1)!.setup = "SYN original annotation";
+  oldCatalogue.cases.at(-1)!.setup = "SYN original annotation"; oldCatalogue.schema_version = 2;
+  const l03 = oldCatalogue.cases.find(k => k.id === "L03")!; l03.expected[1] = l03.gold[1].claim = "SYN original claim wording";
+  for (const i of prior.report.instances.filter(i => i.case_id === "L03")) i.gold[1].claim = l03.gold[1].claim;
   const oldPrep = { ...prep, catalogue_hash: catalogueHash(oldCatalogue) };
   prior.report.catalogue_hash = oldPrep.catalogue_hash; prior.inventory_hash = evaluationHash(prior.report);
   await assert.rejects(rerecordPreparation(c, oldPrep, prior), /Previous catalogue required/);
+  const unbound = structuredClone(prior); unbound.report.instances.find(i => i.case_id === "L03")!.gold[1].claim = "SYN unbound wording";
+  unbound.inventory_hash = evaluationHash(unbound.report);
+  await assert.rejects(rerecordPreparation(c, oldPrep, unbound, oldCatalogue), /Baseline gold annotations differ/);
   const annotated = await rerecordPreparation(c, oldPrep, prior, oldCatalogue);
   assert.deepEqual(annotated.current, exported); assert.deepEqual(annotated.preparation, prep);
+  assert.deepEqual(annotated.provenance.annotation_changes.map(x => x.field), ["schema_version", "gold[1].claim", "setup", "recipe.history"]);
   assert.deepEqual(await snapshot(), before);
 });
 test("T2e re-recording rejects corrupt baselines and changed instance evidence", async () => {
