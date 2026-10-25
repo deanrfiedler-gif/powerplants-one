@@ -19,7 +19,7 @@ import { prepareRequest } from "../src/assistant/request";
 import { bodyFor, claudeInputTokens } from "../src/assistant/claude-request";
 import { costMicro, priceFor } from "../src/assistant/pricing";
 import { turnLimits, type EvidenceEnvelope } from "../src/assistant/model";
-import { catalogueHash, expandCatalogue, memberKey, validateCatalogue, type Catalogue, type Case } from "./t2e-catalogue";
+import { assertScoringPolicy, catalogueHash, expandCatalogue, memberKey, validateCatalogue, type Catalogue, type Case } from "./t2e-catalogue";
 const company = "20000000-0000-4000-8000-000000000001";
 const base = () => ({ operation_id: randomUUID(), schema_version: 1, reason: "SYN T2E-SYN-01 offline preparation" });
 const rows = async (sql: string, args: unknown[] = []) => (await database().query(sql, args)).rows;
@@ -264,10 +264,33 @@ export async function verifyPreparation(value: unknown, prep: Preparation, expec
 // Re-recording is a proposal only. It cannot replace any source, message, evidence, gold support or bound.
 // Reviewer annotations never reach a provider: setup prose, claim wording, assessment class and scoring declarations.
 const legacyHistory = (history: string) => history === "conflicting-padding" ? "omitted-history-padding" : history;
+// The exact gold corrections ported from #686 on 25 October 2026 (T2e plan § Scoring and review-document port).
+// Claim wording and assessment class may change only by one of these; any other change alters a gold answer's meaning.
+export const permittedGoldCorrections: readonly { case_id: string; index: number; field: "claim" | "assessment"; previous: string; current: string }[] = [
+  { case_id: "L03", index: 1, field: "claim", previous: "A2 is 30 November 2027, 09:00 Brisbane if time stated",
+    current: "A2 proposes 30 November 2027; any stated time preserves the recorded UTC instant with an explicit timezone" },
+  { case_id: "L11", index: 1, field: "claim", previous: "No partial refusal text",
+    current: "Provider refusal or Decline publishes fixed CannotAnswer without partial content; a grounded Answer may explicitly decline actions" },
+  ...([["C03", 1], ["L06", 0], ["L10", 1], ["L11", 1], ["L12", 1], ["L12", 2]] as const).map(([case_id, index]) =>
+    ({ case_id, index, field: "assessment" as const, previous: "human-boundary-rubric", current: "application-invariant" })),
+];
 export function assertCatalogueReannotation(previous: Catalogue, current: Catalogue) {
   const comparable = (c: Catalogue) => ({ ...c, schema_version: undefined, cases: c.cases.map(k => ({ ...k, setup: undefined, expected: undefined, scoring: undefined,
     gold: k.gold.map(g => g.support), recipe: { ...k.recipe, history: legacyHistory(k.recipe.history) } })) });
   assert.deepEqual(comparable(previous), comparable(current), "Only reviewer annotations and the legacy history label may change");
+  for (const [n, k] of current.cases.entries()) {
+    const old = previous.cases[n] as Case & { scoring?: Case["scoring"] };
+    // Expected assertions are the gold claims, so a claim correction carries its assertion with it.
+    for (const c of [old, k]) assert.deepEqual(c.expected, c.gold.map(g => g.claim), `${c.id} expected/gold mismatch`);
+    k.gold.forEach((g, m) => { for (const field of ["claim", "assessment"] as const) {
+      const before = old.gold[m][field], after = g[field];
+      assert.ok(before === after || permittedGoldCorrections.some(p => p.case_id === k.id && p.index === m && p.field === field && p.previous === before && p.current === after),
+        `${k.id} gold[${m}].${field} change is not a permitted correction`);
+    } });
+    // Scoring is absent before catalogue schema 3; where present it must follow the predeclared policy.
+    assertScoringPolicy(k);
+    if (old.scoring !== undefined) assertScoringPolicy(old as Case);
+  }
 }
 export function catalogueAnnotationChanges(previous: Catalogue, current: Catalogue) {
   assertCatalogueReannotation(previous, current);

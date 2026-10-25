@@ -112,7 +112,7 @@ test("T2e exclusion checks reject source IDs even without a sentinel and the att
 test("T2e catalogue reannotation permits reviewer annotations only, not question, gold support or recipe changes", () => {
   const current = catalogue(), old = catalogue(); old.cases.at(-1)!.recipe.history = "conflicting-padding";
   old.cases.at(-1)!.setup = "SYN historical wording"; old.schema_version = 2;
-  const l03 = old.cases.find(k => k.id === "L03")!; l03.expected[1] = l03.gold[1].claim = "SYN earlier claim wording";
+  const l03 = old.cases.find(k => k.id === "L03")!; l03.expected[1] = l03.gold[1].claim = "A2 is 30 November 2027, 09:00 Brisbane if time stated";
   old.cases[2].gold[1].assessment = "human-boundary-rubric"; delete (old.cases[0] as { scoring?: unknown }).scoring;
   assertCatalogueReannotation(old, current);
   assert.deepEqual(catalogueAnnotationChanges(old, current).map(x => `${"case_id" in x ? x.case_id : "catalogue"}:${x.field}`),
@@ -123,6 +123,49 @@ test("T2e catalogue reannotation permits reviewer annotations only, not question
     (c: ReturnType<typeof catalogue>) => { c.record_sets.deal.title += " altered"; },
     (c: ReturnType<typeof catalogue>) => { c.cases[0].recipe.participant = true; }]) {
     const changed = catalogue(); edit(changed); assert.throws(() => assertCatalogueReannotation(current, changed), /Only reviewer annotations/);
+  }
+});
+test("T2e re-recording accepts only the listed gold corrections; other claim, assertion or assessment changes are refused", () => {
+  const current = catalogue(), k = (c: ReturnType<typeof catalogue>, id: string) => c.cases.find(x => x.id === id)!;
+  // Reconstruct the #680 catalogue from the committed provenance; its hash binds the reconstruction to the real previous catalogue.
+  const provenance = JSON.parse(readFileSync(resolve("docs/testing/evidence/conversations-t2e/rerecording-provenance.json"), "utf8"));
+  const previous = catalogue() as ReturnType<typeof catalogue> & { schema_version: number };
+  for (const change of provenance.annotation_changes as { case_id?: string; field: string; previous: unknown }[]) {
+    if (!change.case_id) { previous.schema_version = change.previous as number; continue; }
+    const c = k(previous, change.case_id) as unknown as Record<string, unknown> & { gold: Record<string, unknown>[]; expected: string[] };
+    const gold = /^gold\[(\d)\]\.(claim|assessment)$/.exec(change.field);
+    if (gold) { c.gold[+gold[1]][gold[2]] = change.previous; if (gold[2] === "claim") c.expected[+gold[1]] = change.previous as string; }
+    else if (change.field === "scoring") delete c.scoring; else c[change.field] = change.previous;
+  }
+  assert.equal(catalogueHash(previous), provenance.previous_catalogue_hash);
+  assertCatalogueReannotation(previous, current);
+  assert.deepEqual(JSON.parse(JSON.stringify(catalogueAnnotationChanges(previous, current))), provenance.annotation_changes);
+  for (const [label, edit] of [
+    ["claim and expected assertion changed together", (c: ReturnType<typeof catalogue>) => { k(c, "C01").expected[0] = k(c, "C01").gold[0].claim = "The deal is Won."; }],
+    ["claim changed without its assertion", (c: ReturnType<typeof catalogue>) => { k(c, "C01").gold[0].claim = "The deal is Won."; }],
+    ["listed correction reversed", (c: ReturnType<typeof catalogue>) => { k(c, "L03").expected[1] = k(c, "L03").gold[1].claim = "A2 is 30 November 2027, 09:00 Brisbane if time stated"; }],
+    ["listed wording on another case", (c: ReturnType<typeof catalogue>) => { k(c, "L04").expected[0] = k(c, "L04").gold[0].claim = k(current, "L03").gold[1].claim; }],
+    ["unlisted assessment change", (c: ReturnType<typeof catalogue>) => { k(c, "C01").gold[0].assessment = "human-boundary-rubric"; }],
+    ["listed assessment change reversed", (c: ReturnType<typeof catalogue>) => { k(c, "L06").gold[0].assessment = "human-boundary-rubric"; }],
+  ] as const) {
+    const changed = catalogue(); edit(changed);
+    assert.throws(() => assertCatalogueReannotation(current, changed), /not a permitted correction|expected\/gold mismatch/, label);
+  }
+});
+test("T2e scoring policy is enforced by case ID in validation and re-recording, not only by the committed fixture", () => {
+  const k = (c: ReturnType<typeof catalogue>, id: string) => c.cases.find(x => x.id === id)!;
+  for (const [label, edit] of [
+    ["L01 permits decline", (c: ReturnType<typeof catalogue>) => { Object.assign(k(c, "L01").scoring, { outcome: "AnswerOrDeclined", refusal: "DeclineUnsupportedActions" }); }],
+    ["L08 refusal not scored", (c: ReturnType<typeof catalogue>) => { k(c, "L08").scoring.refusal = "NotApplicable"; }],
+    ["L09 refusal not scored", (c: ReturnType<typeof catalogue>) => { k(c, "L09").scoring.refusal = "NotApplicable"; }],
+    ["L09 permits decline", (c: ReturnType<typeof catalogue>) => { Object.assign(k(c, "L09").scoring, { outcome: "AnswerOrDeclined", refusal: "DeclineUnsupportedActions" }); }],
+    ["L07 decline removed", (c: ReturnType<typeof catalogue>) => { Object.assign(k(c, "L07").scoring, { outcome: "AnswerRequired", refusal: "NotApplicable" }); }],
+    ["C01 scores injection resistance", (c: ReturnType<typeof catalogue>) => { k(c, "C01").scoring.refusal = "ResistInjectedInstruction"; }],
+    ["L11 completeness scored", (c: ReturnType<typeof catalogue>) => { k(c, "L11").scoring.completeness = "Applicable"; }],
+  ] as const) {
+    const changed = catalogue(); edit(changed);
+    assert.throws(() => validateCatalogue(changed), /departs from the predeclared policy|decline branch/, label);
+    assert.throws(() => assertCatalogueReannotation(catalogue(), changed), /departs from the predeclared policy/, label);
   }
 });
 test("T2e retained review package matches its inventory; changed, missing or rewritten documents are refused", () => {

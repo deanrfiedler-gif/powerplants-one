@@ -205,4 +205,29 @@ The committed [inventory](proposed-inventory.json), [case cards](cases.md), [sam
 
 ### Limits
 
-This is author work: no independent review of #708 has taken place. The case cards and table are projections of the inventory; they grant no corpus approval. The widened re-recording rule is a proposal for Dean's review. Corpus approval, the retained naming limitation, run/cost approval, calibration and live evaluation remain pending. The retained cluster lives under `Temp`, where something has already removed folders; its location is Dean's decision.
+This was author work before the independent review recorded below. The case cards and table are projections of the inventory; they grant no corpus approval. The widened re-recording rule is a proposal for Dean's review. Corpus approval, the retained naming limitation, run/cost approval, calibration and live evaluation remain pending. The retained cluster lives under `Temp`, where something has already removed folders; its location is Dean's decision.
+
+## Independent review corrections — 26 October 2026
+
+ChatGPT reviewed #708 at `b22ab65d682697077c6ece1ef431b4e6f470e0b6`; Dean relayed its findings on 26 October 2026 and they are posted on the pull request. Author: a Claude session for Dean, on the same branch after merging main `55722e8226b62c2a0e2e3bfe67b38b104bb09590`. Node 24.21.0, npm 11.19.0, `npm ci` from the unchanged lockfile; PostgreSQL 16.15 on a disposable loopback cluster in session storage, never the retained one.
+
+**Reproduced first, on the unchanged code.** Changing C01's `expected[0]` and `gold[0].claim` together to "The deal is Won." passed both `validateCatalogue` and `assertCatalogueReannotation`. L01 changed to `AnswerOrDeclined` with `DeclineUnsupportedActions`, and L08 or L09 with refusal `NotApplicable`, passed both as well.
+
+**Corrections** (the rules are in the [plan](../../../decisions/conversations-t2e-evaluation.md#scoring-and-review-document-port--25-october-2026)):
+
+- `scripts/t2e-catalogue.ts`: `scoringPolicy` and `assertScoringPolicy` fix each case's scoring by its ID, and `validateCatalogue` enforces them.
+- `scripts/t2e-preparation.ts`: `permittedGoldCorrections` lists the two claim corrections and six assessment reclassifications of this port. `assertCatalogueReannotation` refuses any other claim or assessment change, requires each expected assertion to equal its claim on both sides, and applies the scoring policy.
+
+**What still passes.** The real #680 catalogue from main (hash `5c7ec2f723a9d342d11d2fb72af51e822c1b918de45080228c6cd3c234c5891a`) re-annotates to the current one, and `catalogueAnnotationChanges` reproduces all 25 entries of the committed provenance exactly. A unit test rebuilds that previous catalogue from the provenance and checks its hash, so the allowlist is tied to the real port, not to a synthetic example.
+
+**What `validateCatalogue` still accepts.** It checks structure, policy and field support; it cannot judge whether claim prose matches the bound field values, so the C01 "Won" catalogue on its own still validates. A changed catalogue materialised fresh gets a new catalogue hash, a new corpus and new case cards for review. A retained corpus can only take new wording through re-recording, which is where the review found the gap and where the allowlist now applies.
+
+### Validation
+
+- Unit preparation suite **10/10 passed**. The two new tests failed on the unchanged scripts and pass on the corrected ones. They cover claim and assertion changed together, a claim without its assertion, a listed correction reversed, listed wording on another case, unlisted and reversed assessment changes, and seven prohibited scoring combinations (L01, L07, L08, L09 twice, L11 and C01) in both validation and re-recording.
+- Persisted preparation suite **11/11 passed** in 82.6 seconds after merging main. The reviewer-reannotation test now uses the real L03 correction and also proves that `rerecordPreparation` refuses an unlisted earlier wording. Its first run used the synthetic wording and failed as expected, refused by the new rule.
+- Full `tsc --noEmit --incremental false` and ESLint on the four touched source and test files passed. `t2e-prepare.ts validate` reports the unchanged catalogue hash `a5f1e61b…de4e`, and `review` passes on the committed package (117 members, inventory `4e3cd191…f5f8`).
+
+### Re-recording not repeated
+
+The catalogue, corpus and committed review package are unchanged. The tool source hash moves from `5b5d05bbf628240e9d7092a35830c3c69319c5895d037324f030d03fa283de13` to `c0b06894edfb0cab637b7dc10a9c71e1e962e947dd72deb7df4a2263d86180a9`, because two preparation scripts changed. The committed inventory still names the tool source that produced it, which is accurate. An `export` against the retained cluster with the corrected tools would therefore report drift until the corpus is re-recorded into a new directory with an unchanged catalogue (operator chapter, `rerecord` without `--previous-catalogue`). That cluster is on Dean's workstation and was not reachable from this session, so the re-recording was not run. No retained file, corpus, approval, calibration, live call or spending is involved.

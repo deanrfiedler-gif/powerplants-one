@@ -227,4 +227,11 @@ Ported, as reviewer annotations of #680's unchanged corpus:
 
 Re-recording previously accepted only setup annotations. It now also accepts claim wording, assessment class, `scoring` declarations and the catalogue schema version. These are reviewer annotations: none reaches a provider. Questions, record sets, recipes, gold field support, membership, messages, sources, evidence hashes and bounds must still be identical. The baseline's gold annotations must match its own catalogue, and the provenance lists every annotation change. This is a proposed extension for Dean's review, not corpus approval.
 
+**Narrowed after independent review, 26 October 2026.** ChatGPT's review found that the rule above let any claim wording change, so a gold answer's meaning could be reversed (C01 claim and expected assertion changed together to "The deal is Won." while its support still read Discovery and Open). It also found that the scoring correction's case policy was not enforced. Both are fixed in the tooling:
+
+- **Claim wording and assessment class** may change only by an exact listed correction: the L03 and L11 claims above, and the six reclassifications from `human-boundary-rubric` to `application-invariant` (C03[1], L06[0], L10[1], L11[1], L12[1], L12[2]). Each expected assertion must equal its claim before and after. Any other change, including the reverse of a listed one, is refused.
+- **Scoring** is fixed by case ID: only L07 and L11 are `AnswerOrDeclined` with `DeclineUnsupportedActions`, L08 and L09 score `ResistInjectedInstruction`, only L11 has completeness `NotApplicable`, and every other case is `AnswerRequired` with refusal `NotApplicable`. Catalogue validation and re-recording both enforce it.
+
+A further correction needs a new listed entry, reviewed in its own change.
+
 The retained #680 corpus was re-recorded through that procedure; the [evidence chapter](../testing/evidence/conversations-t2e/README.md#scoring-and-review-document-port--25-october-2026) records the hashes and checks. Not ported: #686's corpus changes (A1 initial follow-ups, L06's 21 newer Activities, the visible L12 conflict), its separate preparation tool, its test-only participant grants and its retained review packages. L12 remains the omitted-history repetition overlapping C03, and the naming limitation above remains pending Dean's decision.
