@@ -181,4 +181,11 @@ Dean accepted the recommended answer to each question on 24 October 2026.
 
 ## Verification of this record
 
-Documentation checks only: `python3 scripts/build_status.py --check` and `python3 scripts/check_naming.py`. Still open: the engineer walkthrough, the authority decision for real rule sets (Q6), acceptance of the Figma design, and every build step.
+Documentation checks only: `python3 scripts/build_status.py --check` and `python3 scripts/check_naming.py`.
+
+Still open, as of 26 October 2026:
+
+- the engineer walkthrough, which runs before the Figma design is put up for acceptance;
+- acceptance of the Figma design;
+- what real rule sets still need. The storage policy that Q6 required was decided on 26 October 2026 ([authority decision](rule-sets-real-data-authority.md)). Still missing are an approved private environment, a named engineering owner for each family (Q2) and Dean's authorisation of each family. No real rule set is authorised;
+- build steps R3 to R6. R1 (the engine) and R2 (storage and versioning) are built and hold synthetic data only.
