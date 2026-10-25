@@ -1382,7 +1382,10 @@
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-07-Departures-and-Build-Findings-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-04-Design-Versus-Current-Build-r01.png",
         "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-S2-Configuration-r01.png",
-        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png"
+        "docs/reference/ui/estimating/design-board-r01/PPO-ES-02-Design-Board-R2-Phone-390-Configuration-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-15-Desktop-Entry-Route-To-Confirm-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-16-Desktop-Entry-Route-Confirmed-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-17-Desktop-Entry-Actions-Menu-r01.png"
       ],
       "dependencies": [
         "src/components/sales-estimating-link.tsx",
@@ -1397,7 +1400,8 @@
         "docs/decisions/es02-wizard-figma-implementation.md",
         "docs/design/development/nursery-automation.md",
         "docs/decisions/discovery-register-figma-design.md",
-        "docs/decisions/create-discovery-workspace-figma-design.md"
+        "docs/decisions/create-discovery-workspace-figma-design.md",
+        "docs/decisions/automation-configurator-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -15493,12 +15497,35 @@
       "guide_key": "guide.route-estimating-discovery-id-nursery",
       "design_path": "docs/design/development/pages/route-estimating-discovery-id-nursery.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-01-Desktop-Overview-Full-Length-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-02-Desktop-Requirements-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-03-Desktop-Production-Scenarios-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-04-Desktop-Process-And-Equipment-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-05-Desktop-Line-Capacity-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-06-Desktop-Interfaces-And-Site-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-07-Desktop-Layout-And-Drawings-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-08-Desktop-Delivery-Scope-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-09-Desktop-Quantities-And-Handover-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-10-Desktop-Outputs-And-History-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-11-Desktop-Calculation-Trace-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-12-Desktop-Resolve-Source-Conflict-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-13-Desktop-Edit-Scenario-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-14-Desktop-Record-Answer-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-15-Desktop-Entry-Route-To-Confirm-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-16-Desktop-Entry-Route-Confirmed-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-17-Desktop-Entry-Actions-Menu-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-18-Tablet-Overview-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-19-Phone-Overview-Stage-List-Sections-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-20-Phone-Entry-Forms-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-21-States-r01.png"
+      ],
       "dependencies": [
         "docs/blueprints/nursery-automation-configurator.md",
         "docs/decisions/ADR-0060-nursery-discovery-foundation.md",
         "src/estimating/nursery-automation/screen.tsx",
-        "src/estimating/nursery-automation/screen.css"
+        "src/estimating/nursery-automation/screen.css",
+        "docs/decisions/automation-configurator-figma-design.md"
       ],
       "scope_status": "N1 discovery with separate N2 assessment; N3 shared CPQ handover remains open",
       "visual_status": "Needs review",
@@ -15528,14 +15555,22 @@
       "guide_key": "guide.route-estimating-discovery-id-nursery-assessment",
       "design_path": "docs/design/development/pages/route-estimating-discovery-id-nursery-assessment.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-04-Desktop-Process-And-Equipment-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-05-Desktop-Line-Capacity-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-06-Desktop-Interfaces-And-Site-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-07-Desktop-Layout-And-Drawings-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-11-Desktop-Calculation-Trace-r01.png",
+        "docs/reference/ui/estimating/automation-configurator-figma-design-r01/PPO-Automation-Configurator-12-Desktop-Resolve-Source-Conflict-r01.png"
+      ],
       "dependencies": [
         "docs/blueprints/nursery-automation-configurator.md",
         "docs/decisions/ADR-0061-nursery-technical-assessment.md",
         "docs/decisions/automation-configurator-name.md",
         "src/estimating/nursery-automation/assessment-screen.tsx",
         "src/estimating/nursery-automation/assessment-fields.tsx",
-        "src/estimating/nursery-automation/fields.tsx"
+        "src/estimating/nursery-automation/fields.tsx",
+        "docs/decisions/automation-configurator-figma-design.md"
       ],
       "scope_status": "N2 technical assessment; N3 Products/shared CPQ handover remains separate",
       "visual_status": "Needs review",
