@@ -237,11 +237,11 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
       // Shell v2 geometry is checked above; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
-      // Native Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Help and
+      // Native Outputs, Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Help and
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(29);
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(30);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      for (const [name, href] of [["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
+      for (const [name, href] of [["Outputs", "/documents/issues?department=sales"], ["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
       await expect(actualPanel.getByRole("link", { name: "Users and access", exact: true })).toHaveAttribute("href", "/admin/access?department=sales");

@@ -1,6 +1,8 @@
-# Outputs workspace implementation
+---
+title: Outputs workspace implementation
+date: 2026-10-25
+---
 
-Date: 2026-10-25
 Owner: Codex for Dean Fiedler
 Status: Implemented; final verification in progress; review and acceptance pending
 

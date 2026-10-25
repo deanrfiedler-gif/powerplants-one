@@ -397,8 +397,10 @@ test("DK03-U05 failed and loading family reads never become empty or stale actio
   await setup(page);
   await page.goto("/documents/issues");
   await expect(page.locator(".output-grid tbody tr")).toHaveCount(1);
+  let finishRead!: () => void;
+  const readPending = new Promise<void>((resolve) => { finishRead = resolve; });
   await page.route(/\/api\/v1\/document-outputs(?:\?.*)?$/, async (r) => {
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    await readPending;
     await r.fulfill({
       status: 503,
       json: {
@@ -407,13 +409,23 @@ test("DK03-U05 failed and loading family reads never become empty or stale actio
       },
     });
   });
+  const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  if (phone)
+    await page.locator("#shell-header").getByRole("button", { name: /^(Search outputs|Search and filter)$/ }).filter({ visible: true }).click();
   await page
     .getByRole("button", { name: "Refresh outputs", exact: true })
+    .filter({ visible: true })
     .click();
-  await expect(
-    page.getByText("Loading permitted records…", { exact: true }),
-  ).toBeVisible();
-  await expect(page.locator(".output-grid tbody tr")).toHaveCount(0);
+  if (phone)
+    await page.getByRole("dialog", { name: "Search and filter outputs" }).getByRole("button", { name: "Done", exact: true }).click();
+  try {
+    await expect(
+      page.getByText("Loading permitted records…", { exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".output-grid tbody tr")).toHaveCount(0);
+  } finally {
+    finishRead();
+  }
   await expect(page.locator("#ppo-outputs .business-error")).toContainText(
     "family read unavailable",
   );
