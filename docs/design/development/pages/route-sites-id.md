@@ -34,6 +34,8 @@ Loading: current results unconfirmed and six skeleton rows. Empty: no matching p
 
 This is an online page under the [offline system contract](../systems/offline.md); it introduces no offline storage or queue. A failed current read removes displayed data.
 
+Dean authorised the [26 October focus amendment](../../../decisions/sites-figma-design.md#8-keyboard-focus-during-follow-up-refresh--26-october-2026) for Owned follow-up. It defines a persistent safe heading, guarded restoration, unavailable-state fallbacks and direct keyboard/revocation proof. **Implementation is queued:** the current child still remounts and loses focus during refresh. The amendment preserves access clearing and polling; it does not adopt pause/hide controls. Its approval is separate from an executed browser proof, owner visual/device review or WCAG conformance. No retained Figma frame or review fingerprint changes in this documentation contribution.
+
 ## Adaptations and open questions
 
 - P4 states in the design story are replaced by explicit unavailability and CS-06 links. No readiness calculation or customer confirmation is invented.

@@ -234,6 +234,8 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 
 The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
 
+The [26 October Owned follow-up focus amendment](../../../decisions/sites-figma-design.md#8-keyboard-focus-during-follow-up-refresh--26-october-2026) is authorised but **not implemented**. It specifies host-owned safe focus and conditional restoration, including use of the existing `focusOnError=false` option for background-read failures. Current shared defaults, catalogue states, consumer bindings and runtime examples remain unchanged. The later implementation must supply the amendment's direct focus/access tests and update affected fixtures and guides; this note supplies neither execution evidence nor a review fingerprint.
+
 
 ## PL-04 consumer
 

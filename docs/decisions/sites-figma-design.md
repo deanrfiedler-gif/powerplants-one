@@ -2,12 +2,14 @@
 document_id: PPO-CS04-SITES-FIGMA-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version, native implementation and UI baseline acceptance separate
+status: Owner-accepted design and 26 October focus amendment; focus implementation queued; visual and device acceptance separate
 source_commit: 3bd12c428ec1db087d35bf2e6e55f8845a78b9db
 versioning: git
 ---
 
 # Sites design — owner decision
+
+Sections 1–7 retain the 18 October design decision and its evidence. The [26 October amendment](#8-keyboard-focus-during-follow-up-refresh--26-october-2026) records the subsequently authorised keyboard behaviour; it does not change the retained Figma version or claim that the focus correction is implemented.
 
 On 18 October 2026 Claude recommended Sites as the next page to design, because every Service page links to a site. Dean replied "Proceed on that basis.", as the notes card records. Claude drew scope CS-04 in Figma: the site register at `/sites` and the site workspace at `/sites/[id]`. Sites is a shared record. It is opened from More, so the rail shows Service with More selected.
 
@@ -158,3 +160,71 @@ White cards on the grey record background follow the accepted SV-06 pattern. Cha
 - Claude did not play the prototype in Present mode.
 - The named version "Sites — accepted" is saved. The File index row and the page header were updated on 18 October 2026.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 8. Keyboard focus during follow-up refresh — 26 October 2026
+
+### Decision and authority
+
+After an independent investigation of test-only [PR #710](https://github.com/deanrfiedler-gif/powerplants-one/pull/710), Dean asked, "What is the next step?" Codex recommended adopting a bounded CS-04 focus contract, implementing it in a separate accessibility PR, proving direct focus and revocation behaviour, and reviewing keyboard and screen-reader use. The recommendation explicitly retained the [Codex build limit](parallel-contribution-rules.md#amendment--26-october-2026-codex-build-limit) and kept pause/hide controls as a separate design question. Dean replied on 26 October 2026: **"Proceed based on your professional recommendations."**
+
+That instruction adopts the focus behaviour below and authorises its bounded implementation when the existing build rule permits. It does not waive that rule or authorise a merge or deployment. At this amendment's preflight, implementation PRs #690, #695, #696, #697, #700 and #701 were still open; this contribution records the decision and specification only. Their final status and available capacity must be checked again before implementation starts. No claim on another contributor's branch is transferred.
+
+This amendment owns the new focus behaviour for **CS-04**, `route:/sites/[id]`, Work and visits → Owned follow-up. It extends the existing Sites decision; it supersedes the unresolved focus question recorded in #710, not the access-refresh contract. Traceability remains [NFR-08 and AT-23 in BP-01](../blueprints/BP-01-master-blueprint.md). No parent requirement, capability, grant, migration, API or new technology is introduced. Other consumers of the shared RelatedActivities control are outside this correction unless a later implementation explicitly identifies and verifies a necessary shared change.
+
+### Established behaviour and evidence
+
+At inspected main `f8ea675ef0c8394dc04b101f837fdcf445356f7e`, [useCrmResource](../../src/components/crm-state.ts) polls every 15 seconds and on window focus. [siteOverview](../../src/shared/sites.ts) supplies a fresh observation timestamp. [SiteWorkspace](../../src/components/site-workspace.tsx) passes that observation to [RelatedActivities](../../src/components/context-screens.tsx), whose keyed child remounts while the selected cursor survives. Protected rows and controls therefore disappear while the current page is reread. A Restricted/Unavailable source removes the child; an unsuccessful Overview read clears the loaded Site. [The existing CS-04 test](../../tests/browser/sites-native.spec.ts) verifies page scoping, clearing and rejection of an old reply after source revocation.
+
+The disappearance of a focused DOM element explains the reported keyboard interruption. This investigation traced source and existing tests; it did not execute a new browser reproduction. ReadState also defaults to `focusOnError=true`, so a background error can take focus even after the user has moved elsewhere. That is a second case the correction must address.
+
+The #710 description's pending full-browser evidence was subsequently available at head `8f2b9a363a4071c3bcbe272435c8581277e3fe29`: [desktop job 121083956047](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/40164930472/job/121083956047) reports 612 passed, and [mobile job 121083956082](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/40164930472/job/121083956082) reports 555 passed. Both logs include the selected P11 journey and `quality-owned-follow-up.spec.ts`. Those results establish the test-helper correction at that head; they do not prove preservation of a user's focus or apply to this unbuilt correction. #710 remains a separate test-only contribution.
+
+### Adopted behaviour
+
+1. **Keep a safe anchor mounted.** Keep the non-sensitive Owned follow-up heading outside the remounted activity read. Give it `tabIndex=-1` and a visible focus indicator. It is available for programmatic focus, without an added ordinary Tab stop. Its accessible name never depends on retained activity content.
+2. **Capture before removal.** If the refresh is about to remove the focused row or control, capture its stable activity ID and control identity, not its label, position or old DOM node as restoration authority. Scope the in-memory bookmark to the actor/workspace session, Site, selected cursor and latest refresh generation. Transfer focus to the safe heading in the same update, before the next keyboard interaction can fall through to the document. A passive effect after deletion alone is insufficient. The implementation must verify this lifecycle under React StrictMode and repeated refreshes.
+3. **Preserve access clearing and freshness.** A fresh Overview observation still clears the old activity rows, links and counts while that cursor is reread. This is the current boundary, not a new promise to clear at the instant a poll starts. Restricted/Unavailable source evidence still removes the child. Failed/denied reads do not display cached records. Beyond the minimal ID/control bookmark, retain no old labels, hrefs, counts or row payloads in hidden DOM, an inert subtree, focus metadata or a live announcement. Keep the 15-second and window-focus checks, current server authorization and `private, no-store` responses. This preserves the existing revocation-detection timing; it does not claim instantaneous server-pushed revocation.
+4. **Restore only a current permitted target.** Once the latest successful read is rendered, restore the exact activity/control only if it exists in the permitted current page, the context is unchanged, the document is active, focus is still on the anchor placed by this refresh, and no intervening user action has cancelled the bookmark. Match by stable ID plus control identity, never by row number or summary. Do not load another page to find the target or substitute another activity. Clear the bookmark on restoration, cancellation, denial or a terminal fallback. Use scroll preservation when the target remains visible; if layout changes put it outside the viewport or behind a sticky header/footer, reveal only enough to keep focus visible.
+5. **Respect the user's subsequent actions.** Tab, Shift+Tab, pointer/touch interaction, a deliberate page turn, navigation, a dialog interaction or window departure cancels pending automatic restoration. A request finishing later must not pull focus back. Do not trap Tab on the loading heading or queue/replay Enter against a replacement control. A refresh that leaves the active element mounted must not move it. Carry a still-valid bookmark forward to the newest same-context generation only while focus remains on the managed anchor; replies from older generations can restore neither content nor focus.
+6. **Use safe fallbacks.** If the activity/control is absent, keep focus on the Owned follow-up heading and provide a generic current-page explanation, without identifying hidden records. If the entire Follow-ups source becomes Restricted/Unavailable, remove it and transfer affected focus to the surviving Work and visits heading. If the whole Site becomes unavailable, use a generic unavailable-state target outside the protected record. These fallbacks must be owned by a boundary that survives the removed subtree and apply only when that removal displaced focus. Identity change discards the bookmark; the existing [session view boundary](../../src/components/session-view-boundary.tsx) takes precedence, including its own focus handling.
+7. **Handle background failure without stealing focus.** Use the existing ReadState `focusOnError=false` option for this background-read host and let the scoped focus boundary manage any required transfer. Keep a labelled, keyboard-reachable Retry control. Retry must apply the same capture and no-steal rules if its focused control is removed. A user who has moved elsewhere keeps that focus on both failure and later recovery; the default shared error behaviour for other consumers is unchanged.
+8. **Keep feedback concise.** Mark the updating results region busy and provide a stable, generic status message for loading, failure or changed availability. Keep any essential loading message outside a busy region that would defer its announcement. Do not make the entire list a live region or repeatedly announce unchanged content on every poll. The temporary anchor and restored control must remain visibly focused and unobscured on desktop and phone. Announcement quality requires actual screen-reader review.
+9. **Distinguish explicit paging.** Native Next/First activation changes the cursor once and places affected focus at the new page's heading so the following Tab enters its results. Background refresh retains the selected cursor and restores the former target only under the conditions above. A disappearing Next control on the final page falls back to the heading; an automatic refresh must never advance the cursor.
+
+### Alternatives and separate question
+
+| Approach | Disposition |
+|---|---|
+| Pause polling while keyboard focus is in the list | Rejected for this correction: delays fresh data and discovery of revoked access. |
+| Retain rows and reconcile them by ID during refresh | Deferred: good continuity, but retaining unconfirmed rows conflicts with the current clear-while-rereading contract. Removing the observation key alone also removes its reread trigger. A broader authority/freshness design would be needed. |
+| Remount, then restore after the request finishes | Rejected alone: focus is lost during loading and an unconditional late restore can interrupt the user's next action. |
+| Persistent safe anchor plus guarded restoration | Adopted: preserves orientation while protected rows still clear. The trade-off is a brief loading interruption and lifecycle/race-handling logic. |
+
+This focus correction makes no full WCAG conformance claim. [WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) raises a separate presentation-control question for automatic updates. Pause/hide/frequency controls and any essential-update justification remain **undecided and outside this build**. A future presentation-only hide/show design could keep permission checks running and require fresh data when shown; that is an option, not an adopted control. The focus contract follows [W3C focus-persistence guidance](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/) and [status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+
+### Required implementation proof
+
+Add direct browser assertions in proposed `tests/browser/sites-follow-up-focus.spec.ts`. That path is planned, not an existing or executed test. Reuse the real Site page and synthetic read fixtures; assert `document.activeElement`/`toBeFocused()` during a held read and after it completes. Native keyboard traversal must expose any focus loss rather than using #710's retry helper to recover it. Install controlled clocks before application timers start; gate responses explicitly instead of relying on sleep durations. Give each new Overview response distinct observation evidence.
+
+| Case | Required observable result |
+|---|---|
+| 15-second timer and window-focus trigger | Each trigger rereads the selected cursor, clears old rows, parks affected focus safely during a held response and restores the same permitted target on completion. Include actual window departure/return as well as a controlled focus event. |
+| Fresh content and changed row position | Current summary/status is displayed and restoration follows ID/control identity, not old text or ordinal. A second automatic refresh behaves identically. |
+| User action during loading | Parameterise Tab, Shift+Tab, pointer/touch, dialog, tab/Site navigation and window departure; completion never steals focus back. Tab can leave without a trap. |
+| Focus outside the removed content | Successful refresh, failed refresh and retry completion leave the surviving focused element unchanged. |
+| Activity/control absent, empty or final page | No stale target remains; the safe heading receives/retains focus, and generic feedback discloses no hidden identity. |
+| Source Restricted/Unavailable and Site denial | Parameterise source states and 401/403/404; protected labels, hrefs and counts leave both DOM and accessibility exposure, with the correct surviving fallback. |
+| Overlapping success and failure | Deliver an old success/error after a newer response or restriction. Neither stale data nor stale focus is restored. |
+| Session and context boundaries | Changing actor/workspace, locking the session, changing Site or cursor invalidates restoration; the session boundary's focus cannot be overridden. |
+| Network/5xx/malformed-response failure and Retry | Old rows remain absent, Retry is keyboard reachable, focus is safe throughout retry loading, and recovery honours cancellation. |
+| Paging/refresh race | Refresh during Next/First keyboard activation, during a page load and just as a target page arrives; one deliberate turn only, no skipped/double page, selected cursor retained during automatic refresh. |
+| Semantics and visibility | No positive tabindex, duplicate target IDs, dangling ARIA references or hidden focusable remnants; busy/status semantics are correct; focus ring and target are visible and not obscured by sticky UI. |
+| Live permission boundary | On a disposable synthetic server/database, revoke relevant source/Site access and verify current scoped reads refuse/hide the data, late replies do not revive it, and cache-control remains private/no-store. Mocked browser responses alone do not prove authorization. |
+
+Run the focused cases at desktop and 390/320 px, with keyboard navigation and 200% zoom/reflow checks. Retain the existing CS-04 clearing/late-response regression, inspect other RelatedActivities consumers if any shared code changes, and rerun the compiled browser and complete P01–P11 lanes at the implementation's final head. Record browser/OS/assistive-technology versions and results separately for manual keyboard and screen-reader review; emulated phones do not establish physical-device acceptance. Existing passing #710 runs are not substituted for these executions.
+
+### Delivery and review state
+
+The current contribution changes documentation only. Implementation, new automated test execution, visual comparison, screen-reader/device acceptance and deployment remain unperformed for this correction. The Site page and ReadState specifications link to this amendment while retaining their descriptions of actual runtime behaviour. No component review fingerprint, runnable example, Figma frame or named version is promoted.
+
+The later implementation should use a separate dedicated worktree and PR, update the applicable page/component contracts, fixture states and guides with actual behaviour, and declare any shared-source overlap before editing. Respect the three-build limit and finish the already implemented builds first. A different-model review of this owner-decision amendment is required before merge under [CONTRIBUTING](../../CONTRIBUTING.md#independent-review-by-a-second-model); none has taken place in this contribution. Dean retains merge authority.
