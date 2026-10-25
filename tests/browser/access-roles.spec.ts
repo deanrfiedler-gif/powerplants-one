@@ -125,10 +125,15 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
   const search = page.getByRole("textbox", { name: "Find a person", exact: true }).filter({ visible: true });
   await search.fill("SYN Site observer");
   await search.press("Enter");
-  await page
-    .getByRole("link", { name: "SYN Site observer", exact: true })
-    .filter({ visible: true })
-    .click();
+  await expect(page).toHaveURL((url) => url.searchParams.get("q") === "SYN Site observer");
+  // The phone link contains the name, change date, scope and grant counts.
+  // Keep the original exact person identity while allowing workspace context.
+  const observerPath = "/admin/access/30000000-0000-4000-8000-000000000005";
+  const observer = page.locator(
+    `#ppo-access-register a[href="${observerPath}"], #ppo-access-register a[href^="${observerPath}?"]`,
+  ).filter({ visible: true });
+  await expect(observer).toContainText("SYN Site observer");
+  await observer.click();
   await page
     .getByRole("link", { name: "Compare proposed role bundle", exact: true })
     .click();
