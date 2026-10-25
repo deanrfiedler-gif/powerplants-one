@@ -284,9 +284,46 @@ The work, in order:
 
 **Repository work not done here.** The T1c-2 lock-in also asks for icon-free captures of the accepted T1 frames, and the application change belongs to the T1c-2 pull request. Both remain with that work.
 
-### 12.4 Not done yet
+### 12.4 R7: tokens and text styles on proposal pages, 25 October 2026
 
-R1 renames, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R7 token and text-style binding, R8 variable names, R10 new pages and R11 phone checks. Section 10 step 1 applies before R2 and R7: Dean saves a named version first.
+Dean: "Proceed with R7: bind token-valued fills, fix the near-miss navy, apply text styles and replace off-palette colours on proposal pages, reporting by page."
+
+**Scope.** 75 proposal pages. Accepted pages, the unfinished SC-04, FN-05 and RP-06 drafts, Customer 360 (R4) and the UX benchmark exemplars were not touched. Only solid fills drawn on the page were changed; instance sublayers follow their components.
+
+**Rules applied:**
+
+1. **Exact token value.** An unbound fill whose colour equals a PPO colour variable is bound to it. Where several variables share a value, text takes `text/*` first and shapes take `surface/*`, `border/*` or `status/*` first.
+2. **Near-miss.** A colour within 3.5 RGB units of a token is bound to that token, for example `#242938` and `#292e38` to `brand/navy`, `#e4e8ee` to `proposal/menu-selected` and `#333b4a` to `shell/rail-hover`.
+3. **Off-palette greys and the two off-palette blues.** These are replaced by the nearest token within 50 RGB units, with a coloured tint only taking a token of the same hue (within 20°). Blue text takes `text/link`. Replacements seen include:
+   - `#6b7380` → `text/muted`
+   - `#f5f7fa` → `surface/subtle`
+   - `#e8ebf0` → `shell/current-link`
+   - `#dbe0e8` → `shell/panel-border`
+   - `#fdf6e7` and `#fff8ea` → `status/warning/tint`
+   - `#eaf2fc` and `#ecf3fe` → `proposal/gantt-blue-fill`
+   - `#2563a8` and `#1b5ea8` → `text/link` on text, `border/focus` on shapes
+
+   One mistaken grey replacement of the pink Closing group band on Pipeline insights (`2340:801610`) was restored to `#fcedf3` straight away, and the hue rule was tightened before the remaining pages.
+4. **Not changed:**
+   - Black (`#000000`), which marks scrims and hit areas.
+   - The chart colours `#1baf7a`, `#2a78d6`, `#eb6834` and `#e8f1fb`; R8 adds a chart colour set.
+   - Saturated colours with no token of the same hue.
+   - Fills with paint opacity below 100%, because Figma drops paint opacity when a paint is bound. They need tint variables under R8.
+5. **Text styles.** A PPO text style is applied only where the text already matches it exactly: font, size, line height and letter spacing. That changes nothing visible. Most unstyled text uses automatic line height, while every PPO style has a fixed line height (Body is 14/20), so applying styles there would move layouts. That text is left unstyled; see R8 below.
+
+**Result**, measured read-only on all 75 pages afterwards:
+
+- **Fills:** no opaque token-valued fill is left unbound (107,646 fills are now bound). 2,910 semi-transparent token-valued fills and 1,492 off-palette fills remain, mostly scrims and chart colours.
+- **Text:** no text that exactly matches a style is left without one. Unstyled text fell from 8,832 to 5,310 layers. The stage 1 figure also counted top-bar copies that R2 replaced.
+- **Check:** a screenshot of Materials & substitutions · EN-06 after replacement shows no visible change.
+
+**Follow-on for R8.** To style the remaining text without moving layouts, the type ramp needs auto-line-height variants or a decision to adopt fixed line heights page by page. To bind the semi-transparent fills, tint variables are needed. Both belong with R8's variable work.
+
+Per-page results are in [Appendix B](#appendix-b-r7-results-by-page).
+
+### 12.5 Not done yet
+
+R1 renames, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R8 variable names (now also tint variables and the auto line-height question), R10 new pages and R11 phone checks.
 
 ## Appendix A: per-page measurements
 
@@ -457,3 +494,85 @@ Screens are counted as 1440 / 1024 / 390 / 320 frames in the page's sections. Th
 | Equipment & reports · CP-04 | `2199:85` | Proposal | 15 / 1 / 9 / 5 | 0 / 0 | 248 of 545 | 0 / 0 | 12 |
 | Customer knowledge · CP-05 | `2244:41313` | Proposal | 13 / 1 / 9 / 6 | 0 / 0 | 277 of 555 | 0 / 0 | 9 |
 | Quotations & account · CP-06 | `2281:149` | Proposal | 12 / 1 / 9 / 4 | 0 / 0 | 786 of 954 | 827 / 67 | 5 |
+
+## Appendix B: R7 results by page
+
+Measured read-only after R7 on 25 October 2026. "Before" is the stage 1 measurement of 24 October, which still included the top-bar copies replaced under R2. Every page now has no opaque token-valued fill left unbound and no exactly matching text left without a style.
+
+| Page | Node | Unstyled text (before → after) | Unbound token-value fills (before, all → after, opaque) | Semi-transparent token fills left | Off-palette fills left |
+|---|---|---|---|---|---|
+| Material demand · SC-01 | `2089:529958` | 498 → 442 | 491 → 0 | 29 | 30 |
+| Quotations & account · CP-06 | `2281:149` | 786 → 749 | 827 → 0 | 0 | 0 |
+| Answer evidence · AI-03 | `2389:273553` | 30 → 12 | 838 → 0 | 23 | 0 |
+| Proposal review · AI-02 | `2389:278889` | 58 → 14 | 20 → 0 | 20 | 0 |
+| Voice capture · AI-05 | `2394:866287` | 117 → 108 | 589 → 0 | 14 | 0 |
+| Drafting & domain help · AI-04 | `2393:864503` | 324 → 283 | 339 → 0 | 14 | 1 |
+| Recurring checks · AI-07 | `2403:47777` | 37 → 10 | 45 → 0 | 45 | 0 |
+| My account and preferences · SH-03 · SH-05 · EC-02 | `2105:638399` | 14 → 13 | 55 → 0 | 55 | 42 |
+| Search · SH-04 | `2105:638924` | 21 → 20 | 17 → 0 | 13 | 0 |
+| Pipeline insights · CR-04 | `2336:155` | 11 → 10 | 1022 → 0 | 982 | 677 |
+| Sales aftercare · CR-05 | `2294:85` | 24 → 23 | 17 → 0 | 17 | 0 |
+| Product publication · PD-02 | `2393:864572` | 11 → 10 | 8 → 0 | 8 | 0 |
+| Product pricing · PD-03 | `2393:859137` | 11 → 10 | 6 → 0 | 6 | 0 |
+| Product compatibility · PD-04 | `2393:868573` | 11 → 10 | 786 → 0 | 6 | 0 |
+| Catalogue import · PD-05 | `2404:211` | 11 → 10 | 10 → 0 | 10 | 0 |
+| Estimate detail · ES-01 | `2244:733125` | 11 → 10 | 0 → 0 | 0 | 0 |
+| Sales brief page · CR-02 | `2245:736961` | 36 → 14 | 0 → 0 | 0 | 25 |
+| ES-08 · Screen Configurator Workbench | `406:2` | 202 → 145 | 32 → 0 | 31 | 270 |
+| Quotation release · ES-05 | `2244:50245` | 33 → 14 | 0 → 0 | 0 | 0 |
+| Quotation page & customer views · ES-05 | `2221:85` | 29 → 13 | 5 → 0 | 5 | 0 |
+| Customer response · ES-06 | `2244:50787` | 34 → 15 | 0 → 0 | 0 | 0 |
+| Estimate review · ES-04 | `2244:734679` | 33 → 32 | 0 → 0 | 0 | 0 |
+| Reference cases & calibration · ES-10 | `2244:48064` | 21 → 10 | 28 → 0 | 28 | 0 |
+| Estimate-to-actual review · ES-09 | `2244:50439` | 13 → 10 | 16 → 0 | 16 | 0 |
+| Rules studio · rule sets, derived values & tables · ES-02 · ES-03 | `2315:792701` | 161 → 10 | 63 → 0 | 63 | 2 |
+| Design basis & interfaces · EN-02 | `2091:552579` | 11 → 10 | 45 → 0 | 45 | 0 |
+| Drawings & controlled documents · EN-03 | `2091:592460` | 597 → 437 | 40 → 0 | 40 | 0 |
+| Technical queries · EN-04 | `2091:586789` | 30 → 7 | 85 → 0 | 54 | 2 |
+| Materials & substitutions · EN-06 | `2092:1424` | 687 → 160 | 563 → 0 | 22 | 15 |
+| Technical reviews · EN-05 | `2091:595141` | 139 → 78 | 157 → 0 | 42 | 33 |
+| Change review · EN-07 | `2097:583371` | 14 → 13 | 5 → 0 | 5 | 32 |
+| Commissioning & as-built · EN-08 | `2091:542313` | 104 → 68 | 143 → 0 | 31 | 28 |
+| Risks & issues · PJ-04 | `2097:630918` | 39 → 24 | 640 → 0 | 38 | 0 |
+| Subcontractor packages · PJ-06 | `2097:655149` | 49 → 38 | 58 → 0 | 54 | 2 |
+| Acceptance & closeout · PJ-09 | `2097:6900` | 23 → 22 | 30 → 0 | 30 | 29 |
+| Capacity review · PL-03 | `2244:50314` | 19 → 18 | 39 → 0 | 39 | 0 |
+| Site readiness · FI-05 | `2336:85` | 79 → 66 | 0 → 0 | 0 | 0 |
+| Service agreements · MA-01 · MA-02 | `2089:548670` | 11 → 10 | 54 → 0 | 54 | 0 |
+| Maintenance · MA-03 · MA-04 | `2091:545925` | 29 → 13 | 264 → 0 | 40 | 3 |
+| Warranty cases · MA-06 · MA-07 | `2089:15560` | 56 → 12 | 33 → 0 | 24 | 30 |
+| Purchasing · SC-02 | `2089:544463` | 502 → 139 | 628 → 0 | 32 | 30 |
+| Inbound shipments · SC-03 | `2089:531469` | 195 → 68 | 286 → 0 | 16 | 0 |
+| Kitting and controller preparation · CX-02 | `2044:488208` | 133 → 67 | 122 → 0 | 16 | 4 |
+| Bench testing and returned units · CX-02 | `2083:82` | 118 → 67 | 110 → 0 | 13 | 3 |
+| Returns & claims · SC-08 | `2089:527625` | 179 → 61 | 154 → 0 | 17 | 30 |
+| Dispatch & delivery · SC-06 · SC-07 | `2089:15629` | 75 → 35 | 31 → 0 | 22 | 8 |
+| Service stock · SC-10 | `2091:539160` | 345 → 123 | 345 → 0 | 25 | 79 |
+| Finance handoffs · FN-01 | `2091:592837` | 14 → 13 | 116 → 0 | 55 | 27 |
+| Customer accounts · FN-02 | `2097:606288` | 44 → 43 | 42 → 0 | 42 | 0 |
+| Claims & obligations · FN-04 | `2097:611315` | 0 → 0 | 194 → 0 | 61 | 1 |
+| Measure definitions · FN-06 | `2105:626649` | 11 → 10 | 66 → 0 | 66 | 0 |
+| Reports overview · RP-01 | `2199:595` | 13 → 10 | 70 → 0 | 42 | 0 |
+| Sales performance · RP-02 | `2404:876863` | 13 → 12 | 36 → 0 | 36 | 19 |
+| Service performance · RP-04 | `2411:33278` | 11 → 10 | 1166 → 0 | 39 | 0 |
+| Supply & Finance trust · RP-05 | `2410:885569` | 37 → 36 | 42 → 0 | 42 | 0 |
+| Delivery performance · RP-03 | `2413:127` | 809 → 56 | 1087 → 0 | 22 | 0 |
+| Account development · CS-07 | `2302:786940` | 11 → 10 | 32 → 0 | 32 | 0 |
+| Stakeholders · CS-03 | `2288:761` | 11 → 10 | 21 → 0 | 21 | 0 |
+| Equipment · EQ-01 | `2089:526174` | 263 → 250 | 404 → 0 | 26 | 4 |
+| Test instruments & calibration · EQ-09 | `2089:536153` | 39 → 18 | 723 → 0 | 24 | 5 |
+| Bulletins & lifecycle · EQ-06 · EQ-07 | `2280:85` | 184 → 193 | 158 → 0 | 33 | 7 |
+| Configuration backups · EQ-08 | `2278:452` | 54 → 38 | 72 → 0 | 27 | 2 |
+| Knowledge · DK-04 | `2200:833` | 54 → 12 | 27 → 0 | 27 | 0 |
+| Knowledge authoring · DK-05 | `2244:734610` | 82 → 16 | 43 → 0 | 43 | 0 |
+| Mappings & reconciliation · AD-05 | `2097:685460` | 30 → 16 | 45 → 0 | 37 | 2 |
+| Integrations · AD-04 | `2097:678714` | 11 → 10 | 31 → 0 | 22 | 36 |
+| Data quality · AD-03 | `2097:614223` | 76 → 51 | 90 → 0 | 46 | 3 |
+| Audit history · AD-07 | `2097:668418` | 28 → 27 | 36 → 0 | 30 | 6 |
+| Operational health · AD-09 | `2333:797215` | 11 → 10 | 25 → 0 | 22 | 3 |
+| Assistant settings · AI-06 | `2393:852796` | 12 → 11 | 30 → 0 | 30 | 0 |
+| Migration & cutover · AD-06 | `2438:893312` | 64 → 63 | 38 → 0 | 36 | 2 |
+| Support requests · CP-02 | `2179:85` | 283 → 243 | 3 → 0 | 2 | 0 |
+| Project updates · CP-03 | `2179:237` | 171 → 161 | 3 → 0 | 3 | 0 |
+| Equipment & reports · CP-04 | `2199:85` | 248 → 177 | 0 → 0 | 0 | 0 |
+| Customer knowledge · CP-05 | `2244:41313` | 277 → 271 | 0 → 0 | 0 | 0 |
