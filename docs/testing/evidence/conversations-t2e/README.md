@@ -178,3 +178,31 @@ At reviewed correction head `f8a4481c1f7d85f52a2aca176d2277cfc61b4b95`, [CI data
 PR #683 merged as `ab18a604bd726a6f1e1a1d40a25f52802bcec0a0`; #680 integrates that main with the prepared conditional-authority documentation correction. The incoming change is limited to Zod 4.6.7 in the lockfile and its status record. The nine hashed preparation sources, catalogue, retained inventory and numeric CSV remain unchanged. No corpus is replaced or re-materialised; the owned proposal cluster remains stopped. The inherited DK06-OUT09-1 template-fingerprint consequence is recorded by #683; this integration performs no template republishing.
 
 The earlier documentation-head CI was deliberately cancelled in coordination to free capacity for #683, apart from completed checks and its failing old-lock dependency audit. Cancelled checks are not passes. Fresh integration-head CI and any failures/retries are recorded on PR #680. Claude reviewed f8a4481c; the later documentation and dependency integration are not claimed as a new Claude review. The coordination chat retains the final merge. No corpus approval, calibration, live evaluation or spending is granted.
+
+## Scoring and review-document port — 25 October 2026
+
+[Draft PR #708](https://github.com/deanrfiedler-gif/powerplants-one/pull/708) ports #686's distinct scoring/gold corrections and review-document verification onto #680's tooling, by Dean's decision recorded in the [plan](../../../decisions/conversations-t2e-evaluation.md#scoring-and-review-document-port--25-october-2026). Owner: Dean; author: a Claude Code session. Dedicated worktree and branch `test/t2e-scoring-review-port` from main `80243addf3584d2c858e3f2460b27b0fc87ea091`. The shared checkout and #686's branch were not edited. Node 24.22.1, npm 11.19.0, `npm ci` from the unchanged lockfile without overrides.
+
+Evidence class: **Persisted synthetic integration** for re-recording and export, **offline pure construction** for catalogue, rendering and review-package checks. No live model evidence exists, and no scoring rubric was executed on any answer.
+
+### Retained corpus re-recorded
+
+The retained #680 proposal cluster (PostgreSQL 16, loopback 51483, never run or reset) would not start: its `Temp` data directory had lost the 12 directories that PostgreSQL leaves empty after a clean shutdown (`pg_notify`, `pg_twophase`, `pg_wal/archive_status` and nine others). Its data files, WAL segments and control file were present. The data directory was copied to `pg-proposal-backup-20261025` beside it (4,066 files, identical names and sizes). Only those empty directories were recreated, and no file was changed or removed. The server then started from its 24 October 11:07:20 shutdown without recovery. Any damaged data would have made the comparison below refuse.
+
+From clean source commit `39dac05ea57421d17bf299fe796249bcfea0d8da`, the supported `rerecord` command read the retained `proposed-review-corrections` state, checked baseline `ef3c0fa9aad2a60737edfcc4c2622aa717925b8be659f9cd170455240c7b6502` and the exact previous main catalogue (`5c7ec2f723a9d342d11d2fb72af51e822c1b918de45080228c6cd3c234c5891a`). It wrote a new once-only directory, `proposed-scoring-review-port`, outside Git. All 117 instances, 483 human-message IDs, 642 source entries, 315 gold support mappings, evidence hashes and numeric bounds are identical. The [provenance](rerecording-provenance.json) lists 25 annotation changes: the catalogue schema version, the L03 setup, the L03 and L11 claims, six assessment reclassifications and 15 `scoring` declarations. A separate `export --baseline` then verified all 117 members and both review documents against the new directory, and the cluster was stopped again with its data retained. No answer, reservation, run or approval was created.
+
+- Catalogue canonical hash: `a5f1e61b860d70c47ce2397428006dd031c6ab4e832fd28f4702c0640907de4e`.
+- Proposed inventory canonical hash: `4e3cd1911a88219f76967ca17788f0abaeb97035bae679fb22def2add5b3f5f8`.
+- Canonical preparation/request source hash: `5b5d05bbf628240e9d7092a35830c3c69319c5895d037324f030d03fa283de13`.
+
+The committed [inventory](proposed-inventory.json), [case cards](cases.md), [sample table](review.md) and provenance are byte copies of the tool output, and `review` passes on them. A separate Python comparison with the previous committed inventory found differences only in the two hashes and the claim/assessment annotations of C03, L03, L06, L10, L11 and L12. Every row of the unchanged [CSV](offline-bounds.csv) still matches the inventory, so the price scenarios above stand.
+
+### Validation
+
+- Preparation unit suite **8/8 passed**, including the scoring-declaration pins, reviewer-reannotation acceptance/refusal and the committed review package. It also rejects changed cards or table, a corrupt or re-hashed altered inventory, a different catalogue binding, a rewritten layout and either missing document; it accepts a CRLF copy.
+- Persisted preparation suite **11/11 passed** (257.7 seconds) on a separate disposable cluster in this session's scratch storage, never the retained one. It includes reviewer reannotation with the listed provenance and refusal of baseline gold that differs from its own catalogue. Canonical materialisation took 115.5 seconds of its unchanged 120-second limit.
+- Full `tsc --noEmit --incremental false`, ESLint on the six touched source/test files, and the naming and status-source checks passed. Repository-wide checks and CI are recorded on the PR.
+
+### Limits
+
+This is author work: no independent review of #708 has taken place. The case cards and table are projections of the inventory; they grant no corpus approval. The widened re-recording rule is a proposal for Dean's review. Corpus approval, the retained naming limitation, run/cost approval, calibration and live evaluation remain pending. The retained cluster lives under `Temp`, where something has already removed folders; its location is Dean's decision.
