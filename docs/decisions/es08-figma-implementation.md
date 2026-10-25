@@ -10,7 +10,7 @@ versioning: git
 
 On 13 October 2026 Dean requested building the Screen Configurator Workbench in the live Powerplants One application to match the supplied Figma page, with backend improvements if needed. This authorises implementing the composition previously recorded as a [proposal](es08-figma-design.md). It does not establish that a named Figma version was saved or that Dean has reviewed the resulting application.
 
-The source is the private **PPO - Design** file, page **ES-08 · Screen Configurator Workbench**, node `406:2`. The exact desktop, phone and state nodes remain listed in the proposal record. They were read through the Figma connector on 13 October, including child contexts for Drawings and Parts where the whole-frame response was incomplete. The file URL, Pro icon assets and unmasked Figma screenshots stay outside this public repository under ADR-0050 and ADR-0053. A named accepted version and icon-free source captures remain unrecorded.
+The source is the private **PPO - Design** file, page **Screen Configurator Workbench · ES-08** (formerly "ES-08 · Screen Configurator Workbench"), node `406:2`. The exact desktop, phone and state nodes remain listed in the proposal record. They were read through the Figma connector on 13 October, including child contexts for Drawings and Parts where the whole-frame response was incomplete. The file URL, Pro icon assets and unmasked Figma screenshots stay outside this public repository under ADR-0050 and ADR-0053. A named accepted version and icon-free source captures remain unrecorded.
 
 ## Scope and implementation
 
