@@ -15,7 +15,7 @@ Prepare and receive a precise delivery handover while preserving the immutable W
 
 Start with a Won opportunity. Preparation requires current deal ownership and edit access. A designated Projects or Service receiver needs its existing command capability and source visibility. Parts receiving has no implemented contract.
 
-Customer acceptance, CRM Won, conversion, receiving, work release, scheduling, delivery and Finance are separate. ES-05/06/07 outcomes remain unavailable on the audited main. No routing thresholds are inferred.
+Customer acceptance, CRM Won, conversion, receiving, work release, scheduling, delivery and Finance are separate. Exact quotation issue, response/preparation and native conversion are implemented; preserve their separate contracts and links under [lead-to-delivery continuity](../../../contracts/lead-to-delivery-continuity.md). No routing thresholds are inferred.
 
 Receiving creates no Project, Service work order, sales order, stock movement, booking or ERP/Finance transaction.
 
@@ -29,7 +29,7 @@ Receiving creates no Project, Service work order, sales order, stock movement, b
 
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.route-sales-handoffs-won-id` carries normal and recovery steps.
 
-Retained reference: `docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+Retained reference: `docs/reference/ui/crm/PPO-Sales-to-Delivery-Handover-Workspace-r01.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ADR-0046 records the earlier implementation checkpoint; current quotation and LC-16 continuity contracts govern their implemented flows. Receiving still implies no automatic downstream creation or release. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
 
 
 ## Native Won receiving (LC-16)
@@ -41,3 +41,7 @@ Reuse shared Button, Field, SelectField, ErrorNotice, recoverable command journa
 Desktop and phone: wrap reported scope and references; show original Sales revision beside current native state, owner and version. Keep Review, link reason, discard and original-recovery actions visible in normal document flow. A refresh must not silently substitute a reviewed comparison. Denied comparison reads remove its protected content. Unknown Sales site requires an explicit native site choice and does not rewrite the accepted source. New Service intake and work-order creation save independently before link review; existing native scope and authorisation controls remain.
 
 Exact new-state mockup/HTML images are missing. Retained module references above are baseline context. Implementation captures and synthetic checks are recorded in `docs/testing/evidence/won-delivery-continuity/README.md`; they do not grant paired visual, keyboard/200% zoom, physical-device or owner acceptance. Review fingerprints remain unchanged.
+
+## R10 receiving navigation and command boundary
+
+Follow the [CR-03 workflow reconciliation](../../../decisions/r10-workflow-reconciliation.md#cr-03--one-receiving-workflow-with-explicit-accountability): one canonical record with permission-aware Projects/Service/My Work entry; named eligible receiver and destination ownership; separate native creation and reviewed linking with original recovery. Parts is unsupported. These are working requirements, not a claim that new entry points or the R10 visual baseline are accepted. Preserve the existing LC-16 implementation and review fingerprints.

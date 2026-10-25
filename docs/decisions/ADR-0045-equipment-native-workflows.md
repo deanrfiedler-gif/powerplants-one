@@ -25,3 +25,7 @@ Reusing the standalone HTML's local storage would omit current permission, concu
 `shared.read`, `shared.edit` and `shared.history.record` express existing context maintenance/evidence duties; reuse only where their scope matches the command. Distinct review authority, if required by a future operational policy, needs its own decision and the complete capability regeneration workflow. No hidden control grants authority.
 
 Traceability: CRM-01/CRM-06, DAT-01–DAT-03, SVC-03/SVC-06/SVC-10, ENG-07, DOC-01/DOC-02, F01/F02/F03/F08 and EQ-01–EQ-09. [Programme handover](../delivery/equipment-native-completion-handover.md).
+
+## R10 policy direction — 26 October 2026
+
+The [R10 reconciliation](r10-workflow-reconciliation.md#eq-04--lifecycle-review-and-retained-equipment-identity) records independent physical-change review as the next policy direction, replacing the deferral above for that question only. The current implementation is unchanged; scoped capability selection, durable enforcement and migration/recovery proof remain build work. Configuration governance and retained source/history boundaries remain as recorded here.

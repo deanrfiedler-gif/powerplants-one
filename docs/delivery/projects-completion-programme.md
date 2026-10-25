@@ -84,3 +84,7 @@ The [authorised overview contract](../decisions/project-overview-backend.md) rec
 ## A5 / PJ-06 first native increment — 15 October 2026
 
 The [package contract](../contracts/project-specialist-packages.md) and [decision](../decisions/project-specialist-packages.md) implement internal specialist briefs and exact receiving under the continuing backend mandate. The code is an unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) candidate, with local proof and independent automated review recorded separately from pending CI. A5 is no longer wholly missing once this contribution is integrated. Technical/procurement acceptance, competence verification and work-evidence delivery remain subsequent scope; [evidence](../testing/evidence/project-specialist/README.md) records actual checks separately from acceptance.
+
+## PJ-07 R10 source direction — 26 October 2026
+
+The [R10 reconciliation](../decisions/r10-workflow-reconciliation.md#pj-07--source-backed-review-with-separate-delivery-decisions) permits progress toward a new reviewed reference derived from retained r01 and current accepted decisions, without making recovery of unavailable r02 bytes a prerequisite to design work. This replaces only that future-source prerequisite in A0/A6. Preserve the original discrepancy evidence and issued bytes; the new Figma proposal is not yet an accepted baseline and no native readiness route/reducer/request contract is delivered by this record.

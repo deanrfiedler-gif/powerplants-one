@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-R10-WORKFLOW-DEC,Workflow reconciliation before design acceptance,docs/decisions/r10-workflow-reconciliation.md,,Workflow direction recorded; bounded live Figma review; visual acceptance pending,Dean Fiedler,55722e8226b62c2a0e2e3bfe67b38b104bb09590,,,git,

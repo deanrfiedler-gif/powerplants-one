@@ -43,3 +43,11 @@ The [programme audit](../../../delivery/projects-completion-programme.md) record
 The draft User Guide `guide.pj.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## R10 workflow review — 26 October 2026
+
+The [R10 workflow reconciliation](../../../decisions/r10-workflow-reconciliation.md#pj-07--source-backed-review-with-separate-delivery-decisions) recommends one worklist at the existing reserved `/projects/readiness` destination and a deliberate Readiness extension of the accepted Project record. Keep navigation unavailable until its route and permission-aware reads exist. The coordinator owns the review; source owners retain prerequisites, answers and commands. Specify whole-scope applicability, source/version/time/completeness and restricted/missing/stale states before implementing an aggregate; filters or completed Activities do not establish readiness.
+
+Movement review creates attributable requests, not automatic date cascades, Service booking changes or financial/technical approvals. Define the owning request aggregate before registering CHG. Retain native Supply versus field-gate meanings and separate receiving/recovery for each source. Proceed toward a new reference from retained r01 and current accepted decisions with explicit provenance; do not claim recovery or acceptance of r02.
+
+Figma proposal page `2720:87`, notes `2736:2384`, remains unaccepted. The 320px impact frame `2730:3046` hides three impacts behind a plain summary while showing the request action, and says +9 days for 19 November to 2 December without declaring working-day units (13 calendar days). Expose the full review and explicit date basis; review phone blocker assignment, change history/closing and partial request outcomes. The [direct Figma observations](../../../decisions/r10-workflow-reconciliation.md#direct-figma-observations) list exact nodes and bounded evidence.
