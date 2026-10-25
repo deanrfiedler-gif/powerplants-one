@@ -244,8 +244,9 @@ test("P04 creation, exact uncertain retry, scoped empty results and Systems refu
     await page.getByRole("button", { name: /Show .* work orders/ }).click();
   else
     await page.getByRole("button", { name: "Work order register actions", exact: true }).click();
+  await expect(page).toHaveURL((url) => url.searchParams.get("q") === "SYN no matching work 748291");
   await expect(
-    page.getByRole("heading", { name: "No work orders in this view" }),
+    page.getByText("No work orders in this view", { exact: true }).filter({ visible: true }),
   ).toBeVisible();
   await capture(page, info, "P04-empty.png");
   await identity(page, "systems");
