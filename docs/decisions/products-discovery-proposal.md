@@ -45,7 +45,7 @@ The smallest implementation PR is **A only**. B should follow as a separately re
 
 ## Figma package and conformance
 
-Private file: **PPO - Design**. Page **Products · PD-01 · discovery proposal**, node `653:38`. The six editable frames use local-library instances and private library icons. Separate evidence copies replace every icon with `Icon/placeholder`; only those copies are exported to this public repository. No existing Figma library, accepted page or issued source snapshot was changed.
+Private file: **PPO - Design**. Page **Products · PD-01** (formerly "Products · PD-01 · discovery proposal"), node `653:38`. The six editable frames use local-library instances and private library icons. Separate evidence copies replace every icon with `Icon/placeholder`; only those copies are exported to this public repository. No existing Figma library, accepted page or issued source snapshot was changed.
 
 | View | Node | Viewport / capture |
 |---|---|---|
