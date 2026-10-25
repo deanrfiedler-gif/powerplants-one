@@ -17,7 +17,7 @@ versioning: git
 - Requirements and outputs: EST-08 (issue controlled quotations and record the customer response), EST-03, CRM-03, OUT-06 (customer quotation). No parent requirement ID is added or renamed.
 - Acceptance: AT-05, AT-26, AT-36.
 - Decisions: D-020 (identity, privacy and external access), D-022 (hosting), D-024 (templates, issue and signature policy), D-025 (Partially resolved), D-012 (retention), D-027 (portal and optional features).
-- Records: the [native quotation release decision](quotation-release-native.md) and [release contract](../contracts/quotation-release.md); the [quotation response contract](../contracts/quotation-response.md); [ADR-0058](ADR-0058-outbound-customer-email.md) (Accepted); [ADR-0059](ADR-0059-email-sending-from-ppo.md) (Proposed); the [D-025 decision paper](customer-communications-d025.md); the [customer portal direction](customer-portal-direction.md). The Emails EC-01 design record `docs/decisions/emails-figma-design.md` (PPO-EC01-EMAILS-FIGMA-DEC), whose Amendment A1 (sent email tracking) Dean accepted on 19 October 2026, is in [PR #608](https://github.com/deanrfiedler-gif/powerplants-one/pull/608) and not yet on `main`. This record cites A1 by its IDs.
+- Records: the [native quotation release decision](quotation-release-native.md) and [release contract](../contracts/quotation-release.md); the [quotation response contract](../contracts/quotation-response.md); [ADR-0058](ADR-0058-outbound-customer-email.md) (Accepted); [ADR-0059](ADR-0059-email-sending-from-ppo.md) (Accepted 26 October 2026; Proposed when this paper was written); the [D-025 decision paper](customer-communications-d025.md); the [customer portal direction](customer-portal-direction.md). The Emails EC-01 design record `docs/decisions/emails-figma-design.md` (PPO-EC01-EMAILS-FIGMA-DEC), whose Amendment A1 (sent email tracking) Dean accepted on 19 October 2026, is in [PR #608](https://github.com/deanrfiedler-gif/powerplants-one/pull/608) and not yet on `main`. This record cites A1 by its IDs.
 - Scopes: `scope:ES-05` (quotation release, `/estimating/quotes/[id]/release`), `/estimating/quotes/[id]/response`, and `scope:CR-01` (deal record). The customer-facing page proposed in section 4 is a new route that is not registered until a build stage adds it.
 
 Everything below is a PPO design decision. It is not an observed operating rule, and PandaDoc is a reference for the feature only. PPO does not copy its screens or wording.
@@ -25,7 +25,7 @@ Everything below is a PPO design decision. It is not an observed operating rule,
 ## 1. What PPO has today
 
 - **Issue is exact, but sending is simulated.** Release prepares, approves and issues a quotation revision against an exact retained HTML and PDF manifest. Distribution records only `Unknown`, `SimulatedDelivered` or `SimulatedFailed`, and no provider is called.
-- **PPO sends no email.** ADR-0058 (Accepted) sends customer notices from one shared mailbox and states that PPO "makes no read claim" for them (D-025 R4). ADR-0059 (Proposed) recommends that people send correspondence from their own mailbox, with A1 tracking on that correspondence only. D-025 leaves quotation issue out of its message classes.
+- **PPO sends no email.** ADR-0058 (Accepted) sends customer notices from one shared mailbox and states that PPO "makes no read claim" for them (D-025 R4). ADR-0059 (Proposed at the time; accepted on 26 October 2026) recommends that people send correspondence from their own mailbox, with A1 tracking on that correspondence only. D-025 leaves quotation issue out of its message classes.
 - **Sent email tracking is designed, not built.** Dean accepted A1 on 19 October 2026: on by default for email a person sends from PPO, with a switch for each email (A1-Q1). Only the event type and time are stored, with no IP address, location or device, for 12 months, and the privacy notice says sales email may contain tracking (A1-Q2). Only the sender and colleagues it is shared with see it (A1-Q3). There is no alert by default (A1-Q4). Tracking is "evidence, never proof" (A1-D5). ADR-0059 section 5 sets out the tracking routes and tokens.
 - **Customer responses are recorded by staff.** The response contract records a reported answer with a claimed respondent. Signature and authority verification are Not configured.
 - **There is no external page.** The customer portal is a design only (CP1–CP5), with no external principal in the runtime.
@@ -75,7 +75,7 @@ Each event is stored against the quotation issue and the send receipt, with its 
 
 | Event | When |
 |---|---|
-| `Viewed` | The page is opened. A view within a few seconds of Sent, or from a known link scanner, is recorded as `ViewedMayBeAutomatic`, the counterpart that ADR-0059 E4 proposes for email links |
+| `Viewed` | The page is opened. A view within a few seconds of Sent, or from a known link scanner, is recorded as `ViewedMayBeAutomatic`, the counterpart that ADR-0059 E4 sets for email links (adopted 26 October 2026) |
 | `SectionRead` | The reader leaves a section after reading it, with the section key and its active seconds, rounded to 5 seconds (Q4) |
 | `Downloaded` | The PDF is downloaded |
 
@@ -129,7 +129,7 @@ The hosted demo stays synthetic. It may show the page for synthetic issued quota
 |---|---|---|
 | QV-S0 | This decision | Done: Dean accepted Q1–Q10 on 19 October 2026 |
 | QV-S1 | Synthetic build: the quotation page for synthetic issued quotations, section markers in a new template version, the three events, the Customer views line and Details, withdrawal, supersede and validity behaviour, with database, HTTP and browser proofs | QV-S0. Needs a migration (reserved first), a read duty in `src/platform/permissions.ts` with the AGENTS.md ripple, and the page's design register entry |
-| QV-S2 | Send quotation from the release page through the correspondence path, filling Distribution with real outcomes | ADR-0059 accepted and its correspondence pilot built; PR #608 merged |
+| QV-S2 | Send quotation from the release page through the correspondence path, filling Distribution with real outcomes | ADR-0059 accepted and its correspondence pilot built; PR #608 merged. As of 26 October 2026, ADR-0059 is accepted and #608 has merged; the pilot is not built |
 | QV-S3 | Real external recipients | Privacy notice confirmed, ADR-0059 E5 (logs) and E6 (link domain) met, and the D-020 external-access review of section 4.5 |
 | Later | Accept online, a one-time email code for sensitive quotations, and a portal view of the same page | Separate decisions under D-024 (signature policy) and the portal stages |
 
