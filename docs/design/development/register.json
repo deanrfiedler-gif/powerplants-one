@@ -8079,14 +8079,42 @@
       "html_path": "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
       "image_paths": [
         "docs/testing/evidence/department-navigation/sales-deals-populated.png",
-        "docs/testing/evidence/deals-figma/board.png",
-        "docs/testing/evidence/deals-figma/list.png",
-        "docs/testing/evidence/deals-figma/phone.png"
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-01-Desktop-Board-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-02-Desktop-List-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-03-Desktop-Forecast-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-04-Desktop-Archive-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-05-Desktop-Snapshot-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-06-Desktop-Filters-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-07-Desktop-Two-Selected-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-08-Desktop-Column-Settings-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-09-Desktop-Add-Deal-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-10-Desktop-Record-Won-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-11-Desktop-Won-Recorded-Handover-Due-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-12-Desktop-Record-Lost-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-13-Desktop-Refused-Stage-Move-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-14-Desktop-Pipeline-Settings-Proposal-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-15-Tablet-Board-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-16-Tablet-List-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-17-Phone-List-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-18-Phone-320-List-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-19-Phone-320-Search-And-Filter-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-20-State-Loading-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-21-State-Could-Not-Load-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-22-State-No-Deals-Yet-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-23-State-No-Matches-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-24-State-No-Access-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-25-State-Stale-Results-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-26-State-Partial-Page-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-27-State-Card-Hover-r02.png",
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-28-State-Row-Hover-r02.png"
       ],
       "dependencies": [
         "src/components/crm-insights.tsx",
         "src/crm/insights.ts",
-        "src/crm/worklist.ts"
+        "src/crm/worklist.ts",
+        "docs/decisions/deals-figma-design.md",
+        "docs/decisions/deal-record-page-design.md",
+        "docs/decisions/readable-reference-namespaces.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
@@ -8100,7 +8128,7 @@
         "scope:CR-04"
       ],
       "reviewer": null,
-      "notes": "Figma Deals proposal uses the user-supplied r37, preserving the runtime r38 baseline. The 14 October user-directed polish matches the supplied stage/card screenshot, removes the extra module container and reuses accepted Leads grid components. A further pass aligns 8px gutters and whole-pixel card bounds, makes 1px borders crisp and fixes final-card clipping. Six editable views and evidence are linked from the design contract; owner acceptance and runtime alignment remain pending."
+      "notes": "Owner-accepted Figma design, 24 October 2026: \"Deals · CR-04\" (page 549:2, renamed from \"Deals (proposal)\"), reconciled with the code, with Board, List, Forecast and Archive, the snapshot, filters, selection, column settings, Add deal, Won and Lost, a refused stage move, tablet 1024, phone 390 and 320 and nine states. No probabilities (R11). Decision docs/decisions/deals-figma-design.md; 28 icon-free r02 captures in docs/reference/ui/crm/deals-design-r02. The 14 October r37 proposal evidence stays unchanged. The app does not yet match the design, so the visual status stays Needs review. Named Figma version \"Deals · CR-04 — Pipedrive pattern, accepted\" saved 24 October 2026."
     },
     {
       "key": "route:/schedule",
