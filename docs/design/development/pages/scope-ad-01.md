@@ -40,6 +40,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
+Accepted amendment (not yet drawn on the Users and access page): customer portal access is proposed, independently reviewed and applied through the same request pattern, with a portal-access capability that does not yet exist ([Portal home and access design decision](../../../decisions/portal-home-access-figma-design.md), D11).
+
 Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). Role bundles, Local teams, the Capability grants view, request apply, return and withdraw states, review attestations and 200% zoom are not drawn. Building it is not decided; the native page remains the built page.
 
 The draft User Guide `guide.ad.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
