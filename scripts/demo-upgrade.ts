@@ -370,7 +370,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0118 adds the call core using existing all-table runtime grants. No existing rows, users, seeds
   // or permissions change; CallEvent becomes an identity type under the identity_target rule, and
   // each non-blank Person phone is copied, unread and flagged as needing checking, into contact numbers.
-  if (latestMigrationVersion !== 118) throw Error("Review the existing-demo upgrade for this release.");
+  // 0119 (ADR-0066 R2) adds empty synthetic rule set roots, revisions, acceptances, reviews,
+  // publications and heads, the CpqRuleSet identity and audit type, and governance triggers.
+  // No seed, grant, user, capability or existing row changes; the existing cpq duties govern
+  // and all-table runtime privileges cover the new tables. The migration flushes deferred
+  // identity constraints before altering the identity type check.
+  if (latestMigrationVersion !== 119) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
