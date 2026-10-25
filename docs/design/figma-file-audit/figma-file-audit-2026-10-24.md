@@ -583,9 +583,24 @@ Dean: "Leave EQ-04 for my review and start the next R10 page, CR-03 won-deal rec
 - **Shared component change.** Drawing the 320 px worklist showed that the proposed Grid / List row (phone) could not truncate its meta line. Its Meta text now fills the line and truncates, with the tag at the end. No accepted page uses the component.
 - **Checks.** Every frame was screenshotted. Text left over from the CR-02 story was searched for and replaced, and a hidden snapshot panel with old content was removed. A work-order number that collided with the accepted Work order record page was renumbered. The layout has no overlaps and no clipped text. The flows have not been played in Present mode.
 
-### 12.13 Not done yet
+### 12.13 R10: ES-07 proposal drawn, 25 October 2026
 
-R10's remaining pages: ES-07 conversion and PJ-07, in that order, each as its own request. Follow-ups:
+Dean: "Leave CR-03 for my review and start the next R10 page, ES-07 conversion." The page "Quotation conversion · ES-07" `2705:2415` sits after Customer response · ES-06. It is a proposal only: there is no decision record, File index row or named version until Dean accepts it.
+
+- **What it draws.** `/estimating/quotes/[id]/conversion`, in four steps, as built: receive or return the exact preparation, resolve items, review and freeze the plan, then execute into native Supply demand (Forecast). It uses the ES-06 Customer response proposal's shell and continues its story.
+- **Story.** On Thu 15 Oct Robin Hale, the supply coordinator from Material demand, receives quotation `SYN-PPO-QUO-000188` r2, Option A, $81,200.00. He resolves its two Product lines as one-off items and converts them into `SYN-DEM-000101` and `SYN-DEM-000102`. The electrical, installation and commissioning lots stay as commercial evidence.
+- **Frames.**
+  - Desktop: one frame per step, `2705:12364`, `2705:12804`, `2705:13238` and `2705:13667`.
+  - Tablet: the Receive step, with the side column stacked below.
+  - Phone: receive and converted, at 390 and 320 px.
+  - Six states, a notes card `2717:1322`, and prototype flows "ES-07 — desktop" and "ES-07 — phone".
+- **Waiting for Dean.** Decisions D1–D10 and questions Q1–Q6 are in the notes card. Among them: where receivers start, mapping lines to catalogue products (the built resolutions have no such state), who receives, when conversion happens, and the post-conversion regions, which are not drawn.
+- **CR-03 correction.** Quotation r2 moved installation to January 2027, so CR-03's requested date and the prerequisite dates were corrected to match (`2689:87`).
+- **Checks.** Every frame was screenshotted and the faults found were fixed: the step states, the avatar, the tablet workspace width and a clipped phone footer. The layout has no overlaps or clipped text. The flows have not been played in Present mode.
+
+### 12.14 Not done yet
+
+R10's remaining page: PJ-07, as its own request. Follow-ups:
 
 - **From R8:** the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 - **From R6:** S6 to S12 as their pages are accepted, and each page's adoption of S2 to S5 at its next amendment.
