@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CP01-PORTAL-HOME-FIGMA-DEC,Portal home and access design (Figma) owner decision,docs/decisions/portal-home-access-figma-design.md,,Owner-accepted design; implementation and live customer access separate,Dean Fiedler,01cef3916c874159a9404f737065292ae2466046,,,git,
+PPO-CP01-PORTAL-HOME-FIGMA-R01,Portal home and access design retained captures,docs/reference/ui/customer-portal/portal-home-access-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,01cef3916c874159a9404f737065292ae2466046,,,retained-record,

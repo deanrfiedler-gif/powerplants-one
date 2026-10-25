@@ -118,8 +118,16 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
     coordinator.getByRole("link", { name: "pack.check", exact: true }),
   ).toBeVisible();
   await page.getByRole("link", { name: "Back to users and access" }).click();
+  // The register is paged and its record links retain workspace context.
+  // Find the same person through the visible register on both layouts.
+  if (phoneWidth(page))
+    await page.locator("#shell-header").getByRole("button", { name: /^(Search identities|Search and filter)$/ }).filter({ visible: true }).click();
+  const search = page.getByRole("textbox", { name: "Find a person", exact: true }).filter({ visible: true });
+  await search.fill("SYN Site observer");
+  await search.press("Enter");
   await page
-    .locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
+    .getByRole("link", { name: "SYN Site observer", exact: true })
+    .filter({ visible: true })
     .click();
   await page
     .getByRole("link", { name: "Compare proposed role bundle", exact: true })
