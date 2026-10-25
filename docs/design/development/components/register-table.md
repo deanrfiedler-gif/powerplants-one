@@ -30,8 +30,10 @@ The application implementation and exact consumer bindings are maintained in `..
 - Grid / Checkbox cell `74:48`
 - Grid / Row actions cell `74:50`
 - Grid / Done cell (proposed) `408:430`
+- Grid / Group band (proposed) `2651:7352`
+- Grid / List row (phone, proposed) `2651:7385`
 
-Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. Grid / Group band (proposed) spans the select and settings columns in its group's colour, and Grid / List row (phone, proposed) is the drawn candidate for the register-table-phone gap; the Figma file audit (R6, 25 October 2026) drew them, and no accepted page uses them yet. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
