@@ -503,9 +503,63 @@ Sixteen pages were renamed once to "[Page name] · [scope ID]". Node IDs did not
   - the stage 1 tables in this report;
   - status fragments, the status log, issued references and test evidence.
 
-### 12.9 Not done yet
+### 12.9 R11: phone list Conversations slot, 25 October 2026
 
-R6 components, R10 new pages and R11 phone checks. Follow-ups from R8: the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
+- **Nothing to add.** Every list-type phone screen on the proposal pages already uses `Shell / Phone header · compact` `1530:110` at Type=List, which carries the Conversations action (P2). Across the whole file, all 362 Type=List instances on 89 pages show it.
+- **Stage 1 corrected.** Section 4 listed Site readiness, Catalogue import, Material demand and the Engineering registers as having list frames without a Conversations layer. That count looked only at layers drawn on the page, not inside instances, where the compact header holds the action. The list screens on those ten pages all carry it.
+- **Swept.** The phone screens on all 75 proposal pages (390 and 320 px frames placed directly in a section) were checked. 159 use the List header and 288 the Record header, where Conversations sits in the record's More menu (P3 note). The other 136 use neither header:
+  - 81 customer portal screens (CP-02 to CP-06) with the portal's own header; the portal has no staff Conversations;
+  - 5 screens of the customer's quotation page (Quotation page & customer views);
+  - 46 full-screen forms, sheets and search panels, such as Record result on EN-08 and Count my van on SC-10. They are tasks opened from a list or record, and the phone header amendment gives them no Conversations slot, as with its filter panel (P5);
+  - 4 Screen Configurator Workbench · ES-08 screens with the workbench's own header, drawn on 12 October before the compact header existed. They are record screens and should take the Record header at ES-08's next amendment.
+- **No frame was changed.**
+
+### 12.10 R6: shared components S2 to S5, 25 October 2026
+
+Five proposed component sets are now on Components `1:4`, in the Controls and Grid sections. They follow the Components Read me naming rule: "(proposed)" until a page that uses them is accepted, and "(phone)" for phone parts, so S5 is named "Grid / List row (phone, proposed)". Each description says what the set unifies and gives its source.
+
+| Component | Node | Variants | Properties |
+|---|---|---|---|
+| Controls / Form field (proposed) | `2649:7479` | Control: Input, Select, Date, Textarea × State: Default, Focus, Error, Disabled (16) | Label, Requirement, Help, Value, Message, Counter; show requirement, help and counter |
+| Controls / Switch (proposed) | `2648:7306` | State: On, Off, Not available, Locked on | None |
+| Controls / Choice option (proposed) | `2648:7409` | Type: Radio, Checkbox × State: Default, Selected, Error, Disabled × Style: Card, Plain (16) | Label, Description; show description |
+| Grid / Group band (proposed) | `2651:7352` | Tone: Neutral, Info, Success, Warning, Danger | Label, Count, Detail; show detail, chevron, select column and settings column |
+| Grid / List row (phone, proposed) | `2651:7385` | State: Default, Selected | Title, Trailing, Meta, Detail, Detail trailing, Detail icon (swap); show trailing, tag, line 3, detail icon and chevron; the Tag inside is exposed |
+
+**How they were built.**
+
+- **Anatomy.** Each set takes the shared anatomy of the local versions:
+  - the label, help, 44 px control and error footer of Job pack / Form field and Planner / Input;
+  - the switch of Account / Switch;
+  - the card and radio of Warranty / Choice option and AI-06 / Option row;
+  - the band of PD-04 and Authoring;
+  - the 390 px three-line row of the accepted phone list rows.
+- **Tokens.** Every colour is a PPO colour variable. Padding, gaps and radii use PPO layout variables where a token matches, and all text uses PPO text styles. The switch knob uses `PPO/Elevation/Raised control`, and the checkbox option reuses Grid / Checkbox.
+- **Grid band rule.** Group band includes 44 px select and settings columns, so its colour spans them.
+- **Info tone.** Three variables were added from the stylesheet's `--info` set: `status/info/text` `#346580`, `status/info/surface` `#e9f2f8` and `status/info/border` `#cfe0ec`. Each has its CSS name as code syntax.
+- **Checked.** Each set was checked in a screenshot. Two faults were found and fixed: choice cards were clipped at a fixed height, and strokes counted in layout made the selected cards 2 px taller.
+
+**Departures to note.**
+
+- **Sample text.** Text properties are shared by every variant, so the samples are neutral: "Field label", "Value" and "Option label".
+- **Phone input text.** Value text is 14 px, as on the accepted pages, but the runtime uses at least 16 px on phones (mobile form rule). The register records this.
+- **List row height.** The row hugs its content with 8 px vertical padding: 82 px with three lines. The accepted rows are fixed at 80 px with 12 px padding, which their three lines overflow.
+- **Selected row.** On a selected list row, the Neutral tag's surface is close to the row's selected colour.
+
+**Not changed.** No local version was swapped for a shared one. Read me rule 4 allows a swap only when the result looks identical, and these differ in small ways, so each page adopts the shared component at its next amendment.
+
+**Also updated.**
+
+- **Read me.** The Components Read me now records the R6 exception to its rule 1. It no longer lists the Deals parts that R3 moved as kept elsewhere, and it shows Customer 360 as archived.
+- **Register.** The `fields`, `validation`, `mobile-form` and `register-table` mappings in the [component register](../development/components.json) and their specification pages now list the proposed components. `mobile-form` moves from None to Partial.
+
+### 12.11 Not done yet
+
+R10 new pages. Follow-ups:
+
+- **From R8:** the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
+- **From R6:** S6 to S12 as their pages are accepted, and each page's adoption of S2 to S5 at its next amendment.
+- **From R11:** the compact Record header for the four ES-08 phone screens.
 
 ## Appendix A: per-page measurements
 
