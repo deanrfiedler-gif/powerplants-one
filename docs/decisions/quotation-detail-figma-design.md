@@ -14,7 +14,7 @@ The accepted [Quotations design](quotations-design.md) drew only the register. I
 On 23 October 2026 Dean asked Claude to design that page in Figma as the hub of one quotation across its life: revisions, state, the exact issued document, recipients and the send outcome, customer views, the response and conversion, with every decision left on the release, response and conversion pages. Claude drew it from these sources:
 - the Quotations design and its amendment A1 (one register in the Sales and Estimating rails, the deal owner sends, the follow-up view; accepted 16 October 2026, Figma frames `1044:1552`);
 - the [quote view tracking decision](quote-view-tracking.md), sections 4 to 7 (option B, accepted 19 October 2026);
-- [ADR-0059](ADR-0059-email-sending-from-ppo.md) (Proposed) for the send outcomes;
+- [ADR-0059](ADR-0059-email-sending-from-ppo.md) (Accepted 26 October 2026; Proposed when this design was accepted) for the send outcomes;
 - the [release](quotation-release-native.md), [response](quotation-response-native.md) and [conversion](quotation-conversion-native.md) decisions, and CM9 of the [estimating model](estimating-configurator-model.md) (appendices bound at preparation);
 - the accepted [Deal record design](deal-record-page-design.md), whose shared record layout and Estimates & quotations tab supply the story, and `QuoteDetail` for what exists today.
 
@@ -117,7 +117,7 @@ At 1024 the rail collapses, the header is detached so its actions fit, and Respo
 
 ## 5. Not decided and not drawn
 
-- **Building the page.** The hub needs a quotation-level read across revisions, releases, sends, views, responses and conversion, with restricted sources reported as restricted. Customer views need QV-S1, and real send outcomes need ADR-0059 accepted and QV-S2. Each needs its own authorisation and pull request; no capability is proposed here.
+- **Building the page.** The hub needs a quotation-level read across revisions, releases, sends, views, responses and conversion, with restricted sources reported as restricted. Customer views need QV-S1, and real send outcomes need QV-S2 (ADR-0059 was accepted on 26 October 2026; its correspondence stages are not built). Each needs its own authorisation and pull request; no capability is proposed here.
 - **Not drawn:** Declined, Clarification, Negotiation, Returned, Held and Converted states (D3 gives their actions); the record "…" menu; phone sub-pages for the other tabs; the Send composer, which belongs to the release page; 200% zoom.
 - **Related records not edited:** the Deal record's 7 October history line (Q1) and the register's SYN-QUO-0079 story.
 
