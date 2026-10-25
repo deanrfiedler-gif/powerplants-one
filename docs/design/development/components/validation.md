@@ -14,11 +14,12 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** Partial · **Location:** Components › Job pack, in the private "PPO - Design" Figma file
+**Status:** Partial · **Location:** Components › Job pack and Components › Controls, in the private "PPO - Design" Figma file
 
 - Job pack / Form field `287:3282`
+- Controls / Form field (proposed) `2649:7479`
 
-Only the field-level Error state is drawn. No error summary component exists. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Only the field-level Error state is drawn, in Job pack / Form field and in Controls / Form field (proposed). No error summary component exists. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
