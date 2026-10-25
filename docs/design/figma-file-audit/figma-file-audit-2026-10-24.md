@@ -364,9 +364,94 @@ How the move was done:
 - A screenshot of Service planner · PL-01 `1205:52` shows the moved planner components rendering correctly.
 - The [component register](../development/components.json) mappings for `sales-board` (Deals/Card `551:947`) and `forecast` (Deals/Forecast card `2362:63788`) now give their new location, with their specifications updated. `npm run studio:check` passes with no errors, and its stale-review count is unchanged at 26.
 
-### 12.6 Not done yet
+### 12.6 R8: variables and styles, 25 October 2026
 
-R1 renames, R4 Customer 360 archive, R6 components, R8 variable names (now also tint variables and the auto line-height question), R10 new pages and R11 phone checks.
+Dean: "Do R8 next: rename the colour mode, promote proposal/* variables, add tint variables, a chart colour set, elevation styles and auto line-height text styles."
+
+**Colour mode.** The single mode of the "PPO colour" collection is renamed from "My Work" to "Light".
+
+**Promoted variables.** All 27 `proposal/*` colour variables were in use on accepted pages, so all were renamed. Bindings follow the variable ID, so nothing on any page changed.
+
+| Old name | New name | Code variable now recorded |
+|---|---|---|
+| `proposal/menu-selected` | `shell/menu-selected` | `var(--ppo-shell-selected)` |
+| `proposal/row-selected` | `surface/row-selected` | none in the code yet |
+| `proposal/rail-text`, `rail-muted`, `rail-badge` | `shell/rail-text`, `shell/rail-muted`, `shell/rail-badge` | `--ppo-rail-text`, `--ppo-rail-muted`, `--ppo-rail-rule` |
+| `proposal/attention-dot` | `status/attention-dot` | none yet |
+| `proposal/cpq-info-surface`, `cpq-info-border` | `cpq/info-surface`, `cpq/info-border` | none yet |
+| `proposal/annotation`, `annotation-surface`, `annotation-border` | `annotation/text`, `annotation/surface`, `annotation/border` | design notes only |
+| `proposal/gantt-*` (9) | `gantt/*` | already `var(--gantt-*)` |
+| `proposal/planner-*` (7) | `planner/*` | `--pl02-visit`, `--pl02-visit-border`, `--pl02-travel`, `--pl02-attention-travel`, `--pl02-avatar-surface`, `--pl02-avatar-text` (attention-selected has none) |
+
+A code variable is recorded only where the stylesheet defines the same value. Records written before today cite the old `proposal/` names as they stood: [Gantt colours](../../decisions/gantt-figma-colours.md), [project record page](../../decisions/project-record-page-design.md), [estimate reviews](../../decisions/estimate-reviews-design.md) and the earlier library check. The Gantt record's note that the prefix was out of date is now resolved.
+
+**Tint variables.** Seven tint variables with built-in transparency replace paint opacity, which Figma drops when a paint is bound:
+
+- `tint/white-80`
+- `tint/navy-45`, `tint/navy-42`, `tint/navy-40` (modal scrims)
+- `tint/navy-32` (drawer scrim)
+- `tint/navy-18`, `tint/navy-16` (light scrims)
+
+They were made only for combinations already drawn, and bound by exact match on proposal pages; Pipeline insights alone took 964 bindings of `tint/white-80`.
+
+**Chart colours.** The six categorical colours drawn on Pipeline insights failed the colour-safety check in their drawn order:
+
+- `#7aa6dd` falls below the chroma floor.
+- Amber and orange are too close to tell apart when adjacent.
+
+The adopted set, assigned in this fixed order, passes lightness, chroma, colour-vision separation and the normal-vision floor:
+
+| Slot | Colour | Hex |
+|---|---|---|
+| `chart/1` | blue | `#2a78d6` |
+| `chart/2` | orange | `#eb6834` |
+| `chart/3` | green | `#1baf7a` |
+| `chart/4` | violet (the `gantt/today` value) | `#7c5cc4` |
+| `chart/5` | amber | `#eda100` |
+| `chart/6` | pink | `#e87ba4` |
+
+`chart/neutral` (`#9db4cc`) and `chart/neutral-strong` (`#8aa0b8`) cover Other, target and prior-period series. Slots 3, 5 and 6 are below 3:1 against white, so charts keep visible labels or a table view; the report designs already have tables. The chart colours on Pipeline insights are bound (90 fills and strokes). `#7aa6dd` (2 fills) stays unbound and needs a redraw when that page is reviewed.
+
+**Elevation styles.** Eight effect styles, named by role from the layers that carried each shadow, all with "show behind transparent areas" as drawn:
+
+| Style | Shadow | Role |
+|---|---|---|
+| `PPO/Elevation/Flyout` | 6 0 18, navy 16% | More panel |
+| `PPO/Elevation/Menu` | 0 6 18, navy 14% | Record actions menu, popovers |
+| `PPO/Elevation/Floating action` | 0 6 16, navy 20% | Quick add |
+| `PPO/Elevation/Side panel` | −6 0 18, navy 12% | Snapshots, side forms |
+| `PPO/Elevation/Drawer` | −8 0 24, navy 14% | Wide drawers |
+| `PPO/Elevation/Dialog` | 0 12 32, `#141a24` 22% | Dialogs |
+| `PPO/Elevation/Raised control` | 0 1 2, navy 12% | Selected segmented option |
+| `PPO/Elevation/Paper` | 0 2 8, black 8% | Document page on a surface |
+
+The near-miss `#242938` shadow colour is normalised to `brand/navy`, a one-step difference that cannot be seen. The styles were applied to 6 main components on the Components page, including More panel, Quick add and the dialogs, so every instance inherits them. They were also applied to 443 drawn shadows on proposal pages; instances were not given overrides. 126 one-off shadows on proposal pages match no style and stay as drawn.
+
+**Text styles with automatic line height.** Thirteen `PPO/Auto/*` styles mirror the ramp without a fixed line height:
+
+- Body, Body strong, Small, Small strong, Label, Label strong
+- Caption, Row text, Row title, Body large, Heading
+- Code and Code small (Roboto Mono)
+
+They were applied on proposal pages where text matched exactly, so nothing moved. Unstyled text on the 75 proposal pages fell from 5,310 to 3,036 layers:
+
+- 2,693 use a fixed line height that is not in the ramp, for example 16/24, Medium 12/16 and Bold 16/24.
+- 144 mix styles within one layer.
+- 199 are automatic combinations with no style.
+
+The largest group is 723 layers of Medium 11/16 with 4% letter spacing, which differs from `PPO/Overline` (6%). Applying Overline there would widen text slightly, so it is a candidate for the next amendment of each page, not an automatic change.
+
+**Deals text styles and D4.**
+
+- **Styles raised:** `PPO/Deals/Avatar` (9/12 → 11/14, used 372 times on Deals) and `PPO/Deals/Task badge` (8/12 → 11/14, unused). A screenshot of a Deals card shows the initials still fit their 23 px avatar.
+- **D4 decided from the evidence:** the accepted Deals page already uses the Font Awesome icons, while the `Deals · r37 reference` variables (939 bindings) and the `PPO/Deals/*` styles are the accepted page's own tokens, so they stay.
+- **`Deals/Icon/*` (30 components, 147 instances):** these stay in Components › Icons as a legacy group. They are still used on Deal record page · CR-01 (accepted 16 October) and Pipeline insights · CR-04 (proposal), and should be swapped when each of those pages is next amended.
+
+**Not changed.** The 1,870 fully transparent white fills on proposal pages are invisible hit areas, not tints, and are left as they are. Accepted pages were not rebound or restyled, apart from inheriting the renamed variables and the library component styles.
+
+### 12.7 Not done yet
+
+R1 renames, R4 Customer 360 archive, R6 components, R10 new pages and R11 phone checks. Follow-ups from R8: the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 
 ## Appendix A: per-page measurements
 
