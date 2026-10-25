@@ -568,9 +568,24 @@ Dean: "Keep PR #694 in draft and start R10 with the EQ-04 page design." The page
 - **Waiting for Dean.** Decisions D1–D10 and questions Q1–Q6 are in the notes card. Q1–Q3 concern gaps in the built code: reinstalling a removed unit, the proposer being able to apply, and moving served areas on replacement.
 - **Checks.** Every frame was screenshotted and the faults found were fixed. Labels, gaps and sections follow the Template, with no overlaps and nothing outside its section; visible text was checked for clipping. The flows have not been played in Present mode.
 
-### 12.12 Not done yet
+### 12.12 R10: CR-03 proposal drawn, 25 October 2026
 
-R10's remaining pages: CR-03, ES-07 conversion and PJ-07, in that order, each as its own request. Follow-ups:
+Dean: "Leave EQ-04 for my review and start the next R10 page, CR-03 won-deal receiving." The page "Won-deal receiving · CR-03" `2689:87` sits in the Sales group before Sales aftercare · CR-05, in rail order. It is a proposal only: there is no decision record, File index row or named version until Dean accepts it.
+
+- **What it draws.** The worklist of won deals (`/sales/handoffs/won`) and the receiving record (`/sales/handoffs/won/[id]`). Sales prepares an exact delivery handover from the Won deal; the Projects or Service receiver clarifies, returns or accepts it, then links it to a project or work order (LC-16). The record reuses the CR-02 Sales brief page proposal `2245:736961`, because the built code shares one handover component, and draws only what differs for won deals.
+- **Story.** It continues the accepted Deal record: `SYN-PPO-OPP-000326` Potting machine and take-off, won on Thu 15 Oct, is prepared by Sasha Clarke and accepted by Morgan Lee (Projects). Morgan then creates `SYN-PPO-PRJ-000041` and reviews the link.
+- **Frames.**
+  - Desktop: the worklist `2689:156`, the Sales draft with the Delivery section `2689:1223`, the receiver deciding `2689:1692`, and the accepted handover linking to the new project `2689:2057`.
+  - Tablet: a clarification answered `2699:1406`.
+  - Phone: the worklist at 390 and 320 px, and the receiver accepting at 390 and 320 px.
+  - Six states, a notes card `2702:1959`, and prototype flows "CR-03 — desktop" and "CR-03 — phone".
+- **Waiting for Dean.** Decisions D1–D10 and questions Q1–Q6 are in the notes card. Among them: where receivers find their queue, unclear routes, parts orders, and creating and linking in one step.
+- **Shared component change.** Drawing the 320 px worklist showed that the proposed Grid / List row (phone) could not truncate its meta line. Its Meta text now fills the line and truncates, with the tag at the end. No accepted page uses the component.
+- **Checks.** Every frame was screenshotted. Text left over from the CR-02 story was searched for and replaced, and a hidden snapshot panel with old content was removed. A work-order number that collided with the accepted Work order record page was renumbered. The layout has no overlaps and no clipped text. The flows have not been played in Present mode.
+
+### 12.13 Not done yet
+
+R10's remaining pages: ES-07 conversion and PJ-07, in that order, each as its own request. Follow-ups:
 
 - **From R8:** the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 - **From R6:** S6 to S12 as their pages are accepted, and each page's adoption of S2 to S5 at its next amendment.
