@@ -4,6 +4,8 @@
 
 **Owner:** Dean Fiedler. **State:** Accepted by the owner, 17 October 2026: "Proceed with your recommendations for C1 and C3 to C8." Proposed 16 October 2026. **D-025 is Partially resolved**, not Resolved; section 2 lists what stays open. Acceptance authorises no sending code, provider account, credential, mailbox, DNS change, migration or customer message. Each build stage still needs its own authorisation (C8). **Companion:** [ADR-0058](ADR-0058-outbound-customer-email.md), Accepted, records the provider choice and its alternatives.
 
+**Pointer, 26 October 2026.** [ADR-0059](ADR-0059-email-sending-from-ppo.md), accepted by Dean on 26 October 2026, sends email a person writes from that person's own mailbox and keeps M1–M4 on the shared mailbox. Nothing in this paper changes.
+
 **Direction, 16 October 2026.** Through the UX benchmark's Decision brief, Dean adopted this direction for D-025: "Email and SMS first, drafted from PPO records and sent by a named person; commission the ADR on SMS and email delivery; approve staff task tests and grower interviews". His words: "I am happy to proceed with all six based on your recommendations." See [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01). It changes this paper in two places, and leaves the rest open:
 - **C2 changes.** A named person sends every customer message, so M1 to M3 are drafted from PPO records and sent by a person rather than sent automatically.
 - **Channels.** SMS joins email as a first channel. ADR-0058 covers email; an SMS delivery record is still to be written.

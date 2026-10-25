@@ -32,7 +32,7 @@ Scope stays `scope:ES-08` at `/estimating/configurations/{id}/{view}`, tracing C
 | Reference | Identity |
 |---|---|
 | Proposal file | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository, because it holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Page | "ES-08 · Screen Configurator Workbench" `406:2`, placed before Captures (icon-free) |
+| Page | "Screen Configurator Workbench · ES-08" `406:2` (formerly "ES-08 · Screen Configurator Workbench"; renamed on 25 October 2026 by the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md), R1), placed before Captures (icon-free) |
 | Desktop 1440, secondary menu docked | Configure `416:92770` · Drawings, sheet 01 and inspector `418:1793` · Parts & working with the working panel open `419:94560` · Pricing `419:95661` · Compare & save, bays 12 → 11 unsaved `420:8837` · Definition review `421:8962` · Run history `421:9635` |
 | Desktop 1440, secondary menu collapsed | Configure, Drive & motors with the untested option and the Plan toggle `423:3707` · Drawings with the sheets rescaled to the wider column `423:4233` |
 | Phone 390 | Configure section stepper `425:5176` · Drawings sheet 01 with the field inspector sheet `426:5248` · Parts & working, working panel full screen `426:100047` · Compare & save `426:5695` |
