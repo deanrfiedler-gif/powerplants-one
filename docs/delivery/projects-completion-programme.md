@@ -88,3 +88,7 @@ The [package contract](../contracts/project-specialist-packages.md) and [decisio
 ## PJ-07 R10 source direction — 26 October 2026
 
 The [R10 reconciliation](../decisions/r10-workflow-reconciliation.md#pj-07--source-backed-review-with-separate-delivery-decisions) permits progress toward a new reviewed reference derived from retained r01 and current accepted decisions, without making recovery of unavailable r02 bytes a prerequisite to design work. This replaces only that future-source prerequisite in A0/A6. Preserve the original discrepancy evidence and issued bytes; the new Figma proposal is not yet an accepted baseline and no native readiness route/reducer/request contract is delivered by this record.
+
+## PJ-07 contract prepared — 26 October 2026
+
+The [native readiness and movement contract](../contracts/project-delivery-readiness.md) now defines the proposed scope/source/assessment/ownership/request/recovery boundary and future acceptance examples. The [correction brief](../design/project-delivery-readiness-correction-brief.md) specifies the Figma work, including complete narrow impact review and explicit date units. This is specification delivery only; A6 runtime and visual acceptance remain outstanding. Native Scheduling acceptance may already move a booking, so its existing command boundary must be retained. Current build-limit sequencing permits this documentation continuation without starting a new implementation PR.

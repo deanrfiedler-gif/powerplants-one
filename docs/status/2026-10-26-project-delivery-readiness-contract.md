@@ -1,0 +1,12 @@
+---
+title: Delivery readiness native contract and Figma correction brief prepared
+date: 2026-10-26
+---
+
+Dean instructed “Proceed” after the recommendation to define the PJ-07 readiness workflow/data contract and correction brief. The [native contract proposal](../contracts/project-delivery-readiness.md) and [correction brief](../design/project-delivery-readiness-correction-brief.md) are prepared in draft PR #712. The [existing reconciliation](../decisions/r10-workflow-reconciliation.md#pj-07-specification-continuation--26-october-2026) owns the instruction and its boundaries.
+
+The specification defines explicit Project delivery-step membership, current source/version/policy/time evidence, complete assessment independent of filters, restricted/unknown states, named source owners, Activity follow-up, immutable impact comparisons and independently received coordination requests. Native source commands retain authority. Scheduling's ProjectReference request currently needs scheduling authority, and its native Accept may move the booking; PJ-07 must link that actual outcome without a duplicate apply step. It preserves the two unallocated-demand rules, exact CS shutdown evidence, calendar-day versus configured working-day units, current Project/acceptance boundaries and original-operation recovery.
+
+New files are the contract, correction brief, this fragment and a document-register entry. Existing scope-pj-07, readiness design, reconciliation and programme records receive narrow links. No application, migration, grant, runtime route/register, issued reference or Figma node changed. The 26 October owner build-limit rule in PR #713 was read; this remains documentation in #712 and starts no additional implementation build. Other contributors' branches remain untouched; no merge is authorised or performed.
+
+Eighteen acceptance examples specify future verification; they are not executed application tests. Validation passed: foundation/local links, naming, status sources, 22 documentation unit tests, development-register integrity and whitespace. Nine changed-document anchors and the +6/+13 calendar-day examples were independently checked. Published-tree scope and byte verification are recorded in the PR. No new visual inspection, Present-mode run, source application journey, independent second-model review or owner baseline acceptance is claimed. The prior bounded Figma observations remain the correction brief's evidence.

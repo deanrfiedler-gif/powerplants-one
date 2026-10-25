@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PJ07-READINESS-CONTRACT,Project delivery readiness and movement coordination,docs/contracts/project-delivery-readiness.md,,Proposed native implementation specification; no runtime or visual acceptance,Dean Fiedler,55722e8226b62c2a0e2e3bfe67b38b104bb09590,,,git,
+PPO-PJ07-CORRECTION-BRIEF,Delivery readiness design correction brief,docs/design/project-delivery-readiness-correction-brief.md,,Proposed Figma correction brief; no canvas changes or visual acceptance,Dean Fiedler,55722e8226b62c2a0e2e3bfe67b38b104bb09590,,,git,
