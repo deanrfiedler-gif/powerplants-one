@@ -6,7 +6,9 @@ const { evaluate, testDefinition } = await import("../src/cpq/engine.ts");
 try {
   parentPort.postMessage({
     value:
-      workerData.kind === "package"
+      typeof workerData.kind === "string" && workerData.kind.startsWith("rule-set-")
+        ? (await import("../src/cpq/rule-sets/entry.ts")).ruleSetWork(workerData)
+        : workerData.kind === "package"
         ? (await import("../src/cpq/package-model.ts")).measurePackage(workerData.content)
         : workerData.kind === "quality"
         ? (await import("../src/cpq/quality-model.ts")).qualityResults(workerData.work)

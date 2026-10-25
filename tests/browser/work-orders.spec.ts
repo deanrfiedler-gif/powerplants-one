@@ -231,9 +231,19 @@ test("P04 creation, exact uncertain retry, scoped empty results and Systems refu
   await capture(page, info, "P04-created-empty-scope.png");
   await page.unrouteAll();
   await page.goto("/service/work-orders");
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
+    await page.locator("#shell-header").getByRole("button", { name: "Filter", exact: true }).click();
+  else
+    await page.getByRole("button", { name: "Work order register actions", exact: true }).click();
   await page
     .getByLabel("Search work orders", { exact: true })
+    .filter({ visible: true })
     .fill("SYN no matching work 748291");
+  await page.getByLabel("Search work orders", { exact: true }).filter({ visible: true }).press("Enter");
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
+    await page.getByRole("button", { name: /Show .* work orders/ }).click();
+  else
+    await page.getByRole("button", { name: "Work order register actions", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "No work orders in this view" }),
   ).toBeVisible();
