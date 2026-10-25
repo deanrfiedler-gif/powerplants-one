@@ -1295,14 +1295,14 @@
       ],
       "figma": {
         "status": "Mapped",
-        "location": "Deals · CR-04 549:2 › Page components (proposal)",
+        "location": "Components 1:4 › Components · Sales parts",
         "components": [
           {
             "node": "551:947",
             "name": "Deals/Card"
           }
         ],
-        "note": "Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses (no rotting rule in the app). It stays on the Deals page; moving it to Components 1:4 is separate work."
+        "note": "Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses (no rotting rule in the app). It moved from the Deals page to Components 1:4 on 25 October 2026 (Figma file audit R3); the node ID and every instance are unchanged."
       },
       "review": null
     },
@@ -1370,14 +1370,14 @@
       ],
       "figma": {
         "status": "Partial",
-        "location": "Deals · CR-04 549:2 › Page components (proposal)",
+        "location": "Components 1:4 › Components · Sales parts",
         "components": [
           {
             "node": "2362:63788",
             "name": "Deals/Forecast card (proposal)"
           }
         ],
-        "note": "The forecast card of the accepted Deals Forecast view (24 October 2026). The month lanes and stage groups are drawn in the page frame 2362:63797, not as components. It stays on the Deals page; moving it to Components 1:4 is separate work."
+        "note": "The forecast card of the accepted Deals Forecast view (24 October 2026). The month lanes and stage groups are drawn in the page frame 2362:63797, not as components. It moved from the Deals page to Components 1:4 on 25 October 2026 (Figma file audit R3); the node ID and every instance are unchanged."
       },
       "review": null
     },

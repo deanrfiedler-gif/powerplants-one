@@ -321,9 +321,52 @@ Dean: "Proceed with R7: bind token-valued fills, fix the near-miss navy, apply t
 
 Per-page results are in [Appendix B](#appendix-b-r7-results-by-page).
 
-### 12.5 Not done yet
+### 12.5 R3: lock-in backlog and components on accepted pages, 25 October 2026
 
-R1 renames, R3 lock-in backlog and component moves, R4 Customer 360 archive, R6 components, R8 variable names (now also tint variables and the auto line-height question), R10 new pages and R11 phone checks.
+Dean: "Do R3 next: finish the lock-in backlog and move the 107 components on accepted pages to the Components page."
+
+**Lock-in backlog (C7).** By 25 October the sessions that drew these designs had finished their own lock-ins.
+
+| Design | Pull request | State on 25 October |
+|---|---|---|
+| Deals · CR-04 | #685 | Merged |
+| Calling stage 1a | #676 | Merged |
+| Assistant AI-01 | #687 | Named version saved by Dean; ready for review; CI running |
+| Automation Configurator | #671 | Named version saved by Dean; ready for review; CI running |
+| Quotation detail | #677 | Named version saved by Dean; ready for review; CI running |
+| Portal home & access CP-01 | #678 | Named version saved by Dean; ready for review; CI running |
+
+The two "not saved" named versions were already in version history. "Organisations — accepted" and "Field team — accepted" were both saved on 18 October. Their page headers (`1443:2650`, `1289:89`) and the [Organisations decision record](../../decisions/organisations-figma-design.md) still said they were waiting; those three places are corrected. No new named version was saved, because none was missing. Merging the four open pull requests stays with Dean.
+
+**Components (C6).** 104 main components moved from 26 accepted pages to the Components page by reparenting, so every node ID and instance is unchanged. The 107 in stage 1 also counted the two shell-amendment parts, which stay on their page by decision, and the Conversations action moved under R2. Where they went:
+
+| Components section | Moved from | Count |
+|---|---|---|
+| Sales parts | Deals, Emails, Customer messages | 13 |
+| Estimating parts | Discovery register, Create discovery workspace, Automation Configurator | 6 |
+| Engineering and Projects parts | Baseline, forecast and dependency review; Stakeholder updates | 5 |
+| Service, Supply chain and Shared records | Service requests, Service planner, Changes and follow-up, Appointment detail, Field team, Service review and reports, Findings, Remote diagnosis, Inspections, Incidents, Organisations, Sites, Facilities, People, Site surveys | 46 |
+| Administration parts (new section `2613:6746`) | Users and access, Settings | 14 |
+| Customer portal (new section `2613:6751`) | Portal home & access | 20 |
+
+How the move was done:
+
+- Each group sits under a label naming its source page.
+- Each component's description gained a "Source:" line where it lacked one.
+- Each emptied page-components section now holds a one-line note saying where its components went (decision D6 of the [Components page decision](../../decisions/figma-components-page.md)).
+- Names were not changed, so the "(proposed)" suffixes remain, because records cite these components by name and node ID.
+
+**Checks:**
+
+- No accepted page holds a main component any more.
+- The Components page has no overlapping sections; the top-row sections from Grid rightwards were shifted 400 px to clear the wider Shell section.
+- Nested text properties on the moved component sets were refreshed, the known fix for cross-page set moves.
+- A screenshot of Service planner · PL-01 `1205:52` shows the moved planner components rendering correctly.
+- The [component register](../development/components.json) mappings for `sales-board` (Deals/Card `551:947`) and `forecast` (Deals/Forecast card `2362:63788`) now give their new location, with their specifications updated. `npm run studio:check` passes with no errors, and its stale-review count is unchanged at 26.
+
+### 12.6 Not done yet
+
+R1 renames, R4 Customer 360 archive, R6 components, R8 variable names (now also tint variables and the auto line-height question), R10 new pages and R11 phone checks.
 
 ## Appendix A: per-page measurements
 
