@@ -14,7 +14,7 @@ import { randomUUID } from "node:crypto";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable database only");
 after(closeDatabase);
-for (const through of [117, 118])
+for (const through of [117, 118, 119])
   test(`0120 from ${through} preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert`, async () => {
     await recoverSchema();
     await rows("DROP TABLE IF EXISTS public.ppo_migrations");
@@ -104,8 +104,8 @@ for (const through of [117, 118])
         `SELECT version FROM public.ppo_migrations WHERE version>${through} ORDER BY version`,
       ),
       through === 117
-        ? [{ version: 118 }, { version: 120 }]
-        : [{ version: 120 }],
+        ? [{ version: 118 }, { version: 119 }, { version: 120 }]
+        : through === 118 ? [{ version: 119 }, { version: 120 }] : [{ version: 120 }],
     );
     assert.deepEqual(
       await rows(

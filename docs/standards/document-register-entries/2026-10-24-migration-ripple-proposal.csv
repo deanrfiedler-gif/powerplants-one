@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-MIGRATION-EXPECTATIONS-DEC,Independent migration test expectations,docs/decisions/migration-test-expectations.md,,Recommendations approved; owner waived further Claude review; implementation on hold,Dean Fiedler,79bef1d32f42cd2dcdbf04ce0f30a4374199db2e,,,git,
