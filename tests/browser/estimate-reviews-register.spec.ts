@@ -6,6 +6,10 @@ import { closeDatabase } from "../../src/platform/database";
 import { estimateInput } from "../helpers/estimating";
 
 test.describe.configure({ timeout: 300000 });
+test.beforeAll(() => {
+  // Direct native fixture calls run in the test worker, separately from the server.
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
+});
 test.afterAll(closeDatabase);
 async function identity(page: Page, profile = "coordinator") {
   await page.goto("/work");
