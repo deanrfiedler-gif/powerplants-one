@@ -39,3 +39,7 @@ CodeQL (also named in QA-3) needs its own decision. Some repository settings are
 ## Validation
 
 `npm audit` after the change reports only the four `braces`-chain entries, all under the one advisory. `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities. Against main's lockfile, `scripts/check-npm-audit.mjs` blocks six advisories, including the Next.js critical, and the runtime step fails. The pull request records the lint, typecheck, unit-test and CI results.
+
+## Note, 24 October 2026: `braces` exception removed
+
+GitHub withdrew [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) on 23 October 2026, so `npm audit` no longer reports it, and `scripts/check-npm-audit.mjs` warned that the `braces` exception no longer matched anything. As decision 5 intends, the exception has been deleted. The `exceptions` list remains, empty, so a future exception still has a reason, a date and a place in review. `braces` 3.0.3 stays locked through the same lint-time path; `package-lock.json` is unchanged. Decision 3 and the alternatives above record the position on 15 October 2026 and are otherwise unchanged.

@@ -52,7 +52,7 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
   assert.deepEqual({ ...afterRows, seed_receipts: before.seed_receipts, customer_email_bindings: before.customer_email_bindings }, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 121]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 121]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",

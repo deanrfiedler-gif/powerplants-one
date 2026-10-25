@@ -1184,7 +1184,7 @@ test("SV-02 receipt failure rolls back assessment, clarification and retained st
   assert.equal((await readActivity(p, before.clarification_activity!.id)).status, "Open");
 });
 
-for (const through of [109, 113, 114, 115, 116, 117, 118])
+for (const through of [109, 113, 114, 115, 116, 117, 118, 119])
 test(`SV-01 migration 112 preserves the ${through} history and legacy triage receipts without grants or seeds`, async () => {
   await recoverSchema();
   await database().query("DROP TABLE public.ppo_migrations");
@@ -1222,7 +1222,7 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const previousVersions = new Set(ledger.map((row) => row.version));
   assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
-  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 121] : through === 113 ? [112, 114, 115, 116, 117, 118, 121] : through === 114 ? [112, 115, 116, 117, 118, 121] : through === 115 ? [112, 116, 117, 118, 121] : through === 116 ? [112, 117, 118, 121] : through === 117 ? [112, 118, 121] : [112, 121]);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 121] : through === 113 ? [112, 114, 115, 116, 117, 118, 119, 121] : through === 114 ? [112, 115, 116, 117, 118, 119, 121] : through === 115 ? [112, 116, 117, 118, 119, 121] : through === 116 ? [112, 117, 118, 119, 121] : through === 117 ? [112, 118, 119, 121] : [112, 121]);
   assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
   assert.equal((await ticketStatements(p, input.id)).items.length, 0);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
