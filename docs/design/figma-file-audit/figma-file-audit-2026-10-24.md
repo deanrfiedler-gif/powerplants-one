@@ -449,9 +449,63 @@ The largest group is 723 layers of Medium 11/16 with 4% letter spacing, which di
 
 **Not changed.** The 1,870 fully transparent white fills on proposal pages are invisible hit areas, not tints, and are left as they are. Accepted pages were not rebound or restyled, apart from inheriting the renamed variables and the library component styles.
 
-### 12.7 Not done yet
+### 12.7 R4: Customer 360 archived, 25 October 2026
 
-R1 renames, R4 Customer 360 archive, R6 components, R10 new pages and R11 phone checks. Follow-ups from R8: the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
+- **Page.** "Customer 360 (proposal)" `554:2` moved to the end of the Archive group, after Shell v2. Its name is unchanged and `554:2` still resolves, so the records that cite it still find it.
+- **Note.** An "Archived note" frame `2636:2408` at the top of the page says the page was never accepted and is superseded by Organisations · CS-01 `1443:2615`.
+- **File index.** Row `630:131` moved to Evidence and archive. It now carries the Archived tag and "Archived 25 Oct 2026 · superseded by Organisations · CS-01 (1443:2615)".
+- **Records.** The [Customer 360 record](../../decisions/customer-360-figma-design.md) is marked superseded by the [Organisations and Customer 360 decision](../../decisions/organisations-figma-design.md) (accepted 18 October). The component register entries `customer-360-summary` and `crm-directory`, and the CS-01 scope page, now say the page is archived. `customer-360-summary` stays reference-only.
+
+### 12.8 R1: page names, 25 October 2026
+
+Sixteen pages were renamed once to "[Page name] · [scope ID]". Node IDs did not change.
+
+| Node | Former name | Name now |
+|---|---|---|
+| `404:2` | My Work (accepted) | My Work · SH-01 · SH-02 |
+| `128:8845` | Intake & workload (accepted) | Intake & workload · ES-01 |
+| `152:1122` | Sales briefs (accepted) | Sales briefs · CR-02 |
+| `383:2` | Estimation Wizard (accepted) | Estimation Wizard · ES-02 |
+| `408:4` | ES-02 Priva Fertigation Workbench (accepted) | Priva Fertigation Workbench · ES-02 |
+| `406:2` | ES-08 · Screen Configurator Workbench | Screen Configurator Workbench · ES-08 |
+| `133:2366` | Cost sources (accepted) | Cost sources · ES-03 |
+| `123:40` | Quotations (accepted) | Quotations · ES-05 · ES-06 · ES-07 |
+| `56:2` | Reviews & approvals (accepted) | Reviews & approvals · ES-04 · ES-05 |
+| `184:1047` | Engineering workload (accepted) | Engineering workload · EN-01 |
+| `209:46` | Projects (accepted) | Projects · PJ-02 |
+| `345:2` | Project record page (accepted) | Project record page · PJ-02 |
+| `193:18953` | Work orders (accepted) | Work orders · SV-03 |
+| `312:2` | Work order record page (accepted) | Work order record page · SV-03 |
+| `272:2` | Job pack (accepted) | Job pack · SV-05 |
+| `653:38` | Products · PD-01 · discovery proposal | Products · PD-01 |
+
+**Not renamed.**
+
+- **CPQ · 1 to CPQ · 6** `464:2`–`464:7`. Section 3 offered ES-02 · ES-03, but the [CPQ record](../../decisions/cpq-figma-design.md) says no page-scope ID covers the two workspaces and none is created. ADR-0055 rule 3 names such a page without an ID, so these pages keep their names until a scope is assigned. This corrects section 3, which counted them among the 20.
+- **Customer 360 (proposal)** `554:2`. It was archived under R4 instead.
+- **Conversations, Leads (accepted), Lead record page (accepted) and Excel estimate import, and the three system pages.** These stay as R1 says.
+
+**In the file.**
+
+- **Page headers.** Every renamed page's header already showed the bare page name, except Priva Fertigation Workbench, whose title `1126:11083` lost its "ES-02 " prefix.
+- **Left as written.** Screen titles, flow names, notes and named-version titles that quote an old name are history and were not changed.
+- **File index.** The File index `630:2` widened from 1,240 to 1,456 px. Every table gained a "Former name" column after Page: 95 header and data rows, with "—" where a page kept its name. The Start here and Foundations frames moved 216 px right to stay clear of it.
+- **Naming rule.** Rule 2 of "How pages are organised" now records this one exception.
+
+**In the repository.**
+
+- **Updated.** 26 files cite a renamed page by its current name: 22 decision records (mostly their Accepted frames or Page rows), `components.json`, two component pages and the ES-08 route page. Each now gives the new name, with the former name in brackets. The page's own record also gives the date and links this section.
+- **Re-checked.** `estimate-reviews-design.md` still said "Reviews & approvals (proposal)", and now gives both former names. `products-figma-design.md` no longer says the name is kept, or that Products follows Customer 360.
+- **ADR-0055.** An amendment records the one-time exception to its rule 3.
+- **Not changed.** These records quote an old name as it was at the time, and were left as written:
+  - narrative of past events in `cost-sources-design.md`, `intake-workload-design.md` and `engineering-workload-design.md`;
+  - the 17 October re-skin table in `figma-page-template-alignment.md`, which gains a note pointing to the new names;
+  - the stage 1 tables in this report;
+  - status fragments, the status log, issued references and test evidence.
+
+### 12.9 Not done yet
+
+R6 components, R10 new pages and R11 phone checks. Follow-ups from R8: the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 
 ## Appendix A: per-page measurements
 

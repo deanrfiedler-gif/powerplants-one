@@ -7665,7 +7665,7 @@
         "status": "None",
         "location": "Components",
         "components": [],
-        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2."
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2, archived on 25 October 2026."
       },
       "review": null
     },
@@ -7740,7 +7740,7 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "location": "Screen Configurator Workbench · ES-08 406:2",
         "components": [
           {
             "node": "408:83278",
@@ -7966,7 +7966,7 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "location": "Screen Configurator Workbench · ES-08 406:2",
         "components": [
           {
             "node": "415:4566",
@@ -8272,14 +8272,14 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "Customer 360 (proposal) 554:2",
+        "location": "Customer 360 (proposal) 554:2, archived",
         "components": [
           {
             "node": "555:161360",
             "name": "CS-01 / Summary tile (proposal)"
           }
         ],
-        "note": "Stays on the proposal page until Customer 360 is accepted."
+        "note": "Stays on the Customer 360 proposal page, which was superseded by Organisations · CS-01 and archived on 25 October 2026 (Figma file audit R4). Reference only."
       },
       "review": null
     },
