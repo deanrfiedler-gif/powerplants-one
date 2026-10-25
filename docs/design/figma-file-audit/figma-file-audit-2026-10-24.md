@@ -282,6 +282,8 @@ The work, in order:
 - the unfinished drafts Receiving · SC-04, Cash outlook · FN-05 and Report definitions · RP-06
 - the 329 capture copies
 
+**Open item, 26 October 2026: accepted pages changed through the shared component.** ChatGPT's independent review of PR #694 found that step 3 conflicts with R2 as adopted, which leaves accepted pages' frames as drawn until each page's next amendment. Changing `35:138` changed every linked instance, so linked top bars on accepted pages now show the Conversations action without a page amendment. The T1 scope planned this change "so that every accepted page changes in one reviewed step" at the T1c lock-in, but that lock-in has not happened, and no later instruction from Dean covers accepted pages. Stage 1 counted linked shell instances on 54 accepted pages (Appendix A; those counts include phone headers, which already carried the action). Captures keep their earlier look, and the named version "Before audit clean-up — 2026-10-25" holds every page as it was. Dean's decision is pending; the proposed resolution is on PR #694. No further change to accepted frames is made until he decides.
+
 **Repository work not done here.** The T1c-2 lock-in also asks for icon-free captures of the accepted T1 frames, and the application change belongs to the T1c-2 pull request. Both remain with that work.
 
 ### 12.4 R7: tokens and text styles on proposal pages, 25 October 2026
