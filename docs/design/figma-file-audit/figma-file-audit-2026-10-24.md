@@ -553,9 +553,24 @@ Five proposed component sets are now on Components `1:4`, in the Controls and Gr
 - **Read me.** The Components Read me now records the R6 exception to its rule 1. It no longer lists the Deals parts that R3 moved as kept elsewhere, and it shows Customer 360 as archived.
 - **Register.** The `fields`, `validation`, `mobile-form` and `register-table` mappings in the [component register](../development/components.json) and their specification pages now list the proposed components. `mobile-form` moves from None to Partial.
 
-### 12.11 Not done yet
+### 12.11 R10: EQ-04 proposal drawn, 25 October 2026
 
-R10 new pages. Follow-ups:
+Dean: "Keep PR #694 in draft and start R10 with the EQ-04 page design." The page "Movement, replacement & retirement · EQ-04" `2662:87` sits right after Equipment · EQ-01. It is a proposal only: there is no decision record, File index row or named version until Dean accepts it.
+
+- **What it draws.** How equipment is recorded as moved, corrected, replaced by a separate record or retired: the impact is checked first and a separate reviewer decides. It extends the EQ-01 equipment record and follows the built rules in `src/equipment/changes.ts`.
+- **Story.** It follows EQ-01's own: the Block C dosing unit `SYN-PPO-AST-000311` is replaced by loan unit `SYN-AST-000216` on Wed 14 Oct and applied by Jordan Kim at 15:30. The other cases use records from EQ-01's register: Shade house climate sensor SH-1 for a relocation, Boiler controller BC-1 for retirement and Temperature sensor TS-5 for a correction.
+- **Frames.**
+  - Desktop: review decision `2662:156`, relocation side form `2662:315`, the loan unit after apply `2668:1003` and retirement `2669:10867`.
+  - Tablet: review decision `2671:1640`.
+  - Phone: three 390 px steps and two 320 px screens.
+  - Nine states, a notes card `2685:2625`, and prototype flows "EQ-04 — desktop review" and "EQ-04 — phone".
+- **Shared components.** The side forms and phone steps are the first use of the proposed Controls / Form field and Choice option from R6.
+- **Waiting for Dean.** Decisions D1–D10 and questions Q1–Q6 are in the notes card. Q1–Q3 concern gaps in the built code: reinstalling a removed unit, the proposer being able to apply, and moving served areas on replacement.
+- **Checks.** Every frame was screenshotted and the faults found were fixed. Labels, gaps and sections follow the Template, with no overlaps and nothing outside its section; visible text was checked for clipping. The flows have not been played in Present mode.
+
+### 12.12 Not done yet
+
+R10's remaining pages: CR-03, ES-07 conversion and PJ-07, in that order, each as its own request. Follow-ups:
 
 - **From R8:** the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 - **From R6:** S6 to S12 as their pages are accepted, and each page's adoption of S2 to S5 at its next amendment.
