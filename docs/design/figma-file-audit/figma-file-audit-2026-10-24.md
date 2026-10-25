@@ -598,9 +598,30 @@ Dean: "Leave CR-03 for my review and start the next R10 page, ES-07 conversion."
 - **CR-03 correction.** Quotation r2 moved installation to January 2027, so CR-03's requested date and the prerequisite dates were corrected to match (`2689:87`).
 - **Checks.** Every frame was screenshotted and the faults found were fixed: the step states, the avatar, the tablet workspace width and a clipped phone footer. The layout has no overlaps or clipped text. The flows have not been played in Present mode.
 
-### 12.14 Not done yet
+### 12.14 R10: PJ-07 proposal drawn, 25 October 2026
 
-R10's remaining page: PJ-07, as its own request. Follow-ups:
+Dean: "Leave ES-07 for my review and start the last R10 page, PJ-07 readiness and change-impact review." The page "Delivery readiness · PJ-07" `2720:87` sits between PJ-06 and PJ-08. It is a proposal only: there is no decision record, File index row or named version until Dean accepts it.
+
+- **What it draws.** Two surfaces:
+  - the Delivery readiness worklist (`/projects/readiness`, a Projects rail item that the app lists as unavailable today);
+  - a Readiness tab on the accepted Project record, for reviewing each source prerequisite, assigning blockers and their evidence, and assessing a change before requesting delivery movement.
+
+  The retained r01 HTML supplies the categories, states and impact table. The r02 bytes are unavailable (`projects-completion-programme.md`), so the drawing does not claim to recover them.
+- **Story.** On Mon 12 Oct, Block C fertigation upgrade `SYN-PPO-PRJ-000027` has its zone tie-ins on Sat 7 Nov. Nine prerequisites are read from their sources; the 4-channel dosing unit build `SYN-PPO-BLD-000042` is blocked by a quarantined pump. Change review `SYN-CHG-000012` assesses moving the tie-ins to Sat 14 Nov.
+- **Frames.**
+  - Desktop: the worklist `2720:9833`, the Readiness tab `2720:10714`, the assign-blocker side form `2725:1994` and the change-impact review `2725:2133`.
+  - Tablet: the Readiness tab `2730:1808`.
+  - Phone: the readiness list and the change impact as labelled cards, at 390 and 320 px.
+  - Six states, a notes card `2736:2384`, and prototype flows "PJ-07 — desktop" and "PJ-07 — phone".
+- **Shared component change.** `Rail · Projects (proposal)` gained a "Delivery readiness (proposed)" item behind a new property that is off by default, so accepted pages are unchanged.
+- **Waiting for Dean.** Decisions D1–D10 and questions Q1–Q6 are in the notes card. Among them: the CHG reference type, who owns readiness, what Request delivery movement does, and adopting this design in place of the missing r02.
+- **Checks.** Every frame was screenshotted and the faults found were fixed: rail icon colours, register headers, a duplicated tab count, the Block C site contact (now Sam Okafor, the correction PJ-08 recorded), a rolled-back phone build and the tablet's key-dates strip. The layout has no overlaps or clipped text. The flows have not been played in Present mode.
+
+R10's four pages are now drawn: EQ-04, CR-03, ES-07 and PJ-07, all waiting for Dean's review.
+
+### 12.15 Not done yet
+
+Dean's review of the four R10 proposals. Follow-ups:
 
 - **From R8:** the 723 Overline-like text layers, the remaining fixed-line-height text, the r37 icon swaps on Deal record page and Pipeline insights, and the `#7aa6dd` chart redraw.
 - **From R6:** S6 to S12 as their pages are accepted, and each page's adoption of S2 to S5 at its next amendment.
