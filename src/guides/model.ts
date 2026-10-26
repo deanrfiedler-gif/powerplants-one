@@ -34,3 +34,32 @@ export type GuideFrontMatter = {
 
 // `line` is the 1-based line of the guide file, so an author can go straight to it.
 export type GuideError = { path: string; line: number; message: string };
+
+// The compiled body (ADR-0065, decision 3). These are the only nodes a guide can hold: the compiler refuses every
+// other Markdown construct, and text holds the characters the author typed (React escapes it at render).
+export type InlineNode =
+  | { kind: "text"; text: string }
+  | { kind: "strong"; children: InlineNode[] }
+  | { kind: "emphasis"; children: InlineNode[] }
+  | { kind: "code"; text: string }
+  | { kind: "break" }
+  | { kind: "link"; href: string; children: InlineNode[] };
+
+export type BlockNode =
+  | { kind: "paragraph"; children: InlineNode[] }
+  | { kind: "heading"; children: InlineNode[] } // a ### heading
+  | { kind: "list"; ordered: boolean; items: BlockNode[][] }
+  | { kind: "table"; header: InlineNode[][]; rows: InlineNode[][][] }
+  | { kind: "callout"; tone: "note" | "warning" | "important"; children: BlockNode[] };
+
+// A ## heading and the blocks under it. `id` is the heading's explicit {#section-id}.
+export type GuideSection = { id: string; title: InlineNode[]; blocks: BlockNode[] };
+
+export type CompiledGuide = {
+  path: string;
+  front: GuideFrontMatter;
+  lead: BlockNode[]; // the blocks before the first ## heading
+  sections: GuideSection[];
+  contentHash: string; // SHA-256 hex of the reviewed content; review fields are excluded
+  references: { href: string; line: number }[]; // every link, with its own file line
+};

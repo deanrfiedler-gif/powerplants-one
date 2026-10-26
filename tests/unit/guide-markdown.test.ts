@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { test } from "node:test";
-import { readFrontMatter } from "../../src/guides/compile";
-import type { GuideFrontMatter } from "../../src/guides/model";
+import { compileGuide, readFrontMatter } from "../../src/guides/compile";
+import { allowedHttpsHosts, linkShape } from "../../src/guides/links";
+import type { BlockNode, CompiledGuide, GuideError, GuideFrontMatter, InlineNode } from "../../src/guides/model";
 import { guideStateFor } from "../../src/guides/status";
 
 // User guide stage 1 (ADR-0065, decision 2): the front matter of a guide file is read with yaml, and the reader
@@ -310,4 +312,458 @@ test("state names the other statuses without looking at the hash", () => {
   assert.equal(guideStateFor({ ...base, status: "InReview" }, "sha256:aaa"), "In review");
   assert.equal(guideStateFor({ ...base, status: "Superseded" }, "sha256:aaa"), "Superseded");
   assert.equal(guideStateFor({ ...base, status: "Withdrawn" }, "sha256:aaa"), "Withdrawn");
+});
+
+// ADR-0065, decisions 3 to 6: the body is compiled into PPO's own allowlisted model, and every link passes the URL
+// policy. Anything else is refused with the file and line. Body line i of guideText(...) is file line firstBodyLine + i.
+const guideText = (...body: string[]) => ["---", ...required, "---", ...body].join("\n") + "\n";
+const firstBodyLine = required.length + 3;
+const compile = (...body: string[]) => compileGuide(path, guideText(...body));
+const compiled = (...body: string[]): CompiledGuide => {
+  const result = compile(...body);
+  assert.deepEqual(result.errors, []);
+  assert.ok(result.guide, "a compiled guide was expected");
+  return result.guide;
+};
+const refusals = (...body: string[]): GuideError[] => {
+  const result = compile(...body);
+  assert.equal(result.guide, undefined);
+  assert.ok(result.errors.length > 0, "an error was expected");
+  assert.ok(result.errors.every((error) => error.path === path));
+  return result.errors;
+};
+// Every error sits on the expected body line, and at least one names the construct.
+const refusedAt = (body: string[], index: number, message: RegExp, label = body.join(" / ")) => {
+  const errors = refusals(...body);
+  assert.deepEqual(errors.map((error) => error.line), errors.map(() => firstBodyLine + index), label);
+  assert.ok(errors.some((error) => message.test(error.message)), `${label}: ${errors.map((error) => error.message).join(" | ")}`);
+  return errors;
+};
+const text = (value: string): InlineNode => ({ kind: "text", text: value });
+const paragraph = (...children: InlineNode[]): BlockNode => ({ kind: "paragraph", children });
+
+test("compiles every allowed construct", () => {
+  const guide = compiled(
+    "A lead paragraph.", // 0
+    "",
+    "## How to use it {#how}", // 2
+    "",
+    "1. **Find the record**\\", // 4
+    "   Open the list and choose a row.",
+    "2. Check the *status*.",
+    "",
+    "| Key | Action |", // 8
+    "| --- | --- |",
+    "| `Ctrl+K` | Search |",
+    "",
+    "> [!WARNING]", // 12
+    "> Press `Esc` to close *without* saving. Open [Deals](/sales/opportunities) next.",
+    "",
+    "### Shortcuts", // 15
+    "",
+    "- One",
+    "- Two",
+  );
+
+  assert.equal(guide.path, path);
+  assert.equal(guide.front.guide_key, "guide.page.sales.leads");
+  assert.deepEqual(guide.lead, [paragraph(text("A lead paragraph."))]);
+  assert.equal(guide.sections.length, 1);
+  const [section] = guide.sections;
+  assert.equal(section.id, "how");
+  assert.deepEqual(section.title, [text("How to use it")]);
+
+  const [list, , callout] = section.blocks;
+  assert.ok(list.kind === "list" && list.ordered);
+  const [step] = list.items[0];
+  assert.ok(step.kind === "paragraph");
+  assert.deepEqual(step.children.slice(0, 2).map((node) => node.kind), ["strong", "break"]);
+  assert.ok(callout.kind === "callout");
+  assert.equal(callout.tone, "warning");
+  assert.equal(guide.references[0].href, "/sales/opportunities");
+
+  assert.deepEqual(section.blocks, [
+    {
+      kind: "list",
+      ordered: true,
+      items: [
+        [paragraph({ kind: "strong", children: [text("Find the record")] }, { kind: "break" }, text("Open the list and choose a row."))],
+        [paragraph(text("Check the "), { kind: "emphasis", children: [text("status")] }, text("."))],
+      ],
+    },
+    { kind: "table", header: [[text("Key")], [text("Action")]], rows: [[[{ kind: "code", text: "Ctrl+K" }], [text("Search")]]] },
+    {
+      kind: "callout",
+      tone: "warning",
+      children: [
+        paragraph(
+          text("Press "),
+          { kind: "code", text: "Esc" },
+          text(" to close "),
+          { kind: "emphasis", children: [text("without")] },
+          text(" saving. Open "),
+          { kind: "link", href: "/sales/opportunities", children: [text("Deals")] },
+          text(" next."),
+        ),
+      ],
+    },
+    { kind: "heading", children: [text("Shortcuts")] },
+    { kind: "list", ordered: false, items: [[paragraph(text("One"))], [paragraph(text("Two"))]] },
+  ] satisfies BlockNode[]);
+  assert.deepEqual(guide.references, [{ href: "/sales/opportunities", line: firstBodyLine + 13 }]);
+});
+
+// Body lines that put each refused construct after a lead, a section, a list and a table.
+const before = [
+  "A lead paragraph",
+  "over two lines.",
+  "",
+  "## Overview {#overview}",
+  "",
+  "1. First",
+  "2. Second",
+  "",
+  "| Key | Action |",
+  "| --- | --- |",
+  "| `K` | Keep |",
+  "",
+];
+
+test("refuses disallowed constructs with their line", () => {
+  const cases: [string, string[], number, RegExp][] = [
+    ["block HTML", ["<div>x</div>"], 0, /HTML/],
+    ["inline HTML", ["Some text", "a <b>x</b>"], 1, /HTML/],
+    ["HTML comment", ["<!-- a note -->"], 0, /comment/],
+    ["inline HTML comment", ["Text <!-- a note --> here"], 0, /comment/],
+    ["fenced code block", ["Text.", "", "```", "code", "```"], 2, /code block/i],
+    ["indented code block", ["Text.", "", "    code"], 2, /code block/i],
+    ["horizontal rule", ["***"], 0, /horizontal rule/i],
+    ["setext heading", ["Title", "==="], 0, /underlined/],
+    ["reference definition", ["[a]: /work"], 0, /definition/],
+    ["footnote", ["Text", "see [^1]"], 1, /footnote/i],
+    ["plain quote", ["> quote"], 0, /callout/],
+    ["inline image", ["An image", "![alt](/image.png) here"], 1, /image/i],
+    // Nested constructs keep their own line.
+    ["HTML in a callout", ["> [!NOTE]", "> Text", ">", "> <div>x</div>"], 3, /HTML/],
+    ["code in a list item", ["- item", "", "  ```", "  x", "  ```"], 2, /code block/i],
+    ["HTML in a nested list", ["- a", "  - b", "    <span>x</span>"], 2, /HTML/],
+    ["image in a table row", ["| A | B |", "| - | - |", "| x | y |", "| z | ![i](/i.png) |"], 3, /image/i],
+    ["definition in a quote", ["> [!NOTE]", "> Text", ">", "> [b]: /work"], 3, /definition/],
+    ["footnote split by an escape", ["Text", "see \\[^1]"], 1, /footnote/i],
+    ["footnote inside strong text", ["Text **see", "[^note]**"], 1, /footnote/i],
+  ];
+  for (const [label, lines, index, message] of cases) refusedAt([...before, ...lines], before.length + index, message, label);
+
+  // A footnote reference with its definition becomes a link, and is still named as a footnote.
+  const footnote = refusals(...before, "see [^1]", "", "[^1]: note");
+  assert.ok(footnote.some((error) => error.line === firstBodyLine + before.length && /footnote/i.test(error.message)));
+  assert.ok(footnote.some((error) => error.line === firstBodyLine + before.length + 2 && /definition/.test(error.message)));
+
+  // Every footnote in a run of text is reported on its own line.
+  const footnotes = refusals("Text [^a] and", "more [^b] text.");
+  assert.deepEqual(footnotes.map((error) => error.line), [firstBodyLine, firstBodyLine + 1]);
+
+  // Code spans are literal text, so footnote syntax inside one is allowed.
+  compiled("Type `[^1]` to see it.");
+});
+
+test("refuses bad headings and ids", () => {
+  const lead = ["Lead.", ""];
+  const one = (lines: string[], index: number, message: RegExp) => {
+    const errors = refusedAt([...lead, ...lines], lead.length + index, message);
+    assert.equal(errors.length, 1, lines.join(" / "));
+  };
+  one(["# Title"], 0, /front matter/);
+  one(["#### Deep"], 0, /####/);
+  one(["## Overview"], 0, /section id/);
+  one(["## A {#Bad_Id}"], 0, /Bad_Id/);
+  one(["## How {#how}", "", "Text.", "", "## Again {#how}"], 4, new RegExp(`"how" is already used on line ${firstBodyLine + 2}`));
+
+  one(["## Emphasis *last {#emphasis}*"], 0, /section id/);
+  one(["## {#empty}"], 0, /title/);
+  one(["### Sub {#sub}"], 0, /## headings only/);
+  one(["#tag {#tag}", "---"], 0, /underlined/);
+  one(["- ## Listed {#listed}"], 0, /inside a list or a callout/);
+  one(["> [!NOTE]", "> ### Inside"], 1, /inside a list or a callout/);
+
+  // Both id forms are accepted when they are well formed, and the closing #s of a heading are ignored.
+  const guide = compiled("## How to use it {#how-to-use-2}", "", "## Next {#next} ##");
+  assert.deepEqual(guide.sections.map((section) => section.id), ["how-to-use-2", "next"]);
+  assert.deepEqual(guide.sections[1].title, [text("Next")]);
+});
+
+test("refuses unsafe links", () => {
+  for (const href of [
+    "javascript:alert(1)",
+    "data:text/html,x",
+    "http://example.com",
+    "//evil.example",
+    "mailto:a@b.c",
+    "https://example.com",
+    "/\\evil.example",
+    "/x\\y",
+    "work",
+    "/work?tab=1",
+    "/work#how",
+    "guide:guide.page.work",
+  ]) {
+    const errors = refusals("Lead.", "", "## Links {#links}", "", "Text", `See [x](${href}).`);
+    assert.equal(errors.length, 1, href);
+    assert.equal(errors[0].line, firstBodyLine + 5, href);
+    assert.ok(errors[0].message.includes(`"${href}"`), errors[0].message);
+  }
+
+  const guide = compiled("See [work](/work) and", "[how](guide:guide.page.work#how).");
+  assert.deepEqual(guide.references, [
+    { href: "/work", line: firstBodyLine },
+    { href: "guide:guide.page.work#how", line: firstBodyLine + 1 },
+  ]);
+});
+
+test("keeps typography, and CRLF equals LF", () => {
+  const typography = "Allow 2–3 days for “quoted” work: 4 × 2 m at 20 °C, then sign.";
+  const body = ["Lead.", "", "## Overview {#overview}", "", typography];
+  const guide = compiled(...body);
+  assert.deepEqual(guide.sections[0].blocks, [paragraph(text(typography))]);
+
+  const lf = guideText(...body);
+  const crlf = lf.replace(/\n/g, "\r\n");
+  assert.ok(crlf.includes("\r\n"));
+  const fromCrlf = compileGuide(path, crlf);
+  assert.equal(fromCrlf.guide?.contentHash, guide.contentHash);
+  assert.deepEqual(fromCrlf, compileGuide(path, lf));
+
+  const bad = guideText(...before, "<div>x</div>", "", "Text", "see [^1]", "", "> quote", "", "- [ ] task");
+  const lfErrors = compileGuide(path, bad).errors;
+  assert.deepEqual(compileGuide(path, bad.replace(/\n/g, "\r\n")).errors, lfErrors);
+  const at = firstBodyLine + before.length;
+  assert.deepEqual(lfErrors.map((error) => error.line), [at, at + 3, at + 5, at + 7]);
+});
+
+test("content hash ignores review fields", () => {
+  const body = ["Lead.", "", "## Overview {#overview}", "", "Text."];
+  const guide = compiled(...body);
+  const withReview = (...extra: string[]) => {
+    const result = compileGuide(path, ["---", ...required, ...extra, "---", ...body].join("\n") + "\n");
+    assert.deepEqual(result.errors, []);
+    return result.guide!.contentHash;
+  };
+  assert.equal(withReview("reviewer: Synthetic Reviewer"), guide.contentHash);
+  assert.equal(withReview("reviewer: Another Reviewer", "reviewed_at: 2026-10-23", "reviewed_content_hash: abc"), guide.contentHash);
+  assert.notEqual(compiled(...body.slice(0, -1), "Other text.").contentHash, guide.contentHash);
+  assert.notEqual(withReview("also_applies_to: [route:/sales/leads/new]"), guide.contentHash);
+
+  // The hash is SHA-256 hex over these keys, in this order, with the LF body.
+  const expected = createHash("sha256")
+    .update(
+      JSON.stringify({
+        guide_key: "guide.page.sales.leads",
+        entry_key: "route:/sales/leads",
+        also_applies_to: [],
+        title: "Leads",
+        section_aliases: {},
+        contents: {},
+        list_styles: {},
+        body: body.join("\n") + "\n",
+      }),
+    )
+    .digest("hex");
+  assert.equal(guide.contentHash, expected);
+});
+
+test("holds the plain text the author typed", () => {
+  // marked's lexer does not HTML-escape text; React escapes at render, so the model must hold the characters typed.
+  const guide = compiled("Tom & Jerry say \"hi\", it's x < y", "", "Inline `a<b>&\"'` code and \\*stars\\* \\& more.");
+  assert.deepEqual(guide.lead, [
+    paragraph(text("Tom & Jerry say \"hi\", it's x < y")),
+    paragraph(text("Inline "), { kind: "code", text: "a<b>&\"'" }, text(" code and *stars* & more.")),
+  ]);
+
+  // Character references would show literally here but decoded on GitHub, so they are refused.
+  for (const reference of ["&amp;", "&copy;", "&#169;", "&#xA9;"]) {
+    refusedAt(["Text", `A ${reference} B`], 1, /character reference/, reference);
+  }
+  refusedAt(["See [x](/a&amp;b)."], 0, /character reference/);
+  const references = refusals("Text &amp; more", "and &copy; &reg; end.");
+  assert.deepEqual(references.map((error) => error.line), [firstBodyLine, firstBodyLine + 1, firstBodyLine + 1]);
+  compiled("Use `&amp;` in code, or write \\&amp; to show it.");
+});
+
+test("turns soft line breaks into spaces and keeps hard breaks", () => {
+  const guide = compiled("One line", "  and the next,", "then a hard\\", "break and another  ", "end.");
+  assert.deepEqual(guide.lead, [
+    paragraph(text("One line and the next, then a hard"), { kind: "break" }, text("break and another"), { kind: "break" }, text("end.")),
+  ]);
+});
+
+test("refuses strikethrough, task checkboxes and ordered lists that do not start at 1", () => {
+  refusedAt(["Text", "a ~~gone~~ b"], 1, /strikethrough/i);
+  refusedAt(["Text", "a ~gone~ b"], 1, /strikethrough/i);
+  refusedAt(["- one", "- [ ] two"], 1, /checkbox/i);
+  refusedAt(["- one", "- [x] two"], 1, /checkbox/i);
+  const errors = refusedAt(["Text.", "", "3. three", "4. four"], 2, /start at 1/);
+  assert.equal(errors.length, 1);
+  refusedAt(["0. zero"], 0, /start at 1/);
+
+  const guide = compiled("1. one", "2. two", "", "- a", "  1) nested");
+  assert.deepEqual(guide.lead, [
+    { kind: "list", ordered: true, items: [[paragraph(text("one"))], [paragraph(text("two"))]] },
+    { kind: "list", ordered: false, items: [[paragraph(text("a")), { kind: "list", ordered: true, items: [[paragraph(text("nested"))]] }]] },
+  ] satisfies BlockNode[]);
+});
+
+test("compiles callouts and refuses other quotes", () => {
+  const guide = compiled(
+    "> [!NOTE]",
+    "> First line",
+    "> second line.",
+    "",
+    "> [!IMPORTANT]",
+    ">",
+    "> A separate paragraph.",
+    ">",
+    "> - and a list",
+  );
+  assert.deepEqual(guide.lead, [
+    { kind: "callout", tone: "note", children: [paragraph(text("First line second line."))] },
+    {
+      kind: "callout",
+      tone: "important",
+      children: [paragraph(text("A separate paragraph.")), { kind: "list", ordered: false, items: [[paragraph(text("and a list"))]] }],
+    },
+  ] satisfies BlockNode[]);
+
+  refusedAt(["Text", "", "> [!NOTE]", "> Text", ">", "> > nested"], 5, /another quote/);
+  // The problems inside a refused quote are reported too.
+  const inside = refusedAt(["> [!NOTE]", "> Text", ">", "> > [a]: /work"], 3, /another quote/);
+  assert.ok(inside.some((error) => /definition/.test(error.message)));
+  refusedAt(["> plain <b>quote</b>"], 0, /HTML/);
+  refusedAt(["> [!note]", "> lower case"], 0, /callout/);
+  refusedAt(["> [!TIP]", "> unknown tone"], 0, /callout/);
+  refusedAt(["> [!WARNING]"], 0, /no text/);
+  refusedAt(["Text", "> \\[!NOTE]", "> escaped"], 1, /callout/);
+});
+
+test("lists every link with its own line", () => {
+  const guide = compiled(
+    "Lead [a](/a).", // 0
+    "",
+    "## Section [b](/b) {#section}", // 2
+    "",
+    "- [c](/c)", // 4
+    "",
+    "| Link | Note |", // 6
+    "| --- | --- |",
+    "| [d](/d) | x |",
+    "| y | [e](/e) |", // 9
+    "",
+    "> [!NOTE]", // 11
+    "> Text",
+    "> **[f](guide:guide.page.other#top)**",
+    "",
+    "### Sub [g](/g)", // 15
+  );
+  assert.deepEqual(guide.references, [
+    { href: "/a", line: firstBodyLine },
+    { href: "/b", line: firstBodyLine + 2 },
+    { href: "/c", line: firstBodyLine + 4 },
+    { href: "/d", line: firstBodyLine + 8 },
+    { href: "/e", line: firstBodyLine + 9 },
+    { href: "guide:guide.page.other#top", line: firstBodyLine + 13 },
+    { href: "/g", line: firstBodyLine + 15 },
+  ]);
+  assert.deepEqual(guide.sections[0].title, [text("Section "), { kind: "link", href: "/b", children: [text("b")] }]);
+});
+
+test("refuses link titles and GFM autolinks", () => {
+  refusedAt(["Text", 'See [x](/work "Work").'], 1, /title/);
+  for (const [line, href] of [
+    ["Visit https://example.com today.", "https://example.com"],
+    ["Visit www.example.com today.", "http://www.example.com"],
+    ["Write to someone@example.com today.", "mailto:someone@example.com"],
+    ["Visit <https://example.com> today.", "https://example.com"],
+  ]) {
+    const errors = refusedAt(["Text", line], 1, /link target/, line);
+    assert.ok(errors[0].message.includes(`"${href}"`), errors[0].message);
+  }
+});
+
+test("reports body errors even when the front matter fails", () => {
+  const other = "docs/guides/other.md";
+  const result = compileGuide(other, ["---", "title: A", "colour: red", "---", "", "<div>x</div>", "", "## Overview"].join("\n"));
+  assert.equal(result.guide, undefined);
+  assert.ok(result.errors.every((error) => error.path === other));
+  assert.deepEqual(
+    result.errors.map((error) => error.line),
+    [...result.errors.map((error) => error.line)].sort((a, b) => a - b),
+  );
+  assert.ok(result.errors.some((error) => error.line === 3 && /colour/.test(error.message)));
+  assert.ok(result.errors.some((error) => error.line === 6 && /HTML/.test(error.message)));
+  assert.ok(result.errors.some((error) => error.line === 8 && /section id/.test(error.message)));
+
+  // Without a closing ---, there is no body to compile: only the front matter error is reported.
+  const open = compileGuide(other, ["---", ...required, "", "***", ""].join("\n"));
+  assert.equal(open.guide, undefined);
+  assert.deepEqual(open.errors.map((error) => error.line), [1]);
+});
+
+test("link policy accepts routes and guide links and refuses everything else", () => {
+  assert.deepEqual(allowedHttpsHosts, []);
+  for (const href of ["/", "/work", "/sales/opportunities", "/sales/leads/new", "/a-b/c_d.e"]) assert.equal(linkShape(href), "route", href);
+  for (const href of ["guide:guide.page.work#how", "guide:guide.page.sales.leads#how-to-use-2"]) assert.equal(linkShape(href), "guide", href);
+  for (const href of [
+    "",
+    "work",
+    " /work",
+    "/work ",
+    "/a b",
+    "/a?b=1",
+    "/a#b",
+    "//evil.example",
+    "/\\evil.example",
+    "/x\\y",
+    "\\\\evil.example",
+    "/\t/evil.example",
+    "/a\u0000b",
+    "/a​b",
+    "javascript:alert(1)",
+    "JavaScript:alert(1)",
+    "data:text/html,x",
+    "vbscript:x",
+    "file:///etc/hosts",
+    "http://example.com",
+    "mailto:a@b.c",
+    "https://example.com",
+    "guide:guide.page.work",
+    "guide:Guide.Page#how",
+    "guide:guide.page.work#How",
+    "guide:guide.page.work#a--b",
+  ]) {
+    assert.equal(linkShape(href), "refused", JSON.stringify(href));
+  }
+});
+
+test("link policy accepts https only for a listed host", () => {
+  const hosts = ["help.example"];
+  for (const href of ["https://help.example/", "https://help.example/a/b?c=1#d", "https://HELP.example/x", "https://help.example:8443/x"]) {
+    assert.equal(linkShape(href, hosts), "https", href);
+  }
+  for (const href of [
+    "https://user@help.example/",
+    "https://user:secret@help.example/",
+    "HTTPS://help.example/",
+    "https:help.example",
+    "https:/help.example",
+    "https://help.example.evil.example/",
+    "https://evil.example/#help.example",
+    "https://evil.example\\@help.example/",
+    "https://help.example /",
+    "https://help.example/\u0007",
+    "https://help.example./",
+    "http://help.example/",
+  ]) {
+    assert.equal(linkShape(href, hosts), "refused", JSON.stringify(href));
+  }
+  // The reviewed list is empty, so no https link is accepted without a reviewed change.
+  assert.equal(linkShape("https://help.example/"), "refused");
 });

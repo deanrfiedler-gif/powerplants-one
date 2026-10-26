@@ -1,6 +1,17 @@
 // ADR-0065: this module is the only importer of marked and yaml. Everything else reads PPO's own guide model.
+import { createHash } from "node:crypto";
+import { Lexer, type MarkedToken, type Token, type Tokens } from "marked";
 import { LineCounter, isMap, isScalar, parseDocument, visit } from "yaml";
-import { guideStatuses, type GuideError, type GuideFrontMatter } from "./model";
+import { linkShape } from "./links";
+import {
+  guideStatuses,
+  type BlockNode,
+  type CompiledGuide,
+  type GuideError,
+  type GuideFrontMatter,
+  type GuideSection,
+  type InlineNode,
+} from "./model";
 
 export type FrontMatterRead = {
   front?: GuideFrontMatter;
@@ -226,3 +237,328 @@ function isCalendarDate(value: string): boolean {
   const date = new Date(Date.UTC(year, month - 1, day));
   return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
 }
+
+// The body compiler (ADR-0065, decisions 3 to 6). marked's lexer turns the body into a token tree, and the walk
+// below maps an allowlist of token types onto PPO's model. Every other construct is refused with its own file line,
+// never dropped. Only the lexer is used: nothing here renders Markdown or produces HTML.
+
+type BodyCompile = Pick<CompiledGuide, "lead" | "sections" | "references"> & { errors: GuideError[] };
+// `top` is true outside lists and callouts, where headings may sit.
+type Place = { top: boolean; callout: boolean };
+
+const sectionIdShape = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const sectionIdSuffix = /\s*\{#([^{}]*)\}$/;
+const anyIdSuffix = /\{#[^{}]*\}\s*$/;
+const calloutMarker = /^\[!(NOTE|WARNING|IMPORTANT)\]\s*\n?/;
+const footnoteText = /\[\^[^\]]+\]/g;
+const footnoteLink = /^\[\^[^\]]+\]/;
+// marked decodes numeric references in text (&#169; becomes ©) but leaves named ones (&amp;) and link targets
+// as typed, while GitHub decodes all of them. A guide uses the character itself, so the source reads as shown.
+const characterReference = /&(?:#[0-9]{1,7}|#[xX][0-9a-fA-F]{1,6}|[A-Za-z][A-Za-z0-9]{0,31});/g;
+const definitionLine = /^ {0,3}\[[^\]]+\]:/;
+const atxHeadingStart = /^ {0,3}#{1,6}(?:[ \t]|$)/;
+const softBreak = /[ \t]*\n[ \t]*/g;
+
+const refusals = {
+  html: "Raw HTML is not allowed in a guide: write the content in Markdown instead.",
+  comment: "HTML comments are not allowed in a guide: remove the comment, or put the note in the pull request.",
+  code: "Code blocks are not allowed in a guide: use inline code, such as `Ctrl+K`, for keys and short values.",
+  indentedCode: "Indented code blocks are not allowed in a guide: a line indented by four or more spaces becomes code, so remove the indent.",
+  rule: "Horizontal rules (---, *** or ___ on a line of their own) are not allowed in a guide: start a new ## section instead.",
+  setext: "A heading underlined with = or - is not allowed in a guide: write ## Title {#section-id} or ### Title instead.",
+  definition: "Reference link definitions ([label]: target) are not allowed in a guide: write each link in full, as [text](target).",
+  footnote: "Footnotes ([^…]) are not allowed in a guide: put the note in the text.",
+  image: "Images are not allowed in a guide until the private image store exists.",
+  strikethrough: "Strikethrough (~~text~~) is not allowed in a guide.",
+  checkbox: "Task list checkboxes ([ ] and [x]) are not allowed in a guide.",
+  plainQuote: "A quote must be a callout: start it with [!NOTE], [!WARNING] or [!IMPORTANT] on its first line.",
+  nestedQuote: "A callout cannot contain another quote.",
+  emptyCallout: "The callout has no text after its marker.",
+  titleHeading: "A # heading is not allowed in a guide: the title comes from the front matter, so use ## for a section.",
+  nestedHeading: "A heading cannot sit inside a list or a callout: put it on a line of its own, outside them.",
+  subheadingId: "Section ids belong to ## headings only: remove the {#…} from this ### heading.",
+  missingId: "A ## heading must end with its section id as plain text, such as ## How to use it {#how-to-use}.",
+  missingTitle: "A ## heading needs a title before its section id.",
+};
+
+// Compiles one guide file. Front matter and body problems are reported together, so an author sees them all at
+// once; the guide is returned only when there are none.
+export function compileGuide(path: string, text: string): { guide?: CompiledGuide; errors: GuideError[] } {
+  const read = readFrontMatter(path, text);
+  // Without a closing ---, the rest of the file is unread front matter rather than a body.
+  const unclosed = read.bodyLine === 1 && /^---(?:\n|$)/.test(read.body);
+  const body = unclosed ? undefined : compileBody(path, read.body, read.bodyLine);
+  const errors = [...read.errors, ...(body?.errors ?? [])].sort((a, b) => a.line - b.line);
+  if (!read.front || !body || errors.length > 0) return { errors };
+  const { lead, sections, references } = body;
+  return { guide: { path, front: read.front, lead, sections, contentHash: contentHash(read.front, read.body), references }, errors };
+}
+
+// SHA-256 hex over the reviewed content: the binding keys, the title, the section maps and the LF body. Review
+// fields are left out, so recording a review does not change the hash it records.
+function contentHash(front: GuideFrontMatter, body: string): string {
+  const { guide_key, entry_key, also_applies_to, title, section_aliases, contents, list_styles } = front;
+  const content = JSON.stringify({ guide_key, entry_key, also_applies_to, title, section_aliases, contents, list_styles, body });
+  return createHash("sha256").update(content).digest("hex");
+}
+
+// A token's line is bodyLine plus the line breaks in the raw text before it. Nested tokens count from their
+// container's line in the same way: marked strips the > and indents from nested raw text but keeps its line breaks.
+const lineBreaks = (raw: string) => raw.split("\n").length - 1;
+
+// marked's heading token also covers headings underlined with = or -, whose raw text spans two lines.
+const isAtxHeading = (raw: string) => atxHeadingStart.test(raw) && !raw.replace(/\n+$/, "").includes("\n");
+
+function compileBody(path: string, body: string, bodyLine: number): BodyCompile {
+  const errors: GuideError[] = [];
+  const references: CompiledGuide["references"] = [];
+  const sectionLines = new Map<string, number>();
+  const definitionTags = new Set<string>();
+  const refuse = (line: number, message: string) => {
+    errors.push({ path, line, message });
+  };
+
+  const tokens = new Lexer({ gfm: true, breaks: false, pedantic: false }).lex(body);
+  const lead: BlockNode[] = [];
+  const sections: GuideSection[] = [];
+  let blocks = lead;
+  let line = bodyLine;
+  for (const token of tokens) {
+    const known = token as MarkedToken; // an unknown type reaches the refusal in block()
+    if (known.type === "heading" && known.depth === 2 && isAtxHeading(known.raw)) {
+      const section = sectionHeading(known, line);
+      sections.push(section);
+      blocks = section.blocks;
+    } else {
+      const node = block(token, line, { top: true, callout: false });
+      if (node) blocks.push(node);
+    }
+    line += lineBreaks(token.raw);
+  }
+
+  // marked moves reference definitions into tokens.links. Each one is refused at its own def token above; a
+  // definition without a token of its own is found by scanning the body's lines.
+  if (Object.keys(tokens.links).some((tag) => !definitionTags.has(tag))) {
+    const reported = new Set(errors.filter((error) => error.message === refusals.definition).map((error) => error.line));
+    const found = body.split("\n").flatMap((text, index) => (definitionLine.test(text) ? [bodyLine + index] : []));
+    for (const at of found.length > 0 ? found : [bodyLine]) if (!reported.has(at)) refuse(at, refusals.definition);
+  }
+
+  return { lead, sections, references, errors };
+
+  function blockList(list: Token[], start: number, place: Place): BlockNode[] {
+    const nodes: BlockNode[] = [];
+    let at = start;
+    for (const token of list) {
+      const node = block(token, at, place);
+      if (node) nodes.push(node);
+      at += lineBreaks(token.raw);
+    }
+    return nodes;
+  }
+
+  function block(token: Token, at: number, place: Place): BlockNode | undefined {
+    const known = token as MarkedToken; // any other type falls through to the refusal below
+    switch (known.type) {
+      case "space":
+        return undefined;
+      case "paragraph":
+        return { kind: "paragraph", children: inline(known.tokens, at) };
+      case "text":
+        // A tight list item holds its text as a block-level text token.
+        if (known.tokens) return { kind: "paragraph", children: inline(known.tokens, at) };
+        break;
+      case "heading":
+        return heading(known, at, place);
+      case "list":
+        return list(known, at, place);
+      case "table":
+        // Alignment is not part of the model. The delimiter row follows the header, and each row is one line.
+        return {
+          kind: "table",
+          header: known.header.map((cell) => inline(cell.tokens, at)),
+          rows: known.rows.map((row, index) => row.map((cell) => inline(cell.tokens, at + 2 + index))),
+        };
+      case "blockquote":
+        return callout(known, at, place);
+      case "html":
+        refuse(at, isComment(known.text) ? refusals.comment : refusals.html);
+        return undefined;
+      case "code":
+        refuse(at, known.codeBlockStyle === "indented" ? refusals.indentedCode : refusals.code);
+        return undefined;
+      case "hr":
+        refuse(at, refusals.rule);
+        return undefined;
+      case "def":
+        definitionTags.add(known.tag);
+        refuse(at, refusals.definition);
+        return undefined;
+      case "checkbox":
+        refuse(at, refusals.checkbox);
+        return undefined;
+    }
+    refuse(at, `Markdown of type "${token.type}" is not allowed in a guide.`);
+    return undefined;
+  }
+
+  function sectionHeading(token: Tokens.Heading, at: number): GuideSection {
+    const title = inline(token.tokens, at);
+    const last = title.at(-1);
+    const match = last?.kind === "text" ? sectionIdSuffix.exec(last.text) : null;
+    if (last?.kind !== "text" || !match) {
+      refuse(at, refusals.missingId);
+      return { id: "", title, blocks: [] };
+    }
+    const rest = last.text.slice(0, match.index);
+    if (rest === "") title.pop();
+    else title[title.length - 1] = { kind: "text", text: rest };
+    if (title.length === 0) refuse(at, refusals.missingTitle);
+
+    const id = match[1];
+    const first = sectionLines.get(id);
+    if (!sectionIdShape.test(id)) refuse(at, `The section id "${id}" must use lower-case letters, digits and single hyphens, such as how-to-use.`);
+    else if (first !== undefined) refuse(at, `The section id "${id}" is already used on line ${first}.`);
+    else sectionLines.set(id, at);
+    return { id, title, blocks: [] };
+  }
+
+  function heading(token: Tokens.Heading, at: number, place: Place): BlockNode | undefined {
+    const children = inline(token.tokens, at);
+    if (!isAtxHeading(token.raw)) refuse(at, refusals.setext);
+    else if (token.depth === 1) refuse(at, refusals.titleHeading);
+    else if (token.depth >= 4) refuse(at, `A ${"#".repeat(token.depth)} heading is not allowed in a guide: use ## for a section or ### for a sub-heading.`);
+    else if (!place.top) refuse(at, refusals.nestedHeading);
+    else if (token.depth === 3) {
+      const last = children.at(-1);
+      if (last?.kind === "text" && anyIdSuffix.test(last.text)) refuse(at, refusals.subheadingId);
+      return { kind: "heading", children };
+    }
+    return undefined;
+  }
+
+  function list(token: Tokens.List, at: number, place: Place): BlockNode {
+    // The model has no start number, so a list that starts elsewhere would be renumbered without warning.
+    if (token.ordered && token.start !== 1) refuse(at, `An ordered list must start at 1, not ${token.start}: the guide numbers its steps from 1.`);
+    const items: BlockNode[][] = [];
+    let itemLine = at;
+    for (const item of token.items) {
+      items.push(blockList(item.tokens, itemLine, { top: false, callout: place.callout }));
+      itemLine += lineBreaks(item.raw);
+    }
+    return { kind: "list", ordered: token.ordered, items };
+  }
+
+  function callout(token: Tokens.Blockquote, at: number, place: Place): BlockNode | undefined {
+    if (place.callout) {
+      refuse(at, refusals.nestedQuote);
+      blockList(token.tokens, at, place); // report the problems inside it too
+      return undefined;
+    }
+    const [first] = token.tokens;
+    const marker = first?.type === "paragraph" ? calloutMarker.exec(first.text) : null;
+    const errorsBefore = errors.length;
+    // A refused quote is still walked, so the problems inside it are reported too.
+    const children = blockList(token.tokens, at, { top: false, callout: true });
+    const lead = children[0];
+    const head = lead?.kind === "paragraph" ? lead.children[0] : undefined;
+    if (!marker || lead?.kind !== "paragraph" || head?.kind !== "text" || !calloutMarker.test(head.text)) {
+      refuse(at, refusals.plainQuote);
+      return undefined;
+    }
+
+    // Strip the marker. Text may follow it on the next line of the same paragraph, or in a separate paragraph.
+    const rest = head.text.replace(calloutMarker, "");
+    if (rest !== "") lead.children[0] = { kind: "text", text: rest };
+    else {
+      lead.children.shift();
+      if (lead.children[0]?.kind === "break") lead.children.shift();
+    }
+    if (lead.children.length === 0) children.shift();
+    if (children.length === 0 && errors.length === errorsBefore) refuse(at, refusals.emptyCallout);
+    const tone = marker[1] === "NOTE" ? "note" : marker[1] === "WARNING" ? "warning" : "important";
+    return { kind: "callout", tone, children };
+  }
+
+  function inline(list: Token[], start: number): InlineNode[] {
+    const nodes: InlineNode[] = [];
+    // Adjacent text, escapes included, is checked as one run, so a token boundary cannot hide footnote syntax.
+    let run: { text: string; line: number } | undefined;
+    const closeRun = () => {
+      for (const match of run?.text.matchAll(footnoteText) ?? []) {
+        if (run) refuse(run.line + lineBreaks(run.text.slice(0, match.index)), refusals.footnote);
+      }
+      run = undefined;
+    };
+
+    let at = start;
+    for (const token of list) {
+      const tokenLine = at;
+      at += lineBreaks(token.raw);
+      const known = token as MarkedToken; // any other type falls through to the refusal below
+      if (known.type === "text" || known.type === "escape") {
+        for (const reference of known.type === "text" ? known.raw.matchAll(characterReference) : []) {
+          const referenceLine = tokenLine + lineBreaks(known.raw.slice(0, reference.index));
+          refuse(referenceLine, `"${reference[0]}" is a character reference: type the character itself instead.`);
+        }
+        run = run ? { text: run.text + known.text, line: run.line } : { text: known.text, line: tokenLine };
+        const last = nodes.at(-1);
+        if (last?.kind === "text") nodes[nodes.length - 1] = { kind: "text", text: last.text + known.text };
+        else if (known.text !== "") nodes.push({ kind: "text", text: known.text });
+        continue;
+      }
+      closeRun();
+      switch (known.type) {
+        case "strong":
+          nodes.push({ kind: "strong", children: inline(known.tokens, tokenLine) });
+          continue;
+        case "em":
+          nodes.push({ kind: "emphasis", children: inline(known.tokens, tokenLine) });
+          continue;
+        case "codespan":
+          nodes.push({ kind: "code", text: known.text });
+          continue;
+        case "br":
+          nodes.push({ kind: "break" });
+          continue;
+        case "link": {
+          const node = link(known, tokenLine);
+          if (node) nodes.push(node);
+          continue;
+        }
+        case "html":
+          refuse(tokenLine, isComment(known.text) ? refusals.comment : refusals.html);
+          continue;
+        case "image":
+          refuse(tokenLine, refusals.image);
+          continue;
+        case "del":
+          refuse(tokenLine, refusals.strikethrough);
+          continue;
+      }
+      refuse(tokenLine, `Markdown of type "${token.type}" is not allowed in a guide.`);
+    }
+    closeRun();
+    // A line break inside a paragraph is a soft break, shown as a single space.
+    return nodes.map((node) => (node.kind === "text" ? { kind: "text", text: node.text.replace(softBreak, " ") } : node));
+  }
+
+  function link(token: Tokens.Link, at: number): InlineNode | undefined {
+    const children = inline(token.tokens, at);
+    // With a matching definition, marked turns footnote syntax into a link.
+    if (footnoteLink.test(token.raw)) {
+      refuse(at, refusals.footnote);
+      return undefined;
+    }
+    references.push({ href: token.href, line: at });
+    if (token.title) refuse(at, `Link titles are not shown in a guide: remove the title "${token.title}" from the link.`);
+    const [reference] = token.href.match(characterReference) ?? [];
+    if (reference) refuse(at, `The link target "${token.href}" contains the character reference "${reference}": type the character itself instead.`);
+    else if (linkShape(token.href) === "refused") {
+      refuse(at, `The link target "${token.href}" is not allowed: link to a page path such as /sales/leads, or to a guide section as guide:<guide key>#<section id>.`);
+    }
+    return { kind: "link", href: token.href, children };
+  }
+}
+
+const isComment = (html: string) => html.trimStart().startsWith("<!--");
