@@ -7,6 +7,7 @@ import {
   type TestInfo,
 } from "@playwright/test";
 import { call, capture, identity, saveOriginal } from "./quality-browser";
+import { revealOwnedFollowUp } from "./owned-follow-up";
 
 import {
   keyActivate,
@@ -251,24 +252,15 @@ export async function prepareJourney(page: Page, info: TestInfo) {
   expect(activities.status(), await activities.text()).toBe(200);
   expect(activities.headers()["cache-control"]).toBe("private, no-store");
   // Earlier retained suites add real linked follow-ups. Traverse the current
-  // scoped pages without assuming this original must remain on page one.
-  const owned = page.locator(".detail-section").filter({ has: page.getByRole("heading", { name: "Owned follow-up", exact: true }) });
+  // scoped pages without assuming this original must remain on page one; the
+  // list also reloads on each Site refresh while it is being paged.
+  const owned = await revealOwnedFollowUp(page, activities, id("85"));
   const oem = owned.getByRole("link", {
     name: "SYN OEM query: intermittent sensor alarm remains unresolved",
     exact: true,
   });
-  for (let pageNumber = 0; pageNumber < 30; pageNumber++) {
-    await expect(page.getByText(/^Loading .*…$/)).toHaveCount(0);
-    if (await oem.isVisible()) break;
-    const next = owned.getByRole("button", { name: "Next linked activities", exact: true });
-    await expect(next).toBeVisible();
-    const result = page.waitForResponse((r) =>
-      new URL(r.url()).pathname === "/api/v1/activities" &&
-      r.request().method() === "GET");
-    await keyActivate(page, next);
-    expect((await result).ok()).toBe(true);
-  }
   await expect(oem).toBeVisible();
+  await expect(oem).toHaveAttribute("href", `/work/${id("85")}`);
   await capture(page, info, "journey-existing-site-and-owned-OEM-follow-up");
   await page.goto(`/equipment/${id("80")}`);
   await page.getByRole("tab", { name: "Documents & service", exact: true }).click();
