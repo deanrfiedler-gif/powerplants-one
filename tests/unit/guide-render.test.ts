@@ -232,6 +232,106 @@ test("text is escaped", () => {
   assert.equal(render(handBuilt(paragraph(text("A & B")))).includes("A &amp; B"), true);
 });
 
+// A compiled guide edited by hand can hold any JSON. Whatever is not the shape the model names must draw nothing and
+// must not throw, so one bad node cannot take down the panel. "LEAK" marks content that must never reach the markup.
+const loose = (value: unknown) => value as never;
+const shows = (guide: CompiledGuide, why: string) => {
+  let markup = "";
+  assert.doesNotThrow(() => {
+    markup = render(guide);
+  }, why);
+  assert.doesNotMatch(markup, /LEAK|\[object/, why);
+  return markup;
+};
+
+test("a node of an unknown kind draws nothing: in a title with no contents map, in a paragraph and as a block", () => {
+  const mystery = { kind: "mystery", text: "LEAK", children: [{ kind: "text", text: "LEAK" }] };
+  const childless = { kind: "mystery", text: "LEAK" }; // the review's probe: no children to read
+  const guide: CompiledGuide = {
+    ...baseGuide,
+    sections: [{
+      id: "only",
+      title: [text("Real "), loose(mystery), loose(childless), text("title")],
+      blocks: [paragraph(text("Before "), loose(mystery), text("after")), loose({ ...mystery, kind: "mystery-block" }), paragraph(text("Last"))],
+    }],
+  };
+  assert.deepEqual(guide.front.contents, {}); // the title is the contents button's label
+  const markup = shows(guide, "an unknown kind");
+  assert.deepEqual(navLabels(markup), ["Real title"]);
+  assert.match(markup, /<h3 id="ppo-guide-only" tabindex="-1">Real title<\/h3><p>Before after<\/p><p>Last<\/p><\/section>/);
+});
+
+test("a malformed inline node draws nothing and never throws", () => {
+  const malformed: unknown[] = [
+    null, 5, "LEAK", [], {}, { kind: "mystery", text: "LEAK" },
+    { kind: "text" }, { kind: "text", text: 5 }, { kind: "text", text: { LEAK: 1 } },
+    { kind: "strong" }, { kind: "strong", children: "LEAK" }, { kind: "strong", children: [null, 5, { kind: "mystery" }] },
+    { kind: "emphasis", children: null }, { kind: "emphasis", children: { LEAK: 1 } },
+    { kind: "code" }, { kind: "code", text: 5 }, { kind: "code", text: { LEAK: 1 } },
+    { kind: "link" }, { kind: "link", href: { LEAK: 1 }, children: [text("shown")] }, { kind: "link", href: "/sales/leads" }, { kind: "link", href: "/sales/leads", children: "LEAK" },
+  ];
+  for (const node of malformed) {
+    const why = `inline node ${JSON.stringify(node)}`;
+    assert.match(shows(handBuilt(paragraph(text("Kept "), loose(node), text("text"))), why), /<p>Kept .*text<\/p>/, why);
+    // The same node in a section title with no contents map, where plainText reads it.
+    shows({ ...baseGuide, sections: [{ id: "only", title: [text("T"), loose(node)], blocks: [] }] }, why);
+  }
+  assert.match(shows(handBuilt(paragraph(loose({ kind: "link", href: { LEAK: 1 }, children: [text("shown")] }))), "a link with no address"), /<p>shown<\/p>/);
+  assert.doesNotMatch(render(handBuilt(paragraph(loose({ kind: "link", href: { LEAK: 1 }, children: [text("shown")] })))), /href=/);
+});
+
+test("a malformed block node draws nothing and never throws", () => {
+  const word = (kind: string, ...children: InlineNode[]) => ({ kind, children });
+  const malformed: unknown[] = [
+    null, 5, "LEAK", [], {}, word("mystery", text("LEAK")),
+    { kind: "paragraph" }, { kind: "paragraph", children: null }, { kind: "paragraph", children: "LEAK" },
+    { kind: "heading" }, { kind: "heading", children: { LEAK: 1 } },
+    { kind: "list" }, { kind: "list", ordered: true }, { kind: "list", ordered: true, items: "LEAK" }, { kind: "list", ordered: false, items: { LEAK: 1 } },
+    { kind: "list", ordered: false, items: [null, "LEAK", {}, [null, 5, "LEAK"], [{ kind: "mystery" }], [{ kind: "paragraph" }]] },
+    { kind: "list", ordered: true, items: [null, [], "LEAK"] },
+    { kind: "list", ordered: true, items: [[{ kind: "paragraph", children: [{ kind: "strong" }, { kind: "break" }] }]] },
+    { kind: "list", ordered: true, items: [[{ kind: "paragraph", children: [{ kind: "strong", children: null }, { kind: "break" }, null] }, null, "LEAK"]] },
+    { kind: "table" }, { kind: "table", header: "LEAK", rows: "LEAK" }, { kind: "table", header: { LEAK: 1 }, rows: { LEAK: 1 } },
+    { kind: "table", header: [null, null], rows: [null, "LEAK", [null, "LEAK", 5], [[{ kind: "code" }], null]] },
+    { kind: "table", header: [[], []], rows: [[[{ kind: "code" }], [text("x")]]] },
+    { kind: "table", header: [[], []], rows: [[[{ kind: "code", text: 5 }], [text("x")]]] },
+    { kind: "table", header: [[], []], rows: [[{ kind: "code", text: "Tab" }, "LEAK"]] },
+    { kind: "callout" }, { kind: "callout", tone: "note" }, { kind: "callout", tone: { LEAK: 1 }, children: "LEAK" },
+    { kind: "callout", tone: "note", children: [null] }, { kind: "callout", tone: "note", children: [{ kind: "paragraph" }] }, { kind: "callout", tone: "note", children: [word("mystery", text("LEAK"))] },
+  ];
+  for (const node of malformed) {
+    const why = `block ${JSON.stringify(node)}`;
+    assert.match(shows(handBuilt(paragraph(text("Before")), loose(node), paragraph(text("After"))), why), /<p>Before<\/p>.*<p>After<\/p>/, why);
+    // The same node as the one block under a ### heading, where the feature grid looks at it.
+    shows(handBuilt({ kind: "heading", children: [text("Head")] }, loose(node)), why);
+  }
+});
+
+test("a malformed section, list of sections or front matter draws nothing and never throws", () => {
+  const section = baseGuide.sections[0];
+  const edited = (patch: Record<string, unknown>): CompiledGuide => loose({ ...baseGuide, ...patch });
+  const editedSection = (patch: Record<string, unknown>): CompiledGuide => edited({ sections: [{ ...section, ...patch }] });
+  const editedFront = (patch: Record<string, unknown>): CompiledGuide => edited({ front: { ...baseGuide.front, ...patch } });
+  const cases: [string, CompiledGuide][] = [
+    ["title null", editedSection({ title: null })], ["title string", editedSection({ title: "LEAK" })],
+    ["blocks null", editedSection({ blocks: null })], ["blocks string", editedSection({ blocks: "LEAK" })],
+    ["id number", editedSection({ id: 5 })], ["id missing", editedSection({ id: undefined })],
+    ["section null", edited({ sections: [null, section, "LEAK", 5, []] })],
+    ["sections null", edited({ sections: null })], ["sections string", edited({ sections: "LEAK" })],
+    ["lead null", edited({ lead: null })], ["lead string", edited({ lead: "LEAK" })], ["lead unknown", edited({ lead: [{ kind: "mystery", text: "LEAK" }] })],
+    ["contents null", editedFront({ contents: null })], ["contents string", editedFront({ contents: "LEAK" })], ["contents array", editedFront({ contents: ["LEAK"] })],
+    ["contents label object", editedFront({ contents: { only: { LEAK: 1 } } })],
+    ["list_styles null", editedFront({ list_styles: null })], ["list_styles string", editedFront({ list_styles: "LEAK" })],
+    ["title object", editedFront({ title: { LEAK: 1 } })], ["title missing", editedFront({ title: undefined })],
+    ["front null", edited({ front: null })], ["front missing", edited({ front: undefined })],
+  ];
+  for (const [why, guide] of cases) shows(guide, why);
+  // A contents label that is not text is left out, so the button falls back to the section's own title.
+  assert.deepEqual(navLabels(shows(editedFront({ contents: { only: { LEAK: 1 } } }), "label")), ["Only"]);
+  // Valid sections around a bad one still render.
+  assert.match(shows(edited({ sections: [null, section] }), "neighbours"), /<h3 id="ppo-guide-only" tabindex="-1">Only<\/h3><p>Placeholder\.<\/p>/);
+});
+
 test("no HTML injection API under src/guides", () => {
   const root = fileURLToPath(new URL("../../src/guides/", import.meta.url));
   const files = readdirSync(root, { recursive: true, encoding: "utf8" }).filter((name) => statSync(join(root, name)).isFile());
@@ -481,4 +581,69 @@ test("renders a carried-over guide exactly as the accepted panel", () => {
   assert.equal(accepted.match(/<li>/g)?.length, 4);
   assert.equal(accepted.match(/<dt>/g)?.length, 3);
   assert.equal(rendered, accepted);
+});
+
+// Task 7 rewrites shell-page-guide.tsx, and deletes the accepted-panel oracle and this guard together.
+// The oracle copies lines of the shell panel, so the parity test is only as good as the copy. This guard compares the
+// copy with the file as it stands now. The declared differences are the eyebrow expression on line 35, the choice of
+// guide on line 33, the line 43 button and the indentation of the jump statements; any other difference is drift.
+const shellEyebrow = '{showShell || !pageGuide ? "User guide" : "Page guide"}';
+const sourceLines = (source: string) => source.split("\n").map((line) => line.trim());
+const copiedSpan = (lines: string[], from: string, to: string) => {
+  const start = lines.findIndex((line) => line.startsWith(from));
+  const end = start < 0 ? -1 : lines.indexOf(to, start);
+  return end > start ? lines.slice(start, end + 1) : undefined;
+};
+const firstDifference = (actual: string[], expected: string[]) => {
+  for (let at = 0; at < Math.max(actual.length, expected.length); at++) {
+    if (actual[at] !== expected[at]) return `line ${at + 1} of the block: the oracle has ${JSON.stringify(actual[at])} but the shell has ${JSON.stringify(expected[at])}`;
+  }
+  return undefined;
+};
+function oracleDrift(shellSource: string, oracleSource: string): string[] {
+  const shell = sourceLines(shellSource);
+  const oracle = sourceLines(oracleSource);
+  const problems: string[] = [];
+  const shellJump = copiedSpan(shell, "const jump = ", "};");
+  const oracleJump = copiedSpan(oracle, "const jump = ", "};");
+  const shellPanel = copiedSpan(shell, "const numbered = ", "</article>;");
+  const oraclePanel = copiedSpan(oracle, "const numbered = ", "</article>;");
+  if (!shellJump || !oracleJump || !shellPanel || !oraclePanel) return ["a copied block was not found: the jump handler or the panel from `const numbered` to `</article>;`"];
+  if (!shellPanel.some((line) => line.includes(shellEyebrow))) problems.push("the shell no longer holds the eyebrow expression the oracle replaces with {eyebrow}");
+  const expectedPanel = shellPanel
+    .filter((line) => !line.startsWith("const guide: PageGuide = ") && !line.startsWith("{!showShell && <button"))
+    .map((line) => line.replace(shellEyebrow, "{eyebrow}"));
+  const panelDifference = firstDifference(oraclePanel, expectedPanel);
+  if (panelDifference) problems.push(`panel markup drifted, ${panelDifference}`);
+  const jumpDifference = firstDifference(oracleJump, shellJump);
+  if (jumpDifference) problems.push(`jump handler drifted, ${jumpDifference}`);
+  return problems;
+}
+// A file that cannot be read fails the guard: it never skips.
+const readSource = (relative: string) => {
+  try {
+    return readFileSync(fileURLToPath(new URL(relative, import.meta.url)), "utf8");
+  } catch (error) {
+    return assert.fail(`cannot read ${relative}, so the oracle cannot be checked: ${error instanceof Error ? error.message : String(error)}`);
+  }
+};
+
+test("the accepted-panel oracle still copies shell-page-guide.tsx", () => {
+  assert.deepEqual(oracleDrift(readSource("../../src/components/shell-page-guide.tsx"), readSource("./guide-render-accepted.tsx")), []);
+});
+
+test("the oracle drift guard fails when the shell panel changes, and when a file cannot be read", () => {
+  const shell = readSource("../../src/components/shell-page-guide.tsx");
+  const oracle = readSource("./guide-render-accepted.tsx");
+  const changed = (find: string, replacement: string) => {
+    assert.ok(shell.includes(find), `the shell should hold ${find}`);
+    return shell.replace(find, replacement);
+  };
+  assert.match(oracleDrift(changed("How to use it", "How to use this"), oracle).join("\n"), /panel markup drifted/);
+  assert.match(oracleDrift(changed('<section className="ppo-guide-section"><h3>On your phone</h3>', '<section className="ppo-guide-section"><h3>Extra</h3></section>\n    <section className="ppo-guide-section"><h3>On your phone</h3>'), oracle).join("\n"), /panel markup drifted/);
+  assert.match(oracleDrift(changed(shellEyebrow, '"Guide"'), oracle).join("\n"), /eyebrow expression/);
+  assert.match(oracleDrift(changed('section?.focus({ preventScroll: true });', 'section?.focus();'), oracle).join("\n"), /jump handler drifted/);
+  assert.match(oracleDrift(changed("const numbered = ", "const renamed = "), oracle).join("\n"), /was not found/);
+  assert.match(oracleDrift(shell, oracle.replace("<h4>{title}</h4>", "<h5>{title}</h5>")).join("\n"), /panel markup drifted/);
+  assert.throws(() => readSource("../../src/components/no-such-file.tsx"), /cannot read/);
 });

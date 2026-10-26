@@ -6,6 +6,7 @@ import type { PageGuide } from "../../src/components/leads-guide";
 // If they differ, fix the renderer in src/guides/render.tsx: never edit this copy to follow it. The eyebrow stands in
 // for the expression on line 35, and `guide` for line 33's choice between the page guide and the shell guide.
 // The click handlers are copied too, though renderToStaticMarkup never shows them.
+// guide-render.test.ts compares this copy with shell-page-guide.tsx line by line, so drift fails a test.
 const jump = (id: string) => {
   const section = document.getElementById(id);
   section?.focus({ preventScroll: true });
