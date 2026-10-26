@@ -29,26 +29,33 @@ export const carriedOverSources = [
 // pilot rewrite) removes this entry.
 export const awaitingRewrite = ["docs/guides/crm-deals.md"] as const;
 
-// What one file contributes. `front` holds the front matter lines, so that a cross-check can name the file line of a
-// key (the front matter starts on file line 2). A file that is not a guide has no errors and no lines.
+// What one file contributes. `front` holds the front matter lines of a guide that compiled, so that a cross-check can
+// name the file line of a key (the front matter starts on file line 2). A file that is not a guide has no errors.
 type FileRead = { guide?: CompiledGuide; errors: GuideError[]; front: string[] };
 
-const guideKeyLine = /^guide_key\s*:/;
+// Every file under docs/guides/pages is a guide, so one that cannot be read as a guide is an error, never a skipped
+// document. Elsewhere under docs/guides a Markdown file is a guide when a line in its first 40 declares a guide key.
+// That test is loose on purpose (leading space, quotes, - for _, any case), so that a mistyped key is reported by the
+// compiler instead of letting the file drop out of the library.
+const pagesFolder = `${guidesFolder}/pages/`;
+const guideKeyLine = /^\s*["']?guide[_-]key["']?\s*:/i;
+const guideKeyWindow = 40;
+const isMarkdown = (path: string) => /\.md$/i.test(path);
 
 const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
-// The lines between the opening --- and the closing ---, or to the end of the file when it is not closed, so that
-// a guide with broken front matter is still found and reported rather than ignored.
-function frontMatterOf(text: string): string[] | undefined {
-  const lines = text.replace(/^﻿/, "").replace(/\r\n/g, "\n").split("\n");
-  if (lines[0].trimEnd() !== "---") return undefined;
-  const closing = lines.indexOf("---", 1);
-  return lines.slice(1, closing < 0 ? lines.length : closing);
-}
+const declaresGuideKey = (text: string) => text.replace(/\r\n/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
 
-// Every Markdown file under docs/guides that is not waiting for its rewrite, as sorted repository paths.
-async function markdownPaths(root: string): Promise<string[]> {
+// The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter
+// is well formed.
+const frontMatterLines = (text: string) => {
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  return lines.slice(1, lines.indexOf("---", 1));
+};
+
+// Every file under docs/guides that is not waiting for its rewrite, as sorted repository paths.
+async function filePaths(root: string): Promise<string[]> {
   const skipped = new Set<string>(awaitingRewrite);
   const found: string[] = [];
   const walk = async (folder: string): Promise<void> => {
@@ -63,7 +70,7 @@ async function markdownPaths(root: string): Promise<string[]> {
       if (child.isSymbolicLink()) continue;
       const path = `${folder}/${child.name}`;
       if (child.isDirectory()) await walk(path);
-      else if (child.isFile() && child.name.endsWith(".md") && !skipped.has(path)) found.push(path);
+      else if (child.isFile() && !skipped.has(path)) found.push(path);
     }
   };
   await walk(guidesFolder);
@@ -75,6 +82,11 @@ async function markdownPaths(root: string): Promise<string[]> {
 const cache = new Map<string, { mtimeMs: number; read: FileRead }>();
 
 async function readGuideFile(root: string, path: string): Promise<FileRead> {
+  const inPages = path.startsWith(pagesFolder);
+  if (!isMarkdown(path)) {
+    const message = "Guide files use the .md extension: rename this file, or move it out of docs/guides/pages.";
+    return { errors: inPages ? [{ path, line: 1, message }] : [], front: [] };
+  }
   const file = resolve(root, path);
   const key = `${file}\n${path}`;
   const caching = process.env.NODE_ENV !== "production";
@@ -88,32 +100,28 @@ async function readGuideFile(root: string, path: string): Promise<FileRead> {
   } catch (error) {
     return { errors: [{ path, line: 1, message: `The file could not be read (${errorCode(error) ?? "unknown error"}).` }], front: [] };
   }
-  const read = compileFile(path, text);
+  const read: FileRead = inPages || declaresGuideKey(text) ? compileFile(path, text) : { errors: [], front: [] };
   if (caching) cache.set(key, { mtimeMs, read });
   return read;
 }
 
-// A file is a guide when its front matter declares a guide_key. Presence of an entry_key decides nothing, so a
-// malformed guide cannot slip through as an ordinary document.
 function compileFile(path: string, text: string): FileRead {
-  const front = frontMatterOf(text);
-  if (!front?.some((line) => guideKeyLine.test(line))) return { errors: [], front: [] };
   try {
     const { guide, errors } = compileGuide(path, text);
-    return { guide, errors, front };
+    return { guide, errors, front: guide ? frontMatterLines(text) : [] };
   } catch (error) {
     // marked can throw on pathological input, such as thousands of nested quotes. That file is reported alone.
     const reason = error instanceof Error ? `${error.name}: ${error.message.split("\n")[0]}` : "unknown error";
-    return { errors: [{ path, line: 1, message: `The guide could not be compiled (${reason}). Very deeply nested quotes or lists can cause this.` }], front };
+    return { errors: [{ path, line: 1, message: `The guide could not be compiled (${reason}). Very deeply nested quotes or lists can cause this.` }], front: [] };
   }
 }
 
-// Discovers docs/guides/**/*.md, compiles each guide and checks the guides against the register and against each
-// other. A guide with any error, from its own file or from a cross-check, is left out of `guides`.
+// Discovers the guide files under docs/guides, compiles each and checks the guides against the register and against
+// each other. A guide with any error, from its own file or from a cross-check, is left out of `guides`.
 export async function readGuideLibrary(root: string, entries: Entry[]): Promise<GuideLibrary> {
   const errors: GuideError[] = [];
   const candidates: Candidate[] = [];
-  for (const path of await markdownPaths(root)) {
+  for (const path of await filePaths(root)) {
     const read = await readGuideFile(root, path);
     errors.push(...read.errors);
     if (read.guide) candidates.push({ guide: read.guide, front: read.front });

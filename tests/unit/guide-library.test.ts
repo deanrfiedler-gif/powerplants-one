@@ -386,6 +386,87 @@ test("discovery finds guides by their guide_key and ignores other files", async 
   assert.match(frontMatterError("spaced.md")?.message ?? "", /must start with front matter/);
 });
 
+// ADR-0065, decision 8: every guide compiles or the build fails, so no file may drop out of the library unreported.
+// Each probe below is a valid guide in every other respect.
+test("discovery accounts for every probe file instead of skipping it", async (t) => {
+  const valid = guideText({ guide_key: "guide.page.a", entry_key: "route:/a" });
+  const probe = async (path: string, text: string) => readGuideLibrary(await makeRoot(t, { [path]: text }), entries);
+  const refused = async (name: string, path: string, text: string) => {
+    const result = await probe(path, text);
+    assert.deepEqual(result.guides, [], name);
+    assert.ok(result.errors.length > 0, `${name}: an error was expected`);
+    assert.ok(result.errors.every((error) => error.path === path), `${name}: every error names ${path}`);
+    return result;
+  };
+
+  // Front matter that does not open on line 1 is an error for the file, however the opener is spoiled.
+  await refused("a leading blank line", "docs/guides/blank.md", `\n${valid}`);
+  await refused("a leading comment", "docs/guides/comment.md", `<!-- a note -->\n${valid}`);
+  await refused("a leading space", "docs/guides/space.md", valid.replace(/^---/, " ---"));
+  // A misspelt key is found by its likeness to guide_key, and then refused because guide_key is missing.
+  const typo = await refused("a mistyped key", "docs/guides/typo.md", valid.replace("guide_key:", "guide-key:"));
+  assert.ok(typo.errors.some((error) => /guide_key/.test(error.message)));
+
+  // The extension is read in any case, and a quoted key is the same key to YAML. Both are valid guides, so they
+  // join the library: found and compiled, which is what matters.
+  for (const [name, path, text] of [
+    ["an upper-case extension", "docs/guides/upper.MD", valid],
+    ["a quoted key", "docs/guides/quoted.md", valid.replace("guide_key:", '"guide_key":')],
+  ]) {
+    const result = await probe(path, text);
+    assert.deepEqual(result.errors, [], name);
+    assert.deepEqual(result.guides.map((guide) => guide.path), [path], name);
+  }
+
+  // The same files with a real defect are refused, by name.
+  const wrong = guideText({ guide_key: "guide.page.wrong", entry_key: "route:/a" });
+  await refused("an upper-case extension with a defect", "docs/guides/upper.MD", wrong);
+  await refused("a quoted key with a defect", "docs/guides/quoted.md", wrong.replace("guide_key:", '"guide_key":'));
+});
+
+test("every file under pages is a guide, and a file that cannot be read as one is an error", async (t) => {
+  const valid = (key: string, entryKey: string) => guideText({ guide_key: key, entry_key: entryKey });
+  const root = await makeRoot(t, {
+    "docs/guides/pages/a.MD": valid("guide.page.a", "route:/a"),
+    "docs/guides/pages/sub/b.md": valid("guide.page.b", "route:/b"),
+    "docs/guides/pages/plain.md": "# No front matter, and no guide_key to find\n",
+    "docs/guides/pages/notes.txt": valid("guide.page.sales.leads", "route:/sales/leads"),
+    "docs/guides/pages/sub/image.png": "not a guide",
+  });
+  const result = await readGuideLibrary(root, entries);
+
+  assert.deepEqual(result.guides.map((guide) => guide.path), ["docs/guides/pages/a.MD", "docs/guides/pages/sub/b.md"]);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], [
+    "docs/guides/pages/notes.txt",
+    "docs/guides/pages/plain.md",
+    "docs/guides/pages/sub/image.png",
+  ]);
+  const at = (name: string) => result.errors.filter((error) => error.path === `docs/guides/pages/${name}`);
+  for (const name of ["notes.txt", "sub/image.png"]) {
+    assert.equal(at(name).length, 1, name);
+    assert.equal(at(name)[0].line, 1, name);
+    assert.match(at(name)[0].message, /\.md extension/, name);
+  }
+  assert.ok(at("plain.md").some((error) => error.line === 1 && /front matter/.test(error.message)));
+});
+
+test("outside pages, a Markdown file is a guide only when its first 40 lines declare a guide key", async (t) => {
+  const prose = (count: number) => Array.from({ length: count }, () => "Synthetic prose.");
+  const root = await makeRoot(t, {
+    "docs/guides/notes/readme.md": "# Notes\n\nNothing here names a guide.\n",
+    "docs/guides/notes/mentions.md": ["# Notes", "", "A guide_key is written in the front matter."].join("\n"),
+    // The key sits on line 41, past the window, so this file is an ordinary document.
+    "docs/guides/notes/late.md": [...prose(40), "guide_key: guide.page.late"].join("\n"),
+    // The key sits on line 40, inside the window, so this file is a guide and has no front matter to compile.
+    "docs/guides/notes/early.md": [...prose(39), "guide_key: guide.page.early"].join("\n"),
+    "docs/guides/notes/early.txt": ["guide_key: guide.page.ignored"].join("\n"),
+  });
+  const result = await readGuideLibrary(root, entries);
+
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], ["docs/guides/notes/early.md"]);
+});
+
 test("a missing guides folder is an empty library", async (t) => {
   assert.deepEqual(await readGuideLibrary(await makeRoot(t), entries), { guides: [], errors: [] });
 });
