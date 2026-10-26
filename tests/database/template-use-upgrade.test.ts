@@ -49,7 +49,7 @@ test("R4 populated 0093 upgrade preserves publications, exact ledgers and queued
       tables.map((t) =>
         rows(
           // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
+          `SELECT to_jsonb(r) AS value FROM ppo.${t} r${t === "seed_receipts" ? " WHERE r.version NOT IN (107,108,110,120)" : t === "permission_grants" ? " WHERE r.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(r)::text`,
         ),
       ),
     );
@@ -67,7 +67,7 @@ test("R4 populated 0093 upgrade preserves publications, exact ledgers and queued
   );
   assert.deepEqual(
     upgraded.filter((r) => r.version > 93).map((r) => r.version),
-    [94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119],
+    [94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120],
   );
   for (const t of ["template_use_policies", "template_use_assignments"])
     assert.deepEqual(await rows(`SELECT * FROM ppo.${t}`), []);
