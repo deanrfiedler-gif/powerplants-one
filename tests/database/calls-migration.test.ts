@@ -41,10 +41,20 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
     ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   await migrate();
   await seed();
-  assert.deepEqual(await snapshot(tables), before);
+  const after = await snapshot(tables);
+  const readinessV3 = "94000000-0000-4000-8000-000000000003";
+  assert.equal(after.policy_versions.filter((r: {id:string}) => r.id === readinessV3).length, 1);
+  assert.equal(after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id === readinessV3).length, 10);
+  assert.deepEqual(after.seed_receipts.filter((r: {version:number}) => r.version > 117).map((r: {version:number}) => r.version), [120]);
+  after.policy_versions = after.policy_versions.filter((r: {id:string}) => r.id !== readinessV3);
+  after.policy_criteria = after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id !== readinessV3);
+  after.seed_receipts = after.seed_receipts.filter((r: {version:number}) => r.version !== 120);
+  assert.deepEqual(after.contact_outcomes, before.contact_outcomes.map((r: Record<string,unknown>) => ({...r,purpose:"DateAgreement",site_checks:null})));
+  after.contact_outcomes = before.contact_outcomes;
+  assert.deepEqual(after, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",
