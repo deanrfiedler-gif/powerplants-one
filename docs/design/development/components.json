@@ -1116,9 +1116,17 @@
           {
             "node": "408:430",
             "name": "Grid / Done cell (proposed)"
+          },
+          {
+            "node": "2651:7352",
+            "name": "Grid / Group band (proposed)"
+          },
+          {
+            "node": "2651:7385",
+            "name": "Grid / List row (phone, proposed)"
           }
         ],
-        "note": "Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections."
+        "note": "Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. Grid / Group band (proposed) spans the select and settings columns in its group's colour, and Grid / List row (phone, proposed) is the drawn candidate for the register-table-phone gap; the Figma file audit (R6, 25 October 2026) drew them, and no accepted page uses them yet."
       },
       "review": null
     },
@@ -1295,14 +1303,14 @@
       ],
       "figma": {
         "status": "Mapped",
-        "location": "Deals · CR-04 549:2 › Page components (proposal)",
+        "location": "Components 1:4 › Components · Sales parts",
         "components": [
           {
             "node": "551:947",
             "name": "Deals/Card"
           }
         ],
-        "note": "Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses (no rotting rule in the app). It stays on the Deals page; moving it to Components 1:4 is separate work."
+        "note": "Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses (no rotting rule in the app). It moved from the Deals page to Components 1:4 on 25 October 2026 (Figma file audit R3); the node ID and every instance are unchanged."
       },
       "review": null
     },
@@ -1370,14 +1378,14 @@
       ],
       "figma": {
         "status": "Partial",
-        "location": "Deals · CR-04 549:2 › Page components (proposal)",
+        "location": "Components 1:4 › Components · Sales parts",
         "components": [
           {
             "node": "2362:63788",
             "name": "Deals/Forecast card (proposal)"
           }
         ],
-        "note": "The forecast card of the accepted Deals Forecast view (24 October 2026). The month lanes and stage groups are drawn in the page frame 2362:63797, not as components. It stays on the Deals page; moving it to Components 1:4 is separate work."
+        "note": "The forecast card of the accepted Deals Forecast view (24 October 2026). The month lanes and stage groups are drawn in the page frame 2362:63797, not as components. It moved from the Deals page to Components 1:4 on 25 October 2026 (Figma file audit R3); the node ID and every instance are unchanged."
       },
       "review": null
     },
@@ -2224,7 +2232,7 @@
       ],
       "figma": {
         "status": "Partial",
-        "location": "Components › Job pack and Components › Record",
+        "location": "Components › Job pack, Components › Record and Components › Controls",
         "components": [
           {
             "node": "287:3282",
@@ -2237,9 +2245,21 @@
           {
             "node": "224:12",
             "name": "Record / Field"
+          },
+          {
+            "node": "2649:7479",
+            "name": "Controls / Form field (proposed)"
+          },
+          {
+            "node": "2648:7409",
+            "name": "Controls / Choice option (proposed)"
+          },
+          {
+            "node": "2648:7306",
+            "name": "Controls / Switch (proposed)"
           }
         ],
-        "note": "Job pack / Form field (Default, Edited, Error) and Select row are the drawn editable controls; Record / Field is the read-only label and value. Date, lookup and select controls are not drawn as components."
+        "note": "Job pack / Form field (Default, Edited, Error) and Select row are the drawn editable controls on accepted pages; Record / Field is the read-only label and value. Controls / Form field (proposed) adds Input, Select, Date and Textarea with Focus, Error and Disabled, and Controls / Choice option and Switch (proposed) add radio, checkbox and switch controls; the Figma file audit (R6, 25 October 2026) drew them, and no accepted page uses them yet. Lookup is not drawn as a component."
       },
       "review": null
     },
@@ -2705,14 +2725,18 @@
       ],
       "figma": {
         "status": "Partial",
-        "location": "Components › Job pack",
+        "location": "Components › Job pack and Components › Controls",
         "components": [
           {
             "node": "287:3282",
             "name": "Job pack / Form field"
+          },
+          {
+            "node": "2649:7479",
+            "name": "Controls / Form field (proposed)"
           }
         ],
-        "note": "Only the field-level Error state is drawn. No error summary component exists."
+        "note": "Only the field-level Error state is drawn, in Job pack / Form field and in Controls / Form field (proposed). No error summary component exists."
       },
       "review": null
     },
@@ -4294,10 +4318,15 @@
         }
       ],
       "figma": {
-        "status": "None",
-        "location": "Components",
-        "components": [],
-        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one."
+        "status": "Partial",
+        "location": "Components › Controls",
+        "components": [
+          {
+            "node": "2649:7479",
+            "name": "Controls / Form field (proposed)"
+          }
+        ],
+        "note": "Controls / Form field (proposed) draws the field family that phone frames use. Its value text is 14 px, as on the accepted pages, while the runtime uses at least 16 px on phones; no phone-specific variant is drawn."
       },
       "review": null
     },
@@ -7665,7 +7694,7 @@
         "status": "None",
         "location": "Components",
         "components": [],
-        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2."
+        "note": "No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The Customer 360 register is drawn only on the proposal page 554:2, archived on 25 October 2026."
       },
       "review": null
     },
@@ -7740,7 +7769,7 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "location": "Screen Configurator Workbench · ES-08 406:2",
         "components": [
           {
             "node": "408:83278",
@@ -7966,7 +7995,7 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "ES-08 · Screen Configurator Workbench 406:2",
+        "location": "Screen Configurator Workbench · ES-08 406:2",
         "components": [
           {
             "node": "415:4566",
@@ -8272,14 +8301,14 @@
       ],
       "figma": {
         "status": "Proposal only",
-        "location": "Customer 360 (proposal) 554:2",
+        "location": "Customer 360 (proposal) 554:2, archived",
         "components": [
           {
             "node": "555:161360",
             "name": "CS-01 / Summary tile (proposal)"
           }
         ],
-        "note": "Stays on the proposal page until Customer 360 is accepted."
+        "note": "Stays on the Customer 360 proposal page, which was superseded by Organisations · CS-01 and archived on 25 October 2026 (Figma file audit R4). Reference only."
       },
       "review": null
     },
