@@ -346,3 +346,7 @@ The `/admin/access` register reuses this component with the accepted 60 px toolb
 ## Outputs consumer — DK-03
 
 The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.
+
+## SV-03 register consumer — 24 October 2026
+
+The Work orders register composes this existing control with local SV-03 geometry and native permission-scoped reads. The host state binding covers queues, filtering, selection, snapshot, denied/empty/error/partial states and 390/320 px. The shell adds only a neutral work-order count mount; its established rail and phone controls remain shared. See [work-order evidence](../../../testing/evidence/work-order-register/README.md). Owner visual review is pending; no review fingerprint is changed.

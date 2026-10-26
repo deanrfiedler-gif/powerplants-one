@@ -46733,18 +46733,16 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-24",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Implementation validation in progress; docs/testing/evidence/work-order-register/README.md; owner review pending.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Work order register to work towards this outcome: An authorised work order has a clear basis for delivery.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "A request is not a work order; extra work requires the applicable authority."
+            "Find permitted work orders, review the exact scope and planning position, and open the record for controlled changes."
           ],
           "steps": [],
           "rows": [],
@@ -46765,48 +46763,26 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Confirm work authority and the exact scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose a view such as Ready to authorise or Visit needs review.",
+            "Filter by owner, site or a literal search; counts cover readable orders matching those filters before pagination.",
+            "Open a reference or phone row to inspect scope, readiness and visits.",
+            "Open work order to edit, assess or authorise one exact revision."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Work order register · Register / workspace"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Desktop uses the shared Service rail, view menu, compact toolbar and grid. Column settings hide optional columns.",
+            "On phone the compact header opens Choose view and Filter. Pull down to refresh, or use Refresh in Filter."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
@@ -46824,13 +46800,11 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Select checkboxes on desktop, or press and hold a phone row; Shift+Space also toggles selection.",
+            "Open in sequence reviews selected rows from this page. Export list downloads those rows as CSV; it is not an all-record export.",
+            "Use Previous page and Next page after filtering. Changing filters clears selection and starts at the first page."
           ],
-          "steps": [
-            "Confirm work authority and the exact scope",
-            "Review readiness and any out-of-scope findings",
-            "Use controlled successor scope when requirements change"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -46838,9 +46812,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "An authorised work order has a clear basis for delivery.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A request is not a work order; extra work requires the applicable authority."
+            "Open work order carries the current register query as return context. Linked requests open their native record; Schedule owns booking.",
+            "A proposed visit on a draft needs scope review and grants no booking or dispatch authority."
           ],
           "steps": [],
           "rows": [],
@@ -46849,38 +46822,14 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Draft and Authorised are the native states. Successor in draft preserves the exact previously authorised revision.",
+            "Counts are complete for the matching readable population only when the read is Complete. At least indicates partial source coverage; refresh before relying on it.",
+            "Snapshot history contains native work-order commands and visit proposals only. It excludes independent scheduling, field, Finance and legacy activity."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
@@ -46896,38 +46845,13 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "A failed or denied read never becomes a zero count. Retry the read or reset filters.",
+            "Read-only snapshots have no authorisation action. Controlled commands and uncertain-save recovery remain on the record page."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",

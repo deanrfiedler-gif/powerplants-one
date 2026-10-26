@@ -8923,7 +8923,7 @@
       "title": "Work order register",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Permission-scoped work orders, attention queues, exact scope and visit position, with selected-record review and export.",
       "path": "/service/work-orders",
       "source_paths": [
         "src/app/(business)/service/work-orders/page.tsx"
@@ -8944,11 +8944,14 @@
         "src/service/work-order-register.ts",
         "src/service/work-order-register-model.ts",
         "docs/decisions/work-order-register-backend.md",
-        "docs/testing/evidence/work-order-register/README.md"
+        "docs/testing/evidence/work-order-register/README.md",
+        "src/components/work-order-register.tsx",
+        "src/components/work-order-register.css",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
+      "functional_status": "Native register implementation in progress; checks and capture review recorded in docs/testing/evidence/work-order-register/README.md. Owner review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

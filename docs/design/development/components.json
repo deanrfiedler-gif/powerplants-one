@@ -224,6 +224,11 @@
           "id": "outputs-native",
           "label": "Outputs exact issue and recovery",
           "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -283,7 +288,8 @@
         "src/access/identity-register.ts",
         "src/app/styles/access-register.css",
         "docs/design/development/access-identity-register-fixtures.json",
-        "docs/design/development/outputs-fixtures.json"
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -467,7 +473,8 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues",
-        "route:/documents/issues/service-reports/[id]"
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -737,6 +744,14 @@
           "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -924,6 +939,11 @@
           "id": "outputs-native",
           "label": "Outputs exact issue and recovery",
           "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -978,7 +998,8 @@
         "src/access/identity-register.ts",
         "src/app/styles/access-register.css",
         "docs/design/development/access-identity-register-fixtures.json",
-        "docs/design/development/outputs-fixtures.json"
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -1031,7 +1052,8 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues",
-        "route:/documents/issues/service-reports/[id]"
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -1179,6 +1201,14 @@
           "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
           "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
           "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4817,6 +4847,11 @@
           "id": "outputs-native",
           "label": "Outputs exact issue and recovery",
           "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -4951,7 +4986,8 @@
         "src/access/identity-register.ts",
         "src/app/styles/access-register.css",
         "docs/design/development/access-identity-register-fixtures.json",
-        "docs/design/development/outputs-fixtures.json"
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -5025,7 +5061,8 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues",
-        "route:/documents/issues/service-reports/[id]"
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -5349,6 +5386,14 @@
           "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
           "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
           "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
