@@ -18,6 +18,7 @@ Current ES-07 contribution: 330 entries, 176 source routes and 37 component reco
 | `systems/*.md` | Shell, theme, guidance and offline cross-page contracts |
 | `src/app/globals.css`, `src/components/ui/` | Runtime tokens and shared component implementation; the theme page reads these |
 | `docs/reference/ui/module-workflow-maps/` | Automatically discovered journey-map files; earlier issues remain available |
+| [`figjam-workflow-board.md`](figjam-workflow-board.md) | Section index (node IDs, coverage, basis and open items) for the private workflow diagrams FigJam board; cited by name and node ID, never by link |
 
 The imported baseline has 150 scopes and 110 source destinations from r05. Two new development pages and four shared systems extend it to 266 entries, 262 draft articles and 266 design references. Eight existing images are linked across fifteen baseline entries. Their provenance distinguishes design references from implementation captures. Missing images are visible work, not broken placeholder links. The standalone r05 is a retained portable issue; routine changes belong here rather than in a new HTML revision.
 
