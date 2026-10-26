@@ -5896,7 +5896,12 @@
         "src/access/local-team-screens.tsx",
         "src/access/team-creation.tsx",
         "src/app/api/v1/admin/access/teams/context/route.ts",
-        "src/access/reviews.ts"
+        "src/access/reviews.ts",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "src/app/api/v1/admin/access/route.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -14857,12 +14862,17 @@
       "title": "Users and access",
       "kind": "route",
       "module": "AD",
-      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
+      "summary": "Accepted-design identity register with current grant states, recorded scope, local teams and open requests; read-only inspection and existing person handovers. Owner visual review pending.",
       "path": "/admin/access",
       "source_paths": [
         "src/app/(business)/admin/access/page.tsx",
         "src/access/screens.tsx",
-        "src/access/service.ts"
+        "src/access/service.ts",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "src/app/api/v1/admin/access/route.ts"
       ],
       "guide_key": "guide.route-admin-access",
       "design_path": "docs/design/development/pages/route-admin-access.md",
