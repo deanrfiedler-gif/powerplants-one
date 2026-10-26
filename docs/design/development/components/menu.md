@@ -98,6 +98,9 @@ Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy
 
 SV-04 retains the existing global More control beside its phone record-action dock. It must remain reachable after the header becomes Back; Account and module navigation cannot depend on clicking a temporary loading header. Exact host fixture: tests/browser/appointment-detail.spec.ts at 390/320, including pointer opening and Escape focus return. Owner visual review of this host adaptation remains pending.
 
+
+Reviews & approvals consumes this shared control at `route:/estimating/reviews`; see the [page-specific composition and states](../pages/route-estimating-reviews.md). Existing consumers and review records remain independent.
+
 ## AD-01 identity register host
 
 The `/admin/access` register reuses this component with the accepted 60 px toolbar, 40 px grid and compact phone rows. Host states and consumer bindings are in [the fixture inventory](../access-identity-register-fixtures.json); [execution evidence](../../../testing/evidence/access-identity-register/README.md) distinguishes real database/HTTP checks from the visual-only Figma fixture. Existing component behaviour and review records remain unchanged. Owner/device/screen-reader acceptance is pending.

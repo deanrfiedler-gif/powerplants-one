@@ -47,3 +47,6 @@ The saved-estimate entry now links `/estimating/estimates/[id]/review`. Exact su
 ## Queue backend - 12 October 2026
 
 The [read-only queue contract](../../../decisions/estimating-review-queue.md) supplies `GET /api/v1/estimating/reviews` over exact ES-04 submissions and ES-05 prepared quotations. Counts cover authorised rows in one candidate window; a partial or filtered empty window is not a complete backlog. Record links return to the existing native review/release page. The [accepted Figma composition](../../../decisions/estimate-reviews-design.md) remains the page reference; its route, shared shell, record windows, loading/error/stale states and window-count presentation remain unbuilt. This API addition grants no visual review fingerprint or owner acceptance.
+
+
+The shared [Reviews & approvals register](route-estimating-reviews.md) now supplies the permission-scoped ES-04/ES-05 queue and exact native handovers at `/estimating/reviews`. Earlier standalone workflow proposals remain separate from this accepted register implementation.

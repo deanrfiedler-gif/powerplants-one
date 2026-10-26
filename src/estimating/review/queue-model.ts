@@ -29,6 +29,8 @@ export type QueueRow = {
   title: string;
   customer: string;
   owner: string;
+  submitted_by: string;
+  site: { id: string; name: string } | null;
   kind: "Completeness" | "SourcePrice" | "Technical" | "QuotationApproval";
   sequence: number;
   submitted_at: string;
@@ -45,6 +47,22 @@ export type QueueRow = {
   currency: "AUD";
   tax_basis: string;
   href: string;
+};
+
+export type ReviewQueueData = {
+  items: QueueRow[];
+  counts: Record<QueueView, number>;
+  quotation_count: number;
+  sites: { id: string; name: string }[];
+  counts_scope: "CurrentCandidateWindow";
+  completeness: "PartialWindow" | "CompleteWindow";
+  quotation_source: "NotRequested" | "Available" | "Denied";
+  offset: number;
+  candidate_limit: number;
+  next_offset: number | null;
+  as_of: string;
+  waiting_policy: "NotConfigured";
+  synthetic: boolean;
 };
 
 function integer(

@@ -1125,6 +1125,20 @@
       "application_proof": "tests/browser/access-roles.spec.ts",
       "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
       "adaptations": "docs/design/development/pages/route-admin-access.md"
+    },
+    {
+      "id": "estimate-reviews-figma-register",
+      "route": "/estimating/reviews",
+      "scope": "#ppo-estimate-reviews",
+      "layout": "full-bleed",
+      "design": "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-01-Desktop-Register-r01.png",
+      "sha256": "c79940620b40ca64c0a586a92000595a63523d9878816ef45612484d98e0e781",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/estimate-reviews-register.spec.ts",
+      "application_proof": "tests/browser/estimate-reviews-register.spec.ts",
+      "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
+      "adaptations": "docs/decisions/estimating-review-queue.md"
     }
   ]
 }
