@@ -1139,6 +1139,48 @@
       "application_proof": "tests/browser/estimate-reviews-register.spec.ts",
       "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
       "adaptations": "docs/decisions/estimating-review-queue.md"
+    },
+    {
+      "id": "dk03-accepted-output-issue",
+      "route": "/documents/issues",
+      "scope": "#ppo-outputs",
+      "layout": "full-bleed",
+      "design": "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-01-Desktop-Register-r01.png",
+      "sha256": "418112dc44647f5609f837e44287e0d3ded29d60fb3bfa4d0314906eb0533847",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/output-workspace.spec.ts",
+      "application_proof": "tests/browser/output-workspace.spec.ts",
+      "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
+      "adaptations": "docs/testing/evidence/output-register/README.md"
+    },
+    {
+      "id": "dk03-accepted-job-pack-record",
+      "route": "/documents/issues/job-packs/[id]",
+      "scope": "#ppo-outputs",
+      "layout": "full-bleed",
+      "design": "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-03-Desktop-Record-Issue-r01.png",
+      "sha256": "cfdb3c0c37c3cb2162ef9748a57959448728f17aec98b13bf1d76e798c85ca93",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/output-workspace.spec.ts",
+      "application_proof": "tests/browser/output-workspace.spec.ts",
+      "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
+      "adaptations": "docs/testing/evidence/output-register/README.md"
+    },
+    {
+      "id": "dk03-accepted-service-report-record",
+      "route": "/documents/issues/service-reports/[id]",
+      "scope": "#ppo-outputs",
+      "layout": "full-bleed",
+      "design": "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-07-Desktop-Report-Distribution-r01.png",
+      "sha256": "1543da9c903c5f7c0d4183223425c5ed69b7c9105ed951ad3a287de2042dabdb",
+      "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+      "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+      "component_proof": "tests/browser/output-workspace.spec.ts",
+      "application_proof": "tests/browser/output-workspace.spec.ts",
+      "authority": "Retained accepted Figma source; hashes identify design inputs only. Application review, final verification and owner acceptance remain separately recorded.",
+      "adaptations": "docs/testing/evidence/output-register/README.md"
     }
   ]
 }

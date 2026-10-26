@@ -14,7 +14,11 @@ import {
   choice,
 } from "../shared/validation";
 import { sameVersion } from "../scheduling/validation";
-import { issueContext, packAppointmentApplicable, packContext } from "../documents/context";
+import {
+  issueContext,
+  packAppointmentApplicable,
+  packContext,
+} from "../documents/context";
 import { reportContext, recipient } from "../reports/context";
 import { readBundle } from "../documents/worker";
 import { readReportBundle } from "../reports/worker";
@@ -349,13 +353,13 @@ export async function distributionHistory(
   await outputIssuer(c, p, kind, id);
   const attempts = (
     await c.query(
-      "SELECT id,issue_id,recipient_id,output_hash,channel,actor_id,recovery_owner_id,operation_id,created_at FROM ppo.output_distribution_attempts WHERE workspace_id=$1 AND kind=$2 AND output_id=$3 ORDER BY created_at,id",
+      "SELECT a.id,a.issue_id,a.recipient_id,a.output_hash,a.channel,a.actor_id,a.recovery_owner_id,a.operation_id,a.created_at,u.display_name AS recovery_owner_name FROM ppo.output_distribution_attempts a LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.recovery_owner_id) WHERE a.workspace_id=$1 AND a.kind=$2 AND a.output_id=$3 ORDER BY a.created_at,a.id",
       [p.workspace_id, kind, id],
     )
   ).rows;
   const events = (
     await c.query(
-      "SELECT attempt_id,id,version,state,action,actor_id,operation_id,reason,evidence,occurred_at FROM ppo.output_distribution_events WHERE workspace_id=$1 AND attempt_id=ANY($2::uuid[]) ORDER BY attempt_id,version",
+      "SELECT e.attempt_id,e.id,e.version,e.state,e.action,e.actor_id,e.operation_id,e.reason,e.evidence,e.occurred_at,u.display_name AS actor_name FROM ppo.output_distribution_events e LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.actor_id) WHERE e.workspace_id=$1 AND e.attempt_id=ANY($2::uuid[]) ORDER BY e.attempt_id,e.version",
       [p.workspace_id, attempts.map((a) => a.id)],
     )
   ).rows;
