@@ -63,3 +63,6 @@ export type CompiledGuide = {
   contentHash: string; // SHA-256 hex of the reviewed content; review fields are excluded
   references: { href: string; line: number }[]; // every link, with its own file line
 };
+
+// What reading docs/guides gives: the guides that compiled and passed every cross-check, and every error found.
+export type GuideLibrary = { guides: CompiledGuide[]; errors: GuideError[] };
