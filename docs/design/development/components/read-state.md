@@ -232,14 +232,14 @@ The existing control is reused by /surveys and /surveys/[id]. Host states and wi
 
 ## Sites CS-04 consumer
 
-The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks.
+The Sites register and record reuse this component. Scoped geometry and state evidence live in `src/app/styles/sites.css` and `tests/browser/sites-native.spec.ts`. Counts and sources remain permission scoped, P4 is unavailable and owner visual review is pending. See [Sites implementation](../../../delivery/sites-cs04-build.md) for adaptations and executed checks. The queued focus correction is documented in the [CS-04 consumer note](../component-bindings/2026-10-28-cs04-focus.md#readstate).
 
 
 ## PL-04 consumer
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
 
-The CS-04 paginated owned-follow-up host remounts the page read on fresh Overview evidence while retaining its cursor. A Restricted/unavailable Follow-ups source unmounts it; cleanup ignores prior replies. This is host access behavior, not owner visual acceptance.
+The current CS-04 paginated owned-follow-up host remounts the page read on fresh Overview evidence, retaining the cursor only while its RelatedActivities owner stays mounted. A Restricted/unavailable source or a cleared Site removes that owner and ends the paging context; a returning list starts at the first page. Cleanup ignores prior replies. The focus/recovery correction is still queued. This is host access behaviour, not owner visual acceptance.
 
 ## AD-01 identity register host
 
