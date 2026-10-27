@@ -3,8 +3,10 @@ import { createHash } from "node:crypto";
 import { Lexer, type MarkedToken, type Token, type Tokens } from "marked";
 import { LineCounter, isMap, isScalar, parseDocument, visit } from "yaml";
 import { linkShape } from "./links";
+import { hasVisibleText } from "./status";
 import {
   guideStatuses,
+  maxNesting,
   type BlockNode,
   type CompiledGuide,
   type GuideError,
@@ -119,6 +121,22 @@ export function readFrontMatter(path: string, text: string): FrontMatterRead {
   return read(validate(new Map(Object.entries(data)), report));
 }
 
+// Whether a file's front matter declares a guide key, in any form YAML reads: a block or flow mapping, after comment
+// lines, or with a quoted or escaped key. The library uses this to find guides outside docs/guides/pages. Front matter
+// that YAML cannot read, or with a key that is not plain text, counts when any of its lines names a guide key, so the
+// compiler reports it instead of the file dropping out of the library.
+export function declaresGuideKey(text: string): boolean {
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  if (lines[0] !== "---") return false;
+  const closing = lines.indexOf("---", 1);
+  const block = lines.slice(1, closing < 0 ? undefined : closing);
+  const doc = parseDocument(block.join("\n"), { schema: "core", uniqueKeys: true });
+  if (doc.errors.length === 0 && isMap(doc.contents)) {
+    return doc.contents.items.some((pair) => !isScalar(pair.key) || /^\s*guide[_-]key\s*$/i.test(String(pair.key.value)));
+  }
+  return block.some((line) => /guide[_-]key/i.test(line));
+}
+
 // Always returns a well-typed object so that no cast is needed. The caller discards it when anything was reported.
 function validate(fields: Map<string, unknown>, report: Report): GuideFrontMatter {
   const field = (key: string): unknown => fields.get(key);
@@ -194,6 +212,9 @@ function validate(fields: Map<string, unknown>, report: Report): GuideFrontMatte
   const shownValue = field("shown_before_review");
   if (shownValue !== undefined && typeof shownValue !== "boolean") report("shown_before_review", '"shown_before_review" must be true or false.');
   const shownBeforeReview = shownValue === true;
+  // A reviewer is review evidence, so a name a reader cannot see is refused rather than kept.
+  const reviewer = optionalText("reviewer");
+  if (reviewer !== null && !hasVisibleText(reviewer)) report("reviewer", '"reviewer" must name the reviewer, or be left out until the review.');
   const carriedOverFrom = optionalText("carried_over_from");
   if (shownBeforeReview && (carriedOverFrom === null || carriedOverFrom.trim() === "")) {
     report("shown_before_review", '"shown_before_review" is true, so "carried_over_from" must name the source this guide was carried over from.');
@@ -214,7 +235,7 @@ function validate(fields: Map<string, unknown>, report: Report): GuideFrontMatte
     issued_revision: optionalText("issued_revision"),
     audience: optionalText("audience"),
     owner_role: requiredText("owner_role"),
-    reviewer: optionalText("reviewer"),
+    reviewer,
     reviewed_at: optionalDate("reviewed_at"),
     reviewed_content_hash: optionalText("reviewed_content_hash"),
     review_due_at: optionalDate("review_due_at"),
@@ -333,6 +354,21 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
   const refuse = (line: number, message: string) => {
     errors.push({ path, line, message });
   };
+  // Lists, callouts, bold and italic text and links each count as a level (maxNesting in model.ts). One that would go
+  // past the limit is refused on its own line, and nothing inside it is read.
+  let depth = 0;
+  const nested = <T>(at: number, read: () => T): T | undefined => {
+    if (depth >= maxNesting) {
+      refuse(at, `Lists, callouts, bold and italic text and links are nested more than ${maxNesting} levels deep here: flatten the list or the formatting.`);
+      return undefined;
+    }
+    depth += 1;
+    try {
+      return read();
+    } finally {
+      depth -= 1;
+    }
+  };
 
   const tokens = new Lexer({ gfm: true, breaks: false, pedantic: false }).lex(body);
   const lead: BlockNode[] = [];
@@ -387,7 +423,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
       case "heading":
         return heading(known, at, place);
       case "list":
-        return list(known, at, place);
+        return nested(at, () => list(known, at, place));
       case "table":
         // Alignment is not part of the model. The delimiter row follows the header, and each row is one line.
         return {
@@ -396,7 +432,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
           rows: known.rows.map((row, index) => row.map((cell) => inline(cell.tokens, at + 2 + index))),
         };
       case "blockquote":
-        return callout(known, at, place);
+        return nested(at, () => callout(known, at, place));
       case "html":
         refuse(at, isComment(known.text) ? refusals.comment : refusals.html);
         return undefined;
@@ -526,12 +562,16 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
       }
       closeRun();
       switch (known.type) {
-        case "strong":
-          nodes.push({ kind: "strong", children: inline(known.tokens, tokenLine) });
+        case "strong": {
+          const children = nested(tokenLine, () => inline(known.tokens, tokenLine));
+          if (children) nodes.push({ kind: "strong", children });
           continue;
-        case "em":
-          nodes.push({ kind: "emphasis", children: inline(known.tokens, tokenLine) });
+        }
+        case "em": {
+          const children = nested(tokenLine, () => inline(known.tokens, tokenLine));
+          if (children) nodes.push({ kind: "emphasis", children });
           continue;
+        }
         case "codespan":
           nodes.push({ kind: "code", text: known.text });
           continue;
@@ -539,7 +579,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
           nodes.push({ kind: "break" });
           continue;
         case "link": {
-          const node = link(known, tokenLine);
+          const node = nested(tokenLine, () => link(known, tokenLine));
           if (node) nodes.push(node);
           continue;
         }

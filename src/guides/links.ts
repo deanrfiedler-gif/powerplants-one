@@ -18,10 +18,21 @@ const hiddenCharacter = /[\s\p{Cc}\p{Cf}]/u;
 // A syntax check only. Whether a route or guide target exists is checked against the register at compile time.
 export function linkShape(href: string, httpsHosts: readonly string[] = allowedHttpsHosts): LinkShape {
   if (hiddenCharacter.test(href)) return "refused";
-  if (routeShape.test(href)) return "route";
+  if (routeShape.test(href)) return opensAsWritten(href) ? "route" : "refused";
   if (guideShape.test(href)) return "guide";
   if (isListedHttps(href, httpsHosts)) return "https";
   return "refused";
+}
+
+// A browser resolves . and .. segments, also written %2e, and percent-encodes some characters before it opens a path,
+// so /sales/opportunities/%2e%2e would match its register entry and open /sales/. A route is accepted only when the
+// path the browser opens is the path that was checked and reviewed.
+function opensAsWritten(href: string): boolean {
+  try {
+    return new URL(href, "https://ppo.invalid").pathname === href;
+  } catch {
+    return false;
+  }
 }
 
 function isListedHttps(href: string, httpsHosts: readonly string[]): boolean {

@@ -52,6 +52,10 @@ export type BlockNode =
   | { kind: "table"; header: InlineNode[][]; rows: InlineNode[][][] }
   | { kind: "callout"; tone: "note" | "warning" | "important"; children: BlockNode[] };
 
+// How deeply lists, callouts, bold and italic text and links may sit inside one another. The compiler refuses a guide
+// that goes deeper, and the renderer draws nothing past this depth, so a model edited by hand cannot exhaust the stack.
+export const maxNesting = 8;
+
 // A ## heading and the blocks under it. `id` is the heading's explicit {#section-id}.
 export type GuideSection = { id: string; title: InlineNode[]; blocks: BlockNode[] };
 

@@ -3,10 +3,10 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import { readMaster } from "../development/catalog";
 import type { Entry } from "../development/model";
-import { compileGuide } from "./compile";
+import { compileGuide, declaresGuideKey } from "./compile";
 import { linkShape } from "./links";
 import type { CompiledGuide, GuideError, GuideLibrary } from "./model";
-import { isRouteEntry, releasedGuides, routeForPath, type ReleasedLibrary, type ReleasedRoute } from "./released";
+import { isRouteEntry, releasedGuides, routeForPath, visibleRelease, type ReleasedLibrary, type ReleasedRoute } from "./released";
 
 export type { GuideLibrary } from "./model";
 
@@ -34,9 +34,10 @@ export const awaitingRewrite = ["docs/guides/crm-deals.md"] as const;
 type FileRead = { guide?: CompiledGuide; errors: GuideError[]; front: string[] };
 
 // Every file under docs/guides/pages is a guide, so one that cannot be read as a guide is an error, never a skipped
-// document. Elsewhere under docs/guides a Markdown file is a guide when a line in its first 40 declares a guide key.
-// That test is loose on purpose (leading space, quotes, - for _, any case), so that a mistyped key is reported by the
-// compiler instead of letting the file drop out of the library.
+// document. Elsewhere under docs/guides a Markdown file is a guide when its front matter declares a guide key, in any
+// YAML form (declaresGuideKey in compile.ts), or when a line in its first 40 looks like a guide key line. That second
+// test is loose on purpose (leading space, quotes, - for _, any case), so that a guide whose opening --- or key is
+// mistyped is reported by the compiler instead of dropping out of the library.
 const pagesFolder = `${guidesFolder}/pages/`;
 const guideKeyLine = /^\s*["']?guide[_-]key["']?\s*:/i;
 const guideKeyWindow = 40;
@@ -46,7 +47,7 @@ const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
 // CRLF and a lone CR are line breaks, as they are to the compiler and to marked.
-const declaresGuideKey = (text: string) => text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
+const hasGuideKeyLine = (text: string) => text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
 
 // The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter
 // is well formed.
@@ -101,7 +102,7 @@ async function readGuideFile(root: string, path: string): Promise<FileRead> {
   } catch (error) {
     return { errors: [{ path, line: 1, message: `The file could not be read (${errorCode(error) ?? "unknown error"}).` }], front: [] };
   }
-  const read: FileRead = inPages || declaresGuideKey(text) ? compileFile(path, text) : { errors: [], front: [] };
+  const read: FileRead = inPages || hasGuideKeyLine(text) || declaresGuideKey(text) ? compileFile(path, text) : { errors: [], front: [] };
   if (caching) cache.set(key, { mtimeMs, read });
   return read;
 }
@@ -270,7 +271,7 @@ async function readReleaseFile(root: string): Promise<ReleasedLibrary> {
     throw new Error(`${releasedFile} is not valid JSON`);
   }
   if (!isReleased(data)) throw new Error(`${releasedFile} does not have the expected shape`);
-  return data;
+  return visibleRelease(data);
 }
 
 // The build writes the file from the same types, but a damaged file must not break the shell, which calls guideForPath

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
 import { linkShape } from "./links";
-import type { BlockNode, CompiledGuide, GuideFrontMatter, GuideSection, InlineNode } from "./model";
+import { maxNesting, type BlockNode, type CompiledGuide, type GuideFrontMatter, type GuideSection, type InlineNode } from "./model";
 
 // Renders a compiled guide (ADR-0065, decision 7). React draws every node, so text is escaped and no HTML string is
 // ever built: nothing under src/guides uses an HTML injection API, and a unit test fails if one does. A guide carried
@@ -11,7 +11,8 @@ import type { BlockNode, CompiledGuide, GuideFrontMatter, GuideSection, InlineNo
 //
 // A compiled guide may have been edited by hand, so nothing here trusts the shape the types describe. A node of an
 // unknown kind, a missing or non-array list, and text that is not a string each draw nothing and never throw: one bad
-// node must not take down the whole panel.
+// node must not take down the whole panel. Nor can nesting: a list, callout, bold or italic text or link deeper than
+// maxNesting draws nothing, as the compiler refuses it.
 
 // A route link needs only an address and its text, so the shell can pass the component its router uses.
 export type GuideLinkProps = { href: string; children: ReactNode };
@@ -26,7 +27,8 @@ export type GuideArticleProps = {
   LinkComponent?: GuideLinkComponent; // defaults to next/link
 };
 
-type Context = { LinkComponent: GuideLinkComponent; onOpenGuide?: GuideArticleProps["onOpenGuide"] };
+// `depth` counts the lists, callouts, bold and italic text and links around the node being drawn.
+type Context = { LinkComponent: GuideLinkComponent; onOpenGuide?: GuideArticleProps["onOpenGuide"]; depth: number };
 type List = Extract<BlockNode, { kind: "list" }>;
 type Table = Extract<BlockNode, { kind: "table" }>;
 type Callout = Extract<BlockNode, { kind: "callout" }>;
@@ -40,6 +42,9 @@ function array<T>(value: readonly T[] | undefined): readonly T[] {
 
 const isObject = (value: unknown): boolean => typeof value === "object" && value !== null && !Array.isArray(value);
 
+// The context one level deeper, or undefined past maxNesting, where a container draws nothing.
+const deeper = (context: Context): Context | undefined => (context.depth < maxNesting ? { ...context, depth: context.depth + 1 } : undefined);
+
 // The accepted panel's jump (shell-page-guide.tsx): focus the heading without scrolling, then scroll it to the top.
 function jump(id: string) {
   const section = document.getElementById(id);
@@ -49,7 +54,7 @@ function jump(id: string) {
 
 export function GuideArticle({ guide, eyebrow, children, onOpenGuide, LinkComponent = Link }: GuideArticleProps) {
   const front: Partial<GuideFrontMatter> = isObject(guide.front) ? guide.front : {};
-  const context: Context = { LinkComponent, onOpenGuide };
+  const context: Context = { LinkComponent, onOpenGuide, depth: 0 };
   const sections: readonly GuideSection[] = array(guide.sections).filter(isObject);
   // A contents map in the front matter names the sections that get a button, in its order and with its labels.
   // Without one, every section gets a button with its own title.
@@ -75,7 +80,7 @@ export function GuideArticle({ guide, eyebrow, children, onOpenGuide, LinkCompon
 }
 
 // The text of inline nodes with no formatting, for a contents button that falls back to the section title.
-function plainText(nodes: readonly InlineNode[] | undefined): string {
+function plainText(nodes: readonly InlineNode[] | undefined, depth = 0): string {
   return array(nodes).map((node) => {
     switch (node?.kind) {
       case "text":
@@ -86,7 +91,7 @@ function plainText(nodes: readonly InlineNode[] | undefined): string {
       case "strong":
       case "emphasis":
       case "link":
-        return plainText(node.children);
+        return depth < maxNesting ? plainText(node.children, depth + 1) : "";
       default:
         return ""; // an unknown kind, or not a node at all
     }
@@ -101,16 +106,22 @@ function inlineNode(node: InlineNode, key: number, context: Context): ReactNode 
   switch (node?.kind) {
     case "text":
       return typeof node.text === "string" ? node.text : null;
-    case "strong":
-      return <strong key={key}>{inline(node.children, context)}</strong>;
-    case "emphasis":
-      return <em key={key}>{inline(node.children, context)}</em>;
+    case "strong": {
+      const inner = deeper(context);
+      return inner ? <strong key={key}>{inline(node.children, inner)}</strong> : null;
+    }
+    case "emphasis": {
+      const inner = deeper(context);
+      return inner ? <em key={key}>{inline(node.children, inner)}</em> : null;
+    }
     case "code":
       return typeof node.text === "string" ? <code key={key}>{node.text}</code> : null;
     case "break":
       return <br key={key} />;
-    case "link":
-      return link(typeof node.href === "string" ? node.href : "", inline(node.children, context), key, context);
+    case "link": {
+      const inner = deeper(context);
+      return inner ? link(typeof node.href === "string" ? node.href : "", inline(node.children, inner), key, inner) : null;
+    }
     default:
       return null; // an unknown kind, or not a node at all: draw nothing
   }
@@ -140,12 +151,16 @@ function block(node: BlockNode, key: number, context: Context, journey: boolean)
       return <p key={key}>{inline(node.children, context)}</p>;
     case "heading":
       return <h4 key={key}>{inline(node.children, context)}</h4>;
-    case "list":
-      return list(node, key, context, journey);
+    case "list": {
+      const inner = deeper(context);
+      return inner ? list(node, key, inner, journey) : null;
+    }
     case "table":
       return table(node, key, context);
-    case "callout":
-      return callout(node, key, context);
+    case "callout": {
+      const inner = deeper(context);
+      return inner ? callout(node, key, inner) : null;
+    }
     default:
       return null; // an unknown kind, or not a node at all: draw nothing
   }

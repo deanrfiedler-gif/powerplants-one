@@ -8,7 +8,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import type { PageGuide } from "../../src/components/leads-guide";
 import { compileGuide } from "../../src/guides/compile";
 import { allowedHttpsHosts } from "../../src/guides/links";
-import type { BlockNode, CompiledGuide, InlineNode } from "../../src/guides/model";
+import { maxNesting, type BlockNode, type CompiledGuide, type InlineNode } from "../../src/guides/model";
 import { GuideArticle, type GuideLinkProps } from "../../src/guides/render";
 import { acceptedPanel } from "./guide-render-accepted";
 
@@ -205,6 +205,8 @@ test("never trusts a hand-edited href", () => {
     "/path\u200B",
     "https://synthetic.example/", // https, but the host is not on the list
     "/sales/opportunities/[id]", // a route pattern, not an address
+    "/sales/opportunities/%2e%2e", // the browser would open /sales/
+    "/sales/opportunities/..",
     "",
   ];
   for (const href of refusedHrefs) {
@@ -331,6 +333,34 @@ test("a malformed section, list of sections or front matter draws nothing and ne
   assert.deepEqual(navLabels(shows(editedFront({ contents: { only: { LEAK: 1 } } }), "label")), ["Only"]);
   // Valid sections around a bad one still render.
   assert.match(shows(edited({ sections: [null, section] }), "neighbours"), /<h3 id="ppo-guide-only" tabindex="-1">Only<\/h3><p>Placeholder\.<\/p>/);
+});
+
+test("a model nested deeper than a guide may be draws nothing past the limit and never throws", () => {
+  // The review's probe: 4,000 nested bold nodes, read back from JSON as the production server reads a release file.
+  const deep = JSON.parse('{"kind":"strong","children":['.repeat(4000) + '{"kind":"text","text":"LEAK"}' + "]}".repeat(4000));
+  assert.match(shows(handBuilt(paragraph(text("Kept "), deep)), "deep bold"), /<p>Kept <strong>/);
+  shows({ ...baseGuide, sections: [{ id: "only", title: [text("Title "), deep], blocks: [] }] }, "deep bold in a title");
+  for (const kind of ["emphasis", "link"]) {
+    let node: InlineNode = text("LEAK");
+    for (let level = 0; level < 4000; level += 1) node = loose({ kind, href: "/sales/leads", children: [node] });
+    shows(handBuilt(paragraph(text("Kept "), node)), `deep ${kind}`);
+  }
+  let list: BlockNode = paragraph(text("LEAK"));
+  let callout: BlockNode = paragraph(text("LEAK"));
+  for (let level = 0; level < 4000; level += 1) {
+    list = { kind: "list", ordered: false, items: [[list]] };
+    callout = { kind: "callout", tone: "warning", children: [callout] };
+  }
+  assert.match(shows(handBuilt(paragraph(text("Kept")), list, callout), "deep lists and callouts"), /<p>Kept<\/p><ul>/);
+
+  // Up to the limit nothing is lost: maxNesting levels draw their text, and one more level draws nothing.
+  const bold = (depth: number): InlineNode => {
+    let node: InlineNode = text("Deepest");
+    for (let level = 0; level < depth; level += 1) node = { kind: "strong", children: [node] };
+    return node;
+  };
+  assert.match(render(handBuilt(paragraph(bold(maxNesting)))), /Deepest/);
+  assert.doesNotMatch(render(handBuilt(paragraph(bold(maxNesting + 1)))), /Deepest/);
 });
 
 test("no HTML injection API under src/guides", () => {

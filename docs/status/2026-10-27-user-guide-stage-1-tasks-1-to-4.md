@@ -17,7 +17,7 @@ Dean accepted [ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) on 23 O
   - **Route matching.** Every registered route is matched, so a static route never takes a dynamic route's guide.
   - **Visibility.** Carried-over guides are shown only while they are InReview or Reviewed.
   - **Callouts.** A callout marker must stand alone on its line.
-  - **Discovery.** Every file under `docs/guides/pages/` is a guide.
+  - **Discovery.** Every file under `docs/guides/pages/` is a guide. Elsewhere, a file is a guide when its front matter declares a guide key in any YAML form.
   - **Stricter refusals.** Character references, link titles, brackets and backslashes in links are refused beyond the plan's list.
 
 **Not done:**
@@ -26,14 +26,14 @@ Dean accepted [ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) on 23 O
 - Pages still show the TypeScript guides or the "being prepared" fallback, unchanged.
 - No guide was reviewed or published.
 - The authoring contract (`docs/guides/README.md`) is Task 9. Until then, ADR-0065 and the code are the rules.
-- Tasks 5 to 9 edit `docs/design/development/guides.json`, `register.json`, the component files and the studio tooling. They wait for Dean's decision on the proposed shared-file restructure in PR #719.
+- Tasks 5 to 9 edit `docs/design/development/guides.json`, `register.json`, the component files and the studio tooling. They wait for Dean's go-ahead. Task 8 also waits for #721 and #729, which change the same catalogue files.
 
-**Checked** on a7c34ad2, Node 24.21.0 and npm 11.19.0, with the proxy, CA-bundle and `ANTHROPIC_BASE_URL` variables cleared for the unit tests:
+**Checked** after the review fixes below, on Node 24.21.0 and npm 11.19.0, with the proxy, CA-bundle and `ANTHROPIC_BASE_URL` variables cleared for the unit tests. PR #718 lists each head it checked.
 
 - The npm checks all passed:
-  - `npm run studio:check`: 368 entries, no errors, 26 stale.
+  - `npm run studio:check`: 372 entries, no errors, 26 stale.
   - `lint` and `typecheck`.
-  - `test:unit`: 1,238 of 1,238.
+  - `test:unit`: 1,255 of 1,255.
   - `build`: "Guides compiled: 0. Guides released: 0", plus the skip line for `crm-deals.md`.
 - The Python checks all passed: `check_foundation.py`, `check_naming.py`, `build_status.py --check` and `check_documentation_scope.py`.
 - `npm audit --omit=dev --audit-level=high` found 0 vulnerabilities.
@@ -48,5 +48,11 @@ Dean accepted [ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) on 23 O
 **Review:**
 
 - Each task, and the whole branch, was reviewed by Claude subagents, and every finding was fixed or ruled on.
-- That is not the independent second-model review CONTRIBUTING.md requires for a security control, which is still to come.
+- ChatGPT gave the independent second-model review that CONTRIBUTING.md requires for a security control, on 27 October 2026 against 293fd86e. It found 2 Critical and 3 Important defects. Each was confirmed against the code, reproduced by a failing test and fixed:
+  - **Blank reviewer.** A reviewer name with no visible character no longer counts as review evidence, and the front matter refuses one.
+  - **Release file.** The production server applies the visibility rule again to the release file it reads, so a file edited after the build cannot show a hidden guide.
+  - **Discovery.** Outside `docs/guides/pages/`, a guide key declared anywhere in the front matter, in any YAML form, makes the file a guide, so a malformed guide fails the build.
+  - **Route links.** A route link is refused unless the browser opens it as written, so `..` and `%2e%2e` segments cannot pass the register check and open another page.
+  - **Nesting.** Lists, callouts, bold and italic text and links may nest 8 levels deep. The compiler refuses more, and the renderer draws nothing past that depth, so a hand-edited model cannot exhaust the stack.
+- Whether the reviewer accepts the fixes is not yet recorded.
 - No acceptance scenario was run. No business approval or production readiness is claimed.

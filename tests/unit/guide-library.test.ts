@@ -486,6 +486,33 @@ test("outside pages, a Markdown file is a guide only when its first 40 lines dec
   assert.deepEqual([...new Set(result.errors.map((error) => error.path))], ["docs/guides/notes/early.md"]);
 });
 
+test("outside pages, front matter that declares a guide key in any YAML form makes the file a guide", async (t) => {
+  // A guide with a malformed body must fail the build wherever its key sits in the front matter.
+  const body = ["## Overview {#overview}", "", "<script>alert(1)</script>"];
+  const padded = guideText({ guide_key: "guide.page.a", entry_key: "route:/a", body }).replace("---\n", `---\n${"# A synthetic comment.\n".repeat(39)}`);
+  const keys = { entry_key: "route:/b", title: "Synthetic guide", versioning: "git", status: "Draft", owner_role: "Synthetic owner", source_commit: "0123456789abcdef0123456789abcdef01234567" };
+  const flow = ["---", JSON.stringify({ guide_key: "guide.page.b", ...keys }), "---", "", ...body, ""].join("\n");
+  const escaped = ["---", JSON.stringify({ ...keys, entry_key: "route:/sales/leads" }).replace("{", '{"guide\\u005fkey": "guide.page.sales.leads", '), "---", "", ...body, ""].join("\n");
+  const root = await makeRoot(t, {
+    "docs/guides/padded.md": padded,
+    "docs/guides/flow.md": flow,
+    "docs/guides/escaped.md": escaped,
+    // Front matter that declares no guide key belongs to an ordinary document, such as the contents page.
+    "docs/guides/contents.md": ["---", "document_id: PPO-SYN-TOC", "title: Synthetic contents", "---", "", "# Contents", ""].join("\n"),
+  });
+  const result = await readGuideLibrary(root, entries);
+
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual(
+    result.errors.map((error) => `${error.path}:${error.line} ${error.message}`),
+    [
+      `docs/guides/escaped.md:${lineOf(escaped, "<script>")} Raw HTML is not allowed in a guide: write the content in Markdown instead.`,
+      `docs/guides/flow.md:${lineOf(flow, "<script>")} Raw HTML is not allowed in a guide: write the content in Markdown instead.`,
+      `docs/guides/padded.md:${lineOf(padded, "<script>")} Raw HTML is not allowed in a guide: write the content in Markdown instead.`,
+    ],
+  );
+});
+
 test("a missing guides folder is an empty library", async (t) => {
   assert.deepEqual(await readGuideLibrary(await makeRoot(t), entries), { guides: [], errors: [] });
 });
@@ -718,6 +745,45 @@ test("released library refuses a release file with a malformed guide or route, s
   assert.deepEqual(logged, []);
   assert.deepEqual(result, JSON.parse(JSON.stringify(whole)));
   assert.equal(guideForPath(result, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
+});
+
+test("released library applies the visibility rule again to the release file it reads", async (t) => {
+  // The build writes only visible guides. A file changed after the build must not show one the build would have hidden.
+  const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
+  const route = { path: "/sales/leads", guide_key: "guide.page.sales.leads" };
+  const evidence = { reviewer: "Synthetic Reviewer", reviewed_at: "2026-10-23", reviewed_content_hash: leads.contentHash };
+  const published = { ...leads.front, status: "Published" as const, ...evidence };
+  const edited = (front: object): CompiledGuide => ({ ...leads, front: { ...leads.front, ...front } });
+  const hidden: Record<string, CompiledGuide> = {
+    Draft: edited({ status: "Draft" }),
+    Superseded: edited({ status: "Superseded" }),
+    Withdrawn: edited({ status: "Withdrawn" }),
+    "Published with a stale hash": edited({ ...published, reviewed_content_hash: "0".repeat(64) }),
+    "Published without a reviewer": edited({ ...published, reviewer: null }),
+    "Published by a blank reviewer": edited({ ...published, reviewer: " \t" }),
+    "InReview with shown_before_review as text": edited({ shown_before_review: "yes" }),
+    "InReview with carried_over_from as a number": edited({ carried_over_from: 5 }),
+    "an unknown status": edited({ status: "Live" }),
+  };
+  for (const [name, guide] of Object.entries(hidden)) {
+    const shellGuide = { ...guide, front: { ...guide.front, guide_key: "guide.shell", entry_key: "system:shell" } };
+    const data = { guides: [guide, shellGuide], routes: [route, { path: "/a", guide_key: null }], shell: shellGuide };
+    const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
+    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    assert.deepEqual(logged, [], name);
+    assert.deepEqual(result.guides, [], name);
+    assert.equal(result.shell, null, name);
+    // The route keeps its place, with no guide, so it never falls through to a dynamic route's guide.
+    assert.deepEqual(result.routes, [{ path: "/sales/leads", guide_key: null }, { path: "/a", guide_key: null }], name);
+    assert.equal(guideForPath(result, "/sales/leads"), null, name);
+  }
+
+  // A Published guide whose evidence matches its hash, and a carried-over guide in review, are still read as written.
+  const visible = { guides: [edited(published)], routes: [route], shell: null };
+  const root = await makeRoot(t, { [releasedFile]: JSON.stringify(visible) });
+  const result = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  assert.deepEqual(result, JSON.parse(JSON.stringify(visible)));
+  assert.equal(guideForPath(result, "/sales/leads")?.front.status, "Published");
 });
 
 test("released library reads the release file in production and remembers it", async (t) => {

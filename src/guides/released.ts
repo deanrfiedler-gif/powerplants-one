@@ -2,7 +2,7 @@
 // the release file is read on the server, and the shell reads the same shapes in the browser.
 import type { Entry } from "../development/model";
 import type { CompiledGuide, GuideLibrary } from "./model";
-import { guideStateFor } from "./status";
+import { guideStateFor, hasVisibleText } from "./status";
 
 // One registered page. `guide_key` is the visible guide that covers it, or null when no visible guide does.
 export type ReleasedRoute = { path: string; guide_key: string | null };
@@ -19,11 +19,12 @@ export const isRouteEntry = (entry: Entry): entry is Entry & { path: string } =>
 //   1. it is Published and its reviewed content hash still matches the text; or
 //   2. it was carried over from a TypeScript guide that users already see, it is marked shown_before_review, and it
 //      is in review or reviewed. That lets the carried-over guides keep showing until their formal review.
-// Draft, Superseded and Withdrawn guides are never visible, whatever their flags.
+// Draft, Superseded and Withdrawn guides are never visible, whatever their flags. The checks hold for a guide read
+// back from a release file that was edited by hand, where a flag may not be a boolean.
 function isVisible(guide: CompiledGuide): boolean {
   const { front } = guide;
   if (front.status === "Published") return guideStateFor(front, guide.contentHash) === "Reviewed";
-  return front.shown_before_review && front.carried_over_from !== null && (front.status === "InReview" || front.status === "Reviewed");
+  return front.shown_before_review === true && hasVisibleText(front.carried_over_from) && (front.status === "InReview" || front.status === "Reviewed");
 }
 
 export function releasedGuides(library: GuideLibrary, entries: Entry[]): ReleasedLibrary {
@@ -39,6 +40,19 @@ export function releasedGuides(library: GuideLibrary, entries: Entry[]): Release
     guides,
     routes: entries.filter(isRouteEntry).map((entry) => ({ path: entry.path, guide_key: byEntry.get(entry.key)?.front.guide_key ?? null })),
     shell: guides.find((guide) => guide.front.entry_key === "system:shell") ?? null,
+  };
+}
+
+// The production server reads the release file the build wrote, and applies the visibility rule to it again, as the
+// renderer checks every link again: a file changed after the build cannot show a guide the build would have hidden.
+// A route whose guide is hidden keeps its place with no guide, so it never falls through to a dynamic route's guide.
+export function visibleRelease(released: ReleasedLibrary): ReleasedLibrary {
+  const guides = released.guides.filter(isVisible);
+  const keys = new Set(guides.map((guide) => guide.front.guide_key));
+  return {
+    guides,
+    routes: released.routes.map((route) => (route.guide_key === null || keys.has(route.guide_key) ? route : { ...route, guide_key: null })),
+    shell: released.shell && isVisible(released.shell) ? released.shell : null,
   };
 }
 

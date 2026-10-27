@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { test } from "node:test";
 import { compileGuide, readFrontMatter } from "../../src/guides/compile";
 import { allowedHttpsHosts, linkShape } from "../../src/guides/links";
-import type { BlockNode, CompiledGuide, GuideError, GuideFrontMatter, InlineNode } from "../../src/guides/model";
+import { maxNesting, type BlockNode, type CompiledGuide, type GuideError, type GuideFrontMatter, type InlineNode } from "../../src/guides/model";
 import { guideStateFor } from "../../src/guides/status";
 
 // User guide stage 1 (ADR-0065, decision 2): the front matter of a guide file is read with yaml, and the reader
@@ -335,6 +335,32 @@ test("state needs a reviewer, a review date and a hash before a guide reads as r
   assert.equal(guideStateFor({ ...base, status: "Published", reviewed_content_hash: "" }, ""), "Changes awaiting review");
 });
 
+test("state needs a reviewer name with a visible character", () => {
+  const base: GuideFrontMatter = {
+    ...read(...required).front!,
+    reviewer: "Synthetic Reviewer",
+    reviewed_at: "2026-10-23",
+    reviewed_content_hash: "sha256:aaa",
+  };
+  for (const reviewer of ["", "   ", "\t", " ", "​", " ​\t"]) {
+    for (const status of ["Reviewed", "Published"] as const) {
+      assert.equal(guideStateFor({ ...base, status, reviewer }, "sha256:aaa"), "Changes awaiting review", `${status} by ${JSON.stringify(reviewer)}`);
+    }
+  }
+  // Evidence edited by hand into another type is missing evidence, not a review.
+  assert.equal(guideStateFor({ ...base, status: "Published", reviewer: 5 as never }, "sha256:aaa"), "Changes awaiting review");
+  assert.equal(guideStateFor({ ...base, status: "Published", reviewed_at: true as never }, "sha256:aaa"), "Changes awaiting review");
+});
+
+test("front matter refuses a reviewer with no visible character", () => {
+  for (const reviewer of ['""', '"   "', '"\\t"', '"\\u200B"']) {
+    const errors = refused(...required, `reviewer: ${reviewer}`);
+    assert.equal(errors.length, 1, reviewer);
+    assert.equal(errors[0].line, required.length + 2, reviewer);
+    assert.match(errors[0].message, /"reviewer" must name the reviewer/, reviewer);
+  }
+});
+
 test("state names the other statuses without looking at the hash", () => {
   const base: GuideFrontMatter = read(...required).front!;
   assert.equal(guideStateFor({ ...base, status: "Draft" }, "sha256:aaa"), "Draft");
@@ -589,6 +615,55 @@ test("route links refuse square brackets, so a route pattern is never a link", (
     assert.equal(errors.length, 1, href);
     assert.ok(errors[0].message.includes(`"${href}"`), errors[0].message);
   }
+});
+
+test("route links refuse a path the browser would rewrite before opening it", () => {
+  // A browser resolves . and .. segments, also written %2e, and percent-encodes some characters, so the register check
+  // would pass one address while the browser opened another. /sales/opportunities/%2e%2e opens /sales/.
+  for (const href of [
+    "/sales/opportunities/%2e%2e",
+    "/sales/opportunities/..",
+    "/sales/opportunities/.",
+    "/sales/./leads",
+    "/a/%2E%2e/b",
+    "/a/.%2e",
+    "/a/%2e",
+    "/café",
+    '/a"b',
+    "/a<b",
+    "/a>b",
+    "/a`b",
+    "/a{b",
+    "/a}b",
+  ]) {
+    assert.equal(linkShape(href), "refused", href);
+  }
+  // A path the browser opens as written is still a route: a dot inside a segment, a trailing slash, an escape.
+  for (const href of ["/a.b", "/a/..b", "/a/b.", "/sales/leads/", "/a/%41"]) assert.equal(linkShape(href), "route", href);
+
+  for (const href of ["/sales/opportunities/%2e%2e", "/sales/opportunities/.."]) {
+    const errors = refusedAt(["Text", `Open [a record](${href}).`], 1, /is not allowed/, href);
+    assert.equal(errors.length, 1, href);
+  }
+});
+
+test("refuses lists, callouts and formatting nested deeper than the model allows, on the line that goes too deep", () => {
+  const nestedList = (depth: number) => Array.from({ length: depth }, (_, level) => `${"  ".repeat(level)}- Level ${level + 1}`);
+  // Lists nested maxNesting deep compile in full.
+  let node = compiled(...nestedList(maxNesting)).lead[0];
+  for (let level = 1; level < maxNesting; level += 1) {
+    assert.equal(node.kind, "list", `level ${level}`);
+    node = (node as Extract<BlockNode, { kind: "list" }>).items[0][1];
+  }
+  assert.equal(node.kind, "list");
+
+  refusedAt(nestedList(maxNesting + 1), maxNesting, /nested more than 8 levels deep/);
+  // Bold text in the deepest item is one level too deep as well.
+  const bold = nestedList(maxNesting);
+  bold[maxNesting - 1] += " with **bold** text";
+  refusedAt(bold, maxNesting - 1, /nested more than 8 levels deep/);
+  // A callout counts as a level.
+  refusedAt(["> [!NOTE]", ...nestedList(maxNesting).map((line) => `> ${line}`)], maxNesting, /nested more than 8 levels deep/);
 });
 
 test("keeps typography, and CRLF equals LF", () => {
