@@ -342,7 +342,8 @@ test("state needs a reviewer name with a visible character", () => {
     reviewed_at: "2026-10-23",
     reviewed_content_hash: "sha256:aaa",
   };
-  for (const reviewer of ["", "   ", "\t", " ", "​", " ​\t"]) {
+  // Characters that display as blank count as no character: fillers, the blank braille pattern, lone combining marks.
+  for (const reviewer of ["", "   ", "\t", " ", "​", " ​\t", "ㅤ", "⠀", "ﾠ", "ᅟᅠ", "͏", "́"]) {
     for (const status of ["Reviewed", "Published"] as const) {
       assert.equal(guideStateFor({ ...base, status, reviewer }, "sha256:aaa"), "Changes awaiting review", `${status} by ${JSON.stringify(reviewer)}`);
     }
@@ -353,7 +354,7 @@ test("state needs a reviewer name with a visible character", () => {
 });
 
 test("front matter refuses a reviewer with no visible character", () => {
-  for (const reviewer of ['""', '"   "', '"\\t"', '"\\u200B"']) {
+  for (const reviewer of ['""', '"   "', '"\\t"', '"\\u200B"', '"\\u3164"', '"\\u2800"']) {
     const errors = refused(...required, `reviewer: ${reviewer}`);
     assert.equal(errors.length, 1, reviewer);
     assert.equal(errors[0].line, required.length + 2, reviewer);
@@ -635,11 +636,15 @@ test("route links refuse a path the browser would rewrite before opening it", ()
     "/a`b",
     "/a{b",
     "/a}b",
+    // Browsers differ on whether to encode these, so they are refused outright and every engine agrees.
+    "/a^b",
+    "/a|b",
   ]) {
     assert.equal(linkShape(href), "refused", href);
   }
-  // A path the browser opens as written is still a route: a dot inside a segment, a trailing slash, an escape.
-  for (const href of ["/a.b", "/a/..b", "/a/b.", "/sales/leads/", "/a/%41"]) assert.equal(linkShape(href), "route", href);
+  // A path the browser opens as written is still a route: a dot inside a segment, a trailing slash, an escape and
+  // the other characters a URL path may hold.
+  for (const href of ["/a.b", "/a/..b", "/a/b.", "/sales/leads/", "/a/%41", "/a-b_c~d", "/a!$&'()*+,;=:@b"]) assert.equal(linkShape(href), "route", href);
 
   for (const href of ["/sales/opportunities/%2e%2e", "/sales/opportunities/.."]) {
     const errors = refusedAt(["Text", `Open [a record](${href}).`], 1, /is not allowed/, href);

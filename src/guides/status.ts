@@ -2,8 +2,10 @@ import type { GuideFrontMatter } from "./model";
 
 export type GuideState = "Draft" | "In review" | "Reviewed" | "Changes awaiting review" | "Superseded" | "Withdrawn";
 
-// Text with at least one character a reader can see: whitespace, control and invisible format characters do not count.
-export const hasVisibleText = (value: unknown): value is string => typeof value === "string" && /[^\s\p{Cc}\p{Cf}]/u.test(value);
+// Text with at least one character a reader can see. Whitespace, control and invisible format characters do not
+// count, nor do combining marks on their own, the Hangul fillers and the blank braille pattern, which display as blank.
+export const hasVisibleText = (value: unknown): value is string =>
+  typeof value === "string" && /[^\s\p{Cc}\p{Cf}\p{M}ᅟᅠㅤﾠ⠀]/u.test(value);
 
 // A guide reads as Reviewed only while its reviewed content hash still matches the text on disk. The status word
 // records an intention; the reviewer, date and matching hash are the evidence, so a missing or stale piece of

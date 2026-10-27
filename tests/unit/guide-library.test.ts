@@ -469,7 +469,7 @@ test("every file under pages is a guide, and a file that cannot be read as one i
   assert.ok(at("plain.md").some((error) => error.line === 1 && /front matter/.test(error.message)));
 });
 
-test("outside pages, a Markdown file is a guide only when its first 40 lines declare a guide key", async (t) => {
+test("outside pages, a Markdown file without front matter is a guide only when its first 40 lines hold a guide key line", async (t) => {
   const prose = (count: number) => Array.from({ length: count }, () => "Synthetic prose.");
   const root = await makeRoot(t, {
     "docs/guides/notes/readme.md": "# Notes\n\nNothing here names a guide.\n",

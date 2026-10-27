@@ -6,10 +6,12 @@ export const allowedHttpsHosts: readonly string[] = [];
 
 export type LinkShape = "route" | "guide" | "https" | "refused";
 
-// A single leading /, with no backslash anywhere: browsers read a leading // or /\ as another site's address.
-// No query or fragment: a link to a section of a guide uses guide:<guide key>#<section id>. No square brackets: a
-// route pattern such as /sales/opportunities/[id] names a register entry, not an address a browser can open.
-const routeShape = /^\/(?![/\\])[^\s?#\\[\]]*$/;
+// A single leading / and then only the characters a URL path may hold as written (RFC 3986: letters, digits,
+// - . _ ~ ! $ & ' ( ) * + , ; = : @, % escapes and /), which every browser leaves as they are. So there is no
+// backslash (browsers read a leading /\ as another site's address, as they read //), no query or fragment (a link to
+// a section of a guide uses guide:<guide key>#<section id>), and no square brackets (a route pattern such as
+// /sales/opportunities/[id] names a register entry, not an address a browser can open).
+const routeShape = /^\/(?!\/)[A-Za-z0-9\-._~!$&'()*+,;=:@%/]*$/;
 const guideShape = /^guide:[a-z0-9.\-]+#[a-z0-9]+(-[a-z0-9]+)*$/;
 // Whitespace, control and invisible format characters are refused in every link. Browsers drop some of them
 // silently, so the address they open could differ from the one that was reviewed.
@@ -24,9 +26,9 @@ export function linkShape(href: string, httpsHosts: readonly string[] = allowedH
   return "refused";
 }
 
-// A browser resolves . and .. segments, also written %2e, and percent-encodes some characters before it opens a path,
-// so /sales/opportunities/%2e%2e would match its register entry and open /sales/. A route is accepted only when the
-// path the browser opens is the path that was checked and reviewed.
+// A browser resolves . and .. segments, also written %2e, before it opens a path, so /sales/opportunities/%2e%2e
+// would match its register entry and open /sales/. A route is accepted only when the path the browser opens is the
+// path that was checked and reviewed.
 function opensAsWritten(href: string): boolean {
   try {
     return new URL(href, "https://ppo.invalid").pathname === href;

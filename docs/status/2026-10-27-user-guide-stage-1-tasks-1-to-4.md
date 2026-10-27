@@ -49,10 +49,10 @@ Dean accepted [ADR-0065](../decisions/ADR-0065-guide-markdown-parser.md) on 23 O
 
 - Each task, and the whole branch, was reviewed by Claude subagents, and every finding was fixed or ruled on.
 - ChatGPT gave the independent second-model review that CONTRIBUTING.md requires for a security control, on 27 October 2026 against 293fd86e. It found 2 Critical and 3 Important defects. Each was confirmed against the code, reproduced by a failing test and fixed:
-  - **Blank reviewer.** A reviewer name with no visible character no longer counts as review evidence, and the front matter refuses one.
+  - **Blank reviewer.** A reviewer name that displays as blank (whitespace, invisible or filler characters) no longer counts as review evidence, and the front matter refuses one.
   - **Release file.** The production server applies the visibility rule again to the release file it reads, so a file edited after the build cannot show a hidden guide.
   - **Discovery.** Outside `docs/guides/pages/`, a guide key declared anywhere in the front matter, in any YAML form, makes the file a guide, so a malformed guide fails the build.
-  - **Route links.** A route link is refused unless the browser opens it as written, so `..` and `%2e%2e` segments cannot pass the register check and open another page.
+  - **Route links.** A route link may hold only the characters a URL path keeps as written, and is refused unless the browser opens it as written, so `..` and `%2e%2e` segments cannot pass the register check and open another page. All 216 registered routes still pass.
   - **Nesting.** Lists, callouts, bold and italic text and links may nest 8 levels deep. The compiler refuses more, and the renderer draws nothing past that depth, so a hand-edited model cannot exhaust the stack.
 - Whether the reviewer accepts the fixes is not yet recorded.
 - No acceptance scenario was run. No business approval or production readiness is claimed.
