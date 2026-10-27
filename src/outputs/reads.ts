@@ -7,7 +7,12 @@ import {
   type QueryClient,
 } from "../platform/permissions";
 import { uuid } from "../shared/validation";
-import { packContext, issueContext, packAppointmentApplicable } from "../documents/context";
+import { visible } from "../shared/reads";
+import {
+  packContext,
+  issueContext,
+  packAppointmentApplicable,
+} from "../documents/context";
 import { reportContext } from "../reports/context";
 import { readBundle, type OutputManifest } from "../documents/worker";
 import { readReportBundle, type ReportManifest } from "../reports/worker";
@@ -51,6 +56,33 @@ const changed = () =>
     "OutputReadChanged",
     "Access changed during this read. Refresh the register.",
   );
+async function sharedName(
+  c: QueryClient,
+  p: Principal,
+  kind: "Organisation" | "Site" | "Person",
+  id: string,
+): Promise<string | null> {
+  try {
+    return (await visible(c, p, kind, id)).display_name;
+  } catch (e) {
+    if (hidden(e)) return null;
+    throw e;
+  }
+}
+async function userName(
+  c: QueryClient,
+  p: Principal,
+  id: string,
+): Promise<string | null> {
+  return (
+    (
+      await c.query(
+        "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, id],
+      )
+    ).rows[0]?.display_name ?? null
+  );
+}
 async function begin(c: QueryClient, p: Principal) {
   // Native writers lock this row exclusively; shared readers make no business writes.
   await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
@@ -187,6 +219,18 @@ async function projection(
     site_id: r.site_id,
     organisation_id: w.customer_id,
     service_owner_id: w.service_owner_id,
+    labels: {
+      company:
+        (
+          await c.query(
+            "SELECT display_name FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+            [p.workspace_id, r.company_id],
+          )
+        ).rows[0]?.display_name ?? null,
+      customer: await sharedName(c, p, "Organisation", w.customer_id),
+      site: await sharedName(c, p, "Site", r.site_id),
+      service_owner: internal ? await userName(c, p, w.service_owner_id) : null,
+    },
     appointment: { id: a.id, reference: a.display_number },
     work_order: { id: w.id, reference: w.display_number },
     current_revision_id: revisionId,
@@ -306,6 +350,39 @@ export async function listOutputs(p: Principal, input: unknown = {}) {
       offset: q.offset,
       limit: q.limit,
       has_more_in_window: q.offset + q.limit < matching.length,
+      // Facets have the same permitted, bounded population as discovery; never directory-wide counts.
+      facets: {
+        customers: [
+          ...new Map(
+            rows
+              .filter((x) => x.row.labels.customer)
+              .map(({ row }) => [
+                row.organisation_id,
+                { id: row.organisation_id, label: row.labels.customer! },
+              ]),
+          ).values(),
+        ],
+        sites: [
+          ...new Map(
+            rows
+              .filter((x) => x.row.labels.site)
+              .map(({ row }) => [
+                row.site_id,
+                { id: row.site_id, label: row.labels.site! },
+              ]),
+          ).values(),
+        ],
+        owners: [
+          ...new Map(
+            rows
+              .filter((x) => x.row.labels.service_owner)
+              .map(({ row }) => [
+                row.service_owner_id,
+                { id: row.service_owner_id, label: row.labels.service_owner! },
+              ]),
+          ).values(),
+        ],
+      },
       items: matching.slice(q.offset, q.offset + q.limit),
     };
   });
@@ -407,6 +484,7 @@ async function recipients(
     ).rows;
     result.push({
       ...person,
+      display_name: await userName(c, p, person.user_id),
       sent_at: null,
       delivered_at: null,
       events,
@@ -512,7 +590,7 @@ export async function readOutput(
       issue && kind === "JobPack"
         ? (
             await c.query(
-              "SELECT id,kind,occurred_at,CASE WHEN $3 THEN reason ELSE NULL END AS reason FROM ppo.pack_issue_events WHERE workspace_id=$1 AND issue_id=$2 ORDER BY occurred_at,id",
+              "SELECT e.id,e.kind,e.occurred_at,CASE WHEN $3 THEN e.reason ELSE NULL END AS reason,CASE WHEN $3 THEN e.actor_id ELSE NULL END AS actor_id,CASE WHEN $3 THEN u.display_name ELSE NULL END AS actor_name FROM ppo.pack_issue_events e LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.actor_id) WHERE e.workspace_id=$1 AND e.issue_id=$2 ORDER BY e.occurred_at,e.id",
               [p.workspace_id, issue.id, ctx.internal],
             )
           ).rows
@@ -549,6 +627,10 @@ export async function readOutput(
             output_hash: issue.output_hash,
             review_id: kind === "ServiceReport" ? issue.review_id : null,
             recipient_id: kind === "ServiceReport" ? issue.recipient_id : null,
+            recipient_name:
+              kind === "ServiceReport"
+                ? await sharedName(c, p, "Person", issue.recipient_id)
+                : null,
             exact: exactMetadata(kind, issue.manifest),
             is_current_issue: ctx.record.current_issue_id === issue.id,
             is_current_revision:
