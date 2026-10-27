@@ -6,12 +6,8 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { moduleWorkspaces } from "../../src/shell/module-workspaces";
 import { assertDealsHost, assertChoiceGeometry } from "../helpers/deals-design";
-const register = JSON.parse(
-  readFileSync("docs/standards/ui-baselines.json", "utf8"),
-);
-const baseline = register.module_integrations.find(
-  (entry: { id: string }) => entry.id === "deals-r38",
-);
+import { moduleIntegration } from "../helpers/ui-baselines";
+const baseline = moduleIntegration("deals-r38")!;
 const url = (path: string) => pathToFileURL(resolve(path)).href;
 test.setTimeout(60000);
 test.beforeAll(() => {
@@ -32,9 +28,7 @@ test.beforeEach(async ({ page }, info) => {
 });
 test("each adopted module retains sources, a host contract and compiled-app verification", () => {
   for (const workspace of moduleWorkspaces) {
-    const entry = register.module_integrations.find(
-      (item: { id: string }) => item.id === workspace.baseline,
-    );
+    const entry = moduleIntegration(workspace.baseline)!;
     expect(entry, `Missing contract for ${workspace.route}`).toBeTruthy();
     expect(entry).toMatchObject({
       route: workspace.route,
