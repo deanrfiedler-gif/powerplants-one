@@ -168,13 +168,13 @@ The amendment was first opened as a proposal with three questions for Dean. On 2
 
 1. Hotspots 1 to 5 and 7 take the recommended option below, and hotspot 6 has no change now.
 2. The opt-in attribute for shared workspace styles is `data-ppo-workspace="shared"`.
-3. Codex does not hold new builds. Under strict mode every merge already sends each open build back to merge `main` and rerun CI, so converting adds no CI run, only a one-time move of the build's own entries, which is about the same work as resolving the conflict it replaces. Holding would idle Codex for at least three sequential CI runs and merges. Each freeze check names the new place when a build uses the old one.
+3. This change adds no hold of its own on Codex, but the existing rules in `CONTRIBUTING.md` still apply. Codex keeps at most three builds in progress. It finishes a build it has already implemented, with checks passing and conflicts resolved, before pushing implementation to another claim. #695 is such a build: at `5f6962e3` it conflicts with `main` `09ada563` in 69 files (replayed with `git merge-tree`), so it is finished under that rule before the next claim. A build that converts does so when it next merges `main`. Strict mode already requires that merge and a rerun of CI, so converting needs no extra merge-and-rerun cycle of its own. It is not free, though: the build moves its own entries, and the rerun must pass with them in their new place, which can take another run if it does not. Holding every build until all five changes land would idle Codex for at least three sequential CI runs and merges. Each freeze check names the new place when a build uses the old one.
 
 Each hotspot lands as its own pull request, in rank order. This record changes again only if one of them changes a decision above.
 
 ### Why
 
-Section 5 stopped design pull requests appending to the document register, the reference index and the generated UI build sequence. It did not cover the files a page build edits. On 26 October 2026 every pair of the four Codex page builds combined in #717 (#696, #697, #700 and #701) conflicted, each time because both builds had added their own entry to the same shared list. Dean reports that `main` now requires a branch to be up to date before it merges (strict mode, turned on at his request). This record last read the setting on 18 October (`strict: false`), and the 23 October status recorded the same; the change was not re-read from the API here. Under strict mode each merge sends every other open build back to resolve these files and rerun about 75 minutes of CI. Eight claimed builds (#698, #699, #702 to #707) are queued to start, three at a time, once #717 lands.
+Section 5 stopped design pull requests appending to the document register, the reference index and the generated UI build sequence. It did not cover the files a page build edits. On 26 October 2026 every pair of the four Codex page builds combined in #717 (#696, #697, #700 and #701) conflicted, each time because both builds had added their own entry to the same shared list. Dean reports that `main` now requires a branch to be up to date before it merges (strict mode, turned on at his request). This record last read the setting on 18 October (`strict: false`), and the 23 October status recorded the same; the change was not re-read from the API here. Under strict mode each merge sends every other open build back to resolve these files and rerun about 75 minutes of CI. Eight claimed builds (#698, #699, #702 to #707) are queued to start once #717 lands, within the three-build limit and the completion rule in `CONTRIBUTING.md`.
 
 ### Measurement
 
@@ -204,11 +204,18 @@ The eight queued claims each change one file, their claim, so there is no implem
 
 **Replay 2: #717's own merges, in the order it made them.** #696 merged into `main` cleanly. #700 then conflicted in 9 files, #701 in 11 and #697 in 5: the files above, plus `docs/contracts/service-api.md` for #697.
 
-**Replay 3: every real merge since 19 October.** All 200 two-parent merge commits dated 19 October (when section 5 landed) or later and reachable from any branch on `origin` were replayed; 70 had conflicted. The last column counts merges, not files.
+**Replay 3: a sample of real merges since 19 October.** This is the author's sample, reported as taken. It is not a census of every merge in the period.
+- **What was replayed:** `git log --merges --since=2026-10-19` (container time UTC) over every `refs/remotes/origin/*` ref, keeping commits with two parents. Each was replayed with `git merge-tree --write-tree --name-only --no-messages` on its two parents, using Git 2.43.0, on 26 October 2026 at about 21:44 UTC.
+- **Result:** 200 merges were reached and 70 had conflicted.
+- **Why it is incomplete:** the session's clone was shallow, so history behind its depth boundary was not reached.
+- **What is retained:** the SHAs and files of the 70 conflicted merges were kept, but the 130 clean SHAs were not, so the sample cannot be listed in full.
+- **The independent check:** the second-model review (27 October, on #719) used a full history and Git 2.51.1. It found 224 qualifying two-parent merges on `main` `923f1284` alone between 2026-10-19T00:00:00Z and 2026-10-26T21:45:00Z. A reconstructed 200-merge sample gave 71 conflicts and reproduced the counts below for `components.json`, the specifications, the CSS lists, `ui-baselines.json` and the route table. That reconstruction is not claimed to be the same sample.
+
+Read the figures as an attributed historical report. They show which files conflict and how often relative to each other; they are not exact totals. The last column counts merges, not files.
 
 | Files | Merges that conflicted | Where it is handled |
 |---|---|---|
-| `docs/STATUS.md` | 50 | Section 1 and the [source-isolation decision](documentation-source-isolation.md). None of the 78 merges since 23 October conflicted on it or on the decisions index. |
+| `docs/STATUS.md` | 50 | Section 1 and the [source-isolation decision](documentation-source-isolation.md). None of the 78 merges in the same kind of sample since 23 October conflicted on it or on the decisions index. |
 | `docs/design/development/components.json` | 24 | This amendment |
 | `docs/design/development/components/*.md` | 24 (94 file conflicts) | This amendment |
 | `docs/decisions/README.md` | 15 | As for `STATUS.md` |
@@ -224,7 +231,7 @@ Fourteen other files conflicted once or twice each. None of them is one of the s
 
 ### Hotspots, ranked
 
-| Rank | Hotspot | Pairs of 6 | Hunks in replay 1 | Merges since 19 October | What each build appends |
+| Rank | Hotspot | Pairs of 6 | Hunks in replay 1 | Merges in replay 3's sample | What each build appends |
 |---|---|---|---|---|---|
 | 1 | `components.json` | 6 | 61 | 24 | One item to the end of `states`, `dependencies`, `used_on` and `gaps` in each shared component it uses (3 to 10 components), and new component records to the end of `entries` |
 | 2 | `components/*.md` | 6 | 25 (in 25 files) | 24 | A consumer section at the end of each shared component's specification |
@@ -254,14 +261,28 @@ No component has a recorded review (all 50 have `review: null`), so no fingerpri
 
 | Option | Assessment |
 |---|---|
-| **A. One binding file per consumer change** in `docs/design/development/component-bindings/YYYY-MM-DD-slug.json`, naming the components it binds and the items it adds to each array; new component records as one file each. `readComponentManifest` appends them after the existing items in file-name order, and `catalog.ts` uses that loader instead of its own read. `components.json` is frozen at its size after #717, as `document-register.csv` was at 731 rows; existing items stay and may be corrected in place. | **Recommended.** A build adds only new files. Applied in file-name (date) order, the merged entry is the object the append would have produced, so output and fingerprints stay as they would have been; existing data does not move. It follows the precedent in section 5. |
+| **A. One binding file per consumer change** in `docs/design/development/component-bindings/YYYY-MM-DD-slug.json`, naming the components it binds and the items it adds to each array; new component records as one file each. `readComponentManifest` applies them in the canonical order defined below, and `catalog.ts` uses that loader instead of its own read. `components.json` is frozen at its size after #717, as `document-register.csv` was at 731 rows; existing items stay and may be corrected in place. | **Recommended.** A build adds only new files, and existing data does not move. Any set of binding files gives one merged catalogue, whatever order the branches land in. It follows the precedent in section 5. |
 | B. Keep one file but put each array item on its own line, sorted | Two builds still conflict when their items sort next to each other or close an array. Sorting changes the order of `states`, `states[0]` and `gaps`, which readers show. |
 | C. Generate `components.json` from fragments and commit the result | Rejected in section 5: the committed output is what conflicts. |
 | D. `merge=union` in `.gitattributes` | Rejected in section 5: not documented for GitHub's mergeability check, and it corrupts JSON. |
 
-Proof for A: the catalogue export and every component fingerprint are byte-identical before and after on the same commit; then a converted copy of the four builds' component changes, replayed pairwise, gives no conflict.
+Canonical order for A:
+1. `components.json`'s records stay first, unchanged.
+2. Every binding file's new records are registered, in file-name order. A component id is defined once, so an id already defined in `components.json` or an earlier file is refused.
+3. Every file's bound items are appended to the end of each list, in file-name order.
 
-Does not fix: two builds that genuinely change the same existing item, which is a real conflict. The Python merge script needs the same merge (or reads the loader's output).
+All records are registered before any binding is applied, so a binding may name a component defined in any file. File-name order is not landing order: a branch that merges later can sort earlier, and its items then sit before those of a branch that merged first. The order is fixed for a given set of files, which is what the displayed lists and the fingerprints need. The TypeScript loader and the Python guide merger (`scripts/design-system/merge-component-guides.py`) apply the same rule, with shared test fixtures.
+
+Proof for A has three parts:
+1. **Same effective records.** On the same commit, the merged records equal `components.json`'s records.
+2. **Same observable behaviour.** The catalogue and component-library output are identical apart from fingerprints and the observation time.
+3. **Every fingerprint change explained.** A component or page fingerprint hashes source files as well as its record (`src/development/component-catalog.ts`), so changing the loader changes the fingerprint of every entry that hashes it. Each changed fingerprint is traced to an edited source file it hashes.
+
+Review invalidation is preserved: a changed binding or note still changes the fingerprint of the component it names. A review fingerprint is never rewritten without a review.
+
+A converted copy of the four builds' component changes, replayed pairwise, gives no conflict.
+
+Does not fix: two builds that genuinely change the same existing item, which is a real conflict.
 
 #### 2. `components/*.md`
 
@@ -341,8 +362,8 @@ One fact from this map affects #717, not this amendment: #717 carries #701's six
 
 - **#717** merged on 27 October 2026 (`09ada563`) unchanged. Each change below is cut from `main` after it.
 - **Queued builds (#698, #699, #702 to #707).** A build that starts after a change lands uses the new place from the start; the freeze check refuses the old one and names the new one. A build that started before converts once when it next merges `main`: take `main`'s copy of the frozen file, move its own additions to the new file (or the attribute), rerun the checks. Its own diff holds everything it needs to move, as in section 5.
-- **Other open pull requests.** #715 corrects `read-state.md` in place, which stays allowed. #712 and #695 add contract sections (see 7). None of the others touches these files.
-- Order of landing: 1 and 2 (components), then 3 (CSS), then 4 and 5. Codex does not hold (Decision 3), so a build in progress converts once for each change that lands under it.
+- **Other open pull requests.** #715 rewrites one paragraph of `read-state.md` in place, which stays allowed. It also adds one new paragraph, which takes the file from 119 blocks to 120, over the frozen size. Once change 2 lands, #715 either folds the new text into an existing paragraph or moves it to a binding note. If it changes ReadState's own rules, it can instead raise the file's number in `specification-sizes.json`. #712 and #695 add contract sections (see 7). None of the others touches these files.
+- Order of landing: 1 and 2 (components), then 3 (CSS), then 4 and 5. There is no extra hold (Decision 3), so a build in progress converts once for each change that lands under it.
 
 ### Implementation
 
