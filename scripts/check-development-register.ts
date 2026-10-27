@@ -1,4 +1,5 @@
 import { buildComponentLibrary } from "../src/development/component-catalog";
+import { frozenComponentManifestErrors } from "../src/development/component-model";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
@@ -8,6 +9,7 @@ import {
   sourceRoutes,
   registerPath,
   guidePath,
+  componentManifestPath,
   documentationSlug,
 } from "../src/development/catalog";
 import type { Entry, Guide } from "../src/development/model";
@@ -134,6 +136,12 @@ if (process.argv.includes("--sync")) {
 const catalog = await buildCatalog(root);
 const components = await buildComponentLibrary(root, catalog);
 catalog.errors.push(...components.errors);
+// components.json is frozen; new components and consumer items go in binding files.
+catalog.errors.push(
+  ...frozenComponentManifestErrors(
+    JSON.parse(await readFile(resolve(root, componentManifestPath), "utf8")),
+  ),
+);
 for (const entry of catalog.entries) {
   const spec = await readFile(resolve(root, entry.design_path), "utf8");
   if (!/^## Desktop\s*$/m.test(spec) || !/^## Mobile\s*$/m.test(spec))

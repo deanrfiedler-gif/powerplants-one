@@ -12,9 +12,17 @@ import type {
 } from "./model";
 import { fileHistories } from "./history";
 import { matchEntry } from "./model";
+import {
+  applyComponentBindings,
+  type ComponentBinding,
+  type ComponentManifest,
+} from "./component-model";
 
 export const registerPath = "docs/design/development/register.json";
 export const guidePath = "docs/design/development/guides.json";
+export const componentManifestPath = "docs/design/development/components.json";
+export const componentBindingsPath =
+  "docs/design/development/component-bindings";
 const digest = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 export const resourceId = (path: string) => digest(path).slice(0, 24);
@@ -58,6 +66,50 @@ async function files(root: string, folder: string): Promise<string[]> {
       ),
   );
   return lists.flat().sort();
+}
+// Binding files apply in name order; the date prefix keeps them in the order the changes landed.
+export async function componentBindingFiles(root: string): Promise<string[]> {
+  const paths = (
+    await files(root, componentBindingsPath).catch((error) => {
+      if (error?.code === "ENOENT") return [];
+      throw error;
+    })
+  ).filter((p) => p.endsWith(".json"));
+  for (const path of paths)
+    if (
+      !/^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(
+        posix.basename(path),
+      )
+    )
+      throw Error(
+        "Component binding name must be YYYY-MM-DD-slug.json: " + path,
+      );
+  return paths;
+}
+async function withComponentBindings(
+  root: string,
+  manifest: ComponentManifest,
+): Promise<ComponentManifest> {
+  const bindings = await Promise.all(
+    (await componentBindingFiles(root)).map(async (path) => ({
+      path,
+      binding: JSON.parse(
+        (await readReference(root, path)).toString(),
+      ) as ComponentBinding,
+    })),
+  );
+  return applyComponentBindings(manifest, bindings);
+}
+// components.json with every binding file applied: the component catalogue every reader sees.
+export async function readComponentManifest(
+  root: string,
+): Promise<ComponentManifest> {
+  const result = JSON.parse(
+    (await readReference(root, componentManifestPath)).toString(),
+  ) as ComponentManifest;
+  if (result.schema_version !== 1 || !Array.isArray(result.entries))
+    throw Error("Unsupported component catalogue schema.");
+  return withComponentBindings(root, result);
 }
 export async function sourceRoutes(root: string) {
   const routes = (await files(root, "src/app"))
@@ -144,14 +196,24 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     files(root, "docs/reference/ui/module-workflow-maps"),
     readReference(root, "src/app/globals.css"),
   ]);
-  const componentEntries = JSON.parse(
-    (
-      await readReference(
-        root,
-        "docs/design/development/components.json",
-      ).catch(() => Buffer.from('{"entries":[]}'))
-    ).toString(),
-  ).entries as import("./component-model").ComponentRecord[];
+  const componentEntries = (
+    await withComponentBindings(
+      root,
+      JSON.parse(
+        (
+          await readReference(root, componentManifestPath).catch(() =>
+            Buffer.from('{"entries":[]}'),
+          )
+        ).toString(),
+      ),
+    )
+  ).entries;
+  // A page that depends on the component manifest depends on its binding files too.
+  const bindingPaths = await componentBindingFiles(root),
+    withBindingFiles = (paths: string[]) =>
+      paths.includes(componentManifestPath)
+        ? [...paths, ...bindingPaths]
+        : paths;
   const componentPaths = [
     ...new Set(
       componentEntries.flatMap((e) => [e.specification, e.reference.path]),
@@ -284,17 +346,19 @@ export async function buildCatalog(root: string): Promise<Catalog> {
         (r) =>
           r.path === entry.path?.split("?")[0].replace(/\{([^}]+)\}/g, "[$1]"),
       )?.source;
-      const paths = await dependenciesOf([
-        ...new Set([
-          ...master.shared_sources,
-          ...entry.source_paths,
-          ...(matchedSource ? [matchedSource] : []),
-          ...entry.dependencies,
-          entry.design_path,
-          ...entry.image_paths,
-          ...(entry.html_path ? [entry.html_path] : []),
+      const paths = await dependenciesOf(
+        withBindingFiles([
+          ...new Set([
+            ...master.shared_sources,
+            ...entry.source_paths,
+            ...(matchedSource ? [matchedSource] : []),
+            ...entry.dependencies,
+            entry.design_path,
+            ...entry.image_paths,
+            ...(entry.html_path ? [entry.html_path] : []),
+          ]),
         ]),
-      ]);
+      );
       const hashes = await Promise.all(
         paths.map(async (path) => {
           const hash = await sourceHash(path);
