@@ -26,12 +26,20 @@ Name each file `YYYY-MM-DD-slug.json`, with the date of the change and a slug fo
 ```
 
 - `bindings` names an existing component by `id` and lists the items to add to any of its four consumer lists: `states`, `dependencies`, `used_on` and `gaps`. Nothing else can be bound. A scalar field such as `desktop` or `limitations` is still edited in the component's own record.
-- `entries` holds complete new component records, in the same form as `components.json`. A later binding file can bind to them.
+- `entries` holds complete new component records, in the same form as `components.json`. Any binding file can bind to them, whether its name sorts before or after the defining file. A component `id` is defined once: in `components.json` or in one binding file.
 - Either key may be left out.
 
 ## How it is read
 
-`readComponentManifest` in `src/development/catalog.ts` reads `components.json`, then applies every file here in name order: new records are added after the existing ones, and bound items are appended to the end of each list. Every reader sees that merged catalogue: the design system and component preview pages, `studio:check`, the hosted snapshot, the component tests and `scripts/design-system/merge-component-guides.py`. The result is the object that appending to `components.json` in the same order would have produced. A component's fingerprint hashes its merged record, and a page that depends on `components.json` also hashes these files.
+`readComponentManifest` in `src/development/catalog.ts` reads `components.json` and then the files here, in a canonical order:
+
+1. `components.json`'s records stay first, unchanged.
+2. Every file's new records are registered, in file-name order. Each `id` is checked against all the records before it.
+3. Every file's bound items are appended to the end of each list, in file-name order.
+
+Because every record is registered before any binding is applied, a binding may name a component defined in any file. File-name order is not the order in which branches merge, so a binding's items can sit before those of a branch that merged earlier. The order is still fixed for any given set of files, which is what the fingerprints and displayed lists need.
+
+Every reader sees that merged catalogue: the design system and component preview pages, `studio:check`, the hosted snapshot and the component tests. `scripts/design-system/merge-component-guides.py` applies the same rule in Python. `tests/unit/component-bindings.test.ts` and `scripts/test_documentation_component_bindings.py` share their fixtures, so a change to one reader needs the same change in the other. A component's fingerprint hashes its merged record, and a page that depends on `components.json` also hashes these files.
 
 A file that names an unknown component or list, or is not named `YYYY-MM-DD-slug.json`, stops the catalogue with an error naming the file. Other files in this folder, such as this README, are ignored.
 

@@ -89,7 +89,7 @@ export type ComponentManifest = {
 };
 // A page change records the components it uses in its own binding file under
 // docs/design/development/component-bindings/ instead of appending to components.json, which
-// is frozen (PPO-MERGE-CONFLICT-DEC, 27 October 2026 amendment). Files apply in name order.
+// is frozen (PPO-MERGE-CONFLICT-DEC, 27 October 2026 amendment). applyComponentBindings sets the order.
 export const componentBindingLists = [
   "states",
   "dependencies",
@@ -109,21 +109,34 @@ const copyLists = (entry: ComponentRecord): ComponentRecord => {
     if (Array.isArray(entry[list])) copy[list] = [...entry[list]];
   return copy as unknown as ComponentRecord;
 };
+// Canonical order, not landing order: components.json's records stay first; then every file's
+// new records, then every file's bound items, each in file-name order. All records are known
+// before any binding applies, so a binding may name a component defined in any file.
 export function applyComponentBindings(
   manifest: ComponentManifest,
   files: { path: string; binding: ComponentBinding }[],
 ): ComponentManifest {
   const entries = manifest.entries.map(copyLists);
-  for (const { path, binding } of files) {
-    const fail = (message: string): never => {
+  const failure =
+    (path: string) =>
+    (message: string): never => {
       throw Error(path + ": " + message);
     };
+  for (const { path, binding } of files) {
+    const fail = failure(path);
     if (binding.schema_version !== 1)
       fail("unsupported component binding schema.");
     for (const key of Object.keys(binding))
       if (!["schema_version", "entries", "bindings"].includes(key))
         fail("unknown key: " + key);
-    entries.push(...(binding.entries ?? []).map(copyLists));
+    for (const record of binding.entries ?? []) {
+      if (entries.some((e) => e.id === record.id))
+        fail("component already defined: " + record.id);
+      entries.push(copyLists(record));
+    }
+  }
+  for (const { path, binding } of files) {
+    const fail = failure(path);
     for (const [id, lists] of Object.entries(binding.bindings ?? {})) {
       const entry =
         entries.find((e) => e.id === id) ?? fail("unknown component: " + id);

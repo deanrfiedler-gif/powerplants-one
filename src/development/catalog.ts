@@ -67,7 +67,7 @@ async function files(root: string, folder: string): Promise<string[]> {
   );
   return lists.flat().sort();
 }
-// Binding files apply in name order; the date prefix keeps them in the order the changes landed.
+// Binding files are listed in name order, a canonical order rather than the order branches merge.
 export async function componentBindingFiles(root: string): Promise<string[]> {
   const paths = (
     await files(root, componentBindingsPath).catch((error) => {
