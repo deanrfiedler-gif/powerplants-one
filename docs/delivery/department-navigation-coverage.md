@@ -2,7 +2,7 @@
 
 Derived from the current destination catalogue and ordered rails against the supplied [prompt r01](../reference/ui/application-shell/PPO-Department-Navigation-Icons-VS-Code-Implementation-Prompt-r01.md) and [register r02](../reference/ui/application-shell/PPO-Department-Navigation-Icon-Register-r02.md). This supplements the [handover](department-navigation-icons.md); readiness is separate from permission and owner acceptance.
 
-68 department-rail positions; 57 wired positions (My Work repeats across six departments); 11 withheld. All positions have outline/active artwork. Refresh with scripts/build-navigation-coverage.ts.
+70 department-rail positions; 60 wired positions (My Work repeats across six departments); 10 withheld. All positions have outline/active artwork. Refresh with scripts/build-navigation-coverage.ts.
 
 | Department (short name) | Order | Destination | Route | Semantic glyph | Existing access source | Readiness | Active parent ID | Evidence / missing dependency |
 |---|---:|---|---|---|---|---|---|---|
@@ -22,10 +22,12 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Estimating & quotation | 2 | Intake & workload | /estimating | nav-estimates | estimating.read | Source route present | estimates | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Estimating & quotation | 3 | Intake | /estimating/intake | nav-inbox | crm.opportunity.read AND estimating.edit | Source route present | intake | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Estimating & quotation | 4 | Estimation wizard | /estimating/discovery | nav-wizard | estimating.read | Source route present | wizard | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Estimating & quotation | 5 | Specialist configurations | /estimating/configurations | nav-configurations | estimating.read | Source route present | configurations | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Estimating & quotation | 6 | Cost sources | /estimating/cost-sources | nav-pricing | estimating.read | Source route present | pricing | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Estimating & quotation | 7 | Quotations | /estimating/quotes | nav-quotation | estimating.quote.read AND estimating.read | Source route present | quotations | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Estimating & quotation | 8 | Reviews & approvals | Withheld | nav-approval | No capability invented | Unavailable | None | No native estimate review/approval queue; general work reviews are not a substitute. |
+| Estimating & quotation | 5 | Configure & price | /estimating/cpq | nav-products | cpq.read AND estimating.read | Source route present | cpq | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Estimating & quotation | 6 | Specialist configurations | /estimating/configurations | nav-configurations | estimating.read | Source route present | configurations | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Estimating & quotation | 7 | Cost sources | /estimating/cost-sources | nav-pricing | estimating.read | Source route present | pricing | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Estimating & quotation | 8 | Rules studio | /estimating/rules | nav-documents | cpq.read | Source route present | rules-studio | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Estimating & quotation | 9 | Quotations | /estimating/quotes | nav-quotation | estimating.quote.read AND estimating.read | Source route present | quotations | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Estimating & quotation | 10 | Reviews & approvals | /estimating/reviews | nav-approval | estimating.read | Source route present | estimate-reviews | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Engineering | 1 | My Work | /work | nav-work | activity.read | Source route present | work | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Engineering | 2 | Engineering workload | /engineering | nav-workload | engineering.read | Source route present | engineering | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Engineering | 3 | Design basis & interfaces | /engineering/basis | nav-interfaces | engineering.read | Source route present | basis | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
@@ -75,7 +77,7 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Finance | 7 | Reconciliation | Withheld | nav-reconciliation | No capability invented | Unavailable | None | Handoff reconciliation is a record action; no distinct reconciliation register. |
 | Finance | 8 | Exceptions | Withheld | nav-exceptions | No capability invented | Unavailable | None | Shared /admin recovery does not provide a finance-scoped exception list. |
 
-76 distinct catalogue destinations; 63 ready in source; 13 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
+78 distinct catalogue destinations; 66 ready in source; 12 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
 
 Specific child routes take precedence. Fertigation selects Specialist configurations; Engineering materials, changes and commissioning retain their own destination. Programme view is consumed by the project schedule and supplies a return to its chooser. Sales task drawers keep Tasks selected; People/Organisation details select Contacts in Sales.
 

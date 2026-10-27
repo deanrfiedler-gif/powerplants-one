@@ -1,11 +1,16 @@
 // The shell allocates the viewport once; full-bleed modules own their toolbar,
 // spacing and scroll surface. Other pages retain their established composition.
 export const moduleWorkspaces = [
+  { route: "/admin/access", moduleId: "AD-01", scope: "ppo-access-register", layout: "full-bleed", navigation: "workspace", baseline: "ad01-identity-register" },
+  {route:"/documents/issues",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-output-issue"},
+  {route:"/documents/issues/job-packs/[id]",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-job-pack-record"},
+  {route:"/documents/issues/service-reports/[id]",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-service-report-record"},
   { route: "/customers", moduleId: "CS-01", scope: "ppo-organisations", layout: "full-bleed", navigation: "workspace", baseline: "cs01-organisations-register" },
   { route: "/projects", scope: "ppo-projects", layout: "full-bleed", navigation: "workspace", baseline: "projects-figma-register" },
   { route: "/service/packs/new", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-preparation" },
   { route: "/service/packs", moduleId: "SV-05", scope: "ppo-pack-register", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-register" },
   { route: "/service/packs/[id]", moduleId: "SV-05", scope: "ppo-job-pack", layout: "full-bleed", navigation: "workspace", baseline: "job-pack-figma-record" },
+  { route: "/estimating/reviews", moduleId: "ES-04", scope: "ppo-estimate-reviews", layout: "full-bleed", navigation: "workspace", baseline: "estimate-reviews-figma-register" },
   {route:"/estimating/cpq",moduleId:"ES-02",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-configure-implementation"},
   {route:"/estimating/rules",moduleId:"ES-03",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-rules-implementation"},
   {route:"/maintenance/agreements",moduleId:"MA-01",scope:"ppo-maintenance",layout:"padded",navigation:"workspace",baseline:"ma01-native-r01"},
