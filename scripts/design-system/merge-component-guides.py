@@ -9,7 +9,9 @@ The merge is three-way. A generated part is rewritten only when the catalogue ch
 last sync, so a hand edit inside a generated section survives too. OLD_JSON is components.json at
 the commit recorded in the design system's tokens.json `meta.ref`; NEW_JSON is the commit being
 synced; CURRENT_DIR holds the guides read back from the design system (`project/components`).
-Changed and new guides are written to OUT_DIR/<Name>/README.md.
+Changed and new guides are written to OUT_DIR/<Name>/README.md. Each JSON is read with the
+binding files in the `component-bindings` folder beside it, so pass components.json from a
+checkout of each commit (a `git worktree` of `meta.ref` works), not a lone copy.
 
 usage: python3 merge-component-guides.py OLD_JSON NEW_JSON CURRENT_DIR OUT_DIR [--check]
 
@@ -91,12 +93,34 @@ def build(entry, current_text, name, previous=None):
     return render(head, merged, old_note or note)
 
 
+BINDING_LISTS = ("states", "dependencies", "used_on", "gaps")
+
+
+def apply_bindings(entries, folder):
+    """Apply the binding files beside components.json in name order, as src/development/catalog.ts does."""
+    if not folder.is_dir():
+        return entries
+    for path in sorted(p for p in folder.iterdir() if p.suffix == ".json"):
+        binding = json.loads(path.read_text(encoding="utf-8"))
+        entries.extend(binding.get("entries", []))
+        by_id = {e["id"]: e for e in entries}
+        for entry_id, lists in binding.get("bindings", {}).items():
+            if entry_id not in by_id:
+                raise SystemExit(f"{path}: unknown component {entry_id}")
+            for key, items in lists.items():
+                if key not in BINDING_LISTS:
+                    raise SystemExit(f"{path}: {entry_id}: {key} cannot be bound")
+                by_id[entry_id][key].extend(items)
+    return entries
+
+
 def load(path):
     # components.json on main at d29c020..ed3ccb8 carries double-encoded UTF-8; write the characters themselves.
     text = Path(path).read_text(encoding="utf-8")
     for garbled, char in (("â€“", "–"), ("â€”", "—"), ("â†’", "→")):
         text = text.replace(garbled, char)
-    return {e["id"]: e for e in json.loads(text)["entries"]}
+    entries = apply_bindings(json.loads(text)["entries"], Path(path).parent / "component-bindings")
+    return {e["id"]: e for e in entries}
 
 
 def main():
