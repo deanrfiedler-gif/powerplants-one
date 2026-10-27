@@ -151,6 +151,30 @@ test("front matter refuses unknown tags on known keys", () => {
   assert.match(errors[0].message, /tag/i);
 });
 
+test("front matter refuses __proto__, nested aliases and tags, merge keys, second documents and directives", () => {
+  // Each is refused today. These cases pin that, so an update of yaml cannot start accepting one unnoticed.
+  // The first line after the required keys is file line `next`.
+  const next = required.length + 2;
+  const cases: [string, string[], number, RegExp][] = [
+    ["a __proto__ key", [...required, "__proto__: x"], next, /"__proto__" is not a front matter key/],
+    ["an alias inside a list", [...required, "also_applies_to:", "  - &a route:/sales/leads/new", "  - *a"], next + 2, /alias/i],
+    ["an alias used as a mapping key", [...required, "contents: { &k overview: Overview }", "section_aliases: { *k : overview }"], next + 1, /alias/i],
+    ["a tag on a value inside a list", [...required, "resource_ids: [SYN-RES-1, !custom SYN-RES-2]"], next, /tag/i],
+    ["a merge key", [...required, "contents:", "  <<: { overview: Overview }"], next, /"contents" must pair each section id with text/],
+    ["a second document after a ... line", [...required, "...", "colour: red"], next + 1, /multiple documents/],
+    // yaml reports the second document on the --- line that starts it.
+    ["a second document with a %YAML directive", [...required, "...", "%YAML 1.2", "--- ", "colour: red"], next + 2, /multiple documents/],
+    // A directive must be followed by a --- line, so yaml reports the line after it, where that --- is missing.
+    ["a %YAML directive", ["%YAML 1.2", ...required], 3, /directives-end/],
+  ];
+  for (const [name, lines, line, message] of cases) {
+    const result = read(...lines);
+    assert.equal(result.front, undefined, name);
+    assert.deepEqual(result.errors.map((error) => [error.path, error.line]), [[path, line]], name);
+    assert.match(result.errors[0].message, message, name);
+  }
+});
+
 test("front matter refuses route_patterns and bad values", () => {
   const routes = refused(...required, "route_patterns: [/x]");
   assert.ok(routes.some((error) => error.message.includes("use entry_key and also_applies_to")));
@@ -266,6 +290,11 @@ test("front matter is identical for CRLF and LF", () => {
 
   const badLf = file(...required, "colour: red");
   assert.deepEqual(readFrontMatter(path, badLf.replace(/\n/g, "\r\n")), readFrontMatter(path, badLf));
+
+  // marked also reads a lone CR as a line break, so a file with lone CR line endings reads as LF too: the same front
+  // matter, body, bodyLine and error lines.
+  assert.deepEqual(readFrontMatter(path, lf.replace(/\n/g, "\r")), readFrontMatter(path, lf));
+  assert.deepEqual(readFrontMatter(path, badLf.replace(/\n/g, "\r")), readFrontMatter(path, badLf));
 });
 
 test("front matter ends at the first line that is exactly three dashes", () => {
@@ -492,6 +521,35 @@ test("refuses bad headings and ids", () => {
   assert.deepEqual(guide.sections[1].title, [text("Next")]);
 });
 
+test("refuses headings and contents labels with no visible text", () => {
+  // A heading or a contents button without text has no accessible name.
+  const lead = ["Lead.", ""];
+  for (const [line, message] of [
+    ["### ", /### heading needs text/],
+    ["### ##", /### heading needs text/],
+    ["### [](/work)", /### heading needs text/],
+    ["### [ ](/work)", /### heading needs text/],
+    ["## {#empty}", /needs a title/],
+    ["## [](/work) {#empty}", /needs a title/],
+    ["## [ ](/work) {#empty}", /needs a title/],
+    ["## **[](/work)** {#empty}", /needs a title/],
+  ] as const) {
+    const errors = refusedAt([...lead, line], lead.length, message, line);
+    assert.equal(errors.length, 1, line);
+  }
+  // Text, code and a link with text are all visible.
+  const guide = compiled("## `Ctrl+K` {#keys}", "", "### [Leads](/sales/leads)", "", "Text.");
+  assert.deepEqual(guide.sections[0].title, [{ kind: "code", text: "Ctrl+K" }]);
+
+  // A contents label is the text of its button, so an empty one is refused on the contents line.
+  for (const contents of [['contents: { overview: "" }'], ['contents: { overview: "   " }'], ["contents:", "  overview: Overview", '  steps: " "']]) {
+    const errors = refused(...required, ...contents);
+    assert.deepEqual(errors.map((error) => error.line), [required.length + 2], contents.join(" / "));
+    assert.match(errors[0].message, /"contents" gives the section "(overview|steps)" an empty label/, contents.join(" / "));
+  }
+  assert.deepEqual(read(...required, "contents: { overview: Overview }").errors, []);
+});
+
 test("refuses unsafe links", () => {
   for (const href of [
     "javascript:alert(1)",
@@ -520,22 +578,59 @@ test("refuses unsafe links", () => {
   ]);
 });
 
+test("route links refuse square brackets, so a route pattern is never a link", () => {
+  // A pattern such as /sales/opportunities/[id] would match its own register entry exactly and render as a broken link.
+  for (const href of ["/sales/opportunities/[id]", "/a]b", "/a[b"]) assert.equal(linkShape(href), "refused", href);
+  // A concrete record path keeps the route shape. Whether a guide may link to one is the authoring contract's rule.
+  for (const href of ["/work", "/sales/opportunities/SYN-1"]) assert.equal(linkShape(href), "route", href);
+
+  for (const href of ["/sales/opportunities/[id]", "/a]b"]) {
+    const errors = refusedAt(["Text", `Open [a deal](${href}).`], 1, /is not allowed/, href);
+    assert.equal(errors.length, 1, href);
+    assert.ok(errors[0].message.includes(`"${href}"`), errors[0].message);
+  }
+});
+
 test("keeps typography, and CRLF equals LF", () => {
-  const typography = "Allow 2–3 days for “quoted” work: 4 × 2 m at 20 °C, then sign.";
-  const body = ["Lead.", "", "## Overview {#overview}", "", typography];
+  // Invisible characters are written as escapes in these tests, so an editor cannot drop or change them unseen. The
+  // space in "20 °C" below is a non-breaking space (U+00A0).
+  const typography = "Allow 2–3 days for “quoted” work: 4 × 2 m at 20\u00A0°C, then sign.";
+  const title = "Steps 2–3: the “quoted” work";
+  const cell = "2–3 “days” at 20\u00A0°C";
+  const body = ["Lead.", "", "## Overview {#overview}", "", typography, "", `## ${title} {#steps}`, "", "| Key | Note |", "| --- | --- |", `| \`K\` | ${cell} |`];
   const guide = compiled(...body);
   assert.deepEqual(guide.sections[0].blocks, [paragraph(text(typography))]);
+  const [kept] = guide.sections[0].blocks;
+  assert.ok(kept.kind === "paragraph" && kept.children[0].kind === "text" && kept.children[0].text.includes("20\u00A0°C"), "the compiled text keeps the non-breaking space");
+  // A section title and a table cell keep their characters exactly.
+  assert.deepEqual(guide.sections[1].title, [text(title)]);
+  assert.deepEqual(guide.sections[1].blocks, [{ kind: "table", header: [[text("Key")], [text("Note")]], rows: [[[{ kind: "code", text: "K" }], [text(cell)]]] }]);
+  // So does a contents label.
+  const labelled = compileGuide(path, ["---", ...required, 'contents: { steps: "Steps 2–3 “now”" }', "---", ...body].join("\n") + "\n");
+  assert.deepEqual(labelled.errors, []);
+  assert.deepEqual(labelled.guide?.front.contents, { steps: "Steps 2–3 “now”" });
+  // Section IDs stay ASCII.
+  for (const id of ["café", "2–3"]) {
+    const errors = refusedAt(["Lead.", "", `## Title {#${id}}`], 2, new RegExp(`"${id}" must use lower-case letters, digits and single hyphens`), id);
+    assert.equal(errors.length, 1, id);
+  }
 
+  // marked also reads a lone CR as a line break, so CRLF and lone CR line endings both compile exactly as LF.
   const lf = guideText(...body);
   const crlf = lf.replace(/\n/g, "\r\n");
+  const cr = lf.replace(/\n/g, "\r");
   assert.ok(crlf.includes("\r\n"));
-  const fromCrlf = compileGuide(path, crlf);
-  assert.equal(fromCrlf.guide?.contentHash, guide.contentHash);
-  assert.deepEqual(fromCrlf, compileGuide(path, lf));
+  assert.ok(cr.includes("\r") && !cr.includes("\n"));
+  for (const [name, copy] of [["CRLF", crlf], ["CR", cr]]) {
+    const result = compileGuide(path, copy);
+    assert.equal(result.guide?.contentHash, guide.contentHash, name);
+    assert.deepEqual(result, compileGuide(path, lf), name);
+  }
 
   const bad = guideText(...before, "<div>x</div>", "", "Text", "see [^1]", "", "> quote", "", "- [ ] task");
   const lfErrors = compileGuide(path, bad).errors;
   assert.deepEqual(compileGuide(path, bad.replace(/\n/g, "\r\n")).errors, lfErrors);
+  assert.deepEqual(compileGuide(path, bad.replace(/\n/g, "\r")).errors, lfErrors, "CR");
   const at = firstBodyLine + before.length;
   assert.deepEqual(lfErrors.map((error) => error.line), [at, at + 3, at + 5, at + 7]);
 });
@@ -644,6 +739,38 @@ test("compiles callouts and refuses other quotes", () => {
   refusedAt(["Text", "> \\[!NOTE]", "> escaped"], 1, /callout/);
 });
 
+test("a callout marker must stand alone on its line", () => {
+  // ADR-0065, decision 5: the quote's first line is [!NOTE], [!WARNING] or [!IMPORTANT] and nothing else. GitHub shows
+  // a marker with text after it on the same line as a plain quote, so the compiler refuses it as one.
+  for (const line of ["> [!NOTE] text", "> [!NOTE]x", "> [!WARNING] Check first.", "> [!IMPORTANT]   then text"]) {
+    const errors = refusedAt(["Text", "", line, "> More."], 2, /must be a callout/, line);
+    assert.equal(errors.length, 1, line);
+  }
+
+  // The marker alone on its line, followed by text on the next line or in a separate paragraph, still compiles, and
+  // so does a marker followed only by spaces or a tab.
+  const guide = compiled(
+    "> [!NOTE]",
+    "> Next line.",
+    "",
+    "> [!WARNING]",
+    ">",
+    "> Separate paragraph.",
+    "",
+    "> [!IMPORTANT]   ",
+    "> After trailing spaces.",
+    "",
+    "> [!NOTE]\t",
+    "> After a tab.",
+  );
+  assert.deepEqual(guide.lead, [
+    { kind: "callout", tone: "note", children: [paragraph(text("Next line."))] },
+    { kind: "callout", tone: "warning", children: [paragraph(text("Separate paragraph."))] },
+    { kind: "callout", tone: "important", children: [paragraph(text("After trailing spaces."))] },
+    { kind: "callout", tone: "note", children: [paragraph(text("After a tab."))] },
+  ] satisfies BlockNode[]);
+});
+
 test("lists every link with its own line", () => {
   const guide = compiled(
     "Lead [a](/a).", // 0
@@ -725,7 +852,7 @@ test("link policy accepts routes and guide links and refuses everything else", (
     "\\\\evil.example",
     "/\t/evil.example",
     "/a\u0000b",
-    "/a​b",
+    "/a\u200Bb",
     "javascript:alert(1)",
     "JavaScript:alert(1)",
     "data:text/html,x",

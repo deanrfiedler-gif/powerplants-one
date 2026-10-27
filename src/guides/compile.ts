@@ -50,7 +50,8 @@ const replacedKeys = new Set(["route_patterns", "entry_sections"]);
 type Report = (key: string, message: string) => void;
 
 export function readFrontMatter(path: string, text: string): FrontMatterRead {
-  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  // marked reads a lone CR as a line break as well as CRLF, so both become LF before anything counts lines.
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
   const closing = lines[0] === "---" ? lines.indexOf("---", 1) : -1;
   if (closing < 0) {
     const message =
@@ -184,6 +185,12 @@ function validate(fields: Map<string, unknown>, report: Report): GuideFrontMatte
     else report("list_styles", '"list_styles" must pair each section id with journey.');
   }
 
+  // A contents label is the text of its section's button, so it cannot be blank.
+  const contents = textMap("contents");
+  for (const [id, label] of Object.entries(contents)) {
+    if (label.trim() === "") report("contents", `"contents" gives the section "${id}" an empty label: write the text its button shows.`);
+  }
+
   const shownValue = field("shown_before_review");
   if (shownValue !== undefined && typeof shownValue !== "boolean") report("shown_before_review", '"shown_before_review" must be true or false.');
   const shownBeforeReview = shownValue === true;
@@ -198,7 +205,7 @@ function validate(fields: Map<string, unknown>, report: Report): GuideFrontMatte
     also_applies_to: textList("also_applies_to"),
     carried_over_from: carriedOverFrom,
     shown_before_review: shownBeforeReview,
-    contents: textMap("contents"),
+    contents,
     list_styles: listStyles,
     document_id: optionalText("document_id"),
     title: requiredText("title"),
@@ -250,6 +257,9 @@ const sectionIdShape = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const sectionIdSuffix = /\s*\{#([^{}]*)\}$/;
 const anyIdSuffix = /\{#[^{}]*\}\s*$/;
 const calloutMarker = /^\[!(NOTE|WARNING|IMPORTANT)\]\s*\n?/;
+// ADR-0065, decision 5: the marker stands alone on the quote's first line. This is tested on the raw paragraph text,
+// which keeps its line breaks; the compiled text has turned them into spaces, so it is used only to strip the marker.
+const calloutLine = /^\[!(NOTE|WARNING|IMPORTANT)\][ \t]*(?:\n|$)/;
 const footnoteText = /\[\^[^\]]+\]/g;
 const footnoteLink = /^\[\^[^\]]+\]/;
 // marked decodes numeric references in text (&#169; becomes ©) but leaves named ones (&amp;) and link targets
@@ -277,9 +287,15 @@ const refusals = {
   titleHeading: "A # heading is not allowed in a guide: the title comes from the front matter, so use ## for a section.",
   nestedHeading: "A heading cannot sit inside a list or a callout: put it on a line of its own, outside them.",
   subheadingId: "Section ids belong to ## headings only: remove the {#…} from this ### heading.",
+  emptySubheading: "A ### heading needs text: write the sub-heading, or remove the line.",
   missingId: "A ## heading must end with its section id as plain text, such as ## How to use it {#how-to-use}.",
   missingTitle: "A ## heading needs a title before its section id.",
 };
+
+// The text a reader sees in inline nodes. A heading whose visible text is blank would have no accessible name.
+function visibleText(nodes: InlineNode[]): string {
+  return nodes.map((node) => (node.kind === "text" || node.kind === "code" ? node.text : node.kind === "break" ? " " : visibleText(node.children))).join("");
+}
 
 // Compiles one guide file. Front matter and body problems are reported together, so an author sees them all at
 // once; the guide is returned only when there are none.
@@ -413,7 +429,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
     const rest = last.text.slice(0, match.index);
     if (rest === "") title.pop();
     else title[title.length - 1] = { kind: "text", text: rest };
-    if (title.length === 0) refuse(at, refusals.missingTitle);
+    if (visibleText(title).trim() === "") refuse(at, refusals.missingTitle);
 
     const id = match[1];
     const first = sectionLines.get(id);
@@ -432,6 +448,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
     else if (token.depth === 3) {
       const last = children.at(-1);
       if (last?.kind === "text" && anyIdSuffix.test(last.text)) refuse(at, refusals.subheadingId);
+      else if (visibleText(children).trim() === "") refuse(at, refusals.emptySubheading);
       return { kind: "heading", children };
     }
     return undefined;
@@ -456,7 +473,7 @@ function compileBody(path: string, body: string, bodyLine: number): BodyCompile 
       return undefined;
     }
     const [first] = token.tokens;
-    const marker = first?.type === "paragraph" ? calloutMarker.exec(first.text) : null;
+    const marker = first?.type === "paragraph" ? calloutLine.exec(first.text) : null;
     const errorsBefore = errors.length;
     // A refused quote is still walked, so the problems inside it are reported too.
     const children = blockList(token.tokens, at, { top: false, callout: true });

@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, rm, utimes, writeFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { access, mkdir, mkdtemp, readFile, rm, utimes, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test, type TestContext } from "node:test";
+import { fileURLToPath } from "node:url";
 import { readMaster } from "../../src/development/catalog";
 import { matchEntry, type Entry } from "../../src/development/model";
 import { compileGuide } from "../../src/guides/compile";
@@ -372,7 +374,7 @@ test("discovery finds guides by their guide_key and ignores other files", async 
     "docs/guides/sales/leads.md": crlf,
     "docs/guides/broken.md": unclosed,
     // A byte order mark or a space after the opening --- is a mistake in a guide, never a reason to skip the file.
-    "docs/guides/bom.md": `﻿${spare}`,
+    "docs/guides/bom.md": `\uFEFF${spare}`,
     "docs/guides/spaced.md": spare.replace(/^---/, "--- "),
   });
   const result = await readGuideLibrary(root, entries);
@@ -384,6 +386,23 @@ test("discovery finds guides by their guide_key and ignores other files", async 
   assert.match(frontMatterError("bom.md")?.message ?? "", /must start with front matter/);
   assert.match(frontMatterError("broken.md")?.message ?? "", /not closed/);
   assert.match(frontMatterError("spaced.md")?.message ?? "", /must start with front matter/);
+});
+
+test("discovery and the cross-checks read lone CR line endings as LF", async (t) => {
+  // marked reads a lone CR as a line break, so a file saved with lone CR line endings is a guide like any other: it is
+  // found by its guide key, it compiles as its LF copy does, and a cross-check names the key's own line.
+  const spec = { guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" };
+  const unknown = guideText({ guide_key: "guide.page.nowhere", entry_key: "route:/nowhere" });
+  const root = await makeRoot(t, {
+    "docs/guides/notes/leads.md": guideText(spec).replace(/\n/g, "\r"),
+    "docs/guides/notes/unknown.md": unknown.replace(/\n/g, "\r"),
+  });
+  const result = await readGuideLibrary(root, entries);
+
+  assert.deepEqual(result.guides.map((guide) => guide.path), ["docs/guides/notes/leads.md"]);
+  assert.equal(result.guides[0].contentHash, compiled(spec).contentHash);
+  assert.deepEqual(result.errors.map((error) => [error.path, error.line]), [["docs/guides/notes/unknown.md", lineOf(unknown, "entry_key:")]]);
+  assert.match(result.errors[0].message, /"route:\/nowhere".*not in the development register/);
 });
 
 // ADR-0065, decision 8: every guide compiles or the build fails, so no file may drop out of the library unreported.
@@ -664,6 +683,43 @@ test("released library refuses an unreadable or misshapen release file without l
   }
 });
 
+test("released library refuses a release file with a malformed guide or route, so guideForPath cannot throw", async (t) => {
+  // The shell calls guideForPath while it renders, and that reads every route's path and the front matter of the guide
+  // a route names. A release file damaged in any of those places must give the empty library, not a broken shell.
+  const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
+  const route = { path: "/sales/leads", guide_key: "guide.page.sales.leads" };
+  const files: Record<string, unknown> = {
+    "a null guide": { guides: [null], routes: [route], shell: null },
+    "a route with no fields": { guides: [leads], routes: [{}], shell: null },
+    "a numeric path": { guides: [leads], routes: [{ path: 5, guide_key: route.guide_key }], shell: null },
+    "a guide whose front is null": { guides: [{ ...leads, front: null }], routes: [route], shell: null },
+    "a guide key that is not text": { guides: [{ ...leads, front: { ...leads.front, guide_key: 5 } }], routes: [route], shell: null },
+    "sections that are not a list": { guides: [{ ...leads, sections: null }], routes: [route], shell: null },
+    "a lead that is not a list": { guides: [{ ...leads, lead: "text" }], routes: [route], shell: null },
+    "a route whose guide_key is a number": { guides: [leads], routes: [{ path: route.path, guide_key: 5 }], shell: null },
+    "a route that is not an object": { guides: [leads], routes: ["/sales/leads"], shell: null },
+    "a shell whose front is null": { guides: [leads], routes: [route], shell: { ...leads, front: null } },
+    "a shell that is a list": { guides: [leads], routes: [route], shell: [] },
+  };
+  for (const [name, data] of Object.entries(files)) {
+    const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
+    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    assert.deepEqual(result, { guides: [], routes: [], shell: null }, name);
+    assert.equal(logged.length, 1, name);
+    assert.match(String(logged[0][0]), /does not have the expected shape/, name);
+    assert.doesNotThrow(() => guideForPath(result, "/sales/leads"), name);
+  }
+
+  // A file whose every element is well formed, a shell guide included, is read as written.
+  const shell = compiled(shown({ guide_key: "guide.shell", entry_key: "system:shell" }));
+  const whole = { guides: [leads, shell], routes: [route, { path: "/a", guide_key: null }], shell };
+  const root = await makeRoot(t, { [releasedFile]: JSON.stringify(whole) });
+  const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+  assert.deepEqual(logged, []);
+  assert.deepEqual(result, JSON.parse(JSON.stringify(whole)));
+  assert.equal(guideForPath(result, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
+});
+
 test("released library reads the release file in production and remembers it", async (t) => {
   const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
   const released = releasedGuides(library(leads), entries);
@@ -706,4 +762,65 @@ test("released library compiles the guide files and the register in development"
   const { result: empty, logged } = await capturingErrors(() => withNodeEnv("development", () => releasedGuideLibrary(bare)));
   assert.deepEqual(empty, { guides: [], routes: [], shell: null });
   assert.equal(logged.length, 1);
+});
+
+// ADR-0065, decision 8: the build gate. scripts/build-guides.ts runs in a child process from a temporary root, as
+// `npm run build` runs it from the repository. The root holds only a synthetic register and guide files.
+const buildScript = fileURLToPath(new URL("../../scripts/build-guides.ts", import.meta.url));
+const buildRegister = JSON.stringify({ schema_version: 2, shared_sources: [], entries });
+function runBuild(root: string) {
+  // A clean environment: the test runner's NODE_OPTIONS and test context must not reach the child. tsx is resolved
+  // from this file, because the temporary root has no node_modules of its own.
+  const env = { ...process.env };
+  delete env.NODE_OPTIONS;
+  delete env.NODE_TEST_CONTEXT;
+  return spawnSync(process.execPath, ["--import", import.meta.resolve("tsx"), buildScript], { cwd: root, env, encoding: "utf8", timeout: 60_000 });
+}
+const writtenRelease = (root: string) => access(join(root, releasedFile)).then(() => true, () => false);
+
+test("the build writes the release file with the visible guides and skips the guide awaiting its rewrite", async (t) => {
+  const leads = { spec: shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }), path: "docs/guides/leads.md" };
+  const draft = { spec: { guide_key: "guide.page.a", entry_key: "route:/a" }, path: "docs/guides/a.md" }; // Draft, so hidden
+  const oldTemplate = ["---", "document_id: PPO-HELP-CRM", "guide_key: crm.deals.worklist", "status: InReview - pilot", "route_patterns: /crm/opportunities", "---", "", "# Old template", ""].join("\n");
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    [leads.path]: guideText(leads.spec),
+    [draft.path]: guideText(draft.spec),
+    [awaitingRewrite[0]]: oldTemplate,
+  });
+  const run = runBuild(root);
+
+  assert.equal(run.error, undefined);
+  assert.equal(run.stderr, "");
+  assert.equal(run.status, 0, run.stdout);
+  assert.deepEqual(run.stdout.split("\n"), [
+    `Skipped until rewritten (plan Task 5): ${awaitingRewrite[0]}`,
+    `Guides compiled: 2. Guides released: 1 (${releasedFile}).`,
+    "",
+  ]);
+  const written = JSON.parse(await readFile(join(root, releasedFile), "utf8"));
+  const expected = releasedGuides(library(compiled(leads.spec, leads.path), compiled(draft.spec, draft.path)), entries);
+  assert.deepEqual(written, JSON.parse(JSON.stringify(expected)));
+  assert.deepEqual(written.guides.map((guide: CompiledGuide) => guide.front.guide_key), ["guide.page.sales.leads"]);
+  assert.equal(guideForPath(written, "/a"), null, "the Draft guide is compiled but not released");
+});
+
+test("the build fails on a malformed guide, names its file and line, and writes no release file", async (t) => {
+  const bad = guideText({ guide_key: "guide.page.a", entry_key: "route:/a", body: ["## Overview {#overview}", "", "<div>raw</div>"] });
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    "docs/guides/leads.md": guideText(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" })),
+    "docs/guides/bad.md": bad,
+  });
+  const run = runBuild(root);
+
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stderr);
+  assert.equal(run.stdout, "");
+  assert.deepEqual(run.stderr.split("\n"), [
+    `docs/guides/bad.md:${lineOf(bad, "<div>")} Raw HTML is not allowed in a guide: write the content in Markdown instead.`,
+    "1 guide error: fix them and run the build again.",
+    "",
+  ]);
+  assert.equal(await writtenRelease(root), false, "no release file is written when any guide fails");
 });

@@ -7,8 +7,9 @@ export const allowedHttpsHosts: readonly string[] = [];
 export type LinkShape = "route" | "guide" | "https" | "refused";
 
 // A single leading /, with no backslash anywhere: browsers read a leading // or /\ as another site's address.
-// No query or fragment: a link to a section of a guide uses guide:<guide key>#<section id>.
-const routeShape = /^\/(?![/\\])[^\s?#\\]*$/;
+// No query or fragment: a link to a section of a guide uses guide:<guide key>#<section id>. No square brackets: a
+// route pattern such as /sales/opportunities/[id] names a register entry, not an address a browser can open.
+const routeShape = /^\/(?![/\\])[^\s?#\\[\]]*$/;
 const guideShape = /^guide:[a-z0-9.\-]+#[a-z0-9]+(-[a-z0-9]+)*$/;
 // Whitespace, control and invisible format characters are refused in every link. Browsers drop some of them
 // silently, so the address they open could differ from the one that was reviewed.

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { createElement, isValidElement, type ReactElement, type ReactNode } from "react";
@@ -202,8 +202,9 @@ test("never trusts a hand-edited href", () => {
     "//synthetic.example/",
     "/\\synthetic.example",
     "/path with space",
-    "/path​",
+    "/path\u200B",
     "https://synthetic.example/", // https, but the host is not on the list
+    "/sales/opportunities/[id]", // a route pattern, not an address
     "",
   ];
   for (const href of refusedHrefs) {
@@ -336,8 +337,66 @@ test("no HTML injection API under src/guides", () => {
   const root = fileURLToPath(new URL("../../src/guides/", import.meta.url));
   const files = readdirSync(root, { recursive: true, encoding: "utf8" }).filter((name) => statSync(join(root, name)).isFile());
   assert.ok(files.includes("render.tsx"), "the scan should reach the renderer");
+  // Every way to turn a string into markup: React's escape hatch and its __html object, the DOM's HTML properties and
+  // methods, and an iframe's srcdoc (srcDoc in React, hence any case).
+  const injection = /dangerouslySetInnerHTML|__html|innerHTML|outerHTML|insertAdjacentHTML|document\.write|createContextualFragment|srcdoc/i;
   for (const name of files) {
-    assert.doesNotMatch(readFileSync(join(root, name), "utf8"), /dangerouslySetInnerHTML/, `${name} must not inject HTML`);
+    assert.doesNotMatch(readFileSync(join(root, name), "utf8"), injection, `${name} must not inject HTML`);
+  }
+});
+
+// The guide modules a client component may import. The browser receives the compiled model, never the parser
+// (ADR-0065, decision 8), so these import only React, next/link and each other; released.ts may also import the
+// register's types, which are erased.
+const clientSafe = ["render.tsx", "released.ts", "links.ts", "model.ts", "status.ts"];
+const clientImports = new Set(["react", "next/link", "./model", "./links", "./status"]);
+const serverOnly = /^(?:node:|marked$|yaml$|\.\/compile$|\.\/library$)/;
+
+// The module specifiers of a source file: import and export ... from statements, side-effect imports, import() and
+// require(). `typeOnly` is true for a whole statement written `import type` or `export type`.
+function importsOf(source: string): { specifier: string; typeOnly: boolean }[] {
+  const statements = [...source.matchAll(/^[ \t]*(?:import|export)\s+(type\s+)?(?:[^"';]*?\s+from\s+)?["']([^"']+)["']/gm)];
+  const calls = [...source.matchAll(/\b(?:import|require)\s*\(\s*["']([^"']+)["']/g)];
+  return [
+    ...statements.map((match) => ({ specifier: match[2], typeOnly: match[1] !== undefined })),
+    ...calls.map((match) => ({ specifier: match[1], typeOnly: false })),
+  ];
+}
+
+test("the client-safe guide modules import only React, next/link and each other", () => {
+  const root = fileURLToPath(new URL("../../src/guides/", import.meta.url));
+  for (const name of clientSafe) {
+    for (const { specifier, typeOnly } of importsOf(readFileSync(join(root, name), "utf8"))) {
+      assert.doesNotMatch(specifier, serverOnly, `${name} must not import ${specifier}`);
+      const allowed = clientImports.has(specifier) || (name === "released.ts" && specifier === "../development/model" && typeOnly);
+      assert.ok(allowed, `${name} imports ${specifier}${typeOnly ? " (types only)" : ""}, which is not on the client allowlist`);
+    }
+  }
+  // The scan must not be vacuous: it reads every form of import these modules use.
+  assert.deepEqual(importsOf(readFileSync(join(root, "released.ts"), "utf8")), [
+    { specifier: "../development/model", typeOnly: true },
+    { specifier: "./model", typeOnly: true },
+    { specifier: "./status", typeOnly: false },
+  ]);
+  assert.deepEqual(importsOf('import "x";\nexport * from "y";\nconst z = await import("z");\nimport {\n  a,\n  type b,\n} from "w";'), [
+    { specifier: "x", typeOnly: false },
+    { specifier: "y", typeOnly: false },
+    { specifier: "w", typeOnly: false },
+    { specifier: "z", typeOnly: false },
+  ]);
+});
+
+test("no client component under src imports the guide compiler or library", () => {
+  const src = fileURLToPath(new URL("../../src/", import.meta.url));
+  const files = readdirSync(src, { recursive: true, encoding: "utf8" }).filter((name) => /\.[cm]?[jt]sx?$/.test(name) && statSync(join(src, name)).isFile());
+  const clients = files.filter((name) => /^\s*["']use client["']/.test(readFileSync(join(src, name), "utf8")));
+  assert.ok(clients.includes(join("guides", "render.tsx")), "the scan should find the guide renderer as a client module");
+  for (const name of clients) {
+    for (const { specifier } of importsOf(readFileSync(join(src, name), "utf8"))) {
+      // A relative specifier is resolved against the file, so ./compile from src/guides is found as well.
+      const target = specifier.startsWith(".") ? join(dirname(join(src, name)), specifier) : specifier;
+      assert.doesNotMatch(target.replace(/\.[cm]?[jt]sx?$/, ""), /(?:^|[\\/])guides[\\/](?:compile|library)$/, `${name} is a client component and must not import ${specifier}`);
+    }
   }
 });
 
@@ -469,7 +528,7 @@ test("a numbered step keeps any further blocks inside its text column", () => {
 // The converter in plan Task 6 writes each carried-over guide in this body shape. The same synthetic guide is written
 // twice, as the PageGuide the accepted panel takes and as Markdown, and both must give byte-identical markup.
 const typography = {
-  purpose: "A synthetic record of 3 mm × 4 at 45°, kept for “synthetic” use.",
+  purpose: "A synthetic record of 3\u00A0mm × 4 at 45°, kept for “synthetic” use.",
   firstFeature: "Views – in the side menu",
   intro: "Your inbox for “synthetic” enquiries – work through each one.",
 } as const;
@@ -480,7 +539,7 @@ const parityGuide: PageGuide = {
   purpose: typography.purpose,
   features: [
     [typography.firstFeature, "Inbox holds the records still in play – and Archived holds the rest."],
-    ["The next column", "Every record shows its next action, e.g. 10 × 5 mm at 30°."],
+    ["The next column", "Every record shows its next action, e.g. 10\u00A0×\u00A05\u00A0mm at 30°."],
   ],
   steps: [
     ["Resolve records", "Open the form – then save at 45°."],
@@ -494,7 +553,7 @@ const parityGuide: PageGuide = {
   mobile: "On a phone the table is a card list.",
   shortcuts: [
     ["Tab", "Move through the toolbar."],
-    ["← →", "Resize the focused column by 10 pixels."],
+    ["← →", "Resize the focused column by 10\u00A0pixels."],
     ["Home / End", "Set the focused column to its narrowest or widest."],
   ],
   recovery: "If the list cannot load, the page says so and offers to try again.",
@@ -518,7 +577,7 @@ const parityMarkdown = [
   "",
   "## What this page is for {#overview}",
   "",
-  "A synthetic record of 3 mm × 4 at 45°, kept for “synthetic” use.",
+  "A synthetic record of 3\u00A0mm × 4 at 45°, kept for “synthetic” use.",
   "",
   "### Views – in the side menu",
   "",
@@ -526,7 +585,7 @@ const parityMarkdown = [
   "",
   "### The next column",
   "",
-  "Every record shows its next action, e.g. 10 × 5 mm at 30°.",
+  "Every record shows its next action, e.g. 10\u00A0×\u00A05\u00A0mm at 30°.",
   "",
   "## How to use it {#how}",
   "",
@@ -553,7 +612,7 @@ const parityMarkdown = [
   "| Key | Action |",
   "| --- | --- |",
   "| `Tab` | Move through the toolbar. |",
-  "| `← →` | Resize the focused column by 10 pixels. |",
+  "| `← →` | Resize the focused column by 10\u00A0pixels. |",
   "| `Home / End` | Set the focused column to its narrowest or widest. |",
   "",
   "## If something is unavailable {#recovery}",
@@ -575,9 +634,13 @@ test("renders a carried-over guide exactly as the accepted panel", () => {
   for (const part of ["ppo-guide-features", "ppo-guide-steps", "ppo-guide-journey", "ppo-guide-shortcuts", "<kbd>", "ppo-guide-note", "Page guide"]) {
     assert.ok(accepted.includes(part), `the accepted markup should hold ${part}`);
   }
-  for (const character of ["–", "“", "”", "×", "°", " ", "← →"]) {
+  for (const character of ["–", "“", "”", "×", "°", "\u00A0", "← →"]) {
     assert.ok(rendered.includes(character), `the rendered markup should keep ${JSON.stringify(character)}`);
   }
+  // The non-breaking spaces are written as escapes above. They must reach the compiled text and the rendered markup.
+  const [purpose] = result.guide.sections[0].blocks;
+  assert.ok(purpose.kind === "paragraph" && purpose.children[0].kind === "text" && purpose.children[0].text.includes("3\u00A0mm × 4"), "the compiled text keeps the non-breaking space");
+  assert.ok(rendered.includes("10\u00A0×\u00A05\u00A0mm"), "the rendered markup keeps the non-breaking spaces");
   assert.equal(accepted.match(/<li>/g)?.length, 4);
   assert.equal(accepted.match(/<dt>/g)?.length, 3);
   assert.equal(rendered, accepted);

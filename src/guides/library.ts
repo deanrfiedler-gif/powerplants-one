@@ -6,7 +6,7 @@ import type { Entry } from "../development/model";
 import { compileGuide } from "./compile";
 import { linkShape } from "./links";
 import type { CompiledGuide, GuideError, GuideLibrary } from "./model";
-import { isRouteEntry, releasedGuides, routeForPath, type ReleasedLibrary } from "./released";
+import { isRouteEntry, releasedGuides, routeForPath, type ReleasedLibrary, type ReleasedRoute } from "./released";
 
 export type { GuideLibrary } from "./model";
 
@@ -45,12 +45,13 @@ const isMarkdown = (path: string) => /\.md$/i.test(path);
 const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
-const declaresGuideKey = (text: string) => text.replace(/\r\n/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
+// CRLF and a lone CR are line breaks, as they are to the compiler and to marked.
+const declaresGuideKey = (text: string) => text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
 
 // The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter
 // is well formed.
 const frontMatterLines = (text: string) => {
-  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
   return lines.slice(1, lines.indexOf("---", 1));
 };
 
@@ -272,11 +273,21 @@ async function readReleaseFile(root: string): Promise<ReleasedLibrary> {
   return data;
 }
 
-// A minimal shape check. The file is written by the build from the same types, so it is not validated further.
+// The build writes the file from the same types, but a damaged file must not break the shell, which calls guideForPath
+// while it renders. So every element that guideForPath reads is checked: each route's path and guide key, and each
+// guide's front matter guide key. A guide's sections and lead must be lists; the renderer tolerates anything inside them.
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+
+const isReleasedGuide = (value: unknown): value is CompiledGuide =>
+  isRecord(value) && isRecord(value.front) && typeof value.front.guide_key === "string" && Array.isArray(value.sections) && Array.isArray(value.lead);
+
+const isReleasedRoute = (value: unknown): value is ReleasedRoute =>
+  isRecord(value) && typeof value.path === "string" && (typeof value.guide_key === "string" || value.guide_key === null);
+
 function isReleased(data: unknown): data is ReleasedLibrary {
-  if (typeof data !== "object" || data === null) return false;
-  const { guides, routes, shell } = data as Record<string, unknown>;
-  return Array.isArray(guides) && Array.isArray(routes) && (shell === null || (typeof shell === "object" && !Array.isArray(shell)));
+  if (!isRecord(data)) return false;
+  const { guides, routes, shell } = data;
+  return Array.isArray(guides) && guides.every(isReleasedGuide) && Array.isArray(routes) && routes.every(isReleasedRoute) && (shell === null || isReleasedGuide(shell));
 }
 
 // One short reason with no stack and no file contents: a JSON error message quotes the text it could not read.
