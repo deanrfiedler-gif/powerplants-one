@@ -20,6 +20,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
         }
       ],
       "implementation": [
@@ -36,7 +41,12 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -49,7 +59,8 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access"
       ],
       "desktop": "Use semantic tokens and preserve the meaning of each colour.",
       "mobile": "Swatches wrap; labels and values remain readable without horizontal page scrolling.",
@@ -69,6 +80,14 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "foundations-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -195,6 +214,21 @@
           "id": "automation-n2",
           "label": "Automation N2 host",
           "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -248,7 +282,14 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -427,7 +468,13 @@
         "route:/conversations",
         "route:/conversations/[id]",
         "route:/estimating/discovery/[id]/nursery",
-        "route:/estimating/discovery/[id]/nursery/assessment"
+        "route:/estimating/discovery/[id]/nursery/assessment",
+        "route:/estimating/reviews",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Use one primary action per task region and a visible action label.",
       "mobile": "Controls retain touch targets and wrap into additional rows.",
@@ -681,6 +728,30 @@
           "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "buttons-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -858,6 +929,21 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -906,7 +992,14 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/engineering-changes/PPO-EN-07-Engineering-Change-Impact-Review-Desktop-UI-Mockup-r03.png",
@@ -953,7 +1046,14 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access",
+        "route:/estimating/reviews",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Flush to its pane in one horizontal scroller: no exterior padding, frame or radius. Grey 43 px sentence-case header with column rules; 50 px rows (48 px in a panel). Opening a row inspects it and ticking its checkbox selects it; the two are independent. Sort state is in aria-sort. The footer states the count, the selection and paging.",
       "mobile": "At 780 px and below the key column unpins and the table scrolls sideways with only the checkbox pinned. Check 390 and 320 px for readable text, reachable selection and a footer that wraps.",
@@ -1085,6 +1185,30 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "register-table-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -1841,6 +1965,11 @@
           "id": "automation-n2",
           "label": "Automation N2 host",
           "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -1876,7 +2005,8 @@
         "src/components/current-location-search.ts",
         "src/app/styles/organisations.css",
         "docs/design/development/organisations-native-fixtures.json",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2014,7 +2144,11 @@
         "route:/facilities/[id]/edit",
         "route:/facilities/new",
         "route:/estimating/discovery/[id]/nursery",
-        "route:/estimating/discovery/[id]/nursery/assessment"
+        "route:/estimating/discovery/[id]/nursery/assessment",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Required inputs have visible labels; preserving data, validation and server acceptance remain separate. This example only saves in memory.",
       "mobile": "Use one column, at least 16 px input text and labels above controls. Avoid hidden action buttons beneath a mobile keyboard.",
@@ -2228,6 +2362,14 @@
           "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2433,6 +2575,11 @@
           "id": "automation-n2",
           "label": "Automation N2 host",
           "description": "tests/browser/nursery-assessment.spec.ts: stage/scenario editing, exact results and output, history, transient/denied refresh and original recovery. Synthetic host; no isolated renderer."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -2455,7 +2602,8 @@
         "src/components/sales-delivery-link.tsx",
         "src/components/sales-delivery-creation.tsx",
         "src/components/sales-followup.tsx",
-        "docs/design/development/site-surveys-fixtures.json"
+        "docs/design/development/site-surveys-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2571,7 +2719,11 @@
         "route:/facilities/[id]/edit",
         "route:/facilities/new",
         "route:/estimating/discovery/[id]/nursery",
-        "route:/estimating/discovery/[id]/nursery/assessment"
+        "route:/estimating/discovery/[id]/nursery/assessment",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Submit an empty title to focus the summary, then follow its link to the field. Correct the title and save to clear the example error.",
       "mobile": "Summary and inline errors must remain visible at 320 px and 200% zoom.",
@@ -2721,6 +2873,14 @@
           "action": "Review N2 execution evidence and obtain owner visual acceptance.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -2794,6 +2954,11 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -2824,7 +2989,8 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -2882,7 +3048,11 @@
         "route:/sites",
         "route:/service/incidents/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Arrow keys, Home and End select/focus tabs. Each tab labels its corresponding panel.",
       "mobile": "Confirm wrapped or scrolling tabs keep the selected label and focus visible.",
@@ -2984,6 +3154,14 @@
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3047,6 +3225,16 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -3082,7 +3270,13 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3121,7 +3315,13 @@
         "route:/my-jobs/[id]",
         "route:/service/appointments/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access",
+        "route:/estimating/reviews",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Open with the trigger; arrows/Home/End move through choices; Escape returns focus.",
       "mobile": "Popover stays within viewport bounds and closes through selection or dismissal. SV-04 retains the shared global More opener beside its record-action dock after the compact header becomes Back.",
@@ -3199,6 +3399,22 @@
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "menu-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3238,6 +3454,16 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -3260,7 +3486,13 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/deals/ppo-deal-pipeline_r38.html",
@@ -3295,7 +3527,13 @@
         "route:/my-jobs/inspections",
         "route:/service/inspections",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access",
+        "route:/estimating/reviews",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Opening creates a modal focus boundary. Confirm is local to the example; close and Escape return to the opener.",
       "mobile": "Inspect the dialog at phone width with long content and browser zoom; keep Close and Done reachable.",
@@ -3331,6 +3569,22 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "dialog-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -3572,6 +3826,16 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment and paginated Site-owned follow-ups with exact later-page handovers. P11 observes Overview loading, failure, recovery and denial independently of History pagination. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -3613,7 +3877,13 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -3744,7 +4014,11 @@
         "route:/service/tickets",
         "route:/service/tickets/[id]",
         "route:/service/tickets/new",
-        "route:/sites"
+        "route:/sites",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Retry changes only this fixture. Distinguish no results, denied access, stale retained data and unknown write outcomes.",
       "mobile": "Messages wrap and retry remains reachable; never express failure only through colour.",
@@ -3942,6 +4216,22 @@
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
+        },
+        {
+          "id": "read-state-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
         }
       ],
       "figma": {
@@ -3991,6 +4281,11 @@
           "id": "ad01-request-host",
           "label": "Access request, decision, application and withdrawal",
           "description": "tests/browser/access-requests.spec.ts: unchanged submission/decision, Approved form, separate Applied grant installation, future validity, current Person access, lost committed-response/reload recovery, stale and denied command states at desktop/phone widths. Host fixture; no isolated renderer. Withdrawal fixtures cover both un-applied states, retained approval, fresh-request handover, competing application, denied context and original recovery; no installed grant is removed."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
         }
       ],
       "implementation": [
@@ -4005,7 +4300,8 @@
         "src/development/component-examples.tsx",
         "src/development/component-fixtures.ts",
         "src/app/styles/customers.css",
-        "docs/design/development/maintenance-fixtures.json"
+        "docs/design/development/maintenance-fixtures.json",
+        "docs/design/development/outputs-fixtures.json"
       ],
       "reference": {
         "path": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
@@ -4073,7 +4369,11 @@
         "route:/admin/access/roles",
         "route:/admin/access/[id]/roles",
         "route:/admin/access/requests",
-        "route:/admin/access/requests/[id]"
+        "route:/admin/access/requests/[id]",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
       ],
       "desktop": "Keep a readable label with each tone; business state and tone are not equivalent.",
       "mobile": "Chips wrap without truncating operational meaning.",
@@ -4149,6 +4449,14 @@
           "expected": "Paired native request, independent decision, application and withdrawal comparison across desktop and phone.",
           "actual": "Shared controls unchanged; reasoned requester withdrawal and terminal Withdrawn evidence extend the existing detail. Accepted native images and owner/device review pending.",
           "action": "Review source-bound captures and host recovery/authority states.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -4529,6 +4837,21 @@
           "id": "cs04-native",
           "label": "Sites CS-04 host",
           "description": "Sites register and record at 1440/1024/390/320, loading, no matches, unavailable, restricted sources and installed/served equipment. See tests/browser/sites-native.spec.ts; owner review pending."
+        },
+        {
+          "id": "ad01-identity-register",
+          "label": "AD-01 identity register host",
+          "description": "Real read and visual-only Figma fixture in tests/browser/access-identity-register.spec.ts; 1440/1024/390/320, filters, selection, columns, empty, denied, failed and working-company refusal. Owner review pending."
+        },
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "sv03-register",
+          "label": "SV-03 register host",
+          "description": "Native work orders: all and attention views, filtering, complete/partial counts, selection, snapshots and phone controls. Synthetic host proofs in tests/browser/work-order-register.spec.ts; visual acceptance pending."
         }
       ],
       "implementation": [
@@ -4657,7 +4980,14 @@
         "src/app/styles/sites.css",
         "docs/design/development/sites-native-fixtures.json",
         "src/app/styles/changes-follow-up.css",
-        "docs/testing/evidence/changes-follow-up-build/README.md"
+        "docs/testing/evidence/changes-follow-up-build/README.md",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "docs/design/development/access-identity-register-fixtures.json",
+        "docs/design/development/outputs-fixtures.json",
+        "src/components/work-order-register.tsx"
       ],
       "reference": {
         "path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
@@ -4725,7 +5055,14 @@
         "route:/sites",
         "route:/sites/[id]",
         "route:/schedule/changes",
-        "route:/schedule/policy-impact"
+        "route:/schedule/policy-impact",
+        "route:/admin/access",
+        "route:/estimating/reviews",
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]",
+        "route:/service/work-orders"
       ],
       "desktop": "Shell v2: 240 px labelled rail by default; saved compact 76 px preference retained. My Work uses a 240 px flush menu and a 20 px collapsed edge. Search, hierarchy, More and permitted destinations remain accessible. See the Figma implementation decision for exact sources and responsive adaptations. Shell top bar amendment (16 October 2026): three zones with equal side columns, so the 403 px search (at 1440) is centred in the top bar on every page; the breadcrumb shows the page or owner / page and truncates, owner first, before the search.",
       "mobile": "Shell v2 phone shell: accessible icon-only navy tab bar with selected background/green stripe and equal touch targets, and, since the phone header amendment (19 October 2026), one compact 56 px header row: Menu, the page or view name and Conversations (Back and the record reference on a record). Search, account, Notifications, Page guide and Design & build are in the menu. My Work shows Emails, Leads and Tasks quick actions and flush lists. Check 390 and 320 px.",
@@ -5033,6 +5370,30 @@
           "expected": "Owner comparison of the accepted Sites design and current phone amendment.",
           "actual": "CS-04 consumes the shared component with scoped compact styling and explicit source limits.",
           "action": "Review Sites host evidence and documented deviations; owner review remains pending.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-ad01-register",
+          "expected": "Paired AD-01 accepted Figma and application review.",
+          "actual": "Register implemented; source comparison and functional evidence are separate from owner acceptance.",
+          "action": "Review the bounded identity register against its retained r01 captures.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-sv03-review",
+          "expected": "Accepted Work orders grid, snapshot and phone list with current compact header.",
+          "actual": "Native SV-03 host with local layout bindings, bounded native history and explicit partial counts; implementation adaptations await review.",
+          "action": "Compare desktop/390/320 application captures with the accepted references.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -6649,6 +7010,11 @@
           "id": "denied",
           "label": "Unavailable",
           "description": "Protected forms and evidence removed."
+        },
+        {
+          "id": "queue-successor",
+          "label": "Superseded queue handover",
+          "description": "Exact old submission never silently becomes a decision on its successor."
         }
       ],
       "implementation": [
@@ -8700,6 +9066,234 @@
           }
         ],
         "note": "Frames use Author=Carl 1144:172 and Kind=Carl 1144:52. Current P3 states and R8 confirmation follow decision records; no accepted warning frame exists."
+      },
+      "review": null
+    },
+    {
+      "id": "estimate-reviews-register",
+      "title": "Reviews and approvals register",
+      "category": "Tables & grids",
+      "module": "ES",
+      "purpose": "Permission-scoped ES-04/ES-05 register with exact native snapshots, candidate-window counts and review/release handovers.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No unconfirmed rows or totals."
+        },
+        {
+          "id": "window",
+          "label": "Candidate window",
+          "description": "Three review kinds can share one estimate candidate."
+        },
+        {
+          "id": "partial",
+          "label": "Partial or denied",
+          "description": "Restricted sources are explicit without hidden counts."
+        },
+        {
+          "id": "empty",
+          "label": "Filtered empty",
+          "description": "Continuation remains reachable."
+        },
+        {
+          "id": "returned",
+          "label": "Returned / successor",
+          "description": "Original findings and recorded responses."
+        },
+        {
+          "id": "changed",
+          "label": "Source changed",
+          "description": "No inherited decision authority."
+        },
+        {
+          "id": "selection",
+          "label": "Selection",
+          "description": "Sequence and rechecked selected CSV only."
+        },
+        {
+          "id": "snapshot",
+          "label": "Exact snapshot",
+          "description": "Current native authority and precise handovers."
+        },
+        {
+          "id": "recovery",
+          "label": "Unavailable",
+          "description": "Protected evidence cleared; retry current read."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/estimate-reviews-register.tsx",
+          "symbol": "EstimateReviewsRegister"
+        },
+        {
+          "path": "src/components/estimate-reviews-snapshot.tsx",
+          "symbol": "ReviewQueueSnapshot"
+        }
+      ],
+      "dependencies": [
+        "src/components/estimate-reviews-register.tsx",
+        "src/components/estimate-reviews-snapshot.tsx",
+        "src/components/estimate-reviews-register.css",
+        "src/estimating/review/queue.ts",
+        "src/estimating/review/queue-snapshot.ts",
+        "docs/decisions/estimating-review-queue.md"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/reviews-approvals-design-r01/README.md",
+        "anchor": "",
+        "status": "Accepted design reference; application review pending"
+      },
+      "specification": "docs/design/development/components/estimate-reviews-register.md",
+      "used_on": [
+        "route:/estimating/reviews",
+        "scope:ES-04",
+        "scope:ES-05"
+      ],
+      "desktop": "Accepted 40 px full-width grid, fixed edges, 240 px menu, 360 px selection and overlapping exact snapshot.",
+      "mobile": "Flush rows, labelled selection, full-screen exact snapshot at 390/320 px.",
+      "keyboard": "Labelled checkboxes, native buttons, visible focus, Escape return and evidence-tab arrow keys.",
+      "limitations": "Native synthetic read projection; candidate-window counts; no bulk decisions, SLA, live business integration or application acceptance.",
+      "gaps": [
+        {
+          "id": "reviews-visual-acceptance",
+          "expected": "Owner-reviewed application comparison, physical-device and screen-reader evidence.",
+          "actual": "Implementation and automated evidence remain separate from acceptance. Missing design states use documented adaptations.",
+          "action": "Review application captures and the page contract.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Components › Estimating parts",
+        "components": [
+          {
+            "node": "75:679",
+            "name": "Review grid header"
+          },
+          {
+            "node": "75:678",
+            "name": "Review grid row"
+          },
+          {
+            "node": "104:1786",
+            "name": "Review list row (phone)"
+          },
+          {
+            "node": "104:1654",
+            "name": "Review snapshot (phone)"
+          }
+        ],
+        "note": "Register parts from Reviews & approvals (56:2). The review and correction form itself has no component."
+      },
+      "review": null
+    },
+    {
+      "id": "outputs-workspace",
+      "title": "Outputs exact issue workspace",
+      "category": "Tables & grids",
+      "module": "DK",
+      "purpose": "Permitted Job Pack and Service Report register, exact retained issues and controlled native actions; synthetic distribution remains separate from external delivery.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "outputs-native",
+          "label": "Outputs exact issue and recovery",
+          "description": "Real host fixtures in tests/helpers/output-workspace-fixture.ts and tests/browser/output-workspace.spec.ts cover bounded/denied reads, historical issues, missing bytes, progress, stale actions and original recovery."
+        },
+        {
+          "id": "history",
+          "label": "Historical / unavailable",
+          "description": "Exact old identity/hash; no replacement or regeneration."
+        },
+        {
+          "id": "distribution",
+          "label": "Synthetic and recipient facts",
+          "description": "Permitted population, ReportContent only and original unknown-attempt reconciliation."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/output-register.tsx",
+          "symbol": "OutputsRegisterScreen"
+        },
+        {
+          "path": "src/components/output-record.tsx",
+          "symbol": "OutputRecordScreen"
+        },
+        {
+          "path": "src/components/output-command.tsx",
+          "symbol": "OutputCommand"
+        }
+      ],
+      "dependencies": [
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css",
+        "src/outputs/reads.ts",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "src/shell/navigation.ts",
+        "src/shell/module-workspaces.ts",
+        "docs/design/development/outputs-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
+        "anchor": "",
+        "status": "Accepted Figma design and retained captures; native owner review pending"
+      },
+      "specification": "docs/design/development/components/outputs-workspace.md",
+      "used_on": [
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
+      ],
+      "desktop": "240 px secondary menu, 40 px shared grid, 360 px snapshot and 380 px source details with exact issue tabs. Explicit window coverage.",
+      "mobile": "Flush rows, shared 56 px header, wrapping exact reference, scrollable tabs and reachable actions at 390/320 px.",
+      "keyboard": "Shared arrows/Home/End tabs, snapshot focus return, native modal confirmation and original uncertain recovery.",
+      "limitations": "OUT-09/OUT-10 only. Synthetic distribution is not external delivery. No bulk preparation/issue or new generic authority.",
+      "gaps": [
+        {
+          "id": "outputs-owner-review",
+          "expected": "Paired desktop/phone review against accepted DK-03 frames and current shared phone amendment.",
+          "actual": "Native adaptation and synthetic proofs supplied; owner, physical-device and assistive-technology acceptance pending.",
+          "action": "Review retained source and application captures in docs/testing/evidence/output-register/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Mapped",
+        "location": "Output, issue and distribution · DK-03",
+        "components": [
+          {
+            "node": "771:75",
+            "name": "Output grid row"
+          },
+          {
+            "node": "771:130",
+            "name": "Output grid header"
+          },
+          {
+            "node": "771:148",
+            "name": "Output phone list row"
+          },
+          {
+            "node": "776:2153",
+            "name": "Distribution attempt card"
+          }
+        ],
+        "note": "Accepted page components. Shared controls retain their existing Components mappings; native acceptance remains separate."
       },
       "review": null
     }

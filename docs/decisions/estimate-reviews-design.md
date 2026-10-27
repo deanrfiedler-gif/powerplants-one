@@ -98,3 +98,8 @@ These depart from the adopted Shell page (built from `main@ed3ccb8`) or the firs
 - No application code, route, migration, permission or capability changes. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
 - When the page is built, it is compared with these captures and the Figma frames at the same viewports, following ADR-0053 rule 7.
 - A later change to this design receives a new named version and a new capture revision folder; these bytes stay unchanged.
+
+
+## Implementation record — 24 October 2026
+
+The accepted register is implemented at `/estimating/reviews`, matching the existing planned ES-04 scope path, and activates the reserved `estimate-reviews` navigation ID. The [queue decision](estimating-review-queue.md) records current-window counts, exact snapshot/native handovers, source restrictions and phone selection adaptations. The [working page contract](../design/development/pages/route-estimating-reviews.md) retains review status separately from implementation. Additional workflow frames marked review pending are not accepted by this implementation.

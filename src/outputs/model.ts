@@ -76,6 +76,12 @@ export type OutputRow = {
   site_id: string;
   organisation_id: string;
   service_owner_id: string;
+  labels: {
+    company: string | null;
+    customer: string | null;
+    site: string | null;
+    service_owner: string | null;
+  };
   appointment: { id: string; reference: string };
   work_order: { id: string; reference: string };
   current_revision_id: string | null;

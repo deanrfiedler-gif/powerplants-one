@@ -38,7 +38,7 @@ Keep UUIDs, references, labels, revisions and states distinct. New: SYN-<TYPE>-<
 
 Separate request/work order/appointment/pack/report/response/Finance handoff. Completion may need follow-up. Scheduling checks concurrency, crew availability, permissions, readiness, reasons and acknowledgement.
 
-Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commitments/invoices/revenue/payments/balances. Show source time, completeness, currency and units. Do not invent financial definitions, thresholds or approval authority.
+Distinguish captured/reviewed/billable/ERP-processed quantities and costs/commitments/invoices/revenue/payments/balances. Show source time/completeness/currency/units. Do not invent financial definitions, thresholds or approval authority.
 
 P10 reads immutable P09 reviews and preserves field Drafts. Incomplete declarations block Finance despite accepted attendance. Allocate billable/non-billable quantities. SyntheticVerified is not live verification. Preserve processing IDs/possibly accepted targets; resolve Unknown by evidenced lookup. Finance scope governs reads/output/receipts.
 
@@ -68,7 +68,7 @@ Repo work grants no paid service, deployment, access, transactions, migration or
 
 Run foundation/prototype/naming/status/scope checks. Test authority, replay and integrity; recheck access before metadata/bytes.
 
-ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; CPQ: cpq-{rule-packages,release-quality}.md, estimating-configurator-model.md; retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike: reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R2. ES-02: ADR-0054 r02 catalogue, r01 kept; UI separate. ES-04: estimating-review.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Keep owner consent, receipts, unmet Demand, holds and fresh disposition.
+ES-01–10/Excel: estimating-{native-programme,programme-handover}.md; CPQ: cpq-{rule-packages,release-quality}.md, estimating-configurator-model.md; retain estimating-cost-sources.md, PJ-09 close/reopen; projects-register-native.md (Wrike: reference) and es0{1,2}-design-board.md. ES-08: es08-figma-implementation.md; WP-G00 before D1–D15/DEC-R2. ES-02: ADR-0054 r02 catalogue, r01 kept; UI separate. ES-04/05: estimating-review-queue.md. ES-05–07: quotation-{release,response,conversion,disposition,supply-followup}-native.md. ES-07: quotation-{reservation-reconciliation,receipt-correction,allocation-shortfall,material-resolution,task-dependency}.md. Keep owner consent, receipts, unmet Demand, holds and fresh disposition.
 
 Mail: preserve private mailboxes and body separation (demo-email-crm-integration.md); CI is not Outlook acceptance. SH-01–06: docs/delivery/sh-platform-handover.md; teams/DK/delivery pending.
 

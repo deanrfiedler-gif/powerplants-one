@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 import { randomUUID } from "node:crypto";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
 
@@ -96,10 +97,13 @@ test("AD-01 submit, reopen and independently return an exact proposal without ch
 }) => {
   const f = await fixture(page, baseURL!);
   await page.goto("/admin/access");
-  await page
-    .getByRole("link", { name: "Access-change requests", exact: true })
-    .first()
-    .click();
+  await expect(page.locator("#ppo-access-register")).toBeVisible();
+  const requests = page.getByRole("link", {
+    name: "Access requests",
+    exact: true,
+  });
+  if (!(await requests.isVisible())) await openSecondaryMenu(page);
+  await requests.click();
   await expect(
     page.getByRole("heading", { name: "Propose one additional capability" }),
   ).toBeVisible();

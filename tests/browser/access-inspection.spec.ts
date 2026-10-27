@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
-import { phoneWidth } from "../helpers/phone-menu";
+import { phoneWidth, openSecondaryMenu } from "../helpers/phone-menu";
 
 test("AD-01 people and exact company/site explanation on the native page", async ({
   page,
@@ -21,18 +21,42 @@ test("AD-01 people and exact company/site explanation on the native page", async
   ).toBeVisible();
   await expect(
     page.locator(
-      'a[href="/admin/access/30000000-0000-4000-8000-000000000005"]',
+      'a[href^="/admin/access/30000000-0000-4000-8000-000000000005"]:visible',
     ),
   ).toBeVisible();
-  await page.getByLabel("Find a person", { exact: true }).fill("not-a-person");
-  await page.getByRole("button", { name: "Search identities" }).click();
+  if (phoneWidth(page))
+    await page
+      .locator("#shell-header")
+      .getByRole("button", { name: /^Search (identities|and filter)$/ })
+      .click();
+  await page
+    .getByLabel("Find a person", { exact: true })
+    .filter({ visible: true })
+    .fill("not-a-person");
+  await page
+    .getByLabel("Find a person", { exact: true })
+    .filter({ visible: true })
+    .press("Enter");
   await expect(
     page.getByText("No identities match these filters."),
   ).toBeVisible();
-  await page.getByLabel("Find a person", { exact: true }).fill("");
-  await page.getByRole("button", { name: "Search identities" }).click();
+  if (phoneWidth(page))
+    await page
+      .locator("#shell-header")
+      .getByRole("button", { name: /^Search (identities|and filter)$/ })
+      .click();
   await page
-    .locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
+    .getByLabel("Find a person", { exact: true })
+    .filter({ visible: true })
+    .fill("");
+  await page
+    .getByLabel("Find a person", { exact: true })
+    .filter({ visible: true })
+    .press("Enter");
+  await page
+    .locator(
+      'a[href^="/admin/access/30000000-0000-4000-8000-000000000005"]:visible',
+    )
     .click();
   await expect(
     page.getByRole("heading", { name: "Explain grant eligibility" }),
@@ -190,7 +214,7 @@ test("AD-01 denied page clears people; failed reads retry without displaying ret
   await page.getByRole("button", { name: /retry/i }).click();
   await expect(
     page.locator(
-      'a[href="/admin/access/30000000-0000-4000-8000-000000000005"]',
+      'a[href^="/admin/access/30000000-0000-4000-8000-000000000005"]:visible',
     ),
   ).toBeVisible();
 });
@@ -206,19 +230,23 @@ test("AD-01 capability catalogue shows unassigned keys and drills through exact 
     baseURL!,
   );
   await page.goto("/admin/access");
-  await page
-    .getByRole("link", { name: "Browse the capability catalogue" })
-    .click();
+  await expect(page.locator("#ppo-access-register")).toBeVisible();
+  const catalogue = page.getByRole("link", {
+    name: "Capability catalogue",
+    exact: true,
+  });
+  if (!(await catalogue.isVisible())) await openSecondaryMenu(page);
+  await catalogue.click();
   if (phoneWidth(page))
-    await expect(page.locator("#shell-header .ppo-phone-title-text")).toContainText("Capability catalogue");
+    await expect(
+      page.locator("#shell-header .ppo-phone-title-text"),
+    ).toContainText("Capability catalogue");
   else
     await expect(
-      page
-        .getByRole("navigation", { name: "Breadcrumb" })
-        .getByRole("list", {
-          name: "Users and access / Capability catalogue",
-          exact: true,
-        }),
+      page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("list", {
+        name: "Users and access / Capability catalogue",
+        exact: true,
+      }),
     ).toBeVisible();
   await page.getByLabel("Find a capability").fill("no-matching-capability");
   await page.getByRole("button", { name: "Search capabilities" }).click();
