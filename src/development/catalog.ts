@@ -23,6 +23,8 @@ export const guidePath = "docs/design/development/guides.json";
 export const componentManifestPath = "docs/design/development/components.json";
 export const componentBindingsPath =
   "docs/design/development/component-bindings";
+export const specificationSizesPath =
+  "docs/design/development/components/specification-sizes.json";
 const digest = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 export const resourceId = (path: string) => digest(path).slice(0, 24);
@@ -67,14 +69,14 @@ async function files(root: string, folder: string): Promise<string[]> {
   );
   return lists.flat().sort();
 }
+const bindingFolder = (root: string) =>
+  files(root, componentBindingsPath).catch((error) => {
+    if (error?.code === "ENOENT") return [] as string[];
+    throw error;
+  });
 // Binding files apply in name order; the date prefix keeps them in the order the changes landed.
 export async function componentBindingFiles(root: string): Promise<string[]> {
-  const paths = (
-    await files(root, componentBindingsPath).catch((error) => {
-      if (error?.code === "ENOENT") return [];
-      throw error;
-    })
-  ).filter((p) => p.endsWith(".json"));
+  const paths = (await bindingFolder(root)).filter((p) => p.endsWith(".json"));
   for (const path of paths)
     if (
       !/^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(
@@ -85,6 +87,30 @@ export async function componentBindingFiles(root: string): Promise<string[]> {
         "Component binding name must be YYYY-MM-DD-slug.json: " + path,
       );
   return paths;
+}
+// A page's consumer notes sit beside its binding file (same name, .md) instead of being appended to
+// each component's specification. Each note belongs to every component its binding file names.
+export async function componentBindingNotes(
+  root: string,
+): Promise<Map<string, string[]>> {
+  const all = await bindingFolder(root),
+    notes = new Map<string, string[]>();
+  for (const note of all.filter(
+    (p) => p.endsWith(".md") && posix.basename(p) !== "README.md",
+  )) {
+    const path = note.replace(/\.md$/, ".json");
+    if (!all.includes(path))
+      throw Error("A binding note needs its binding file: " + note);
+    const binding = JSON.parse(
+      (await readReference(root, path)).toString(),
+    ) as ComponentBinding;
+    for (const id of [
+      ...(binding.entries ?? []).map((e) => e.id),
+      ...Object.keys(binding.bindings ?? {}),
+    ])
+      notes.set(id, [...(notes.get(id) ?? []), note]);
+  }
+  return notes;
 }
 async function withComponentBindings(
   root: string,
