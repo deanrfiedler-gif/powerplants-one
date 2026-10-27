@@ -88,3 +88,8 @@ Technical queries, every Supply view, Maintenance/Warranty subviews, Equipment p
 ## Review and verification
 
 [N01–N34 execution ledger](../testing/evidence/navigation/scenario-results.csv) records source commit, environment, fixture/role, actual result and remaining gaps. [Screenshot review](../testing/evidence/navigation/screenshot-review.md) records inspected compact/expanded desktop, phone, long-menu and restricted-role captures. Neither document marks owner/device review accepted. Full logs/traces remain private; bounded result records accompany the contribution. CI, merge and deployment remain separate.
+
+
+## Reviews & approvals activation — 24 October 2026
+
+The existing `estimate-reviews` ID now resolves to `/estimating/reviews` (ES-04/ES-05), under `estimating.read`; quotation rows also check their native read authority. The estimating phone bar exposes this same permitted destination. This increment supersedes the historical unavailable entry in the navigation checkpoint above; it does not reinterpret the earlier runtime evidence. Exact estimate handovers carry submission and review kind, and a successor requires a deliberate current-review action. Quotation links retain exact revision identity. See [the queue contract](../decisions/estimating-review-queue.md) and [current execution evidence](../testing/evidence/estimating-review-queue/README.md).

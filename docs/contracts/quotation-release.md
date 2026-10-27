@@ -36,3 +36,8 @@ Migration/seed 0059 adds two local-only fictional identities and thirteen exact 
 The demonstration conditions have no commercial validity. Operative terms, thresholds, tax/FX policy, validity period, customer authentication/signature and optional commercial packages remain Not configured or unavailable. The manual journey uses one exact estimate option; no new money formula is introduced. ES-06 records responses to an exact synthetic issue and ES-07 receives/converts separately; neither response nor work is created by this contract. MYOB, SharePoint and native CAD retain their authority. No live customer communication, merge or deployment is authorised here.
 
 See the [execution handover](../delivery/quotation-release-handover.md). Functional source, automated proof, inspected screenshots, owner acceptance and deployment remain separate.
+
+
+## Reviews & approvals register handover
+
+ES-05 quotation approvals share `/estimating/reviews` with ES-04, under the [queue/snapshot contract](../decisions/estimating-review-queue.md). Quotation rows require existing quotation read authority in addition to the register read; missing duty makes the source explicitly restricted. Snapshots retain the exact prepared revision and route to `/estimating/quotes/[revision-id]/release` for output inspection and any native decision. Output-pending, returned, approved, issued and changed-source states remain distinct. Register selection cannot approve, issue or distribute, and read permission never substitutes for the native independent duty.

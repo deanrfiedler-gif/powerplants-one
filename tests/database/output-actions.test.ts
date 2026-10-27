@@ -269,6 +269,12 @@ test("DK03-C01 shared issue delegates exact native operations; pack recovery ret
   });
   const checked = (await readPack(p, pack.id)).items[0],
     cmd = { ...base(), expected_version: checked.version };
+  const ready = await readOutputActions(p, pack.id, { kind: "JobPack" });
+  assert.equal(ready.request_issue.available, true);
+  assert.deepEqual(ready.request_issue.basis, {
+    expected_version: checked.version,
+  });
+  assert.equal(ready.withdraw_pack, false);
   const accepted = await runOutputAction(
     p,
     pack.id,
@@ -282,6 +288,9 @@ test("DK03-C01 shared issue delegates exact native operations; pack recovery ret
   );
   const actions = await readOutputActions(p, pack.id, { kind: "JobPack" }),
     job = actions.jobs[0];
+  assert.equal(actions.request_issue.available, false);
+  assert.equal(job.recoverable, true);
+  assert.ok(job.recovery_owner_name);
   await processRenderJob(job.id, {
     afterStore: async () => {
       throw Error("SYN interrupted after storage");
@@ -340,6 +349,18 @@ test("DK03-C01 shared issue delegates exact native operations; pack recovery ret
 test("DK03-C02 report issue uses exact review/template and resumes original finalisation", async () => {
   const q = await reviewed(),
     r = q.report;
+  const ready = await readOutputActions(q.reviewer, r.id, {
+    kind: "ServiceReport",
+  });
+  assert.equal(ready.request_issue.available, true);
+  assert.deepEqual(ready.request_issue.basis, {
+    expected_version: r.version,
+    revision_id: r.revisions[0].id,
+    review_id: r.reviews[0].id,
+    template_id: r.template.id,
+    template_version: r.template.version,
+  });
+  assert.equal(ready.withdraw_pack, false);
   const cmd = {
     ...base(),
     expected_version: r.version,
@@ -760,7 +781,7 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
   );
   assert.deepEqual(
     after.filter((r) => r.version > 90).map((r) => r.version),
-    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 121],
+    [91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121],
   );
   assert.equal(
     (await rows("SELECT count(*) n FROM ppo.output_distribution_attempts"))[0]
@@ -775,7 +796,9 @@ test("DK03-C07 populated 0090 upgrade retains all originals and adds only empty 
     after,
   );
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
+    await rows(
+      "SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id",
+    ),
     grants,
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);

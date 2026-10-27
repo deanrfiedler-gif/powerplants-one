@@ -4,8 +4,8 @@ import { database, transaction } from "../platform/database";
 import type { Principal } from "../platform/identity";
 import { canonical, sharedOperation } from "../platform/operations";
 import type { QueryClient } from "../platform/permissions";
-import { unavailable } from "../platform/errors";
-import { companyContext } from "../shared/authority";
+import { AppError, unavailable } from "../platform/errors";
+import { companyContext, scopedOwner } from "../shared/authority";
 import {
   common,
   commonKeys,
@@ -231,19 +231,17 @@ export async function recordCustomerDelivery(
         actor_id: p.actor_id,
         operation_id: cmd.operation_id,
       });
-      const communication_id = await draftNotice(
-        c,
-        p,
-        saved,
-        null,
-        delivery.id,
-      );
+      const notice = await draftNotice(c, p, saved, null, delivery.id);
       return {
         id,
         version: saved.version,
         state: "Recorded",
         updated_at: new Date(saved.updated_at),
-        audit_details: { delivery_event_id: delivery.id, communication_id },
+        audit_details: {
+          delivery_event_id: delivery.id,
+          communication_id: null,
+          ...notice,
+        },
       };
     },
     "SupplyRecord",
@@ -412,7 +410,7 @@ export async function noticeSnapshot(
     UNION ALL SELECT f.id,f.predecessor_id FROM ppo.supply_facts f JOIN ancestors a ON f.id=a.predecessor_id WHERE f.workspace_id=$1)
     SELECT m.id,ppo.customer_communication_latest(m.workspace_id,m.id) AS state FROM ppo.supply_customer_notice_sources s JOIN ppo.customer_communications m ON (m.workspace_id,m.id)=(s.workspace_id,s.communication_id)
     WHERE s.workspace_id=$1 AND s.demand_id=$3 AND s.dispatch_fact_id IN (SELECT id FROM ancestors WHERE id<>$2)
-      AND m.recipient_contact_id IS NOT DISTINCT FROM $4::uuid AND ppo.customer_communication_latest(m.workspace_id,m.id) IN ('Submitted','Sent','Delivered','OutcomeUnknown')
+      AND m.recipient_contact_id IS NOT DISTINCT FROM $4::uuid AND ppo.customer_communication_latest(m.workspace_id,m.id) IN ('Queued','Submitted','Sent','Delivered','OutcomeUnknown')
     ORDER BY m.source_fact_version DESC,m.id LIMIT 1`,
       [w, dispatchId, r.id, delivery?.contact_id ?? null],
     )
@@ -441,7 +439,7 @@ export async function noticeSnapshot(
       facts,
     },
     hold:
-      prior && ["Submitted", "OutcomeUnknown"].includes(prior.state)
+      prior && ["Queued", "Submitted", "OutcomeUnknown"].includes(prior.state)
         ? "PriorOutcomeUnknown"
         : dispatch.completeness !== "Complete"
           ? "MissingData"
@@ -451,13 +449,21 @@ export async function noticeSnapshot(
 export const noticeSourceHash = (basis: Record<string, unknown>) =>
   createHash("sha256").update(canonical(basis)).digest("hex");
 
+type NoticePreparation =
+  | { communication_id: string }
+  | {
+      communication_id: null;
+      notice_outcome: "NotPrepared";
+      notice_reason: "OwnerUnavailable";
+    };
+
 async function draftNotice(
   c: PoolClient,
   p: Principal,
   r: SupplyRecord,
   dispatchId: string | null,
   deliveryId: string | null,
-) {
+): Promise<NoticePreparation | null> {
   const cls = dispatchId ? "DispatchNotice" : "DelayNotice";
   if ((await switchMode(c, p.workspace_id, r.company_id, cls)) === "Off")
     return null;
@@ -468,6 +474,30 @@ async function draftNotice(
       "CustomerDeliveryChanged",
       "Review the latest customer delivery evidence.",
     );
+  // A missing follow-up owner is notice setup, not invalid native Dispatch/ETA evidence.
+  // Do not guess a replacement owner or suppress any caller/source/catalogue validation.
+  try {
+    await scopedOwner(
+      c,
+      p,
+      r.owner_id,
+      r.company_id,
+      r.site_id ?? undefined,
+      "activity.read",
+    );
+  } catch (error) {
+    if (
+      error instanceof AppError &&
+      error.status === 404 &&
+      error.code === "RecordUnavailable"
+    )
+      return {
+        communication_id: null,
+        notice_outcome: "NotPrepared",
+        notice_reason: "OwnerUnavailable",
+      };
+    throw error;
+  }
   const duplicate = (
     await c.query(
       `SELECT s.communication_id FROM ppo.supply_customer_notice_sources s
@@ -534,7 +564,7 @@ async function draftNotice(
     source_snapshot: canonical(snapshot.basis),
     source_hash: noticeSourceHash(snapshot.basis),
   });
-  return communication_id;
+  return { communication_id };
 }
 
 // Explicit recovery after Off, missing setup or a held draft. It still resolves native evidence;
@@ -574,14 +604,19 @@ export async function prepareSupplyCustomerNotice(
     },
     async (c, record) => {
       currentVersion(record.version, cmd.expected_version);
-      const communication_id = await draftNotice(
+      const notice = await draftNotice(
         c,
         p,
         record,
         cmd.dispatch_fact_id,
         null,
       );
-      if (!communication_id)
+      if (notice && !notice.communication_id)
+        conflict(
+          "NoticeOwnerUnavailable",
+          "Restore an active, authorised follow-up owner on the demand before preparing its notice.",
+        );
+      if (!notice)
         conflict(
           "NoticeNotApplicable",
           "The class is Off or no later customer ETA has a sent baseline for this contact.",
@@ -591,7 +626,7 @@ export async function prepareSupplyCustomerNotice(
         version: record.version,
         state: "Recorded",
         updated_at: new Date(),
-        audit_details: { communication_id },
+        audit_details: { ...notice },
       };
     },
     "SupplyRecord",

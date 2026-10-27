@@ -1,0 +1,47 @@
+{
+  "scope": "AD-01",
+  "route": "/admin/access",
+  "owner": "Dean Fiedler",
+  "status": "Implementation for review",
+  "sources": [
+    "tests/helpers/access-identity-register.ts",
+    "tests/browser/access-identity-register.spec.ts",
+    "tests/database/access-identity-register.test.ts"
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 1024,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 844
+    }
+  ],
+  "states": [
+    "all",
+    "active",
+    "inactive",
+    "hosted-masked",
+    "search",
+    "company-filter",
+    "sort",
+    "selected",
+    "columns",
+    "loading",
+    "empty",
+    "failed",
+    "denied",
+    "working-company-selected",
+    "recovered"
+  ],
+  "authority": "Visual fixture creates no identities or grants. Real database proof is separate; owner review is pending."
+}

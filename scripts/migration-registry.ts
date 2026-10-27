@@ -122,6 +122,7 @@ export const migrationFiles = [
   "0117-nursery-technical-assessments.sql",
   "0118-calling-core.sql",
   "0119-cpq-rule-sets.sql",
+  "0120-site-readiness.sql",
   "0121-customer-delivery-notices.sql",
 ] as const;
 export const seedFiles = [
@@ -169,6 +170,7 @@ export const seedFiles = [
   [107, "seed-field-readiness.sql"],
   [108, "seed-conversations.sql"],
   [110, "seed-conversation-agent.sql"],
+  [120, "seed-site-readiness.sql"],
   [121, "seed-customer-delivery-notices.sql"],
 ] as const;
 export const latestMigrationVersion = 121;

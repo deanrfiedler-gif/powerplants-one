@@ -1,3 +1,5 @@
+import { appointmentPreparation, appointmentPreparations, preparationInstalled } from "./site-readiness";
+import { siteChecks, siteCheckKeys } from "./site-readiness-model";
 import { canResolvePolicyImpact, policyReads } from "./policy-authority";
 import { policyStorageAvailable } from "./policy-persistence";
 import { policyImpactHolds } from "./policy-holds";
@@ -423,7 +425,7 @@ async function guardBooking(
     );
   const lastContact = (
     await c.query(
-      "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 AND schedule_version=$3 ORDER BY created_at DESC,id DESC LIMIT 1",
+      "SELECT * FROM ppo.contact_outcomes WHERE workspace_id=$1 AND appointment_id=$2 AND schedule_version=$3 AND coalesce(to_jsonb(contact_outcomes)->>'purpose','DateAgreement')='DateAgreement' ORDER BY created_at DESC,id DESC LIMIT 1",
       [p.workspace_id, a.id, a.schedule_version],
     )
   ).rows[0];
@@ -805,8 +807,17 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
     "outcome",
     "occurred_at",
     "notes",
+    "purpose",
+    "site_checks",
   ]);
+  const purpose = r.purpose === undefined ? "DateAgreement" : choice(r.purpose, "purpose", ["DateAgreement", "SiteReadiness"]);
+  if (purpose === "DateAgreement" && r.site_checks !== undefined)
+    throw new AppError(422, "InvalidData", "Date agreement does not carry site checks.");
+  const checks = purpose === "SiteReadiness" ? siteChecks(r.site_checks) : null;
   const cmd = {
+    // Omitted purpose preserves the exact pre-0120 command hash for recovery.
+    ...(r.purpose === undefined ? {} : { purpose }),
+    ...(checks ? { site_checks: checks } : {}),
     ...common(r),
     id: uuid(r.id, "id"),
     appointment_id: uuid(id, "appointment_id"),
@@ -825,7 +836,7 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
       "Failed",
     ]),
     occurred_at: instant(r.occurred_at, "occurred_at"),
-    notes: narrative(r.notes, "notes", 2000),
+    notes: purpose === "SiteReadiness" && (r.notes === undefined || r.notes === "") ? "" : narrative(r.notes, "notes", 2000),
   };
   return sharedOperation(
     p,
@@ -859,12 +870,15 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
           "occurred_at",
           "Record contact after the current appointment version was saved and no later than now.",
         );
+      if (purpose === "SiteReadiness" && (!(await preparationInstalled(c)) || !(await appointmentPreparation(c, p.workspace_id, a.id)) || !["Proposed", "Confirmed"].includes(a.status) || a.actual_start_at))
+        blocked("purpose", "Site readiness requires an unstarted visit on the P4 policy.");
       const activity_id =
-        cmd.outcome === "Confirmed"
+        cmd.outcome === "Confirmed" && !siteCheckKeys.some((key) => checks?.[key].status === "NotReady")
           ? null
           : await followUp(c, p, a, w, "ContactUnsuccessful");
       const result = await insert(c, "contact_outcomes", {
         ...childMeta(p, a, cmd.id),
+        ...(r.purpose === undefined ? {} : { purpose, site_checks: checks }),
         schedule_version: a.schedule_version,
         recipient_id: cmd.recipient_id,
         activity_id,
@@ -875,7 +889,8 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
         start_at: a.start_at,
         end_at: a.end_at,
       });
-      if (a.status !== "Cancelled")
+      // SiteReadiness advances the appointment once in its database guard.
+      if (purpose === "DateAgreement" && a.status !== "Cancelled")
         await bumpAppointment(c, p, a, {
           customer_commitment:
             cmd.outcome === "Confirmed"
@@ -890,6 +905,7 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
         audit_details: {
           appointment_id: a.id,
           schedule_version: a.schedule_version,
+          purpose,
           channel: cmd.channel,
           outcome: cmd.outcome,
           sending_performed: false,
@@ -1349,6 +1365,7 @@ export async function appointmentDetail(c: QueryClient, p: Principal, id: string
     customer_id: core.customer.id,
     primary_contact_name: primaryContactName,
     service_owner_name: owner?.display_name ?? null,
+    preparation: await appointmentPreparation(c, p.workspace_id, a.id),
     contacts,
     requests,
     followups,
@@ -1452,9 +1469,11 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
     const affected = (await c.query("SELECT DISTINCT appointment_id FROM ppo.scheduling_policy_impacts WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])", [p.workspace_id, permitted])).rows;
     for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
   }
+  const preparations = await appointmentPreparations(c, p.workspace_id, permitted);
   return rows.map(({ can_manage, can_read_supply, can_request, can_contact, can_resolve_policy, ...a }) => ({
     ...a,
     projection: "ScheduleSummary" as const,
+    preparation: preparations.get(a.id) ?? null,
     policy_impacts: impacts.get(a.id) ?? [],
     assignments: assignments.filter((x) => x.appointment_id === a.id),
     requests: requests

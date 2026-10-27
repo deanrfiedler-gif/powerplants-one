@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { seed } from "../../scripts/database";
 import type { Principal } from "../../src/platform/identity";
 import {
   createWorkOrder,
@@ -65,8 +66,8 @@ export async function noPartsNeeded(
     },
   });
 }
-// A single-task visit on a new v2 scope, confirmed with two crew and its pack issued.
-export async function v2Issued(start = "2031-12-05T00:00:00Z") {
+// A single-task visit on the currently published scope policy, with two crew and a draft pack.
+export async function preparedGateVisit(start = "2031-12-05T00:00:00Z") {
   const co = await principal(),
     wid = randomUUID(),
     aid = randomUUID(),
@@ -238,6 +239,11 @@ export async function v2Issued(start = "2031-12-05T00:00:00Z") {
     expected_appointment_version: a.version,
     content: content(),
   });
+  const pack = (await readPack(co, pid)).items[0];
+  return { co, wid, aid, pid, pack, scope };
+}
+export async function v2Issued(start = "2031-12-05T00:00:00Z") {
+  const { co, wid, aid, pid, scope } = await preparedGateVisit(start);
   let pack = (await readPack(co, pid)).items[0];
   await checkPack(co, pid, {
     ...base(),
@@ -249,6 +255,7 @@ export async function v2Issued(start = "2031-12-05T00:00:00Z") {
   pack = (await readPack(co, pid)).items[0];
   await processRenderJob(pack.jobs[0].id);
   pack = (await readPack(co, pid)).items[0];
+  await seed(); // Publish v3 after acquiring the historical v2 pin and issued bytes.
   return { co, wid, aid, pid, pack, scope };
 }
 // The exact-recipient fields an acknowledgement or a return carries.

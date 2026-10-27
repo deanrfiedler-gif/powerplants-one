@@ -42,17 +42,25 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
     ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   await migrate();
   await seed();
-  const afterRows = await snapshot(tables);
-  assert.deepEqual(afterRows.seed_receipts.filter((r: { version: number }) => r.version !== 121), before.seed_receipts);
-  assert.deepEqual(afterRows.seed_receipts.filter((r: { version: number }) => r.version === 121).map((r: { version: number }) => r.version), [121]);
+  const after = await snapshot(tables);
+  const readinessV3 = "94000000-0000-4000-8000-000000000003";
+  assert.equal(after.policy_versions.filter((r: {id:string}) => r.id === readinessV3).length, 1);
+  assert.equal(after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id === readinessV3).length, 10);
+  assert.deepEqual(after.seed_receipts.filter((r: {version:number}) => r.version > 117).map((r: {version:number}) => r.version), [120, 121]);
+  after.policy_versions = after.policy_versions.filter((r: {id:string}) => r.id !== readinessV3);
+  after.policy_criteria = after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id !== readinessV3);
+  after.seed_receipts = after.seed_receipts.filter((r: {version:number}) => ![120, 121].includes(r.version));
+  assert.deepEqual(after.contact_outcomes, before.contact_outcomes.map((r: Record<string,unknown>) => ({...r,purpose:"DateAgreement",site_checks:null})));
+  after.contact_outcomes = before.contact_outcomes;
   const oldBindings = new Set(before.customer_email_bindings.map((r: { message_class: string; binding: string }) => `${r.message_class}:${r.binding}`));
-  assert.deepEqual(afterRows.customer_email_bindings.filter((r: { message_class: string; binding: string }) => oldBindings.has(`${r.message_class}:${r.binding}`)), before.customer_email_bindings);
+  assert.deepEqual(after.customer_email_bindings.filter((r: { message_class: string; binding: string }) => oldBindings.has(`${r.message_class}:${r.binding}`)), before.customer_email_bindings);
   const shape = (rs: { message_class: string; binding: string }[]) => rs.map(r => `${r.message_class}:${r.binding}`).sort(new Intl.Collator("en").compare);
-  assert.deepEqual(shape(afterRows.customer_email_bindings.filter((r: { message_class: string; binding: string }) => !oldBindings.has(`${r.message_class}:${r.binding}`))), shape(customerDeliveryBindings));
-  assert.deepEqual({ ...afterRows, seed_receipts: before.seed_receipts, customer_email_bindings: before.customer_email_bindings }, before);
+  assert.deepEqual(shape(after.customer_email_bindings.filter((r: { message_class: string; binding: string }) => !oldBindings.has(`${r.message_class}:${r.binding}`))), shape(customerDeliveryBindings));
+  after.customer_email_bindings = before.customer_email_bindings;
+  assert.deepEqual(after, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 121]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120, 121]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",

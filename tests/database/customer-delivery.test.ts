@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
 import { after, before, test } from "node:test";
 import { reset } from "../../scripts/database";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -16,7 +17,9 @@ import {
   runCustomerMessageJobs,
   withdrawCustomerMessage,
   reconcileCustomerMessage,
+  processCustomerMessageJob,
 } from "../../src/communications";
+import { SyntheticMailboxChannel } from "../../src/adapters/synthetic-mailbox";
 import {
   base,
   contact,
@@ -367,7 +370,9 @@ test("missing typed dispatch details hold even when omitted by the template; inv
     ]),
     [],
   );
-  const missing: Omit<typeof cmd, "dispatch_notice"> & { dispatch_notice?: typeof cmd.dispatch_notice } = { ...cmd };
+  const missing: Omit<typeof cmd, "dispatch_notice"> & {
+    dispatch_notice?: typeof cmd.dispatch_notice;
+  } = { ...cmd };
   delete missing.dispatch_notice;
   await recordFact(actor, ready.id, missing);
   const id = (await readCustomerDelivery(actor, ready.id)).notices[0]
@@ -440,6 +445,202 @@ test("an unresolved earlier dispatch outcome holds a correction until reconcilia
     [],
   );
 });
+
+test("a correction recorded during claimed hand-over stays held until the original is resolved and a correction is prepared", async () => {
+  const ready = await readyDemand(actor);
+  const first = await moved(actor, ready.id);
+  await confirm(actor, first.communication_id!);
+  const [job] = await rows(
+    "SELECT id FROM ppo.outbox_jobs WHERE kind='CustomerMessageConfirmed' AND payload->>'record_id'=$1",
+    [first.communication_id],
+  );
+  const mailbox = new SyntheticMailboxChannel();
+  let corrected: Awaited<ReturnType<typeof fact>> | undefined;
+  await processCustomerMessageJob(String(job.id), {
+    name: "Synthetic",
+    async submit(outbound) {
+      // The claim has committed, but the provider result is not yet recorded.
+      corrected = await fact(
+        actor,
+        ready.id,
+        "Dispatch",
+        {
+          state: "Moved",
+          quantity: "4",
+          movement_at: "2026-10-24T03:00:00.000Z",
+        },
+        first.cmd.id,
+        { ...details, tracking_number: "SYN-RACE-000002" },
+      );
+      return mailbox.submit(outbound);
+    },
+    observe: (workspace, id) => mailbox.observe(workspace, id),
+  });
+  assert.ok(corrected, "the native correction committed during hand-over");
+  const heldId = (await readCustomerDelivery(actor, ready.id)).notices.find(
+    (n) => n.dispatch_fact_id === corrected!.cmd.id,
+  )!.communication_id;
+  assert.equal((await latest(heldId)).state, "Held");
+  assert.equal((await latest(heldId)).hold_reason, "PriorOutcomeUnknown");
+  assert.equal((await followUps(heldId)).length, 1);
+  await runCustomerMessageJobs(100);
+  assert.equal((await latest(first.communication_id!)).state, "Sent");
+  await assert.rejects(confirm(actor, heldId), { code: "MessageNotPrepared" });
+  assert.deepEqual(
+    await rows(
+      "SELECT communication_id FROM ppo.synthetic_mailbox_messages WHERE communication_id=$1",
+      [heldId],
+    ),
+    [],
+  );
+  await withdrawCustomerMessage(actor, heldId, {
+    ...base(),
+    expected_version: (await latest(heldId)).version,
+  });
+  await prepareSupplyCustomerNotice(actor, ready.id, {
+    ...base(),
+    expected_version: await recordVersion(ready.id),
+    dispatch_fact_id: corrected.cmd.id,
+  });
+  const successor = (await readCustomerDelivery(actor, ready.id)).notices.at(
+    -1,
+  )!.communication_id;
+  assert.equal((await message(successor)).correction, true);
+  assert.equal(
+    (await message(successor)).supersedes_id,
+    first.communication_id,
+  );
+  assert.match((await message(successor)).subject, /Correction/);
+  await send(actor, successor);
+  assert.equal((await latest(successor)).state, "Sent");
+  const copies = await rows(
+    "SELECT communication_id FROM ppo.synthetic_mailbox_messages WHERE communication_id=ANY($1::uuid[]) ORDER BY communication_id",
+    [[first.communication_id, heldId, successor]],
+  );
+  assert.deepEqual(
+    copies.map((r) => r.communication_id).sort(),
+    [first.communication_id, successor].sort(),
+  );
+});
+
+for (const unavailableOwner of [
+  "Inactive",
+  "activity.read",
+  "shared.read",
+] as const) {
+  test(`native dispatch and ETA survive ${unavailableOwner} owner setup and recover only by explicit preparation`, async () => {
+    const owner = {
+      ...actor,
+      actor_id: randomUUID(),
+      display_name: "SYN notice recovery owner",
+    };
+    await database().query(
+      "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$4,$3)",
+      [owner.actor_id, owner.workspace_id, owner.display_name, owner.actor_id],
+    );
+    await grant(owner, ["activity.read", "shared.read"]);
+    const dispatch = await readyDemand(actor),
+      eta = await readyDemand(actor);
+    const baseline = await moved(actor, eta.id);
+    await send(actor, baseline.communication_id!);
+    assert.equal((await latest(baseline.communication_id!)).state, "Sent");
+    await database().query(
+      "UPDATE ppo.supply_records SET owner_id=$1 WHERE id=ANY($2::uuid[])",
+      [owner.actor_id, [dispatch.id, eta.id]],
+    );
+    if (unavailableOwner === "Inactive")
+      await database().query("UPDATE ppo.users SET active=false WHERE id=$1", [
+        owner.actor_id,
+      ]);
+    else
+      await database().query(
+        "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability=$2",
+        [owner.actor_id, unavailableOwner],
+      );
+
+    const movement = await moved(actor, dispatch.id);
+    const changed = await delivery(
+      actor,
+      eta.id,
+      eta.person,
+      "2026-11-08",
+      "SYN-DLR-000001",
+    );
+    assert.equal(movement.communication_id, undefined);
+    assert.equal(
+      (await readCustomerDelivery(actor, dispatch.id)).notices.length,
+      0,
+    );
+    const etaView = await readCustomerDelivery(actor, eta.id);
+    assert.equal(etaView.notices.length, 1);
+    assert.equal(etaView.current?.customer_eta, "2026-11-08");
+    assert.equal(
+      (
+        await rows(
+          "SELECT data->>'state' AS state FROM ppo.supply_facts WHERE id=$1",
+          [movement.cmd.id],
+        )
+      )[0].state,
+      "Moved",
+    );
+    for (const operation of [
+      movement.cmd.operation_id,
+      changed.cmd.operation_id,
+    ]) {
+      const [audit] = await rows(
+        "SELECT details FROM ppo.audit_events WHERE operation_id=$1",
+        [operation],
+      );
+      assert.equal(audit.details.communication_id, null);
+      assert.equal(audit.details.notice_outcome, "NotPrepared");
+      assert.equal(audit.details.notice_reason, "OwnerUnavailable");
+    }
+    const recoverCommand = {
+      ...base(),
+      expected_version: await recordVersion(dispatch.id),
+      dispatch_fact_id: movement.cmd.id,
+    };
+    await assert.rejects(
+      prepareSupplyCustomerNotice(actor, dispatch.id, recoverCommand),
+      { code: "NoticeOwnerUnavailable" },
+    );
+    await database().query("UPDATE ppo.users SET active=true WHERE id=$1", [
+      owner.actor_id,
+    ]);
+    await grant(owner, ["activity.read", "shared.read"]);
+    assert.deepEqual(
+      (await recordFact(actor, dispatch.id, movement.cmd)).receipt,
+      movement.result.receipt,
+    );
+    assert.deepEqual(
+      (await recordCustomerDelivery(actor, eta.id, changed.cmd)).receipt,
+      changed.result.receipt,
+    );
+    assert.deepEqual(
+      await recover(actor, movement.cmd.operation_id),
+      movement.result.receipt,
+    );
+    assert.equal(
+      (await readCustomerDelivery(actor, dispatch.id)).notices.length,
+      0,
+    );
+    assert.equal((await readCustomerDelivery(actor, eta.id)).notices.length, 1);
+    await prepareSupplyCustomerNotice(actor, dispatch.id, recoverCommand);
+    await prepareSupplyCustomerNotice(actor, eta.id, {
+      ...base(),
+      expected_version: await recordVersion(eta.id),
+    });
+    for (const id of [dispatch.id, eta.id]) {
+      const notice = (await readCustomerDelivery(actor, id)).notices.at(
+        -1,
+      )!.communication_id;
+      assert.equal((await message(notice)).owner_id, owner.actor_id);
+      assert.equal((await latest(notice)).state, "Prepared");
+      await send(actor, notice);
+      assert.equal((await latest(notice)).state, "Sent");
+    }
+  });
+}
 
 test("an ETA that was not rendered is not a sent baseline; missing delivery contact is held without guessing", async () => {
   await setupNotices(false);

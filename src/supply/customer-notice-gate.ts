@@ -57,7 +57,11 @@ export async function supplyCustomerNoticeGate(
       source.dispatch_fact_id,
     );
     if (snapshot?.hold) return snapshot.hold;
-    if (!snapshot || noticeSourceHash(snapshot.basis) !== source.source_hash)
+    if (
+      !snapshot ||
+      snapshot.supersedes_id !== m.supersedes_id ||
+      noticeSourceHash(snapshot.basis) !== source.source_hash
+    )
       return "SourceChanged" as const;
   } catch (e) {
     if (e instanceof AppError && e.code === "DispatchNotCurrent")

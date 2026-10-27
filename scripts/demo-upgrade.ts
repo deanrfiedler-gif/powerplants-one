@@ -375,6 +375,12 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No seed, grant, user, capability or existing row changes; the existing cpq duties govern
   // and all-table runtime privileges cover the new tables. The migration flushes deferred
   // identity constraints before altering the identity type check.
+  // 0120 adds immutable preparation terms and deadline-task mappings, plus typed
+  // SiteReadiness evidence. Existing contacts gain DateAgreement/null defaults;
+  // old receipts, scheduling policies, issued snapshots and hashes are preserved.
+  // Seed 120 adds P04 v3 and synthetic preparation terms only. Existing scopes
+  // remain pinned; no user, identity, capability or grant is added. Existing
+  // all-table runtime privileges cover the new objects; no external sender is enabled.
   // 0121 adds immutable native dispatch/customer-ETA source evidence and extends the CUS-EMAIL
   // allowlist. Seed 121 inserts seven fictional catalogue choices only. No user/grant, existing
   // payload, source snapshot, identity or switch changes; existing all-table runtime privileges

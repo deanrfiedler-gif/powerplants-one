@@ -33,7 +33,9 @@ const tables = async () =>
       "SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename",
     )
   ).map((r) => r.tablename as string);
-const captureOriginalRows = async (names: string[]): Promise<Record<string, { row: Record<string, unknown> }[]>> =>
+const captureOriginalRows = async (
+  names: string[],
+): Promise<Record<string, { row: Record<string, unknown> }[]>> =>
   Object.fromEntries(
     await Promise.all(
       names.map(async (name) => [
@@ -114,18 +116,44 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     shape(customerDeliveryBindings),
   );
   assert.deepEqual(
-    afterRows.seed_receipts.filter((r) => r.row.version !== 121),
+    afterRows.seed_receipts.filter(
+      (r) => ![120, 121].includes(Number(r.row.version)),
+    ),
     before.seed_receipts,
   );
   assert.deepEqual(
     afterRows.seed_receipts
-      .filter((r) => r.row.version === 121)
+      .filter((r) => [120, 121].includes(Number(r.row.version)))
       .map((r) => r.row.version),
-    [121],
+    [120, 121],
+  );
+  const readinessV3 = "94000000-0000-4000-8000-000000000003";
+  assert.equal(
+    afterRows.policy_versions.filter((r) => r.row.id === readinessV3).length,
+    1,
+  );
+  assert.equal(
+    afterRows.policy_criteria.filter(
+      (r) => r.row.policy_version_id === readinessV3,
+    ).length,
+    10,
+  );
+  assert.deepEqual(
+    afterRows.contact_outcomes,
+    before.contact_outcomes.map(({ row }) => ({
+      row: { ...row, purpose: "DateAgreement", site_checks: null },
+    })),
   );
   assert.deepEqual(
     {
       ...afterRows,
+      policy_versions: afterRows.policy_versions.filter(
+        (r) => r.row.id !== readinessV3,
+      ),
+      policy_criteria: afterRows.policy_criteria.filter(
+        (r) => r.row.policy_version_id !== readinessV3,
+      ),
+      contact_outcomes: before.contact_outcomes,
       customer_email_bindings: before.customer_email_bindings,
       seed_receipts: before.seed_receipts,
     },
@@ -135,12 +163,14 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(
-    upgradedLedger.filter((r) => r.version !== 119 && r.version !== 121),
+    upgradedLedger.filter((r) => ![119, 120, 121].includes(Number(r.version))),
     ledger,
   );
   assert.deepEqual(
-    upgradedLedger.filter((r) => r.version === 119 || r.version === 121).map((r) => r.version),
-    [119, 121],
+    upgradedLedger
+      .filter((r) => [119, 120, 121].includes(Number(r.version)))
+      .map((r) => r.version),
+    [119, 120, 121],
   );
   for (const name of [
     "supply_customer_delivery_events",

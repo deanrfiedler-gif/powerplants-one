@@ -44,7 +44,7 @@ test("Work orders additive HTTP register and record preserve native detail and e
   const r = await call(cookie, "/register?limit=1&sort=reference_asc");
   assert.equal(r.status, 200);
   assert.match(r.headers.get("cache-control")!, /private, no-store/);
-  assert.equal(r.body.count_scope, "AuthorisedCandidateWindow");
+  assert.equal(r.body.count_scope, "PermissionScopedMatchingFilters");
   assert.equal(r.body.items.length, 1);
   assert.equal(r.body.next_offset, 1);
   const next = await call(
