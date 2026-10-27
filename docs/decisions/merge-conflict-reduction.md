@@ -2,7 +2,7 @@
 document_id: PPO-MERGE-CONFLICT-DEC
 date: 2026-10-18
 owner: Dean Fiedler
-status: Owner-adopted repository working rule (18 October 2026) for the three controls; Dean's decision on the open items below is still needed; changes no application behaviour
+status: Owner-adopted repository working rule (18 October 2026) for the three controls; 27 October 2026 amendment adopted under Dean's delegation; Dean's decision on the other open items below is still needed; changes no application behaviour
 source_commit: c089e132de43a046c5b2938851ed59f0de770259
 versioning: git
 ---
@@ -150,7 +150,7 @@ These are repository settings and workflow changes, so this pull request does no
 4. **Generated design files** (the access-review design, the UI build sequence and similar) conflict because two branches regenerate them. This record only adds the "regenerate from `main`" rule; moving them out of the pull request path or generating them in CI is a separate decision. **Amended 19 October 2026:** for the UI build sequence and the two appended design files, see [section 5](#5-design-pull-requests-no-longer-share-generated-or-appended-files). The access-review design is not covered and stays open.
 5. **Make the merged-tree check required, and decide on a merge queue.** Add **Check merged tree against main** to the required checks once it has run on one pull request (the picker lists only names that have reported). A merge queue would also need a `merge_group` trigger on each required workflow, and on the merged-tree workflow, which this record did not add because it cannot be tried until the queue is enabled.
 6. **Widen the documentation-only scope.** The map is built (section 4, second change). It found one design folder nothing reads, now scoped, and that the register, the reference pages and most evidence are read, so design-register pull requests still run every suite (10 of the last 48). Scoping them needs either a content-aware check on `register.json` and `pages/*.md`, or a smaller required job for the register and the ten page-guide specs; say if you want either built.
-7. **Page builds appending to shared lists.** Proposed on 27 October 2026 in the [amendment below](#amendment--27-october-2026-page-builds-stop-appending-to-shared-lists-proposed); not decided.
+7. **Page builds appending to shared lists.** Decided on 27 October 2026; see the [amendment below](#amendment--27-october-2026-page-builds-stop-appending-to-shared-lists).
 
 ## Scope and limits
 
@@ -158,9 +158,19 @@ These are repository settings and workflow changes, so this pull request does no
 - Not verified: behaviour with two real concurrent pull requests, because only three are open and none reserves a number; the rendered files' conflicts under GitHub's own "Update branch" button; and `--open-prs` against the #569 claim of 0109 beyond a read-only listing of what it claims.
 - Historical status entries stay in `docs/STATUS.md` below the end marker and in `docs/STATUS-log.md`. The legacy part is frozen against new entries, not against corrections.
 
-## Amendment — 27 October 2026: page builds stop appending to shared lists (proposed)
+## Amendment — 27 October 2026: page builds stop appending to shared lists
 
-**Status: proposed. Dean's decision is needed before any application, test or tooling file changes.** Author: Claude, for Dean. Nothing in this section is adopted, and it changes no file outside this record and its status fragment.
+**Status: adopted on 27 October 2026 under Dean's delegation (see Decision).** Author: Claude, for Dean. This section changes no application, test or tooling file itself; each hotspot is changed by its own pull request.
+
+### Decision
+
+The amendment was first opened as a proposal with three questions for Dean. On 27 October 2026 he replied: "Proceed however you believe is the most professional." That delegates the choice to Claude's recommendation; Dean did not choose between the options himself. On that basis:
+
+1. Hotspots 1 to 5 and 7 take the recommended option below, and hotspot 6 has no change now.
+2. The opt-in attribute for shared workspace styles is `data-ppo-workspace="shared"`.
+3. Codex does not hold new builds. Under strict mode every merge already sends each open build back to merge `main` and rerun CI, so converting adds no CI run, only a one-time move of the build's own entries, which is about the same work as resolving the conflict it replaces. Holding would idle Codex for at least three sequential CI runs and merges. Each freeze check names the new place when a build uses the old one.
+
+Each hotspot lands as its own pull request, in rank order. This record changes again only if one of them changes a decision above.
 
 ### Why
 
@@ -329,12 +339,12 @@ One fact from this map affects #717, not this amendment: #717 carries #701's six
 
 ### Moving branches over
 
-- **#717** lands first and is not changed. Each change below is cut from `main` after it.
+- **#717** merged on 27 October 2026 (`09ada563`) unchanged. Each change below is cut from `main` after it.
 - **Queued builds (#698, #699, #702 to #707).** A build that starts after a change lands uses the new place from the start; the freeze check refuses the old one and names the new one. A build that started before converts once when it next merges `main`: take `main`'s copy of the frozen file, move its own additions to the new file (or the attribute), rerun the checks. Its own diff holds everything it needs to move, as in section 5.
 - **Other open pull requests.** #715 corrects `read-state.md` in place, which stays allowed. #712 and #695 add contract sections (see 7). None of the others touches these files.
-- Recommended order of landing: 1 and 2 (components), then 3 (CSS), then 4 and 5. If Codex holds new implementation until 1 to 3 have landed, no queued build needs converting; otherwise each converts once per change that lands under it.
+- Order of landing: 1 and 2 (components), then 3 (CSS), then 4 and 5. Codex does not hold (Decision 3), so a build in progress converts once for each change that lands under it.
 
-### Implementation, after your decision
+### Implementation
 
 One small pull request per hotspot, highest rank first, each cut from `main` after #717. Each is proved by: a replay showing the earlier conflicts gone (the converted changes of the four builds, merged pairwise); `npm run studio:check`, `lint`, `typecheck`, the unit tests and `build`; the Python documentation checks; and for the CSS change, green browser suites in CI with no visual change. Each states what was and was not run.
 
@@ -344,9 +354,3 @@ One small pull request per hotspot, highest rank first, each cut from `main` aft
 - The migration ledgers, the migration registry and `demo-upgrade.ts`, the largest remaining source by file count (owned by [migration test expectations](migration-test-expectations.md)).
 - `src/app/layout.tsx` and `src/shell/navigation.ts`, which builds also edit but which have not conflicted in these replays.
 - Strict mode itself: with fewer conflicts, a merge still sends other pull requests back for a CI rerun when they fall behind. Only open decisions 1 and 5 (merged-tree check or merge queue) change that.
-
-### Decision needed
-
-1. Adopt the recommendations for hotspots 1 to 5 and 7, and no change now for 6, or choose other options.
-2. Approve the attribute name `data-ppo-workspace="shared"`, or name another.
-3. Say whether Codex should hold new implementation until hotspots 1 to 3 have landed.
