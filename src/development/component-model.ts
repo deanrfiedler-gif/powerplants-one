@@ -172,6 +172,31 @@ export function frozenComponentManifestErrors(
         `components.json holds ${sizes[key as keyof typeof sizes]} ${key === "entries" ? "components" : key + " items"}, more than the ${limit} it is frozen at; add them in a binding file in docs/design/development/component-bindings/.`,
     );
 }
+// A specification's size is its number of paragraph blocks (runs of non-blank lines). Page
+// consumer notes used to be appended at the end; they now go in the binding's .md note.
+export function specificationBlocks(text: string): number {
+  let blocks = 0,
+    inside = false;
+  for (const line of text.replace(/\r\n/g, "\n").split("\n")) {
+    if (line.trim() && !inside) blocks++;
+    inside = !!line.trim();
+  }
+  return blocks;
+}
+// frozen: blocks per specification file name when notes moved; texts: current file contents.
+// Corrections in place keep the count. A change to the component's own rules that adds a
+// paragraph raises that file's number in specification-sizes.json deliberately.
+export function specificationGrowthErrors(
+  frozen: Record<string, number>,
+  texts: Record<string, string>,
+): string[] {
+  return Object.entries(frozen)
+    .filter(([name, limit]) => specificationBlocks(texts[name] ?? "") > limit)
+    .map(
+      ([name, limit]) =>
+        `components/${name} has ${specificationBlocks(texts[name])} paragraph blocks, more than the ${limit} it is frozen at; put a page's consumer note in its binding's .md file in docs/design/development/component-bindings/.`,
+    );
+}
 export type ComponentView = ComponentRecord & {
   fingerprint: string;
   review_state: "Not reviewed" | "Current" | "Stale";
