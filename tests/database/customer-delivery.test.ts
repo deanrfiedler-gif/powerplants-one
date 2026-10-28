@@ -544,9 +544,10 @@ for (const unavailableOwner of [
     const baseline = await moved(actor, eta.id);
     await send(actor, baseline.communication_id!);
     assert.equal((await latest(baseline.communication_id!)).state, "Sent");
+    // Fixture ownership changes still retain the exact native revision sequence.
     await database().query(
-      "UPDATE ppo.supply_records SET owner_id=$1 WHERE id=ANY($2::uuid[])",
-      [owner.actor_id, [dispatch.id, eta.id]],
+      "UPDATE ppo.supply_records SET owner_id=$1,version=version+1 WHERE workspace_id=$2 AND id=ANY($3::uuid[])",
+      [owner.actor_id, owner.workspace_id, [dispatch.id, eta.id]],
     );
     if (unavailableOwner === "Inactive")
       await database().query("UPDATE ppo.users SET active=false WHERE id=$1", [
