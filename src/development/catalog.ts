@@ -74,7 +74,7 @@ const bindingFolder = (root: string) =>
     if (error?.code === "ENOENT") return [] as string[];
     throw error;
   });
-// Binding files apply in name order; the date prefix keeps them in the order the changes landed.
+// Binding files are listed in name order, a canonical order rather than the order branches merge.
 export async function componentBindingFiles(root: string): Promise<string[]> {
   const paths = (await bindingFolder(root)).filter((p) => p.endsWith(".json"));
   for (const path of paths)
