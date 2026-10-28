@@ -8,7 +8,7 @@ import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { call, identity, capture, saveOriginal } from "./quality-browser";
 import { prepareJourney, committed } from "./quality-prepare";
-import { completion, submit, review, issue, reportState, technicianEvidence } from "./quality-report";
+import { completion, submit, review, issue, reportState, technicianHistory } from "./quality-report";
 import { png } from "./field";
 import { financeJourney } from "./quality-finance";
 import { returnVisit } from "./quality-return";
@@ -414,8 +414,7 @@ export async function serviceJourney(
   await review(page, true);
   await capture(page, info, "journey-exact-evidence-returned");
   await identity(page, "assigned-technician");
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, aid);
   await page
     .getByRole("button", {
       name: "Correct this observation entry",
