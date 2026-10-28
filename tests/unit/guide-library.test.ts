@@ -513,6 +513,43 @@ test("outside pages, front matter that declares a guide key in any YAML form mak
   );
 });
 
+// The second-model re-review's case: an escaped guide key in front matter that YAML reports an error for. A guide whose
+// front matter YAML cannot read cleanly, or that uses an alias, is compiled, so its errors fail the build.
+const brokenEscaped = [
+  "---",
+  '"guide\\u005fkey": guide.page.sales.leads',
+  "entry_key: route:/sales/leads",
+  "title: Synthetic guide",
+  "title: Synthetic guide again",
+  "versioning: git",
+  "status: Draft",
+  "owner_role: Synthetic owner",
+  'source_commit: "0123456789abcdef0123456789abcdef01234567"',
+  "---",
+  "",
+  "## Overview {#overview}",
+  "",
+  "<script>alert(1)</script>",
+  "",
+].join("\n");
+
+test("outside pages, front matter that YAML cannot read cleanly, or that uses an alias, makes the file a guide", async (t) => {
+  const merged = ["---", "base: &base { guide_key: guide.page.a }", "<<: *base", "---", "", "## Overview {#overview}", "", "Synthetic text.", ""].join("\n");
+  const root = await makeRoot(t, {
+    "docs/guides/broken-escaped.md": brokenEscaped,
+    "docs/guides/merged.md": merged,
+    "docs/guides/contents.md": ["---", "document_id: PPO-SYN-TOC", "title: Synthetic contents", "---", "", "# Contents", ""].join("\n"),
+  });
+  const result = await readGuideLibrary(root, entries);
+  const at = (path: string) => result.errors.filter((error) => error.path === path);
+
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], ["docs/guides/broken-escaped.md", "docs/guides/merged.md"]);
+  assert.ok(at("docs/guides/broken-escaped.md").some((error) => error.line === lineOf(brokenEscaped, "title: Synthetic guide again") && /Front matter YAML/.test(error.message)));
+  assert.ok(at("docs/guides/broken-escaped.md").some((error) => error.line === lineOf(brokenEscaped, "<script>") && /Raw HTML/.test(error.message)));
+  assert.ok(at("docs/guides/merged.md").length > 0);
+});
+
 test("a missing guides folder is an empty library", async (t) => {
   assert.deepEqual(await readGuideLibrary(await makeRoot(t), entries), { guides: [], errors: [] });
 });
@@ -888,5 +925,20 @@ test("the build fails on a malformed guide, names its file and line, and writes 
     "1 guide error: fix them and run the build again.",
     "",
   ]);
+  assert.equal(await writtenRelease(root), false, "no release file is written when any guide fails");
+});
+
+test("the build fails on an escaped guide key in front matter that YAML reports an error for", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    "docs/guides/broken-escaped.md": brokenEscaped,
+  });
+  const run = runBuild(root);
+
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout);
+  assert.equal(run.stdout, "");
+  assert.match(run.stderr, new RegExp(`^docs/guides/broken-escaped\\.md:${lineOf(brokenEscaped, "title: Synthetic guide again")} Front matter YAML`, "m"));
+  assert.match(run.stderr, new RegExp(`^docs/guides/broken-escaped\\.md:${lineOf(brokenEscaped, "<script>")} Raw HTML is not allowed`, "m"));
   assert.equal(await writtenRelease(root), false, "no release file is written when any guide fails");
 });

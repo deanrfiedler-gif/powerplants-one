@@ -122,16 +122,22 @@ export function readFrontMatter(path: string, text: string): FrontMatterRead {
 }
 
 // Whether a file's front matter declares a guide key, in any form YAML reads: a block or flow mapping, after comment
-// lines, or with a quoted or escaped key. The library uses this to find guides outside docs/guides/pages. Front matter
-// that YAML cannot read, or with a key that is not plain text, counts when any of its lines names a guide key, so the
-// compiler reports it instead of the file dropping out of the library.
+// lines, or with a quoted or escaped key. The library uses this to find guides outside docs/guides/pages. It fails
+// closed: front matter that YAML reports an error for, that uses an alias (a << merge needs one), or that has a key
+// that is not plain text counts as a guide, because a key escaped or merged there cannot be seen without a clean read. The compiler then
+// reports it instead of the file dropping out of the library. Front matter YAML reads as something other than a
+// mapping counts when any of its lines names a guide key.
 export function declaresGuideKey(text: string): boolean {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
   if (lines[0] !== "---") return false;
   const closing = lines.indexOf("---", 1);
   const block = lines.slice(1, closing < 0 ? undefined : closing);
   const doc = parseDocument(block.join("\n"), { schema: "core", uniqueKeys: true });
-  if (doc.errors.length === 0 && isMap(doc.contents)) {
+  if (doc.errors.length > 0) return true;
+  let alias = false;
+  visit(doc, { Alias: () => { alias = true; return visit.BREAK; } });
+  if (alias) return true;
+  if (isMap(doc.contents)) {
     return doc.contents.items.some((pair) => !isScalar(pair.key) || /^\s*guide[_-]key\s*$/i.test(String(pair.key.value)));
   }
   return block.some((line) => /guide[_-]key/i.test(line));
