@@ -10,6 +10,7 @@ import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png, draft } from "../helpers/field";
 import { operation } from "../helpers/offline";
 import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { moduleIntegration } from "../helpers/ui-baselines";
 test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
@@ -1005,8 +1006,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
 });
 
 test("FI07 proposed Service reference and native report register comparison", async ({ page, browser }, info) => {
-  const registry = JSON.parse(await readFile("docs/standards/ui-baselines.json", "utf8"));
-  const contract = registry.module_integrations.find((x: { id: string }) => x.id === "fi07-reports-register");
+  const contract = moduleIntegration("fi07-reports-register")!;
   const context = await browser.newContext({ viewport: { width: info.project.name.startsWith("mobile") ? 390 : 1440, height: 1000 } });
   const reference = await context.newPage();
   try {

@@ -1,5 +1,8 @@
 import { buildComponentLibrary } from "../src/development/component-catalog";
-import { frozenComponentManifestErrors } from "../src/development/component-model";
+import {
+  frozenComponentManifestErrors,
+  specificationGrowthErrors,
+} from "../src/development/component-model";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
@@ -10,6 +13,7 @@ import {
   registerPath,
   guidePath,
   componentManifestPath,
+  specificationSizesPath,
   documentationSlug,
 } from "../src/development/catalog";
 import type { Entry, Guide } from "../src/development/model";
@@ -141,6 +145,19 @@ catalog.errors.push(
   ...frozenComponentManifestErrors(
     JSON.parse(await readFile(resolve(root, componentManifestPath), "utf8")),
   ),
+);
+// So are the specifications' sizes; a page's consumer note goes beside its binding file.
+const specificationSizes: Record<string, number> = JSON.parse(
+  await readFile(resolve(root, specificationSizesPath), "utf8"),
+).blocks;
+const specifications: Record<string, string> = {};
+for (const name of Object.keys(specificationSizes))
+  specifications[name] = await readFile(
+    resolve(root, "docs/design/development/components", name),
+    "utf8",
+  ).catch(() => "");
+catalog.errors.push(
+  ...specificationGrowthErrors(specificationSizes, specifications),
 );
 for (const entry of catalog.entries) {
   const spec = await readFile(resolve(root, entry.design_path), "utf8");

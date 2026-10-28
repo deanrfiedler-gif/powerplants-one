@@ -1,7 +1,12 @@
 // Server/CLI only. Working files are read at request time; no browser file paths are accepted.
 import { createHash } from "node:crypto";
 import { posix } from "node:path";
-import { readComponentManifest, readReference, resourceId } from "./catalog";
+import {
+  componentBindingNotes,
+  readComponentManifest,
+  readReference,
+  resourceId,
+} from "./catalog";
 import { resourceHref, type Catalog } from "./model";
 import {
   componentCategories,
@@ -21,6 +26,7 @@ export async function buildComponentLibrary(
   supplied?: ComponentManifest,
 ): Promise<ComponentLibrary> {
   const manifest = supplied ?? (await readComponentManifest(root)),
+    notes = await componentBindingNotes(root),
     errors: string[] = [],
     cache = new Map<string, Promise<Buffer | null>>();
   const raw = (path: string) => {
@@ -132,6 +138,7 @@ export async function buildComponentLibrary(
           ...entry.implementation.map((i) => i.path),
           ...entry.dependencies,
           ...(entry.review?.evidence ?? []),
+          ...(notes.get(entry.id) ?? []),
         ]),
         pending = [...paths];
       while (pending.length)
