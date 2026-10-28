@@ -973,6 +973,8 @@ const nonGuideControls: Record<string, string> = {
   "docs/guides/bad-metadata.md": "--- \ntitle: Repeated\ntitle: Repeated\n---\n\n# Notes\n",
   "docs/guides/ordinary.md": "# Markdown\n\nThis document discusses \"guide\\u005fkey\" in prose.\n",
   "docs/guides/fenced.md": "# YAML example\n\n" + "~~~yaml\n" + '"guide\\u005fkey": example\n' + "~~~\n",
+  "docs/guides/thematic-fenced.md": "--- \n\n# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
+  "docs/guides/thematic-indented.md": "--- \n\n# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
 };
 
 test("discovery recognises malformed front-matter envelopes with escaped YAML keys, not ordinary Markdown", async (t) => {

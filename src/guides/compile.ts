@@ -160,8 +160,23 @@ export function declaresGuideKey(text: string): boolean {
   // A YAML error elsewhere in a malformed envelope may prevent the whole document from yielding a mapping.
   // Probe key-shaped lines individually through the same YAML parser so escaped keys are decoded; do not classify
   // arbitrary invalid metadata or prose mentioning a guide key as guides.
+  // Ignore fenced and indented Markdown code examples after a malformed opener. Without a closing
+  // front-matter delimiter these are part of ordinary prose, not YAML keys declaring a guide.
+  let fenceMarker: string | null = null;
+  let fenceSize = 0;
   return block.some((line) => {
-    if (!line.includes(":")) return false;
+    const fence = /^ {0,3}(\x60{3,}|~{3,})(.*)$/.exec(line);
+    if (fence) {
+      const marker = fence[1];
+      if (fenceMarker === null) {
+        fenceMarker = marker[0];
+        fenceSize = marker.length;
+      } else if (marker[0] === fenceMarker && marker.length >= fenceSize && fence[2].trim() === "") {
+        fenceMarker = null;
+      }
+      return false;
+    }
+    if (fenceMarker !== null || /^(?: {4}|\t)/.test(line) || !line.includes(":")) return false;
     const fragment = parseDocument(line.trimStart(), options);
     return isMap(fragment.contents) &&
       fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
