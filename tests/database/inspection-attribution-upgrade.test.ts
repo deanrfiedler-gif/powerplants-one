@@ -146,7 +146,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
         "seed_receipts",
       ].map((t) =>
         rows(
-          `SELECT to_jsonb(t) AS row FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version <> 120" : ""} ORDER BY to_jsonb(t)::text`,
+          `SELECT to_jsonb(t) AS row FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (120,121)" : ""} ORDER BY to_jsonb(t)::text`,
         ),
       ),
     );
@@ -166,6 +166,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
   await seed();
   assert.deepEqual(await snapshotTables(), before);
   assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=120")).rows, [{version:120}]);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version=121"), [{ version: 121 }]);
   const upgraded = (
     await rows(
       "SELECT to_jsonb(a) AS row FROM ppo.inspection_attempts a WHERE id=$1",
@@ -193,7 +194,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
     await rows(
       "SELECT version FROM public.ppo_migrations WHERE version>113 ORDER BY version",
     ),
-    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }],
+    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }],
   );
   await assert.rejects(
     database().query(
