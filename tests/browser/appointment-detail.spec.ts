@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { navigationForCapabilities } from "../../src/shell/navigation";
-import { expectAppointmentRecord } from "../helpers/appointment-record";
+import { expectAppointmentNavigation, expectAppointmentRecord } from "../helpers/appointment-record";
+import { openAccountPanel, openPhoneMenu, phoneMenuOpener } from "../helpers/phone-menu";
 import {
   appointmentFixture,
   appointmentPackFixture,
@@ -122,6 +123,69 @@ test.beforeEach(async ({ page }) => {
     }),
   );
 });
+test("P05 phone account navigation waits for the appointment header handover", async ({ page }) => {
+  await fixture(page);
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    let release!: () => void;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    const pattern = `**/api/v1/appointments/${sv04Id(1)}`;
+    // Only the appointment read is held: the independent session and shell reads
+    // settle normally, just as they can before planner.spec's second identity switch.
+    const hold = async (route: import("@playwright/test").Route) => {
+      await held;
+      await route.fallback();
+    };
+    await page.route(pattern, hold);
+    try {
+      await page.goto(path);
+      await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false");
+      await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "list");
+      await expect(page.locator("#ppo-appointment")).toHaveCount(0);
+      // Establish that the transient Menu works and is hydrated. This separates
+      // the following lost pointer activation from an uninstalled event listener.
+      await openPhoneMenu(page);
+      await page.getByRole("button", { name: "Close menu", exact: true }).click();
+      await expect(phoneMenuOpener(page)).toBeFocused();
+      let recordReady = false;
+      const navigationReady = expectAppointmentNavigation(page).then(
+        () => { recordReady = true; return null; },
+        (error: unknown) => error,
+      );
+
+      // Negative control: deliver the record between native mouse down and up.
+      // React removes Menu for Back; the completed pointer gesture cannot click
+      // the removed button. No sleep or repeated activation arranges this order.
+      const transient = page.locator("#shell-phone-menu");
+      const box = await transient.boundingBox();
+      expect(box).not.toBeNull();
+      await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+      await page.mouse.down();
+      expect(recordReady, "identity/menu readiness is not appointment readiness").toBe(false);
+      release();
+      expect(await navigationReady).toBeNull();
+      await expect(transient).toHaveCount(0);
+      await page.mouse.up();
+      await expect(page.getByRole("dialog", { name: "More", exact: true })).toBeHidden();
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
+
+      // The P05 journey now waits for that same record/header state before its
+      // one activation. Both mouse and keyboard keep the record-page opener.
+      await openAccountPanel(page);
+      await expect(page.getByLabel("Identity", { exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Close account", exact: true }).click();
+      await expect(page.locator("#navigation-toggle")).toBeFocused();
+      await openPhoneMenu(page, true);
+      await page.keyboard.press("Escape");
+      await expect(page.locator("#navigation-toggle")).toBeFocused();
+    } finally {
+      release();
+      await page.mouse.up();
+      await page.unroute(pattern, hold);
+    }
+  }
+});
+
 test("SV04 retains the FI06 exact incident handover on desktop and both phones", async ({ page }) => {
   await fixture(page);
   let reads = 0;
