@@ -94,22 +94,45 @@ def build(entry, current_text, name, previous=None):
 
 
 BINDING_LISTS = ("states", "dependencies", "used_on", "gaps")
+BINDING_NAME = re.compile(r"\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*\.json")
 
 
 def apply_bindings(entries, folder):
-    """Apply the binding files beside components.json in name order, as src/development/catalog.ts does."""
+    """Apply the binding files beside components.json by the rule in src/development/component-model.ts.
+
+    Canonical order, not landing order: the existing records stay first; then every file's new
+    records, then every file's bound items, each in file-name order. All records are known before
+    any binding applies, so a binding may name a component defined in any file.
+    """
     if not folder.is_dir():
         return entries
-    for path in sorted(p for p in folder.iterdir() if p.suffix == ".json"):
+    files = []
+    for path in sorted((p for p in folder.iterdir() if p.suffix == ".json"), key=lambda p: p.name):
+        if not BINDING_NAME.fullmatch(path.name):
+            raise SystemExit(f"Component binding name must be YYYY-MM-DD-slug.json: {path}")
         binding = json.loads(path.read_text(encoding="utf-8"))
-        entries.extend(binding.get("entries", []))
-        by_id = {e["id"]: e for e in entries}
+        if binding.get("schema_version") != 1:
+            raise SystemExit(f"{path}: unsupported component binding schema.")
+        for key in binding:
+            if key not in ("schema_version", "entries", "bindings"):
+                raise SystemExit(f"{path}: unknown key: {key}")
+        for record in binding.get("entries", []):
+            if any(e["id"] == record["id"] for e in entries):
+                raise SystemExit(f"{path}: component already defined: {record['id']}")
+            entries.append(record)
+        files.append((path, binding))
+    by_id = {e["id"]: e for e in entries}
+    for path, binding in files:
         for entry_id, lists in binding.get("bindings", {}).items():
             if entry_id not in by_id:
-                raise SystemExit(f"{path}: unknown component {entry_id}")
+                raise SystemExit(f"{path}: unknown component: {entry_id}")
             for key, items in lists.items():
                 if key not in BINDING_LISTS:
-                    raise SystemExit(f"{path}: {entry_id}: {key} cannot be bound")
+                    raise SystemExit(f"{path}: {entry_id}: only states, dependencies, used_on and gaps can be bound, not {key}")
+                if not isinstance(items, list):
+                    raise SystemExit(f"{path}: {entry_id}: {key} must be a list.")
+                if not isinstance(by_id[entry_id].get(key), list):
+                    raise SystemExit(f"{path}: {entry_id}: the component has no {key} list.")
                 by_id[entry_id][key].extend(items)
     return entries
 

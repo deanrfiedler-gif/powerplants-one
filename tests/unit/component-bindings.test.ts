@@ -101,6 +101,59 @@ test("bindings append to the four consumer lists in file order and add new recor
   assert.deepEqual(Object.keys(buttons), Object.keys(record("buttons")));
 });
 
+test("a binding may name a component whose definition file sorts after it", () => {
+  // scripts/test_documentation_component_bindings.py holds the same fixture for the Python reader.
+  const merged = applyComponentBindings(manifest(), [
+    {
+      path: "2026-10-27-a-consumer.json",
+      binding: {
+        schema_version: 1,
+        bindings: {
+          "future-widget": { used_on: ["route:/new"] },
+          buttons: { used_on: ["route:/new"] },
+        },
+      },
+    },
+    {
+      path: "2026-10-27-z-widget.json",
+      binding: {
+        schema_version: 1,
+        entries: [record("future-widget")],
+        bindings: { "future-widget": { used_on: ["route:/later"] } },
+      },
+    },
+  ]);
+  assert.deepEqual(
+    merged.entries.map((e) => e.id),
+    ["buttons", "menu", "future-widget"],
+  );
+  const widget = merged.entries.find((e) => e.id === "future-widget")!;
+  assert.deepEqual(widget.used_on, ["route:/base", "route:/new", "route:/later"]);
+  assert.deepEqual(merged.entries[0].used_on, ["route:/base", "route:/new"]);
+});
+
+test("a component is defined once, in components.json or one binding file", () => {
+  const define = (path: string, id: string) => ({
+    path,
+    binding: { schema_version: 1, entries: [record(id)] } as ComponentBinding,
+  });
+  assert.throws(
+    () =>
+      applyComponentBindings(manifest(), [
+        define("2026-10-27-a.json", "buttons"),
+      ]),
+    /2026-10-27-a\.json: component already defined: buttons/,
+  );
+  assert.throws(
+    () =>
+      applyComponentBindings(manifest(), [
+        define("2026-10-27-a.json", "widget"),
+        define("2026-10-28-b.json", "widget"),
+      ]),
+    /2026-10-28-b\.json: component already defined: widget/,
+  );
+});
+
 test("a binding names a known component, a known list and the current schema", () => {
   const apply = (binding: unknown) =>
     applyComponentBindings(manifest(), [
