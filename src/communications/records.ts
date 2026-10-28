@@ -250,6 +250,10 @@ export async function gate(c: QueryClient, m: Communication) {
   if (r.hold) return r.hold;
   if (r.person!.email !== m.recipient_address || r.person!.display_name !== m.recipient_name)
     return "RecipientChanged" as const;
+  if (m.source_type === "SupplyDemand") {
+    const { supplyCustomerNoticeGate } = await import("../supply/customer-notice-gate");
+    return supplyCustomerNoticeGate(c, m);
+  }
   return null;
 }
 

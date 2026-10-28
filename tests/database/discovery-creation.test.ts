@@ -161,13 +161,13 @@ test("0113 preserves populated original links, receipts, grants and migration le
   await migrate(); await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }]);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }]);
   const afterGrants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map(g => g.id));
   assert.deepEqual(afterGrants.filter(g => ids.has(g.id)), grants);
   assert.deepEqual(afterGrants.filter(g => !ids.has(g.id)),
     agentAskSeedGrants(grants).sort((a, b) => String(a.id) < String(b.id) ? -1 : 1));
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"), receipts);
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }]);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }]);
   const complete = () => Promise.all([snapshot(), rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     rows("SELECT * FROM ppo.seed_receipts ORDER BY version"), rows("SELECT * FROM public.ppo_migrations ORDER BY version")]);
   const upgraded = await complete();
