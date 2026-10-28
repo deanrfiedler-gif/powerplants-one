@@ -5,7 +5,7 @@ date: 2026-10-28
 
 ChatGPT's independent security re-review of PR #718, on 28 October 2026 against fb4bc093, confirmed four of the five second-model corrections and found **1 Important** defect remaining, with 0 Critical. PR #718 merged before it was fixed, so this follow-up fixes it.
 
-**The defect.** Outside `docs/guides/pages/`, a guide key written with a YAML escape (`"guide_key"`) was found only when YAML read the front matter cleanly. Front matter with such a key and a YAML error, a duplicate `title` for one, was skipped as not a guide, so a guide with raw HTML in its body passed `npm run build`.
+**The defect.** Outside `docs/guides/pages/`, a guide key written with a YAML escape (`"guide\u005fkey"`) was found only when YAML read the front matter cleanly. Front matter with such a key and a YAML error, a duplicate `title` for one, was skipped as not a guide, so a guide with raw HTML in its body passed `npm run build`.
 
 **Implemented:** `declaresGuideKey` in `src/guides/compile.ts` now fails closed. Front matter that YAML reports an error for, or that uses an alias (which a `<<` merge needs), makes the file a guide, so the compiler reports it and the build fails. Front matter that YAML reads cleanly is judged by its keys, as before.
 
