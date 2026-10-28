@@ -27,6 +27,23 @@ Retained CRM CI at `575ae00` passed I2 keyboard/long-text 17/17 and actual appli
 
 The PR check suite is authoritative for current-head CI; a green earlier commit is not used to approve a later one. Required checks and repository review conditions must pass before merge.
 
+## CR05 initial-read investigation — 29 October 2026
+
+This investigation is [PR #738](https://github.com/deanrfiedler-gif/powerplants-one/pull/738), separate from the guide-security correction in #735, under #737 step 3. Both downloaded failure archives match their GitHub SHA-256 digests:
+
+| Head / run | Artifact | SHA-256 | CR05 result |
+|---|---|---|---|
+| `b9b1455e` / [40650787949](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/40650787949) | 12803489917, original failed attempt | `ac71b4c6af8b0a90fdd0f97ff968b9701caa9b223d0b6beb74a0b370224747e2` | 36.696 s; Customer review absent at line 358 |
+| `429413af` / [40693504129](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/40693504129) | 12823268962 | `1b1236d97b9ef61f1f4cd9284d9af4ba3337ad39c70592ab264079058907e1e1` | 36.905 s; same assertion |
+
+The screenshot and accessibility snapshot in **both** archives show `Loading aftercare review…` as the main content. Neither shows the workspace or a displayed resource error. The shell and demonstration identity are present; the options-loading notice is absent. The prior HTTP 200/body assertions succeeded, but they do not establish that the hook accepted that response, or that the response belonged to the deliberately held request: the waiter matches any GET to the record path.
+
+The archives contain neither trace ZIPs nor generated Playwright HTML reports; `.github/workflows/application.yml` deliberately excludes them because raw traces can contain session material. In the latest archive, the main server's `process-18407.jsonl` reaches its diagnostic cap at 13:51:03.837 UTC, before CR05 starts at 14:21:30.304 UTC on 28 October. Those logs cannot establish the failed test's request order. Overlapping reads, a response from a disposed effect, and delayed client consumption remain hypotheses; a loading snapshot alone does not select one. No rendering defect or resource-hook defect is established.
+
+The existing test now records a bounded, content-free `cr05-initial-read.json` around its initial read and original tab assertion. It correlates numbered browser requests/responses/completions, the intercepted route's upstream read/delay/fulfilment, the response matched by the test, window-focus/visibility events, page-error occurrence and loading/tab/error-state transitions. It records no URL, header, cookie, identity, body, record content or error message. The artifact is retained on passes as well as failures and uses the existing upload paths. The six-second hold, latest-response application semantics, five-second assertion, permissions and error handling are unchanged. This is diagnostic instrumentation, not a correction or a regression pass.
+
+Local ESLint and TypeScript checks pass. Browser reproduction could not start: the standard Chrome installer fails on this container's UID/group operations; a separately extracted stable Chrome 156.0.8078.73 exits with SIGSEGV before opening a page under Playwright. Node is 24.22.1, npm 11.9.0 and repository Playwright 1.64.1; this is not a successful run of the pinned CI environment. No local browser, database or HTTP pass is claimed. Exact-head CI and captured request sequencing remain required before choosing a correction.
+
 ## Latest completed Sales CI checkpoint
 
 At `69c7427`, [CRM/Sales assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35935637580/job/107431925953) passed 388 units, 62 database cases (all eight Sales cases), 31 browser cases with two existing project skips, 17 retained I2 cases, and actual application/PostgreSQL restart verification. This includes training evidence, source change, CRM Unknown/Returned/Accepted receiving, receipt revocation and all eight new desktop/phone Sales journeys. The [full compiled application lane](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35935637612/job/107431926324) then passed 374 browser cases with 61 existing project skips. Header/board visual checks, documentation, register, Email, Leads, Engineering, Projects, reports, demo and focused quality/access/HTTP jobs also passed. Full application/database/HTTP jobs remain independently tracked; use the PR for the final exact-head result.

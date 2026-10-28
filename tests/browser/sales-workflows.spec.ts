@@ -5,6 +5,7 @@ import { emptyHandover } from "../../src/sales/handover-model";
 import { emptyReview } from "../../src/sales/aftercare-model";
 import { reportIssued } from "../helpers/reports";
 import { closeDatabase } from "../../src/platform/database";
+import { aftercareReadDiagnostics } from "../helpers/aftercare-read-diagnostics";
 test.describe.configure({ timeout: 120000 });
 test.beforeAll(() => {
   if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
@@ -336,26 +337,38 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   });
   const options = await call(page, `sales/aftercare/${id}/options`);
   expect(options.people.length).toBeGreaterThan(0);
+  const readiness = await aftercareReadDiagnostics(page, info, `/api/v1/sales/aftercare/${id}`);
   // Navigation can finish before the exact saved review reaches the browser.
   // Hold the real response beyond the unchanged UI assertion window so this
   // ordering is exercised on both viewports without retrying or replacing data.
   await page.route(`**/api/v1/sales/aftercare/${id}`, async (route) => {
+    readiness.mark("held-route-entered", route.request());
     const response = await route.fetch();
+    readiness.mark("held-upstream-response", route.request(), response.status());
     await new Promise((resolve) => setTimeout(resolve, 6000));
+    readiness.mark("held-delay-completed", route.request());
     await route.fulfill({ response });
+    readiness.mark("held-route-fulfilled", route.request());
   }, { times: 1 });
   const reviewRead = page.waitForResponse((response) =>
     new URL(response.url()).pathname === `/api/v1/sales/aftercare/${id}` &&
     response.request().method() === "GET",
   );
-  await page.goto(`/sales/aftercare/${id}`);
-  const response = await reviewRead;
-  expect(response.status()).toBe(200);
-  expect(await response.finished()).toBeNull();
-  expect((await response.json()).record.id).toBe(id);
-  await expect(
-    page.getByRole("tab", { name: "Customer review", exact: true }),
-  ).toBeVisible();
+  try {
+    await page.goto(`/sales/aftercare/${id}`);
+    const response = await reviewRead;
+    readiness.mark("test-matched-response", response.request(), response.status());
+    expect(response.status()).toBe(200);
+    expect(await response.finished()).toBeNull();
+    expect((await response.json()).record.id).toBe(id);
+    readiness.mark("tab-assertion-started");
+    await expect(
+      page.getByRole("tab", { name: "Customer review", exact: true }),
+    ).toBeVisible();
+    readiness.mark("tab-assertion-passed");
+  } finally {
+    await readiness.finish();
+  }
   for (const tab of await page.getByRole("tab").all()) {
     await tab.click();
     await expect(tab).toHaveAttribute("aria-selected", "true");
