@@ -13,4 +13,6 @@ ChatGPT's independent security re-review of PR #718, on 28 October 2026 against 
 
 **Checked** on Node 24.21.0 and npm 11.19.0, with the proxy, CA-bundle and `ANTHROPIC_BASE_URL` variables cleared for the unit tests. The two new regression tests failed before the fix and pass after it: a library case (an escaped key with a duplicate key, and an alias) and a spawned build that must exit 1 naming both lines. The full check list and its results are in the pull request.
 
-**Not done:** whether the reviewer accepts this fix is not yet recorded. No acceptance scenario was run. No business approval or production readiness is claimed.
+**Review:** ChatGPT's independent second-model re-review of the correction at cb1d7a79, on 28 October 2026, found no defects in the corrected discovery path. It confirmed that parse errors now force compilation, that aliases and non-scalar keys cannot bypass discovery, and that plain and escaped guide keys are still recognised. That is code-review evidence only.
+
+**Not done:** no acceptance scenario was run. No business approval or production readiness is claimed.
