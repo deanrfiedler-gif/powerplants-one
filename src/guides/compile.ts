@@ -121,26 +121,51 @@ export function readFrontMatter(path: string, text: string): FrontMatterRead {
   return read(validate(new Map(Object.entries(data)), report));
 }
 
-// Whether a file's front matter declares a guide key, in any form YAML reads: a block or flow mapping, after comment
-// lines, or with a quoted or escaped key. The library uses this to find guides outside docs/guides/pages. It fails
-// closed: front matter that YAML reports an error for, that uses an alias (a << merge needs one), or that has a key
-// that is not plain text counts as a guide, because a key escaped or merged there cannot be seen without a clean read. The compiler then
-// reports it instead of the file dropping out of the library. Front matter YAML reads as something other than a
-// mapping counts when any of its lines names a guide key.
+// A spoiled opening --- is still recognisable as an attempted front-matter envelope when it is the first
+// substantive line. Permitting BOM, horizontal space, or leading blank/comment lines here is for discovery only:
+// readFrontMatter intentionally requires an exact --- on line 1 and refuses these files.
+const possibleFrontMatterDelimiter = /^[\uFEFF \t]*-{3,}[ \t]*$/;
+const frontMatterPreamble = (line: string): boolean =>
+  /^[\uFEFF \t]*$/.test(line) || /^[\uFEFF \t]*<!--.*-->[ \t]*$/.test(line);
+
+// Whether a Markdown file declares a guide key, including escaped YAML keys in malformed front-matter envelopes.
+// The library uses this only outside docs/guides/pages. With an exact opener, invalid YAML, aliases and complex
+// mapping keys fail closed, as before. With a spoiled opener, require evidence of a guide key or unsafe YAML alias/
+// mapping key: rejecting every parse error there would incorrectly treat ordinary Markdown as a guide.
 export function declaresGuideKey(text: string): boolean {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
-  if (lines[0] !== "---") return false;
-  const closing = lines.indexOf("---", 1);
-  const block = lines.slice(1, closing < 0 ? undefined : closing);
-  const doc = parseDocument(block.join("\n"), { schema: "core", uniqueKeys: true });
-  if (doc.errors.length > 0) return true;
+  let opening = 0;
+  while (opening < lines.length && frontMatterPreamble(lines[opening])) opening++;
+  if (!possibleFrontMatterDelimiter.test(lines[opening] ?? "")) return false;
+
+  const exactOpener = opening === 0 && lines[0] === "---";
+  const closing = lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
+  const block = lines.slice(opening + 1, closing < 0 ? undefined : closing);
+  const options = { schema: "core" as const, uniqueKeys: true };
+  const doc = parseDocument(block.join("\n"), options);
+
+  if (exactOpener && doc.errors.length > 0) return true;
   let alias = false;
   visit(doc, { Alias: () => { alias = true; return visit.BREAK; } });
   if (alias) return true;
-  if (isMap(doc.contents)) {
-    return doc.contents.items.some((pair) => !isScalar(pair.key) || /^\s*guide[_-]key\s*$/i.test(String(pair.key.value)));
-  }
-  return block.some((line) => /guide[_-]key/i.test(line));
+
+  const isGuideKey = (key: unknown) => /^\s*guide[_-]key\s*$/i.test(String(key));
+  const mappingHasGuideKey = (mapping: typeof doc.contents) =>
+    isMap(mapping) && mapping.items.some((pair) => !isScalar(pair.key) || isGuideKey(pair.key.value));
+  if (mappingHasGuideKey(doc.contents)) return true;
+
+  // Keep the existing fallback for an exact delimiter whose YAML does not form a mapping.
+  if (exactOpener) return block.some((line) => /guide[_-]key/i.test(line));
+
+  // A YAML error elsewhere in a malformed envelope may prevent the whole document from yielding a mapping.
+  // Probe key-shaped lines individually through the same YAML parser so escaped keys are decoded; do not classify
+  // arbitrary invalid metadata or prose mentioning a guide key as guides.
+  return block.some((line) => {
+    if (!line.includes(":")) return false;
+    const fragment = parseDocument(line.trimStart(), options);
+    return isMap(fragment.contents) &&
+      fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
+  });
 }
 
 // Always returns a well-typed object so that no cast is needed. The caller discards it when anything was reported.
