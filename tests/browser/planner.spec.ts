@@ -1,5 +1,6 @@
 import { test, expect, type Page, type Request } from "@playwright/test";
 import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { expectAppointmentNavigation } from "../helpers/appointment-record";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function appointmentMenuAction(page: Page, name: string) {
@@ -585,6 +586,7 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await expect(request.getByText("Accepted", { exact: true })).toBeVisible();
   await capture(page, info, "project-accepted-held");
   await page.goto("/service/appointments/" + id("a8", 1));
+  await expectAppointmentNavigation(page);
   await identity(page, "assigned-technician");
   await expect(
     page.getByRole("button", { name: "Move or reassign", exact: true }),
