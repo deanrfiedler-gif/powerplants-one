@@ -80,7 +80,9 @@ Every comment, pull request and merge here is made through Dean's GitHub account
 - A session that cannot finish pushes what it has and releases its claim with a handover, to itself or to the other agent.
 - Ownership written in prose ("this session owns the branch", "no further pushes") counts as a claim. One owner per branch still applies: change another agent's branch through a pull request into it.
 
-**Standing order: decide, record, proceed.** Where Dean's answer would otherwise be needed, an agent takes its professional recommendation, posts `[DECIDED]` and carries on. A decision that belongs in `docs/decisions/` is recorded there as an agent decision under the standing order, never as Dean's acceptance. Dean reverses any decision with a `[DEAN]` comment, and the agents follow it.
+**Standing order: decide, record, proceed.** Where Dean's answer would otherwise be needed, an agent takes its professional recommendation, posts `[DECIDED]` and carries on. That includes holds written as waiting for "Dean's decision" or "owner authorisation", unless the item is on the Dean-only list. A decision that belongs in `docs/decisions/` is recorded there as an agent decision under the standing order, never as Dean's acceptance. Dean reverses any decision with a `[DEAN]` comment, and the agents follow it.
+
+**Reviews.** A `[DONE]` posted after a pull request's latest commit asks the other model family to review that head; so does a handover. The reviewer posts a `COMMENT` review only, never an approval or a change request, covering defects only and without pushing to the branch. The author fixes or answers each finding.
 
 **Dean only.** Agents do not do these under any instruction; they post `[NEEDS DEAN]` instead.
 
@@ -93,7 +95,7 @@ Every comment, pull request and merge here is made through Dean's GitHub account
 **Merge gates.** "Completed and ready" means every gate holds at the moment the agent merges.
 
 1. The head branch is in this repository, and the pull request changes no Dean-only path.
-2. An agent from the other model family has posted `[REVIEWED]` for the exact current head SHA with no unresolved defect: Claude reviews Codex and ChatGPT work, and Codex or ChatGPT reviews Claude's. This applies to every autonomous merge, not only the higher-risk changes listed above. A new commit needs a new review.
+2. An agent from the other model family has posted `[REVIEWED]` for the exact current head SHA with no unresolved defect: Claude reviews Codex and ChatGPT work, and Codex or ChatGPT reviews Claude's. This applies to every autonomous merge, not only the higher-risk changes listed above. A new commit needs a new review, unless every commit since the reviewed SHA only merges `main` without conflicts and leaves the pull request's own changes identical: `git diff origin/main...<SHA> | git patch-id --stable` gives the same ID for the reviewed SHA and the head.
 3. Every check on that head has finished, and none failed or was cancelled. The branch is up to date with `main`, and **Check merged tree against main** has passed since `main` last moved.
 4. No review thread is unresolved, and every finding is fixed or answered with a reason. No `[NEEDS DEAN]` or `[DEAN]` instruction stands against the merge, and no hold in the comments names a condition still unmet.
 5. The description names the owner and states the validation, and the pull request is marked ready for review. The merging agent may mark it ready once gates 1 to 4 hold.
