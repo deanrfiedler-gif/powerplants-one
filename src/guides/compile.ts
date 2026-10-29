@@ -121,20 +121,82 @@ export function readFrontMatter(path: string, text: string): FrontMatterRead {
   return read(validate(new Map(Object.entries(data)), report));
 }
 
-// Whether a file's front matter declares a guide key, in any form YAML reads: a block or flow mapping, after comment
-// lines, or with a quoted or escaped key. The library uses this to find guides outside docs/guides/pages. Front matter
-// that YAML cannot read, or with a key that is not plain text, counts when any of its lines names a guide key, so the
-// compiler reports it instead of the file dropping out of the library.
+// A spoiled opening --- is still recognisable as an attempted front-matter envelope when it is the first
+// substantive line. Permitting BOM, horizontal space, or leading blank/comment lines here is for discovery only:
+// readFrontMatter intentionally requires an exact --- on line 1 and refuses these files.
+const possibleFrontMatterDelimiter = /^[\uFEFF \t]*-{3,}[ \t]*$/;
+// Complete leading comment blocks are metadata preambles even when the closing --> is on a later line.
+// Only comments occupying complete lines are skipped; ordinary prose before a rule is not YAML.
+function firstSubstantiveLine(lines: readonly string[]): number {
+  let index = 0;
+  while (index < lines.length) {
+    const line = lines[index].trim();
+    if (!line) { index++; continue; }
+    if (!line.startsWith("<!--")) break;
+    let closing = index;
+    while (closing < lines.length && !lines[closing].includes("-->")) closing++;
+    if (closing === lines.length || lines[closing].slice(lines[closing].indexOf("-->") + 3).trim())
+      return lines.length;
+    index = closing + 1;
+  }
+  return index;
+}
+
+// Whether a Markdown file declares a guide key, including escaped YAML keys in malformed front-matter envelopes.
+// The library uses this only outside docs/guides/pages. With an exact opener, invalid YAML, aliases and complex
+// mapping keys fail closed, as before. With a spoiled opener, require evidence of a guide key or unsafe YAML alias/
+// mapping key: rejecting every parse error there would incorrectly treat ordinary Markdown as a guide.
 export function declaresGuideKey(text: string): boolean {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
-  if (lines[0] !== "---") return false;
-  const closing = lines.indexOf("---", 1);
-  const block = lines.slice(1, closing < 0 ? undefined : closing);
-  const doc = parseDocument(block.join("\n"), { schema: "core", uniqueKeys: true });
-  if (doc.errors.length === 0 && isMap(doc.contents)) {
-    return doc.contents.items.some((pair) => !isScalar(pair.key) || /^\s*guide[_-]key\s*$/i.test(String(pair.key.value)));
-  }
-  return block.some((line) => /guide[_-]key/i.test(line));
+  const opening = firstSubstantiveLine(lines);
+  if (!possibleFrontMatterDelimiter.test(lines[opening] ?? "")) return false;
+
+  const exactOpener = opening === 0 && lines[0] === "---";
+  const closing = lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
+  const block = lines.slice(opening + 1, closing < 0 ? undefined : closing);
+  // Markdown code samples after a spoiled --- are not front matter. Mask them *before* whole-document
+  // YAML parsing: the parser may otherwise decode an indented code example as a top-level guide_key.
+  // An exact opening --- retains the conservative fail-closed rule from #735.
+  let fenceMarker: string | null = null;
+  let fenceSize = 0;
+  const scanned = exactOpener ? block : block.map((line) => {
+    const fence = /^ {0,3}(\x60{3,}|~{3,})(.*)$/.exec(line);
+    if (fence) {
+      const marker = fence[1];
+      if (fenceMarker === null) {
+        fenceMarker = marker[0];
+        fenceSize = marker.length;
+      } else if (marker[0] === fenceMarker && marker.length >= fenceSize && fence[2].trim() === "") {
+        fenceMarker = null;
+      }
+      return "";
+    }
+    return fenceMarker !== null || /^(?: {4}|\t)/.test(line) ? "" : line;
+  });
+  const options = { schema: "core" as const, uniqueKeys: true };
+  const doc = parseDocument(scanned.join("\n"), options);
+
+  if (exactOpener && doc.errors.length > 0) return true;
+  let alias = false;
+  visit(doc, { Alias: () => { alias = true; return visit.BREAK; } });
+  if (alias) return true;
+
+  const isGuideKey = (key: unknown) => /^\s*guide[_-]key\s*$/i.test(String(key));
+  const mappingHasGuideKey = (mapping: typeof doc.contents) =>
+    isMap(mapping) && mapping.items.some((pair) => !isScalar(pair.key) || isGuideKey(pair.key.value));
+  if (mappingHasGuideKey(doc.contents)) return true;
+
+  // Keep the existing fallback for an exact delimiter whose YAML does not form a mapping.
+  if (exactOpener) return block.some((line) => /guide[_-]key/i.test(line));
+
+  // Invalid YAML may prevent a whole-document mapping. Probe exposed root-level key lines through YAML,
+  // including quoted escaped keys. The scan above already excluded Markdown code examples.
+  return scanned.some((line) => {
+    if (!line.includes(":")) return false;
+    const fragment = parseDocument(line.trimStart(), options);
+    return isMap(fragment.contents) &&
+      fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
+  });
 }
 
 // Always returns a well-typed object so that no cast is needed. The caller discards it when anything was reported.

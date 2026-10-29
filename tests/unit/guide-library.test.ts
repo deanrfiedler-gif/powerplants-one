@@ -7,7 +7,7 @@ import { test, type TestContext } from "node:test";
 import { fileURLToPath } from "node:url";
 import { readMaster } from "../../src/development/catalog";
 import { matchEntry, type Entry } from "../../src/development/model";
-import { compileGuide } from "../../src/guides/compile";
+import { compileGuide, declaresGuideKey } from "../../src/guides/compile";
 import {
   awaitingRewrite,
   carriedOverSources,
@@ -513,6 +513,43 @@ test("outside pages, front matter that declares a guide key in any YAML form mak
   );
 });
 
+// The second-model re-review's case: an escaped guide key in front matter that YAML reports an error for. A guide whose
+// front matter YAML cannot read cleanly, or that uses an alias, is compiled, so its errors fail the build.
+const brokenEscaped = [
+  "---",
+  '"guide\\u005fkey": guide.page.sales.leads',
+  "entry_key: route:/sales/leads",
+  "title: Synthetic guide",
+  "title: Synthetic guide again",
+  "versioning: git",
+  "status: Draft",
+  "owner_role: Synthetic owner",
+  'source_commit: "0123456789abcdef0123456789abcdef01234567"',
+  "---",
+  "",
+  "## Overview {#overview}",
+  "",
+  "<script>alert(1)</script>",
+  "",
+].join("\n");
+
+test("outside pages, front matter that YAML cannot read cleanly, or that uses an alias, makes the file a guide", async (t) => {
+  const merged = ["---", "base: &base { guide_key: guide.page.a }", "<<: *base", "---", "", "## Overview {#overview}", "", "Synthetic text.", ""].join("\n");
+  const root = await makeRoot(t, {
+    "docs/guides/broken-escaped.md": brokenEscaped,
+    "docs/guides/merged.md": merged,
+    "docs/guides/contents.md": ["---", "document_id: PPO-SYN-TOC", "title: Synthetic contents", "---", "", "# Contents", ""].join("\n"),
+  });
+  const result = await readGuideLibrary(root, entries);
+  const at = (path: string) => result.errors.filter((error) => error.path === path);
+
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], ["docs/guides/broken-escaped.md", "docs/guides/merged.md"]);
+  assert.ok(at("docs/guides/broken-escaped.md").some((error) => error.line === lineOf(brokenEscaped, "title: Synthetic guide again") && /Front matter YAML/.test(error.message)));
+  assert.ok(at("docs/guides/broken-escaped.md").some((error) => error.line === lineOf(brokenEscaped, "<script>") && /Raw HTML/.test(error.message)));
+  assert.ok(at("docs/guides/merged.md").length > 0);
+});
+
 test("a missing guides folder is an empty library", async (t) => {
   assert.deepEqual(await readGuideLibrary(await makeRoot(t), entries), { guides: [], errors: [] });
 });
@@ -889,4 +926,112 @@ test("the build fails on a malformed guide, names its file and line, and writes 
     "",
   ]);
   assert.equal(await writtenRelease(root), false, "no release file is written when any guide fails");
+});
+
+test("the build fails on an escaped guide key in front matter that YAML reports an error for", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    "docs/guides/broken-escaped.md": brokenEscaped,
+  });
+  const run = runBuild(root);
+
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout);
+  assert.equal(run.stdout, "");
+  assert.match(run.stderr, new RegExp(`^docs/guides/broken-escaped\\.md:${lineOf(brokenEscaped, "title: Synthetic guide again")} Front matter YAML`, "m"));
+  assert.match(run.stderr, new RegExp(`^docs/guides/broken-escaped\\.md:${lineOf(brokenEscaped, "<script>")} Raw HTML is not allowed`, "m"));
+  assert.equal(await writtenRelease(root), false, "no release file is written when any guide fails");
+});
+
+// Security regression for PR #735's malformed-opener finding. Every probe outside pages is an attempted guide:
+// the compiler must reject its opener rather than allowing the library/build to silently omit it.
+const malformedEnvelopeCases: Array<[string, string]> = [
+  ["space", brokenEscaped.replace(/^---/, "--- ")],
+  ["BOM", "\uFEFF" + brokenEscaped],
+  ["blank", "\n" + brokenEscaped],
+  ["comment", "<!-- front matter note -->\n" + brokenEscaped],
+  ["multiline-comment", "<!-- note for the guide\n continued -->\n" + brokenEscaped],
+  ["multiple-comments", "\n<!-- first -->\n<!-- continued note\n closing note -->\n" + brokenEscaped],
+  ["multiline-comment-CRLF", ("<!-- multiline\r\n done -->\r\n" + brokenEscaped).replace(/\n/g, "\r\n")],
+  ["indented", brokenEscaped.replace(/^---/, "  ---")],
+  ["combined", "\n\uFEFF" + brokenEscaped.replace(/^---/, "--- \t")],
+  ["CRLF", brokenEscaped.replace(/^---/, "--- ").replace(/\n/g, "\r\n")],
+  ["clean-escaped", brokenEscaped.replace(/^---/, "--- ").replace("title: Synthetic guide again\n", "")],
+  ["invalid-flow", brokenEscaped.replace(/^---/, "--- ").replace("title: Synthetic guide again", "title: [unclosed")],
+  ["malformed-closing", brokenEscaped.replace("\n---\n\n## Overview", "\n--- \n\n## Overview")],
+  ["nested-alias", [
+    "--- ", 'base: &base {"guide\\u005fkey": guide.page.sales.leads}', "<<: *base", "---",
+    "", "## Overview {#overview}", "", "<script>alert(1)</script>", "",
+  ].join("\n")],
+  ["flow-escaped", [
+    "--- ", '{"guide\\u005fkey": "guide.page.sales.leads", "entry_key": "route:/sales/leads"}',
+    "---", "", "## Overview {#overview}", "", "<script>alert(1)</script>", "",
+  ].join("\n")],
+];
+const nonGuideControls: Record<string, string> = {
+  "docs/guides/contents.md": "---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/space-contents.md": "--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/BOM-contents.md": "\uFEFF---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/blank-contents.md": "\n---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/bad-metadata.md": "--- \ntitle: Repeated\ntitle: Repeated\n---\n\n# Notes\n",
+  "docs/guides/ordinary.md": "# Markdown\n\nThis document discusses \"guide\\u005fkey\" in prose.\n",
+  "docs/guides/fenced.md": "# YAML example\n\n" + "~~~yaml\n" + '"guide\\u005fkey": example\n' + "~~~\n",
+  "docs/guides/thematic-fenced.md": "--- \n\n# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
+  "docs/guides/thematic-indented.md": "--- \n\n# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
+  "docs/guides/commented-thematic-indented.md": "<!-- example\n context -->\n--- \n\n# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
+  "docs/guides/thematic-tilde-fenced.md": "--- \n\n# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
+};
+
+test("discovery recognises malformed front-matter envelopes with escaped YAML keys, not ordinary Markdown", async (t) => {
+  for (const [name, content] of malformedEnvelopeCases) {
+    assert.equal(declaresGuideKey(content), true, name);
+    const compiled = compileGuide("docs/guides/" + name + ".md", content);
+    assert.ok(compiled.errors.some((error) => /front matter/i.test(error.message)), name + ": must be rejected by compiler");
+  }
+  for (const [path, content] of Object.entries(nonGuideControls)) {
+    assert.equal(declaresGuideKey(content), false, path + ": not a guide");
+  }
+
+  const paths = Object.fromEntries(malformedEnvelopeCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));
+  const root = await makeRoot(t, { ...nonGuideControls, ...paths });
+  const result = await readGuideLibrary(root, entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual(
+    [...new Set(result.errors.map((error) => error.path))],
+    Object.keys(paths).sort(),
+    "all malformed guides are reported, with no ordinary non-guide documents classified",
+  );
+  for (const path of Object.keys(paths)) {
+    assert.ok(result.errors.some((error) => error.path === path && error.line === 1 && /front matter/i.test(error.message)), path);
+  }
+});
+
+test("spawned build fails closed for every malformed-opener escaped guide and writes no release", async (t) => {
+  const paths = Object.fromEntries(malformedEnvelopeCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...nonGuideControls,
+    ...paths,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.equal(run.stdout, "");
+  for (const path of Object.keys(paths)) {
+    assert.ok(run.stderr.includes(path + ":1 "), path + ": missing build refusal in " + run.stderr);
+  }
+  assert.equal(await writtenRelease(root), false, "release must not be written when discovery finds any malformed guide");
+});
+
+test("spawned build still ignores normal non-guide Markdown, including malformed non-guide metadata", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...nonGuideControls,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(run.stderr, "");
+  assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(root), true);
 });
