@@ -11,6 +11,6 @@ The implementation must retain strict readFrontMatter validation; do not relax Y
 
 The integration candidate's own exact-head CI, confirmed migration/production-source preservation, independent **different-model** security review and defect disposition remain mandatory before owner-controlled merge. The ChatGPT builder of this integration cannot self-certify the #740 security change; request another model. CI is evidence of execution, not independent review or operational acceptance. All behaviour remains synthetic. No deployment, external integration, customer messaging or merge is authorised by this status.
 
-## Integrated implementation candidate
+**Integrated implementation candidate.**
 
 The integration fixes the two source-confirmed PR #740 defects without altering the historical contributor branches. Complete leading HTML-comment blocks are now recognised before a malformed opening delimiter. Non-exact delimiter discovery masks fenced and four-space/tab-indented Markdown code before the first whole-document YAML parse, preventing a code example from being interpreted as a root guide key. An exact opening delimiter preserves its original conservative fail-closed rules. New controls exercise multiline and repeated comment preambles, a CRLF comment case, indented examples after a commented thematic rule and fenced examples; all pre-existing malformed-envelope cases remain. These checks are **authored but not claimed executed locally**. The final commit and exact-head CI plus different-model review determine readiness.
