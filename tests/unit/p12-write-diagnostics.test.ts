@@ -84,14 +84,17 @@ test("P12 diagnostics are optional, best effort and bounded even for invalid clo
   }
 });
 
-test("P12 marker file contains no private payload and is created owner-only", () => {
+test("P12 marker file contains no private payload and requests POSIX owner-only mode", () => {
   const root = mkdtempSync(join(tmpdir(), "p12-diagnostic-unit-"));
   try {
     const path = writeDiagnosticPath(root);
     const d = writeDiagnostics(path);
     d.phase("service-worker");
     d.failure(new Error(secret));
-    assert.equal(statSync(path).mode & 0o777, 0o600);
+    // Node does not implement POSIX owner/group/other modes on Windows.
+    // These bits do not establish Windows ACL protection; content checks still run.
+    if (process.platform !== "win32")
+      assert.equal(statSync(path).mode & 0o777, 0o600);
     const bytes = readFileSync(path, "utf8");
     assert.equal(bytes.includes(secret), false);
     assert.match(safeWriteDiagnostic(bytes), /phase=service-worker; elapsed_ms=\d+; category=error/);
