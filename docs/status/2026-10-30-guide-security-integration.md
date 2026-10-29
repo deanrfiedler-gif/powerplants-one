@@ -1,0 +1,12 @@
+---
+title: Guide discovery security integration and regression gate
+date: 2026-10-30
+---
+
+Issue #737 guide-security gate. This separately owned integration branch is created from current main `dc32160b5bd9e25e87d22484d841ad52f6f0452e` on Dean's 30 October instruction to proceed with the next engineering gates. It does not write the Claude-owned #735 branch or the earlier ChatGPT-owned #740 branch, and it preserves their combined commit ancestry when integrated. It targets main directly; do not merge #735 and #740 separately as duplicate cumulative changes.
+
+Integration scope is restricted to the guide compiler discovery logic, its unit/library/spawned-build regressions and this dated status fragment. The two verified #740 defects are (1) a multiline HTML-comment preamble bypassing malformed escaped-key guide discovery, allowing a build to write a release file; and (2) a false-positive guide classification for a normal indented YAML code example after a thematic Markdown rule, causing two unit/build failures. Both require a fail-closed regression without classifying ordinary Markdown as a guide. Historical #740 head `abd832b5f74184b251c7b6428dc2c86988be21fb` was red in Application assurance (new failing tests), with additional unrelated browser failures; original #735 head `429413af5280039af16553e8faa6e3aaf2427fac` had a separate CR05 browser failure. Neither is an approved security fix.
+
+The implementation must retain strict readFrontMatter validation; do not relax YAML, URL, raw HTML, release, or publisher restrictions. Test malformed openers (whitespace, BOM, comments, CRLF, blank lines, flow keys and aliases), ordinary prose and code examples, library error reporting, spawned build exit and absence of release output. Preserve all unrelated application, native Supply, migrations, seeds and customer-message bytes.
+
+The integration candidate's own exact-head CI, confirmed migration/production-source preservation, independent **different-model** security review and defect disposition remain mandatory before owner-controlled merge. The ChatGPT builder of this integration cannot self-certify the #740 security change; request another model. CI is evidence of execution, not independent review or operational acceptance. All behaviour remains synthetic. No deployment, external integration, customer messaging or merge is authorised by this status.
