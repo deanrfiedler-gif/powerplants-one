@@ -62,6 +62,18 @@ export function writeDiagnostics(
   };
 }
 
+// Preserve the original exception; only its allowlisted category reaches the marker.
+export async function withWriteDiagnostic<T>(
+  diagnostic: ReturnType<typeof writeDiagnostics>,
+  action: () => Promise<T>,
+): Promise<T> {
+  try { return await action(); }
+  catch (error) {
+    diagnostic.failure(error);
+    throw error;
+  }
+}
+
 export function safeWriteDiagnostic(raw: string): string {
   const unavailable = " [write diagnostic unavailable]";
   if (raw.length > 512) return unavailable;

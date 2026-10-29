@@ -1,4 +1,4 @@
-import { writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
+import { withWriteDiagnostic, writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -23,8 +23,10 @@ const diagnostic = writeDiagnostics(
   phase === "write" && process.env.PPO_P12_WRITE_DIAGNOSTICS === "1" && process.env.RUNNER_TEMP
     ? writeDiagnosticPath(process.env.RUNNER_TEMP) : undefined,
 );
-await mkdir(root, { recursive: true });
-await mkdir(evidence, { recursive: true });
+await withWriteDiagnostic(diagnostic, async () => {
+  await mkdir(root, { recursive: true });
+  await mkdir(evidence, { recursive: true });
+});
 const server = spawn(
   process.execPath,
   ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
@@ -337,12 +339,14 @@ try {
   throw error;
 } finally {
   diagnostic.phase("cleanup");
-  await context?.close();
-  server.kill("SIGTERM");
-  await new Promise<void>((resolve) => {
-    if (server.exitCode !== null) resolve();
-    else server.once("exit", () => resolve());
+  await withWriteDiagnostic(diagnostic, async () => {
+    await context?.close();
+    server.kill("SIGTERM");
+    await new Promise<void>((resolve) => {
+      if (server.exitCode !== null) resolve();
+      else server.once("exit", () => resolve());
+    });
+    await closeDatabase();
   });
-  await closeDatabase();
   diagnostic.phase("complete");
 }

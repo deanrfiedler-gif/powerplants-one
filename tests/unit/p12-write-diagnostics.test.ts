@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  safeWriteDiagnostic, writeDiagnosticPath, writeDiagnostics,
+  safeWriteDiagnostic, withWriteDiagnostic, writeDiagnosticPath, writeDiagnostics,
 } from "../helpers/p12-write-diagnostics";
 
 const secret = "PRIVATE-canary-token-profile-path-output";
@@ -99,4 +99,41 @@ test("P12 marker file contains no private payload and requests POSIX owner-only 
     assert.equal(bytes.includes(secret), false);
     assert.match(safeWriteDiagnostic(bytes), /phase=service-worker; elapsed_ms=\d+; category=error/);
   } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+for (const phase of ["startup", "cleanup"] as const) {
+  test(`P12 ${phase} exceptions are classified without replacing the error`, async () => {
+    let output = "";
+    const d = writeDiagnostics("unused", (value) => { output = value; }, () => 0);
+    d.phase(phase);
+    const error = new Error(secret);
+    await assert.rejects(withWriteDiagnostic(d, async () => { throw error; }),
+      (caught) => caught === error);
+    assert.deepEqual(JSON.parse(output), { phase, elapsed_ms: 0, category: "error" });
+    assert.equal(output.includes(secret), false);
+  });
+}
+
+test("P12 cleanup classification retains the earlier body failure", async () => {
+  let output = "";
+  const d = writeDiagnostics("unused", (value) => { output = value; }, () => 0);
+  d.phase("photo");
+  const bodyError = new Error(secret);
+  bodyError.name = "TimeoutError";
+  d.failure(bodyError);
+  const first = output;
+  d.phase("cleanup");
+  const cleanupError = new Error(secret);
+  await assert.rejects(withWriteDiagnostic(d, async () => { throw cleanupError; }),
+    (caught) => caught === cleanupError);
+  assert.equal(output, first);
+  assert.equal(JSON.parse(output).category, "timeout");
+});
+
+test("P12 diagnostic wrapper preserves successful values and failures when marker writes fail", async () => {
+  const d = writeDiagnostics("unused", () => { throw new Error(secret); });
+  assert.equal(await withWriteDiagnostic(d, async () => 42), 42);
+  const error = new Error(secret);
+  await assert.rejects(withWriteDiagnostic(d, async () => { throw error; }),
+    (caught) => caught === error);
 });
