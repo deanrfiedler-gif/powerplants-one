@@ -1,4 +1,4 @@
-import { withWriteDiagnostic, writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
+import { diagnoseWriteDownload, withWriteDiagnostic, writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -142,12 +142,14 @@ try {
     await page
       .getByLabel("Assigned job to download")
       .selectOption(setup.appointment_id);
-    diagnostic.phase("download");
-    await page
-      .getByRole("button", { name: "Download selected job", exact: true })
-      .click();
-    await expect(page.locator("#notice")).toContainText(
-      "Job context and exact pack saved",
+    await diagnoseWriteDownload(
+      diagnostic,
+      () => page
+        .getByRole("button", { name: "Download selected job", exact: true })
+        .click(),
+      () => expect(page.locator("#notice")).toContainText(
+        "Job context and exact pack saved",
+      ),
     );
     diagnostic.phase("offline-reload");
     await context.setOffline(true);
