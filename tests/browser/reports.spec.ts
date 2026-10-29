@@ -1,3 +1,4 @@
+import { technicianHistory } from "../helpers/quality-report";
 import { observedResponse } from "../helpers/observed-response";
 import type { Page, TestInfo } from "@playwright/test";
 import { test, expect, observeApiCall } from "../helpers/browser-lifecycle";
@@ -181,14 +182,6 @@ function reportState(page: Page, state: string) {
 }
 async function reportTab(page: Page, name: string) {
   await page.getByRole("tab", { name, exact: true }).click();
-}
-async function technicianEvidence(page: Page) {
-  const details = page.getByRole("tab", { name: "Details", exact: true });
-  if ((page.viewportSize()?.width ?? 1440) <= 780) {
-    await expect(details).toBeVisible();
-    await details.click();
-  }
-  await page.getByRole("link", { name: "Technician evidence and correction" }).filter({ visible: true }).click();
 }
 async function review(page: Page, returned = false, commit = true) {
   if (!(await page.getByLabel("Entry 1 review reason", { exact: true }).isVisible()))
@@ -457,8 +450,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   });
   await staleReview.close();
   await identity(page, "assigned-technician");
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, job.id);
   await page
     .getByRole("button", { name: "Correct this observation entry" })
     .click();
@@ -676,8 +668,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await expect(
     reportState(page, "Draft"),
   ).toBeVisible();
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, job.id);
   await page
     .getByRole("button", { name: "Correct this observation entry" })
     .click();
