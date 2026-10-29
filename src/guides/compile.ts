@@ -153,12 +153,14 @@ function firstSubstantiveLine(lines: string[]): number {
   return -1;
 }
 
-// Malformed opening delimiters can be Markdown thematic rules. Ignore fenced and indented code examples before
-// invoking the YAML parser, not just in a later fallback: YAML itself can misread indented Markdown code as a map.
+// Malformed opening delimiters can be Markdown thematic rules. Ignore fenced code and actual indented Markdown examples before
+// invoking the YAML parser: YAML itself can misread indented Markdown code as a map.
 // This filtering is discovery-only, and only when the opening delimiter was spoiled.
 function withoutMarkdownCode(block: string[]): string[] {
   let fenceMarker: string | null = null;
   let fenceSize = 0;
+  let markdownHeading = false;
+  let blankAfterHeading = false;
   return block.map((line) => {
     const fence = /^ {0,3}(\x60{3,}|~{3,})(.*)$/.exec(line);
     if (fence) {
@@ -171,7 +173,16 @@ function withoutMarkdownCode(block: string[]): string[] {
       }
       return "";
     }
-    return fenceMarker !== null || /^(?: {4}|\t)/.test(line) ? "" : line;
+    if (fenceMarker !== null) return "";
+    // YAML permits an indented top-level mapping. Only treat indentation as Markdown code after
+    // a visible Markdown heading and its blank separator, not throughout a malformed envelope.
+    if (/^ {0,3}#{1,6}[ \t]+\S/.test(line)) {
+      markdownHeading = true;
+      blankAfterHeading = false;
+    } else if (markdownHeading && /^[ \t]*$/.test(line)) {
+      blankAfterHeading = true;
+    }
+    return markdownHeading && blankAfterHeading && /^(?: {4}|\t)/.test(line) ? "" : line;
   });
 }
 

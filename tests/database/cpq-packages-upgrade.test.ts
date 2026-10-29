@@ -43,7 +43,7 @@ const snapshot = async () => {
         t,
         await rows(
           // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110,120)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
+          `SELECT to_jsonb(x) value FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110,120, 121)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
         ),
       ]),
     ),
@@ -75,7 +75,7 @@ test("populated 0101 upgrade preserves exact CPQ/cost/adoption histories, origin
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120],
+    [102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121],
   );
   assert.deepEqual(
     await rows(
