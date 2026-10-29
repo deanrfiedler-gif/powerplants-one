@@ -1040,3 +1040,86 @@ test("spawned build still ignores normal non-guide Markdown, including malformed
   assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(root), true);
 });
+
+// Exact front-matter delimiter parity: the compiler only closes an exact opener at an exact later --- line.
+// Discovery must not stop at a YAML block scalar containing indented ---, at --- with trailing spaces, or at ----.
+// Those premature closers would conceal the escaped key below and let the build incorrectly write a release file.
+const exactClosingDelimiters: Array<[string, string]> = [
+  ["block-scalar", "summary: |\n  ---"],
+  ["spaced-rule", "---  "],
+  ["long-rule", "----"],
+];
+const exactClosingGuide = (intervening: string) =>
+  ["---", "title: Synthetic prefix", ...intervening.split("\n"), ...brokenEscaped.split("\n").slice(1)].join("\n");
+const exactClosingPath = (name: string) => "docs/guides/exact-closing-" + name + ".md";
+const scalarNonGuide = [
+  "---",
+  "document_id: PPO-SYN-TOC",
+  "title: Ordinary contents",
+  "summary: |",
+  "  ---",
+  "---",
+  "",
+  "# Contents",
+  "",
+].join("\n");
+
+test("exact opening delimiters discover escaped guide keys after delimiter-like YAML content", async (t) => {
+  assert.equal(declaresGuideKey(scalarNonGuide), false, "ordinary front matter with a block scalar is not a guide");
+  const files: Record<string, string> = { "docs/guides/contents.md": scalarNonGuide };
+  for (const [name, middle] of exactClosingDelimiters) {
+    const text = exactClosingGuide(middle);
+    const path = exactClosingPath(name);
+    assert.equal(declaresGuideKey(text), true, name + ": guide discovery must reach the escaped key");
+    const direct = compileGuide(path, text);
+    assert.ok(direct.errors.some((error) => /Raw HTML/.test(error.message)), name + ": strict compiler must refuse forbidden body");
+    files[path] = text;
+  }
+
+  const result = await readGuideLibrary(await makeRoot(t, files), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual(
+    [...new Set(result.errors.map((error) => error.path))],
+    exactClosingDelimiters.map(([name]) => exactClosingPath(name)).sort(),
+    "each attempted guide is rejected and the ordinary contents document remains excluded",
+  );
+  for (const [name] of exactClosingDelimiters) {
+    const path = exactClosingPath(name);
+    assert.ok(
+      result.errors.some((error) => error.path === path && /Raw HTML/.test(error.message)),
+      name + ": library reports the same forbidden body as direct compilation",
+    );
+  }
+});
+
+test("spawned build refuses hidden escaped guides after delimiter-like YAML and leaves no release file", async (t) => {
+  const files: Record<string, string> = {
+    "docs/design/development/register.json": buildRegister,
+    "docs/guides/contents.md": scalarNonGuide,
+  };
+  for (const [name, middle] of exactClosingDelimiters) files[exactClosingPath(name)] = exactClosingGuide(middle);
+  const root = await makeRoot(t, files);
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.equal(run.stdout, "");
+  for (const [name, middle] of exactClosingDelimiters) {
+    const path = exactClosingPath(name);
+    const line = lineOf(exactClosingGuide(middle), "<script>");
+    assert.ok(run.stderr.includes(path + ":" + line + " Raw HTML"), name + ": missing build refusal");
+  }
+  assert.equal(await writtenRelease(root), false, "a rejected guide must never produce released.json");
+});
+
+test("spawned build still skips ordinary block-scalar front matter with no guide key", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    "docs/guides/contents.md": scalarNonGuide,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(run.stderr, "");
+  assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(root), true);
+});
