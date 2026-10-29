@@ -1,3 +1,4 @@
+import { writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -18,6 +19,10 @@ const phase = process.argv[2],
   evidence = "verification-evidence/p08-restart";
 if (!["write", "accept", "verify"].includes(phase))
   throw new Error("Use write, accept or verify.");
+const diagnostic = writeDiagnostics(
+  phase === "write" && process.env.PPO_P12_WRITE_DIAGNOSTICS === "1" && process.env.RUNNER_TEMP
+    ? writeDiagnosticPath(process.env.RUNNER_TEMP) : undefined,
+);
 await mkdir(root, { recursive: true });
 await mkdir(evidence, { recursive: true });
 const server = spawn(
@@ -90,6 +95,7 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   assert.ok(ready, "Application startup failed");
+  diagnostic.phase("browser-launch");
   context = await chromium.launchPersistentContext(join(root, "profile"), {
     channel: "chrome",
     headless: true,
@@ -98,11 +104,14 @@ try {
   });
   const page = context.pages()[0];
   if (phase === "write") {
+    diagnostic.phase("coordinator");
     await call(page, "local-session", { profile: "coordinator" });
+    diagnostic.phase("appointment");
     const setup = await prepareFieldAppointment(
       (path, body) => call(page, path, body),
       "2026-12-07",
     );
+    diagnostic.phase("acknowledgements");
     for (const profile of ["assigned-technician", "second-technician"]) {
       const actor = await call(page, "local-session", { profile }),
         recipient = setup.pack.readiness.recipients.find(
@@ -120,24 +129,32 @@ try {
         },
       );
     }
+    diagnostic.phase("technician");
     await call(page, "local-session", { profile: "assigned-technician" });
+    diagnostic.phase("workspace");
     await page.goto("/offline/index.html");
     await expect(page.locator("#workspace")).toBeVisible();
+    diagnostic.phase("service-worker");
     await page.waitForFunction(() => !!navigator.serviceWorker.controller);
+    diagnostic.phase("job-selection");
     await page
       .getByLabel("Assigned job to download")
       .selectOption(setup.appointment_id);
+    diagnostic.phase("download");
     await page
       .getByRole("button", { name: "Download selected job", exact: true })
       .click();
     await expect(page.locator("#notice")).toContainText(
       "Job context and exact pack saved",
     );
+    diagnostic.phase("offline-reload");
     await context.setOffline(true);
     await page.reload();
+    diagnostic.phase("open-job");
     await page
       .getByRole("button", { name: "Open saved field job", exact: true })
       .click();
+    diagnostic.phase("start-intent");
     await page
       .getByRole("button", {
         name: "Save provisional start intent",
@@ -145,6 +162,7 @@ try {
       })
       .click();
     await expect(page.locator("#queue .queue-row")).toHaveCount(1);
+    diagnostic.phase("observation");
     await page
       .getByLabel("Evidence type", { exact: true })
       .selectOption("Observation");
@@ -169,6 +187,7 @@ try {
       })
       .click();
     await expect(page.locator("#queue .queue-row")).toHaveCount(2);
+    diagnostic.phase("photo");
     await page
       .getByLabel("Evidence type", { exact: true })
       .selectOption("Photo");
@@ -189,11 +208,13 @@ try {
       })
       .click();
     await expect(page.locator("#queue .queue-row")).toHaveCount(6);
+    diagnostic.phase("proof-write");
     const originals = (await rows(page)).map((x) => x.original);
     await writeFile(
       proofPath,
       JSON.stringify({ appointment_id: setup.appointment_id, originals }),
     );
+    diagnostic.phase("screenshot");
     await shot(page);
     console.log(
       "P08 write: actual offline shell, original provisional start, factual observation and PNG chain committed in a persistent Chromium profile; server has accepted none.",
@@ -311,7 +332,11 @@ try {
       );
     }
   }
+} catch (error) {
+  diagnostic.failure(error);
+  throw error;
 } finally {
+  diagnostic.phase("cleanup");
   await context?.close();
   server.kill("SIGTERM");
   await new Promise<void>((resolve) => {
@@ -319,4 +344,5 @@ try {
     else server.once("exit", () => resolve());
   });
   await closeDatabase();
+  diagnostic.phase("complete");
 }
