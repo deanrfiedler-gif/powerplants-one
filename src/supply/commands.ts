@@ -1002,7 +1002,10 @@ async function applyFact(
       String(saved.version),
       cmd.kind,
     );
-  return result(saved, { fact_id: cmd.id });
+  const notice = cmd.kind === "Dispatch"
+    ? await (await import("./customer-delivery")).recordDispatchNotice(c, p, saved, cmd)
+    : null;
+  return result(saved, { fact_id: cmd.id, ...notice });
 }
 export async function sourceReservation(
   p: Principal,

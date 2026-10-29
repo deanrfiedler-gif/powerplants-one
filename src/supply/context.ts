@@ -197,7 +197,9 @@ export async function receiptAuthority(
   const r = await supplyRecord(c, p, id);
   const cap = part.startsWith("Fact:")
     ? factCapability(part.slice(5) as FactKind)
-    : part === "Allocate" || part === "ReduceAllocations"
+    : part === "PrepareDispatchNotice"
+      ? "supply.fulfil"
+      : part === "Allocate" || part === "ReduceAllocations"
       ? "supply.coordinate"
       : part === "Attachment"
         ? captureCapability(r.kind)
