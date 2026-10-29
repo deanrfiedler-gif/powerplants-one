@@ -195,7 +195,11 @@ export function declaresGuideKey(text: string): boolean {
   if (opening < 0 || !possibleFrontMatterDelimiter.test(lines[opening])) return false;
 
   const exactOpener = opening === 0 && lines[0] === "---";
-  const closing = lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
+  // An exact opener must use readFrontMatter's exact closing delimiter, or a block scalar containing
+  // an indented --- (or another delimiter-like line) can hide a later escaped guide key from discovery.
+  const closing = exactOpener
+    ? lines.indexOf("---", 1)
+    : lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
   const source = lines.slice(opening + 1, closing < 0 ? undefined : closing);
   const block = exactOpener ? source : withoutMarkdownCode(source);
   const options = { schema: "core" as const, uniqueKeys: true };
