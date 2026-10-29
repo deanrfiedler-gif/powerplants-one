@@ -45,3 +45,10 @@ Accepted Figma design: see the [decision](../../../decisions/customer-messages-f
 The draft User Guide `guide.ec.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+
+## S3 backend consumer contract — 24 October 2026
+
+[D-025 S3](../../../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) supplies native dispatch/delay drafts and versioned customer delivery evidence in PR #695. The source API exposes exact movement/outstanding quantities, fictional carrier/platform/tracking fields, the named contact, explicit customer ETA, immutable message-source hashes and sent-baseline evidence. Native commands use Demand versions and actor-private original-operation recovery; a sender still confirms the fixed CUS-EMAIL content.
+
+Future controls must distinguish source evidence from email content and explicit customer ETA from supplier dates. Show SourceChanged, SenderUnauthorised and PriorOutcomeUnknown as held follow-up states; restoring a grant or editing a source does not send a held message. Withdrawal, source correction/reconciliation, fresh preparation and named confirmation are separate actions. The tracking URL is fictional. No new visible surface, accepted screenshot, UI wiring, visual review, business acceptance or deployment is claimed by this backend work.
