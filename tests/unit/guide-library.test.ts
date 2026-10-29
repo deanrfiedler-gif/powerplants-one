@@ -946,6 +946,10 @@ test("the build fails on an escaped guide key in front matter that YAML reports 
 // Security regression for PR #735's malformed-opener finding. Every probe outside pages is an attempted guide:
 // the compiler must reject its opener rather than allowing the library/build to silently omit it.
 const malformedEnvelopeCases: Array<[string, string]> = [
+  ["multiline-comment", "<!-- front matter\n note -->\n" + brokenEscaped],
+  ["multiline-comment-BOM", "\uFEFF<!-- front matter\n more notes -->\n" + brokenEscaped.replace(/^---/, "--- \t")],
+  ["comments-and-blank", "\n<!-- first -->\n<!-- next\n more -->\n\n" + brokenEscaped],
+  ["multiline-comment-CRLF", ("<!-- intro\n note -->\n" + brokenEscaped.replace(/^---/, "--- ")).replace(/\n/g, "\r\n")],
   ["space", brokenEscaped.replace(/^---/, "--- ")],
   ["BOM", "\uFEFF" + brokenEscaped],
   ["blank", "\n" + brokenEscaped],
@@ -975,6 +979,10 @@ const nonGuideControls: Record<string, string> = {
   "docs/guides/fenced.md": "# YAML example\n\n" + "~~~yaml\n" + '"guide\\u005fkey": example\n' + "~~~\n",
   "docs/guides/thematic-fenced.md": "--- \n\n# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
   "docs/guides/thematic-indented.md": "--- \n\n# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
+
+  "docs/guides/multiline-comment-contents.md": "<!-- ordinary notes\nsecond line -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n# Contents\n",
+  "docs/guides/thematic-tabbed.md": "--- \n\n# Example\n\n\t\"guide\\u005fkey\": guide.page.sales.leads\n",
+  "docs/guides/thematic-backtick.md": "--- \n\n# Example\n\n" + "\x60\x60\x60yaml\n" + '"guide\\u005fkey": guide.page.sales.leads\n' + "\x60\x60\x60\n",
 };
 
 test("discovery recognises malformed front-matter envelopes with escaped YAML keys, not ordinary Markdown", async (t) => {
