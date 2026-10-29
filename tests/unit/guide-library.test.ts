@@ -952,7 +952,7 @@ const malformedEnvelopeCases: Array<[string, string]> = [
   ["comment", "<!-- front matter note -->\n" + brokenEscaped],
   ["multiline-comment", "<!-- note for the guide\n continued -->\n" + brokenEscaped],
   ["multiple-comments", "\n<!-- first -->\n<!-- continued note\n closing note -->\n" + brokenEscaped],
-  ["multiline-comment-CRLF", ("<!-- multiline\r\n done -->\r\n" + brokenEscaped).replace(/\n/g, "\r\n")],
+  ["multiline-comment-CRLF", ("<!-- multiline\n done -->\n" + brokenEscaped).replace(/\n/g, "\r\n")],
   ["indented", brokenEscaped.replace(/^---/, "  ---")],
   ["combined", "\n\uFEFF" + brokenEscaped.replace(/^---/, "--- \t")],
   ["CRLF", brokenEscaped.replace(/^---/, "--- ").replace(/\n/g, "\r\n")],
