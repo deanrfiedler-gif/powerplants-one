@@ -212,6 +212,7 @@ Dean accepted Pipeline insights · CR-04 (`2336:155`) on 31 October 2026 with th
 | Add it to Phone 320 Search and filter | User decision, 31 October 2026 | Asked whether to add it to the phone frame too, Dean answered: "Yes, draw the phone" |
 | Three pairs of fields, so the form fits one screen | Claude's layout choice, drawn for Dean's review | D16 below |
 | Named version for this amendment | User decision, 31 October 2026 | Asked whether Claude should save "Deals · CR-04 — Expected close amendment", Dean answered: "Yes, you save it". Claude saved it in the Figma desktop app the same day and confirmed it at the top of the file's version history. It was saved before the phone was drawn, so it does not hold the phone change |
+| Named version for the phone | User decision, 31 October 2026 | Asked whether Claude should save "Deals · CR-04 — Expected close amendment, phone", Dean answered: "Yes, you save it". Claude saved it in the Figma desktop app the same day and confirmed it at the top of version history. It holds both changes and is the reference for this amendment |
 
 ### What changed on the page
 
@@ -239,11 +240,10 @@ The count agrees with the List `555:5333` as at Thursday 15 October 2026: seven 
 
 ### Design reference
 
-[Deals design r03](../reference/ui/crm/deals-design-r03/README.md) holds two new captures, 06 Filters (`2895:424975`) and 19 Phone 320 Search and filter (`2909:444511`), both on "Captures (icon-free)". The other 26 captures in [r02](../reference/ui/crm/deals-design-r02/README.md) still show the current design, and all 28 r02 files stay unchanged. The named version "Deals · CR-04 — Expected close amendment" holds the desktop change only.
+[Deals design r03](../reference/ui/crm/deals-design-r03/README.md) holds two new captures, 06 Filters (`2895:424975`) and 19 Phone 320 Search and filter (`2909:444511`), both on "Captures (icon-free)". The other 26 captures in [r02](../reference/ui/crm/deals-design-r02/README.md) still show the current design, and all 28 r02 files stay unchanged. The named version "Deals · CR-04 — Expected close amendment, phone" holds both changes; the earlier "Deals · CR-04 — Expected close amendment" holds the desktop change only.
 
 ### What remains open
 
-- **Named version for the phone.** The phone change is in the file but in no named version yet.
 - **Phone view of Pipeline insights.** Its filters were not checked in this work.
 - **Building it.** The filter needs its own pull request, including how the two views read the range.
 

@@ -25,7 +25,7 @@ Each image is one Figma frame exported at scale 1 at its exact frame size. Every
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Deals · CR-04 — Expected close amendment", saved 31 October 2026 at Dean's request, after image 06 was exported, and confirmed in version history. It holds the desktop change only; image 19 was drawn after it |
+| Named version | "Deals · CR-04 — Expected close amendment", saved 31 October 2026 at Dean's request, after image 06 was exported, and confirmed in version history. It holds the desktop change only; image 19 was drawn after it. "Deals · CR-04 — Expected close amendment, phone", saved the same day at Dean's request after image 19 was exported and confirmed in version history, holds both |
 | Frames | Filters `555:6470` and Phone 320 Search and filter `2369:818269` on page "Deals · CR-04" `549:2` |
 | Capture copies | `2895:424975` and `2909:444511` on page "Captures (icon-free)", under the heading `2895:425222` at y = 929,990 |
 
