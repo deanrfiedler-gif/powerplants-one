@@ -1123,3 +1123,121 @@ test("spawned build still skips ordinary block-scalar front matter with no guide
   assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(root), true);
 });
+
+// Malformed-envelope parity: from the review of #745 (5705882866) and #740's comment-preamble finding (6508552215).
+// With a spoiled opener there is no trustworthy closer, so a block scalar holding an indented ---, or a ---- line,
+// must not hide a later escaped key. Several HTML comments on one line, a multiline comment followed by another on
+// its closing line, or a leading comment that never closes must not hide a malformed opener either.
+const spoiledOpener = brokenEscaped.replace(/^---/, "--- ");
+const spoiledAfter = (prefix: string[]) => ["--- ", ...prefix, ...brokenEscaped.split("\n").slice(1)].join("\n");
+// A key can span lines in YAML: an explicit "? key" with its ": value" below, or a flow mapping (Codex review
+// 5707083000 on #749). Both must be found behind every kind of malformed envelope.
+const multilineKeyGuide = (prefix: string[], key: string[]) =>
+  [...prefix, ...key, "---", "", "## Overview {#overview}", "", "<script>alert(1)</script>", ""].join("\n");
+const explicitKey = ['? "guide\\u005fkey"', ": guide.page.sales.leads"];
+const flowKey = ['{ "guide\\u005fkey"', "  : guide.page.sales.leads }"];
+const singleLineKey = ['"guide\\u005fkey": guide.page.sales.leads'];
+// Invalid plain text before a multi-line key (Codex review 5707405123 on #749).
+const invalidPrefix = ["--- ", "invalid front matter"];
+// A key longer than discovery's 64-line read window (Codex review 5707757203 on #749): one quoted key whose escaped
+// line breaks run past the window, an explicit key after many comment lines and a flow mapping after many comment
+// lines. Below the bound discovery reads the whole key; at and above it, it must refuse the key it cannot finish.
+const longQuotedKey = (continuations: number) => ['? "guide\\', ...Array<string>(continuations).fill('  \\'), '  _key"', ": guide.page.sales.leads"];
+const commentedExplicitKey = (comments: number) => ["?", ...Array<string>(comments).fill("  # note"), ...explicitKey.map((line, index) => (index === 0 ? "  " + line.slice(2) : line))];
+const commentedFlowKey = (comments: number) => ["{", ...Array<string>(comments).fill("  # note"), ...flowKey.map((line, index) => (index === 0 ? "  " + line.slice(2) : line))];
+const envelopeGapCases: Array<[string, string]> = [
+  ["spoiled-block-scalar", spoiledAfter(["summary: |", "  ---"])],
+  ["spoiled-long-rule", spoiledAfter(["summary: Synthetic", "----"])],
+  ["BOM-block-scalar", "\uFEFF" + spoiledAfter(["summary: |", "  ---"]).replace(/^--- /, "---")],
+  ["BOM-long-rule", "\uFEFF" + spoiledAfter(["summary: Synthetic", "----"]).replace(/^--- /, "---")],
+  ["blank-block-scalar", "\n" + spoiledAfter(["summary: |", "  ---"]).replace(/^--- /, "---")],
+  ["blank-long-rule", "\n" + spoiledAfter(["summary: Synthetic", "----"]).replace(/^--- /, "---")],
+  ["adjacent-comments", "<!-- first --><!-- second -->\n" + spoiledOpener],
+  ["adjacent-comments-CRLF", ("<!-- first --><!-- second -->\n" + spoiledOpener).replace(/\n/g, "\r\n")],
+  ["spaced-comments", "<!-- first --> <!-- second -->\n" + spoiledOpener],
+  ["multiline-then-comment", "<!-- first\n note --><!-- second -->\n" + spoiledOpener],
+  ["unclosed-comment", "<!-- never closed\n" + spoiledOpener],
+  ["explicit-key-block-scalar", multilineKeyGuide(["--- ", "summary: |", "  ---"], explicitKey)],
+  ["explicit-key-long-rule", multilineKeyGuide(["--- ", "summary: Synthetic", "----"], explicitKey)],
+  ["explicit-key-unclosed-comment", multilineKeyGuide(["<!-- never closed", "--- "], explicitKey)],
+  ["explicit-key-adjacent-lone-CR", multilineKeyGuide(["<!-- a --><!-- b -->", "--- "], explicitKey).replace(/\n/g, "\r")],
+  ["flow-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], flowKey)],
+  ["explicit-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], explicitKey)],
+  ["explicit-key-blank", "\n" + multilineKeyGuide(["---", "summary: Synthetic", "----"], explicitKey)],
+  ["explicit-key-CRLF", multilineKeyGuide(["--- ", "summary: |", "  ---"], explicitKey).replace(/\n/g, "\r\n")],
+  ["invalid-prefix-explicit-key", multilineKeyGuide(invalidPrefix, explicitKey)],
+  ["invalid-prefix-explicit-key-CRLF", multilineKeyGuide(invalidPrefix, explicitKey).replace(/\n/g, "\r\n")],
+  ["invalid-prefix-explicit-key-lone-CR", multilineKeyGuide(invalidPrefix, explicitKey).replace(/\n/g, "\r")],
+  ["invalid-prefix-flow-key", multilineKeyGuide(invalidPrefix, flowKey)],
+  ["invalid-prefix-single-line-key", multilineKeyGuide(invalidPrefix, singleLineKey)],
+  ["long-key-below-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(62))],
+  ["long-key-at-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(63))],
+  ["long-key-above-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(70))],
+  ["long-key-above-bound-CRLF", multilineKeyGuide(invalidPrefix, longQuotedKey(70)).replace(/\n/g, "\r\n")],
+  ["long-key-above-bound-lone-CR", multilineKeyGuide(invalidPrefix, longQuotedKey(70)).replace(/\n/g, "\r")],
+  ["long-explicit-key-comments", multilineKeyGuide(invalidPrefix, commentedExplicitKey(70))],
+  ["long-flow-key-comments", multilineKeyGuide(invalidPrefix, commentedFlowKey(70))],
+];
+const envelopeGapControls: Record<string, string> = {
+  "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/spoiled-scalar-contents.md": "--- \ndocument_id: PPO-SYN-TOC\nsummary: |\n  ---\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/explicit-title-contents.md": "--- \n? title\n: Contents\n---\n\n# Contents\n",
+  "docs/guides/invalid-prefix-prose.md": "--- \ninvalid front matter\n? title\n: Contents\nUse {braces} here?\n---\n\n# Notes\n",
+  "docs/guides/unclosed-comment-notes.md": "<!-- draft notes, never closed\n\n# Notes\n\nNothing here names a guide.\n",
+  // Markdown emphasis at the start of a line is a YAML alias, and a long note can mention guide_key in prose.
+  "docs/guides/emphasis-notes.md": "----\n\n*Note*: synthetic text.\n\n**Bold** start, then [a link](https://example.com).\n",
+  "docs/guides/long-notes.md": ["----", "", "The guide_key field names a guide.", ...Array.from({ length: 80 }, (_, i) => (i % 2 ? `See [note ${i}](https://example.com/${i}) and {braces}.` : `Line ${i}: it's ordinary prose.`))].join("\n"),
+  "docs/guides/long-title-contents.md": ["--- ", "invalid front matter", ...longQuotedKey(70).map((line) => line.replace("guide", "title")), "---", "", "# Contents", ""].join("\n"),
+};
+const envelopeGapPaths = Object.fromEntries(envelopeGapCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));
+
+test("discovery finds escaped guide keys behind delimiter-like lines and comment preambles in malformed envelopes", async (t) => {
+  for (const [name, content] of envelopeGapCases) {
+    assert.equal(declaresGuideKey(content), true, name);
+    const compiled = compileGuide("docs/guides/" + name + ".md", content);
+    assert.ok(compiled.errors.some((error) => /front matter/i.test(error.message)), name + ": must be rejected by compiler");
+  }
+  for (const [path, content] of Object.entries(envelopeGapControls)) {
+    assert.equal(declaresGuideKey(content), false, path + ": not a guide");
+  }
+
+  const result = await readGuideLibrary(await makeRoot(t, { ...envelopeGapControls, ...envelopeGapPaths }), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual(
+    [...new Set(result.errors.map((error) => error.path))],
+    Object.keys(envelopeGapPaths).sort(),
+    "every attempted guide is reported, and no control is",
+  );
+  for (const path of Object.keys(envelopeGapPaths)) {
+    assert.ok(result.errors.some((error) => error.path === path && error.line === 1 && /front matter/i.test(error.message)), path);
+  }
+});
+
+test("spawned build refuses escaped guides behind delimiter-like lines and comment preambles, and writes no release", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...envelopeGapControls,
+    ...envelopeGapPaths,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.equal(run.stdout, "");
+  for (const path of Object.keys(envelopeGapPaths)) {
+    assert.ok(run.stderr.includes(path + ":1 "), path + ": missing build refusal in " + run.stderr);
+  }
+  assert.equal(await writtenRelease(root), false, "release must not be written when discovery finds any malformed guide");
+});
+
+test("spawned build still skips the comment-preamble, block-scalar and unclosed-comment controls", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...envelopeGapControls,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(run.stderr, "");
+  assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(root), true);
+});
