@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Statements | Resolved as recommended | Download a statement produced from the same MYOB read, stamped with its time; later the exact MYOB-produced PDF. Finance's monthly statements are unchanged |
 | Q7 Navigation label | Resolved as recommended | "Quotations & account" on desktop and tablet, "Account" on the phone tab bar |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | Section 7 |
+| Named Figma version | Saved 30 October 2026 at Dean's instruction | "You save it." Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -85,7 +85,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md):
 | Proposed departures | D1–D16 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | Waits for Dean (section 7) |
+| Named version | "Quotations & account — accepted" (section 7) |
 
 ## 4. What the design shows
 
@@ -132,4 +132,4 @@ Design acceptance is not functional, business or deployment acceptance. CPA-15 s
 
 ## 7. Named version
 
-Dean saves the named Figma version "Quotations & account — accepted" himself. This pull request stays in draft until he confirms it.
+Asked whether he would save the named Figma version, Dean told Claude: "You save it." Claude saved "Quotations & account — accepted" in the Figma desktop app on 30 October 2026 and saw it at the top of the file's version history.

@@ -20,7 +20,8 @@ Checked:
 Not done:
 - `/portal/commercial` is not built, and CPA-15 stays Not run.
 - The Quotation page ES-05, Dispatch & delivery, Customer accounts, Change review and Support requests pages that CP-06 draws on are still proposals; accepting CP-06 doesn't accept them.
-- The named Figma version "Quotations & account — accepted" waits for Dean.
+
+At Dean's instruction ("You save it."), Claude saved the named Figma version "Quotations & account — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant, adapter, customer message or parent ID changes.
 
