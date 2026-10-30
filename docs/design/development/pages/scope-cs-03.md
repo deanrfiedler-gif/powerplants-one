@@ -12,11 +12,15 @@ r20 page type: **Record detail; Review / comparison**. Current relationships, Hi
 
 ## Desktop
 
+Accepted design: the [Stakeholders design decision](../../../decisions/stakeholders-figma-design.md) of 30 October 2026 covers the five tabs (People, Site parties, Relationship map, Gaps, History), the Stakeholders item under Related in the Organisations side menu, primary contacts by purpose, and Change primary contact as a side panel that hands over to People. The native treatment below is what is built; this design is not built yet.
+
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
 The native proposal receives the business views rather than the standalone drawer geometry. The owning page scrolls; horizontal scrolling is confined to the tab strip. Paired retained-source/native inspection and actual viewport evidence are recorded in the CS handover.
 
 ## Mobile
+
+Accepted design: captures 09 to 14 in [design r01](../../../reference/ui/customers/stakeholders-design-r01/README.md): a stakeholder list and Who to contact per site at 390 and 320, the Choose view sheet and eight phone states.
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -29,5 +33,7 @@ Incoming: exact canonical customer/Site/Person and permitted source records. Out
 Reference: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationships-r01.html
 
 ## Verification and acceptance
+
+Accepted Figma design: [Stakeholders design r01 captures](../../../reference/ui/customers/stakeholders-design-r01/README.md) (fifteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/stakeholders-figma-design.md). Building it is not decided; the proposed designations and responsibility classes stay unadopted until a build decision (section 5 of the decision).
 
 The detailed page guide is `guide.cs.03`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
