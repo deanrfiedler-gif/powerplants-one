@@ -538,15 +538,15 @@ Finance handoffs belong to work orders. PPO has no project invoicing, so the $13
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS01-15.01 | Coordinator | `/equipment` | Confirm or record the installed fertigation unit, controller and sensor sets at the Bellbird site, with synthetic serial numbers and the installation date | Each asset `SYN-AST-` listed under the site with its installation date and source | S2; continue |
-| TS01-15.02 | Coordinator | `/maintenance/agreements` | Create the maintenance agreement: 12 months from 12 March 2027, six-monthly service, $4,800.00 ex GST | Agreement Proposed | S2; stop |
-| TS01-15.03 | Finance reviewer | `/maintenance/agreements/[id]` | Approve the agreement | Agreement Active; the approver differs from the creator | S1 if the creator can approve |
-| TS01-15.04 | Coordinator | `/maintenance/plans` | Create and review the six-monthly fertigation service plan | Plan Reviewed | S2; continue |
-| TS01-15.05 | Coordinator | `/maintenance/due` | Run maintenance generation, then run it again; check the first service occurrence | Exactly one Open occurrence for the first due date (September 2027); the second run adds none | S1 if duplicated |
+| TS01-15.01 | Coordinator | `/equipment` (Create equipment) | Record the installed fertigation unit, process computer and two sensor sets at the Bellbird site, Identity status Verified, with synthetic serial numbers. Put the installation date (5 March 2027) in the configuration description: the form has no install or warranty date fields (finding F-10) | Each asset `SYN-AST-` listed under the site, Active and Verified | S2; continue |
+| TS01-15.02 | Coordinator | `/maintenance/agreements` | Create agreement: Bellbird site (WholeSite); effective 12 March 2027, expiry 11 March 2028; scope "Quarterly fertigation and controller service"; exclusions "Wear parts beyond one filter element per visit, including dosing pump diaphragms and repair kits"; charging basis "$4,800.00 ex GST per year, invoiced by Finance"; Finance review owner Finance reviewer; exact source Available | Agreement `SYN-AGR-` Proposed | S2; stop |
+| TS01-15.03 | Finance reviewer | `/maintenance/agreements/[id]` | Approve exact agreement terms, with a commercial approval reference | Agreement Active. Coordinator holds no approve duty, so separation comes from duties, not a creator check (finding F-11) | S1 if Coordinator can approve |
+| TS01-15.04 | Coordinator | `/maintenance/plans` | Create the plan for the fertigation unit on the exact agreement revision: interval Quarterly (PPO offers only Monthly or Quarterly, finding F-12), anchor 12 March 2027, Australia/Brisbane, generation window 12 months, the four tasks in TS-02 section 3; then Review exact plan and interval source | Plan `SYN-MPL-` Reviewed | S2; continue |
+| TS01-15.05 | Coordinator | `/maintenance/plans/[id]` | Generate bounded due occurrences for 13 March 2027 to 11 March 2028; then run the same window again | Exactly three Open occurrences, due 12 June, 12 September and 12 December 2027; the second run creates none and lists all three as retained | S1 if duplicated |
 | TS01-15.06 | Coordinator | `/sales/aftercare` | Open aftercare follow-up from the issued APT-3 report; complete the review | Follow-up ReviewCompleted | S3; continue |
 | TS01-15.07 | Coordinator | `/customers/[id]` | Open Bellbird's customer record | One continuous history: lead, deal Won, quotations A and B, project Closed, work order, three appointments, three reports, agreement Active, equipment | S2 if any record is missing |
 
-**Exit criteria:** agreement Active with one due occurrence; aftercare reviewed; customer history complete. The scenario ends here; TS-02 continues from this state.
+**Exit criteria:** agreement Active with three quarterly occurrences; aftercare reviewed; customer history complete. The scenario ends here; TS-02 continues from this state.
 
 **Links:** `docs/contracts/maintenance-warranty-api.md`; ADR-0046; AT-19, AT-30, AT-33; PT-25.
 
@@ -608,6 +608,9 @@ Each branch starts from the stage named and runs on a copy of the data at that p
 | F-07 | Hosted demo roles lack most authorities this scenario needs | TS-01 runs locally only | `src/platform/demo-roles.ts` |
 | F-08 | The seeded policy holds dispatch and refuses Start work until customer site readiness is recorded. Main has no screen to record it; draft PR #750 adds one on the appointment page. Pack lead-time checks are backend only | Without PR #750, every appointment stays Dispatch held and field stages 11 and 13 cannot start; with it, stages 10 and 13 become fully testable | Migration 0120 |
 | F-09 | Two profiles carry the name Riley (technician and drawing issue owner) and two carry Morgan (technician and Equipment records) | Risk of using the wrong identity | `src/components/business-session.tsx` |
+| F-10 | The equipment form has no installation, commissioning or warranty date fields; the API accepts them | Installed dates and warranty terms cannot be entered on screen | `src/shared/commands.ts` (createAsset) |
+| F-11 | Maintenance agreements and plans do not check that the approver or reviewer differs from the creator; separation comes only from who holds which duty | Coordinator can create and review the same plan | `src/maintenance/agreements.ts`, `src/maintenance/plans.ts` |
+| F-12 | Maintenance plans accept only Monthly or Quarterly intervals | Six-monthly service cannot be modelled; TS-01 and TS-02 use Quarterly | `src/maintenance/model.ts` |
 
 ## 9. Traceability
 
