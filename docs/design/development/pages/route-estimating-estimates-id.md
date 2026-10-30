@@ -38,7 +38,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
-- Accepted Figma design: [Estimate detail design r01 captures](../../../reference/ui/estimating/estimate-detail-design-r01/README.md) (captures 01–07 and 11–19 for this page; design compositions, not application captures) and its [decision](../../../decisions/estimate-detail-figma-design.md). The History tab, the Sources tab with no change and 200% zoom are not drawn. The named Figma version "Estimate detail — shared record layout, accepted" waits for Dean.
+- Accepted Figma design: [Estimate detail design r01 captures](../../../reference/ui/estimating/estimate-detail-design-r01/README.md) (captures 01–07 and 11–19 for this page; design compositions, not application captures) and its [decision](../../../decisions/estimate-detail-figma-design.md). The History tab, the Sources tab with no change and 200% zoom are not drawn. The named Figma version "Estimate detail — shared record layout, accepted" was saved on 31 October 2026.
 
 ## Behaviour, handovers and verification
 
