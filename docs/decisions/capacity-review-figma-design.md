@@ -39,7 +39,7 @@ This is a design decision, with the one rule amendment in section 5. It authoris
 | Q5 Known hours for projects and workshop | Resolved as recommended; amends PPO-SCHED-ADR | Owner-supplied planned effort on project tasks and planned step hours on builds count as known hours with their source. Everything else stays "Effort unknown". Section 5 |
 | Q6 The over-capacity rule | Resolved as recommended; amends PPO-SCHED-ADR | Over means known demand greater than available standard hours on that day. A week cell names the day. Extended hours are stated and never counted as available. Section 5 |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waiting | "Capacity review — accepted" waits for Dean to save it, or to say yes to Claude saving it |
+| Named Figma version | Saved, 31 October 2026 | "Capacity review — accepted". Asked who should save it, Dean answered "You save it", and Claude saved it in the Figma desktop app |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -72,7 +72,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D11 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | "Capacity review — accepted", waiting |
+| Named version | "Capacity review — accepted", saved 31 October 2026 |
 
 ## 4. Departures, accepted
 
