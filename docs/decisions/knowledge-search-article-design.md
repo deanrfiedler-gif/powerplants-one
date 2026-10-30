@@ -38,3 +38,7 @@ The detailed report inventories all views, fields, interactions, status rules, f
 Fifteen model groups and thirteen local non-rendered DOM interaction groups passed. Repository foundation, prototype and naming assurance results are recorded in the evidence record. A native Playwright review harness is included but has not been run: browser security policy blocked local HTTP and file preview navigation. No visual, real-device, accessibility, business acceptance or production-readiness claim is made.
 
 Contribution branch: `design/knowledge-search-article-r01`. This session is scoped to the Knowledge package and additive index/status/register entries. Preserve unrelated contributions on integration. GitHub publication was attempted but blocked: `git push` could not obtain an HTTPS username/credential. CONTRIBUTING requires stopping on a blocked push, so no remote branch or PR was created through another route. The completed local commit and patch preserve the contribution. No default-branch push, merge, deployment or source-system change occurred.
+
+## Amendment — 30 October 2026
+
+Dean accepted a Figma successor to this direction: the [Knowledge design decision](knowledge-figma-design.md) (PPO-DK04-KNOWLEDGE-FIGMA-DEC) brings DK-04 onto the current shell and record layout, with departures D1–D12. The r01 HTML and report stay unchanged as earlier direction.
