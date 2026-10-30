@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q9 Expected close in the Deals filters | Resolved as recommended | Yes, as a small amendment to Deals · CR-04, so both views keep the same filters. Open deals with no close date are left out unless chosen. The amendment is not yet drawn on the Deals page (section 6) |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
 | Corrections made before acceptance | Claude's audit and polish, disclosed here | Section 7 |
-| Named Figma version | Not saved; waits for Dean | Section 8 |
+| Named Figma version | Saved 31 October 2026 | Asked who should save it, Dean answered "You save it"; Claude saved "Pipeline insights — accepted" in the Figma desktop app. Section 8 |
 | Changing the built page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -140,5 +140,5 @@ Before acceptance, 31 October 2026, at Dean's request. These correct no decision
 - **Captures:** a final pass found no Font Awesome instance left in the eighteen copies and no prototype link on them.
 - **Prototype:** all 102 links read back with destinations on this page. The flows were **not played in Present mode**.
 - **Visual:** frames were inspected by screenshots taken inside Figma while drawing and after the audit, and three exported captures (05, 13 and 16) were opened to confirm they are icon-free.
-- **Named version:** "Pipeline insights — accepted" has not been saved. It waits for Dean.
+- **Named version:** "Pipeline insights — accepted" was saved on 31 October 2026 at Dean's "You save it", and reads back at the top of the file's version history. It was saved after the captures were exported. The only later edit to this page is the wording of the header's and File index's named-version lines.
 - **Not done:** no application check, because no application code changes; no accessibility tool, device or screen-reader test of the design; no paired comparison with the built page.
