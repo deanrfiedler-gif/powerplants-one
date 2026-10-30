@@ -1765,8 +1765,26 @@
       "guide_key": "guide.es.10",
       "design_path": "docs/design/development/pages/scope-es-10.md",
       "html_path": "docs/reference/ui/reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-01-Desktop-Case-Register-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-02-Desktop-Case-Register-Last-Columns-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-03-Desktop-Case-Detail-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-04-Desktop-Comparison-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-05-Desktop-Comparison-Withheld-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-06-Desktop-Calibration-Proposal-Draft-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-07-Desktop-Preview-Scenario-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-08-Desktop-Independent-Review-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-09-Desktop-Estimator-Panel-Over-ES-08-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-10-Tablet-Comparison-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-11-Phone-390-Case-Detail-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-12-Phone-390-Independent-Review-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-13-Phone-320-Case-Detail-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-14-Phone-320-Independent-Review-r01.png",
+        "docs/reference/ui/estimating/reference-calibration-design-r01/PPO-Reference-Calibration-15-Desktop-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/reference-calibration-figma-design.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
