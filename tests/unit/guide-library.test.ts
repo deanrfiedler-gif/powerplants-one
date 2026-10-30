@@ -971,6 +971,10 @@ const malformedEnvelopeCases: Array<[string, string]> = [
     "---", "", "## Overview {#overview}", "", "<script>alert(1)</script>", "",
   ].join("\n")],
 ];
+// The library also refuses a file with a guide key line in its first 40 lines, in Markdown code or not and escaped
+// or not (hasGuideKeyLine). The code-example controls below therefore put their example after 40 lines of prose, so
+// they still show that discovery itself masks fenced and indented code.
+const pastLineRule = Array.from({ length: 40 }, (_, line) => `Line ${line + 1} of ordinary prose.`).join("\n") + "\n\n";
 const nonGuideControls: Record<string, string> = {
   "docs/guides/contents.md": "---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
   "docs/guides/space-contents.md": "--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
@@ -978,13 +982,13 @@ const nonGuideControls: Record<string, string> = {
   "docs/guides/blank-contents.md": "\n---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
   "docs/guides/bad-metadata.md": "--- \ntitle: Repeated\ntitle: Repeated\n---\n\n# Notes\n",
   "docs/guides/ordinary.md": "# Markdown\n\nThis document discusses \"guide\\u005fkey\" in prose.\n",
-  "docs/guides/fenced.md": "# YAML example\n\n" + "~~~yaml\n" + '"guide\\u005fkey": example\n' + "~~~\n",
-  "docs/guides/thematic-fenced.md": "--- \n\n# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
-  "docs/guides/thematic-indented.md": "--- \n\n# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
+  "docs/guides/fenced.md": "# YAML example\n\n" + pastLineRule + "~~~yaml\n" + '"guide\\u005fkey": example\n' + "~~~\n",
+  "docs/guides/thematic-fenced.md": "--- \n\n" + pastLineRule + "# Example\n\n~~~yaml\n\"guide\\u005fkey\": guide.page.sales.leads\n~~~\n",
+  "docs/guides/thematic-indented.md": "--- \n\n" + pastLineRule + "# Example\n\n    \"guide\\u005fkey\": guide.page.sales.leads\n",
 
   "docs/guides/multiline-comment-contents.md": "<!-- ordinary notes\nsecond line -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n# Contents\n",
-  "docs/guides/thematic-tabbed.md": "--- \n\n# Example\n\n\t\"guide\\u005fkey\": guide.page.sales.leads\n",
-  "docs/guides/thematic-backtick.md": "--- \n\n# Example\n\n" + "\x60\x60\x60yaml\n" + '"guide\\u005fkey": guide.page.sales.leads\n' + "\x60\x60\x60\n",
+  "docs/guides/thematic-tabbed.md": "--- \n\n" + pastLineRule + "# Example\n\n\t\"guide\\u005fkey\": guide.page.sales.leads\n",
+  "docs/guides/thematic-backtick.md": "--- \n\n" + pastLineRule + "# Example\n\n" + "\x60\x60\x60yaml\n" + '"guide\\u005fkey": guide.page.sales.leads\n' + "\x60\x60\x60\n",
 };
 
 test("discovery recognises malformed front-matter envelopes with escaped YAML keys, not ordinary Markdown", async (t) => {
@@ -1240,4 +1244,152 @@ test("spawned build still skips the comment-preamble, block-scalar and unclosed-
   assert.equal(run.stderr, "");
   assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(root), true);
+});
+
+// Escape parity (Claude review of #740 at a0c1b797): an escaped guide key is found wherever the same key written plainly
+// is. Each case below was skipped with the escaped key and refused with the plain one: front matter that is a list or
+// nests the key, an opener with text or an invisible character beside its dashes, and a key that Markdown-looking
+// YAML (a fence-like line in a block scalar, a heading-shaped comment) hid from discovery's code masking.
+const parityKey = '"guide\\u005fkey": guide.page.sales.leads';
+const parityRest = ["entry_key: route:/sales/leads", "title: Synthetic guide", "status: Draft"];
+const parityBody = ["", "## Overview {#overview}", "", "<script>alert(1)</script>", ""];
+const parityGuide = (front: string[]) => [...front, ...parityBody].join("\n");
+const escapeParityCases: Array<[string, string]> = [
+  ["exact-list", parityGuide(["---", `- ${parityKey}`, ...parityRest.map((line) => "  " + line), "---"])],
+  ["exact-nested", parityGuide(["---", "front:", `  ${parityKey}`, ...parityRest.map((line) => "  " + line), "---"])],
+  ["comment-opener", parityGuide(["--- # front matter", parityKey, ...parityRest, "---"])],
+  ["word-opener", parityGuide(["---yaml", parityKey, ...parityRest, "---"])],
+  ["no-break-space-opener", parityGuide(["---\u00a0", parityKey, ...parityRest, "---"])],
+  ["zero-width-opener", parityGuide(["\u200b---", parityKey, ...parityRest, "---"])],
+  ["form-feed-opener", parityGuide(["---\f", parityKey, ...parityRest, "---"])],
+  ["fence-in-block-scalar", parityGuide(["--- ", "summary: |", "  ~~~", parityKey, ...parityRest, "---"])],
+  ["heading-comment", parityGuide(["--- ", "# Guide front matter", "", ...[parityKey, ...parityRest].map((line) => "    " + line), "---"])],
+  ["fenced-example-early", "# YAML example\n\n~~~yaml\n" + parityKey + "\n~~~\n"],
+  // Past the loose line rule's 40 lines, an explicit key behind an opener with a comment is still found by discovery.
+  ["comment-opener-explicit-key", parityGuide(["--- # front matter", ...pastLineRule.trimEnd().split("\n"), '? "guide\\u005fkey"', ": guide.page.sales.leads", "---"])],
+];
+const escapeParityControls: Record<string, string> = {
+  // An exact opener with a spoiled closer and no guide key is metadata the compiler cannot read, not a guide.
+  "docs/guides/spoiled-closer-contents.md": "---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n--- \n\n# Contents\n",
+  "docs/guides/long-rule-closer-contents.md": "---\ndocument_id: PPO-SYN-TOC\ntitle: Contents\n----\n\n# Contents\n",
+};
+const escapeParityPaths = Object.fromEntries(escapeParityCases.map(([name, content]) => ["docs/guides/parity-" + name + ".md", content]));
+
+test("an escaped guide key is found wherever the same key written plainly is", async (t) => {
+  for (const [name, content] of escapeParityCases) {
+    const plain = content.replace('"guide\\u005fkey"', "guide_key");
+    const compiled = compileGuide("docs/guides/parity-" + name + ".md", content);
+    assert.ok(compiled.errors.length > 0, name + ": must be rejected by the compiler");
+    const result = await readGuideLibrary(await makeRoot(t, { ["docs/guides/plain-" + name + ".md"]: plain, ["docs/guides/parity-" + name + ".md"]: content }), entries);
+    assert.deepEqual(result.guides, [], name);
+    assert.deepEqual(
+      [...new Set(result.errors.map((error) => error.path))],
+      ["docs/guides/parity-" + name + ".md", "docs/guides/plain-" + name + ".md"],
+      name + ": the escaped and the plain key must both be reported",
+    );
+  }
+  for (const name of ["exact-list", "exact-nested", "comment-opener", "word-opener", "no-break-space-opener", "zero-width-opener", "form-feed-opener", "comment-opener-explicit-key"]) {
+    assert.equal(declaresGuideKey(escapeParityPaths["docs/guides/parity-" + name + ".md"]), true, name);
+  }
+  for (const [path, content] of Object.entries(escapeParityControls)) assert.equal(declaresGuideKey(content), false, path);
+  // The exact-closer fixtures carry a duplicate title; without their escaped key they must not be guides, so those
+  // cases depend on the key and not on the YAML error.
+  for (const [name, middle] of exactClosingDelimiters) {
+    assert.equal(declaresGuideKey(exactClosingGuide(middle).replace('"guide\\u005fkey": guide.page.sales.leads\n', "")), false, name);
+  }
+});
+
+test("spawned build refuses every escape-parity guide and writes no release", async (t) => {
+  const root = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...escapeParityControls, ...escapeParityPaths });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.equal(run.stdout, "");
+  for (const path of Object.keys(escapeParityPaths)) assert.ok(run.stderr.includes(path + ":"), path + ": missing build refusal in " + run.stderr);
+  for (const path of Object.keys(escapeParityControls)) assert.ok(!run.stderr.includes(path), path + ": a control was refused");
+  assert.equal(await writtenRelease(root), false, "release must not be written when any escape-parity guide is refused");
+});
+
+test("spawned build still skips metadata with a spoiled closer and no guide key", async (t) => {
+  const root = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...escapeParityControls });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(run.stderr, "");
+  assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(root), true);
+});
+
+// The loose rule's 40-line boundary (Codex review 5708817813 on #755). Discovery itself is blind here: a fence-like
+// line in a block scalar masks everything after it. A key that starts on line 39 or 40 and continues past line 40
+// through an escaped line break is refused, as its plain twin on the same line is; one that starts on line 41 is
+// outside the rule, escaped or plain.
+const boundaryGuide = (padding: number, key: string[]) =>
+  ["--- ", "summary: |", "  ~~~", ...Array<string>(padding).fill("# padding"), ...key, "---", ...parityBody].join("\n");
+const continuedKey = ['"guide\\', '  _key": guide.page.sales.leads'];
+const longContinuedKey = ['"guide\\', ...Array<string>(30).fill("  \\"), '  _key": guide.page.sales.leads'];
+const boundaryEndings: Array<[string, string]> = [["LF", "\n"], ["CRLF", "\r\n"], ["CR", "\r"]];
+const boundaryFiles = (start: number, padding: number) =>
+  Object.fromEntries(
+    boundaryEndings.flatMap(([ending, newline]) => [
+      [`docs/guides/start${start}-escaped-${ending}.md`, boundaryGuide(padding, continuedKey).replace(/\n/g, newline)],
+      [`docs/guides/start${start}-plain-${ending}.md`, boundaryGuide(padding, ["guide_key: guide.page.sales.leads"]).replace(/\n/g, newline)],
+    ]),
+  );
+const boundaryRefused = { ...boundaryFiles(39, 35), ...boundaryFiles(40, 36), "docs/guides/start40-long-continuation.md": boundaryGuide(36, longContinuedKey) };
+const boundaryOutside = boundaryFiles(41, 37);
+
+test("the loose rule reads a key that starts in its first 40 lines to its end", async (t) => {
+  for (const [path, content] of Object.entries(boundaryRefused)) assert.ok(compileGuide(path, content).errors.length > 0, path);
+  const result = await readGuideLibrary(await makeRoot(t, { ...boundaryRefused, ...boundaryOutside }), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], Object.keys(boundaryRefused).sort(), "only the keys starting on lines 39 and 40 are refused");
+
+  const refused = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...boundaryRefused });
+  const refusal = runBuild(refused);
+  assert.equal(refusal.status, 1, refusal.stdout + refusal.stderr);
+  for (const path of Object.keys(boundaryRefused)) assert.ok(refusal.stderr.includes(path + ":"), path + ": missing build refusal");
+  assert.equal(await writtenRelease(refused), false, "release must not be written when a boundary key is refused");
+
+  const outside = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...boundaryOutside });
+  const skip = runBuild(outside);
+  assert.equal(skip.status, 0, skip.stdout + skip.stderr);
+  assert.match(skip.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(outside), true);
+});
+
+// A backslash at the end of a comment or a plain value does not continue the line in YAML (Codex review 5709304454 on
+// #755), so the key on the next line, escaped, split across lines or plain, must still be found.
+const backslashPrefixes: Array<[string, string[]]> = [
+  ["comment", ["# note \\"]],
+  ["plain-value", ["other: value\\"]],
+  ["two-comments", ["# a \\", "# b \\"]],
+];
+const prefixedKeys: Array<[string, string[]]> = [
+  ["escaped", [parityKey]],
+  ["split", continuedKey],
+  ["plain", ["guide_key: guide.page.sales.leads"]],
+];
+const prefixedGuides = Object.fromEntries(
+  backslashPrefixes.flatMap(([prefix, lines]) =>
+    prefixedKeys.flatMap(([key, keyLines]) =>
+      boundaryEndings.map(([ending, newline]) => [
+        `docs/guides/after-${prefix}-${key}-${ending}.md`,
+        ["--- ", "summary: |", "  ~~~", ...lines, ...keyLines, "---", ...parityBody].join("\n").replace(/\n/g, newline),
+      ]),
+    ),
+  ),
+);
+
+test("the loose rule checks the line after one that ends in a backslash", async (t) => {
+  for (const [path, content] of Object.entries(prefixedGuides)) assert.ok(compileGuide(path, content).errors.length > 0, path);
+  const result = await readGuideLibrary(await makeRoot(t, prefixedGuides), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], Object.keys(prefixedGuides).sort(), "every key after a backslash-ending line is refused");
+
+  const root = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...prefixedGuides });
+  const run = runBuild(root);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  for (const path of Object.keys(prefixedGuides)) assert.ok(run.stderr.includes(path + ":"), path + ": missing build refusal");
+  assert.equal(await writtenRelease(root), false, "release must not be written when a key after a backslash-ending line is refused");
 });
