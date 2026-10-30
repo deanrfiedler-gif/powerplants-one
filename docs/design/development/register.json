@@ -3016,7 +3016,25 @@
       "html_path": null,
       "image_paths": [
         "docs/testing/evidence/scheduling-resources/images/capacity-1440x960.png",
-        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png"
+        "docs/testing/evidence/scheduling-resources/images/capacity-320x844.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-01-Desktop-Grid-By-Week-Full-Length-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-02-Desktop-Grid-By-Day-Field-Team-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-03-Desktop-Cell-Detail-Popover-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-04-Desktop-Demand-List-Full-Length-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-05-Desktop-Skill-View-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-06-Desktop-Exclusions-Analysis-Only-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-07-Tablet-Grid-By-Week-Collapsed-Full-Length-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-08-Phone-390-Team-Week-Cards-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-09-Phone-390-Demand-List-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-10-Phone-320-Team-Week-Cards-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-11-Phone-320-Demand-List-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-12-State-Loading-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-13-State-Engineering-Unavailable-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-14-State-Results-Bounded-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-15-State-Refresh-Error-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-16-State-Unknown-Effort-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-17-State-Unmapped-Resource-r01.png",
+        "docs/reference/ui/service/capacity-review-design-r01/PPO-Capacity-Review-18-State-No-Demand-In-Range-r01.png"
       ],
       "dependencies": [
         "src/scheduling/workspace-reads.ts",
@@ -3024,7 +3042,9 @@
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/capacity-review-figma-design.md",
+        "docs/decisions/scheduling-resources-architecture.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
@@ -11489,7 +11509,9 @@
         "src/scheduling/components/client/workspace-navigation.client.tsx",
         "src/app/styles/scheduling-workspaces.css",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/capacity-review-figma-design.md",
+        "docs/decisions/scheduling-resources-architecture.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
