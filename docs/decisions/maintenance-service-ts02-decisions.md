@@ -17,8 +17,8 @@ End-to-end scenario TS-02 (PR #753, `docs/testing/TS-02-berry-farm-planned-maint
 | --- | --- |
 | Q1. Plans accept only Monthly or Quarterly intervals (finding F-12). Add six-monthly and yearly? | Yes |
 | Q2. Should turning a due occurrence into work also create the work order, with the plan's tasks copied in? | Yes; it removes the exact-text trap (F2-01) |
-| Q3. Should agreement-covered lines default to NonBillable with the agreement as the reason? | Yes, matching project billing (PR #751, `docs/decisions/project-delivery-billing.md`) rule R3 |
-| Q4. How is the annual agreement fee invoiced? | Through a scheduled-charge Finance handoff shared with project milestone claims (rule C below) |
+| Q3. Should agreement-covered lines default to NonBillable with the agreement as the reason? | Yes. Project-linked lines keep project billing (PR #751, `docs/decisions/project-delivery-billing.md`) rule R3, which allows no override (rule M-R3 below) |
+| Q4. How is the annual agreement fee invoiced? | Through a scheduled-charge Finance handoff sharing one pipeline with project milestone claims (rule C below: an `AgreementCharge` kind beside `ProjectClaim`) |
 | Q5. When an occurrence is received as Partial, how is the remaining work raised? | Allow a follow-on request from a Partial occurrence, keeping the original |
 
 The detailed rules below are Claude's proposals adopted under Dean's standing order, as agent decisions rather than Dean's acceptance of each rule. Dean can reverse any of them.
@@ -37,10 +37,21 @@ The detailed rules below are Claude's proposals adopted under Dean's standing or
 - Everything is created in one operation with one receipt, so a retry cannot create a second request or work order. The work order still needs a person to complete the remaining authorisation fields (authority evidence, shutdown conditions) and to authorise it.
 - If a person edits a task description on the work order, receiving the result still refuses the unmatched task, as today. The page warns before saving such an edit.
 
-### M-R3. Covered lines default to NonBillable
+### M-R3. Agreement-covered lines default to NonBillable; project-linked lines follow project R3
 
-- When a Finance handoff is prepared for a work order whose coverage is Covered by an agreement, or which is linked to a project (project billing (PR #751, `docs/decisions/project-delivery-billing.md`) R3), each source line defaults to NonBillable with the reason "Covered by agreement SYN-AGR-…" or "Included in project contract".
-- Finance can change any line, with a reason, before approval. Unknown or Disputed coverage keeps today's forced FinanceReview route.
+- **Project-linked work orders.** Project billing (PR #751, `docs/decisions/project-delivery-billing.md`) rule R3 governs them, unchanged: every line is `NonBillable` with the reason "Included in project contract", rechecked at submit, approval and begin processing, with no override. This record adds nothing to that rule and relaxes none of it. When a work order is both linked to a project and covered by an agreement, R3 applies and the agreement default below does not.
+- **Agreement-covered work orders not linked to a project.** When a Finance handoff is prepared for a work order whose coverage is Covered by an agreement, each source line defaults to `NonBillable` with the reason "Covered by agreement SYN-AGR-…". This is a default, not a rule: Finance can change a line to `Billable`, with a reason, before approval, for example for parts the agreement excludes.
+- Unknown or Disputed coverage keeps today's forced FinanceReview route.
+- Submit, approval and begin processing decide which case applies from the work order's current project link, so a Draft prepared before a link was added cannot use the agreement override.
+
+### Worked example: a covered work order on a project
+
+Synthetic. Work order WO-A is covered by agreement SYN-AGR-0001 and is not linked to a project. WO-P is covered by the same agreement and is also linked to the TS-01 project.
+
+1. WO-A's handoff is prepared with every line `NonBillable`, "Covered by agreement SYN-AGR-0001". Finance changes the filter-cartridge line to `Billable`, "Consumable excluded from agreement schedule 2". That is accepted.
+2. WO-P's handoff is prepared with every line `NonBillable`, "Included in project contract". Finance makes the same change to its filter-cartridge line. Submitting is refused: the work order is linked to a project, so R3 applies.
+3. Finance changes only the reason text on a WO-P line and leaves it `NonBillable`. That is accepted, and it bills nothing.
+4. If the cartridge really is outside the project contract, it is charged only through an approved project variation and its claim line, never through WO-P's handoff.
 
 ### M-R4. Follow-on work from a Partial occurrence
 
@@ -48,19 +59,22 @@ The detailed rules below are Claude's proposals adopted under Dean's standing or
 - The occurrence stays Partial while follow-on work is open. When a follow-on result is received with every outstanding task Complete, the occurrence becomes Completed. The original request, report and result are kept unchanged.
 - One open follow-on at a time per occurrence.
 
-### C. Scheduled charges for agreements and projects
+### C. Agreement charges share the Finance pipeline with project claims
 
 - A maintenance agreement gains a charge schedule: one or more dated charges in exact cents, with currency and tax basis. The default is one annual charge in advance on the effective date. The schedule is part of the agreement revision that Finance reviewer approves, so it changes only through a successor revision.
-- A charge becomes claimable on its date while the agreement is Active. Finance prepares the claim as a Finance handoff of the same scheduled-charge source kind that project billing (PR #751, `docs/decisions/project-delivery-billing.md`) increment B3 introduces for milestone claims. The kind is named `ScheduledCharge`, with the source (agreement or project) recorded on the handoff. One pipeline serves both: allocation against double claiming, ERP outcome as evidence, and reconciliation.
-- Renewal does not extend charges; a successor agreement revision carries its own schedule.
+- A charge becomes claimable on its date while the agreement is Active. Finance prepares the claim as a Finance handoff of a new source kind, `AgreementCharge`, for one agreement. Project billing keeps its own source kind, `ProjectClaim`, exactly as #751 R2 and B3 define it; this record does not rename or amend it.
+- **One pipeline, two typed kinds.** `AgreementCharge` reuses the same machinery as `ProjectClaim`: the existing handoff states, review, processing claim, ERP outcome as evidence, reconciliation, and the entitlement holds and lifecycle of #751 R2 (Held from submission, including while Returned, OutcomeUnknown or ReconciliationRequired; Consumed once processed and reconciled; released only by a pre-effect cancellation, a revised Draft or an explicit release with a reason, atomically under the workspace lock). It adds no second allocation scheme.
+- **Disjoint entitlements.** Each scheduled agreement charge is one claimable entitlement, identified by its agreement, agreement revision and charge line. A `ProjectClaim` can name only milestones and variation lines of its project's basis, and an `AgreementCharge` can name only charge lines of its agreement's schedule. Neither kind can reserve the other's entitlements, so one charge has exactly one entitlement identity and one hold, whichever kind claims it.
+- **Agreements sold with a project.** As #751 R3 says, such an agreement is billed under the agreement. Its fee is a charge on the agreement's schedule, and the project's claim schedule must not also contain it: the basis's `original_control_value` excludes the agreement fee, as in the TS-01 example ($129,910.00 base scope; the $4,800.00 agreement billed separately).
+- A claim takes a whole charge line. Renewal does not extend charges; a successor agreement revision carries its own schedule.
 
 ## Build increments
 
 | ID | Increment | Depends on |
 | --- | --- | --- |
 | M1 | M-R1 intervals, M-R2 work-order creation, M-R4 follow-on requests (one migration) | The work-order project link (B1), which is in progress, so their database changes do not collide |
-| M2 | M-R3 default dispositions for agreement-covered and project-linked lines | M1; B1 |
-| C1 | The `ScheduledCharge` handoff kind for agreement charges, built together with project billing B3 | Project billing B2 |
+| M2 | M-R3 agreement-covered default dispositions, with the project-link check at submit, approval and begin processing deferring to R3 | M1; project billing B4 (the R3 enforcement), so the agreement override never reaches a project-linked line |
+| C1 | Agreement charge schedule and the `AgreementCharge` Finance handoff source kind, reusing the entitlement holds and processing that project billing B3 builds for `ProjectClaim` | Project billing B3 |
 
 Changes to migrations or grants need a cross-model review before merge. TS-01 and TS-02 move back to six-monthly service when M1 lands.
 
