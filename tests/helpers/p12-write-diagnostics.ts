@@ -4,7 +4,7 @@ import { join } from "node:path";
 // Only these literals and a bounded duration may cross the P12 private-output guard.
 export const writePhases = [
   "startup", "browser-launch", "coordinator", "appointment", "acknowledgements",
-  "technician", "workspace", "service-worker", "job-selection", "download",
+  "technician", "workspace", "service-worker", "job-selection", "download", "download-confirmation",
   "offline-reload", "open-job", "start-intent", "observation", "photo",
   "proof-write", "screenshot", "cleanup", "complete",
 ] as const;
@@ -72,6 +72,18 @@ export async function withWriteDiagnostic<T>(
     diagnostic.failure(error);
     throw error;
   }
+}
+
+// Keep the original two operations ordered; do not retry or change their deadlines.
+export async function diagnoseWriteDownload(
+  diagnostic: ReturnType<typeof writeDiagnostics>,
+  click: () => Promise<void>,
+  confirm: () => Promise<void>,
+) {
+  diagnostic.phase("download");
+  await click();
+  diagnostic.phase("download-confirmation");
+  await confirm();
 }
 
 export function safeWriteDiagnostic(raw: string): string {
