@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-ES05-QUOTATION-RELEASE-FIGMA-DEC,Quotation release design (Figma) owner decision,docs/decisions/quotation-release-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,
+PPO-ES05-QUOTATION-RELEASE-FIGMA-R01,Quotation release design retained captures,docs/reference/ui/estimating/quotation-release-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,retained-record,
