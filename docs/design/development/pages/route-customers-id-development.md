@@ -12,7 +12,7 @@ r20 page type: **Planning workspace**. Account context, Relationship objectives,
 
 ## Desktop
 
-Accepted design: the [Account development design decision](../../../decisions/account-development-figma-design.md) of 31 October 2026 covers a register across customers under Related › Account development, the plan record with read-only horticultural context, objectives, the visit programme, next actions and opportunities, objective detail, and the Plan a visit and Record visit outcome side forms. The native treatment below is what is built; this design is not built yet.
+Accepted design: the [Account development design decision](../../../decisions/account-development-figma-design.md) of 31 October 2026 covers a register across customers under Related › Account development, the plan record with read-only horticultural context, objectives, commitments, changes since the last visit, the visit programme, next actions and opportunities, objective detail, and side forms for Plan a visit, Record visit outcome, Start a plan and revision review. The native treatment below is what is built; this design is not built yet.
 
 Use the current native PPO shell and padded content composition. Reuse PageHeader, RecordTabs/RecordPanel, Field/SelectField, ReadState, ErrorNotice and the existing command recovery controls. Keep source ownership, unknown/restricted states and exact record links visible. The shared shell retains header, search and global navigation; no standalone demo shell is copied.
 
@@ -20,7 +20,7 @@ The native proposal receives the business views rather than the standalone drawe
 
 ## Mobile
 
-Accepted design: captures 09 to 14 in [design r01](../../../reference/ui/customers/account-development-design-r01/README.md): the record summary and Record visit outcome at 390 and 320, People to meet at 390, and two phone states.
+Accepted design: captures 14 to 22 in [design r01](../../../reference/ui/customers/account-development-design-r01/README.md): the record summary with Before you go and Record visit outcome at 390 and 320, People to meet at 390, three no-signal views and two phone states.
 
 Stack fields and record facts; let long names and unknown values wrap. Keep labelled save/recovery controls, visible focus and keyboard-operable tabs. Inspect 430, 390 and 320 CSS px and intermediate 768/1024 layouts. No information or required decision is hidden to make a screenshot fit.
 
@@ -34,6 +34,6 @@ Reference: docs/blueprints/crm-parity.md PAR-07; no dedicated CS-07 standalone d
 
 ## Verification and acceptance
 
-Accepted Figma design: [Account development design r01 captures](../../../reference/ui/customers/account-development-design-r01/README.md) (twenty icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/account-development-figma-design.md). Building it is not decided; the structured objectives and register route stay unadopted until a build decision (section 5 of the decision).
+Accepted Figma design: [Account development design r01 captures](../../../reference/ui/customers/account-development-design-r01/README.md) (twenty-eight icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/account-development-figma-design.md). Building it is not decided; the structured objectives and register route stay unadopted until a build decision (section 5 of the decision).
 
 The detailed page guide is `guide.route-customers-id-development`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.
