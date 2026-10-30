@@ -47,10 +47,24 @@ const isMarkdown = (path: string) => /\.md$/i.test(path);
 const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
-// CRLF and a lone CR are line breaks, as they are to the compiler and to marked.
+// CRLF and a lone CR are line breaks, as they are to the compiler and to marked. Each line that starts in the first
+// 40 is also read to its end as YAML would decode it: a line ending in an escaped line break (an odd number of
+// backslashes) continues onto the next, however far, so line 40 cannot cut a key in half. Continued lines never
+// overlap, so this stays linear in the length of the file.
+const escapedLineBreak = /(?:^|[^\\])(?:\\\\)*\\$/;
 const hasGuideKeyLine = (text: string) => {
-  const opening = text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow);
-  return [...opening, ...decodeYamlEscapes(opening.join("\n")).split("\n")].some((line) => guideKeyLine.test(line));
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  if (lines.slice(0, guideKeyWindow).some((line) => guideKeyLine.test(line))) return true;
+  for (let index = 0; index < Math.min(lines.length, guideKeyWindow); ) {
+    let last = lines[index++];
+    let line = last;
+    while (escapedLineBreak.test(last) && index < lines.length) {
+      last = lines[index++];
+      line += "\n" + last;
+    }
+    if (decodeYamlEscapes(line).split("\n").some((decoded) => guideKeyLine.test(decoded))) return true;
+  }
+  return false;
 };
 
 // The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter

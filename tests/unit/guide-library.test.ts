@@ -1319,3 +1319,41 @@ test("spawned build still skips metadata with a spoiled closer and no guide key"
   assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(root), true);
 });
+
+// The loose rule's 40-line boundary (Codex review 5708817813 on #755). Discovery itself is blind here: a fence-like
+// line in a block scalar masks everything after it. A key that starts on line 39 or 40 and continues past line 40
+// through an escaped line break is refused, as its plain twin on the same line is; one that starts on line 41 is
+// outside the rule, escaped or plain.
+const boundaryGuide = (padding: number, key: string[]) =>
+  ["--- ", "summary: |", "  ~~~", ...Array<string>(padding).fill("# padding"), ...key, "---", ...parityBody].join("\n");
+const continuedKey = ['"guide\\', '  _key": guide.page.sales.leads'];
+const longContinuedKey = ['"guide\\', ...Array<string>(30).fill("  \\"), '  _key": guide.page.sales.leads'];
+const boundaryEndings: Array<[string, string]> = [["LF", "\n"], ["CRLF", "\r\n"], ["CR", "\r"]];
+const boundaryFiles = (start: number, padding: number) =>
+  Object.fromEntries(
+    boundaryEndings.flatMap(([ending, newline]) => [
+      [`docs/guides/start${start}-escaped-${ending}.md`, boundaryGuide(padding, continuedKey).replace(/\n/g, newline)],
+      [`docs/guides/start${start}-plain-${ending}.md`, boundaryGuide(padding, ["guide_key: guide.page.sales.leads"]).replace(/\n/g, newline)],
+    ]),
+  );
+const boundaryRefused = { ...boundaryFiles(39, 35), ...boundaryFiles(40, 36), "docs/guides/start40-long-continuation.md": boundaryGuide(36, longContinuedKey) };
+const boundaryOutside = boundaryFiles(41, 37);
+
+test("the loose rule reads a key that starts in its first 40 lines to its end", async (t) => {
+  for (const [path, content] of Object.entries(boundaryRefused)) assert.ok(compileGuide(path, content).errors.length > 0, path);
+  const result = await readGuideLibrary(await makeRoot(t, { ...boundaryRefused, ...boundaryOutside }), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], Object.keys(boundaryRefused).sort(), "only the keys starting on lines 39 and 40 are refused");
+
+  const refused = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...boundaryRefused });
+  const refusal = runBuild(refused);
+  assert.equal(refusal.status, 1, refusal.stdout + refusal.stderr);
+  for (const path of Object.keys(boundaryRefused)) assert.ok(refusal.stderr.includes(path + ":"), path + ": missing build refusal");
+  assert.equal(await writtenRelease(refused), false, "release must not be written when a boundary key is refused");
+
+  const outside = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...boundaryOutside });
+  const skip = runBuild(outside);
+  assert.equal(skip.status, 0, skip.stdout + skip.stderr);
+  assert.match(skip.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(outside), true);
+});
