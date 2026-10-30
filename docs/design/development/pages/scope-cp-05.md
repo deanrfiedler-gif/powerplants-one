@@ -14,11 +14,15 @@ Implement customer knowledge and guided support.
 
 ## Desktop
 
+Accepted design: the [Customer knowledge design decision](../../../decisions/customer-knowledge-figma-design.md) of 30 October 2026 covers Help home, search results, the article with applicability in words and a distinct Stop and call us note, guided help questions and result, CP-02 step 2 prefilled from guided help, superseded and withdrawn articles, and states, with twenty-nine icon-free captures in [design r01](../../../reference/ui/customer-portal/customer-knowledge-design-r01/README.md). Captures 01–09 are desktop and 10 is tablet. This page is not built. The portal shell comes from the [Portal home and access design](../../../decisions/portal-home-access-figma-design.md), so the staff shell wording below does not apply to it.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 11–23 and 28–29 in [design r01](../../../reference/ui/customer-portal/customer-knowledge-design-r01/README.md): Help home, guided help, result, request support and article at 390 and 320, and the withdrawn and offline states at 390. Guided help comes first on phone, and answers use large touch targets.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,7 +36,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [customer-portal-mockup.html](../../../blueprints/customer-portal-mockup.html)
+- [Customer knowledge design r01](../../../reference/ui/customer-portal/customer-knowledge-design-r01/README.md): accepted Figma captures
+- [customer-portal-mockup.html](../../../blueprints/customer-portal-mockup.html): earlier direction only
 
 ## Behaviour, handovers and verification
 
