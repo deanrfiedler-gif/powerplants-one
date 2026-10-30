@@ -1136,6 +1136,9 @@ const multilineKeyGuide = (prefix: string[], key: string[]) =>
   [...prefix, ...key, "---", "", "## Overview {#overview}", "", "<script>alert(1)</script>", ""].join("\n");
 const explicitKey = ['? "guide\\u005fkey"', ": guide.page.sales.leads"];
 const flowKey = ['{ "guide\\u005fkey"', "  : guide.page.sales.leads }"];
+const singleLineKey = ['"guide\\u005fkey": guide.page.sales.leads'];
+// Invalid plain text before a multi-line key (Codex review 5707405123 on #749).
+const invalidPrefix = ["--- ", "invalid front matter"];
 const envelopeGapCases: Array<[string, string]> = [
   ["spoiled-block-scalar", spoiledAfter(["summary: |", "  ---"])],
   ["spoiled-long-rule", spoiledAfter(["summary: Synthetic", "----"])],
@@ -1156,11 +1159,17 @@ const envelopeGapCases: Array<[string, string]> = [
   ["explicit-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], explicitKey)],
   ["explicit-key-blank", "\n" + multilineKeyGuide(["---", "summary: Synthetic", "----"], explicitKey)],
   ["explicit-key-CRLF", multilineKeyGuide(["--- ", "summary: |", "  ---"], explicitKey).replace(/\n/g, "\r\n")],
+  ["invalid-prefix-explicit-key", multilineKeyGuide(invalidPrefix, explicitKey)],
+  ["invalid-prefix-explicit-key-CRLF", multilineKeyGuide(invalidPrefix, explicitKey).replace(/\n/g, "\r\n")],
+  ["invalid-prefix-explicit-key-lone-CR", multilineKeyGuide(invalidPrefix, explicitKey).replace(/\n/g, "\r")],
+  ["invalid-prefix-flow-key", multilineKeyGuide(invalidPrefix, flowKey)],
+  ["invalid-prefix-single-line-key", multilineKeyGuide(invalidPrefix, singleLineKey)],
 ];
 const envelopeGapControls: Record<string, string> = {
   "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
   "docs/guides/spoiled-scalar-contents.md": "--- \ndocument_id: PPO-SYN-TOC\nsummary: |\n  ---\ntitle: Contents\n---\n\n# Contents\n",
   "docs/guides/explicit-title-contents.md": "--- \n? title\n: Contents\n---\n\n# Contents\n",
+  "docs/guides/invalid-prefix-prose.md": "--- \ninvalid front matter\n? title\n: Contents\nUse {braces} here?\n---\n\n# Notes\n",
   "docs/guides/unclosed-comment-notes.md": "<!-- draft notes, never closed\n\n# Notes\n\nNothing here names a guide.\n",
 };
 const envelopeGapPaths = Object.fromEntries(envelopeGapCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));

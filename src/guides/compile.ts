@@ -185,6 +185,10 @@ function withoutMarkdownCode(block: string[]): string[] {
   });
 }
 
+// The most lines discovery reads from a line that can open a multi-line YAML key. A key needs only the lines up to
+// its value indicator, so this bounds the work without missing a key written in any ordinary way.
+const keyWindow = 64;
+
 // Whether a Markdown file declares a guide key, including escaped YAML keys behind malformed opening delimiters.
 // The library uses this outside docs/guides/pages. An exact opener continues to fail closed for any YAML parse
 // error, alias or complex key; a malformed opener needs guide-specific evidence rather than treating prose as a guide.
@@ -194,15 +198,19 @@ export function declaresGuideKey(text: string): boolean {
   const isGuideKey = (key: unknown) => /^\s*guide[_-]key\s*$/i.test(String(key));
   // Parse candidate key lines one at a time, so an escaped key is decoded even when the YAML around it is broken,
   // without accepting a Markdown code example (the caller masks code first) or other metadata.
+  // A line starting "? " is an explicit key, read alone as a key with no value.
+  const explicitKeyLine = /^\s*\?(?:\s|$)/;
   const keyLine = (line: string) => {
-    if (!line.includes(":")) return false;
+    if (!line.includes(":") && !explicitKeyLine.test(line)) return false;
     const fragment = parseDocument(line.trimStart(), options);
     return isMap(fragment.contents) && fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
   };
   // A key can also span lines: an explicit "? key" with its ": value" below, a flow mapping or a block scalar key. So
-  // read the lines as a YAML stream too, and look at every key YAML recovers, in every document, errors or not. A
-  // delimiter-like line (a ---- rule, say) can leave the YAML after it unreadable as part of that stream, so each run
-  // of lines between such lines is also read on its own.
+  // read the lines as a YAML stream too, and look at every key YAML recovers, in every document, errors or not. Text
+  // YAML cannot read can stop it recovering anything after it: a delimiter-like line (a ---- rule, say) or a line of
+  // plain prose. So each run of lines between delimiter-like lines is also read on its own, and so is the run from
+  // each line that can open a multi-line key (an explicit "? " key, a flow collection or a quoted key) to the next
+  // delimiter-like line, at most keyWindow lines, which keeps the work linear in the length of the file.
   const streamKey = (block: string[]) => {
     const runs: string[][] = [block];
     let run: string[] = [];
@@ -214,6 +222,12 @@ export function declaresGuideKey(text: string): boolean {
       }
     }
     runs.push(run);
+    block.forEach((line, index) => {
+      if (!explicitKeyLine.test(line) && !/^\s*["']|[{[]/.test(line)) return;
+      const window = block.slice(index, index + keyWindow);
+      const end = window.findIndex((next, at) => at > 0 && possibleFrontMatterDelimiter.test(next));
+      runs.push(end < 0 ? window : window.slice(0, end));
+    });
     return runs.some((part) => parseAllDocuments(part.join("\n"), options).some((doc) => {
       let found = false;
       visit(doc, {
