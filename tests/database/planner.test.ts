@@ -223,10 +223,11 @@ test("P05 additive upgrade preserves exact P04 proposal bytes, receipts, source 
       "Proposed",
     );
   }
+  // 0122 adds only an unset typed project link to each existing work order.
   for (const r of orderBefore)
     assert.deepEqual(
       (await rows("SELECT * FROM ppo.work_orders WHERE id=$1", [r.id]))[0],
-      r,
+      { ...r, project_id: null },
     );
   assert.deepEqual(
     await rows(
