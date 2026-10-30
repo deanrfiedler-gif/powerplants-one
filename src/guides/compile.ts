@@ -189,22 +189,30 @@ function withoutMarkdownCode(block: string[]): string[] {
 // open when the window ends is refused rather than skipped (see streamKey).
 const keyWindow = 64;
 
-// Whether the text could hold a guide key once YAML has decoded it. Every key YAML reads is either literal text or a
-// double-quoted scalar, whose escapes this decodes everywhere: an escaped line break joins the next line without its
-// indentation, a hex escape becomes its character and any other escaped character stands for itself. Line folding
-// only ever adds a space or a line break, so it cannot form a key. A file that fails this cannot declare a guide key.
-function mayHoldGuideKey(block: string[]): boolean {
-  const decoded = block.join("\n").replace(/\\(?:\n[ \t]*|x([0-9a-fA-F]{2})|u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8})|([^]))/g, (_escape, x, u, w, other) => {
+// The text as YAML's double-quoted escapes would decode it, applied everywhere: an escaped line break joins the next
+// line without its indentation, a hex escape becomes its character and any other escaped character stands for itself.
+// Every key YAML reads is either literal text or a double-quoted scalar, and line folding only ever adds a space or a
+// line break, so any guide key YAML can read is spelled out in this text.
+export function decodeYamlEscapes(text: string): string {
+  return text.replace(/\\(?:\n[ \t]*|x([0-9a-fA-F]{2})|u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8})|([^]))/g, (_escape, x, u, w, other) => {
     if (other !== undefined) return other;
     const code = parseInt(x ?? u ?? w ?? "", 16);
     return Number.isNaN(code) ? "" : code <= 0x10ffff ? String.fromCodePoint(code) : "";
   });
-  return /guide[_-]key/i.test(decoded);
 }
 
+// Whether the text could hold a guide key once YAML has decoded it. A block that fails this cannot declare one.
+function mayHoldGuideKey(block: string[]): boolean {
+  return /guide[_-]key/i.test(decodeYamlEscapes(block.join("\n")));
+}
+
+// A first line that tries to open front matter: three dashes after any spaces or invisible characters, whatever
+// follows them (--- # front matter, ---yaml, a no-break space). Only an exact --- opens it for the compiler.
+const possibleOpener = /^[\s\uFEFF\u200B-\u200D\u2060]*---/;
+
 // Whether a Markdown file declares a guide key, including escaped YAML keys behind malformed opening delimiters.
-// The library uses this outside docs/guides/pages. An exact opener continues to fail closed for any YAML parse
-// error, alias or complex key; a malformed opener needs guide-specific evidence rather than treating prose as a guide.
+// The library uses this outside docs/guides/pages. An exact opener's front matter declares one when it could hold a
+// guide key once decoded; a malformed opener needs guide-specific evidence rather than treating prose as a guide.
 export function declaresGuideKey(text: string): boolean {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
   const options = { schema: "core" as const, uniqueKeys: true };
@@ -277,29 +285,27 @@ export function declaresGuideKey(text: string): boolean {
   // A leading comment that never closes leaves no opener to find: fail closed on any guide key after it.
   if (start.unclosed) return declaresKey(withoutMarkdownCode(lines.slice(start.index)));
   const opening = start.index;
-  if (opening < 0 || !possibleFrontMatterDelimiter.test(start.text)) return false;
+  if (opening < 0 || !possibleOpener.test(start.text)) return false;
 
-  const exactOpener = opening === 0 && lines[0] === "---";
+  // An exact opener closes where readFrontMatter closes it, at the next exact --- (a block scalar holding an indented
+  // --- must not end it early), or the file is unclosed. Its front matter declares a guide when it could hold a guide
+  // key once decoded, at any depth and in any YAML shape, so no parse error, alias, list or nesting can hide one, and
+  // front matter that cannot hold one is not a guide even if YAML cannot read it.
+  if (opening === 0 && lines[0] === "---") {
+    const closing = lines.indexOf("---", 1);
+    return mayHoldGuideKey(lines.slice(1, closing < 0 ? undefined : closing));
+  }
+
   // A spoiled opener needs guide-specific evidence: without a key the decoded text could hold, Markdown emphasis that
   // YAML reads as an alias, or prose it reads as a complex key, does not make an ordinary file a guide.
-  if (!exactOpener && !mayHoldGuideKey(withoutMarkdownCode(lines.slice(opening + 1)))) return false;
-  // An exact opener must use readFrontMatter's exact closing delimiter, or a block scalar containing
-  // an indented --- (or another delimiter-like line) can hide a later escaped guide key from discovery.
-  const closing = exactOpener
-    ? lines.indexOf("---", 1)
-    : lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
-  const source = lines.slice(opening + 1, closing < 0 ? undefined : closing);
-  const block = exactOpener ? source : withoutMarkdownCode(source);
+  if (!mayHoldGuideKey(withoutMarkdownCode(lines.slice(opening + 1)))) return false;
+  const closing = lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
+  const block = withoutMarkdownCode(lines.slice(opening + 1, closing < 0 ? undefined : closing));
   const doc = parseDocument(block.join("\n"), options);
-
-  if (exactOpener && doc.errors.length > 0) return true;
   let alias = false;
   visit(doc, { Alias: () => { alias = true; return visit.BREAK; } });
   if (alias) return true;
-
   if (isMap(doc.contents) && doc.contents.items.some((pair) => !isScalar(pair.key) || isGuideKey(pair.key.value))) return true;
-
-  if (exactOpener) return block.some((line) => /guide[_-]key/i.test(line));
 
   // A spoiled opener has no trustworthy closer: a delimiter-like line can sit inside a block scalar, as an indented
   // --- or a ---- line, and hide a later key. So probe every line after the opener, with Markdown code still masked,

@@ -3,7 +3,7 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import { readMaster } from "../development/catalog";
 import type { Entry } from "../development/model";
-import { compileGuide, declaresGuideKey } from "./compile";
+import { compileGuide, declaresGuideKey, decodeYamlEscapes } from "./compile";
 import { linkShape } from "./links";
 import type { CompiledGuide, GuideError, GuideLibrary } from "./model";
 import { isRouteEntry, releasedGuides, routeForPath, visibleRelease, type ReleasedLibrary, type ReleasedRoute } from "./released";
@@ -37,7 +37,8 @@ type FileRead = { guide?: CompiledGuide; errors: GuideError[]; front: string[] }
 // document. Elsewhere under docs/guides a Markdown file is a guide when its front matter declares a guide key, in any
 // YAML form (declaresGuideKey in compile.ts), or when a line in its first 40 looks like a guide key line. That second
 // test is loose on purpose (leading space, quotes, - for _, any case), so that a guide whose opening --- or key is
-// mistyped is reported by the compiler instead of dropping out of the library.
+// mistyped is reported by the compiler instead of dropping out of the library. It also reads those lines as YAML
+// would decode them, so a key written with escapes is caught wherever the same key written plainly would be.
 const pagesFolder = `${guidesFolder}/pages/`;
 const guideKeyLine = /^\s*["']?guide[_-]key["']?\s*:/i;
 const guideKeyWindow = 40;
@@ -47,7 +48,10 @@ const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
 // CRLF and a lone CR are line breaks, as they are to the compiler and to marked.
-const hasGuideKeyLine = (text: string) => text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
+const hasGuideKeyLine = (text: string) => {
+  const opening = text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow);
+  return [...opening, ...decodeYamlEscapes(opening.join("\n")).split("\n")].some((line) => guideKeyLine.test(line));
+};
 
 // The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter
 // is well formed.
