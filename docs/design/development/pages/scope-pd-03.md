@@ -10,9 +10,13 @@ Connect exact Product and existing ES-03 CostSource revisions without duplicatin
 
 ## Desktop
 
+Accepted design: the [Product pricing design decision](../../../decisions/product-pricing-figma-design.md) of 31 October 2026 covers bindings for one revision, the bind panel, affected estimates, history, the worklist across products and the restricted view, with thirty-five icon-free captures in [design r01](../../../reference/ui/products/product-pricing-design-r01/README.md). Where it differs from the text below, it governs; the built page has not moved to it yet. It departs from "no new modal/drawer": Bind is a flush right panel (D10).
+
 At 1440 × 960 and 1024 × 768, retain the shell, labelled Products workspace links and exact identity header. Use the shared padded module surface with semantic navy/green tokens, Roboto/Verdana, white bordered panels and wrapping facts. Registers use readable cards; comparisons place Before and After side by side. Keep the selected revision and evidence before consequential actions. Avoid global overrides or a second shell.
 
 ## Mobile
+
+Accepted design: captures 14–19 in [design r01](../../../reference/ui/products/product-pricing-design-r01/README.md): the read-only summary and source view at 390 and 320, the revision sheet and the restricted view at 390 (D11).
 
 At 390 × 844 and 320 px, stack cards, forms and Before/After sections in source order. Fields retain readable 16 px text, touch targets and visible labels. Long UUIDs, provider keys and evidence wrap within the panel. Effective 200% reflow is checked at 720 CSS px from the 1440 desktop basis. No outer-page horizontal scrolling is permitted.
 
@@ -31,7 +35,8 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 
 ## Visual sources, departures and proof
 
-- [PPO-Supplier-Pricing-and-Cost-Sources-r01.html](../../../reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html)
+- [Product pricing design r01 captures](../../../reference/ui/products/product-pricing-design-r01/README.md) (accepted Figma design, icon-free)
+- [PPO-Supplier-Pricing-and-Cost-Sources-r01.html](../../../reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html) (earlier direction)
 
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)
 - [Native contract](../../../contracts/products-catalogue.md)
