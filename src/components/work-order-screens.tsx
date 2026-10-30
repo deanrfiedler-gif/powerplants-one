@@ -153,6 +153,8 @@ export type Order = {
   }[];
   blockers: { field: string; message: string; stage: string }[];
   actions: { can_edit: boolean; can_authorise: boolean; can_assess: boolean };
+  // M-R2: exact maintenance plan task descriptions this work order receives, if any.
+  planned_tasks?: string[];
 };
 const emptyEvidence = (): Evidence => ({
   title: "",
@@ -985,6 +987,25 @@ function ScopeForm({
           Saving changed scope requires fresh readiness review. Previous
           approvals remain preserved.
         </p>
+        {(() => {
+          // M-R2: receiving a maintenance result matches task text exactly, so warn before saving.
+          const planned = new Set(w.planned_tasks ?? []);
+          const changed = planned.size
+            ? value.items.flatMap((item, n) =>
+                planned.has(item.task_description) ? [] : [n + 1],
+              )
+            : [];
+          return changed.length ? (
+            <p className="notice" role="status">
+              {changed.length === 1 ? "Task" : "Tasks"} {changed.join(", ")}{" "}
+              no longer {changed.length === 1 ? "matches" : "match"} the
+              maintenance plan task wording exactly. Receiving the maintenance
+              result will refuse a task whose description differs from the
+              plan. Restore the plan wording unless the plan itself is being
+              revised.
+            </p>
+          ) : null;
+        })()}
         <button disabled={cmd.busy}>
           {successor ? "Create successor draft" : "Save scope draft"}
         </button>

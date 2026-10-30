@@ -169,6 +169,17 @@ export function scopeIncludes(
     return false;
   return !s.asset_ids.length || (!!asset && s.asset_ids.includes(asset));
 }
+// PPO-MAINTENANCE-TS02-DEC M-R1: months between due dates from the plan's anchor. The generation
+// window stays 1–12 months, so a Yearly plan yields at most one or two dates per run.
+export const intervalMonths = {
+  Monthly: 1,
+  Quarterly: 3,
+  SixMonthly: 6,
+  Yearly: 12,
+} as const;
+export const planIntervals = Object.keys(
+  intervalMonths,
+) as readonly (keyof typeof intervalMonths)[];
 export function planFields(v: unknown) {
   const x = object(v, [
     "title",
@@ -236,7 +247,7 @@ export function planFields(v: unknown) {
     ),
     task_set_reference: label(x.task_set_reference, "task_set_reference", 200),
     task_set_revision: label(x.task_set_revision, "task_set_revision", 100),
-    interval: choice(x.interval, "interval", ["Monthly", "Quarterly"] as const),
+    interval: choice(x.interval, "interval", planIntervals),
     interval_source: sourceFields(x.interval_source),
     anchor: dateOnly(x.anchor, "anchor"),
     timezone,
@@ -269,7 +280,7 @@ export function occurrenceDates(
       "until",
       "Keep the preview inside the sourced bounded generation window.",
     );
-  const step = plan.interval === "Monthly" ? 1 : 3;
+  const step = intervalMonths[plan.interval];
   const months =
     (Number(from.slice(0, 4)) - Number(plan.anchor.slice(0, 4))) * 12 +
     Number(from.slice(5, 7)) -

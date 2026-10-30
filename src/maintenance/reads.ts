@@ -13,6 +13,7 @@ import { object, invalid } from "../shared/validation";
 import { agreementCurrentness } from "./model";
 import { companyContext } from "../shared/authority";
 import { visibleTicket } from "../service/tickets";
+import { visibleWorkOrder } from "../service/work-orders";
 import { reportContext } from "../reports/context";
 import { currentAssessment } from "./assessments";
 import { planRevision } from "./plans";
@@ -393,6 +394,22 @@ export async function workspace(p: Principal, family: Family, id: string) {
       for (const request of requests)
         try {
           await visibleTicket(c, p, request.ticket_id);
+          // M-R2: the prepared work order appears only to someone who may read it.
+          if (request.work_order_id)
+            try {
+              const w = await visibleWorkOrder(c, p, request.work_order_id);
+              request.work_order = {
+                id: w.id,
+                display_number: w.display_number,
+                status: w.status,
+              };
+            } catch (e) {
+              if (!(e instanceof AppError && [403, 404].includes(e.status)))
+                throw e;
+              request.work_order = null;
+              delete request.work_order_id;
+              sources.service_access = "Restricted";
+            }
           (sources.requests as unknown[]).push(request);
           const results = (
             await c.query(
@@ -426,6 +443,7 @@ export async function workspace(p: Principal, family: Family, id: string) {
         "warranty.recovery",
         "service.scope.authorise",
         "service.ticket.edit",
+        "service.work_order.edit",
         "finance.reconcile",
       ] as Capability[]),
     ])
@@ -531,13 +549,22 @@ export async function receiptAuthority(
   const original = await record(c, p, family, id);
   if (family === "coverage" && (original as Assessment).warranty_case_id)
     cap = "warranty.assess";
-  if (command.includes("PrepareWork"))
+  if (command.includes("PrepareWork") || command.includes("PrepareFollowOn"))
     await companyContext(
       c,
       p,
       original.company_id,
       original.site_id,
       "service.ticket.edit",
+    );
+  // M-R2/M-R4: maintenance preparation now also creates a work order.
+  if (command.includes("PrepareWork:due") || command.includes("PrepareFollowOn"))
+    await companyContext(
+      c,
+      p,
+      original.company_id,
+      original.site_id,
+      "service.work_order.edit",
     );
   if (command.includes("ReceiveResult")) {
     const event = (await history(c, p, id))

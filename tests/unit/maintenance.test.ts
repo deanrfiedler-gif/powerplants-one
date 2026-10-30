@@ -41,6 +41,41 @@ test("month-end anchor survives short months, leap years, quarterly steps and ye
   assert.throws(() => planFields({ ...plan, timezone: "Made/Up" }));
   assert.throws(() => planFields({ ...plan, interval: "Daily" }));
 });
+test("M-R1 six-monthly and yearly steps stay month-end safe and inside the 12-month window", () => {
+  const plan = { ...planFields(planContent(CRM.company)), window_months: 12 };
+  for (const interval of ["Monthly", "Quarterly", "SixMonthly", "Yearly"])
+    assert.equal(planFields({ ...plan, interval }).interval, interval);
+  for (const interval of ["Fortnightly", "Biannual", "sixmonthly", ""])
+    assert.throws(() => planFields({ ...plan, interval }));
+  const six = { ...plan, interval: "SixMonthly" as const, anchor: "2026-08-31" };
+  assert.deepEqual(occurrenceDates(six, "2026-01-01", "2027-01-01"), ["2026-08-31"]);
+  assert.deepEqual(occurrenceDates(six, "2026-09-01", "2027-09-01"), [
+    "2027-02-28",
+    "2027-08-31",
+  ]);
+  // The anchor never drifts: after a short February the next date returns to the month end.
+  assert.deepEqual(occurrenceDates(six, "2027-02-01", "2028-02-01"), [
+    "2027-02-28",
+    "2027-08-31",
+  ]);
+  const yearly = { ...plan, interval: "Yearly" as const, anchor: "2028-02-29" };
+  assert.deepEqual(occurrenceDates(yearly, "2028-01-01", "2029-01-01"), ["2028-02-29"]);
+  assert.deepEqual(occurrenceDates(yearly, "2028-02-29", "2029-02-28"), [
+    "2028-02-29",
+    "2029-02-28",
+  ]);
+  assert.deepEqual(occurrenceDates(yearly, "2029-03-01", "2030-03-01"), ["2030-02-28"]);
+  // A run never exceeds the plan's window, even for a Yearly plan.
+  assert.throws(() => occurrenceDates(yearly, "2028-01-01", "2029-01-02"));
+  assert.throws(() =>
+    occurrenceDates({ ...yearly, window_months: 6 }, "2028-01-01", "2028-07-02"),
+  );
+  // Dates before the revision's effective date are not generated.
+  assert.deepEqual(
+    occurrenceDates({ ...yearly, effective_from: "2028-03-01" }, "2028-01-01", "2029-01-01"),
+    [],
+  );
+});
 test("agreement currentness, selected areas and explicit exclusions never imply broad coverage", () => {
   const a = agreementFields(agreementContent());
   assert.equal(agreementCurrentness("Proposed", a, "2026-02-01"), "Proposed");

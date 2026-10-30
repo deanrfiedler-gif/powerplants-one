@@ -151,6 +151,14 @@ Builds rule R1 of the project field work and milestone billing decision (`docs/d
 
 The database guard (`guard_project_link`) also refuses a different customer, a non-Active project when linking, a direct switch between projects and any change of link once a visit has started; it share-locks the project so a concurrent closure waits. Receipt recovery follows the existing WorkOrder rule (current order scope and `service.work_order.edit`); a receipt carries no project content. Service keeps the confirmed field schedule: the link gives Projects no authority to confirm, move or cancel an appointment.
 
+### M1 maintenance-prepared work order amendment — 30 October 2026 (implementation in review)
+
+Builds rules M-R2 and M-R4 of PPO-MAINTENANCE-TS02-DEC (`docs/decisions/maintenance-service-ts02-decisions.md`, proposed in [PR #754](https://github.com/deanrfiedler-gif/powerplants-one/pull/754)). Maintenance `prepare-work` and `prepare-follow-on` ([contract](maintenance-warranty-api.md#recurrence-and-service-receiving)) create a Draft work order through the API-C03 create rules and the first-draft SaveScopeDraft rules inside the maintenance operation, so there is one receipt and its record is the maintenance occurrence; no separate CreateWorkOrder or SaveScopeDraft audit event is written for that work order. Migration 0123 records the work order on the maintenance request (`maintenance_work_requests.work_order_id`); the database requires that work order to receive the request's exact ticket. No capability, grant or seed changes.
+
+| Contract / route | M1 behaviour |
+|---|---|
+| API-R03 GET `/service/work-orders/:id` | Adds `planned_tasks`: the exact maintenance plan task descriptions the work order receives, sorted, or an empty list. Text only; no maintenance identity is returned. The scope form warns before saving a task description that is not one of them, because maintenance receiving refuses an unmatched task. |
+
 ### P03 implementation amendment — current bounded contract
 
 [ADR-0008](../decisions/ADR-0008-p03-customer-intake.md) and the [P03 handover](../delivery/p03-handover.md) take precedence over the historical subset descriptions below. All paths in this table use `/api/v1`. Existing envelopes, server sessions, scope checks, operation hashing, audit and transactional outbox remain the only protocol. The accepted P01 `SaveTicketDraft` schema, normalisation, hash and original receipts are unchanged; its New-only route remains available. Rich intake uses separate commands with API `schema_version=1`; the database's `intake_schema_version=2` is a distinct mapping marker.

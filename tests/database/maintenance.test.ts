@@ -250,13 +250,15 @@ test("MA03/04 overlapping and concurrent generation, deferral and exact request 
     )[0].status,
     "New",
   );
-  assert.equal(
+  // M-R2: Prepare also creates exactly one Draft work order receiving the request.
+  assert.deepEqual(
     (
-      await rows("SELECT * FROM ppo.work_order_tickets WHERE ticket_id=$1", [
-        req.ticket_id,
-      ])
-    ).length,
-    0,
+      await rows(
+        "SELECT l.work_order_id,w.status FROM ppo.work_order_tickets l JOIN ppo.work_orders w ON w.id=l.work_order_id WHERE l.ticket_id=$1",
+        [req.ticket_id],
+      )
+    ).map((x) => [x.work_order_id, x.status]),
+    [[req.work_order_id, "Draft"]],
   );
   await assert.rejects(
     occurrenceCommand(a.p, os[0].id, {
