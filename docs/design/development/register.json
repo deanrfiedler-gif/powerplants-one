@@ -5637,8 +5637,23 @@
       "guide_key": "guide.ai.05",
       "design_path": "docs/design/development/pages/scope-ai-05.md",
       "html_path": null,
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-01-Desktop-Microphone-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-02-Desktop-First-Use-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-03-Desktop-Recording-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-04-Desktop-Transcript-Read-Back-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-05-Desktop-AI-02-Hand-Off-Full-Length-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-06-Phone-390-Frames-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-07-Phone-320-Frames-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-08-States-r01.png",
+        "docs/reference/ui/my-work/voice-capture-design-r01/PPO-Voice-Capture-09-Proposed-Later-Use-My-Jobs-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/voice-capture-figma-design.md",
+        "docs/decisions/assistant-figma-design.md",
+        "docs/decisions/ppo-assistant-direction.md",
+        "docs/decisions/ai-communications-threads-proposal.md"
+      ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
