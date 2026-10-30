@@ -210,7 +210,7 @@ Dean accepted Pipeline insights · CR-04 (`2336:155`) on 31 October 2026 with th
 | Open deals with no close date are left out unless chosen | User decision, the same answer | Q9 |
 | Keep Sort and Page size on Deals | Accepted Deals fields, unchanged. Insights leaves them out only because they do not apply there | D16 of Pipeline insights |
 | Three pairs of fields, so the form fits one screen | Claude's layout choice, drawn for Dean's review | D16 below |
-| Named version for this amendment | Not decided. Awaits Dean | [What remains open](#what-remains-open) |
+| Named version for this amendment | User decision, 31 October 2026 | Asked whether Claude should save "Deals · CR-04 — Expected close amendment", Dean answered: "Yes, you save it". Claude saved it in the Figma desktop app the same day and confirmed it at the top of the file's version history |
 
 ### What changed on the page
 
@@ -233,11 +233,10 @@ The count agrees with the List `555:5333` as at Thursday 15 October 2026: seven 
 
 ### Design reference
 
-[Deals design r03](../reference/ui/crm/deals-design-r03/README.md) holds one new capture, 06 Filters, copied from the frame as `2895:424975` on "Captures (icon-free)". The other 27 captures in [r02](../reference/ui/crm/deals-design-r02/README.md) still show the current design, and all 28 r02 files stay unchanged.
+The amended design is the named version "Deals · CR-04 — Expected close amendment". [Deals design r03](../reference/ui/crm/deals-design-r03/README.md) holds one new capture, 06 Filters, copied from the frame as `2895:424975` on "Captures (icon-free)". The other 27 captures in [r02](../reference/ui/crm/deals-design-r02/README.md) still show the current design, and all 28 r02 files stay unchanged.
 
 ### What remains open
 
-- **Named version.** No version has been saved for this amendment. The r02 version "Deals · CR-04 — Pipedrive pattern, accepted" predates it.
 - **Phone.** Phone 320 Search and filter `2369:818269` has no Expected close. The brief covered the desktop frame only, so the phone still differs until it is changed.
 - **Building it.** The filter needs its own pull request, including how the two views read the range.
 

@@ -24,7 +24,7 @@ The image is one Figma frame exported at scale 1 at its exact frame size. Every 
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | None saved yet for this amendment |
+| Named version | "Deals · CR-04 — Expected close amendment", saved 31 October 2026 at Dean's request, after this image was exported, and confirmed in version history |
 | Frame | Filters `555:6470` on page "Deals · CR-04" `549:2` |
 | Capture copy | `2895:424975` on page "Captures (icon-free)", under the heading `2895:425222` at y = 929,990 |
 
