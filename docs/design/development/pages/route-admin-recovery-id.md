@@ -15,6 +15,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Accepted design: the recovery item in the [Operational health design decision](../../../decisions/operational-health-figma-design.md) of 31 October 2026 (D5), captures 06, 18 and 19 and states S10–S12 in [design r01](../../../reference/ui/operational-health-design-r01/README.md). Retained field evidence has no retry; it stays as drawn on AD-04. Not yet built to this design.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
