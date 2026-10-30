@@ -21,9 +21,13 @@ Acceptance records receiving evidence only. It does not create or approve an Est
 
 ## Desktop
 
+Accepted design: the [Sales brief page design decision](../../../decisions/sales-brief-page-figma-design.md) of 30 October 2026 redesigns this page for both sides, with 25 icon-free captures in [design r01](../../../reference/ui/estimating/sales-brief-page-design-r01/README.md). Departures D1–D16 and answers Q1–Q7 are recorded there: the shared record layout, six tabs, a checks bar that becomes a state bar, decision dialogs against one exact revision with a reason, Source changed blocking Accept, the successor chain and the LC-13 workspace link. The running page keeps its current layout until a build is approved.
+
  retain the current shell, Roboto/Verdana and navy/green tokens. Reuse PageHeader, Button, Field, SelectField, RecordTabs and error/status controls. Keep review decisions after the brief, immutable history separate and long reasons wrapping. Inspect at 1440 × 960 and 1024 × 768.
 
 ## Mobile
+
+Accepted design: captures 15–19 in [design r01](../../../reference/ui/estimating/sales-brief-page-design-r01/README.md): the receiver at tablet 1024, Sales answering a clarification and the receiver accepting r1 at phone 390 and 320, with the compact record header, 16 px inputs and full-width 48 px actions.
 
  stack fields/actions, keep every tab reachable and contain table/history overflow. Inspect at 390 × 844, 320 CSS px and 200% zoom; keyboard focus and recovery state must stay visible.
 
