@@ -44,7 +44,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Customer cancelling a request | Resolved as recommended | Not in CP1: no customer command changes request state. The customer replies "no longer needed" and staff close it |
 | Q8 Next page | Resolved as recommended; since overtaken | Visits & reports · CP-04. Equipment & reports · CP-04 was drawn in a parallel session on 23 October, before this acceptance |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Not saved | Waits for Dean's explicit yes (section 7) |
+| Named Figma version | Saved 31 October 2026 | Asked whether to save it, Dean answered "proceed"; Claude saved "Support requests — accepted" in the Figma desktop app (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -77,7 +77,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D16 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | Not saved (section 7) |
+| Named version | "Support requests — accepted", saved 31 October 2026 (section 7) |
 
 ## 4. What the design shows
 
@@ -169,5 +169,5 @@ The audit is recorded on the notes card `2179:189`.
   - none of 1,712 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link, and the Captures page keeps its 115 flow starting points.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/customer-portal/support-requests-design-r01/README.md).
-- The named Figma version "Support requests — accepted" has not been saved; it waits for Dean's explicit yes.
+- The named Figma version "Support requests — accepted" was saved on 31 October 2026 and read back once in the version history. Just before the save, the page header and the notes line were changed to name this version; no accepted frame changed.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline. CPA-01–CPA-16 remain Not run.
