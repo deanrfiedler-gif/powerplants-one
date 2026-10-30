@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Per-person relationship owner | Resolved as recommended | Not now. The organisation's owner shows on the group band |
 | Q7 Accepted pages that do not yet show this page's additions | Resolved as recommended | Accepted as the story; each page is brought in line when it is next amended. Section 5 lists them |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean | Proposed title "Stakeholders — accepted". Section 7 |
+| Named Figma version | Saved | "Stakeholders — accepted", saved by Claude in the Figma desktop app on 31 October 2026 on Dean's words "You save it". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -71,7 +71,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D11 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | Waiting for Dean |
+| Named version | "Stakeholders — accepted", saved 31 October 2026 |
 
 ## 4. What the design shows
 
@@ -107,6 +107,6 @@ At Dean's request Claude checked each frame against the owning pages. Corrected:
 
 - Claude checked the frames with screenshots taken inside Figma, and measured every truncated text against its rendered width; none was clipped. A programmatic check found no overlaps and nothing outside its section. Roboto is the only font.
 - The fifteen captures are copies on the "Captures (icon-free)" page, from y = 600,000 (`2792:353414`–`2792:362042`). Prototype links and flow starting points were removed and each of the 1,071 Font Awesome icon instances was swapped for `Icon/placeholder`. A scan found no Font Awesome instance, no visible vector outside a placeholder or the logo, and no navigation link left. The images were exported at scale 1 and the hashes are in the [captures README](../reference/ui/customers/stakeholders-design-r01/README.md).
-- The named Figma version "Stakeholders — accepted" is not saved yet. This pull request stays in draft until Dean confirms it.
+- The named Figma version "Stakeholders — accepted" was saved on 31 October 2026 on Dean's words "You save it", and appears at the top of the file's version history. The header's Named version field and the notes card were updated to name it immediately before the save.
 - Claude did not play the flows in Present mode.
 - Nothing new is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
