@@ -1289,11 +1289,26 @@
       "guide_key": "guide.cr.05",
       "design_path": "docs/design/development/pages/scope-cr-05.md",
       "html_path": "docs/reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-01-Desktop-Worklist-My-Aftercare-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-02-Desktop-Customer-Review-Full-Length-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-03-Desktop-Complete-Review-Dialog-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-04-Desktop-Service-Referral-Submitted-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-05-Desktop-Training-Record-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-06-Desktop-Renewal-Handover-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-07-Desktop-History-And-Handovers-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-08-Tablet-Worklist-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-09-Phone-390-Frames-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-10-Phone-320-Frames-r01.png",
+        "docs/reference/ui/sales-aftercare/sales-aftercare-design-r01/PPO-Sales-Aftercare-11-States-r01.png"
+      ],
       "dependencies": [
         "src/components/sales-aftercare.tsx",
         "src/sales/aftercare-service.ts",
-        "src/sales/aftercare-model.ts"
+        "src/sales/aftercare-model.ts",
+        "docs/decisions/sales-aftercare-figma-design.md",
+        "docs/decisions/sales-aftercare-renewal-design.md",
+        "docs/contracts/sales-aftercare-receiving.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",

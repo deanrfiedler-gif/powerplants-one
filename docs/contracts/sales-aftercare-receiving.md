@@ -110,6 +110,8 @@ Proposed events, for the outbox: `AftercareRecordOpened`, `AftercareReviewPlanne
 
 ## 7. Facts that must be decided before build
 
+On 30 October 2026 the [Sales aftercare design decision](../decisions/sales-aftercare-figma-design.md) gave direction on three of these: the account owner of record owns the item (Q2), no satisfaction scale for now (Q3), and what "assessed" means (Q4). The table below stands as issued; the rest stay open.
+
 | Open question | Why it blocks |
 |---|---|
 | Follow-up intervals | No interval rule exists. Until one is adopted, with an owner and a revision, every review date must come from a user choice or a recorded commitment. |
