@@ -20,7 +20,7 @@ Claude drew the page from these sources:
 - the [`scope:EQ-06`](../design/development/pages/scope-eq-06.md) and [`scope:EQ-07`](../design/development/pages/scope-eq-07.md) design contracts;
 - [ADR-0045](ADR-0045-equipment-native-workflows.md) and the [Equipment workspace design](equipment-workspace-design.md), with its [r02 HTML](../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html);
 - the built pages at `/equipment/bulletins` and `/equipment/lifecycle`, and the proof in [`docs/testing/evidence/equipment-native/`](../testing/evidence/equipment-native/README.md), which show what data really exists;
-- the Equipment EQ-01 and Movement, replacement & retirement EQ-04 proposals in Figma, and the accepted [Sales aftercare design](sales-aftercare-figma-design.md).
+- the Equipment EQ-01 and Movement, replacement & retirement EQ-04 proposals in Figma, and the accepted Sales aftercare design (`docs/decisions/sales-aftercare-figma-design.md`, in pull request #762, not yet merged when this record was written).
 
 On 31 October 2026 Claude asked "Do you accept the EQ-06 · EQ-07 design with the recommended answers?" and Dean answered: "Accept, lock in". That adopts D1–D12 and the recommended answers to Q1–Q6.
 
