@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Drafting from a message a colleague shared | Resolved as recommended | Yes, only on the record it was shared to (EC-01 D5), and only when the person ticks it |
 | Q8 Whether Carl fills in the SV-08 case | Resolved as recommended | It prefills a new case form only (unit, request, the person's label reading, articles checked). The person reviews and saves it; SV-08's rules are unchanged |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | "Drafting & domain help — accepted". Section 8 |
+| Named Figma version | Saved, 31 October 2026 | "Drafting & domain help — accepted", at Dean's "Yes, save it". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -82,7 +82,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D14 in section 4, accepted |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Drafting & domain help — accepted", waiting for Dean |
+| Named version | "Drafting & domain help — accepted", saved 31 October 2026 |
 
 ## 4. Decisions, accepted
 
@@ -133,5 +133,5 @@ Before acceptance, on 24 October 2026, Claude screenshotted the main frames insi
 - The fifteen captures are copies on the "Captures (icon-free)" page from y = 1,020,000 (`2915:438782` to `2915:448871`). Prototype links were removed and every Font Awesome instance was swapped for `Icon/placeholder`; a final scan found none left and no link on any copy. The three flow starting points the copies added to that page were removed.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/drafting-domain-help-design-r01/README.md). Claude viewed captures 05, 13 and 14 after export; capture 15's content was viewed inside Figma. The others were not viewed individually after export.
 - Claude did not play the flows in Present mode.
-- The named Figma version waits for Dean, and the pull request stays a draft until he confirms it.
+- The named Figma version "Drafting & domain help — accepted" was saved in the Figma desktop app on 31 October 2026 at Dean's "Yes, save it", in answer to "Shall I save the named version "Drafting & domain help — accepted" in Figma?", and confirmed at the top of version history. The page header and File index row were updated first, so the version carries the accepted wording.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
