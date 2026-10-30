@@ -14,17 +14,23 @@ Implement cash timing and commercial outlook with explicit source/time/currency 
 
 ## Desktop
 
+Accepted design: the [Cash outlook design decision](../../../decisions/cash-outlook-figma-design.md) of 31 October 2026 covers the outlook overview, all expected lines, by project, week detail, assumptions and gaps, waiting for me, scenario comparison, project outlook, source reads, actuals from MYOB and the side forms New scenario, Change an assumption and Confirm an expected date, with thirty-five icon-free captures in [design r01](../../../reference/ui/finance/cash-outlook-design-r01/README.md). Departures D1–D15 and answers Q1–Q13 are recorded there. Tablet: capture 14, with the rail and side menu collapsed and a six-column week summary.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
 
+Accepted design: captures 15–22 in [design r01](../../../reference/ui/finance/cash-outlook-design-r01/README.md): summary of the next four weeks, week detail, gaps worklist and line detail at 390 and 320, with 16 px inputs and 44 px targets. Phone states aren't drawn.
+
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Mobile-specific evidence is in the captures above; a desktop image is not mobile evidence.
 
 ## Shared components and states
+
+Accepted design: captures 23–35 in [design r01](../../../reference/ui/finance/cash-outlook-design-r01/README.md) show loading, no expected items, could not load, no Finance access, MYOB out of date, assumption stale, scenario out of date, customer not mapped, form validation, saving, save not confirmed, date conflict and the project manager view. The shared Button has no disabled variant, so the saving state dims its buttons.
 
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
 
@@ -32,7 +38,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [Cash outlook design r01 captures](../../../reference/ui/finance/cash-outlook-design-r01/README.md) (accepted Figma design, icon-free)
 
 ## Behaviour, handovers and verification
 
