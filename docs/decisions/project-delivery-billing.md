@@ -42,14 +42,24 @@ These answers decide direction. The detailed rules below are Claude's proposals 
 - **Variations.** Each approved variation becomes claimable as its own claim line, at its frozen approved amount, once its work is evidenced as done. It is never folded into a milestone silently.
 - **Evidence.** The project manager records a milestone as reached, linking the evidence: an acceptance stage, commissioning results, a delivery record or the customer acceptance. Reaching a milestone creates nothing financial by itself.
 - **Claim handoff.** Finance prepares the claim. It is a Finance handoff of a new source kind, `ProjectClaim`, for one project, listing the reached milestones and evidenced variations it claims. It reuses the existing handoff states, review, processing claim, ERP outcome and reconciliation, so there is one Finance pipeline, not two. Finance owns invoice release (BP-01 section 5.2; FIN-05).
-- **No double claiming.** A milestone or variation line can be held by one live claim at a time, as handoff allocations already work for work-order quantities. A returned or cancelled claim releases its lines.
+- **No double claiming.** Each milestone and each claimable variation line is one claimable entitlement in exact cents. It is conserved the way a work-order source quantity is under the [Finance handoff](../contracts/finance-handoff.md) section 3 and its P10 amendment, and the existing lifecycle applies unchanged:
+  - Submitting a claim reserves each entitlement it names in `finance_allocation_holds`, under the same workspace lock. A competing claim cannot reserve an entitlement that is Held or Consumed.
+  - ReadyForReview, Approved and AwaitingERP keep the entitlement Held.
+  - Returned keeps it Held by the returned claim. Only creating a revised Draft of that claim, or an explicit release with a reason, transfers or frees it, atomically under the lock.
+  - Cancelled before any possible external effect releases it.
+  - OutcomeUnknown and ReconciliationRequired keep it Held, because an external effect may have happened.
+  - Processed and reconciled entitlements become Consumed. A successor claim on a consumed entitlement needs a linked correction or reversal under an evidenced policy, which this record does not define; until one exists, a consumed entitlement cannot be claimed again.
+  - A claim takes a whole milestone or variation line. Partial claims of one entitlement are not part of the first increment.
 - **ERP.** The processor records the MYOB outcome as evidence (document type, document number, observed time), simulated in the prototype. No invoice number is invented, and no MYOB endpoint is assumed.
 - **Measures.** The project shows claimed amounts by claim state, beside `adjusted_control_value`. `billed_value`, `cash_received` and `open_receivable` stay unavailable until Finance definitions under D-017 exist; a processed claim is reported as "processed per recorded ERP outcome", not as revenue or cash.
 
 ### R3. Field hours and parts on a fixed-price project are cost evidence
 
-- A Finance handoff for a work order linked to a project defaults every line to `NonBillable` with the reason "Included in project contract". Finance can change a line with a reason, as today.
-- Work for an approved variation is charged through the variation's claim line, never by billing its hours.
+- Every line of a Finance handoff for a work order linked to a project is `NonBillable` with the reason "Included in project contract". This is a rule, not a default: submit, approval and begin processing each recheck the work order's current project link and refuse any `Billable` line, including on a revised Draft of a returned handoff. Changing a line's reason or disposition cannot make included work billable.
+- There is no override in the first increment. Work outside the contract is charged only through an approved variation and its claim line (R2), never by billing hours or parts. A later exception would need its own decision, naming the exact contract or variation entitlement and a cross-pipeline allocation that stops the same work being charged twice.
+- Work for an approved variation is charged through the variation's claim line, never by billing its hours; its hours and parts are cost evidence like the rest.
+- R1 already stops a work order being linked or unlinked once a visit has started, so a handoff cannot predate its work order's link. The checks above apply at each boundary anyway, so an existing Draft cannot slip through.
+- The first increment supports fixed-price milestone bases only, so R3 applies to every project-linked work order. A schedule-of-rates or cost-plus project needs its own decision.
 - A maintenance agreement sold with the project is billed under the agreement, not through a project claim.
 
 ### R4. Retentions later
@@ -70,6 +80,26 @@ Synthetic figures, not Powerplants policy. Rev B base scope: $129,910.00 excludi
 
 Variation V-01 (booster pump, $5,180.00) is claimed as its own line once the APT-2 work is evidenced. The $4,800.00 maintenance agreement is billed under the agreement. The 116 hours of field labour on the work order go to Finance as NonBillable cost evidence.
 
+## Worked example: competing claims
+
+Synthetic, using the TS-01 milestones above.
+
+1. Claim A names M1 and M2 and is submitted. M1 and M2 are Held by A.
+2. Finance returns A because M2's delivery evidence is incomplete. M1 and M2 stay Held by A.
+3. Claim B names M2 and is submitted. It is refused: M2 is Held by A.
+4. Finance creates revised Draft A2, claiming M1 only. In one locked step, M1's hold transfers to A2 and M2 is released.
+5. Claim B is submitted again and now reserves M2. Revising A2 to add M2 back is refused while B holds it.
+6. A2 is processed and reconciled, so M1 becomes Consumed. Claim C naming M1 is refused, and stays refused until a linked correction or reversal policy exists.
+7. B is dispatched and its MYOB outcome is Unknown. M2 stays Held by B: B cannot be cancelled or returned, and no other claim can take M2, until the outcome is verified.
+
+## Worked example: an attempted billability override
+
+The TS-01 work order is linked to the project, and its Finance handoff carries 116 hours of labour as `NonBillable`, "Included in project contract".
+
+1. A Finance user changes the labour line to `Billable` with the reason "Extra site time requested by customer". Submitting is refused: the work order is linked to a project.
+2. The user changes only the reason text, leaving the line `NonBillable`. That is accepted, and it bills nothing.
+3. If the extra time really is outside the contract, the project manager raises variation V-02. Once it is approved and its work evidenced, it is charged through its own claim line, and the hours stay `NonBillable` cost evidence.
+
 ## Build increments
 
 Each increment is its own pull request. Increments that change a migration or a grant need a cross-model review before merging.
@@ -78,14 +108,16 @@ Each increment is its own pull request. Increments that change a migration or a 
 | --- | --- | --- |
 | B1 | Typed `project_id` on work orders, with the Raise field work, link and unlink commands, the project's work list, and the R1 permission rules (migration) | — |
 | B2 | Claim schedule on the commercial basis, milestone evidence, and claimable variation lines (migration) | PJ-05 page, so people can use it |
-| B3 | `ProjectClaim` Finance handoff source kind, allocation, ERP evidence and the project's claim measures (migration) | B2 |
-| B4 | R3 default for project-linked work orders; TS-01 updated to raise field work from the project and to claim M1–M4 and V-01 | B1, B3 |
+| B3 | `ProjectClaim` Finance handoff source kind, entitlement holds under the existing allocation lifecycle (R2), ERP evidence and the project's claim measures (migration) | B2 |
+| B4 | R3 rule for project-linked work orders, enforced at submit, approval and begin processing; TS-01 updated to raise field work from the project and to claim M1–M4 and V-01 | B1, B3 |
 
 ## Still open
 
 - Real milestone schedules come from each reviewed contract; this record sets none.
 - Tax invoice content, payment terms and MYOB document types need Finance's definitions under D-017.
 - Retentions, progress claims, deposits held as security and project cost reporting are not decided.
+- Correction or reversal of a processed claim, and so any successor claim on a consumed entitlement, needs its own policy.
+- Projects priced other than as fixed-price milestones are not decided.
 - PJ-07 delivery readiness (PR #712) refers to scheduling's `ProjectReference` request source. Once B1 lands, it should use the typed link.
 
 ## Traceability
