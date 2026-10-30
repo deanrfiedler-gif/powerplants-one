@@ -92,7 +92,7 @@ Not run: the flows in Present mode, a real device, keyboard and assistive-techno
 
 ## 7. Open and receiving items
 
-- The named Figma version "Knowledge authoring — accepted" waits for Dean.
+- The named Figma version "Knowledge authoring — accepted" was saved by Claude in the Figma desktop app on 31 October 2026, at Dean's "You save it", and was seen at the top of version history.
 - Knowledge · DK-04 was accepted on 30 October 2026 in its own lock-in, recorded at `docs/decisions/knowledge-figma-design.md` on its own pull request. D1 and the reused Knowledge parts rest on it, and that path is cited as text until it reaches main.
 - The build needs a PPO-STD-001 amendment for the `SYN-LRN-` type, knowledge capabilities in `src/platform/permissions.ts` with the AD-01 access review, transactional publication with a real receipt, and the CP-05 receiving page.
 - Not drawn: the By owner and By product family views in full, the Add to an existing article and Dismiss outcomes as their own frames, the full r01 → r02 comparison, dispositions for DK-04 feedback, owned follow-ups in My Work, publication history, denied access, 200% zoom and print.

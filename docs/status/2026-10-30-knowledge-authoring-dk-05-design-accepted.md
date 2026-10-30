@@ -19,8 +19,9 @@ Checked:
 
 Not done:
 - `/knowledge/review` is not built.
-- The named Figma version "Knowledge authoring — accepted" waits for Dean.
 - The prototype flows were not played in Present mode.
+
+The named Figma version "Knowledge authoring — accepted" was saved on 31 October 2026 at Dean's "You save it" and seen in version history.
 
 No application code, route, migration, permission, grant, publication or parent ID changes.
 
