@@ -52,7 +52,7 @@ This is a design decision. It authorises no application code, route, proposal st
 | Q8 How F1 decides what is similar | Resolved as recommended | PPO compares title and need words against the customer's open deals, so it works with the provider off and gives the same answer every time. Carl may explain a match but cannot add or hide one. "Not a duplicate" stays on the proposal, not on the deal |
 | Q9 Whether F2 keeps your words after a reload | Resolved as recommended | No. Chat stays in page memory (specification §7), so after a reload the popover says "From your request" without the quote. The saved command keeps only the field values |
 | Q10 Whether F3 is the default | Resolved as recommended | The full form stays the default in the AI1 evaluation, with Focus review as a choice. It becomes the default only if the evaluation shows no rise in corrections (specification §10) |
-| Named Figma version | Not yet saved | "Proposal review — accepted" waits for Dean. Section 8 |
+| Named Figma version | Saved, 31 October 2026 | "Proposal review — accepted", at Dean's "Yes, save it". Section 8 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -86,7 +86,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Five, accepted: section 4 and F3 in section 9 |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Proposal review — accepted", not yet saved |
+| Named version | "Proposal review — accepted", saved 31 October 2026 |
 
 ## 4. What the design shows
 
@@ -149,7 +149,7 @@ After the polish, all visible text is Roboto, no text overflows its container, a
 - The twenty-one captures are copies on the "Captures (icon-free)" page: images 01, 15 and 16 at y = 800,000 (`2849:8718`, `2849:14839`, `2849:15517`), which the polish did not change; images 02–11 at y = 806,000 (`2882:115` to `2882:5890`); images 12–14 at y = 900,000 and x from 100,000 (`2882:6450`, `2882:7622`, `2882:8166`); images 17–21 at y = 900,000 from x = 105,000 (`2892:8568`, `2892:9202`, `2892:9941`, `2892:12548`, `2892:13157`). Every Font Awesome instance was swapped for `Icon/placeholder`. A scan found no icon instance and no prototype link on any copy. Claude viewed images 03, 12, 18 and 20 after export; images 01, 15 and 16 keep their earlier export.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/assistant-proposal-review-design-r01/README.md).
 - The Captures page held 6 flow starting points when the copies were finished; a copied flow start was removed where one appeared. Other lock-in sessions were writing to that page at the same time.
-- The named Figma version "Proposal review — accepted" has not been saved. It waits for Dean's yes.
+- The named Figma version "Proposal review — accepted" was saved in the Figma desktop app on 31 October 2026 at Dean's "Yes, save it", in answer to "Shall I save the named version "Proposal review — accepted" in Figma?", and confirmed at the top of version history. The page header and File index row were updated first, so the version carries the accepted wording. It also carries the AI-01 D5 and D6 text.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
 
