@@ -37,7 +37,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q1–Q8, Q12 and Q13 | Recommended answers adopted, 31 October 2026 | Section 5 |
 | Q9–Q11 differences between FN-02 and FN-04 | Recommended handling adopted; **differences stay open** until those pages are accepted | Section 5 |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | **Not yet saved** | Section 8 |
+| Named Figma version | Saved 31 October 2026 at Dean's instruction | "You save it" Section 8 |
 | R5, R9, R10, R11 and R12 | Proposed, not decided | Section 7 |
 | Building the page | Not decided | Section 7 |
 
@@ -131,4 +131,4 @@ Design acceptance is not functional, business or deployment acceptance.
 
 ## 8. Named version
 
-The named Figma version "Cash outlook — accepted" has not been saved. It waits for Dean's save or his instruction. This pull request stays in draft until it is confirmed.
+Asked who would save the named Figma version, Dean told Claude: "You save it". Claude saved "Cash outlook — accepted" in the Figma desktop app on 31 October 2026 and saw it at the top of the file's version history after reopening the panel.

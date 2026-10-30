@@ -19,8 +19,9 @@ Checked:
 Not done:
 - `/finance/outlook` is not built, and the date, staleness and GST rules are proposed, not verified.
 - The prototype flows were traced in code but not played in Present mode.
-- The named Figma version waits for Dean.
 - FN-01, FN-02, FN-04, SC-02 and SC-08, which FN-05 draws on, are still proposals. Q9–Q11 name differences between FN-02 and FN-04 that stay open.
+
+At Dean's instruction ("You save it"), Claude saved the named Figma version "Cash outlook — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant, adapter, customer message or parent ID changes.
 
