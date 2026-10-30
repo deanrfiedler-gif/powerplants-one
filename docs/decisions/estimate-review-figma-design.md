@@ -116,5 +116,5 @@ At 1024 the rail collapses and the Details column folds into a "Show details" li
 - A scripted check found no text past a frame edge and no clipped record-header action. "Approved" appears only in negations, and no threshold number is drawn.
 - The prototype has two flows. It was not played in Present mode before acceptance.
 - The 20 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`; a recursive check after the swap found no Font Awesome instance left. They were exported at scale 1 with the Figma connector. Hashes are in the [captures README](../reference/ui/estimating/estimate-review-design-r01/README.md).
-- The named Figma version waits for Dean. This record does not claim it until he confirms it.
+- The named Figma version "Estimate review — shared record layout, accepted" was saved on 31 October 2026 at Dean's "You save it", and reads back at the top of the file's version history. It was saved after the captures were exported. The only later edit to this page recorded here is the header's Named version field, which says it is saved.
 - Nothing is built from this design, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
