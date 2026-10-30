@@ -366,6 +366,8 @@ As TS-01 section 10: same evidence standard, severity scale (S1–S4) and outcom
 
 ## 11. Open questions for Dean
 
+Dean adopted all five recommendations on 30 October 2026 ("Proceed based on your recommendations."); see PR #754, `docs/decisions/maintenance-service-ts02-decisions.md`. TS-01 and TS-02 move back to six-monthly service when build increment M1 lands.
+
 | ID | Question | Recommendation |
 | --- | --- | --- |
 | Q1 | Powerplants services fertigation every six months, but PPO offers only monthly or quarterly plans. Add six-monthly (and yearly)? | Yes: a small model change with high value; TS-01 and TS-02 move back to six-monthly when it lands |
