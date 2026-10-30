@@ -236,6 +236,7 @@ export async function readProjectSchedule(
   return { ...schedule, field_work };
 }
 
+const candidateBatch = 200;
 // Work orders the caller could link: same company and customer, unlinked, no started visit, and
 // editable and readable by the caller. A bounded page, searched by reference or scope summary.
 export async function fieldWorkCandidates(
@@ -263,44 +264,56 @@ export async function fieldWorkCandidates(
         has_more: false,
         observed_at: new Date().toISOString(),
       };
-    const found = (
-      await c.query<ItemRow>(
-        `${itemSelect} WHERE w.workspace_id=$1 AND w.company_id=$3 AND w.customer_id=$4 AND w.project_id IS NULL
-        AND ${orderVisibility()} AND NOT EXISTS(SELECT 1 FROM ppo.appointments a WHERE a.workspace_id=w.workspace_id AND a.work_order_id=w.id AND a.actual_start_at IS NOT NULL)
-        AND ($5='' OR position(lower($5) IN lower(concat_ws(' ',w.display_number,r.summary)))>0)
-        ORDER BY w.display_number,w.id LIMIT 101`,
-        [
-          p.workspace_id,
-          p.actor_id,
-          project.company_id,
-          project.organisation_id,
-          text.trim(),
-        ],
-      )
-    ).rows;
+    // The page and has_more come only from rows the caller may read in full AND edit, so hidden
+    // work orders are neither counted nor able to crowd out permitted ones (#752 review R1). Scan
+    // in keyset order, a batch at a time, until 101 permitted rows are found or no rows remain.
     const items: FieldWorkCandidate[] = [];
-    for (const row of await readable(c, p, found.slice(0, 100)))
-      if (
-        await hasPermission(
-          c,
-          p,
-          "service.work_order.edit",
-          row.company_id,
-          row.site_id,
+    let after: { display_number: string; id: string } | null = null;
+    for (;;) {
+      const batch: ItemRow[] = (
+        await c.query<ItemRow>(
+          `${itemSelect} WHERE w.workspace_id=$1 AND w.company_id=$3 AND w.customer_id=$4 AND w.project_id IS NULL
+          AND ${orderVisibility()} AND NOT EXISTS(SELECT 1 FROM ppo.appointments a WHERE a.workspace_id=w.workspace_id AND a.work_order_id=w.id AND a.actual_start_at IS NOT NULL)
+          AND ($5='' OR position(lower($5) IN lower(concat_ws(' ',w.display_number,r.summary)))>0)
+          AND ($6::text IS NULL OR (w.display_number,w.id)>($6::text,$7::uuid))
+          ORDER BY w.display_number,w.id LIMIT ${candidateBatch}`,
+          [
+            p.workspace_id,
+            p.actor_id,
+            project.company_id,
+            project.organisation_id,
+            text.trim(),
+            after?.display_number ?? null,
+            after?.id ?? null,
+          ],
         )
-      )
-        items.push({
-          id: row.id,
-          display_number: row.display_number,
-          status: row.status,
-          version: row.version,
-          site_name: row.site_name,
-          summary: row.summary,
-        });
-    // A bounded page: has_more says more unlinked work orders matched, not how many.
+      ).rows;
+      for (const row of await readable(c, p, batch))
+        if (
+          items.length <= 100 &&
+          (await hasPermission(
+            c,
+            p,
+            "service.work_order.edit",
+            row.company_id,
+            row.site_id,
+          ))
+        )
+          items.push({
+            id: row.id,
+            display_number: row.display_number,
+            status: row.status,
+            version: row.version,
+            site_name: row.site_name,
+            summary: row.summary,
+          });
+      if (items.length > 100 || batch.length < candidateBatch) break;
+      after = batch[batch.length - 1];
+    }
+    // A bounded page: has_more says more permitted work orders matched, not how many.
     return {
-      items,
-      has_more: found.length > 100,
+      items: items.slice(0, 100),
+      has_more: items.length > 100,
       observed_at: new Date().toISOString(),
     };
   });

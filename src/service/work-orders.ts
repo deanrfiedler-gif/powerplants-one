@@ -508,7 +508,13 @@ export async function createWorkOrder(p: Principal, input: unknown) {
     (c) => authoriseCreateWorkOrder(c, p, cmd),
     async (c) => {
       const w = await insertWorkOrder(c, p, cmd);
-      return { ...w, state: w.status };
+      // The audit keeps the original project so receipt recovery re-checks that project's
+      // authority (#752 review R2). A create without a project records nothing new.
+      return {
+        ...w,
+        state: w.status,
+        ...(cmd.project_id ? { audit_details: { project_id: cmd.project_id } } : {}),
+      };
     },
     "WorkOrder",
     "WorkOrderCreated",
