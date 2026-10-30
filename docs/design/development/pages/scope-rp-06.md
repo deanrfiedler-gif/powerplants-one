@@ -32,9 +32,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design captures: [Report definitions design r01](../../../reference/ui/reporting/report-definitions-design-r01/README.md). No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Report definitions design r01 captures](../../../reference/ui/reporting/report-definitions-design-r01/README.md) (twenty-one icon-free PNGs of twenty-one frames; design compositions, not application captures) and its [decision](../../../decisions/report-definitions-figma-design.md). The design shows a register with four views (definitions, saved views, scheduled reviews, export permissions), a definition record, version comparison with impact, a record-a-review side form and review history. Reviews are due dates with in-app reminders when PPO checks run; no background service is drawn or assumed. Not drawn: the send-for-review and adopt steps as their own forms, new definition, change cadence, move a saved view and save a view; the phone definition record, saved views and export permissions (they stay on desktop); keyboard order, 200% zoom and dark mode. The route is not built, and no definition, schedule or permission exists until a build provides them.
 
 The draft User Guide `guide.rp.06` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
