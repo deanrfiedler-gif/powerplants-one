@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-RP02-SALES-PERFORMANCE-FIGMA-DEC,Sales and quotation performance RP-02 design (Figma) owner decision,docs/decisions/sales-performance-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,
+PPO-RP02-SALES-PERFORMANCE-FIGMA-R01,Sales and quotation performance RP-02 design retained captures,docs/reference/ui/reporting/sales-performance-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,retained-record,
