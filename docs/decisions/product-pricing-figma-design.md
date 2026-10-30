@@ -45,7 +45,7 @@ This is a design decision. It authorises no application code, read model, route,
 | Q10 Reads the design relies on | Resolved as recommended; build separate | Add a bounded, permission-filtered read for the worklist, and extend an affected-estimate row with its source revision, line, quantity and amount. Until built, those cells are design intent |
 | Q11 Contract wording on FX | Resolved as recommended; applied | The Products contract now says PD-03 performs no FX and shows the original price and rate when ES-03 holds them |
 | Q12 Optional additions | Resolved as recommended | F1 price check, F2 validity timeline and F5 follow-up actions are accepted. F4 readiness strip follows the worklist read. F3 cost trail is later. F6, the Assistant drafting mismatch evidence for review, is not taken now |
-| Named Figma version | Waits for Dean | Section 7 |
+| Named Figma version | Saved 31 October 2026 | Asked whether Claude should save it, Dean answered "Yes, save it"; Claude saved "Product pricing — accepted" in the Figma desktop app (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -122,5 +122,5 @@ Smaller refinements: the column settings gear in every grid header, rebalanced c
 - Claude checked the frames with screenshots taken inside Figma, and scripted checks for overlaps, frames outside their section, overflow, clipped text at desktop and links leaving the page. The last run found none, apart from the tablet frame, whose content scrolls by design.
 - **Present mode was not run**, so the prototype links are untested in play. The tablet, phone 320, additions and state frames are outside the flows and were checked by screenshot and script only.
 - The 35 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance, no stray vector and no prototype link. They sit on the Captures page from y = 900,000.
-- The named version "Product pricing — accepted" is not saved. It waits for Dean's yes.
+- The named version "Product pricing — accepted" was saved on 31 October 2026 and seen in version history. After the save, Claude changed only the named-version wording in the page header and the File index row.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.

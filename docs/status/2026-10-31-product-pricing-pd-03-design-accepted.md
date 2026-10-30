@@ -13,7 +13,7 @@ Dean accepted the Figma design for PD-03, product supplier-source context, after
 
 Thirty-five icon-free captures with hashes are retained in [product-pricing-design-r01](../reference/ui/products/product-pricing-design-r01/README.md), and the design register page for `scope:PD-03` cites them. The Products contract now says PD-03 performs no FX and shows an FX source's original price and rate as recorded (Q11).
 
-The named Figma version "Product pricing — accepted" is not saved yet; it waits for Dean's yes.
+The named Figma version "Product pricing — accepted" was saved on 31 October 2026 after Dean answered "Yes, save it".
 
 Checked:
 - Layout, overflow, clipping and off-page link scripts, and in-Figma screenshots.
