@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, page "Estimate-to-actual review · ES-09" `2244:50439`, at the named version "Estimate-to-actual review · ES-09 — shared record layout, accepted". The file's link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, page "Estimate-to-actual review · ES-09" `2244:50439`, at the named version "Estimate-to-actual review · ES-09 — shared record layout, accepted", saved on 30 October 2026 by Claude in the Figma desktop app on Dean's instruction ("Save it for me."). The file's link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
 | Desktop 1440 | Outcome register `2244:733390` (flow start "ES-09 — desktop"); SYN-EAR-0001 record, Overview, full length `2245:735333`; comparison basis declaration `2245:747016`; SCR-CLOTH line drill-down `2245:748014`; possible-duplicate block `2245:751599`; review and sign-off `2245:752746`; hand to ES-10 `2245:753618` |
 | Tablet and phone | Tablet 1024 register `2245:776157` and record `2245:776432`; phone outcome summary 390 `2245:766098` (flow start "ES-09 — phone") and 320 `2245:766267`; reviewer approve screen 390 `2245:766436` and 320 `2245:766490` |
 | States | Loading `2245:777244`, nothing matches `2245:777891`, could not load `2245:778481`, read-only `2245:788978`, actuals incomplete `2245:798257`, possible duplicate `2245:798319`, definition missing `2245:790022`, changed source after review `2245:791070`, returned `2245:798372` |

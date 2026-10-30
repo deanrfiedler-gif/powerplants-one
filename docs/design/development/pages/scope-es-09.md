@@ -41,7 +41,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: see the [decision](../../../decisions/estimate-actual-review-figma-design.md). The successor review record, the History and Matters tabs as separate views, observer export, a phone register list and 200% zoom are not drawn. Building needs ES-09/A1's own authorisation, and FD-05 and FD-06 under D-017 before any Projects cost read is trusted. The named Figma version "Estimate-to-actual review · ES-09 — shared record layout, accepted" waits for Dean.
+Accepted Figma design: see the [decision](../../../decisions/estimate-actual-review-figma-design.md). The successor review record, the History and Matters tabs as separate views, observer export, a phone register list and 200% zoom are not drawn. Building needs ES-09/A1's own authorisation, and FD-05 and FD-06 under D-017 before any Projects cost read is trusted. The named Figma version "Estimate-to-actual review · ES-09 — shared record layout, accepted" was saved on 30 October 2026.
 
 The draft User Guide `guide.es.09` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
