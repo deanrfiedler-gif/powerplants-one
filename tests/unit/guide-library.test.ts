@@ -1123,3 +1123,76 @@ test("spawned build still skips ordinary block-scalar front matter with no guide
   assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(root), true);
 });
+
+// Malformed-envelope parity: from the review of #745 (5705882866) and #740's comment-preamble finding (6508552215).
+// With a spoiled opener there is no trustworthy closer, so a block scalar holding an indented ---, or a ---- line,
+// must not hide a later escaped key. Several HTML comments on one line, a multiline comment followed by another on
+// its closing line, or a leading comment that never closes must not hide a malformed opener either.
+const spoiledOpener = brokenEscaped.replace(/^---/, "--- ");
+const spoiledAfter = (prefix: string[]) => ["--- ", ...prefix, ...brokenEscaped.split("\n").slice(1)].join("\n");
+const envelopeGapCases: Array<[string, string]> = [
+  ["spoiled-block-scalar", spoiledAfter(["summary: |", "  ---"])],
+  ["spoiled-long-rule", spoiledAfter(["summary: Synthetic", "----"])],
+  ["BOM-block-scalar", "\uFEFF" + spoiledAfter(["summary: |", "  ---"]).replace(/^--- /, "---")],
+  ["adjacent-comments", "<!-- first --><!-- second -->\n" + spoiledOpener],
+  ["spaced-comments", "<!-- first --> <!-- second -->\n" + spoiledOpener],
+  ["multiline-then-comment", "<!-- first\n note --><!-- second -->\n" + spoiledOpener],
+  ["unclosed-comment", "<!-- never closed\n" + spoiledOpener],
+];
+const envelopeGapControls: Record<string, string> = {
+  "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/spoiled-scalar-contents.md": "--- \ndocument_id: PPO-SYN-TOC\nsummary: |\n  ---\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/unclosed-comment-notes.md": "<!-- draft notes, never closed\n\n# Notes\n\nNothing here names a guide.\n",
+};
+const envelopeGapPaths = Object.fromEntries(envelopeGapCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));
+
+test("discovery finds escaped guide keys behind delimiter-like lines and comment preambles in malformed envelopes", async (t) => {
+  for (const [name, content] of envelopeGapCases) {
+    assert.equal(declaresGuideKey(content), true, name);
+    const compiled = compileGuide("docs/guides/" + name + ".md", content);
+    assert.ok(compiled.errors.some((error) => /front matter/i.test(error.message)), name + ": must be rejected by compiler");
+  }
+  for (const [path, content] of Object.entries(envelopeGapControls)) {
+    assert.equal(declaresGuideKey(content), false, path + ": not a guide");
+  }
+
+  const result = await readGuideLibrary(await makeRoot(t, { ...envelopeGapControls, ...envelopeGapPaths }), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual(
+    [...new Set(result.errors.map((error) => error.path))],
+    Object.keys(envelopeGapPaths).sort(),
+    "every attempted guide is reported, and no control is",
+  );
+  for (const path of Object.keys(envelopeGapPaths)) {
+    assert.ok(result.errors.some((error) => error.path === path && error.line === 1 && /front matter/i.test(error.message)), path);
+  }
+});
+
+test("spawned build refuses escaped guides behind delimiter-like lines and comment preambles, and writes no release", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...envelopeGapControls,
+    ...envelopeGapPaths,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.equal(run.stdout, "");
+  for (const path of Object.keys(envelopeGapPaths)) {
+    assert.ok(run.stderr.includes(path + ":1 "), path + ": missing build refusal in " + run.stderr);
+  }
+  assert.equal(await writtenRelease(root), false, "release must not be written when discovery finds any malformed guide");
+});
+
+test("spawned build still skips the comment-preamble, block-scalar and unclosed-comment controls", async (t) => {
+  const root = await makeRoot(t, {
+    "docs/design/development/register.json": buildRegister,
+    ...envelopeGapControls,
+  });
+  const run = runBuild(root);
+  assert.equal(run.error, undefined);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(run.stderr, "");
+  assert.match(run.stdout, /Guides compiled: 0\. Guides released: 0/);
+  assert.equal(await writtenRelease(root), true);
+});

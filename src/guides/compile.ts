@@ -127,30 +127,29 @@ export function readFrontMatter(path: string, text: string): FrontMatterRead {
 const possibleFrontMatterDelimiter = /^[\uFEFF \t]*-{3,}[ \t]*$/;
 
 // Discovery tolerates a leading BOM, whitespace and complete HTML comment preambles, including comments spanning
-// multiple lines. This deliberately does not change readFrontMatter: the strict compiler refuses such files.
-function firstSubstantiveLine(lines: string[]): number {
-  let comment = false;
+// multiple lines and several comments on one line. It returns the first line holding anything else, with that line's
+// text after its comments, or -1 when there is none. A leading comment that never closes is reported with the line it
+// opens on, so the caller can fail closed. This deliberately does not change readFrontMatter: the strict compiler
+// refuses such files.
+function firstSubstantiveLine(lines: string[]): { index: number; text: string; unclosed: boolean } {
+  let opened = -1;
   for (let index = 0; index < lines.length; index++) {
-    const line = lines[index];
-    if (comment) {
-      const closing = line.indexOf("-->");
-      if (closing < 0) continue;
-      comment = false;
-      if (/^[\uFEFF \t]*$/.test(line.slice(closing + 3))) continue;
-      return index;
+    let rest = lines[index];
+    for (;;) {
+      if (opened >= 0) {
+        const closing = rest.indexOf("-->");
+        if (closing < 0) break;
+        rest = rest.slice(closing + 3);
+        opened = -1;
+      }
+      rest = rest.replace(/^[\uFEFF \t]+/, "");
+      if (!rest.startsWith("<!--")) break;
+      opened = index;
+      rest = rest.slice(4);
     }
-    if (/^[\uFEFF \t]*$/.test(line)) continue;
-    const opening = /^[\uFEFF \t]*<!--/.exec(line);
-    if (!opening) return index;
-    const closing = line.indexOf("-->", opening[0].length);
-    if (closing < 0) {
-      comment = true;
-      continue;
-    }
-    if (/^[\uFEFF \t]*$/.test(line.slice(closing + 3))) continue;
-    return index;
+    if (opened < 0 && rest.trim() !== "") return { index, text: rest, unclosed: false };
   }
-  return -1;
+  return { index: opened, text: "", unclosed: opened >= 0 };
 }
 
 // Malformed opening delimiters can be Markdown thematic rules. Ignore fenced code and actual indented Markdown examples before
@@ -191,8 +190,21 @@ function withoutMarkdownCode(block: string[]): string[] {
 // error, alias or complex key; a malformed opener needs guide-specific evidence rather than treating prose as a guide.
 export function declaresGuideKey(text: string): boolean {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
-  const opening = firstSubstantiveLine(lines);
-  if (opening < 0 || !possibleFrontMatterDelimiter.test(lines[opening])) return false;
+  const options = { schema: "core" as const, uniqueKeys: true };
+  const isGuideKey = (key: unknown) => /^\s*guide[_-]key\s*$/i.test(String(key));
+  // Parse candidate key lines one at a time, so an escaped key is decoded even when the YAML around it is broken,
+  // without accepting a Markdown code example (the caller masks code first) or other metadata.
+  const keyLine = (line: string) => {
+    if (!line.includes(":")) return false;
+    const fragment = parseDocument(line.trimStart(), options);
+    return isMap(fragment.contents) && fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
+  };
+
+  const start = firstSubstantiveLine(lines);
+  // A leading comment that never closes leaves no opener to find: fail closed on any guide key after it.
+  if (start.unclosed) return withoutMarkdownCode(lines.slice(start.index)).some(keyLine);
+  const opening = start.index;
+  if (opening < 0 || !possibleFrontMatterDelimiter.test(start.text)) return false;
 
   const exactOpener = opening === 0 && lines[0] === "---";
   // An exact opener must use readFrontMatter's exact closing delimiter, or a block scalar containing
@@ -202,7 +214,6 @@ export function declaresGuideKey(text: string): boolean {
     : lines.findIndex((line, index) => index > opening && possibleFrontMatterDelimiter.test(line));
   const source = lines.slice(opening + 1, closing < 0 ? undefined : closing);
   const block = exactOpener ? source : withoutMarkdownCode(source);
-  const options = { schema: "core" as const, uniqueKeys: true };
   const doc = parseDocument(block.join("\n"), options);
 
   if (exactOpener && doc.errors.length > 0) return true;
@@ -210,19 +221,14 @@ export function declaresGuideKey(text: string): boolean {
   visit(doc, { Alias: () => { alias = true; return visit.BREAK; } });
   if (alias) return true;
 
-  const isGuideKey = (key: unknown) => /^\s*guide[_-]key\s*$/i.test(String(key));
   if (isMap(doc.contents) && doc.contents.items.some((pair) => !isScalar(pair.key) || isGuideKey(pair.key.value))) return true;
 
   if (exactOpener) return block.some((line) => /guide[_-]key/i.test(line));
 
-  // A malformed YAML value elsewhere may make the document unreadable as one map. Parse candidate key lines
-  // independently to decode escaped keys without incorrectly accepting a code example or arbitrary metadata.
-  return block.some((line) => {
-    if (!line.includes(":")) return false;
-    const fragment = parseDocument(line.trimStart(), options);
-    return isMap(fragment.contents) &&
-      fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
-  });
+  // A spoiled opener has no trustworthy closer: a delimiter-like line can sit inside a block scalar, as an indented
+  // --- or a ---- line, and hide a later key. So probe every line after the opener, with Markdown code still masked,
+  // not only the lines before the loose closer.
+  return withoutMarkdownCode(lines.slice(opening + 1)).some(keyLine);
 }
 
 // Always returns a well-typed object so that no cast is needed. The caller discards it when anything was reported.
