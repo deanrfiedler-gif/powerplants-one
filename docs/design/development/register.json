@@ -1254,12 +1254,31 @@
       "design_path": "docs/design/development/pages/scope-cr-04.md",
       "html_path": "docs/reference/ui/crm/ppo-deal-pipeline_r38.html",
       "image_paths": [
-        "docs/testing/evidence/department-navigation/sales-deals-populated.png"
+        "docs/testing/evidence/department-navigation/sales-deals-populated.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-01-Desktop-Insights-Overview-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-02-Desktop-Stage-Ageing-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-03-Desktop-No-Next-Action-List-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-04-Desktop-Close-Date-Movement-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-05-Desktop-Forecast-Review-October-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-06-Desktop-Record-A-Statement-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-07-Desktop-About-These-Numbers-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-08-Desktop-Drill-Through-Deals-List-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-09-Desktop-What-Changed-Since-Statements-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-10-Desktop-Complete-Review-Dialog-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-11-Desktop-Completed-And-Locked-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-12-Desktop-Reopen-Review-Dialog-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-13-Desktop-Filters-Expected-Close-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-14-Tablet-Insights-Overview-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-15-Phone-390-Frames-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-16-Phone-320-Frames-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-17-States-S1-To-S6-r01.png",
+        "docs/reference/ui/crm/pipeline-insights-design-r01/PPO-Pipeline-Insights-18-States-S7-To-S12-r01.png"
       ],
       "dependencies": [
         "src/components/crm-insights.tsx",
         "src/crm/insights.ts",
-        "src/crm/worklist.ts"
+        "src/crm/worklist.ts",
+        "docs/decisions/pipeline-insights-figma-design.md"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",

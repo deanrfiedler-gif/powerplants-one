@@ -14,11 +14,15 @@ Retain Board/List/Forecast/Archive. Extend analytical review with stage history,
 
 ## Desktop
 
+Accepted design: the [Pipeline insights design decision](../../../decisions/pipeline-insights-figma-design.md) of 31 October 2026 covers the insights overview, stage ageing, the no-next-action list, close-date movement, the October forecast review with owner statements, its snapshot and lifecycle, the statement form, About these numbers, drill-through to Deals List and the Expected close filter, with eighteen icon-free captures in [design r01](../../../reference/ui/crm/pipeline-insights-design-r01/README.md). The native contract below describes the built page, which is not yet changed to this design.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 15 and 16 in [design r01](../../../reference/ui/crm/pipeline-insights-design-r01/README.md): the overview cards and the no-next-action list at 390 and 320, with a compact header and a full-width 48 px action.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design captures: [Pipeline insights design r01](../../../reference/ui/crm/pipeline-insights-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures).
 
 - [sales-deals-populated.png](../../../testing/evidence/department-navigation/sales-deals-populated.png)
 - [ppo-deal-pipeline_r38.html](../../../reference/ui/crm/ppo-deal-pipeline_r38.html)
