@@ -453,7 +453,13 @@ export async function createWorkOrder(p: Principal, input: unknown) {
           work_order_id: w.id,
           ...t,
         });
-      return { ...w, state: w.status };
+      // The audit keeps the original project so receipt recovery re-checks that project's
+      // authority (#752 review R2). A create without a project records nothing new.
+      return {
+        ...w,
+        state: w.status,
+        ...(cmd.project_id ? { audit_details: { project_id: cmd.project_id } } : {}),
+      };
     },
     "WorkOrder",
     "WorkOrderCreated",

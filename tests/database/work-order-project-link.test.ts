@@ -560,3 +560,145 @@ test("link candidates are unlinked, same-customer, editable work orders without 
     code("RecordUnavailable"),
   );
 });
+
+// #752 review R1: candidates are paged only over rows the caller may read in full and edit, so
+// hidden rows are never counted and cannot crowd permitted ones out of the page.
+const site2 = "70000000-0000-4000-8000-000000000002";
+const siteGrant = (user: string, capability: string, site: string) =>
+  database().query(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,site_id,capability,scope_type,scope_id) VALUES($1,$2,$3,$4,$5,'Site',$4) ON CONFLICT DO NOTHING",
+    [CRM.workspace, user, CRM.company, site, capability],
+  );
+let cloned = 0;
+// Fixture-only: unlinked Draft copies of SYN-WO-000001 on a site, each linked to the given ticket.
+// References are allocated in insertion order, so earlier copies sort first.
+async function cloneOrders(count: number, site: string, ticket: string) {
+  const ids = Array.from({ length: count }, () => id(91, ++cloned));
+  await transaction(async (c) => {
+    for (const orderId of ids) {
+      await c.query(
+        `INSERT INTO ppo.work_orders SELECT (jsonb_populate_record(NULL::ppo.work_orders,(to_jsonb(w)-'display_number')||jsonb_build_object('id',$2::text,'version',1,'status','Draft','scope_revision_id',null,'project_id',null,'site_id',$3::text))).* FROM ppo.work_orders w WHERE w.id=$1`,
+        [order(1), orderId, site],
+      );
+      await c.query(
+        "INSERT INTO ppo.work_order_tickets(workspace_id,company_id,site_id,work_order_id,ticket_id,issue_disposition) VALUES($1,$2,$3,$4,$5,'SYN candidate paging fixture')",
+        [CRM.workspace, CRM.company, site, orderId, ticket],
+      );
+    }
+  });
+  return (
+    await rows("SELECT display_number FROM ppo.work_orders WHERE id=ANY($1) ORDER BY display_number", [ids])
+  ).map((r) => r.display_number as string);
+}
+async function siteTwoTicket() {
+  const ticket = id(41, 1);
+  await database().query(
+    `INSERT INTO ppo.tickets SELECT (jsonb_populate_record(NULL::ppo.tickets,(to_jsonb(t)-'display_number')||jsonb_build_object('id',$1::text,'version',1,'site_id',$2::text,'asset_id',null))).* FROM ppo.tickets t WHERE t.id=(SELECT ticket_id FROM ppo.work_order_tickets WHERE work_order_id=$3 ORDER BY ticket_id LIMIT 1)`,
+    [ticket, site2, order(1)],
+  );
+  return ticket;
+}
+test("R1 candidate pages count only readable, editable work orders; hidden ones neither leak nor crowd", async () => {
+  const p = await principal(),
+    prj = await project(p);
+  const siteOneTicket = (
+    await rows("SELECT ticket_id FROM ppo.work_order_tickets WHERE work_order_id=$1 ORDER BY ticket_id LIMIT 1", [order(1)])
+  )[0].ticket_id as string;
+  const hidden = await cloneOrders(101, CRM.site, siteOneTicket);
+  const permitted = await cloneOrders(2, site2, await siteTwoTicket());
+  const page = (input = {}) => fieldWorkCandidates(p, prj, input);
+  const numbers = async (input = {}) => {
+    const r = await page(input);
+    return { items: r.items.map((w) => w.display_number), has_more: r.has_more };
+  };
+  // With company-wide edit every unlinked row qualifies: a full page and more.
+  const full = await page();
+  assert.equal(full.items.length, 100);
+  assert.equal(full.has_more, true);
+  // Site 1 rows readable but not editable: they are skipped, the later Site 2 rows are found, and
+  // has_more does not reveal the skipped rows.
+  await revoke(p.actor_id, "service.work_order.edit");
+  await siteGrant(p.actor_id, "service.work_order.edit", site2);
+  assert.deepEqual(await numbers(), { items: permitted, has_more: false });
+  // A search that matches only rows the caller cannot edit shows nothing and no "more".
+  assert.deepEqual(await numbers({ q: hidden[50] }), { items: [], has_more: false });
+  // Rows hidden from read by their linked request behave the same.
+  await grant(p.actor_id, "service.work_order.edit");
+  await revoke(p.actor_id, "service.ticket.read");
+  await siteGrant(p.actor_id, "service.ticket.read", site2);
+  assert.deepEqual(await numbers(), { items: permitted, has_more: false });
+  assert.deepEqual(await numbers({ q: hidden[0] }), { items: [], has_more: false });
+  // More than a page of permitted rows still gives exactly 100 and has_more.
+  const more = await cloneOrders(101, site2, id(41, 1));
+  const bounded = await numbers();
+  assert.equal(bounded.items.length, 100);
+  assert.equal(bounded.has_more, true);
+  assert.deepEqual(bounded.items, [...permitted, ...more].slice(0, 100));
+});
+
+// #752 review R2: receipt recovery needs the same project authority as the original command, on
+// the project that command named, not the work order's current link.
+test("R2 link, unlink and project-linked create receipts recover only with current project edit", async () => {
+  const p = await principal(),
+    prj = await project(p);
+  const on = await link(p, order(1), prj);
+  const linked = await linkWorkOrderProject(p, order(1), on);
+  const off = await link(p, order(1), prj);
+  const unlinked = await unlinkWorkOrderProject(p, order(1), off);
+  const payload = {
+    ...base(),
+    id: randomUUID(),
+    company_id: CRM.company,
+    site_id: CRM.site,
+    customer_id: CRM.org,
+    service_owner_id: CRM.owner,
+    project_id: prj,
+    tickets: [{ ticket_id: id(40, 20), issue_disposition: "SYN project field work request" }],
+  };
+  const created = await createWorkOrder(p, payload);
+  const plain = {
+    ...payload,
+    ...base(),
+    id: randomUUID(),
+    project_id: undefined,
+    tickets: [{ ticket_id: id(40, 20), issue_disposition: "SYN unlinked field work request" }],
+  };
+  delete (plain as { project_id?: string }).project_id;
+  const unrelated = await createWorkOrder(p, plain);
+  // The audit keeps the original project for the linked create; a plain create records none.
+  assert.equal(
+    (await rows("SELECT details->>'project_id' AS project FROM ppo.audit_events WHERE operation_id=$1", [payload.operation_id]))[0].project,
+    prj,
+  );
+  assert.equal(
+    (await rows("SELECT details ? 'project_id' AS has FROM ppo.audit_events WHERE operation_id=$1", [plain.operation_id]))[0].has,
+    false,
+  );
+  const recovered = async () => {
+    const out: Record<string, boolean> = {};
+    for (const [name, op] of [["link", on.operation_id], ["unlink", off.operation_id], ["create", payload.operation_id], ["plain", plain.operation_id]] as const)
+      out[name] = await readOperation(p, op).then(() => true, (e) => {
+        if (!code("RecordUnavailable")(e) && !code("Forbidden")(e)) throw e;
+        return false;
+      });
+    return out;
+  };
+  // The work order is now unlinked, yet the link receipt recovers against its original project.
+  assert.deepEqual(await readOperation(p, on.operation_id), linked.receipt);
+  assert.deepEqual(await readOperation(p, off.operation_id), unlinked.receipt);
+  assert.deepEqual(await readOperation(p, payload.operation_id), created.receipt);
+  assert.deepEqual(await readOperation(p, plain.operation_id), unrelated.receipt);
+  // Without project edit, POST replay and GET recovery both refuse; the plain create is unaffected.
+  await revoke(p.actor_id, "project.edit");
+  await assert.rejects(linkWorkOrderProject(p, order(1), on), code("RecordUnavailable"));
+  assert.deepEqual(await recovered(), { link: false, unlink: false, create: false, plain: true });
+  await grant(p.actor_id, "project.edit");
+  assert.deepEqual(await recovered(), { link: true, unlink: true, create: true, plain: true });
+  // Relinking to a second project leaves the original receipts tied to the first one.
+  const second = await project(p);
+  await linkWorkOrderProject(p, order(1), await link(p, order(1), second));
+  assert.deepEqual(await readOperation(p, on.operation_id), linked.receipt);
+  // Work-order edit is still required as well.
+  await revoke(p.actor_id, "service.work_order.edit");
+  assert.deepEqual(await recovered(), { link: false, unlink: false, create: false, plain: false });
+});
