@@ -35,7 +35,7 @@ This is a design decision. It authorises no application code, route change, migr
 | Q3 Default custodian | Design rule accepted as recommended | The site's service coordinator for installed equipment; the workshop lead for a unit prepared in Kitting until it is installed. The technician who captured it is recorded as "captured by" |
 | Q4 Test-restore at commissioning | Design rule accepted as recommended; not an operating rule yet | Required for controllers PPO configures, onto a workshop bench unit or the installed unit before handover, verified by a second person. Where a restore isn't possible, record "not tested" with the reason; it stays a gap |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | Section 7 |
+| Named Figma version | Saved 31 October 2026 at Dean's instruction | "You save it". Section 7 |
 | Restyling the built page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -106,4 +106,4 @@ Design acceptance is not functional, business or deployment acceptance.
 
 ## 7. Named version
 
-"Configuration backups — accepted" waits for Dean to save it, or to tell Claude to.
+Asked who would save the named Figma version, Dean told Claude: "You save it". Claude saved "Configuration backups — accepted" in the Figma desktop app on 31 October 2026 and saw it at the top of the file's version history.

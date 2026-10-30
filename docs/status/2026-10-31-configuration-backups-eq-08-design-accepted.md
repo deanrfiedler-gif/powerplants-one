@@ -20,7 +20,8 @@ Not done:
 - The built `/equipment/backups` page is unchanged; restyling it is not decided, and the design needs fields the model doesn't have.
 - The 5-working-day rule and required test-restores are not operating procedure, and where backup files are kept today hasn't been checked.
 - The Equipment, EN-08, Kitting, Bench testing and Change review pages that EQ-08 draws on are still proposals; accepting EQ-08 doesn't accept them.
-- The named Figma version "Configuration backups — accepted" waits for Dean.
+
+At Dean's instruction ("You save it"), Claude saved the named Figma version "Configuration backups — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.
 
