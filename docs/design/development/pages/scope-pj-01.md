@@ -14,11 +14,15 @@ Extend project creation with accepted commercial scope, receiving review, owned 
 
 ## Desktop
 
+Accepted design: the [Project initiation design decision](../../../decisions/project-initiation-figma-design.md) of 31 October 2026 covers the worklist, receiving review, date runway, source check, create project, link decision, return to Sales, start checklist and Set Started, with forty-one icon-free captures in [design r01](../../../reference/ui/projects/project-initiation-design-r01/README.md). Captures 01–16 are desktop and 17 is tablet. The design is not built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 18–23 in [design r01](../../../reference/ui/projects/project-initiation-design-r01/README.md): the review summary, raising a question and answering one at 390 and 320.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,7 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [Project initiation design r01 captures](../../../reference/ui/projects/project-initiation-design-r01/README.md) (accepted Figma design, icon-free)
 
 ## Behaviour, handovers and verification
 

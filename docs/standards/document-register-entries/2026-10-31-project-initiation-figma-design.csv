@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PJ01-INITIATION-FIGMA-DEC,Project initiation design (Figma) owner decision,docs/decisions/project-initiation-figma-design.md,,Owner-accepted design; building the page and its data model separate,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,git,
+PPO-PJ01-INITIATION-FIGMA-R01,Project initiation design retained captures,docs/reference/ui/projects/project-initiation-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,retained-record,

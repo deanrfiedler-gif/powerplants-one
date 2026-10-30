@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "status": {
+      "states": [
+        {
+          "id": "pj01-review-status",
+          "label": "PJ-01 review status with change menu",
+          "description": "Not reviewed, Confirmed, Needs clarification or Not applicable, always in words, in a bordered control that opens a menu. Figma part Initiation / Review status; not built."
+        }
+      ],
+      "used_on": ["scope:PJ-01", "route:/projects/new"],
+      "gaps": [
+        {
+          "id": "status-pj01-review-control",
+          "expected": "A review status control with hover, focus and open states, named with its item for assistive technology.",
+          "actual": "Drawn in Figma with four status variants and an open-menu state card. No application control exists.",
+          "action": "Build it with the PJ-01 page, once that is decided, using the shared Tag and menu rules.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
