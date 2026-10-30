@@ -1139,6 +1139,12 @@ const flowKey = ['{ "guide\\u005fkey"', "  : guide.page.sales.leads }"];
 const singleLineKey = ['"guide\\u005fkey": guide.page.sales.leads'];
 // Invalid plain text before a multi-line key (Codex review 5707405123 on #749).
 const invalidPrefix = ["--- ", "invalid front matter"];
+// A key longer than discovery's 64-line read window (Codex review 5707757203 on #749): one quoted key whose escaped
+// line breaks run past the window, an explicit key after many comment lines and a flow mapping after many comment
+// lines. Below the bound discovery reads the whole key; at and above it, it must refuse the key it cannot finish.
+const longQuotedKey = (continuations: number) => ['? "guide\\', ...Array<string>(continuations).fill('  \\'), '  _key"', ": guide.page.sales.leads"];
+const commentedExplicitKey = (comments: number) => ["?", ...Array<string>(comments).fill("  # note"), ...explicitKey.map((line, index) => (index === 0 ? "  " + line.slice(2) : line))];
+const commentedFlowKey = (comments: number) => ["{", ...Array<string>(comments).fill("  # note"), ...flowKey.map((line, index) => (index === 0 ? "  " + line.slice(2) : line))];
 const envelopeGapCases: Array<[string, string]> = [
   ["spoiled-block-scalar", spoiledAfter(["summary: |", "  ---"])],
   ["spoiled-long-rule", spoiledAfter(["summary: Synthetic", "----"])],
@@ -1164,6 +1170,13 @@ const envelopeGapCases: Array<[string, string]> = [
   ["invalid-prefix-explicit-key-lone-CR", multilineKeyGuide(invalidPrefix, explicitKey).replace(/\n/g, "\r")],
   ["invalid-prefix-flow-key", multilineKeyGuide(invalidPrefix, flowKey)],
   ["invalid-prefix-single-line-key", multilineKeyGuide(invalidPrefix, singleLineKey)],
+  ["long-key-below-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(62))],
+  ["long-key-at-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(63))],
+  ["long-key-above-bound", multilineKeyGuide(invalidPrefix, longQuotedKey(70))],
+  ["long-key-above-bound-CRLF", multilineKeyGuide(invalidPrefix, longQuotedKey(70)).replace(/\n/g, "\r\n")],
+  ["long-key-above-bound-lone-CR", multilineKeyGuide(invalidPrefix, longQuotedKey(70)).replace(/\n/g, "\r")],
+  ["long-explicit-key-comments", multilineKeyGuide(invalidPrefix, commentedExplicitKey(70))],
+  ["long-flow-key-comments", multilineKeyGuide(invalidPrefix, commentedFlowKey(70))],
 ];
 const envelopeGapControls: Record<string, string> = {
   "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
@@ -1171,6 +1184,10 @@ const envelopeGapControls: Record<string, string> = {
   "docs/guides/explicit-title-contents.md": "--- \n? title\n: Contents\n---\n\n# Contents\n",
   "docs/guides/invalid-prefix-prose.md": "--- \ninvalid front matter\n? title\n: Contents\nUse {braces} here?\n---\n\n# Notes\n",
   "docs/guides/unclosed-comment-notes.md": "<!-- draft notes, never closed\n\n# Notes\n\nNothing here names a guide.\n",
+  // Markdown emphasis at the start of a line is a YAML alias, and a long note can mention guide_key in prose.
+  "docs/guides/emphasis-notes.md": "----\n\n*Note*: synthetic text.\n\n**Bold** start, then [a link](https://example.com).\n",
+  "docs/guides/long-notes.md": ["----", "", "The guide_key field names a guide.", ...Array.from({ length: 80 }, (_, i) => (i % 2 ? `See [note ${i}](https://example.com/${i}) and {braces}.` : `Line ${i}: it's ordinary prose.`))].join("\n"),
+  "docs/guides/long-title-contents.md": ["--- ", "invalid front matter", ...longQuotedKey(70).map((line) => line.replace("guide", "title")), "---", "", "# Contents", ""].join("\n"),
 };
 const envelopeGapPaths = Object.fromEntries(envelopeGapCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));
 
