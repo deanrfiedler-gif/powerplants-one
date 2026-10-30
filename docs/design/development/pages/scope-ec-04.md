@@ -28,6 +28,8 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
+Accepted amendment (not yet drawn on the Customer messages page): a new request notice class. On a staff public reply, the contact's notice choice sends a short shared-mailbox email with a link, never the message text ([Support requests design decision](../../../decisions/support-requests-figma-design.md), D13). D-025's later stages must authorise any sending.
+
 ## Shared components and states
 
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.

@@ -14,6 +14,8 @@ Desktop section 1249:9359 (1440 × 900): register 1249:9382, snapshot 1254:3846,
 
 Retained icon-free references: [thirteen captures and manifest](../../../reference/ui/service/service-requests-design-r01/README.md). Those issued bytes remain unchanged. Live Figma supplies the current layout; its generated code is not application source. Runtime comparison and limits are recorded in the [evidence ledger](../../../testing/evidence/service-requests-accepted/README.md).
 
+Accepted amendment (not yet drawn on the Service requests page): on the Updates tab, Reply to customer and Add internal note are separate actions with separate composers, and an internal note can never be made public ([Support requests design decision](../../../decisions/support-requests-figma-design.md), D12; capture 13).
+
 ## Desktop
 
 The existing routes are refined in place. List is the default; queues live in the flush secondary menu: All open, My requests, New to triage, Urgent, Needs information, Overdue clarifications, No work order yet, Work order linked. The last two describe visible linked work only. Grid rows are 40 px, with separate reference and summary columns, row selection and a pinned snapshot action. Selection permits Open in sequence and Export list only. Board retains only New, NeedsInformation and Triaged. A large snapshot opens the same permission-filtered record.
