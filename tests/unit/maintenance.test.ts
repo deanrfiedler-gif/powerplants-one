@@ -136,6 +136,12 @@ test("plan completion requirements become ordered scope entries without losing t
   const emoji = "a".repeat(999) + "\u{1F600}" + "b";
   const split = check(emoji, 2);
   assert.deepEqual(split, ["a".repeat(999), "\u{1F600}b"]);
+  // Around the boundary: a pair ending at 1,000 stays in the first entry; one starting at 1,001
+  // needs no move.
+  assert.deepEqual(check("a".repeat(998) + "\u{1F600}" + "b", 2), ["a".repeat(998) + "\u{1F600}", "b"]);
+  assert.deepEqual(check("a".repeat(1000) + "\u{1F600}", 2), ["a".repeat(1000), "\u{1F600}"]);
+  for (const e of [...check("a".repeat(998) + "\u{1F600}" + "b", 2), ...check("a".repeat(1000) + "\u{1F600}", 2)])
+    assert.ok(e.isWellFormed());
   for (const e of [...split, ...check("\u{1F600}".repeat(2000), 4)]) {
     assert.ok(e.isWellFormed(), JSON.stringify(e.slice(-2)));
     assert.ok(e.length <= 1000);
