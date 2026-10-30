@@ -1130,6 +1130,12 @@ test("spawned build still skips ordinary block-scalar front matter with no guide
 // its closing line, or a leading comment that never closes must not hide a malformed opener either.
 const spoiledOpener = brokenEscaped.replace(/^---/, "--- ");
 const spoiledAfter = (prefix: string[]) => ["--- ", ...prefix, ...brokenEscaped.split("\n").slice(1)].join("\n");
+// A key can span lines in YAML: an explicit "? key" with its ": value" below, or a flow mapping (Codex review
+// 5707083000 on #749). Both must be found behind every kind of malformed envelope.
+const multilineKeyGuide = (prefix: string[], key: string[]) =>
+  [...prefix, ...key, "---", "", "## Overview {#overview}", "", "<script>alert(1)</script>", ""].join("\n");
+const explicitKey = ['? "guide\\u005fkey"', ": guide.page.sales.leads"];
+const flowKey = ['{ "guide\\u005fkey"', "  : guide.page.sales.leads }"];
 const envelopeGapCases: Array<[string, string]> = [
   ["spoiled-block-scalar", spoiledAfter(["summary: |", "  ---"])],
   ["spoiled-long-rule", spoiledAfter(["summary: Synthetic", "----"])],
@@ -1142,10 +1148,16 @@ const envelopeGapCases: Array<[string, string]> = [
   ["spaced-comments", "<!-- first --> <!-- second -->\n" + spoiledOpener],
   ["multiline-then-comment", "<!-- first\n note --><!-- second -->\n" + spoiledOpener],
   ["unclosed-comment", "<!-- never closed\n" + spoiledOpener],
+  ["explicit-key-block-scalar", multilineKeyGuide(["--- ", "summary: |", "  ---"], explicitKey)],
+  ["explicit-key-long-rule", multilineKeyGuide(["--- ", "summary: Synthetic", "----"], explicitKey)],
+  ["explicit-key-unclosed-comment", multilineKeyGuide(["<!-- never closed", "--- "], explicitKey)],
+  ["explicit-key-adjacent-lone-CR", multilineKeyGuide(["<!-- a --><!-- b -->", "--- "], explicitKey).replace(/\n/g, "\r")],
+  ["flow-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], flowKey)],
 ];
 const envelopeGapControls: Record<string, string> = {
   "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",
   "docs/guides/spoiled-scalar-contents.md": "--- \ndocument_id: PPO-SYN-TOC\nsummary: |\n  ---\ntitle: Contents\n---\n\n# Contents\n",
+  "docs/guides/explicit-title-contents.md": "--- \n? title\n: Contents\n---\n\n# Contents\n",
   "docs/guides/unclosed-comment-notes.md": "<!-- draft notes, never closed\n\n# Notes\n\nNothing here names a guide.\n",
 };
 const envelopeGapPaths = Object.fromEntries(envelopeGapCases.map(([name, content]) => ["docs/guides/" + name + ".md", content]));

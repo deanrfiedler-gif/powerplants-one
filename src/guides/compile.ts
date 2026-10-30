@@ -1,7 +1,7 @@
 // ADR-0065: this module is the only importer of marked and yaml. Everything else reads PPO's own guide model.
 import { createHash } from "node:crypto";
 import { Lexer, type MarkedToken, type Token, type Tokens } from "marked";
-import { LineCounter, isMap, isScalar, parseDocument, visit } from "yaml";
+import { LineCounter, isMap, isScalar, parseAllDocuments, parseDocument, visit } from "yaml";
 import { linkShape } from "./links";
 import { hasVisibleText } from "./status";
 import {
@@ -199,10 +199,38 @@ export function declaresGuideKey(text: string): boolean {
     const fragment = parseDocument(line.trimStart(), options);
     return isMap(fragment.contents) && fragment.contents.items.some((pair) => isScalar(pair.key) && isGuideKey(pair.key.value));
   };
+  // A key can also span lines: an explicit "? key" with its ": value" below, a flow mapping or a block scalar key. So
+  // read the lines as a YAML stream too, and look at every key YAML recovers, in every document, errors or not. A
+  // delimiter-like line (a ---- rule, say) can leave the YAML after it unreadable as part of that stream, so each run
+  // of lines between such lines is also read on its own.
+  const streamKey = (block: string[]) => {
+    const runs: string[][] = [block];
+    let run: string[] = [];
+    for (const line of block) {
+      if (!possibleFrontMatterDelimiter.test(line)) run.push(line);
+      else {
+        runs.push(run);
+        run = [];
+      }
+    }
+    runs.push(run);
+    return runs.some((part) => parseAllDocuments(part.join("\n"), options).some((doc) => {
+      let found = false;
+      visit(doc, {
+        Pair: (_key, pair) => {
+          if (!isScalar(pair.key) || !isGuideKey(pair.key.value)) return undefined;
+          found = true;
+          return visit.BREAK;
+        },
+      });
+      return found;
+    }));
+  };
+  const declaresKey = (block: string[]) => block.some(keyLine) || streamKey(block);
 
   const start = firstSubstantiveLine(lines);
   // A leading comment that never closes leaves no opener to find: fail closed on any guide key after it.
-  if (start.unclosed) return withoutMarkdownCode(lines.slice(start.index)).some(keyLine);
+  if (start.unclosed) return declaresKey(withoutMarkdownCode(lines.slice(start.index)));
   const opening = start.index;
   if (opening < 0 || !possibleFrontMatterDelimiter.test(start.text)) return false;
 
@@ -228,7 +256,7 @@ export function declaresGuideKey(text: string): boolean {
   // A spoiled opener has no trustworthy closer: a delimiter-like line can sit inside a block scalar, as an indented
   // --- or a ---- line, and hide a later key. So probe every line after the opener, with Markdown code still masked,
   // not only the lines before the loose closer.
-  return withoutMarkdownCode(lines.slice(opening + 1)).some(keyLine);
+  return declaresKey(withoutMarkdownCode(lines.slice(opening + 1)));
 }
 
 // Always returns a well-typed object so that no cast is needed. The caller discards it when anything was reported.
