@@ -16,7 +16,7 @@ On 23 October 2026 Dean asked Claude to design and build the "Account developmen
 
 Dean then accepted the design: "Accept as recommended", answering "Do you accept the CS-07 design with D1–D12 and the recommended Q1–Q6?" That adopts D1–D12 and the recommended answers to Q1–Q6.
 
-Dean then asked for an audit: "Give the pages an audit and polish" to find refinements, new features, ways to be more professional and gaps (section 6). Claude applied the corrections and recommended six additions. Dean answered "Draw the six", and after they were drawn, "Accept as recommended", answering "Do you accept the additions D13–D18 with the recommended Q7–Q11?" That adopts D13–D18 and the recommended answers to Q7–Q11. The named Figma version waits for Dean's explicit yes (section 7).
+Dean then asked for an audit: "Give the pages an audit and polish" to find refinements, new features, ways to be more professional and gaps (section 6). Claude applied the corrections and recommended six additions. Dean answered "Draw the six", and after they were drawn, "Accept as recommended", answering "Do you accept the additions D13–D18 with the recommended Q7–Q11?" That adopts D13–D18 and the recommended answers to Q7–Q11. Dean then asked for the named version: "You save it". Claude saved it in the Figma desktop app (section 7).
 
 Scope:
 - `scope:CS-07` "Account development and visit plan", with `route:/customers/[id]/development`. A register across customers is part of this design; its route is the proposed `/customers/development` (Q6).
@@ -43,7 +43,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q11 Quarterly account review on Organisations | Resolved as recommended | Organisations lists "Quarterly account review · Tue 27 Oct"; this page keeps the Q4 visit on Wed 21 Oct, and Organisations is corrected at its next amendment |
 | Audit and six additions | User decisions, 31 October 2026 | Quoted above. Sections 4 and 6 |
 | Accept the design, then the additions | User decisions, 31 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean's explicit yes | Proposed title "Account development — accepted". Section 7 |
+| Named Figma version | User decision, 31 October 2026 | Saved as "Account development — accepted" on Dean's words "You save it". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -76,7 +76,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D18 in section 4, accepted |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | Waiting for Dean's explicit yes |
+| Named version | "Account development — accepted", saved 31 October 2026 |
 
 ## 4. What the design shows
 
@@ -133,6 +133,6 @@ Dean's later audit corrected: the nothing-matches state, which contradicted Bloc
 
 - Claude checked the frames with screenshots taken inside Figma, and measured every truncated single-line text against its rendered width; none is clipped after the corrections above. A programmatic check found no overlaps and nothing outside its section. Roboto is the only text family apart from the shared Roboto Mono references.
 - The twenty-eight captures are copies on the "Captures (icon-free)" page, from y = 650,000 (`2866:49538`–`2866:61494`). Hidden overlays, prototype links and flow starting points were removed, and each of the 832 Font Awesome icon instances was swapped for `Icon/placeholder`. A scan found no Font Awesome instance, no visible vector outside a placeholder or the logo, and no prototype link left. The images were exported at scale 1 with the Figma connector. Hashes are in the [captures README](../reference/ui/customers/account-development-design-r01/README.md).
-- The named Figma version "Account development — accepted" is not saved yet; it needs Dean's explicit yes. This pull request stays in draft until then.
+- The named Figma version "Account development — accepted" was saved on 31 October 2026 on Dean's words "You save it", and appears at the top of the file's version history. The header's Named version field and the notes card were updated to name it immediately before the save.
 - Claude did not play the flows in Present mode.
 - Nothing new is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
