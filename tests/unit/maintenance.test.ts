@@ -132,6 +132,15 @@ test("plan completion requirements become ordered scope entries without losing t
   const lines = check(`${"a".repeat(600)}\n${"b".repeat(600)}`, 2);
   assert.deepEqual(lines, ["a".repeat(600), "b".repeat(600)]);
   assert.deepEqual(check(`a ${"x".repeat(1200)}`, 2).map((e) => e.length), [1000, 202]);
+  // A hard cut never splits a surrogate pair: each entry is well-formed and the character survives.
+  const emoji = "a".repeat(999) + "\u{1F600}" + "b";
+  const split = check(emoji, 2);
+  assert.deepEqual(split, ["a".repeat(999), "\u{1F600}b"]);
+  for (const e of [...split, ...check("\u{1F600}".repeat(2000), 4)]) {
+    assert.ok(e.isWellFormed(), JSON.stringify(e.slice(-2)));
+    assert.ok(e.length <= 1000);
+  }
+  assert.equal(check("\u{1F600}".repeat(2000), 4).join(""), "\u{1F600}".repeat(2000));
   // The worst case stays within the 20-entry scope limit.
   assert.ok(completionRequirementEntries(` ${"x".repeat(499)}`.repeat(8)).length <= 20);
 });

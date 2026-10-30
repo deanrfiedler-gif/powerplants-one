@@ -460,6 +460,8 @@ test("M-R2/M-R4 retained completion requirements of 1,000, 1,001 and 4,000 chara
     { ...twoTasks()[0], completion_requirements: "x".repeat(1000) },
     { ...twoTasks()[1], completion_requirements: "y".repeat(1001) },
     { ...twoTasks()[0], id: randomUUID(), description: "SYN exact observation of the mixing tank", completion_requirements: words(4000) },
+    // A supplementary character across the 1,000-code-unit boundary moves whole to the next entry.
+    { ...twoTasks()[1], id: randomUUID(), description: "SYN identify the dosing pump label", completion_requirements: "a".repeat(999) + "\u{1F600}" + "b" },
   ];
   const a = await dueOccurrence(tasks);
   const p = a.p;
@@ -476,16 +478,18 @@ test("M-R2/M-R4 retained completion requirements of 1,000, 1,001 and 4,000 chara
     (await readWorkOrder(p, workOrder)).items[0].scopes[0].items.map((i: { completion_requirements: string[] }) => i.completion_requirements);
   const visible = (v: string) => v.replace(/\s/g, "");
   const entries = await scopeOf(original.work_order_id);
-  assert.deepEqual(entries.map((e: string[]) => e.length), [1, 2, 5]);
+  assert.deepEqual(entries.map((e: string[]) => e.length), [1, 2, 5, 2]);
   entries.forEach((e: string[], i: number) => {
     assert.deepEqual(e, completionRequirementEntries(tasks[i].completion_requirements));
-    assert.ok(e.every((x) => x.length <= 1000));
+    assert.ok(e.every((x) => x.length <= 1000 && x.isWellFormed()));
     assert.equal(visible(e.join("")), visible(tasks[i].completion_requirements));
   });
   assert.deepEqual(entries[0], ["x".repeat(1000)]);
   assert.equal(entries[2].join(" "), tasks[2].completion_requirements);
+  // Read back from the database, the character is intact in its own entry.
+  assert.deepEqual(entries[3], ["a".repeat(999), "\u{1F600}b"]);
   // A Partial visit leaves the two long tasks outstanding; the follow-on scope carries them whole too.
-  const s = await serviceResult(p, original.id, 63, "Partial", ["Complete", "Partial", "Partial"]);
+  const s = await serviceResult(p, original.id, 63, "Partial", ["Complete", "Partial", "Partial", "Partial"]);
   const received = await receiveResult(p, "due", a.occurrence.id, {
     ...base(),
     expected_version: prepared.receipt.record_version,

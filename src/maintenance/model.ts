@@ -359,8 +359,9 @@ export function assessmentFields(v: unknown) {
 // M-R2/M-R4: a plan task's completion requirement may hold 4,000 characters, but a Service scope
 // item takes 1–20 entries of at most 1,000. Prepared scope copies the requirement as ordered
 // entries without dropping any text: each break falls at the last whitespace within the 1,000-
-// character window when that is at least halfway through it, otherwise exactly at 1,000. Every
-// break advances at least 500 characters, so a 4,000-character requirement yields at most 8 entries.
+// character window when that is at least halfway through it, otherwise at 1,000 (999 when that
+// would split a surrogate pair). Every break advances at least 500 code units, so a 4,000-character
+// requirement yields at most 8 entries.
 // A requirement within the limit stays a single, unchanged entry.
 export function completionRequirementEntries(requirement: string, limit = 1000) {
   const entries: string[] = [];
@@ -372,6 +373,10 @@ export function completionRequirementEntries(requirement: string, limit = 1000) 
         at = i;
         break;
       }
+    // A hard cut never separates a surrogate pair: the whole character moves to the next entry,
+    // so every entry stays well-formed Unicode within the 1,000-code-unit limit (#770 review).
+    if (at === limit && /[\uD800-\uDBFF]/.test(rest[at - 1]) && /[\uDC00-\uDFFF]/.test(rest[at]))
+      at -= 1;
     entries.push(rest.slice(0, at).trim());
     rest = rest.slice(at).trim();
   }
