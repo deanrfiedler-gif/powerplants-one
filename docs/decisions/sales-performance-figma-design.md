@@ -21,7 +21,7 @@ Claude drew the page from these sources:
 - [Service and Finance download access](report-finance-download-access.md) and the [conformance standard](../standards/html-module-conformance.md);
 - the drawn proposals Reports overview RP-01 and Pipeline insights CR-04, and the Deals, Leads, Quotations, Quotation detail, Account development, Product pricing and Reviews & approvals pages.
 
-On 30 October 2026 Dean answered "Do you accept the RP-02 design?": "Accept and lock in". The button he chose was offered as accepting the design with its recommendations, so this record reads his answer as adopting D1–D15 and the recommended answers to Q1–Q7. The named Figma version is section 8.
+On 30 October 2026 Dean answered "Do you accept the RP-02 design?": "Accept and lock in". The button he chose was offered as accepting the design with its recommendations, so this record reads his answer as adopting D1–D15 and the recommended answers to Q1–Q7. Dean then asked Claude to save the named Figma version: "Save it for me" (section 8).
 
 Scope:
 - `scope:RP-02` "Sales and quotation performance", at `/reports/sales`. No new scope is added.
@@ -43,7 +43,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 REP-05 before a pricing policy exists | Resolved as recommended | REP-05 groups by policy version and kind, and shows "No pricing policy published" until D-010 publishes one. The synthetic test policy SYN-PPOL-000001 v1 is for the demonstration only. No threshold appears anywhere |
 | Q7 Story checks | Resolved as recommended; source pages not changed | Count SYN-PPO-QUO-000188 in REP-04 and update the RP-01 tile when that page next changes. Correct the SYN-QUO-0079 organisation on Deals when that page next changes. Section 7 |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean | Section 8 |
+| Named Figma version | Saved by Claude at Dean's request, 30 October 2026 | "Sales performance · RP-02 — accepted": "Save it for me". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -76,7 +76,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Accepted: section 4 |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | Waiting for Dean: section 8 |
+| Named version | "Sales performance · RP-02 — accepted", saved on 30 October 2026 at Dean's request |
 
 ## 4. What the design shows
 
@@ -163,5 +163,5 @@ Before presenting the page Claude screenshotted the frames inside Figma, checked
 - The seventeen captures are copies of the accepted frames on the "Captures (icon-free)" page, from y = 503,000 (`2771:457776` to `2771:514918`). Prototype reactions were removed and each Font Awesome icon instance was swapped for `Icon/placeholder`: 912 swaps across the copies. A scan then found no Font Awesome instance left, no copy with a prototype link, and none of 3,640 visible texts with a stored colour that differs from its bound variable.
 - The captures were exported at scale 1 with the Figma connector. The export is capped at 4,096 px, so the two full-length reports (desktop 7,345 px, tablet 7,471 px) were each split into three clipped frames at section boundaries, `2790:340724` to `2790:342288` and `2790:343268` to `2790:344832`, giving twenty-one images. The hashes are in the [captures README](../reference/ui/reporting/sales-performance-design-r01/README.md).
 - **Captures page flow list.** While the copies were being made, the page's list of flow starting points went from about 120 to none, and another session then added one. Claude could not establish whether its own cleanup or that session caused this. The list only names flows on capture copies, whose links are removed; no frame or capture image changed. Earlier records that state a count of those flows describe the page as it was then.
-- **The named version.** Waiting for Dean: "Sales performance · RP-02 — accepted". This pull request stays a draft until he confirms it.
+- **The named version.** At Dean's request ("Save it for me") Claude saved "Sales performance · RP-02 — accepted" in the Figma desktop app on 30 October 2026, and saw it at the top of the reopened version history, by Dean Fiedler's account. It is a version of the whole file, so it also holds whatever other sessions had drawn by then. The page header, the notes card and the File index row were updated afterwards to record it, so those three text changes post-date the named version.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
