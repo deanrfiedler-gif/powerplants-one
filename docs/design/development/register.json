@@ -7404,10 +7404,28 @@
       "guide_key": "guide.page.estimating.estimates.id",
       "design_path": "docs/design/development/pages/route-estimating-estimates-id.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-01-Desktop-Summary-V06-Reviewed-Full-Length-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-02-Desktop-Lines-Origins-Override-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-03-Desktop-Versions-Compare-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-04-Desktop-Review-Waiting-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-05-Desktop-Quotations-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-06-Desktop-Import-Evidence-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-07-Desktop-Source-Changed-Since-Adoption-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-11-Tablet-Summary-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-12-Phone-Summary-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-13-Phone-Lines-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-14-Phone-320-Summary-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-15-Phone-320-Lines-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-16-State-Loading-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-17-State-Could-Not-Load-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-18-State-Not-Found-Or-No-Access-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-19-State-Stale-Version-r01.png"
+      ],
       "dependencies": [
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/estimate-detail-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -7435,8 +7453,16 @@
       "guide_key": "guide.page.estimating.new",
       "design_path": "docs/design/development/pages/route-estimating-new.md",
       "html_path": "docs/reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-08-Desktop-Create-Search-First-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-09-Desktop-Create-Form-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-10-Desktop-Created-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-20-State-Uncertain-Save-r01.png",
+        "docs/reference/ui/estimating/estimate-detail-design-r01/PPO-EstimateDetail-21-State-No-Estimate-Yet-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/estimate-detail-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",

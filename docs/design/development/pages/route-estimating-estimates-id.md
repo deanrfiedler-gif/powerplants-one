@@ -13,6 +13,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 3. Check scope completeness and required clarification
 4. Assign or review the next estimating action
 
+Accepted design: the [Estimate detail design decision](../../../decisions/estimate-detail-figma-design.md) of 30 October 2026 makes this page the record of the adopted estimate versions, with 21 icon-free captures in [design r01](../../../reference/ui/estimating/estimate-detail-design-r01/README.md). Departures D1–D16 and answers Q1–Q8 are recorded there: the shared record layout with a checks bar of five facts, a primary action that follows state, a linked-records chain, and Summary, Lines, Sources, Versions, Review, Quotations, Import evidence and History tabs. Prices and quantities change only in CPQ, and a changed source marks the version without refreshing it. Nothing new is built; until the matching build steps are delivered, the running page keeps its editable workbook and the rest of this entry describes it.
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
@@ -25,6 +27,8 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
+Accepted design: captures 11–15 in [design r01](../../../reference/ui/estimating/estimate-detail-design-r01/README.md): the tablet record at 1024, and a reviewer's phone summary and read-only lines at 390 and 320 with the compact record header, checks and review state as lists, section links and a sticky action bar.
+
 ## Shared components and states
 
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
@@ -34,6 +38,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
+- Accepted Figma design: [Estimate detail design r01 captures](../../../reference/ui/estimating/estimate-detail-design-r01/README.md) (captures 01–07 and 11–19 for this page; design compositions, not application captures) and its [decision](../../../decisions/estimate-detail-figma-design.md). The History tab, the Sources tab with no change and 200% zoom are not drawn. The named Figma version "Estimate detail — shared record layout, accepted" waits for Dean.
 
 ## Behaviour, handovers and verification
 

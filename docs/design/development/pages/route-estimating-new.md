@@ -13,6 +13,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 3. Review the entered context, save through the page action and inspect the resulting record/confirmation.
 4. Then continue the wider workflow: Assign or review the next estimating action
 
+Accepted design: the [Estimate detail design decision](../../../decisions/estimate-detail-figma-design.md) of 30 October 2026 (D6, Q3) keeps this page as a search-first entry that never duplicates. It opens an existing estimate or workspace, and otherwise offers Express estimate (Direct CPQ, CM2) or Start discovery, guarded by an accepted Sales brief. Cost lines move to CPQ, and unknown values stay explicit. Nothing new is built; until the matching build steps are delivered, the running page keeps its manual cost lines and the rest of this entry describes it.
+
 ## Desktop
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
@@ -34,6 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [PPO-Estimation-Wizard-Container-r03.html](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html)
+- Accepted Figma design: captures 08–10, 20 and 21 in [Estimate detail design r01](../../../reference/ui/estimating/estimate-detail-design-r01/README.md) (design compositions, not application captures) and its [decision](../../../decisions/estimate-detail-figma-design.md). Create estimate at tablet and phone sizes is not drawn.
 
 ## Behaviour, handovers and verification
 
