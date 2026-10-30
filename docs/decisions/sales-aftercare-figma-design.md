@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Smaller story checks | Resolved as recommended | Accepted as synthetic, and aligned when those pages are accepted: SYN-RPT-000064 (from CP-02) is numbered above SV-06's latest report; stage 2 customer acceptance is still pending on PJ-09, so this review follows commissioning closeout, not acceptance; the EQ-07 end-of-support handover is dated before EQ-07's own story date |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
 | Corrections made during lock-in | Claude's polish after acceptance, disclosed here | Section 7. None changes a decision |
-| Named Figma version | Waits for Dean | "Sales aftercare — accepted". Section 8 |
+| Named Figma version | Saved 31 October 2026 | Asked who should save it, Dean answered "You save it"; Claude saved "Sales aftercare — accepted" in the Figma desktop app. Section 8 |
 | Changing the built pages | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -133,5 +133,5 @@ During lock-in, 30 October 2026, after acceptance. These are polish and correct 
 - **Captures:** 421 icons swapped to the placeholder; a final pass found no Font Awesome instance left and no stray vector; 125 prototype links were removed from the copies, and the copied flow start was removed from the Captures page.
 - **Prototype:** all 20 links read back with destinations on this page. The flows were **not played in Present mode**.
 - **Visual:** all eleven captures were inspected by eye, as frame screenshots or exported images. After the corrections in section 7, captures 03, 04, 06 and 11 were re-exported; the changed parts of 04 and 06 were viewed again, and the wording changes in 03 and 11 were checked by reading the edited layers back, not by viewing the final images.
-- **Named version:** "Sales aftercare — accepted" waits for Dean. This pull request stays in draft until he confirms it.
+- **Named version:** "Sales aftercare — accepted" was saved on 31 October 2026 at Dean's "You save it", and reads back at the top of the file's version history. It was saved after the captures were exported. The only later edit to this page recorded here is the header, notes and File index wording that says it is saved.
 - **Not done:** no application check, because no application code changes; no accessibility tool, device or screen-reader test of the design; no paired comparison with the built pages.
