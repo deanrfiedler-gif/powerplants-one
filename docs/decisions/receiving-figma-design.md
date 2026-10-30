@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, migration, capabil
 | Q5 Release "use as is" with a claim open | Resolved as recommended; design direction | Yes, for the coordinator, after a passed check |
 | Q6 One receipt in two views | Resolved as recommended | Yes in the views. In All receipts it sits once, under its most urgent state |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | Section 7 |
+| Named Figma version | Saved 31 October 2026 at Dean's instruction | "You save it". Section 7 |
 | Changing the application page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -118,4 +118,4 @@ Design acceptance is not functional, business or deployment acceptance.
 
 ## 7. Named version
 
-The named Figma version "Receiving — accepted" is not saved. It waits for Dean. This line is updated once it is.
+Asked who should save the named Figma version, Dean told Claude: "You save it". Claude saved "Receiving — accepted" in the Figma desktop app on 31 October 2026 and saw it at the top of the file's version history. The Figma page header's Named version field was updated just after that save, so the saved version's header still reads "waits for Dean".

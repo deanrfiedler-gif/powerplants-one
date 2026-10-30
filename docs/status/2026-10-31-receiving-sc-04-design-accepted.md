@@ -20,7 +20,8 @@ Not done:
 - The prototype flows were traced in code, not played in Figma Present mode. Devices, keyboard and screen reader weren't checked.
 - `/supply/receipts` isn't changed. MYOB document types, locations and serial tracking stay unverified under DEC-CCE-10.
 - Material demand, Purchasing, Inbound shipments, Returns & claims and Integrations are still proposals; accepting SC-04 doesn't accept them. The decision lists three small differences on those pages.
-- The named Figma version "Receiving — accepted" waits for Dean.
+
+At Dean's instruction ("You save it"), Claude saved the named Figma version "Receiving — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.
 
