@@ -192,3 +192,7 @@ After the polish no text overflows its container (2,383 text layers, all Roboto)
 - Dean saved the named Figma version "Assistant — accepted" in the Figma desktop app on 25 October 2026 and confirmed it: "I have saved it." Claude did not open the version history to check it. The page header, the notes card and the File index row were updated afterwards to record it, so those three text changes post-date the named version.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 9. Amendment, 31 October 2026
+
+Dean's acceptance of [AI-02](assistant-proposal-review-figma-design.md) adopted its Q6: a text-only change to two frames so both pages tell the same story. D5 `2371:1628` now shows Jamie's reason at 09:06 and a draft card reading Needs details · 1, with the title "Glasshouse 5 climate screen extension" and the follow-up "Call Priya Shah on Wed 21 Oct". D6 `2371:2224` reads Needs details · 1, and its hint says "Create opportunity unlocks when the follow-up time is added." The r01 captures keep their bytes; images 14 and 15 in [proposal review design r01](../reference/ui/my-work/assistant-proposal-review-design-r01/README.md) show the amended frames. The page header status and the notes card D9 record the change. The named version "Assistant — accepted" predates it.
