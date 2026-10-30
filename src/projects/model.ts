@@ -1,3 +1,4 @@
+import type { FieldWork } from "../service/project-field-work-model";
 import { calendarIssues, type WorkingCalendar } from "./calendar-model";
 // Shared, dependency-free schedule contract. All dates are calendar dates, never instants.
 export const phases = [
@@ -53,6 +54,7 @@ export type Schedule = {
   project: Project;
   tasks: Task[];
   observed_at: string;
+  field_work?: FieldWork;
   programme?: Awaited<
     ReturnType<typeof import("./programme-reads").programmeFor>
   >;

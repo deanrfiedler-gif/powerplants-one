@@ -155,10 +155,13 @@ export async function readSchedule(
       row.site_id,
     );
     const tasks = await tasksFor(c, p, id);
+    // B1: linked field work, filtered by the reader's own work-order permission (never a hidden count).
+    const { projectFieldWork } = await import("../service/project-field-work");
     return {
       project: projection(row, can_edit),
       tasks,
       programme: await programmeFor(c, p, id, row.timezone, tasks),
+      field_work: await projectFieldWork(c, p, row),
       observed_at: new Date().toISOString(),
     };
   });

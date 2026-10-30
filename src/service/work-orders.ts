@@ -33,6 +33,11 @@ import {
 } from "../shared/validation";
 import { visibleTicket, ticketVisibility } from "./tickets";
 import {
+  authoriseCreateLink,
+  checkCreateLink,
+  workOrderProject,
+} from "./project-access";
+import {
   assessmentFields,
   commandFields,
   evidenceFields,
@@ -323,6 +328,7 @@ export async function createWorkOrder(p: Principal, input: unknown) {
     "tickets",
     "project_reference",
     "opportunity_reference",
+    "project_id",
   ]);
   const tickets = list(
     r.tickets,
@@ -350,6 +356,9 @@ export async function createWorkOrder(p: Principal, input: unknown) {
     customer_id: uuid(r.customer_id, "customer_id"),
     service_owner_id: uuid(r.service_owner_id, "service_owner_id"),
     project_reference: optionalText(r.project_reference, "project_reference"),
+    // B1: an optional typed project link, under the same rules as linking an existing work order.
+    // Present only when supplied, so existing create operations keep their payload hashes.
+    ...(r.project_id == null ? {} : { project_id: uuid(r.project_id, "project_id") }),
     opportunity_reference: optionalText(
       r.opportunity_reference,
       "opportunity_reference",
@@ -417,8 +426,11 @@ export async function createWorkOrder(p: Principal, input: unknown) {
           if (row.site_id !== cmd.site_id || row.company_id !== cmd.company_id)
             throw unavailable();
         }
+      if (cmd.project_id)
+        await authoriseCreateLink(c, p, cmd.project_id, cmd);
     },
     async (c) => {
+      if (cmd.project_id) await checkCreateLink(c, p, cmd.project_id);
       const w = await insert(c, "work_orders", {
         id: cmd.id,
         workspace_id: p.workspace_id,
@@ -430,6 +442,8 @@ export async function createWorkOrder(p: Principal, input: unknown) {
         updated_by: p.actor_id,
         project_reference: cmd.project_reference,
         opportunity_reference: cmd.opportunity_reference,
+        // Omitted when unset, so a create still works against schemas before migration 0122.
+        ...(cmd.project_id ? { project_id: cmd.project_id } : {}),
       });
       for (const t of tickets)
         await insert(c, "work_order_tickets", {
@@ -1186,9 +1200,13 @@ export async function readWorkOrder(p: Principal, id: string) {
       w.site_id,
     ),
   };
+  // B1: the linked project appears only to someone who may read it; its identity never leaks otherwise.
+  const { project_id, ...order } = w as WorkOrder & { project_id?: string | null };
+  const project = await workOrderProject(c, p, project_id);
   return envelope([
     {
-      ...w,
+      ...order,
+      project,
       site_name: site.display_name,
       site_timezone: site.timezone,
       customer_name: customer.display_name,
