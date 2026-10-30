@@ -14,13 +14,14 @@ Dean accepted the Figma design for CP-02, customer support request and conversat
 
 Q1 gives the recommended direction for D-024 without deciding it. Thirty-five icon-free captures with hashes are retained in [support-requests-design-r01](../reference/ui/customer-portal/support-requests-design-r01/README.md), and the design register page for `scope:CP-02` cites them. In Figma the capture copies sit on the Captures page from y = 470,000, and the Support parts moved to Components › Customer portal.
 
+The named Figma version "Support requests — accepted" was saved on 31 October 2026 after Dean answered "proceed".
+
 Checked:
 - No Font Awesome instance or stray vector is left in the capture copies.
 - No text colour differs from its bound variable, and no copy carries a prototype link.
 - All three prototype flows were played in Figma Present mode, every link clicked. The faults found were fixed and replayed.
 
 Not done:
-- The named Figma version "Support requests — accepted" waits for Dean's yes.
 - `/portal/support` is not built.
 - The tablet, phone 320, staff and other state frames are not in a flow; they were checked by screenshot and script only.
 
