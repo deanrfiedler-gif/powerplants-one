@@ -20,7 +20,7 @@ Claude drew the page from these sources:
 - [Service and Finance download access](report-finance-download-access.md) and the [conformance standard](../standards/html-module-conformance.md);
 - the Figma pages Reports overview RP-01, RP-04, Measure definitions FN-06 and Audit history AD-07.
 
-On 31 October 2026 Dean answered "Do you accept the RP-06 proposal?": "Accept as recommended". The button he chose was offered as accepting the proposal with the recommended answers to Q1–Q7, so this record reads his answer as adopting D1–D10 and those answers.
+On 31 October 2026 Dean answered "Do you accept the RP-06 proposal?": "Accept as recommended". The button he chose was offered as accepting the proposal with the recommended answers to Q1–Q7, so this record reads his answer as adopting D1–D10 and those answers. Claude then found that its Q7 answer conflicted with RP-02 Q1, and recommended that RP-02 Q1 govern. Dean answered: "Proceed based on your recommendations." Section 5 records this.
 
 Scope:
 - `scope:RP-06` "Report definition, saved views and scheduled review", at `/reports/definitions`. No new scope is added.
@@ -40,7 +40,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Reviews on the management overview | Resolved as recommended; RP-01 not changed | A count of overdue reviews with a link on RP-01, and no scores, when RP-01 next changes |
 | Q5 When a monthly review is due | Resolved as recommended; proposed rule | 5 working days after month end. Claude proposed this for the story; it is not drawn from a source |
 | Q6 Recording a review while a definition is In review | Resolved as recommended | Allowed. The review states the version and its status, and adopts nothing |
-| Q7 REP-02 denominator | Accepted as recommended; **conflict open** | Every pursuit created, with quoted shown as a stage. It disagrees with RP-02 Q1. Section 5 |
+| Q7 REP-02 denominator | User decision, 31 October 2026; design direction only | RP-02 Q1 governs: decided records, with open records listed and never counted as losses. This replaces the first answer, every pursuit created. Section 5 |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
 | Named Figma version | Not yet saved | Section 8 |
 | Building the page | Not decided | Section 6 |
@@ -57,7 +57,7 @@ This is a design decision. It authorises no application code, route, read model,
 | States | Loading `2852:6343`; nothing defined `2852:6381`; could not load `2852:6403`; no permission `2852:6429`; definition uses an unadopted measure `2852:6451`; saved view on a superseded version `2852:6475`; review overdue `2852:6507`; proposer is the reviewer `2852:6539` |
 | Components | None added or changed, so there is no binding file. New layouts are page parts on this page |
 | Prototype | Flows "RP-06 — desktop" and "RP-06 — phone" |
-| Story | Synthetic, as at Tue 13 Oct 2026, 09:00 AEST. RP-04 is reviewed monthly by the Service manager, with September's review recorded and two actions. REP-02 is at version 1 Draft. The saved view "Glasshouse projects" sits on RP-03. RP-05 Finance sections export to Finance only. Owners are shown as roles. Existing references are unchanged |
+| Story | Synthetic, as at Tue 13 Oct 2026, 09:00 AEST. RP-04 is reviewed monthly by the Service manager, with September's review recorded and two actions. REP-02 is at version 1 Draft, with its denominator following RP-02 Q1 (section 5). The saved view "Glasshouse projects" sits on RP-03. RP-05 Finance sections export to Finance only. Owners are shown as roles. Existing references are unchanged |
 | Retained captures | [Report definitions design r01](../reference/ui/reporting/report-definitions-design-r01/README.md): twenty-one icon-free PNGs of twenty-one frames, with hashes. Capture copies are on the Captures page from y = 810,000 |
 
 ## 3. Conformance declaration
@@ -98,11 +98,13 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Tablet | The top bar hides its parent crumb at 1024 so the search and icons fit. Its zones are resized as instance overrides | Shell / Top bar at wider widths |
 | Page parts | Tables other than the Grid header are built from frames, with raw colour values matching the tokens rather than bound variables | Components and tokens. A build uses the shared table and tokens |
 
-## 5. Conflict to resolve: the REP-02 denominator
+## 5. The REP-02 denominator: RP-02 Q1 governs
 
-Q7 was recommended and accepted as "every pursuit created, with quoted shown as a stage". The RP-02 design decision (PPO-RP02-SALES-PERFORMANCE-FIGMA-DEC), which Dean accepted on 30 October 2026 in pull request #765, still open when this was written, says in its Q1 that conversion is three transitions, each "the numerator divided by decided records", and that "still-open records are listed and never count as losses". The two disagree on whether open records sit in the denominator.
+Q7 was first recommended and accepted as "every pursuit created, with quoted shown as a stage". The RP-02 design decision (PPO-RP02-SALES-PERFORMANCE-FIGMA-DEC), which Dean accepted on 30 October 2026 in pull request #765, still open when this was written, says in its Q1 that conversion is three transitions, each "the numerator divided by decided records", and that "still-open records are listed and never count as losses". The two disagreed on whether open records sit in the denominator. Claude had not read RP-02 Q1 before recommending Q7, so Dean accepted the first answer without this comparison in front of him.
 
-Claude did not read RP-02 Q1 before recommending Q7, so Dean accepted the recommendation without this comparison in front of him. This record does not choose between them. It amends neither record, and it publishes no definition. The accepted RP-06 drawing shows the denominator as an open decision at the story date, so it holds whichever rule governs.
+Claude told Dean of the conflict and recommended RP-02 Q1: open records in the denominator would make the newest cohorts look worst simply because their deals are unfinished, and BP-01 §22.1 says not to turn missing denominators into zero performance. It named the trade-off: a decided-records rate can look high early in a cohort, because quick wins close first, so a build must never show the rate without the open count beside it. Dean answered: "Proceed based on your recommendations."
+
+So RP-02 Q1 governs, and the RP-02 record is not amended. The RP-06 record frames at desktop and tablet were reworded to match: three transitions, the last complete quarter as the default period (RP-02 Q4), and open records listed. Brief wording that REP-02 waits for Dean's denominator decision is replaced, because he has now made it. How withdrawn pursuits count is not stated in RP-02 Q1, so the frame leaves it for Measure definitions FN-06. This is design direction: the definition is real only when it is published in FN-06 with a second person's approval.
 
 Export rules also differ in emphasis. RP-02 D13 asks for a second person for anything leaving Powerplants, while RP-06 sets a second person per report section. They can both stand, and a build should apply both.
 
