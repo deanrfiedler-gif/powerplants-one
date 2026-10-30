@@ -11,6 +11,7 @@ date: 2026-10-30
 - **Openers with text or invisible characters.** `--- # front matter`, `---yaml`, `--- yaml`, a no-break space, a zero-width space and a form feed beside the dashes were not recognised as opener attempts. Any first line that starts with three dashes, after spaces or invisible characters, is now one.
 - **Keys hidden by code masking.** After a spoiled opener, discovery masks Markdown code, and YAML could make a key look like code. Examples are a fence-like line inside a block scalar, and a heading-shaped comment before indented keys. The library's loose rule, a guide key line in the first 40 lines, now also reads those lines as YAML would decode them, so it catches an escaped key wherever it catches a plain one.
 - **A key cut in half at line 40.** Codex's review of #755 (5708817813) showed that the loose rule cut the file at 40 lines before decoding, so a key starting on line 40 and continued by an escaped line break was missed. The rule now reads each line that starts in the first 40 to its end, following escaped line breaks however far, in time linear in the file's length. A key starting on line 41 stays outside the rule, escaped or plain.
+- **A key hidden by a line ending in a backslash.** Codex's next review of #755 (5709304454) showed that the rule then joined a comment or plain value ending in a backslash to the line after it, which YAML does not do, and so never checked the key on that line. Each line that starts in the first 40 is now checked from its own start. Each run of continued lines is still decoded only once.
 
 **Decision: the code-example controls.** Five controls from `abd832b5` kept an escaped key inside a fenced or indented example in a file's opening lines. The same examples with a plain key had always been refused by the loose rule. Under Dean's standing order, an escaped key is now treated like a plain one. Within the first 40 lines, a guide key line in code is refused either way. The five controls move their examples past line 40, where they still show that discovery masks Markdown code. The early fenced example is now a refusal case.
 
@@ -31,5 +32,7 @@ Each is checked against the compiler and the library, beside its plain-key twin,
 - the same keys starting on line 41 stay excluded and build cleanly.
 
 Without the boundary fix, this test fails.
+
+**Backslash-prefix coverage.** A comment, a plain value or two comments ending in a backslash come before an escaped, split or plain key, in LF, CRLF and lone CR. Each of the 27 files is refused by the compiler, the library and a spawned build that writes no release file. Without the fix, this test fails.
 
 **Merge gate.** This needs final-head CI, an independent review by a model family other than Claude, adoption into #740, and the #740 → `main` gates before it lands. No operational acceptance, merge or deployment has occurred.

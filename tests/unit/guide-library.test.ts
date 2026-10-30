@@ -1357,3 +1357,39 @@ test("the loose rule reads a key that starts in its first 40 lines to its end", 
   assert.match(skip.stdout, /Guides compiled: 0\. Guides released: 0/);
   assert.equal(await writtenRelease(outside), true);
 });
+
+// A backslash at the end of a comment or a plain value does not continue the line in YAML (Codex review 5709304454 on
+// #755), so the key on the next line, escaped, split across lines or plain, must still be found.
+const backslashPrefixes: Array<[string, string[]]> = [
+  ["comment", ["# note \\"]],
+  ["plain-value", ["other: value\\"]],
+  ["two-comments", ["# a \\", "# b \\"]],
+];
+const prefixedKeys: Array<[string, string[]]> = [
+  ["escaped", [parityKey]],
+  ["split", continuedKey],
+  ["plain", ["guide_key: guide.page.sales.leads"]],
+];
+const prefixedGuides = Object.fromEntries(
+  backslashPrefixes.flatMap(([prefix, lines]) =>
+    prefixedKeys.flatMap(([key, keyLines]) =>
+      boundaryEndings.map(([ending, newline]) => [
+        `docs/guides/after-${prefix}-${key}-${ending}.md`,
+        ["--- ", "summary: |", "  ~~~", ...lines, ...keyLines, "---", ...parityBody].join("\n").replace(/\n/g, newline),
+      ]),
+    ),
+  ),
+);
+
+test("the loose rule checks the line after one that ends in a backslash", async (t) => {
+  for (const [path, content] of Object.entries(prefixedGuides)) assert.ok(compileGuide(path, content).errors.length > 0, path);
+  const result = await readGuideLibrary(await makeRoot(t, prefixedGuides), entries);
+  assert.deepEqual(result.guides, []);
+  assert.deepEqual([...new Set(result.errors.map((error) => error.path))], Object.keys(prefixedGuides).sort(), "every key after a backslash-ending line is refused");
+
+  const root = await makeRoot(t, { "docs/design/development/register.json": buildRegister, ...prefixedGuides });
+  const run = runBuild(root);
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  for (const path of Object.keys(prefixedGuides)) assert.ok(run.stderr.includes(path + ":"), path + ": missing build refusal");
+  assert.equal(await writtenRelease(root), false, "release must not be written when a key after a backslash-ending line is refused");
+});

@@ -47,22 +47,33 @@ const isMarkdown = (path: string) => /\.md$/i.test(path);
 const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
-// CRLF and a lone CR are line breaks, as they are to the compiler and to marked. Each line that starts in the first
-// 40 is also read to its end as YAML would decode it: a line ending in an escaped line break (an odd number of
-// backslashes) continues onto the next, however far, so line 40 cannot cut a key in half. Continued lines never
-// overlap, so this stays linear in the length of the file.
+// CRLF and a lone CR are line breaks, as they are to the compiler and to marked. Every line that starts in the first
+// 40 is also read, from its own start, as YAML would decode it. A line ending in an escaped line break (an odd number
+// of backslashes) continues onto the next, however far, so line 40 cannot cut a key in half. Each line is checked from
+// where it starts, so an earlier line ending in a backslash (a comment or a plain value, which YAML does not continue)
+// cannot hide the key on the next. Each run of continued lines is decoded once, so the work stays linear in the
+// length of the file.
 const escapedLineBreak = /(?:^|[^\\])(?:\\\\)*\\$/;
+const decodedGuideKeyLine = /\s*["']?guide[_-]key["']?\s*:/iy;
 const hasGuideKeyLine = (text: string) => {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
   if (lines.slice(0, guideKeyWindow).some((line) => guideKeyLine.test(line))) return true;
   for (let index = 0; index < Math.min(lines.length, guideKeyWindow); ) {
-    let last = lines[index++];
-    let line = last;
-    while (escapedLineBreak.test(last) && index < lines.length) {
-      last = lines[index++];
-      line += "\n" + last;
+    // One run of lines joined by escaped line breaks, decoded line by line, and where each line in the window starts.
+    let decoded = "";
+    const starts: number[] = [];
+    for (let first = true; index < lines.length; first = false) {
+      const line = lines[index];
+      const continues = escapedLineBreak.test(line);
+      if (index++ < guideKeyWindow) starts.push(decoded.length);
+      decoded += decodeYamlEscapes((first ? line : line.replace(/^[ \t]*/, "")).slice(0, continues ? -1 : undefined));
+      if (!continues) break;
     }
-    if (decodeYamlEscapes(line).split("\n").some((decoded) => guideKeyLine.test(decoded))) return true;
+    const keyAt = (at: number) => {
+      decodedGuideKeyLine.lastIndex = at;
+      return decodedGuideKeyLine.test(decoded);
+    };
+    if (starts.some(keyAt)) return true;
   }
   return false;
 };
