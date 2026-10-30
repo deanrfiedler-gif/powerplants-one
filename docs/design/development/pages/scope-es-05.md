@@ -14,11 +14,15 @@ Extend the current Draft quotation foundation with approval, controlled issue, d
 
 ## Desktop
 
+Accepted design: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 draws the customer quotation page at an indicative `/quote/[token]`, outside the application shell, and the Send quotation composer on the Distribution step, with 29 icon-free captures in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md). Departures D1–D15 and answers Q1–Q8 are recorded there. Nothing is built; stages QV-S1 to QV-S3 and ADR-0059 keep their own gates. The customer route is registered only when QV-S1 adds it.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 05–08 and 12 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md): the customer page at 390 and 320 with a compact customer header, the reflowed issued document and a fixed 48 px Download PDF bar, and the link notice.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,6 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted Figma design: [Quotation page design r01 captures](../../../reference/ui/estimating/quotation-page-design-r01/README.md) (29 icon-free PNGs; design compositions, not application captures). See the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md).
 - [PPO-Quotation-Approval-Issue-and-Distribution-r02.html](../../../reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html)
 
 ## Behaviour, handovers and verification

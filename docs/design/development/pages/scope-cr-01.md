@@ -14,6 +14,8 @@ Extend the existing opportunity-detail route into the full Deal Workspace: scope
 
 ## Desktop
 
+Later amendment: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 adds the Customer views line under the issued revision on the Estimates & quotations tab, and on the phone Quotes tab with a Details sheet (captures 17, 19 and 20 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md)). Only the sender, the quotation owner and the deal owner see it. Not built; it needs QV-S1.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
