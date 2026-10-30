@@ -3,10 +3,11 @@ import "../app/styles/customers.css";
 import Link from "next/link";
 import { CrmDirectory } from "./crm-directory";
 import { DuplicateCandidates } from "./duplicate-candidates";
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { FacilityRegister } from "./facility-register";
 import { SitePrimaryContact } from "./site-primary-contact";
-import { RecordTabs, RecordPanel } from "./record-ui";
+import { useCrmResource } from "./crm-state";
+import { RecordTabs, RecordPanel, useFocusFallback } from "./record-ui";
 import {
   Field,
   Observed,
@@ -260,28 +261,33 @@ function LegacyContextList({
     </>
   );
 }
-export function RelatedActivities({ type, id, observation = "" }: { type: string; id: string; observation?: string }) {
+type RelatedActivity = {
+  id: string;
+  summary: string;
+  status: string;
+  owner_name: string;
+  due_needed: boolean;
+  due_at: string | null;
+};
+export function RelatedActivities({ type, id, live = false }: { type: string; id: string; live?: boolean }) {
   const [cursor, setCursor] = useState("");
   const path = `activities?${new URLSearchParams({ object_type: type, object_id: id, ...(cursor ? { cursor } : {}) })}`;
-  // Retain the selected page while remounting its read on fresh parent evidence.
-  // Unmounting also prevents an earlier in-flight read restoring revoked data.
-  return <RelatedActivitiesPage key={observation} path={path} cursor={cursor} setCursor={setCursor} />;
-}
-function RelatedActivitiesPage({ path, cursor, setCursor }: { path: string; cursor: string; setCursor: (cursor: string) => void }) {
-  const r = useResource<
-    Envelope<{
-      id: string;
-      summary: string;
-      status: string;
-      owner_name: string;
-      due_needed: boolean;
-      due_at: string | null;
-    }>
-  >(path);
+  // A live list re-reads quietly so rows, focus and scroll survive a routine
+  // refresh. A denied, failed or overdue read clears it (PPO-SITE-FOLLOW-UP-FOCUS-DEC).
+  const quiet = useCrmResource<Envelope<RelatedActivity>>(live ? path : null, true, true),
+    once = useResource<Envelope<RelatedActivity>>(live ? null : path),
+    r = live ? quiet : once;
+  const section = useRef<HTMLElement>(null),
+    heading = useRef<HTMLHeadingElement>(null);
+  useFocusFallback(section, heading);
+  const turn = (next: string) => {
+    heading.current?.focus();
+    setCursor(next);
+  };
   return (
-    <section className="detail-section">
-      <h2>Owned follow-up</h2>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+    <section ref={section} className="detail-section">
+      <h2 ref={heading} tabIndex={-1}>Owned follow-up</h2>
+      <ReadState loading={r.loading} error={r.error} retry={r.reload} focusOnError={!live} />
       {r.data && !r.loading && !r.error && (
         <>
           <p>{r.data.items.length} permitted linked activities on this page. Later pages are excluded.</p>
@@ -306,8 +312,8 @@ function RelatedActivitiesPage({ path, cursor, setCursor }: { path: string; curs
             ))
           )}
           <div className="actions">
-            {cursor && <button className="secondary" onClick={() => setCursor("")}>First linked activities</button>}
-            {r.data.next_cursor && <button className="secondary" onClick={() => setCursor(r.data!.next_cursor!)}>Next linked activities</button>}
+            {cursor && <button className="secondary" onClick={() => turn("")}>First linked activities</button>}
+            {r.data.next_cursor && <button className="secondary" onClick={() => turn(r.data!.next_cursor!)}>Next linked activities</button>}
             <Link href="/work">Open My Work</Link>
           </div>
         </>

@@ -1,13 +1,15 @@
 ---
-title: Site follow-up focus proposal for Dean's choice
+title: Site follow-up list keeps keyboard focus across refreshes
 date: 2026-10-31
 ---
 
-The [proposal](../decisions/site-follow-up-focus.md) answers the open question in the [25 October fragment](2026-10-25-p11-journey-pages-site-follow-ups-across-cs-04-refreshes.md): how to stop the 15-second refresh of the Site page's Owned follow-up list from taking keyboard focus, without weakening the rule that revoked data must not stay on screen. It recommends keeping the list on screen during a routine refresh and clearing it only when a read is denied or fails, or the source turns Restricted or Unavailable. Dean has not yet chosen. [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), still open and unmerged, specifies the alternative of clearing and restoring focus, so this choice settles which goes forward.
+This closes the open question in the [25 October fragment](2026-10-25-p11-journey-pages-site-follow-ups-across-cs-04-refreshes.md). Dean chose option (a) of the [decision record](../decisions/site-follow-up-focus.md) on 31 October 2026, and it is now built. The Site page's Owned follow-up list stays on screen during its 15-second refresh, keeping rows, focus and scroll. It still clears when a read is denied, fails or stays unanswered past the next one, and it is removed at once when the Follow-ups source turns Restricted or Unavailable. Focus moves to a heading when a focused control is removed and when the user pages. [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), open and unmerged, specified the alternative of clearing and restoring focus.
 
-Measured on 31 October 2026 on the real Site page (dev server, Chrome through Playwright, 1440 px, synthetic reads, 50-item page): focus was lost 4 times in 60 seconds, and at 1, 2 and 3 Tabs a second a keyboard user never reached "Next linked activities" within 150 seconds. A temporary prototype of the recommendation reached it at all three paces, and the Restricted, late-reply, denied and failed-read checks passed. Only the assertion at `sites-native.spec.ts:100` that a routine refresh empties the list failed. The prototype was removed and is not on any branch.
+Before the change, on the real Site page (dev server, Chrome through Playwright, 1440 px, synthetic reads, 50-item page), focus was lost 4 times in 60 seconds, and at 1, 2 and 3 Tabs a second a keyboard user never reached "Next linked activities" within 150 seconds. A temporary prototype reached it at all three paces. That pace test was not rerun on the build.
 
-Not checked: a screen reader, a phone viewport, the compiled application, the live API, a real window switch or the full test suite. No application, test, API, permission or migration change is made here. Second-model review of the paper is still to come, and owner visual review of the page remains pending.
+Checked locally: the six cases in `tests/browser/sites-follow-up-focus.spec.ts` pass at desktop and phone viewports and all fail on the previous code. The CS-04 follow-up case in `sites-native.spec.ts` and `quality-owned-follow-up.spec.ts` pass at both viewports. CI's browser lanes are the deciding run for the wider suite.
+
+Not checked: a screen reader, the compiled application, the live API or a real window switch. Not built: focus still falls to the document when the whole Overview read fails. Second-model review, device review and owner visual review are pending. No API, permission or migration change.
 
 <!-- decision-index -->
-[Keeping keyboard focus when the Site follow-up list refreshes](../decisions/site-follow-up-focus.md) (PPO-SITE-FOLLOW-UP-FOCUS-DEC) is a proposal for Dean's choice between three options.
+[Keeping keyboard focus when the Site follow-up list refreshes](../decisions/site-follow-up-focus.md) (PPO-SITE-FOLLOW-UP-FOCUS-DEC) records Dean's choice to keep the list on screen during routine refreshes.

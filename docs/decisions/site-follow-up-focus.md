@@ -2,20 +2,22 @@
 document_id: PPO-SITE-FOLLOW-UP-FOCUS-DEC
 date: 2026-10-31
 owner: Dean Fiedler
-status: Proposal for Dean's choice; not accepted; no application change; overlaps open PR #715
+status: Dean chose option (a) on 31 October 2026; built in PR #785; second-model review, screen-reader, device and owner visual review pending
 source_commit: 7eb4432baefcf8b098a37726b250a311f21e67dc
 versioning: git
 ---
 
 # Keeping keyboard focus when the Site follow-up list refreshes
 
-## The decision needed
+## Decision
 
-Every 15 seconds the Site page empties and redraws its Owned follow-up list (CS-04, `route:/sites/[id]`, Work and visits). Anyone using a keyboard inside the list loses their place each time. **Should the list stay on screen during a routine refresh and clear only when a read is denied or fails?**
+Before this change, the Site page emptied and redrew its Owned follow-up list every 15 seconds (CS-04, `route:/sites/[id]`, Work and visits), and anyone using a keyboard inside the list lost their place each time. Claude asked which of the options below the list should use, and recommended (a). Dean's answer, 31 October 2026: **"Option (a), keep list"**.
 
-**Recommendation: yes, option (a) below.** The access review did not ask for the list to be emptied on every routine refresh. Measured on the real page, option (a) lets a keyboard user reach "Next linked activities" at any pace tested. Every denial check that the existing test makes still passes.
+**The list stays on screen during a routine refresh. It clears only when a read is denied, fails or stays unanswered past the next one, and it is removed at once when the Follow-ups source turns Restricted or Unavailable.** The conditions below are Claude's recommended rules for building that choice. Dean chose the option they were attached to, without going through them one by one.
 
-This overlaps [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), which is open and unmerged. It specifies option (b) and defers option (a). Dean's choice here settles which of the two goes forward. No application behaviour changes until then.
+This replaces the direction in [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), which is open and unmerged, specified option (b) and deferred option (a). That PR's owner, Codex, would amend or close it.
+
+The rest of this record keeps the case as it was put to Dean. Where it says "today", it means the behaviour before this change.
 
 ## What the access review required
 
@@ -106,19 +108,21 @@ PR #715 deferred (a) because retaining rows "conflicts with the current clear-wh
 
 **(c) is the option I would reject.** The Follow-ups state only reports whether the read worked and whether more than ten active items exist (`sites.ts:219`). Each activity is filtered individually (`activityVisibility`), including on the visibility of everything it links to. One row can therefore become hidden while the state stays the same, and that row would stay on screen indefinitely. That is the gap the review found, in a different form.
 
-## Conditions on the recommendation
+## Conditions, and how each was built
 
 1. **A routine refresh is silent.** The list, focus and scroll position stay, and no loading message appears. The 15-second and window-focus re-reads continue. Use the existing quiet refresh (`useCrmResource`, also the pattern in My Work's `useWorkResource`), for the Site host only. Do not use the `retained` notice: it would speak every 15 seconds, and it applies to data kept after a failure, which this page forbids.
 2. **Every denied or failed read clears the list** (`clearOnError`), and a Restricted or Unavailable source removes it at once. Both rules are unchanged.
 3. **Old rows have a time limit.** If a re-read is still unanswered when the next one is due, clear the list. This caps a hung read at about 30 seconds, against about 15 today. The prototype did not include this.
-4. **Focus has somewhere to go when rows do vanish.** Keep a persistent heading target and `focusOnError=false` when focus is elsewhere (PR #715 items 1, 6 and 7). A focused row that disappears on a successful read moves focus to the heading.
+4. **Focus has somewhere to go when rows do vanish.** A focused control that is removed from the list moves focus to the Owned follow-up heading, which stays mounted. If the whole list is removed because the source turned Restricted or Unavailable, focus moves to the Work and visits heading. A background failure no longer takes focus from someone working elsewhere (`focusOnError={false}`). The error is still announced as an alert.
 5. **Next and First move focus to the heading** while the page loads (PR #715 item 9). Measured in the prototype: focus stays on the heading, and the next Tab lands on the new page's first link.
 
-If (a) is chosen, PR #715's items 2 to 5 and its window-return section are no longer needed, and its other rules carry over. Its owner, Codex, would amend or close it. This paper does not touch that branch.
+**Not built.** If the whole Overview read fails, the Site record is removed and focus still falls to the document. PR #715 item 1 proposes a persistent "Site view" target for this. It would change focus on every Site tab, and review of that PR raised that scope as a question, so it needs its own change. The explanation PR #715 item 9 proposes when the list returns on its first page is also not built.
 
-## Evidence for option (a)
+PR #715's items 2 to 5 and its window-return section are no longer needed. This change does not touch that branch.
 
-I tried a temporary prototype locally, then removed it. It is not on any branch.
+## Evidence
+
+Before Dean chose, I tried a temporary prototype locally, then removed it. It is not on any branch. The results below are from that prototype, which is why it has the defect described after the table.
 
 | Check | Result |
 | --- | --- |
@@ -132,14 +136,26 @@ I tried a temporary prototype locally, then removed it. It is not on any branch.
 | The same case with line 100 flipped to expect the row to stay | Passes, including the Restricted and late-reply assertions |
 | `quality-owned-follow-up.spec.ts`, unchanged | Passes |
 
-One defect to fix in a real build: the prototype moved focus to the error even when focus had moved outside the list, because it lost track after the Retry button was removed. Condition 4 needs its own test for this.
+The prototype moved focus to the error even when focus had moved outside the list, because it lost track after the Retry button was removed. The build corrects this, and `tests/browser/sites-follow-up-focus.spec.ts` covers it.
 
-**Not checked:** a screen reader, a phone viewport, the compiled application, the live API or a real operating-system window switch. Playwright's focus handling may differ from a real window, so the window-focus result needs a manual check. Reads were synthetic, and the dev server repeats first reads under React StrictMode. No full test suite was run.
+**The build,** in `tests/browser/sites-follow-up-focus.spec.ts`, has six cases, run on desktop (1440 px) and phone (390 px) viewports against the dev server with synthetic reads:
 
-## If an option is accepted
+- A routine refresh keeps rows, focus and scroll, with no loading message.
+- A keyboard walk reaches Next across a refresh, and paging keeps focus on the list.
+- A row that is no longer permitted goes, with the source state unchanged.
+- A denied or failed read clears the list and moves only the focus it displaced.
+- A Restricted source removes the list at once, and a late reply restores nothing.
+- Rows clear when a re-read is still unanswered as the next falls due.
 
-- **Tests under (a):** change `sites-native.spec.ts:100` to prove the rows stay, and add proofs for a dropped row, a failed read and the time limit. Add a keyboard walk to Next with no recovery helper. `tests/helpers/owned-follow-up.ts` and `quality-owned-follow-up.spec.ts` describe the remount in their comments, and their retry logic can be simplified. Under (c), the re-read and clearing proofs would also change.
-- **Design register, in the same PR:** correct `route-sites-id.md` and the CS-04 paragraph in `read-state.md` in place, because that specification's size is frozen. Run `npm run studio:check`. No Figma change is expected. Owner visual review stays pending.
-- **Records:** a new status fragment closes the open question in the [25 October fragment](../status/2026-10-25-p11-journey-pages-site-follow-ups-across-cs-04-refreshes.md). This record then states the choice, in Dean's words.
+All six pass on the new code and all six fail on the previous code. The pace table above is from the prototype and was not rerun on the build, whose walk runs at test speed with a forced refresh.
 
-This paper changes no application code, test, API, permission or migration. It claims no accessibility conformance or business acceptance. It has not yet had the review by a second model that an owner decision paper needs before merge.
+**Not checked:** a screen reader, the compiled application, the live API or a real operating-system window switch. Playwright's focus handling may differ from a real window, so the window-focus result needs a manual check. Reads were synthetic, and the dev server repeats first reads under React StrictMode.
+
+## What changed
+
+- **Application:** `RelatedActivities` takes `live` in place of `observation`, and only the Site host passes it. `useCrmResource` gains an optional `clearUnanswered`, and `record-ui.tsx` gains `useFocusFallback`. Other consumers of `useCrmResource` behave as before. Other `RelatedActivities` hosts keep their single read, but share the page-turn focus change and the focusable heading.
+- **Tests:** `sites-native.spec.ts` now proves the rows stay during a held re-read, and its Restricted and late-reply assertions are unchanged. `tests/helpers/owned-follow-up.ts` no longer retries a walk, and `quality-owned-follow-up.spec.ts` keeps its forced refreshes as a guard against the old failure.
+- **Design register:** `route-sites-id.md` and the CS-04 paragraph in `read-state.md` are corrected in place. No Figma change. Owner visual review stays pending.
+- **Records:** the [status fragment](../status/2026-10-31-site-follow-up-focus-proposal.md) closes the open question in the [25 October fragment](../status/2026-10-25-p11-journey-pages-site-follow-ups-across-cs-04-refreshes.md).
+
+No API, permission or migration changes. This record claims no accessibility conformance or business acceptance. It has not yet had the review by a second model that an owner decision paper needs before merge.

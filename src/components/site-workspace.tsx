@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { useCrmResource } from "./crm-state";
 import { Button, ButtonLink } from "./ui/button";
 import { RegisterTable, RegisterChip } from "./ui/register-table";
-import { RecordTabs, RecordPanel } from "./record-ui";
+import { RecordTabs, RecordPanel, useFocusFallback } from "./record-ui";
 import { WorklistMenu, WorklistPanel } from "./crm-worklist-tools";
 import { ProductIcon } from "./product-icons";
 import { SiteReadiness, SitesReadState } from "./sites-register";
@@ -57,6 +57,9 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
   const requested = params.get("tab") ?? "overview";
   const tab = tabs.includes(requested) ? requested : "overview";
   const [details, setDetails] = useState(false);
+  const followUps = useRef<HTMLDivElement>(null),
+    workHeading = useRef<HTMLHeadingElement>(null);
+  useFocusFallback(followUps, workHeading);
   const from = new URLSearchParams(params.get("from") ?? ""),
     population = new URLSearchParams();
   for (const key of [
@@ -503,13 +506,15 @@ function LoadedSite({ data, reload }: { data: Overview; reload: () => void }) {
               {tab === "equipment" && <SiteEquipment site={s} />}
             </RecordPanel>
             <RecordPanel id="site-record" tab="work" value={tab}>
-              <h2>Work and visits</h2>
+              <h2 ref={workHeading} tabIndex={-1}>Work and visits</h2>
               <p>
                 Current permitted source records. Open the source for its
                 complete history and controls.
               </p>
               <WorkRows sources={sources} />
-              {tab === "work" && sources.some(source => source.name === "Follow-ups" && ["Available", "Partial"].includes(source.state)) && <RelatedActivities type="Site" id={s.id} observation={data.observed_at} />}
+              <div ref={followUps}>
+                {tab === "work" && sources.some(source => source.name === "Follow-ups" && ["Available", "Partial"].includes(source.state)) && <RelatedActivities type="Site" id={s.id} live />}
+              </div>
             </RecordPanel>
             <RecordPanel id="site-record" tab="history" value={tab}>
               {tab === "history" && <SiteHistory id={s.id} />}

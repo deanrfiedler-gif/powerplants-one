@@ -1,2 +1,2 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
-PPO-SITE-FOLLOW-UP-FOCUS-DEC,Keeping keyboard focus when the Site follow-up list refreshes,docs/decisions/site-follow-up-focus.md,,"Proposal for Dean's choice; not accepted; no application change; overlaps open PR #715",Dean Fiedler,7eb4432baefcf8b098a37726b250a311f21e67dc,,,git,
+PPO-SITE-FOLLOW-UP-FOCUS-DEC,Keeping keyboard focus when the Site follow-up list refreshes,docs/decisions/site-follow-up-focus.md,,"Dean chose option (a) on 31 October 2026; built in PR #785; second-model review, screen-reader, device and owner visual review pending",Dean Fiedler,7eb4432baefcf8b098a37726b250a311f21e67dc,,,git,
