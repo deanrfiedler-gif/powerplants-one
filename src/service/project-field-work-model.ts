@@ -30,8 +30,17 @@ export type LinkedProject = {
   lifecycle: "Active" | "Closed";
 };
 export type LinkFacts = {
-  work_order: { company_id: string; customer_id: string; project_id: string | null };
-  project: { id: string; company_id: string; organisation_id: string; lifecycle: string };
+  work_order: {
+    company_id: string;
+    customer_id: string;
+    project_id: string | null;
+  };
+  project: {
+    id: string;
+    company_id: string;
+    organisation_id: string;
+    lifecycle: string;
+  };
   visit_started: boolean;
 };
 export type LinkRefusal = {
@@ -47,16 +56,49 @@ export function linkRefusal(
   const { work_order: w, project } = facts;
   if (action === "link") {
     if (w.project_id === project.id)
-      return { status: 409, code: "AlreadyLinked", message: "This work order already belongs to this project." };
+      return {
+        status: 409,
+        code: "AlreadyLinked",
+        message: "This work order already belongs to this project.",
+      };
     if (w.project_id)
-      return { status: 409, code: "ProjectLinkExists", message: "This work order already belongs to another project. Unlink it there first, with a reason." };
-    if (project.company_id !== w.company_id || project.organisation_id !== w.customer_id)
-      return { status: 422, code: "InvalidData", field: "project_id", message: "Choose a project for the same company and customer as this work order." };
+      return {
+        status: 409,
+        code: "ProjectLinkExists",
+        message:
+          "This work order already belongs to another project. Unlink it there first, with a reason.",
+      };
+    if (
+      project.company_id !== w.company_id ||
+      project.organisation_id !== w.customer_id
+    )
+      return {
+        status: 422,
+        code: "InvalidData",
+        field: "project_id",
+        message:
+          "Choose a project for the same company and customer as this work order.",
+      };
   } else if (w.project_id !== project.id)
-    return { status: 409, code: "VersionConflict", message: "This work order is no longer linked to this project. Refresh to see its current link." };
+    return {
+      status: 409,
+      code: "VersionConflict",
+      message:
+        "This work order is no longer linked to this project. Refresh to see its current link.",
+    };
   if (project.lifecycle !== "Active")
-    return { status: 409, code: "ClosedProject", message: "This project is closed. Reopen it through Acceptance & closeout before changing its field work." };
+    return {
+      status: 409,
+      code: "ClosedProject",
+      message:
+        "This project is closed. Reopen it through Acceptance & closeout before changing its field work.",
+    };
   if (facts.visit_started)
-    return { status: 409, code: "FieldWorkStarted", message: "A visit on this work order has started, so its project link is fixed." };
+    return {
+      status: 409,
+      code: "FieldWorkStarted",
+      message:
+        "A visit on this work order has started, so its project link is fixed.",
+    };
   return null;
 }

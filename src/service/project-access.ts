@@ -80,10 +80,18 @@ export async function authoriseCreateLink(
     }),
   );
 }
-export async function checkCreateLink(c: QueryClient, p: Principal, project_id: string) {
+export async function checkCreateLink(
+  c: QueryClient,
+  p: Principal,
+  project_id: string,
+) {
   const project = await editableProject(c, p, project_id, true);
   if (project.lifecycle !== "Active")
-    throw new AppError(409, "ClosedProject", "This project is closed. Reopen it through Acceptance & closeout before raising field work for it.");
+    throw new AppError(
+      409,
+      "ClosedProject",
+      "This project is closed. Reopen it through Acceptance & closeout before raising field work for it.",
+    );
 }
 
 // The work order read shows its project only to someone who may read that project.
@@ -96,4 +104,3 @@ export async function workOrderProject(
   const row = await readableProject(c, p, projectId);
   return row ? linkedProject(row) : null;
 }
-

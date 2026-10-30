@@ -144,9 +144,15 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
       row: { ...row, purpose: "DateAgreement", site_checks: null },
     })),
   );
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  assert.deepEqual(
+    afterRows.work_orders,
+    before.work_orders.map(({ row }) => ({ row: { ...row, project_id: null } })),
+  );
   assert.deepEqual(
     {
       ...afterRows,
+      work_orders: before.work_orders,
       policy_versions: afterRows.policy_versions.filter(
         (r) => r.row.id !== readinessV3,
       ),

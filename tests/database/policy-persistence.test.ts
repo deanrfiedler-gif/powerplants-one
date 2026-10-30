@@ -145,7 +145,9 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     // 0051 adds only a nullable relationship to existing coverage rows; retain every original value.
     const expected = name === "coverage_assessments"
       ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }))
-      : name === "contact_outcomes" ? beforeRows[name].map((row: Record<string, unknown>) => ({...row, purpose: "DateAgreement", site_checks: null})) : beforeRows[name];
+      : name === "contact_outcomes" ? beforeRows[name].map((row: Record<string, unknown>) => ({...row, purpose: "DateAgreement", site_checks: null}))
+      // 0122 adds only an unset typed project link to existing work orders.
+      : name === "work_orders" ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, project_id: null })) : beforeRows[name];
     assert.deepEqual(upgraded[name], expected);
   }
   // Seed 107 publishes readiness policy SYN-PPO-P04 v2 (field readiness gate): v1's eight criteria plus PartsReadiness.
