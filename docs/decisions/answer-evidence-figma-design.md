@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Access changed | Resolved as recommended; amends AI-01 | Only the affected statements are withdrawn (specification section 6, T2b P1), and AI-01's access-changed state now matches. Section 5 |
 | Q7 Where the full view opens | Resolved as recommended | In the same tab at `/assistant/evidence`, with Back to the answer reopening the panel where it was. A new tab would start without the page memory |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean | "Answer evidence — accepted". Section 8 |
+| Named Figma version | Saved, 31 October 2026 | "Answer evidence — accepted", at Dean's "Yes, save it". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -84,7 +84,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Four, in section 4, accepted: D2, D3, D11 and D13 |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Answer evidence — accepted", waiting for Dean |
+| Named version | "Answer evidence — accepted", saved 31 October 2026 |
 
 ## 4. Decisions, accepted
 
@@ -118,7 +118,7 @@ D2 and Q6 change frames of the accepted [Assistant AI-01 design](assistant-figma
 - **AI-01 notes card `2380:9379`:** a line records the amendment.
 - **Captures:** images 17 and 18 in [design r01](../reference/ui/my-work/answer-evidence-design-r01/README.md) show the amended AI-01 frames.
 
-The AI-01 named version "Assistant — accepted" predates these changes. "Answer evidence — accepted" will be the first named version to contain them.
+The AI-01 named version "Assistant — accepted" predates these changes. "Answer evidence — accepted" is the first named version to contain them.
 
 ## 6. Not decided and not drawn
 
@@ -137,6 +137,6 @@ Before acceptance, on 24 October 2026, Claude screenshotted every frame and stat
 - The eighteen captures are copies on the "Captures (icon-free)" page at y = 745,000 (`2845:24753` to `2845:26637`). Prototype links were removed and every Font Awesome instance was swapped for `Icon/placeholder`; a final scan found none left and no link on any copy. The Captures page's five flow starting points were kept.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/answer-evidence-design-r01/README.md). Claude viewed captures 04 and 16 and did not view the others individually.
 - After the AI-01 changes Claude viewed the summary block and the access-changed state inside Figma. The other AI-01 frames using the block were not viewed again.
-- **Named version:** "Answer evidence — accepted" waits for Dean.
+- The named Figma version "Answer evidence — accepted" was saved in the Figma desktop app on 31 October 2026 at Dean's "Yes, save it", in answer to "Shall I save the named version "Answer evidence — accepted" in Figma?", and confirmed at the top of version history. The page header and File index row were updated first, so the version carries the accepted wording.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
