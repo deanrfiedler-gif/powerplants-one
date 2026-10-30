@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-DK05-KNOWLEDGE-AUTHORING-FIGMA-DEC,Knowledge authoring design (Figma) owner decision,docs/decisions/knowledge-authoring-figma-design.md,,Owner-accepted design; implementation and customer publication separate,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,
+PPO-DK05-KNOWLEDGE-AUTHORING-FIGMA-R01,Knowledge authoring design retained captures,docs/reference/ui/knowledge-authoring/knowledge-authoring-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,retained-record,
