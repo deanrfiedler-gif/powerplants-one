@@ -14,8 +14,9 @@ Twenty-three icon-free captures with hashes are retained in [site-readiness-desi
 
 Not done:
 - The prototype flows have not been played in Present mode.
-- The named Figma version "Site readiness — accepted" waits for Dean's yes.
 - The built `/my-jobs/site-readiness` keeps its earlier layout. Rebuilding it, and the model changes it needs, each need a go-ahead.
+
+At Dean's instruction ("Yes, save it"), Claude saved the named Figma version "Site readiness — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant or parent ID changes. The rules and source texts in the frames are synthetic, and nothing on the page declares a site safe or grants work authority.
 

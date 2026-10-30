@@ -2,7 +2,7 @@
 document_id: PPO-FI05-SITE-READINESS-FIGMA-DEC
 date: 2026-10-31
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version waits for Dean's yes; rebuilding the page, its data changes and operational rules separate
+status: Owner-accepted design; named Figma version saved; rebuilding the page, its data changes and operational rules separate
 source_commit: 7eb4432baefcf8b098a37726b250a311f21e67dc
 versioning: git
 ---
@@ -40,7 +40,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Story clashes on accepted pages | Recorded, as recommended | Section 5. No accepted page was changed. Fix them in the planner story when those pages are next changed |
 | Q6 An explicit group on each requirement | Resolved as recommended | Yes. The readiness owner sets it in Access & readiness, defaulted from the kind. Powerplants One never infers a group from wording |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | **Waiting for Dean's explicit yes** | "Site readiness — accepted" is saved only on that yes |
+| Named Figma version | Saved 31 October 2026 at Dean's instruction | "Yes, save it". Section 7 |
 | Rebuilding the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -90,7 +90,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D12 in section 4, accepted |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | Waits for Dean's yes |
+| Named version | "Site readiness — accepted", saved 31 October 2026 |
 
 ## 4. What the design shows
 
@@ -130,3 +130,7 @@ Audit of 24 October 2026, by script and screenshots: Roboto only; status always 
 The 23 captures are copies on the "Captures (icon-free)" page `115:2`. A scan after the swap found no Font Awesome instance, no prototype link, and no visible vector outside a placeholder or the logo. They were exported at scale 1 and match their frames' sizes; samples were inspected by eye. The hashes are in the [captures README](../reference/ui/service/site-readiness-design-r01/README.md).
 
 Design acceptance is not functional, business or deployment acceptance. No device, accessibility or operational review is recorded. The register's visual status stays "Needs review", and no review fingerprint was copied.
+
+## 7. Named version
+
+Asked "Shall I save the named version "Site readiness — accepted"?", Dean answered: "Yes, save it". Claude saved it in the Figma desktop app on 31 October 2026 and saw it at the top of the file's version history, marked "just now", after reopening the panel. The page header's Named version field was updated just after the save; that is a text-only change after the named version.
