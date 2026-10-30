@@ -941,12 +941,23 @@
       "image_paths": [
         "docs/testing/evidence/equipment-native/eq-bulletins-1440.png",
         "docs/testing/evidence/equipment-native/eq-bulletins-390.png",
-        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png"
+        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-01-Desktop-Bulletins-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-02-Desktop-Bulletin-Record-Full-Length-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-03-Desktop-Asset-Review-Form-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-04-Desktop-Superseded-Bulletin-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-09-Tablet-Bulletins-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-10-Phone-390-Frames-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-11-Phone-320-Frames-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-12-States-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-13-States-Read-Only-And-Not-Reviewed-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-14-States-Cannot-Tell-Evidence-Superseded-r01.png"
       ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
         "docs/delivery/equipment-native-completion-handover.md",
-        "docs/testing/evidence/equipment-native/README.md"
+        "docs/testing/evidence/equipment-native/README.md",
+        "docs/decisions/bulletins-lifecycle-figma-design.md"
       ],
       "scope_status": "Native implementation; synthetic verification recorded",
       "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
@@ -990,12 +1001,18 @@
       "image_paths": [
         "docs/testing/evidence/equipment-native/eq-support-recorded-desktop.png",
         "docs/testing/evidence/equipment-native/eq-support-recorded-mobile.png",
-        "docs/testing/evidence/equipment-native/eq-support-detail-390.png"
+        "docs/testing/evidence/equipment-native/eq-support-detail-390.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-05-Desktop-Lifecycle-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-06-Desktop-Lifecycle-Record-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-07-Desktop-Sales-Aftercare-Handover-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-08-Desktop-Lifecycle-Handover-Read-Back-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-14-States-Cannot-Tell-Evidence-Superseded-r01.png"
       ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
         "docs/delivery/equipment-native-completion-handover.md",
-        "docs/testing/evidence/equipment-native/README.md"
+        "docs/testing/evidence/equipment-native/README.md",
+        "docs/decisions/bulletins-lifecycle-figma-design.md"
       ],
       "scope_status": "Native implementation; synthetic verification recorded",
       "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
@@ -12801,12 +12818,23 @@
       "image_paths": [
         "docs/testing/evidence/equipment-native/eq-bulletins-1440.png",
         "docs/testing/evidence/equipment-native/eq-bulletins-390.png",
-        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png"
+        "docs/testing/evidence/equipment-native/eq-bulletin-closure-error-390.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-01-Desktop-Bulletins-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-02-Desktop-Bulletin-Record-Full-Length-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-03-Desktop-Asset-Review-Form-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-04-Desktop-Superseded-Bulletin-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-09-Tablet-Bulletins-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-10-Phone-390-Frames-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-11-Phone-320-Frames-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-12-States-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-13-States-Read-Only-And-Not-Reviewed-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-14-States-Cannot-Tell-Evidence-Superseded-r01.png"
       ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
         "docs/delivery/equipment-native-completion-handover.md",
-        "docs/testing/evidence/equipment-native/README.md"
+        "docs/testing/evidence/equipment-native/README.md",
+        "docs/decisions/bulletins-lifecycle-figma-design.md"
       ],
       "scope_status": "Native implementation; synthetic verification recorded",
       "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
@@ -12896,12 +12924,18 @@
       "image_paths": [
         "docs/testing/evidence/equipment-native/eq-support-recorded-desktop.png",
         "docs/testing/evidence/equipment-native/eq-support-recorded-mobile.png",
-        "docs/testing/evidence/equipment-native/eq-support-detail-390.png"
+        "docs/testing/evidence/equipment-native/eq-support-detail-390.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-05-Desktop-Lifecycle-Register-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-06-Desktop-Lifecycle-Record-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-07-Desktop-Sales-Aftercare-Handover-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-08-Desktop-Lifecycle-Handover-Read-Back-r01.png",
+        "docs/reference/ui/equipment/bulletins-lifecycle-design-r01/PPO-Bulletins-Lifecycle-14-States-Cannot-Tell-Evidence-Superseded-r01.png"
       ],
       "dependencies": [
         "docs/decisions/ADR-0045-equipment-native-workflows.md",
         "docs/delivery/equipment-native-completion-handover.md",
-        "docs/testing/evidence/equipment-native/README.md"
+        "docs/testing/evidence/equipment-native/README.md",
+        "docs/decisions/bulletins-lifecycle-figma-design.md"
       ],
       "scope_status": "Native implementation; synthetic verification recorded",
       "visual_status": "Implementation captures inspected; proposed native adaptation; owner acceptance pending",
