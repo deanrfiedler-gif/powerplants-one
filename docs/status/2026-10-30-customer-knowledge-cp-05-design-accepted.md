@@ -16,11 +16,11 @@ Twenty-nine icon-free captures with hashes are retained in [customer-knowledge-d
 Checked:
 - No Font Awesome instance or stray vector is left in the capture copies.
 - No text colour differs from its bound variable, and no copy carries a prototype link.
+- The named Figma version "Customer knowledge — accepted" was saved on 31 October 2026 at Dean's "Yes, save it".
 
 Open:
 - DK-05, accepted the same day, tells the same article differently (`SYN-KA-000016` r01, not yet published on 13 Oct). The accepted CP-05 frames keep `SYN-KA-000021` r02; aligning them needs a revised capture set.
 - Guided-path authoring and the owner feedback list are not drawn on DK-05.
-- The named Figma version "Customer knowledge — accepted" is not saved yet.
 - The prototype flows have not been played in Present mode.
 
 Not done:

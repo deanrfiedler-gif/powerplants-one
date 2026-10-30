@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Reference type for guided paths | Resolved as recommended | `SYN-GH-000nnn`, separate from articles (`SYN-KA-`) |
 | Q8 Next page | Resolved as recommended; since done | Knowledge authoring · DK-05, which was drawn after this page |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean | "Customer knowledge — accepted" is not saved yet (section 7) |
+| Named Figma version | Saved 31 October 2026 | Asked who should save it, Dean answered "Yes, save it"; Claude saved "Customer knowledge — accepted" in the Figma desktop app (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D14 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | "Customer knowledge — accepted", waiting for Dean (section 7) |
+| Named version | "Customer knowledge — accepted", saved 31 October 2026 (section 7) |
 
 ## 4. What the design shows
 
@@ -115,6 +115,7 @@ The flows have not been played in Present mode.
 
 - The 29 captures are copies of the accepted frames on the "Captures (icon-free)" page at y = 560,000, named "CP-05 capture r01 · …". 340 Font Awesome instances were swapped for `Icon/placeholder`. Scans afterwards found no Font Awesome instance and no visible vector outside a placeholder or the logo, no text colour among 1,136 visible texts differing from its bound variable, and no prototype link on a copy.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/customer-portal/customer-knowledge-design-r01/README.md).
-- The named Figma version "Customer knowledge — accepted" is not saved yet.
+- The named Figma version "Customer knowledge — accepted" was saved on 31 October 2026 at Dean's "Yes, save it", and appears once in the file's version history. It was saved after the captures were exported. The only later edit recorded here is the header and notes wording that says it is saved.
+- The Captures page held 115 flow starting points at the first read during lock-in and 2 shortly afterwards, both named PL-03. A PL-03 lock-in was working on that page at the time; the cause is not established and nothing was restored. No CP-05 copy carries a prototype link, so these captures are not affected.
 - New references were checked unused in the repository and across the Figma file on 23 October 2026. A re-check on 30 October found no use of the new `SYN-KA-` or `SYN-GH-` numbers in the repository, and found the DK-05 difference in section 5.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline. CPA-11 and CPA-12 remain Not run.
