@@ -50,3 +50,7 @@ The [read-only queue contract](../../../decisions/estimating-review-queue.md) su
 
 
 The shared [Reviews & approvals register](route-estimating-reviews.md) now supplies the permission-scoped ES-04/ES-05 queue and exact native handovers at `/estimating/reviews`. Earlier standalone workflow proposals remain separate from this accepted register implementation.
+
+## Accepted record design - 30 October 2026
+
+The [Estimate review design decision](../../../decisions/estimate-review-figma-design.md) accepts the record page `/estimating/estimates/[id]/review` on the shared record layout, with [20 icon-free captures](../../../reference/ui/estimating/estimate-review-design-r01/README.md). The application is unchanged by it. Commercial approval and pricing exceptions remain Not configured, and this grants no review fingerprint or UI baseline.

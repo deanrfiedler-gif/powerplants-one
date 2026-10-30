@@ -6,7 +6,11 @@ Stable key: `route:/estimating/estimates/[id]/review`. Scope ES-04. Owner: Dean 
 
 ## Purpose and source
 
-Submit the exact saved estimate, independently review completeness/source prices/technical facts, return findings and review attributable correction. Preserve review history and applicability separately from commercial approval. r20 page type: Review / comparison with Record detail and evidence forms. Reference: [ES-04 r01](../../../reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html). Exact native desktop/mobile reference images are unavailable.
+Submit the exact saved estimate, independently review completeness/source prices/technical facts, return findings and review attributable correction. Preserve review history and applicability separately from commercial approval. r20 page type: Review / comparison with Record detail and evidence forms. Reference: [ES-04 r01](../../../reference/ui/estimate-review/PPO-Estimate-Review-and-Pricing-Exceptions-r01.html). Accepted Figma design images are in [design r01](../../../reference/ui/estimating/estimate-review-design-r01/README.md); exact native reference images are unavailable.
+
+## Accepted design
+
+The [Estimate review design decision](../../../decisions/estimate-review-figma-design.md) of 30 October 2026 moves this page onto the shared record layout, with 20 icon-free captures in [design r01](../../../reference/ui/estimating/estimate-review-design-r01/README.md). Departures D1–D12 and answers Q1–Q7 are recorded there: a review bar with one chip per review kind and "Commercial approval · Not configured"; one review tab per duty held; findings with severity, line and evidence; changed since last review from the fingerprints; pricing exceptions reading "Policy not configured"; and a handover to ES-05. Captures 01–10 are desktop, 11 tablet, 12–15 phone and 16–20 states. These are design compositions, not application captures. The built page described below is unchanged until a build is decided.
 
 ## Desktop
 
@@ -20,7 +24,7 @@ Cards stack below 900 CSS px. At 390 × 844 and 320 × 700 retain every finding,
 
 Reuse the `estimate-review` host component, shared Button/ButtonLink, fields, validation, Status and original-command recovery. Existing `est-panel` spacing is bounded legacy reuse; new colours/radii use shared tokens and avoid legacy estimate button overrides. Incoming saved estimates retain their source identities and exact bytes. Outgoing Reviewed evidence does not grant commercial approval, technical release, quote issue or downstream work.
 
-The reference's six views, queue and fictional thresholds remain reference-only. This native increment is an exact record page reached from the saved estimate. The adaptation is proposed for owner review, not an accepted visual baseline. Missing policy is Not configured. Loading, empty, unavailable, owner/reviewer/read-only, stale basis, Returned, Reviewed and unknown-original outcomes are required states.
+The reference's six views, queue and fictional thresholds remain reference-only. This native increment is an exact record page reached from the saved estimate. The built adaptation was proposed for owner review and is not an accepted visual baseline; the accepted Figma design above replaces it when a build is decided. Missing policy is Not configured. Loading, empty, unavailable, owner/reviewer/read-only, stale basis, Returned, Reviewed and unknown-original outcomes are required states.
 
 ## Evidence and guide
 
