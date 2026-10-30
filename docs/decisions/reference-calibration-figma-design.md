@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Who adopts, and how | Accepted as direction for later work; adoption stays unavailable | Dean, or an estimating manager he names, through a separate governed rule registry with versioned definition packs. Adoption invalidates dependants and never edits past estimates. Not part of ES-10's first build |
 | Q4 Where the panel appears | Resolved as recommended | ES-08 first, then Estimation Wizard lines, then Discovery costing, Automation and Fertigation once they have reviewed outcomes |
 | Q5 Rail item | Resolved as recommended; one conflict open | "Reference cases" after Cost sources with the chart-column icon, with ES-09 beside it. See section 7 |
-| Named Figma version | Waiting for Dean | Section 6 |
+| Named Figma version | Saved on Dean's instruction, 30 October 2026 | Section 6 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -109,8 +109,9 @@ Checked on the Figma page and the capture copies:
 
 Not done:
 - The two flows were linked and their targets set by script; they were not played in Figma Present mode.
-- Dean has not yet saved the named version "Reference cases & calibration — Pipedrive pattern, accepted". This pull request stays a draft until he confirms it.
 - No visual review evidence is recorded in the design register; its status stays "Needs review".
+
+Named version: asked whether he had saved it, Dean answered "Save it for me". Claude saved "Reference cases & calibration — Pipedrive pattern, accepted" in the Figma desktop app on 30 October 2026 and confirmed it at the top of the version history.
 
 ## 7. Open item: the rail
 

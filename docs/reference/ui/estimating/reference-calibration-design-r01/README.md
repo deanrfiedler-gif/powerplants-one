@@ -47,7 +47,7 @@ Every Font Awesome icon was replaced by a plain placeholder square before export
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Named version | "Reference cases & calibration — Pipedrive pattern, accepted", waiting for Dean to save it |
+| Named version | "Reference cases & calibration — Pipedrive pattern, accepted", saved by Claude on Dean's instruction after these captures were made ("Save it for me") |
 | Accepted frames | Page "Reference cases & calibration · ES-10" `2244:48064`, in image order: `2245:733046`, `2245:737030`, `2245:741363`, `2245:750791`, `2245:751205`, `2245:763200`, `2245:775017`, `2245:775528`, `2245:787972`, `2245:796591`, `2245:801087`, `2245:801197`, `2245:801342`, `2245:801453`, `2247:2647` |
 | Capture copies | Page "Captures (icon-free)", from y = 578,000, images in order: `2771:576694`, `2771:577391`, `2771:578056`, `2771:578521`, `2771:578975`, `2771:579380`, `2771:579839`, `2771:580230`, `2771:580655`, `2771:581407`, `2771:581788`, `2771:581901`, `2771:582051`, `2771:582164`, `2771:582314` |
 

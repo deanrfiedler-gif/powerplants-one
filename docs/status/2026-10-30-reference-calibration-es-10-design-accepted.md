@@ -18,8 +18,9 @@ Checked:
 Not done:
 - `/estimating/reference-cases` and the estimator panel are not built.
 - The two prototype flows have not been played in Figma Present mode.
-- Dean has not yet saved the named Figma version "Reference cases & calibration — Pipedrive pattern, accepted".
 - The rail differs between ES-10 ("Reference cases" after Cost sources) and ES-09 ("Outcomes" after Reviews & approvals). Reconciling them needs Dean's choice.
+
+Claude saved the named Figma version "Reference cases & calibration — Pipedrive pattern, accepted" on Dean's instruction: "Save it for me".
 
 No application code, route, migration, permission, rule, rate, formula, estimate or parent ID changes.
 
