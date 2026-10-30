@@ -20,9 +20,10 @@ Checked:
 
 Not done:
 - The Overview, Incidents, Recovery readiness and Release readiness views, scheduled hosted checks and alerts are not built.
-- The named Figma version "Operational health — accepted" is not saved yet.
 - Ideas I1–I7 from the audit are listed in the decision and not decided, and no restore rehearsal has been run.
 - Integrations AD-04 and the other administration proposals AD-09 draws on are still proposals; accepting AD-09 doesn't accept them.
+
+At Dean's instruction ("You save it"), Claude saved the named Figma version "Operational health — accepted" and saw it in the file's version history.
 
 No application code, route, migration, permission, grant, adapter, workflow or parent ID changes.
 

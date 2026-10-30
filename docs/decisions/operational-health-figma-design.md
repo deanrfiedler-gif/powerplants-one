@@ -50,7 +50,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Additions, D11–D16 | Accepted as recommended, 31 October 2026 | "Accept additions" |
 | Ideas I1–I7 | Not decided | Section 5 |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | Saved 31 October 2026 at Dean's instruction | "You save it" Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -171,4 +171,4 @@ Open for those pages' next change, not changed here:
 
 ## 7. Named version
 
-Named Figma version "Operational health — accepted": not saved yet. It waits for Dean, or for his explicit instruction to Claude.
+Asked who would save the named Figma version, Dean told Claude: "You save it". Claude saved "Operational health — accepted" in the Figma desktop app on 31 October 2026 and saw it at the top of the file's version history. It includes the audit additions.
