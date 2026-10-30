@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Story clock | Resolved as recommended | The brief set Tue 13 Oct 2026, 09:00, but A1 (18 October) and the terms check (16 October) come after it. The story moved to Tue 27 Oct 2026, 09:00 and its dates by 14 days. Later-example states sit in November |
 | Q6 Pinned model as a check | Resolved as recommended | "Model and SDK pinned by the build" is the fifth pre-call check. The story therefore reads 2 of 5 met and 3 open, not the 2 open of the original brief |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | Section 7 |
+| Named Figma version | Saved, 30 October 2026 | "Assistant settings — accepted", at Dean's "Yes, save it". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -79,7 +79,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D8 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | Waits for Dean: "Assistant settings — accepted" |
+| Named version | "Assistant settings — accepted", saved 30 October 2026 |
 
 ## 4. Departures, accepted
 
@@ -119,6 +119,6 @@ Before acceptance Claude checked the page for overlaps, frames outside their sec
 - The sixteen captures are copies of the accepted frames on the "Captures (icon-free)" page at y = 480,000 (`2771:560316` to `2771:568816`). Prototype links were removed and 1,122 Font Awesome instances were swapped for `Icon/placeholder`. A scan found no icon instance left and no prototype link on any copy. Claude viewed captures 03, 12 and 16 and did not view the others individually.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/settings/assistant-settings-design-r01/README.md).
 - **Captures page flows, open.** The Captures page reported 115 flow starting points at the start of this lock-in and 1 afterwards, while at least two other lock-in sessions were adding captures to it. This session's script read the list and wrote it back after making its copies, and reported 4 at that moment. Claude could not establish which script reduced the list and has not rebuilt it. The accepted pages' own flows are separate and unaffected. An earlier state remains in the file's version history.
-- The named Figma version "Assistant settings — accepted" has not been saved. It waits for Dean.
+- The named Figma version "Assistant settings — accepted" was saved in the Figma desktop app on 30 October 2026 at Dean's "Yes, save it", in answer to "Shall I save the named version "Assistant settings — accepted" in Figma?", and confirmed at the top of version history. The page header was updated first, so the version carries the accepted wording.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
