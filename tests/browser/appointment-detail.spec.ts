@@ -122,24 +122,42 @@ test.beforeEach(async ({ page }) => {
     }),
   );
 });
-test("SV04 retains the FI06 exact incident handover on desktop and both phones", async ({ page }) => {
+test("SV04 retains the FI06 exact incident handover on desktop and both phones", async ({
+  page,
+}) => {
   await fixture(page);
   let reads = 0;
   await page.route("**/api/v1/service/incidents/context?*", (route) => {
-    expect(new URL(route.request().url()).searchParams.get("appointment_id")).toBe(sv04Id(1));
+    expect(
+      new URL(route.request().url()).searchParams.get("appointment_id"),
+    ).toBe(sv04Id(1));
     reads += 1;
-    return route.fulfill({ json: { can_report: true, targets: [{
-      scope_item_id: sv04Id(70), asset_id: sv04Id(71),
-      task_description: "SYN affected motor", display_name: "SYN shade motor",
-    }] } });
+    return route.fulfill({
+      json: {
+        can_report: true,
+        targets: [
+          {
+            scope_item_id: sv04Id(70),
+            asset_id: sv04Id(71),
+            task_description: "SYN affected motor",
+            display_name: "SYN shade motor",
+          },
+        ],
+      },
+    });
   });
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(path);
     await expectAppointmentRecord(page, appointmentFixture());
-    await page.getByRole("button", { name: "Visit more actions", exact: true }).click();
-    await expect(page.getByRole("menuitem", { name: "Report an incident", exact: true })).toHaveAttribute(
-      "href", `/service/incidents/new?appointment_id=${sv04Id(1)}&scope_item_id=${sv04Id(70)}&asset_id=${sv04Id(71)}`,
+    await page
+      .getByRole("button", { name: "Visit more actions", exact: true })
+      .click();
+    await expect(
+      page.getByRole("menuitem", { name: "Report an incident", exact: true }),
+    ).toHaveAttribute(
+      "href",
+      `/service/incidents/new?appointment_id=${sv04Id(1)}&scope_item_id=${sv04Id(70)}&asset_id=${sv04Id(71)}`,
     );
     await page.keyboard.press("Escape");
     if (width <= 780) {
@@ -148,8 +166,11 @@ test("SV04 retains the FI06 exact incident handover on desktop and both phones",
       const more = page.locator("#navigation-toggle");
       await expect(more).toBeVisible();
       await more.click();
-      await expect(page.getByRole("dialog", { name: "More", exact: true })
-        .getByRole("button", { name: "Account", exact: true })).toBeVisible();
+      await expect(
+        page
+          .getByRole("dialog", { name: "More", exact: true })
+          .getByRole("button", { name: "Account", exact: true }),
+      ).toBeVisible();
       await page.keyboard.press("Escape");
       await expect(more).toBeFocused();
     }
@@ -194,7 +215,7 @@ test("SV04 shared record fits desktop, tablet and both phones, with one content 
     ).toHaveCount(0);
     await expect(
       page.getByText(
-        "Customer site-readiness recording is not available yet.",
+        "This visit's readiness policy does not include customer site readiness.",
         { exact: false },
       ),
     ).toBeVisible();
@@ -208,7 +229,10 @@ test("SV04 shared record fits desktop, tablet and both phones, with one content 
           .getByRole("button", { name: "Record contact", exact: true })
           .boundingBox())!.height,
       ).toBeGreaterThanOrEqual(44);
-      const navigation = page.getByRole("navigation", { name: "Mobile navigation", exact: true });
+      const navigation = page.getByRole("navigation", {
+        name: "Mobile navigation",
+        exact: true,
+      });
       await expect(navigation).toBeVisible();
       await expect(navigation.locator("a:visible")).toHaveCount(0);
       await expect(navigation.locator("button:visible")).toHaveCount(1);
@@ -537,4 +561,179 @@ test("SV04 contact stale refusal retains entries; uncertain save retries the exa
   await expect.poll(() => sent.length).toBe(3);
   expect(sent[2]).toEqual(sent[1]);
   expect(sent[0].recipient_id).toBe(sv04Id(4));
+});
+
+test("SV04 P4 records customer site readiness with all four checks and keeps entries on refusal", async ({
+  page,
+}) => {
+  const f = await fixture(page);
+  f.appointment.preparation = {
+    policy: {
+      id: sv04Id(90),
+      reference: "SYN-PPO-PREP-01",
+      version: 1,
+      synthetic: true,
+    },
+    schedule_version: f.appointment.schedule_version,
+    outcome: "Unknown",
+    contact_id: null,
+    opens_at: "2026-10-08T03:30:00Z",
+    confirmation_due_at: "2026-10-12T03:30:00Z",
+    late: false,
+    issue_due_at: null,
+    calendar_status: "Published lead calendar",
+    issue_deadline_blocks_dispatch: false,
+  };
+  const sent: Record<string, unknown>[] = [];
+  await page.route(
+    `**/api/v1/appointments/${sv04Id(1)}/contacts`,
+    async (route) => {
+      sent.push(route.request().postDataJSON());
+      await route.fulfill({
+        status: 409,
+        json: {
+          code: "VersionConflict",
+          message: "SYN appointment changed. Review before saving.",
+          retryable: false,
+        },
+      });
+    },
+  );
+  await page.goto(path);
+  const checks = page.getByRole("region", {
+    name: "Dispatch checks",
+    exact: true,
+  });
+  await expect(
+    checks.getByText(/Not recorded for this schedule/),
+  ).toBeVisible();
+  await checks
+    .getByRole("button", { name: "Record site readiness", exact: true })
+    .click();
+  const form = page.getByRole("region", {
+    name: "Record customer site readiness",
+    exact: true,
+  });
+  await expect(form).toBeVisible();
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect(
+    form.getByText(
+      "Choose Confirmed, Not ready or Not applicable for every check.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  expect(sent).toHaveLength(0);
+  await form
+    .getByLabel("Access arranged", { exact: true })
+    .selectOption("Confirmed");
+  await form
+    .getByLabel("Power and water available", { exact: true })
+    .selectOption("NotApplicable");
+  await form
+    .getByLabel("Equipment accessible", { exact: true })
+    .selectOption("NotReady");
+  await form
+    .getByLabel("Equipment accessible note", { exact: true })
+    .fill("SYN bench under the drive not cleared");
+  await form
+    .getByLabel("Isolation arrangements agreed", { exact: true })
+    .selectOption("Confirmed");
+  await expect(
+    form.getByText("1 check not ready: dispatch stays held.", { exact: true }),
+  ).toBeVisible();
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect(
+    page.getByText("SYN appointment changed. Review before saving.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect.poll(() => sent.length).toBe(1);
+  expect(sent[0]).toMatchObject({
+    purpose: "SiteReadiness",
+    outcome: "Confirmed",
+    recipient_id: sv04Id(4),
+    site_checks: {
+      access: { status: "Confirmed", note: "" },
+      power_water: { status: "NotApplicable", note: "" },
+      equipment: {
+        status: "NotReady",
+        note: "SYN bench under the drive not cleared",
+      },
+      isolation: { status: "Confirmed", note: "" },
+    },
+  });
+  await expect(
+    form.getByLabel("Equipment accessible", { exact: true }),
+  ).toHaveValue("NotReady");
+  await form
+    .getByRole("button", { name: "Record no answer", exact: true })
+    .click();
+  await expect.poll(() => sent.length).toBe(2);
+  expect(sent[1]).toMatchObject({
+    purpose: "SiteReadiness",
+    outcome: "NoResponse",
+  });
+});
+
+test("SV04 P4 shows a reported not-ready check from the latest site-readiness contact", async ({
+  page,
+}) => {
+  const f = await fixture(page);
+  f.appointment.preparation = {
+    policy: {
+      id: sv04Id(90),
+      reference: "SYN-PPO-PREP-01",
+      version: 1,
+      synthetic: true,
+    },
+    schedule_version: f.appointment.schedule_version,
+    outcome: "Blocked",
+    contact_id: sv04Id(91),
+    opens_at: "2026-10-08T03:30:00Z",
+    confirmation_due_at: "2026-10-12T03:30:00Z",
+    late: false,
+    issue_due_at: null,
+    calendar_status: "Published lead calendar",
+    issue_deadline_blocks_dispatch: false,
+  };
+  f.appointment.contacts = [
+    {
+      ...f.appointment.contacts[0],
+      id: sv04Id(91),
+      purpose: "SiteReadiness",
+      outcome: "Confirmed",
+      notes: "",
+      site_checks: {
+        access: { status: "Confirmed", note: "" },
+        power_water: { status: "Confirmed", note: "" },
+        equipment: { status: "NotReady", note: "SYN bench in the way" },
+        isolation: { status: "NotApplicable", note: "" },
+      },
+    },
+    ...f.appointment.contacts,
+  ];
+  await page.goto(path);
+  await expect(
+    page
+      .getByRole("region", { name: "Dispatch checks", exact: true })
+      .getByText(/reported 1 check not ready/),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByText("Site readiness · Not ready", { exact: true })
+      .filter({ visible: true })
+      .first(),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Equipment accessible · Not ready · SYN bench in the way", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Record again", exact: true }),
+  ).toBeVisible();
 });

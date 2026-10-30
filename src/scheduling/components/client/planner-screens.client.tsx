@@ -10,6 +10,7 @@ import {
   BookingContinuation,
 } from "./booking-continuation.client";
 import { BookingRecovery, useBookingCommand } from "./booking-recovery.client";
+import { SiteReadinessForm } from "./site-readiness-form.client";
 import {
   appointmentHref,
   plannerContext,
@@ -109,6 +110,7 @@ export type Appointment = {
   work_order_version: number;
   customer_commitment: string;
   preparation_status: string;
+  preparation?: import("../../site-readiness-model").SitePreparation | null;
   dispatch_hold: boolean;
   pack_requirement: string;
   cancellation_reason?: string;
@@ -131,6 +133,8 @@ export type Appointment = {
   authorisation_blockers: { field: string; message: string }[];
   contacts: {
     id: string;
+    purpose?: "DateAgreement" | "SiteReadiness" | null;
+    site_checks?: import("../../site-readiness-model").SiteChecks | null;
     outcome: string;
     channel: string;
     occurred_at: string;
@@ -1033,6 +1037,7 @@ export function AppointmentScreen({ id }: { id: string }) {
       form={!closed && mode ? <>
         {(mode === "confirm" || mode === "move" || mode === "request") && <BookingForm key={`${id}:${mode}`} appointment={a} mode={mode} onSaved={resource.reload} onClose={() => setMode(null)} />}
         {mode === "contact" && <ContactForm key={`${a.id}:${a.version}`} a={a} onSaved={resource.reload} />}
+        {mode === "readiness" && a.preparation && <SiteReadinessForm key={`${a.id}:${a.version}`} a={a} preparation={a.preparation} onSaved={() => { resource.reload(); setMode(null); }} onClose={() => setMode(null)} />}
         {mode === "cancel" && <CancelForm a={a} onSaved={resource.reload} />}
       </> : null}
       requests={a.requests.length ? a.requests.map(request => closed ? <article key={request.id}><strong>{request.source_type} · {readableRequestStatus(request.status)}</strong><p>{request.reason}</p>{request.decision_reason && <p>{request.decision_reason}</p>}</article> : <fieldset key={request.id} disabled={!current}><RequestDecision a={a} request={request} onSaved={resource.reload} /></fieldset>) : <p>No change requests. Pending requests never reserve crew or time.</p>}

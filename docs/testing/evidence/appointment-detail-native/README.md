@@ -56,3 +56,20 @@ Browser assertions also cover denied pack data, an empty appointment response, k
 The source states requiring P4/P5 and the drawn site-readiness dialog remain gated as requested. The overdue/not-ready frames therefore have no executable equivalent in this increment. Undrawn demand-link, Parts-statement and exception dialogs await design. Crew competency is labelled “Checked at confirmation” because the read does not supply a live independent pass. Missing contact roles, record positions and pack-task due dates are not invented. Existing booking forms remain inline.
 
 A current supply hold can be displayed; historical R2 cause/task context is unavailable from the existing structured appointment read and is not inferred from free-text Activity summaries. Native review should decide the visual differences; a later data contract is needed for the full R2 narrative. Owner review remains separate from automated results. No deployment or production-readiness claim is made.
+
+## P4 site-readiness recording — 30 October 2026
+
+Branch `claude/site-readiness-recording` from main `fa15714`. Local environment: Linux container, Node 22.23.4 with `--engine-strict=false` (the repository pins Node 24.21.0 and npm 11.19.0, which this container could not run), PostgreSQL 16 with `max_locks_per_transaction = 256`, migrated and seeded with `npm run db:migrate` and `db:seed`, and the installed stable Chrome 153.0.8010.12.
+
+| Check | Result |
+| --- | --- |
+| `npx tsc --noEmit` | Passed |
+| ESLint on the four changed source files | Passed |
+| `tests/unit/appointment-detail.test.ts` | 4/4 passed, including the new P4 display and action-authority case |
+| `tests/unit/booking-recovery.test.ts` | 7/7 passed, including the new typed site-readiness journal case |
+| `tests/browser/appointment-detail.spec.ts`, desktop-chromium and mobile-chromium, `--no-deps` | 16/16 passed, including the two new P4 cases |
+| `tests/database/site-readiness.test.ts` | 3/4 passed. The fourth fails with `RenderOrStorageFailure` and fails the same way on unmodified main here: the container's Chrome is below the pinned renderer version. No server code changed |
+
+The browser spec ran through a local config without the PDF renderer version gate (`globalSetup`), because the container's Chrome is 153.0.8010.12 and the gate needs a later patch; the UI spec does not render PDFs. The first browser run found a real defect: the booking recovery journal refused the new `purpose` and `site_checks` fields ("The recovery record exceeds its supported bounds. No command was sent."). The journal now accepts exactly that typed shape, and the browser and unit cases cover it.
+
+Not run here: the full unit, database, HTTP and browser suites; the compiled-application browser lane; screenshots against the Figma frames. CI on the pull request is the authoritative run. Owner visual review, device review and business acceptance remain pending.

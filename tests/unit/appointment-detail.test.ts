@@ -23,7 +23,7 @@ test("SV04 never treats missing, denied or stale pack reads as a dispatch pass",
   assert.equal(appointmentDispatch(a, p, true).title, "Ready to dispatch");
   assert.match(
     appointmentDispatch(a, p, true).detail,
-    /site readiness is not included/,
+    /policy does not include customer site readiness/,
   );
   assert.equal(
     appointmentDispatch(a, null, true).title,
@@ -32,6 +32,7 @@ test("SV04 never treats missing, denied or stale pack reads as a dispatch pass",
   assert.equal(appointmentDispatch(a, p, false).title, "Readiness unavailable");
   assert.deepEqual(appointmentActions(a, false), {
     contact: false,
+    readiness: false,
     manage: false,
     request: false,
   });
@@ -60,6 +61,7 @@ test("SV04 proposed reserves no crew; closed visits expose no editing actions", 
     a.status = status;
     assert.deepEqual(appointmentActions(a, true), {
       contact: false,
+      readiness: false,
       manage: false,
       request: false,
     });
@@ -70,4 +72,82 @@ test("SV04 proposed reserves no crew; closed visits expose no editing actions", 
   a.actual_start_at = "2026-10-13T03:30:00Z";
   assert.equal(appointmentActions(a, true).manage, false);
   assert.equal(appointmentDispatch(a, p, true).title, "Visit started");
+});
+
+const confirmed = { status: "Confirmed" as const, note: "" };
+function withPreparation(outcome: "Pass" | "Blocked" | "Unknown") {
+  const a = appointmentFixture();
+  a.preparation = {
+    policy: {
+      id: "p",
+      reference: "SYN-PPO-PREP-01",
+      version: 1,
+      synthetic: true,
+    },
+    schedule_version: a.schedule_version,
+    outcome,
+    contact_id: outcome === "Unknown" ? null : "site-contact",
+    opens_at: "2026-10-08T03:30:00Z",
+    confirmation_due_at: "2026-10-12T03:30:00Z",
+    late: false,
+    issue_due_at: null,
+    calendar_status: "Published lead calendar",
+    issue_deadline_blocks_dispatch: false,
+  };
+  if (outcome !== "Unknown")
+    a.contacts.unshift({
+      ...a.contacts[0],
+      id: "site-contact",
+      purpose: "SiteReadiness",
+      outcome: "Confirmed",
+      site_checks: {
+        access: confirmed,
+        power_water: confirmed,
+        equipment:
+          outcome === "Blocked"
+            ? { status: "NotReady", note: "Bench in the way" }
+            : confirmed,
+        isolation: { status: "NotApplicable", note: "" },
+      },
+    });
+  return a;
+}
+test("P4 site readiness shows the server-derived outcome and is recordable only before the visit starts", () => {
+  const unknown = withPreparation("Unknown");
+  assert.deepEqual(
+    [
+      appointmentChecks(unknown)[1].outcome,
+      appointmentChecks(unknown)[1].gated,
+    ],
+    ["Unknown", false],
+  );
+  assert.match(appointmentChecks(unknown)[1].detail, /Not recorded/);
+  assert.equal(appointmentActions(unknown, true).readiness, true);
+  assert.equal(appointmentActions(unknown, false).readiness, false);
+  const pass = withPreparation("Pass");
+  assert.equal(appointmentChecks(pass)[1].outcome, "Pass");
+  assert.match(appointmentChecks(pass)[1].detail, /Confirmed by/);
+  pass.preparation!.late = true;
+  assert.match(appointmentChecks(pass)[1].detail, /late/);
+  const blocked = withPreparation("Blocked");
+  assert.equal(appointmentChecks(blocked)[1].outcome, "Blocked");
+  assert.match(appointmentChecks(blocked)[1].detail, /1 check not ready/);
+  blocked.actual_start_at = "2026-10-13T03:30:00Z";
+  assert.equal(appointmentActions(blocked, true).readiness, false);
+  const noContactDuty = withPreparation("Unknown");
+  noContactDuty.actions.can_contact = false;
+  assert.equal(appointmentActions(noContactDuty, true).readiness, false);
+  const p = appointmentPackFixture();
+  p.readiness = {
+    ...p.readiness,
+    dispatch_hold: false,
+    component_ready: true,
+    reasons: [],
+  };
+  const ready = withPreparation("Pass");
+  ready.dispatch_hold = false;
+  assert.match(
+    appointmentDispatch(ready, p, true).detail,
+    /including customer site readiness/,
+  );
 });
