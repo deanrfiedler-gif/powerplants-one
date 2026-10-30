@@ -5565,7 +5565,12 @@
         "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-13-Phone-320-Frames-r01.png",
         "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-14-States-r01.png",
         "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-15-AI-01-Amended-D5-Draft-Card-r01.png",
-        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-16-AI-01-Amended-D6-Hand-Off-r01.png"
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-16-AI-01-Amended-D6-Hand-Off-r01.png",
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-17-F1-Desktop-Possible-Duplicate-r01.png",
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-18-F2-Desktop-Why-This-Value-r01.png",
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-19-F3-Desktop-Focus-Review-Full-Length-r01.png",
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-20-F1-F3-Phone-390-Frames-r01.png",
+        "docs/reference/ui/my-work/assistant-proposal-review-design-r01/PPO-Proposal-Review-21-F1-F3-States-r01.png"
       ],
       "dependencies": [
         "docs/decisions/assistant-proposal-review-figma-design.md",

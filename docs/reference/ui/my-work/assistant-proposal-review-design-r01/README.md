@@ -9,16 +9,17 @@ source_commit: 7eb4432baefcf8b098a37726b250a311f21e67dc
 
 # Proposal review design r01 — retained captures
 
-These sixteen images retain the proposal review design (`scope:AI-02`, AI proposal review and saved outcomes) that Dean accepted on 31 October 2026, with the audit and polish he accepted the same day. They cover:
+These twenty-one images retain the proposal review design (`scope:AI-02`, AI proposal review and saved outcomes) that Dean accepted on 31 October 2026, with the audit and polish and the additions F1–F3 he accepted the same day. They cover:
 - the review form inside the accepted AI-01 panel on desktop at 1440, Ready, the outcomes PPO reports, and Your proposals;
 - the full-width surface below 1280 px, at 1024;
 - the review form full screen, Saved and Outcome unknown at phone 390 and 320, and not saveable, changed since prepared and Your proposals at 390;
 - fourteen panel states;
-- AI-01's draft card and hand-off frames after the text-only story alignment that Q6 adopted. AI-01's own r01 captures are unchanged.
+- AI-01's draft card and hand-off frames after the text-only story alignment that Q6 adopted. AI-01's own r01 captures are unchanged;
+- additions F1 (possible duplicate check), F2 (why this value) and F3 (focus review), on desktop, phone 390 and in six panel states.
 
 The decisions, conformance declaration and departures are in [the design decision](../../../../decisions/assistant-proposal-review-figma-design.md). Retain these bytes unchanged; a revised design receives a new revision folder.
 
-Each image is one Figma frame exported at scale 1 at its exact frame size. Images 12–14 are frames holding copies of several frames, 40 px apart on a grey background.
+Each image is one Figma frame exported at scale 1 at its exact frame size. Images 12–14, 20 and 21 are frames holding copies of several frames, 40 px apart on a grey background.
 
 Every Font Awesome icon was replaced by a plain placeholder square before export, as [ADR-0053](../../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The Powerplants logo is the company's own. The organisations, opportunity reference, people, times, operation identifier and provider labels are synthetic fixtures; they are not adopted operating rules and grant no authority. Carl's messages are design text, not model output. The images are design compositions, not captures of the application.
 
@@ -42,6 +43,11 @@ Every Font Awesome icon was replaced by a plain placeholder square before export
 | 14 · States · fourteen panel states | [PPO-Proposal-Review-14-States-r01.png](PPO-Proposal-Review-14-States-r01.png) | 1261 × 4096 | 674,760 | `a2ea872aa8a63d9094724f3290b67fbb9406a7a4f4e3e37e735f544301cfed4a` |
 | 15 · AI-01 amended · D5 draft card, story aligned (Q6) | [PPO-Proposal-Review-15-AI-01-Amended-D5-Draft-Card-r01.png](PPO-Proposal-Review-15-AI-01-Amended-D5-Draft-Card-r01.png) | 1440 × 900 | 254,292 | `8833de16c4e1dfa710e6ee73587434725f4ba7482c6710d0afe6b7b9b986e424` |
 | 16 · AI-01 amended · D6 hand-off, story aligned (Q6) | [PPO-Proposal-Review-16-AI-01-Amended-D6-Hand-Off-r01.png](PPO-Proposal-Review-16-AI-01-Amended-D6-Hand-Off-r01.png) | 1440 × 900 | 239,057 | `125faea6452a1d3f300158f3ed5e98076aa426484f5fc47339727568e1ff7492` |
+| 17 · F1 · Desktop · Possible duplicate check | [PPO-Proposal-Review-17-F1-Desktop-Possible-Duplicate-r01.png](PPO-Proposal-Review-17-F1-Desktop-Possible-Duplicate-r01.png) | 1440 × 900 | 257,050 | `4115810c680930da7aed5b0348ff22b0672bf59826388990451fae341efbd0e2` |
+| 18 · F2 · Desktop · Why this value | [PPO-Proposal-Review-18-F2-Desktop-Why-This-Value-r01.png](PPO-Proposal-Review-18-F2-Desktop-Why-This-Value-r01.png) | 1440 × 900 | 273,106 | `52f979cc1d3f3ec0372580ede0e93ed37c912d7c44c14510b83cb0c79a69fcc8` |
+| 19 · F3 · Desktop · Focus review, full length | [PPO-Proposal-Review-19-F3-Desktop-Focus-Review-Full-Length-r01.png](PPO-Proposal-Review-19-F3-Desktop-Focus-Review-Full-Length-r01.png) | 1440 × 1834 | 380,612 | `c7733239c20c89141ac3a59bdc048c6af5ab7c7d83ca6f1edfccebc2ab823f2b` |
+| 20 · F1–F3 · Phone 390 · three frames | [PPO-Proposal-Review-20-F1-F3-Phone-390-Frames-r01.png](PPO-Proposal-Review-20-F1-F3-Phone-390-Frames-r01.png) | 1330 × 1884 | 247,337 | `7c8d6db055779a79e29810ac3fe6bb4ea0c25425cd605aac86d39658f961e481` |
+| 21 · F1–F3 · States · six panel states | [PPO-Proposal-Review-21-F1-F3-States-r01.png](PPO-Proposal-Review-21-F1-F3-States-r01.png) | 1360 × 1792 | 259,386 | `9a948a44585eac8b43a03d3a542d686cafe97c393934b2f1dadba321cfb68774` |
 
 Image 12 holds, in rows of three at 390: the review form full screen at full length, Saved and Outcome unknown; then not saveable, changed since prepared and Your proposals.
 
@@ -54,4 +60,8 @@ Image 14 holds, in rows of three:
 4. an earlier save blocking a new one; Discard draft, which asks first; changing the customer, which asks first;
 5. Your proposals with nothing to show; Your proposals failing to load.
 
-The proposed additions F1–F3 are not in these images: they are not accepted.
+Image 20 holds, left to right at 390: the possible duplicate check, why this value as a bottom sheet, and focus review at full length.
+
+Image 21 holds, in rows of three:
+1. after Not a duplicate; nothing similar; the check failed;
+2. why this value on a proposed default; on your request; a focus review section opened.
