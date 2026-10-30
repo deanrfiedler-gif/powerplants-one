@@ -10,6 +10,7 @@ import {
   supplierApproval,
   minorUnits,
   assessmentFields,
+  completionRequirementEntries,
 } from "../../src/maintenance/model";
 import {
   agreementContent,
@@ -101,4 +102,36 @@ test("unresolved assessment ownership and exact integer supplier amounts", () =>
   assert.doesNotThrow(() =>
     supplierApproval("PartiallyApproved", 500, 1000, 250),
   );
+});
+
+// M1 review (PR #770): prepared Service scope entries take at most 1,000 characters each, but a
+// retained plan requirement may hold 4,000. Every character outside whitespace survives, in order.
+test("plan completion requirements become ordered scope entries without losing text", () => {
+  const visible = (v: string) => v.replace(/\s/g, "");
+  const check = (requirement: string, count: number) => {
+    const entries = completionRequirementEntries(requirement);
+    assert.equal(entries.length, count, `${requirement.length} characters`);
+    for (const e of entries) {
+      assert.ok(e.length >= 1 && e.length <= 1000, `${e.length}`);
+      assert.equal(e, e.trim());
+    }
+    assert.equal(visible(entries.join("")), visible(requirement));
+    return entries;
+  };
+  const words = (n: number) => "SYN reviewed outcome evidence ".repeat(Math.ceil(n / 30)).slice(0, n).trim();
+  // Within the limit the requirement stays one unchanged entry.
+  assert.deepEqual(check("x".repeat(1000), 1), ["x".repeat(1000)]);
+  assert.deepEqual(check(words(1000), 1), [words(1000)]);
+  // Unbroken text is cut exactly at 1,000; worded text breaks between words.
+  assert.deepEqual(check("x".repeat(1001), 2), ["x".repeat(1000), "x"]);
+  assert.equal(check("x".repeat(4000), 4).join(""), "x".repeat(4000));
+  const worded = check(words(4000), 5);
+  for (const e of worded.slice(0, -1)) assert.ok(!/\S$/.test(e) || /(SYN|reviewed|outcome|evidence)$/.test(e), e.slice(-20));
+  assert.equal(worded.join(" "), words(4000));
+  // Line breaks inside an entry are retained; an early lone space does not force a tiny entry.
+  const lines = check(`${"a".repeat(600)}\n${"b".repeat(600)}`, 2);
+  assert.deepEqual(lines, ["a".repeat(600), "b".repeat(600)]);
+  assert.deepEqual(check(`a ${"x".repeat(1200)}`, 2).map((e) => e.length), [1000, 202]);
+  // The worst case stays within the 20-entry scope limit.
+  assert.ok(completionRequirementEntries(` ${"x".repeat(499)}`.repeat(8)).length <= 20);
 });

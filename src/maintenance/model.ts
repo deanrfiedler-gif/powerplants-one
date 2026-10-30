@@ -356,3 +356,25 @@ export function assessmentFields(v: unknown) {
     facility_id: optionalId(x.facility_id, "facility_id"),
   };
 }
+// M-R2/M-R4: a plan task's completion requirement may hold 4,000 characters, but a Service scope
+// item takes 1–20 entries of at most 1,000. Prepared scope copies the requirement as ordered
+// entries without dropping any text: each break falls at the last whitespace within the 1,000-
+// character window when that is at least halfway through it, otherwise exactly at 1,000. Every
+// break advances at least 500 characters, so a 4,000-character requirement yields at most 8 entries.
+// A requirement within the limit stays a single, unchanged entry.
+export function completionRequirementEntries(requirement: string, limit = 1000) {
+  const entries: string[] = [];
+  let rest = requirement.trim();
+  while (rest.length > limit) {
+    let at = limit;
+    for (let i = limit; i >= limit / 2; i--)
+      if (/\s/.test(rest[i])) {
+        at = i;
+        break;
+      }
+    entries.push(rest.slice(0, at).trim());
+    rest = rest.slice(at).trim();
+  }
+  if (rest) entries.push(rest);
+  return entries;
+}

@@ -27,6 +27,7 @@ import { confirmed, content } from "./packs";
 import { startInput, entry, draft, photo } from "./field";
 import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
+import { completionRequirementEntries } from "../../src/maintenance/model";
 import { noPartsNeeded } from "./readiness-gate";
 export async function serviceResult(
   p: Principal,
@@ -126,7 +127,7 @@ export async function serviceResult(
           task_kind: "Inspection",
           task_description: t.description,
           expected_outcome: t.expected_outcome,
-          completion_requirements: [t.completion_requirements],
+          completion_requirements: completionRequirementEntries(t.completion_requirements),
           required_skill_codes: ["SYN-VISUAL"],
           shutdown_condition: null,
           access_condition: null,

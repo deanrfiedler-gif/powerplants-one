@@ -14,6 +14,7 @@ import {
 } from "../../src/maintenance/receiving";
 import { workspace } from "../../src/maintenance/reads";
 import { readWorkOrder } from "../../src/service/work-orders";
+import { completionRequirementEntries } from "../../src/maintenance/model";
 import {
   agreement,
   assessment,
@@ -449,4 +450,59 @@ test("M-R4 a Partial occurrence offers one follow-on request carrying only the o
     prepareFollowOn(p, a.occurrence.id, { ...cmd, operation_id: randomUUID(), expected_version: completed.receipt.record_version }),
     code("Forbidden", "RecordUnavailable"),
   );
+});
+
+// M1 review (PR #770): a retained plan requirement may hold 4,000 characters while a Service scope
+// entry holds 1,000. Prepare and follow-on preparation copy it as ordered entries, losing no text.
+test("M-R2/M-R4 retained completion requirements of 1,000, 1,001 and 4,000 characters reach the Draft scope whole", async () => {
+  const words = (n: number) => "SYN reviewed outcome evidence ".repeat(Math.ceil(n / 30)).slice(0, n).trim();
+  const tasks: Task[] = [
+    { ...twoTasks()[0], completion_requirements: "x".repeat(1000) },
+    { ...twoTasks()[1], completion_requirements: "y".repeat(1001) },
+    { ...twoTasks()[0], id: randomUUID(), description: "SYN exact observation of the mixing tank", completion_requirements: words(4000) },
+  ];
+  const a = await dueOccurrence(tasks);
+  const p = a.p;
+  const prepared = await prepareWork(p, "due", a.occurrence.id, {
+    ...base(),
+    expected_version: 1,
+    assessment_id: a.entitlement,
+    owner_id: CRM.owner,
+  });
+  const original = (await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1", [a.occurrence.id]))[0];
+  // The request retains the plan's exact requirement text; the scope carries it as ordered entries.
+  assert.deepEqual(original.content.tasks.map((t: Task) => t.completion_requirements), tasks.map((t) => t.completion_requirements));
+  const scopeOf = async (workOrder: string) =>
+    (await readWorkOrder(p, workOrder)).items[0].scopes[0].items.map((i: { completion_requirements: string[] }) => i.completion_requirements);
+  const visible = (v: string) => v.replace(/\s/g, "");
+  const entries = await scopeOf(original.work_order_id);
+  assert.deepEqual(entries.map((e: string[]) => e.length), [1, 2, 5]);
+  entries.forEach((e: string[], i: number) => {
+    assert.deepEqual(e, completionRequirementEntries(tasks[i].completion_requirements));
+    assert.ok(e.every((x) => x.length <= 1000));
+    assert.equal(visible(e.join("")), visible(tasks[i].completion_requirements));
+  });
+  assert.deepEqual(entries[0], ["x".repeat(1000)]);
+  assert.equal(entries[2].join(" "), tasks[2].completion_requirements);
+  // A Partial visit leaves the two long tasks outstanding; the follow-on scope carries them whole too.
+  const s = await serviceResult(p, original.id, 63, "Partial", ["Complete", "Partial", "Partial"]);
+  const received = await receiveResult(p, "due", a.occurrence.id, {
+    ...base(),
+    expected_version: prepared.receipt.record_version,
+    request_id: original.id,
+    report_revision_id: s.report.revisions[0].id,
+    task_mapping: s.mapping,
+  });
+  assert.equal(received.receipt.state, "Partial");
+  await prepareFollowOn(p, a.occurrence.id, {
+    ...base(),
+    expected_version: received.receipt.record_version,
+    assessment_id: await assessment(p, a.revision),
+    owner_id: CRM.owner,
+  });
+  const followOn = (
+    await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1 AND follow_on_result_id IS NOT NULL", [a.occurrence.id])
+  )[0];
+  assert.deepEqual(followOn.content.tasks.map((t: Task) => t.completion_requirements), tasks.slice(1).map((t) => t.completion_requirements));
+  assert.deepEqual(await scopeOf(followOn.work_order_id), tasks.slice(1).map((t) => completionRequirementEntries(t.completion_requirements)));
 });

@@ -26,7 +26,7 @@ import { reportContext } from "../reports/context";
 import { currentAssessment } from "./assessments";
 import { planRevision } from "./plans";
 import { exactPlan } from "./warranty";
-import { agreementCurrentness } from "./model";
+import { agreementCurrentness, completionRequirementEntries } from "./model";
 import {
   agreementRevision,
   assetSnapshot,
@@ -366,7 +366,7 @@ async function preparedWorkOrder(
         task_kind: t.kind,
         task_description: t.description,
         expected_outcome: t.expected_outcome,
-        completion_requirements: [t.completion_requirements],
+        completion_requirements: completionRequirementEntries(t.completion_requirements),
         required_skill_codes: [],
         shutdown_condition: null,
         access_condition: null,
