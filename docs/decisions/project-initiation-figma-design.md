@@ -57,7 +57,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Reference | Identity |
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
-| Page | "Project initiation · PJ-01" `2883:6244`, under "— Projects —", after Projects `209:46` and before Project record page `345:2`. The page header holds the conformance declaration; the notes card `2899:14515` is in Flows and notes. File index row in the Projects table, after Projects · PJ-02 |
+| Page | "Project initiation · PJ-01" `2883:6244`, under "— Projects —", after Projects `209:46` and before Project record page `345:2`. The page header holds the conformance declaration; the notes card `2899:14515` is in Flows and notes. File index row `2929:16290` in the Projects table, after Projects · PJ-02 |
 | Desktop 1440 | Worklist `2887:137`; receiving review, full length `2890:547`; raising a question `2890:1061`; create project `2894:10413`; link decision with a site check `2894:10795`; start checklist `2894:11213`; capture an assumption `2896:13673`; return to Sales `2896:14159`; successor, history kept `2896:14640`; Project record header amendment `2896:14964`; Questions tab `2907:6005`; link an existing project `2907:6477`; prepared request `2907:6961`; Set Started `2907:7439`; source difference `2916:9645`; Over limit view `2916:22419` |
 | Tablet 1024 | Receiving review `2897:13831` |
 | Phone 390 | Review summary `2897:14251`; raise a question `2897:14392`; answer a question `2897:14451` |
