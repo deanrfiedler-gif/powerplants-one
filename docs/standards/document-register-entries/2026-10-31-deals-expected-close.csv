@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CRM-DEALS-FIGMA-R03,Deals design retained capture (Expected close amendment),docs/reference/ui/crm/deals-design-r03/README.md,r03,Retained design reference for the Expected close amendment; icon-free; not an application capture or UI baseline,Dean Fiedler,7eb4432baefcf8b098a37726b250a311f21e67dc,,,retained-record,

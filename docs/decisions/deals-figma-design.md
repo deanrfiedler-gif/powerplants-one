@@ -9,7 +9,7 @@ versioning: git
 
 # Deals Figma design
 
-**Owner:** Dean Fiedler · **Date:** 14 October 2026 · **Status:** Owner-accepted design, 24 October 2026 ([Acceptance — 24 October 2026](#acceptance--24-october-2026)). The sections from "Request and source" to "Acceptance boundary" are the 14 October proposal record, kept as written; the page they call "Deals (proposal)" is now named "Deals · CR-04".
+**Owner:** Dean Fiedler · **Date:** 14 October 2026 · **Status:** Owner-accepted design, 24 October 2026 ([Acceptance — 24 October 2026](#acceptance--24-october-2026)), with one later amendment ([Amendment — 31 October 2026](#amendment--31-october-2026)). The sections from "Request and source" to "Acceptance boundary" are the 14 October proposal record, kept as written; the page they call "Deals (proposal)" is now named "Deals · CR-04".
 
 ## Request and source
 
@@ -195,3 +195,55 @@ The deals other pages rely on stay as they were: LED propagation lighting (close
 - The 28 captures are copies of the accepted frames on the "Captures (icon-free)" page, with every Font Awesome icon swapped for `Icon/placeholder` at its original size and visibility and every prototype link removed. A layer-by-layer comparison of each copy with its source found no difference in visibility, size or text outside the swapped icons, no Font Awesome instance and no link. The hashes are in the [captures README](../reference/ui/crm/deals-design-r02/README.md).
 - Claude cannot run Present mode through the connector, so the click-through was checked structurally, not played.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+
+## Amendment — 31 October 2026
+
+This section adds an Expected close range to the Deals Filters frame. The 24 October sections above stay as written. This is a design change only: no application code, read, route, migration, permission or capability changes, and no page, scope or parent requirement ID changes.
+
+### Why
+
+Dean accepted Pipeline insights · CR-04 (`2336:155`) on 31 October 2026 with the words "Accept, lock in", which adopted the recommended answers to that page's questions. Its Q9 reads: "Yes, as a small amendment to Deals · CR-04, so both views keep the same filters. Open deals with no close date are left out unless chosen." Its D16 adds the range to the Insights filters and leaves out Sort and Page size, because they do not apply there. That lock-in did not edit this page. The record is `docs/decisions/pipeline-insights-figma-design.md` in [pull request #786](https://github.com/deanrfiedler-gif/powerplants-one/pull/786).
+
+| Item | Classification | Evidence |
+|---|---|---|
+| Add Expected close to the Deals filters | User decision, 31 October 2026, adopted through Pipeline insights Q9 | "Accept, lock in" |
+| Open deals with no close date are left out unless chosen | User decision, the same answer | Q9 |
+| Keep Sort and Page size on Deals | Accepted Deals fields, unchanged. Insights leaves them out only because they do not apply there | D16 of Pipeline insights |
+| Three pairs of fields, so the form fits one screen | Claude's layout choice, drawn for Dean's review | D16 below |
+| Named version for this amendment | Not decided. Awaits Dean | [What remains open](#what-remains-open) |
+
+### What changed on the page
+
+The Filters frame `555:6470` is the only frame changed. It is still 1440 × 960.
+
+- **Expected close group,** after Stage and before Sort. It is copied from the Filters frame `2866:39739` on Pipeline insights: the heading, the quick choices This month, Next month, Date passed and No date, and From and To (Thu 1 Oct 2026 to Sat 31 Oct 2026), with This month selected. New nodes: heading `2895:20568`, quick choices `2895:20569`, range `2895:20574`, count line `2895:20577`.
+- **Count line:** "7 of 18 open deals match, including 2 with a passed close date. Open deals with no close date are left out unless you choose No date." The second sentence is new; Insights has only the first.
+- **Three field rows:** Company and Site `2895:20565`, Next action and Stage `2895:20566`, Sort and Page size `2895:20567`, each field 228 px wide with a 16 px gap. Field order is unchanged and every existing field keeps its node ID. The form keeps its 12 px gap, and its content now ends at 770 px of the 800 px form. Before this change Page size ran past the bottom edge, and the group would otherwise have added about 200 px more.
+- **From and To chevrons:** `Icon/chevron-down`, as on every other field on this frame. The Insights copy still carries the smaller legacy `Deals/Icon/chevron`. That page was not edited.
+- **Behind the scrim:** the board stays unfiltered, showing all 18 open deals, because Done has not been pressed. The count is the form's preview.
+- **Notes card** `555:7697`: an amendment heading and copy. The section "Flows and notes" grew to fit, and "Page components (proposal)" moved down with it. No other frame moved.
+
+The count agrees with the List `555:5333` as at Thursday 15 October 2026: seven of the 18 open deals close in October, and LED propagation lighting (10 Oct) and Dosing controller replacement (11 Oct) have passed. Every open deal drawn has a close date, so No date would match none of them in this story.
+
+### Departure
+
+| ID | Departure | Today's app | Basis |
+|---|---|---|---|
+| D16 | The Filters form has an Expected close range with quick choices. Company and Site, Next action and Stage, and Sort and Page size share rows | No expected-close filter. The Forecast view groups by close month | Pipeline insights Q9. This Deals D16 is separate from D16 on that page |
+
+### Design reference
+
+[Deals design r03](../reference/ui/crm/deals-design-r03/README.md) holds one new capture, 06 Filters, copied from the frame as `2895:424975` on "Captures (icon-free)". The other 27 captures in [r02](../reference/ui/crm/deals-design-r02/README.md) still show the current design, and all 28 r02 files stay unchanged.
+
+### What remains open
+
+- **Named version.** No version has been saved for this amendment. The r02 version "Deals · CR-04 — Pipedrive pattern, accepted" predates it.
+- **Phone.** Phone 320 Search and filter `2369:818269` has no Expected close. The brief covered the desktop frame only, so the phone still differs until it is changed.
+- **Building it.** The filter needs its own pull request, including how the two views read the range.
+
+### Verification
+
+- The form was checked by screenshot inside Figma at scale 1, and by reading each visible child's position: no overlap, and no row wider than the form. A first read showed the Sort row sitting inside the group; it was moved to the end of the form and confirmed in a separate call and a second screenshot.
+- A page check found no Section overlapping another and no node outside its Section. The two flow names are unchanged, and the existing Close and Done links were not touched. Present mode was not played.
+- The capture copy was compared with the frame layer by layer across 1,381 layers: no difference in visibility, size or text outside the swapped icons. All 269 icon instances are `Icon/placeholder` and no prototype link remains.
+- Nothing is built, so there is no application or device evidence, and this record implies no visual review of the application.

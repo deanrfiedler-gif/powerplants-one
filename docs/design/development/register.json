@@ -8219,7 +8219,8 @@
         "docs/reference/ui/crm/deals-design-r02/PPO-Deals-25-State-Stale-Results-r02.png",
         "docs/reference/ui/crm/deals-design-r02/PPO-Deals-26-State-Partial-Page-r02.png",
         "docs/reference/ui/crm/deals-design-r02/PPO-Deals-27-State-Card-Hover-r02.png",
-        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-28-State-Row-Hover-r02.png"
+        "docs/reference/ui/crm/deals-design-r02/PPO-Deals-28-State-Row-Hover-r02.png",
+        "docs/reference/ui/crm/deals-design-r03/PPO-Deals-06-Desktop-Filters-r03.png"
       ],
       "dependencies": [
         "src/components/crm-insights.tsx",
