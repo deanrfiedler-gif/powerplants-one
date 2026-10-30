@@ -39,7 +39,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 When an offline copy is out of date | Resolved as recommended | Whenever the phone is offline, and after 7 days without a check. Saved copies are checked at every sync; a withdrawal removes the copy from offline use at the next check but keeps it in Saved with its reason |
 | Q6 Story differences between pages | Resolved as recommended | M-4 is `SYN-AST-000146`, serial `SYN-M40-219102` (the Search page, same date), model SM-40, with no make named, so no synthetic article reads as a manufacturer's procedure. Other pages are aligned as each is accepted. Equipment gains a "Knowledge for this equipment" link there (section 5) |
 | Accept the design | User decision, 30 October 2026 | Quoted above |
-| Named Figma version | Waits for Dean | "Knowledge — accepted" is not yet saved. Saving it is Dean's step (section 7) |
+| Named Figma version | User decision, 31 October 2026; saved by Claude | Asked whether he would save "Knowledge — accepted" himself or have Claude do it, Dean replied "You save it" (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D12 in section 4, accepted |
 | Status | Owner-accepted design, 30 October 2026 |
 | Decision record | This file |
-| Named version | "Knowledge — accepted", waits for Dean (section 7) |
+| Named version | "Knowledge — accepted", saved 31 October 2026 (section 7) |
 
 ## 4. What the design shows
 
@@ -124,5 +124,5 @@ Before presenting on 23 October 2026, Claude screenshotted every UI frame and ra
 - The 21 captures are copies of the frames on the "Captures (icon-free)" page, from y = 480,000. Prototype links were removed, hidden menus were left out, and each Font Awesome instance was swapped for `Icon/placeholder` (`67:77`). A scan after the swap found no Font Awesome instance and no visible vector outside a placeholder or the logo, and no prototype link.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/knowledge/knowledge-design-r01/README.md).
 - The prototype flows were not played in Present mode.
-- The named Figma version is not saved. Dean saves "Knowledge — accepted" in the Figma desktop app, and this record is then updated.
+- On Dean's "You save it", Claude saved the named version "Knowledge — accepted" in the Figma desktop app on 31 October 2026, and the version history lists it. The page header's Named version field was updated just before the save, so the version holds that wording; the captures are frames only and did not change.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline. AT-20 and AT-37 remain open.

@@ -14,12 +14,12 @@ Twenty-one icon-free captures with hashes are retained in [knowledge-design-r01]
 
 Checked:
 - No Font Awesome instance, stray vector or prototype link is left in the capture copies.
+- The named Figma version "Knowledge — accepted", saved by Claude on 31 October 2026 on Dean's "You save it", is listed in the version history.
 
 Corrected at lock-in:
 - The navigation placement frame's More › Shared records excerpt had collapsed to an empty box when Dean accepted, and Claude had wrongly reported screenshotting every frame. The list now shows as D1 and Q3 describe; the decision record and notes card state this.
 
 Not done:
-- The named Figma version "Knowledge — accepted" waits for Dean.
 - The prototype flows were not played in Present mode.
 - `/knowledge` is not built, and the accepted links on Equipment, My jobs and Job pack are not drawn on those pages.
 
