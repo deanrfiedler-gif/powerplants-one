@@ -5,9 +5,12 @@ import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
 import { hasPermission, type QueryClient } from "../platform/permissions";
 import { invalid, object, uuid } from "../shared/validation";
+import { readSchedule } from "../projects/service";
+import type { Schedule } from "../projects/model";
 import {
   editableProject,
   projectLinkAvailable,
+  readableProject,
   refuse,
   type ProjectFacts,
 } from "./project-access";
@@ -213,6 +216,24 @@ export async function projectFieldWork(
         )),
     });
   return { items, can_link };
+}
+
+// GET /projects/:id: the existing schedule read plus the project's field work. The field work is
+// read in its own transaction after the schedule and re-checks project read; the Projects service
+// itself is unchanged.
+export async function readProjectSchedule(
+  p: Principal,
+  id: string,
+  input: unknown = {},
+): Promise<Schedule> {
+  const schedule = await readSchedule(p, id, input);
+  const field_work = await transaction(async (c) => {
+    const project = await readableProject(c, p, schedule.project.id);
+    return project
+      ? projectFieldWork(c, p, project)
+      : { items: [], can_link: false };
+  });
+  return { ...schedule, field_work };
 }
 
 // Work orders the caller could link: same company and customer, unlinked, no started visit, and

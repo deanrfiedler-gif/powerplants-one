@@ -10,9 +10,10 @@ import { localConfig } from "../../src/platform/config";
 import { createSession, type Principal } from "../../src/platform/identity";
 import { AppError } from "../../src/platform/errors";
 import { reset } from "../../scripts/database";
-import { createProject, readSchedule } from "../../src/projects/service";
+import { createProject } from "../../src/projects/service";
 import { createWorkOrder, readWorkOrder } from "../../src/service/work-orders";
 import {
+  readProjectSchedule as readSchedule,
   fieldWorkCandidates,
   linkWorkOrderProject,
   unlinkWorkOrderProject,
