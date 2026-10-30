@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, microphone 
 | Q6 Real-phone testing | Resolved as recommended | AI2 acceptance on a current iPhone and a current Android phone, with Australian speakers, in a glasshouse with fans running, a ute with the engine on and a plant room. Results recorded per device and condition, apart from browser emulation (AIA-19) |
 | Q7 Always showing the read-back | Resolved as recommended | Yes, for every name, number and date in the pilot. Consider skipping fully confident items only after measuring corrections |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | "Voice capture — accepted" waits for Dean's yes. Section 7 |
+| Named Figma version | Saved, 31 October 2026 | "Voice capture — accepted", at Dean's "Yes, save it". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -80,7 +80,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Seven, accepted: marked in section 4 |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Voice capture — accepted", waits for Dean's yes |
+| Named version | "Voice capture — accepted", saved 31 October 2026 |
 
 ## 4. What the design shows
 
@@ -125,5 +125,6 @@ This is text only and changes no accepted decision. No other page was edited: AI
 - Moving the eight parts and seven icons left the eight parts' instance counts unchanged (22, 4, 44, 9, 12, 3, 8 and 16). A screenshot after the move showed button labels intact.
 - The nine captures are copies on the "Captures (icon-free)" page at y = 1,040,000 (`2915:449092`, `2915:449798`, `2915:450555`, `2915:451299`, `2915:452144`, `2915:453175`, `2915:454819`, `2915:456466`, `2915:457183`). 1,115 Font Awesome instances were swapped for `Icon/placeholder`, a scan found none left, and prototype links were cleared from each copy.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/voice-capture-design-r01/README.md). Image 06 was re-laid in two rows after its first export hit Figma's 4,096 px limit.
+- The named Figma version "Voice capture — accepted" was saved in the Figma desktop app on 31 October 2026 at Dean's "Yes, save it", in answer to "Shall I save the named version "Voice capture — accepted" in Figma?", and confirmed at the top of version history. The page header and File index row were updated first, so the version carries the accepted wording.
 - Claude viewed the phone 390 composite and the File index row after the move, and each frame group when it was drawn. Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application, microphone, device, Australian-speech, noisy-condition or screen-reader evidence. Q6 sets that test plan; none of it has been run. The captures are design compositions, not application captures, and set no UI baseline.
