@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Recording a review while a definition is In review | Resolved as recommended | Allowed. The review states the version and its status, and adopts nothing |
 | Q7 REP-02 denominator | User decision, 31 October 2026; design direction only | RP-02 Q1 governs: decided records, with open records listed and never counted as losses. This replaces the first answer, every pursuit created. Section 5 |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Not yet saved | Section 8 |
+| Named Figma version | Saved by Claude at Dean's request, 31 October 2026 | "Report definitions · RP-06 — accepted": "Save it for me". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Accepted: section 4 |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | Not yet saved: section 8 |
+| Named version | "Report definitions · RP-06 — accepted", saved on 31 October 2026 at Dean's request |
 
 ## 4. What the design shows
 
@@ -130,4 +130,4 @@ Claude checked each desktop frame and the states, notes and phone sections by sc
 
 ## 8. Named version
 
-The named Figma version "Report definitions · RP-06 — accepted" has not been saved. Dean saves it, or asks Claude to. The pull request stays a draft until he confirms it, as the lock-in protocol requires.
+Dean asked Claude to save the named version: "Save it for me". Claude saved "Report definitions · RP-06 — accepted" in the Figma desktop app on 31 October 2026 and saw it at the top of the version history after reopening the panel. The saved file state includes the REP-02 rewording, the capture copies and the File index row. Afterwards only the page header's named-version field and the File index row's status text changed, to record this save. Other sessions were editing other pages of the same file, and a named version covers the whole file.
