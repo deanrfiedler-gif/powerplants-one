@@ -163,14 +163,14 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(
-    upgradedLedger.filter((r) => ![119, 120, 121].includes(Number(r.version))),
+    upgradedLedger.filter((r) => ![119, 120, 121, 122].includes(Number(r.version))),
     ledger,
   );
   assert.deepEqual(
     upgradedLedger
-      .filter((r) => [119, 120, 121].includes(Number(r.version)))
+      .filter((r) => [119, 120, 121, 122].includes(Number(r.version)))
       .map((r) => r.version),
-    [119, 120, 121],
+    [119, 120, 121, 122],
   );
   for (const name of [
     "supply_customer_delivery_events",
