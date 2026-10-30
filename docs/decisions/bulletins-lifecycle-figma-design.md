@@ -44,7 +44,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Bulletin numbering | Resolved as recommended | SYN-BUL-000nnn with revisions r1, r2 and so on, keeping the r02 reference SYN-PPO-SB-000004 r01 exactly as issued |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
 | Corrections made during lock-in | Claude's polish after acceptance, disclosed here | Section 7. None changes a decision |
-| Named Figma version | Waits for Dean | Section 8 |
+| Named Figma version | Saved 31 October 2026 | Asked who should save it, Dean answered "You save it"; Claude saved "Bulletins & lifecycle — accepted" in the Figma desktop app. Section 8 |
 | Changing the built pages | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -133,5 +133,5 @@ During lock-in, 31 October 2026, after acceptance. These are polish and correct 
 - **Captures:** all Font Awesome instances in the copies were swapped to the placeholder, 937 in all; a final pass found none left and no stray vector. Prototype links were removed from the copies, and the Captures page's flow list is unchanged.
 - **Prototype:** 28 links read back with destinations on this page. The flows were **not played in Present mode**.
 - **Visual:** every source frame was viewed by eye before capture, and captures 10, 13 and 14 as composed copies.
-- **Named version:** "Bulletins & lifecycle — accepted" waits for Dean.
+- **Named version:** "Bulletins & lifecycle — accepted" was saved on 31 October 2026 at Dean's "You save it", and reads back at the top of the file's version history. It appears twice, about a minute apart: the history panel had not refreshed after the first save, so Claude saved again. Both entries hold the same accepted design. They were saved after the captures were exported. The only later edit to this page recorded here is the header and File index wording that says it is saved.
 - **Not done:** no application check, because no application code changes; no accessibility tool, device or screen-reader test of the design; no paired comparison with the built pages.
