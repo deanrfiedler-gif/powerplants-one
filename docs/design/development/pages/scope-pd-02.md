@@ -10,9 +10,13 @@ Prepare immutable catalogue successors, compare exact predecessor content and in
 
 ## Desktop
 
+Accepted design: the [Product publication design decision](../../../decisions/product-publication-figma-design.md) of 31 October 2026 covers the authoring form, comparison, publication queue, review, returned, publish, published and withdraw, with twenty-six icon-free captures in [design r01](../../../reference/ui/products/product-publication-design-r01/README.md). Where it differs from the text below, it governs; the built pages have not moved to it yet. It departs from "no new modal/drawer" and readable-card registers: Publish and Withdraw are short dialogs (P1) and the queue is a grid (P2).
+
 At 1440 × 960 and 1024 × 768, retain the shell, labelled Products workspace links and exact identity header. Use the shared padded module surface with semantic navy/green tokens, Roboto/Verdana, white bordered panels and wrapping facts. Registers use readable cards; comparisons place Before and After side by side. Keep the selected revision and evidence before consequential actions. Avoid global overrides or a second shell.
 
 ## Mobile
+
+Accepted design: captures 10–14 in [design r01](../../../reference/ui/products/product-publication-design-r01/README.md): review and the read-only comparison at 390 and 320, and the outcome sheet at 390 (D13).
 
 At 390 × 844 and 320 px, stack cards, forms and Before/After sections in source order. Fields retain readable 16 px text, touch targets and visible labels. Long UUIDs, provider keys and evidence wrap within the panel. Effective 200% reflow is checked at 720 CSS px from the 1440 desktop basis. No outer-page horizontal scrolling is permitted.
 
@@ -32,8 +36,9 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 
 ## Visual sources, departures and proof
 
-No dedicated accepted HTML or mobile image exists for this scope. This native composition is proposed for owner review.
+No dedicated accepted HTML or mobile image exists for this scope. The built native composition is proposed for owner review; the accepted Figma design is cited below.
 
+- [Product publication design r01 captures](../../../reference/ui/products/product-publication-design-r01/README.md) (accepted Figma design, icon-free)
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)
 - [Native contract](../../../contracts/products-catalogue.md)
 - [Evidence index](../../../testing/evidence/products-native/README.md)
