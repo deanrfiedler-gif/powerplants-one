@@ -82,3 +82,7 @@ New review/action UUIDs use the separate `44000000…` synthetic namespace. `DEM
 Eleven model groups and fifteen DOM simulation groups passed on the issued source. Those checks cover the central return/resubmission journey, quantities, source races, duplicate prevention, role visibility, escaping and panel-mode rules. They do not render a native browser. No fresh browser captures are supplied, and no earlier repository capture is reused as evidence for this page.
 
 Native desktop/phone/320 px/200% zoom review is still required before visual adoption. Actual API permissions, durable receipts, concurrency, restarts, source adapters, operational technical review, real calendars, stock posting, document issue, customer communication and financial authority remain separate receiving work. No recurring monitor, automation, customer portal publication or deployment is included.
+
+## Native specification continuation — 26 October 2026
+
+The [workflow reconciliation](r10-workflow-reconciliation.md#pj-07-specification-continuation--26-october-2026) records Dean's instruction to proceed with the next bounded contract task. The [native contract proposal](../contracts/project-delivery-readiness.md) and [Figma correction brief](../design/project-delivery-readiness-correction-brief.md) are its receiving specifications. They preserve the source discrepancy and issued bytes above. The standalone page's session-memory receipts are not native persistence evidence; no Figma visual acceptance, recovered r02 source or application implementation is claimed.
