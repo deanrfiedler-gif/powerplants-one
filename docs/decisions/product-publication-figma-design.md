@@ -35,7 +35,7 @@ This is a design decision. It authorises no application code, read model, route,
 | Q3 Who may publish | Resolved as recommended | Holders of `products.publish`, a product-owner duty. The author may publish after an independent review, as Morgan Lee did for CP-40 r03 on Products. Today's command requires independence for Reviewed and Returned only, so this needs no change |
 | Q4 Notifying Engineering and Estimating | Resolved as recommended; build separate | Yes: an in-app notification only, no email, to owners whose saved items link the superseded or withdrawn revision, with the exact revision link. It changes nothing. A later increment with Notifications |
 | Q5 DP-25 differs from Products | Resolved as recommended | This page keeps Dean's brief: a Model, r03 published, r04 reviewed and published. Products `653:38` shows a Variant at r01 and is not edited. The synthetic seed aligns to this page when it is built |
-| Named Figma version | Waits for Dean | "Product publication — accepted" is not saved yet. This record is updated when it is |
+| Named Figma version | Saved 31 October 2026 | Asked whether Claude should save it, Dean answered "Yes, save it"; Claude saved "Product publication — accepted" in the Figma desktop app (section 7) |
 | Building the pages | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -111,5 +111,5 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - Claude checked the frames with screenshots taken inside Figma, and scripted checks for overlaps, frames outside their section, clipped text, template leftovers and links leaving the page. The last run found none.
 - **Present mode was not run**, so the prototype links are untested in play. The tablet, phone 320 and state frames are outside the flows and were checked by screenshot and script only.
 - The 26 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance, no stray vector, no prototype link and, across 1,534 texts, no colour differing from its bound variable. They sit on the Captures page from y = 1,100,000. Two were opened and read by eye; all 26 PNG sizes match their frames.
-- The named version has not been saved at the time of this record.
+- The named version "Product publication — accepted" was saved on 31 October 2026 and seen in version history. After the save, Claude changed only the named-version wording in the page header.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.

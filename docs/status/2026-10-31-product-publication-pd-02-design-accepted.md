@@ -11,7 +11,7 @@ Dean accepted the Figma design for PD-02, catalogue authoring and publication: "
 
 Twenty-six icon-free captures with hashes are retained in [product-publication-design-r01](../reference/ui/products/product-publication-design-r01/README.md), and the design register page for `scope:PD-02` cites them.
 
-The named Figma version "Product publication — accepted" has not been saved yet.
+The named Figma version "Product publication — accepted" was saved on 31 October 2026 after Dean answered "Yes, save it".
 
 Checked:
 - Layout, overflow, clipping and off-page link scripts, and in-Figma screenshots.
