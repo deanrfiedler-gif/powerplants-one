@@ -33,7 +33,7 @@ This is a design decision. It authorises no application code, read model, migrat
 | Q6 "Answer needed by" on Clarify | Resolved as recommended; not built | An optional date shown with the question and in My Work. It is never a customer date |
 | Q7 Create discovery | Resolved as recommended | The reviewed creation in the [20 October direction](discovery-creation-journey.md) saves the exact link in the same transaction, and that is the default. This page's return link review applies only when creation saved no link or the link was refused or interrupted |
 | Accept the design | User decision, 30 October 2026 | "Accept as drawn." |
-| Named Figma version | Waits for Dean | "Sales brief page — shared record layout, accepted" is to be saved by Dean. This pull request stays in draft until he confirms it |
+| Named Figma version | User decision, 30 October 2026 | Asked whether he had saved it or Claude should, Dean answered: "Please save it". Claude saved "Sales brief page — shared record layout, accepted" in the Figma desktop app and saw it at the top of version history as Dean Fiedler's entry, "just now". Afterwards only the page header's Status and Named version fields changed |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -116,4 +116,5 @@ Loading; no access, which reads as "Sales brief not found" and shows no identiti
 - The 25 October [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md) later relinked detached top bars and bound colours across proposal pages, including this one, and the scripted check was not re-run afterwards. At lock-in only frame names, labels, the page header and the notes card's opening changed.
 - The prototype was not played in Present mode. Its links were set by script and listed.
 - The 25 captures are copies of the accepted frames with 723 Font Awesome icons swapped for `Icon/placeholder`; a check after the swap found none left. They were exported at scale 1 with the Figma connector. Hashes are in the [captures README](../reference/ui/estimating/sales-brief-page-design-r01/README.md).
+- The named version was saved on 30 October 2026 and seen in version history. It is a version of the whole file, and another session was also working in the file that day.
 - Nothing is rebuilt to this design, so there is no application or device evidence for it. This record implies no visual review of the application and no UI baseline.
