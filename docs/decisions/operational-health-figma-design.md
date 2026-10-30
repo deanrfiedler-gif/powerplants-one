@@ -11,6 +11,8 @@ versioning: git
 
 On 24 October 2026 Dean asked Claude "to design and build the 'Operational health, recovery and release readiness (AD-09)' UI page in Figma as a proposal for my review. Draw the page; do not stop at a written brief." Claude drew it and asked "Do you accept the AD-09 design with the recommended answers?". On 31 October 2026 Dean answered: "Accept as drawn". That answer was offered as accepting the design with Claude's recommendations, including departures D1–D10 and the recommended answers to Q1–Q7.
 
+The same day Dean asked Claude to "Give the pages an audit and polish", to find refinements, new features, ways to be more professional and gaps. Claude corrected the accepted frames, drew the gaps as additions with D11–D16 and Q8–Q10, listed ideas I1–I7, and asked "Do you accept the audit additions with the recommended answers?". Dean answered: "Accept additions". That answer was offered as accepting the additions, D11–D16 and the recommended answers to Q8–Q10. It decides none of the ideas.
+
 Claude drew the page from these sources:
 - the existing `/foundation`, `/admin` and `/admin/recovery/[id]` pages, their read models and `src/shell/navigation.ts`;
 - [ADR-0006](ADR-0006-p01-local-foundation.md) and [ADR-0007](ADR-0007-p02-shared-foundation.md);
@@ -41,6 +43,12 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Does a Mitigated incident block a release | Resolved as recommended | No, when a reviewer notes the release didn't cause it. Open and Investigating block (S6) |
 | Q6 Backup before a demo upgrade | Resolved as recommended | A manual confirmation by the preparer, citing the automatic backup retention, until the workflow records it. It is a proposed check, not one that exists today |
 | Q7 Should PPO read CI results itself | Resolved as recommended | Not yet. The preparer records each evidence link with its time; reading results automatically needs its own ADR |
+| Q8 Sign off from a phone | Resolved as recommended | Yes once every check has passed, with the same form: Dean uses the demo from his phone, and sign-off starts nothing. The phone release frames are drawn read-only, with the failed run as their action |
+| Q9 Rehearse a restore | Resolved as recommended | Once on a disposable copy before the next upgrade that adds real risk, then recorded in Recovery readiness. Until then it says Not proved. Running it needs its own go-ahead |
+| Q10 Does an unverified upgrade block the next review | Resolved as recommended | A warning, not a block, naming the check still waiting |
+| Audit and polish | User decision, 31 October 2026 | "Give the pages an audit and polish". Section 4 lists what changed |
+| Additions, D11–D16 | Accepted as recommended, 31 October 2026 | "Accept additions" |
+| Ideas I1–I7 | Not decided | Section 5 |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
 | Named Figma version | Not saved yet | Section 7 |
 | Building the page | Not decided | Section 5 |
@@ -51,23 +59,24 @@ This is a design decision. It authorises no application code, route, read model,
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Operational health · AD-09" `2333:797215`, last under "— Administration —". The page header `2333:797216` holds the conformance declaration; the notes card `2348:805772` is in Flows and notes. File index row `2836:394378` |
-| Desktop 1440 | Health overview `2333:797959`; Incident SYN-INC-000007 `2342:557`; Recovery item SYN-RPT-000067 `2343:801185`; Release readiness, Not ready `2345:803059`; Release readiness, Ready for demo upgrade `2345:803910`; Foundation checks `2346:802674` |
+| Desktop 1440 | Health overview `2333:797959`; Incidents register `2866:41097`; Incident SYN-INC-000007 `2342:557`; Close with reason `2866:444389`; Exceptions & recovery register `2866:41743`; Recovery item SYN-RPT-000067 `2343:801185`; Recovery readiness `2866:42429`; Release readiness, Not ready `2345:803059`; Sign off `2866:445085`; Ready for demo upgrade `2345:803910`; After the upgrade `2866:445710`; Foundation checks `2346:802674` |
 | Tablet 1024 | Health overview `2347:806400` |
-| Phone 390 | Overview after the alert `2347:806961`; Incident `2347:807808` |
-| Phone 320 | Overview after the alert `2347:807227`; Incident `2347:807918` |
-| States | S1 Loading `2347:809014`; S2 All healthy `2347:809189`; S3 A check failing `2347:809408`; S4 Results stale `2347:809607`; S5 Incident unowned `2347:809796` (phone 390); S6 Release blocked by an open incident `2347:809906`; S7 Local-only checks on the hosted demo `2346:803292` (desktop) |
-| Page parts | None new. Reused: Shell v2, Record / Header, Record / Readiness bar, Record / Section heading, Field, Grid / Header cell, Grid / Cell, Tag, Button, Tab, Attention row (AD-02), Integrations / Sync list row (phone, an AD-04 proposal part), Shell / Phone header · compact, Tab bar, Quick add |
-| Prototype | Flows "AD-09 — desktop" (from the Health overview) and "AD-09 — phone" (from the 390 overview); 38 links, none off the page |
+| Phone 390 | Overview after the alert `2347:806961`; Incident `2347:807808`; Recovery item `2866:453673`; Release readiness `2866:453889` |
+| Phone 320 | Overview after the alert `2347:807227`; Incident `2347:807918`; Recovery item `2866:453781`; Release readiness `2866:454019` |
+| States | S1 Loading `2347:809014`; S2 All healthy `2347:809189`; S3 A check failing `2347:809408`; S4 Results stale `2347:809607`; S5 Incident unowned `2347:809796` (phone 390); S6 Release blocked by an open incident `2347:809906`; S7 Local-only checks on the hosted demo `2346:803292` (desktop); S8 No access `2866:454477`; S9 Could not load `2866:454649`; S10 Retry running `2866:454149`; S11 Retry refused, source changed `2866:454259`; S12 Retry failed again `2866:454367` (phone 390) |
+| Page parts | None new. Reused: Shell v2, Record / Header, Record / Readiness bar, Record / Section heading, Field, Grid / Header cell, Grid / Cell, Grid / Checkbox cell, Grid / Row actions cell, Grid / Group band, Controls / Form field, Controls / Choice option, Toolbar search, Tag, Button, Tab, Attention row (AD-02), Integrations / Sync list row (phone, an AD-04 proposal part), Shell / Phone header · compact, Tab bar, Quick add |
+| Prototype | Flows "AD-09 — desktop" (from the Health overview), "AD-09 — phone" (from the 390 overview) and "AD-09 — phone release" (from the 390 release frame); 101 links, none off the page |
 | Story | Synthetic, section 3 |
-| Retained captures | [Operational health design r01](../reference/ui/operational-health-design-r01/README.md): 18 icon-free PNGs with hashes, from copies `2836:401355`–`2836:407159` on Captures at y = 684,341 onward |
+| Retained captures | [Operational health design r01](../reference/ui/operational-health-design-r01/README.md): 33 icon-free PNGs with hashes, from copies `2875:32516`–`2875:42635` on Captures at y = 684,341 onward |
 
 ## 3. Story and conformance
 
-Synthetic, as at Tue 13 Oct 2026, 09:00 AEST, signed in as Taylor Quinn (systems administrator, AD-01). Jordan Kim (independent reviewer, AD-01) reviews the demo upgrade gate. Dean Fiedler signs off. The phone frames are the out-of-hours moment: PPO alerts Taylor at 06:10 that the render queue is slow again, and Taylor acknowledges at 06:18. The Ready frame is Wed 14 Oct, 10:40; S6 is Wed 14 Oct, 10:15.
+Synthetic, as at Tue 13 Oct 2026, 09:00 AEST, signed in as Taylor Quinn (systems administrator, AD-01). Jordan Kim (independent reviewer, AD-01) reviews the demo upgrade gate. Dean Fiedler signs off. The phone frames are the out-of-hours moment: PPO alerts Taylor at 06:10 that the render queue is slow again, and Taylor acknowledges at 06:18. Later frames: S6 Wed 14 Oct, 10:15; Sign off 10:30; Ready 10:40; After the upgrade 15:10. The Sign off frame is signed in as Dean Fiedler, and so is the phone release frame.
 
 - Outbox: two sends blocked for SYN-RCT-000083 (MYOB refused unit BX; the release transfer is held behind it), owned in Integrations AD-04.
 - SYN-INC-000007 "Document rendering slow on hosted demo": Mitigated, owned by Taylor Quinn. Recovery items SYN-RPT-000065 and 000066 were retried and are Durable; SYN-RPT-000067 failed at 08:31 and its safe retry is ready, for SYN-PPO-WO-000040.
-- SYN-REL-000004, the next demo upgrade: Not ready, because the database-5 upgrade suite failed (the Products upgrade proof still pins 117). It adds migration 0118 and seed 111.
+- SYN-REL-000004, the next demo upgrade: Not ready, because the database-5 upgrade suite failed (the Products upgrade proof still pins 117). It adds migration 0118 and seed 111. A test-only fix on Wed 09:40 moves the source, so repository checks re-run on it; the gate note stands because the migration and seed didn't change.
+- SYN-INC-000006 "Scheduled worker missed two runs": Resolved, closed in the Close with reason frame with the worker's run records as evidence.
 
 Those numbers are the story's, not the repository's. The latest migration was 117 and the latest seed 110 when the page was drawn on 24 October 2026; `main` has since moved to migration 121 with the guard moved to match. The rule the page shows is unchanged.
 
@@ -77,7 +86,7 @@ Conformance:
 
 | Item | Declaration |
 |---|---|
-| Scope identity | `scope:AD-09`; existing `/foundation`, `/admin` and `/admin/recovery/[id]`; proposed Overview, Incidents and Release readiness views under the same Support entry |
+| Scope identity | `scope:AD-09`; existing `/foundation`, `/admin` and `/admin/recovery/[id]`; proposed Overview, Incidents, Recovery readiness and Release readiness views under the same Support entry |
 | Page type (r20) | Overview / dashboard (Health overview); Record detail (Incident, Recovery item); Review / comparison (Release readiness review); Register / worklist (Foundation checks) |
 | Incoming handovers | Integrations AD-04 (connector summary, outbox sends); recovery items from document rendering and the offline field workspace; release evidence links from repository checks; people from Users and access AD-01 |
 | Outgoing handovers | Integrations AD-04 (failed sync items); Audit history AD-07 (incident, recovery and release events); each recovery item's source record; My account alert channels (later, Q2); the private demo update workflow, run by Dean and never started by PPO |
@@ -102,6 +111,22 @@ What exists today, which is the basis for showing only real checks:
 | D8 | The owner or the rota is alerted in PPO notifications when a check fails, results go stale or a queue passes its age limit. Acknowledging records it without changing status. The drawn 10-minute render queue limit is a synthetic example, not an operating threshold | NFR-11; ADR-0058 |
 | D9 | Phone: compact header "Health", grouped list rows, an alert banner; an incident record with status steps, facts and one 48 px action (Acknowledge alert, Take ownership), the rest under More. 320 keeps the same content | [Phone header amendment](phone-header-amendment.md) P1–P9 |
 | D10 | Status is always in words (tags, Slow, Stale, Local). Queue and rendering figures are stated in words, and nothing claims uptime | The brief; the scope page |
+| D11 | Evidence belongs to one source. Each check counts only for the release's exact source; a change re-runs repository checks and lapses a sign-off | Demo runbook: "confirm the applicable checks passed for the selected source" |
+| D12 | Incidents and Exceptions & recovery get grid registers with group bands across the checkbox and settings columns. Exceptions & recovery keeps the built links (Document preparation, Finance follow-up, Personal saved work), Refresh recovery cases and "up to 100 recent owned cases; not a complete backlog total" | `exception-screens.tsx`; Dean's register preference |
+| D13 | Recovery readiness, a sixth Operational health menu item, shows backup and restore evidence, recovery procedures and known limitations. It says Not proved: retention is a setting and no rehearsal is recorded. Objectives stay candidates | The [coverage audit](../reference/ui/module-page-register/PPO-HTML-Page-Coverage-Audit-r03.md)'s AD-09 scope; NFR-06; the demo runbook |
+| D14 | The steps themselves: Close with reason (reason, cause addressed, evidence) and Sign off (what you are confirming, note, what happens) | The brief; Q3 |
+| D15 | After the upgrade: the workflow's receipt and checks, then the runbook's checks by a person. A scheduled worker run is checked separately. "Verified" means on the demo only | Demo runbook, release steps 4–6 |
+| D16 | Recovery item and release readiness on the phone at 390 and 320. States S8 no access, S9 could not load (never read as down), S10 retry running, S11 retry refused because the source changed, S12 retry failed again | Scope page state list; built Stale source and attempt rules |
+
+The audit also corrected the accepted frames without changing their design:
+- The avatar showed DF on Taylor Quinn's frames.
+- The render queue said 0 failed while SYN-RPT-000067 was Failed, and that item was missing from Needs a person.
+- "Everything else is green" overlooked the waiting check.
+- The incident's timeline and audit list had no entry for SYN-RPT-000067.
+- Open incidents was labelled as an existing check and reviewed by the incident's own owner; it now says it comes with D4 and Jordan Kim reviews it.
+- The Ready frame reused Tuesday's evidence after the source changed.
+- The Ready frame's main action is now Record the upgrade run.
+- S5's hidden action sheet named the wrong incident, and a phone row's age contradicted the 06:12 moment.
 
 The release readiness checklist:
 
@@ -119,15 +144,24 @@ The release readiness checklist:
 
 ## 5. What this does not decide or build
 
-- The Overview, Incidents and Release readiness views, their read models, capabilities and records aren't built, and no capability is added to `src/platform/permissions.ts`. Each needs its own go-ahead.
+- The Overview, Incidents, Recovery readiness and Release readiness views, their read models, capabilities and records aren't built, and no capability is added to `src/platform/permissions.ts`. Each needs its own go-ahead.
 - Scheduled hosted checks and alerts aren't built. Their 5-minute interval, 15-minute staleness and 10-minute queue limit are drawn proposals, not operating policy.
 - PPO doesn't run the private demo update workflow, read CI results or change `scripts/demo-upgrade.ts`. A hosted upgrade still follows the [Azure existing-demo upgrade decision](azure-existing-demo-upgrade.md).
 - The design doesn't change backup, restore or recovery objectives (NFR-06).
-- Not drawn: an incidents register page, release history, alert thresholds in Settings, the field evidence case (drawn on AD-04), and tablet frames other than the overview.
+- No restore rehearsal is authorised by Q9 until Dean gives its go-ahead.
+- Not drawn: release history, alert thresholds in Settings, the field evidence case (drawn on AD-04), and tablet frames other than the overview.
+- Ideas, not decided; each needs Dean's go-ahead:
+  - I1: build the review's header from the migration registry (migrations, seeds, grants, testers affected).
+  - I2: a 24-hour strip of results in words per check, never an uptime percentage.
+  - I3: one alert per incident, with repeats joining the open incident.
+  - I4: a tester notice on the demo during an upgrade or open incident.
+  - I5: an incident summary drafted by the Assistant for the owner to edit.
+  - I6: a follow-up review when closing, creating owned actions.
+  - I7: an evidence pack exporting a release's checks, sign-off and receipt.
 
 ## 6. Verification
 
-Layout audit of 24 October 2026, by script and screenshots: no frame overlaps and nothing sits outside its section. Off-page links are only the shared components' hover states; all 38 navigation links stay on the page and were re-read on 31 October 2026. Capture copies: 18 frames, no Font Awesome instance and no prototype link left, one desktop and one phone copy inspected by eye.
+Layout audit of 24 October 2026, by script and screenshots: no frame overlaps and nothing sits outside its section. Re-run on 31 October 2026 after the additions, with the same result. Off-page links are only the shared components' hover states; all 101 navigation links stay on the page. Capture copies: 33 frames, no Font Awesome instance and no prototype link left. The new frames were inspected by eye.
 
 The prototype flows were **not** played in Present mode; their links were traced in code only. Design acceptance is not functional, business or deployment acceptance.
 

@@ -14,7 +14,7 @@ Extend current diagnostic/recovery foundations into operational health, incident
 
 ## Desktop
 
-Accepted design: the [Operational health design decision](../../../decisions/operational-health-figma-design.md) of 31 October 2026 covers the health overview, incident record, recovery item with safe retry, release readiness review (Not ready, Ready for demo upgrade) and Foundation checks, with eighteen icon-free captures in [design r01](../../../reference/ui/operational-health-design-r01/README.md). Departures D1–D10 and answers Q1–Q7 are recorded there. Only the existing `/foundation` and `/admin` pages are built.
+Accepted design: the [Operational health design decision](../../../decisions/operational-health-figma-design.md) of 31 October 2026 covers the health overview, incidents (register, record, close with reason), Exceptions & recovery (register, item with safe retry), Recovery readiness, the release readiness review (Not ready, Sign off, Ready for demo upgrade, After the upgrade) and Foundation checks, with thirty-three icon-free captures in [design r01](../../../reference/ui/operational-health-design-r01/README.md). Departures D1–D16 and answers Q1–Q10 are recorded there. Only the existing `/foundation` and `/admin` pages are built.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -22,7 +22,7 @@ At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order.
 
 ## Mobile
 
-Accepted design: captures 08–16 in [design r01](../../../reference/ui/operational-health-design-r01/README.md): overview and incident at 390 and 320, opened from an out-of-hours alert, and five phone states. Compact header, grouped list rows, and one 48 px action on the incident (D9).
+Accepted design: captures 14–26 and 29–33 in [design r01](../../../reference/ui/operational-health-design-r01/README.md): overview and incident at 390 and 320 opened from an out-of-hours alert, recovery item and release readiness at 390 and 320, and ten phone states. Compact header, grouped list rows, and one 48 px action on the incident (D9).
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
