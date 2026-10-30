@@ -73,3 +73,17 @@ Branch `claude/site-readiness-recording` from main `fa15714`. Local environment:
 The browser spec ran through a local config without the PDF renderer version gate (`globalSetup`), because the container's Chrome is 153.0.8010.12 and the gate needs a later patch; the UI spec does not render PDFs. The first browser run found a real defect: the booking recovery journal refused the new `purpose` and `site_checks` fields ("The recovery record exceeds its supported bounds. No command was sent."). The journal now accepts exactly that typed shape, and the browser and unit cases cover it.
 
 Not run here: the full unit, database, HTTP and browser suites; the compiled-application browser lane; screenshots against the Figma frames. CI on the pull request is the authoritative run. Owner visual review, device review and business acceptance remain pending.
+
+## Review fixes — 31 October 2026
+
+Fixes for the three findings of the Codex review of `82ee763`, after merging main `7eb4432` and the test-only reply-by date fix (PR #777). Same container: Node 22.23.4, PostgreSQL 16, Chrome 153.0.8010.12.
+
+| Check | Result |
+| --- | --- |
+| `npx tsc --noEmit`; ESLint on the changed source and test files | Passed |
+| `tests/unit/appointment-detail.test.ts`, `booking-recovery.test.ts` | 12/12 passed, including the new early-confirmation and no-answer wording case |
+| `tests/database/site-readiness.test.ts` | 5/5 passed. The acknowledgement case no longer clears the hold with SQL: it proves the contact command releases it (version +2, audit `dispatch_hold_released`), that a Not ready contact reholds and a new confirmation releases again, and that attendance then starts. The new case proves an unrelated Parts hold stays held. With the release disabled, the acknowledgement case fails |
+| `tests/http/site-readiness.test.ts` against a local server | 2/2 passed. The new case issues and renders the pack, has both technicians acknowledge, and records Confirmed, Not ready and Confirmed contacts over authenticated HTTP; the appointment and pack reads report the hold, its release and the start |
+| `tests/browser/appointment-detail.spec.ts`, desktop-chromium and mobile-chromium, `--no-deps` | 20/20 passed, including two new cases: a 409, a refresh to a genuinely newer version, the draft retained with the review notice and saved only on an explicit record; and a moved visit needing the reconfirmation box. With the old version key restored, the first new case fails |
+
+Limits. The two pack-issuing proofs render a PDF; they ran here only with an uncommitted local allowance for the container's Chrome patch in `src/platform/browser.ts`, which was reverted and is not part of the change. Without it they fail with `RenderOrStorageFailure`, as on unmodified main. The browser cases mock the API; the HTTP and database cases supply the server evidence. The editor's notices and reconfirmation box were inspected in desktop and 390 px screenshots, not against a drawn frame. Not run here: the full suites and the compiled lane. Owner visual, device, screen-reader and business acceptance remain pending.

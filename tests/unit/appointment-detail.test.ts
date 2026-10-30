@@ -151,3 +151,33 @@ test("P4 site readiness shows the server-derived outcome and is recordable only 
     /including customer site readiness/,
   );
 });
+
+test("P4 explains an early confirmation as outside the window and keeps the no-answer wording", () => {
+  // The server stores a Confirmed contact made before opens_at and derives Unknown.
+  const early = withPreparation("Pass");
+  early.preparation!.outcome = "Unknown";
+  early.contacts[0].occurred_at = "2026-10-07T23:00:00Z";
+  const detail = appointmentChecks(early)[1].detail;
+  assert.match(detail, /^Outside the confirmation window/);
+  assert.match(
+    detail,
+    /recorded before the window opened, so it does not count/,
+  );
+  assert.match(detail, /new confirmation .* within the current window/);
+  assert.match(
+    detail,
+    /8 Oct 2026, 13:30 AEST \(UTC\+10\) to 12 Oct 2026, 13:30 AEST/,
+  );
+  assert.doesNotMatch(detail, /not a confirmation/);
+  // A no answer is not a confirmation, inside the window or before it.
+  const noAnswer = withPreparation("Pass");
+  noAnswer.preparation!.outcome = "Unknown";
+  noAnswer.contacts[0].outcome = "NoResponse";
+  for (const occurred_at of ["2026-10-09T01:00:00Z", "2026-10-07T23:00:00Z"]) {
+    noAnswer.contacts[0].occurred_at = occurred_at;
+    assert.equal(
+      appointmentChecks(noAnswer)[1].detail,
+      "Not confirmed yet: the last contact was not a confirmation.",
+    );
+  }
+});

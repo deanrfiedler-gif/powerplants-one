@@ -1,7 +1,8 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Field, Stamp } from "../../../components/business-ui";
+import { formatRange } from "../../../shell/date-format";
 import { appointmentHref, safePlannerReturn } from "../../navigation";
 import {
   siteCheckKeys,
@@ -44,16 +45,31 @@ const statusWords: Record<SiteCheck["status"], string> = {
 };
 export const siteCheckStatusWords = statusWords;
 
+// The saved appointment facts an unsaved draft was entered against. The draft is
+// held apart from the read version, so refreshing after a stale refusal keeps it.
+type DraftBasis = Pick<
+  Appointment,
+  "version" | "schedule_version" | "start_at" | "end_at"
+>;
+const basisOf = (a: Appointment): DraftBasis => ({
+  version: a.version,
+  schedule_version: a.schedule_version,
+  start_at: a.start_at,
+  end_at: a.end_at,
+});
+
 export function SiteReadinessForm({
   a,
   preparation,
   onSaved,
   onClose,
+  onRefresh,
 }: {
   a: Appointment;
   preparation: SitePreparation;
   onSaved: () => void;
   onClose: () => void;
+  onRefresh: () => void;
 }) {
   const [channel, setChannel] = useState("ManualPhone"),
     [choices, setChoices] = useState<Record<CheckKey, CheckChoice>>({
@@ -70,6 +86,9 @@ export function SiteReadinessForm({
     }),
     [notes, setNotes] = useState(""),
     [missing, setMissing] = useState(false),
+    [basis, setBasis] = useState(() => basisOf(a)),
+    [reconfirmed, setReconfirmed] = useState(false),
+    [reconfirmMissing, setReconfirmMissing] = useState(false),
     command = useBookingCommand(),
     id = useRef(crypto.randomUUID()),
     occurred = useRef<string | null>(null);
@@ -78,12 +97,43 @@ export function SiteReadinessForm({
     safePlannerReturn(useSearchParams().get("returnTo")),
   );
   const notReady = siteCheckKeys.filter((key) => choices[key] === "NotReady");
+  const hasDraft =
+    siteCheckKeys.some((key) => choices[key] || checkNotes[key]) || !!notes;
+  // A newer saved version keeps the draft for review; a moved visit also needs
+  // the answers confirmed again for the new time before they can be recorded.
+  const refreshed = hasDraft && a.version !== basis.version;
+  const moved =
+    hasDraft &&
+    (a.schedule_version !== basis.schedule_version ||
+      a.start_at !== basis.start_at ||
+      a.end_at !== basis.end_at);
+  // A refusal notice belongs to the version it refused; the review notice replaces it.
+  const clearRefusal = useRef(command.clear);
+  useEffect(() => {
+    clearRefusal.current = command.clear;
+  });
+  useEffect(() => {
+    clearRefusal.current();
+  }, [a.version]);
   async function save(outcome: "Confirmed" | "NoResponse") {
     if (outcome === "Confirmed" && siteCheckKeys.some((key) => !choices[key])) {
       setMissing(true);
       return;
     }
     setMissing(false);
+    if (outcome === "Confirmed" && moved && !reconfirmed) {
+      setReconfirmMissing(true);
+      return;
+    }
+    setReconfirmMissing(false);
+    // A fresh submission against a newer version is a new contact record: the
+    // refused original changed nothing, and its time preceded the newer version.
+    if (a.version !== basis.version) {
+      id.current = crypto.randomUUID();
+      occurred.current = null;
+    }
+    setBasis(basisOf(a));
+    setReconfirmed(false);
     occurred.current ??= new Date().toISOString();
     // A no-answer contact asked nothing, so each check is recorded as Not applicable
     // with that reason; the NoResponse outcome keeps the criterion Unknown (P4 table).
@@ -136,6 +186,50 @@ export function SiteReadinessForm({
         record; Powerplants One sends nothing to the customer.
       </p>
       <BookingRecovery command={command} />
+      {(command.error as { code?: string } | null)?.code ===
+        "VersionConflict" && (
+        <div className="save-notice" role="note">
+          <p>
+            Your entries are kept. Refresh the saved appointment, review your
+            entries against it, then record again.
+          </p>
+          <button type="button" className="secondary" onClick={onRefresh}>
+            Refresh saved appointment
+          </button>
+        </div>
+      )}
+      {moved ? (
+        <section
+          className="planner-warning"
+          role="status"
+          aria-label="Visit moved: reconfirm site readiness"
+        >
+          <h3>The visit moved after these entries were made</h3>
+          <p>
+            Your entries are kept and nothing has been saved. They were for{" "}
+            {formatRange(basis.start_at, basis.end_at, a.site_timezone)}; the
+            visit is now {formatRange(a.start_at, a.end_at, a.site_timezone)}.
+            Confirm each check again with the site contact for the new time and
+            change any answer that differs before recording.
+          </p>
+        </section>
+      ) : (
+        refreshed && (
+          <section
+            className="planner-warning"
+            role="status"
+            aria-label="Review entries against the saved appointment"
+          >
+            <h3>Review your entries against the saved appointment</h3>
+            <p>
+              The appointment was refreshed to its saved version after these
+              entries were made. Your entries are kept and nothing has been
+              saved; the visit time has not changed. Review them, then choose
+              Record confirmation or Record no answer to save them.
+            </p>
+          </section>
+        )
+      )}
       {command.saved &&
         command.accepted?.entry.label === "Customer site readiness" && (
           <p role="status" className="save-notice">
@@ -237,6 +331,36 @@ export function SiteReadinessForm({
             value={notes}
             onChange={setNotes}
           />
+          {moved && (
+            <div className="field sv04-reconfirm">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={reconfirmed}
+                  aria-invalid={reconfirmMissing && !reconfirmed}
+                  aria-describedby={
+                    reconfirmMissing ? "site-readiness-reconfirm" : undefined
+                  }
+                  onChange={(e) => {
+                    setReconfirmed(e.target.checked);
+                    if (e.target.checked) setReconfirmMissing(false);
+                  }}
+                />{" "}
+                I have confirmed these answers again with the site contact for
+                the new visit time
+              </label>
+              {reconfirmMissing && (
+                <p
+                  id="site-readiness-reconfirm"
+                  role="alert"
+                  className="field-error"
+                >
+                  Confirm the answers again for the new visit time before
+                  recording them.
+                </p>
+              )}
+            </div>
+          )}
           {notReady.length > 0 && (
             <p role="status">
               {notReady.length} check{notReady.length === 1 ? "" : "s"} not

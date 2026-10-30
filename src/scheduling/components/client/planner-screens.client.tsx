@@ -1037,7 +1037,7 @@ export function AppointmentScreen({ id }: { id: string }) {
       form={!closed && mode ? <>
         {(mode === "confirm" || mode === "move" || mode === "request") && <BookingForm key={`${id}:${mode}`} appointment={a} mode={mode} onSaved={resource.reload} onClose={() => setMode(null)} />}
         {mode === "contact" && <ContactForm key={`${a.id}:${a.version}`} a={a} onSaved={resource.reload} />}
-        {mode === "readiness" && a.preparation && <SiteReadinessForm key={`${a.id}:${a.version}`} a={a} preparation={a.preparation} onSaved={() => { resource.reload(); setMode(null); }} onClose={() => setMode(null)} />}
+        {mode === "readiness" && a.preparation && <SiteReadinessForm key={a.id} a={a} preparation={a.preparation} onSaved={() => { resource.reload(); setMode(null); }} onClose={() => setMode(null)} onRefresh={resource.reload} />}
         {mode === "cancel" && <CancelForm a={a} onSaved={resource.reload} />}
       </> : null}
       requests={a.requests.length ? a.requests.map(request => closed ? <article key={request.id}><strong>{request.source_type} · {readableRequestStatus(request.status)}</strong><p>{request.reason}</p>{request.decision_reason && <p>{request.decision_reason}</p>}</article> : <fieldset key={request.id} disabled={!current}><RequestDecision a={a} request={request} onSaved={resource.reload} /></fieldset>) : <p>No change requests. Pending requests never reserve crew or time.</p>}

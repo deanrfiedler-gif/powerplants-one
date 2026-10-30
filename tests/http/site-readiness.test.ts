@@ -3,9 +3,10 @@ import { after, test } from "node:test";
 import { randomUUID } from "node:crypto";
 import { closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
-import { preparedGateVisit } from "../helpers/readiness-gate";
+import { noPartsNeeded, preparedGateVisit } from "../helpers/readiness-gate";
 import { nextWorkingVisit, siteContactInput } from "../helpers/site-readiness";
-import { rows } from "../helpers/packs";
+import { base, rows } from "../helpers/packs";
+import { startInput } from "../helpers/field";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable database only");
 after(closeDatabase);
@@ -32,6 +33,96 @@ async function call(cookie: string, path: string, body?: unknown) {
   });
   return { status: r.status, headers: r.headers, body: await r.json() };
 }
+// Runs first: the next proof revokes the coordinator's contact duty at its end.
+test("P4 HTTP confirmation after the whole crew acknowledged releases dispatch; negative then positive repeats it", async () => {
+  // Three hours after the next proof's visit, so the same synthetic crew is free.
+  const start = new Date(
+    Date.parse(nextWorkingVisit()) + 3 * 3600000,
+  ).toISOString();
+  const f = await preparedGateVisit(start),
+    co = await session("coordinator"),
+    crew = [
+      await session("assigned-technician"),
+      await session("second-technician"),
+    ];
+  const pack = async () => (await call(co, `packs/${f.pid}`)).body.items[0];
+  const check = await call(co, `packs/${f.pid}/check`, {
+    ...base(),
+    expected_version: (await pack()).version,
+    decision: "Checked",
+  });
+  assert.equal(check.status, 201, JSON.stringify(check.body));
+  const issue = await call(co, `packs/${f.pid}/issue`, {
+    ...base(),
+    expected_version: (await pack()).version,
+  });
+  assert.equal(issue.status, 202, JSON.stringify(issue.body)); // render queued
+  await call(co, `render-jobs/${(await pack()).jobs[0].id}/retry`, {});
+  const issued = await pack();
+  assert.ok(issued.current_issue_id, JSON.stringify(issued.jobs));
+  // As in the database proof: Parts is stated after issue, so P4 stays the last check.
+  await noPartsNeeded(f.co, f.wid, f.aid);
+  for (const cookie of crew) {
+    const actor = (await call(cookie, "local-session")).body;
+    const recipient = issued.readiness.recipients.find(
+      (r: { user_id: string }) => r.user_id === actor.actor_id,
+    );
+    const ack = await call(
+      cookie,
+      `pack-issues/${issued.current_issue_id}/acknowledge`,
+      {
+        ...base(),
+        assignment_id: recipient.assignment_id,
+        assignment_version: recipient.assignment_version,
+        presented_hash: issued.issues[0].output_hash,
+        captured_at: new Date().toISOString(),
+      },
+    );
+    assert.equal(ack.status, 201, JSON.stringify(ack.body));
+  }
+  const path = `appointments/${f.aid}`;
+  const appointment = async () => (await call(co, path)).body.items[0];
+  let a = await appointment();
+  assert.equal(a.preparation.outcome, "Unknown");
+  assert.deepEqual(
+    [a.dispatch_hold, a.pack_requirement],
+    [true, "AwaitingAcknowledgement"],
+  );
+  assert.match(
+    (await pack()).readiness.reasons.join(" "),
+    /^Customer site readiness: Unknown/,
+  );
+  const record = async (notReady: boolean) => {
+    const cmd = siteContactInput((await appointment()).version);
+    if (notReady) cmd.site_checks.isolation.status = "NotReady";
+    const saved = await call(co, path + "/contacts", cmd);
+    assert.equal(saved.status, 201, JSON.stringify(saved.body));
+    return appointment();
+  };
+  // P4 is the last prerequisite: the recorded confirmation releases the hold.
+  a = await record(false);
+  assert.equal(a.preparation.outcome, "Pass");
+  assert.deepEqual(
+    [a.dispatch_hold, a.pack_requirement],
+    [false, "Acknowledged"],
+  );
+  let readiness = (await pack()).readiness;
+  assert.deepEqual(
+    [readiness.dispatch_hold, readiness.component_ready, readiness.reasons],
+    [false, true, []],
+  );
+  a = await record(true);
+  assert.equal(a.preparation.outcome, "Blocked");
+  assert.equal(a.dispatch_hold, true);
+  a = await record(false);
+  assert.equal(a.dispatch_hold, false);
+  readiness = (await pack()).readiness;
+  assert.equal(readiness.component_ready, true);
+  const job = (await call(crew[0], `my-jobs/${f.aid}`)).body.items[0];
+  const started = await call(crew[0], `${path}/start`, startInput(job));
+  assert.equal(started.status, 201, JSON.stringify(started.body));
+});
+
 test("P4 HTTP records typed evidence, recovers the original and enforces current authority", async () => {
   const f = await preparedGateVisit(nextWorkingVisit()),
     co = await session("coordinator"),

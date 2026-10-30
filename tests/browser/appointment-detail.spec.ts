@@ -737,3 +737,176 @@ test("SV04 P4 shows a reported not-ready check from the latest site-readiness co
     page.getByRole("button", { name: "Record again", exact: true }),
   ).toBeVisible();
 });
+
+// P4 draft retention: a stale refusal, then a refresh to a genuinely newer saved version.
+async function draftAfterStaleRefusal(page: Page, move: boolean) {
+  const f = await fixture(page);
+  f.appointment.preparation = {
+    policy: {
+      id: sv04Id(90),
+      reference: "SYN-PPO-PREP-01",
+      version: 1,
+      synthetic: true,
+    },
+    schedule_version: f.appointment.schedule_version,
+    outcome: "Unknown",
+    contact_id: null,
+    opens_at: "2026-10-08T03:30:00Z",
+    confirmation_due_at: "2026-10-12T03:30:00Z",
+    late: false,
+    issue_due_at: null,
+    calendar_status: "Published lead calendar",
+    issue_deadline_blocks_dispatch: false,
+  };
+  const sent: Record<string, unknown>[] = [];
+  await page.route(
+    `**/api/v1/appointments/${sv04Id(1)}/contacts`,
+    async (route) => {
+      const body = route.request().postDataJSON();
+      sent.push(body);
+      if (sent.length === 1)
+        return route.fulfill({
+          status: 409,
+          json: {
+            code: "VersionConflict",
+            message: "SYN appointment changed. Review before saving.",
+            retryable: false,
+          },
+        });
+      return route.fulfill({
+        status: 201,
+        json: {
+          operation_id: body.operation_id,
+          record_id: body.id,
+          record_version: 1,
+          state: "Confirmed",
+          receipt_id: sv04Id(95),
+          accepted_at: "2026-10-09T01:00:00Z",
+        },
+      });
+    },
+  );
+  await page.goto(path);
+  await page
+    .getByRole("region", { name: "Dispatch checks", exact: true })
+    .getByRole("button", { name: "Record site readiness", exact: true })
+    .click();
+  const form = page.getByRole("region", {
+    name: "Record customer site readiness",
+    exact: true,
+  });
+  const entries: [string, string][] = [
+    ["Access arranged", "Confirmed"],
+    ["Power and water available", "NotApplicable"],
+    ["Equipment accessible", "NotReady"],
+    ["Isolation arrangements agreed", "Confirmed"],
+  ];
+  for (const [label, value] of entries)
+    await form.getByLabel(label, { exact: true }).selectOption(value);
+  await form
+    .getByLabel("Equipment accessible note", { exact: true })
+    .fill("SYN bench under the drive not cleared");
+  await form.getByLabel("Note", { exact: true }).fill("SYN spoke to Dana");
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect(
+    form.getByText("SYN appointment changed. Review before saving.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  // Another actor saved a newer version; the refresh reads it.
+  f.appointment.version += 1;
+  if (move) {
+    f.appointment.schedule_version += 1;
+    f.appointment.preparation.schedule_version += 1;
+    f.appointment.start_at = "2026-10-14T03:30:00Z";
+    f.appointment.end_at = "2026-10-14T06:30:00Z";
+  }
+  await form
+    .getByRole("button", { name: "Refresh saved appointment", exact: true })
+    .click();
+  await expect(
+    form.getByText("SYN appointment changed. Review before saving.", {
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  for (const [label, value] of entries)
+    await expect(form.getByLabel(label, { exact: true })).toHaveValue(value);
+  await expect(
+    form.getByLabel("Equipment accessible note", { exact: true }),
+  ).toHaveValue("SYN bench under the drive not cleared");
+  await expect(form.getByLabel("Note", { exact: true })).toHaveValue(
+    "SYN spoke to Dana",
+  );
+  expect(sent).toHaveLength(1);
+  return { f, form, sent };
+}
+
+test("SV04 P4 keeps the unsaved draft across a refresh to a newer version and saves only on an explicit record", async ({
+  page,
+}) => {
+  const { f, form, sent } = await draftAfterStaleRefusal(page, false);
+  const notice = form.getByRole("status", {
+    name: "Review entries against the saved appointment",
+  });
+  await expect(notice).toBeVisible();
+  await expect(notice).toContainText("Your entries are kept");
+  await expect(notice).toContainText("the visit time has not changed");
+  await expect(
+    form.getByRole("checkbox", { name: /confirmed these answers again/ }),
+  ).toHaveCount(0);
+  // Nothing is resubmitted until the user records again.
+  await page.waitForTimeout(300);
+  expect(sent).toHaveLength(1);
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect.poll(() => sent.length).toBe(2);
+  expect(sent[1].expected_version).toBe(f.appointment.version);
+  expect(sent[0].expected_version).toBe(f.appointment.version - 1);
+  expect(sent[1].id).not.toBe(sent[0].id);
+  expect(sent[1].operation_id).not.toBe(sent[0].operation_id);
+  expect(sent[1].site_checks).toEqual(sent[0].site_checks);
+  expect(sent[1].notes).toBe("SYN spoke to Dana");
+  await expect(form).toHaveCount(0);
+});
+
+test("SV04 P4 keeps the draft for a moved visit but needs reconfirmation before recording it", async ({
+  page,
+}) => {
+  const { f, form, sent } = await draftAfterStaleRefusal(page, true);
+  const notice = form.getByRole("status", {
+    name: "Visit moved: reconfirm site readiness",
+  });
+  await expect(notice).toBeVisible();
+  await expect(notice).toContainText("Tue 13 Oct 2026 · 13:30–16:30");
+  await expect(notice).toContainText("Wed 14 Oct 2026 · 13:30–16:30");
+  await expect(
+    form.getByRole("status", {
+      name: "Review entries against the saved appointment",
+    }),
+  ).toHaveCount(0);
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  const required = form.getByText(
+    "Confirm the answers again for the new visit time before recording them.",
+    { exact: true },
+  );
+  await expect(required).toBeVisible();
+  const reconfirm = form.getByRole("checkbox", {
+    name: "I have confirmed these answers again with the site contact for the new visit time",
+    exact: true,
+  });
+  await expect(reconfirm).toHaveAttribute("aria-invalid", "true");
+  expect(sent).toHaveLength(1);
+  await reconfirm.check();
+  await expect(required).toHaveCount(0);
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect.poll(() => sent.length).toBe(2);
+  expect(sent[1].expected_version).toBe(f.appointment.version);
+  expect(sent[1].site_checks).toEqual(sent[0].site_checks);
+});

@@ -1,6 +1,7 @@
 import type { Appointment } from "./components/client/planner-screens.client";
 import type { Pack } from "../documents/components/client/job-pack-types";
 import { readableValue } from "../documents/pack-view";
+import { formatDateTime } from "../shell/date-format";
 
 export type AppointmentMode =
   "confirm" | "move" | "request" | "contact" | "readiness" | "cancel";
@@ -31,14 +32,21 @@ export function siteReadinessCheck(a: Appointment) {
     ? Object.values(contact.site_checks).filter((c) => c.status === "NotReady")
         .length
     : 0;
+  // The server stores a confirmation made before the window opens but derives Unknown (P4).
+  const early =
+    !!contact &&
+    contact.outcome === "Confirmed" &&
+    Date.parse(contact.occurred_at) < Date.parse(prep.opens_at);
   const detail =
     prep.outcome === "Pass"
       ? `Confirmed by ${contact?.recipient_name ?? "the site contact"}${prep.late ? ", late (after the window closed)" : ""}.`
       : prep.outcome === "Blocked"
         ? `The customer reported ${notReady || "a"} check${notReady === 1 ? "" : "s"} not ready. The service owner has a follow-up.`
-        : contact
-          ? "Not confirmed yet: the last contact was not a confirmation."
-          : "Not recorded for this schedule. Record what the site contact confirms before the crew leaves.";
+        : early
+          ? `Outside the confirmation window: the last confirmation was recorded before the window opened, so it does not count. Record a new confirmation with the site contact within the current window, ${formatDateTime(prep.opens_at, a.site_timezone)} to ${formatDateTime(prep.confirmation_due_at, a.site_timezone)}.`
+          : contact
+            ? "Not confirmed yet: the last contact was not a confirmation."
+            : "Not recorded for this schedule. Record what the site contact confirms before the crew leaves.";
   return { outcome: prep.outcome, detail, gated: false };
 }
 
