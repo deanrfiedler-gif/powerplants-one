@@ -111,3 +111,7 @@ The local request queue/form and independent decision record reuse this control.
 AD-01 application continuation: retain the existing request host and consumer bindings. The same fields/buttons/read state/status now cover Approved application, future-dated Applied outcome, immutable original recovery and denied-context clearing. Applied must not imply current effective access. See [application contract](../../../decisions/access-request-application.md); tests/browser/access-requests.spec.ts provides owning-page states. Shared exports/styles remain unchanged; paired owner/device review remains pending.
 
 AD-01 withdrawal continuation reuses the same request consumer bindings and host fixture. Secondary reasoned closure, Withdrawn outcome, retained approval, fresh-request handover and original recovery extend the existing states. See [withdrawal contract](../../../decisions/access-request-withdrawal.md); no shared export/style change or owner acceptance.
+
+## Outputs consumer — DK-03
+
+The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.

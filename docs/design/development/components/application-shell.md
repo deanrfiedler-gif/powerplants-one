@@ -257,7 +257,7 @@ The rail items arrive with the shell context and More sits directly below them, 
 Dean asked for the rails and secondary menus to match the Figma designs and for the search box in the secondary menu to go. The [decision](../../../decisions/shell-rail-menu-figma-alignment.md) lists the Figma values used.
 
 - **Rail (v2 / Rail `84:197`, Rail item `73:29`, Rail · Service `198:3778`).** The toggle is a plain 40 px row in both widths and no longer takes More's open-panel fill. Collapsed: 46 px logo, 22 px glyphs, first item at y = 108. A grouped rail uses 40 px items with 24 px ruled caps headings (collapsed: a centred 24 px rule), so Service fits at 900 px without scrolling. Every rail shows its department heading. The labelled Sales rail shows "Estimating handovers"; the accessible name keeps the full label.
-- **Secondary menu (v2 / Menu item `73:46`, heading `73:48`, strip `73:63`, edge `73:54`).** `SecondaryMenuFrame` defaults to the Figma presentation (`figma-shell.css`): `#f6f7f9` panel, 8 px padding, 40 px rows with 16 px icons, `#e3e8ee` selected row in `#355b80`, plain counts, caps headings, no drawn title block, a 20 px strip and a 3 px blue edge on hover. The selectors carry the same weight as the shared `my-work.css` rules, so module menus with their own accepted styling still apply. Job Pack and the Projects register are not listed. Acceptance's baseline presentation is removed.
+- **Secondary menu (v2 / Menu item `73:46`, heading `73:48`, strip `73:63`, edge `73:54`).** `SecondaryMenuFrame` defaults to the Figma presentation (`figma-shell.css`): `#f6f7f9` panel, 8 px padding, 40 px rows with 16 px icons, `#e3e8ee` selected row in `#355b80`, plain counts, caps headings, no drawn title block, a 20 px strip and a 3 px blue edge on hover. The selectors carry the same weight as the shared `my-work.css` rules, so module menus with their own accepted styling still apply. Job Pack and the Projects register are not listed. Acceptance's baseline presentation is removed. Since 27 October 2026 a new page joins these and the shared `my-work.css` rules by setting `data-ppo-workspace="shared"` on its root (through `SecondaryMenuFrame`'s `attributes`), not by adding its id: the id lists are frozen by `tests/unit/workspace-styles.test.ts`, and inside each `:is()` the attribute carries the same id weight ([record](../../../decisions/merge-conflict-reduction.md)).
 - **More (v2 / More panel `79:51`).** No search box, no Workspace dropdown and no "N destinations" footer (Dean chose removal on 18 October to match the drawn panel). Workspaces in More is the department choice and offers every department the identity can reach, each opening its landing. Opening More focuses its first control, normally the first department. The top bar's search finds pages.
 - **Desktop requirements.** 240 / 76 px rail at 1440 × 900 with Figma positions; 240 px menu docked from 1200 px; strip 20 px.
 - **Mobile requirements.** Unchanged, except that the phone More menu has no search box, Workspace dropdown or footer; its Workspaces links choose the department. Menu rows keep at least 44 px.
@@ -335,3 +335,18 @@ The Sites register and record reuse this component. Scoped geometry and state ev
 ## PL-04 consumer
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
+
+
+Reviews & approvals consumes this shared control at `route:/estimating/reviews`; see the [page-specific composition and states](../pages/route-estimating-reviews.md). Existing consumers and review records remain independent.
+
+## AD-01 identity register host
+
+The `/admin/access` register reuses this component with the accepted 60 px toolbar, 40 px grid and compact phone rows. Host states and consumer bindings are in [the fixture inventory](../access-identity-register-fixtures.json); [execution evidence](../../../testing/evidence/access-identity-register/README.md) distinguishes real database/HTTP checks from the visual-only Figma fixture. Existing component behaviour and review records remain unchanged. Owner/device/screen-reader acceptance is pending.
+
+## Outputs consumer — DK-03
+
+The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.
+
+## SV-03 register consumer — 24 October 2026
+
+The Work orders register composes this existing control with local SV-03 geometry and native permission-scoped reads. The host state binding covers queues, filtering, selection, snapshot, denied/empty/error/partial states and 390/320 px. The shell adds only a neutral work-order count mount; its established rail and phone controls remain shared. See [work-order evidence](../../../testing/evidence/work-order-register/README.md). Owner visual review is pending; no review fingerprint is changed.

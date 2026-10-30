@@ -1,3 +1,4 @@
+import { safeWriteDiagnostic, writeDiagnosticPath } from "./p12-write-diagnostics";
 import assert from "node:assert/strict";
 import { spawn, execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -153,14 +154,21 @@ export async function prepareOfflineRecovery(root: string) {
           phase,
         ],
         {
-          env: { ...process.env, RUNNER_TEMP: temporary },
+          env: { ...process.env, RUNNER_TEMP: temporary, PPO_P12_WRITE_DIAGNOSTICS: phase === "write" ? "1" : "0" },
           timeout: 180000,
           maxBuffer: 8 * 1024 * 1024,
         },
       );
     } catch {
+      let diagnostic = "";
+      if (phase === "write") {
+        diagnostic = safeWriteDiagnostic("");
+        try {
+          diagnostic = safeWriteDiagnostic(await readFile(writeDiagnosticPath(temporary), "utf8"));
+        } catch { /* Keep the original private-output guard when diagnostics are unavailable. */ }
+      }
       throw Error(
-        `P12 original offline ${phase} procedure failed; no profile or private subprocess output is published.`,
+        `P12 original offline ${phase} procedure failed; no profile or private subprocess output is published.${diagnostic}`,
       );
     }
     const evidence = join(

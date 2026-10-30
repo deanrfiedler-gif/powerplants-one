@@ -8,7 +8,7 @@ import { writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { call, identity, capture, saveOriginal } from "./quality-browser";
 import { prepareJourney, committed } from "./quality-prepare";
-import { completion, submit, review, issue, reportState, technicianEvidence } from "./quality-report";
+import { completion, submit, review, issue, reportState, technicianHistory } from "./quality-report";
 import { png } from "./field";
 import { financeJourney } from "./quality-finance";
 import { returnVisit } from "./quality-return";
@@ -414,8 +414,7 @@ export async function serviceJourney(
   await review(page, true);
   await capture(page, info, "journey-exact-evidence-returned");
   await identity(page, "assigned-technician");
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, aid);
   await page
     .getByRole("button", {
       name: "Correct this observation entry",
@@ -456,15 +455,17 @@ export async function serviceJourney(
     .filter({ visible: true })
     .click();
   await page.getByText("Propose a visit", { exact: true }).click();
-  const returnDay = info.project.name.startsWith("mobile")
-    ? "2031-11-17"
-    : "2031-11-14";
+  // Keep this new v3 return inside the confirmation window, after the first
+  // planned visit. The existing proposal/history is then retained throughout.
+  const firstVisit = (await call(page, `appointments/${aid}`)).items[0];
+  const returnStart = new Date(Date.parse(firstVisit.end_at) + 3600000);
+  const returnEnd = new Date(returnStart.getTime() + 2 * 3600000);
   await page
     .getByLabel("Proposed start (device timezone)")
-    .fill(returnDay + "T00:00");
+    .fill(returnStart.toISOString().slice(0, 16));
   await page
     .getByLabel("Proposed finish (device timezone)")
-    .fill(returnDay + "T02:00");
+    .fill(returnEnd.toISOString().slice(0, 16));
   const proposal = await committed(
     page,
     `service/work-orders/${source.work_order_id}/visits`,

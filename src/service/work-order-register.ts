@@ -21,6 +21,7 @@ import {
 } from "./work-order-register-model";
 
 const sorts = {
+  reference_desc: "w.display_number DESC,w.id",
   updated_desc: "w.updated_at DESC,w.id",
   updated_asc: "w.updated_at,w.id",
   reference_asc: "w.display_number,w.id",
@@ -160,7 +161,7 @@ export async function readWorkOrderRegister(p: Principal, input: unknown = {}) {
         AND ($3::uuid IS NULL OR w.service_owner_id=$3) AND ($4::uuid IS NULL OR w.site_id=$4)
         AND ($5::uuid IS NULL OR w.company_id=$5) AND ($6::text IS NULL OR w.status=$6)
         AND strpos(lower(concat_ws(' ',w.display_number,s.display_name,o.display_name,r.summary)),lower($7))>0
-      ORDER BY ${sorts[f.sort]} LIMIT $8 OFFSET $9`,
+      ORDER BY ${sorts[f.sort]}`,
         [
           p.workspace_id,
           p.actor_id,
@@ -169,8 +170,6 @@ export async function readWorkOrderRegister(p: Principal, input: unknown = {}) {
           f.company_id,
           f.status,
           f.q,
-          f.limit + 1,
-          f.offset,
         ],
       )
     ).rows;
@@ -179,7 +178,7 @@ export async function readWorkOrderRegister(p: Principal, input: unknown = {}) {
       Awaited<ReturnType<typeof projection>>["row"]
     >();
     let partial = false;
-    for (const candidate of candidates.slice(0, f.limit)) {
+    for (const candidate of candidates) {
       try {
         rows.set(candidate.id, (await projection(c, p, candidate.id)).row);
       } catch (e) {
@@ -199,19 +198,37 @@ export async function readWorkOrderRegister(p: Principal, input: unknown = {}) {
         partial = true;
       }
     }
-    let more = candidates.length > f.limit;
-    if (more) {
-      try {
-        await visibleWorkOrder(c, p, candidates[f.limit].id);
-      } catch (e) {
-        if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
-        more = false;
-        partial = true;
-      }
-    }
     const allowed = [...rows.values()];
+    const matching = allowed.filter((row) =>
+      inWorkOrderView(row, f.view, p.actor_id),
+    );
+    // Counts, options and pagination share the same authorised population. Never
+    // filter a page of candidates after paging: sparse attention queues would
+    // otherwise miss records and counts would describe only that window.
     return {
-      items: allowed.filter((row) => inWorkOrderView(row, f.view, p.actor_id)),
+      items: matching.slice(f.offset, f.offset + f.limit),
+      total: matching.length,
+      options: {
+        owners: [
+          ...new Map(
+            allowed.map((row) => [
+              row.service_owner_id,
+              {
+                id: row.service_owner_id,
+                label: row.owner_name ?? "Unassigned",
+              },
+            ]),
+          ).values(),
+        ],
+        sites: [
+          ...new Map(
+            allowed.map((row) => [
+              row.site_id,
+              { id: row.site_id, label: row.site_name },
+            ]),
+          ).values(),
+        ],
+      },
       counts: Object.fromEntries(
         workOrderViews.map((view) => [
           view,
@@ -219,12 +236,13 @@ export async function readWorkOrderRegister(p: Principal, input: unknown = {}) {
             .length,
         ]),
       ),
-      count_scope: "AuthorisedCandidateWindow",
+      count_scope: "PermissionScopedMatchingFilters" as const,
       view: f.view,
       sort: f.sort,
       offset: f.offset,
       limit: f.limit,
-      next_offset: more ? f.offset + f.limit : null,
+      next_offset:
+        matching.length > f.offset + f.limit ? f.offset + f.limit : null,
       completeness: partial ? "Partial" : "Complete",
       as_of: asOf.toISOString(),
       synthetic: true,

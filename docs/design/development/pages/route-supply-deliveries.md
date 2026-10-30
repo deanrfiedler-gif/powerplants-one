@@ -37,3 +37,10 @@ No exact historical mobile image is recorded. New application captures belong un
 [1440 px](../../../testing/evidence/supply-chain-native/sc-07-supply-1440.png) · [1024 px](../../../testing/evidence/supply-chain-native/sc-07-supply-1024.png) · [390 px](../../../testing/evidence/supply-chain-native/sc-07-supply-390.png) · [320 px](../../../testing/evidence/supply-chain-native/sc-07-supply-320.png)
 
 Source, hashes, executed checks and proposed departures are recorded in the [evidence index](../../../testing/evidence/supply-chain-native/README.md). These are native application captures; historical references and pending owner review remain separate.
+
+
+## S3 backend consumer contract — 24 October 2026
+
+[D-025 S3](../../../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) supplies native dispatch/delay drafts and versioned customer delivery evidence in PR #695. The source API exposes exact movement/outstanding quantities, fictional carrier/platform/tracking fields, the named contact, explicit customer ETA, immutable message-source hashes and sent-baseline evidence. Native commands use Demand versions and actor-private original-operation recovery; a sender still confirms the fixed CUS-EMAIL content.
+
+Future controls must distinguish source evidence from email content and explicit customer ETA from supplier dates. Show SourceChanged, SenderUnauthorised and PriorOutcomeUnknown as held follow-up states; restoring a grant or editing a source does not send a held message. Withdrawal, source correction/reconciliation, fresh preparation and named confirmation are separate actions. The tracking URL is fictional. No new visible surface, accepted screenshot, UI wiring, visual review, business acceptance or deployment is claimed by this backend work.
