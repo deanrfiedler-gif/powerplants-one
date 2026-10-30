@@ -29,6 +29,7 @@ build/
 /tmp/
 .next/
 .ppo-development/
+.ppo-guides/
 *.tsbuildinfo
 test-results/
 playwright-report/

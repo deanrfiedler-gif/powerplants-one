@@ -1,3 +1,4 @@
+import { dispatchNoticeDetails } from "./customer-delivery-model";
 import {
   choice,
   common,
@@ -164,8 +165,11 @@ export function factCommand(input: unknown) {
     "observed_at",
     "completeness",
     "attachment_id",
+    "dispatch_notice",
   ]);
   const kind = choice(r.kind, "kind", Object.keys(factSpecs) as FactKind[]);
+  if (r.dispatch_notice !== undefined && kind !== "Dispatch")
+    invalid("dispatch_notice", "Carrier details belong only to native Dispatch evidence.");
   return {
     ...common(r),
     id: uuid(r.id, "id"),
@@ -177,6 +181,8 @@ export function factCommand(input: unknown) {
     observed_at: instant(r.observed_at, "observed_at"),
     completeness: choice(r.completeness, "completeness", completeness),
     attachment_id: optionalId(r.attachment_id, "attachment_id"),
+    // Absence preserves all historical normalized commands and receipt hashes.
+    ...(r.dispatch_notice === undefined ? {} : { dispatch_notice: dispatchNoticeDetails(r.dispatch_notice) }),
   };
 }
 export function allocationCommand(input: unknown) {

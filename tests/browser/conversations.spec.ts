@@ -48,7 +48,7 @@ async function askedThread(
     title,
     body: "@{1} SYN when does the controller arrive?",
     mentions: [{ ordinal: 1, kind: "Person", person_id: askedId }],
-    asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" }],
+    asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2031-12-01" }],
   });
     expect(started.status).toBe(201);
   return { thread: started.body.record_id, title, dealId: deal.id };
@@ -294,7 +294,7 @@ test.describe("T1c-1 composer and New thread", () => {
     await dialog
       .getByRole("textbox", { name: `Question for ${person.name}` })
       .fill("SYN delivery date");
-    await dialog.getByLabel(`Reply by for ${person.name}`).fill("2026-10-30");
+    await dialog.getByLabel(`Reply by for ${person.name}`).fill("2031-12-01");
     await expect(dialog.getByText("Title: Where is the controller?")).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Edit" })).toBeVisible();
     await expect(dialog.getByText("Switch on Ask for anyone you're asking a question; you can add a reply-by date.")).toBeVisible();
@@ -692,7 +692,7 @@ test.describe("T1c-3 context panel", () => {
         },
       ],
       asks: [
-        { ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" },
+        { ordinal: 1, question: "SYN delivery date", reply_by: "2031-12-01" },
       ],
     });
     expect(started.status).toBe(201);
@@ -718,7 +718,7 @@ test.describe("T1c-3 context panel", () => {
     const related = panel.locator(".cv-context-item", { hasText: project.title });
     await expect(related.locator(".cv-context-why")).toHaveText(/^Mentioned by /);
     await expect(panel.getByText(/: SYN delivery date$/)).toBeVisible();
-    await expect(panel.getByText("Open question · reply by 30 Oct 2026")).toBeVisible();
+    await expect(panel.getByText("Open question · reply by 1 Dec 2031")).toBeVisible();
     for (const item of await panel.locator(".cv-context-item").all()) await expect(item.locator(".cv-context-why").first()).toBeVisible();
     // No Carl, pins or exclusions in T1.
     await expect(panel.getByText(/Carl|Pin|Exclude/)).toHaveCount(0);

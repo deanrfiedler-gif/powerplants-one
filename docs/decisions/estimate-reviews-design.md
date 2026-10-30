@@ -35,7 +35,7 @@ Scope: the `estimate-reviews` slot in Estimating & quotation, showing ES-04 esti
 | Reference | Identity |
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Reviews & approvals — Pipedrive pattern, accepted". The file's link is not recorded in this public repository, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Accepted frames | Page "Reviews & approvals (proposal)": desktop `77:635`, desktop with two rows selected `81:1002`, phone `104:1803`. Its notes card `82:1333` lists the decisions, rules, handovers and open questions |
+| Accepted frames | Page "Reviews & approvals · ES-04 · ES-05" `56:2` (formerly "Reviews & approvals (proposal)", then "Reviews & approvals (accepted)"; renamed on 25 October 2026 by the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md), R1): desktop `77:635`, desktop with two rows selected `81:1002`, phone `104:1803`. Its notes card `82:1333` lists the decisions, rules, handovers and open questions |
 | Page components | Review grid row `75:678` and header `75:679`; Review list row (phone) `104:1786`; Review snapshot (phone) `104:1654` |
 | Proposed shared components | Page "Shell v2 (proposal)": v2 / Rail `84:197`, Rail item `73:29`, Menu item `73:46`, Menu heading `73:48`, Menu edge `73:54`, Menu strip `73:63`, More panel `79:51`, Grid / Header cell `74:13`, Grid / Cell `74:40`, Checkbox `74:47`, Checkbox cell `74:48`, Row actions cell `74:50`, Tab item `107:148`, Tab bar (phone) `107:149` |
 | Retained captures | [Reviews & approvals design r01](../reference/ui/estimating/reviews-approvals-design-r01/README.md): seven icon-free PNGs at exact frame size, with hashes. These are the repository reference for this decision |
@@ -98,3 +98,8 @@ These depart from the adopted Shell page (built from `main@ed3ccb8`) or the firs
 - No application code, route, migration, permission or capability changes. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
 - When the page is built, it is compared with these captures and the Figma frames at the same viewports, following ADR-0053 rule 7.
 - A later change to this design receives a new named version and a new capture revision folder; these bytes stay unchanged.
+
+
+## Implementation record — 24 October 2026
+
+The accepted register is implemented at `/estimating/reviews`, matching the existing planned ES-04 scope path, and activates the reserved `estimate-reviews` navigation ID. The [queue decision](estimating-review-queue.md) records current-window counts, exact snapshot/native handovers, source restrictions and phone selection adaptations. The [working page contract](../design/development/pages/route-estimating-reviews.md) retains review status separately from implementation. Additional workflow frames marked review pending are not accepted by this implementation.
