@@ -25,6 +25,8 @@ Claude drew the page from these sources:
 
 On 31 October 2026 Dean accepted the design by choosing the offered answer "Accept with recs". The question on screen was "Do you accept the AI-02 proposal?" The answer was offered as "I accept the Proposal review · AI-02 design with D1–D19 and your recommended answers to Q1–Q7. Record my words and follow the lock-in protocol." That adopts D1–D19 and the recommended answers to Q1–Q7.
 
+Later on 31 October Dean asked: "Give the pages an audit and polish to determine the following: 1. If any improvements or refinements can be applied. 2. If any new and innovative features could be included. 3. If they could be made more professional. 4. If there are any gaps." Claude polished this page and proposed features. Dean then chose the offered answer "Accept, draw F1–F3" to "Do you accept the polish and want features F1–F3 drawn?" That accepts the polish in section 7 and asks for F1–F3 as a proposal. F1–F3 are not accepted (section 9).
+
 Scope:
 - `scope:AI-02` "AI proposal review and saved outcomes", at `/assistant/proposals` for Your proposals. The review itself sits inside the AI-01 panel, or `/assistant` on phones. No new scope is added.
 - No parent requirement ID is added or renamed; all 78 remain. The design elaborates CRM-01, CRM-02, NFR-01, NFR-05, NFR-08 and NFR-09, as the specification's acceptance table does. Acceptance procedures AIA-08 to AIA-15 and AIA-19 remain Not run.
@@ -45,6 +47,8 @@ This is a design decision. It authorises no application code, route, proposal st
 | Q6 Align AI-01's D5 prompt with this story | Resolved as recommended; applied | A text-only change to AI-01 D5 and D6, made at this lock-in. Section 6 |
 | Q7 Who can see Your proposals | Resolved as recommended | Only the person who prepared them. Administrators see the business audit and receipts, not drafts or chat |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
+| Audit and polish | Accepted, 31 October 2026 | Dean's answer, quoted above. Section 7 |
+| F1–F3 | Drawn as a proposal, not accepted | Section 9 |
 | Named Figma version | Not yet saved | "Proposal review — accepted" waits for Dean. Section 8 |
 | Building the page | Not decided | Section 5 |
 
@@ -54,15 +58,15 @@ This is a design decision. It authorises no application code, route, proposal st
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Proposal review · AI-02" `2389:278889`, under "— My Work —", after Answer evidence · AI-03. The page header `2389:278890` holds the conformance declaration; the notes card `2393:871314` in Flows and notes holds D1–D19, Q1–Q7, the flows, what is not drawn and the checks. File index: the row "Row / Proposal review · AI-02" `2847:388971` in the My Work group |
-| Desktop 1440 | Request typed `2393:141`; review form, full length (1440 × 2749) `2393:747`; not saveable `2393:854230`; changed since prepared `2393:854941`; Saving `2393:856956`; Saved `2393:857489`; Outcome unknown `2393:858060`; Expired `2393:858597`; Your proposals `2393:859919` |
+| Desktop 1440 | Request typed `2393:141`; review form, full length (1440 × 2749) `2393:747`; Ready `2866:439554`; not saveable `2393:854230`; changed since prepared `2393:854941`; Saving `2393:856956`; Saved `2393:857489`; Outcome unknown `2393:858060`; Expired `2393:858597`; Your proposals `2393:859919` |
 | Tablet 1024 | Full-width surface with the review form in one 640 px column, full length (1024 × 2489) `2393:861117` |
-| Phone 390 | Review form full screen, full length `2393:862389`; Saved `2393:862770`; Outcome unknown `2393:862977` |
+| Phone 390 | Review form full screen, full length `2393:862389`; Saved `2393:862770`; Outcome unknown `2393:862977`; not saveable `2866:443452`; changed since prepared `2866:443788`; Your proposals `2866:444187` |
 | Phone 320 | Review form scrolled to the follow-up `2393:863725`; Saved `2393:864108`; Outcome unknown `2393:864317` |
-| States | Six panel-width cards in section "States": validation errors `2393:865525`; permission denied `2393:865829`; duplicate click `2393:866121`; access changed `2393:866419`; rejected `2393:866711`; superseded `2393:867004` |
+| States | Fourteen panel-width cards in section "States": validation errors `2393:865525`; permission denied `2393:865829`; duplicate click `2393:866121`; access changed `2393:866419`; rejected `2393:866711`; superseded `2393:867004`; Due date needed chosen `2866:440125`; no matching contact `2866:440409`; still not confirmed `2866:440722`; an earlier save blocking a new one `2866:441024`; Discard draft `2866:441330`; changing the customer `2866:441628`; Your proposals nothing to show `2866:441926`; Your proposals failing to load `2866:442230` |
 | Components | Moved at acceptance to the Components page, section "Components · Assistant" `2388:6065`, keeping their node IDs and instances: AI-02 / Provenance tag `2391:3917`; Review field `2391:3982`; Comparison row `2391:3983`; Outcome card `2391:4077`; Proposal row `2391:4114` |
-| Prototype | Flows "AI-02 — desktop" (from Request typed) and "AI-02 — phone" (from the 390 review), with 14 links and none off the page. Send to the review; Create opportunity to Saving, standing in for "after a time is chosen"; Saving to Saved; Saved to Your proposals; Keep, Leave out, Refresh preview and Prepare again back to the review; Check save status to Saved |
+| Prototype | Flows "AI-02 — desktop" (from Request typed) and "AI-02 — phone" (from the 390 review), with no links off the page. Send to the review; Due time to Ready; Ready's Create opportunity to Saving; Saving to Saved; Saved to Your proposals; Keep, Leave out, Refresh preview and Prepare again back to the review; Check save status to Saved. On the phone flow, Create opportunity stands in for "after a time is chosen" because the phone has no Ready frame |
 | Story | Synthetic, Tue 13 Oct 2026 from 09:05 Brisbane time, signed in as Jamie Park on Hillview Growers SYN-PPO-ORG-000007. The request: "Create an opportunity for Hillview Growers to extend climate screens to Glasshouse 5. Assign it to me. I spoke to the head grower by phone; follow up on 21 October." The head grower resolves to Priya Shah. Sites on record are SYN Glasshouse 4 and SYN Hillview Growers, so Glasshouse 5 stays unknown with Jamie's reason. The due time is asked for. The opportunity saves as SYN-OPP-000357, the next number after Deals' 000351–000356. A branch changes the owner to Sam Patel. Your proposals also shows Coastal Berry Farms (SYN-PPO-ORG-000023) drafts, which created no records. Existing references are unchanged |
-| Retained captures | [Proposal review design r01](../reference/ui/my-work/assistant-proposal-review-design-r01/README.md): fifteen icon-free PNGs with hashes |
+| Retained captures | [Proposal review design r01](../reference/ui/my-work/assistant-proposal-review-design-r01/README.md): sixteen icon-free PNGs with hashes |
 
 ## 3. Conformance declaration
 
@@ -72,7 +76,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 |---|---|
 | Scope identity | `scope:AI-02` AI proposal review and saved outcomes. The reviewed-creation part of PPO-AI-SPEC §3 AI1: one opportunity and its initial follow-up through the existing `createOpportunity` command. No new scope; parent requirement IDs unchanged |
 | Page type (r20) | Form / guided workflow, with Review / comparison for "Changed since prepared" and Register / worklist for Your proposals. Hosted in the AI-01 panel (Work queue + persistent detail variant) |
-| Reused components | The AI-01 panel and parts (Panel header, Scope chip, Source chip, Prompt, Composer, Answer header), Shell v2 Rail · Sales, the top bar with the Conversations action, Shell / Phone header · compact, a copy of the Hillview Growers record, Button, Tag, Record / Field, Record / Filter chip and the icon set. The Review field follows Job pack / Form field. New: the five components listed in section 2. AI-03's evidence parts are pending (D18) |
+| Reused components | The AI-01 panel and parts (Panel header, Scope chip, Source chip, Prompt, Composer, Answer header), Shell v2 Rail · Sales, the top bar with the Conversations action, Shell / Phone header · compact, a copy of the Hillview Growers record, Button, Tag, Record / Field, Record / Filter chip and the icon set. The Review field follows Job pack / Form field. New: the five components listed in section 2 |
 | Incoming handovers | From AI-01: "Create an opportunity…" gives Carl's `prepare_opportunity` result, a persisted Draft proposal with no business record. Choices come from permitted reads made as the person signed in |
 | Outgoing handovers | Create opportunity confirms with the proposal ID, its version and the hash of the exact displayed command; PPO runs `createOpportunity` as that person. Saved links to the opportunity on Deal record CR-01 and Deals CR-04 and to the follow-up activity. Check save status goes to the receipt service. Prepare again starts a new Draft. Never: a save by Carl, a privileged AI account, a calendar invitation, a customer message, or a value or expected-close field |
 | Source authority | The decisions and specification listed above. Carl's drafts are proposals, never authority |
@@ -102,14 +106,15 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | D15 | Your proposals lists the person's own proposals from the last 30 days, with one action per outcome, from the panel's More menu and `/assistant/proposals` | Dean's brief; specification §7 |
 | D16 | Access that changes during review clears the draft, with generic wording | Specification §6, §7; AIA-06, AIA-13 |
 | D17 | The story and references in section 2 | Reference rule; synthetic fixtures |
-| D18 | AI-03's evidence parts are pending. AI-03 is drawn but was not accepted when this design was, so AI-01's Source chip stands in until a later amendment | Dean, 24 October, quoted above |
+| D18 | AI-03 was accepted the same day and keeps AI-01's Source chip as its way in, so no part here is replaced: a source chip on this page opens AI-03's evidence view | Dean, 24 October, quoted above; AI-03 decision |
 | D19 | The request text is Dean's brief, not AI-01 D5's. Q6 aligned AI-01 | Dean's brief |
+| Rule added in the polish | A value the person edits is tagged Your request | Accepted polish; specification §7 (editing creates a successor) |
 
 ## 5. Not decided and not drawn
 
 Building the page is not decided. The specification's proposed HTTP surface, proposal store and migration remain proposals. A capability for AI-01 (its Q4) would apply here too and brings the access-review chain in `AGENTS.md` when built.
 
-Not drawn: the microphone (AI2); the panel More menu itself, which AI-01 draws and to which Your proposals is added; a Ready frame on its own; AI-03's evidence inspection; keyboard focus order and 200% zoom; hosted demo use; offline.
+Not drawn: the microphone (AI2); the panel More menu itself, which AI-01 draws and to which Your proposals is added; Your proposals at 1024; a phone Ready frame, and phone Saving and Expired, which use the same outcome card; keyboard focus order and 200% zoom; hosted demo use; offline.
 
 ## 6. Amendment to AI-01
 
@@ -117,17 +122,40 @@ Q6 adopted a text-only change to two frames of the accepted AI-01 page, recorded
 - D5 `2371:1628`: the visible message is now Jamie's reason at 09:06, Carl answers at 09:06, and the draft card reads Needs details · 1, title "Glasshouse 5 climate screen extension" (Proposed default), follow-up "Call Priya Shah on Wed 21 Oct", still needed "The follow-up time".
 - D6 `2371:2224`: Needs details · 1, and the hint reads "Create opportunity unlocks when the follow-up time is added."
 
-AI-01's r01 captures keep their bytes. Images 14 and 15 in this page's captures show the amended frames.
+AI-01's r01 captures keep their bytes. Images 15 and 16 in this page's captures show the amended frames.
 
-## 7. Audit
+## 7. Audit and polish
 
-When the page was drawn, Claude screenshotted most frames inside Figma and checked fonts, text overflow, overlaps and section bounds: 2,187 text layers, all Roboto; no text overflowing its container; no frame or label overlapping another or outside its section. Saving, Expired and the 320 Saved and Outcome unknown frames were covered by the automated checks only at that point. No separate owner-requested polish was run.
+When the page was drawn, Claude screenshotted most frames inside Figma and checked fonts, text overflow, overlaps and section bounds. At Dean's request on 31 October, after acceptance, Claude audited it again.
+
+- **Corrected:**
+  - the exact-command cards abbreviated the command; they now show the full reason, need summary, source basis, pipeline and follow-up summary;
+  - the source basis held a call date Jamie never gave; it now reads "Jamie Park spoke to Priya Shah, head grower, by phone.";
+  - Saved worded the follow-up differently from the review;
+  - two character counts (93 and 68);
+  - Expired repeated Create and Discard in its footer;
+  - the scope row on Your proposals, which lists every customer;
+  - the duplicate Conversation link on phones;
+  - the Superseded card promised a list row that does not exist.
+- **Added:** Ready, the only frame with Create opportunity enabled and the expiry time Q2 adopted; eight state cards; phone not saveable, changed since prepared and Your proposals.
+
+After the polish, all visible text is Roboto, no text overflows its container, and no frame or label overlaps another or leaves its section. The notes card `2393:871314` records this.
 
 ## 8. Verification
 
-- The fifteen captures are copies on the "Captures (icon-free)" page from y = 800,000 (`2849:8718` to `2849:16847`). 862 Font Awesome instances were swapped for `Icon/placeholder`. A scan found no icon instance, no visible vector outside a placeholder, and no prototype link on any copy. Claude viewed captures 06, 12 and 13 after export and did not view the others individually.
+- The sixteen captures are copies on the "Captures (icon-free)" page: images 01, 15 and 16 at y = 800,000 (`2849:8718`, `2849:14839`, `2849:15517`), which the polish did not change; images 02–11 at y = 806,000 (`2882:115` to `2882:5890`); images 12–14 at y = 900,000 and x from 100,000 (`2882:6450`, `2882:7622`, `2882:8166`). Every Font Awesome instance was swapped for `Icon/placeholder`. A scan found no icon instance and no prototype link on any copy. Claude viewed images 03 and 12 after this export; images 01, 15 and 16 keep their earlier export.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/assistant-proposal-review-design-r01/README.md).
-- The Captures page held 5 flow starting points before and after these copies; a copied flow start was removed. Another lock-in session was writing to that page at the same time.
+- The Captures page held 6 flow starting points when the copies were finished; a copied flow start was removed where one appeared. Other lock-in sessions were writing to that page at the same time.
 - The named Figma version "Proposal review — accepted" has not been saved. It waits for Dean's yes.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## 9. Proposed additions F1–F3, not accepted
+
+Drawn on 31 October 2026 at Dean's "Accept, draw F1–F3", in the section "Proposed additions F1–F3 (not accepted)". They are not part of this accepted design, not in the retained captures and carry no prototype links. The notes card holds their detail and questions Q8–Q10 with recommended answers.
+
+| ID | Addition | Frames |
+|---|---|---|
+| F1 | Possible duplicate check: open deals at the customer that look like the same work, with Open deal and Not a duplicate. It never blocks Create and covers only deals the person can open | Desktop `2877:6291`; phone `2877:7070`; states `2877:6801`, `2877:6891`, `2877:6980` |
+| F2 | Why this value: a provenance tag opens where the value came from, as a popover on desktop and AI-03's bottom sheet on phones | Desktop `2878:10765`; phone `2878:11526`; states `2878:11329`, `2878:11426` |
+| F3 | Focus review: only Needs input and Proposed default fields stay open; other values collapse into a summary that still shows them. A departure from specification §4 if accepted. Desktop form 1,834 px against 2,749 px | Desktop `2878:12023`; phone `2878:12793`; state `2878:416921`; part AI-02 / Compact field row `2877:6283`, on this page |

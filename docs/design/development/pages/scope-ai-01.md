@@ -36,7 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted Figma design captures: [Assistant design r01](../../../reference/ui/my-work/assistant-design-r01/README.md). No HTML reference is linked. D5 and D6 had a text-only story alignment on 31 October 2026; images 14 and 15 in [proposal review design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md) show the amended frames.
+Accepted Figma design captures: [Assistant design r01](../../../reference/ui/my-work/assistant-design-r01/README.md). No HTML reference is linked. D5 and D6 had a text-only story alignment on 31 October 2026; images 15 and 16 in [proposal review design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md) show the amended frames.
 
 ## Behaviour, handovers and verification
 
