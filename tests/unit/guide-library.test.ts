@@ -1153,6 +1153,9 @@ const envelopeGapCases: Array<[string, string]> = [
   ["explicit-key-unclosed-comment", multilineKeyGuide(["<!-- never closed", "--- "], explicitKey)],
   ["explicit-key-adjacent-lone-CR", multilineKeyGuide(["<!-- a --><!-- b -->", "--- "], explicitKey).replace(/\n/g, "\r")],
   ["flow-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], flowKey)],
+  ["explicit-key-BOM", "\uFEFF" + multilineKeyGuide(["---", "summary: |", "  ---"], explicitKey)],
+  ["explicit-key-blank", "\n" + multilineKeyGuide(["---", "summary: Synthetic", "----"], explicitKey)],
+  ["explicit-key-CRLF", multilineKeyGuide(["--- ", "summary: |", "  ---"], explicitKey).replace(/\n/g, "\r\n")],
 ];
 const envelopeGapControls: Record<string, string> = {
   "docs/guides/adjacent-comment-contents.md": "<!-- a --><!-- b -->\n--- \ndocument_id: PPO-SYN-TOC\ntitle: Contents\n---\n\n# Contents\n",

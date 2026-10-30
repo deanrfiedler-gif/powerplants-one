@@ -14,9 +14,9 @@ date: 2026-10-30
 
 **Unchanged.** An exact `---` opener still closes at the next exact `---`, as `readFrontMatter` does. The strict compiler is unchanged and refuses every malformed envelope at line 1.
 
-**Regression coverage.** Sixteen attempted guides are covered.
+**Regression coverage.** Nineteen attempted guides are covered.
 - Six are delimiter-like-line cases: a spoiled, BOM or blank-line opener, each with a block scalar holding `  ---` and with a `----` line.
 - Five are comment-preamble cases: adjacent, spaced and CRLF adjacent comments, a multiline comment followed by another, and an unclosed comment.
-- Five are multi-line-key cases: explicit keys after a block scalar, after a `----` line, after an unclosed comment and behind adjacent comments with lone-CR endings, and a flow-mapping key behind a BOM opener. Each is checked against the compiler, the library and a spawned build, which must exit 1 and write no release file. Four controls stay excluded and build cleanly: adjacent comments before clean metadata, a spoiled opener with a block scalar and no guide key, a spoiled opener with an explicit non-guide key, and an unclosed comment with no guide key. Without this change, the two detection tests fail.
+- Eight are multi-line-key cases. Explicit keys appear after a spoiled, BOM or blank-line opener, after a `----` line, after an unclosed comment, and behind adjacent comments, across LF, CRLF and lone-CR endings. A flow-mapping key appears behind a BOM opener. Each is checked against the compiler, the library and a spawned build, which must exit 1 and write no release file. Four controls stay excluded and build cleanly: adjacent comments before clean metadata, a spoiled opener with a block scalar and no guide key, a spoiled opener with an explicit non-guide key, and an unclosed comment with no guide key. Without this change, the two detection tests fail.
 
 **Merge gate.** This needs final-head CI, an independent review by a model family other than Claude, adoption into #740 by its owner, and the #740 → `main` gates before it lands. No operational acceptance, merge or deployment has occurred.
