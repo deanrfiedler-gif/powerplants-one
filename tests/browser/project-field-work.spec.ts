@@ -83,10 +83,13 @@ test("B1 a coordinator links a work order to the project with a reason, sees it 
     exact: true,
   });
   expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  await noHorizontalScroll(page);
+  await form.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath("field-work-link-form.png") });
   await link.click();
   await expect(
     section.getByText(`${reference} linked to this project`, { exact: true }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30000 }); // First use compiles the command route.
   const row = section.getByRole("link", { name: reference, exact: true });
   await expect(row).toBeVisible();
   await noHorizontalScroll(page);
@@ -126,7 +129,7 @@ test("B1 a coordinator links a work order to the project with a reason, sees it 
     unlinkSection.getByText(`${reference} unlinked from this project`, {
       exact: true,
     }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30000 });
   await expect(
     unlinkSection.getByText(
       "No field work you can see is linked to this project.",

@@ -455,14 +455,16 @@ export function ProjectSchedulePage({
         onBaselines={() => setBaselines(true)}
         onSalesContext={() => setSales(true)}
         onRefresh={resource.reload}
+        after={
+          resource.data.field_work && (
+            <ProjectFieldWork
+              project={resource.data.project}
+              fieldWork={resource.data.field_work}
+              onChanged={resource.reload}
+            />
+          )
+        }
       />
-      {resource.data.field_work && (
-        <ProjectFieldWork
-          project={resource.data.project}
-          fieldWork={resource.data.field_work}
-          onChanged={resource.reload}
-        />
-      )}
       {resource.error && (
         <div className="project-load-error">
           <ErrorNotice error={resource.error} />

@@ -264,6 +264,7 @@ export function ProjectsGantt({
   programme = false,
   referenceDate,
   persistLayout = true,
+  after,
 }: {
   schedule: Schedule;
   preferenceKey: string;
@@ -277,6 +278,8 @@ export function ProjectsGantt({
   programme?: boolean;
   referenceDate?: string;
   persistLayout?: boolean;
+  // Optional page content below the schedule card, inside the fixed page layout (B1 Field work).
+  after?: React.ReactNode;
 }) {
   const { project, tasks } = schedule;
   // This component mounts after the current session's schedule fetch, on the client.
@@ -1514,6 +1517,7 @@ export function ProjectsGantt({
               </span>
             </div>
           </section>
+          {after}
           <p className="page-footer">
             External owners indicate responsibility. Assigning a task does not
             grant app access.

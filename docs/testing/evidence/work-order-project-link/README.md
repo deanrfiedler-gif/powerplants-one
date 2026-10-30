@@ -25,14 +25,19 @@ These are Claude's choices, not Dean's acceptance; Dean can reverse any of them 
 
 ## Results
 
-Results are filled in on the pull request's `[DONE by Claude]` comment with the exact head SHA; this table records what was run locally.
+Local environment: Node 22.23.4 (the repository pins Node 24; `engine-strict` off), PostgreSQL 16.15 `ppo_synthetic_test`, Chrome 153 for browser specs without the renderer-version global setup. The pull request's `[DONE by Claude]` comment names the exact head SHA these results apply to.
 
 | Check | Result and boundary |
 | --- | --- |
-| New database suite `tests/database/work-order-project-link.test.ts` | 9 passed: unlinked migration, link/unlink receipts, audit and outbox with exact replay, stale versions, different customer, closed project, started visit, cross-company, direct switch, both permissions, read isolation (no hidden count, no leaked project identity), create with a project, candidates. |
-| New unit suite `tests/unit/project-field-work.test.ts` | 5 passed. |
-| Migration ripple | Version lists, the Products upgrade starting points, the demo upgrade count and whole-schema snapshots were extended for 0122. Suites that need the document renderer fail locally with `RenderOrStorageFailure` (container Chrome is below the pinned renderer), so CI is the authority for them. |
-| Browser `tests/browser/project-field-work.spec.ts` | See the pull request comment. |
+| New database suite `tests/database/work-order-project-link.test.ts` | 9 passed: unlinked migration and untouched `project_reference`; link and unlink receipts, audit and outbox with exact replay; stale work-order and project versions; operation reuse with different content; different customer, closed project and started visit (command and database); cross-company and direct switch (command and database); both permissions; read isolation (no hidden count, no leaked project identity); create with a project; link candidates. |
+| New unit suite `tests/unit/project-field-work.test.ts` | 5 passed, with the migration registry unit test (8 in total). |
+| Affected database suites run locally | 22 files, 154 tests: 142 passed. All 12 failures were environmental and recur on unmodified `main`: `RenderOrStorageFailure` (renderer below the pinned patch), "The exact draft output is unavailable" (same renderer), and "permission denied to create role" (local role). Two ledger chains (`assistant-upgrade` 119/120) and the P05 work-order snapshot (`planner`) were corrected and then passed on rerun (42 of 42 with the new suite). |
+| Migration ripple not run locally | The remaining extended version lists and snapshots (about 50 further files, many renderer-dependent). CI's eight database shards are the authority. |
+| Browser `tests/browser/project-field-work.spec.ts` | 2 passed (1440×1000 desktop, 390×844 phone): link with reason, both records show the link, navigation both ways, unlink with reason, empty state, 44 px targets, no horizontal overflow of the card. |
+| Existing browser specs on the changed page | `projects-gantt` and `project-baselines`: 8 passed; `project-programme`: passed. `work-orders.spec.ts` visit-proposal case: see the pull request comment for the comparison with `main`. |
+| Static | TypeScript, ESLint on changed files, Prettier on new files, foundation, naming, migrations, status sources, documentation unit tests, documentation scope, studio check, whitespace and conflict-marker scans passed. |
 | Deployment / owner approval | Not performed or granted by these checks. |
 
-No exact mockup or HTML exists for the Field work card; captures, where taken, are implementation evidence only.
+## Captures
+
+[Desktop linked](desktop-linked.png), [desktop link form](desktop-link-form.png), [phone linked](phone-linked.png) and [phone link form](phone-link-form.png), taken by the browser spec on synthetic data. They are implementation evidence, not visual acceptance. The first desktop run placed the card beside the schedule because the schedule page is a fixed flex layout; the card now sits inside the page below the schedule card, bounded to 30% of the viewport, with the shared Button styling restored over the Gantt's button reset. No exact mockup or HTML exists for the Field work card.
