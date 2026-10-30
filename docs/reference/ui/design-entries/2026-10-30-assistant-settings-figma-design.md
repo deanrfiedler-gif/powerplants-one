@@ -1,0 +1,7 @@
+# Assistant settings (AI-06)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Assistant settings — `/assistant/settings` (register destination), opened from Settings › Configuration areas › Assistant | [Design r01 captures](../settings/assistant-settings-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 30 October 2026 | [Decision](../../../decisions/assistant-settings-figma-design.md). AI-06; not built. An overview, the provider choice with five pre-call checks and a second-person switch, a reservation budget that fails closed, capabilities with slice, status, sources and roles, Anthropic's published terms shown as unverified, the 40-task evaluation set with results "Not run", and flagged answers with evidence, reviewer, outcome and hand-over to the owner |
+
+**Assistant settings design, 30 October 2026:** Dean accepted the Figma design for AI-06, the Assistant area of the Settings hub, at desktop, tablet and phone, with seven phone states. The Simulated assistant stays in use, the model reads "Not selected", and the Claude switch stays blocked until all five pre-call checks are met and a second person approves. The [decision](../../../decisions/assistant-settings-figma-design.md) records it, and the [retained captures](../settings/assistant-settings-design-r01/README.md) are sixteen icon-free PNGs with hashes. No route, capability or provider call follows. Listing it here does not repeat the dated inventory audit.
