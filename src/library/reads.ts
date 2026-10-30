@@ -3,6 +3,10 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
 import { AppError } from "../platform/errors";
+import { hasPermission, requireCapability } from "../platform/permissions";
+import { visible } from "../shared/reads";
+import { workingCompanyFor } from "../platform/working-company";
+import { libraryCursor, type LibraryPosition } from "./paging";
 import {
   choice,
   invalid,
@@ -50,6 +54,7 @@ function publicRevision(r: Revision) {
       content_hash: r.source.content_hash,
       byte_count: r.source.byte_count,
       content_type: r.source.content_type,
+      author_id: r.source.author_id,
     },
   };
 }
@@ -125,6 +130,31 @@ async function status(
       : null,
   };
 }
+
+async function presentation(c: QueryClient, p: Principal, d: DocumentRow, r: Revision) {
+  const organisation = await visible(c, p, "Organisation", d.organisation_id);
+  let site_name: string | null = null;
+  if (d.site_id) {
+    try { site_name = (await visible(c, p, "Site", d.site_id)).display_name; }
+    catch (e) { if (!hidden(e)) throw e; }
+  }
+  const people = (await c.query<{id:string;display_name:string}>(
+    "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+    [p.workspace_id,[r.owner_id,r.created_by,r.source.author_id]],
+  )).rows;
+  const name = (id:string) => people.find(x => x.id === id)?.display_name ?? "Unavailable";
+  return {
+    organisation_name: organisation.display_name as string,
+    site_name,
+    owner_name: name(r.owner_id),
+    registered_by_name: name(r.created_by),
+    source_author_name: name(r.source.author_id),
+    can_register: await hasPermission(c,p,"document.register",d.company_id,d.site_id ?? undefined),
+    can_review: await hasPermission(c,p,"document.review",d.company_id,d.site_id ?? undefined),
+    independent_reviewer: p.actor_id !== r.created_by && p.actor_id !== r.source.author_id,
+  };
+}
+
 export async function readDocument(
   p: Principal,
   id: string,
@@ -147,108 +177,89 @@ export async function readDocument(
       revision: publicRevision(r),
       ...(await status(c, p, d, r)),
       findings,
+      ...(await presentation(c, p, d, r)),
       synthetic: true,
     };
   });
 }
-export async function listDocuments(
-  p: Principal,
-  query: Record<string, string> = {},
-) {
-  object(query, [
-    "q",
-    "state",
-    "document_type",
-    "company_id",
-    "organisation_id",
-    "site_id",
-    "owner_id",
-    "availability",
-    "review_state",
-    "after",
-    "limit",
-  ]);
-  const q =
-    query.q === undefined ? null : label(query.q, "q", 200).toLocaleLowerCase();
-  const state =
-    query.state === undefined
-      ? "Current"
-      : choice(query.state, "state", ["Current", "Withdrawn", "All"] as const);
-  const availability =
-    query.availability === undefined
-      ? null
-      : choice(query.availability, "availability", [
-          "Available",
-          "ExactUnavailable",
-        ] as const);
-  const review_state =
-    query.review_state === undefined
-      ? null
-      : choice(query.review_state, "review_state", [
-          "Unreviewed",
-          "Reviewed",
-          "Returned",
-          "ReviewOutdated",
-        ] as const);
-  const owner = optionalId(query.owner_id, "owner_id");
-  const type =
-    query.document_type === undefined
-      ? null
-      : label(query.document_type, "document_type", 80);
-  const company = optionalId(query.company_id, "company_id"),
-    organisation = optionalId(query.organisation_id, "organisation_id"),
-    site = optionalId(query.site_id, "site_id");
-  let after = optionalId(query.after, "after");
+
+export async function listDocuments(p: Principal, query: Record<string,string> = {}) {
+  object(query, ["q","state","document_type","company_id","organisation_id","site_id","owner_id","availability","review_state","after","cursor","sort","direction","limit"]);
+  const q = query.q === undefined ? null : label(query.q,"q",200).toLocaleLowerCase();
+  const state = query.state === undefined ? "Current" : choice(query.state,"state",["Current","Withdrawn","All"] as const);
+  const availability = query.availability === undefined ? null : choice(query.availability,"availability",["Available","ExactUnavailable"] as const);
+  const review_state = query.review_state === undefined ? null : choice(query.review_state,"review_state",["Unreviewed","Reviewed","Returned","ReviewOutdated"] as const);
+  const owner = optionalId(query.owner_id,"owner_id");
+  const type = query.document_type === undefined ? null : label(query.document_type,"document_type",80);
+  const company = optionalId(query.company_id,"company_id"), organisation = optionalId(query.organisation_id,"organisation_id"), site = optionalId(query.site_id,"site_id");
+  const sort = query.sort === undefined ? "registration" : choice(query.sort,"sort",["registration","number","updated"] as const);
+  const direction = query.direction === undefined ? "asc" : choice(query.direction,"direction",["asc","desc"] as const);
+  const after = optionalId(query.after,"after");
+  if (after && (query.cursor || sort !== "registration" || direction !== "asc")) invalid("after","Use the returned cursor for sorted pages.");
   const limit = query.limit === undefined ? 25 : Number(query.limit);
-  if (!Number.isInteger(limit) || limit < 1 || limit > 50)
-    invalid("limit", "Choose 1–50 records.");
-  return readTransaction(p, async (c) => {
-    const items = [];
-    // Scan in bounded batches; current authority precedes filtering and public pagination.
+  if (!Number.isInteger(limit) || limit < 1 || limit > 50) invalid("limit","Choose 1–50 records.");
+  const cursor = libraryCursor({workspace:p.workspace_id,actor:p.actor_id,working:workingCompanyFor(p.actor_id),q,state,availability,review_state,owner,type,company,organisation,site,sort,direction,limit});
+  let position: LibraryPosition | null = cursor.decode(query.cursor) ?? (after ? {id:after,key:after} : null);
+  const column = {registration:"id",number:"display_number",updated:"updated_at"}[sort];
+  const cast = {registration:"uuid",number:"text",updated:"timestamptz"}[sort];
+  const order = direction === "asc" ? "ASC" : "DESC", compare = direction === "asc" ? ">" : "<";
+  return readTransaction(p, async c => {
+    await requireCapability(c,p,"document.read");
+    const items: Array<Awaited<ReturnType<typeof registerItem>>> = [];
+    let last: LibraryPosition | null = null;
+    const finish = async (more:boolean) => {
+      // Recheck authority after the full scan, including any slow exact-storage reads.
+      for (const item of items) await documentContext(c,p,item.document.id);
+      return {items,next_after:more && sort === "registration" && direction === "asc" ? last!.id : null,next_cursor:more ? cursor.encode(last!) : null,
+        sort,direction,can_register:await hasPermission(c,p,"document.register"),coverage:"VisibleDocuments",synthetic:true};
+    };
     for (;;) {
-      const candidates = (
-        await c.query(
-          `SELECT id FROM ppo.library_documents WHERE workspace_id=$1 AND ($2::uuid IS NULL OR id>$2)
-      AND ($3='All' OR state=$3) AND ($4::uuid IS NULL OR company_id=$4) AND ($5::uuid IS NULL OR organisation_id=$5)
-      AND ($6::uuid IS NULL OR site_id=$6) ORDER BY id LIMIT 100`,
-          [p.workspace_id, after, state, company, organisation, site],
-        )
-      ).rows;
-      if (!candidates.length)
-        return { items, next_after: null, synthetic: true };
+      const candidates = (await c.query<{id:string;sort_key:string}>(
+        `SELECT id,${column}::text AS sort_key FROM ppo.library_documents WHERE workspace_id=$1
+        AND ($2::uuid IS NULL OR (${column},id) ${compare} ($7::${cast},$2::uuid))
+        AND ($3='All' OR state=$3) AND ($4::uuid IS NULL OR company_id=$4)
+        AND ($5::uuid IS NULL OR organisation_id=$5) AND ($6::uuid IS NULL OR site_id=$6)
+        ORDER BY ${column} ${order},id ${order} LIMIT 100`,
+        [p.workspace_id,position?.id ?? null,state,company,organisation,site,position?.key ?? null],
+      )).rows;
+      if (!candidates.length) return finish(false);
       for (const candidate of candidates) {
-        after = candidate.id;
+        position = {id:candidate.id,key:candidate.sort_key};
         try {
-          const { d, r } = await documentContext(c, p, candidate.id);
-          if (
-            (type && r.document_type !== type) ||
-            (owner && r.owner_id !== owner)
-          )
-            continue;
-          if (
-            q &&
-            ![r.title, d.display_number, r.applicability, r.document_type]
-              .join(" ")
-              .toLocaleLowerCase()
-              .includes(q)
-          )
-            continue;
-          const observed = await status(c, p, d, r);
-          if (
-            (availability && observed.availability !== availability) ||
-            (review_state && observed.review_state !== review_state)
-          )
-            continue;
-          if (items.length === limit)
-            return {
-              items,
-              next_after: items.at(-1)!.document.id,
-              synthetic: true,
-            };
-          items.push({ document: d, revision: publicRevision(r), ...observed });
-        } catch (e) {
-          if (!hidden(e)) throw e;
-        }
+          const {d,r} = await documentContext(c,p,candidate.id);
+          if ((type && r.document_type !== type) || (owner && r.owner_id !== owner)) continue;
+          if (q && ![r.title,d.display_number,r.applicability,r.document_type].join(" ").toLocaleLowerCase().includes(q)) continue;
+          const observed = await status(c,p,d,r);
+          if ((availability && observed.availability !== availability) || (review_state && observed.review_state !== review_state)) continue;
+          if (items.length === limit) return finish(true);
+          items.push(await registerItem(c,p,d,r,observed)); last = position;
+        } catch(e) { if (!hidden(e)) throw e; }
+      }
+    }
+  });
+}
+async function registerItem(c:QueryClient,p:Principal,d:DocumentRow,r:Revision,observed:Awaited<ReturnType<typeof status>>) {
+  return {document:d,revision:publicRevision(r),...observed,...await presentation(c,p,d,r)};
+}
+export async function documentRevisions(p:Principal,id:string,query:Record<string,string> = {}) {
+  object(query,["before","limit"]);
+  const before = query.before === undefined ? 2147483647 : Number(query.before), limit = query.limit === undefined ? 25 : Number(query.limit);
+  if (!Number.isSafeInteger(before) || before < 1 || before > 2147483647) invalid("before","Use a positive revision number.");
+  if (!Number.isInteger(limit) || limit < 1 || limit > 50) invalid("limit","Choose 1–50 revisions.");
+  return readTransaction(p,async c => {
+    const {d} = await documentContext(c,p,id), items = [];
+    let scan = before, coverage:"VisibleRevisions"|"Partial" = "VisibleRevisions";
+    for (;;) {
+      const candidates = (await c.query<{id:string;revision:number}>("SELECT id,revision FROM ppo.library_revisions WHERE workspace_id=$1 AND document_id=$2 AND revision<$3 ORDER BY revision DESC LIMIT 100",[p.workspace_id,d.id,scan])).rows;
+      if (!candidates.length) return {items,next_before:null,coverage,synthetic:true};
+      for (const candidate of candidates) {
+        scan = candidate.revision;
+        try {
+          const r = await revisionContext(c,p,d,candidate.id);
+          const observed = await status(c,p,d,r);
+          if(items.length === limit) return {items,next_before:items.at(-1)!.revision.revision,coverage,synthetic:true};
+          items.push(await registerItem(c,p,d,r,observed));
+        } catch(e) { if(!hidden(e)) throw e; coverage="Partial"; }
       }
     }
   });
@@ -288,7 +299,7 @@ export async function documentUsage(
         scan = link.id;
         try {
           await revisionContext(c, p, d, link.revision_id);
-          await targetContext(c, p, link.target_kind, link.target_id, d);
+          const target = await targetContext(c, p, link.target_kind, link.target_id, d);
           if (items.length === limit)
             return {
               items,
@@ -301,6 +312,7 @@ export async function documentUsage(
             revision_id: link.revision_id,
             target_kind: link.target_kind,
             target_id: link.target_id,
+            target_label: target.display_name ?? target.title ?? target.description ?? target.display_number ?? link.target_kind,
             purpose: link.purpose,
             created_at: link.created_at,
             created_by: link.created_by,
