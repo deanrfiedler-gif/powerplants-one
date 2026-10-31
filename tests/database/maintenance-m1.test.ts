@@ -522,15 +522,55 @@ test("M-R2/M-R4 retained completion requirements of 1,000, 1,001 and 4,000 chara
     task_mapping: s.mapping,
   });
   assert.equal(received.receipt.state, "Partial");
-  await prepareFollowOn(p, a.occurrence.id, {
-    ...base(),
-    expected_version: received.receipt.record_version,
-    assessment_id: await assessment(p, a.revision),
-    owner_id: CRM.owner,
-  });
+  // #770 review: two different follow-on operations race; exactly one creates the follow-on.
+  const covered = await assessment(p, a.revision);
+  const race = await Promise.allSettled(
+    [base(), base()].map((b) =>
+      prepareFollowOn(p, a.occurrence.id, {
+        ...b,
+        expected_version: received.receipt.record_version,
+        assessment_id: covered,
+        owner_id: CRM.owner,
+      }),
+    ),
+  );
+  assert.equal(race.filter((r) => r.status === "fulfilled").length, 1);
+  for (const r of race)
+    if (r.status === "rejected")
+      assert.ok(code("VersionConflict", "SourceReviewRequired")(r.reason), String(r.reason));
+  assert.equal(
+    (await rows("SELECT count(*)::int AS n FROM ppo.maintenance_work_requests WHERE occurrence_id=$1 AND follow_on_result_id IS NOT NULL", [a.occurrence.id]))[0].n,
+    1,
+  );
   const followOn = (
     await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1 AND follow_on_result_id IS NOT NULL", [a.occurrence.id])
   )[0];
   assert.deepEqual(followOn.content.tasks.map((t: Task) => t.completion_requirements), tasks.slice(1).map((t) => t.completion_requirements));
   assert.deepEqual(await scopeOf(followOn.work_order_id), tasks.slice(1).map((t) => completionRequirementEntries(t.completion_requirements)));
+});
+
+// #770 review: two different Prepare operations for one occurrence race (not a replay). Exactly one
+// commits a request and its work order; the other is refused and writes nothing.
+test("M-R2 competing Prepare operations create one request and one work order", async () => {
+  const a = await dueOccurrence();
+  const before = await countRows();
+  const race = await Promise.allSettled(
+    [base(), base()].map((b) =>
+      prepareWork(a.p, "due", a.occurrence.id, {
+        ...b,
+        expected_version: 1,
+        assessment_id: a.entitlement,
+        owner_id: CRM.owner,
+      }),
+    ),
+  );
+  assert.equal(race.filter((r) => r.status === "fulfilled").length, 1);
+  const refused = race.find((r) => r.status === "rejected") as PromiseRejectedResult;
+  assert.ok(code("VersionConflict", "SourceReviewRequired")(refused.reason), String(refused.reason));
+  assert.deepEqual(await countRows(), {
+    orders: before.orders + 1,
+    tickets: before.tickets + 1,
+    requests: before.requests + 1,
+    items: before.items + 2,
+  });
 });
