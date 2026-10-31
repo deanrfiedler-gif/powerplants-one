@@ -9,6 +9,10 @@ Verified Scheduling runtime: `de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a`; screens
 Merge `44420ad50ebfc18352a33a94b4195c25d6e4469a` preserves Service I4 and changes no Scheduling runtime.
 Implementation, automated proof, visual inspection, owner acceptance and deployment are separate.
 
+## Travel review accepted-design build
+
+[31 October Travel route implementation, proof and design differences](travel-review.md) records the PL-05 build separately from the historical evidence below.
+
 ## Environment
 
 Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, Playwright 1.63.0 and maintained Chrome 154.0.8037.58. Repository browser/PDF guard passed. Task-owned loopback clusters used only `ppo_synthetic_test`: regression port 55475, browser fixtures 55476; compiled preview 3134. No production data or external services.

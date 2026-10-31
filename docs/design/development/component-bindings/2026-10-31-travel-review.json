@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "src/scheduling/travel-review-model.ts"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "src/scheduling/travel-review-model.ts"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "fields-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "src/scheduling/travel-review-model.ts"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "status": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "src/scheduling/travel-review-model.ts"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "status-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "planner": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "src/scheduling/travel-review-model.ts"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "planner-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "pl05-travel-route",
+          "label": "Travel route host",
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/review-workspaces.client.tsx"
+      ],
+      "used_on": [
+        "scope:PL-05",
+        "route:/schedule/travel"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-pl05-accepted-route",
+          "expected": "Accepted D1–D5 route and responsive states, with separate owner implementation review.",
+          "actual": "Native route composition; retained Scheduling navigation and explicit missing source facts differ from the mockup.",
+          "action": "Review paired Travel evidence and declared differences before recording owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

@@ -14648,10 +14648,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-31",
       "source_commit": "de1fcb65581f3e0bbdfd8b8e27bfa4f8ef05ca0a",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "runtime_evidence": "Current Travel route proof and declared design differences: docs/testing/evidence/scheduling-resources/travel-review.md. Functional proof, visual inspection, owner acceptance and deployment remain separate.",
       "sections": [
         {
           "section_id": "purpose",
@@ -14679,10 +14679,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
-            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
-            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
-            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
+            "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
+            "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
           ],
           "rows": [],
           "headers": []
@@ -14691,8 +14691,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
-            "Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks."
+            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained under the initial-preflight fallback; the separate Service planner build started after this Travel claim.",
+            "The day summary keeps visits, planned travel, original-schedule gaps, conflicts, anonymous busy intervals, blocks and closures together. Route estimate remains Unknown; actual field Travel is separate."
           ],
           "steps": [],
           "rows": [],
@@ -14712,13 +14712,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced."
+            "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order."
           ],
           "steps": [
-            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
-            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
-            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
-            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
+            "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
+            "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
           ],
           "rows": [],
           "headers": []
@@ -14738,8 +14738,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading and failed/denied refreshes remove the prior route and comparison. No visits does not certify availability; proposed visits without crew remain in the planner. A requested person outside the returned permitted choices is unavailable, never silently substituted."
           ],
           "steps": [],
           "rows": [],
@@ -14770,9 +14769,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "The route is one scroll with the summary below it. Earlier/Later share one row and Review booking change occupies the next. At 320 px the title is Travel and status wraps below the booked interval. Native controls support Tab, Enter and Space; no drag operation is required.",
+            "Online only. Desktop/phone emulation is not physical-device or assistive-technology acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -14812,7 +14810,7 @@
         "docs/decisions/scheduling-resources-architecture.md",
         "docs/delivery/scheduling-resources-handover.md"
       ],
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
+      "change_summary": "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order.",
       "document_id": "PPO-GUIDE-PL-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -63844,10 +63842,10 @@
           "title": "Using this page",
           "paragraphs": [],
           "steps": [
-            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
-            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
-            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
-            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
+            "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
+            "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
           ],
           "headers": [],
           "rows": []
@@ -63856,8 +63854,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Review / comparison in the native PPO shell. The secondary Scheduling navigation connects Planner, Resources, Changes & follow-up, Travel review and Demand & capacity.",
-            "Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks."
+            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained under the initial-preflight fallback; the separate Service planner build started after this Travel claim.",
+            "The day summary keeps visits, planned travel, original-schedule gaps, conflicts, anonymous busy intervals, blocks and closures together. Route estimate remains Unknown; actual field Travel is separate."
           ],
           "steps": [],
           "rows": [],
@@ -63877,13 +63875,13 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced."
+            "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order."
           ],
           "steps": [
-            "Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.",
-            "Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.",
-            "Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.",
-            "Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order."
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
+            "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
+            "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
           ],
           "rows": [],
           "headers": []
@@ -63903,8 +63901,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading, no records, filtered empty and failed/denied reads are distinct. Refresh clears analytical scenarios and obtains a new source snapshot. Missing source evidence stays Unknown.",
-            "PL-01/PL-04 commands retain validation, stale-version, saving, uncertain outcome and receipt/retry states. Retry an uncertain original unchanged; do not submit a different decision until it is resolved."
+            "Loading and failed/denied refreshes remove the prior route and comparison. No visits does not certify availability; proposed visits without crew remain in the planner. A requested person outside the returned permitted choices is unavailable, never silently substituted."
           ],
           "steps": [],
           "rows": [],
@@ -63935,9 +63932,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use labelled controls and Tab/Shift+Tab; Enter or Space activates buttons. Travel order has Earlier/Later alternatives without dragging. Cards and comparisons stack on phones.",
-            "These are online workspaces. A read failure means evidence unavailable. Only the separate Offline workspace supports its documented offline field operations.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "The route is one scroll with the summary below it. Earlier/Later share one row and Review booking change occupies the next. At 320 px the title is Travel and status wraps below the booked interval. Native controls support Tab, Enter and Space; no drag operation is required.",
+            "Online only. Desktop/phone emulation is not physical-device or assistive-technology acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -63964,9 +63960,9 @@
           "headers": []
         }
       ],
-      "prepared_at": "2026-09-24",
-      "change_summary": "S1–S5 Scheduling & Resources implementation and source-owned review boundaries.",
-      "runtime_evidence": "Scheduling evidence: 6 unit and 5 focused database passes; 36 combined desktop/phone browser passes plus 14 after final read-contract changes. Native 200% zoom inspected. See docs/testing/evidence/scheduling-resources/README.md for exact source, baseline failures and review limits. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
+      "prepared_at": "2026-10-31",
+      "change_summary": "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order.",
+      "runtime_evidence": "Current Travel route proof and declared design differences: docs/testing/evidence/scheduling-resources/travel-review.md. Functional proof, visual inspection, owner acceptance and deployment remain separate.",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx",
         "docs/decisions/scheduling-resources-architecture.md",
