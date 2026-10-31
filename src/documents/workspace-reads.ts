@@ -218,14 +218,18 @@ export async function listPublications(
         after = row.id;
         try {
           const pub = await publicationContext(c, p, row.id);
+          const template = (
+            await c.query(
+              "SELECT name FROM ppo.pack_templates WHERE workspace_id=$1 AND id=$2",
+              [p.workspace_id, pub.template_id],
+            )
+          ).rows[0];
           items.push({
             id: pub.id,
             template_id: pub.template_id,
             runtime_version: pub.runtime_version,
             definition_hash: pub.definition_hash,
-            title:
-              pub.proposal_snapshot?.body?.title ??
-              `Job pack version ${pub.runtime_version}`,
+            title: template?.name ?? `Job pack version ${pub.runtime_version}`,
             revision_id: pub.revision_id,
             proposal_id: pub.proposal_id,
           });

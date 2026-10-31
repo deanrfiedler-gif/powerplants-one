@@ -23514,7 +23514,7 @@
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "R4 backend verification: docs/testing/evidence/template-use/README.md. Native page continuation in PR #704; page validation and visual acceptance pending.",
+      "runtime_evidence": "docs/testing/evidence/template-management/workspace/README.md; independent visual review and owner acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23756,6 +23756,17 @@
           "steps": [],
           "rows": [],
           "headers": []
+        },
+        {
+          "section_id": "phone-controls",
+          "title": "On a phone",
+          "paragraphs": [
+            "Use Filter in the compact header to choose the family or company and site, then Show records. Pull down from the top to read the current list again. Exact records keep their actions in the bottom bar and More menu.",
+            "A stale decision keeps your entered values so you can inspect the refusal. An uncertain result locks editing: use Confirm original action to recover the original operation before starting another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
@@ -77072,9 +77083,20 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "phone-controls",
+          "title": "On a phone",
+          "paragraphs": [
+            "Use Filter in the compact header to choose the family or company and site, then Show records. Pull down from the top to read the current list again. Exact records keep their actions in the bottom bar and More menu.",
+            "A stale decision keeps your entered values so you can inspect the refusal. An uncertain result locks editing: use Confirm original action to recover the original operation before starting another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
-      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+      "runtime_evidence": "docs/testing/evidence/template-management/workspace/README.md; independent visual review and owner acceptance pending."
     },
     {
       "guide_key": "guide.route-documents-templates",
@@ -77122,9 +77144,20 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "phone-controls",
+          "title": "On a phone",
+          "paragraphs": [
+            "Use Filter in the compact header to choose the family or company and site, then Show records. Pull down from the top to read the current list again. Exact records keep their actions in the bottom bar and More menu.",
+            "A stale decision keeps your entered values so you can inspect the refusal. An uncertain result locks editing: use Confirm original action to recover the original operation before starting another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
-      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+      "runtime_evidence": "docs/testing/evidence/template-management/workspace/README.md; independent visual review and owner acceptance pending."
     },
     {
       "guide_key": "guide.route-documents-templates-proposals-id",
@@ -77172,9 +77205,20 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "phone-controls",
+          "title": "On a phone",
+          "paragraphs": [
+            "Use Filter in the compact header to choose the family or company and site, then Show records. Pull down from the top to read the current list again. Exact records keep their actions in the bottom bar and More menu.",
+            "A stale decision keeps your entered values so you can inspect the refusal. An uncertain result locks editing: use Confirm original action to recover the original operation before starting another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
-      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+      "runtime_evidence": "docs/testing/evidence/template-management/workspace/README.md; independent visual review and owner acceptance pending."
     },
     {
       "guide_key": "guide.route-documents-templates-use",
@@ -77222,9 +77266,20 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "phone-controls",
+          "title": "On a phone",
+          "paragraphs": [
+            "Use Filter in the compact header to choose the family or company and site, then Show records. Pull down from the top to read the current list again. Exact records keep their actions in the bottom bar and More menu.",
+            "A stale decision keeps your entered values so you can inspect the refusal. An uncertain result locks editing: use Confirm original action to recover the original operation before starting another."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
         }
       ],
-      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+      "runtime_evidence": "docs/testing/evidence/template-management/workspace/README.md; independent visual review and owner acceptance pending."
     }
   ]
 }

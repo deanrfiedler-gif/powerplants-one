@@ -74,3 +74,7 @@ Desktop at 1440 × 900: the current department's rail with nothing selected (Doc
 ## Implementation continuation, 31 October 2026
 
 PR #704 preserves the October draft and continues on current main. The four registered routes use native template reads and commands; compact phone headers and complete-window permission revalidation are being aligned. [Continuation status](../../../status/2026-10-31-template-management-continuation.md) records the approved API compatibility restoration and remaining proof. Source presence is in progress, not visual or owner acceptance.
+
+## Native page execution evidence
+
+PR #704 now carries the four-route native page with 23 database, four compiled HTTP and 13 browser checks, including a real author/reviewer/publication/site-use journey and actual Chrome 200% zoom. See [execution evidence](../../../testing/evidence/template-management/workspace/README.md). Exact reviewer/publisher names remain authorized projections; publication choices use the exact published template name. Unadopted site defaults are not labelled pinned. Current-authority failure removes open-dialog evidence without replacing an uncertain original operation. Independent visual review, exhaustive refusal captures, manual screen-reader review and owner acceptance remain separate.

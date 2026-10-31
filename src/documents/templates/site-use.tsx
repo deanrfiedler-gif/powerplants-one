@@ -48,6 +48,7 @@ function Use({ company, site }: { company: string; site: string }) {
     "after",
   );
   const policy = read.data as UsePolicy | null;
+  const [filterOpen, setFilterOpen] = useState(false);
   const [inspect, setInspect] = useState<string | null>(null),
     [assign, setAssign] = useState<{
       policy: UsePolicy;
@@ -77,7 +78,64 @@ function Use({ company, site }: { company: string; site: string }) {
     );
   const canAssign = !!policy?.can_assign && !read.error && !read.loading;
   return (
-    <TemplateFrame view="use" family="OUT-09" manage>
+    <TemplateFrame
+      view="use"
+      family="OUT-09"
+      manage
+      onRefresh={() => {
+        read.reload();
+        scopes.reload();
+      }}
+      phoneHeader={{
+        filter: {
+          open: () => setFilterOpen(true),
+          applied: !!company || !!site,
+        },
+      }}
+    >
+      {filterOpen && (
+        <WorklistPanel
+          title="Site use filters"
+          onClose={() => setFilterOpen(false)}
+        >
+          <div className="tm-phone-filter">
+            <SelectField
+              name="phone-use-company"
+              label="Company"
+              required
+              value={company}
+              options={companies.map(([id, name]) => ({
+                id,
+                display_name: name ?? id,
+              }))}
+              onChange={(c) => navigate(c, "")}
+            />
+            <SelectField
+              name="phone-use-site"
+              label="Site"
+              required
+              value={site}
+              options={sites}
+              onChange={(s) => navigate(company, s)}
+              disabled={!company}
+            />
+            <ReadFeedback {...scopes} />
+            {scopes.hasMore && <Paging read={scopes} scope="permitted sites" />}
+            <Button onClick={() => navigate("", "")}>Reset</Button>
+            <Button variant="primary" onClick={() => setFilterOpen(false)}>
+              Show records
+            </Button>
+            <Button
+              onClick={() => {
+                read.reload();
+                scopes.reload();
+              }}
+            >
+              Refresh current records
+            </Button>
+          </div>
+        </WorklistPanel>
+      )}
       <div className="tm-use">
         <header className="tm-use-header">
           <div>
@@ -172,6 +230,8 @@ function Use({ company, site }: { company: string; site: string }) {
                                 Assigned interval ·{" "}
                                 {short(policy.selection.assignment_id)}
                               </Button>
+                            ) : policy.version === 0 ? (
+                              "Workspace default · not adopted"
                             ) : (
                               "Pinned baseline"
                             ),
@@ -193,7 +253,11 @@ function Use({ company, site }: { company: string; site: string }) {
                   )}
                 </section>
                 <section className="tm-baseline">
-                  <h2>Pinned baseline</h2>
+                  <h2>
+                    {policy.version === 0
+                      ? "Workspace default before adoption"
+                      : "Pinned baseline"}
+                  </h2>
                   <Facts
                     items={[
                       [
@@ -216,9 +280,9 @@ function Use({ company, site }: { company: string; site: string }) {
                     ]}
                   />
                   <Note>
-                    The baseline applies before the first assignment starts.
-                    Later gaps hold preparation. Existing pack revisions and
-                    issued files keep their original selection.
+                    {policy.version === 0
+                      ? "No site-use policy has been adopted. The first assignment pins the current workspace default as its baseline."
+                      : "The baseline applies before the first assignment starts. Later gaps hold preparation. Existing pack revisions and issued files keep their original selection."}
                   </Note>
                 </section>
                 <section className="tm-assignments">
@@ -352,7 +416,7 @@ function Use({ company, site }: { company: string; site: string }) {
           </>
         )}
       </div>
-      {inspect && (
+      {inspect && policy && (
         <AssignmentDetail
           key={inspect}
           id={inspect}
@@ -367,6 +431,7 @@ function Use({ company, site }: { company: string; site: string }) {
       )}
       {assign && (
         <AssignDialog
+          available={!!policy}
           policy={assign.policy}
           predecessor={assign.predecessor}
           onClose={() => setAssign(null)}

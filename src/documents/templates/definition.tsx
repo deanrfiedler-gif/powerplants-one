@@ -53,7 +53,7 @@ export function DefinitionRecord({
         ? initialTab!
         : "definition",
     ),
-    [create, setCreate] = useState(false);
+    [create, setCreate] = useState<Template | null>(null);
   const router = useRouter(),
     canCreate =
       !!t &&
@@ -72,7 +72,7 @@ export function DefinitionRecord({
         title: t ? `Version ${t.version}` : "Definition",
         record: {
           more: canCreate
-            ? [{ label: "Propose a change", onSelect: () => setCreate(true) }]
+            ? [{ label: "Propose a change", onSelect: () => setCreate(t) }]
             : [],
         },
       }}
@@ -96,7 +96,7 @@ export function DefinitionRecord({
                 Definitions
               </ButtonLink>
               {canCreate && (
-                <Button variant="primary" onClick={() => setCreate(true)}>
+                <Button variant="primary" onClick={() => setCreate(t)}>
                   Propose a change
                 </Button>
               )}
@@ -222,13 +222,21 @@ export function DefinitionRecord({
               </RecordPanel>
             </section>
           </div>
+          {canCreate && (
+            <div className="tm-phone-primary">
+              <Button variant="primary" onClick={() => setCreate(t)}>
+                Propose a change
+              </Button>
+            </div>
+          )}
         </>
       )}
-      {create && t && (
+      {create && (
         <ProposalForm
           family={family}
-          base={t}
-          onClose={() => setCreate(false)}
+          base={create}
+          available={!!t}
+          onClose={() => setCreate(null)}
           onSaved={(result) => router.push(proposalHref(result))}
         />
       )}
@@ -318,7 +326,10 @@ export function PublicationEvidence({ id }: { id: string }) {
               ["Publication ID", <code key="id">{pub.id}</code>],
               [
                 "Exact proposal",
-                <Link key="proposal" href={proposalHref(pub.proposal_id)}>
+                <Link
+                  key="proposal"
+                  href={`${proposalHref(pub.proposal_id)}?revision=${pub.revision_id}`}
+                >
                   {pub.proposal_id}
                 </Link>,
               ],
@@ -344,7 +355,7 @@ export function PublicationEvidence({ id }: { id: string }) {
                 "Current support",
                 <Chip key="support" value={read.data!.runtime_support} />,
               ],
-              ["Publisher", <code key="publisher">{pub.publisher_id}</code>],
+              ["Publisher", pub.publisher_name ?? pub.publisher_id],
               ["Published", <Time key="time" value={pub.published_at} />],
               ["Approval note", pub.approval_note],
               ["Reason", pub.reason],

@@ -158,6 +158,12 @@ test("R2 independent exact reviews remain historical; edits invalidate review, a
     revision_id: input.revision_id,
   });
   assert.equal(old.latest_review.id, review.review_id);
+  const reviewerName = (
+    await database().query("SELECT display_name FROM ppo.users WHERE id=$1", [
+      reviewer.actor_id,
+    ])
+  ).rows[0].display_name;
+  assert.equal(old.latest_review.actor_name, reviewerName);
   assert.equal(old.is_current_revision, false);
   await assert.rejects(
     reviewProposal(reviewer, input.id, {

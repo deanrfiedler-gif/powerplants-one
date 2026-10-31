@@ -169,6 +169,7 @@ export type Publication = {
   definition_hash: string;
   definition: string;
   publisher_id: string;
+  publisher_name?: string | null;
   published_at: string;
   approval_note: string;
   reason: string;

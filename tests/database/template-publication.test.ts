@@ -90,6 +90,12 @@ test("R3 defaults deny; exact independent publication has immutable identity, ca
     saved = await publishTemplate(reviewer, input.id, cmd);
   const pub = await readPublication(reviewer, cmd.id);
   assert.equal(pub.runtime_support, "Supported");
+  const publisherName = (
+    await rows("SELECT display_name FROM ppo.users WHERE id=$1", [
+      reviewer.actor_id,
+    ])
+  )[0].display_name;
+  assert.equal(pub.publication.publisher_name, publisherName);
   const t = await readTemplate(reviewer, cmd.template_id, { family: "OUT-09" });
   assert.equal(t.runtime_support, "Supported");
   assert.equal(t.selected_by_policy, false);

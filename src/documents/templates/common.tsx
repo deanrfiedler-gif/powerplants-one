@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { api, ErrorNotice, Stamp } from "../../components/business-ui";
 import { Button } from "../../components/ui/button";
 import { RegisterChip } from "../../components/ui/register-table";
@@ -123,14 +123,51 @@ export function Paging({
   order?: string;
   scope?: string;
 }) {
+  const footer = useRef<HTMLElement>(null);
+  const continuation = useRef<Set<Element> | null>(null);
+  useEffect(() => {
+    if (read.loading || !continuation.current) return;
+    const previous = continuation.current;
+    continuation.current = null;
+    const next = Array.from(
+      footer.current?.parentElement?.querySelectorAll<HTMLElement>(
+        "a[href], input, button",
+      ) ?? [],
+    ).find(
+      (node) =>
+        !previous.has(node) &&
+        node.getClientRects().length &&
+        !footer.current?.contains(node),
+    );
+    (next ?? footer.current)?.focus();
+  }, [read.data, read.error, read.loading]);
   return (
-    <footer className="tm-paging">
+    <footer
+      className="tm-paging"
+      ref={footer}
+      tabIndex={-1}
+      aria-label="List continuation"
+    >
+      <span className="sr-only" role="status">
+        {read.data ? `${read.data.items.length} records shown` : ""}
+      </span>
       <span>
         {read.data ? (read.hasMore ? "More available" : "End of list") : ""}
         {read.data && ` · ${scope} · ${order}`}
       </span>
       {read.hasMore && (
-        <Button busy={read.loading} disabled={!!read.error} onClick={read.more}>
+        <Button
+          busy={read.loading}
+          disabled={!!read.error}
+          onClick={() => {
+            continuation.current = new Set(
+              footer.current?.parentElement?.querySelectorAll(
+                "a[href], input, button",
+              ) ?? [],
+            );
+            read.more();
+          }}
+        >
           Load more
         </Button>
       )}
@@ -187,17 +224,20 @@ export function TemplateFrame({
   family,
   manage,
   phoneHeader,
+  onRefresh,
   children,
 }: {
   view: "definitions" | "proposals" | "use";
   family: Family | null;
   manage: boolean;
   phoneHeader?: Omit<PhoneHeaderConfig, "chooseView">;
+  onRefresh?: () => void;
   children: ReactNode;
 }) {
-  const [open, setOpen] = useState(true),
+  const [open, setOpen] = useState(!phoneHeader?.record),
     menu = useSecondaryMenu(open, setOpen),
     shell = useShell();
+  const pull = useRef<{ x: number; y: number } | null>(null);
   const query = family ? `&family=${family}` : "";
   const nav = (
     <nav aria-label="Template views">
@@ -256,16 +296,51 @@ export function TemplateFrame({
       contentId="template-content"
       menu={nav}
       message=""
-      phoneHeader={
-        phoneHeader ?? {
-          title:
-            view === "use"
-              ? "Site use"
-              : `${family ? familyNames[family] + " " : ""}${view === "definitions" ? "definitions" : "proposals"}`,
-        }
-      }
+      phoneHeader={{
+        title:
+          view === "use"
+            ? "Site use"
+            : `${family ? familyNames[family] + " " : ""}${view === "definitions" ? "definitions" : "proposals"}`,
+        ...phoneHeader,
+      }}
     >
-      {children}
+      <div
+        className="tm-page"
+        onTouchStart={(event) => {
+          pull.current = null;
+          if (
+            !onRefresh ||
+            !window.matchMedia("(max-width: 780px)").matches ||
+            event.touches.length !== 1
+          )
+            return;
+          let target: HTMLElement | null = event.target as HTMLElement;
+          if (target.closest("button, input, select, textarea, dialog")) return;
+          while (target) {
+            if (target.scrollTop > 0) return;
+            target = target.parentElement;
+          }
+          const touch = event.touches[0];
+          pull.current = { x: touch.clientX, y: touch.clientY };
+        }}
+        onTouchEnd={(event) => {
+          const start = pull.current;
+          pull.current = null;
+          const end = event.changedTouches[0];
+          if (
+            start &&
+            end &&
+            end.clientY - start.y > 80 &&
+            Math.abs(end.clientX - start.x) < 40
+          )
+            onRefresh?.();
+        }}
+        onTouchCancel={() => {
+          pull.current = null;
+        }}
+      >
+        {children}
+      </div>
     </SecondaryMenuFrame>
   );
 }

@@ -56,3 +56,5 @@ R2 creates ordinary SharedRecordUpdated evidence only. It never emits PolicyOrTe
 Proposal reads add stored scope/author labels, exact-revision publication identity and contributor/duty hints after native authority. The revision number stays separate from command version. Revision history uses immutable revision order and reviews use command-version order, with timestamp/identity tie-breakers; cursor context distinguishes this chronology from older UUID-order tokens. No source values are read for field bindings.
 
 Dean explicitly approved restoring main's proposal-list behavior on 31 October: unauthorised callers receive an empty permitted list. Every returned row still passes proposalContext and its template.read, company/site/family and source-binding checks, then is rechecked before return. Per-record and command authority remain mandatory; no duty or grant is removed.
+
+The exact proposal read includes `latest_review.actor_name` for the already authorized revision review. It resolves the workspace user display name and rechecks proposal/revision authority before return; history and latest-review labels therefore agree without a client directory join.

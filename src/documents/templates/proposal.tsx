@@ -73,6 +73,11 @@ function Proposal({
     d?.revision.body.title ?? "Proposal",
   );
 
+  const publicationVisible =
+    !!d?.publication_id || !!d?.permissions.can_publish;
+  const selectedTab =
+    tab === "publication" && !publicationVisible ? "proposal" : tab;
+
   const saved = () => {
     setDialog(null);
     setPublishing(null);
@@ -238,48 +243,69 @@ function Proposal({
               <RecordTabs
                 id="proposal-tabs"
                 label="Proposal sections"
-                value={tab}
+                value={selectedTab}
                 onChange={setTab}
                 tabs={[
                   { id: "proposal", label: "Proposal" },
                   { id: "reviews", label: "Reviews" },
                   { id: "history", label: "History" },
-                  { id: "publication", label: "Publication" },
+                  ...(publicationVisible
+                    ? [{ id: "publication", label: "Publication" }]
+                    : []),
                 ]}
               />
-              <RecordPanel id="proposal-tabs" tab="proposal" value={tab}>
+              <RecordPanel
+                id="proposal-tabs"
+                tab="proposal"
+                value={selectedTab}
+              >
                 <h2>Proposed fields</h2>
                 <Note>
                   Ordered field definitions and permitted source bindings. This
                   view does not fetch source values or render a preview.
                 </Note>
-                <RegisterTable
-                  caption="Proposed fields in authored order"
-                  variant="panel"
-                >
-                  <thead>
-                    <tr>
-                      <th>Key</th>
-                      <th>Label</th>
-                      <th>Source binding</th>
-                      <th>Required</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {d.revision.body.fields.map((f) => (
-                      <tr key={f.key}>
-                        <td>
-                          <code>{f.key}</code>
-                        </td>
-                        <td>{f.label}</td>
-                        <td>
-                          <code>{f.binding}</code>
-                        </td>
-                        <td>{f.required ? "Proposed" : "No"}</td>
+                <div className="tm-desktop">
+                  <RegisterTable
+                    caption="Proposed fields in authored order"
+                    variant="panel"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Key</th>
+                        <th>Label</th>
+                        <th>Source binding</th>
+                        <th>Required</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </RegisterTable>
+                    </thead>
+                    <tbody>
+                      {d.revision.body.fields.map((f) => (
+                        <tr key={f.key}>
+                          <td>
+                            <code>{f.key}</code>
+                          </td>
+                          <td>{f.label}</td>
+                          <td>
+                            <code>{f.binding}</code>
+                          </td>
+                          <td>{f.required ? "Proposed" : "No"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </RegisterTable>
+                </div>
+                <dl className="tm-phone-list tm-phone-fields">
+                  {d.revision.body.fields.map((f) => (
+                    <div key={f.key}>
+                      <dt>
+                        <code>{f.key}</code>
+                      </dt>
+                      <dd>
+                        {f.label} · {f.binding} ·{" "}
+                        {f.required ? "required" : "optional"}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
                 {d.latest_review && (
                   <>
                     <h2>Latest review of this revision</h2>
@@ -287,16 +313,20 @@ function Proposal({
                   </>
                 )}
               </RecordPanel>
-              <RecordPanel id="proposal-tabs" tab="reviews" value={tab}>
+              <RecordPanel id="proposal-tabs" tab="reviews" value={selectedTab}>
                 {tab === "reviews" && <Reviews id={id} />}
               </RecordPanel>
-              <RecordPanel id="proposal-tabs" tab="history" value={tab}>
+              <RecordPanel id="proposal-tabs" tab="history" value={selectedTab}>
                 {tab === "history" && (
                   <History id={id} current={d.proposal.current_revision_id} />
                 )}
               </RecordPanel>
-              <RecordPanel id="proposal-tabs" tab="publication" value={tab}>
-                {tab === "publication" &&
+              <RecordPanel
+                id="proposal-tabs"
+                tab="publication"
+                value={selectedTab}
+              >
+                {selectedTab === "publication" &&
                   (d.publication_id ? (
                     <PublicationEvidence id={d.publication_id} />
                   ) : (
@@ -326,6 +356,7 @@ function Proposal({
       )}
       {dialog?.kind === "revise" && (
         <ProposalForm
+          available={!!d}
           family={dialog.data.proposal.family}
           proposal={dialog.data}
           onClose={() => setDialog(null)}
@@ -337,6 +368,7 @@ function Proposal({
       )}
       {dialog?.kind === "review" && (
         <ReviewDialog
+          available={!!d}
           data={dialog.data}
           onClose={() => setDialog(null)}
           onSaved={saved}
@@ -344,6 +376,7 @@ function Proposal({
       )}{" "}
       {publishing && (
         <PublishDialog
+          available={!!d}
           data={publishing}
           onClose={() => setPublishing(null)}
           onSaved={saved}

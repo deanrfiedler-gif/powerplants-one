@@ -297,7 +297,7 @@
 }
 #ppo-templates .record-tablist button[aria-selected="true"] {
   color: var(--ink);
-  border-bottom-color: var(--green);
+  border-bottom-color: var(--ink);
   font-weight: 600;
 }
 #ppo-templates .record-panel {
@@ -688,5 +688,165 @@ dialog:has(.tm-form) > footer {
   .tm-form .tm-facts > div,
   .tm-assignment-detail .tm-facts > div {
     grid-template-columns: 90px minmax(0, 1fr);
+  }
+}
+
+.tm-phone-filter {
+  display: grid;
+  gap: 16px;
+}
+@media (max-width: 780px) {
+  #ppo-templates .tm-toolbar,
+  #ppo-templates .tm-scope {
+    display: none;
+  }
+  dialog:has(.tm-phone-filter) {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+  #ppo-templates:has(.tm-record-grid) .tm-phone-primary {
+    bottom: 0;
+  }
+}
+
+#ppo-templates .tm-page {
+  display: contents;
+}
+
+#ppo-templates .record-tablist button {
+  flex: 0 0 auto;
+}
+#ppo-templates .tm-phone-fields {
+  margin: 0;
+}
+#ppo-templates .tm-phone-fields > div {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+#ppo-templates .tm-phone-fields dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-templates .tm-record-grid) .mobile-navigation {
+    display: none;
+  }
+  #ppo-templates:has(.tm-record-grid) {
+    min-height: calc(100dvh - 56px);
+  }
+  #ppo-templates .record-tablist button {
+    flex: 1;
+  }
+}
+
+/* WorklistPanel supplies dialog/focus behavior; bind its layout to this consumer. */
+#ppo-templates .crm-r38-panel {
+  padding: 0;
+  width: min(680px, calc(100vw - 32px));
+  max-width: 100vw;
+  max-height: calc(100dvh - 32px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+  background: var(--white);
+  overflow: hidden;
+}
+#ppo-templates .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-templates .crm-r38-panel::backdrop {
+  background: color-mix(in srgb, var(--ink) 25%, transparent);
+}
+#ppo-templates .crm-r38-panel > header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-strong);
+}
+#ppo-templates .crm-r38-panel > header h2 {
+  margin: 0;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+#ppo-templates .crm-r38-panel > header button {
+  flex: none;
+  width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+}
+#ppo-templates .crm-r38-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
+}
+#ppo-templates .crm-r38-panel > footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--line-strong);
+}
+#ppo-templates .crm-r38-panel:has(.tm-form) > footer {
+  display: none;
+}
+#ppo-templates .crm-r38-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(620px, 100vw);
+  height: 100dvh;
+  max-height: 100dvh;
+  border-radius: 0;
+}
+#ppo-templates .tm-form-actions {
+  position: sticky;
+  bottom: -20px;
+  margin: 0 -20px -20px;
+  padding: 16px 20px;
+  background: var(--white);
+  z-index: 1;
+}
+@media (max-width: 780px) {
+  #ppo-templates .crm-r38-panel {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+  #ppo-templates .crm-r38-panel > header,
+  #ppo-templates .crm-r38-panel-body {
+    padding: 16px;
+  }
+  #ppo-templates .tm-form-actions {
+    bottom: -16px;
+    margin: 0 -16px -16px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 780px) {
+  .app-frame:has(#ppo-templates .tm-record-grid) {
+    padding-bottom: 0;
+  }
+  #ppo-templates .tm-phone-primary {
+    bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+  #ppo-templates:has(.tm-record-grid) .tm-phone-primary {
+    bottom: 0;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
 }

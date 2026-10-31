@@ -87,6 +87,13 @@ export async function readProposal(
           [p.workspace_id, d.id, revision.id],
         )
       ).rows[0] ?? null;
+    if (latest_review) {
+      const actor = await c.query(
+        "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, latest_review.reviewer_id],
+      );
+      latest_review.actor_name = actor.rows[0]?.display_name ?? null;
+    }
     await proposalContext(c, p, id);
     await revisionContext(c, p, d, revision.id);
     return {

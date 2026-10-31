@@ -31,6 +31,7 @@ function DecisionForm({
   onSaved,
   onClose,
   approval = false,
+  available = true,
 }: {
   title: string;
   children?: ReactNode;
@@ -41,6 +42,7 @@ function DecisionForm({
   onSaved: () => void;
   onClose: () => void;
   approval?: boolean;
+  available?: boolean;
 }) {
   const [reason, setReason] = useState(""),
     [note, setNote] = useState("");
@@ -58,13 +60,16 @@ function DecisionForm({
     }
   };
   return (
-    <WorklistPanel title={title} onClose={close}>
+    <WorklistPanel
+      title={available ? title : "Decision unavailable"}
+      onClose={close}
+    >
       <form
         className="tm-form tm-decision"
         onChange={() => command.dirty()}
         onSubmit={(e) => {
           e.preventDefault();
-          if (!ready) return;
+          if (!available || !ready) return;
           const intent = fields();
           void command.send(intent.path, {
             ...intent.body,
@@ -74,30 +79,40 @@ function DecisionForm({
         }}
       >
         <ValidationFields error={command.error}>
-          <Note>{binding}</Note>
-          <ErrorNotice error={command.error} />
-          <fieldset disabled={command.busy || command.uncertain}>
-            {children}
-            {approval && (
-              <Field
-                name="approval_note"
-                label="Service approval note"
-                multiline
-                maxLength={2000}
-                required
-                value={note}
-                onChange={setNote}
-              />
-            )}
-            <Field
-              name="reason"
-              label="Reason"
-              maxLength={1000}
-              required
-              value={reason}
-              onChange={setReason}
-            />
-          </fieldset>
+          {available ? (
+            <>
+              <Note>{binding}</Note>
+              <ErrorNotice error={command.error} />
+              <fieldset disabled={command.busy || command.uncertain}>
+                {children}
+                {approval && (
+                  <Field
+                    name="approval_note"
+                    label="Service approval note"
+                    multiline
+                    maxLength={2000}
+                    required
+                    value={note}
+                    onChange={setNote}
+                  />
+                )}
+                <Field
+                  name="reason"
+                  label="Reason"
+                  maxLength={1000}
+                  required
+                  value={reason}
+                  onChange={setReason}
+                />
+              </fieldset>
+            </>
+          ) : (
+            <Note warning>
+              Current evidence cannot be confirmed. Re-read the record before
+              starting a decision. Any uncertain original operation remains
+              available for confirmation.
+            </Note>
+          )}
           <p role="status">{command.status}</p>
           {command.uncertain && (
             <Note warning>
@@ -122,9 +137,9 @@ function DecisionForm({
               type="submit"
               variant="primary"
               busy={command.busy}
-              disabled={!ready || command.uncertain}
+              disabled={!available || !ready || command.uncertain}
             >
-              {label}
+              {available ? label : "Decision unavailable"}
             </Button>
           </footer>
         </ValidationFields>
@@ -141,10 +156,12 @@ export function ReviewDialog({
   data,
   onSaved,
   onClose,
+  available = true,
 }: {
   data: ProposalData;
   onSaved: () => void;
   onClose: () => void;
+  available?: boolean;
 }) {
   const [outcome, setOutcome] = useState("ChangesRequested"),
     [checks, setChecks] = useState<Record<keyof typeof checkLabels, Check>>({
@@ -158,6 +175,7 @@ export function ReviewDialog({
       Object.values(checks).every((c) => c.result === "Pass"));
   return (
     <DecisionForm
+      available={available}
       title={`Review r${data.revision.revision} · ${data.revision.body.title}`}
       label="Record review"
       ready={ready}
@@ -243,13 +261,16 @@ export function PublishDialog({
   data,
   onSaved,
   onClose,
+  available = true,
 }: {
   data: Readiness;
   onSaved: () => void;
   onClose: () => void;
+  available?: boolean;
 }) {
   return (
     <DecisionForm
+      available={available}
       title={`Publish as Job pack version ${data.runtime_version}`}
       label={`Publish version ${data.runtime_version}`}
       ready
@@ -303,11 +324,13 @@ export function AssignDialog({
   predecessor,
   onSaved,
   onClose,
+  available = true,
 }: {
   policy: UsePolicy;
   predecessor?: Assignment;
   onSaved: () => void;
   onClose: () => void;
+  available?: boolean;
 }) {
   const choices = useTemplatePages<PublicationChoice>(
     `document-template-publications?company_id=${policy.company_id}&site_id=${policy.site_id}`,
@@ -331,6 +354,7 @@ export function AssignDialog({
     (ends === "open" || !!to);
   return (
     <DecisionForm
+      available={available}
       title={
         predecessor ? "Assign successor · Job packs" : "Assign use · Job packs"
       }
@@ -396,7 +420,7 @@ export function AssignDialog({
         onChange={setPublicationId}
         options={(choices.data?.items ?? []).map((p) => ({
           id: p.id,
-          display_name: `Job pack version ${p.runtime_version} · ${p.id}`,
+          display_name: `${p.title} · version ${p.runtime_version} · ${p.id}`,
         }))}
       />
       <Paging read={choices} scope="publications at this site" />

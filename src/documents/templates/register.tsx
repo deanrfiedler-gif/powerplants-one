@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button, ButtonLink } from "../../components/ui/button";
 import { RegisterTable } from "../../components/ui/register-table";
-import { WorklistChoice } from "../../components/crm-worklist-tools";
+import {
+  WorklistChoice,
+  WorklistPanel,
+} from "../../components/crm-worklist-tools";
 import {
   TemplateFrame,
   ReadFeedback,
@@ -49,10 +52,21 @@ function Register({ query }: { query: URLSearchParams }) {
     `document-template-drafts/scopes?family=${family ?? "OUT-09"}`,
   );
   const [selectedSnapshot, setSnapshot] = useState<Template | null>(null),
-    [create, setCreate] = useState(false);
+    [create, setCreate] = useState(false),
+    [filterOpen, setFilterOpen] = useState(false);
   const snapshot =
     definitions.data?.items.find((item) => item.id === selectedSnapshot?.id) ??
     null;
+  const snapshotPanel = useRef<HTMLElement>(null);
+  const snapshotId = snapshot?.id;
+  useEffect(() => {
+    if (!snapshotId) return;
+    const trigger = document.activeElement as HTMLElement | null;
+    snapshotPanel.current?.focus();
+    return () => {
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, [snapshotId]);
   const queryKey = query.toString();
   const [previousQuery, setPreviousQuery] = useState(queryKey);
   if (previousQuery !== queryKey) {
@@ -70,7 +84,73 @@ function Register({ query }: { query: URLSearchParams }) {
     router.replace(`/documents/templates?${next}`);
   };
   return (
-    <TemplateFrame view={view} family={family} manage={!!scopes.data}>
+    <TemplateFrame
+      view={view}
+      family={family}
+      manage={!!scopes.data}
+      onRefresh={() => {
+        read.reload();
+        scopes.reload();
+      }}
+      phoneHeader={{
+        filter: { open: () => setFilterOpen(true), applied: !!family },
+        ...(view === "proposals" &&
+        canCreate &&
+        family &&
+        !read.error &&
+        !read.loading
+          ? {
+              pageAction: {
+                label: "New proposal",
+                icon: "plus" as const,
+                onSelect: () => setCreate(true),
+              },
+            }
+          : {}),
+      }}
+    >
+      {filterOpen && (
+        <WorklistPanel
+          title="Template filters"
+          onClose={() => setFilterOpen(false)}
+        >
+          <div className="tm-phone-filter">
+            <WorklistChoice
+              label="Family"
+              prefix="Family: "
+              value={family ?? ""}
+              options={families.map((id) => ({
+                id,
+                label: `${familyNames[id]} (${id})`,
+              }))}
+              onChange={choose}
+            />
+            <p>
+              A family is required. Results include only records you can read.
+            </p>
+            <Button
+              onClick={() => {
+                const next = new URLSearchParams(query);
+                next.delete("family");
+                router.replace(`/documents/templates?${next}`);
+              }}
+            >
+              Reset
+            </Button>
+            <Button variant="primary" onClick={() => setFilterOpen(false)}>
+              Show records
+            </Button>
+            <Button
+              onClick={() => {
+                read.reload();
+                scopes.reload();
+              }}
+            >
+              Refresh current records
+            </Button>
+          </div>
+        </WorklistPanel>
+      )}
       <div className="tm-register">
         <div className="tm-toolbar">
           <WorklistChoice
@@ -215,7 +295,7 @@ function Register({ query }: { query: URLSearchParams }) {
                       href={definitionHref(t.family, t.id)}
                     >
                       <strong>
-                        {t.family_name} · version {t.version}
+                        {t.name} · version {t.version}
                       </strong>
                       <span>
                         {short(t.id)} ·{" "}
@@ -340,6 +420,8 @@ function Register({ query }: { query: URLSearchParams }) {
         {snapshot && family && (
           <aside
             className="tm-snapshot"
+            ref={snapshotPanel}
+            tabIndex={-1}
             aria-label="Definition snapshot"
             onKeyDown={(e) => {
               if (e.key === "Escape") setSnapshot(null);
@@ -403,6 +485,7 @@ function Register({ query }: { query: URLSearchParams }) {
         )}
         {create && family && (
           <ProposalForm
+            available={!read.error && !!scopes.data}
             family={family}
             onClose={() => setCreate(false)}
             onSaved={(id) => router.push(proposalHref(id))}
