@@ -583,7 +583,8 @@ test("a superseding immutable proposal refuses the displayed publisher review an
   await expect(
     page.getByRole("heading", { name: "Complete saved review", exact: true }),
   ).toBeVisible();
-  await login(request, "scheduling-policy-reviewer");
+  // reviewed() proposes as publisher; only that proposer can create its successor.
+  await login(request, "scheduling-policy-publisher");
   const successor = crypto.randomUUID();
   const saved = await request.post("/api/v1/schedule/policy-proposals", {
     headers: { Origin: origin },
