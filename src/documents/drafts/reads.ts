@@ -2,11 +2,12 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
-import { hasPermission } from "../../platform/permissions";
+import { hasPermission, requireCapability } from "../../platform/permissions";
 import { workingCompanyFor } from "../../platform/working-company";
 import { page } from "../../shared/reads";
 import { choice, invalid, object, uuid } from "../../shared/validation";
 import { proposalContext, revisionContext, scopeAuthority } from "./context";
+import { proposalPresentation } from "../workspace-reads";
 import { bindingCatalogue, families } from "./validation";
 
 async function read<T>(p: Principal, work: (c: PoolClient) => Promise<T>) {
@@ -92,6 +93,7 @@ export async function readProposal(
       ...status,
       proposal: d,
       revision,
+      ...await proposalPresentation(c, p, d, revision),
       latest_review,
       is_current_revision: revision.id === d.current_revision_id,
     };
@@ -105,6 +107,7 @@ export async function listProposals(
   const family = choice(q.family, "family", families),
     pg = pagination(p, q, "list:" + family);
   return read(p, async (c) => {
+    await requireCapability(c, p, "template.read");
     let after = pg.after;
     const visible: Awaited<ReturnType<typeof proposalContext>>[] = [];
     while (visible.length <= pg.limit) {
@@ -127,10 +130,13 @@ export async function listProposals(
       if (rows.length < 100) break;
     }
     const selected = visible.slice(0, pg.limit);
+    const presentations = await Promise.all(selected.map(({ d, r }) => proposalPresentation(c, p, d, r)));
     for (const { d } of selected) await proposalContext(c, p, d.id);
     return {
       ...status,
-      items: selected.map(({ d, r }) => ({
+      items: selected.map(({ d, r }, index) => ({
+        ...presentations[index],
+        revision: r.revision,
         id: d.id,
         company_id: d.company_id,
         site_id: d.site_id,
@@ -156,7 +162,7 @@ export async function proposalHistory(
 ) {
   object(q, ["kind", "limit", "cursor"]);
   const kind = choice(q.kind, "kind", ["Revision", "Review"] as const),
-    pg = pagination(p, q, uuid(id, "proposal_id") + ":" + kind);
+    pg = pagination(p, q, uuid(id, "proposal_id") + ":chronological:" + kind);
   return read(p, async (c) => {
     const { d } = await proposalContext(c, p, id);
     const table =
@@ -165,10 +171,13 @@ export async function proposalHistory(
         : "template_proposal_reviews";
     let after = pg.after;
     const visible: Record<string, unknown>[] = [];
+    // An opaque cursor still names only visible evidence. Its immutable row supplies
+    // the chronological key; UUID order must not reorder revisions or reviews.
+    const order = kind === "Revision" ? "revision" : "proposal_version";
     while (visible.length <= pg.limit) {
       const rows = (
         await c.query(
-          `SELECT * FROM ppo.${table} WHERE workspace_id=$1 AND proposal_id=$2 AND ($3::uuid IS NULL OR id>$3) ORDER BY id LIMIT 100`,
+          `SELECT * FROM ppo.${table} WHERE workspace_id=$1 AND proposal_id=$2 AND ($3::uuid IS NULL OR ${order}>(SELECT ${order} FROM ppo.${table} WHERE workspace_id=$1 AND proposal_id=$2 AND id=$3)) ORDER BY ${order},created_at,id LIMIT 100`,
           [p.workspace_id, d.id, after],
         )
       ).rows;
@@ -191,6 +200,10 @@ export async function proposalHistory(
       if (rows.length < 100) break;
     }
     const items = visible.slice(0, pg.limit);
+    for (const row of items) {
+      const actor = await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id, row.created_by ?? row.reviewer_id]);
+      row.actor_name = actor.rows[0]?.display_name ?? null;
+    }
     await proposalContext(c, p, d.id);
     for (const row of items)
       await revisionContext(

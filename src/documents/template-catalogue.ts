@@ -44,6 +44,7 @@ const families = {
 } as const;
 type Template = {
   id: string;
+  name: string | null;
   publication_id?: string | null;
   version: number;
   definition: string;
@@ -142,7 +143,7 @@ async function readTransaction<T>(
 }
 function select(family: OutputFamily) {
   const f = families[family];
-  return `SELECT t.id,t.version,t.definition,t.content_hash,
+  return `SELECT t.id,t.version,t.definition,t.content_hash,${family === "OUT-09" ? "t.name" : "NULL::text AS name"},
     ${family === "OUT-09" ? "t.renderer_version" : "NULL::text AS renderer_version"},
     COALESCE(pol.template_id=t.id,false) AS selected_by_policy,pol.version AS policy_version
     FROM ppo.${f.prefix}_templates t LEFT JOIN ppo.${f.policy} pol ON pol.workspace_id=t.workspace_id`;
@@ -218,6 +219,7 @@ async function projection(
     family_name: families[family].label,
     publication_id: row.publication_id ?? null,
     id: row.id,
+    name: row.name ?? `Version ${row.version}`,
     version: row.version,
     content_hash: row.content_hash,
     definition_integrity: definitionIntegrity,

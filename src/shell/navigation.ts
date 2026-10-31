@@ -63,6 +63,7 @@ export type ShellDestination = {
   requiresAny?: Capability[];
 };
 export const destinations: ShellDestination[] = [
+  {id:"templates",label:"Templates",icon:"nav-documents",readiness:"ready",href:"/documents/templates",requiresAny:["pack.read","report.read","finance.read","template.read"]},
   {id:"cpq",label:"Configure & price",icon:"nav-products",readiness:"ready",workspace:"estimate",href:"/estimating/cpq",requiresAll:["cpq.read","estimating.read"]},
   {id:"rules-studio",label:"Rules studio",icon:"nav-documents",readiness:"ready",workspace:"estimate",href:"/estimating/rules",requires:["cpq.read"]},
   {id:"sales-estimating",label:"Sales-to-Estimating handovers",railLabel:"Estimating handovers",icon:"nav-inbox",readiness:"ready",workspace:"sales",href:"/sales/handoffs/estimating",requires:["crm.opportunity.read"]},
@@ -277,6 +278,7 @@ export function pageForPath(path: string) {
     .filter((d) => d.href && matchesPath(path, d.href))
     .toSorted((a, b) => b.href!.length - a.href!.length)[0];
   if (path.startsWith("/service/appointments/")) return destination("planner");
+  if (matchesPath(path, "/documents/templates")) return destination("templates");
   if (path.startsWith("/documents/")) return destination("documents");
   return item;
 }
@@ -429,7 +431,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
     { title: "Workspaces", ids: workspaces.map(w => w.primary) },
     { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "sales" ? ["sales-estimating","sales-won","sales-aftercare"] : workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
     { title: "My workspace", ids: ["home", "work", "mail", "calendar", "approvals"] },
-    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "reports"] },
+    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "templates", "reports"] },
     { title: "Administration & support", ids: ["access", "settings", "recovery", "foundation"] },
     ...(q ? [{ title: "Workspace pages", ids: destinations.map(d => d.id) }] : []),
   ];
