@@ -604,7 +604,8 @@ test("R1 candidate pages count only readable, editable work orders; hidden ones 
   const siteOneTicket = (
     await rows("SELECT ticket_id FROM ppo.work_order_tickets WHERE work_order_id=$1 ORDER BY ticket_id LIMIT 1", [order(1)])
   )[0].ticket_id as string;
-  const hidden = await cloneOrders(101, CRM.site, siteOneTicket);
+  // More hidden rows than one 200-row scan batch, so permitted rows are only found after a keyset step.
+  const hidden = await cloneOrders(201, CRM.site, siteOneTicket);
   const permitted = await cloneOrders(2, site2, await siteTwoTicket());
   const page = (input = {}) => fieldWorkCandidates(p, prj, input);
   const numbers = async (input = {}) => {
@@ -701,4 +702,72 @@ test("R2 link, unlink and project-linked create receipts recover only with curre
   // Work-order edit is still required as well.
   await revoke(p.actor_id, "service.work_order.edit");
   assert.deepEqual(await recovered(), { link: false, unlink: false, create: false, plain: false });
+});
+
+// #752 re-review: recovery is decided by the project each original command named, not by the work
+// order's current link. Losing read or edit on the original project refuses its receipts while a
+// relinked current project stays accessible; restoring access restores recovery.
+test("R2 receipts follow the original project's authority after relinking to another project", async () => {
+  const p = await principal(),
+    first = await project(p);
+  // Fixture-only: the customer also occupies Site 2, so a second project can sit there.
+  await database().query(
+    `INSERT INTO ppo.site_parties SELECT (jsonb_populate_record(NULL::ppo.site_parties,to_jsonb(s)||jsonb_build_object('id',$2::text,'site_id',$3::text))).* FROM ppo.site_parties s WHERE s.site_id=$1 AND s.organisation_id=$4 ORDER BY s.valid_from LIMIT 1`,
+    [CRM.site, randomUUID(), site2, CRM.org],
+  );
+  const second = await project(p, { site_id: site2 });
+  const on = await link(p, order(1), first);
+  const linked = await linkWorkOrderProject(p, order(1), on);
+  const off = await link(p, order(1), first);
+  const unlinked = await unlinkWorkOrderProject(p, order(1), off);
+  const again = await link(p, order(1), second);
+  const relinked = await linkWorkOrderProject(p, order(1), again);
+  const created = {
+    ...base(),
+    id: randomUUID(),
+    company_id: CRM.company,
+    site_id: CRM.site,
+    customer_id: CRM.org,
+    service_owner_id: CRM.owner,
+    project_id: first,
+    tickets: [{ ticket_id: id(40, 20), issue_disposition: "SYN project field work request" }],
+  };
+  const createdReceipt = (await createWorkOrder(p, created)).receipt;
+  const { project_id: _omit, ...plainInput } = { ...created, ...base(), id: randomUUID() };
+  void _omit;
+  const plainReceipt = (await createWorkOrder(p, plainInput)).receipt;
+  const ops = {
+    link: [on.operation_id, linked.receipt],
+    unlink: [off.operation_id, unlinked.receipt],
+    create: [created.operation_id, createdReceipt],
+    relink: [again.operation_id, relinked.receipt],
+    plain: [plainInput.operation_id, plainReceipt],
+  } as const;
+  const recovered = async () => {
+    const out: Record<string, boolean> = {};
+    for (const [name, [op, receipt]] of Object.entries(ops))
+      out[name] = await readOperation(p, op).then(
+        (r) => (assert.deepEqual(r, receipt), true),
+        (e) => {
+          if (!code("RecordUnavailable")(e) && !code("Forbidden")(e)) throw e;
+          return false;
+        },
+      );
+    return out;
+  };
+  const all = { link: true, unlink: true, create: true, relink: true, plain: true };
+  const firstDenied = { link: false, unlink: false, create: false, relink: true, plain: true };
+  assert.deepEqual(await recovered(), all);
+  // Edit kept only on Site 2: the current, relinked project stays editable; the original does not.
+  await revoke(p.actor_id, "project.edit");
+  await siteGrant(p.actor_id, "project.edit", site2);
+  assert.deepEqual(await recovered(), firstDenied);
+  await grant(p.actor_id, "project.edit");
+  assert.deepEqual(await recovered(), all);
+  // Read kept only on Site 2: the original project is unreadable, the current one readable.
+  await revoke(p.actor_id, "project.read");
+  await siteGrant(p.actor_id, "project.read", site2);
+  assert.deepEqual(await recovered(), firstDenied);
+  await grant(p.actor_id, "project.read");
+  assert.deepEqual(await recovered(), all);
 });
