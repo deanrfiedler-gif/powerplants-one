@@ -5,7 +5,7 @@ import { localConfig } from "./src/platform/config";
 // The native spec refuses databases other than ppo_synthetic_test.
 const { origin } = localConfig();
 export default defineConfig({
-  testDir: "tests/browser",
+  testDir: "tests/library-browser",
   testMatch: "library-native.spec.ts",
   workers: 1,
   timeout: 180_000,
