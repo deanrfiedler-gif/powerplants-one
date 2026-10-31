@@ -98,7 +98,8 @@ is one reviewed command. Its scope rules are the decision:
 
 The fixtures run to 2031 and the runway test fails from roughly June 2031, about 90 days before
 anything breaks, with the command in its message. Re-running the script with a new offset is the
-whole maintenance action.
+original maintenance approach. The 31 October extension below requires reviewing each selected
+date's role before applying that broad transform to newer fixtures.
 
 Two application constants change value: the planner's default day and a mock invoice due date.
 No logic, schema, migration, permission, document or interface changes. Reversal is `git revert`.
@@ -106,6 +107,67 @@ No logic, schema, migration, permission, document or interface changes. Reversal
 The hosted demo is unaffected and also not repaired. `scripts/database.ts` records applied seeds
 in `ppo.seed_receipts` by version and skips any version already present, so an already-seeded
 demo keeps its original dates. That is a separate problem and is not addressed here.
+
+## Live-clock fixture coverage — 31 October 2026
+
+Dean requested preventive coverage after the Conversations reply-by cliff. PR #777 is already
+merged at `6e939bf0b937fc05f9e477d1cd14f8838c92fd9a`; its four repaired inputs remain unchanged.
+The separate correction extends the existing 90-day policy rather than changing application
+clocks or disabling validation. All fixtures and commands here are synthetic.
+
+### Audit and disposition
+
+| Fixture dates examined | Verified path and result | Protection / disposition |
+|---|---|---|
+| Conversations `2031-12-01` (formerly `2026-10-30`), browser setup/form and context DB test | `checkComposition` in `src/conversations/commands.ts` compares with PostgreSQL's Brisbane day; migration 0108 also rejects a past reply-by on insertion. | Guard all four actual source literals, including the form's `.fill`, with Brisbane civil-day runway. #777's changes are not duplicated. |
+| Work-order register `2026-11-19` and `2026-11-20`, 00:00–02:00 UTC | `proposeVisit` only validates ordering; the subsequent `cancelAppointment` in the earliest-active-visit test requires `start_at > Date.now()`. The 19 November start is a real cliff. | Move both ordered visits by 261 weeks to **2031-11-20/21** and guard their defaults and explicit call arguments. |
+| Closed-visit database proposal `2026-12-21`, 00:00–02:00 UTC | CV-04/05 cancels the proposal before creating its replacement, reaching the same future-start gate. | Move by 261 weeks to **2031-12-22**, retaining duration/weekday, and guard both endpoints. |
+| P05 seeded visits in September 2031 | `guardBooking` / cancellation check actual current time. | Retain the existing seeded appointment warning. |
+| Positive readiness expiry `2032-01-01` and `2032-01-02` | `assessWorkReadiness` refuses expired Pass / PermittedException / NotApplicable evidence; read-time blockers also compare with `Date.now()`. | Guard the planner default, policy-dispositions assessment and maintenance-service, offline-authority and isolated-field-http helpers. |
+| Policy command defaults `2031-09-22`; policy-impact inputs `2031-09-21/22` | Proposal/review binds against database observation time; `readPolicyImpact` requires a future effective instant before the policy's expiry. | Guard these independently dated source literals. Preserve the explicit lower/upper-bound refusal cases. |
+| SUP-1 promises `2031-12-01/08/09` | Writes accept historical dates, but `materialBasis` supplies the current demand-local date to `readiness`. A supplier-confirmed promise before today no longer supports At risk. | Guard the five positive literals using **Australia/Sydney**, the helper's demand timezone. Keep broken-promise `2026-09-30` and delay-impact `2026-10-10` unchanged. |
+| Customer delivery `2026-11-03/04/05/07/08/09`; movement `2026-10-24` | `customerDeliveryCommand` uses `dateOnly`; `recordCustomerDelivery` and the S3 database guards do not require a future ETA. `laterCustomerEta` compares to the previously sent ETA, not today. | Retain historical evidence and relative ordering; no expiry warning. |
+| Supply browser promise `2026-11-01`; default demand required date `2026-10-01` | `supplyFact` selects Estimated by default. This route/navigation fixture never supplies an eligible supplier-confirmed promise and does not assert a future readiness state. | Retain; no proven future-date rejection or changed asserted outcome at this date. |
+| HTTP work-order proposal `2026-11-22`; browser closed-visit proposals `2026-12-27/28/29` | These only propose/read/recover visits; neither path books nor cancels them. The register selects by active status and date order, without a current-time filter. | Retain. The browser's reversed finish remains an intentional validation failure. |
+| Readiness `2026-01-02`, planner started visit `2026-09-17`; Conversations unit `2026-10-30`; retained demo policy roots `2027-01-01` / `2028-01-01`; FX `2026-10-01…31` and source-price validity | Expired/started negatives, UI/normalisation-only unit inputs, immutable upgrade identities, or comparison against explicit pricing dates. They are not positive future-clock inputs. | Leave unchanged. Conversations reminder/refusal DB tests already derive dates from the database's Brisbane day, including yesterday. |
+
+The audit searched fixed dates and real-clock comparisons in test helpers, browser/database/HTTP
+tests, application validators and database guards. It traced the paths above; it is not a claim
+that every dated value or derived assertion in this repository is time-independent.
+
+### Warning and maintenance
+
+`tests/unit/fixture-expiry.test.ts` now reads 25 selected literals in 12 source files using the
+reviewed rules in `tests/helpers/fixture-expiry.ts`, in addition to the seeded appointment check.
+The TypeScript parser is an existing development dependency; no fixture module is executed just
+to inspect its dates. Selection uses field/default/argument context, not a whole-repository date
+replacement. Counts and explicit, reasoned exclusions fail if their source shape disappears or
+changes. A past positive date still fails; there is no "only inspect dates after today" filter.
+
+Instant gates use elapsed UTC time; civil-date gates use the application's Brisbane or Sydney
+calendar day. Less than 90 days fails the ordinary unit suite, naming the source file, line,
+date, clock and remaining runway. Existing Application assurance and other `npm run check` /
+`test:unit` lanes run it without a workflow change. It is an early CI failure, not a separate
+notification service: if no tests run, no warning is emitted.
+
+Run `node --import tsx --test tests/unit/fixture-expiry.test.ts` to check the inventory. On a
+warning, trace the input again, move only positive live-clock fixtures and any dependent
+assertions/anchors together, preserve weekday constraints where relevant, and rerun the affected
+database/browser suites. The existing shift script can help in **report mode**. Do not apply its
+whole-tree result blindly: newer historical upgrade roots, negative controls and explicit pricing
+evidence may still have dates after today. Already-expired positive fixtures also need deliberate
+repair because the script's default threshold skips them. Never rewrite migration bytes.
+
+New validation paths, new files, indirect/dynamically constructed dates, embedded SQL and
+changes to timezone semantics require a fresh audit/rule; this bounded source inventory does
+not prove arbitrary dataflow. Known P05 seed dependencies still need joint review when that
+cluster moves. Relative fixtures can have separate midnight races. Hosted demo seed receipts
+are still outside this test-only protection. Reversal is the separate contribution's revert.
+
+Regression tests restore the original Conversations date and both cancellation cliffs in memory,
+check 90-day and expiry boundaries, Brisbane midnight, Sydney DST, browser form selection,
+missing coverage and preserved negative cases. Execution results and independent-review status
+are recorded in [the contribution fragment](../status/2026-10-31-fixture-expiry-coverage.md).
 
 ## Validation evidence and remaining questions
 
