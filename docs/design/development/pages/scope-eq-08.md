@@ -2,22 +2,26 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `scope:EQ-08`. Owner: Dean Fiedler. Review: **Draft; owner visual acceptance pending**.
+Stable entry: `scope:EQ-08`. Owner: Dean Fiedler. Review: **Figma design accepted by the owner, 31 October 2026; the built page has not been restyled to it, and no review fingerprint is asserted**.
 Starting implementation baseline: `ca006fb1fc6b2e2bd2a9bdb509caa276d1052ffc`. Route: `/equipment/backups`.
 
 ## Purpose and page type
 
 Record an exact configuration backup, captured time/person, custodian, protected location/source revision, compatibility and recovery-procedure revision.
 
-Selected r20 family: **Document & evidence workspace**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. No accepted native image is available; missing desktop/mobile approval images are explicit.
+Selected r20 family: **Document & evidence workspace**. The issued [Equipment r02 HTML](../../../reference/ui/equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) remains the semantic/reference source. Its bytes are unchanged. The accepted design images are the [design r01 captures](../../../reference/ui/equipment/configuration-backups-design-r01/README.md); no accepted capture of the built page exists.
 
 ## Desktop
+
+Accepted design: the [Configuration backups design decision](../../../decisions/configuration-backups-figma-design.md) of 31 October 2026 covers the backup register grouped by status, the gaps worklist, an asset's backup history with its evidence stages, a backup out of date after a configuration change, and the Record backup and Record restore evidence side forms, with nineteen icon-free captures in [design r01](../../../reference/ui/equipment/configuration-backups-design-r01/README.md). The layout below describes the built page until it is restyled.
 
 Use the existing PPO application shell, shared navigation and global information icon. Content has one page scroll owner and a 1440 px maximum content width with 16 px padding. The Equipment navigation wraps. Register and identity/location regions use two equal columns at 768 px and above; record evidence follows the selected RecordTabs panel. Forms use two equal columns with visible field labels and a full-width impact/consequence notice. Long source references and identifiers wrap; dense historical details expand in place.
 
 Use existing Roboto/Verdana typography, semantic ink/surface/line/focus tokens, shared Button/ButtonLink variants and 44 px controls. Preserve words beside status colours. At 1440, 1280, 1024 and 768 px verify the full shell, long values, explicit Unknowns, source failures and action reachability.
 
 ## Mobile
+
+Accepted design: captures 08–11 and 16–19 in [design r01](../../../reference/ui/equipment/configuration-backups-design-r01/README.md): the technician's backup history and Record backup at 390 and 320, and four phone states. Compact Record header, 16 px inputs, 48 px controls and one full-width main action.
 
 At 430, 390 and 320 CSS px use one-column cards, stacked description lists and one-column forms. Inputs stay at 16 px, controls at least 44 px and tabs/navigation wrap. The physical location and served areas remain separate at every width. Keyboard order follows the document; shared tabs provide selected state and arrow navigation. Camera/manual alternatives and every decision remain reachable. Verify 200% zoom with no horizontal page overflow. Emulation is not physical-device or screen-reader acceptance.
 
@@ -42,6 +46,8 @@ Loading, no permitted records, filtered-empty, read-only, missing source, partia
 Proposed native adaptation: use the existing shared shell and responsive cards/tabs instead of copying the standalone HTML shell, scripted mock state or a new Equipment search/review/task master. This is an implementation proposal under ADR-0045, not adoption of a visual baseline.
 
 ## Evidence and review
+
+The [design decision](../../../decisions/configuration-backups-figma-design.md) records the owner's acceptance and what it doesn't build: derived status, gaps, custodian changes and the where and unit-restored fields aren't in the built model. Figma source presence, design acceptance, the implementation evidence below and deployment stay separate.
 
 The page guide `guide.eq.08` describes current controls. [Completion handover](../../../delivery/equipment-native-completion-handover.md) records executed checks, screenshots, failure comparisons and publication status. Source presence, functional evidence, visual comparison, business acceptance and deployment remain separate. No review fingerprint is asserted.
 
