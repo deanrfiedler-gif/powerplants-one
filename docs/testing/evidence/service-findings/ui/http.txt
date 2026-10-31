@@ -1,0 +1,10 @@
+✔ SV07 HTTP uses authenticated no-store reads and strict query validation (96138.0159ms)
+✔ SV07 next-action HTTP keeps authentication, origin and strict source-bound validation (33478.4275ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131846.7063

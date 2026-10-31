@@ -1,0 +1,10 @@
+Application source: 5d42e7e00aedc1a4891c201d5630e9c801ded81c
+Date: 31 October 2026
+NODE_OPTIONS=--max-old-space-size=8192 npx tsc --noEmit: exit 0
+NODE_OPTIONS=--max-old-space-size=1024 npm run lint: exit 0
+npm run studio:check: exit 0 (373 entries, 217 source routes, no errors; 347 unreviewed and 26 stale retained)
+python3 scripts/check_foundation.py: exit 0 (14,098 links, 7,414 scanned files, 182 status fragments)
+python3 scripts/check_naming.py: exit 0
+python3 scripts/build_status.py --check: exit 0
+git diff --check: exit 0
+Full production build, complete repository suites, physical-device/screen-reader testing and formal business acceptance scenarios: not run.
