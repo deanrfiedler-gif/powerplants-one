@@ -51,6 +51,9 @@ type DraftBasis = Pick<
   Appointment,
   "version" | "schedule_version" | "start_at" | "end_at"
 >;
+// The schedule a reconfirmation was given for: its version and interval.
+const scheduleKey = (a: Pick<Appointment, "schedule_version" | "start_at" | "end_at">) =>
+  `${a.schedule_version}|${a.start_at}|${a.end_at}`;
 const basisOf = (a: Appointment): DraftBasis => ({
   version: a.version,
   schedule_version: a.schedule_version,
@@ -87,7 +90,9 @@ export function SiteReadinessForm({
     [notes, setNotes] = useState(""),
     [missing, setMissing] = useState(false),
     [basis, setBasis] = useState(() => basisOf(a)),
-    [reconfirmed, setReconfirmed] = useState(false),
+    // #750 re-review: the reconfirmation is bound to the exact schedule displayed when the user
+    // ticked it, so a later move (even after another refresh) clears it.
+    [reconfirmedFor, setReconfirmedFor] = useState<string | null>(null),
     [reconfirmMissing, setReconfirmMissing] = useState(false),
     command = useBookingCommand(),
     id = useRef(crypto.randomUUID()),
@@ -107,6 +112,7 @@ export function SiteReadinessForm({
     (a.schedule_version !== basis.schedule_version ||
       a.start_at !== basis.start_at ||
       a.end_at !== basis.end_at);
+  const reconfirmed = reconfirmedFor === scheduleKey(a);
   // A refusal notice belongs to the version it refused; the review notice replaces it.
   const clearRefusal = useRef(command.clear);
   useEffect(() => {
@@ -133,7 +139,7 @@ export function SiteReadinessForm({
       occurred.current = null;
     }
     setBasis(basisOf(a));
-    setReconfirmed(false);
+    setReconfirmedFor(null);
     occurred.current ??= new Date().toISOString();
     // A no-answer contact asked nothing, so each check is recorded as Not applicable
     // with that reason; the NoResponse outcome keeps the criterion Unknown (P4 table).
@@ -342,7 +348,7 @@ export function SiteReadinessForm({
                     reconfirmMissing ? "site-readiness-reconfirm" : undefined
                   }
                   onChange={(e) => {
-                    setReconfirmed(e.target.checked);
+                    setReconfirmedFor(e.target.checked ? scheduleKey(a) : null);
                     if (e.target.checked) setReconfirmMissing(false);
                   }}
                 />{" "}

@@ -910,3 +910,48 @@ test("SV04 P4 keeps the draft for a moved visit but needs reconfirmation before 
   expect(sent[1].expected_version).toBe(f.appointment.version);
   expect(sent[1].site_checks).toEqual(sent[0].site_checks);
 });
+
+// #750 re-review: a reconfirmation belongs to the schedule it was given for. The box is ticked for
+// the first move; before anything is sent the visit moves again and the user refreshes from the
+// page actions. The tick does not carry over, and nothing is sent until the new time is reconfirmed.
+test("SV04 P4 reconfirmation does not carry over to a second move of the visit", async ({
+  page,
+}) => {
+  const { f, form, sent } = await draftAfterStaleRefusal(page, true);
+  const reconfirm = form.getByRole("checkbox", {
+    name: "I have confirmed these answers again with the site contact for the new visit time",
+    exact: true,
+  });
+  await reconfirm.check();
+  // Another actor moves the visit again before the user records anything.
+  f.appointment.version += 1;
+  f.appointment.schedule_version += 1;
+  f.appointment.preparation!.schedule_version += 1;
+  f.appointment.start_at = "2026-10-15T03:30:00Z";
+  f.appointment.end_at = "2026-10-15T06:30:00Z";
+  await refresh(page);
+  const notice = form.getByRole("status", {
+    name: "Visit moved: reconfirm site readiness",
+  });
+  await expect(notice).toContainText("Thu 15 Oct 2026 · 13:30–16:30");
+  // The tick given for 14 October does not count for 15 October.
+  await expect(reconfirm).not.toBeChecked();
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect(
+    form.getByText(
+      "Confirm the answers again for the new visit time before recording them.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await page.waitForTimeout(300);
+  expect(sent).toHaveLength(1);
+  await reconfirm.check();
+  await form
+    .getByRole("button", { name: "Record confirmation", exact: true })
+    .click();
+  await expect.poll(() => sent.length).toBe(2);
+  expect(sent[1].expected_version).toBe(f.appointment.version);
+  expect(sent[1].site_checks).toEqual(sent[0].site_checks);
+});
