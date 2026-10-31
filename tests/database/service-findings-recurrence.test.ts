@@ -51,9 +51,12 @@ async function failure(
       readings: saved.row.plan.map((d) => ({
         check_key: d.key,
         state: "Recorded",
-        ...(d.check_type === "Numeric"
-          ? { value: "120", unit: "kPa" }
-          : { choice: "Clear" }),
+        value: d.check_type === "Numeric" ? "120" : null,
+        unit: d.check_type === "Numeric" ? "kPa" : null,
+        choice: d.check_type === "Numeric" ? null : "Clear",
+        reason: null,
+        note: null,
+        evidence_ids: [],
       })),
     }),
   );
