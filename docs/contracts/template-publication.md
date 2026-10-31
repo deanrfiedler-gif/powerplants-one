@@ -43,3 +43,9 @@ Migration 0093 adds an empty immutable publication table and default-denied capa
 Existing policies, old definitions, jobs, revisions and issued bundles are unchanged. R4 must establish applicability, trusted time, overlap rules and stale reservation behaviour before use assignment. No publication downloads, reissues, sends or regenerates an old output. Native UI, other families, live providers, deployment and owner acceptance remain separate.
 
 Traceability: BC-03, DOC-03/DOC-06, OUT-09, D-012/D-024 and AT-36. [Verification ledger](../testing/evidence/template-publication/README.md).
+
+## Native workspace publication choices (implementation in progress)
+
+`GET /api/v1/document-template-publications?company_id=...&site_id=...&limit=1..50&cursor=...` lists currently permitted exact publications at that OUT-09 review scope in identity order. Each row uses `publicationContext`; scope and selected rows are rechecked before return. The title comes from the exact published template name copied from the reviewed revision; runtime version, definition fingerprint, proposal and revision identities remain distinct. The signed continuation binds actor, workspace, working company and the requested company/site. This list is evidence for the existing Assign command, never proof that support or assignment authority remains current at submission.
+
+The exact publication read also returns `publication.publisher_name` from the workspace user after publication authorization, then rechecks `publicationContext` before return. The UI links the publication to its retained proposal revision, not whichever revision is current later. This projection grants no directory access or new publication authority.
