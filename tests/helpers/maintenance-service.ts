@@ -29,27 +29,14 @@ import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
 import { completionRequirementEntries } from "../../src/maintenance/model";
 import { noPartsNeeded } from "./readiness-gate";
-// Each request task takes the first unused scope item with exactly its description.
-function pairByDescription<I extends { id: string; task_description: string }>(
-  tasks: { id: string; description: string }[],
-  items: I[],
-) {
-  const used = new Set<string>();
-  return tasks.map((task, index) => {
-    const item = items.find((x) => !used.has(x.id) && x.task_description === task.description);
-    if (!item) throw Error(`No scope item for request task ${index + 1}`);
-    used.add(item.id);
-    return { task, index, item };
-  });
-}
+import { mappingFromPairs, pairTasks } from "./task-pairing";
 export async function serviceResult(
   p: Principal,
   request_id: string,
   n = 49,
   outcome = "Complete",
   // Optional per-task outcomes in request task order, for a Partial visit with some tasks Complete.
-  // Scope items and report tasks are paired with request tasks by exact description, never by list
-  // position: their read order is not the request order (#770 follow-on flakiness).
+  // Request tasks are paired once with scope items by exact description (tests/helpers/task-pairing.ts).
   taskOutcomes?: string[],
   // A second visit for the same crew starts later the same day, so the bookings do not overlap.
   visitOffsetHours = 0,
@@ -301,16 +288,14 @@ export async function serviceResult(
   }
   job = (await readFieldJob(technician, appointment)).items[0];
   const completion = draft(job, outcome);
+  // Pair once against the field job's scope items; the same ids carry the outcomes and the mapping.
+  const pairs = pairTasks(
+    request.content.tasks,
+    job.scope.items as { id: string; description: string }[],
+  );
   if (taskOutcomes)
-    completion.task_outcomes = pairByDescription(
-      request.content.tasks,
-      // The field job names a scope item's wording `description`.
-      (job.scope.items as { id: string; description: string }[]).map((x) => ({
-        id: x.id,
-        task_description: x.description,
-      })),
-    ).map(({ index, item }) => ({
-      scope_item_id: item.id,
+    completion.task_outcomes = pairs.map(({ index, scope_item_id }) => ({
+      scope_item_id,
       outcome: taskOutcomes[index],
       reason: "SYN explicit task outcome and remaining-work reason",
     }));
@@ -337,14 +322,10 @@ export async function serviceResult(
     appointment,
     job,
     work_order_id: wid,
-    mapping: pairByDescription(
-      request.content.tasks,
+    mapping: mappingFromPairs(
+      pairs,
       report.revisions[0].snapshot.tasks as { id: string; task_description: string }[],
-    ).map(({ task, item }) => ({
-      task_id: task.id,
-      scope_item_id: item.id,
-      basis:
-        "Exact immutable request/task and reviewed Service scope comparison",
-    })),
+      "Exact immutable request/task and reviewed Service scope comparison",
+    ),
   };
 }
