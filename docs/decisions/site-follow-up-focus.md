@@ -15,7 +15,7 @@ Before this change, the Site page emptied and redrew its Owned follow-up list ev
 
 **The list stays on screen during a routine refresh. It clears only when a read is denied, fails or stays unanswered past the next one, and it is removed at once when the Follow-ups source turns Restricted or Unavailable.** The conditions below are Claude's recommended rules for building that choice. Dean chose the option they were attached to, without going through them one by one.
 
-This replaces the direction in [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), which is open and unmerged, specified option (b) and deferred option (a). That PR's owner, Codex, would amend or close it.
+This replaces the direction in [PR #715](https://github.com/deanrfiedler-gif/powerplants-one/pull/715), which specified option (b) and deferred option (a). Its owner, Codex, [closed it unmerged as superseded](https://github.com/deanrfiedler-gif/powerplants-one/pull/715#issuecomment-6541153831) on 31 October 2026. Its routine-clear and bookmark-restoration rules are withdrawn and are not the current direction. Where the comparison below describes PR #715 or option (b), it records the case as it was put to Dean, not a live proposal.
 
 The rest of this record keeps the case as it was put to Dean. Where it says "today", it means the behaviour before this change.
 
@@ -116,9 +116,12 @@ PR #715 deferred (a) because retaining rows "conflicts with the current clear-wh
 4. **Focus has somewhere to go when rows do vanish.** A focused control that is removed from the list moves focus to the Owned follow-up heading, which stays mounted. If the whole list is removed because the source turned Restricted or Unavailable, focus moves to the Work and visits heading. A background failure no longer takes focus from someone working elsewhere (`focusOnError={false}`). The error is still announced as an alert.
 5. **Next and First move focus to the heading** while the page loads (PR #715 item 9). Measured in the prototype: focus stays on the heading, and the next Tab lands on the new page's first link.
 
-**Not built.** If the whole Overview read fails, the Site record is removed and focus still falls to the document. PR #715 item 1 proposes a persistent "Site view" target for this. It would change focus on every Site tab, and review of that PR raised that scope as a question, so it needs its own change. The explanation PR #715 item 9 proposes when the list returns on its first page is also not built.
+**Not built.** Two follow-ups stay open after PR #715's closure. Neither is part of this change.
 
-PR #715's items 2 to 5 and its window-return section are no longer needed. This change does not touch that branch.
+- **Focus through a whole-Overview failure and recovery.** If the whole Overview read fails, the Site record is removed and focus still falls to the document. Withdrawn PR #715 item 1 proposed a persistent "Site view" target. It would change focus on every Site tab, and review of that PR raised that scope as a question, so it needs its own change. That change must define its Site-wide scope and prove that displaced focus survives the failure, Retry and automatic recovery without moving focus that was not displaced.
+- **Feedback when recovery returns the list to its first page.** When a source or Site recovery returns the list to its first page, nothing explains why. Withdrawn PR #715 item 9 proposed a generic explanation. Any build must keep it generic and disclose no removed record's identity.
+
+PR #715's items 2 to 5, its routine-clear and bookmark-restoration rules and its window-return section are no longer needed and should not be revived. Later rules for this list link to this record. This change did not touch that branch.
 
 ## Evidence
 
