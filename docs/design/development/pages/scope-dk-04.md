@@ -24,7 +24,7 @@ Accepted design: the [Knowledge design decision](../../../decisions/knowledge-fi
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Design and application status are separate. The phone design at 390 and 320 CSS px is owner-accepted as a Figma design (captures below). The application is not built, so its mobile visual, device and assistive-technology review is still pending, and the register keeps its unreviewed application status. Retain mobile application evidence here when it is reviewed; a desktop image is not mobile evidence.
 
 Accepted design: captures 07–13 in [design r01](../../../reference/ui/knowledge/knowledge-design-r01/README.md): search from a job, article, saved offline copies and Set context at 390, and search, article and saved at 320. Compact header, 16 px inputs and one full-width 48 px main action (D12).
 
