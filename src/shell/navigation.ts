@@ -103,7 +103,7 @@ export const destinations: ShellDestination[] = [
   {"id": "programme", "label": "Programme", "icon": "nav-programme", "readiness": "ready", "href": "/projects/programme", "workspace": "projects", "requires": ["project.read"]},
   {"id": "readiness", "label": "Delivery readiness", "icon": "nav-readiness", "readiness": "unavailable", "workspace": "projects"},
   {"id": "risks", "label": "Risks & issues", "icon": "nav-risks", "readiness": "unavailable", "workspace": "projects"},
-  {"id": "variations", "label": "Variations & obligations", "icon": "nav-variations", "readiness": "unavailable", "workspace": "projects"},
+  {"id": "variations", "label": "Variations & obligations", "icon": "nav-variations", "readiness": "ready", "href": "/projects/commercial", "workspace": "projects", "requires": ["project.commercial.read"]},
   {"id": "assurance", "label": "Site assurance", "icon": "nav-assurance", "readiness": "unavailable", "workspace": "projects"},
   {"id": "acceptance", "label": "Acceptance & closeout", "icon": "nav-acceptance", "readiness": "ready", "href": "/projects/acceptance", "workspace": "projects", "requires": ["project.read"]},
   {"id":"agreements","label":"Service agreements","icon":"nav-agreements","readiness":"ready","href":"/maintenance/agreements","workspace":"service","requires":["maintenance.read"]},
@@ -247,6 +247,7 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (/^\/projects\/[^/]+\/commercial\/[^/]+$/.test(path)) return destination("variations");
   if (path === "/admin/access/requests") return { ...destination("access"), label: "Access-change requests" };
   if (/^\/admin\/access\/requests\/[^/]+$/.test(path)) return { ...destination("access"), label: "Access request" };
   if (path === "/admin/access/roles") return { ...destination("access"), label: "Proposed role bundles" };

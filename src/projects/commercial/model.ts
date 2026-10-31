@@ -47,6 +47,7 @@ export type Event = {
   state: State;
   content: Content;
   note: string;
+  reason: string;
   disputed: boolean;
   action_snapshot: { id: string; version: number; state: string }[];
   created_by: string;

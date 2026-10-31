@@ -1,0 +1,254 @@
+{
+  "scope": "PJ-05",
+  "date": "2026-10-31",
+  "mode": "Task-owned development server; synthetic only",
+  "main": "1402c87b",
+  "source_hash_basis": "SHA-256 of LF-normalised UTF-8 source; PNG hashes use raw bytes",
+  "sources": [
+    {
+      "path": "scripts/http-suite.ts",
+      "sha256": "1ee09f3e9d4fd9cb7c691acdc73adb49367e060ea7cf51ef67a92d4034de711b"
+    },
+    {
+      "path": "src/app/(business)/projects/[id]/commercial/[entry]/page.tsx",
+      "sha256": "f6e467bcf0e48e1b2ddf5bdf571ac156817593336399c099ed022a3783c83faf"
+    },
+    {
+      "path": "src/app/(business)/projects/commercial/page.tsx",
+      "sha256": "89875b57d6a6acbfbe2d6f7450a3e02399de11d35a1aee86b32c1af885fcd8fe"
+    },
+    {
+      "path": "src/app/api/v1/projects/[id]/commercial/basis-options/route.ts",
+      "sha256": "4b8f9afef5129a7458cd6415538d843cf12c1576c1cedf8652bb06df5d394899"
+    },
+    {
+      "path": "src/projects/commercial/model.ts",
+      "sha256": "b446cd97870279707ab1f8c31eb445b1029a588184241a887785c78dc28fbcef"
+    },
+    {
+      "path": "src/projects/commercial/options.ts",
+      "sha256": "7a983773ebe59863832fdf8ea3a003ac2942f0f51e174434803556c932748ae2"
+    },
+    {
+      "path": "src/projects/commercial/presentation.ts",
+      "sha256": "146c5292ab60c31adf4955af0346448a2842dcafbc736e7c7193daaca17643bd"
+    },
+    {
+      "path": "src/projects/commercial/reads.ts",
+      "sha256": "f63f055d4abaf33073a8af5cb1bd52868d2e43b0f281478491ff02b8679066a4"
+    },
+    {
+      "path": "src/projects/commercial/ui-command.tsx",
+      "sha256": "5473386f715c3af7196756866d55d076b788ce9669b95f41350c4ec47277d758"
+    },
+    {
+      "path": "src/projects/commercial/ui-common.tsx",
+      "sha256": "94fb80f963b29ee1259311a7e248351bca5785dfcaa3732baa8b6b12791b7534"
+    },
+    {
+      "path": "src/projects/commercial/ui-model.ts",
+      "sha256": "9f44b251b74320c41be7a4ce4b6691379122dc975580c781587351720831d653"
+    },
+    {
+      "path": "src/projects/commercial/ui-record.tsx",
+      "sha256": "1c92ebe2d099973910715ac629c916583a5ca0f85b34fe7be26481065200b53b"
+    },
+    {
+      "path": "src/projects/commercial/ui-register.tsx",
+      "sha256": "969144e687411883f41145651dbe9e8d0b6021f0d00db1bb5afc3678eca8fbdc"
+    },
+    {
+      "path": "src/projects/commercial/ui-values.tsx",
+      "sha256": "1fea9a08710365281474c2c8b3e771c6461e432aa08c1d1d672b908ddc48d541"
+    },
+    {
+      "path": "src/projects/commercial/ui.css",
+      "sha256": "8ce25f4ec31f0652c2102f637da274aacac4c8ecf08d28384ad35ec627da22e8"
+    },
+    {
+      "path": "src/shell/breadcrumb.ts",
+      "sha256": "66918147336e2b35d16821c3a98ea9244dd848728ee04ff9414f62e611be92b6"
+    },
+    {
+      "path": "src/shell/module-workspaces.ts",
+      "sha256": "7d56597768e45cc7f1e86f7ec1bc27d5f20c726f0eaa852230c80d27b0b08faa"
+    },
+    {
+      "path": "src/shell/navigation.ts",
+      "sha256": "fbf37704375a84954332c15f0c28a5a1654e1e9c2f150a753307bf404f7b2ec3"
+    },
+    {
+      "path": "tests/browser/project-commercial-ui.spec.ts",
+      "sha256": "ebbbfd9e3f9f7e89c610a3a453b86fdbab4bb117982431532a275dcfc24301c0"
+    },
+    {
+      "path": "tests/browser/project-commercial.config.ts",
+      "sha256": "1b4ec87da23585c902ac2b38887215f02b8171b834e114e59469ae6894d639ba"
+    },
+    {
+      "path": "tests/database/project-commercial-ui.test.ts",
+      "sha256": "c0f71d07bfc0304b00e869a8d9be69affa0bda94d9b4b12b942b9dad92e54e80"
+    },
+    {
+      "path": "tests/helpers/project-commercial-ui.ts",
+      "sha256": "213b721292bc1d5ad94b156380f2433b0d3554491af151acd20924e4c3843396"
+    },
+    {
+      "path": "tests/http/project-commercial-ui.test.ts",
+      "sha256": "47886dc138172671fdccc4cfb7a27b0ece95db24a9445f84a10fe9d510d4d4b3"
+    },
+    {
+      "path": "tests/unit/project-commercial-ui.test.ts",
+      "sha256": "361329a982e218c176383ca93d0b4900078710d20b70f97452f2431f30dbf25b"
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1024-variation.png",
+      "width": 1024,
+      "height": 960,
+      "sha256": "0f49606ff593e271326c1106e9bbbdd8a8e10f7f8bcdb79293cfe3130bd63844"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1024-variations.png",
+      "width": 1024,
+      "height": 960,
+      "sha256": "0ca299d155153be6faed737c613b3e6d7e3dd93be373bf7766b62cfad73e0092"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-basis.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "97d66c49440c7dfbbf6d066b75a128fbf117fa42103721c6ded0aa036c876a78"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-decision.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "12c40e614ebfb6a2749ef36a26051edb438a000bf9dc4373fce4ecd9399db122"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-history.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "efc1dfc97d4f78df61eec573ebc88aa67862772f80363ae1cde3914ba8c30d69"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-new-variation-actions.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "a7787b1b36438e167fec819444105f511a7ec136530a8869fa90d15c1db39e6c"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-new-variation.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "912229f2185b1b99bab39ae7070afe5fba7aaf25190f1efd19816376563f828b"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-notice-list.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "af21e1f5659d1134d5fd917c706845d231caf895bd106d887897a587971745ef"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-notice.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "de15faabecc18c26df6afdccd1a4625cc941d57bf66bbf198fea72322e6c8efc"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-obligation-list.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "4a7afd4a5e18e240e6685479a3807f5b3bf429f813538ed7fa8bf84bd35ffaa6"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-obligation.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "c1cc2d4b81b658fccc16d3f4bfd389226f3bb64873c6285389a33d4f26571417"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-preview.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "c0983008b4b96b85710667c17524f4ac699364de00178f9f3c1dec7d7d0d1447"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-record-notice-actions.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "722ea3edf7a4eedd400714ecff9fa595517f24d932c2a19ae27016cee192dda7"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-record-notice.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "abc406653fd745754e5b3d8676a39fc43d7a810602b296b9c247dbc262738dc4"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-satisfied-blocked.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "fb6741f1fa62273306418c26e1626a3de66af62589c87a412e63646658ea4f45"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-values-list.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "a8c4e7df2ae30ba8f165a0c6236f35785e25d9f4d8d73431b2f1af6c297987f3"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-values-reconciliation.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "7e8be67aeb126c19593be4a8303f9eb6f8a2b8f67066917f7fcf5c8a3d0d8504"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-variation.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "dcf33385ab369717c81966116fd28e00ccab55aa5ef244882a45782c2a5a06fe"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/1440-variations.png",
+      "width": 1440,
+      "height": 960,
+      "sha256": "08570142134a0045dfc0b7a1357c1a5c9a0010cbac668b7f4ea05bafa4148f13"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/320-variation.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "ef123e1f66a170a0fb9e28098ae24d31b781ba56ccd5a4905b26979ad0519bb9"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/320-variations.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "91b4dd2cc457c8915563156fafe48e737de46415e26f393c4e414f3412ff9b10"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/390-decision.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "19fa25e6b338504256d1efdd25570e116d1e257873d77f048df5e48381f96eca"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/390-variation.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "1ce55e4885bdeed748d79f364d5b439f34e5fcffe3b7c8df9a83c2a9f47f029b"
+    },
+    {
+      "path": "docs/testing/evidence/project-commercial/captures/390-variations.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "77f98b6839210cd5e95858334d776a3672434e96af7245386e76182da35f17a8"
+    }
+  ],
+  "visual_acceptance": "Not granted",
+  "owner_acceptance": "Pending",
+  "deployment": "Not performed"
+}

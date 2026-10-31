@@ -10667,246 +10667,158 @@
       "title": "Contract obligations, notices and variations",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Bounded native workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-31",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Contract obligations, notices and variations to work towards this outcome: Commercial obligations have a traceable status and owner.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "Do not invent notice periods, thresholds or contractual authority.",
-            "The 14 October PJ-05 backend contract defines exact source and independently reviewed commercial records and a synthetic Finance breakdown. Native page controls remain planned; API verification does not release this guide or establish operational financial authority."
+            "Review one project’s variations, obligations, notice evidence and original commercial basis. Values follow synthetic PJ05-FD08 v1; they are not accounting revenue, billings or cash."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Contract reference, obligation, notice date, variation and supporting evidence.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Choose the intended synthetic project. Commercial read, prepare and review duties remain separate. Control values also require finance.read and shared.finance.read. Only the coordinator or recorded owner prepares changes; a reviewer cannot decide a proposal they wrote or submitted."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Read the applicable obligation and exact scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Projects → Variations & obligations and search for a project.",
+            "Choose Variations, Obligations, Notices, Commercial basis or Value breakdown.",
+            "Open a title for its record, or Preview for its summary.",
+            "Confirm the exact state, source and version before acting."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Contract obligations, notices and variations · Page + detail"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The secondary menu chooses the view. The project picker changes context. Group counts appear only after the whole permitted list is loaded. Refresh rereads current authority; failed refreshes retain old facts with an unconfirmed warning and disable actions."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information and values",
           "paragraphs": [
-            "Contract reference, obligation, notice date, variation and supporting evidence.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "title": "Prepare and review",
+          "paragraphs": [],
           "steps": [
-            "Read the applicable obligation and exact scope",
-            "Record proposed/disputed changes with dated evidence",
-            "Track authorised notices and decisions separately"
+            "Propose a basis using a received Sales handover, accepted quotation and reviewed contract. The exact source resolver validates the combination.",
+            "Create a variation with title, clause, scope, owner, requested/priced amounts and any date-impact proposal. Give a reason and note.",
+            "Record notice occurrence and evidence; this sends nothing. Correct evidence through a successor notice.",
+            "Revise an open obligation to record satisfaction evidence. Complete or cancel linked Activities before Mark satisfied. Request waiver sends the exact version for independent review.",
+            "Submit a prepared basis or priced variation. Record decision approves, returns, rejects or disputes the exact proposal as its native lifecycle permits.",
+            "Approved variations stay immutable; New signed adjustment creates a separately reviewed delta."
           ],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Commercial obligations have a traceable status and owner.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Do not invent notice periods, thresholds or contractual authority."
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "title": "States and permissions",
+          "paragraphs": [
+            "Loading, empty, partial, unavailable, source changed, closed project, version conflict and uncertain save are distinct. Missing access never becomes a zero or an empty complete register."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
-          "section_id": "examples",
-          "title": "Worked examples",
+          "section_id": "example",
+          "title": "Synthetic example",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare contract reference, obligation, notice date, variation and supporting evidence. Follow the task sequence and check that commercial obligations have a traceable status and owner. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Contract obligations, notices and variations has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Do not invent notice periods, thresholds or contractual authority."
+            "A 350.00 original quotation with approved changes of 12000.00 and -2000.00 has an adjusted control value of 10350.00. A separate pending requested 7000.00 and priced 6500.00 are never added together."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recover safely",
+          "paragraphs": [
+            "If a save cannot be confirmed, the original operation is locked in this browser session. Check saved result or Retry unchanged. A missing receipt does not prove failure. Do not clear the session or start a replacement action. After a definite version conflict, close, refresh and review before starting a new command."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use the project and view pickers on phone. Records offer Details, Overview, Activities and History. Forms and decisions reuse the shared modal/drawer and return focus on close. Commercial work is online only; the session journal retains only pending command recovery, not offline records."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Resources",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Read the PJ-05 commercial controls, Finance definitions and accepted design decision. The application comparison and executed checks are recorded separately in the evidence chapter."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review status",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Functional checks, application visual review, owner acceptance and deployment are separate. Source-design acceptance is not application acceptance."
           ],
           "steps": [],
-          "rows": [],
-          "headers": []
+          "headers": [],
+          "rows": []
         }
       ],
       "related_entry_keys": [
-        "scope:PJ-01",
-        "scope:FN-06",
-        "scope:ES-06"
+        "scope:PJ-05",
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -77014,6 +76926,324 @@
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-projects-id-commercial-entry",
+      "entry_key": "route:/projects/[id]/commercial/[entry]",
+      "title": "Commercial record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Bounded native workflow",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
+      "related_entry_keys": [
+        "scope:PJ-05",
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Inspect one variation, obligation, notice or commercial basis and act on its exact current version. Earlier reasons, notes and decisions remain in History."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Choose the intended synthetic project. Commercial read, prepare and review duties remain separate. Control values also require finance.read and shared.finance.read. Only the coordinator or recorded owner prepares changes; a reviewer cannot decide a proposal they wrote or submitted."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Read the title, state, owner and source facts.",
+            "Use Overview for the current proposal, Activities for linked work and History for earlier versions. Basis records also offer Sources.",
+            "On tablet and phone, use Details for the facts shown in the desktop left column.",
+            "Refresh before acting on a stale read. A preparer cannot decide a proposal they wrote or submitted."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The header offers the actions allowed for this record. Previous and next follow the complete permitted register for the same kind; they are unavailable while that read is incomplete. Overview keeps requested, priced and approved amounts separate. The source strip warns when the retained basis has changed."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and values",
+          "paragraphs": [
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Prepare and review",
+          "paragraphs": [],
+          "steps": [
+            "Propose a basis using a received Sales handover, accepted quotation and reviewed contract. The exact source resolver validates the combination.",
+            "Create a variation with title, clause, scope, owner, requested/priced amounts and any date-impact proposal. Give a reason and note.",
+            "Record notice occurrence and evidence; this sends nothing. Correct evidence through a successor notice.",
+            "Revise an open obligation to record satisfaction evidence. Complete or cancel linked Activities before Mark satisfied. Request waiver sends the exact version for independent review.",
+            "Submit a prepared basis or priced variation. Record decision approves, returns, rejects or disputes the exact proposal as its native lifecycle permits.",
+            "Approved variations stay immutable; New signed adjustment creates a separately reviewed delta."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and permissions",
+          "paragraphs": [
+            "Loading, empty, partial, unavailable, source changed, closed project, version conflict and uncertain save are distinct. Missing access never becomes a zero or an empty complete register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "A 350.00 original quotation with approved changes of 12000.00 and -2000.00 has an adjusted control value of 10350.00. A separate pending requested 7000.00 and priced 6500.00 are never added together."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recover safely",
+          "paragraphs": [
+            "If a save cannot be confirmed, the original operation is locked in this browser session. Check saved result or Retry unchanged. A missing receipt does not prove failure. Do not clear the session or start a replacement action. After a definite version conflict, close, refresh and review before starting a new command."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use Details, Overview, Activities and History on phone. Tabs support arrow-key navigation; dialogs return focus on close. Commercial records require a connection. Pending-save recovery in this browser session is not an offline record cache."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Read the PJ-05 commercial controls, Finance definitions and accepted design decision. The application comparison and executed checks are recorded separately in the evidence chapter."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guide. Functional checks, application visual review, owner acceptance and deployment are separate. Source-design acceptance is not application acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
+      "prepared_at": "2026-10-31"
+    },
+    {
+      "guide_key": "guide.route-projects-commercial",
+      "entry_key": "route:/projects/commercial",
+      "title": "Contract obligations, notices and variations",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Bounded native workflow",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
+      "related_entry_keys": [
+        "scope:PJ-05",
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Review one project’s variations, obligations, notice evidence and original commercial basis. Values follow synthetic PJ05-FD08 v1; they are not accounting revenue, billings or cash."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Choose the intended synthetic project. Commercial read, prepare and review duties remain separate. Control values also require finance.read and shared.finance.read. Only the coordinator or recorded owner prepares changes; a reviewer cannot decide a proposal they wrote or submitted."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Open Projects → Variations & obligations and search for a project.",
+            "Choose Variations, Obligations, Notices, Commercial basis or Value breakdown.",
+            "Open a title for its record, or Preview for its summary.",
+            "Confirm the exact state, source and version before acting."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "The secondary menu chooses the view. The project picker changes context. Group counts appear only after the whole permitted list is loaded. Refresh rereads current authority; failed refreshes retain old facts with an unconfirmed warning and disable actions."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information and values",
+          "paragraphs": [
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Prepare and review",
+          "paragraphs": [],
+          "steps": [
+            "Propose a basis using a received Sales handover, accepted quotation and reviewed contract. The exact source resolver validates the combination.",
+            "Create a variation with title, clause, scope, owner, requested/priced amounts and any date-impact proposal. Give a reason and note.",
+            "Record notice occurrence and evidence; this sends nothing. Correct evidence through a successor notice.",
+            "Revise an open obligation to record satisfaction evidence. Complete or cancel linked Activities before Mark satisfied. Request waiver sends the exact version for independent review.",
+            "Submit a prepared basis or priced variation. Record decision approves, returns, rejects or disputes the exact proposal as its native lifecycle permits.",
+            "Approved variations stay immutable; New signed adjustment creates a separately reviewed delta."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "states",
+          "title": "States and permissions",
+          "paragraphs": [
+            "Loading, empty, partial, unavailable, source changed, closed project, version conflict and uncertain save are distinct. Missing access never becomes a zero or an empty complete register."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "example",
+          "title": "Synthetic example",
+          "paragraphs": [
+            "A 350.00 original quotation with approved changes of 12000.00 and -2000.00 has an adjusted control value of 10350.00. A separate pending requested 7000.00 and priced 6500.00 are never added together."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recover safely",
+          "paragraphs": [
+            "If a save cannot be confirmed, the original operation is locked in this browser session. Check saved result or Retry unchanged. A missing receipt does not prove failure. Do not clear the session or start a replacement action. After a definite version conflict, close, refresh and review before starting a new command."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use the project and view pickers on phone. Records offer Details, Overview, Activities and History. Forms and decisions reuse the shared modal/drawer and return focus on close. Commercial work is online only; the session journal retains only pending command recovery, not offline records."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Resources",
+          "paragraphs": [
+            "Read the PJ-05 commercial controls, Finance definitions and accepted design decision. The application comparison and executed checks are recorded separately in the evidence chapter."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guide. Functional checks, application visual review, owner acceptance and deployment are separate. Source-design acceptance is not application acceptance."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
+      "prepared_at": "2026-10-31"
     }
   ]
 }

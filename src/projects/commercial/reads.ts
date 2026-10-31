@@ -1,3 +1,5 @@
+import { hasPermission, type QueryClient } from "../../platform/permissions";
+import { commercialNames, commercialPresentation } from "./presentation";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
@@ -26,6 +28,30 @@ import { inspectSource, savedSource, sourceStatus } from "./sources";
 import type { Source } from "./validation";
 const denied = (e: unknown) =>
   e instanceof AppError && [403, 404].includes(e.status);
+type NoticeCorrection = "Latest" | "Corrected" | "Unavailable" | null;
+async function noticeCorrection(
+  c: QueryClient,
+  p: Principal,
+  entry: Entry,
+): Promise<NoticeCorrection> {
+  if (entry.kind !== "Notice") return null;
+  const successor = (
+    await c.query<Entry>(
+      "SELECT * FROM ppo.project_commercial_entries WHERE workspace_id=$1 AND project_id=$2 AND predecessor_id=$3 AND kind='Notice' LIMIT 1",
+      [p.workspace_id, entry.project_id, entry.id],
+    )
+  ).rows[0];
+  if (!successor) return "Latest";
+  try {
+    await sourceAuthority(c, p, successor);
+    const latest = (await history(c, p, successor.id, undefined, 1))[0];
+    await actions(c, p, entry.project_id, latest.content.action_ids);
+    return "Corrected";
+  } catch (error) {
+    if (!denied(error)) throw error;
+    return "Unavailable"; // Never disclose an inaccessible successor's identity or content.
+  }
+}
 const projection = (e: Entry, v: Event) => ({
   id: e.id,
   kind: e.kind,
@@ -36,6 +62,7 @@ const projection = (e: Entry, v: Event) => ({
   content: v.content,
   command: v.command,
   note: v.note,
+  reason: v.reason,
   disputed: v.disputed,
   recorded_by: v.created_by,
   recorded_at: v.created_at.toISOString(),
@@ -132,6 +159,35 @@ export async function readCommercial(
       p.workspace_id,
     ]);
     const pr = await authority(c, p, project);
+    const context = {
+      actor_id: p.actor_id,
+      workspace_id: p.workspace_id,
+      project: {
+        id: pr.id,
+        title: pr.title,
+        display_number: pr.display_number,
+        lifecycle: pr.lifecycle,
+        coordinator_id: pr.coordinator_id,
+        coordinator_name: pr.coordinator_name,
+        customer_name: pr.customer_name,
+        site_name: pr.site_name,
+        timezone: pr.timezone,
+      },
+      can_prepare: await hasPermission(
+        c,
+        p,
+        "project.commercial.prepare",
+        pr.company_id,
+        pr.site_id,
+      ),
+      can_review: await hasPermission(
+        c,
+        p,
+        "project.commercial.review",
+        pr.company_id,
+        pr.site_id,
+      ),
+    };
     if (q.id !== undefined) {
       object(q, ["id", "before_version"]);
       const e = await entryRow(c, p, uuid(q.id, "id"));
@@ -147,12 +203,38 @@ export async function readCommercial(
           : version(Number(q.before_version)),
       );
       const current = (await history(c, p, e.id, undefined, 1))[0];
-      await actions(c, p, pr.id, [
+      const currentActions = await actions(c, p, pr.id, [
         ...new Set([current, ...rows].flatMap((x) => x.content.action_ids)),
       ]);
+      const names = await commercialNames(c, p, [current, ...rows]);
+      const authored = !!(
+        await c.query(
+          "SELECT 1 FROM ppo.project_commercial_events WHERE workspace_id=$1 AND entry_id=$2 AND created_by=$3 AND command IN ('Create','Revise','Submit') LIMIT 1",
+          [p.workspace_id, e.id, p.actor_id],
+        )
+      ).rowCount;
       return {
-        current: projection(e, current),
-        history: rows.slice(0, 50).map((v) => projection(e, v)),
+        context,
+        current_actions: currentActions.filter((a) =>
+          current.content.action_ids.includes(a.id),
+        ),
+        can_prepare:
+          context.can_prepare &&
+          pr.lifecycle === "Active" &&
+          [pr.coordinator_id, current.content.owner_id].includes(p.actor_id),
+        can_decide:
+          context.can_review && pr.lifecycle === "Active" && !authored,
+        independent_review_required: authored,
+        current: commercialPresentation(
+          {
+            ...projection(e, current),
+            correction_status: await noticeCorrection(c, p, e),
+          },
+          names,
+        ),
+        history: rows
+          .slice(0, 50)
+          .map((v) => commercialPresentation(projection(e, v), names)),
         next_before_version: rows.length > 50 ? rows[49].version : null,
         source,
         source_status: status,
@@ -175,13 +257,19 @@ export async function readCommercial(
     );
     const items: (ReturnType<typeof projection> & {
       source_status: "Current" | "Changed";
+      activity_counts: { open: number; closed: number };
+      correction_status: NoticeCorrection;
     })[] = [];
-    let after = pg.after,
+    // A dependent entry retains its basis's exact source. Reuse only within this
+    // authorised project read; no source/permission result survives a new request.
+    const sourceChecks = new Map<string, "Current" | "Changed">();
+    const correctionHeads = new Map<string, string>();
+    let after: string | null = null,
       partial = false;
     // Native signed cursors are encoded, not encrypted. Only a visible record may be their anchor.
-    // Scan fixed-size batches until enough permitted rows are found; never return a hidden ID.
+    // Scan fixed-size batches before sorting permitted rows; never return a hidden ID.
     for (;;) {
-      const rows = (
+      const rows: (Entry & Event)[] = (
         await c.query<Entry & Event>(
           `SELECT e.*,v.* FROM ppo.project_commercial_entries e JOIN LATERAL
         (SELECT * FROM ppo.project_commercial_events v WHERE v.workspace_id=e.workspace_id AND v.entry_id=e.id ORDER BY version DESC LIMIT 1) v ON true
@@ -190,28 +278,71 @@ export async function readCommercial(
         )
       ).rows;
       for (const r of rows) {
+        if (r.kind === "Notice" && r.predecessor_id)
+          correctionHeads.set(r.predecessor_id, r.id);
         try {
-          const source = await sourceAuthority(c, p, r);
-          await actions(c, p, pr.id, r.content.action_ids);
+          const sourceKey = r.basis_id ?? r.id;
+          let sourceState = sourceChecks.get(sourceKey);
+          if (!sourceState) {
+            const source = await sourceAuthority(c, p, r);
+            sourceState = await sourceStatus(c, p, pr.id, source);
+            sourceChecks.set(sourceKey, sourceState);
+          }
+          const linked = await actions(c, p, pr.id, r.content.action_ids);
+          const closed = linked.filter((a) =>
+            ["Completed", "Cancelled"].includes(a.state),
+          ).length;
           items.push({
             ...projection(r, r),
-            source_status: await sourceStatus(c, p, pr.id, source),
+            source_status: sourceState,
+            activity_counts: { open: linked.length - closed, closed },
+            correction_status: r.kind === "Notice" ? "Latest" : null,
           });
         } catch (e) {
           if (!denied(e)) throw e;
           partial = true;
         }
-        if (items.length > pg.limit) break;
       }
-      if (items.length > pg.limit || rows.length < 200) break;
+      if (rows.length < 200) break;
       after = rows.at(-1)!.id;
     }
-    const selected = items.slice(0, pg.limit);
+    const visibleIds = new Set(items.map((item) => item.id));
+    for (const item of items) {
+      const successor = correctionHeads.get(item.id);
+      if (successor)
+        item.correction_status = visibleIds.has(successor)
+          ? "Corrected"
+          : "Unavailable";
+    }
+    // Sort only authorised records. The signed cursor names a visible anchor; hidden IDs/counts never escape.
+    items.sort(
+      (a, b) =>
+        b.recorded_at.localeCompare(a.recorded_at) || a.id.localeCompare(b.id),
+    );
+    const anchor = pg.after ? items.findIndex((x) => x.id === pg.after) : -1;
+    if (pg.after && anchor < 0)
+      invalid("cursor", "The result changed. Start a fresh read.");
+    const remaining = items.slice(anchor + 1);
+    const selected = remaining.slice(0, pg.limit);
+    const names = await commercialNames(
+      c,
+      p,
+      selected.map((x) => ({ content: x.content, created_by: x.recorded_by })),
+    );
+    const complete = !partial && remaining.length <= pg.limit;
+    const counts =
+      complete && !pg.after
+        ? Object.fromEntries(
+            kinds.map((k) => [k, items.filter((x) => x.kind === k).length]),
+          )
+        : null;
     return {
-      items: selected,
+      context,
+      counts,
+      items: selected.map((x) => commercialPresentation(x, names)),
       next_cursor:
-        items.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
-      completeness: partial ? "Partial" : "Page",
+        remaining.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
+      completeness: partial ? "Partial" : complete ? "Complete" : "Page",
       synthetic: true,
       observed_at: new Date().toISOString(),
     };

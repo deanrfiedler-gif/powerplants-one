@@ -1,0 +1,14 @@
+{
+  "id": "project-commercial",
+  "route": "/projects/commercial",
+  "scope": "#ppo-commercial",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-01-Desktop-Variations-r01.png",
+  "sha256": "8c956e8be0c6e2bdc2603f28a1cb7ae45ead212f061c9306eaf18a71e1ca501a",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/project-commercial-ui.spec.ts",
+  "application_proof": "tests/browser/project-commercial-ui.spec.ts",
+  "authority": "Accepted source design only. Application comparison, functional proof, owner acceptance and deployment are separate.",
+  "adaptations": "docs/design/development/pages/route-projects-commercial.md"
+}
