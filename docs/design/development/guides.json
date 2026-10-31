@@ -23507,14 +23507,14 @@
       "title": "Document and form template management",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Accepted design; implementation in progress",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "R4 backend verification: docs/testing/evidence/template-use/README.md. Native controls, walkthrough and visual acceptance pending.",
+      "runtime_evidence": "R4 backend verification: docs/testing/evidence/template-use/README.md. Native page continuation in PR #704; page validation and visual acceptance pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -23524,8 +23524,8 @@
             "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
             "A template change must not alter previously issued outputs.",
             "R1 supplies exact read-only template and usage APIs. R2 adds scoped structured proposals, immutable revisions and independent review evidence. Native authoring controls, supported publication and use assignment remain separate.",
-            "R3 adds an OUT-09 publication API: an authorised independent publisher with Service pack-check authority records approval of the exact reviewed revision and current supported definition. Publication preserves the nine mandatory sections and does not select a use policy. Recover an uncertain original unchanged; edits require fresh review. Native publishing controls remain unbuilt.",
-            "R4 adds controlled OUT-09 company/site assignment of an exact supported publication. Record explicit effective dates and Service approval; an open predecessor requires explicit succession. Use trusted server selection, resolve overlaps and gaps, and recover an uncertain original unchanged. Previously issued outputs remain exact. Native assignment controls are not yet built."
+            "R3 adds an OUT-09 publication API: an authorised independent publisher with Service pack-check authority records approval of the exact reviewed revision and current supported definition. Publication preserves the nine mandatory sections and does not select a use policy. Recover an uncertain original unchanged; edits require fresh review. Native publishing controls are in progress in PR #704.",
+            "R4 adds controlled OUT-09 company/site assignment of an exact supported publication. Record explicit effective dates and Service approval; an open predecessor requires explicit succession. Use trusted server selection, resolve overlaps and gaps, and recover an uncertain original unchanged. Previously issued outputs remain exact. Native assignment controls are in progress in PR #704."
           ],
           "steps": [],
           "rows": [],
@@ -23741,6 +23741,17 @@
             "Draft for review. Business reviewer and running-page walkthrough remain pending; backend execution evidence does not accept this guide.",
             "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
             "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "native-workspace-progress",
+          "title": "Native workspace implementation",
+          "paragraphs": [
+            "The four Templates routes have a working implementation in progress. Definitions and proposals require a family. Exact records, independent review, publication and site-use assignments retain separate identity and authority.",
+            "The proposal-list compatibility restoration is approved; visual review and native page proof remain pending; see the 31 October continuation status."
           ],
           "steps": [],
           "rows": [],
@@ -77014,6 +77025,206 @@
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-documents-templates-family-id",
+      "entry_key": "route:/documents/templates/[family]/[id]",
+      "title": "Exact template definition",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Accepted design; implementation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:DK-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Read-only exact definition and dependency evidence; Usage is paged by kind and current permission. Publication is available for managed definitions. Propose a change starts from the exact retained base.",
+            "Implementation is in progress. Visual review, owner acceptance and deployment are pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Inspect the version and fingerprint. Use Usage for permitted references, or Propose a change to create separate review evidence.",
+            "Confirm the exact revision, fingerprint and scope before a decision. Publication does not assign site use."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If evidence cannot be confirmed",
+          "paragraphs": [
+            "Use Start again after an expired page token. On denied or failed reads, do not rely on earlier rows. For an uncertain command, recover or retry the same original operation; do not create a replacement."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+    },
+    {
+      "guide_key": "guide.route-documents-templates",
+      "entry_key": "route:/documents/templates",
+      "title": "Templates definitions and proposals",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Accepted design; implementation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:DK-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Required family choice (OUT-09, OUT-10 or OUT-14), separate Definitions and Proposals views, permitted identity-order paging and a read-only definition snapshot. No combined-family totals, global search or column sorting.",
+            "Implementation is in progress. Visual review, owner acceptance and deployment are pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Choose a family, inspect a definition or open its record. Proposals are review evidence and never imply a supported runtime version.",
+            "Confirm the exact revision, fingerprint and scope before a decision. Publication does not assign site use."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If evidence cannot be confirmed",
+          "paragraphs": [
+            "Use Start again after an expired page token. On denied or failed reads, do not rely on earlier rows. For an uncertain command, recover or retry the same original operation; do not create a replacement."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+    },
+    {
+      "guide_key": "guide.route-documents-templates-proposals-id",
+      "entry_key": "route:/documents/templates/proposals/[id]",
+      "title": "Template proposal record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Accepted design; implementation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:DK-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Exact current or retained revision, ordered fields, independent reviews, chronological history and supported OUT-09 publication readiness. Earlier revisions are read-only; contributors cannot review or publish.",
+            "Implementation is in progress. Visual review, owner acceptance and deployment are pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Read the exact revision and latest observations. Revise creates a new Draft revision. Independent Review, Publish and Assign use remain separate decisions.",
+            "Confirm the exact revision, fingerprint and scope before a decision. Publication does not assign site use."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If evidence cannot be confirmed",
+          "paragraphs": [
+            "Use Start again after an expired page token. On denied or failed reads, do not rely on earlier rows. For an uncertain command, recover or retry the same original operation; do not create a replacement."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
+    },
+    {
+      "guide_key": "guide.route-documents-templates-use",
+      "entry_key": "route:/documents/templates/use",
+      "title": "Job pack site use",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Accepted design; implementation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:DK-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Required company/site context, database-clock selection, separately pinned baseline and immutable start-inclusive/end-exclusive assignment intervals. Job packs only; successors preserve earlier intervals.",
+            "Implementation is in progress. Visual review, owner acceptance and deployment are pending."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [],
+          "steps": [
+            "Choose the company and site. Inspect Selected now and retained assignments. Assign use names an exact supported publication; gaps after adoption hold preparation.",
+            "Confirm the exact revision, fingerprint and scope before a decision. Publication does not assign site use."
+          ],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If evidence cannot be confirmed",
+          "paragraphs": [
+            "Use Start again after an expired page token. On denied or failed reads, do not rely on earlier rows. For an uncertain command, recover or retry the same original operation; do not create a replacement."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "runtime_evidence": "Page proof pending on PR #704; existing backend proof is separate."
     }
   ]
 }

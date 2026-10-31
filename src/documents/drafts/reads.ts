@@ -2,7 +2,7 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError } from "../../platform/errors";
-import { hasPermission, requireCapability } from "../../platform/permissions";
+import { hasPermission } from "../../platform/permissions";
 import { workingCompanyFor } from "../../platform/working-company";
 import { page } from "../../shared/reads";
 import { choice, invalid, object, uuid } from "../../shared/validation";
@@ -93,7 +93,7 @@ export async function readProposal(
       ...status,
       proposal: d,
       revision,
-      ...await proposalPresentation(c, p, d, revision),
+      ...(await proposalPresentation(c, p, d, revision)),
       latest_review,
       is_current_revision: revision.id === d.current_revision_id,
     };
@@ -107,7 +107,6 @@ export async function listProposals(
   const family = choice(q.family, "family", families),
     pg = pagination(p, q, "list:" + family);
   return read(p, async (c) => {
-    await requireCapability(c, p, "template.read");
     let after = pg.after;
     const visible: Awaited<ReturnType<typeof proposalContext>>[] = [];
     while (visible.length <= pg.limit) {
@@ -130,7 +129,9 @@ export async function listProposals(
       if (rows.length < 100) break;
     }
     const selected = visible.slice(0, pg.limit);
-    const presentations = await Promise.all(selected.map(({ d, r }) => proposalPresentation(c, p, d, r)));
+    const presentations = await Promise.all(
+      selected.map(({ d, r }) => proposalPresentation(c, p, d, r)),
+    );
     for (const { d } of selected) await proposalContext(c, p, d.id);
     return {
       ...status,
@@ -201,7 +202,10 @@ export async function proposalHistory(
     }
     const items = visible.slice(0, pg.limit);
     for (const row of items) {
-      const actor = await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id, row.created_by ?? row.reviewer_id]);
+      const actor = await c.query(
+        "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, row.created_by ?? row.reviewer_id],
+      );
       row.actor_name = actor.rows[0]?.display_name ?? null;
     }
     await proposalContext(c, p, d.id);

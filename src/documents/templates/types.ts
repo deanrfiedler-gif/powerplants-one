@@ -1,25 +1,245 @@
 export type Family = "OUT-09" | "OUT-10" | "OUT-14";
-export const familyNames: Record<Family,string> = {"OUT-09":"Job packs","OUT-10":"Service reports","OUT-14":"Finance evidence"};
+export const familyNames: Record<Family, string> = {
+  "OUT-09": "Job packs",
+  "OUT-10": "Service reports",
+  "OUT-14": "Finance evidence",
+};
 export const families = Object.keys(familyNames) as Family[];
-export function familyOf(value: string | null): Family | null { return families.includes(value as Family) ? value as Family : null; }
-export const definitionHref = (family: Family,id: string) => `/documents/templates/${family}/${id}`;
-export const proposalHref = (id: string) => `/documents/templates/proposals/${id}`;
-export const short = (value: string | null | undefined) => value ? `${value.slice(0,8)} … ${value.slice(-4)}` : "Not recorded";
-export type Page<T> = {items:T[];next_cursor?:string|null;next_after?:string|null;completeness?:string;scope:string;observed_at?:string};
-export type Scope = {id:string;company_id:string;site_id:string;company_name:string|null;site_name:string|null;timezone:string|null;can_propose:boolean;can_assign:boolean};
-export type Template = {id:string;family:Family;family_name:string;name:string;version:number;publication_id:string|null;content_hash:string;definition_integrity:boolean;runtime_support:string;renderer_version:string|null;selected_by_policy:boolean;policy_version:number|null;definition_eligible:boolean;dependencies:{state:string;items:{path:string;sha256:string;byte_count:number}[]};definition?:string};
-export type Body = {schema_version:1;title:string;audience:"Internal"|"Customer";fields:{key:string;label:string;binding:string;required:boolean}[]};
-export type Permissions = {is_contributor:boolean;can_revise:boolean;can_review:boolean;can_publish:boolean};
-export type ProposalSummary = {id:string;family:Family;company_id:string;site_id:string;company_name:string|null;site_name:string|null;version:number;revision:number;current_revision_id:string;state:string;title:string;audience:string;content_hash:string;publication_id:string|null;runtime_version:number|null;template_id:string|null;permissions:Permissions};
-export type Revision = {id:string;revision:number;proposal_version:number;content_hash:string;created_by:string;created_at:string;reason:string;body:Body;base:{id:string;version:number;definition:string;content_hash:string;renderer_version:string|null};actor_name?:string|null};
-export type Check = {result:"Pass"|"Fail"|"Blocked"|"NotRun";note:string};
-export type Review = {id:string;revision_id:string;proposal_version:number;content_hash:string;outcome:"Reviewed"|"ChangesRequested";checks:Record<"schema"|"source_bindings"|"audience",Check>;created_at:string;reviewer_id:string;actor_name?:string|null;reason:string};
-export type ProposalData = {proposal:{id:string;company_id:string;site_id:string;family:Family;version:number;current_revision_id:string;state:string;created_by:string;updated_by:string;created_at:string;updated_at:string};revision:Revision;latest_review:Review|null;is_current_revision:boolean;company_name:string|null;site_name:string|null;timezone:string|null;actor_name:string|null;publication_id:string|null;runtime_version:number|null;template_id:string|null;permissions:Permissions};
-export type Binding = {binding:string;capability:string;audience:string;description?:string};
-export type Readiness = {proposal_id:string;expected_version:number;revision_id:string;content_hash:string;review_id:string;runtime_version:number;definition:string;definition_hash:string};
-export type Publication = {id:string;proposal_id:string;revision_id:string;review_id:string;template_id:string;runtime_version:number;definition_hash:string;definition:string;publisher_id:string;published_at:string;approval_note:string;reason:string;proposal_snapshot:{company_id:string;site_id:string}};
-export type PublicationData = {publication:Publication;runtime_support:string};
-export type PublicationChoice = Pick<Publication,"id"|"template_id"|"runtime_version"|"definition_hash"|"revision_id"|"proposal_id"> & {title:string};
-export type Assignment = {id:string;company_id:string;site_id:string;policy_version:number;publication_id:string;template_id:string;template_version?:number;definition_hash:string;effective_from:string;effective_to:string|null;resolved_effective_to:string|null;predecessor_id:string|null;successor_id:string|null;actor_id:string;actor_name?:string|null;recorded_at:string;reason:string;approval_note:string};
-export type UsePolicy = Page<Assignment> & {family:"OUT-09";company_id:string;site_id:string;company_name:string|null;site_name:string|null;timezone:string|null;can_assign:boolean;version:number;baseline_template_id:string;baseline_policy_version:number;baseline_hash:string;as_of:string;selection:{template_id:string;template_version:number;policy_version:number;assignment_id:string|null}|null;hold:string|null};
-export type Usage = {id:string;record_id:string;revision_id:string;kind:string;state:string;template:{id:string;version:number;content_hash:string;policy_version:number};exact_definition_match:boolean;file_availability:string};
+export function familyOf(value: string | null): Family | null {
+  return families.includes(value as Family) ? (value as Family) : null;
+}
+export const definitionHref = (family: Family, id: string) =>
+  `/documents/templates/${family}/${id}`;
+export const proposalHref = (id: string) =>
+  `/documents/templates/proposals/${id}`;
+export const short = (value: string | null | undefined) =>
+  value ? `${value.slice(0, 8)} … ${value.slice(-4)}` : "Not recorded";
+export type Page<T> = {
+  items: T[];
+  next_cursor?: string | null;
+  next_after?: string | null;
+  completeness?: string;
+  scope: string;
+  observed_at?: string;
+};
+export type Scope = {
+  id: string;
+  company_id: string;
+  site_id: string;
+  company_name: string | null;
+  site_name: string | null;
+  timezone: string | null;
+  can_propose: boolean;
+  can_assign: boolean;
+};
+export type Template = {
+  id: string;
+  family: Family;
+  family_name: string;
+  name: string;
+  version: number;
+  publication_id: string | null;
+  content_hash: string;
+  definition_integrity: boolean;
+  runtime_support: string;
+  renderer_version: string | null;
+  selected_by_policy: boolean;
+  policy_version: number | null;
+  definition_eligible: boolean;
+  dependencies: {
+    state: string;
+    items: { path: string; sha256: string; byte_count: number }[];
+  };
+  definition?: string;
+};
+export type Body = {
+  schema_version: 1;
+  title: string;
+  audience: "Internal" | "Customer";
+  fields: { key: string; label: string; binding: string; required: boolean }[];
+};
+export type Permissions = {
+  is_contributor: boolean;
+  can_revise: boolean;
+  can_review: boolean;
+  can_publish: boolean;
+};
+export type ProposalSummary = {
+  id: string;
+  family: Family;
+  company_id: string;
+  site_id: string;
+  company_name: string | null;
+  site_name: string | null;
+  version: number;
+  revision: number;
+  current_revision_id: string;
+  state: string;
+  title: string;
+  audience: string;
+  content_hash: string;
+  publication_id: string | null;
+  runtime_version: number | null;
+  template_id: string | null;
+  permissions: Permissions;
+};
+export type Revision = {
+  id: string;
+  revision: number;
+  proposal_version: number;
+  content_hash: string;
+  created_by: string;
+  created_at: string;
+  reason: string;
+  body: Body;
+  base: {
+    id: string;
+    version: number;
+    definition: string;
+    content_hash: string;
+    renderer_version: string | null;
+  };
+  actor_name?: string | null;
+};
+export type Check = {
+  result: "Pass" | "Fail" | "Blocked" | "NotRun";
+  note: string;
+};
+export type Review = {
+  id: string;
+  revision_id: string;
+  proposal_version: number;
+  content_hash: string;
+  outcome: "Reviewed" | "ChangesRequested";
+  checks: Record<"schema" | "source_bindings" | "audience", Check>;
+  created_at: string;
+  reviewer_id: string;
+  actor_name?: string | null;
+  reason: string;
+};
+export type ProposalData = {
+  proposal: {
+    id: string;
+    company_id: string;
+    site_id: string;
+    family: Family;
+    version: number;
+    current_revision_id: string;
+    state: string;
+    created_by: string;
+    updated_by: string;
+    created_at: string;
+    updated_at: string;
+  };
+  revision: Revision;
+  latest_review: Review | null;
+  is_current_revision: boolean;
+  company_name: string | null;
+  site_name: string | null;
+  timezone: string | null;
+  actor_name: string | null;
+  publication_id: string | null;
+  runtime_version: number | null;
+  template_id: string | null;
+  permissions: Permissions;
+};
+export type Binding = {
+  binding: string;
+  capability: string;
+  audience: string;
+  description?: string;
+};
+export type Readiness = {
+  proposal_id: string;
+  expected_version: number;
+  revision_id: string;
+  content_hash: string;
+  review_id: string;
+  runtime_version: number;
+  definition: string;
+  definition_hash: string;
+};
+export type Publication = {
+  id: string;
+  proposal_id: string;
+  revision_id: string;
+  review_id: string;
+  template_id: string;
+  runtime_version: number;
+  definition_hash: string;
+  definition: string;
+  publisher_id: string;
+  published_at: string;
+  approval_note: string;
+  reason: string;
+  proposal_snapshot: { company_id: string; site_id: string };
+};
+export type PublicationData = {
+  publication: Publication;
+  runtime_support: string;
+};
+export type PublicationChoice = Pick<
+  Publication,
+  | "id"
+  | "template_id"
+  | "runtime_version"
+  | "definition_hash"
+  | "revision_id"
+  | "proposal_id"
+> & { title: string };
+export type Assignment = {
+  id: string;
+  company_id: string;
+  site_id: string;
+  policy_version: number;
+  publication_id: string;
+  template_id: string;
+  template_version?: number;
+  definition_hash: string;
+  effective_from: string;
+  effective_to: string | null;
+  resolved_effective_to: string | null;
+  predecessor_id: string | null;
+  successor_id: string | null;
+  actor_id: string;
+  actor_name?: string | null;
+  recorded_at: string;
+  reason: string;
+  approval_note: string;
+};
+export type UsePolicy = Page<Assignment> & {
+  family: "OUT-09";
+  company_id: string;
+  site_id: string;
+  company_name: string | null;
+  site_name: string | null;
+  timezone: string | null;
+  can_assign: boolean;
+  version: number;
+  baseline_template_id: string;
+  baseline_policy_version: number;
+  baseline_hash: string;
+  as_of: string;
+  selection: {
+    template_id: string;
+    template_version: number;
+    policy_version: number;
+    assignment_id: string | null;
+  } | null;
+  hold: string | null;
+};
+export type Usage = {
+  id: string;
+  record_id: string;
+  revision_id: string;
+  kind: string;
+  state: string;
+  template: {
+    id: string;
+    version: number;
+    content_hash: string;
+    policy_version: number;
+  };
+  exact_definition_match: boolean;
+  file_availability: string;
+};

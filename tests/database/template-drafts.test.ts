@@ -20,6 +20,7 @@ import {
   proposalHistory,
   readBindings,
 } from "../../src/documents/drafts/reads";
+import { readTemplateScopes } from "../../src/documents/workspace-reads";
 import { readOperation } from "../../src/shared/receipts";
 import {
   base,
@@ -60,7 +61,30 @@ test("R2 denies all new duties by default; creates exact proposals for three fam
   const p0 = await principal(),
     first = await draftInput(p0);
   await assert.rejects(createProposal(p0, first), unavailable);
+  await assert.rejects(readTemplateScopes(p0, { family: "OUT-09" }), {
+    code: "Forbidden",
+  });
+  assert.deepEqual((await listProposals(p0, { family: "OUT-09" })).items, []);
   const { p } = await setupDraft();
+  const scopes = await readTemplateScopes(p, { family: "OUT-09", limit: "1" });
+  assert.equal(scopes.items.length, 1);
+  assert.ok(scopes.items[0].company_name);
+  assert.ok(scopes.items[0].site_name);
+  assert.equal(scopes.items[0].can_propose, true);
+  assert.equal(scopes.items[0].can_assign, false);
+  const other = await principal("systems");
+  await assert.rejects(readTemplateScopes(other, { family: "OUT-09" }), {
+    code: "Forbidden",
+  });
+  if (scopes.next_cursor)
+    await assert.rejects(
+      readTemplateScopes(p, {
+        family: "OUT-10",
+        limit: "1",
+        cursor: scopes.next_cursor,
+      }),
+      { code: "InvalidData" },
+    );
   for (const family of ["OUT-09", "OUT-10", "OUT-14"] as const) {
     const input = await draftInput(p, family),
       a = await createProposal(p, input);
@@ -169,6 +193,16 @@ test("R2 independent exact reviews remain historical; edits invalidate review, a
     limit: "1",
   });
   assert.equal(history.completeness, "Partial");
+  assert.equal(history.items[0].revision, 1);
+  assert.equal(history.items[0].id, input.revision_id);
+  const continuation = await proposalHistory(p, input.id, {
+    kind: "Revision",
+    limit: "1",
+    cursor: history.next_cursor!,
+  });
+  assert.equal(continuation.items[0].revision, 2);
+  assert.equal(continuation.next_cursor, null);
+  assert.ok(continuation.items[0].actor_name);
   assert.equal(
     (
       await proposalHistory(p, input.id, {

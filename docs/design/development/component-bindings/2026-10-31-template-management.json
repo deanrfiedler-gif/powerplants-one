@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "drawer": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals, exact evidence, site use, loading, empty, denied, stale and uncertain-operation hosts; implementation proof pending."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    }
+  }
+}

@@ -38,3 +38,7 @@ An unchanged accepted original replays its exact receipt (200, versus initial 20
 Migration 0094 adds empty policy/assignment tables, a derived interval view, default-denied capability, typed identity/event and guards. Existing workspace pointers, records, seeds and grants are untouched. Native controls, other families, providers and operational authority remain separate. The workspace-level catalogue's selected_by_policy retains its original meaning; policy_selection_scope explicitly labels it WorkspaceDefaultOnly, while the new site policy API resolves scoped use.
 
 Traceability: BC-03 / DK-06 R4; DOC-03/DOC-06, OUT-09, D-012/D-024 and AT-36. [Execution evidence](../testing/evidence/template-use/README.md).
+
+## Native workspace presentation (implementation in progress)
+
+Authorised policy reads add stored company/site/timezone labels and a current `can_assign` hint derived from existing template/pack-check duties. Authorised assignment evidence adds the retained template version and recorded actor display name. These labels do not add directory access. Selected-now state still comes from the native database-clock policy resolver; the page never substitutes the workspace default after an assignment gap.
