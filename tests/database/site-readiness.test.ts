@@ -347,15 +347,49 @@ test("P4 gates attendance after issue and acknowledgement; P5 overdue follow-ups
     startAttendance(tech, f.aid, startInput(job)),
     code("StartBlocked"),
   );
-  await recordContact(f.co, f.aid, await command(f.aid));
+  const stored = async () =>
+    (
+      await rows(
+        "SELECT dispatch_hold,pack_requirement,version FROM ppo.appointments WHERE id=$1",
+        [f.aid],
+      )
+    )[0];
+  // The whole crew acknowledged while P4 was Unknown, so the durable hold stands.
+  const acknowledged = await stored();
+  assert.deepEqual(
+    [acknowledged.dispatch_hold, acknowledged.pack_requirement],
+    [true, "AwaitingAcknowledgement"],
+  );
+  // P4 is the last prerequisite: the contact command itself releases the hold
+  // through the acknowledgement's derivation. No direct database edit.
+  const confirmation = await command(f.aid);
+  const released = await recordContact(f.co, f.aid, confirmation);
   ready = await readiness();
   assert.deepEqual(ready.reasons, []);
-  // Clear the durable hold only after the derived pass, then prove a later
-  // negative contact reholds the same issued pack without changing its bytes.
-  await rows(
-    "UPDATE ppo.appointments SET dispatch_hold=false,pack_requirement='Acknowledged',version=version+1 WHERE id=$1",
-    [f.aid],
+  assert.deepEqual(await stored(), {
+    dispatch_hold: false,
+    pack_requirement: "Acknowledged",
+    version: acknowledged.version + 2, // the contact's rehold check, then the release
+  });
+  assert.equal(
+    (await readAppointment(f.co, f.aid)).items[0].dispatch_hold,
+    false,
   );
+  assert.deepEqual(
+    (
+      await rows(
+        "SELECT details->>'dispatch_hold_released' AS released FROM ppo.audit_events WHERE operation_id=$1",
+        [confirmation.operation_id],
+      )
+    ).map((r) => r.released),
+    ["true"],
+  );
+  assert.deepEqual(
+    (await recordContact(f.co, f.aid, confirmation)).receipt,
+    released.receipt,
+  );
+  assert.equal((await stored()).version, acknowledged.version + 2);
+  // A later negative contact reholds the same issued pack without changing its bytes.
   const negative = await command(f.aid);
   negative.site_checks.access.status = "NotReady";
   await recordContact(f.co, f.aid, negative);
@@ -368,9 +402,11 @@ test("P4 gates attendance after issue and acknowledgement; P5 overdue follow-ups
     true,
   );
   assert.equal((await readiness()).preparation?.outcome, "Blocked");
+  // Negative then positive: the new confirmation releases the hold again.
   await recordContact(f.co, f.aid, await command(f.aid));
   ready = await readiness();
   assert.equal(ready.component_ready, true);
+  assert.equal((await stored()).dispatch_hold, false);
   assert.equal(ready.preparation?.issue_deadline_blocks_dispatch, false);
   // The missed-deadline Activity remains owned evidence, never a start criterion.
   assert.equal((await runPreparationDeadlines(clock)).created, 0);
@@ -395,4 +431,63 @@ test("P4 gates attendance after issue and acknowledgement; P5 overdue follow-ups
     code("BookingBlocked"),
   );
   assert.equal((await runPreparationDeadlines()).created, 0);
+});
+
+test("P4 confirmation after acknowledgement leaves an unrelated Parts hold in place", async () => {
+  const f = await preparedGateVisit(nextWorkingVisit());
+  await checkPack(f.co, f.pid, {
+    ...base(),
+    expected_version: f.pack.version,
+    decision: "Checked",
+  });
+  let pack = (await readPack(f.co, f.pid)).items[0];
+  await requestIssue(f.co, f.pid, {
+    ...base(),
+    expected_version: pack.version,
+  });
+  pack = (await readPack(f.co, f.pid)).items[0];
+  const rendered = await processRenderJob(pack.jobs[0].id);
+  assert.ok("issue_id" in rendered, JSON.stringify(rendered));
+  pack = (await readPack(f.co, f.pid)).items[0];
+  // No "No parts needed" statement: Parts (P1) stays unsatisfied, independently of P4.
+  const tech = await principal("assigned-technician");
+  for (const actor of [tech, await principal("second-technician")])
+    await acknowledgePack(
+      actor,
+      pack.issues[0].id,
+      recipientFields(pack, actor),
+    );
+  const confirmation = await command(f.aid);
+  await recordContact(f.co, f.aid, confirmation);
+  const ready = await transaction((c) => dispatchReadiness(c, f.co, f.aid));
+  assert.equal(ready.preparation?.outcome, "Pass");
+  assert.equal(ready.reasons.length, 1);
+  assert.match(ready.reasons[0], /^Parts ready for the stated material scope/);
+  assert.deepEqual(
+    (
+      await rows(
+        "SELECT dispatch_hold,pack_requirement FROM ppo.appointments WHERE id=$1",
+        [f.aid],
+      )
+    )[0],
+    { dispatch_hold: true, pack_requirement: "AwaitingAcknowledgement" },
+  );
+  assert.deepEqual(
+    (
+      await rows(
+        "SELECT details->>'dispatch_hold_released' AS released FROM ppo.audit_events WHERE operation_id=$1",
+        [confirmation.operation_id],
+      )
+    ).map((r) => r.released),
+    ["false"],
+  );
+  assert.equal(
+    (await readAppointment(f.co, f.aid)).items[0].dispatch_hold,
+    true,
+  );
+  const job = (await readFieldJob(tech, f.aid)).items[0];
+  await assert.rejects(
+    startAttendance(tech, f.aid, startInput(job)),
+    code("StartBlocked"),
+  );
 });

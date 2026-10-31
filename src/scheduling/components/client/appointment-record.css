@@ -402,6 +402,41 @@
 #ppo-appointment .sv04-phone-label {
   display: none;
 }
+/* Customer site readiness (gate P4): four checks in the editor and on contact rows. */
+#ppo-appointment .sv04-site-check {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line-soft);
+}
+#ppo-appointment .sv04-site-check small {
+  display: block;
+  color: var(--text-secondary);
+}
+/* A moved visit's retained draft: an explicit reconfirmation, label beside its box. */
+#ppo-appointment .sv04-reconfirm label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  min-height: 44px;
+}
+#ppo-appointment .sv04-reconfirm input[type="checkbox"] {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--ink);
+}
+#ppo-appointment .sv04-site-checks {
+  margin: 4px 0 0;
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
 @media (max-width: 1100px) and (min-width: 781px) {
   #ppo-appointment .shared-record-body {
     display: flex;
@@ -432,7 +467,9 @@
     background: var(--white);
     z-index: 6;
   }
-  .app-frame:has(#ppo-appointment) .mobile-navigation > :not(#navigation-toggle) {
+  .app-frame:has(#ppo-appointment)
+    .mobile-navigation
+    > :not(#navigation-toggle) {
     display: none;
   }
   .app-frame:has(#ppo-appointment) #navigation-toggle {
@@ -583,5 +620,8 @@
   }
   #ppo-appointment :is(input, select, textarea) {
     font-size: 16px;
+  }
+  #ppo-appointment .sv04-site-check {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

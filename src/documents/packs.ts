@@ -570,6 +570,31 @@ export async function dispatchReadiness(
     preparation,
   };
 }
+// The durable hold follows the same full derivation that pack acknowledgement writes. A later
+// prerequisite (P4 customer site readiness) may become the last one to pass after the crew has
+// acknowledged; the command that records it then releases the hold, in its own transaction, only
+// when every current check passes. A failing or unavailable derivation leaves the stored hold
+// untouched, so an incident, policy, parts, pack or authority hold is never cleared here.
+export async function releaseReadyDispatchHold(
+  c: QueryClient,
+  p: Principal,
+  appointmentId: string,
+) {
+  let ready: Awaited<ReturnType<typeof dispatchReadiness>>;
+  try {
+    ready = await dispatchReadiness(c, p, appointmentId);
+  } catch (e) {
+    if (e instanceof AppError) return false;
+    throw e;
+  }
+  if (!ready.component_ready) return false;
+  return !!(
+    await c.query(
+      "UPDATE ppo.appointments SET version=version+1,updated_by=$3,updated_at=clock_timestamp(),dispatch_hold=false,pack_requirement='Acknowledged' WHERE workspace_id=$1 AND id=$2 AND dispatch_hold AND status='Confirmed' AND actual_start_at IS NULL",
+      [p.workspace_id, appointmentId, p.actor_id],
+    )
+  ).rowCount;
+}
 export async function acknowledgePack(
   p: Principal,
   id: string,

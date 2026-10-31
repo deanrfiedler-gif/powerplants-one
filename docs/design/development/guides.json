@@ -12755,8 +12755,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Dispatch held explains the current server reasons. Ready to dispatch reflects the implemented gate only: customer site-readiness recording is not available yet.",
-            "P4 site readiness and P5 issue lead-time warnings are shown as unavailable. This screen cannot record a site-readiness statement, link a demand or record a Parts statement or exception.",
+            "Dispatch held explains the current server reasons. Ready to dispatch includes customer site readiness on visits whose policy has gate P4; a visit on an older policy says its policy does not include it.",
+            "Record site readiness on the Customer site readiness check, or Record customer site readiness in the actions menu, records what the site contact confirmed: each of the four checks as Confirmed, Not ready or Not applicable, with a note. Record no answer keeps the check Not confirmed. Any Not ready check holds dispatch and gives the service owner a follow-up. When the crew has already acknowledged and this was the last check, the confirmation releases dispatch; any other hold stays. A confirmation recorded before the window opened does not count and the check asks for a new one within the window. If the save is refused because the appointment changed, your entries are kept: refresh, review them and record again; if the visit moved, confirm the answers again for the new time first. P5 issue lead-time warnings are still shown as unavailable, and this screen cannot link a demand or record a Parts statement or exception.",
             "Proposed visits reserve no people or time. Cancelled visits show their reason and retained records. Missing values remain explicitly unavailable."
           ],
           "steps": [],
@@ -12837,7 +12837,7 @@
         "tests/unit/appointment-detail.test.ts",
         "docs/decisions/appointment-detail-figma-design.md"
       ],
-      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery and gated P4/P5.",
+      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery, P4 site-readiness recording and gated P5.",
       "document_id": "PPO-GUIDE-SV-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -44089,8 +44089,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Dispatch held explains the current server reasons. Ready to dispatch reflects the implemented gate only: customer site-readiness recording is not available yet.",
-            "P4 site readiness and P5 issue lead-time warnings are shown as unavailable. This screen cannot record a site-readiness statement, link a demand or record a Parts statement or exception.",
+            "Dispatch held explains the current server reasons. Ready to dispatch includes customer site readiness on visits whose policy has gate P4; a visit on an older policy says its policy does not include it.",
+            "Record site readiness on the Customer site readiness check, or Record customer site readiness in the actions menu, records what the site contact confirmed: each of the four checks as Confirmed, Not ready or Not applicable, with a note. Record no answer keeps the check Not confirmed. Any Not ready check holds dispatch and gives the service owner a follow-up. When the crew has already acknowledged and this was the last check, the confirmation releases dispatch; any other hold stays. A confirmation recorded before the window opened does not count and the check asks for a new one within the window. If the save is refused because the appointment changed, your entries are kept: refresh, review them and record again; if the visit moved, confirm the answers again for the new time first. P5 issue lead-time warnings are still shown as unavailable, and this screen cannot link a demand or record a Parts statement or exception.",
             "Proposed visits reserve no people or time. Cancelled visits show their reason and retained records. Missing values remain explicitly unavailable."
           ],
           "steps": [],
@@ -44178,7 +44178,7 @@
         "tests/unit/appointment-detail.test.ts",
         "docs/decisions/appointment-detail-figma-design.md"
       ],
-      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery and gated P4/P5.",
+      "change_summary": "Describe the real SV-04 shared record controls, source failures, online command recovery, P4 site-readiness recording and gated P5.",
       "document_id": "PPO-GUIDE-PAGE-SERVICE-APPOINTMENTS-ID",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
