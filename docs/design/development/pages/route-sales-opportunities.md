@@ -58,7 +58,7 @@ At desktop and phone widths, native URL changes must update controlled search du
 
 The draft User Guide `guide.page.sales.opportunities` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+The [CR-04 application evidence](../../../testing/evidence/deals-cr04/README.md) records focused native and presentation tests, matching 1440/1024/390/320 captures and developer inspection against r02. Keyboard/non-drag changes, recovery, filter/history context, selection/export, fixed columns and grouped values are covered. Physical-device testing, a complete accessibility audit and owner visual acceptance remain pending. No review fingerprint or deployment is adopted.
 
 ## Native Sales implementation contract
 
@@ -106,4 +106,4 @@ Dean accepted the finished Deals page, renamed "Deals · CR-04" (`549:2`): "I ac
 - **Departures D1–D15** (layout, Leads column order and fixed columns, Forecast stage groups, Archive bands, the selection panel, the column chooser, Add deal over the register, the Won notice, phone and tablet treatment) are listed in the decision with the app's current behaviour beside each.
 - **Not drawn:** the phone Board with stage navigation, the Choose view sheet, phone selection, tablet Forecast and Archive, open menus and a drag in progress.
 
-[Decision](../../../decisions/deals-figma-design.md#acceptance--24-october-2026), [captures r02](../../../reference/ui/crm/deals-design-r02/README.md). Visual status stays "Needs review": the app has not been built to this design. Building it, the new reads (snapshot follow-through) and paired source/application review are separate work.
+[Decision](../../../decisions/deals-figma-design.md#acceptance--24-october-2026), [captures r02](../../../reference/ui/crm/deals-design-r02/README.md). Visual status stays "Needs review": PR #699 implements the accepted workspace and bounded snapshot reads, with application captures linked above. Independent review and owner application acceptance remain separate from implementation and developer inspection.

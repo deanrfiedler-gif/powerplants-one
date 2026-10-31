@@ -43594,9 +43594,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-31",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "0ee4e3b371fb6ddc48692e0345f193a11c67e6bc",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "PR #699 validation in progress; no owner acceptance or deployment.",
+      "runtime_evidence": "PR #699: focused native and presentation proof and inspected application captures in docs/testing/evidence/deals-cr04/README.md. No owner acceptance or deployment.",
       "sections": [
         {
           "section_id": "purpose",
