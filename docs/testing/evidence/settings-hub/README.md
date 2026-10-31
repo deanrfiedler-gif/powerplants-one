@@ -47,3 +47,11 @@ The complete repository database/browser suites and production build were not ru
 Private PostgreSQL 16 clusters use loopback 55482 and 55483, both named `ppo_synthetic_test`. The dedicated dev server uses `PPO_PORT=3182`; port 3000 and other contributors' services are untouched. Chrome 156.0.8078.80 / Playwright 1.64.1 captured 1440, 1024, 390 and 320 CSS-pixel widths. Test data is seeded locally; source records and accepted captures are unchanged.
 
 Capture provenance, source hashes and exact image dimensions are recorded in `capture-manifest.json`. Only curated synthetic PNGs are committed. No application review fingerprint is marked accepted.
+
+## Retained successor test correction — 31 October 2026
+
+Codex addresses [Claude finding 1 on #802](https://github.com/deanrfiedler-gif/powerplants-one/pull/802#pullrequestreview-5722605727) in [child PR #812](https://github.com/deanrfiedler-gif/powerplants-one/pull/812), based on `0c89f501d20728316fed657d39a008bad3d2d55d`. The `reviewed()` fixture proposes as the publisher and reviews as the separate reviewer. The retained superseding-proposal browser scenario now creates its successor as that original publisher, matching the native predecessor-proposer guard. The expected 201, stale-review refusal, zero-publication check and successor link after reopening are unchanged. Application commands and the API-C26 authority contract are unchanged.
+
+Executed in the correction worktree: focused ESLint and TypeScript (`tsc --noEmit`) passed; Playwright `--list --grep 'a superseding immutable proposal'` discovered both desktop and mobile cases. Dependencies were installed with `npm ci --engine-strict=false --ignore-scripts` on Node 24.22.1 / npm 11.9.0; this is not a validation of the pinned npm 11.19.0 setup.
+
+`npm run browser:check` failed because Chrome is absent at `/opt/google/chrome/chrome`. Neither browser case was executed here. Run `npx playwright test -c playwright.scheduling.config.ts --grep 'a superseding immutable proposal'` in the configured compiled synthetic environment to verify both projects. Full database/browser suites and production build were not run for this test-only correction. Findings 2–9, the prior appointment-handover failure, CI and independent exact-head review remain open; no acceptance or deployment is claimed.
