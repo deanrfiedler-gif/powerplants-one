@@ -458,6 +458,16 @@ The implemented read contract has its source-specific verification/publication i
 
 Board/Grid and phone stage switching are in-memory presentation choices and emit no business command. Both open the canonical detail/create/Activity paths. Private responses remain no-store. Qualification, expected version, conflict comparison, original-operation recovery and receipt authority are unchanged.
 
+### Accepted Deals CR-04 workspace reads and presentation
+
+GET `/api/v1/crm/opportunities/:id/follow-through` is a bounded, private, no-store read with no query inputs. It first and last checks native deal visibility. It returns the deal version and observation time; estimate IDs, exact saved version IDs/numbers and content hashes through `estimateContext`/`versionContext`; exact issued quotation revision/issue/response identities and native response holds through `quotationRevision`; and estimating/receiving handover IDs, saved versions/revisions, state and source hash/currentness through `handoverRecord`/`handoverBasis`. Each source passes its own existing permission checks again before publication. No commercial line costs or hidden source payload are projected.
+
+Each section returns `availability=Complete|Partial|Unavailable`, permitted `items`, a candidate limit of 20 and `has_more`. Complete describes that bounded source window, not the entire commercial history. A revoked source capability empties that section; partial native lifecycle reads remain partial. An inaccessible deal is indistinguishable from a missing one. A changed deal version returns 409 `SourceChanged`; database failures remain failures, never empty complete sections. Advisory exit prompts have `assessment=ReviewRequired` and `authority=AdvisoryOnly`; they neither assert stored completion nor change native stage/outcome rules.
+
+The existing signed worklist remains the denominator for Board, List, Forecast and Archive. Only first-page Complete results are labelled all matching; every other count and subtotal describes the returned page. Selection binds to that page's criteria, actor and saved projection. Selected CSV re-reads the same permitted window, refuses changed results, preserves displayed row and column order, escapes spreadsheet formulas and leaves unknown amounts blank. All values remain unweighted AUD excluding GST. There is no bulk stage command or export authority implied by selection.
+
+The accepted Add deal overlay reuses the collection command and expected-version/uncertain-result behaviour remains with native editors. Recording Won offers the explicit receiving handover and Archive; it never creates or authorises Project, Service or ERP work. The [page contract](../design/development/pages/route-sales-opportunities.md) records the accepted design and responsive adaptations.
+
 ## SC-06 Job Pack read-model amendment — 20 September 2026
 
 Additive read contract for the Job Pack r03 application integration, increment I1 of build plan `PPO-SC06-PLAN` (`docs/delivery/job-pack-integration-build-plan.md`, published separately in PR #255). No command, state, permission, migration or snapshot changes. `snapshot()`, the OUT-09 template and API-C08–C11 are exactly as the P06 amendment above records them.

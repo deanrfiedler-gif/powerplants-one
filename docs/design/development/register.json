@@ -8179,10 +8179,10 @@
     },
     {
       "key": "route:/sales/opportunities",
-      "title": "Opportunities · Board / List / Forecast / Archive",
+      "title": "Deals · Board / List / Forecast / Archive",
       "kind": "route",
       "module": "CR",
-      "summary": "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.",
+      "summary": "Review and progress permitted deals, next activities and native follow-through, with explicit page and selection totals.",
       "path": "/sales/opportunities",
       "source_paths": [
         "src/app/(business)/sales/opportunities/page.tsx"
@@ -8227,11 +8227,18 @@
         "src/crm/worklist.ts",
         "docs/decisions/deals-figma-design.md",
         "docs/decisions/deal-record-page-design.md",
-        "docs/decisions/readable-reference-namespaces.md"
+        "docs/decisions/readable-reference-namespaces.md",
+        "src/components/crm-worklist-grid.tsx",
+        "src/components/crm-worklist-selection.tsx",
+        "src/components/crm-add-deal.tsx",
+        "src/components/crm-deal-followthrough.tsx",
+        "src/crm/worklist-followthrough.ts",
+        "src/crm/worklist-columns.ts",
+        "src/app/styles/deals-workspace.css"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance",
+      "functional_status": "CR-04 implementation under validation in PR #699; independent review pending",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8241,7 +8248,7 @@
         "scope:CR-04"
       ],
       "reviewer": null,
-      "notes": "Owner-accepted Figma design, 24 October 2026: \"Deals · CR-04\" (page 549:2, renamed from \"Deals (proposal)\"), reconciled with the code, with Board, List, Forecast and Archive, the snapshot, filters, selection, column settings, Add deal, Won and Lost, a refused stage move, tablet 1024, phone 390 and 320 and nine states. No probabilities (R11). Decision docs/decisions/deals-figma-design.md; 28 icon-free r02 captures in docs/reference/ui/crm/deals-design-r02. The 14 October r37 proposal evidence stays unchanged. The app does not yet match the design, so the visual status stays Needs review. Named Figma version \"Deals · CR-04 — Pipedrive pattern, accepted\" saved 24 October 2026."
+      "notes": "Owner-accepted Figma design, 24 October 2026: \"Deals · CR-04\" (page 549:2, renamed from \"Deals (proposal)\"), reconciled with the code, with Board, List, Forecast and Archive, the snapshot, filters, selection, column settings, Add deal, Won and Lost, a refused stage move, tablet 1024, phone 390 and 320 and nine states. No probabilities (R11). Decision docs/decisions/deals-figma-design.md; 28 icon-free r02 captures in docs/reference/ui/crm/deals-design-r02. The 14 October r37 proposal evidence stays unchanged. The app does not yet match the design, so the visual status stays Needs review. Named Figma version \"Deals · CR-04 — Pipedrive pattern, accepted\" saved 24 October 2026. PR #699 implements the accepted workspace. Expected close filtering remains outstanding while #790 is unmerged. Application visual review, owner acceptance and deployment remain separate; no review fingerprint is adopted."
     },
     {
       "key": "route:/schedule",

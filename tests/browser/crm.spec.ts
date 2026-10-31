@@ -6,7 +6,7 @@ import { writeFile } from "node:fs/promises";
 import { CRM, crmCreate, crmBase, crmAction } from "../helpers/crm";
 import { openAccountPanel } from "../helpers/phone-menu";
 async function pick(page: Page, label: string, id: string) {
-  await page.getByRole("combobox", {name:label,exact:true}).click();
+  await page.getByRole("combobox", { name: label, exact: true }).click();
   await page.locator(`[role="option"][data-record-id="${id}"]`).click();
 }
 // Each case covers a multi-command journey; individual controls must still respond promptly.
@@ -14,8 +14,14 @@ test.describe.configure({ timeout: 120000 });
 test.use({ actionTimeout: 15000 });
 async function identity(page: Page, profile = "coordinator") {
   // The initial session read is asynchronous; use the same bounded budget as identity controls.
-  await expect(page.getByRole("region", { name: "Local demonstration identity", exact: true })).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
-  if (!(await page.getByLabel("Identity", { exact: true }).isVisible())) await openAccountPanel(page);
+  await expect(
+    page.getByRole("region", {
+      name: "Local demonstration identity",
+      exact: true,
+    }),
+  ).toHaveAttribute("aria-busy", "false", { timeout: 15000 });
+  if (!(await page.getByLabel("Identity", { exact: true }).isVisible()))
+    await openAccountPanel(page);
   await page.getByLabel("Identity", { exact: true }).selectOption(profile);
   await page
     .getByRole("button", { name: "Use this identity", exact: true })
@@ -30,36 +36,62 @@ async function noOverflow(page: Page) {
   ).toBe(true);
 }
 async function waitForCompactSearch(page: Page) {
-  await expect(page.locator("#header-search input[name='sales-search']")).toHaveCount(1);
-  await expect(page.locator(".crm-toolbar input[name='sales-search']")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: /^Search and filter/ }),
+  ).toBeVisible();
+  await expect(
+    page.locator(".crm-toolbar input[name='sales-search']"),
+  ).toHaveCount(0);
 }
 async function capture(page: Page, info: TestInfo, scenario: string) {
   await noOverflow(page);
-  const errors = ["validation", "denied", "unavailable", "revoked-activity", "revoked-refresh"];
-  const anchor = scenario === "loaded-sales-list"
-    ? page.locator(".crm-worklist").first()
-    : errors.includes(scenario)
-    ? page.locator('.business-error[role="alert"]').first()
-    : scenario === "conflict"
-      ? page.getByRole("heading", { name: "Compare saved version 2 with your proposal" })
-      : scenario === "uncertain-save"
-        ? page.getByText("Save outcome uncertain — confirm the original action", { exact: true })
-        : scenario === "empty"
-          ? page.locator(".crm-worklist-stamp").first()
-          : scenario === "loading"
-            ? page.getByText("Loading permitted sales records…", { exact: true })
-            : scenario === "overdue"
-              ? page.getByRole("heading", { name: "Overdue", exact: true })
-              : scenario === "successor-action"
-                ? page.getByRole("heading", { name: "Due date needed", exact: true })
-                : scenario === "next-action-needed"
-                ? page.getByRole("heading", { name: "Next action needed", exact: true })
-                : scenario === "site-scoped-selectors"
-                  ? page.getByLabel("Site", { exact: true })
-                  : scenario === "reflow-320-keyboard"
-                    ? page.getByLabel("Stage", { exact: true })
-                    : page.locator("h1");
-  await anchor.evaluate((element) => element.scrollIntoView({ block: "start" }));
+  const errors = [
+    "validation",
+    "denied",
+    "unavailable",
+    "revoked-activity",
+    "revoked-refresh",
+  ];
+  const anchor =
+    scenario === "loaded-sales-list"
+      ? page.locator(".crm-worklist").first()
+      : errors.includes(scenario)
+        ? page.locator('.business-error[role="alert"]').first()
+        : scenario === "conflict"
+          ? page.getByRole("heading", {
+              name: "Compare saved version 2 with your proposal",
+            })
+          : scenario === "uncertain-save"
+            ? page.getByText(
+                "Save outcome uncertain — confirm the original action",
+                { exact: true },
+              )
+            : scenario === "empty"
+              ? page.locator(".crm-worklist-stamp").first()
+              : scenario === "loading"
+                ? page.getByText("Loading permitted sales records…", {
+                    exact: true,
+                  })
+                : scenario === "overdue"
+                  ? page.getByRole("heading", { name: "Overdue", exact: true })
+                  : scenario === "successor-action"
+                    ? page.getByRole("heading", {
+                        name: "Due date needed",
+                        exact: true,
+                      })
+                    : scenario === "next-action-needed"
+                      ? page.getByRole("heading", {
+                          name: "Next action needed",
+                          exact: true,
+                        })
+                      : scenario === "site-scoped-selectors"
+                        ? page.getByLabel("Site", { exact: true })
+                        : scenario === "reflow-320-keyboard"
+                          ? page.getByLabel("Stage", { exact: true })
+                          : page.locator("h1");
+  await anchor.evaluate((element) =>
+    element.scrollIntoView({ block: "start" }),
+  );
   const bytes = await page.screenshot({
     path: info.outputPath(`I1-${scenario}.png`),
     fullPage: false,
@@ -108,7 +140,11 @@ async function seeded(page: Page) {
   const i = {
     ...crmCreate(),
     title: `SYN Browser opportunity ${randomUUID()}`,
-    initial_action: {...crmAction(), due_at:"2026-01-01T00:00:00Z", due_needed:false},
+    initial_action: {
+      ...crmAction(),
+      due_at: "2026-01-01T00:00:00Z",
+      due_needed: false,
+    },
   };
   await call(page, "crm/opportunities", i);
   await page.goto(`/sales/opportunities/${i.id}`);
@@ -124,10 +160,10 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   // the real GET response for 6.5s, preserving its status/body and the real UI sign-in.
   // Concurrent initial reads share one delay; subsequent identity changes remain live.
   let initialSessionRead: Promise<void> | undefined;
-  await page.route("**/api/v1/local-session", async route => {
+  await page.route("**/api/v1/local-session", async (route) => {
     if (route.request().method() !== "GET") return route.continue();
     const response = await route.fetch();
-    initialSessionRead ??= new Promise(resolve => setTimeout(resolve, 6500));
+    initialSessionRead ??= new Promise((resolve) => setTimeout(resolve, 6500));
     await initialSessionRead;
     await route.fulfill({ response });
   });
@@ -137,11 +173,11 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(
     page.getByRole("heading", { name: "Add deal", exact: true }),
   ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Add deal and action" })
-    .click();
+  await page.getByRole("button", { name: "Add deal and action" }).click();
   await expect(page.locator('.business-error[role="alert"]')).toBeFocused();
-  await expect(page.locator('.business-error[role="alert"]')).toContainText("Choose an existing permitted company.");
+  await expect(page.locator('.business-error[role="alert"]')).toContainText(
+    "Choose an existing permitted company.",
+  );
   await capture(page, info, "validation");
   await page
     .getByLabel("Visibility company", { exact: true })
@@ -157,19 +193,23 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     .fill(
       "SYN Understand the monitoring need across the growing area. ".repeat(12),
     );
-  await page.getByLabel("Qualification outcome", { exact: true }).fill("SYN Need reviewed with the known contact; proposal work is a future decision.");
+  await page
+    .getByLabel("Qualification outcome", { exact: true })
+    .fill(
+      "SYN Need reviewed with the known contact; proposal work is a future decision.",
+    );
   await page
     .getByLabel("Source context (synthetic)", { exact: true })
     .fill("SYN Manually recorded fictional conversation");
-  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
+  if (await page.getByRole("tab", { name: "Activities", exact: true }).count())
+    await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
+  if (await page.getByRole("tab", { name: "Activities", exact: true }).count())
+    await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Call to clarify the irrigation controls need");
-  await page
-    .getByRole("button", { name: "Add deal and action" })
-    .click();
+  await page.getByRole("button", { name: "Add deal and action" }).click();
   await expect(page).toHaveURL(/sales\/opportunities\/[a-f0-9-]+$/);
   const detailUrl = page.url();
   await expect(
@@ -179,9 +219,11 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await expect(
     page.getByRole("heading", { name: title, exact: true }),
   ).toBeVisible();
-  await expect(page.getByText("No unsaved changes", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("No unsaved changes", { exact: true }),
+  ).toBeVisible();
   await capture(page, info, "saved-opportunity");
-  await page.getByRole("tab", {name:"Activities",exact:true}).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await page.getByRole("link", { name: "Open activity", exact: true }).click();
   await expect(
     page.getByRole("heading", {
@@ -202,7 +244,7 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByText("Completed", { exact: true }).first(),
   ).toBeVisible();
   await page.goto(detailUrl);
-  await page.getByRole("tab", {name:"Activities",exact:true}).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Next action needed", exact: true }),
   ).toBeVisible();
@@ -213,14 +255,26 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     ),
   ).toBeVisible();
   await capture(page, info, "next-action-needed");
-  await page.locator(".crm-stage-track").getByRole("button", { name: "Scoping", exact: true }).click();
-  await page.getByRole("dialog", { name: "Change deal stage", exact: true }).getByRole("button", { name: "Save stage", exact: true }).click();
+  await page
+    .locator(".crm-stage-track")
+    .getByRole("button", { name: "Scoping", exact: true })
+    .click();
+  await page
+    .getByRole("dialog", { name: "Change deal stage", exact: true })
+    .getByRole("button", { name: "Save stage", exact: true })
+    .click();
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(page.locator('.crm-stage-track [aria-current="step"]')).toContainText("Scoping");
-  await expect(page.getByRole("button", { name: "Save next action", exact: true })).toBeEnabled();
-  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
+  await expect(
+    page.locator('.crm-stage-track [aria-current="step"]'),
+  ).toContainText("Scoping");
+  await expect(
+    page.getByRole("button", { name: "Save next action", exact: true }),
+  ).toBeEnabled();
+  if (await page.getByRole("tab", { name: "Activities", exact: true }).count())
+    await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await pick(page, "Activity owner", CRM.owner);
-  if (await page.getByRole("tab",{name:"Activities",exact:true}).count()) await page.getByRole("tab",{name:"Activities",exact:true}).click();
+  if (await page.getByRole("tab", { name: "Activities", exact: true }).count())
+    await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await page
     .getByLabel("Action purpose", { exact: true })
     .fill("SYN Arrange a technical discovery conversation");
@@ -231,11 +285,12 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
     page.getByRole("heading", { name: "Due date needed", exact: true }),
   ).toBeVisible();
   await page.reload();
-  await page.getByRole("tab", {name:"Activities",exact:true}).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
   await expect(
     page
-      .getByRole("tabpanel", {name:"Activities",exact:true})
-      .getByRole("link", {name:"SYN Arrange a technical discovery conversation",
+      .getByRole("tabpanel", { name: "Activities", exact: true })
+      .getByRole("link", {
+        name: "SYN Arrange a technical discovery conversation",
         exact: true,
       }),
   ).toBeVisible();
@@ -243,7 +298,8 @@ test("CA-01/04/13 desktop and phone full sales journey via real UI, validation, 
   await capture(page, info, "successor-action");
   await page.goto("/sales/opportunities");
   await fillOpportunitySearch(page, title);
-  if (info.project.use.isMobile) await page.getByRole("button", { name: /^Scoping \(/ }).click();
+  if (info.project.use.isMobile)
+    await page.getByRole("button", { name: /^Scoping \(/ }).click();
   await expect(
     page.getByRole("link", { name: title, exact: true }),
   ).toBeVisible();
@@ -254,14 +310,16 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   page,
 }, info) => {
   const i = await seeded(page);
-  await page.getByRole("tab", {name:"Activities",exact:true}).click();
-  await expect(page.getByRole("heading",{name:"Overdue",exact:true})).toBeVisible();
-  await capture(page,info,"overdue");
-  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
+  await page.getByRole("tab", { name: "Activities", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Overdue", exact: true }),
+  ).toBeVisible();
+  await capture(page, info, "overdue");
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByLabel("Qualified customer need", { exact: true })
     .fill("SYN Safe proposed need retained after conflict");
-  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Proposed qualification note");
@@ -273,7 +331,9 @@ test("CA-02/03 real conflict retains proposed need; lost response reconciles ori
   await page
     .getByRole("button", { name: "Progress to Qualified", exact: true })
     .click();
-  await expect(page.locator('.business-error[role="alert"]')).toContainText("changed");
+  await expect(page.locator('.business-error[role="alert"]')).toContainText(
+    "changed",
+  );
   await expect(
     page.getByLabel("Qualified customer need", { exact: true }),
   ).toHaveValue("SYN Safe proposed need retained after conflict");
@@ -331,7 +391,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   page,
 }, info) => {
   const i = await seeded(page);
-  await page.getByRole("tab", {name:"Scope & sites",exact:true}).click();
+  await page.getByRole("tab", { name: "Scope & sites", exact: true }).click();
   await page
     .getByLabel("Qualification outcome", { exact: true })
     .fill("SYN Sensitive unsaved proposal");
@@ -355,34 +415,22 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await page.setViewportSize({ width: 320, height: 844 });
   await waitForCompactSearch(page);
   await noOverflow(page);
-  // Phone header amendment: the retained deal search is a second row of the header. Its keyboard order is Menu,
-  // Conversations, then the search; the account trigger left the phone row (it opens from Menu), so Tab leaves
-  // the header for the page.
-  const dealSearch = page.getByLabel("Search deals", { exact: true });
-  await dealSearch.focus();
-  await page.keyboard.press("Shift+Tab");
-  await expect(page.getByRole("banner").getByRole("link", { name: /^Conversations/ })).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  await expect(page.locator("#shell-phone-menu")).toBeFocused();
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Tab");
-  await expect(dealSearch).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(dealSearch).not.toBeFocused();
-  expect(await page.evaluate(() => { const a = document.activeElement; return !!a && a !== document.body && !a.closest(".header-account") && getComputedStyle(a).visibility === "visible"; })).toBe(true);
-  const filterToggle = page.getByRole("button", {
-    name: "Filters and sort",
-    exact: true,
-  });
+  // CR-04 uses the shared compact search/filter trigger and a keyboard-accessible drawer.
+  const filterToggle = page.getByRole("button", { name: /^Search and filter/ });
   await filterToggle.focus();
   await page.keyboard.press("Enter");
-  await expect(filterToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(
+    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Search deals", { exact: true })).toBeVisible();
   await page.getByLabel("Next action", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await capture(page, info, "reflow-320-keyboard");
   await page.keyboard.press("Escape");
-  await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(
+    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+  ).toBeHidden();
   await expect(filterToggle).toBeFocused();
   await page.setViewportSize(info.project.use.viewport!);
   await page.route("**/api/v1/crm/opportunities?**", (route) =>
@@ -415,74 +463,197 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await capture(page, info, "loading");
 });
 
-test("CA-06/10 real CRM permission revocation clears linked Activity content after refused completion",async({page},info)=>{
- // Private disposable DB fixture, no grant/admin route is added to the application.
- process.loadEnvFile(".env.local");
- const {database,closeDatabase}=await import("../../src/platform/database");
- const {localConfig}=await import("../../src/platform/config");
- expect(localConfig().database_name).toBe("ppo_synthetic_test");
- const {randomBytes}=await import("node:crypto");
- const user=randomUUID(),token=randomBytes(32).toString("hex");
- try {
-  await database().query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Browser revocation fixture')",[user,CRM.workspace,randomUUID()]);
-  await database().query("INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT DISTINCT workspace_id,$1::uuid,$3::uuid,capability,'Site',$4::uuid,$4::uuid FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','activity.read','activity.edit')",[user,CRM.owner,CRM.company,CRM.site]);
-  await database().query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash("sha256").update(token).digest("hex"),CRM.workspace,user]);
-  await page.context().addCookies([{name:"ppo_local_session",value:token,url:`http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,httpOnly:true,sameSite:"Strict"}]);
-  await page.goto("/sales/opportunities/new");await expect(page.getByRole("heading",{name:"Add deal",exact:true})).toBeVisible();
-  await page.getByLabel("Visibility company",{exact:true}).selectOption(CRM.company);await pick(page, "Organisation", CRM.org);
-  await expect(page.getByText("Choose a permitted site. Your creation authority is limited to that site.",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Add deal and action"})).toBeDisabled();
-  await pick(page, "Site", CRM.site);await pick(page, "Contact", CRM.person);await pick(page, "Deal owner", user);await pick(page, "Activity owner", user);await expect(page.getByRole("button",{name:"Add deal and action"})).toBeEnabled();await capture(page,info,"site-scoped-selectors");
-  const i={...crmCreate(),title:"SYN Revoked opportunity private title",owner_id:user,initial_action:{...crmAction(user),summary:"SYN Revoked Activity private content"}};
-  await call(page,"crm/opportunities",i);
-  const detail = await page.context().newPage();
-  await detail.goto(`/sales/opportunities/${i.id}`);
-  await expect(detail.getByRole("heading", {name:i.title,exact:true})).toBeVisible();
-  await detail.getByRole("tab", {name:"Scope & sites",exact:true}).click();
-  await detail.getByLabel("Qualification outcome", {exact:true}).fill("SYN Private proposal before revocation");
-  // Hold a real authorised server response, then let a newer request observe revocation.
-  let releaseOriginal!: () => void;
-  const originalHeld = new Promise<void>(resolve => { releaseOriginal = resolve; });
-  let originalFetched = false;
-  let intercept = true;
-  await detail.route(`**/api/v1/crm/opportunities/${i.id}`, async route => {
-    if (!intercept) { await route.continue(); return; }
-    intercept = false;
-    const response = await route.fetch();
-    expect(response.ok()).toBe(true);
-    originalFetched = true;
-    await originalHeld;
-    await route.fulfill({response});
-  });
-  await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect.poll(() => originalFetched).toBe(true);
-  await page.goto(`/work/${i.initial_action.id}`);
-  await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toBeVisible();
-  await page.getByLabel("Completion outcome or cancellation reason",{exact:true}).fill("SYN Sensitive proposed outcome");await page.getByLabel("Reason for change",{exact:true}).fill("SYN Attempt after actual revocation");
-  let completionRequests = 0;
-  await page.route(`**/api/v1/activities/${i.initial_action.id}/complete`,async route=>{
-    completionRequests++;
-    await database().query("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",[user]);
-    await route.continue();
-  });
-  await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
-  expect(completionRequests).toBe(1);
-  await expect(page.getByRole("heading",{name:i.initial_action.summary,exact:true})).toHaveCount(0);await expect(page.getByLabel("Completion outcome or cancellation reason",{exact:true})).toHaveCount(0);
-  expect(await page.locator("body").innerText()).not.toContain(i.title);await capture(page,info,"revoked-activity");
-  expect((await database().query("SELECT status,outcome FROM ppo.activities WHERE id=$1",[i.initial_action.id])).rows[0]).toEqual({status:"Open",outcome:null});
-  await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
-  // Both the record and its scope editor can report denied reads during
-  // revocation. Require a visible refusal; private-content assertions below
-  // prove the record is removed, including after the held late response.
-  await expect(detail.locator('.business-error[role="alert"]').filter({hasText:"This record is unavailable."}).first()).toBeVisible();
-  await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
-  const lateResponse = detail.waitForResponse(r => r.url().endsWith(`/crm/opportunities/${i.id}`) && r.status() === 200);
-  releaseOriginal();
-  await (await lateResponse).finished();
-  await detail.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
-  await expect(detail.getByRole("heading",{name:i.title,exact:true})).toHaveCount(0);
-  await expect(detail.getByLabel("Qualification outcome",{exact:true})).toHaveCount(0);
-  expect(await detail.locator("body").innerText()).not.toContain(i.initial_action.summary);
-  await capture(detail,info,"revoked-refresh");
-  await detail.close();
- } finally {await closeDatabase();}
+test("CA-06/10 real CRM permission revocation clears linked Activity content after refused completion", async ({
+  page,
+}, info) => {
+  // Private disposable DB fixture, no grant/admin route is added to the application.
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
+  const { database, closeDatabase } =
+    await import("../../src/platform/database");
+  const { localConfig } = await import("../../src/platform/config");
+  expect(localConfig().database_name).toBe("ppo_synthetic_test");
+  const { randomBytes } = await import("node:crypto");
+  const user = randomUUID(),
+    token = randomBytes(32).toString("hex");
+  try {
+    await database().query(
+      "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1,$2,'PPO-LocalSynthetic',$3,'SYN Browser revocation fixture')",
+      [user, CRM.workspace, randomUUID()],
+    );
+    await database().query(
+      "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) SELECT DISTINCT workspace_id,$1::uuid,$3::uuid,capability,'Site',$4::uuid,$4::uuid FROM ppo.permission_grants WHERE user_id=$2 AND capability IN ('shared.read','shared.internal.read','crm.opportunity.read','crm.opportunity.create','crm.opportunity.edit','activity.read','activity.edit')",
+      [user, CRM.owner, CRM.company, CRM.site],
+    );
+    await database().query(
+      "INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",
+      [createHash("sha256").update(token).digest("hex"), CRM.workspace, user],
+    );
+    await page
+      .context()
+      .addCookies([
+        {
+          name: "ppo_local_session",
+          value: token,
+          url: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
+          httpOnly: true,
+          sameSite: "Strict",
+        },
+      ]);
+    await page.goto("/sales/opportunities/new");
+    await expect(
+      page.getByRole("heading", { name: "Add deal", exact: true }),
+    ).toBeVisible();
+    await page
+      .getByLabel("Visibility company", { exact: true })
+      .selectOption(CRM.company);
+    await pick(page, "Organisation", CRM.org);
+    await expect(
+      page.getByText(
+        "Choose a permitted site. Your creation authority is limited to that site.",
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Add deal and action" }),
+    ).toBeDisabled();
+    await pick(page, "Site", CRM.site);
+    await pick(page, "Contact", CRM.person);
+    await pick(page, "Deal owner", user);
+    await pick(page, "Activity owner", user);
+    await expect(
+      page.getByRole("button", { name: "Add deal and action" }),
+    ).toBeEnabled();
+    await capture(page, info, "site-scoped-selectors");
+    const i = {
+      ...crmCreate(),
+      title: "SYN Revoked opportunity private title",
+      owner_id: user,
+      initial_action: {
+        ...crmAction(user),
+        summary: "SYN Revoked Activity private content",
+      },
+    };
+    await call(page, "crm/opportunities", i);
+    const detail = await page.context().newPage();
+    await detail.goto(`/sales/opportunities/${i.id}`);
+    await expect(
+      detail.getByRole("heading", { name: i.title, exact: true }),
+    ).toBeVisible();
+    await detail
+      .getByRole("tab", { name: "Scope & sites", exact: true })
+      .click();
+    await detail
+      .getByLabel("Qualification outcome", { exact: true })
+      .fill("SYN Private proposal before revocation");
+    // Hold a real authorised server response, then let a newer request observe revocation.
+    let releaseOriginal!: () => void;
+    const originalHeld = new Promise<void>((resolve) => {
+      releaseOriginal = resolve;
+    });
+    let originalFetched = false;
+    let intercept = true;
+    await detail.route(`**/api/v1/crm/opportunities/${i.id}`, async (route) => {
+      if (!intercept) {
+        await route.continue();
+        return;
+      }
+      intercept = false;
+      const response = await route.fetch();
+      expect(response.ok()).toBe(true);
+      originalFetched = true;
+      await originalHeld;
+      await route.fulfill({ response });
+    });
+    await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await expect.poll(() => originalFetched).toBe(true);
+    await page.goto(`/work/${i.initial_action.id}`);
+    await expect(
+      page.getByRole("heading", {
+        name: i.initial_action.summary,
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page
+      .getByLabel("Completion outcome or cancellation reason", { exact: true })
+      .fill("SYN Sensitive proposed outcome");
+    await page
+      .getByLabel("Reason for change", { exact: true })
+      .fill("SYN Attempt after actual revocation");
+    let completionRequests = 0;
+    await page.route(
+      `**/api/v1/activities/${i.initial_action.id}/complete`,
+      async (route) => {
+        completionRequests++;
+        await database().query(
+          "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='crm.opportunity.read'",
+          [user],
+        );
+        await route.continue();
+      },
+    );
+    await page
+      .getByRole("button", { name: "Complete with outcome", exact: true })
+      .click();
+    await expect(page.locator('.business-error[role="alert"]')).toBeVisible();
+    expect(completionRequests).toBe(1);
+    await expect(
+      page.getByRole("heading", {
+        name: i.initial_action.summary,
+        exact: true,
+      }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByLabel("Completion outcome or cancellation reason", {
+        exact: true,
+      }),
+    ).toHaveCount(0);
+    expect(await page.locator("body").innerText()).not.toContain(i.title);
+    await capture(page, info, "revoked-activity");
+    expect(
+      (
+        await database().query(
+          "SELECT status,outcome FROM ppo.activities WHERE id=$1",
+          [i.initial_action.id],
+        )
+      ).rows[0],
+    ).toEqual({ status: "Open", outcome: null });
+    await detail.evaluate(() => window.dispatchEvent(new Event("focus")));
+    // Both the record and its scope editor can report denied reads during
+    // revocation. Require a visible refusal; private-content assertions below
+    // prove the record is removed, including after the held late response.
+    await expect(
+      detail
+        .locator('.business-error[role="alert"]')
+        .filter({ hasText: "This record is unavailable." })
+        .first(),
+    ).toBeVisible();
+    await expect(
+      detail.getByRole("heading", { name: i.title, exact: true }),
+    ).toHaveCount(0);
+    const lateResponse = detail.waitForResponse(
+      (r) =>
+        r.url().endsWith(`/crm/opportunities/${i.id}`) && r.status() === 200,
+    );
+    releaseOriginal();
+    await (await lateResponse).finished();
+    await detail.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
+    await expect(
+      detail.getByRole("heading", { name: i.title, exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      detail.getByLabel("Qualification outcome", { exact: true }),
+    ).toHaveCount(0);
+    expect(await detail.locator("body").innerText()).not.toContain(
+      i.initial_action.summary,
+    );
+    await capture(detail, info, "revoked-refresh");
+    await detail.close();
+  } finally {
+    await closeDatabase();
+  }
 });

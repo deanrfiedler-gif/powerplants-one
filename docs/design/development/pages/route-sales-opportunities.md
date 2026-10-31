@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.
+The CR-04 workspace implements the accepted 24 October design in PR #699. Functional validation and application visual review are recorded separately; design acceptance does not imply application acceptance.
 
 1. Use Board or List to inspect the same permitted worklist
 2. Use Forecast to review timing and known values
@@ -27,6 +27,18 @@ Accepted design: captures 17–19 in [design r02](../../../reference/ui/crm/deal
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+
+## Implementation contract
+
+Use `data-ppo-workspace="shared"` and the existing shell. Board remains the default. The toolbar is 54 px and the status row 44 px; five 228 px stages contain 212 × 264 px cards at 1440. The List uses shared RegisterTable, fixed 44 px selection/settings columns, activity-first columns, a visit-scoped chooser and existing pointer/keyboard resizing. Forecast splits each month by stage; Archive bands Won and Lost. No hidden or fabricated whole-result aggregate is used.
+
+Counts and known-value subtotals cover the returned page, or all matching results only when the server says Complete. Selected CSV covers selected permitted rows on that page in displayed order and chosen column order, with a fresh access/source read before download. Unknown money remains blank in CSV. Filters, access, paging or changed rows clear selection. Sequential opening uses snapshots and preserves the worklist URL when opening a full record.
+
+The Add deal modal uses `add=deal` over the current register and the native creation form; Back/Forward, dirty guards and uncertain-command recovery remain active. Direct `/sales/opportunities/new` entry remains. Won prompts the explicit CR-03 receiving handover; stage refusal uses the native reason and saved-version recovery. Pipeline settings and rotting remain proposals; no bulk stage changes, probabilities, Deal record rebuild or Insights rebuild.
+
+Snapshot follow-through reads exact native estimate versions, issued quotation revisions and estimating/receiving handover versions through their existing authorities. Each section is bounded to 20 source candidates with explicit partial/unavailable states. Source hashes/IDs are retained by the API; absent permissions do not become zero counts. Advisory exit prompts never become transition gates or fabricated completed conditions.
+
+Undrawn adaptations use PPO controls: phone Board stage navigation, a Choose view sheet, phone selection sheet, tablet Forecast horizontal month scrolling, tablet Archive fixed-column scrolling, native menus and labelled drag targets with individual non-drag alternatives. Expected close filtering remains outstanding while design PR #790 is unmerged (checked 31 October 2026). Fixed design fixtures use 15 October 09:00 AEST; runtime attention and due wording use returned facts and observation time.
 
 ## Shared components and states
 
@@ -53,7 +65,7 @@ Acceptance evidence is pending. Capture matching original-reference and applicat
 Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.
 
 - Board, List, Forecast and Archive preserve their existing controls.
-- Pipeline insights expands above the existing worklist.
+- Pipeline insights opens the existing read-only review from the status row.
 - Coverage distinguishes known/unknown values and next-action states.
 - Deal drill-through links retain the selected worklist URL.
 
@@ -69,7 +81,7 @@ Mobile: stack fields/actions, keep every tab reachable and contain table/history
 
 Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.page.sales.opportunities` carries normal and recovery steps.
 
-Retained reference: `docs/reference/ui/crm/ppo-deal-pipeline_r38.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ES-05/06/07, agreements and automatic downstream effects remain unavailable under ADR-0046. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+Historical native-integration evidence: `docs/delivery/sales-native-completion-handover.md` and the retained r38 reference. The accepted 24 October r02 captures now govern this workspace, including phone layouts. Current native estimating/quotation/receiving sources supply the bounded snapshot read; automatic downstream effects remain outside scope. Application acceptance is pending.
 
 ## Figma Deals proposal — 13 October 2026
 

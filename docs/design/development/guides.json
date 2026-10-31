@@ -43586,23 +43586,23 @@
     {
       "guide_key": "guide.page.sales.opportunities",
       "entry_key": "route:/sales/opportunities",
-      "title": "Opportunities · Board / List / Forecast / Archive",
+      "title": "Deals · Board / List / Forecast / Archive",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Native synthetic application; business acceptance pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance.",
+      "runtime_evidence": "PR #699 validation in progress; no owner acceptance or deployment.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals."
+            "Review and progress the same permitted deals in Board, List, Forecast and Archive. Open the title for the full Deal record or the eye for its snapshot."
           ],
           "steps": [],
           "rows": [],
@@ -43623,9 +43623,11 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Apply the intended Deals filters.",
-            "Expand Pipeline insights and check the as-at, denominator and completeness.",
-            "Review stage ageing, next-action coverage and close-date movements."
+            "Choose a view and apply Filters or a named view; the current criteria remain in the URL.",
+            "Use the snapshot to inspect customer, activity, work context and exact permitted native follow-through.",
+            "In List, tick rows to open the selection panel. Open in sequence or export the selected visible columns as CSV.",
+            "Use + Deal for the native creation form over the register. Cancel retains the prior view; unsaved and uncertain work remains guarded.",
+            "Use Change stage or Record Won/Lost on one deal, review any refusal, and follow the explicit receiving handover after Won."
           ],
           "rows": [],
           "headers": []
@@ -43634,10 +43636,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Board, List, Forecast and Archive preserve their existing controls.",
-            "Pipeline insights expands above the existing worklist.",
-            "Coverage distinguishes known/unknown values and next-action states.",
-            "Deal drill-through links retain the selected worklist URL."
+            "Board groups by saved stage. List places next activity and due immediately after the title; its checkbox and settings columns stay fixed. The gear chooses and orders columns; resize a divider with a pointer or the arrow keys.",
+            "Forecast groups expected-close months by stage, with stage subtotals. Archive groups Won and Lost. Pipeline insights opens the existing read-only review."
           ],
           "steps": [],
           "rows": [],
@@ -43647,7 +43647,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "The denominator is the returned page, not a whole-company forecast. Amounts are unweighted AUD excluding GST; null is not zero. Stage ageing uses recorded entry time. Date movements compare recorded snapshots; positive moves accumulate as slipped days. Missing history stays unknown."
+            "Totals describe all matching results only when the complete result fits this first page; otherwise they describe this page. Selection totals describe selected rows on this page. Known AUD amounts exclude GST and are unweighted; Not estimated remains distinct from zero."
           ],
           "steps": [],
           "rows": [],
@@ -43658,11 +43658,11 @@
           "title": "Complete the main task",
           "paragraphs": [],
           "steps": [
-            "Apply the intended Deals filters.",
-            "Expand Pipeline insights and check the as-at, denominator and completeness.",
-            "Review stage ageing, next-action coverage and close-date movements.",
-            "Open Forecast to inspect expected-close buckets.",
-            "Drill into a deal for source evidence, then return to the filtered worklist."
+            "Choose a view and apply Filters or a named view; the current criteria remain in the URL.",
+            "Use the snapshot to inspect customer, activity, work context and exact permitted native follow-through.",
+            "In List, tick rows to open the selection panel. Open in sequence or export the selected visible columns as CSV.",
+            "Use + Deal for the native creation form over the register. Cancel retains the prior view; unsaved and uncertain work remains guarded.",
+            "Use Change stage or Record Won/Lost on one deal, review any refusal, and follow the explicit receiving handover after Won."
           ],
           "rows": [],
           "headers": []
@@ -43671,7 +43671,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Insights are read-only arithmetic over authorised facts. No probabilities, forecast categories or financial policy are adopted."
+            "Recording Won preserves the explicit receiving handover. Use Prepare receiving handover to open CR-03, or Open Archive. Won alone never creates or authorises Project, Service or ERP work."
           ],
           "steps": [],
           "rows": [],
@@ -43681,7 +43681,7 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+            "A failed or denied read is not an empty list. Partial pages do not imply complete totals. Snapshot quotation, estimating and handover sections carry their own permission and partial-source state. Exit conditions are advisory review prompts, not new stage rules."
           ],
           "steps": [],
           "rows": [],
@@ -43691,8 +43691,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
-            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+            "Synthetic design example: Potting machine and take-off, SYN-PPO-OPP-000326, belongs to Sasha Clarke at SYN Woodhaven Nursery, NSW. At the fixed design clock of 15 October 2026, its activity is due the next day. Runtime dates are calculated from the current server observation."
           ],
           "steps": [],
           "rows": [],
@@ -43702,7 +43701,8 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "A refused stage move shows the native reason. Load the saved version and compare before another deliberate move. Validation keeps your input. If the save result is uncertain, confirm the original operation before retrying its exact request; do not create a replacement command.",
+            "Selection clears when filters, page, access or saved rows change. Export rechecks the permitted page; if it changed, refresh and select again. A failed follow-through read has its own Retry control."
           ],
           "steps": [],
           "rows": [],
@@ -43712,7 +43712,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace."
+            "Use the phone title to choose Board, List, Forecast or Archive. Board retains stage navigation and individual Change stage controls; List uses compact rows opening the full Deal record. Choose Select deals in List to expose checkboxes.",
+            "The phone search/filter action opens the shared form. Tablet Forecast scrolls its month groups; Archive retains the fixed-column table. Add deal uses the floating action. All stage changes have a keyboard and non-drag alternative."
           ],
           "steps": [],
           "rows": [],
@@ -43749,9 +43750,12 @@
         "src/components/crm-insights.tsx",
         "src/crm/insights.ts",
         "src/crm/worklist.ts",
-        "docs/decisions/ADR-0046-sales-native-workflows.md"
+        "docs/decisions/ADR-0046-sales-native-workflows.md",
+        "docs/decisions/deals-figma-design.md",
+        "src/components/crm-worklist.tsx",
+        "src/crm/worklist-followthrough.ts"
       ],
-      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "change_summary": "Accepted CR-04 workspace: selection and CSV, snapshot source authority, Add deal, stage/outcome recovery and responsive controls.",
       "document_id": "PPO-GUIDE-PAGE-SALES-OPPORTUNITIES",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

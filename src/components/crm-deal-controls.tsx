@@ -22,7 +22,8 @@ import type { OutcomeSource } from "../crm/outcome-sources";
 import { OpportunityOutcomeSource } from "./opportunity-outcome-source";
 
 export type DealRecord = Awaited<ReturnType<typeof readOpportunity>>;
-export type DealMode = "snapshot" | "information" | "scope" | "stage" | "outcome" | "transfer";
+export type DealMode =
+  "snapshot" | "information" | "scope" | "stage" | "outcome" | "transfer";
 export type StageUndo = {
   id: string;
   version: number;
@@ -83,7 +84,12 @@ export function DealDialog({
   onSaved,
   sequence,
 }: {
-  sequence?: {position:number;total:number;onPrevious?:()=>void;onNext?:()=>void};
+  sequence?: {
+    position: number;
+    total: number;
+    onPrevious?: () => void;
+    onNext?: () => void;
+  };
   id: string;
   mode?: DealMode;
   targetStage?: string;
@@ -98,6 +104,7 @@ export function DealDialog({
 }) {
   const ref = useRef<HTMLDialogElement>(null),
     [currentMode, setMode] = useState(mode),
+    [outcomeChoice, setOutcomeChoice] = useState(targetOutcome),
     [dirty, setDirty] = useState(false),
     [pending, setPending] = useState(false);
   const resource = useCrmResource<Envelope<DealRecord>>(
@@ -124,8 +131,12 @@ export function DealDialog({
   useEffect(() => {
     if (currentMode !== "snapshot") return;
     const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !document.querySelector(":modal, :popover-open")) {
-        event.preventDefault(); onClose();
+      if (
+        event.key === "Escape" &&
+        !document.querySelector(":modal, :popover-open")
+      ) {
+        event.preventDefault();
+        onClose();
       }
     };
     document.addEventListener("keydown", escape);
@@ -152,13 +163,17 @@ export function DealDialog({
     >
       <header className="crm-dialog-head">
         <h2 id="crm-dialog-title">
-          {currentMode === "transfer" ? "Transfer deal owner" : currentMode === "outcome" ? "Record sales outcome" : currentMode === "snapshot"
-            ? (o?.title ?? "Deal snapshot")
-            : currentMode === "information"
-              ? "Edit deal"
-              : currentMode === "scope"
-                ? "Edit requirements and scope"
-                : "Change deal stage"}
+          {currentMode === "transfer"
+            ? "Transfer deal owner"
+            : currentMode === "outcome"
+              ? "Record sales outcome"
+              : currentMode === "snapshot"
+                ? (o?.title ?? "Deal snapshot")
+                : currentMode === "information"
+                  ? "Edit deal"
+                  : currentMode === "scope"
+                    ? "Edit requirements and scope"
+                    : "Change deal stage"}
         </h2>
         <button
           type="button"
@@ -196,38 +211,58 @@ export function DealDialog({
                 <section>
                   <h3>Deal summary</h3>
                   <dl className="crm-facts">
-                    <dt>Organisation</dt>
-                    <dd>
-                      <Link href={`/customers/${o.organisation_id}`}>
-                        {o.organisation_name}
-                      </Link>
-                    </dd>
-                    <dt>Customer contact</dt>
-                    <dd>
-                      {o.primary_person_id ? (
-                        <Link href={`/people/${o.primary_person_id}`}>
-                          {o.contact_name}
+                    <div>
+                      <dt>Organisation</dt>
+                      <dd>
+                        <Link href={`/customers/${o.organisation_id}`}>
+                          {o.organisation_name}
                         </Link>
-                      ) : (
-                        "Not yet identified"
-                      )}
-                    </dd>
-                    <dt>Value · AUD, excl. GST</dt>
-                    <dd>{dealAmount(o.value_amount)}</dd>
-                    <dt>Expected close</dt>
-                    <dd>{dealClose(o.expected_close_date)}</dd>
-                    <dt>Deal owner</dt>
-                    <dd>{o.owner_name}</dd>
-                    <dt>Site</dt>
-                    <dd>{o.site_name ?? o.site_unknown_reason}</dd>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Customer contact</dt>
+                      <dd>
+                        {o.primary_person_id ? (
+                          <Link href={`/people/${o.primary_person_id}`}>
+                            {o.contact_name}
+                          </Link>
+                        ) : (
+                          "Not yet identified"
+                        )}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Value · AUD, excl. GST</dt>
+                      <dd>{dealAmount(o.value_amount)}</dd>
+                    </div>
+                    <div>
+                      <dt>Expected close</dt>
+                      <dd>{dealClose(o.expected_close_date)}</dd>
+                    </div>
+                    <div>
+                      <dt>Deal owner</dt>
+                      <dd>{o.owner_name}</dd>
+                    </div>
+                    <div>
+                      <dt>Site</dt>
+                      <dd>{o.site_name ?? o.site_unknown_reason}</dd>
+                    </div>
                   </dl>
                   <button
                     className="secondary"
-                    disabled={!o.can_edit || o.close_outcome !== "Open" || !!resource.error}
+                    disabled={
+                      !o.can_edit ||
+                      o.close_outcome !== "Open" ||
+                      !!resource.error
+                    }
                     onClick={() => setMode("stage")}
                   >
                     Change stage · {o.stage_id}
                   </button>
+                  {o.can_edit && o.close_outcome === "Open" && !resource.error && <div className="crm-snapshot-outcomes">
+                    <button className="secondary" disabled={o.stage_id !== o.stages.at(-1)?.stage_id} title="Won is available at the final native pipeline stage" onClick={() => { setOutcomeChoice("Won"); setMode("outcome"); }}>Record Won</button>
+                    <button className="secondary" onClick={() => { setOutcomeChoice("Lost"); setMode("outcome"); }}>Record Lost</button>
+                  </div>}
                 </section>
                 <section>
                   <h3>Next activity</h3>
@@ -260,7 +295,13 @@ export function DealDialog({
                   <p className="crm-snapshot-context">{o.need_summary}</p>
                 </section>
               </div>
-              {!resource.error && <DealFollowThrough id={o.id} version={o.version}/>}
+              {!resource.error && (
+                <DealFollowThrough
+                  id={o.id}
+                  version={o.version}
+                  onReload={resource.reload}
+                />
+              )}
             </>
           ) : (
             <DealEditor
@@ -268,7 +309,7 @@ export function DealDialog({
               o={o}
               mode={currentMode}
               targetStage={targetStage}
-              targetOutcome={targetOutcome}
+              targetOutcome={outcomeChoice}
               undo={undo}
               onDirty={() => setDirty(true)}
               onPending={setPending}
@@ -281,7 +322,29 @@ export function DealDialog({
       </div>
       {currentMode === "snapshot" && (
         <footer className="crm-dialog-footer">
-          {sequence && <nav className="crm-sequence" aria-label="Selected deals"><button className="secondary" disabled={!sequence.onPrevious} onClick={sequence.onPrevious} aria-label="Previous selected deal">←</button><span>{sequence.position} of {sequence.total}</span><button className="secondary" disabled={!sequence.onNext} onClick={sequence.onNext} aria-label="Next selected deal">→</button></nav>}
+          {sequence && (
+            <nav className="crm-sequence" aria-label="Selected deals">
+              <button
+                className="secondary"
+                disabled={!sequence.onPrevious}
+                onClick={sequence.onPrevious}
+                aria-label="Previous selected deal"
+              >
+                ←
+              </button>
+              <span>
+                {sequence.position} of {sequence.total}
+              </span>
+              <button
+                className="secondary"
+                disabled={!sequence.onNext}
+                onClick={sequence.onNext}
+                aria-label="Next selected deal"
+              >
+                →
+              </button>
+            </nav>
+          )}
           <button className="secondary" onClick={close}>
             Close
           </button>
@@ -338,11 +401,19 @@ function DealEditor({
     [newOwner, setNewOwner] = useState(""),
     [transferReason, setTransferReason] = useState(""),
     [ownerSearch, setOwnerSearch] = useState(""),
-    [outcome, setOutcome] = useState(targetOutcome === "Lost" ? "Lost" : o.stage_id === "Closing" ? "Won" : "Lost"),
+    [outcome, setOutcome] = useState(
+      targetOutcome === "Lost"
+        ? "Lost"
+        : o.stage_id === "Closing"
+          ? "Won"
+          : "Lost",
+    ),
     [lostReason, setLostReason] = useState(""),
     [acceptanceEvidence, setAcceptanceEvidence] = useState(""),
     [outcomeNote, setOutcomeNote] = useState(""),
-    [commercialSource, setCommercialSource] = useState<OutcomeSource | null>(null),
+    [commercialSource, setCommercialSource] = useState<OutcomeSource | null>(
+      null,
+    ),
     [search, setSearch] = useState("");
   const command = useCrmCommand(
     (r) => onAccepted(r, o, mode === "stage"),
@@ -355,22 +426,55 @@ function DealEditor({
       : null,
     true,
   );
-  const handover = useCrmResource<Awaited<ReturnType<typeof ownerTransferOptions>>>(
-    mode === "transfer" ? `crm/opportunities/${o.id}/handover-options?${new URLSearchParams({q:ownerSearch,limit:"25"})}` : null,true,
+  const handover = useCrmResource<
+    Awaited<ReturnType<typeof ownerTransferOptions>>
+  >(
+    mode === "transfer"
+      ? `crm/opportunities/${o.id}/handover-options?${new URLSearchParams({ q: ownerSearch, limit: "25" })}`
+      : null,
+    true,
   );
   const blocked =
-    command.busy || command.uncertain || !o.can_edit || readFailed || (mode === "transfer" && (!o.can_transfer || handover.loading || !handover.data || !!handover.error)) || ((mode === "outcome" || mode === "stage") && o.close_outcome !== "Open");
+    command.busy ||
+    command.uncertain ||
+    !o.can_edit ||
+    readFailed ||
+    (mode === "transfer" &&
+      (!o.can_transfer ||
+        handover.loading ||
+        !handover.data ||
+        !!handover.error)) ||
+    ((mode === "outcome" || mode === "stage") && o.close_outcome !== "Open");
   if (denied(command.error) || denied(persons.error) || denied(handover.error))
-    return <ErrorNotice error={command.error ?? persons.error ?? handover.error} />;
+    return (
+      <ErrorNotice error={command.error ?? persons.error ?? handover.error} />
+    );
   const send = () => {
-    if(mode === "transfer") {
-      const comparison=handover.data;if(!comparison)return;
-      const {next_activity:next,identification_activity:identification}=comparison;
-      return command.send(`crm/opportunities/${o.id}/transfer-owner`,{expected_version:version,new_owner_id:newOwner,reason:transferReason,expected_next_activity:{id:next.id,version:next.version},expected_identification_activity:identification?{id:identification.id,version:identification.version}:null});
+    if (mode === "transfer") {
+      const comparison = handover.data;
+      if (!comparison) return;
+      const { next_activity: next, identification_activity: identification } =
+        comparison;
+      return command.send(`crm/opportunities/${o.id}/transfer-owner`, {
+        expected_version: version,
+        new_owner_id: newOwner,
+        reason: transferReason,
+        expected_next_activity: { id: next.id, version: next.version },
+        expected_identification_activity: identification
+          ? { id: identification.id, version: identification.version }
+          : null,
+      });
     }
     if (mode === "outcome") {
       if (!commercialSource) return;
-      return command.send(`crm/opportunities/${o.id}/outcome`, {expected_version:version,close_outcome:outcome,lost_reason:outcome === "Lost" ? lostReason : null,acceptance_evidence:outcome === "Won" ? acceptanceEvidence : null,commercial_source:commercialSource,reason:outcomeNote.trim() || `Record ${outcome} sales outcome`});
+      return command.send(`crm/opportunities/${o.id}/outcome`, {
+        expected_version: version,
+        close_outcome: outcome,
+        lost_reason: outcome === "Lost" ? lostReason : null,
+        acceptance_evidence: outcome === "Won" ? acceptanceEvidence : null,
+        commercial_source: commercialSource,
+        reason: outcomeNote.trim() || `Record ${outcome} sales outcome`,
+      });
     }
     if (mode === "information")
       return command.send(`crm/opportunities/${o.id}/information`, {
@@ -427,7 +531,14 @@ function DealEditor({
           </button>
         )}
         {!!command.error && !command.uncertain && (
-          <button type="button" className="secondary" onClick={()=>{reload();handover.reload();}}>
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => {
+              reload();
+              handover.reload();
+            }}
+          >
             Load current saved version for comparison
           </button>
         )}
@@ -458,24 +569,131 @@ function DealEditor({
                 ? "Deal stage"
                 : "Deal information"}
           </legend>
-          {mode === "transfer" && <>
-            <Field name="owner-search" label="Find eligible owner" value={ownerSearch} onChange={setOwnerSearch} maxLength={200}/>
-            <SelectField name="new_owner_id" label="New deal owner" value={newOwner} onChange={setNewOwner} options={handover.data?.items??[]} required/>
-            <ErrorNotice error={handover.error}/>
-            {handover.loading && <p role="status">Loading eligible owners…</p>}
-            {handover.data?.next_cursor && <p>More eligible owners exist. Refine the search.</p>}
-            {handover.data?.items.length === 0 && <p>No eligible receiving owners match this search.</p>}
-            <p>Current deal owner: {o.owner_name}. Transfer is immediate when this save is accepted.</p>
-            {handover.data && <section aria-label="Activity comparison"><h3>Activities keep their owners</h3>{[handover.data.next_activity,...(handover.data.identification_activity && handover.data.identification_activity.id!==handover.data.next_activity.id ? [handover.data.identification_activity] : [])].map(a=><p className="crm-narrative" key={a.id}>{a.summary} · {a.status} · Owner: {a.owner_name} · Version {a.version}</p>)}<p>The receiving owner must review any outstanding activity separately. Estimates, quotes and delivery obligations keep their ownership.</p></section>}
-            <Field name="reason" label="Transfer reason" value={transferReason} onChange={setTransferReason} multiline required maxLength={1000}/>
-          </>}
-          {mode === "outcome" && <>
-            <SelectField name="close_outcome" label="Sales outcome" value={outcome} onChange={value => { setOutcome(value); setCommercialSource(null); }} options={(o.stage_id === "Closing" ? ["Won","Lost"] : ["Lost"]).map(id=>({id,display_name:id}))} required />
-            <OpportunityOutcomeSource key={outcome} id={o.id} version={version} outcome={outcome} onChange={setCommercialSource} />
-            {outcome === "Lost" ? <SelectField name="lost_reason" label="Lost reason" value={lostReason} onChange={setLostReason} options={["Price","Competitor","Timing","No decision"].map(id=>({id,display_name:id}))} required /> : <Field name="acceptance_evidence" label="Acceptance or order evidence" value={acceptanceEvidence} onChange={setAcceptanceEvidence} multiline required maxLength={2000} />}
-            <Field name="reason" label="Outcome notes (optional)" value={outcomeNote} onChange={setOutcomeNote} maxLength={1000} />
-            <p>{outcome === "Won" ? `Handover will be due, owned by ${o.owner_name}, until a receiving route and owner are confirmed.` : "The stage and existing activities will remain in the record."} Reopening is unavailable.</p>
-          </>}
+          {mode === "transfer" && (
+            <>
+              <Field
+                name="owner-search"
+                label="Find eligible owner"
+                value={ownerSearch}
+                onChange={setOwnerSearch}
+                maxLength={200}
+              />
+              <SelectField
+                name="new_owner_id"
+                label="New deal owner"
+                value={newOwner}
+                onChange={setNewOwner}
+                options={handover.data?.items ?? []}
+                required
+              />
+              <ErrorNotice error={handover.error} />
+              {handover.loading && (
+                <p role="status">Loading eligible owners…</p>
+              )}
+              {handover.data?.next_cursor && (
+                <p>More eligible owners exist. Refine the search.</p>
+              )}
+              {handover.data?.items.length === 0 && (
+                <p>No eligible receiving owners match this search.</p>
+              )}
+              <p>
+                Current deal owner: {o.owner_name}. Transfer is immediate when
+                this save is accepted.
+              </p>
+              {handover.data && (
+                <section aria-label="Activity comparison">
+                  <h3>Activities keep their owners</h3>
+                  {[
+                    handover.data.next_activity,
+                    ...(handover.data.identification_activity &&
+                    handover.data.identification_activity.id !==
+                      handover.data.next_activity.id
+                      ? [handover.data.identification_activity]
+                      : []),
+                  ].map((a) => (
+                    <p className="crm-narrative" key={a.id}>
+                      {a.summary} · {a.status} · Owner: {a.owner_name} · Version{" "}
+                      {a.version}
+                    </p>
+                  ))}
+                  <p>
+                    The receiving owner must review any outstanding activity
+                    separately. Estimates, quotes and delivery obligations keep
+                    their ownership.
+                  </p>
+                </section>
+              )}
+              <Field
+                name="reason"
+                label="Transfer reason"
+                value={transferReason}
+                onChange={setTransferReason}
+                multiline
+                required
+                maxLength={1000}
+              />
+            </>
+          )}
+          {mode === "outcome" && (
+            <>
+              <SelectField
+                name="close_outcome"
+                label="Sales outcome"
+                value={outcome}
+                onChange={(value) => {
+                  setOutcome(value);
+                  setCommercialSource(null);
+                }}
+                options={(o.stage_id === "Closing"
+                  ? ["Won", "Lost"]
+                  : ["Lost"]
+                ).map((id) => ({ id, display_name: id }))}
+                required
+              />
+              <OpportunityOutcomeSource
+                key={outcome}
+                id={o.id}
+                version={version}
+                outcome={outcome}
+                onChange={setCommercialSource}
+              />
+              {outcome === "Lost" ? (
+                <SelectField
+                  name="lost_reason"
+                  label="Lost reason"
+                  value={lostReason}
+                  onChange={setLostReason}
+                  options={["Price", "Competitor", "Timing", "No decision"].map(
+                    (id) => ({ id, display_name: id }),
+                  )}
+                  required
+                />
+              ) : (
+                <Field
+                  name="acceptance_evidence"
+                  label="Acceptance or order evidence"
+                  value={acceptanceEvidence}
+                  onChange={setAcceptanceEvidence}
+                  multiline
+                  required
+                  maxLength={2000}
+                />
+              )}
+              <Field
+                name="reason"
+                label="Outcome notes (optional)"
+                value={outcomeNote}
+                onChange={setOutcomeNote}
+                maxLength={1000}
+              />
+              <p>
+                {outcome === "Won"
+                  ? `Handover will be due, owned by ${o.owner_name}, until a receiving route and owner are confirmed.`
+                  : "The stage and existing activities will remain in the record."}{" "}
+                Reopening is unavailable.
+              </p>
+            </>
+          )}
           {mode === "information" && (
             <>
               <Field
@@ -585,7 +803,10 @@ function DealEditor({
                 label="Deal stage"
                 value={stage}
                 onChange={setStage}
-                options={o.stages.map(s => ({ id: s.stage_id, display_name: s.stage_id }))}
+                options={o.stages.map((s) => ({
+                  id: s.stage_id,
+                  display_name: s.stage_id,
+                }))}
               />
               {stageRequiresEvidence(stage) && (
                 <>
@@ -619,8 +840,8 @@ function DealEditor({
                 </>
               )}
               <p className="scope-note">
-                Stage changes preserve the original qualification in
-                history. Activities and sales outcome remain unchanged.
+                Stage changes preserve the original qualification in history.
+                Activities and sales outcome remain unchanged.
               </p>
             </>
           )}
@@ -640,14 +861,20 @@ function DealEditor({
               blocked ||
               (mode === "outcome" && !commercialSource) ||
               version !== o.version ||
-              (mode === "stage" && stage === o.stage_id) || (mode === "transfer" && handover.data?.opportunity_version !== version)
+              (mode === "stage" && stage === o.stage_id) ||
+              (mode === "transfer" &&
+                handover.data?.opportunity_version !== version)
             }
           >
-            {mode === "transfer" ? "Confirm owner transfer" : mode === "outcome" ? "Record outcome" : mode === "information"
-              ? "Save deal"
-              : mode === "scope"
-                ? "Save requirements and scope"
-                : "Save stage"}
+            {mode === "transfer"
+              ? "Confirm owner transfer"
+              : mode === "outcome"
+                ? "Record outcome"
+                : mode === "information"
+                  ? "Save deal"
+                  : mode === "scope"
+                    ? "Save requirements and scope"
+                    : "Save stage"}
           </button>
         </footer>
       </form>

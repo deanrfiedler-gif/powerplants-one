@@ -1,13 +1,25 @@
-import { toggleWorklistFilters, fillOpportunitySearch, chooseWorklistSort, searchNeedsDrawer } from "../helpers/crm-worklist-ui";
+import {
+  toggleWorklistFilters,
+  fillOpportunitySearch,
+  chooseWorklistSort,
+  chooseDealsView,
+  searchNeedsDrawer,
+} from "../helpers/crm-worklist-ui";
 import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { identityToggle, openAccountPanel, phoneWidth } from "../helpers/phone-menu";
+import {
+  identityToggle,
+  openAccountPanel,
+  phoneWidth,
+} from "../helpers/phone-menu";
 const fixture = pathToFileURL(
   resolve("verification-evidence/crm-ui/index.html"),
 ).href;
 
-test("search retains every key while framework URL rendering is deferred", async ({ page }) => {
+test("search retains every key while framework URL rendering is deferred", async ({
+  page,
+}) => {
   await page.goto(fixture + "?fixture_navigation_delay=1");
   const search = page.getByLabel("Search deals", { exact: true });
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
@@ -17,7 +29,9 @@ test("search retains every key while framework URL rendering is deferred", async
   await expect(search).toHaveValue("Glasshouse climate control upgrade");
   await expect(search).toBeFocused();
   await expect(page.locator(".crm-card:visible")).toHaveCount(1);
-  await expect.poll(() => new URL(page.url()).searchParams.get("q")).toBe("Glasshouse climate control upgrade");
+  await expect
+    .poll(() => new URL(page.url()).searchParams.get("q"))
+    .toBe("Glasshouse climate control upgrade");
   expect(await page.evaluate(() => history.length)).toBe(historyLength);
   await page.reload();
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
@@ -37,17 +51,36 @@ test("hosted header, populated board, filtering and independent card targets", a
   );
   // On a phone the hosted account opens from the header Menu (phone header amendment P4) and Escape returns focus there.
   await openAccountPanel(page, "Account");
-  await expect(page.getByRole("button", { name: "Sign out", exact: true })).toBeVisible();
-  await expect(page.getByText("Powerplants One · Synthetic data only", { exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  if (phoneWidth(page)) await expect(page.locator("#shell-phone-menu")).toBeFocused();
   await expect(
-    page.getByRole("button", { name:"Filters and sort", exact:true }),
+    page.getByRole("button", { name: "Sign out", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Powerplants One · Synthetic data only", { exact: true }),
+  ).toBeVisible();
+  await page.keyboard.press("Escape");
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-phone-menu")).toBeFocused();
+  await expect(
+    page.getByRole("button", {
+      name: /^(Filters and sort|Filters|Search and filter)(,|$)/,
+    }),
   ).toBeVisible();
   await page.getByRole("button", { name: "More", exact: true }).click();
-  await expect(page.getByRole("navigation", { name: info.project.name === "desktop" ? "More navigation" : "All modules", exact: true })).toBeVisible();
-  await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
-  await page.getByRole("button", { name: info.project.name === "desktop" ? "Close More menu" : "Close menu", exact: true }).click();
+  await expect(
+    page.getByRole("navigation", {
+      name: info.project.name === "desktop" ? "More navigation" : "All modules",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("searchbox", { name: "Find a menu item" }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", {
+      name: info.project.name === "desktop" ? "Close More menu" : "Close menu",
+      exact: true,
+    })
+    .click();
   const phone = phoneWidth(page);
   const geometry = await page.evaluate((phone) => {
     const header = document.querySelector(".topbar")!.getBoundingClientRect();
@@ -57,14 +90,23 @@ test("hosted header, populated board, filtering and independent card targets", a
     const account = document
       .querySelector(phone ? "#shell-phone-menu" : ".identity-hosted")!
       .getBoundingClientRect();
-    const search = [...document.querySelectorAll(
-      ".crm-header-search,.ppo-global-search",
-    )].find((node) => node.getBoundingClientRect().width > 0)!
+    const search = [
+      ...document.querySelectorAll(
+        ".crm-header-search,.ppo-global-search,.ppo-phone-search-filter",
+      ),
+    ]
+      .find((node) => node.getBoundingClientRect().width > 0)!
       .getBoundingClientRect();
-    const heading = document.querySelector<HTMLElement>(phone ? ".ppo-phone-title" : ".product-heading")!;
+    const heading = document.querySelector<HTMLElement>(
+      phone ? ".ppo-phone-title" : ".product-heading",
+    )!;
     const headingBounds = heading.getBoundingClientRect();
     const title = document.createRange();
-    title.selectNodeContents(heading.querySelector(phone ? ".ppo-phone-title-text" : ".ppo-crumb-current")!);
+    title.selectNodeContents(
+      heading.querySelector(
+        phone ? ".ppo-phone-title-text" : ".ppo-crumb-current",
+      )!,
+    );
     const titleBounds = title.getBoundingClientRect();
     const rail = document.querySelector(".sidebar")!;
     const cards = [...document.querySelectorAll(".crm-card")].filter(
@@ -139,31 +181,27 @@ test("hosted header, populated board, filtering and independent card targets", a
       page.getByRole("link", { name: "Open full deal" }),
     ).toHaveAttribute("href", /^\/sales\/opportunities\//);
     await page.keyboard.press("Escape");
-    await expect(card.getByRole("button", { name: /^Snapshot:/ })).toBeFocused();
+    await expect(
+      card.getByRole("button", { name: /^Snapshot:/ }),
+    ).toBeFocused();
   } else await expect(card).toHaveAttribute("draggable", "false");
   await fillOpportunitySearch(page, "Glasshouse");
-  await expect(page.locator(".crm-worklist-stamp")).toContainText(
-    "1 deal",
-  );
-  await page.getByRole("button", { name: "List", exact: true }).click();
+  await expect(page.locator(".crm-worklist-stamp")).toContainText("1 deal");
+  await chooseDealsView(page, "List");
   await expect(page.locator("tbody tr")).toHaveCount(1);
   expect(new URL(page.url()).searchParams.get("q")).toBe("Glasshouse");
-  await page.getByRole("button", { name: "Board", exact: true }).click();
+  await chooseDealsView(page, "Board");
   await toggleWorklistFilters(page);
   await expect(page.getByLabel("Stage", { exact: true })).toBeVisible();
   await toggleWorklistFilters(page);
   await fillOpportunitySearch(page, "no matching records");
-  await expect(page.locator(".crm-worklist-stamp")).toContainText(
-    "0 deals",
-  );
+  await expect(page.locator(".crm-worklist-stamp")).toContainText("0 deals");
   await expect(page.locator(".crm-board-scroll")).toBeVisible();
   await expect(page.locator(".crm-workspace > .empty-state")).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("empty-board.png") });
   await fillOpportunitySearch(page, "denied");
   await expect(page.locator(".crm-workspace > .business-error")).toBeVisible();
-  await expect(
-    page.getByLabel("Search deals", { exact: true }),
-  ).toHaveCount(0);
+  await expect(page.getByLabel("Search deals", { exact: true })).toHaveCount(0);
   await expect(page.locator(".crm-card")).toHaveCount(0);
 });
 

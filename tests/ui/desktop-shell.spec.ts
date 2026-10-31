@@ -2,258 +2,688 @@ import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { expectFlowingShellHeader } from "../helpers/shell-header-geometry";
-const fixture = pathToFileURL(resolve("verification-evidence/crm-ui/index.html")).href;
+const fixture = pathToFileURL(
+  resolve("verification-evidence/crm-ui/index.html"),
+).href;
 test.beforeEach(async ({ page }, info) => {
-  test.skip(info.project.name !== "desktop", "Desktop integration; existing CRM phone tests retain mobile coverage.");
+  test.skip(
+    info.project.name !== "desktop",
+    "Desktop integration; existing CRM phone tests retain mobile coverage.",
+  );
   await page.goto(fixture + "?mode=local");
-  await expect(page.getByRole("button", { name: "Change identity", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Change identity", exact: true }),
+  ).toBeVisible();
 });
-test("department shell fits laptop, desktop and compact viewports with flowing search and contained controls", async ({ page }, info) => {
-  for (const [width, height] of [[1366, 768], [1920, 1080], [800, 500], [960, 540]]) {
+test("department shell fits laptop, desktop and compact viewports with flowing search and contained controls", async ({
+  page,
+}, info) => {
+  for (const [width, height] of [
+    [1366, 768],
+    [1920, 1080],
+    [800, 500],
+    [960, 540],
+  ]) {
     await page.setViewportSize({ width, height });
     const geometry = await page.evaluate(() => {
       const rail = document.querySelector<HTMLElement>(".ppo-rail")!;
-      const top = document.querySelector(".ppo-shell-header")!.getBoundingClientRect();
-      const more = document.querySelector("#desktop-more-toggle")!.getBoundingClientRect();
-      const logo = document.querySelector(".ppo-rail .brand-logo")!.getBoundingClientRect();
-      const controls = [...document.querySelectorAll(".product-heading,.ppo-header-centre,.ppo-header-utilities,.header-account")].map(element => element.getBoundingClientRect());
-      return { railWidth: rail.clientWidth, railFits: rail.scrollHeight <= rail.clientHeight, pageFits: document.documentElement.scrollWidth <= innerWidth,
-        headerHeight: top.height, moreBottom: more.bottom, logoCentre: logo.left + logo.width / 2, logoWidth: logo.width, logoY: logo.top + logo.height / 2,
-        plusGap: document.querySelector(".ppo-quick-add")!.getBoundingClientRect().left - document.querySelector(".ppo-global-search")!.getBoundingClientRect().right,
+      const top = document
+        .querySelector(".ppo-shell-header")!
+        .getBoundingClientRect();
+      const more = document
+        .querySelector("#desktop-more-toggle")!
+        .getBoundingClientRect();
+      const logo = document
+        .querySelector(".ppo-rail .brand-logo")!
+        .getBoundingClientRect();
+      const controls = [
+        ...document.querySelectorAll(
+          ".product-heading,.ppo-header-centre,.ppo-header-utilities,.header-account",
+        ),
+      ].map((element) => element.getBoundingClientRect());
+      return {
+        railWidth: rail.clientWidth,
+        railFits: rail.scrollHeight <= rail.clientHeight,
+        pageFits: document.documentElement.scrollWidth <= innerWidth,
+        headerHeight: top.height,
+        moreBottom: more.bottom,
+        logoCentre: logo.left + logo.width / 2,
+        logoWidth: logo.width,
+        logoY: logo.top + logo.height / 2,
+        plusGap:
+          document.querySelector(".ppo-quick-add")!.getBoundingClientRect()
+            .left -
+          document.querySelector(".ppo-global-search")!.getBoundingClientRect()
+            .right,
         // The navy disc is the quick-add button's own ::before. It stays inside the 44px button; if that
         // button ever stops being its own containing block the disc resolves against the centred group
         // instead and paints straight across the search field.
-        discWidth: parseFloat(getComputedStyle(document.querySelector(".ppo-quick-add")!, "::before").width),
-        icons: [...document.querySelectorAll(".ppo-primary-nav .product-icon")].map(element => element.getBoundingClientRect().width),
-        controlsFit: controls.every(rect => rect.top >= top.top && rect.bottom <= top.bottom && rect.right <= innerWidth),
-        noOverlap: controls.every((rect, index) => index === 0 || controls[index - 1].right <= rect.left), zoom: getComputedStyle(document.documentElement).zoom };
+        discWidth: parseFloat(
+          getComputedStyle(
+            document.querySelector(".ppo-quick-add")!,
+            "::before",
+          ).width,
+        ),
+        icons: [
+          ...document.querySelectorAll(".ppo-primary-nav .product-icon"),
+        ].map((element) => element.getBoundingClientRect().width),
+        controlsFit: controls.every(
+          (rect) =>
+            rect.top >= top.top &&
+            rect.bottom <= top.bottom &&
+            rect.right <= innerWidth,
+        ),
+        noOverlap: controls.every(
+          (rect, index) =>
+            index === 0 || controls[index - 1].right <= rect.left,
+        ),
+        zoom: getComputedStyle(document.documentElement).zoom,
+      };
     });
-    expect(geometry.railWidth).toBe(76); expect(geometry.headerHeight).toBe(64); expect(geometry.logoCentre).toBe(38);
-    expect(geometry.logoWidth).toBe(46); expect(geometry.logoY).toBe(32); expect(geometry.plusGap).toBeCloseTo(12, 0); expect(geometry.discWidth, "quick-add disc stays inside its button").toBeCloseTo(40, 0);
-    expect(geometry.railFits && geometry.pageFits && geometry.controlsFit && geometry.noOverlap).toBe(true);
-    expect(geometry.moreBottom).toBeLessThanOrEqual(height); expect(geometry.icons).toEqual(Array(11).fill(22));
-    expect(await page.locator(".ppo-primary-nav a").evaluateAll(links => links.map(link => link.getAttribute("aria-label")))).toEqual(["Pulse", "Leads", "Deals", "Activities", "Tasks", "Sales Inbox", "Sales-to-Estimating handovers", "Won-deal receiving", "Aftercare & renewal", "Contacts", "Products"]);
+    expect(geometry.railWidth).toBe(76);
+    expect(geometry.headerHeight).toBe(64);
+    expect(geometry.logoCentre).toBe(38);
+    expect(geometry.logoWidth).toBe(46);
+    expect(geometry.logoY).toBe(32);
+    expect(geometry.plusGap).toBeCloseTo(12, 0);
+    expect(
+      geometry.discWidth,
+      "quick-add disc stays inside its button",
+    ).toBeCloseTo(40, 0);
+    expect(
+      geometry.railFits &&
+        geometry.pageFits &&
+        geometry.controlsFit &&
+        geometry.noOverlap,
+    ).toBe(true);
+    expect(geometry.moreBottom).toBeLessThanOrEqual(height);
+    expect(geometry.icons).toEqual(Array(11).fill(22));
+    expect(
+      await page
+        .locator(".ppo-primary-nav a")
+        .evaluateAll((links) =>
+          links.map((link) => link.getAttribute("aria-label")),
+        ),
+    ).toEqual([
+      "Pulse",
+      "Leads",
+      "Deals",
+      "Activities",
+      "Tasks",
+      "Sales Inbox",
+      "Sales-to-Estimating handovers",
+      "Won-deal receiving",
+      "Aftercare & renewal",
+      "Contacts",
+      "Products",
+    ]);
     expect(["1", "normal"]).toContain(geometry.zoom);
-    await page.screenshot({ path: info.outputPath(`shell-${width}x${height}.png`) });
-    await page.getByRole("button", { name: "More", exact: true }).click();
-    await expect(page.getByRole("navigation", { name: "More navigation" })).toBeVisible();
-    await expect(page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Sales", exact: true })).toHaveAttribute("aria-current", "page");
-    // Figma's v2 / More panel draws no footer (Dean, 18 October 2026): the list runs to the panel's bottom edge.
-    const frames = await page.locator("#desktop-more-panel").evaluate(panel => {
-      const body = panel.querySelector<HTMLElement>(".ppo-more-body")!, header = panel.querySelector("header")!;
-      const inner = () => panel.getBoundingClientRect().top + panel.clientTop + panel.clientHeight;
-      const before = { head: header.getBoundingClientRect().bottom, bottom: inner() };
-      body.scrollTop = body.scrollHeight;
-      return { before, after: { head: header.getBoundingClientRect().bottom, bottom: inner() }, bodyTop: body.getBoundingClientRect().top, bodyBottom: body.getBoundingClientRect().bottom, scrolled: body.scrollTop > 0, footers: panel.querySelectorAll("footer").length };
+    await page.screenshot({
+      path: info.outputPath(`shell-${width}x${height}.png`),
     });
-    expect(frames.after).toEqual(frames.before); expect(frames.bodyTop).toBeCloseTo(frames.before.head); expect(frames.bodyBottom).toBeCloseTo(frames.before.bottom); expect(frames.scrolled).toBe(true); expect(frames.footers).toBe(0);
+    await page.getByRole("button", { name: "More", exact: true }).click();
+    await expect(
+      page.getByRole("navigation", { name: "More navigation" }),
+    ).toBeVisible();
+    await expect(
+      page
+        .getByRole("navigation", { name: "More navigation" })
+        .getByRole("link", { name: "Sales", exact: true }),
+    ).toHaveAttribute("aria-current", "page");
+    // Figma's v2 / More panel draws no footer (Dean, 18 October 2026): the list runs to the panel's bottom edge.
+    const frames = await page
+      .locator("#desktop-more-panel")
+      .evaluate((panel) => {
+        const body = panel.querySelector<HTMLElement>(".ppo-more-body")!,
+          header = panel.querySelector("header")!;
+        const inner = () =>
+          panel.getBoundingClientRect().top +
+          panel.clientTop +
+          panel.clientHeight;
+        const before = {
+          head: header.getBoundingClientRect().bottom,
+          bottom: inner(),
+        };
+        body.scrollTop = body.scrollHeight;
+        return {
+          before,
+          after: {
+            head: header.getBoundingClientRect().bottom,
+            bottom: inner(),
+          },
+          bodyTop: body.getBoundingClientRect().top,
+          bodyBottom: body.getBoundingClientRect().bottom,
+          scrolled: body.scrollTop > 0,
+          footers: panel.querySelectorAll("footer").length,
+        };
+      });
+    expect(frames.after).toEqual(frames.before);
+    expect(frames.bodyTop).toBeCloseTo(frames.before.head);
+    expect(frames.bodyBottom).toBeCloseTo(frames.before.bottom);
+    expect(frames.scrolled).toBe(true);
+    expect(frames.footers).toBe(0);
     // More lists every permitted page without a search or a Workspace dropdown of its own: the top bar's
     // search finds pages, and Workspaces is the department choice.
-    await expect(page.getByRole("searchbox", { name: "Find a menu item" })).toHaveCount(0);
+    await expect(
+      page.getByRole("searchbox", { name: "Find a menu item" }),
+    ).toHaveCount(0);
     await expect(page.locator("#desktop-more-panel select")).toHaveCount(0);
-    await page.screenshot({ path: info.outputPath(`more-${width}x${height}.png`) });
+    await page.screenshot({
+      path: info.outputPath(`more-${width}x${height}.png`),
+    });
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("button", { name: "More", exact: true })).toBeFocused();
-    await expect(page.getByRole("navigation", { name: "More navigation" })).toBeHidden();
+    await expect(
+      page.getByRole("button", { name: "More", exact: true }),
+    ).toBeFocused();
+    await expect(
+      page.getByRole("navigation", { name: "More navigation" }),
+    ).toBeHidden();
   }
 });
-test("Conversations and builder keep search centred with either rail state", async ({ page }, info) => {
+test("Conversations and builder keep search centred with either rail state", async ({
+  page,
+}, info) => {
   await page.goto(fixture + "?mode=local&conversations=1&development=1");
-  await expect(page.getByRole("link", { name: "Conversations, 3 unread", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Conversations, 3 unread", exact: true }),
+  ).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   for (const width of [1920, 1440, 1366, 1280, 1201, 1200, 1199, 1024, 960]) {
     await page.setViewportSize({ width, height: 900 });
     for (const rail of ["collapsed", "expanded"]) {
       // The component fixture owns the frame; production layout supplies this state.
-      await page.locator(".app-frame").evaluate((frame, state) => frame.setAttribute("data-rail", state), rail);
-      await test.step(`${width}px, ${rail} rail`, async () => { await expectFlowingShellHeader(page); });
-      await expect(page.locator(".ppo-header-utilities .ppo-studio-link")).toBeVisible({ visible: width >= 1200 });
-      if (width === 1280) await page.screenshot({ path: info.outputPath(`conversations-builder-${rail}-1280.png`) });
+      await page
+        .locator(".app-frame")
+        .evaluate(
+          (frame, state) => frame.setAttribute("data-rail", state),
+          rail,
+        );
+      await test.step(`${width}px, ${rail} rail`, async () => {
+        await expectFlowingShellHeader(page);
+      });
+      await expect(
+        page.locator(".ppo-header-utilities .ppo-studio-link"),
+      ).toBeVisible({ visible: width >= 1200 });
+      if (width === 1280)
+        await page.screenshot({
+          path: info.outputPath(`conversations-builder-${rail}-1280.png`),
+        });
     }
   }
 });
 
-test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({ page }) => {
+test("global search is independent of page filtering, keyboard selection and quick-add routes", async ({
+  page,
+}) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
-  await page.keyboard.press("Control+k"); await expect(search).toBeFocused();
+  await page.keyboard.press("Control+k");
+  await expect(search).toBeFocused();
   await search.fill("upgrade");
-  const options = page.locator("#shell-search-list").getByRole("option"); await expect(options).toHaveCount(2);
-  await search.press("ArrowUp"); await expect(options.last()).toHaveAttribute("aria-selected", "true");
-  await search.press("ArrowDown"); await expect(options.first()).toHaveAttribute("aria-selected", "true");
+  const options = page.locator("#shell-search-list").getByRole("option");
+  await expect(options).toHaveCount(2);
+  await search.press("ArrowUp");
+  await expect(options.last()).toHaveAttribute("aria-selected", "true");
+  await search.press("ArrowDown");
+  await expect(options.first()).toHaveAttribute("aria-selected", "true");
   expect(new URL(page.url()).searchParams.get("q")).toBeNull();
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
-  await search.press("Escape"); await expect(search).toBeFocused(); await expect(page.getByRole("listbox")).toBeHidden();
+  await search.press("Escape");
+  await expect(search).toBeFocused();
+  await expect(page.getByRole("listbox")).toBeHidden();
   await page.getByRole("button", { name: "Quick add", exact: true }).click();
-  await expect(page.getByRole("navigation", { name: "Create a record" }).getByRole("link").first()).toHaveAttribute("href", "/sales/opportunities/new");
-  await page.keyboard.press("ArrowUp"); await expect(page.getByRole("link", { name: "Contact", exact: true })).toBeFocused();
-  await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Quick add", exact: true })).toBeFocused();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Create a record" })
+      .getByRole("link")
+      .first(),
+  ).toHaveAttribute("href", "/sales/opportunities/new");
+  await page.keyboard.press("ArrowUp");
+  await expect(
+    page.getByRole("link", { name: "Contact", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: "Quick add", exact: true }),
+  ).toBeFocused();
   await page.getByRole("button", { name: "Quick Help", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Quick Help" })).toBeVisible();
-  await page.locator(".crm-workbar").click({position:{x:2,y:2}}); await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
-  await page.getByRole("button", { name: "Notifications", exact: true }).click();
-  await expect(page.getByRole("link", { name: "Open Notifications", exact: true })).toHaveAttribute("href", "/work/updates");
+  await page
+    .locator(".crm-workspace-status")
+    .click({ position: { x: 2, y: 2 } });
+  await expect(page.getByRole("heading", { name: "Quick Help" })).toBeHidden();
+  await page
+    .getByRole("button", { name: "Notifications", exact: true })
+    .click();
+  await expect(
+    page.getByRole("link", { name: "Open Notifications", exact: true }),
+  ).toHaveAttribute("href", "/work/updates");
 });
-test("identity lock clears results and rejects a late response even if transport ignores abort", async ({ page }) => {
+test("identity lock clears results and rejects a late response even if transport ignores abort", async ({
+  page,
+}) => {
   const search = page.getByRole("combobox", { name: "Search Powerplants One" });
-  await search.fill("upgrade"); await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(2);
+  await search.fill("upgrade");
+  await expect(
+    page.locator("#shell-search-list").getByRole("option"),
+  ).toHaveCount(2);
   await page.evaluate(() => {
     const original = window.fetch;
-    window.fetch = (input, init) => String(input).includes("/shell/search") ? new Promise(resolve => {
-      (window as unknown as { resolveShellSearch: () => void }).resolveShellSearch = () => resolve(new Response(JSON.stringify({ items: [{ id: "late", label: "SYN Late private result", kind: "Customer", reference: "", href: "/customers/late" }], has_more: false, limit_per_type: 5 })));
-    }) : original(input, init);
+    window.fetch = (input, init) =>
+      String(input).includes("/shell/search")
+        ? new Promise((resolve) => {
+            (
+              window as unknown as { resolveShellSearch: () => void }
+            ).resolveShellSearch = () =>
+              resolve(
+                new Response(
+                  JSON.stringify({
+                    items: [
+                      {
+                        id: "late",
+                        label: "SYN Late private result",
+                        kind: "Customer",
+                        reference: "",
+                        href: "/customers/late",
+                      },
+                    ],
+                    has_more: false,
+                    limit_per_type: 5,
+                  }),
+                ),
+              );
+          })
+        : original(input, init);
   });
   await search.fill("delayed");
-  await expect.poll(() => page.evaluate(() => typeof (window as unknown as { resolveShellSearch?: unknown }).resolveShellSearch)).toBe("function");
-  await page.getByRole("button", { name: "Change identity", exact: true }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          typeof (window as unknown as { resolveShellSearch?: unknown })
+            .resolveShellSearch,
+      ),
+    )
+    .toBe("function");
+  await page
+    .getByRole("button", { name: "Change identity", exact: true })
+    .click();
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(search).toHaveValue("");
-  await page.evaluate(() => (window as unknown as { resolveShellSearch: () => void }).resolveShellSearch());
+  await page.evaluate(() =>
+    (
+      window as unknown as { resolveShellSearch: () => void }
+    ).resolveShellSearch(),
+  );
   await search.focus();
-  await expect(page.getByText("SYN Late private result", { exact: true })).toHaveCount(0);
-  await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(0);
+  await expect(
+    page.getByText("SYN Late private result", { exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.locator("#shell-search-list").getByRole("option"),
+  ).toHaveCount(0);
 });
 
-test("page guide is contextual and Supply selection requests its native readiness landing", async ({ page }) => {
+test("page guide is contextual and Supply selection requests its native readiness landing", async ({
+  page,
+}) => {
   await page.getByRole("button", { name: "Page guide", exact: true }).click();
   const guide = page.getByRole("dialog", { name: "Page guide", exact: true });
-  await expect(guide.getByRole("heading", { name: "Deals", exact: true })).toBeVisible();
-  await expect(guide.getByText("The detailed Deals guide is being prepared.", { exact: false })).toBeVisible();
+  await expect(
+    guide.getByRole("heading", { name: "Deals", exact: true }),
+  ).toBeVisible();
+  await expect(
+    guide.getByText("The detailed Deals guide is being prepared.", {
+      exact: false,
+    }),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
+  await expect(
+    page.getByRole("button", { name: "Page guide", exact: true }),
+  ).toBeFocused();
   // This component harness renders links without following them; the compiled browser suite
   // separately follows this URL and proves the Supply rail and reload behaviour.
   await page.getByRole("button", { name: "More", exact: true }).click();
   const departments = page.getByRole("navigation", { name: "More navigation" });
-  await expect(departments.getByRole("link", { name: "Supply chain", exact: true })).toHaveAttribute("href", "/supply/material-readiness");
+  await expect(
+    departments.getByRole("link", { name: "Supply chain", exact: true }),
+  ).toHaveAttribute("href", "/supply/material-readiness");
   await expect(page.locator(".crm-card:visible")).toHaveCount(8);
   await page.reload();
   await page.getByRole("button", { name: "More", exact: true }).click();
   // The harness remains on its owned Sales route, which overrides a remembered department.
-  await expect(departments.getByRole("link", { name: "Sales", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(
+    departments.getByRole("link", { name: "Sales", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
 });
 
-test("Figma shell keeps inherited r17 utility controls and its explicit header and More geometry", async ({ page, context }, info) => {
+test("Figma shell keeps inherited r17 utility controls and its explicit header and More geometry", async ({
+  page,
+  context,
+}, info) => {
   const reference = await context.newPage();
   await page.setViewportSize({ width: 1536, height: 864 });
   await reference.setViewportSize({ width: 1536, height: 864 });
   await page.goto(fixture);
-  await reference.goto(pathToFileURL(resolve("docs/reference/ui/application-shell/PPO-Application-Shell-r17.html")).href);
+  await reference.goto(
+    pathToFileURL(
+      resolve(
+        "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
+      ),
+    ).href,
+  );
   await page.evaluate(() => document.fonts.ready);
   await reference.evaluate(() => document.fonts.ready);
-  const style = async (locator: import("@playwright/test").Locator, properties: string[]) => locator.evaluate((element, props) => {
-    const css = getComputedStyle(element);
-    return Object.fromEntries(props.map(property => [property, css.getPropertyValue(property)]));
-  }, properties);
-  const typography = ["font-size", "font-weight", "line-height", "letter-spacing"];
-  await expect(page.getByRole("button", { name: "Account", exact: true })).toBeVisible();
+  const style = async (
+    locator: import("@playwright/test").Locator,
+    properties: string[],
+  ) =>
+    locator.evaluate((element, props) => {
+      const css = getComputedStyle(element);
+      return Object.fromEntries(
+        props.map((property) => [property, css.getPropertyValue(property)]),
+      );
+    }, properties);
+  const typography = [
+    "font-size",
+    "font-weight",
+    "line-height",
+    "letter-spacing",
+  ];
+  await expect(
+    page.getByRole("button", { name: "Account", exact: true }),
+  ).toBeVisible();
   // Shell v2 uses 14px breadcrumb labels. The retained r17 source is unchanged;
   // inherited utility dialogs below continue to be compared against it.
-  expect(await style(page.locator(".ppo-crumb-current"), ["font-size", "line-height"]))
-    .toEqual({ "font-size": "14px", "line-height": "18.2px" });
-  expect((await style(page.locator(".ppo-crumb-current"), ["font-weight"]))["font-weight"]).toBe("600");
+  expect(
+    await style(page.locator(".ppo-crumb-current"), [
+      "font-size",
+      "line-height",
+    ]),
+  ).toEqual({ "font-size": "14px", "line-height": "18.2px" });
+  expect(
+    (await style(page.locator(".ppo-crumb-current"), ["font-weight"]))[
+      "font-weight"
+    ],
+  ).toBe("600");
   // Shell top bar amendment R1: a top-level page shows its own name only, so Deals has no parent crumb.
   await expect(page.locator(".ppo-crumbs li")).toHaveText(["Deals"]);
-  expect(await style(page.locator(".ppo-global-search input"), ["font-size", "font-weight", "height"])).toEqual(await style(reference.locator("#sh-global-search"), ["font-size", "font-weight", "height"]));
-  expect(await style(page.locator(".ppo-global-search"), ["height", "border-radius", "background-color", "padding-left"])).toEqual(await style(reference.locator(".sh-search-anchor .sh-search-field"), ["height", "border-radius", "background-color", "padding-left"]));
+  expect(
+    await style(page.locator(".ppo-global-search input"), [
+      "font-size",
+      "font-weight",
+      "height",
+    ]),
+  ).toEqual(
+    await style(reference.locator("#sh-global-search"), [
+      "font-size",
+      "font-weight",
+      "height",
+    ]),
+  );
+  expect(
+    await style(page.locator(".ppo-global-search"), [
+      "height",
+      "border-radius",
+      "background-color",
+      "padding-left",
+    ]),
+  ).toEqual(
+    await style(reference.locator(".sh-search-anchor .sh-search-field"), [
+      "height",
+      "border-radius",
+      "background-color",
+      "padding-left",
+    ]),
+  );
   const cases = [
-    ["search", ""], ["quick", "Quick add"], ["help", "Quick Help"], ["notifications", "Notifications"], ["guide", "Page guide"], ["account", "Account"], ["more", "More"],
+    ["search", ""],
+    ["quick", "Quick add"],
+    ["help", "Quick Help"],
+    ["notifications", "Notifications"],
+    ["guide", "Page guide"],
+    ["account", "Account"],
+    ["more", "More"],
   ] as const;
   for (const [kind, name] of cases) {
     if (kind === "search") {
-      await page.getByRole("combobox", { name: "Search Powerplants One" }).focus();
+      await page
+        .getByRole("combobox", { name: "Search Powerplants One" })
+        .focus();
       await reference.locator("#sh-global-search").focus();
-      await expect(page.locator("#shell-search-list").getByRole("option")).toHaveCount(4);
+      await expect(
+        page.locator("#shell-search-list").getByRole("option"),
+      ).toHaveCount(4);
     } else {
       await page.getByRole("button", { name, exact: true }).click();
       await reference.locator(`[data-panel="${kind}"]:visible`).first().click();
     }
-    const actualPanel = page.locator(kind === "more" ? "#desktop-more-panel" : kind === "account" ? "#hosted-account-controls" : kind === "search" ? "#shell-search-panel" : "#shell-utility-panel");
+    const actualPanel = page.locator(
+      kind === "more"
+        ? "#desktop-more-panel"
+        : kind === "account"
+          ? "#hosted-account-controls"
+          : kind === "search"
+            ? "#shell-search-panel"
+            : "#shell-utility-panel",
+    );
     const referencePanel = reference.locator("#sh-panel");
     await expect(actualPanel).toBeVisible();
     await expect(referencePanel).toBeVisible();
-    await referencePanel.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
-    const a = (await actualPanel.boundingBox())!, b = (await referencePanel.boundingBox())!;
+    await referencePanel.evaluate((element) =>
+      element.getAnimations().forEach((animation) => animation.finish()),
+    );
+    const a = (await actualPanel.boundingBox())!,
+      b = (await referencePanel.boundingBox())!;
     if (kind === "more") {
       const rail = (await page.locator(".ppo-rail").boundingBox())!;
       expect(a.width).toBe(240);
       expect(a.x).toBe(rail.x + rail.width);
       expect(a.y).toBe(0);
       expect(a.height).toBe(864);
-      expect(await style(actualPanel, ["border-radius", "background-color"]))
-        .toEqual({ "border-radius": "0px", "background-color": "rgb(246, 247, 249)" });
-      expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight"]))
-        .toEqual({ "font-size": "16px", "font-weight": "700" });
+      expect(
+        await style(actualPanel, ["border-radius", "background-color"]),
+      ).toEqual({
+        "border-radius": "0px",
+        "background-color": "rgb(246, 247, 249)",
+      });
+      expect(
+        await style(actualPanel.locator("h2"), ["font-size", "font-weight"]),
+      ).toEqual({ "font-size": "16px", "font-weight": "700" });
     } else {
-      if (kind !== "search") expect(a.width, kind + " width").toBeCloseTo(b.width, 0);
+      if (kind !== "search")
+        expect(a.width, kind + " width").toBeCloseTo(b.width, 0);
       // Search and quick-add follow their flowing triggers; utility panels keep
       // their original anchors. No comparison assumes a viewport-centred search.
       if (kind === "search" || kind === "quick") {
-        const trigger = (await page.locator(kind === "search" ? ".ppo-global-search" : ".ppo-quick-add").boundingBox())!;
+        const trigger = (await page
+          .locator(kind === "search" ? ".ppo-global-search" : ".ppo-quick-add")
+          .boundingBox())!;
         if (kind === "search") {
-          expect(a.x, "search panel follows its field").toBeCloseTo(trigger.x, 0);
-          expect(a.width, "search panel uses its field width").toBeCloseTo(trigger.width, 0);
-        }
-        else expect(a.x + a.width, "quick panel follows its button").toBeCloseTo(trigger.x + trigger.width, 0);
+          expect(a.x, "search panel follows its field").toBeCloseTo(
+            trigger.x,
+            0,
+          );
+          expect(a.width, "search panel uses its field width").toBeCloseTo(
+            trigger.width,
+            0,
+          );
+        } else
+          expect(a.x + a.width, "quick panel follows its button").toBeCloseTo(
+            trigger.x + trigger.width,
+            0,
+          );
       } else expect(a.x, kind + " horizontal anchor").toBeCloseTo(b.x, 0);
       expect(a.y, kind + " vertical anchor").toBeCloseTo(b.y, 0);
-      expect(await style(actualPanel, ["border-radius", "box-shadow", "border-color"])).toEqual(await style(referencePanel, ["border-radius", "box-shadow", "border-color"]));
-      expect(await style(actualPanel.locator("h2"), ["font-size", "font-weight", "line-height"])).toEqual(await style(referencePanel.locator("h2"), ["font-size", "font-weight", "line-height"]));
+      expect(
+        await style(actualPanel, [
+          "border-radius",
+          "box-shadow",
+          "border-color",
+        ]),
+      ).toEqual(
+        await style(referencePanel, [
+          "border-radius",
+          "box-shadow",
+          "border-color",
+        ]),
+      );
+      expect(
+        await style(actualPanel.locator("h2"), [
+          "font-size",
+          "font-weight",
+          "line-height",
+        ]),
+      ).toEqual(
+        await style(referencePanel.locator("h2"), [
+          "font-size",
+          "font-weight",
+          "line-height",
+        ]),
+      );
     }
     if (["quick", "help", "notifications", "guide"].includes(kind)) {
-      const referenceTrigger = reference.locator(`[data-panel="${kind}"]:visible`).first();
-      await referenceTrigger.evaluate(element => element.getAnimations().forEach(animation => animation.finish()));
-      expect(await style(page.getByRole("button", { name, exact: true }), ["background-color", "color"])).toEqual(await style(referenceTrigger, ["background-color", "color"]));
+      const referenceTrigger = reference
+        .locator(`[data-panel="${kind}"]:visible`)
+        .first();
+      await referenceTrigger.evaluate((element) =>
+        element.getAnimations().forEach((animation) => animation.finish()),
+      );
+      expect(
+        await style(page.getByRole("button", { name, exact: true }), [
+          "background-color",
+          "color",
+        ]),
+      ).toEqual(await style(referenceTrigger, ["background-color", "color"]));
     }
     if (kind === "help") {
-      const actualHelp = actualPanel.getByRole("button", { name: "Open page guide" });
-      const referenceHelp = referencePanel.getByRole("button", { name: "Open page guide" });
-      await actualHelp.hover(); await referenceHelp.hover();
-      expect(await style(actualHelp, ["background-color", "color"])).toEqual(await style(referenceHelp, ["background-color", "color"]));
+      const actualHelp = actualPanel.getByRole("button", {
+        name: "Open page guide",
+      });
+      const referenceHelp = referencePanel.getByRole("button", {
+        name: "Open page guide",
+      });
+      await actualHelp.hover();
+      await referenceHelp.hover();
+      expect(await style(actualHelp, ["background-color", "color"])).toEqual(
+        await style(referenceHelp, ["background-color", "color"]),
+      );
     }
     if (kind === "account") {
       // NAV moves presentation-only preview into Development. Sign out is a
       // secondary action; r17's transparent reset link has a different purpose.
-      await expect(actualPanel.getByLabel("Preview workspace", { exact: true })).toHaveCount(0);
-      await expect(actualPanel.getByRole("button", { name: "Reset preview preference" })).toHaveCount(0);
-      const actualReset = actualPanel.getByRole("button", { name: "Sign out", exact: true });
-      const referenceReset = referencePanel.getByRole("button", { name: "Reset preview preference" });
-      await actualReset.hover(); await referenceReset.hover();
-      expect(await style(actualReset, ["color"])).toEqual(await style(referenceReset, ["color"]));
-      expect((await style(actualReset, ["background-color"]))["background-color"]).toBe("rgb(240, 242, 245)");
+      await expect(
+        actualPanel.getByLabel("Preview workspace", { exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        actualPanel.getByRole("button", { name: "Reset preview preference" }),
+      ).toHaveCount(0);
+      const actualReset = actualPanel.getByRole("button", {
+        name: "Sign out",
+        exact: true,
+      });
+      const referenceReset = referencePanel.getByRole("button", {
+        name: "Reset preview preference",
+      });
+      await actualReset.hover();
+      await referenceReset.hover();
+      expect(await style(actualReset, ["color"])).toEqual(
+        await style(referenceReset, ["color"]),
+      );
+      expect(
+        (await style(actualReset, ["background-color"]))["background-color"],
+      ).toBe("rgb(240, 242, 245)");
     }
     if (kind === "guide") {
-      await actualPanel.getByRole("button", { name: "Read the application shell guide" }).click();
-      expect(await style(actualPanel.locator(".ppo-guide-intro h3"), typography)).toEqual(await style(referencePanel.locator(".sh-guide-intro h3"), typography));
-      await expect(actualPanel.getByRole("button", { name: "Journey map", exact: true })).toBeVisible();
-      const actualJourney = actualPanel.getByRole("button", { name: "Journey map", exact: true });
-      const referenceJourney = referencePanel.getByRole("button", { name: "Journey map", exact: true });
-      await actualJourney.hover(); await referenceJourney.hover();
-      expect(await style(actualJourney, ["background-color", "color"])).toEqual(await style(referenceJourney, ["background-color", "color"]));
+      await actualPanel
+        .getByRole("button", { name: "Read the application shell guide" })
+        .click();
+      expect(
+        await style(actualPanel.locator(".ppo-guide-intro h3"), typography),
+      ).toEqual(
+        await style(referencePanel.locator(".sh-guide-intro h3"), typography),
+      );
+      await expect(
+        actualPanel.getByRole("button", { name: "Journey map", exact: true }),
+      ).toBeVisible();
+      const actualJourney = actualPanel.getByRole("button", {
+        name: "Journey map",
+        exact: true,
+      });
+      const referenceJourney = referencePanel.getByRole("button", {
+        name: "Journey map",
+        exact: true,
+      });
+      await actualJourney.hover();
+      await referenceJourney.hover();
+      expect(await style(actualJourney, ["background-color", "color"])).toEqual(
+        await style(referenceJourney, ["background-color", "color"]),
+      );
       await actualJourney.click();
-      await expect(actualPanel.getByRole("heading", { name: "Your journey", exact: true })).toBeFocused();
-      await actualPanel.locator(".ppo-panel-body").evaluate(element => { element.scrollTop = 0; });
+      await expect(
+        actualPanel.getByRole("heading", { name: "Your journey", exact: true }),
+      ).toBeFocused();
+      await actualPanel.locator(".ppo-panel-body").evaluate((element) => {
+        element.scrollTop = 0;
+      });
     }
     if (kind === "more") {
       // Shell v2 geometry is checked above; the navigation decision replaces planned links
       // with ready, permitted destinations, including native Supply Chain.
-      await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
+      await expect(
+        actualPanel
+          .locator(".ppo-menu-group")
+          .first()
+          .locator(".ppo-more-link"),
+      ).toHaveText([
+        "Sales",
+        "Estimating & quotation",
+        "Engineering",
+        "Projects",
+        "Service operations",
+        "Supply chain",
+        "Finance",
+      ]);
       // Native Outputs, Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Help and
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(30);
+      await expect(
+        actualPanel.locator(".ppo-menu-group .ppo-more-link"),
+      ).toHaveCount(30);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      for (const [name, href] of [["Outputs", "/documents/issues?department=sales"], ["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
-        await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
+      for (const [name, href] of [
+        ["Outputs", "/documents/issues?department=sales"],
+        ["Products", "/products?department=sales"],
+        ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"],
+        ["Won-deal receiving", "/sales/handoffs/won"],
+        ["Aftercare & renewal", "/sales/aftercare"],
+      ]) {
+        await expect(
+          actualPanel.getByRole("link", { name, exact: true }),
+        ).toHaveAttribute("href", href);
       }
-      await expect(actualPanel.getByRole("link", { name: "Users and access", exact: true })).toHaveAttribute("href", "/admin/access?department=sales");
+      await expect(
+        actualPanel.getByRole("link", {
+          name: "Users and access",
+          exact: true,
+        }),
+      ).toHaveAttribute("href", "/admin/access?department=sales");
       // Figma's v2 / More panel draws no "N destinations" footer (Dean, 18 October 2026).
       await expect(actualPanel.locator("footer")).toHaveCount(0);
-      await expect(actualPanel.getByRole("link", { name: "Facilities & growing areas", exact: true })).toHaveAttribute("href", "/facilities?department=sales");
-      await expect(actualPanel.getByRole("link", { name: "Site surveys", exact: true })).toHaveAttribute("href", "/surveys?department=sales");
+      await expect(
+        actualPanel.getByRole("link", {
+          name: "Facilities & growing areas",
+          exact: true,
+        }),
+      ).toHaveAttribute("href", "/facilities?department=sales");
+      await expect(
+        actualPanel.getByRole("link", { name: "Site surveys", exact: true }),
+      ).toHaveAttribute("href", "/surveys?department=sales");
     }
     await page.bringToFront();
     await page.screenshot({ path: info.outputPath(`r17-runtime-${kind}.png`) });
     await reference.bringToFront();
-    await reference.screenshot({ path: info.outputPath(`r17-reference-${kind}.png`) });
+    await reference.screenshot({
+      path: info.outputPath(`r17-reference-${kind}.png`),
+    });
     await page.keyboard.press("Escape");
     await reference.keyboard.press("Escape");
   }
