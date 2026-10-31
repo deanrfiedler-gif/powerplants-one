@@ -26,7 +26,7 @@ Accepted design: captures 08–13 in [design r01](../../../reference/ui/estimati
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Design and application status are separate. The phone design at 390 and 320 CSS px is owner-accepted as a Figma design (captures above). The application is not built, so comparison of the implemented application with that design, interaction and device review, and UI-baseline acceptance are still pending, and the register keeps its unbuilt and unreviewed application status. Retain mobile application evidence here when it is reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 
