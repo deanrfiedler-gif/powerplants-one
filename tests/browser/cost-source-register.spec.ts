@@ -75,7 +75,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
         })
       : r.fulfill({
           json: {
-            items: noMatch || empty ? [] : [item],
+            items: noMatch || empty ? [] : Array.from({ length: 25 }, (_, i) => i === 0 ? item : { ...item, id: `91000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`, reference: `SYN-SRC-${String(21 + i).padStart(4, "0")}`, title: `SYN Source evidence ${i + 1}` }),
             companies: [],
             counts: {
               all: empty ? 0 : 101,
@@ -186,6 +186,13 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
       ),
     ).toBe(true);
     await page.screenshot({ path: `${captures}/register-${width}.png` });
+    if (width <= 780) {
+      await page.locator(".cs-phone-list").evaluate(el => { el.scrollTop = el.scrollHeight; });
+      await expect(page.locator(".cs-phone-open").last()).toBeInViewport();
+      await page.screenshot({ path: `${captures}/list-end-${width}.png` });
+      await page.locator(".cs-phone-list").evaluate(el => { el.scrollTop = 0; });
+    }
+
     await page
       .locator(width > 780 ? ".cs-row-link" : ".cs-phone-open")
       .first()
@@ -228,6 +235,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await page
     .getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true })
     .check();
+  await page.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).check();
   await expect(
     page.getByRole("complementary", { name: "Selected sources" }),
   ).toBeVisible();

@@ -387,7 +387,7 @@ function Register({
     >
       <div className="cs-workspace">
         <h1 className="sr-only">Cost sources</h1>
-        <div className="cs-list" inert={!!snapshot && !menu.phone}>
+        <div className="cs-list" inert={!!snapshot}>
           <div className="cs-toolbar">
             {data && selected.length ? (
               <>
@@ -512,7 +512,7 @@ function Register({
             </div>
           )}
           <CostSourceReadNotice {...resource} />
-          <ErrorNotice error={actionError} />
+          <ErrorNotice error={data ? null : actionError} />
           {notice && (
             <p className="cs-notice" role="status">
               {notice}
@@ -790,7 +790,7 @@ function Register({
         {data && selected.length > 0 && panelOpen && !snapshot && (
           <aside className="cs-selection" aria-label="Selected sources">
             <header>
-              <h2>{selected.length} sources selected</h2>
+              <h2>{selected.length} {selected.length === 1 ? "source" : "sources"} selected</h2>
             </header>
             <div>
               {chosen.map((r) => (

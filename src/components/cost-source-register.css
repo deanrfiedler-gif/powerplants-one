@@ -483,3 +483,11 @@
 @media (max-width:780px) { #ppo-cost-sources .cs-snapshot-footer { position:fixed; left:0; right:0; bottom:64px; } }
 
 @media (min-width:781px) and (max-width:1199px) { #ppo-cost-sources .cs-snapshot-activity { padding-top:48px; } }
+
+#ppo-cost-sources .ppo-register-label { height:auto; min-height:0; padding:0; }
+#ppo-cost-sources button.cs-row-link { min-height:0; height:auto; }
+#ppo-cost-sources .cs-fixed-select input[type=checkbox] { width:16px; height:16px; min-height:16px; min-width:16px; }
+#ppo-cost-sources .ppo-register-table tr[data-selected] td { background:var(--ppo-shell-selected); }
+#ppo-cost-sources .cs-selection h2 { font-size:14px; line-height:20px; margin:0; }
+#ppo-cost-sources .cs-selection h3 { font-size:11px; line-height:16px; text-transform:uppercase; letter-spacing:.66px; color:var(--muted); }
+#ppo-cost-sources .cs-selection article { border:1px solid var(--line); border-radius:6px; padding:12px; margin-bottom:14px; }
