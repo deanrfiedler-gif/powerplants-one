@@ -134,3 +134,25 @@
 @media (max-width: 780px) {
   #ppo-service-planner .pl01-attention-rows { max-height: none; }
 }
+
+/* Phone person cards and title-first visits from the accepted composition. */
+@media (max-width: 780px) {
+  #ppo-service-planner .planner-phone { padding: 12px 16px; gap: 12px; }
+  #ppo-service-planner .pq-person { background: var(--white); border: 1px solid var(--line-soft); padding: 12px 16px; }
+  #ppo-service-planner .pq-person.off { background: var(--surface-3); min-height: 72px; }
+  #ppo-service-planner .pq-person header { grid-template-columns: 28px minmax(0,1fr) auto; gap: 4px 8px; }
+  #ppo-service-planner .pq-person header .tl-av { grid-row: 1 / span 2; align-self: start; }
+  #ppo-service-planner .pq-person header a { grid-column: 2; grid-row: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #ppo-service-planner .pq-person header small { grid-column: 3; grid-row: 1; font-size: 11px; }
+  #ppo-service-planner .pl01-phone-role { grid-row: 2; grid-column: 2 / -1; font-size: 11px; }
+  #ppo-service-planner .pq-day { background: transparent; padding: 0; }
+  #ppo-service-planner .pq-card:not(.held):not(.prop) { background: var(--planner-confirmed-surface); border-color: var(--planner-confirmed-border); }
+  #ppo-service-planner .pq-card { box-shadow: none; }
+  #ppo-service-planner .pq-card .t { display: flex; gap: 6px; justify-content: space-between; font-weight: 600; }
+  #ppo-service-planner .pl01-visit-title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  #ppo-service-planner .pq-card .r1 { font-size: 12px; color: var(--muted); }
+  #ppo-service-planner .pq-card .r1 b { font-weight: 400; }
+  #ppo-service-planner .pq-card .m { font-size: 12px; }
+  #ppo-service-planner .pq-card.sel { outline: 2px solid var(--ink); outline-offset: 1px; }
+  #ppo-service-planner .pq-card.held.sel { border-color: var(--warning-border, #ecd2a2); }
+}

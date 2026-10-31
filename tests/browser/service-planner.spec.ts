@@ -19,6 +19,8 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 band, tray, selection an
   test.skip(info.project.name.includes("mobile"), "The desktop project executes the full explicit width matrix.");
     await page.setViewportSize({ width, height: width > 780 ? 960 : 844 });
     await enter(page);
+    // The tablet reference uses the existing collapsed primary rail.
+    if (width === 1024) await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
     const root = page.locator("#ppo-service-planner");
     await expect(root).toHaveAttribute("data-ppo-workspace", "shared");
     await expect(root.locator(".planner-stat-row")).toHaveCount(0);
@@ -59,6 +61,7 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 Day to Week keeps the me
   test.skip(info.project.name.includes("mobile"), "The desktop project executes the explicit width matrix.");
   await page.setViewportSize({ width, height: width > 780 ? 960 : 844 });
   await enter(page);
+  if (width === 1024) await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
   // Phone Day already holds the week for its day chips. Only desktop Day must
   // change the read range when switching to Week; do not wait for a fake read.
   const read = width > 780 ? page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from")) : null;
@@ -71,6 +74,7 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 Day to Week keeps the me
 });
 
 test("PL-01 tray opens the native proposal without reserving or saving a visit", async ({ page }, info) => {
+  if (!info.project.name.includes("mobile")) await page.setViewportSize({ width: 1440, height: 960 });
   await enter(page);
   const work = await createDemand(page);
   const scheduleRead = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from"));
@@ -89,6 +93,7 @@ test("PL-01 tray opens the native proposal without reserving or saving a visit",
 });
 
 test("PL-01 a timeline drag opens Move this visit without sending a booking command", async ({ page }, info) => {
+  if (!info.project.name.includes("mobile")) await page.setViewportSize({ width: 1440, height: 960 });
   test.skip(info.project.name.includes("mobile"), "Phone movement uses the keyboard and button alternative.");
   await enter(page);
   const visit = page.locator('.tl-card[data-status="Confirmed"]').first();
@@ -102,6 +107,7 @@ test("PL-01 a timeline drag opens Move this visit without sending a booking comm
   await expect(dialog.getByRole("region", { name: "Current and proposed visit" })).toContainText("Current → Proposed");
   await expect(dialog.getByText(/new customer site readiness confirmation/)).toBeVisible();
   expect(writes).toEqual([]);
+  await expect(dialog.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   await page.screenshot({ path: info.outputPath("PL01-drag-comparison.png"), fullPage: false });
   await page.getByRole("button", { name: "Close move", exact: true }).click();
   expect(writes).toEqual([]);

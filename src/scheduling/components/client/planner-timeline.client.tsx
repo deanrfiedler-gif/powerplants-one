@@ -549,14 +549,14 @@ export function PlannerWeek({
                             }}
                           >
                             <span className="r1">
-                              <b>{state.kind === "attention" && <span aria-hidden="true">⚠ </span>}{visits.length > 1 ? time : a.scope_summary}</b>
+                              <b>{state.kind === "attention" && <span aria-hidden="true">⚠ </span>}{time}</b>
                               {ext && (
                                 <span className="wk-ext" title="Runs into extended hours (outside 08:00–17:00)">
                                   <Glyph icon="clock" path={clockGlyph} />
                                 </span>
                               )}
-
                             </span>
+                            {visits.length === 1 && <span className="t">{a.scope_summary}</span>}
                           </div>
                         );
                       })}

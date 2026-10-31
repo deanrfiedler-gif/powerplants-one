@@ -82,6 +82,7 @@ function PhoneCard({
         }
       }}
     >
+      <span className="t"><span className="pl01-visit-title" title={a.scope_summary}>{a.scope_summary}</span>{state.kind === "attention" && <span aria-hidden="true">⚠</span>}</span>
       <span className="r1">
         <b>{time}</b>
         {ext && (
@@ -99,7 +100,6 @@ function PhoneCard({
         )}
         {(everyone || crew.length > 1) && crew.length > 0 && <span className="pl01-crew-inline">{crew.map(x => initials(x.name)).join(", ")}</span>}
       </span>
-      <span className="t">{state.kind === "attention" && <span aria-hidden="true">⚠ </span>}{a.scope_summary}</span>
       <span className="m">{a.site_name}</span>
     </div>
   );
