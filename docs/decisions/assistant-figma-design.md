@@ -192,3 +192,7 @@ After the polish no text overflows its container (2,383 text layers, all Roboto)
 - Dean saved the named Figma version "Assistant — accepted" in the Figma desktop app on 25 October 2026 and confirmed it: "I have saved it." Claude did not open the version history to check it. The page header, the notes card and the File index row were updated afterwards to record it, so those three text changes post-date the named version.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## Amendment, 31 October 2026
+
+The accepted [Answer evidence AI-03 design](answer-evidence-figma-design.md), section 5, changed two things in this design. The Customer CRM summary's Next actions is now one statement with two sources (AI-03 D2). Access changed now withdraws only the affected statement, where this design's state discarded the whole answer (AI-03 Q6). The text above and the [r01 captures](../reference/ui/my-work/assistant-design-r01/README.md) stay as accepted on 24 October 2026.
