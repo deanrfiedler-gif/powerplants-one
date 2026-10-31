@@ -2,31 +2,86 @@ import type { PageGuide } from "./leads-guide";
 
 export const estimatingWorkloadGuide: PageGuide = {
   title: "Estimating intake & workload",
-  intro: "Find the current opportunity brief, scope readiness and estimating owner, then continue with the exact discovery or saved estimate.",
+  intro:
+    "Find the current opportunity brief, scope readiness and estimating owner, then continue with exact discovery or saved work.",
   overviewTitle: "Workload, source context and authority",
-  purpose: "This online view joins records you can currently read. Appearing here does not mean an intake has been accepted. Discovery completeness, saved prices, estimate approval and quotation issue are separate facts.",
+  purpose:
+    "This online view joins records you can currently read. Appearing here does not mean intake was accepted. Scope readiness, saved prices, commercial approval and quotation issue are separate facts.",
   features: [
-    ["Canonical brief", "The linked Sales reference and source version identify the customer, site and need summary. Sales ownership stays separate from the estimating workspace owner."],
-    ["Readiness", "Discovery not started has no workspace or estimating allocation. Scope clarification (amber) means the selected discovery is incomplete. Discovery complete (green) means the scope can be reviewed for manual costing; it does not approve a price or issue a quotation. Legacy manual basis has no recorded E2 questionnaire. Each state is named in words as well as colour."],
-    ["Exact saved basis", "Saved-estimate links show the cost version and the discovery revision it costed. A later discovery save never silently reprices that estimate. Competing alternatives remain separate."],
-    ["Dates and policy", "Required response is Unknown. A displayed Sales action date is not a quotation deadline. Intake acceptance, allocation, returns and priority policy are Not configured. A Sales handover-due obligation is not receiving acceptance."],
+    [
+      "Canonical brief",
+      "The Sales reference and source version identify customer, site and need. Sales ownership stays separate from the estimating workspace owner.",
+    ],
+    [
+      "Readiness",
+      "Discovery not started has no workspace or estimating allocation. Scope clarification means the selected Discovery is incomplete. Discovery complete describes scope ready to review for manual costing. Legacy manual basis has no recorded E2 questionnaire. Read the reasons in the snapshot.",
+    ],
+    [
+      "Exact saved basis",
+      "Alternatives retain their option IDs. Saved-estimate links retain exact versions and the Discovery revision costed. A later Discovery save never silently reprices an estimate.",
+    ],
+    [
+      "Dates and policy",
+      "Required response stays Unknown. Sales action dates and handover-due obligations are separate. Intake acceptance, allocation, returns and priority policy remain Not configured.",
+    ],
   ],
   steps: [
-    ["Find permitted work", "Search by customer, reference, title or brief, choose an estimating owner and sort, then Apply filters. Choose a readiness state from Scope readiness; each shows how many permitted opportunities it holds. My estimating work selects workspaces you own, not every Sales opportunity you own. On a phone, readiness, owner and sort sit under one button that names the current selections."],
-    ["Read the result boundary", "The view examines up to 100 permitted opportunities matching the search and owner, in the chosen sort order. Readiness filters and counts apply within that window. Narrow search for older work. Counts describe permitted rows only. Closed opportunities appear only with existing estimating workspaces."],
-    ["Review the brief", "Select an opportunity's title to show its detail: in the panel beside the register on a wide screen, or in a drawer on a narrower one. Escape or Done closes the drawer and returns you to the row. On a phone each card shows the detail. Open the Sales reference to review source details and its independently owned next action. No Sales stage or handover state changes here."],
-    ["Continue discovery", "Start discovery requires estimating edit permission. The existing wizard checks current authority and establishes its own owner. Open discovery retains the workspace and selected alternative; resolve owned questions there."],
-    ["Open saved work", "Saved estimates lists the manual workbooks with their saved sell total in AUD, excluding tax. An estimate without cost lines reads Not estimated, never zero. Saved estimate links open exact history and Draft quotation preparation. The Estimation wizard and Specialist configurations are in the module navigation and use their existing guarded workflows."],
+    [
+      "Find permitted work",
+      "Search a customer, opportunity reference, title or brief. Use All workload, My estimating work or a readiness view in the secondary menu; on a phone use the header view picker and Filter. My means the estimating workspace owner, not the Sales owner.",
+    ],
+    [
+      "Read the result boundary",
+      "All and My each examine up to 100 search-matched opportunities in the chosen sort order. Readiness counts use the selected owner window before the readiness filter. These are permitted rows within the window, not global totals. Narrow search for older work. Closed opportunities appear only with existing estimating workspaces.",
+    ],
+    [
+      "Review the snapshot",
+      "Open a row title. The snapshot overlaps the register, or fills the phone screen. Review the brief, both owners, readiness reasons, next step and attributed Sales context. Escape closes it and returns to the row.",
+    ],
+    [
+      "Work with a selection",
+      "Select rows, or use Select opportunities in phone filters. Open in sequence visits most recently changed first. Export list rechecks records and permissions; changed or inaccessible records require a fresh selection. Neither action accepts or assigns work.",
+    ],
+    [
+      "Continue Discovery",
+      "Start discovery requires current edit and native receiving/linking authority. Starting never accepts a Sales brief or confirms its reported scope. Eligible accepted context is explicitly reviewed in native creation; existing workspaces use the separate link review. Resolve changed accepted sources in their owning workflow.",
+    ],
+    [
+      "Open saved work",
+      "Saved estimates is a separate view with exact version links and saved sell in AUD excluding tax. No cost lines reads Not estimated. Workload filters remain in the URL when switching views.",
+    ],
   ],
-  journeyIntro: "Each destination owns its saved records and recovery. Navigation and filtering make no business changes.",
+  journeyIntro:
+    "Each destination owns its saved records and recovery. Navigation and filtering make no business changes.",
   journey: [
-    ["Opportunity brief", "Review the customer need and known source context."],
-    ["Discovery and alternatives", "Capture areas, systems, evidence, responsibilities and exact immutable revisions in the five-step wizard."],
-    ["Deliberate costing", "Review the saved discovery before creating a manual estimate or successor. Review specialist runs before adopting their contributions."],
-    ["Exact Draft quotation", "Prepare a customer-safe Draft from an exact saved estimate version. Draft generation is not approval, issue, sending, delivery or acceptance."],
+    ["Opportunity brief", "Review customer need and exact source context."],
+    [
+      "Discovery and alternatives",
+      "Capture and confirm scope independently in the native wizard.",
+    ],
+    [
+      "Deliberate costing",
+      "Review saved Discovery before creating or adopting manual costs.",
+    ],
+    [
+      "Exact Draft quotation",
+      "Prepare a Draft from an exact saved version. This is not approval, issue, sending or acceptance.",
+    ],
   ],
-  mobile: "Search stays visible; open Readiness, owner and sort when needed. Its label names the current selections while it is closed. Each card shows the full owner, readiness, unknown-date and next-step detail. This page is online only; no business draft is stored on the device.",
-  shortcuts: [["Tab / Shift+Tab", "Move through filters, readiness choices, rows and record links."], ["Enter / Space", "Apply the filter form, choose a readiness state or select a row."], ["Esc", "Close the detail drawer or this guide and return to its opener."], ["Back / Forward", "Restore the workload filters recorded in the URL."]],
-  recovery: "Loading and failed reads are not an empty queue. Failed refresh clears the rows and offers Try loading again. Current estimating, CRM and underlying source permissions are rechecked; revoked records and actions disappear. If a downstream save is uncertain, reconcile its original operation in that workspace before making another attempt. Stale versions require comparison there.",
-  boundary: "No allocation, commercial approval, customer message, work authority or ERP effect is granted here. Excel estimate import and supplier refresh remain separate programme work. This guide describes the synthetic implementation; business and device acceptance remain separate.",
+  mobile:
+    "The compact header holds the view picker and Filter. Rows show title, changed date, reference, readiness, customer and estimating owner. The full-screen snapshot wraps its title and keeps handovers at the bottom. At 320 px previous/next are in Snapshot actions. This page is online only.",
+  shortcuts: [
+    ["Tab / Shift+Tab", "Move through views, filters, rows and record links."],
+    ["Enter / Space", "Activate a focused row or control."],
+    ["Arrow keys / Home / End", "Choose a snapshot tab."],
+    ["Esc", "Close the top dialog or menu and return focus."],
+    [
+      "Back / Forward",
+      "Restore URL filters, Saved estimates and the open snapshot.",
+    ],
+  ],
+  recovery:
+    "Loading and failed reads are not an empty queue. During refresh, earlier rows are marked unconfirmed, counts withheld and actions disabled. Failure clears obsolete rows, counts, selection and snapshot; use Try loading again. Denied access and no matches are separate. Native saves retain their original-operation recovery in the destination.",
+  boundary:
+    "No allocation, commercial approval, customer message, work authority or ERP effect is granted here. The guide describes the synthetic implementation; owner, business and device acceptance remain separate.",
 };

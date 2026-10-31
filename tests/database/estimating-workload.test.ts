@@ -7,12 +7,19 @@ import { createSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
 import { createEstimate } from "../../src/estimating/service";
+import {
+  createHandover,
+  commandHandover,
+  readHandover,
+} from "../../src/sales/handover-service";
+import { emptyHandover } from "../../src/sales/handover-model";
+import { listEstimates } from "../../src/estimating/reads";
 import { readEstimatingWorkload } from "../../src/estimating/workload";
 import {
   createDiscoveryWorkspace,
   previewDiscoveryCreate,
 } from "../../src/estimating/discovery-workspaces";
-import { crmBase, crmCreate, CRM } from "../helpers/crm";
+import { crmBase, crmCreate, crmDiscovery, CRM } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
 import { discoveryInput } from "../helpers/estimating-discovery";
 
@@ -107,6 +114,10 @@ test("ES01 selected discovery and saved legacy cost identities remain exact; sav
   ).items[0];
   assert.equal(legacy.estimates[0].id, cost.id);
   assert.equal(legacy.estimates[0].version, 1);
+  const saved = (
+    await listEstimates(p, { q: legacy.estimates[0].display_number })
+  ).items[0];
+  assert.equal(saved.version_id, legacy.estimates[0].version_id);
   assert.equal(legacy.estimates[0].discovery_revision, null);
   assert.equal("cost_total" in legacy.estimates[0], false);
 });
@@ -193,6 +204,12 @@ test("ES01 readiness counts cover the permitted search and owner window before t
   const expected = { unstarted: 2, clarification: 1, ready: 1, legacy: 1 };
   const all = await readEstimatingWorkload(p, { q: prefix });
   assert.deepEqual(all.counts, expected);
+  assert.deepEqual(all.owner_counts, { all: 5, mine: 3 });
+  const clarification = all.items.find((i) => i.state === "clarification")!;
+  assert.equal(
+    clarification.readiness_reasons[0].follow_up.reason,
+    "SYN confirm sensor wiring before costing",
+  );
   assert.equal(all.items.length, 5);
   for (const view of [
     "unstarted",
@@ -220,4 +237,169 @@ test("ES01 readiness counts cover the permitted search and owner window before t
     { unstarted: 0, clarification: 0, ready: 0, legacy: 0 },
     "hidden rows are never counted",
   );
+});
+
+test("ES01 All/My counts retain separate SQL-before-limit windows and use the workspace owner", async () => {
+  const p = (await createSession("coordinator")).principal;
+  const sales = (await createSession("assigned-technician")).principal;
+  const prefix = `SYN ES01 bounded ${randomUUID()}`;
+  const owned: string[] = [];
+  for (let i = 0; i < 2; i++) {
+    const o = { ...crmCreate(), title: `${prefix} older owned ${i}` };
+    await createOpportunity(p, o);
+    const discovery = discoveryInput(),
+      preview = await previewDiscoveryCreate(p, {
+        opportunity_id: o.id,
+        discovery,
+      });
+    await createDiscoveryWorkspace(p, {
+      ...crmBase(),
+      id: randomUUID(),
+      option_id: randomUUID(),
+      revision_id: randomUUID(),
+      opportunity_id: o.id,
+      discovery,
+      expected_opportunity_version: preview.expected_opportunity_version,
+      context_hash: preview.context_hash,
+      confirmed_question_ids: preview.required_confirmation_ids,
+    });
+    await database().query(
+      "UPDATE ppo.opportunities SET owner_id=$1 WHERE id=$2",
+      [sales.actor_id, o.id],
+    );
+    owned.push(o.id);
+  }
+  // Newer opportunities owned by the Sales actor do not become estimating work.
+  for (let i = 0; i < 101; i++)
+    await createOpportunity(p, {
+      ...crmCreate(),
+      title: `${prefix} recent ${i}`,
+    });
+  for (const sort of ["updated", "customer"]) {
+    const all = await readEstimatingWorkload(p, { q: prefix, sort });
+    assert.equal(all.items.length, 100);
+    assert.deepEqual(all.owner_counts, { all: 100, mine: 2 });
+    assert.deepEqual(all.counts, {
+      unstarted: 100,
+      clarification: 0,
+      ready: 0,
+      legacy: 0,
+    });
+    const mine = await readEstimatingWorkload(p, {
+      q: prefix,
+      sort,
+      owner: "mine",
+      view: "ready",
+    });
+    assert.deepEqual(mine.owner_counts, all.owner_counts);
+    assert.deepEqual(
+      mine.items.map((x) => x.opportunity.id).sort(),
+      owned.sort(),
+    );
+    assert.deepEqual(mine.counts, {
+      unstarted: 0,
+      clarification: 0,
+      ready: 2,
+      legacy: 0,
+    });
+    assert.ok(
+      mine.items.every(
+        (x) =>
+          x.estimating_owner_id === p.actor_id &&
+          x.sales_owner !== x.estimating_owner,
+      ),
+    );
+    const filtered = await readEstimatingWorkload(p, {
+      q: prefix,
+      sort,
+      view: "ready",
+    });
+    assert.equal(filtered.items.length, 0);
+    assert.deepEqual(filtered.counts, all.counts);
+    assert.deepEqual(filtered.owner_counts, all.owner_counts);
+  }
+  const narrowed = await readEstimatingWorkload(p, {
+    q: prefix + " older owned",
+  });
+  assert.equal(
+    narrowed.items.length,
+    2,
+    "search applies before the bounded window",
+  );
+  assert.deepEqual(narrowed.owner_counts, { all: 2, mine: 2 });
+});
+
+test("ES01 Sales context reports exact acceptance without accepting or linking; changed accepted sources block Start", async () => {
+  const p = (await createSession("coordinator")).principal,
+    o = { ...crmDiscovery(), title: `SYN ES01 brief ${randomUUID()}` };
+  o.initial_action.due_at = "2031-10-01T00:00:00.000Z";
+  o.initial_action.due_needed = false;
+  await createOpportunity(p, o);
+  const id = randomUUID();
+  await createHandover(p, {
+    ...crmBase(),
+    id,
+    opportunity_id: o.id,
+    kind: "Estimating",
+  });
+  await commandHandover(p, id, {
+    ...crmBase(),
+    action: "Save",
+    expected_version: 1,
+    receiving_owner_id: p.actor_id,
+    note: "SYN ES01 prepared",
+    content: {
+      ...emptyHandover(),
+      problem: "SYN reported problem",
+      outcome: "SYN desired outcome",
+      included_scope: "SYN controls",
+      exclusions: "None",
+      assumptions: "None",
+      unknowns: "SYN scope to discover",
+      requested_date: "2031-10-01",
+      date_reason: "SYN requested",
+      next_activity_id: o.initial_action.id,
+    },
+  });
+  await commandHandover(p, id, {
+    ...crmBase(),
+    action: "Submit",
+    expected_version: 2,
+    note: "SYN submitted",
+  });
+  const before = (
+    await database().query("SELECT count(*) FROM ppo.operation_receipts")
+  ).rows;
+  const submitted = (await readEstimatingWorkload(p, { q: o.title })).items[0];
+  assert.ok(submitted.sales_brief && submitted.sales_brief !== "Unavailable");
+  assert.equal(submitted.sales_brief.state, "Submitted");
+  assert.equal(submitted.sales_brief.selection, null);
+  assert.deepEqual(
+    (await database().query("SELECT count(*) FROM ppo.operation_receipts"))
+      .rows,
+    before,
+  );
+  assert.equal((await readHandover(p, id)).record.state, "Submitted");
+  const brief = await readHandover(p, id);
+  await commandHandover(p, id, {
+    ...crmBase(),
+    action: "Accept",
+    expected_version: 3,
+    source_hash: brief.record.source_hash,
+    note: "SYN receiver acceptance",
+  });
+  const accepted = (await readEstimatingWorkload(p, { q: o.title })).items[0];
+  assert.ok(accepted.sales_brief && accepted.sales_brief !== "Unavailable");
+  assert.equal(accepted.sales_brief.selection?.handover_id, id);
+  assert.ok(accepted.sales_brief.selection?.acceptance_event_id);
+  assert.equal(accepted.can_start, true);
+  await database().query(
+    "UPDATE ppo.opportunities SET need_summary=need_summary || ' source changed' WHERE id=$1",
+    [o.id],
+  );
+  const changed = (await readEstimatingWorkload(p, { q: o.title })).items[0];
+  assert.ok(changed.sales_brief && changed.sales_brief !== "Unavailable");
+  assert.equal(changed.sales_brief.source_changed, true);
+  assert.equal(changed.can_start, false);
+  assert.equal(changed.workspace, null);
 });

@@ -2,94 +2,43 @@
 
 Stable entry: `scope:ES-01`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/estimating`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
-## Purpose and task
+## Purpose and current contract
 
-The native front door now reads permitted opportunity briefs alongside discovery ownership/readiness and saved-estimate links. Allocation, intake acceptance, returned-brief commands and priority policy remain Not configured. This is the first native programme increment, not completion of every ES-01 business-state transition.
+ES-01 is the native permitted intake/workload front door. Its r20 type is register/worklist. Find the Opportunity brief, review independently owned Discovery readiness and continue with an exact option or saved cost revision. Intake acceptance, allocation/return commands and priority policy remain Not configured. Required response remains Unknown.
 
-1. Find the intake or existing estimate
-2. Check scope completeness and required clarification
-3. Review the next estimating step and open the exact discovery or saved estimate
-
-**Design board r01, 24 September 2026.** A design board applies the Powerplants One design system and the running shell to this register and proposes a register with a persistent detail panel. It records one user decision: ES-01 design uses the Powerplants One design system, not the separate PHYTO system (24 September 2026). It also records five findings against the running build (B1–B5). See the [design board record](../../../decisions/es01-design-board.md).
-
-**Design decisions, 25 September 2026.** Dean delegated the decisions on P1–P9 and O1–O2. P1–P8 were adopted, P9 adopted in part, O1 set at 1360 CSS px and O2 at the success tone, with the adjustments listed in the record. They are implemented in the native page and B1–B5 are fixed; see [Design adoption](#design-adoption--25-september-2026) below. The native workload contract below still applies except where that section amends it. Owner visual and device review remain pending.
+The [route contract](route-estimating.md) is the current desktop, tablet, phone, keyboard, bounded-count, selection/export and recovery specification. It implements the [accepted Intake & workload design](../../../decisions/intake-workload-design.md), including retained [captures 01–07](../../../reference/ui/estimating/intake-workload-design-r01/README.md) and later accepted amendments. All workload and My estimating work use separately bounded search-matched opportunity windows; My uses the estimating workspace owner. Readiness counts apply before the readiness filter in the selected owner window. The coverage is not a global workload total.
 
 ## Desktop
 
-Native cards stack by available container width when enlarged, preserving whole owner/status values. The scoped header avoids the legacy phone grid and reflows its centre controls when constrained. Actual native captures are retained in [workload evidence](../../../testing/evidence/estimating-native-workload/README.md); exact ES-01 comparison imagery remains missing and owner/device acceptance pending.
-
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
-
-Decided and implemented (P1, P7, O1): register rows with a persistent 448 px sticky detail panel while the register is at least 1244 CSS px wide (a 1360 CSS px viewport in the standard shell), and a 448 px right-hand drawer below that. Measured on the running build: 1244 px register at 1360 (panel) and 1243 px at 1359 (drawer). These are decided adaptations awaiting owner visual review, not an accepted baseline.
+Follow the [route desktop contract](route-estimating.md#desktop): secondary menu, full-width register, overlapping snapshot and 360 px selection panel. Keep both owners, exact option/revision handovers and bounded counts visible.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
+Follow the [route mobile contract](route-estimating.md#mobile): compact shell view/filter header, 80 px list rows, full-screen snapshot, 320 px actions menu and keyboard/focus restoration.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+## Source and decision history
 
-The design board draws phone compositions at 390 px (R2 full scroll, R3 filters expanded) and 320 × 700 (R4). They are design compositions, not device evidence. The implementation follows them: at 760 CSS px of register width and below, cards carry the full detail. The same applies at 200% CSS zoom of a 1440 px window.
+The [24–25 September design board record](../../../decisions/es01-design-board.md) preserves the original P1–P9/O1–O2 decisions and B1–B5 findings. The 11 October accepted design replaces its persistent panel, drawer, section tabs, segments and full-detail phone cards. Native rules for canonical source identity, independent ownership, readiness, exact costs and current authority remain in force.
 
-## Shared components and states
+Historical implementation evidence remains unchanged: [first native increment](../../../testing/evidence/estimating-native-workload/README.md) and [September adoption](../../../testing/evidence/estimating-workload-design-adoption/README.md). The [current implementation evidence](../../../testing/evidence/intake-workload-accepted/README.md) records this build separately. The related [ES-02 wizard HTML](../../../reference/ui/estimating/PPO-Estimation-Wizard-Container-r03.html) is a downstream reference, not the workload layout baseline.
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+## Incoming and outgoing handovers
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Incoming: canonical Opportunity UUID, company, version, need, customer and site; current workspace owner, selected option, immutable Discovery revision and permitted saved estimates. Both Sales and estimating owners remain visible. A Sales next action and post-Won handover-due obligation are separate from an estimating response date or receiving acceptance.
 
-## Visual references
-
-No accepted ES-01 image or HTML reference of the implemented page exists. Keep this gap visible. The accepted Figma design for the next build and the proposed design board are retained:
-
-- [Intake & workload design r01](../../../reference/ui/estimating/intake-workload-design-r01/README.md) — seven icon-free captures of the design Dean accepted on 11 October 2026; see [Accepted Figma design](#accepted-figma-design--11-october-2026)
-- [Design board r01](../../../reference/ui/estimating/workload-design-board-r01/README.md) — 14 artboards, proposed and not accepted; key boards: [D1 · Workload desktop](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D1-Workload-Desktop-1440-r01.png) (1440 × 1400), [D2 · Saved estimates](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-D2-Saved-Estimates-Desktop-1440-r01.png) (1440 × 900), [R1 · 1024 drawer](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R1-Tablet-1024-Drawer-r01.png) (1024 × 768), [R2 · Phone 390](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R2-Phone-390-Workload-r01.png) (390 × 2112) and [R4 · Phone 320](../../../reference/ui/estimating/workload-design-board-r01/PPO-ES-01-Design-Board-R4-Phone-320-Workload-r01.png) (320 × 700)
-- [Native workload evidence](../../../testing/evidence/estimating-native-workload/README.md) — captures of the first native increment, parent `f929312`
-- [Design adoption evidence](../../../testing/evidence/estimating-workload-design-adoption/README.md) — captures of the running build after the 25 September decisions; not visual acceptance
-
-## Native workload contract — 24 September 2026
-
-Reuse the current shell, PageHeader, Button/ButtonLink, ErrorNotice and Status. The r20 page type is a register/worklist. Incoming handover: canonical Opportunity UUID/company/version and need summary, plus the current estimating workspace and selected option. A post-Won Sales handover-due reference is shown as an obligation only. No accepted intake is inferred. Outgoing links retain workspace, opportunity, option and saved-estimate identity; ordinary navigation writes nothing.
-
-Desktop: search and Apply filters remain visible; the native Readiness, owner and sort disclosure retains additional selections when collapsed. This also leaves room for the first workload card on a phone. Cards have brief, ownership/context and next-step columns. At 1000 px, next step spans the card below two source columns. At 600 px and below, card regions and expanded filters stack. Keep labels and action links visible at 390 and 320 CSS px and 200% zoom. Allow long references, briefs and owner names to wrap. Reuse navy/green semantic tokens and Roboto/Verdana; no new masthead or rail.
-
-URL filters survive reload and browser history. Search applies literally to canonical customer, brief, title and reference before the bounded candidate window. Readiness filters apply within the 100-candidate window, explicitly labelled; counts are displayed permitted rows, not global workload. My estimating work refers to the workspace owner, not Sales ownership. The Saved estimates view preserves the existing E1 register at `/estimating?tab=estimates`.
-
-Loading, no matches, empty permitted workload, failure, no-permission and revoked-access states remain distinct. Failed refresh clears rows rather than displaying old data as current. This page has no business command or unsaved proposal; stale writes and uncertain operations are handled in the existing destination workflow. Required response date stays Unknown; Sales action due date is separate. No automatic price, approval or issue follows from complete scope.
-
-Native evidence and current verification: [programme handover](../../../delivery/estimating-programme-handover.md). Missing exact design image remains explicit. No baseline or owner visual acceptance is registered.
-
-## Design adoption — 25 September 2026
-
-Amends the native workload contract above where they differ. Decisions and reasons: [design board record](../../../decisions/es01-design-board.md).
-
-| Area | Implemented rule |
-|---|---|
-| Views (P4) | Workload and Saved estimates are link tabs with `aria-current`. Specialist configurations stays in module navigation only |
-| Filters (P5) | Search, estimating owner and sort are inline, with Apply filters and Clear filters in one centred 44 px action row. In the stacked layout, readiness, owner and sort sit under one disclosure button whose label names the retained selections. Default values are left out of the URL |
-| Readiness (P2, P3, O2) | The shared segmented control, each option with a permitted count from the read model's `counts`. Counts cover the same search- and owner-matched 100-candidate window, before the readiness view. Tones: attention (Scope clarification), success (Discovery complete), neutral (the other two); the words carry the state |
-| Register (P1, P6) | Rows carry opportunity, readiness and ownership; the title is a selection button. The panel, drawer or phone card holds next step, ownership and dates (Required response Unknown, once), discovery alternatives, saved estimates, any Sales handover due, and Sales context |
-| Drawer (P7) | `WorklistPanel` behaviour with page-scoped right-hand geometry; Escape and Done return focus to the row |
-| Saved estimates (P8) | Table: estimate, customer, version, saved date and right-aligned saved sell in AUD, excluding tax. A null sell total reads Not estimated. Labelled blocks at 700 CSS px and below |
-| States (P9) | Loading text, no matches, no permitted workload, failed read with rows and counts cleared plus Try loading again, and no access. Placeholder rows declined |
-| Findings | B1–B5 fixed; `estimating.css` keeps its button rules for the other Estimating screens |
-
-## Accepted Figma design — 11 October 2026
-
-Dean accepted a Figma design for this page as the named version "Intake & workload — Pipedrive pattern, accepted": see the [design decision](../../../decisions/intake-workload-design.md) and the seven icon-free [captures](../../../reference/ui/estimating/intake-workload-design-r01/README.md). It applies the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) pattern: a full-width grid, a record window that overlaps it, readiness and Saved estimates as secondary-menu views with counts, the Not configured intake rules at the foot of the menu, and phone list rows. When the page is built it replaces P1 (persistent panel), P4 (section tabs), P7 (drawer) and O1 (1360 CSS px breakpoint); P2's segments become menu counts with the same count rule, and P5's owner choice becomes the My estimating work view. P3, P6, P8, O2 and the native workload contract stay in force. The decision also amends the shared record-window rule (A1). Until the page is built, the implemented composition above remains the app's behaviour; visual status stays Needs review.
-
-## Behaviour, handovers and verification
-
-The draft User Guide `guide.es.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Outgoing: Open Sales opportunity retains the source identity. Open discovery retains workspace and selected option; alternatives retain their exact option IDs. Saved-estimate links open exact version IDs and identify the Discovery revision costed; a later Discovery save never silently reprices them. Saved estimates remains a separate register at `/estimating?tab=estimates`, including browser restoration.
 
 ## Accepted Sales brief link (LC-13)
 
-Keep the existing scope ID and r20 record workspace/intake worklist page type. Incoming: exact current accepted Sales event and source facts. Outgoing: explicit immutable link to the existing native estimating workspace, selected option and scope revision. Reuse PageHeader, Button, Field, error/status controls, native details disclosure and the existing command journal. The existing CRM panel and estimating layout are retained legacy host exceptions; no shared style system changes.
+Follow the current [LC-13 contract](../../../contracts/lead-to-delivery-continuity.md), not the earlier create-then-link-only description. The workload reads explicit submitted/accepted brief state, receiver, immutable acceptance selection and source drift without issuing any command. Starting Discovery alone does not accept a brief or pre-confirm its reported scope.
 
-From accepted Intake, open an existing workspace or create native Discovery. Show Sales problem, scope, exclusions, assumptions, unknowns and requested-date basis as reported context; do not pre-confirm Discovery answers. A successful creation returns to the handover for a separate link review. Compare both saved versions, record a reason and save the link. Keep that comparison fixed through background refresh. Separate current acceptance, source drift and historical links. A denied target displays no retained target identities. An interrupted link recovers the exact original from the actor-scoped journal, including after reload.
+For a new workspace, the native creation review rechecks editing authority, the assigned receiver, current accepted source and linking basis. Where selected and eligible, the adopted native command can atomically create and bind that exact accepted brief. Existing workspaces retain the separate reviewed link command, expected versions, reason and original-operation recovery. A changed accepted source prevents Start here; the owning flow resolves it. Denied source/target identities must not be retained as current.
 
-Desktop: place the link comparison and separate native-creation result beside the accepted brief; use labelled saved versions and wrap long reasons. Phone: stack the same controls at 390 and 320 CSS px, keep recovery controls reachable and contain scope text without horizontal overflow. Keyboard navigation must reach the native workspace and original-result controls. The new-state mockup images are missing; retain the exact existing HTML/image references above. This is a proposed additive adaptation, not adopted paired visual or owner acceptance.
+Reuse the existing Sales link forms, command journal and native Discovery workflow. No receiving, linking, migration, grant or capability contract is changed by the register composition.
+
+## Components, guides and review
+
+The [consumer binding](../component-bindings/2026-10-31-intake-workload.md) records reused shell, register, menu, dialog, form, button and feedback controls with host states. The draft `guide.es.01` and `guide.page.estimating` describe the current route and remain subject to owner review.
+
+See the [programme handover](../../../delivery/estimating-programme-handover.md) for native proof and remaining policy limits. Source presence, functional verification, application visual comparison, owner/device acceptance and deployment are separate. No test pass changes the review status.

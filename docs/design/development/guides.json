@@ -5400,10 +5400,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/intake-workload-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
@@ -5429,7 +5429,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief, choose an estimating owner and sort, then Apply filters. Choose a readiness state from Scope readiness; each shows its count of permitted opportunities. Select an opportunity's title to review its detail and next step, then Open discovery to resolve scope or deliberately adopt manual costs. Use the Saved estimates tab for the existing exact-version workbooks and Draft output."
+            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Choose All workload, My estimating work or a Scope readiness view from the secondary menu (the view picker on a phone). Open a title to inspect its snapshot, then continue with exact Discovery or saved work. Saved estimates remains a separate view."
           ],
           "steps": [],
           "rows": [],
@@ -5439,7 +5439,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The page has Workload and Saved estimates tabs, a filter row, readiness choices with counts, and a register with one row per permitted opportunity: opportunity, readiness and ownership. On a wide screen the selected opportunity's detail stays in a panel beside the register; on a narrower screen it opens in a drawer that Escape or Done closes. On a phone each card carries the full detail. Saved estimates is a table of saved sell totals in AUD, excluding tax."
+            "The accepted composition has a secondary menu, toolbar and full-width register. The snapshot overlaps the register without narrowing it. Selection opens a small panel with Open in sequence and Export list. Phone rows show title, change date, reference, readiness, customer and estimating owner; the full detail is in a full-screen snapshot. Saved estimates shows exact saved versions and AUD sell excluding tax."
           ],
           "steps": [],
           "rows": [],
@@ -5459,7 +5459,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Readiness counts cover permitted rows matching the search and owner within the bounded window. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward; the selected row does not."
+            "My estimating work means workspaces you own, independently of Sales ownership. All and My each have a search- and sort-matched window of up to 100 opportunities; readiness counts use the selected owner window before the readiness filter. Counts are permitted rows within those windows, not global totals. Recently changed and Customer are the supported sorts. URL filters, Saved estimates and the open snapshot survive reload and Back/Forward. Selection is transient. Open in sequence always uses newest changes first. Export rechecks current records and permissions; if selected facts changed, refresh and select again."
           ],
           "steps": [],
           "rows": [],
@@ -5469,7 +5469,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Opening a record has no business effect. Complete discovery must still be deliberately adopted by the existing costing service. A changed discovery revision never silently changes a saved estimate. Draft quotation preparation uses an exact saved estimate version and remains a separate action."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -5499,7 +5499,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and counts and offers Try loading again. Revoked source access removes protected rows, counts and actions. The view is bounded to 100 search/owner-matching candidates in the chosen sort order before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
+            "Loading, no matches, no permitted workload, failed reads and denied access are different states. During refresh, earlier results are marked unconfirmed, counts are withheld and row/selection actions are disabled. Failure removes obsolete rows, counts, selection and snapshot; use Try loading again. No edit authority removes Start discovery while permitted context remains readable. Narrow search to find older work outside the bounded window. Resolve stale or uncertain saves in the owning workflow."
           ],
           "steps": [],
           "rows": [],
@@ -5509,7 +5509,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "At phone width, tablet portrait and 200% zoom the register stacks into cards that carry the full detail. Readiness, owner and sort sit under one button whose label names the current selections. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Rows are selected with Enter or Space; the drawer closes with Escape and returns focus to its row. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
+            "Use the shared compact header's view picker and Filter control; there is no second phone toolbar. Filters contain search, owner, readiness, sort, refresh and Select opportunities. At 390 and 320 px the full-screen snapshot wraps its title and keeps primary handovers at the bottom; 320 px moves previous/next into Snapshot actions. Enter/Space opens a row; Escape closes the top dialog and returns focus; arrow keys switch snapshot tabs. Browser Back/Forward restores URL context. This page is online only."
           ],
           "steps": [],
           "rows": [],
@@ -5529,7 +5529,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Prepared from the native workload implementation on 24 September 2026 and revised for the ES-01 design decisions of 25 September 2026 (docs/decisions/es01-design-board.md). This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
+            "Updated 31 October 2026 for the accepted Intake & workload composition and current LC-13 contract. This Draft guide is not owner or business approval. Implementation and validation evidence is in docs/testing/evidence/intake-workload-accepted/README.md; visual comparison, device/assistive-technology review, owner acceptance, merge and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -5539,14 +5539,12 @@
           "section_id": "accepted-sales-workspace-link",
           "title": "Continue from the accepted Sales brief",
           "paragraphs": [
-            "The assigned receiver must also own and be allowed to edit the native workspace. Sales acceptance, Discovery confirmation and quotation approval remain separate. A later accepted Sales successor does not erase an earlier link."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [
-            "Open the accepted Sales handover and review its reported scope and current source status.",
-            "Open the native workspace, or choose Create native estimating workspace. Record and confirm Discovery independently. A saved creation returns here; it is not undone if linking later fails.",
-            "Choose Review workspace link, compare the Sales and native versions and record a reason. Link accepted brief.",
-            "If sources or the workspace changed, discard the old comparison and explicitly review the new one. If the outcome is uncertain, Check original link or retry the exact original before any new intent.",
-            "Open the linked workspace to see the attributed accepted Sales context and retain native discovery/cost history."
+            "Review exact Sales acceptance and current source status in its native record.",
+            "For new Discovery, use the native creation review and its explicit accepted-brief selection. For an existing workspace, use the separate reviewed link command.",
+            "Reconcile an uncertain result using the original operation in the owning workflow."
           ],
           "headers": [],
           "rows": []
@@ -5565,9 +5563,12 @@
         "src/components/estimating-workload.tsx",
         "src/estimating/workload.ts",
         "docs/delivery/estimating-programme-handover.md",
-        "docs/decisions/es01-design-board.md"
+        "docs/decisions/es01-design-board.md",
+        "docs/decisions/intake-workload-design.md",
+        "src/components/estimating-workload-model.ts",
+        "src/components/estimating-workload-snapshot.tsx"
       ],
-      "change_summary": "Describe the decided ES-01 register: readiness counts, selection panel and drawer, phone cards, saved-estimate table, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
+      "change_summary": "Describe accepted overlap, bounded owner/readiness counts, selection/export, compact phone, exact handovers and freshness recovery.",
       "document_id": "PPO-GUIDE-ES-01",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -39693,10 +39694,10 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-24",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/intake-workload-accepted/README.md",
       "sections": [
         {
           "section_id": "purpose",
@@ -39722,7 +39723,7 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Expand Readiness, owner and sort for additional filters, then Apply filters. Collapsing the controls retains their selections. Review ownership and the selected discovery revision. Open discovery to resolve scope or deliberately adopt manual costs. Use Saved estimates for the existing exact-version workbook and Draft output."
+            "Open Estimating > Intake & workload. Search a customer, opportunity reference, title or brief. Choose All workload, My estimating work or a Scope readiness view from the secondary menu (the view picker on a phone). Open a title to inspect its snapshot, then continue with exact Discovery or saved work. Saved estimates remains a separate view."
           ],
           "steps": [],
           "rows": [],
@@ -39732,7 +39733,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The page has a workload/saved-estimates navigation row, search/readiness/owner/sort filters and one card per permitted opportunity. Desktop cards align brief, ownership/source context and next estimating step. Phone cards stack these sections without hiding scope states or actions."
+            "The accepted composition has a secondary menu, toolbar and full-width register. The snapshot overlaps the register without narrowing it. Selection opens a small panel with Open in sequence and Export list. Phone rows show title, change date, reference, readiness, customer and estimating owner; the full detail is in a full-screen snapshot. Saved estimates shows exact saved versions and AUD sell excluding tax."
           ],
           "steps": [],
           "rows": [],
@@ -39752,7 +39753,7 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Use My estimating work to select workspaces you own; unallocated opportunities are not assigned to you by this filter. Use Scope clarification for incomplete selected discovery, Discovery complete for scope ready to review for manual costing, or Legacy manual basis for estimates without a recorded E2 questionnaire. Recently changed orders opportunity/discovery changes; Customer sorts by canonical customer name. Filters live in the URL and survive Reload and Back/Forward."
+            "My estimating work means workspaces you own, independently of Sales ownership. All and My each have a search- and sort-matched window of up to 100 opportunities; readiness counts use the selected owner window before the readiness filter. Counts are permitted rows within those windows, not global totals. Recently changed and Customer are the supported sorts. URL filters, Saved estimates and the open snapshot survive reload and Back/Forward. Selection is transient. Open in sequence always uses newest changes first. Export rechecks current records and permissions; if selected facts changed, refresh and select again."
           ],
           "steps": [],
           "rows": [],
@@ -39762,7 +39763,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Opening a record has no business effect. Complete discovery must still be deliberately adopted by the existing costing service. A changed discovery revision never silently changes a saved estimate. Draft quotation preparation uses an exact saved estimate version and remains a separate action."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -39792,7 +39793,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "The view refreshes on focus and periodically. Loading, failed reads and denied access are distinct from an empty queue. A failed refresh clears rows and offers Try loading again. Revoked source access removes protected rows/actions. The view is bounded to 100 search/owner-matching candidates before readiness filtering; narrow search for older records. Downstream saves retain their existing expected-version and original-operation recovery; resolve an uncertain original save in its record before retrying."
+            "Loading, no matches, no permitted workload, failed reads and denied access are different states. During refresh, earlier results are marked unconfirmed, counts are withheld and row/selection actions are disabled. Failure removes obsolete rows, counts, selection and snapshot; use Try loading again. No edit authority removes Start discovery while permitted context remains readable. Narrow search to find older work outside the bounded window. Resolve stale or uncertain saves in the owning workflow."
           ],
           "steps": [],
           "rows": [],
@@ -39802,7 +39803,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Filters stack at phone widths. Use labelled controls and Apply filters with keyboard or touch; every record link remains reachable. Browser Back/Forward restores URL filters. The global information icon opens the page guide and returns focus when closed. This page is online only and stores no business draft locally."
+            "Use the shared compact header's view picker and Filter control; there is no second phone toolbar. Filters contain search, owner, readiness, sort, refresh and Select opportunities. At 390 and 320 px the full-screen snapshot wraps its title and keeps primary handovers at the bottom; 320 px moves previous/next into Snapshot actions. Enter/Space opens a row; Escape closes the top dialog and returns focus; arrow keys switch snapshot tabs. Browser Back/Forward restores URL context. This page is online only."
           ],
           "steps": [],
           "rows": [],
@@ -39822,7 +39823,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Prepared from the native workload implementation on 24 September 2026. This is a Draft guide; owner and operational review are pending. Verification is recorded in docs/delivery/estimating-programme-handover.md. A test pass or screenshot does not grant business acceptance or indicate deployment."
+            "Updated 31 October 2026 for the accepted Intake & workload composition and current LC-13 contract. This Draft guide is not owner or business approval. Implementation and validation evidence is in docs/testing/evidence/intake-workload-accepted/README.md; visual comparison, device/assistive-technology review, owner acceptance, merge and deployment remain separate."
           ],
           "steps": [],
           "rows": [],
@@ -39838,9 +39839,12 @@
         "docs/blueprints/BP-04-estimating-quotation.md",
         "src/components/estimating-workload.tsx",
         "src/estimating/workload.ts",
-        "docs/delivery/estimating-programme-handover.md"
+        "docs/delivery/estimating-programme-handover.md",
+        "docs/decisions/intake-workload-design.md",
+        "src/components/estimating-workload-model.ts",
+        "src/components/estimating-workload-snapshot.tsx"
       ],
-      "change_summary": "Describe actual workload filters, canonical ownership, exact discovery/cost identities, bounded results and authority/recovery boundaries.",
+      "change_summary": "Describe accepted overlap, bounded owner/readiness counts, selection/export, compact phone, exact handovers and freshness recovery.",
       "document_id": "PPO-GUIDE-PAGE-ESTIMATING",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,

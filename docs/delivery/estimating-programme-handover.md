@@ -1,5 +1,13 @@
 # Native Estimating and Quotation programme
 
+## Accepted Intake & workload implementation — 31 October 2026
+
+The accepted ES-01 composition replaces the September docked panel/drawer with the secondary menu, full-width register, overlapping snapshot and small selection panel. Phone rows use the adopted compact header and full-screen snapshot. [Current route contract](../design/development/pages/route-estimating.md) records exact geometry, states and adaptations; [implementation evidence](../testing/evidence/intake-workload-accepted/README.md) separates executed proof and visual comparison from acceptance. Earlier dated checkpoints below remain historical.
+
+The bounded read preserves search/owner-before-limit semantics. All and My have separate 100-opportunity candidate windows; My uses workspace ownership. Readiness counts follow the selected owner window before its readiness view. Exact saved version IDs, Discovery alternatives and reasons, both owners and explicit current Sales context remain available. Native creation/receiving/linking rules are rechecked; this read issues no acceptance command. Export rechecks permitted selected facts. Refresh withholds current counts/actions, and failure clears obsolete results. No migration, permission grant, dependency, allocation or priority policy is introduced.
+
+Implementation delivery, application comparison, owner/device acceptance, merge and deployment remain separate.
+
 ## CCE reference package — 12 October 2026
 
 The [CCE specification](../architecture/cce-technical-specification.md), [Figma brief](cce-figma-design-prompt.md) and [validation evidence](../testing/evidence/cce-reference-validation/README.md) are published as proposed architecture and bounded synthetic reference work. The [publication decision](../decisions/cce-architecture-proposal.md) preserves EST parent IDs, native ES-04–07 receiving and the ES-08 Screen Systems family. Historical CCE database results use `ba1f4e3` through migration 0077; the documentation branch starts at `4228d47` through 0083. No later database compatibility, complete CCE UI, atomic adoption command, provider integration or owner acceptance is asserted.
