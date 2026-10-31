@@ -10672,9 +10672,9 @@
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-10-31",
-      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
       "sections": [
         {
           "section_id": "purpose",
@@ -76937,7 +76937,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Bounded native workflow",
-      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
       "related_entry_keys": [
         "scope:PJ-05",
         "route:/projects/commercial",
@@ -76971,7 +76971,7 @@
           "steps": [
             "Read the title, state, owner and source facts.",
             "Use Overview for the current proposal, Activities for linked work and History for earlier versions. Basis records also offer Sources.",
-            "On phone, use Details for the facts shown in the desktop left column.",
+            "On tablet and phone, use Details for the facts shown in the desktop left column.",
             "Refresh before acting on a stale read. A preparer cannot decide a proposal they wrote or submitted."
           ],
           "headers": [],
@@ -77083,7 +77083,7 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
       "prepared_at": "2026-10-31"
     },
     {
@@ -77096,7 +77096,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Bounded native workflow",
-      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
+      "source_commit": "54e9fd5c699ff1ea2d23e7d89db28d8827337dba",
       "related_entry_keys": [
         "scope:PJ-05",
         "route:/projects/commercial",
@@ -77242,7 +77242,7 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
+      "runtime_evidence": "8 unit, 2 database, 4 HTTP and 4 browser cases passed with synthetic fixtures; see docs/testing/evidence/project-commercial/README.md.",
       "prepared_at": "2026-10-31"
     }
   ]

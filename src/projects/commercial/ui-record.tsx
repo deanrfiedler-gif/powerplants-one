@@ -39,6 +39,49 @@ const subscribePhone = (notify: () => void) => {
 };
 const isPhone = () => window.matchMedia(phoneQuery).matches;
 const serverPhone = () => false;
+const compactQuery = "(max-width: 1100px)";
+const subscribeCompact = (notify: () => void) => {
+  const query = window.matchMedia(compactQuery);
+  query.addEventListener("change", notify);
+  return () => query.removeEventListener("change", notify);
+};
+const isCompact = () => window.matchMedia(compactQuery).matches;
+
+function BasisSources({ data }: { data: DetailRead }) {
+  if (!data.source) return null;
+  return (
+    <section>
+      <h2>Exact sources · retained snapshot</h2>
+      <p>
+        Source set: {data.source_status}. Newer source bytes never replace this
+        snapshot silently.
+      </p>
+      <dl className="commercial-proposal">
+        <dt>Won Sales handover</dt>
+        <dd>Received handover and exact acceptance event retained</dd>
+        <dt>Quotation issue</dt>
+        <dd>
+          <Link
+            href={`/estimating/quotes/${data.source.input.quotation.revision_id}`}
+          >
+            Open retained quotation
+          </Link>{" "}
+          · exact issued output retained
+        </dd>
+        <dt>Customer response</dt>
+        <dd>Reported Accepted · exact response event retained</dd>
+        <dt>Contract document</dt>
+        <dd>
+          <Link href={`/documents/library/${data.source.input.document_id}`}>
+            Open retained contract document
+          </Link>{" "}
+          · version {data.source.input.document_version} · exact reviewed
+          revision retained
+        </dd>
+      </dl>
+    </section>
+  );
+}
 
 export function CommercialRecord({
   project,
@@ -49,11 +92,17 @@ export function CommercialRecord({
 }) {
   const router = useRouter();
   const phone = useSyncExternalStore(subscribePhone, isPhone, serverPhone);
+  const compact = useSyncExternalStore(
+    subscribeCompact,
+    isCompact,
+    serverPhone,
+  );
   const [before, setBefore] = useState<number | null>(null),
     [tab, setTab] = useState("overview"),
     [intent, setIntent] = useState<Intent | null>(null),
-    [blocked, setBlocked] = useState(false);
-  const activeTab = !phone && tab === "details" ? "overview" : tab;
+    [blocked, setBlocked] = useState(false),
+    [historyFilter, setHistoryFilter] = useState("All");
+  const activeTab = !compact && tab === "details" ? "overview" : tab;
   const read = useResource<DetailRead>(
     `projects/${project}/commercial?id=${entry}${before ? `&before_version=${before}` : ""}`,
   );
@@ -81,6 +130,25 @@ export function CommercialRecord({
     !siblings.error &&
     siblings.data?.completeness === "Complete" &&
     position >= 0;
+  const historyCategory = (command: string) =>
+    command === "Decide"
+      ? "Decisions"
+      : command === "Submit"
+        ? "Submissions"
+        : "Changes";
+  const visibleHistory = (data?.history ?? []).filter(
+    (event) =>
+      historyFilter === "All" ||
+      historyCategory(event.command) === historyFilter,
+  );
+  const historyDate = (value: string) =>
+    new Date(value).toLocaleDateString("en-AU", {
+      timeZone: context?.project.timezone,
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
   const current = !!row && !read.loading && !read.error;
   const openActions =
     data?.current_actions?.filter(
@@ -123,6 +191,7 @@ export function CommercialRecord({
           setBefore(null);
           read.reload();
           siblings.reload();
+          finance.reload();
         }}
       >
         Refresh
@@ -195,7 +264,7 @@ export function CommercialRecord({
   ) : null;
   const actions = row ? (
     <>
-      {phone ? (
+      {compact ? (
         <details className="commercial-record-more">
           <summary>More actions</summary>
           <div>
@@ -209,6 +278,30 @@ export function CommercialRecord({
           {prepareActions}
         </>
       )}
+      {row.kind === "Basis" && data.source && (
+        <ButtonLink
+          href={`/estimating/quotes/${data.source.input.quotation.revision_id}`}
+        >
+          Open quotation
+        </ButtonLink>
+      )}
+      {current &&
+        row.kind === "Basis" &&
+        row.state === "Approved" &&
+        data.source_status === "Current" &&
+        context?.can_prepare &&
+        context.project.lifecycle === "Active" &&
+        (context.project.coordinator_id === context.actor_id ||
+          row.content.owner_id === context.actor_id) && (
+          <Button
+            variant="primary"
+            onClick={() =>
+              setIntent({ action: "Create", kind: "Variation", basis: row.id })
+            }
+          >
+            New variation
+          </Button>
+        )}
       {row.basis_id && (
         <ButtonLink href={recordHref(project, row.basis_id)}>
           Open basis
@@ -245,6 +338,7 @@ export function CommercialRecord({
   const tabs = [
     ...(phone ? [{ id: "details", label: "Details" }] : []),
     { id: "overview", label: "Overview" },
+    ...(compact && !phone ? [{ id: "details", label: "Details" }] : []),
     {
       id: "activities",
       label: `Activities${data?.current_actions ? ` · ${data.current_actions.length}` : ""}`,
@@ -378,9 +472,11 @@ export function CommercialRecord({
                   </span>
                 )}
                 <span>
-                  {data.independent_review_required
-                    ? "You authored or submitted a proposal version"
-                    : "Independent review duties apply"}
+                  {row.kind === "Notice"
+                    ? "Recorded evidence · no delivery verification"
+                    : data.independent_review_required
+                      ? "You authored or submitted a proposal version"
+                      : "Independent review duties apply"}
                 </span>
               </>
             }
@@ -409,6 +505,12 @@ export function CommercialRecord({
                   original evidence is retained.
                 </p>
               )}
+              {row.kind === "Notice" && (
+                <p className="commercial-banner">
+                  Recorded notice evidence only. This record sends nothing and
+                  does not verify delivery.
+                </p>
+              )}
               {row.state === "Submitted" && (
                 <p className="commercial-banner">
                   {data.independent_review_required
@@ -418,25 +520,82 @@ export function CommercialRecord({
                 </p>
               )}
               {row.kind === "Basis" && (
-                <section className="commercial-basis-value">
-                  <h2>Original control value</h2>
-                  <strong>
-                    {finance.loading
-                      ? "Loading"
-                      : finance.data && !finance.error
-                        ? moneyLabel(data.source?.amount, "Unavailable")
-                        : "Unavailable"}
-                  </strong>
-                  <p>
-                    Synthetic · AUD excluding GST · retained exact quotation
-                    value. Both Finance read duties are required.
-                  </p>
-                  <ReadState
-                    loading={finance.loading}
-                    error={finance.error}
-                    retry={finance.reload}
-                  />
-                </section>
+                <>
+                  {row.state === "Approved" && (
+                    <p className="commercial-banner">
+                      Approved original basis. It cannot be edited or replaced.
+                      Each approved variation is a separate signed change.
+                    </p>
+                  )}
+                  <section>
+                    <h2>Control values</h2>
+                    <div className="commercial-amount-card">
+                      <div className="commercial-basis-value">
+                        <small>Original value</small>
+                        <strong>
+                          {finance.loading
+                            ? "Loading"
+                            : finance.data &&
+                                !finance.error &&
+                                (row.state !== "Approved" ||
+                                  finance.data.basis_id === row.id)
+                              ? moneyLabel(
+                                  row.state === "Approved"
+                                    ? finance.data.original_control_value
+                                    : data.source?.amount,
+                                  "Unavailable",
+                                )
+                              : "Unavailable"}
+                        </strong>
+                      </div>
+                      {row.state === "Approved" && (
+                        <>
+                          <div>
+                            <small>Approved changes</small>
+                            <strong>
+                              {finance.loading
+                                ? "Loading"
+                                : finance.data?.basis_id === row.id &&
+                                    !finance.error
+                                  ? moneyLabel(
+                                      finance.data.approved_change_value,
+                                      "Unavailable",
+                                    )
+                                  : "Unavailable"}
+                            </strong>
+                          </div>
+                          <div>
+                            <small>Adjusted value</small>
+                            <strong>
+                              {finance.loading
+                                ? "Loading"
+                                : finance.data?.basis_id === row.id &&
+                                    !finance.error
+                                  ? finance.data.status === "Held"
+                                    ? "Held"
+                                    : moneyLabel(
+                                        finance.data.adjusted_control_value,
+                                        "Unavailable",
+                                      )
+                                  : "Unavailable"}
+                            </strong>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <p>
+                      Synthetic · AUD excluding GST · definition PJ05-FD08 v1.
+                      Original value is the retained exact quotation value. Both
+                      Finance read duties are required.
+                    </p>
+                    <ReadState
+                      loading={finance.loading}
+                      error={finance.error}
+                      retry={finance.reload}
+                    />
+                  </section>
+                  <BasisSources data={data} />
+                </>
               )}
               {row.kind === "Variation" && (
                 <section>
@@ -513,19 +672,23 @@ export function CommercialRecord({
                   <dd>{row.note}</dd>
                 </dl>
               </section>
-              <section>
-                <h2>Decision</h2>
-                <p>
-                  {row.command === "Decide"
-                    ? `${row.state} · ${row.recorded_by_name}`
-                    : "A commercial reviewer who did not write or submit any proposal version decides. Earlier decisions remain in History."}
-                </p>
-                {row.command === "Decide" && (
+              {row.kind !== "Notice" && (
+                <section>
+                  <h2>
+                    {row.kind === "Obligation" ? "Waiver decision" : "Decision"}
+                  </h2>
                   <p>
-                    {row.note} · <Stamp value={row.recorded_at} />
+                    {row.command === "Decide"
+                      ? `${row.state} · ${row.recorded_by_name}`
+                      : "A commercial reviewer who did not write or submit any proposal version decides. Earlier decisions remain in History."}
                   </p>
-                )}
-              </section>
+                  {row.command === "Decide" && (
+                    <p>
+                      {row.note} · <Stamp value={row.recorded_at} />
+                    </p>
+                  )}
+                </section>
+              )}
             </RecordPanel>
             <RecordPanel
               id="commercial-record"
@@ -547,8 +710,45 @@ export function CommercialRecord({
             </RecordPanel>
             <RecordPanel id="commercial-record" tab="history" value={activeTab}>
               <h2>History</h2>
-              {data.history?.map((event) => (
+              <div
+                className="commercial-history-filters"
+                aria-label="Filter loaded history"
+              >
+                {["All", "Changes", "Submissions", "Decisions"].map(
+                  (filter) => (
+                    <Button
+                      key={filter}
+                      aria-pressed={historyFilter === filter}
+                      onClick={() => setHistoryFilter(filter)}
+                    >
+                      {filter} ·{" "}
+                      {
+                        (data.history ?? []).filter(
+                          (event) =>
+                            filter === "All" ||
+                            historyCategory(event.command) === filter,
+                        ).length
+                      }
+                    </Button>
+                  ),
+                )}
+              </div>
+              <p>
+                Counts describe this loaded history page. Earlier versions
+                remain available below.
+              </p>
+              {!visibleHistory.length && (
+                <p>No matching events in this loaded history page.</p>
+              )}
+              {visibleHistory.map((event, index) => (
                 <article className="commercial-history" key={event.version}>
+                  {(index === 0 ||
+                    historyDate(visibleHistory[index - 1].recorded_at) !==
+                      historyDate(event.recorded_at)) && (
+                    <div className="commercial-history-date">
+                      {historyDate(event.recorded_at)} · site time
+                    </div>
+                  )}
                   <h3>
                     {event.command} · <CommercialState row={event} /> · version{" "}
                     {event.version}
@@ -559,6 +759,40 @@ export function CommercialRecord({
                   </p>
                   <p>Reason: {event.reason}</p>
                   <p>Note: {event.note}</p>
+                  <details>
+                    <summary>
+                      Recorded content · version {event.version}
+                    </summary>
+                    <dl>
+                      <dt>Title</dt>
+                      <dd>{event.content.title}</dd>
+                      <dt>Scope / detail</dt>
+                      <dd>{event.content.detail}</dd>
+                      <dt>Clause</dt>
+                      <dd>{event.content.clause}</dd>
+                      {row.kind === "Variation" && (
+                        <>
+                          <dt>Requested</dt>
+                          <dd>{moneyLabel(event.content.requested_amount)}</dd>
+                          <dt>Priced</dt>
+                          <dd>
+                            {moneyLabel(
+                              event.content.priced_amount,
+                              "Not priced",
+                            )}
+                          </dd>
+                          <dt>Date impact</dt>
+                          <dd>{event.content.date_impact ?? "Not assessed"}</dd>
+                        </>
+                      )}
+                      {event.content.evidence && (
+                        <>
+                          <dt>Evidence</dt>
+                          <dd>{event.content.evidence}</dd>
+                        </>
+                      )}
+                    </dl>
+                  </details>
                 </article>
               ))}
               <div className="commercial-actions">
@@ -583,33 +817,7 @@ export function CommercialRecord({
                 tab="sources"
                 value={activeTab}
               >
-                <h2>Retained sources</h2>
-                <p>
-                  The exact received handover, accepted quotation and reviewed
-                  contract are retained. Newer source bytes are never adopted
-                  silently.
-                </p>
-                <dl className="commercial-proposal">
-                  <dt>Contract</dt>
-                  <dd>
-                    <Link
-                      href={`/documents/library/${data.source?.input.document_id}`}
-                    >
-                      Open retained contract document
-                    </Link>{" "}
-                    · version {data.source?.input.document_version}
-                  </dd>
-                  <dt>Quotation</dt>
-                  <dd>
-                    <Link
-                      href={`/estimating/quotes/${data.source?.input.quotation.revision_id}`}
-                    >
-                      Open retained quotation
-                    </Link>
-                  </dd>
-                  <dt>Source status</dt>
-                  <dd>{data.source_status}</dd>
-                </dl>
+                <BasisSources data={data} />
               </RecordPanel>
             )}
           </SharedRecord>
@@ -642,6 +850,7 @@ export function CommercialRecord({
             setIntent(null);
             setBefore(null);
             siblings.reload();
+            finance.reload();
             if (id !== entry) router.push(recordHref(project, id));
             else read.reload();
           }}

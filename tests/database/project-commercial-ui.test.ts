@@ -16,6 +16,8 @@ import {
   readCommercialFinance,
 } from "../../src/projects/commercial/reads";
 import { readCommercialPicker } from "../../src/projects/commercial/options";
+import { createActivity } from "../../src/activities/activities";
+import { raidAction } from "../helpers/project-raid";
 import { commercialUIFixture } from "../helpers/project-commercial-ui";
 import { AppError } from "../../src/platform/errors";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -189,6 +191,49 @@ test("PJ05 screen fixture reconciles Finance definitions, blocked satisfaction, 
     await database().query(
       "INSERT INTO ppo.permission_grants SELECT * FROM jsonb_populate_recordset(NULL::ppo.permission_grants,$1::jsonb)",
       [JSON.stringify(grants.rows)],
+    );
+  }
+  const restrictedActivity = {
+    ...raidAction(f.project.id),
+    access_class: "RestrictedFinance",
+  };
+  await createActivity(f.owner, restrictedActivity);
+  const hiddenCorrection = {
+    ...notice,
+    ...commercialAction(randomUUID(), 0, "Create"),
+    predecessor_id: entries.notice,
+    content: {
+      ...notice.content,
+      action_ids: [restrictedActivity.id],
+    },
+  };
+  await commandCommercial(f.owner, f.project.id, hiddenCorrection);
+  const activityGrants = await database().query(
+    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='shared.finance.read' RETURNING *",
+    [f.owner.workspace_id, f.owner.actor_id],
+  );
+  assert.ok(activityGrants.rowCount);
+  try {
+    const previous = await readCommercial(f.owner, f.project.id, {
+      id: entries.notice,
+    });
+    assert.equal(previous.current!.correction_status, "Unavailable");
+    assert.equal(JSON.stringify(previous).includes(hiddenCorrection.id), false);
+    const restricted = await readCommercial(f.owner, f.project.id);
+    assert.equal(restricted.completeness, "Partial");
+    assert.equal(
+      restricted.items!.find((row) => row.id === entries.notice)!
+        .correction_status,
+      "Unavailable",
+    );
+    assert.equal(
+      JSON.stringify(restricted).includes(hiddenCorrection.id),
+      false,
+    );
+  } finally {
+    await database().query(
+      "INSERT INTO ppo.permission_grants SELECT * FROM jsonb_populate_recordset(NULL::ppo.permission_grants,$1::jsonb)",
+      [JSON.stringify(activityGrants.rows)],
     );
   }
 });

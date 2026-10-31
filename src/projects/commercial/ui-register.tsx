@@ -137,7 +137,7 @@ function CommercialWorkspace({
     context.project.lifecycle === "Active" &&
     (context.project.coordinator_id === context.actor_id ||
       basis?.content.owner_id === context.actor_id) &&
-    (view === "Basis" ? !basis : !!basis);
+    (view === "Basis" ? !basis : basis?.source_status === "Current");
   const groups = complete
     ? groupOrder
         .map((name) => ({
@@ -209,7 +209,6 @@ function CommercialWorkspace({
       )}
       <div className="commercial-toolbar">
         <div className="commercial-picker">{picker}</div>
-        <span>One project at a time</span>
         <div className="commercial-toolbar-actions">
           {complete && (
             <span className="commercial-desktop-utility">
@@ -299,6 +298,12 @@ function CommercialWorkspace({
               No approved original basis is available. Propose and independently
               approve the basis before adding variations, obligations or
               notices.
+            </p>
+          )}
+          {current && basis?.source_status === "Changed" && (
+            <p className="commercial-banner" role="status">
+              The retained commercial basis changed. New records and decisions
+              are held until its source is reconciled.
             </p>
           )}
           {list.data?.completeness === "Partial" && (

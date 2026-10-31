@@ -4,7 +4,7 @@ Stable entry: `scope:PJ-05`. Owner: Dean Fiedler. Status: **Draft for visual rev
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/projects/commercial`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
-## Implementation checkpoint — 31 October 2026
+## Implementation and functional proof — 31 October 2026
 
 See the [native route contract](route-projects-commercial.md) for current controls, adaptations and exclusions, and the [evidence chapter](../../../testing/evidence/project-commercial/README.md) for executed checks. No review fingerprint or application acceptance is granted.
 

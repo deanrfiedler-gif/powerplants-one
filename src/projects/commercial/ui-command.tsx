@@ -269,8 +269,8 @@ export function CommercialCommand({
         {pending ? (
           <>
             <p role="status">
-              {busy && !uncertain.current
-                ? "Saving this action. Waiting for confirmation."
+              {busy
+                ? "Waiting for confirmation of this action."
                 : "The save outcome is unconfirmed. The original action and version are locked. Check its receipt or retry the unchanged command."}
             </p>
             <ErrorNotice error={error} />
@@ -313,6 +313,7 @@ export function CommercialCommand({
                       label="Received Sales handover"
                       value={handover}
                       onChange={(v) => {
+                        finance.reload();
                         setHandover(v);
                         setQuote("");
                       }}
@@ -334,7 +335,10 @@ export function CommercialCommand({
                       name="quotation"
                       label="Accepted quotation"
                       value={quote}
-                      onChange={setQuote}
+                      onChange={(v) => {
+                        finance.reload();
+                        setQuote(v);
+                      }}
                       options={quotes.data?.items ?? []}
                       search={search.quotations}
                       onSearch={(q) =>
@@ -353,7 +357,10 @@ export function CommercialCommand({
                       name="document"
                       label="Reviewed contract document"
                       value={document}
-                      onChange={setDocument}
+                      onChange={(v) => {
+                        finance.reload();
+                        setDocument(v);
+                      }}
                       options={documents.data?.items ?? []}
                       search={search.documents}
                       onSearch={(q) =>
@@ -619,7 +626,7 @@ export function CommercialCommand({
                             {choice === "Approved"
                               ? intent.kind === "Basis"
                                 ? "Approves the retained original basis"
-                                : "Records the exact priced terms"
+                                : `Approves the submitted price of ${moneyLabel(intent.row?.content.priced_amount)}`
                               : choice === "Disputed"
                                 ? "Kept disputed until decided again"
                                 : choice === "Rejected"

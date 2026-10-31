@@ -24,7 +24,7 @@ ValidationFields renders native field and command refusals. Fixture examples inc
 
 ## tabs
 
-RecordTabs and RecordPanel provide keyboard navigation. Desktop shows Overview, Activities and History, with Sources on Basis; phone adds Details. Hidden desktop Details is omitted from the tab model so arrow keys cannot focus an invisible tab. Alignment: inspect the desktop and phone captures; application acceptance remains pending.
+RecordTabs and RecordPanel provide keyboard navigation. Desktop shows Overview, Activities and History, with Sources on Basis; tablet and phone add Details. Hidden desktop Details is omitted from the tab model so arrow keys cannot focus an invisible tab. Alignment: inspect the desktop and phone captures; application acceptance remains pending.
 
 ## menu
 
@@ -52,4 +52,6 @@ The Projects navigation item opens /projects/commercial. SecondaryMenuFrame rece
 
 ## shared-record
 
-SharedRecord composes four native record kinds with facts, sources, tabbed content and permitted actions. Facts move into Details on phone. Previous/next require a complete same-kind list. Overview keeps valuation alternatives separate; History shows stored actor names, reasons and notes. Alignment: inspect the desktop and phone captures; application acceptance remains pending.
+SharedRecord composes four native record kinds with facts, sources, tabbed content and permitted actions. Facts move into Details on tablet and phone. Previous/next require a complete same-kind list. Overview keeps valuation alternatives separate; History shows stored actor names, reasons and notes, with filters counted over the loaded history page. Alignment: inspect the desktop and phone captures; application acceptance remains pending.
+
+The basis Overview shows its protected original, approved-change and adjusted values alongside retained handover, quotation, customer-response and document references. Approved totals are bound to the matching native Finance basis; restricted or stale Finance reads never display old amounts. Notice records describe evidence and correction only, with no decision or delivery claim.

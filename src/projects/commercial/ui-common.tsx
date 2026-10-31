@@ -206,15 +206,6 @@ export function ControlValues({
         billing or cash. Requested and priced are alternatives and are never
         added together.
       </p>
-      <details className="commercial-value-explanation">
-        <summary>About control values</summary>
-        <p>
-          Synthetic · AUD excluding GST · definition PJ05-FD08 v1 · read{" "}
-          <Stamp value={data.observed_at} />. Project control values, not
-          revenue, billing or cash. Requested and priced are alternatives and
-          are never added together.
-        </p>
-      </details>
     </section>
   );
 }
