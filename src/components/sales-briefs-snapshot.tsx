@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useCrmResource, denied } from "./crm-state";
+import Link from "next/link";
+import { WorklistMenu } from "./crm-worklist-tools";
+import { useConversationsAction } from "./shell-conversations";
+import { phoneMenuEvent } from "./shell-phone-header";
+import { ShellIcon } from "./shell-icon";
 import { Button, ButtonLink } from "./ui/button";
 import { RecordPanel, RecordTabs } from "./record-ui";
 import {
@@ -12,18 +17,21 @@ import { formatDateTime } from "../shell/date-format";
 import { BriefIcon, BriefState } from "./sales-briefs-ui";
 export function SalesBriefSnapshot({
   row,
+  phone,
   rows,
   onSelect,
   onClose,
   onRefresh,
 }: {
   row: ReceivingBrief;
+  phone: boolean;
   rows: ReceivingBrief[];
   onSelect: (row: ReceivingBrief) => void;
   onClose: () => void;
   onRefresh: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const conversations = useConversationsAction(phone);
   const [tab, setTab] = useState("clarification");
   const read = useCrmResource<ReceivingSnapshot>(
     `sales/handovers/receiving/${row.id}?revision=${row.revision}&token=${row.token}`,
@@ -69,13 +77,18 @@ export function SalesBriefSnapshot({
           aria-label="Close brief snapshot"
           onClick={onClose}
         >
-          <BriefIcon name="close" />
+          {phone ? (
+            <ShellIcon name="chevron-left" />
+          ) : (
+            <BriefIcon name="close" />
+          )}
         </Button>
         <span className="sb-position">
           {index + 1} of {rows.length}
         </span>
         <Button
           variant="quiet"
+          className="sb-snapshot-step"
           aria-label="Previous brief"
           disabled={index <= 0}
           onClick={() => onSelect(rows[index - 1])}
@@ -84,12 +97,64 @@ export function SalesBriefSnapshot({
         </Button>
         <Button
           variant="quiet"
+          className="sb-snapshot-step"
           aria-label="Next brief"
           disabled={index >= rows.length - 1}
           onClick={() => onSelect(rows[index + 1])}
         >
           <BriefIcon name="next" />
         </Button>
+        {phone && (
+          <WorklistMenu label="More snapshot actions" icon="more" choices>
+            <button
+              type="button"
+              role="menuitem"
+              data-menu-close
+              onClick={() => {
+                onClose();
+                requestAnimationFrame(() =>
+                  window.dispatchEvent(
+                    new CustomEvent(phoneMenuEvent, {
+                      detail: document.getElementById("shell-phone-menu"),
+                    }),
+                  ),
+                );
+              }}
+            >
+              Open menu
+            </button>
+            {conversations && (
+              <Link
+                role="menuitem"
+                href="/conversations"
+                aria-label={conversations.name}
+              >
+                Conversations
+                {conversations.badge ? ` · ${conversations.badge}` : ""}
+              </Link>
+            )}
+            <button
+              className="sb-narrow-step"
+              type="button"
+              role="menuitem"
+              data-menu-close
+              disabled={index <= 0}
+              onClick={() => onSelect(rows[index - 1])}
+            >
+              Previous brief
+            </button>
+            <button
+              className="sb-narrow-step"
+              type="button"
+              role="menuitem"
+              data-menu-close
+              disabled={index >= rows.length - 1}
+              onClick={() => onSelect(rows[index + 1])}
+            >
+              Next brief
+            </button>
+          </WorklistMenu>
+        )}
       </div>
       {!d ? (
         <div className="sb-notice" role={read.error ? "alert" : "status"}>

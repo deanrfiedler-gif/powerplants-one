@@ -1,67 +1,67 @@
-# Estimating Intake — design contract
+# Sales briefs — design contract
 
 <!-- versioning: git; committed history is authoritative -->
 
-Stable entry: `route:/estimating/intake`. Owner: Dean Fiedler. Review: pending. Parent scope: CR-02. Route: `/estimating/intake`.
+Stable entry: `route:/estimating/intake`. Owner: Dean Fiedler. Review: pending. Parent scope: CR-02. Navigation ID: `intake`. Route: `/estimating/intake`. Page type: r20 register / worklist with a submitted-brief snapshot and selection panel.
 
-## Native Sales implementation contract
+## Purpose and boundaries
 
-Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision.
+Receive the latest submitted Sales brief revision. Sales preparation remains at `/sales/handoffs/estimating`; Intake & workload remains at `/estimating`. The queue records no receiving decision. Clarify, Answer, Resolve, Return and Accept remain on the native brief record, with current permissions, expected versions and original-operation recovery.
 
-- Sales preparation worklist: select a permitted deal and create its draft.
-- Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.
-- Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.
-- History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs.
+The [accepted design decision](../../../decisions/sales-briefs-design.md) and [five retained icon-free captures](../../../reference/ui/estimating/sales-briefs-design-r01/README.md) are the source: named version “Sales briefs — Pipedrive pattern, accepted”; page `152:1122`, desktop `152:1123`, selection `152:1302`, phone `152:1510`, notes `152:1530`. Historical “proposal” frame names do not downgrade the documented acceptance. The [Reviews & approvals pattern](../../../decisions/estimate-reviews-design.md), [top bar amendment](../../../decisions/shell-top-bar-amendment.md) and [phone header amendment](../../../decisions/phone-header-amendment.md) govern the shared shell. Design acceptance is separate from application acceptance.
 
-The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity.
+## Receiving population and API
 
-Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision.
+`GET /api/v1/sales/handovers/receiving` supplies rows, counts, customer and receiver choices, paging, completeness and observation time in one repeatable-read transaction. It projects every permitted handover's latest Submit event, its frozen content, source hash and revision, and the last receiving-state event in that revision. Draft-only records are absent. A successor draft never replaces submitted content, receiver, state, dates or update time. A prior revision's receiver is the actor of its immutable Return/Accept event; native successor creation requires that terminal outcome.
 
-Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft.
+The existing `estimating.edit` capability is checked at each brief's actual company/site, alongside native Opportunity, related evidence and historical-source visibility. Current working company also applies. Other receivers' permitted briefs remain visible; visibility never grants receiving authority. Hidden records contribute no rows, counts or facets, and denied direct reads are indistinguishable from missing records.
+
+Search (reference, submitted title, customer and owner names), customer and receiving-owner filters apply before every view count and before paging. Facets come from the same full permitted submitted population. All briefs, Awaiting my decision, Assigned to me, five receiving-state views and Source changed share that basis. Counts are never inferred from a visible page. Default page size 50, maximum 100; newest receiving update first, stable ID tie-break. Later pages require the supplied basis token; source, state, identity, access or filter changes invalidate comparison and require a fresh first page.
+
+`GET /api/v1/sales/handovers/receiving/[id]?revision=N&token=...` rechecks the exact snapshot. CSV uses the list endpoint's `selection=id:token,...` query (1–100 distinct selected rows). The server reauthorizes and compares every selected row before returning list fields; no partial export. Spreadsheet formula prefixes are escaped. CSV contains the exact brief link and no full narrative or hidden records.
+
+## Receiving semantics
+
+| View or state | Rule |
+|---|---|
+| All briefs | Every permitted latest submitted revision, including Returned and Accepted |
+| Awaiting my decision | Receiving owner is the current actor; Submitted or Clarification answered, including source-changed briefs |
+| Assigned to me | Every submitted receiving state owned by the current actor |
+| Submitted | Submitted or resolved answer; available for native receiver review |
+| Clarification requested | Receiver asked; Sales has not answered |
+| Clarification answered | Sales answered; receiver must resolve the answer before acceptance |
+| Returned | Terminal return and its owned follow-up; retained through a draft successor |
+| Accepted | Exact acceptance retained through a draft successor; not estimating or quotation approval |
+| Source changed | Current fingerprint differs for an open submitted revision; renewed review required |
+
+Source changed is warning text with words and an icon. The native Accept command still refuses it; return for a corrected successor and review that submission. A terminal revision retains its outcome; its snapshot separately reports later source movement. Returned is muted. Terminal views remain all-time, consistent with the existing receiving read. No rail badge is introduced: no subsequently adopted Sales briefs badge rule was found.
 
 ## Desktop
 
-Accepted design (11 October 2026): the [Sales briefs design decision](../../../decisions/sales-briefs-design.md), with captures 01–03 in [Sales briefs design r01](../../../reference/ui/estimating/sales-briefs-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. The design labels this destination Sales briefs; the app still shows Intake and the earlier cards, and the shell parts wait for their own rollout decision.
+Use `SecondaryMenuFrame` with `data-ppo-workspace="shared"`, shared tokens, controls and `RegisterTable`. The page has a labelled 240 px primary rail, a flush 240 px secondary menu, a 60 px toolbar and 40 px grid rows. The menu has no repeated title. Customer and Receiving owner filters, result count/as-at, Refresh and More occupy the toolbar. Search is available from More. The menu collapses using the shared edge/strip and becomes an overlay below the shared docked breakpoint.
 
-- **Layout at 1440 × 900:** the labelled 240 px rail with Sales briefs selected (white tile, Solid inbox icon); the breadcrumb "Sales briefs" (shell top bar amendment, 16 October 2026) as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
-- **Secondary menu:** All briefs, Awaiting my decision (receiving owner is me; Submitted or Clarification answered) and Assigned to me; a State group (Submitted, Clarification requested, Clarification answered, Returned, Accepted); an Attention group (Source changed). Neutral counts appear on open views only. It collapses to a 20 px strip from its right border or the top-bar toggle.
-- **Toolbar:** Customer and Receiving owner filters, the count with its refresh time, Refresh and "…".
-- **Grid:** one row per brief at its latest submitted revision. Single-line 40 px rows with lines between cells. Columns: Opportunity (reference and revision), Title, Customer, State (icon and words), Updated (sorted, newest first), Requested ("Date needed" when Sales gave a reason instead), Receiving owner and Sales owner. The checkbox column and the settings and "…" column stay fixed while the grid scrolls sideways. Long titles and customers end with an ellipsis; the record window shows them in full.
-- **State:** the receiving states as the code records them. "· source changed" is added in the warning text colour to an open brief whose source fingerprint changed; Returned is muted; every state has words.
-- **Record window:** clicking a row opens it over the grid, never squeezing it. Its left edge meets the secondary menu's right edge, with close, previous and next on that edge. It shows the summary, the frozen brief, the rule note, Clarification and Evidence tabs, and History. Its buttons are Open opportunity and Open brief; receiving decisions stay on the brief page.
-- **Selection:** ticking rows shows a selection toolbar and a 360 px panel with Open in sequence and Export list only.
+Columns: Opportunity reference and submitted revision, Title, Customer, State, Updated, Requested, Receiving owner and Sales owner at submission. Checkbox and row-action/settings columns stay fixed during horizontal scroll. Titles/customers truncate in the grid and appear in full in the snapshot; column settings can hide optional columns. The page owns no document scroll.
 
-The brief page itself keeps the requirements below.
+A row opens a large overlapping snapshot aligned with the content edge. At 1440 px the brief column is 440 px; the remaining area holds Clarification (initial tab), Evidence and immutable revision History. Show submitted problem, outcome, included scope, exclusions, assumptions, unknowns, date or reason, source references, next Sales action, owners and submission time. Source drift is separate from frozen content. Exact Open opportunity and Open brief links form the footer.
 
- retain the current shell, Roboto/Verdana and navy/green tokens. Reuse PageHeader, Button, Field, SelectField, RecordTabs and error/status controls. Keep review decisions after the brief, immutable history separate and long reasons wrapping. Inspect at 1440 × 960 and 1024 × 768.
+Selecting rows replaces the toolbar and opens a 360 px side panel without shrinking the grid. Open in sequence orders selected rows by oldest receiving update, then ID. Export list rechecks selected current-page revisions. Selection does not accept, return, resolve, assign or create anything.
 
 ## Mobile
 
-Accepted design (11 October 2026): captures 04–05 in [Sales briefs design r01](../../../reference/ui/estimating/sales-briefs-design-r01/README.md).
+The shared compact 56 px header replaces the earlier two-row capture header: current view and count, search, Conversations and Filter; search and filter combine at 320 px. Choose view opens the shared sheet; search/filter opens the shared panel. Pull down refreshes the list; Refresh remains available in the filter panel. No duplicate toolbar sits below the header.
 
-- **Header and toolbar at 390 × 844:** the page name "Sales briefs" only, with no breadcrumb. A toolbar holds a view picker ("All briefs") standing in for the secondary menu, the count and a filter icon button.
-- **List:** flush list rows about 80 px tall, each showing the title and last update, the reference and customer, and the state and requested date, with a chevron.
-- **Record view:** tapping a row opens a full-screen record view with back, previous and next. The brief is stacked, and Open opportunity and Open brief are fixed at the bottom.
-- **Tab bar:** icons only, the five Estimating tabs, each with a hidden accessible label. Sales briefs is reached through More, so More is the current tab. Phone selection of several rows is not designed yet.
+Rows are approximately 80 px at 390 px. At 320 px the state/date line wraps and rows grow to preserve readable state text. Tapping opens a full-screen snapshot with back, position, previous/next and More, a sticky two-link footer, and no visible tab bar. More keeps Open menu and permitted Conversations reachable; previous/next move there at 320 px. Desktop tabs and history stack below the brief and remain reachable by scrolling.
 
-The brief page itself keeps the requirements below.
+Press and hold selects a row; Select briefs in the filter panel is the explicit keyboard/touch alternative. Labelled checkboxes, Review selection, Clear selection, sequence and export remain available on phone. Escape closes dialogs/popovers and returns focus. Enter opens a focused title, Space toggles selection, and shared tabs support keyboard navigation. The 320 px contract contains all horizontal scrolling within the desktop grid; long phone content wraps. Online read authority is not offline authority.
 
- stack fields/actions, keep every tab reachable and contain table/history overflow. Inspect at 390 × 844, 320 CSS px and 200% zoom; keyboard focus and recovery state must stay visible.
+## Read states and recovery
 
-Loading, empty/filter-empty, partial, failed, denied, read-only, validation, saving, saved, uncertain and source-changed states remain explicit. The guide `guide.route-estimating-intake` carries normal and recovery steps.
+Loading has no inferred totals. An empty permitted queue differs from filtered no-results. Partial source reads label counts as lower bounds and retain a retry. Failed or denied reads clear earlier rows, counts, selection and snapshots. A changed page basis gives an explicit stale state and refreshes from the first page. Snapshot revision/token mismatch hides the earlier snapshot and its links until a fresh exact read succeeds. A late export response after a changed population or unmount is discarded. Export refusal clears selection and asks for fresh review.
 
-Accepted Figma design for the receiving queue: [Sales briefs design r01 captures](../../../reference/ui/estimating/sales-briefs-design-r01/README.md) (icon-free PNGs; not application captures). Retained reference: `docs/reference/ui/estimating/sales-estimating-intake-preview-r02.html`. Missing mobile reference images are explicitly unprovided. The current shell and server authority govern departures from demonstration HTML. ADR-0046 recorded the earlier quotation boundary. Current native ES-05/06/07 engines exist; Sales quotation/outcome integration and automatic downstream effects remain separate from this handover. Actual paired captures and differences are recorded in `docs/delivery/sales-native-completion-handover.md`; acceptance is pending.
+The queue does not alter native uncertain-save recovery. After following Open brief, Check original result / Retry exact original and the existing expected-version guards still apply. If the linked revision is historical because Sales started or submitted a successor, the native detail shows that frozen submission without receiving controls; reviewing the current brief is a separate explicit link.
 
-## Accepted Sales brief link (LC-13)
+## LC-13 and review
 
-Keep the existing scope ID and r20 record workspace/intake worklist page type. Incoming: exact current accepted Sales event and source facts. Outgoing: explicit immutable link to the existing native estimating workspace, selected option and scope revision. Reuse PageHeader, Button, Field, error/status controls, native details disclosure and the existing command journal. The existing CRM panel and estimating layout are retained legacy host exceptions; no shared style system changes.
+Acceptance creates no Discovery, estimate, quotation, order, Project, work order or booking. Continue on the brief through LC-13's explicit reviewed link to an existing or separately created native estimating workspace. The adopted reviewed creation journey can also explicitly include the exact accepted Sales event; it remains separate from acceptance. Discovery answers and costing are independently authored. This queue does not add link state or link commands.
 
-From accepted Intake, open an existing workspace or create native Discovery. Show Sales problem, scope, exclusions, assumptions, unknowns and requested-date basis as reported context; do not pre-confirm Discovery answers. A successful creation returns to the handover for a separate link review. Compare both saved versions, record a reason and save the link. Keep that comparison fixed through background refresh. Separate current acceptance, source drift and historical links. A denied target displays no retained target identities. An interrupted link recovers the exact original from the actor-scoped journal, including after reload.
-
-Desktop: place the link comparison and separate native-creation result beside the accepted brief; use labelled saved versions and wrap long reasons. Phone: stack the same controls at 390 and 320 CSS px, keep recovery controls reachable and contain scope text without horizontal overflow. Keyboard navigation must reach the native workspace and original-result controls. The new-state mockup images are missing; retain the exact existing HTML/image references above. This is a proposed additive adaptation, not adopted paired visual or owner acceptance.
-
-## NAV contextual navigation
-
-Receiving Intake is a separate permitted Estimating destination from Intake & workload; receiving ownership and contextual Sales handovers remain distinct.
-
-Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+[Application evidence](../../../testing/evidence/sales-briefs-queue/README.md) records actual functional checks, inspected captures at 1440/1024/390/320, differences and limits. Missing accepted drawings for 1024/320, loading/error/partial/stale, phone selection and Evidence use the bounded adaptations above. Component bindings and fixture states are in [the CR-02 consumer note](../component-bindings/2026-10-31-sales-briefs-queue.md). Visual inspection, owner acceptance, exact-head independent review, merge and deployment remain separate; no review fingerprint is asserted.

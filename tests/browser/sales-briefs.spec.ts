@@ -16,6 +16,8 @@ async function open(page: Page) {
     mode: "ok",
     data: briefsFixture(),
     snapshotMode: "ok",
+    exportMode: "ok",
+    releaseRead: null as (() => void) | null,
     exports: [] as string[],
   };
   await page.route("**/api/v1/local-session", (r) =>
@@ -36,7 +38,10 @@ async function open(page: Page) {
       const n = Number(url.pathname.split("-").at(-1));
       return route.fulfill({ json: briefSnapshotFixture(n) });
     }
-    if (state.mode === "loading") return;
+    if (state.mode === "loading")
+      await new Promise<void>((resolve) => {
+        state.releaseRead = resolve;
+      });
     if (state.mode !== "ok")
       return route.fulfill({
         status:
@@ -44,6 +49,14 @@ async function open(page: Page) {
         json: { code: "Unavailable", message: "SYN read unavailable" },
       });
     if (selection) {
+      if (state.exportMode !== "ok")
+        return route.fulfill({
+          status: 409,
+          json: {
+            code: "ReceivingQueueChanged",
+            message: "SYN changed selection",
+          },
+        });
       state.exports.push(selection);
       const rows = state.data.items.filter((r) => selection.includes(r.id));
       return route.fulfill({
@@ -89,7 +102,9 @@ async function open(page: Page) {
     });
   });
   await page.goto("/estimating/intake", { waitUntil: "domcontentloaded" });
-  await expect(page.locator("#ppo-sales-briefs")).toBeVisible();
+  await expect(page.locator("#ppo-sales-briefs")).toBeVisible({
+    timeout: 30000,
+  });
   await expect(page.locator(".sb-phone-row")).toHaveCount(8);
   return state;
 }
@@ -270,11 +285,11 @@ test("CR-02 retained desktop/phone comparison captures", async ({
     await page.screenshot({ path: `${folder}/phone-snapshot.png` });
     await page.setViewportSize({ width: 320, height: 844 });
     await page.screenshot({ path: `${folder}/phone-320-snapshot.png` });
+    await page.getByRole("button", { name: "Close brief snapshot" }).click();
+    await page.screenshot({ path: `${folder}/phone-320-list.png` });
   } else {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.evaluate(() => {
-      localStorage.setItem("ppo:rail-expanded", "true");
-    });
+
     await page.screenshot({ path: `${folder}/desktop-register.png` });
     await page.locator(".sb-title").nth(1).click();
     await expect(
@@ -295,5 +310,157 @@ test("CR-02 retained desktop/phone comparison captures", async ({
       })
       .check();
     await page.screenshot({ path: `${folder}/desktop-selection.png` });
+    await page
+      .getByRole("button", { name: "Clear selection", exact: true })
+      .click();
+    await page.setViewportSize({ width: 1024, height: 768 });
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(1025);
+    await page.screenshot({ path: `${folder}/desktop-1024-register.png` });
+    await page.locator(".sb-title").nth(1).click();
+    await page.screenshot({ path: `${folder}/desktop-1024-snapshot.png` });
   }
+});
+
+test("CR-02 loading, empty, failed read, filters and failed export recover without retained rows", async ({
+  page,
+}, info) => {
+  test.skip(!!info.project.use.isMobile, "Desktop read transitions");
+  const state = await open(page),
+    host = page.locator("#ppo-sales-briefs");
+  await host.getByRole("button", { name: "Customer", exact: true }).click();
+  await page
+    .getByRole("menuitemradio", { name: "SYN Coastal Berries", exact: true })
+    .click();
+  await expect(host.locator("tbody tr")).toHaveCount(2);
+  await expect(host.locator(".sb-count")).toContainText("2 briefs");
+  await host
+    .getByRole("button", { name: "Receiving owner", exact: true })
+    .click();
+  await page
+    .getByRole("menuitemradio", { name: "Riley James", exact: true })
+    .click();
+  await expect(
+    host.getByText("No briefs match this view", { exact: true }),
+  ).toBeVisible();
+  await page.goto("/estimating/intake");
+  await expect(host.locator("tbody tr")).toHaveCount(8);
+  state.mode = "loading";
+  await host
+    .getByRole("button", { name: "Refresh briefs", exact: true })
+    .click();
+  await expect(
+    host.getByText("Loading permitted Sales briefs…", { exact: true }),
+  ).toBeVisible();
+  await expect(host.locator("tbody tr")).toHaveCount(0);
+  state.mode = "ok";
+  state.releaseRead?.();
+  await expect(host.locator("tbody tr")).toHaveCount(8);
+  state.mode = "failed";
+  await host
+    .getByRole("button", { name: "Refresh briefs", exact: true })
+    .click();
+  await expect(
+    host.getByRole("heading", { name: "Sales briefs could not be loaded" }),
+  ).toBeVisible();
+  await expect(host.locator("tbody tr")).toHaveCount(0);
+  state.mode = "ok";
+  state.data = {
+    ...state.data,
+    items: [],
+    total: 0,
+    permitted_total: 0,
+    counts: Object.fromEntries(
+      receivingViews.map((v) => [v.id, 0]),
+    ) as typeof state.data.counts,
+  };
+  await host.getByRole("button", { name: "Retry loading briefs" }).click();
+  await expect(
+    host.getByText("No permitted submitted briefs", { exact: true }),
+  ).toBeVisible();
+  state.data = briefsFixture();
+  await host
+    .getByRole("button", { name: "Refresh briefs", exact: true })
+    .click();
+  await host
+    .getByRole("checkbox", {
+      name: "Select SYN-PPO-OPP-000031 r1",
+      exact: true,
+    })
+    .check();
+  state.exportMode = "stale";
+  await host.getByRole("button", { name: "Export list", exact: true }).click();
+  await expect(
+    host.getByText(/The selected list could not be exported/),
+  ).toBeVisible();
+  await expect(host.locator(".sb-selection-toolbar")).toHaveCount(0);
+  expect(state.exports).toHaveLength(0);
+});
+test("CR-02 phone selection and compact header keep views, filters and sequence reachable at 320", async ({
+  page,
+}, info) => {
+  test.skip(!info.project.use.isMobile, "Phone controls");
+  await open(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await expect(
+    page.getByRole("button", { name: "Search and filter", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Search briefs", exact: true }),
+  ).not.toBeVisible();
+  await page
+    .getByRole("button", { name: "Search and filter", exact: true })
+    .click();
+  const panel = page.getByRole("dialog", {
+    name: "Search and filter Sales briefs",
+  });
+  await panel
+    .getByRole("button", { name: "Select briefs", exact: true })
+    .click();
+  const list = page.locator(".sb-phone-list");
+  await list
+    .getByRole("checkbox", {
+      name: "Select SYN-PPO-OPP-000031 r1",
+      exact: true,
+    })
+    .check();
+  await list
+    .getByRole("checkbox", {
+      name: "Select SYN-PPO-OPP-000030 r1",
+      exact: true,
+    })
+    .check();
+  await page
+    .getByRole("button", { name: "Review selection", exact: true })
+    .click();
+  const selection = page.getByRole("dialog", { name: "2 briefs selected" });
+  await expect(selection).toBeVisible();
+  await selection
+    .getByRole("button", { name: "Open in sequence", exact: true })
+    .click();
+  const snapshot = page.getByRole("dialog", {
+    name: "Submitted Sales brief snapshot",
+  });
+  await expect(
+    snapshot.getByRole("heading", { name: "Nutrient room dosing upgrade" }),
+  ).toBeVisible();
+  await snapshot
+    .getByRole("button", { name: "More snapshot actions", exact: true })
+    .click();
+  await expect(
+    snapshot.getByRole("menuitem", { name: "Open menu", exact: true }),
+  ).toBeVisible();
+  await snapshot
+    .getByRole("menuitem", { name: "Next brief", exact: true })
+    .click();
+  await expect(
+    snapshot.getByRole("heading", { name: "Boiler house heat recovery study" }),
+  ).toBeVisible();
+  await snapshot
+    .getByRole("button", { name: "Close brief snapshot", exact: true })
+    .click();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth),
+  ).toBeLessThanOrEqual(321);
 });

@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "sales-briefs-register",
+      "title": "Sales briefs receiving register",
+      "category": "Tables & grids",
+      "module": "ES",
+      "purpose": "CR-02 permission-scoped submitted-revision register and exact brief snapshots.",
+      "owner": "Dean Fiedler",
+      "example": null,
+      "coverage": "Host example",
+      "states": [
+        {
+          "id": "loading",
+          "label": "Loading",
+          "description": "No unconfirmed rows or complete totals."
+        },
+        {
+          "id": "submitted",
+          "label": "Submitted revisions",
+          "description": "Five receiving states, source drift, draft successors and current receiver ownership."
+        },
+        {
+          "id": "partial",
+          "label": "Partial",
+          "description": "Unavailable source reads label totals as lower bounds."
+        },
+        {
+          "id": "empty",
+          "label": "Empty and no matches",
+          "description": "Separate permitted-empty and filtered-empty messages."
+        },
+        {
+          "id": "stale",
+          "label": "Stale comparison",
+          "description": "Changed page/snapshot/export basis clears stale selection."
+        },
+        {
+          "id": "denied",
+          "label": "Denied or failed",
+          "description": "No retained private evidence; retry with current authority."
+        },
+        {
+          "id": "selection",
+          "label": "Selected",
+          "description": "Current page only; oldest-update-first sequence and reauthorized CSV."
+        },
+        {
+          "id": "phone",
+          "label": "Phone and keyboard",
+          "description": "390/320 list, explicit selection, More, focus return and exact handovers."
+        }
+      ],
+      "implementation": [
+        {
+          "path": "src/components/sales-briefs-register.tsx",
+          "symbol": "SalesBriefsRegister"
+        },
+        {
+          "path": "src/components/sales-briefs-snapshot.tsx",
+          "symbol": "SalesBriefSnapshot"
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "src/sales/receiving-queue.ts",
+        "src/sales/receiving-queue-model.ts",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "reference": {
+        "path": "docs/reference/ui/estimating/sales-briefs-design-r01/README.md",
+        "anchor": "",
+        "status": "Accepted design reference; application acceptance pending"
+      },
+      "specification": "docs/design/development/components/sales-briefs-register.md",
+      "used_on": [
+        "route:/estimating/intake",
+        "scope:CR-02"
+      ],
+      "desktop": "Full-width 40 px grid, 240 px secondary menu, overlapping exact snapshot and 360 px selection panel.",
+      "mobile": "Compact shared header, 390/320 list, wrapped narrow states, full-screen snapshot and selected-list dialog.",
+      "keyboard": "Labelled controls, native dialog focus/return, Space selection, Enter snapshot and shared tab navigation.",
+      "limitations": "Online synthetic authority; no bulk decisions, automatic Discovery, large-population performance qualification or visual acceptance.",
+      "gaps": [
+        {
+          "id": "sales-briefs-visual-acceptance",
+          "expected": "Owner-reviewed application comparison and device/screen-reader evidence.",
+          "actual": "Automated functional proof and capture inspection remain distinct from owner acceptance.",
+          "action": "Review the evidence and bounded adaptations.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ],
+      "figma": {
+        "status": "Partial",
+        "location": "Sales briefs · CR-02 / page components",
+        "components": [
+          {
+            "node": "152:1564",
+            "name": "Sales brief grid row"
+          },
+          {
+            "node": "152:1598",
+            "name": "Sales brief grid header"
+          },
+          {
+            "node": "152:1609",
+            "name": "Sales brief list row (phone)"
+          },
+          {
+            "node": "152:1622",
+            "name": "Sales brief snapshot (phone)"
+          }
+        ],
+        "note": "Accepted page 152:1122 and named version; application acceptance remains pending. No private file link or licensed artwork retained."
+      },
+      "review": null
+    }
+  ],
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "menu-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "tabs-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "sales-briefs-queue",
+          "label": "CR-02 receiving queue",
+          "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        }
+      ],
+      "dependencies": [
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "docs/design/development/sales-briefs-fixtures.json"
+      ],
+      "used_on": [
+        "route:/estimating/intake"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-sales-briefs-review",
+          "expected": "Accepted-design host comparison with separate functional and owner review.",
+          "actual": "CR-02 implementation evidence is recorded separately from acceptance.",
+          "action": "Review docs/testing/evidence/sales-briefs-queue/README.md.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

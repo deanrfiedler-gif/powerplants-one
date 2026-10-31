@@ -35,6 +35,13 @@ const date = (value: string) =>
     month: "short",
     timeZone: "Australia/Brisbane",
   }).format(new Date(value));
+const updatedDate = (value: string, observed: string) => {
+  // Brisbane day boundaries, tied to the read's as-at time rather than a fixture clock.
+  const day = (v: string) =>
+    Math.floor((Date.parse(v) + 10 * 3600000) / 86400000);
+  const ago = day(observed) - day(value);
+  return ago === 0 ? "Today" : ago === 1 ? "Yesterday" : date(value);
+};
 const time = (value: string) =>
   new Intl.DateTimeFormat("en-AU", {
     hour: "2-digit",
@@ -150,6 +157,7 @@ function Queue({ query }: { query: URLSearchParams }) {
           : undefined,
         pageAction: {
           icon: "search",
+          search: true,
           label: "Search briefs",
           onSelect: () => setFilterOpen(true),
         },
@@ -178,6 +186,17 @@ function Queue({ query }: { query: URLSearchParams }) {
                         aria-current={view.id === v.id ? "page" : undefined}
                         onClick={() => menu.closeOverlay(false)}
                       >
+                        <BriefIcon
+                          name={
+                            v.id === "SourceChanged"
+                              ? "source"
+                              : v.id === "Awaiting"
+                                ? "clock"
+                                : v.id === "Assigned"
+                                  ? "owner"
+                                  : "scope"
+                          }
+                        />
                         <span>{v.label}</span>
                         {data && v.count && (
                           <span className="mw-badge">
@@ -310,7 +329,7 @@ function Queue({ query }: { query: URLSearchParams }) {
               paging and view counts.
             </p>
             <div className="sb-filter-choices">{filters}</div>
-            <Button type="submit">Show {data?.total ?? ""} briefs</Button>
+            <Button type="submit">Apply search</Button>
             <Button
               type="button"
               variant="secondary"
@@ -472,10 +491,10 @@ function Rows({
   const cell = (r: ReceivingBrief, label: string) => {
     if (label === "Opportunity")
       return (
-        <>
-          <strong>{r.opportunity.reference}</strong>{" "}
+        <span className="sb-reference">
+          <strong>{r.opportunity.reference}</strong>
           <small>r{r.revision}</small>
-        </>
+        </span>
       );
     if (label === "Title")
       return (
@@ -488,7 +507,7 @@ function Rows({
     if (label === "Updated")
       return (
         <time dateTime={r.updated_at} title={formatDateTime(r.updated_at)}>
-          {date(r.updated_at)}
+          {updatedDate(r.updated_at, data.observed_at)}
         </time>
       );
     if (label === "Requested")
@@ -515,7 +534,10 @@ function Rows({
       )}
       {!!selected.length && (
         <div className="sb-selection-toolbar">
-          <Button onClick={beginSequence}>Open in sequence</Button>
+          <Button variant="secondary" onClick={beginSequence}>
+            <BriefIcon name="arrow" />
+            Open in sequence
+          </Button>
           <Button
             variant="secondary"
             busy={exporting}
@@ -688,6 +710,7 @@ function Rows({
           <PhoneRow
             key={r.id}
             row={r}
+            observed={data.observed_at}
             selecting={selectMode || !!selected.length}
             selected={selected.includes(r.id)}
             onSelect={() => flip(r.id)}
@@ -702,15 +725,19 @@ function Rows({
       {!rows.length && (
         <RegisterEmpty
           title={
-            data.permitted_total === 0
-              ? "No permitted submitted briefs"
-              : "No briefs match this view"
+            data.completeness === "Partial"
+              ? "No briefs available in this partial read"
+              : data.permitted_total === 0
+                ? "No permitted submitted briefs"
+                : "No briefs match this view"
           }
         >
           <p>
-            {data.permitted_total === 0
-              ? "Submitted Sales work appears here after source and receiver permissions are checked."
-              : "Change the view, customer, receiving owner or search."}
+            {data.completeness === "Partial"
+              ? "Some source reads are unavailable. Refresh before concluding that no briefs match."
+              : data.permitted_total === 0
+                ? "Submitted Sales work appears here after source and receiver permissions are checked."
+                : "Change the view, customer, receiving owner or search."}
           </p>
         </RegisterEmpty>
       )}
@@ -745,7 +772,10 @@ function Rows({
             <Button variant="secondary" onClick={clear}>
               Cancel
             </Button>
-            <Button onClick={beginSequence}>Open in sequence</Button>
+            <Button variant="secondary" onClick={beginSequence}>
+              <BriefIcon name="arrow" />
+              Open in sequence
+            </Button>
           </footer>
         </aside>
       )}
@@ -762,6 +792,7 @@ function Rows({
         <SalesBriefSnapshot
           key={snapshot.id}
           row={snapshot}
+          phone={phone}
           rows={sequence ? sequenceRows : rows}
           onSelect={setSnapshot}
           onClose={() => setSnapshot(null)}
@@ -773,6 +804,7 @@ function Rows({
 }
 function PhoneRow({
   row,
+  observed,
   selecting,
   selected,
   onSelect,
@@ -780,12 +812,14 @@ function PhoneRow({
   onLongPress,
 }: {
   row: ReceivingBrief;
+  observed: string;
   selecting: boolean;
   selected: boolean;
   onSelect: () => void;
   onOpen: () => void;
   onLongPress: () => void;
 }) {
+  const identity = useIdentity();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null),
     held = useRef(false);
   const stop = () => {
@@ -832,13 +866,23 @@ function PhoneRow({
         <span className="sb-phone-body">
           <span className="sb-phone-first">
             <strong>{row.opportunity.title}</strong>
-            <time dateTime={row.updated_at}>{date(row.updated_at)}</time>
+            <time dateTime={row.updated_at}>
+              {updatedDate(row.updated_at, observed)}
+            </time>
           </span>
           <small>
             {row.opportunity.reference} r{row.revision} · {row.customer.name}
           </small>
           <span className="sb-phone-last">
-            <BriefState row={row} />
+            <BriefState
+              row={row}
+              receiver={
+                row.receiving_owner?.id !== identity.actor_id &&
+                !["Accepted", "Returned"].includes(row.state)
+                  ? row.receiving_owner?.name
+                  : undefined
+              }
+            />
             <small>
               {row.requested_date
                 ? `Requested ${date(row.requested_date)}`

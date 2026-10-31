@@ -174,14 +174,29 @@ test("CR02 frozen submission survives clarification, acceptance and reload", asy
   await captureSizes(page, info.outputPath.bind(info), "cr02");
   const intakeRead = page.waitForResponse(
     (response) =>
-      response.url().includes("/api/v1/sales/handovers?") &&
+      response.url().includes("/api/v1/sales/handovers/receiving") &&
       response.request().method() === "GET",
   );
   await page.goto("/estimating/intake");
   expect((await intakeRead).ok()).toBe(true);
-  await expect(
-    page.locator(`a[href="/sales/handoffs/estimating/${id}"]`),
-  ).toContainText(o.title);
+  const queue = page.locator("#ppo-sales-briefs");
+  const brief = info.project.use.isMobile ? queue.locator(".sb-phone-row").filter({hasText:o.title}).getByRole("button") : queue.getByRole("button",{name:o.title,exact:true});
+  await brief.click();
+  const snapshot=page.getByRole("dialog",{name:"Submitted Sales brief snapshot"});
+  await expect(snapshot.getByRole("link",{name:"Open brief",exact:true})).toHaveAttribute("href",`/sales/handoffs/estimating/${id}?revision=1`);
+  await snapshot.getByRole("button",{name:"Close brief snapshot"}).click();
+  const accepted = await call(page, `sales/handovers/${id}`);
+  await call(page, `sales/handovers/${id}`, {...crmBase(), action:"Successor",expected_version:accepted.record.version,note:"SYN successor stays separate"});
+  const successor = await call(page, `sales/handovers/${id}`);
+  await call(page, `sales/handovers/${id}`, {...crmBase(), action:"Save",expected_version:successor.record.version,content:{...successor.record.content,problem:"SYN newer unsubmitted content"},receiving_owner_id:null,note:"SYN saved draft only"});
+  await page.goto(`/sales/handoffs/estimating/${id}?revision=1`);
+  await expect(page.getByRole("heading",{name:"Submitted Sales brief · revision 1"})).toBeVisible();
+  await expect(page.getByText("SYN problem",{exact:true})).toBeVisible();
+  await expect(page.getByText("SYN newer unsubmitted content",{exact:true})).toHaveCount(0);
+  await expect(page.getByRole("button",{name:"Accept exact revision"})).toHaveCount(0);
+  await expect(page.getByRole("link",{name:"Review the current brief separately"})).toHaveAttribute("href",`/sales/handoffs/estimating/${id}`);
+  await page.goto("/sales/handoffs/estimating");
+  await expect(page.locator(`a[href="/sales/handoffs/estimating/${id}"]`)).toContainText(o.title);
   await page.goto("/sales/handoffs/won");
   await expect(page.getByRole("heading", { name: /Won/ })).toBeVisible();
 });

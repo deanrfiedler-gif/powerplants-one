@@ -85,6 +85,20 @@ test("CR-02 queue: native clarification, source drift, successor isolation, full
   assert.equal(queue.total, 1);
   assert.equal(queue.counts.Awaiting, 1);
   const original = queue.items[0];
+  const other = (await createSession("second-company")).principal;
+  const hiddenQueue = await listReceivingBriefs(other);
+  assert.equal(hiddenQueue.total, 0);
+  assert.equal(hiddenQueue.counts.All, 0);
+  assert.deepEqual(hiddenQueue.customers, []);
+  assert.deepEqual(hiddenQueue.owners, []);
+  await assert.rejects(
+    readReceivingBrief(other, first.id),
+    code("RecordUnavailable"),
+  );
+  await assert.rejects(
+    exportReceivingBriefs(other, `${original.id}:${original.token}`),
+    code("RecordUnavailable"),
+  );
   assert.equal(
     (
       await readReceivingBrief(p, first.id, {
@@ -120,8 +134,10 @@ test("CR-02 queue: native clarification, source drift, successor isolation, full
     ...crmBase(),
     expected_version: 1,
     title: "SYN Changed source title",
-    source_channel: first.o.source_channel,
-    source_basis: first.o.source_basis,
+    primary_person_id: first.o.primary_person_id,
+    contact_unknown_reason: first.o.contact_unknown_reason,
+    value_amount: "123.00",
+    expected_close_date: "2031-12-01",
   });
   queue = await listReceivingBriefs(p);
   assert.equal(queue.items[0].source_changed, true);
@@ -151,6 +167,8 @@ test("CR-02 queue: native clarification, source drift, successor isolation, full
   assert.equal(queue.items[0].state, "Returned");
   assert.equal(queue.items[0].receiving_owner?.id, p.actor_id);
   assert.equal(queue.items[0].updated_at, returned.updated_at);
+  assert.equal(queue.items[0].token, returned.token);
+  assert.equal(queue.counts.SourceChanged, 0);
   assert.equal(queue.items[0].requested_date, "2031-10-01");
   assert.equal(
     (await readReceivingBrief(p, first.id)).content.problem,

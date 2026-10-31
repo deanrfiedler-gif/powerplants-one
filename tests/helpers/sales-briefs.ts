@@ -92,8 +92,8 @@ export function briefsFixture(): ReceivingQueue {
         name: number === 30 ? "Nutrient room" : "Synthetic growing site",
       },
       receiving_owner: {
-        id: i === 4 ? id(5001) : briefActor,
-        name: i === 4 ? "Riley James" : "Sasha Cole",
+        id: i === 4 || i === 7 ? id(5001) : briefActor,
+        name: i === 4 || i === 7 ? "Riley James" : "Sasha Cole",
       },
       sales_owner: {
         id: id(6001 + (i % 2)),
@@ -101,7 +101,7 @@ export function briefsFixture(): ReceivingQueue {
       },
       state,
       source_changed: i === 2,
-      updated_at: `2026-10-${String(11 - Math.floor(i / 2)).padStart(2, "0")}T00:55:00.000Z`,
+      updated_at: `2026-10-${String(11 - Math.floor(i / 2)).padStart(2, "0")}T00:35:00.000Z`,
       submitted_at: "2026-10-09T01:30:00.000Z",
       requested_date,
       date_reason: requested_date

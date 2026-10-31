@@ -224,7 +224,7 @@ export function HandoverDetail({ id }: { id: string }) {
   const params = useSearchParams();
   const requested = params.get("revision");
   const r = useCrmResource<Detail>(`sales/handovers/${id}`, true);
-  if (requested && r.data && !r.error && (r.data.record.revision !== Number(requested) || r.data.record.state === "Draft")) {
+  if (requested && r.data && !r.error && r.data.record.kind === "Estimating" && (r.data.record.revision !== Number(requested) || r.data.record.state === "Draft")) {
     const submission = r.data.history.find((e) => e.action === "Submit" && e.revision === Number(requested));
     return <section className="crm-panel">
       <h1>{submission ? `Submitted Sales brief · revision ${submission.revision}` : "Submitted revision unavailable"}</h1>

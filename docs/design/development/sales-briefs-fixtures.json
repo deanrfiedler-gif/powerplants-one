@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "scope": "CR-02",
+  "host": "/estimating/intake",
+  "source": "tests/helpers/sales-briefs.ts",
+  "proof": "tests/browser/sales-briefs.spec.ts",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 320,
+      "height": 844
+    }
+  ],
+  "states": [
+    "Loading",
+    "Empty",
+    "Filtered empty",
+    "Complete",
+    "Partial lower bounds",
+    "Stale paging basis",
+    "Failed read and retry",
+    "Denied and revoked snapshot",
+    "Submitted",
+    "Clarification requested",
+    "Clarification answered",
+    "Returned",
+    "Accepted",
+    "Source changed",
+    "Draft successor retaining submission",
+    "Other receiving owner",
+    "Selection and failed export",
+    "Exact snapshot and sequence",
+    "Phone and 320 px"
+  ]
+}
