@@ -217,11 +217,17 @@ export function WorklistPanel({
   children,
   onClose,
   drawer = false,
+  className = "",
+  headerActions,
+  doneLabel = "Done",
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
   drawer?: boolean;
+  className?: string;
+  headerActions?: ReactNode;
+  doneLabel?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null),
     id = useId();
@@ -237,7 +243,7 @@ export function WorklistPanel({
   return (
     <dialog
       ref={ref}
-      className={`crm-r38-panel ${drawer ? "crm-r38-drawer" : ""}`}
+      className={`crm-r38-panel ${className} ${drawer ? "crm-r38-drawer" : ""}`}
       aria-labelledby={id}
       onCancel={(e) => {
         e.preventDefault();
@@ -246,6 +252,7 @@ export function WorklistPanel({
     >
       <header>
         <h2 id={id}>{title}</h2>
+        {headerActions}
         <button
           className="secondary"
           aria-label={`Close ${title}`}
@@ -257,7 +264,7 @@ export function WorklistPanel({
       <div className="crm-r38-panel-body">{children}</div>
       <footer>
         <button className="secondary" onClick={onClose}>
-          Done
+          {doneLabel}
         </button>
       </footer>
     </dialog>
@@ -413,13 +420,14 @@ export function ForecastWorklist({
           {forecastGroups(items, asOf, months).map((group) => (
             <section
               className="crm-forecast-month"
+              data-overdue={group.id === "overdue" || undefined}
               key={group.id}
               aria-label={group.label}
             >
               <header>
                 <h3>{group.label}</h3>
-                <strong>{valueSummary(group.items).formatted}</strong>
                 <span>
+                  {valueSummary(group.items).formatted} known ·{" "}
                   {group.items.length} deals ·{" "}
                   {valueSummary(group.items).unknown} not estimated
                 </span>
@@ -443,9 +451,10 @@ export function ForecastWorklist({
                       aria-label={`${group.label} · ${stage}`}
                     >
                       <h4>
-                        {stage}
                         <span>
-                          {rows.length} ·{" "}
+                          {stage} · {rows.length}
+                        </span>
+                        <span>
                           {totals.unknown === rows.length
                             ? "Not estimated"
                             : totals.formatted}
@@ -475,11 +484,7 @@ export function ForecastWorklist({
                               {dealClose(item.expected_close_date)}
                             </button>
                             <span title={item.owner_name}>
-                              {item.owner_name
-                                .split(" ")
-                                .map((x) => x[0])
-                                .slice(-2)
-                                .join("")}
+                              {item.owner_name}
                             </span>
                             <strong>{dealAmount(item.value_amount)}</strong>
                           </div>

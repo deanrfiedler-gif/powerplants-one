@@ -140,7 +140,7 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
     if (r.url().includes("/api/v1/") && r.method() !== "GET")
       commands.push(r.method());
   });
-  const search = page.getByLabel("Search deals", { exact: true });
+  const search = page.getByRole("searchbox", { name: "Search deals", exact: true });
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
@@ -151,7 +151,7 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   await chooseWorklistSort(page, "Title");
   if (
     !(await page
-      .getByRole("dialog", { name: "Filter deals", exact: true })
+      .getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ })
       .isVisible())
   )
     await toggleWorklistFilters(page);
@@ -373,7 +373,7 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
     e.scrollTop = 100;
   });
   const sticky = await page
-    .locator(".crm-grid tbody th")
+    .locator(".crm-accepted-grid tbody th")
     .first()
     .evaluate((e) => ({
       left: e.getBoundingClientRect().left,
@@ -491,15 +491,15 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await filterToggle.focus();
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+    page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeVisible();
-  await expect(page.getByLabel("Search deals", { exact: true })).toBeVisible();
+  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toBeVisible();
   await page.getByLabel("Next action", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+    page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeHidden();
   await expect(filterToggle).toBeFocused();
   await capture(page, info, "320-grid-keyboard");
@@ -684,7 +684,7 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await expect(
     page.locator('.crm-workspace > .business-error[role="alert"]'),
   ).toBeVisible();
-  await expect(page.getByLabel("Search deals", { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toHaveCount(0);
   const late = page.waitForResponse(
     (r) => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 200,
   );

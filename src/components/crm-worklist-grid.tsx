@@ -136,7 +136,7 @@ function Cell({
   if (column === "activity")
     return (
       <span
-        className={`crm-cell-activity crm-action-text state-${item.next_action_state}`}
+        className={`crm-cell-activity crm-cell-summary crm-action-text state-${item.next_action_state}`}
       >
         {item.next_action_state === "Needed"
           ? "Nothing scheduled"
@@ -146,7 +146,7 @@ function Cell({
   if (column === "due")
     return (
       <span
-        className={`crm-cell-activity crm-action-text state-${item.next_action_state}`}
+        className={`crm-cell-activity crm-cell-due crm-action-text state-${item.next_action_state}`}
       >
         {item.next_action_state === "Needed" ? (
           "Schedule a follow-up"
@@ -305,7 +305,7 @@ export function Grid({
       {desktop && (
         <div
           ref={ref}
-          className="crm-grid-scroll crm-grid crm-accepted-grid-scroll crm-accepted-grid"
+          className="crm-grid-scroll crm-accepted-grid-scroll crm-accepted-grid"
           style={
             {
               "--crm-table-width": `${88 + columns.reduce((sum, id) => sum + widths[id], 0)}px`,

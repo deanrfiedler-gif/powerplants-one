@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 import {
   dealsDesignRecords,
   dealsArchiveRecords,
@@ -6,6 +6,25 @@ import {
   dealsDesignStages,
 } from "./deals-accepted-fixture";
 export async function installDealsDesign(page: Page) {
+  // Capture the real synthetic session/shell once for repeatable design reads.
+  // Native command/authentication proof lives in deals-cr04-native and HTTP/database tests.
+  const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3404"}`;
+  for (const path of ["local-session", "shell/context"]) {
+    let body: unknown;
+    await expect(async () => {
+      const response = await page.request.get(`${origin}/api/v1/${path}`);
+      expect(
+        response.ok(),
+        `Design fixture prerequisite ${path}: ${response.status()}`,
+      ).toBe(true);
+      body = await response.json();
+    }).toPass({ timeout: 60000, intervals: [1000, 3000] });
+    await page.route(`**/api/v1/${path}`, (route) =>
+      route.request().method() === "GET"
+        ? route.fulfill({ json: body })
+        : route.continue(),
+    );
+  }
   const state = {
     denied: false,
     failed: false,
@@ -32,7 +51,9 @@ export async function installDealsDesign(page: Page) {
         },
       });
     const p = new URL(route.request().url()).searchParams;
-    let items = (p.get("outcome") === "Closed" ? dealsArchiveRecords : dealsDesignRecords).filter(
+    let items = (
+      p.get("outcome") === "Closed" ? dealsArchiveRecords : dealsDesignRecords
+    ).filter(
       (r) =>
         !p.get("q") ||
         r.title.toLowerCase().includes(p.get("q")!.toLowerCase()),

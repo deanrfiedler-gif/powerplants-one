@@ -12,12 +12,18 @@ export function AddDealDialog({
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [state, setState] = useState({ dirty: false, blocked: false });
+  const [closing, setClosing] = useState(false);
+  // Unmount the discarded form first so its native navigation guard is released
+  // before removing add=deal from history. A pending/uncertain intent cannot close.
+  useEffect(() => {
+    if (closing) onClose();
+  }, [closing, onClose]);
   const close = () => {
     if (
       !state.blocked &&
       (!state.dirty || window.confirm("Discard this unsaved deal?"))
     )
-      onClose();
+      setClosing(true);
   };
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -53,7 +59,9 @@ export function AddDealDialog({
         </button>
       </header>
       <div className="crm-add-body">
-        <NewOpportunityForm embedded onSaved={onSaved} onState={setState} />
+        {!closing && (
+          <NewOpportunityForm embedded onSaved={onSaved} onState={setState} />
+        )}
       </div>
       <footer className="crm-dialog-footer">
         <span>Values start as not estimated.</span>

@@ -420,16 +420,16 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await filterToggle.focus();
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+    page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeVisible();
-  await expect(page.getByLabel("Search deals", { exact: true })).toBeVisible();
+  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toBeVisible();
   await page.getByLabel("Next action", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
   await capture(page, info, "reflow-320-keyboard");
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("dialog", { name: "Filter deals", exact: true }),
+    page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeHidden();
   await expect(filterToggle).toBeFocused();
   await page.setViewportSize(info.project.use.viewport!);

@@ -246,12 +246,69 @@ export const dealsDesignRecords: WorklistItem[] = stories.map(
 
 // Archive titles/outcome totals follow r02. Individual value allocation beyond the
 // two retained historical records is synthetic test data, not a recovered design source.
-const closedStories: [string, string, WorklistItem["stage_id"], "Won"|"Lost", string|null][] = [
- ["Shadehouse irrigation controls", "SYN Meadowfield Nursery, QLD", "Closing", "Won", "28500.00"],
- ["Propagation bench heating", "SYN Fernbank Nursery, NSW", "Closing", "Won", "35450.00"],
- ["Fertigation sensor retrofit", "SYN Ironbark Plants, NSW", "Closing", "Won", "18600.00"],
- ["Seasonal screen retrofit", "SYN Peppertree Produce, SA", "Scoping", "Lost", "17500.00"],
- ["Hydroponic channel upgrade", "SYN Saltwater Greens, SA", "Negotiation", "Lost", "66000.00"],
- ["Boiler controls integration", "SYN Coolwater Crops, VIC", "Discovery", "Lost", null],
+const closedStories: [
+  string,
+  string,
+  WorklistItem["stage_id"],
+  "Won" | "Lost",
+  string | null,
+][] = [
+  [
+    "Shadehouse irrigation controls",
+    "SYN Meadowfield Nursery, QLD",
+    "Closing",
+    "Won",
+    "28500.00",
+  ],
+  [
+    "Propagation bench heating",
+    "SYN Fernbank Nursery, NSW",
+    "Closing",
+    "Won",
+    "35450.00",
+  ],
+  [
+    "Fertigation sensor retrofit",
+    "SYN Ironbark Plants, NSW",
+    "Closing",
+    "Won",
+    "18600.00",
+  ],
+  [
+    "Seasonal screen retrofit",
+    "SYN Peppertree Produce, SA",
+    "Scoping",
+    "Lost",
+    "17500.00",
+  ],
+  [
+    "Hydroponic channel upgrade",
+    "SYN Saltwater Greens, SA",
+    "Negotiation",
+    "Lost",
+    "66000.00",
+  ],
+  [
+    "Boiler controls integration",
+    "SYN Coolwater Crops, VIC",
+    "Discovery",
+    "Lost",
+    null,
+  ],
 ];
-export const dealsArchiveRecords: WorklistItem[] = closedStories.map(([title,organisation,stage,outcome,value],i)=>({...dealsDesignRecords[i],id:`c3000000-0000-4000-8000-${String(i+1).padStart(12,"0")}`,display_number:`SYN-PPO-OPP-00040${i}`,title,organisation_name:organisation,stage_id:stage,close_outcome:outcome,value_amount:value,next_action_state:i===0?"Upcoming":"Needed",next_action_summary:i===0?"Prepare receiving handover":null,next_action_id:i===0?dealsDesignRecords[0].next_action_id:null,due_at:i===0?"2026-10-16T23:00:00.000Z":null}));
+export const dealsArchiveRecords: WorklistItem[] = closedStories.map(
+  ([title, organisation, stage, outcome, value], i) => ({
+    ...dealsDesignRecords[i],
+    id: `c3000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,
+    display_number: `SYN-PPO-OPP-00040${i}`,
+    title,
+    organisation_name: organisation,
+    stage_id: stage,
+    close_outcome: outcome,
+    value_amount: value,
+    next_action_state: i === 0 ? "Upcoming" : "Needed",
+    next_action_summary: i === 0 ? "Prepare receiving handover" : null,
+    next_action_id: i === 0 ? dealsDesignRecords[0].next_action_id : null,
+    due_at: i === 0 ? "2026-10-16T23:00:00.000Z" : null,
+  }),
+);

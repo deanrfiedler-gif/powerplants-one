@@ -8,11 +8,13 @@ const origin =
 test.describe.configure({ timeout: 180000 });
 test.use({ actionTimeout: 30000 });
 test.beforeEach(async ({ page }) => {
-  const r = await page.request.post(origin + "/api/v1/local-session", {
-    headers: { Origin: origin },
-    data: { profile: "coordinator" },
-  });
-  expect(r.status()).toBe(200);
+  await expect(async () => {
+    const r = await page.request.post(origin + "/api/v1/local-session", {
+      headers: { Origin: origin },
+      data: { profile: "coordinator" },
+    });
+    expect(r.status()).toBe(200);
+  }).toPass({ timeout: 60000, intervals: [1000, 3000] });
 });
 test("CR-04 application geometry and compact List at matching viewports", async ({
   page,
@@ -32,7 +34,14 @@ test("CR-04 application geometry and compact List at matching viewports", async 
           ? ".crm-phone-deal"
           : ".ppo-register-table tbody tr[data-opportunity-id]",
       ),
-    ).toHaveCount(18, {timeout:30000});
+    ).toHaveCount(18, { timeout: 30000 });
+    if (width === 1024)
+      await page
+        .getByRole("button", {
+          name: "Collapse primary navigation",
+          exact: true,
+        })
+        .click();
     await page.evaluate(() => document.fonts.ready);
     expect(
       await page.evaluate(
@@ -145,7 +154,9 @@ test("CR-04 filter URL, browser history, Add deal overlay and follow-through ret
   await expect(
     page.getByRole("dialog", { name: "Add deal", exact: true }),
   ).toBeVisible();
-  await expect(page.getByLabel("Deal title", {exact:true})).toBeVisible({timeout:30000});
+  await expect(page.getByLabel("Deal title", { exact: true })).toBeVisible({
+    timeout: 30000,
+  });
   await page.screenshot({ path: info.outputPath("application-add-1440.png") });
   expect(new URL(page.url()).searchParams.get("q")).toBe("Potting");
   await page.goBack();
@@ -156,7 +167,20 @@ test("CR-04 filter URL, browser history, Add deal overlay and follow-through ret
   await expect(
     page.getByRole("dialog", { name: "Add deal", exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  await page.reload();
+  const draft = page.getByRole("dialog", { name: "Add deal", exact: true });
+  await expect(draft).toBeVisible();
+  await draft
+    .getByLabel("Deal title", { exact: true })
+    .fill("SYN unsaved modal title");
+  page.once("dialog", (d) => d.dismiss());
+  await draft.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(draft.getByLabel("Deal title", { exact: true })).toHaveValue(
+    "SYN unsaved modal title",
+  );
+  page.once("dialog", (d) => d.accept());
+  await draft.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(draft).toHaveCount(0);
   state.followFailed = true;
   await page
     .getByRole("button", { name: "Snapshot: Potting machine and take-off" })
@@ -184,44 +208,116 @@ test("CR-04 filter URL, browser history, Add deal overlay and follow-through ret
   expect(new URL(page.url()).searchParams.get("q")).toBe("Potting");
 });
 
-test("CR-04 month and outcome grouping, partial/failed/empty reads and compact selection", async ({page},info)=>{
- const state=await installDealsDesign(page);
- for(const width of [1440,1024,390,320]) {
-  await page.setViewportSize({width,height:width===1024?768:width>1024?960:844});
-  await page.goto(origin+"/sales/opportunities?view=Forecast");
-  await expect(page.locator(".crm-forecast-card")).toHaveCount(18,{timeout:30000});
-  await expect(page.locator(".crm-forecast")).toContainText("Not estimated");
-  await page.screenshot({path:info.outputPath(`application-forecast-${width}.png`)});
-  await page.goto(origin+"/sales/opportunities?view=Archive");
-  await expect(page.locator("[data-opportunity-id]")).toHaveCount(6,{timeout:30000});
-  await expect(page.locator(".crm-outcome-band")).toHaveCount(2);
-  await expect(page.locator(".crm-outcome-band").first()).toContainText("$82,550.00");
-  await expect(page.locator(".crm-outcome-band").last()).toContainText("1 not estimated");
-  await page.screenshot({path:info.outputPath(`application-archive-${width}.png`)});
- }
- await page.goto(origin+"/sales/opportunities?view=Grid");
- await page.getByRole("button",{name:/^Choose view\. Current view:/}).click();
- await page.getByRole("button",{name:"Select deals",exact:true}).click();
- await page.locator(".crm-phone-select input").first().check();
- await expect(page.locator(".crm-selection-panel")).toBeVisible();
- await page.screenshot({path:info.outputPath("application-selection-320.png")});
- await page.getByRole("button",{name:"Close selection"}).click();
- await page.getByRole("button",{name:/^Search and filter/}).click();
- await expect(page.getByRole("dialog",{name:"Filter deals",exact:true})).toBeVisible();
- await page.screenshot({path:info.outputPath("application-filters-320.png")});
- await page.getByLabel("Search deals",{exact:true}).fill("no-synthetic-match");
- await page.getByRole("button",{name:"Close Filter deals",exact:true}).click();
- await expect(page.getByRole("heading",{name:"No deals match these filters"})).toBeVisible();
- state.empty=true; await page.goto(origin+"/sales/opportunities?view=Grid");
- await expect(page.getByRole("heading",{name:"No deals yet"})).toBeVisible();
- state.empty=false; state.partial=true;
- await page.setViewportSize({width:1440,height:960}); await page.reload();
- await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
- await expect(page.locator(".crm-workspace-status")).toContainText("this page");
- await page.screenshot({path:info.outputPath("application-partial-1440.png")});
- state.failed=true; await page.getByRole("button",{name:"Refresh from start",exact:true}).click();
- await expect(page.getByText("Synthetic read unavailable. Try again.",{exact:true})).toBeVisible();
- await expect(page.locator("[data-opportunity-id]")).toHaveCount(0);
- state.failed=false; await page.getByRole("button",{name:"Try loading again",exact:true}).click();
- await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
+test("CR-04 month and outcome grouping, partial/failed/empty reads and compact selection", async ({
+  page,
+}, info) => {
+  const state = await installDealsDesign(page);
+  for (const width of [1440, 1024, 390, 320]) {
+    await page.setViewportSize({
+      width,
+      height: width === 1024 ? 768 : width > 1024 ? 960 : 844,
+    });
+    await page.goto(origin + "/sales/opportunities?view=Forecast");
+    if (width === 1024)
+      await page
+        .getByRole("button", {
+          name: "Collapse primary navigation",
+          exact: true,
+        })
+        .click();
+    await expect(page.locator(".crm-forecast-card")).toHaveCount(18, {
+      timeout: 30000,
+    });
+    expect(
+      await page
+        .locator(".crm-forecast-card > a")
+        .evaluateAll((nodes) => nodes.every((node) => node.clientHeight >= 18)),
+    ).toBe(true);
+    await expect(page.locator(".crm-forecast-workspace")).toContainText(
+      "Not estimated",
+    );
+    await page.screenshot({
+      path: info.outputPath(`application-forecast-${width}.png`),
+    });
+    await page.goto(origin + "/sales/opportunities?view=Archive");
+    await expect(page.locator("[data-opportunity-id]")).toHaveCount(6, {
+      timeout: 30000,
+    });
+    await expect(page.locator(".crm-outcome-band")).toHaveCount(2);
+    await expect(page.locator(".crm-outcome-band").first()).toContainText(
+      "$82,550.00",
+    );
+    await expect(page.locator(".crm-outcome-band").last()).toContainText(
+      "1 not estimated",
+    );
+    await page.screenshot({
+      path: info.outputPath(`application-archive-${width}.png`),
+    });
+  }
+  await page.goto(origin + "/sales/opportunities?view=Grid");
+  await page
+    .getByRole("button", { name: /^Choose view\. Current view:/ })
+    .click();
+  await page
+    .getByRole("button", { name: "Select deals in List", exact: true })
+    .click();
+  await page.locator(".crm-phone-select input").first().check();
+  await expect(page.locator(".crm-selection-panel")).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("application-selection-320.png"),
+  });
+  await page.getByRole("button", { name: "Close selection" }).click();
+  await page.getByRole("button", { name: /^Search and filter/ }).click();
+  await expect(
+    page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
+  ).toBeVisible();
+  for (const label of ["Deal owner", "Company", "Site"]) {
+    await expect(
+      page.getByLabel(label, { exact: true }).locator("option").first(),
+    ).not.toHaveText(/Loading/);
+  }
+  await expect(
+    page.getByRole("button", { name: "Show 18 deals", exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("application-filters-320.png"),
+  });
+  await page
+    .getByRole("searchbox", { name: "Search deals", exact: true })
+    .fill("no-synthetic-match");
+  await page
+    .getByRole("button", { name: /^Close (Filter deals|Search and filter)$/ })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "No deals match these filters" }),
+  ).toBeVisible();
+  state.empty = true;
+  await page.goto(origin + "/sales/opportunities?view=Grid");
+  await expect(
+    page.getByRole("heading", { name: "No deals yet" }),
+  ).toBeVisible();
+  state.empty = false;
+  state.partial = true;
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.reload();
+  await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
+  await expect(page.locator(".crm-workspace-status")).toContainText(
+    "this page",
+  );
+  await page.screenshot({
+    path: info.outputPath("application-partial-1440.png"),
+  });
+  state.failed = true;
+  await page
+    .getByRole("button", { name: "Refresh from start", exact: true })
+    .click();
+  await expect(
+    page.getByText("Synthetic read unavailable. Try again.", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator("[data-opportunity-id]")).toHaveCount(0);
+  state.failed = false;
+  await page
+    .getByRole("button", { name: "Try loading again", exact: true })
+    .click();
+  await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
 });

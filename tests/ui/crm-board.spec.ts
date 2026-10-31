@@ -21,7 +21,10 @@ test("search retains every key while framework URL rendering is deferred", async
   page,
 }) => {
   await page.goto(fixture + "?fixture_navigation_delay=1");
-  const search = page.getByLabel("Search deals", { exact: true });
+  const search = page.getByRole("searchbox", {
+    name: "Search deals",
+    exact: true,
+  });
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
@@ -62,7 +65,7 @@ test("hosted header, populated board, filtering and independent card targets", a
     await expect(page.locator("#shell-phone-menu")).toBeFocused();
   await expect(
     page.getByRole("button", {
-      name: /^(Filters and sort|Filters|Search and filter)(,|$)/,
+      name: /^(Filters and sort|Filters?|Search and filter)(,|$)/,
     }),
   ).toBeVisible();
   await page.getByRole("button", { name: "More", exact: true }).click();
@@ -92,10 +95,12 @@ test("hosted header, populated board, filtering and independent card targets", a
       .getBoundingClientRect();
     const search = [
       ...document.querySelectorAll(
-        ".crm-header-search,.ppo-global-search,.ppo-phone-search-filter",
+        phone
+          ? ".ppo-phone-page-action,.ppo-phone-search-filter"
+          : ".ppo-global-search",
       ),
     ]
-      .find((node) => node.getBoundingClientRect().width > 0)!
+      .find((node) => node.checkVisibility())!
       .getBoundingClientRect();
     const heading = document.querySelector<HTMLElement>(
       phone ? ".ppo-phone-title" : ".product-heading",
@@ -128,6 +133,7 @@ test("hosted header, populated board, filtering and independent card targets", a
         account.right <= header.right,
       noOverlap:
         search.right <= account.left ||
+        account.right <= search.left ||
         search.bottom <= account.top ||
         search.top >= account.bottom,
       cardHeights: cards.map((e) => e.getBoundingClientRect().height),
@@ -188,7 +194,9 @@ test("hosted header, populated board, filtering and independent card targets", a
   await fillOpportunitySearch(page, "Glasshouse");
   await expect(page.locator(".crm-worklist-stamp")).toContainText("1 deal");
   await chooseDealsView(page, "List");
-  await expect(page.locator("tbody tr")).toHaveCount(1);
+  await expect(
+    page.locator(phone ? ".crm-phone-deal" : "tbody tr"),
+  ).toHaveCount(1);
   expect(new URL(page.url()).searchParams.get("q")).toBe("Glasshouse");
   await chooseDealsView(page, "Board");
   await toggleWorklistFilters(page);
@@ -201,7 +209,9 @@ test("hosted header, populated board, filtering and independent card targets", a
   await page.screenshot({ path: info.outputPath("empty-board.png") });
   await fillOpportunitySearch(page, "denied");
   await expect(page.locator(".crm-workspace > .business-error")).toBeVisible();
-  await expect(page.getByLabel("Search deals", { exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("searchbox", { name: "Search deals", exact: true }),
+  ).toHaveCount(0);
   await expect(page.locator(".crm-card")).toHaveCount(0);
 });
 

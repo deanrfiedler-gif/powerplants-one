@@ -46,7 +46,9 @@ export function DealSelection({
       aria-labelledby="crm-selection-title"
     >
       <header>
-        <h2 id="crm-selection-title">{items.length} deals selected</h2>
+        <h2 id="crm-selection-title">
+          {items.length} {items.length === 1 ? "deal" : "deals"} selected
+        </h2>
         <button
           className="secondary"
           aria-label="Close selection"
@@ -74,10 +76,6 @@ export function DealSelection({
           </article>
         ))}
         <div className="crm-selection-actions">
-          <button disabled={busy} onClick={onOpen}>
-            <ProductIcon name="eye" />
-            Open in sequence
-          </button>
           <button className="secondary" disabled={busy} onClick={onExport}>
             <ProductIcon name="download" />
             Export selected list
@@ -93,8 +91,15 @@ export function DealSelection({
         </p>
       </div>
       <footer>
-        <button className="secondary" onClick={onClose}>
-          Cancel selection
+        <button
+          className="secondary"
+          aria-label="Cancel selection"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
+        <button disabled={busy} onClick={onOpen}>
+          Open in sequence
         </button>
       </footer>
     </dialog>

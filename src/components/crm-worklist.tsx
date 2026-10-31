@@ -27,6 +27,7 @@ import {
 } from "react";
 import {
   DealDialog,
+  useDesktopCRM,
   stageRequiresEvidence,
   type DealRecord,
   type StageUndo,
@@ -88,12 +89,6 @@ function FilterPicker({
   );
   return (
     <div className="crm-filter-picker">
-      <Field
-        name={`filter-${kind}-search`}
-        label={`Find ${kind.toLowerCase()} filter`}
-        value={q}
-        onChange={setQ}
-      />
       <SelectField
         name={`filter-${kind}`}
         label={kind === "Owner" ? "Deal owner" : kind}
@@ -106,16 +101,15 @@ function FilterPicker({
             : `All permitted ${kind === "Company" ? "companies" : kind === "Site" ? "sites" : "owners"}`
         }
       />
-      {data.data && !isDenied && (
-        <p className="crm-worklist-stamp">
-          <strong>{data.data.items.length} deals</strong> · {totals?.formatted}{" "}
-          known · {totals?.unknown} not estimated ·{" "}
-          {data.data.completeness === "Complete"
-            ? "all matching results"
-            : "this page only"}{" "}
-          · AUD excl. GST · As at <Stamp value={data.data.window.as_of} />
-        </p>
-      )}
+      <details className="crm-filter-option-search">
+        <summary>Search {kind.toLowerCase()} options</summary>
+        <Field
+          name={`filter-${kind}-search`}
+          label={`Find ${kind.toLowerCase()} filter`}
+          value={q}
+          onChange={setQ}
+        />
+      </details>
       <ErrorNotice error={data.error} />
       {data.data?.next_cursor && (
         <small>More options exist. Refine this filter search.</small>
@@ -201,6 +195,7 @@ function useScrollMemory() {
 }
 export function SalesWorklist() {
   const p = useIdentity();
+  const desktop = useDesktopCRM();
   const [dialog, setDialog] = useState<{
       id: string;
       mode: "snapshot" | "stage" | "information" | "outcome";
@@ -867,7 +862,27 @@ export function SalesWorklist() {
       )}
       {filtersOpen && !isDenied && (
         <WorklistPanel
-          title="Filter deals"
+          title={desktop ? "Filter deals" : "Search and filter"}
+          className="crm-filter-dialog"
+          doneLabel={
+            ready
+              ? `Show ${data.data!.items.length} deals${data.data!.completeness === "Complete" ? "" : " on this page"}`
+              : "Back to deals"
+          }
+          headerActions={
+            <button
+              className="secondary crm-filter-reset"
+              onClick={() =>
+                setFilters((old) => ({
+                  ...initial,
+                  pipeline_definition_id: old.pipeline_definition_id,
+                  outcome: view === "Archive" ? "Closed" : "Open",
+                }))
+              }
+            >
+              Reset
+            </button>
+          }
           drawer
           onClose={() => setFiltersOpen(false)}
         >
@@ -877,34 +892,10 @@ export function SalesWorklist() {
             aria-label="Deal filters"
           >
             <div className="crm-filter-grid">
-              {scopedSearch}
-              {(["Company", "Site", "Owner"] as const).map((kind) => (
-                <FilterPicker
-                  key={kind}
-                  kind={kind}
-                  value={
-                    filters[
-                      kind === "Company"
-                        ? "company_id"
-                        : kind === "Site"
-                          ? "site_id"
-                          : "owner_id"
-                    ]
-                  }
-                  company={filters.company_id}
-                  enabled={!data.error}
-                  set={(v) =>
-                    change(
-                      kind === "Company"
-                        ? "company_id"
-                        : kind === "Site"
-                          ? "site_id"
-                          : "owner_id",
-                      v,
-                    )
-                  }
-                />
-              ))}
+              <div className="crm-filter-search">
+                <span aria-hidden="true">Search deals</span>
+                {scopedSearch}
+              </div>
               <label className="field">
                 Sales outcome
                 <select
@@ -947,6 +938,50 @@ export function SalesWorklist() {
                 }))}
                 empty="All stages"
               />
+              <FilterPicker
+                kind="Owner"
+                value={filters.owner_id}
+                company={filters.company_id}
+                enabled={!data.error}
+                set={(value) => change("owner_id", value)}
+              />
+              <label className="crm-check">
+                <input
+                  type="checkbox"
+                  checked={filters.owner_id === p.actor_id}
+                  onChange={(e) =>
+                    change("owner_id", e.target.checked ? p.actor_id : "")
+                  }
+                />
+                Owned by me
+              </label>
+              {(["Company", "Site"] as const).map((kind) => (
+                <FilterPicker
+                  key={kind}
+                  kind={kind}
+                  value={
+                    filters[
+                      kind === "Company"
+                        ? "company_id"
+                        : kind === "Site"
+                          ? "site_id"
+                          : "owner_id"
+                    ]
+                  }
+                  company={filters.company_id}
+                  enabled={!data.error}
+                  set={(v) =>
+                    change(
+                      kind === "Company"
+                        ? "company_id"
+                        : kind === "Site"
+                          ? "site_id"
+                          : "owner_id",
+                      v,
+                    )
+                  }
+                />
+              ))}
               <label className="field">
                 Sort
                 <select
@@ -971,29 +1006,7 @@ export function SalesWorklist() {
                   <option value="50">50 records</option>
                 </select>
               </label>
-              <label className="crm-check">
-                <input
-                  type="checkbox"
-                  checked={filters.owner_id === p.actor_id}
-                  onChange={(e) =>
-                    change("owner_id", e.target.checked ? p.actor_id : "")
-                  }
-                />
-                Owned by me
-              </label>
             </div>
-            <button
-              className="secondary"
-              onClick={() =>
-                setFilters((old) => ({
-                  ...initial,
-                  pipeline_definition_id: old.pipeline_definition_id,
-                  outcome: view === "Archive" ? "Closed" : "Open",
-                }))
-              }
-            >
-              Clear filters
-            </button>
           </section>
         </WorklistPanel>
       )}

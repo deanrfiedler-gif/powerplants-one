@@ -85,9 +85,25 @@ test("CR-04 accepted fixture continuity and forecast denominators include every 
 });
 
 test("CR-04 activity wording follows the observed Brisbane date, including midnight and unknown dates", () => {
-  const row = {...dealsDesignRecords[0], due_at: "2026-10-15T14:00:00.000Z"};
-  assert.equal(activityDueLabel(row, "2026-10-15T13:59:59.000Z"), "Due in 1 day");
+  const row = {
+    ...dealsDesignRecords[0],
+    next_action_state: "Upcoming" as const,
+    due_at: "2026-10-15T14:00:00.000Z",
+  };
+  assert.equal(
+    activityDueLabel(row, "2026-10-15T13:59:59.000Z"),
+    "Due in 1 day",
+  );
   assert.equal(activityDueLabel(row, "2026-10-15T14:00:00.000Z"), "Due today");
-  assert.equal(activityDueLabel({...row, next_action_state:"Overdue"}, "2026-10-16T14:00:00.000Z"), "Overdue by 1 day");
-  assert.equal(activityDueLabel({...row, due_at:null}, dealsDesignAsOf), "Due date needed");
+  assert.equal(
+    activityDueLabel(
+      { ...row, next_action_state: "Overdue" },
+      "2026-10-16T14:00:00.000Z",
+    ),
+    "Overdue by 1 day",
+  );
+  assert.equal(
+    activityDueLabel({ ...row, due_at: null }, dealsDesignAsOf),
+    "Due date needed",
+  );
 });

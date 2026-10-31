@@ -259,10 +259,32 @@ export function DealDialog({
                   >
                     Change stage · {o.stage_id}
                   </button>
-                  {o.can_edit && o.close_outcome === "Open" && !resource.error && <div className="crm-snapshot-outcomes">
-                    <button className="secondary" disabled={o.stage_id !== o.stages.at(-1)?.stage_id} title="Won is available at the final native pipeline stage" onClick={() => { setOutcomeChoice("Won"); setMode("outcome"); }}>Record Won</button>
-                    <button className="secondary" onClick={() => { setOutcomeChoice("Lost"); setMode("outcome"); }}>Record Lost</button>
-                  </div>}
+                  {o.can_edit &&
+                    o.close_outcome === "Open" &&
+                    !resource.error && (
+                      <div className="crm-snapshot-outcomes">
+                        <button
+                          className="secondary"
+                          disabled={o.stage_id !== "Closing"}
+                          title="Won is available at the final native pipeline stage"
+                          onClick={() => {
+                            setOutcomeChoice("Won");
+                            setMode("outcome");
+                          }}
+                        >
+                          Record Won
+                        </button>
+                        <button
+                          className="secondary"
+                          onClick={() => {
+                            setOutcomeChoice("Lost");
+                            setMode("outcome");
+                          }}
+                        >
+                          Record Lost
+                        </button>
+                      </div>
+                    )}
                 </section>
                 <section>
                   <h3>Next activity</h3>

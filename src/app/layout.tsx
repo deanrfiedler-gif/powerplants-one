@@ -56,9 +56,7 @@ export const metadata: Metadata = {
   // The manifest link itself comes from the src/app/manifest.ts file convention.
   // These add the icon and installed-title metadata Apple reads from the document.
   icons: {
-    icon: [
-      { url: "/pwa/ppo-app-icon-192.png", sizes: "192x192", type: "image/png" },
-    ],
+    icon: [{ url: "/pwa/ppo-app-icon-192.png", sizes: "192x192", type: "image/png" }],
     apple: [{ url: appleTouchIconPath, sizes: "180x180", type: "image/png" }],
   },
   appleWebApp: {
@@ -89,15 +87,7 @@ export default async function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ApplicationFrame
-          hosted={process.env.PPO_ENV === "azure-demo"}
-          development={await developmentRequest(await headers())}
-          railExpanded={railExpandedFrom(
-            (await cookies()).get(railCookie)?.value,
-          )}
-        >
-          {children}
-        </ApplicationFrame>
+        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
       </body>
     </html>
   );

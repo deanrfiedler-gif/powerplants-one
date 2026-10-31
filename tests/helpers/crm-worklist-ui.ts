@@ -5,21 +5,20 @@ import { keyActivate, keyType } from "./quality-keyboard";
 // exercising the worklist; the background correctly remains inert.
 export async function toggleWorklistFilters(page: Page) {
   const close = page.getByRole("button", {
-    name: "Close Filter deals",
-    exact: true,
+    name: /^Close (Filter deals|Search and filter)$/,
   });
   if (await close.isVisible()) await close.click();
   else
     await page
       .getByRole("button", {
-        name: /^(Filters and sort|Filters|Search and filter)(,|$)/,
+        name: /^(Filters and sort|Filters?|Search and filter)(,|$)/,
       })
       .filter({ visible: true })
       .click();
 }
 
 const filterDrawer = (page: Page) =>
-  page.getByRole("dialog", { name: "Filter deals", exact: true });
+  page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ });
 
 // Accepted CR-04 search lives in the filter drawer at every viewport.
 export async function searchNeedsDrawer(page: Page) {
@@ -27,7 +26,10 @@ export async function searchNeedsDrawer(page: Page) {
 }
 
 export async function fillOpportunitySearch(page: Page, value: string) {
-  const search = page.getByLabel("Search deals", { exact: true });
+  const search = page.getByRole("searchbox", {
+    name: "Search deals",
+    exact: true,
+  });
   const opened = await searchNeedsDrawer(page);
   if (opened) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
@@ -51,17 +53,20 @@ export async function keyOpportunitySearch(page: Page, value: string) {
       page,
       page
         .getByRole("button", {
-          name: /^(Filters and sort|Filters|Search and filter)(,|$)/,
+          name: /^(Filters and sort|Filters?|Search and filter)(,|$)/,
         })
         .filter({ visible: true }),
     );
-  await keyType(page, page.getByLabel("Search deals", { exact: true }), value);
+  await keyType(
+    page,
+    page.getByRole("searchbox", { name: "Search deals", exact: true }),
+    value,
+  );
   if (opened)
     await keyActivate(
       page,
       page.getByRole("button", {
-        name: "Close Filter deals",
-        exact: true,
+        name: /^Close (Filter deals|Search and filter)$/,
       }),
     );
 }
