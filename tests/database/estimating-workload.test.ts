@@ -6,6 +6,7 @@ import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
 import { createOpportunity } from "../../src/crm/opportunities";
+import { editDealScope } from "../../src/crm/refinements";
 import { createEstimate } from "../../src/estimating/service";
 import {
   createHandover,
@@ -241,11 +242,15 @@ test("ES01 readiness counts cover the permitted search and owner window before t
 
 test("ES01 All/My counts retain separate SQL-before-limit windows and use the workspace owner", async () => {
   const p = (await createSession("coordinator")).principal;
-  const sales = (await createSession("assigned-technician")).principal;
+  const sales = (await createSession("crm-receiver")).principal;
   const prefix = `SYN ES01 bounded ${randomUUID()}`;
   const owned: string[] = [];
   for (let i = 0; i < 2; i++) {
-    const o = { ...crmCreate(), title: `${prefix} older owned ${i}` };
+    const o = {
+      ...crmCreate(),
+      owner_id: sales.actor_id,
+      title: `${prefix} older owned ${i}`,
+    };
     await createOpportunity(p, o);
     const discovery = discoveryInput(),
       preview = await previewDiscoveryCreate(p, {
@@ -263,10 +268,6 @@ test("ES01 All/My counts retain separate SQL-before-limit windows and use the wo
       context_hash: preview.context_hash,
       confirmed_question_ids: preview.required_confirmation_ids,
     });
-    await database().query(
-      "UPDATE ppo.opportunities SET owner_id=$1 WHERE id=$2",
-      [sales.actor_id, o.id],
-    );
     owned.push(o.id);
   }
   // Newer opportunities owned by the Sales actor do not become estimating work.
@@ -393,10 +394,20 @@ test("ES01 Sales context reports exact acceptance without accepting or linking; 
   assert.equal(accepted.sales_brief.selection?.handover_id, id);
   assert.ok(accepted.sales_brief.selection?.acceptance_event_id);
   assert.equal(accepted.can_start, true);
-  await database().query(
-    "UPDATE ppo.opportunities SET need_summary=need_summary || ' source changed' WHERE id=$1",
-    [o.id],
-  );
+  await editDealScope(p, o.id, {
+    ...crmBase(),
+    expected_version: accepted.opportunity.version,
+    need_summary: o.need_summary + " source changed",
+    scope_details: {
+      inclusions: null,
+      exclusions: null,
+      assumptions: null,
+      constraints: null,
+      acceptance: null,
+      timing: null,
+      delivery: null,
+    },
+  });
   const changed = (await readEstimatingWorkload(p, { q: o.title })).items[0];
   assert.ok(changed.sales_brief && changed.sales_brief !== "Unavailable");
   assert.equal(changed.sales_brief.source_changed, true);

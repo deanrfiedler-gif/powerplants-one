@@ -62,12 +62,15 @@ export function WorkloadReadiness({ item }: { item: WorkloadItem }) {
 }
 function useRegisterRead<T>(path: string) {
   const resource = useResource<T>(path),
-    reload = useRef(resource.reload);
+    latest = useRef(resource);
   useEffect(() => {
-    reload.current = resource.reload;
+    latest.current = resource;
   });
   useEffect(() => {
-    const refresh = () => reload.current();
+    // Do not supersede a slow initial/read refresh with another polling request.
+    const refresh = () => {
+      if (!latest.current.loading) latest.current.reload();
+    };
     const timer = setInterval(refresh, 15000);
     window.addEventListener("focus", refresh);
     return () => {
@@ -141,6 +144,7 @@ function Register({
     [exportError, setExportError] = useState<unknown>(null),
     [notice, setNotice] = useState("");
   const opener = useRef<HTMLElement | null>(null);
+  const focusAfterClose = useRef<string | null>(null);
   const saved = query.get("tab") === "estimates",
     view = (query.get("view") ?? "all") as WorkloadState | "all",
     owner = query.get("owner") ?? "all",
@@ -181,13 +185,33 @@ function Register({
       { scroll: false },
     );
   }
+  // Wait for URL navigation to unmount the modal before focusing the register.
+  useEffect(() => {
+    if (snapshot || workload.loading || !focusAfterClose.current) return;
+    const id = focusAfterClose.current;
+    const frame = requestAnimationFrame(() => {
+      focusAfterClose.current = null;
+      const targets = [
+        opener.current,
+        document.querySelector<HTMLElement>(
+          ".ew-selection footer button:last-child",
+        ),
+        ...document.querySelectorAll<HTMLElement>(
+          `[data-opportunity-id="${id}"]`,
+        ),
+      ];
+      targets
+        .find(
+          (element) =>
+            element?.isConnected && element.getClientRects().length > 0,
+        )
+        ?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [snapshot, workload.loading]);
   function closeSnapshot() {
+    focusAfterClose.current = snapshot?.opportunity.id ?? null;
     change({ record: "" }, true);
-    requestAnimationFrame(
-      () =>
-        opener.current?.isConnected &&
-        opener.current.focus({ preventScroll: true }),
-    );
   }
   function openSnapshot(id: string, source?: HTMLElement) {
     if (source) opener.current = source;
@@ -378,6 +402,7 @@ function Register({
   return (
     <SecondaryMenuFrame
       id="ppo-estimating-workload"
+      attributes={{ "data-ppo-workspace": "shared" }}
       name="Intake & workload"
       menuId="estimating-views"
       contentId="estimating-content"
@@ -540,6 +565,11 @@ function Register({
             {notice}
           </p>
         )}
+        {current.loading && activeData && (
+          <p className="ew-basis ew-phone-refresh" role="status">
+            {readNote}
+          </p>
+        )}
         <ErrorNotice error={exportError} />
         {!!current.error ? (
           <section className="ew-notice" role="alert">
@@ -578,6 +608,13 @@ function Register({
             )}
             <div
               className="ew-results"
+              role="region"
+              aria-label={
+                saved
+                  ? "Saved estimates register"
+                  : "Estimating workload register"
+              }
+              tabIndex={0}
               data-stale={current.loading || undefined}
               aria-busy={current.loading}
             >
@@ -871,6 +908,7 @@ function WorkloadGrid({
                 <td>
                   <button
                     className="ew-row-title"
+                    data-opportunity-id={i.opportunity.id}
                     disabled={!fresh}
                     onClick={(e) => open(i.opportunity.id, e.currentTarget)}
                   >
@@ -918,6 +956,7 @@ function WorkloadGrid({
             <button
               disabled={!fresh}
               className="ew-phone-open"
+              data-opportunity-id={i.opportunity.id}
               onClick={(e) => open(i.opportunity.id, e.currentTarget)}
             >
               <span className="ew-phone-body">

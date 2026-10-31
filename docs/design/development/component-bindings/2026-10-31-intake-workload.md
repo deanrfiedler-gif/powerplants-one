@@ -24,4 +24,4 @@ Reuse useResource and ErrorNotice with explicit host states. Initial loading has
 
 ## application-shell
 
-Reuse the existing module rail, secondary menu collapse, guide and compact phone header. No shared shell CSS is changed. The adopted phone header replaces the original capture's duplicate toolbar. Physical-device, screen-reader and owner acceptance remain review items.
+Reuse the existing module rail, secondary menu collapse, guide and compact phone header. The route joins existing styles through data-ppo-workspace=shared and adds one sorted module-workspace declaration to remove the obsolete section tabs. No shared shell CSS is changed. The adopted phone header replaces the original capture's duplicate toolbar. Physical-device, screen-reader and owner acceptance remain review items.

@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 9px 16px 10px;
   min-height: 60px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
@@ -881,5 +881,85 @@
   }
   #ppo-estimating-workload .ew-record-scroll > header > .ew-muted {
     display: none;
+  }
+}
+
+#ppo-estimating-workload
+  .ppo-register-table
+  :is(.ew-icon-button, .crm-r38-menu-trigger) {
+  height: 32px;
+  min-height: 32px;
+  width: 32px;
+  min-width: 32px;
+  margin: auto;
+}
+#ppo-estimating-workload .ew-toolbar > .crm-r38-menu-trigger {
+  font: inherit;
+  white-space: nowrap;
+  flex: none;
+}
+#ppo-estimating-workload
+  .ew-toolbar
+  > .crm-r38-menu-trigger[aria-label="Sort workload"] {
+  width: 198px;
+}
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-phone-open {
+    min-height: 79px;
+    padding: 8px 16px;
+  }
+  #ppo-estimating-workload .ew-phone-body {
+    gap: 3px;
+  }
+}
+
+/* Match the shared register host reset; keep global element rules out of the menu. */
+#ppo-estimating-workload[data-module-layout] {
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+}
+#ppo-estimating-workload .mw-menu nav ul {
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+#ppo-estimating-workload .mw-menu nav > ul:first-child {
+  margin-top: 0;
+}
+#ppo-estimating-workload .mw-menu li a {
+  text-decoration: none;
+}
+#ppo-estimating-workload
+  :is(aside.mw-menu:not([hidden]), dialog.mw-menu[open]) {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-estimating-workload .mw-menu .ew-rules {
+  padding: 18px 12px;
+}
+#ppo-estimating-workload .mw-menu .ew-rules h3 {
+  padding: 0;
+  margin: 0 0 8px;
+}
+#ppo-estimating-workload .ew-rules dl div {
+  gap: 4px;
+}
+#ppo-estimating-workload .ew-rules dd {
+  white-space: nowrap;
+}
+
+#ppo-estimating-workload .ew-phone-refresh {
+  display: none;
+}
+#ppo-estimating-workload .ew-results:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-phone-refresh {
+    display: block;
   }
 }

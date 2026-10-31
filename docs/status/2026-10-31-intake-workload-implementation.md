@@ -7,4 +7,4 @@ ES-01 at `/estimating` replaces the September docked panel/drawer with the accep
 
 The [route contract](../design/development/pages/route-estimating.md), [scope contract](../design/development/pages/scope-es-01.md), guides, [component binding](../design/development/component-bindings/2026-10-31-intake-workload.md) and [programme handover](../delivery/estimating-programme-handover.md) describe the delivered behaviour. No migration, grant, capability, dependency or policy is added.
 
-Draft PR #703 is the implementation claim. The [evidence record](../testing/evidence/intake-workload-accepted/README.md) distinguishes executed checks, local validation limits and pending comparison. Owner visual/device acceptance, merge and deployment are separate; this fragment grants none.
+Draft PR #703 is the implementation claim. The [evidence record](../testing/evidence/intake-workload-accepted/README.md) distinguishes executed checks, local validation limits and the inspected desktop/tablet/phone comparison. Owner visual/device acceptance, merge and deployment are separate; this fragment grants none.

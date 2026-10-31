@@ -10,7 +10,7 @@ import {
 
 test.describe.configure({ timeout: 120000 });
 const iconFreeCaptureStyle =
-  ".ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility:hidden !important; }";
+  ".mw-icon, .ppo-fa, .svg-inline--fa, [data-prefix], .es02-icon, .product-icon, .shell-icon, i[class*='fa-'] { visibility:hidden !important; }";
 const rowButton = (page: Page, title: string) =>
   page
     .locator(".ew-row-title:visible, .ew-phone-open:visible")
@@ -29,7 +29,7 @@ async function filters(page: Page) {
   return page.getByRole("dialog", { name: "Workload filters", exact: true });
 }
 async function setup(page: Page) {
-  await page.goto("/estimating");
+  await page.goto("/estimating?q=fixture-setup-no-match");
   const origin = new URL(page.url()).origin;
   expect(
     (
@@ -86,6 +86,7 @@ test("ES01 accepted snapshot, native Discovery entry, filters, view picker and U
   await page.reload();
   await expect(snapshot).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(opener).toBeFocused();
   const filter = await filters(page);
   await filter
     .getByRole("combobox", { name: "Scope readiness", exact: true })
@@ -322,7 +323,12 @@ test("ES01 Saved estimates keeps legacy URL, exact versions, null sell and brows
     "href",
     `/estimating/estimates/${cost.id}?version_id=${saved.version_id}`,
   );
-  await expect(page.getByText(/Not estimated/).first()).toBeVisible();
+  await expect(
+    page
+      .getByText(/Not estimated/)
+      .filter({ visible: true })
+      .first(),
+  ).toBeVisible();
   await page.reload();
   await expect(link).toBeVisible();
   await page.screenshot({
@@ -355,8 +361,9 @@ test("ES01 refresh withholding, failed/denied reads, no matches and no-edit perm
   await expect(
     page
       .getByText("Refreshing — earlier results unconfirmed", { exact: true })
+      .filter({ visible: true })
       .first(),
-  ).toBeAttached();
+  ).toBeVisible();
   await expect(rowButton(page, input.title)).toBeDisabled();
   release();
   await expect(

@@ -18,6 +18,7 @@ export const moduleWorkspaces = [
   { route: "/equipment/instruments", moduleId: "EQ-09", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq09-native-r01" },
   { route: "/equipment/lifecycle", moduleId: "EQ-07", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq07-native-r01" },
   { route: "/equipment/lookup", moduleId: "EQ-02", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq02-native-r01" },
+  { route: "/estimating", moduleId: "ES-01", scope: "ppo-estimating-workload", layout: "full-bleed", navigation: "workspace", baseline: "intake-workload-accepted" },
   { route: "/estimating/configurations", scope: "ppo-specialist", layout: "full-bleed", navigation: "workspace", baseline: "es08-native-r01" },
   {route:"/estimating/cpq",moduleId:"ES-02",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-configure-implementation"},
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
