@@ -10,9 +10,13 @@ Stage bounded synthetic JSON, resolve exact mappings, independently review the c
 
 ## Desktop
 
+Accepted design: the [Catalogue import design decision](../../../decisions/catalogue-import-figma-design.md) of 31 October 2026 covers import history, staging, map rows, row detail, plan summary, review, returned and corrected, apply confirmation and the applied result, with twenty-seven icon-free captures in [design r01](../../../reference/ui/products/catalogue-import-design-r01/README.md). Where it differs from the text below, it governs; the built page has not moved to it yet. It departs from "no new modal/drawer": row detail is a flush right panel (X6).
+
 At 1440 × 960 and 1024 × 768, retain the shell, labelled Products workspace links and exact identity header. Use the shared padded module surface with semantic navy/green tokens, Roboto/Verdana, white bordered panels and wrapping facts. Registers use readable cards; comparisons place Before and After side by side. Keep the selected revision and evidence before consequential actions. Avoid global overrides or a second shell.
 
 ## Mobile
+
+Accepted design: captures 11–15 in [design r01](../../../reference/ui/products/catalogue-import-design-r01/README.md): plan summary and review at 390 and 320, and the notice that mapping is a desktop task (D14).
 
 At 390 × 844 and 320 px, stack cards, forms and Before/After sections in source order. Fields retain readable 16 px text, touch targets and visible labels. Long UUIDs, provider keys and evidence wrap within the panel. Effective 200% reflow is checked at 720 CSS px from the 1440 desktop basis. No outer-page horizontal scrolling is permitted.
 
@@ -32,8 +36,9 @@ Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source
 
 ## Visual sources, departures and proof
 
-No dedicated accepted HTML or mobile image exists for this scope. This native composition is proposed for owner review.
+No dedicated accepted HTML exists for this scope. The accepted Figma design is below; the built native composition has not moved to it.
 
+- [Catalogue import design r01 captures](../../../reference/ui/products/catalogue-import-design-r01/README.md) (accepted Figma design, icon-free)
 - [Products workflow map](../../../reference/ui/module-workflow-maps/PPO-Products-and-Catalogue-Management-Workflow-Map-r01.html)
 - [Native contract](../../../contracts/products-catalogue.md)
 - [Evidence index](../../../testing/evidence/products-native/README.md)
