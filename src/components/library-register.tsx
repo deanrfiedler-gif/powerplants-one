@@ -331,7 +331,17 @@ function LibraryRegisterView({
       phoneHeader={{
         title: view,
         count: data ? `${data.items.length} shown` : undefined,
-        filter: { open: () => setFilters(true), applied: !!query },
+        filter: {
+          open: () => setFilters(true),
+          applied: [
+            "q",
+            "company_id",
+            "organisation_id",
+            "site_id",
+            "owner_id",
+            "document_type",
+          ].some((key) => params.has(key)),
+        },
         pageAction: data?.can_register
           ? {
               label: "Register document",

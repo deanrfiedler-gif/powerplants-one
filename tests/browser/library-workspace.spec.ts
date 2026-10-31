@@ -453,6 +453,8 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     `**/api/v1/document-library/${libraryItem.document.id}/revisions`,
     (r) => {
       const input = revisionInput(r.request().postDataJSON());
+      if (!("observed_revision_id" in input))
+        throw new Error("Expected a revision command");
       expect(input.observed_revision_id).toBe(libraryItem.revision.id);
       expect(input.expected_version).toBe(libraryItem.document.version);
       expect(input.revision_id).not.toBe(libraryItem.revision.id);
