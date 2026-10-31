@@ -6,21 +6,32 @@ type Choices = {
   items: { id: string; display_name: string }[];
   next_after: string | null;
 };
-export function LibraryChoice({
-  label,
-  kind,
-  value,
-  onChange,
-  scope = {},
-  required = false,
-}: {
+type ChoiceProps = {
   label: string;
   kind: string;
   value: string;
   onChange: (value: string) => void;
   scope?: Record<string, string>;
   required?: boolean;
-}) {
+  emptyLabel?: string;
+};
+export function LibraryChoice(props: ChoiceProps) {
+  return (
+    <LibraryChoiceControl
+      key={JSON.stringify([props.kind, props.scope ?? {}])}
+      {...props}
+    />
+  );
+}
+function LibraryChoiceControl({
+  label,
+  kind,
+  value,
+  onChange,
+  scope = {},
+  required = false,
+  emptyLabel,
+}: ChoiceProps) {
   const controlId = useId();
   const [search, setSearch] = useState(""),
     [after, setAfter] = useState("");
@@ -32,6 +43,16 @@ export function LibraryChoice({
   });
   const r = useResource<Choices>(`document-library/options?${q}`),
     data = !r.loading && !r.error ? r.data : null;
+  const selectedQuery = new URLSearchParams({
+    kind,
+    ...Object.fromEntries(Object.entries(scope).filter(([, v]) => v)),
+    selected_id: value,
+  });
+  const selected = useResource<Choices>(
+    value && !data?.items.some((i) => i.id === value)
+      ? `document-library/options?${selectedQuery}`
+      : null,
+  );
   return (
     <div className="library-choice">
       <label>
@@ -58,11 +79,17 @@ export function LibraryChoice({
           onChange={(e) => onChange(e.target.value)}
         >
           <option value="">
-            {required ? "Choose…" : `All ${label.toLowerCase()}`}
+            {required
+              ? "Choose…"
+              : (emptyLabel ??
+                `${label}: ${kind === "RecordedOwner" ? "Anyone" : "All"}`)}
           </option>
           {value && !data?.items.some((i) => i.id === value) && (
             <option value={value}>
-              Selected record (outside this choices page)
+              {selected.error
+                ? "Selected record unavailable"
+                : (selected.data?.items.find((i) => i.id === value)
+                    ?.display_name ?? "Checking selected record…")}
             </option>
           )}
           {data?.items.map((i) => (
@@ -80,6 +107,9 @@ export function LibraryChoice({
           onChange={(e) => {
             setSearch(e.target.value);
             setAfter("");
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.preventDefault();
           }}
           maxLength={200}
         />

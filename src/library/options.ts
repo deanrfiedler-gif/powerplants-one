@@ -29,6 +29,8 @@ export async function libraryOptions(
 ) {
   object(query, [
     "kind",
+    "purpose",
+    "selected_id",
     "company_id",
     "organisation_id",
     "site_id",
@@ -41,6 +43,11 @@ export async function libraryOptions(
     "kind",
     Object.keys(tables) as Array<keyof typeof tables>,
   );
+  const purpose =
+    query.purpose === undefined
+      ? "Filter"
+      : choice(query.purpose, "purpose", ["Filter", "Register"] as const);
+  const selected = optionalId(query.selected_id, "selected_id");
   const company = optionalId(query.company_id, "company_id"),
     organisation = optionalId(query.organisation_id, "organisation_id"),
     site = optionalId(query.site_id, "site_id"),
@@ -62,8 +69,8 @@ export async function libraryOptions(
     for (;;) {
       const rows = (
         await c.query(
-          `SELECT * FROM ppo.${tables[kind]} WHERE workspace_id=$1 AND ($2::uuid IS NULL OR id>$2) ORDER BY id LIMIT 100`,
-          [p.workspace_id, scan],
+          `SELECT * FROM ppo.${tables[kind]} WHERE workspace_id=$1 AND ($2::uuid IS NULL OR id>$2) AND ($3::uuid IS NULL OR id=$3) ORDER BY id LIMIT 100`,
+          [p.workspace_id, scan, selected],
         )
       ).rows;
       if (!rows.length)
@@ -96,14 +103,20 @@ export async function libraryOptions(
             const reachable = (
               await c.query(
                 `SELECT 1 FROM ppo.companies co LEFT JOIN ppo.sites s ON s.workspace_id=co.workspace_id AND s.company_id=co.id
-              WHERE co.workspace_id=$1 AND co.id=$3 AND ${scopeSql("co.id", "s.id", "document.read")} AND ${scopeSql("co.id", "s.id", "shared.read")} LIMIT 1`,
+              WHERE co.workspace_id=$1 AND co.id=$3 AND ${scopeSql("co.id", "s.id", "document.read")} AND ${scopeSql("co.id", "s.id", "shared.read")} ${purpose === "Register" ? `AND ${scopeSql("co.id", "s.id", "document.register")}` : ""} LIMIT 1`,
                 [p.workspace_id, p.actor_id, companyId],
               )
             ).rowCount;
             if (!reachable) continue;
           } else if (kind === "Site") {
             await visible(c, p, "Site", row.id);
-            await companyContext(c, p, row.company_id, row.id, "document.read");
+            await companyContext(
+              c,
+              p,
+              row.company_id,
+              row.id,
+              purpose === "Register" ? "document.register" : "document.read",
+            );
             if (company && row.company_id !== company) continue;
             if (
               organisation &&
@@ -139,7 +152,7 @@ export async function libraryOptions(
             if (!row.active) title += " (inactive)";
           } else if (kind === "Owner") {
             if (!company) throw unavailable();
-            await companyContext(c, p, company, site, "document.read");
+            await companyContext(c, p, company, site, "document.register");
             await scopedOwner(
               c,
               p,
@@ -167,7 +180,15 @@ export async function libraryOptions(
                 [p.workspace_id, parentId],
               )
             ).rows[0];
-            title = `${native?.display_number ?? kind} · exact issue ${row.id} · ${source.current ? "Current source" : "Historical source"}`;
+            const revisions =
+              kind === "JobPackIssue" ? "pack_revisions" : "report_revisions";
+            const exact = (
+              await c.query(
+                `SELECT revision FROM ppo.${revisions} WHERE workspace_id=$1 AND id=$2`,
+                [p.workspace_id, row.revision_id],
+              )
+            ).rows[0];
+            title = `${native?.display_number ?? "Issued document"} · revision ${exact?.revision ?? "unavailable"} · ${source.current ? "Current source" : "Historical source"}`;
           } else {
             throw unavailable();
           }

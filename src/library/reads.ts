@@ -312,19 +312,30 @@ export async function listDocuments(
     direction,
     limit,
   });
-  let position: LibraryPosition | null =
-    cursor.decode(query.cursor) ?? (after ? { id: after, key: after } : null);
+  let position: LibraryPosition | null = cursor.decode(query.cursor);
   const column = {
-    registration: "id",
+    registration: "created_at",
     number: "display_number",
     updated: "updated_at",
   }[sort];
-  const cast = { registration: "uuid", number: "text", updated: "timestamptz" }[
-    sort
-  ];
+  const cast = {
+    registration: "timestamptz",
+    number: "text",
+    updated: "timestamptz",
+  }[sort];
   const order = direction === "asc" ? "ASC" : "DESC",
     compare = direction === "asc" ? ">" : "<";
   return readTransaction(p, async (c) => {
+    if (after) {
+      await documentContext(c, p, after);
+      const prior = (
+        await c.query<{ key: string }>(
+          "SELECT created_at::text AS key FROM ppo.library_documents WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, after],
+        )
+      ).rows[0];
+      position = { id: after, key: prior.key };
+    }
     const items: Array<Awaited<ReturnType<typeof registerItem>>> = [];
     let last: LibraryPosition | null = null;
     const finish = async (more: boolean) => {

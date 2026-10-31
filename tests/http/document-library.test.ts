@@ -45,6 +45,22 @@ test("DK-HTTP01 compiled register, review, revision, history, links and receipts
       .status,
     422,
   );
+  for (const query of [
+    `kind=Owner&company_id=${input.company_id}&site_id=${input.site_id}`,
+    "kind=Company&purpose=Register",
+  ]) {
+    const deniedChoices = await h.call(
+      "observer",
+      `document-library/options?${query}`,
+    );
+    assert.equal(deniedChoices.status, 200);
+    assert.deepEqual(deniedChoices.body.items, []);
+  }
+  const exactOwner = await h.call(
+    "observer",
+    `document-library/options?kind=RecordedOwner&selected_id=${p.actor_id}`,
+  );
+  assert.equal(exactOwner.body.items[0].id, p.actor_id);
   const replay = await h.call("coordinator", "document-library", input);
   assert.equal(replay.status, 200);
   assert.deepEqual(replay.body, created.body);

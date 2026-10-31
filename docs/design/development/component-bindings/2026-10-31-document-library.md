@@ -20,7 +20,7 @@ RecordTabs owns keyboard selection for Overview, Revisions, Findings, Links and 
 
 ## menu
 
-WorklistMenu groups lower-frequency record commands; the accepted SecondaryMenuFrame provides document views and the shared phone header. The snapshot is a nonmodal aside with Escape and focus return.
+WorklistMenu groups lower-frequency record commands; the accepted SecondaryMenuFrame provides document views and the shared phone header. The snapshot is a nonmodal aside with Escape and focus return. Register quick views contain no Outputs shortcut; the shell owns that separately permission-gated destination.
 
 ## dialog
 
@@ -28,11 +28,11 @@ WorklistPanel renders register/revision/finding/link/recovery drawers and a cent
 
 ## read-state
 
-ReadState handles loading, denied and failed reads with retry. Old record details and register rows are hidden while unconfirmed. Content failure never substitutes another revision.
+ReadState handles loading, denied and failed reads with retry. Same-context refresh retains the mounted rows and record until success, marking the read busy; denied or failed reads clear them. Query changes clear the result window but keep filter/menu state and focus. Loading more focuses the first newly shown row. Record tabs survive refresh and commands. Content failure never substitutes another revision.
 
 ## status
 
-Status labels keep review distinct from availability and source currency. Findings use Open, Awaiting review and Closed; a response is not closure. Eligibility renders the five server-derived facts with text as well as colour.
+Status labels keep review distinct from availability and source currency. Current use, content availability and source currency use labelled status chips. Findings use Open, Awaiting review and Closed; a response is not closure. Eligibility renders the five server-derived facts with text as well as colour.
 
 ## application-shell
 

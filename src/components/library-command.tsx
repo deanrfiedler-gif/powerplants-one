@@ -14,6 +14,7 @@ import { LibraryChoice } from "./library-choice";
 import {
   documentTypes,
   revisionName,
+  libraryLabel,
   type LibraryItem,
   type Finding,
 } from "../library/model";
@@ -62,7 +63,8 @@ export function LibraryCommand({
       path: string;
       body: Record<string, unknown>;
     } | null>(null),
-    [dirty, setDirty] = useState(false);
+    [dirty, setDirty] = useState(false),
+    [editDetails, setEditDetails] = useState(false);
   const flight = useRef(false),
     ids = useRef<{
       id: string;
@@ -93,6 +95,7 @@ export function LibraryCommand({
     company_id: values.company_id,
     organisation_id: values.organisation_id,
     site_id: values.site_id,
+    purpose: "Register",
   };
   const field = (
     name: string,
@@ -275,10 +278,21 @@ export function LibraryCommand({
             </p>
           )}
           {intent === "Revise" && (
-            <p>
-              The successor starts Unreviewed. Existing links and decisions stay
-              on their exact earlier revisions.
-            </p>
+            <section className="library-card">
+              <h3>Replaces the current revision</h3>
+              <p>
+                {revisionName(item!.revision.revision)} · {item!.revision.title}
+              </p>
+              <p>
+                The successor starts Unreviewed. Existing links and decisions
+                stay on their exact earlier revisions.
+              </p>
+              <p role="status">
+                Active links will show Needs assessment after saving. Assess
+                each link in its receiving workflow before relying on the new
+                revision.
+              </p>
+            </section>
           )}
           <fieldset
             disabled={busy || !!pending}
@@ -289,6 +303,7 @@ export function LibraryCommand({
                 <LibraryChoice
                   label="Company"
                   kind="Company"
+                  scope={{ purpose: "Register" }}
                   value={values.company_id}
                   required
                   onChange={(v) => set("company_id", v)}
@@ -298,16 +313,18 @@ export function LibraryCommand({
                   kind="Organisation"
                   value={values.organisation_id}
                   required
-                  scope={{ company_id: values.company_id }}
+                  scope={{ company_id: values.company_id, purpose: "Register" }}
                   onChange={(v) => set("organisation_id", v)}
                 />
                 <LibraryChoice
                   label="Site"
                   kind="Site"
+                  emptyLabel="No site"
                   value={values.site_id}
                   scope={{
                     company_id: values.company_id,
                     organisation_id: values.organisation_id,
+                    purpose: "Register",
                   }}
                   onChange={(v) => set("site_id", v)}
                 />
@@ -315,31 +332,49 @@ export function LibraryCommand({
             )}
             {revisionForm && (
               <>
-                {field("title", "Title")}
-                <label>
-                  Type
-                  <select
-                    value={values.document_type}
-                    onChange={(e) => set("document_type", e.target.value)}
-                  >
-                    {!documentTypes.includes(values.document_type) && (
-                      <option>{values.document_type}</option>
-                    )}
-                    {documentTypes.map((t) => (
-                      <option key={t}>{t}</option>
-                    ))}
-                  </select>
-                </label>
-                <LibraryChoice
-                  label="Owner"
-                  kind="Owner"
-                  scope={scope}
-                  value={values.owner_id}
-                  required
-                  onChange={(v) => set("owner_id", v)}
-                />
-                {field("audience", "Audience")}
-                {field("applicability", "Applicability", 2000, true)}
+                {intent === "Revise" && !editDetails && (
+                  <section className="library-card">
+                    <h3>Copied details</h3>
+                    <p>
+                      {values.title} · {values.document_type} ·{" "}
+                      {item!.owner_name}
+                    </p>
+                    <p>{values.audience}</p>
+                    <p>{values.applicability}</p>
+                    <Button onClick={() => setEditDetails(true)}>
+                      Edit details
+                    </Button>
+                  </section>
+                )}
+                {(intent === "Register" || editDetails) && (
+                  <>
+                    {field("title", "Title")}
+                    <label>
+                      Type
+                      <select
+                        value={values.document_type}
+                        onChange={(e) => set("document_type", e.target.value)}
+                      >
+                        {!documentTypes.includes(values.document_type) && (
+                          <option>{values.document_type}</option>
+                        )}
+                        {documentTypes.map((t) => (
+                          <option key={t}>{t}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <LibraryChoice
+                      label="Owner"
+                      kind="Owner"
+                      scope={scope}
+                      value={values.owner_id}
+                      required
+                      onChange={(v) => set("owner_id", v)}
+                    />
+                    {field("audience", "Audience")}
+                    {field("applicability", "Applicability", 2000, true)}
+                  </>
+                )}
                 <label>
                   Source
                   <select
@@ -425,7 +460,9 @@ export function LibraryCommand({
                       "WorkOrder",
                       "EngineeringPackage",
                     ].map((k) => (
-                      <option key={k}>{k}</option>
+                      <option key={k} value={k}>
+                        {libraryLabel(k)}
+                      </option>
                     ))}
                   </select>
                 </label>

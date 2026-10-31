@@ -11,6 +11,7 @@ import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { usePublishPageDescription } from "../shell/page-description";
 import {
   libraryViews,
+  libraryLabel,
   reviewLabel,
   revisionName,
   recordHref,
@@ -24,15 +25,17 @@ import "./library.css";
 
 // Re-read the displayed window when loading more so revoked rows are not retained.
 export function useLibraryWindow(path: string | null, pages = 1) {
-  const [window, setWindow] = useState({ pages, attempt: 0 });
+  const [window, setWindow] = useState({ path, pages, attempt: 0 });
+  if (window.path !== path) setWindow({ path, pages, attempt: 0 });
   const [result, setResult] = useState<{
     path: string;
     request: typeof window;
     data: LibraryPage | null;
     error: unknown;
+    observedAt: string;
   } | null>(null);
   useEffect(() => {
-    if (!path) return;
+    if (!path || window.path !== path) return;
     let live = true;
     async function read() {
       let cursor: string | null = null;
@@ -52,10 +55,23 @@ export function useLibraryWindow(path: string | null, pages = 1) {
     void read().then(
       (data) => {
         if (live && data)
-          setResult({ path, request: window, data, error: null });
+          setResult({
+            path,
+            request: window,
+            data,
+            error: null,
+            observedAt: new Date().toISOString(),
+          });
       },
       (error) => {
-        if (live) setResult({ path, request: window, data: null, error });
+        if (live)
+          setResult({
+            path,
+            request: window,
+            data: null,
+            error,
+            observedAt: new Date().toISOString(),
+          });
       },
     );
     return () => {
@@ -64,7 +80,8 @@ export function useLibraryWindow(path: string | null, pages = 1) {
   }, [path, window]);
   const current = result?.path === path && result.request === window;
   return {
-    data: current ? result.data : null,
+    data: result?.path === path ? result.data : null,
+    observedAt: result?.path === path ? result.observedAt : undefined,
     error: current ? result.error : null,
     loading: !!path && !current,
     pages: window.pages,
@@ -167,7 +184,6 @@ export function LibraryRegister() {
     query = params.toString();
   return (
     <LibraryRegisterView
-      key={query}
       query={query}
       navigate={(q) => router.replace(`/documents${q ? `?${q}` : ""}`)}
     />
@@ -211,7 +227,7 @@ function LibraryRegisterView({
   if (view === "Content unavailable")
     server.set("availability", "ExactUnavailable");
   const resource = useLibraryWindow(`document-library?${server}`),
-    data = !resource.loading && !resource.error ? resource.data : null;
+    data = !resource.error ? resource.data : null;
   const [menuOpen, setMenuOpen] = useState(true),
     menu = useSecondaryMenu(menuOpen, setMenuOpen);
   const [search, setSearch] = useState(params.get("q") ?? ""),
@@ -219,6 +235,33 @@ function LibraryRegisterView({
     [snapshot, setSnapshot] = useState<string | null>(null),
     [create, setCreate] = useState(false),
     [selected, setSelected] = useState<string[]>([]);
+  const pendingFocus = useRef<{ query: string; ids: Set<string> } | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [previousQuery, setPreviousQuery] = useState(query);
+  if (previousQuery !== query) {
+    setPreviousQuery(query);
+    setSearch(params.get("q") ?? "");
+    setSnapshot(null);
+    setSelected([]);
+  }
+  useEffect(() => {
+    if (resource.loading || !pendingFocus.current) return;
+    const pending = pendingFocus.current;
+    pendingFocus.current = null;
+    if (pending.query !== query) return;
+    const oldIds = pending.ids;
+    const added = data?.items.find((item) => !oldIds.has(item.document.id));
+    const links =
+      listRef.current?.querySelectorAll<HTMLAnchorElement>("a[data-document]");
+    const target =
+      added &&
+      [...(links ?? [])].find(
+        (link) =>
+          link.dataset.document === added.document.id &&
+          link.getClientRects().length,
+      );
+    (target || listRef.current)?.focus();
+  }, [resource.loading, data, query]);
   usePublishPageDescription(
     "Document library",
     "Find exact permitted revisions. Content, source currency and review remain separate. Library evidence never grants permission to work.",
@@ -371,17 +414,17 @@ function LibraryRegisterView({
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/documents/issues">
-                <ShellIcon name="nav-documents" />
-                Outputs
-              </Link>
-            </li>
           </ul>
         </nav>
       }
     >
-      <div className="library-register">
+      <div
+        className="library-register"
+        ref={listRef}
+        tabIndex={-1}
+        aria-label="Document results"
+        aria-busy={resource.loading}
+      >
         <h1 className="sr-only">Document library</h1>
         <div className="library-toolbar">
           {searchForm}
@@ -427,7 +470,23 @@ function LibraryRegisterView({
               >
                 <thead>
                   <tr>
-                    <th scope="col">Select</th>
+                    <th scope="col">
+                      <input
+                        type="checkbox"
+                        aria-label="Select all shown documents"
+                        checked={
+                          data.items.length > 0 &&
+                          selected.length === data.items.length
+                        }
+                        onChange={(e) =>
+                          setSelected(
+                            e.target.checked
+                              ? data.items.map((i) => i.document.id)
+                              : [],
+                          )
+                        }
+                      />
+                    </th>
                     <th scope="col">Document</th>
                     <th scope="col">Rev</th>
                     <th scope="col">Current use</th>
@@ -493,28 +552,50 @@ function LibraryRegisterView({
                         />
                       </td>
                       <td>
-                        <Link href={recordHref(item, listContext)}>
+                        <Link
+                          data-document={item.document.id}
+                          href={recordHref(item, listContext)}
+                        >
                           {item.revision.title}
                         </Link>
                       </td>
                       <td>{revisionName(item.revision.revision)}</td>
                       <td>
-                        {item.eligible_for_current_use
-                          ? "Eligible"
-                          : "Not eligible"}
+                        <Status
+                          value={
+                            item.eligible_for_current_use
+                              ? "Eligible"
+                              : "Not eligible"
+                          }
+                          tone={
+                            item.eligible_for_current_use
+                              ? "success"
+                              : "attention"
+                          }
+                        />
                       </td>
                       <td>
                         <Status value={reviewLabel(item.review_state)} />
                       </td>
                       <td>
-                        {item.availability === "Available"
-                          ? "Available"
-                          : "Unavailable"}
+                        <Status
+                          value={libraryLabel(item.availability)}
+                          tone={
+                            item.availability === "Available"
+                              ? "neutral"
+                              : "danger"
+                          }
+                        />
                       </td>
-                      <td>{item.source_current ? "Current" : "Superseded"}</td>
+                      <td>
+                        <Status
+                          value={item.source_current ? "Current" : "Superseded"}
+                          tone={item.source_current ? "neutral" : "attention"}
+                        />
+                      </td>
                       <td>{item.revision.document_type}</td>
                       <td>{item.unresolved_findings}</td>
-                      <td>{item.revision.source.kind}</td>
+                      <td>{libraryLabel(item.revision.source.kind)}</td>
                       <td>{item.document.display_number}</td>
                       <td>{item.organisation_name}</td>
                       <td>{item.site_name ?? "No site"}</td>
@@ -545,7 +626,10 @@ function LibraryRegisterView({
               )}
               {data.items.map((item) => (
                 <article key={item.document.id}>
-                  <Link href={recordHref(item, listContext)}>
+                  <Link
+                    data-document={item.document.id}
+                    href={recordHref(item, listContext)}
+                  >
                     <strong>{item.revision.title}</strong>
                     <span>
                       {item.document.display_number} ·{" "}
@@ -557,9 +641,15 @@ function LibraryRegisterView({
                     {item.eligible_for_current_use
                       ? "Eligible for current use"
                       : currentUseReasons(item)
-                          .filter((r) => !r.ok)
+                          .filter((r, index) => !r.ok && index !== 1)
                           .map((r) => r.label)
                           .join(" · ")}
+                  </p>
+                  <p>
+                    Updated{" "}
+                    {new Date(item.document.updated_at).toLocaleDateString(
+                      "en-AU",
+                    )}
                   </p>
                   <Button onClick={() => setSnapshot(item.document.id)}>
                     Snapshot
@@ -568,12 +658,25 @@ function LibraryRegisterView({
               ))}
             </div>
             <footer className="library-footer">
-              {data.items.length} shown · Live read · No total claimed{" "}
+              {data.items.length} shown · Live read · No total claimed · Read{" "}
+              <Stamp value={resource.observedAt} /> ·{" "}
+              {params.get("sort") === "number"
+                ? "Number"
+                : params.get("sort") === "updated"
+                  ? "Last update"
+                  : "Registration order"}{" "}
+              ({params.get("direction") === "desc" ? "descending" : "ascending"}
+              ){" "}
               {data.next_cursor ? (
                 <Button
+                  disabled={resource.loading}
                   onClick={() => {
                     setSnapshot(null);
                     setSelected([]);
+                    pendingFocus.current = {
+                      query,
+                      ids: new Set(data.items.map((i) => i.document.id)),
+                    };
                     resource.more();
                   }}
                 >

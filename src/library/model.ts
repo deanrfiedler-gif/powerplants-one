@@ -101,6 +101,29 @@ export const libraryViews = [
   "Content unavailable",
 ];
 export const revisionName = (n: number) => "r" + String(n).padStart(2, "0");
+export const libraryLabel = (value: string) =>
+  (
+    ({
+      SyntheticText: "Synthetic text",
+      JobPackIssue: "Issued job pack",
+      ReportIssue: "Issued service report",
+      ExactUnavailable: "Unavailable",
+      WorkOrder: "Work order",
+      EngineeringPackage: "Engineering package",
+      Organisation: "Customer",
+      "Finding:Open": "Finding opened",
+      "Finding:Respond": "Finding response",
+      "Finding:Accept": "Response accepted",
+      "Link:Add": "Link added",
+      "Link:Retire": "Link retired",
+      Register: "Document registered",
+    Create: "Document registered",
+      Revise: "Revision added",
+      Review: "Review recorded",
+      Withdraw: "Document withdrawn",
+      Recover: "Content recovered",
+    }) as Record<string, string>
+  )[value] ?? value;
 export const reviewLabel = (state: string) =>
   state === "ReviewOutdated" ? "Review outdated" : state;
 export type LibraryListContext = {

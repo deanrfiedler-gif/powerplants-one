@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
+  api,
   ErrorNotice,
   ReadState,
   Status,
@@ -22,6 +23,7 @@ import {
 import { LibraryCommand, type LibraryIntent } from "./library-command";
 import {
   recordHref,
+  libraryLabel,
   revisionName,
   reviewLabel,
   targetPaths,
@@ -63,13 +65,58 @@ type Revisions = {
   next_before: number | null;
   coverage: string;
 };
+function useRecordEvidence<T>(path: string, version: number, retain = false) {
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{
+    path: string;
+    version: number;
+    attempt: number;
+    data: T | null;
+    error: unknown;
+  } | null>(null);
+  useEffect(() => {
+    let live = true;
+    void api<T>(path).then(
+      (data) => {
+        if (live) setResult({ path, version, attempt, data, error: null });
+      },
+      (error) => {
+        if (live) setResult({ path, version, attempt, data: null, error });
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [path, version, attempt]);
+  const current =
+    result?.path === path &&
+    result.version === version &&
+    result.attempt === attempt;
+  return {
+    data:
+      current || (retain && result?.path === path && result.version === version)
+        ? (result?.data ?? null)
+        : null,
+    error: current ? result.error : null,
+    loading: !current,
+    reload: () => setAttempt((a) => a + 1),
+  };
+}
 export function LibraryRecord({ id }: { id: string }) {
   const params = useSearchParams(),
     revision = params.get("revision_id"),
-    resource = useResource<LibraryItem>(
+    resource = useRecordEvidence<LibraryItem>(
       `document-library/${id}${revision ? `?revision_id=${encodeURIComponent(revision)}` : ""}`,
+      0,
+      true,
     );
-  const item = !resource.loading && !resource.error ? resource.data : null;
+  const item = !resource.error ? resource.data : null;
+  const [tab, setTab] = useState("Overview");
+  const [readAttempt, setReadAttempt] = useState(0);
+  const refresh = () => {
+    setReadAttempt((a) => a + 1);
+    resource.reload();
+  };
   return (
     <div
       id="ppo-library"
@@ -83,9 +130,13 @@ export function LibraryRecord({ id }: { id: string }) {
       />
       {item && (
         <LibraryRecordBody
-          key={`${id}:${item.revision.id}:${item.document.version}`}
+          key={`${id}:${item.revision.id}`}
           item={item}
-          refresh={resource.reload}
+          refresh={refresh}
+          tab={tab}
+          setTab={setTab}
+          refreshing={resource.loading}
+          readAttempt={readAttempt}
         />
       )}
     </div>
@@ -94,9 +145,17 @@ export function LibraryRecord({ id }: { id: string }) {
 function LibraryRecordBody({
   item,
   refresh,
+  tab,
+  setTab,
+  refreshing,
+  readAttempt,
 }: {
   item: LibraryItem;
   refresh: () => void;
+  tab: string;
+  setTab: (tab: string) => void;
+  refreshing: boolean;
+  readAttempt: number;
 }) {
   const params = useSearchParams(),
     router = useRouter();
@@ -120,13 +179,31 @@ function LibraryRecordBody({
     position >= 0
       ? `${position + 1} of ${list.data!.items.length} shown`
       : undefined;
-  const [tab, setTab] = useState("Overview"),
-    [intent, setIntent] = useState<LibraryIntent | null>(null),
+  const [intent, setIntent] = useState<LibraryIntent | null>(null),
     [finding, setFinding] = useState<Finding>(),
     [linkId, setLinkId] = useState<string>();
   const current = item.library_current && item.document.state === "Current",
-    writable = current && item.can_register;
+    writable = current && item.can_register && !refreshing;
+  const [saved, setSaved] = useState("");
+  const usage = useRecordEvidence<Usage>(
+    `document-library/${item.document.id}/usage`,
+    item.document.version + readAttempt,
+  );
+  const revisions = useRecordEvidence<Revisions>(
+    `document-library/${item.document.id}/revisions`,
+    item.document.version + readAttempt,
+  );
+  const linkCount =
+    usage.data?.coverage === "VisibleReferences" && !usage.data.next_after
+      ? usage.data.items.length
+      : undefined;
+  const revisionCount =
+    revisions.data?.coverage === "VisibleRevisions" &&
+    !revisions.data.next_before
+      ? revisions.data.items.length
+      : undefined;
   const action = (value: LibraryIntent, f?: Finding, id?: string) => {
+    if (refreshing) return;
     setFinding(f);
     setLinkId(id);
     setIntent(value);
@@ -175,6 +252,7 @@ function LibraryRecordBody({
   });
   const reviewable =
     current &&
+    !refreshing &&
     item.can_review &&
     item.independent_reviewer &&
     item.availability === "Available" &&
@@ -254,6 +332,7 @@ function LibraryRecordBody({
           </WorklistMenu>
         </div>
       </header>
+      {saved && <p role="status">{saved}</p>}
       <LibraryEligibility item={item} />
       {current && item.can_review && !item.independent_reviewer && (
         <p role="status">
@@ -281,7 +360,27 @@ function LibraryRecordBody({
           <RecordTabs
             id="library-record"
             label="Document views"
-            tabs={tabs.map((t) => ({ id: t, label: t }))}
+            tabs={tabs.map((t) => {
+              const count =
+                t === "Findings"
+                  ? item.findings?.length
+                  : t === "Links"
+                    ? linkCount
+                    : t === "Revisions"
+                      ? revisionCount
+                      : undefined;
+              return {
+                id: t,
+                label: (
+                  <>
+                    {t}
+                    {count !== undefined && (
+                      <span aria-hidden="true"> · {count}</span>
+                    )}
+                  </>
+                ),
+              };
+            })}
             value={tab}
             onChange={setTab}
           />
@@ -293,6 +392,43 @@ function LibraryRecordBody({
           >
             {tab === "Overview" && (
               <>
+                <ReadState
+                  loading={usage.loading}
+                  error={usage.error}
+                  retry={usage.reload}
+                  focusOnError={false}
+                />
+                {usage.data && (
+                  <section className="library-link-notice" role="status">
+                    {usage.data.items.some(
+                      (link) =>
+                        !link.retired_at && link.needs_revision_assessment,
+                    ) ? (
+                      <p>
+                        A link still points at an earlier revision or withdrawn
+                        document. Assess it before relying on this revision.
+                      </p>
+                    ) : usage.data.coverage === "Partial" ||
+                      usage.data.next_after ? (
+                      <p>
+                        Link assessment is incomplete. Review the permitted
+                        links before relying on this revision.
+                      </p>
+                    ) : (
+                      <p>No visible active link needs revision assessment.</p>
+                    )}
+                    {usage.data.coverage === "Partial" && (
+                      <p>
+                        Partial coverage. Restricted links are not listed or
+                        counted.
+                      </p>
+                    )}
+                    {usage.data.next_after && (
+                      <p>More permitted links are available.</p>
+                    )}
+                    <Button onClick={() => setTab("Links")}>Open Links</Button>
+                  </section>
+                )}
                 <h2>
                   Review decision · {revisionName(item.revision.revision)}
                 </h2>
@@ -319,10 +455,15 @@ function LibraryRecordBody({
                     <p>No review recorded for this exact revision.</p>
                   )}
                 </section>
-                <ExactContent item={item} />
+                <ExactContent key={item.revision.id} item={item} />
               </>
             )}
-            {tab === "Revisions" && <RevisionList id={item.document.id} />}
+            {tab === "Revisions" && (
+              <RevisionList
+                key={`${item.document.version}:${readAttempt}`}
+                id={item.document.id}
+              />
+            )}
             {tab === "Findings" && (
               <>
                 <h2>Findings · {revisionName(item.revision.revision)}</h2>
@@ -372,8 +513,19 @@ function LibraryRecordBody({
                 ))}
               </>
             )}
-            {tab === "Links" && <LinkList item={item} action={action} />}
-            {tab === "History" && <HistoryList id={item.document.id} />}
+            {tab === "Links" && (
+              <LinkList
+                key={`${item.document.version}:${readAttempt}`}
+                item={item}
+                action={action}
+              />
+            )}
+            {tab === "History" && (
+              <HistoryList
+                key={`${item.document.version}:${readAttempt}`}
+                id={item.document.id}
+              />
+            )}
           </div>
         </section>
       </div>
@@ -385,6 +537,7 @@ function LibraryRecordBody({
           linkId={linkId}
           onClose={() => setIntent(null)}
           onSaved={() => {
+            setSaved(`${intent} saved. Refreshing the exact revision.`);
             setIntent(null);
             refresh();
           }}
@@ -503,7 +656,7 @@ function RevisionList({ id }: { id: string }) {
               <p>{item.revision.reason}</p>
               <Status value={reviewLabel(item.review_state)} />
               <p>
-                {item.availability} ·{" "}
+                {libraryLabel(item.availability)} ·{" "}
                 {item.source_current ? "Source current" : "Source superseded"}
               </p>
             </article>
@@ -620,7 +773,8 @@ function HistoryList({ id }: { id: string }) {
           {data.items.map((event) => (
             <article className="library-card" key={event.id}>
               <h3>
-                {event.command} · {revisionName(event.revision.revision)}
+                {libraryLabel(event.command)} ·{" "}
+                {revisionName(event.revision.revision)}
               </h3>
               <p>
                 <Stamp value={event.created_at} /> · actor{" "}

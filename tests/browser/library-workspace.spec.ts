@@ -58,6 +58,24 @@ async function setup(page: Page) {
         body: "SYN exact installation notes\nLine 2\nLine 3",
       }),
   );
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/usage*`,
+    (r) =>
+      r.fulfill({
+        json: { items: [], next_after: null, coverage: "VisibleReferences" },
+      }),
+  );
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/revisions*`,
+    (r) =>
+      r.fulfill({
+        json: {
+          items: [libraryItem],
+          next_before: null,
+          coverage: "VisibleRevisions",
+        },
+      }),
+  );
   await page.route("**/api/v1/document-library/options?*", (r) =>
     r.fulfill({ json: { items: [], next_after: null } }),
   );
@@ -206,6 +224,9 @@ test("DK-UI awaiting review accepts only independently and old links open their 
     .click();
   await expect(dialog).not.toBeVisible();
   expect(accepted).toBe(true);
+  await expect(
+    page.getByRole("tab", { name: "Findings", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
   const previous = "91000000-0000-4000-8000-000000000008";
   await page.route(
     `**/api/v1/document-library/${libraryItem.document.id}/usage*`,
@@ -343,6 +364,11 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
     page.getByText("2 shown · Live read", { exact: false }),
   ).toBeVisible();
   expect(firstReads).toBeGreaterThan(readsBeforeMore);
+  await expect(
+    page
+      .locator(".library-desktop")
+      .getByRole("link", { name: "SYN second row", exact: true }),
+  ).toBeFocused();
   const snapshot = page.getByRole("button", {
     name: `Snapshot of ${libraryItem.revision.title}`,
     exact: true,
@@ -456,6 +482,14 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
   await page.route(
     `**/api/v1/document-library/${libraryItem.document.id}/revisions`,
     (r) => {
+      if (r.request().method() === "GET")
+        return r.fulfill({
+          json: {
+            items: [libraryItem],
+            next_before: null,
+            coverage: "VisibleRevisions",
+          },
+        });
       const input = revisionInput(r.request().postDataJSON());
       if (!("observed_revision_id" in input))
         throw new Error("Expected a revision command");
@@ -467,6 +501,15 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     },
   );
   await page.getByRole("button", { name: "Add revision", exact: true }).click();
+  await expect(
+    dialog.getByText("Active links will show Needs assessment", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(dialog.getByLabel("Title", { exact: true })).toHaveCount(0);
+  await dialog
+    .getByRole("button", { name: "Edit details", exact: true })
+    .click();
   await expect(dialog.getByLabel("Title", { exact: true })).toHaveValue(
     libraryItem.revision.title,
   );
@@ -476,7 +519,118 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
   await dialog
     .getByLabel("Reason", { exact: true })
     .fill("SYN successor proof");
+  await dialog.getByText("Find owner", { exact: true }).click();
+  await dialog
+    .getByRole("textbox", { name: "Find owner", exact: true })
+    .fill("SYN");
+  await dialog
+    .getByRole("textbox", { name: "Find owner", exact: true })
+    .press("Enter");
+  await expect(dialog).toBeVisible();
+  expect(revised).toBe(false);
   await dialog.getByRole("button", { name: "Revise", exact: true }).click();
   await expect(dialog).not.toBeVisible();
   expect(revised).toBe(true);
+});
+
+test("DK-UI review fixes preserve filters, selected labels and link assessment", async ({
+  page,
+}) => {
+  await setup(page);
+  const customer = libraryItem.document.organisation_id;
+  await page.route("**/api/v1/document-library/options?*", (r) => {
+    const q = new URL(r.request().url()).searchParams;
+    const found = q.has("after") || q.has("selected_id");
+    return r.fulfill({
+      json: {
+        items:
+          q.get("kind") === "Organisation" && found
+            ? [{ id: customer, display_name: "SYN customer beyond first page" }]
+            : [],
+        next_after: found ? null : customer,
+      },
+    });
+  });
+  await page.goto("/documents");
+  const toolbar = page.locator(".library-toolbar");
+  await toolbar.getByText("Find customer", { exact: true }).click();
+  await toolbar
+    .getByRole("button", { name: "More choices", exact: true })
+    .click();
+  const customerSelect = toolbar.getByRole("combobox", {
+    name: "Customer",
+    exact: true,
+  });
+  await customerSelect.focus();
+  await customerSelect.selectOption(customer);
+  await expect(customerSelect).toBeFocused();
+  await expect(customerSelect.locator("option:checked")).toHaveText(
+    "SYN customer beyond first page",
+  );
+  await toolbar
+    .getByRole("button", { name: "First choices", exact: true })
+    .click();
+  await expect(customerSelect.locator("option:checked")).toHaveText(
+    "SYN customer beyond first page",
+  );
+  await page
+    .getByRole("button", { name: "Library options", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Search and filters", exact: true })
+    .click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  const panel = page.getByRole("dialog");
+  const type = panel.getByRole("combobox", { name: "Type", exact: true });
+  await type.focus();
+  await type.selectOption("Procedure");
+  await expect(panel).toBeVisible();
+  await expect(type).toBeFocused();
+  await type.press("ArrowDown");
+  await expect(type).toBeFocused();
+  await expect(panel).toBeVisible();
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/usage*`,
+    (r) =>
+      r.fulfill({
+        json: {
+          items: [
+            {
+              id: "SYN-link",
+              revision_id: "SYN-old",
+              target_kind: "Site",
+              target_id: libraryItem.document.site_id,
+              target_label: "SYN site",
+              purpose: "SYN link",
+              retired_at: null,
+              needs_revision_assessment: true,
+            },
+          ],
+          next_after: "SYN-more",
+          coverage: "Partial",
+        },
+      }),
+  );
+  await page.goto(path);
+  await expect(
+    page.getByText("A link still points at an earlier revision", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Partial coverage. Restricted links", { exact: false }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Open Links", exact: true }).click();
+  await expect(
+    page.getByRole("tab", { name: "Links", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page
+    .getByRole("button", { name: "Document actions", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect(
+    page.getByRole("tab", { name: "Links", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByText("SYN site", { exact: true })).toBeVisible();
 });

@@ -709,7 +709,7 @@ test("DK-B10 current register paging and source-exception filters use only permi
     await createDocument(p, input);
     inputs.push(input);
   }
-  inputs.sort((a, b) => a.id.localeCompare(b.id));
+  // Default registration order follows immutable creation time, not random UUIDs.
   await reviewDocument(reviewer, inputs[0].id, {
     ...review(inputs[0].revision_id, 1),
     outcome: "Returned",
@@ -839,6 +839,16 @@ test("DK-UI01 sorted continuations bind filters and actor; revisions retain exac
     input.title = `SYN Library ordering ${index}`;
     await createDocument(p, input);
   }
+  assert.deepEqual(
+    (await listDocuments(p)).items.map((x) => x.document.id),
+    inputs.map((x) => x.id),
+  );
+  const legacyFirst = await listDocuments(p, { limit: "1" });
+  const legacyNext = await listDocuments(p, {
+    limit: "1",
+    after: legacyFirst.next_after!,
+  });
+  assert.equal(legacyNext.items[0].document.id, inputs[1].id);
   for (const sort of ["number", "updated", "registration"]) {
     const first = await listDocuments(p, {
       sort,
@@ -903,6 +913,42 @@ test("DK-UI02 permitted choice reads distinguish recorded owners from eligible d
   const recorded = await libraryOptions(observer, { kind: "RecordedOwner" });
   assert.ok(recorded.items.some((x) => x.id === p.actor_id));
   assert.ok(!recorded.items.some((x) => x.id === observer.actor_id));
+  assert.deepEqual(
+    (
+      await libraryOptions(observer, {
+        kind: "Owner",
+        company_id: input.company_id,
+        site_id: input.site_id,
+      })
+    ).items,
+    [],
+  );
+  assert.deepEqual(
+    (
+      await libraryOptions(observer, {
+        kind: "Owner",
+        company_id: input.company_id,
+        selected_id: p.actor_id,
+      })
+    ).items,
+    [],
+  );
+  for (const kind of ["Company", "Organisation", "Site"]) {
+    assert.ok((await libraryOptions(observer, { kind })).items.length > 0);
+    assert.deepEqual(
+      (await libraryOptions(observer, { kind, purpose: "Register" })).items,
+      [],
+    );
+    assert.ok(
+      (await libraryOptions(p, { kind, purpose: "Register" })).items.length > 0,
+    );
+  }
+  const selected = await libraryOptions(observer, {
+    kind: "RecordedOwner",
+    selected_id: p.actor_id,
+  });
+  assert.equal(selected.items.length, 1);
+  assert.equal(selected.items[0].id, p.actor_id);
   const owners = await libraryOptions(p, {
     kind: "Owner",
     company_id: input.company_id,
