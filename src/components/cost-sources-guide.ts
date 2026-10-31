@@ -71,7 +71,7 @@ export const costSourcesGuide: PageGuide = {
     ],
   ],
   mobile:
-    "Evidence and forms stack vertically; long references wrap. Review each tier and each changed line before saving. Controls remain reachable by touch and keyboard. This is an online synthetic workflow; it is not an offline queue.",
+    "Choose Select sources or press and hold a row to select on a phone. Selecting rows keeps the list visible. Use Show panel to inspect the selection and Hide panel to return to the list. Evidence and forms stack vertically; long references wrap. Review each tier and each changed line before saving. Controls remain reachable by touch and keyboard. This is an online synthetic workflow; it is not an offline queue.",
   shortcuts: [
     ["Tab / Shift+Tab", "Move through filters, evidence, fields and actions."],
     ["Enter", "Apply a filter or activate a focused action."],

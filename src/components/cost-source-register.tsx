@@ -158,7 +158,8 @@ function Register({
     setSnapshot(row);
   }
   function toggle(row: CostSourceRow) {
-    setPanelOpen(true);
+    // The phone panel covers the list; open it only through Show panel.
+    setPanelOpen(menu.phone === false);
     setSelected((old) =>
       old.some((r) => r.id === row.id)
         ? old.filter((r) => r.id !== row.id)
