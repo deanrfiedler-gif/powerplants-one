@@ -45,16 +45,11 @@ export function PolicyRecord({ id }: { id: string }) {
     false,
   );
   const data = !source.loading && !source.error ? source.data : undefined;
-  return (
-    <SettingsFrame
-      record
-      phoneHeader={{
-        title: "Business policies",
-        record: data ? { position: "All policies" } : undefined,
-      }}
-    >
+  return data ? (
+    <PolicyBody key={id} data={data} reload={source.reload} />
+  ) : (
+    <SettingsFrame record phoneHeader={{ title: "Business policies" }}>
       <ReadState {...source} retry={source.reload} />
-      {data && <PolicyBody key={id} data={data} reload={source.reload} />}
     </SettingsFrame>
   );
 }
@@ -106,6 +101,7 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
     proposal.expected_head.version === chain.head.version &&
     proposal.effective_from > data.read_at;
   const nextVersion = chain ? chain.head.version + 1 : null;
+  const proposalVersion = proposal ? proposal.expected_head.version + 1 : null;
   function open(which: typeof dialog) {
     setLocalError(null);
     setReason("");
@@ -135,6 +131,7 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
           predecessor_proposal:
             proposal &&
             proposal.proposer_id === identity.actor_id &&
+            proposal.expected_head.version === chain.head.version &&
             !evidence?.successor_proposal_id
               ? ref(proposal)
               : null,
@@ -193,11 +190,13 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
   }
   if (denied)
     return (
-      <ReadState
-        loading={false}
-        error={command.error as Failure}
-        retry={reload}
-      />
+      <SettingsFrame record phoneHeader={{ title: "Business policies" }}>
+        <ReadState
+          loading={false}
+          error={command.error as Failure}
+          retry={reload}
+        />
+      </SettingsFrame>
     );
   const primary = canPublish ? (
     <Button variant="primary" disabled={frozen} onClick={() => open("publish")}>
@@ -249,7 +248,40 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
   const acceptedKind =
     command.accepted && policyCommandKind(command.accepted.entry.path);
   return (
-    <>
+    <SettingsFrame
+      record
+      phoneHeader={{
+        title: "Business policies",
+        record: {
+          position: "All policies",
+          more: [
+            ...(canPropose && !frozen
+              ? [
+                  {
+                    label: "Propose change",
+                    onSelect: (opener: HTMLElement) => {
+                      opener.focus();
+                      open("propose");
+                    },
+                  },
+                ]
+              : []),
+            ...(proposal
+              ? [
+                  {
+                    label: tab === "terms" ? "View proposal" : "View terms",
+                    onSelect: () =>
+                      setTab(tab === "terms" ? "proposal" : "terms"),
+                  },
+                ]
+              : []),
+            ...(!command.busy
+              ? [{ label: "Refresh policy", onSelect: reload }]
+              : []),
+          ],
+        },
+      }}
+    >
       <SharedRecord
         id="ppo-policy-record"
         title={item.name}
@@ -410,7 +442,7 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                 aria-selected={tab === "proposal"}
                 onClick={() => setTab("proposal")}
               >
-                Version {nextVersion} proposal
+                Version {proposalVersion} proposal
               </button>
             )}
           </div>
@@ -420,12 +452,8 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
         <ErrorNotice error={command.error} />
         {(item.proposal_count ?? 0) > 1 && (
           <p className="settings-note">
-            {item.proposal_count} open proposal branches exist. This view opens
-            the most recently saved branch.{" "}
-            <Link href="/schedule/policy-impact">
-              Inspect all saved proposals in PL-04
-            </Link>{" "}
-            before taking an action.
+            Latest of {item.proposal_count} open proposal branches.{" "}
+            <Link href="/schedule/policy-impact">View all in PL-04</Link>.
           </p>
         )}
         {command.pending && (
@@ -485,7 +513,7 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
               {proposal && (
                 <section className="settings-proposal-callout">
                   <h2>
-                    Version {nextVersion} · {item.state.toLowerCase()}
+                    Version {proposalVersion} · {item.state.toLowerCase()}
                   </h2>
                   <p>
                     Maximum visit {proposal.max_visit_minutes} minutes from{" "}
@@ -516,12 +544,27 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                 <p className="settings-phone-readonly">{item.changes}</p>
               )}
               <h2>
-                Terms in force{item.version ? ` · version ${item.version}` : ""}
+                {item.id === "record-references"
+                  ? "Format rules"
+                  : item.version
+                    ? `Terms in force · version ${item.version}`
+                    : "Policy terms · not in force"}
               </h2>
               {!item.chain || item.version ? (
                 terms(item.terms)
               ) : (
                 <p>No scheduling version is currently in force.</p>
+              )}
+              {item.reference_types && (
+                <>
+                  <h2>Record types in use</h2>
+                  {terms(item.reference_types)}
+                  <p>
+                    Existing references stay as issued. Specialised
+                    configuration, maintenance and supply references retain
+                    their existing suffix formats.
+                  </p>
+                </>
               )}
               <p className="settings-note">
                 Evidence is for fictional demonstration only. Synthetic values
@@ -540,7 +583,8 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                   Back to terms
                 </Button>
                 <h2>
-                  Version {nextVersion} proposal · revision {proposal.version}
+                  Version {proposalVersion} proposal · revision{" "}
+                  {proposal.version}
                 </h2>
                 <p>
                   Proposed by{" "}
@@ -719,6 +763,32 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                       onChange={setEffective}
                       required
                     />
+                    <div className="settings-fixed-terms">
+                      <h3>Unchanged terms</h3>
+                      <dl>
+                        <dt>Initial date agreement</dt>
+                        <dd>Required</dd>
+                        <dt>Changed date contact</dt>
+                        <dd>Allowed, dispatch held</dd>
+                        <dt>Crew competence</dt>
+                        <dd>All crew</dd>
+                        <dt>Effective to</dt>
+                        <dd>
+                          {chain && (
+                            <Stamp
+                              value={chain.members.at(-1)!.policy.effective_to}
+                              timezone={zone}
+                            />
+                          )}
+                        </dd>
+                        <dt>Applies to</dt>
+                        <dd>{item.scope}</dd>
+                      </dl>
+                    </div>
+                    <p>
+                      The server checks the current publication head, a future
+                      start and unchanged fixed terms before saving.
+                    </p>
                     {effective && (
                       <p>
                         UTC:{" "}
@@ -735,10 +805,11 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                 ) : dialog === "publish" ? (
                   <>
                     <p>
-                      Publish the exact proposal and independent review. A new
-                      version and an owned review for each affected booking will
-                      be created. Dispatch and start stay held until the impacts
-                      are resolved.
+                      Publishing cannot be undone. A later change requires
+                      another reviewed version. Publish the exact proposal and
+                      independent review. A new version and an owned review for
+                      each affected booking will be created. Dispatch and start
+                      stay held until the impacts are resolved.
                     </p>
                     <p>
                       {affected.length} bookings in the saved review need
@@ -809,6 +880,6 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
           )}
         </WorkDialog>
       )}
-    </>
+    </SettingsFrame>
   );
 }

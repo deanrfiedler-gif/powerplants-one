@@ -125,7 +125,7 @@ export function SettingsHub() {
           <>
             {!data.areas.length ? (
               <RegisterEmpty title="No configuration area permitted">
-                Your current access does not open a configuration area.
+                <p>Your current access does not open a configuration area.</p>
               </RegisterEmpty>
             ) : (
               <>

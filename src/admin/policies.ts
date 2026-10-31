@@ -25,6 +25,7 @@ export type BusinessPolicy = {
   proposal_id: string | null;
   changes: string;
   terms: PolicyTerm[];
+  reference_types?: PolicyTerm[];
   chain?: PolicyChain;
   proposal_count?: number;
 };
@@ -119,7 +120,7 @@ export async function readBusinessPolicies(p: Principal) {
         until: active?.policy.effective_to ?? null,
         source_at: head.source_as_at,
         state: proposalState,
-        next_version: proposal ? chain.head.version + 1 : null,
+        next_version: proposal ? proposal.expected_head_version + 1 : null,
         proposal_id: proposal?.id ?? null,
         changes: "Saved proposal, independent review and separate publisher",
         terms: active ? schedulingTerms(active.policy) : [],
@@ -241,6 +242,22 @@ export async function readBusinessPolicies(p: Principal) {
       next_version: null,
       proposal_id: null,
       changes: "Adopted naming decision; no editor",
+      // The eight types in the accepted AD-02 reference record. These are format
+      // examples, never allocated records or a new reference family.
+      reference_types: [
+        ["SRV", "Site survey"],
+        ["TKT", "Service request"],
+        ["WO", "Work order"],
+        ["APT", "Appointment"],
+        ["OPP", "Opportunity"],
+        ["SITE", "Site"],
+        ["ACR", "Access request"],
+        ["RPT", "Service report"],
+      ].map(([type, label]) => ({
+        name: type,
+        value: `SYN-${type}-000nnn`,
+        meaning: `${label}. nnn stands for the allocated number; this is a format example.`,
+      })),
       terms: [
         {
           name: "Pattern",

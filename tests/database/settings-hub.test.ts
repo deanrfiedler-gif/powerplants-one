@@ -209,4 +209,9 @@ test("AD-02 stale review publication refuses atomically; current publication rec
     "future publication must not be called in force",
   );
   assert.equal(final.items[0].chain!.head.version, 2);
+  assert.equal(
+    final.items[0].next_version,
+    2,
+    "an older branch keeps its intended version after the publication head advances",
+  );
 });

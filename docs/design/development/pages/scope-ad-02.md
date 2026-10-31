@@ -14,7 +14,7 @@ Implement governed business configuration and policy publication, including appl
 
 ## Desktop
 
-Accepted design: the [Settings hub design decision](../../../decisions/settings-hub-figma-design.md) of 22 October 2026 covers the Settings hub (WS-D6) at the proposed route `/admin/settings`, the Business policies register at `/admin/policies`, and the policy record at `/admin/policies/[id]` with its Terms and Version 2 proposal tabs, the Propose change and Publish dialogs, the refused publication and the Readable record references record, with thirteen icon-free captures in [design r01](../../../reference/ui/settings/settings-hub-design-r01/README.md). Departures D1–D8 and answers Q1–Q6 are recorded there. Implementation is in progress on draft PR #802; functional proof and visual review remain separate.
+Accepted design: the [Settings hub design decision](../../../decisions/settings-hub-figma-design.md) of 22 October 2026 covers the Settings hub (WS-D6) at the proposed route `/admin/settings`, the Business policies register at `/admin/policies`, and the policy record at `/admin/policies/[id]` with its Terms and Version 2 proposal tabs, the Propose change and Publish dialogs, the refused publication and the Readable record references record, with thirteen icon-free captures in [design r01](../../../reference/ui/settings/settings-hub-design-r01/README.md). Departures D1–D8 and answers Q1–Q6 are recorded there. Implementation is retained in draft PR #802; focused functional proof and Codex visual comparison are recorded in the evidence, separately from owner acceptance and deployment.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -44,7 +44,7 @@ Accepted Figma design: [Settings hub design r01 captures](../../../reference/ui/
 
 The draft User Guide `guide.ad.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Application acceptance is pending. Retain matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
 
 ## Native AD-02 implementation
 

@@ -1,4 +1,14 @@
 import { test, expect, type Page } from "@playwright/test";
+import { closeDatabase } from "../../src/platform/database";
+import { setupPolicy } from "../helpers/policy-commands";
+// This suite publishes a version. Keep it on the isolated scheduling database,
+// reset once for each project, and run the dependent synthetic story in order.
+test.describe.configure({ mode: "serial", timeout: 300000 });
+test.beforeAll(setupPolicy);
+test.afterAll(closeDatabase);
+test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+});
 async function identity(page: Page, baseURL: string, profile: string) {
   const result = await page.request.post("/api/v1/local-session", {
     timeout: 120000,
@@ -18,12 +28,31 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
   page,
   baseURL,
 }, info) => {
+  // Capture navigation exercises the native chooser if a local session read fails.
+  // Policy reads are never retried or substituted by this helper.
+  async function navigate(path: string, profile = "scheduling-policy-publisher") {
+    const sessionRead = page.waitForResponse((response) =>
+      response.url().endsWith("/api/v1/local-session") && response.request().method() === "GET",
+    );
+    await page.goto(path);
+    const response = await sessionRead;
+    if (response.status() === 503) {
+      const body = await response.json();
+      expect(body.code).toBe("DependencyUnavailable");
+      info.annotations.push({ type: "local-session-recovery", description: `${path}: native chooser after ${body.code}` });
+      await page.getByLabel("Identity", { exact: true }).selectOption(profile);
+      await page.getByRole("button", { name: "Use this identity", exact: true }).click();
+      await expect(page.getByRole("region", { name: "Local demonstration identity" })).toHaveAttribute("aria-busy", "false");
+    } else {
+      expect(response.ok()).toBeTruthy();
+    }
+  }
   await identity(page, baseURL!, "scheduling-policy-publisher");
   const data = await family(page),
     policy = data.items.find((r: { area: string }) => r.area === "Scheduling");
   for (const width of [1440, 1024, 390, 320]) {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto("/admin/settings");
+    await page.setViewportSize({ width, height: width < 780 ? 844 : 900 });
+    await navigate("/admin/settings");
     if (width >= 1024) {
       await expect(
         page.locator('.settings-area-card[data-area="policies"]'),
@@ -51,7 +80,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       path: info.outputPath(`hub-${width}.png`),
       fullPage: true,
     });
-    await page.goto("/admin/policies");
+    await navigate("/admin/policies");
     await expect(
       page.getByRole("link", { name: policy.name, exact: true }),
     ).toBeVisible();
@@ -66,7 +95,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       path: info.outputPath(`register-${width}.png`),
       fullPage: true,
     });
-    await page.goto(`/admin/policies/${policy.id}`);
+    await navigate(`/admin/policies/${policy.id}`);
     await expect(
       page.getByRole("heading", { name: policy.name, exact: true }),
     ).toBeVisible();
@@ -85,6 +114,13 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       expect(workspace!.x).toBeGreaterThanOrEqual(facts!.x + facts!.width - 1);
     } else {
       await expect(page.locator(".shared-record-facts")).toBeHidden();
+      expect(
+        await page
+          .locator(".settings-current-terms tbody td:first-child")
+          .evaluateAll((cells) =>
+            cells.every((cell) => cell.scrollHeight <= cell.clientHeight + 1),
+          ),
+      ).toBe(true);
     }
     expect(
       await page
@@ -93,12 +129,36 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
           nodes.every((el) => el.scrollWidth <= el.clientWidth + 1),
         ),
     ).toBe(true);
+    if (width < 780) {
+      const more = page.getByRole("button", {
+        name: "More actions",
+        exact: true,
+      });
+      await more.click();
+      await page
+        .getByRole("menuitem", { name: "Propose change", exact: true })
+        .click();
+      const phoneDialog = page.getByRole("dialog", { name: /Propose version/ });
+      await expect(phoneDialog).toBeVisible();
+      await page.screenshot({
+        path: info.outputPath(`propose-phone-${width}.png`),
+        fullPage: true,
+      });
+      const discard = async (prompt: import("@playwright/test").Dialog) => {
+        await prompt.accept();
+      };
+      page.on("dialog", discard);
+      await page.keyboard.press("Escape");
+      await expect(phoneDialog).toHaveCount(0);
+      page.off("dialog", discard);
+      await expect(more).toBeFocused();
+    }
     await page.screenshot({
       path: info.outputPath(`terms-${width}.png`),
       fullPage: true,
     });
   }
-  await page.goto("/admin/policies?state=waiting-to-publish");
+  await navigate("/admin/policies?state=waiting-to-publish");
   await expect(
     page.getByText("No policies waiting to publish", { exact: true }),
   ).toBeVisible();
@@ -109,7 +169,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
     page.getByRole("heading", { name: "Business policies", exact: true }),
   ).toBeVisible();
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/admin/policies/record-references");
+  await navigate("/admin/policies/record-references");
   await expect(
     page.getByRole("heading", {
       name: "Readable record references",
@@ -126,7 +186,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
   const seed = data.items.find(
     (r: { area: string }) => r.area === "Working hours",
   );
-  await page.goto(`/admin/policies/${seed.id}`);
+  await navigate(`/admin/policies/${seed.id}`);
   await expect(
     page.getByRole("heading", { name: seed.name, exact: true }),
   ).toBeVisible();
@@ -134,7 +194,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
     page.getByRole("button", { name: "Propose change", exact: true }),
   ).toHaveCount(0);
   await identity(page, baseURL!, "observer");
-  await page.goto("/admin/settings");
+  await navigate("/admin/settings", "observer");
   await expect(
     page.getByRole("heading", { name: "Configuration areas", exact: true }),
   ).toBeVisible();
@@ -143,7 +203,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       .locator(".settings-area-card")
       .filter({ hasText: "Business policies" }),
   ).toHaveCount(0);
-  await page.goto(`/admin/policies/${policy.id}`);
+  await navigate(`/admin/policies/${policy.id}`, "observer");
   await expect(
     page.getByRole("heading", { name: policy.name, exact: true }),
   ).toHaveCount(0);
@@ -301,7 +361,7 @@ test("AD-02 dialogs save an independent proposal and refuse stale publication", 
     }),
   ).toBeVisible();
   for (const width of [1440, 1024, 390, 320]) {
-    await page.setViewportSize({ width, height: 1000 });
+    await page.setViewportSize({ width, height: width < 780 ? 844 : 1000 });
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -371,7 +431,7 @@ test("AD-02 recovers a committed publication after its response is lost without 
   for (const width of [1440, 1024, 390, 320]) {
     if (width === 390)
       await page.getByRole("tab", { name: "Terms", exact: true }).click();
-    await page.setViewportSize({ width, height: 1000 });
+    await page.setViewportSize({ width, height: width < 780 ? 844 : 1000 });
     await expect(
       page.getByRole("button", { name: /Publish version/ }).last(),
     ).toBeVisible();
@@ -434,6 +494,114 @@ test("AD-02 recovers a committed publication after its response is lost without 
   );
   await page.screenshot({
     path: info.outputPath("recovered-publication.png"),
+    fullPage: true,
+  });
+});
+
+test("AD-02 phone read states clear stale data and distinguish denied, empty and failed sources", async ({
+  page,
+  baseURL,
+}, info) => {
+  await identity(page, baseURL!, "scheduling-policy-publisher");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/admin/policies");
+  await expect(page.getByLabel("Find a policy")).toBeVisible();
+  await expect(
+    page.locator(".settings-register tbody tr").first(),
+  ).toBeVisible();
+  await page.getByLabel("Find a policy").fill("no-match-ad02-state");
+  await expect(
+    page.getByText("No policies match", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("state-filter-empty-390.png"),
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Clear search", exact: true }).click();
+  let release: () => void = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let status = 409;
+  await page.route("**/api/v1/admin/policies", async (route) => {
+    await held;
+    await route.fulfill({
+      status,
+      contentType: "application/json",
+      body: JSON.stringify({
+        code: status === 409 ? "PolicyChanged" : "Unavailable",
+        message:
+          status === 409
+            ? "Synthetic read changed. Refresh before continuing."
+            : "Synthetic source failed.",
+      }),
+    });
+  });
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect(page.locator(".settings-register tbody tr")).toHaveCount(0);
+  await page.screenshot({
+    path: info.outputPath("state-loading-390.png"),
+    fullPage: true,
+  });
+  release();
+  await expect(
+    page
+      .getByText("Synthetic read changed. Refresh before continuing.", {
+        exact: false,
+      })
+      .first(),
+  ).toBeVisible();
+  await expect(page.locator(".settings-register tbody tr")).toHaveCount(0);
+  await page.screenshot({
+    path: info.outputPath("state-stale-390.png"),
+    fullPage: true,
+  });
+  status = 503;
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect(
+    page.getByText("Synthetic source failed.", { exact: false }).first(),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath("state-failed-390.png"),
+    fullPage: true,
+  });
+  await page.route("**/api/v1/admin/settings", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        areas: [],
+        attention: [],
+        policy_summary: null,
+        foundation_available: true,
+        read_at: new Date().toISOString(),
+        viewer: "SYN state fixture",
+      }),
+    }),
+  );
+  await page.goto("/admin/settings");
+  await expect(
+    page.getByText("No configuration area permitted", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".settings-area-card")).toHaveCount(0);
+  await page.screenshot({
+    path: info.outputPath("state-no-areas-390.png"),
+    fullPage: true,
+  });
+  await page.unroute("**/api/v1/admin/policies");
+  await identity(page, baseURL!, "observer");
+  await page.goto("/admin/policies");
+  await expect(
+    page
+      .getByText(
+        "Current workspace policy authority and complete source visibility are required.",
+        { exact: false },
+      )
+      .first(),
+  ).toBeVisible();
+  await expect(page.locator(".settings-register tbody tr")).toHaveCount(0);
+  await page.screenshot({
+    path: info.outputPath("state-denied-390.png"),
     fullPage: true,
   });
 });

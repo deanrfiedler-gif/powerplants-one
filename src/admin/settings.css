@@ -420,3 +420,51 @@
     max-width: none;
   }
 }
+
+/* Fixed native terms inside the shared command dialog. */
+#ppo-settings .settings-fixed-terms {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  margin-top: 12px;
+}
+#ppo-settings .settings-fixed-terms dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px 16px;
+}
+#ppo-settings .settings-fixed-terms dd {
+  margin: 0;
+}
+#ppo-settings .settings-fixed-terms dt {
+  color: var(--text-secondary);
+}
+
+/* Shared table rows have desktop heights; stacked phone cells grow with content. */
+#ppo-settings .settings-register .ppo-register-table th {
+  padding: 12px;
+}
+@media (min-width: 781px) {
+  #ppo-settings .settings-register .ppo-register-table :is(th, td):first-child {
+    min-width: 280px;
+    width: 280px;
+  }
+  #ppo-settings .settings-register .ppo-register-table th {
+    white-space: nowrap;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-settings .settings-register .ppo-register-table :is(tr, td),
+  #ppo-settings .settings-current-terms .ppo-register-table :is(tr, td),
+  #ppo-settings .settings-proposal-terms .ppo-register-table :is(tr, td) {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  #ppo-settings .shared-record-sources,
+  #ppo-settings .settings-tabs {
+    display: none;
+  }
+}
