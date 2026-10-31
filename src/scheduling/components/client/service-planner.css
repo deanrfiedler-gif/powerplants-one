@@ -94,3 +94,43 @@
 #ppo-service-planner .planner-toolbar .field { gap: 0; }
 #ppo-service-planner .planner-toolbar .planner-date .field { width: 142px; }
 #ppo-service-planner .planner-toolbar input, #ppo-service-planner .planner-toolbar select { width: 100%; }
+
+#ppo-service-planner .tl-person, #ppo-service-planner .tl-person.off { height: 72px; box-sizing: border-box; }
+#ppo-service-planner .tl-person .tl-av { grid-row: 1 / span 3; align-self: start; }
+#ppo-service-planner .tl-name { display: block; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; }
+#ppo-service-planner .tl-role { grid-row: 2; }
+#ppo-service-planner .tl-total { grid-row: 3; }
+#ppo-service-planner .pl01-workspace:not(.tray-collapsed) .pl01-tray-toggle { display: flex; justify-content: flex-end; height: 32px; padding: 6px 16px; }
+#ppo-service-planner .pl01-attention-rows { max-height: 116px; }
+#ppo-service-planner .pl01-attention strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 780px) {
+  #ppo-service-planner .pl01-attention-rows { max-height: none; }
+  #ppo-service-planner .pl01-attention strong { white-space: normal; }
+}
+
+#ppo-service-planner .tray-collapsed .pl01-tray-toggle { writing-mode: horizontal-tb; display: flex; flex-direction: column; gap: 16px; padding: 12px 4px; justify-content: flex-start; }
+#ppo-service-planner .pl01-tray-expand { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--line-soft); border-radius: var(--radius-control); font-size: 20px; }
+#ppo-service-planner .pl01-tray-count { display: grid; gap: 4px; text-align: center; }
+#ppo-service-planner .pl01-tray-count strong { font-size: 14px; }
+#ppo-service-planner .pl01-tray-count small, #ppo-service-planner .pl01-tray-count strong.unknown { font-size: 9px; line-height: 12px; }
+#ppo-service-planner .pl01-attention article { padding: 4px 0; }
+#ppo-service-planner .pl01-attention strong { font-size: 13px; line-height: 16px; }
+#ppo-service-planner .pl01-attention ul { margin: 2px 0; line-height: 14px; }
+
+#ppo-service-planner .pl01-zone { order: 3; width: 170px; min-width: 0; }
+#ppo-service-planner .pl01-attention h2 { font-size: 10px; line-height: 12px; margin-bottom: 6px; }
+#ppo-service-planner .pl01-attention article { padding: 2px 0; }
+#ppo-service-planner .pl01-attention-rows { max-height: 104px; }
+#ppo-service-planner .wk-row { min-width: 750px; }
+#ppo-service-planner .wk-corner, #ppo-service-planner .wk-day { height: 36px; }
+#ppo-service-planner .wk-cell { min-height: 72px; padding: 6px; gap: 4px; }
+#ppo-service-planner .wk-person, #ppo-service-planner .wk-row.off .wk-person { min-height: 72px; padding: 8px 16px; box-sizing: border-box; grid-template-columns: 28px minmax(0,1fr); }
+#ppo-service-planner .wk-person .tl-av { grid-row: 1 / span 3; align-self: start; }
+#ppo-service-planner .wk-tile { padding: 3px 6px; min-width: 0; }
+#ppo-service-planner .wk-tile .r1 { font-size: 12px; line-height: 16px; }
+#ppo-service-planner .wk-tile .r1 b { overflow: hidden; text-overflow: ellipsis; }
+#ppo-service-planner .wk-tile.held { background: var(--planner-attention-selected); }
+#ppo-service-planner .wk-tile.sel { outline: 2px solid var(--ink); outline-offset: 1px; box-shadow: none; }
+@media (max-width: 780px) {
+  #ppo-service-planner .pl01-attention-rows { max-height: none; }
+}

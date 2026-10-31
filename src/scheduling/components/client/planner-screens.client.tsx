@@ -1525,9 +1525,10 @@ export function PlannerScreen() {
   const held = data?.items.filter(plannerHeld) ?? [];
   const trayCollapsed = !!selected || (trayChoice ?? !menu.docked);
   const trayUsable = !!demand.data && !demand.loading && !demand.error;
+  const trayCount = trayUsable ? `${demand.data!.completeness === "Partial" ? "≥ " : ""}${demand.data!.items.length}` : "Unknown";
   return (
     <SecondaryMenuFrame state={menu} id="ppo-service-planner" name="Scheduling" menuId="planner-menu" contentId="planner-content"
-      attributes={{ "data-ppo-workspace": "shared" }} menu={<><h2 className="pl01-menu-heading">Scheduling</h2><SchedulingNavigation side /></>} message={dragNotice}>
+      attributes={{ "data-ppo-workspace": "shared" }} menu={<><h2 className="pl01-menu-heading">Scheduling</h2><SchedulingNavigation side /></>} message="">
       {/* The shell banner and the module tab strip both already name this
           page, so the heading block is redundant on screen. It stays in the
           document for assistive technology and heading order. */}
@@ -1588,13 +1589,13 @@ export function PlannerScreen() {
           </button>
         </div>
         {(wide || showFilters) && (
-          <EnumField
+          <div className="pl01-zone" title={`${zone}. ${EXTENDED_HOURS_ADVICE}`}><EnumField
             name="display-timezone"
             label="Display timezone"
             value={zone}
             onChange={setZone}
             values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
-          />
+          /></div>
         )}
         {/* The removed heading block carried the only route to work orders,
             so it moves into the control bar with the other page actions. */}
@@ -1669,12 +1670,12 @@ export function PlannerScreen() {
       )}
       {wide && <PlannerAttention items={data?.items ?? []} usable={usable} returnTo={returnTo} />}
       {!wide && <button className="pl01-tray-launch secondary" onClick={() => setPhoneTray(!phoneTray)} aria-expanded={phoneTray}>
-        {phoneTray ? "← Back to planner" : "Needs attention and tray"} · To plan {trayUsable ? demand.data!.items.length : "Unknown"} · On hold {usable ? held.length : "Unknown"}
+        {phoneTray ? "← Back to planner" : "Needs attention and tray"} · To plan {trayCount} · On hold {usable ? held.length : "Unknown"}
       </button>}
       <div className={`pl01-workspace${trayCollapsed ? " tray-collapsed" : ""}${phoneTray ? " phone-tray-open" : ""}`}>
         <aside className="pl01-tray" aria-label="Planner tray" hidden={!wide && !phoneTray}>
           {wide && <button className="pl01-tray-toggle secondary" onClick={() => { setSelectedId(null); setTrayChoice(!trayCollapsed); }} aria-expanded={!trayCollapsed}>
-            {trayCollapsed ? "Expand tray" : "Collapse tray"}<span>To plan · {trayUsable ? demand.data!.items.length : "Unknown"}</span><span>On hold · {usable ? held.length : "Unknown"}</span>
+            {trayCollapsed ? <><span className="sr-only">Expand tray</span><span className="pl01-tray-expand" aria-hidden="true">›</span><span className="pl01-tray-count"><strong className={!trayUsable ? "unknown" : ""}>{trayCount}</strong><small>To plan</small></span><span className="pl01-tray-count"><strong className={!usable ? "unknown" : ""}>{usable ? held.length : "Unknown"}</strong><small>On hold</small></span></> : <span>‹ Collapse tray</span>}
           </button>}
           {(!wide || !trayCollapsed) && <>
             {!wide && <PlannerAttention items={data?.items ?? []} usable={usable} returnTo={returnTo} />}
@@ -1774,19 +1775,6 @@ export function PlannerScreen() {
         <div className="pl01-board-content" hidden={!wide && phoneTray}>
       {data && (
         <>
-          <p className="read-meta">
-            {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
-            Display {zone} · Observed{" "}
-            <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
-            {usable
-              ? "Complete permitted result within this date/site/resource filter"
-              : "Last successful read · current counts unavailable"}
-          </p>
-          <p className="planner-legend">
-            <span>Confirmed = reserved crew</span>
-            <span>Proposed = no capacity reserved</span>
-            <span>Dispatch is checked by the current readiness gate</span>
-          </p>
           {mode === "week" && !boardView && !phoneView && (
             <p className="planner-scroll-hint">
               Scroll within each resource lane to compare days. Keyboard: focus
@@ -1875,6 +1863,19 @@ export function PlannerScreen() {
               />
             </>
           )}
+          <p className="read-meta">
+            {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
+            Display {zone} · Observed{" "}
+            <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
+            {usable
+              ? "Complete permitted result within this date/site/resource filter"
+              : "Last successful read · current counts unavailable"}
+          </p>
+          <p className="planner-legend">
+            <span>Confirmed = reserved crew</span>
+            <span>Proposed = no capacity reserved</span>
+            <span>Dispatch is checked by the current readiness gate</span>
+          </p>
           <section className="panel proposal-section" id="planner-proposals">
             <h2>Proposed and cancelled appointments</h2>
             <p>

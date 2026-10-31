@@ -11,8 +11,10 @@ export async function pl01Call(page: Page, path: string, body?: unknown) {
 export async function pl01Identity(page: Page, profile = "coordinator") {
   await page.goto("/schedule");
   await pl01Call(page, "local-session", { profile });
+  const read = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from"));
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Unassigned demand" })).toBeVisible();
+  expect((await read).ok()).toBeTruthy();
+  await openPlannerTray(page);
 }
 export const evidence = () => ({ title: "SYN PL01 exact evidence", content_text: "SYN authorised visual inspection only; service owner reviewed the fictional site and work controls.", source_reference: "SYN-PPO-PL01-TEST", source_version: "1" });
 export async function createDemand(page: Page, summary = "SYN PL01 reviewed external visual inspection") {
@@ -44,11 +46,29 @@ export async function openDemand(page: Page, id: string, context = "/schedule") 
   await expect(panel.getByRole("button", { name: "Save proposal", exact: true })).toBeEnabled();
   return panel;
 }
+export async function openPlannerTray(page: Page) {
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    const launch = page.getByRole("button", { name: /^Needs attention and tray/ });
+    if (!await page.getByRole("button", { name: /Back to planner/ }).isVisible()) {
+      await expect(launch).toBeVisible();
+      await launch.click();
+    }
+  } else {
+    const expand = page.getByRole("button", { name: /^Expand tray/ });
+    if (await expand.isVisible()) await expand.click();
+  }
+  await expect(page.getByRole("heading", { name: "To plan", exact: true })).toBeVisible();
+}
 export async function openDemandPanel(page: Page, id: string) {
+  // D4 makes the phone tray a separate view. Check the retained calendar read
+  // in its visible view, then use the actual tray control to reach the card.
+  const back = page.getByRole("button", { name: /Back to planner/ });
+  if (await back.isVisible()) await back.click();
   // Demand and the calendar load independently. Wait for the calendar above
   // the card to settle so its arrival cannot move Plan visit during the click.
   await expect(page.getByText("Complete permitted result within this date/site/resource filter", { exact: false })).toBeVisible();
-  const card = page.locator("article").filter({ has: page.locator(`a[href='/service/work-orders/${id}']`) });
+  await openPlannerTray(page);
+  const card = page.locator(".pl01-tray article").filter({ has: page.locator(`a[href='/service/work-orders/${id}']`) });
   await card.getByRole("button", { name: "Plan visit" }).click();
   const panel = page.getByRole("dialog", { name: "Plan visit", exact: true });
   await expect(panel).toBeVisible();

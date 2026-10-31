@@ -387,7 +387,7 @@ export function PlannerWeek({
       isWeekend(d) &&
       rows.every(({ cells }) => !cells[i]!.visits.length && !cells[i]!.lane.unavailable.length && !cells[i]!.lane.closed.length && !cells[i]!.lane.reserved.length),
   );
-  const columns = `210px ${slim.map((s) => (s ? "24px" : "minmax(150px, 1fr)")).join(" ")}`;
+  const columns = `190px ${slim.map((s) => (s ? "24px" : "minmax(90px, 1fr)")).join(" ")}`;
   const sum = (i: number, key: "bookedMinutes" | "capacityMinutes") =>
     rows.filter((x) => x.r.active).reduce((a, x) => a + x.cells[i]!.lane[key], 0);
   const last = days[days.length - 1]!;
@@ -507,7 +507,6 @@ export function PlannerWeek({
                           ext = confirmed
                             ? extendedHours(a.start_at, a.end_at, { timezone: r.calendar.timezone, travel_before_minutes: me.travel_before_minutes, travel_after_minutes: me.travel_after_minutes })
                             : null,
-                          crew = a.assignments.filter((x) => x.active),
                           drag = usable && a.actions.can_manage && confirmed,
                           isSelected = selected === a.id;
                         const tile = [
@@ -556,15 +555,7 @@ export function PlannerWeek({
                                   <Glyph icon="clock" path={clockGlyph} />
                                 </span>
                               )}
-                              {crew.length > 1 && (
-                                <span className="tl-crew" aria-hidden="true">
-                                  {crew.map((x) => (
-                                    <span key={x.resource_id} title={x.name}>
-                                      {initials(x.name)}
-                                    </span>
-                                  ))}
-                                </span>
-                              )}
+
                             </span>
                           </div>
                         );

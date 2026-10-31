@@ -1,11 +1,17 @@
 import { test, expect, type Page } from "@playwright/test";
+import { createDemand, openDemandPanel, fillProposal } from "../helpers/pl01";
 
 async function enter(page: Page) {
   const session = await page.request.post("/api/v1/local-session", {
     headers: { Origin: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}` }, data: { profile: "coordinator" },
   });
   expect(session.ok(), await session.text()).toBeTruthy();
+  const read = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from"));
   await page.goto("/schedule?day=2031-09-22&view=day");
+  const response = await read;
+  expect(response.ok(), await response.text()).toBeTruthy();
+  const through = new URL(response.url()).searchParams.get("to")!;
+  expect(new Date(through).toISOString()).toBe((page.viewportSize()!.width <= 780 ? "2031-09-28" : "2031-09-22") + "T14:00:00.000Z");
   await expect(page.locator('[data-appointment][data-status="Confirmed"]').first()).toBeVisible();
 }
 
@@ -45,9 +51,40 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 band, tray, selection an
     await expect(move.getByText(/new customer site readiness confirmation/)).toBeVisible();
     await page.getByRole("button", { name: "Close move", exact: true }).click();
     await details.getByRole("button", { name: "Close visit details", exact: true }).click();
-    await page.getByRole("button", { name: "Week", exact: true }).click();
-    await expect(page.locator('[data-appointment][data-status="Confirmed"]').first()).toBeVisible();
-    await page.screenshot({ path: info.outputPath(`PL01-week-${width}.png`), fullPage: true });
+
+});
+
+for (const width of [1440, 1024, 390, 320]) test(`PL-01 Day to Week keeps the measured read range at ${width}px`, async ({ page }, info) => {
+  test.skip(info.project.name.includes("mobile"), "The desktop project executes the explicit width matrix.");
+  await page.setViewportSize({ width, height: width > 780 ? 960 : 844 });
+  await enter(page);
+  // Phone Day already holds the week for its day chips. Only desktop Day must
+  // change the read range when switching to Week; do not wait for a fake read.
+  const read = width > 780 ? page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from")) : null;
+  await page.getByRole("button", { name: "Week", exact: true }).click();
+  if (read) expect((await read).ok()).toBeTruthy();
+  await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
+  await expect(page.locator('[data-appointment][data-status="Confirmed"]').first()).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: info.outputPath(`PL01-week-${width}.png`), fullPage: true });
+});
+
+test("PL-01 tray opens the native proposal without reserving or saving a visit", async ({ page }, info) => {
+  await enter(page);
+  const work = await createDemand(page);
+  const scheduleRead = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule" && new URL(r.url()).searchParams.has("from"));
+  const demandRead = page.waitForResponse(r => new URL(r.url()).pathname === "/api/v1/schedule/demand");
+  await page.reload();
+  expect((await scheduleRead).ok()).toBeTruthy();
+  expect((await demandRead).ok()).toBeTruthy();
+  const writes: string[] = [];
+  page.on("request", r => { if (r.method() === "POST" && r.url().endsWith(`/service/work-orders/${work.id}/visits`)) writes.push(r.url()); });
+  const panel = await openDemandPanel(page, work.id);
+  await expect(panel.getByRole("button", { name: "Save proposal", exact: true })).toBeEnabled();
+  await fillProposal(page);
+  await page.screenshot({ path: info.outputPath("PL01-plan-visit.png"), fullPage: true });
+  await panel.getByRole("button", { name: "Close plan visit" }).click();
+  expect(writes).toEqual([]);
 });
 
 test("PL-01 a timeline drag opens Move this visit without sending a booking command", async ({ page }, info) => {
