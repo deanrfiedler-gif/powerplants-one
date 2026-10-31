@@ -28,12 +28,14 @@ export async function recurrenceFor(
     }>(
       `
     SELECT t.procedure_key,t.checks->((pc.ordinality-1)::int)->>'key' AS check_key,a.occurred_at,r.evaluation FROM ppo.inspection_defects d
-    JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(d.workspace_id,d.source_attempt_id)
-    JOIN ppo.service_inspection_bindings b ON (b.workspace_id,b.attempt_id)=(d.workspace_id,d.source_attempt_id)
+    JOIN ppo.inspection_defect_attempts dl ON (dl.workspace_id,dl.defect_id)=(d.workspace_id,d.id)
+    JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(dl.workspace_id,dl.attempt_id)
+    JOIN ppo.service_inspection_bindings b ON (b.workspace_id,b.attempt_id)=(a.workspace_id,a.id)
     JOIN ppo.service_inspection_templates t ON (t.workspace_id,t.id)=(b.workspace_id,b.template_id)
     JOIN LATERAL jsonb_array_elements(a.plan) WITH ORDINALITY pc(definition,ordinality) ON pc.definition->>'key'=d.check_key
-    JOIN ppo.inspection_results r ON (r.workspace_id,r.attempt_id,r.check_key)=(d.workspace_id,d.source_attempt_id,d.check_key)
-    WHERE d.workspace_id=$1 AND d.id=$2`,
+    JOIN ppo.inspection_results r ON (r.workspace_id,r.attempt_id,r.check_key)=(a.workspace_id,a.id,d.check_key)
+    WHERE d.workspace_id=$1 AND d.id=$2 AND r.evaluation='Fail'
+    ORDER BY a.occurred_at DESC,a.id LIMIT 1`,
       [p.workspace_id, row.source_id],
     )
   ).rows[0];
@@ -58,22 +60,32 @@ export async function recurrenceFor(
   for (const candidate of candidates.slice(0, 50)) {
     try {
       const previous = await project(c, p, candidate);
-      const fact = (
+      const facts = (
         await c.query<{ occurred_at: Date; correction_note: string | null }>(
-          "SELECT a.occurred_at,d.correction_note FROM ppo.inspection_defects d JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(d.workspace_id,d.source_attempt_id) WHERE d.workspace_id=$1 AND d.id=$2",
-          [p.workspace_id, candidate.id],
+          `
+        SELECT a.occurred_at,d.correction_note FROM ppo.inspection_defects d
+        JOIN ppo.inspection_defect_attempts dl ON (dl.workspace_id,dl.defect_id)=(d.workspace_id,d.id)
+        JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(dl.workspace_id,dl.attempt_id)
+        JOIN ppo.inspection_results r ON (r.workspace_id,r.attempt_id,r.check_key)=(a.workspace_id,a.id,d.check_key)
+        WHERE d.workspace_id=$1 AND d.id=$2 AND r.evaluation='Fail'
+          AND a.occurred_at < $3::timestamptz AND a.occurred_at >= $3::timestamptz - interval '2160 hours'
+        ORDER BY a.occurred_at DESC,a.id LIMIT 51`,
+          [p.workspace_id, candidate.id, at],
         )
-      ).rows[0];
+      ).rows;
       await authorise(c, p, candidate);
-      if (withinRecurrenceWindow(fact.occurred_at.toISOString(), at))
-        result.earlier.push({
-          id: previous.id,
-          reference: previous.source_record.reference,
-          href: previous.source_record.href,
-          occurred_at: fact.occurred_at.toISOString(),
-          state: previous.state,
-          correction: fact.correction_note,
-        });
+      for (const fact of facts.slice(0, 50)) {
+        if (withinRecurrenceWindow(fact.occurred_at.toISOString(), at))
+          result.earlier.push({
+            id: previous.id,
+            reference: previous.source_record.reference,
+            href: previous.source_record.href,
+            occurred_at: fact.occurred_at.toISOString(),
+            state: previous.state,
+            correction: fact.correction_note,
+          });
+      }
+      if (facts.length > 50) result.partial = true;
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
       result.partial = true;
@@ -91,5 +103,9 @@ export async function recurrenceFor(
     (a, b) =>
       b.occurred_at.localeCompare(a.occurred_at) || a.id.localeCompare(b.id),
   );
+  if (result.earlier.length > 50) {
+    result.earlier = result.earlier.slice(0, 50);
+    result.partial = true;
+  }
   return result;
 }

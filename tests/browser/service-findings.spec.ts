@@ -355,6 +355,10 @@ test("SV07 comparison captures at 1440, 1024, 390 and 320", async ({
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+    if (width === 1024) {
+      const collapse = page.getByRole("button", { name: "Collapse primary navigation", exact: true });
+      if (await collapse.isVisible()) await collapse.click();
+    }
     await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
     if (width >= 1024)
       await page
@@ -374,5 +378,36 @@ test("SV07 comparison captures at 1440, 1024, 390 and 320", async ({
       ),
     ).toBe(true);
     await page.screenshot({ path: info.outputPath(`snapshot-${width}.png`) });
+    if (width < 1024) {
+      await page.locator(".sv07-snapshot").evaluate((el) => {
+        el.scrollTop = el.scrollHeight / 2;
+      });
+      await page.screenshot({
+        path: info.outputPath(`snapshot-${width}-middle.png`),
+      });
+      await page.locator(".sv07-snapshot").evaluate((el) => {
+        el.scrollTop = el.scrollHeight;
+      });
+      await page.screenshot({
+        path: info.outputPath(`snapshot-${width}-bottom.png`),
+      });
+      await expect(
+        page.getByRole("link", { name: "Open report", exact: true }),
+      ).toBeVisible();
+    }
   }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/service/findings?department=service");
+  const expand = page.getByRole("button", { name: "Expand primary navigation", exact: true });
+  if (await expand.isVisible()) await expand.click();
+  await page.getByRole("link", { name: /^Needs an owner/ }).click();
+  await page.locator(".sv07-desktop tbody tr").filter({hasText: "Firmware check"}).locator(".sv07-open").click();
+  await expect(page.getByRole("heading", {name:"Set the next action"})).toBeVisible();
+  await page.screenshot({path:info.outputPath("assignment-1440.png")});
+  await page.getByRole("button", {name:"Close",exact:true}).click();
+  await page.getByRole("link", { name: /^Recurring/ }).click();
+  await page.locator(".sv07-desktop tbody tr").filter({hasText:"VA-12 travel fault"}).locator(".sv07-open").click();
+  await page.getByRole("tab", {name:/Recurrence/}).click();
+  await expect(page.getByText("Same equipment and failed check within 90 days.", {exact:false})).toBeVisible();
+  await page.screenshot({path:info.outputPath("recurrence-1440.png")});
 });

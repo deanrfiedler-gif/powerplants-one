@@ -64,3 +64,29 @@ Subsequent main `4c1097cc` adds migration 0113. PR #634 integrates it alongside 
 Both combined-history upgrade cases passed locally: populated 0109 to 0111/0113, and reserved 0111 installed after populated 0113. The [raw upgrade result](r2-merged-upgrades.tap) records exact data/ledger preservation, idempotent migration/seeding and accepted pre-upgrade receipt recovery. Command: `node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=180000 tests/database/service-finding-next-action-upgrade.test.ts`. The two focused R2 parser tests, targeted ESLint, naming, migration numbering, generated status and whitespace checks passed. An earlier broader local run passed its first Discovery scenario but hit the 120-second deadline in its second; it was stopped and is not counted as a passing full database run or attributed to this merge.
 
 Independent GPT-6.1-Sol review found no defects in the resolution after inspecting 83 migration lists, computed histories, Products starting points, seed preservation, the demo count, late-0111 proof and incoming Reports integration. A separate mechanical comparison confirmed additive preservation of main's assertions in all 59 changed existing test files. The reviewer made no edits and ran no database tests; review and focused local proof do not replace combined-head CI.
+
+## SV-07 native page — 31 October 2026
+
+Contribution: `codex/service-findings-ui`, [PR #801](https://github.com/deanrfiedler-gif/powerplants-one/pull/801), starting main `1402c87b9069def4dcd4d82f291cd991cff40ca5`. Owner: Codex for this implementation; Dean Fiedler remains the product owner. The dedicated worktree uses real `npm ci` with Node 24.22.2/npm 11.19.0; no engine override, junction, dependency, migration, capability or grant was added. The isolated loopback server uses port 3147 and PostgreSQL 16 uses port 5547/database `ppo_synthetic_test`. All fixture data is synthetic.
+
+### Functional proof
+
+Five focused unit tests and five mocked-browser scenarios pass. They cover strict filters/identities, source-owned closure, the inclusive 90-day boundary, due-week and overdue boundaries in site time, all eight views and all five sources, next-action history and unchanged-operation replay, stale-version comparison, technician view-only controls, failed-read clearing and continuation through an empty selected-view window. Two native HTTP tests pass, including all eight view names, authentication, private/no-store responses, strict input/origin checks and unavailable source refusals. The native recurrence database test passes: original check identity, repeated failures on one open defect, exact 90-day inclusion and 1 ms exclusion, no source-state mutation, and Activity-read revocation. Historical observations are seeded through the inspection engine so the test does not pretend today’s attendance can capture an old reading.
+
+The native recurrence run used a 600-second local test deadline and took 149 seconds in its test body under memory contention. An earlier unchanged native inspection test exceeded the standard 120-second deadline. The same test on an untouched archive of main `1402c87b` also exceeded 120 seconds. The full affected native suites are being rerun with the longer local deadline, without changing assertions or repository/CI time limits. Results of those suites, final typecheck and lint are pending here until execution finishes.
+
+Foundation, naming, `studio:check`, and status-source validation passed. The register retains pending/stale visual reviews; no acceptance fingerprint is copied. Full build, the complete repository test suite, owner acceptance and deployment are not claimed.
+
+### Visual comparison
+
+Codex inspected the application’s register and selected remaining-work finding at 1440, 1024, 390 and 320 px against retained accepted captures 01, 02, 05, 06, 07 and 08. Phone evidence includes top, middle and bottom scroll positions. The 1024 capture collapses the primary rail using its existing control. Retained source images are unchanged. This is an implementation review, **not visual acceptance**.
+
+Differences are recorded in the [page contract](../../../design/development/pages/scope-sv-07.md#differences-and-open-work): native source references and real read fields; bounded counts/read-time qualification and pagination; horizontal ten-column scrolling; shared shell/header/date controls and fallback icons; native required change reason; source history linked rather than fabricated; no category recurrence where the source has no stable fault key; no SV-08 controls; no bulk assignment; no 30-day cutoff; Ready to close qualified as follow-up completed awaiting source review. Layout spacing and wrapping differ where these controls and truthful text require it. Owner/device acceptance remains pending.
+
+### Service reports regression boundary
+
+Only three additions touch `report-register.tsx`: the Findings menu import, the Service reports group heading and the Findings/History groups. Its data, table, snapshot and actions are unchanged. The new menu stylesheet targets only the new menu class. Report record components, their styles and native commands have no diff. The existing Service reports browser suite passed seven of eight tests; the phone Details handover URL assertion failed. The identical assertion fails on untouched main `1402c87b` at port 3148 with the same unchanged URL and five-second expectation. That baseline failure is retained; this PR does not alter the report handover.
+
+### Separate delivery statuses
+
+Functional proof: focused passes above; remaining native/static checks pending. Visual review: inspected comparison with declared differences; no visual acceptance. Owner acceptance: pending. Deployment: not performed. Claude’s exact-head review and all CONTRIBUTING merge gates remain required.

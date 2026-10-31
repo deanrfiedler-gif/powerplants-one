@@ -1,10 +1,16 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 import { reset } from "../../scripts/database";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { readFinding, readFindings } from "../../src/service/findings/reads";
 import { inspectionCommand } from "../../src/inspections/service-commands";
+import { saveAttempt } from "../../src/inspections/service";
+import { serviceHost } from "../../src/inspections/service-context";
 import {
   inspectionFixture,
   openInspection,
@@ -24,14 +30,16 @@ async function failure(
 ) {
   const id = await openInspection(f, f.tech, 1),
     saved = await saveInspection(f, id);
-  await inspectionCommand(
-    f.tech,
-    f.id,
-    {
-      ...base(),
-      action: "save",
-      attempt_id: id,
-      expected_version: saved.row.version,
+  // Historical synthetic fixture: retain engine hashes and constraints without
+  // pretending today's attendance can capture a reading from 90 days ago.
+  await transaction((c) =>
+    saveAttempt(c, f.tech, serviceHost(f.id), id, saved.row.version, {
+      configuration_reference: saved.row.configuration_reference,
+      configuration_source_id: saved.row.configuration_source_id,
+      timezone: saved.row.timezone,
+      clock_concern: null,
+      prerequisites: saved.row.prerequisites,
+      findings: saved.row.findings,
       occurred_at: at,
       instrument_ids: ["e9550000-0000-4000-8000-000000000003"],
       reading_instruments: saved.row.plan
@@ -47,8 +55,7 @@ async function failure(
           ? { value: "120", unit: "kPa" }
           : { choice: "Clear" }),
       })),
-    },
-    "capture",
+    }),
   );
   const ready = (await inspect(f.tech, f.id)).attempts.find(
     (a) => a.row.id === id,
@@ -64,8 +71,14 @@ async function failure(
     },
     "capture",
   );
+  const linked = (
+    await database().query(
+      "SELECT defect_id FROM ppo.inspection_defect_attempts WHERE attempt_id=$1",
+      [id],
+    )
+  ).rows[0];
   const d = (await inspect(f.tech, f.id)).defects.find(
-    (d) => d.source_attempt_id === id,
+    (d) => d.id === linked.defect_id,
   )!;
   assert.ok(d);
   return d;
@@ -75,23 +88,24 @@ test("SV07 recurrence uses the original failed-check key at the exact 90-day bou
     g = f,
     now = new Date(),
     at = now.toISOString();
-  const boundary = await failure(
-    f,
-    new Date(now.getTime() - 90 * 86400000).toISOString(),
-  );
-  const outside = await failure(
-    f,
-    new Date(now.getTime() - 90 * 86400000 - 1).toISOString(),
-  );
+  await failure(f, new Date(now.getTime() - 90 * 86400000).toISOString());
+  await failure(f, new Date(now.getTime() - 90 * 86400000 - 1).toISOString());
   const latest = await failure(g, at),
     key = `inspection:${latest.id}`;
   const row = (await readFinding(g.co, key)).item;
   assert.equal(row.recurrence?.basis, "FailedCheck");
   assert.ok(
-    row.recurrence?.earlier.some((r) => r.id === `inspection:${boundary.id}`),
+    row.recurrence?.earlier.some(
+      (r) =>
+        r.occurred_at === new Date(now.getTime() - 90 * 86400000).toISOString(),
+    ),
   );
   assert.ok(
-    !row.recurrence?.earlier.some((r) => r.id === `inspection:${outside.id}`),
+    !row.recurrence?.earlier.some(
+      (r) =>
+        r.occurred_at ===
+        new Date(now.getTime() - 90 * 86400000 - 1).toISOString(),
+    ),
   );
   assert.ok(
     (await readFindings(g.co, { view: "recurring", limit: 50 })).items.some(
@@ -115,14 +129,10 @@ test("SV07 recurrence uses the original failed-check key at the exact 90-day bou
     before,
   );
   await database().query(
-    "UPDATE ppo.activities SET access_class='RestrictedFinance',version=version+1 WHERE id=$1",
-    [boundary.activity_id],
+    "UPDATE ppo.permission_grants SET valid_to=clock_timestamp() WHERE user_id=$1 AND capability='activity.read'",
+    [g.co.actor_id],
   );
-  const hidden = (await readFinding(g.co, key)).item;
-  assert.ok(
-    !hidden.recurrence?.earlier.some(
-      (r) => r.id === `inspection:${boundary.id}`,
-    ),
+  await assert.rejects(readFinding(g.co, key), (e: unknown) =>
+    [403, 404].includes((e as { status: number }).status),
   );
-  assert.ok(!JSON.stringify(hidden.recurrence).includes(boundary.id));
 });

@@ -1,4 +1,5 @@
 "use client";
+import { FindingTime as Stamp } from "./service-findings-time";
 import { useEffect, useState, type RefObject } from "react";
 import {
   api,
@@ -7,7 +8,6 @@ import {
   isDenied,
   ReadState,
   SelectField,
-  Stamp,
   useCommand,
   useResource,
   ValidationFields,
@@ -21,12 +21,12 @@ import type { readNextAction } from "../service/findings/next-action";
 type Data = Awaited<ReturnType<typeof readNextAction>>;
 export function FindingActionEditor({
   data,
-  guard,
+  guardRef,
   onSaved,
   onRevoked,
 }: {
   data: Data;
-  guard: RefObject<() => boolean>;
+  guardRef: RefObject<() => boolean>;
   onSaved: () => void;
   onRevoked: () => void;
 }) {
@@ -61,13 +61,13 @@ export function FindingActionEditor({
       !!reason);
   useUnsavedChanges(dirty, locked);
   useEffect(() => {
-    guard.current = () =>
+    guardRef.current = () =>
       !locked &&
       (!dirty || window.confirm("Discard unsaved next-action changes?"));
     return () => {
-      guard.current = () => true;
+      guardRef.current = () => true;
     };
-  }, [dirty, locked, guard]);
+  }, [dirty, locked, guardRef]);
   useEffect(() => {
     if (isDenied(cmd.error) || isDenied(owners.error)) onRevoked();
   }, [cmd.error, owners.error, onRevoked]);
@@ -108,13 +108,17 @@ export function FindingActionEditor({
         {row.action ? (
           <>
             <p>{row.action.summary}</p>
-            <p>In My Work · {row.action.id}</p>
+            <p>Owned activity in My Work</p>
             <dl>
               <dt>Owner</dt>
               <dd>{row.action.owner_name}</dd>
               <dt>Due</dt>
               <dd>
-                <Stamp value={row.action.due_at} timezone={row.site.timezone} />
+                <Stamp
+                  scheduled
+                  value={row.action.due_at}
+                  timezone={row.site.timezone}
+                />
               </dd>
               <dt>Instruction</dt>
               <dd>{row.action.summary}</dd>
@@ -230,6 +234,7 @@ export function FindingActionEditor({
             </p>
             <p>
               <Stamp
+                scheduled
                 value={comparison.item.action?.due_at}
                 timezone={row.site.timezone}
               />

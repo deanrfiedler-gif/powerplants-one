@@ -24,7 +24,16 @@ test("SV07 HTTP uses authenticated no-store reads and strict query validation", 
   assert.match(all.headers.get("cache-control")!, /private, no-store/);
   assert.equal(all.body.count_scope, "AuthorisedCandidateWindow");
   assert.ok(all.body.items.length <= 1);
-  for (const view of ["open", "needs_owner", "due_this_week", "overdue", "waiting_review", "follow_up_completed", "recurring", "closed"]) {
+  for (const view of [
+    "open",
+    "needs_owner",
+    "due_this_week",
+    "overdue",
+    "waiting_review",
+    "follow_up_completed",
+    "recurring",
+    "closed",
+  ]) {
     const response = await get(cookie, `?view=${view}&limit=1`);
     assert.equal(response.status, 200);
     assert.equal(response.body.count_scope, "AuthorisedCandidateWindow");
@@ -71,14 +80,38 @@ test("SV07 HTTP uses authenticated no-store reads and strict query validation", 
 test("SV07 next-action HTTP keeps authentication, origin and strict source-bound validation", async () => {
   const cookie = await session("coordinator");
   const path = "/schedule:90000000-0000-4000-8000-000000000099/next-action";
-  assert.equal((await get(cookie,path)).status,404);
-  assert.equal((await get(cookie,path+"?actor_id=other")).status,422);
-  const payload = {operation_id:randomUUID(),schema_version:1,reason:"SYN follow-up",source_token:"a".repeat(64),expected_version:0,owner_id:randomUUID(),due_at:"2031-11-10T00:00:00Z",instruction:"SYN investigate",required_evidence:null};
+  assert.equal((await get(cookie, path)).status, 404);
+  assert.equal((await get(cookie, path + "?actor_id=other")).status, 422);
+  const payload = {
+    operation_id: randomUUID(),
+    schema_version: 1,
+    reason: "SYN follow-up",
+    source_token: "a".repeat(64),
+    expected_version: 0,
+    owner_id: randomUUID(),
+    due_at: "2031-11-10T00:00:00Z",
+    instruction: "SYN investigate",
+    required_evidence: null,
+  };
   async function post(body: unknown, token = cookie, requestOrigin = origin) {
-    return fetch(origin+"/api/v1/service/findings"+path,{method:"POST",headers:{Cookie:token,Origin:requestOrigin,"Content-Type":"application/json"},body:JSON.stringify(body)});
+    return fetch(origin + "/api/v1/service/findings" + path, {
+      method: "POST",
+      headers: {
+        Cookie: token,
+        Origin: requestOrigin,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
   }
-  assert.equal((await post(payload,"")).status,401);
-  assert.equal((await post(payload,cookie,"https://example.invalid")).status,403);
-  assert.equal((await post({...payload,activity_id:randomUUID()})).status,422);
-  assert.equal((await post(payload)).status,404);
+  assert.equal((await post(payload, "")).status, 401);
+  assert.equal(
+    (await post(payload, cookie, "https://example.invalid")).status,
+    403,
+  );
+  assert.equal(
+    (await post({ ...payload, activity_id: randomUUID() })).status,
+    422,
+  );
+  assert.equal((await post(payload)).status, 404);
 });

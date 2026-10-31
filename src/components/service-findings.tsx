@@ -1,4 +1,5 @@
 "use client";
+import { FindingTime as Stamp } from "./service-findings-time";
 import Link from "next/link";
 import { useRef, useState, useEffect, type RefObject } from "react";
 import { useSearchParams } from "next/navigation";
@@ -15,13 +16,7 @@ import {
 } from "./ui/register-table";
 import { WorklistChoice } from "./crm-worklist-tools";
 import { RecordTabs, RecordPanel } from "./record-ui";
-import {
-  ReadState,
-  Stamp,
-  useResource,
-  friendly,
-  type Envelope,
-} from "./business-ui";
+import { ReadState, useResource, friendly, type Envelope } from "./business-ui";
 import {
   FindingsMenu,
   findingViews,
@@ -71,7 +66,7 @@ function State({ row }: { row: Finding }) {
 }
 function Due({ row }: { row: Finding }) {
   return row.action?.due_at ? (
-    <Stamp value={row.action.due_at} timezone={row.site.timezone} />
+    <Stamp scheduled value={row.action.due_at} timezone={row.site.timezone} />
   ) : (
     <>None</>
   );
@@ -95,7 +90,7 @@ export function FindingsScreen() {
     [menuOpen, setMenuOpen] = useState(true);
   const menu = useSecondaryMenu(menuOpen, setMenuOpen),
     opener = useRef<HTMLElement | null>(null),
-    guard = useRef<() => boolean>(() => true);
+    guardRef = useRef<() => boolean>(() => true);
   const params = new URLSearchParams({
     view,
     q,
@@ -110,7 +105,7 @@ export function FindingsScreen() {
   const data = available ? r.data : null,
     rows = data?.items ?? [];
   const change = (fn: () => void) => {
-    if (!guard.current()) return;
+    if (!guardRef.current()) return;
     setSelected(null);
     setOffset(0);
     fn();
@@ -121,12 +116,12 @@ export function FindingsScreen() {
       menu.closeOverlay();
     });
   const inspect = (id: string) => {
-    if (!guard.current()) return;
+    if (!guardRef.current()) return;
     opener.current = document.activeElement as HTMLElement;
     setSelected(id);
   };
   const close = () => {
-    if (!guard.current()) return;
+    if (!guardRef.current()) return;
     setSelected(null);
     requestAnimationFrame(
       () => opener.current?.isConnected && opener.current.focus(),
@@ -151,7 +146,7 @@ export function FindingsScreen() {
       phoneHeader={{ title: "Findings", count: data?.total }}
       menu={
         <nav aria-label="Service review views">
-          <ul>
+          <ul className="sv07-review-links">
             <li>
               <Link href="/service/reports">Service reports</Link>
             </li>
@@ -346,7 +341,7 @@ export function FindingsScreen() {
                 variant="quiet"
                 disabled={!offset}
                 onClick={() => {
-                  if (guard.current()) {
+                  if (guardRef.current()) {
                     setSelected(null);
                     setOffset(Math.max(0, offset - 25));
                   }
@@ -359,7 +354,7 @@ export function FindingsScreen() {
                 variant="quiet"
                 disabled={data?.next_offset == null}
                 onClick={() => {
-                  if (guard.current()) {
+                  if (guardRef.current()) {
                     setSelected(null);
                     setOffset(data!.next_offset!);
                   }
@@ -377,7 +372,7 @@ export function FindingsScreen() {
             ids={rows.map((r) => r.id)}
             onSelect={inspect}
             onClose={close}
-            guard={guard}
+            guardRef={guardRef}
             onSaved={r.reload}
           />
         )}
@@ -390,14 +385,14 @@ function FindingSnapshot({
   ids,
   onSelect,
   onClose,
-  guard,
+  guardRef,
   onSaved,
 }: {
   id: string;
   ids: string[];
   onSelect: (id: string) => void;
   onClose: () => void;
-  guard: RefObject<() => boolean>;
+  guardRef: RefObject<() => boolean>;
   onSaved: () => void;
 }) {
   const [tab, setTab] = useState("action"),
@@ -417,7 +412,17 @@ function FindingSnapshot({
       ? {
           title: row.what_remains,
           record: {
-            position: `${ids.indexOf(id) + 1} of ${ids.length}`,
+            position: ids.includes(id) ? `${ids.indexOf(id) + 1} of ${ids.length}` : undefined,
+            previous: {
+              label: "Previous finding",
+              disabled: ids.indexOf(id) <= 0,
+              onSelect: () => onSelect(ids[ids.indexOf(id) - 1]),
+            },
+            next: {
+              label: "Next finding",
+              disabled: ids.indexOf(id) < 0 || ids.indexOf(id) >= ids.length - 1,
+              onSelect: () => onSelect(ids[ids.indexOf(id) + 1]),
+            },
             more: [{ label: "Back to findings", onSelect: onClose }],
           },
         }
@@ -464,7 +469,7 @@ function FindingSnapshot({
           Next finding
         </Button>
         <small>
-          {index + 1} of {ids.length}
+          {index >= 0 ? `${index + 1} of ${ids.length}` : "Source finding"}
         </small>
       </div>
       <ReadState
@@ -477,7 +482,10 @@ function FindingSnapshot({
       />
       {row && action.data && (
         <>
-          <RecordIdentity reference={row.source_record.reference} title={row.what_remains} />
+          <RecordIdentity
+            reference={row.source_record.reference}
+            title={row.what_remains}
+          />
           <header className="sv07-detail-heading">
             <h2>{row.what_remains}</h2>
             <p>
@@ -513,7 +521,7 @@ function FindingSnapshot({
                 { id: "action", label: "Next action" },
                 {
                   id: "recurrence",
-                  label: `Recurrence · ${recurrence?.earlier.length ?? 0}`,
+                  label: recurrence?.basis === "FailedCheck" ? `Recurrence · ${recurrence.earlier.length}` : "Recurrence",
                 },
                 { id: "history", label: "History" },
               ]}
@@ -524,7 +532,7 @@ function FindingSnapshot({
               <FindingActionEditor
                 key={id}
                 data={action.data}
-                guard={guard}
+                guardRef={guardRef}
                 onSaved={saved}
                 onRevoked={() => {
                   action.reload();
@@ -547,8 +555,8 @@ function FindingSnapshot({
                 <p>No earlier permitted match found.</p>
               ) : (
                 <ol>
-                  {recurrence.earlier.map((item) => (
-                    <li key={item.id}>
+                  {recurrence.earlier.map((item, index) => (
+                    <li key={`${item.id}:${index}`}>
                       <Link href={item.href}>{item.reference}</Link>
                       <p>
                         <Stamp
