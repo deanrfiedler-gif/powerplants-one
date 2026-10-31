@@ -16,11 +16,15 @@ The current Resource has no canonical Person binding. Individual induction remai
 
 ## Desktop
 
+Accepted design: the [Site readiness design decision](../../../decisions/site-readiness-figma-design.md) of 31 October 2026 covers the coordinator review, one technician's readiness and requirement detail, with twenty-three icon-free captures in [design r01](../../../reference/ui/service/site-readiness-design-r01/README.md). Departures D1–D12 and answers Q1–Q6 are recorded there. The built page keeps the earlier layout described below until a rebuild is authorised; the design is not built. Tablet: capture 04.
+
 Page type: record/evidence workspace with a visit chooser. Reuse the current shell, PageHeader, ReadState, Field, ValidationFields, Button and original-operation command status. Show visit context, explicit preparation selection, source/requirements and retained personal reviews in that order. No second navigation shell or global header. Incoming handovers: My Jobs, exact appointment/assignment and CS-06. Outgoing handovers: owning Site readiness and the same job; escalation is a retained note, not an automatically assigned Activity.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 05–23 in [design r01](../../../reference/ui/service/site-readiness-design-r01/README.md): the readiness list, requirement detail with Acknowledge, biosecurity rules, changed since acknowledged, all acknowledged with one condition open and offline at 390 and 320, and seven phone states. The compact phone header, My jobs' tab bar on the list, and one 48 px action on each detail screen (D1).
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -34,7 +38,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html](../../../reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html)
+- [Site readiness design r01 captures](../../../reference/ui/service/site-readiness-design-r01/README.md) (accepted Figma design, icon-free)
+- [PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html](../../../reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html) (earlier direction)
 
 ## Behaviour, handovers and verification
 

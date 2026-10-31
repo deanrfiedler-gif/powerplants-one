@@ -3375,7 +3375,30 @@
       "html_path": "docs/reference/ui/quality-site-assurance/PPO-Quality-Safety-and-Site-Assurance-Workspace-r01.html",
       "image_paths": [
         "docs/testing/evidence/field-readiness-native/captures/quality-reference-1440.png",
-        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png"
+        "docs/testing/evidence/field-readiness-native/captures/quality-reference-390.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-01-Desktop-Coordinator-Review-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-02-Desktop-Technician-Readiness-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-03-Desktop-Requirement-Detail-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-04-Tablet-Technician-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-05-Phone390-Site-Readiness-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-06-Phone390-Requirement-Acknowledge-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-07-Phone390-Biosecurity-Rules-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-08-Phone390-Changed-Since-Acknowledged-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-09-Phone390-All-Acknowledged-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-10-Phone390-Offline-Queued-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-11-Phone320-Site-Readiness-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-12-Phone320-Requirement-Acknowledge-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-13-Phone320-Biosecurity-Rules-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-14-Phone320-Changed-Since-Acknowledged-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-15-Phone320-All-Acknowledged-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-16-Phone320-Offline-Queued-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-17-State-Loading-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-18-State-No-Requirements-Recorded-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-19-State-Could-Not-Load-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-20-State-Source-Withdrawn-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-21-State-Queued-Offline-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-22-State-Uncertain-r01.png",
+        "docs/reference/ui/service/site-readiness-design-r01/PPO-Site-Readiness-23-State-Condition-Overdue-r01.png"
       ],
       "dependencies": [
         "src/field/readiness.ts",
@@ -3388,7 +3411,8 @@
         "src/components/field-visit-entry.tsx",
         "docs/decisions/field-closed-visit-guidance.md",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "docs/decisions/site-readiness-figma-design.md"
       ],
       "scope_status": "Implemented; review pending",
       "visual_status": "Needs review",
