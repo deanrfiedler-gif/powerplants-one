@@ -251,6 +251,7 @@ function BookingForm({
   onSaved,
   initialStart,
   initialCrew,
+  compareMove = false,
   onClose,
 }: {
   appointment: BookingBasis;
@@ -258,6 +259,7 @@ function BookingForm({
   onSaved: () => void;
   initialStart?: string;
   initialCrew?: CrewInput;
+  compareMove?: boolean;
   onClose?: () => void;
 }) {
   const [basis, setBasis] = useState(appointment),
@@ -451,7 +453,7 @@ function BookingForm({
         {basis.work_order_display_number}
       </p>
       <VersionLine a={basis} />
-      {mode === "move" && <section className="pl01-move-comparison" aria-label="Current and proposed visit">
+      {mode === "move" && compareMove && <section className="pl01-move-comparison" aria-label="Current and proposed visit">
         <h3>Current → Proposed</h3>
         <p>Current: {formatRange(basis.start_at, basis.end_at, basis.site_timezone)}</p>
         <p>Proposed: {start.replace("T", " ")} → {end.replace("T", " ")} · {basis.site_timezone}</p>
@@ -1946,6 +1948,7 @@ export function PlannerScreen() {
                 data?.items.find((a) => a.id === move.a.id) ?? move.a
               }
               mode="move"
+              compareMove
               initialStart={move.start}
               initialCrew={move.crew}
               onSaved={() => {
