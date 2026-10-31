@@ -9,7 +9,7 @@ export const costSourcesGuide: PageGuide = {
   features: [
     [
       "Source register",
-      "Search reference, supplier, item or title and filter the current header state. The result is bounded to 100 matching permitted sources; no result is not a statement that the whole catalogue is empty.",
+      "Search reference, supplier, item or title and filter the current header state. Menu counts cover every permitted search and supplier match; the selected view has its own count and paged results. My sources means owner, while Awaiting my review requires independence from both owner and revision author. Select rows on the current page to open exact evidence in sequence or export their list.",
     ],
     [
       "Exact evidence",

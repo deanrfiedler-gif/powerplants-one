@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "buttons": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-buttons",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    },
+    "register-table": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-register-table",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    },
+    "menu": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-menu",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    },
+    "dialog": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-dialog",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    },
+    "read-state": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-read-state",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    },
+    "application-shell": {
+      "dependencies": [
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-snapshot.tsx",
+        "src/shell/phone-header.ts",
+        "src/components/shell-phone-header.tsx"
+      ],
+      "used_on": [
+        "route:/estimating/cost-sources"
+      ],
+      "states": [
+        {
+          "id": "es03-register-application-shell",
+          "label": "ES-03 register host",
+          "description": "Exact source snapshot, current-page selection and permission-scoped paging; visual review pending."
+        }
+      ]
+    }
+  }
+}

@@ -6,7 +6,7 @@ ES-01 retains the existing `estimates` navigation identity and `/estimating` rou
 
 **Owner:** Dean Fiedler · **Catalogue key:** `application-shell` · **Review:** Pending
 
-The actual ProductNavigation, ProductHeader and ShellControls surround this catalogue. Use the full application window to review them.
+The actual ProductNavigation, ProductHeader and ShellControls surround this catalogue. Use the full application window to review them. A phone record overlay may supply an explicit Back callback to close its panel and restore the list; absent that callback the existing parent-link/history behaviour remains.
 
 ## Source and reference
 

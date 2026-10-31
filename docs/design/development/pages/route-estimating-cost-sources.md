@@ -6,9 +6,9 @@ Stable entry: `route:/estimating/cost-sources`. Scope: ES-03, page-register orde
 
 ## Purpose and layout
 
-Backend availability: the additive [Cost sources register API](../../../decisions/cost-source-register-backend.md) supplies first-tier cost, owner/revision-author IDs, review eligibility, supplier/company and menu filters, full permission-scoped search counts and bounded paging. [Functional evidence](../../../testing/evidence/cost-source-register/README.md) is separate from page implementation. Menu counts cover the search/supplier/company basis before view/state/validity filters; the selected result has its own matching count. Expiry uses an explicit Brisbane date. Existing native list/detail UI remains compatible; accepted Figma grid, shell, selection/export and visual review are still pending. No review fingerprint is adopted.
+Backend availability: the additive [Cost sources register API](../../../decisions/cost-source-register-backend.md) supplies first-tier cost, owner/revision-author IDs, review eligibility, supplier/company and menu filters, full permission-scoped search counts and bounded paging. [Functional evidence](../../../testing/evidence/cost-source-register/README.md) is separate from page implementation. Menu counts cover the search/supplier/company basis before view/state/validity filters; the selected result has its own matching count. Expiry uses an explicit Brisbane date. The register now consumes this API in a full-width shared table, secondary menu and phone list with exact snapshot and selection actions. Native detail commands remain compatible; visual review and owner acceptance are pending. No review fingerprint is adopted.
 
-Find current permitted sources by reference, supplier, item or title and explicit source state. r20 page type: Register / worklist. Native layout is padded within the current shell; the shell owns the viewport and main content scrolling. No standalone masthead, second rail or nested viewport is carried from the reference. The native source/editor/comparison route split is a proposed adaptation of the five-view retained design, pending paired owner review.
+Find current permitted sources by reference, supplier, item or title and explicit source state. r20 page type: Register / worklist. The register opts into shared workspace styles and full-bleed shell layout; the host owns its grid/list scroll and overlapping snapshot. No standalone masthead, second rail or nested viewport is carried from the reference. The native source/editor/comparison route split is a proposed adaptation of the five-view retained design, pending paired owner review.
 
 1. Search literal source text; Apply filters updates the URL.
 2. Read current state, revision, effective date and Unknown expiry.
@@ -17,7 +17,7 @@ Find current permitted sources by reference, supplier, item or title and explici
 
 ## Desktop
 
-Accepted design: the [Cost sources design decision](../../../decisions/cost-sources-design.md) of 11 October 2026, with captures 01–03 in [Cost sources design r01](../../../reference/ui/estimating/cost-sources-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. The app still shows the card list described below; the shell parts wait for their own rollout decision.
+Accepted design: the [Cost sources design decision](../../../decisions/cost-sources-design.md) of 11 October 2026, with captures 01–03 in [Cost sources design r01](../../../reference/ui/estimating/cost-sources-design-r01/README.md). It reuses the [Reviews & approvals](../../../decisions/estimate-reviews-design.md) shell and grid. Implementation reuses SecondaryMenuFrame, RegisterTable, RecordTabs and shared buttons. Application comparison is pending; retained captures remain design evidence only.
 
 - **Layout at 1440 × 900:** the labelled 240 px rail with Cost sources selected (white tile, Solid icon, a neutral badge for sources awaiting your review); the breadcrumb "Cost sources" (shell top bar amendment, 16 October 2026) as the page title; a flush 240 px secondary menu; then a 60 px toolbar and a full-bleed grid.
 - **Secondary menu:** All sources, Awaiting my review and My sources (owned by you); a State group (Draft, Submitted, Reviewed, Returned, Rejected) and a Validity group (Expiry unknown, Past expiry), with neutral counts. It collapses to a 20 px strip from its right border or the top-bar toggle.
@@ -59,3 +59,7 @@ Incoming: explicit authored synthetic evidence, exact current saved estimate/dis
 - [Native contract](../../../contracts/estimating-cost-sources.md) and [executed verification/limits](../../../delivery/estimating-cost-sources-handover.md).
 
 Source presence, functional proof, paired visual review, owner acceptance and deployment are separate. No current fingerprint is recorded as reviewed. Preserve all issued reference bytes.
+
+## Implementation adaptations pending visual review
+
+Exact minimum quantity and unit appear below tier cost; phone rows allow 96 px for these facts instead of the 80 px drawing. Column visibility, width and order are visit-local; server ordering remains newest update first. Supplier filtering uses literal label text. Person attribution uses retained UUIDs (or You), without inventing display names. Used in filters the bounded source-wide candidate window to the selected revision and explicitly reports partial coverage. Phone selection supports an explicit Select sources action and long press. No bulk evidence decision, automatic repricing or new permission is introduced.

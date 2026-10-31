@@ -56,6 +56,47 @@ const effects = async () =>
   ).rows;
 
 export function registerCostSourceRegisterTests() {
+  test("ES03 detail excludes a revision author independently of the source owner", async (t) => {
+    const { owner, reviewer } = await actors();
+    const f = await create(owner, randomUUID());
+    await decide(owner, f.input.id, "Submit");
+    assert.equal((await readCostSource(reviewer, f.input.id)).can_review, true);
+    // Simulate retained attribution where author and aggregate owner differ.
+    // Do not rewrite immutable evidence in the database.
+    const original = pg.Client.prototype.query;
+    const hook = t.mock.method(
+      pg.Client.prototype,
+      "query",
+      function (this: pg.Client, ...args: unknown[]) {
+        const result = Reflect.apply(original, this, args);
+        if (
+          typeof args[0] === "string" &&
+          args[0].startsWith("SELECT * FROM ppo.cost_source_revisions")
+        ) {
+          return Promise.resolve(result).then((value) => ({
+            ...value,
+            rows: value.rows.map((row: Record<string, unknown>) => ({
+              ...row,
+              created_by: reviewer.actor_id,
+            })),
+          }));
+        }
+        return result;
+      },
+    );
+    try {
+      const detail = await readCostSource(reviewer, f.input.id);
+      assert.notEqual(detail.source.owner_id, reviewer.actor_id);
+      assert.equal(detail.revision.created_by, reviewer.actor_id);
+      assert.equal(detail.can_review, false);
+      assert.equal(detail.affected_scope, "SourceCandidateWindow");
+      assert.equal(detail.affected_limit, 100);
+      assert.equal(detail.affected_complete, true);
+    } finally {
+      hook.mock.restore();
+    }
+  });
+
   test("ES03 register follows current revisions and independent decisions without changing originals", async () => {
     const { owner, reviewer } = await actors(),
       q = randomUUID();

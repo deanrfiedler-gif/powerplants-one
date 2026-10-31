@@ -1,0 +1,15 @@
+# Cost sources application proof
+
+<!-- versioning: git -->
+
+Synthetic application captures from the task-owned development server on port 3475. Browser responses are synthetic fixtures; native database and HTTP suites separately exercise the server contracts. These captures are not owner or visual acceptance.
+
+Executed: 18 focused source/model/phone-header unit tests passed; all eight existing native ES-03 database cases passed, followed by a passing author-independence regression and a passing exact-usage assertion in the saved-pricing-lineage case. All four native HTTP cases passed. The expanded synthetic browser case passed at all four widths, exercising exact snapshots/estimate links, partial usage, selection, paging, denied/stale retry, empty/no-match and phone Back/desktop Escape. Typecheck, full lint, studio and naming passed; final focused checks and corrected foundation check remain in progress.
+
+Execution corrections: sandbox Node user-info failure resolved with host access; merged lockfile dependencies installed using `npm ci --engine-strict=false`. Explicit identity readiness resolved one browser startup timeout. Tablet snapshot controls intercepted the Used in tab; the layout was corrected and the complete case passed. The stale-read fixture initially used a nested error envelope instead of the native flat envelope; corrected before the passing run. The disposable PostgreSQL reset needed `max_locks_per_transaction=4096`; the author regression then passed. Missing status front matter/body-heading issues were corrected and status checking passed. No failed application assertion is labelled unrelated.
+
+## Design comparison
+
+Compared register captures at 1440, 1024, 390 and 320 pixels with the retained accepted desktop reference. Corrected menu bullets and inherited phone button layout after inspecting the first captures. Remaining adaptations: explicit minimum quantity and unit increase phone row height; current shared compact phone header replaces the older toolbar; UUID attribution is retained where no permitted name lookup exists; pagination and count-basis explanation add controls absent from the static design; date-only Updated cells retain exact timestamp in the title; supplier filtering is literal text; column settings persist only for the visit. Shared shell navigation reflects current main rather than the historical frame. The fixture omits create-company authority, so its New source button is absent by permission. Icons use permitted runtime/fallback controls, not copied Pro artwork.
+
+Inspected the register at four widths, desktop/tablet snapshots and the scrolled 320 px snapshot against retained desktop and phone references. Fixed menu bullets, phone button layout and tablet tab occlusion. Snapshot/selection capture sets are supplied for review. Loading appears while the API read is pending; a deliberately held network-loading browser case, manual screen-reader testing, full native command journeys and formal visual acceptance remain outside the completed proof. No baseline fingerprint is marked reviewed.

@@ -685,6 +685,7 @@ function SourceComparison({ detail: d }: { detail: Detail }) {
   );
 }
 export function CostSourceDetail({ id }: { id: string }) {
+  const router = useRouter();
   const params = useSearchParams(),
     revision = params.get("revision_id"),
     data = useCrmResource<Detail>(
@@ -710,7 +711,17 @@ export function CostSourceDetail({ id }: { id: string }) {
           <SourceComparison detail={data.data} />
           <nav className="source-actions" aria-label="Source actions">
             {data.data.can_revise && !edit && (
-              <Button onClick={() => setEdit(true)}>
+              <Button
+                onClick={() => {
+                  // Starting an edit deliberately returns to the current native read,
+                  // so a later successor preserves the existing stale-input recovery.
+                  if (revision)
+                    router.replace(`/estimating/cost-sources/${id}`, {
+                      scroll: false,
+                    });
+                  setEdit(true);
+                }}
+              >
                 Prepare source successor
               </Button>
             )}
@@ -719,7 +730,9 @@ export function CostSourceDetail({ id }: { id: string }) {
             </Link>
           </nav>
           {edit && data.data.can_revise && <SourceForm initial={data.data} />}
-          <SourceDecision detail={data.data} />
+          <section id="source-review" aria-label="Source review">
+            <SourceDecision detail={data.data} />
+          </section>
           <section className="est-panel">
             <h2>Revision and review history</h2>
             {data.data.revisions.map((r) => (
@@ -1104,8 +1117,8 @@ function RefreshForm({
                     required
                   />
                   <span>
-                    I reviewed every changed line, the unchanged sell prices
-                    and any Unknown validity.
+                    I reviewed every changed line, the unchanged sell prices and
+                    any Unknown validity.
                   </span>
                 </label>
                 <Field
