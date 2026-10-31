@@ -1497,7 +1497,8 @@
         "src/components/estimate-review.css",
         "src/estimating/review/service.ts",
         "src/estimating/review/reads.ts",
-        "docs/contracts/estimating-review.md"
+        "docs/contracts/estimating-review.md",
+        "src/components/estimate-reviews-register.tsx"
       ],
       "scope_status": "Bounded native review; commercial approval not configured",
       "visual_status": "Needs review",
@@ -1510,7 +1511,8 @@
       "related_keys": [
         "route:/estimating/estimates/[id]/review",
         "scope:ES-03",
-        "scope:ES-05"
+        "scope:ES-05",
+        "route:/estimating/reviews"
       ],
       "reviewer": null
     },
@@ -1536,7 +1538,8 @@
         "src/estimating/release/reads.ts",
         "docs/contracts/quotation-release.md",
         "docs/design/development/navigation-fixtures.json",
-        "docs/decisions/navigation-consolidation.md"
+        "docs/decisions/navigation-consolidation.md",
+        "src/components/estimate-reviews-register.tsx"
       ],
       "scope_status": "Bounded native synthetic release",
       "visual_status": "Needs review",
@@ -1552,7 +1555,8 @@
         "scope:DK-03",
         "scope:DK-06",
         "route:/estimating/quotes/[id]/release",
-        "route:/estimating/quotes/[id]/response"
+        "route:/estimating/quotes/[id]/response",
+        "route:/estimating/reviews"
       ],
       "reviewer": null
     },
@@ -4816,10 +4820,10 @@
     },
     {
       "key": "scope:DK-03",
-      "title": "Output, issue and distribution centre",
+      "title": "Outputs",
       "kind": "scope",
       "module": "DK",
-      "summary": "Consolidate existing domain-specific outputs into the Output, Issue & Distribution Centre; preserve generation/issue/delivery/acknowledgement distinctions.",
+      "summary": "Permitted Job Pack and Service Report register, exact retained issues and controlled native actions; synthetic distribution remains separate from external delivery.",
       "path": "/documents/issues",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -4830,7 +4834,12 @@
         "src/outputs/actions.ts",
         "src/outputs/distribution.ts",
         "docs/decisions/output-actions-backend.md",
-        "docs/contracts/output-actions.md"
+        "docs/contracts/output-actions.md",
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css"
       ],
       "guide_key": "guide.dk.03",
       "design_path": "docs/design/development/pages/scope-dk-03.md",
@@ -4863,11 +4872,22 @@
         "src/reports/context.ts",
         "src/reports/worker.ts",
         "src/platform/permissions.ts",
-        "docs/decisions/output-issue-figma-design.md"
+        "docs/decisions/output-issue-figma-design.md",
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css",
+        "src/outputs/reads.ts",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "src/shell/navigation.ts",
+        "src/shell/module-workspaces.ts",
+        "docs/design/development/outputs-fixtures.json"
       ],
-      "scope_status": "refine",
+      "scope_status": "Bounded native implementation",
       "visual_status": "Needs review",
-      "functional_status": "Read and controlled action backend evidence recorded in docs/testing/evidence/output-register/README.md and docs/testing/evidence/output-actions/README.md. Native page, visual review and owner acceptance remain open.",
+      "functional_status": "Implementation and validation evidence: docs/testing/evidence/output-register/README.md. Owner acceptance remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -4875,7 +4895,13 @@
       "build_rank": 22,
       "related_keys": [
         "scope:DK-01",
-        "scope:AD-07"
+        "scope:AD-07",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]",
+        "scope:SV-05",
+        "scope:SV-06",
+        "scope:DK-06"
       ],
       "reviewer": null
     },
@@ -5896,7 +5922,12 @@
         "src/access/local-team-screens.tsx",
         "src/access/team-creation.tsx",
         "src/app/api/v1/admin/access/teams/context/route.ts",
-        "src/access/reviews.ts"
+        "src/access/reviews.ts",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "src/app/api/v1/admin/access/route.ts"
       ],
       "guide_key": "guide.ad.01",
       "design_path": "docs/design/development/pages/scope-ad-01.md",
@@ -8892,7 +8923,7 @@
       "title": "Work order register",
       "kind": "route",
       "module": "SV",
-      "summary": "An app page exists here. Its wider workspace scope or newer design still needs refinement; see the linked scope areas below.",
+      "summary": "Permission-scoped work orders, attention queues, exact scope and visit position, with selected-record review and export.",
       "path": "/service/work-orders",
       "source_paths": [
         "src/app/(business)/service/work-orders/page.tsx"
@@ -8913,11 +8944,14 @@
         "src/service/work-order-register.ts",
         "src/service/work-order-register-model.ts",
         "docs/decisions/work-order-register-backend.md",
-        "docs/testing/evidence/work-order-register/README.md"
+        "docs/testing/evidence/work-order-register/README.md",
+        "src/components/work-order-register.tsx",
+        "src/components/work-order-register.css",
+        "docs/decisions/phone-header-amendment.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "BC-01 additive register/record backend: execution in docs/testing/evidence/work-order-register/README.md; frontend integration and global menu counts remain separate.",
+      "functional_status": "Native register implementation in progress; checks and capture review recorded in docs/testing/evidence/work-order-register/README.md. Owner review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -14857,12 +14891,17 @@
       "title": "Users and access",
       "kind": "route",
       "module": "AD",
-      "summary": "Native access inspection, proposed-role comparison and local request/independent decision. Applying grants, teams and campaigns remain open.",
+      "summary": "Accepted-design identity register with current grant states, recorded scope, local teams and open requests; read-only inspection and existing person handovers. Owner visual review pending.",
       "path": "/admin/access",
       "source_paths": [
         "src/app/(business)/admin/access/page.tsx",
         "src/access/screens.tsx",
-        "src/access/service.ts"
+        "src/access/service.ts",
+        "src/access/identity-register-screen.tsx",
+        "src/access/identity-register-model.ts",
+        "src/access/identity-register.ts",
+        "src/app/styles/access-register.css",
+        "src/app/api/v1/admin/access/route.ts"
       ],
       "guide_key": "guide.route-admin-access",
       "design_path": "docs/design/development/pages/route-admin-access.md",
@@ -15662,6 +15701,241 @@
       "related_keys": [
         "scope:ES-02",
         "route:/estimating/discovery/[id]/nursery"
+      ]
+    },
+    {
+      "key": "route:/estimating/reviews",
+      "title": "Reviews & approvals",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Permission-scoped ES-04/ES-05 register with exact native snapshots, candidate-window counts and review/release handovers.",
+      "path": "/estimating/reviews",
+      "source_paths": [
+        "src/app/(business)/estimating/reviews/page.tsx"
+      ],
+      "guide_key": "guide.route-estimating-reviews",
+      "design_path": "docs/design/development/pages/route-estimating-reviews.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-01-Desktop-Register-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-02-Desktop-Record-Snapshot-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-03-Desktop-Selection-Small-Snapshot-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-04-Desktop-More-Slide-Out-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-05-Desktop-Collapsed-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-06-Phone-Review-List-r01.png",
+        "docs/reference/ui/estimating/reviews-approvals-design-r01/PPO-Reviews-Approvals-07-Phone-Record-Snapshot-r01.png"
+      ],
+      "dependencies": [
+        "src/components/estimate-reviews-register.tsx",
+        "src/components/estimate-reviews-snapshot.tsx",
+        "src/components/estimate-reviews-register.css",
+        "src/estimating/review/queue.ts",
+        "src/estimating/review/queue-snapshot.ts",
+        "docs/decisions/estimating-review-queue.md",
+        "src/shell/module-workspaces.ts"
+      ],
+      "scope_status": "Implemented in PR; acceptance separate",
+      "visual_status": "Needs review",
+      "functional_status": "Focused validation recorded in queue evidence",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-04",
+        "scope:ES-05",
+        "route:/estimating/estimates/[id]/review"
+      ]
+    },
+    {
+      "key": "route:/documents/issues/job-packs/[id]",
+      "title": "Outputs — exact job-pack issue",
+      "kind": "route",
+      "module": "DK",
+      "summary": "Permitted Job Pack and Service Report register, exact retained issues and controlled native actions; synthetic distribution remains separate from external delivery.",
+      "path": "/documents/issues/job-packs/[id]",
+      "source_paths": [
+        "src/app/(business)/documents/issues/job-packs/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-documents-issues-job-packs-id",
+      "design_path": "docs/design/development/pages/scope-dk-03.md",
+      "html_path": "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
+      "image_paths": [
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-01-Desktop-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-03-Desktop-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-04-Desktop-Record-Issue-History-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-05-Desktop-Record-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-06-Desktop-Record-Preparation-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-07-Desktop-Report-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-08-Flow-1a-Prepare-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-09-Flow-1b-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-10-Flow-1c-Outcome-Unknown-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-11-Flow-2a-Reconcile-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-12-Flow-2b-Simulated-Sent-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-13-Flow-3a-Request-Issue-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-14-Flow-3b-Recover-Job-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-15-Flow-3c-Issued-After-Recovery-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-16-Tablet-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-17-Phone-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-18-Phone-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-19-Phone-320-Output-Unavailable-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-20-States-r01.png"
+      ],
+      "dependencies": [
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css",
+        "src/outputs/reads.ts",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "src/shell/navigation.ts",
+        "src/shell/module-workspaces.ts",
+        "docs/design/development/outputs-fixtures.json"
+      ],
+      "scope_status": "Bounded native implementation",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation and validation evidence: docs/testing/evidence/output-register/README.md. Owner acceptance remains separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 22,
+      "related_keys": [
+        "scope:DK-03",
+        "route:/documents/issues",
+        "route:/documents/issues/service-reports/[id]"
+      ]
+    },
+    {
+      "key": "route:/documents/issues",
+      "title": "Outputs register",
+      "kind": "route",
+      "module": "DK",
+      "summary": "Permitted Job Pack and Service Report register, exact retained issues and controlled native actions; synthetic distribution remains separate from external delivery.",
+      "path": "/documents/issues",
+      "source_paths": [
+        "src/app/(business)/documents/issues/page.tsx"
+      ],
+      "guide_key": "guide.route-documents-issues",
+      "design_path": "docs/design/development/pages/scope-dk-03.md",
+      "html_path": "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
+      "image_paths": [
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-01-Desktop-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-03-Desktop-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-04-Desktop-Record-Issue-History-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-05-Desktop-Record-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-06-Desktop-Record-Preparation-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-07-Desktop-Report-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-08-Flow-1a-Prepare-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-09-Flow-1b-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-10-Flow-1c-Outcome-Unknown-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-11-Flow-2a-Reconcile-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-12-Flow-2b-Simulated-Sent-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-13-Flow-3a-Request-Issue-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-14-Flow-3b-Recover-Job-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-15-Flow-3c-Issued-After-Recovery-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-16-Tablet-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-17-Phone-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-18-Phone-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-19-Phone-320-Output-Unavailable-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-20-States-r01.png"
+      ],
+      "dependencies": [
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css",
+        "src/outputs/reads.ts",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "src/shell/navigation.ts",
+        "src/shell/module-workspaces.ts",
+        "docs/design/development/outputs-fixtures.json"
+      ],
+      "scope_status": "Bounded native implementation",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation and validation evidence: docs/testing/evidence/output-register/README.md. Owner acceptance remains separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 22,
+      "related_keys": [
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues/service-reports/[id]"
+      ]
+    },
+    {
+      "key": "route:/documents/issues/service-reports/[id]",
+      "title": "Outputs — exact service-report issue",
+      "kind": "route",
+      "module": "DK",
+      "summary": "Permitted Job Pack and Service Report register, exact retained issues and controlled native actions; synthetic distribution remains separate from external delivery.",
+      "path": "/documents/issues/service-reports/[id]",
+      "source_paths": [
+        "src/app/(business)/documents/issues/service-reports/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-documents-issues-service-reports-id",
+      "design_path": "docs/design/development/pages/scope-dk-03.md",
+      "html_path": "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
+      "image_paths": [
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-01-Desktop-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-03-Desktop-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-04-Desktop-Record-Issue-History-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-05-Desktop-Record-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-06-Desktop-Record-Preparation-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-07-Desktop-Report-Distribution-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-08-Flow-1a-Prepare-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-09-Flow-1b-Record-Outcome-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-10-Flow-1c-Outcome-Unknown-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-11-Flow-2a-Reconcile-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-12-Flow-2b-Simulated-Sent-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-13-Flow-3a-Request-Issue-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-14-Flow-3b-Recover-Job-Dialog-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-15-Flow-3c-Issued-After-Recovery-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-16-Tablet-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-17-Phone-Register-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-18-Phone-Record-Issue-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-19-Phone-320-Output-Unavailable-r01.png",
+        "docs/reference/ui/output-distribution/output-issue-figma-r01/PPO-Output-Issue-20-States-r01.png"
+      ],
+      "dependencies": [
+        "src/components/output-register.tsx",
+        "src/components/output-record.tsx",
+        "src/components/output-command.tsx",
+        "src/outputs/presentation.ts",
+        "src/app/styles/outputs.css",
+        "src/outputs/reads.ts",
+        "src/outputs/actions.ts",
+        "src/outputs/distribution.ts",
+        "src/shell/navigation.ts",
+        "src/shell/module-workspaces.ts",
+        "docs/design/development/outputs-fixtures.json"
+      ],
+      "scope_status": "Bounded native implementation",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation and validation evidence: docs/testing/evidence/output-register/README.md. Owner acceptance remains separate.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 22,
+      "related_keys": [
+        "scope:DK-03",
+        "route:/documents/issues/job-packs/[id]",
+        "route:/documents/issues"
       ]
     }
   ]

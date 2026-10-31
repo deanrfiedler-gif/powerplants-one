@@ -102,3 +102,13 @@ test("the five later Service destinations each have their own rail icon", () => 
   const others = departmentRails.service.filter(id => !five.includes(id)).map(id => destination(id).icon);
   for (const id of five) assert.ok(!others.includes(destination(id).icon), id);
 });
+
+
+test("Reviews & approvals activates its reserved identity only for estimating readers", () => {
+  assert.equal(destination("estimate-reviews").href, "/estimating/reviews");
+  assert.equal(moduleWorkspaceForPath("/estimating/reviews")?.scope,"ppo-estimate-reviews");
+  assert.equal(pageForPath("/estimating/reviews")?.id, "estimate-reviews");
+  assert.equal(railDestinationForLocation("/estimating/reviews", new URLSearchParams(), "estimate"), "estimate-reviews");
+  assert.ok(navigationForCapabilities(new Set(["estimating.read"]), true).includes("estimate-reviews"));
+  assert.ok(!navigationForCapabilities(new Set(["estimating.quote.approve"]), true).includes("estimate-reviews"));
+});
