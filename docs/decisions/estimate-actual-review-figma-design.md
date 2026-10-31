@@ -102,12 +102,14 @@ At 1024 the rail collapses, the side menu or details column collapses, and Retur
 | D11 | Lessons hand on as local proposals, with the refusal stated on screen | Report section 14.2 |
 | D12 | Exact r01 timestamps are shown in AEST: r04, saved 26 May 23:40 UTC, appears as 27 May 2026 09:40 | r01 fixture |
 
+**D5 and the shared rail.** D5 is retained as accepted. The [estimating navigation amendment](estimating-navigation-amendment.md) (PPO-ESTIMATING-NAVIGATION-AMENDMENT-DEC, Dean's option 1 of 30 October 2026) now sets the shared Estimating rail for ES-09 and ES-10: Outcomes after Reviews & approvals, and Reference cases after Cost sources. The rail arrangement is agreed; the ES-09 and ES-10 Figma drawings and their synthetic fixtures are not yet amended to show it, and the ES-09 rail drawn here still lacks Reference cases.
+
 ## 5. Not decided and not drawn
 
 - **Building the page.** The first slice stays ES-09/A1 as r01 sets it out, and it needs its own authorisation and pull request. Commercial lineage, a versioned basis record and server-enforced restricted reads do not exist yet (r01 report section 14.3).
 - **Still open from r01 report section 20.5:** the reference type code, the owners and contents of the variance reason and allocation registries, materiality per size band, non-punitive use as policy, and finding narrative visibility.
 - **Not drawn:** the successor review record, the History and Matters tabs as separate views, observer export, More panel overlays, a phone register list, 200% zoom.
-- **Related records not edited:** the Reference cases ES-10 page, drawn before this one, says ES-09 is not drawn and shows the r01 Northbank job as Draft / Partial; it aligns when ES-10 is accepted. The Returns & claims claims (Q6). Other Estimating rail instances do not gain the Outcomes item until they are next changed.
+- **Related records not edited:** the Reference cases ES-10 page, drawn before this one, says ES-09 is not drawn and shows the r01 Northbank job as Draft / Partial; accepting ES-10 does not by itself align the two drawings or their synthetic fixtures. The shared rail is now agreed in the [estimating navigation amendment](estimating-navigation-amendment.md), but the ES-10 and ES-09 drawings are not yet amended to match it. The Returns & claims claims (Q6). Other Estimating rail instances do not gain the Outcomes item until they are next changed.
 
 ## 6. Changes at lock-in
 

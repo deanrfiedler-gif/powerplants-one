@@ -30,6 +30,8 @@ The exact mobile composition has not been visually accepted for this entry. Reta
 
 ## Shared components and states
 
+Estimating rail: Outcomes sits after Reviews & approvals (ES-09 D5), and Reference cases after Cost sources, as agreed in the [estimating navigation amendment](../../../decisions/estimating-navigation-amendment.md). The accepted ES-09 and ES-10 drawings are not yet amended to show this shared rail.
+
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
 
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
