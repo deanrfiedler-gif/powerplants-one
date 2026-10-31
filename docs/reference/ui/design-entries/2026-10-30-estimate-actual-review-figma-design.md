@@ -1,0 +1,7 @@
+# Estimate-to-actual review (ES-09)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Estimate-to-actual review — `/estimating/outcomes` (proposed Outcomes item, Estimating rail) | [Design r01 captures](../estimating/estimate-actual-review-design-r01/README.md) (Figma, icon-free PNGs); issued [r01 HTML](../estimate-actual-review/PPO-Estimate-to-Actual-Outcome-Review-r01.html) unchanged | Owner-accepted design, 30 October 2026 | [Decision](../../../decisions/estimate-actual-review-figma-design.md). Not built. Register with no amounts or margin column; shared record layout with a declared comparison basis, comparison by category and line, decomposition, sources, price movements, outstanding matters, proposed reason codes, sign-off by someone other than the preparer, and lessons handed on locally to ES-10 and DK-05. Withheld numbers name the missing definition; every figure is synthetic |
+
+**Estimate-to-actual review design, 30 October 2026:** Dean accepted the Figma design for `/estimating/outcomes` ("Accept all"), with departures D1–D12 and the recommended answers to Q1–Q7. The [decision](../../../decisions/estimate-actual-review-figma-design.md) records it, and the [retained captures](../estimating/estimate-actual-review-design-r01/README.md) are 22 icon-free PNGs with hashes. The named Figma version "Estimate-to-actual review · ES-09 — shared record layout, accepted" was saved on 30 October 2026. Nothing is built. Listing it here does not repeat the dated inventory audit.
