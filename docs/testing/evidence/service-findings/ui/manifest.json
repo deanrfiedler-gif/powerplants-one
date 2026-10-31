@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "source_commit": "5d42e7e00aedc1a4891c201d5630e9c801ded81c",
+  "source_commit": "a1256f73f21c054ce44b22c54c0c752c791f0405",
   "main_control": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
   "data": "Synthetic fixture only; remote Font Awesome calls aborted; no licensed artwork retained.",
-  "capture_command": "npx playwright test --config tmp/sv07/playwright.config.ts service-findings.spec.ts",
+  "capture_command": "node node_modules/@playwright/test/cli.js test --config tmp/sv07/playwright.config.ts service-findings.spec.ts",
   "visual_review": "Inspected by Codex against retained accepted frames; differences in scope-sv-07.md. Not visual acceptance.",
   "owner_acceptance": "Unrecorded",
   "deployment": "Not performed",
   "captures": [
     {
       "file": "assignment-1440.png",
-      "sha256": "12616f6ff5fa256f195bdbd56102380a373765e97bd40d381cabef7dcf2acc56",
+      "sha256": "8f0a52b65c08bbc06012d3180503bb4cc8b9ae4229c6052c023aa3fb11fbcfc7",
       "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-03-Desktop-Assign-Next-Action-r01.png",
       "note": "Inspected comparison."
     },
     {
       "file": "recurrence-1440.png",
-      "sha256": "598cf31e626a3ae11d9c8ae7b3c95ffbbf2c21f4dafdf3861b42de62bc0865c3",
+      "sha256": "751fd23d0f56498446eae512a24e9f90081d18cad4cd2c7d378b8bfa2e107cd1",
       "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-04-Desktop-Recurrence-r01.png",
       "note": "Inspected comparison."
     },
     {
       "file": "register-1024.png",
-      "sha256": "aa19d2feb03320c654ccd7679f49f1219dfd5242d3ae714a9394b57ed2f64dcd",
+      "sha256": "bb3ed5a9edbeb54c56259925a33fc4966f73a95aabc5ab25e156988c265f06d5",
       "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-05-Tablet-Register-r01.png",
       "note": "Inspected comparison."
     },
     {
       "file": "register-1440.png",
-      "sha256": "77f9f6897d7e820fab0c6ced6833269438ad15fc7a9a7575f4cce98cddaf2fe1",
+      "sha256": "d53a8e30d136e43605c1093d9d8ea9943ad94111a33148f5ade2a524fa71b6b5",
       "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-01-Desktop-Register-r01.png",
       "note": "Inspected comparison."
     },
@@ -92,5 +92,6 @@
       "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-07-Phone-Finding-r01.png",
       "note": "Inspected comparison."
     }
-  ]
+  ],
+  "application_source_commit": "5d42e7e00aedc1a4891c201d5630e9c801ded81c"
 }

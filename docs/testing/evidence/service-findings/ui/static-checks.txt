@@ -8,3 +8,5 @@ python3 scripts/check_naming.py: exit 0
 python3 scripts/build_status.py --check: exit 0
 git diff --check: exit 0
 Full production build, complete repository suites, physical-device/screen-reader testing and formal business acceptance scenarios: not run.
+
+Fixture-only follow-up a1256f73: targeted ESLint exit 0; corrected browser fixtures pass all five scenarios across a 3/5 full run and 2/2 focused local-deadline retry. Application source is unchanged.

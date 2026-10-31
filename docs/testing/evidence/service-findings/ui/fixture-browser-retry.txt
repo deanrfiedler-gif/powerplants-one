@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:15412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts (35.5s)
+  ok 2 tests\browser\service-findings.spec.ts:324:1 › SV07 read failures remove earlier content and counts, and empty windows can continue (7.5s)
+
+  2 passed (1.3m)
