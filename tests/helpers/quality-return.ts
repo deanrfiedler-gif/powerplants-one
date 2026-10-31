@@ -11,6 +11,7 @@ import {
 } from "./quality-prepare";
 import { submit, review, issue, reportState } from "./quality-report";
 import { png } from "./field";
+import { phoneWidth } from "./phone-menu";
 import { siteContactInput } from "./site-readiness";
 import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
 
@@ -35,6 +36,11 @@ export async function prepareReturnVisit(
 ) {
   const crew = await siteReadinessFixtureCrew();
   let aid = source.return_proposal.record_id;
+  // Every caller has just opened the source report. A record's phone row swaps Menu for Back once the page's own read
+  // returns, which is after the session read that identity() waits for. A press that starts on Menu as it leaves sends
+  // no click, so wait for the record row: the identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "coordinator");
   const before = (await call(page, `appointments/${aid}`)).items[0];
   expect(before.status).toBe("Proposed");
