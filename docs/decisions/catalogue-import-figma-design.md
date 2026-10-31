@@ -83,7 +83,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | D5 | Exceptions stay visible: banner, Exceptions column and the filters Needs decision, Exceptions, Duplicates and Excluded | Contract; Dean's brief |
 | D6 | Row detail shows the exceptions, the duplicate candidate side by side, why each action is or is not available, and the rationale (X6) | Products snapshot |
 | D7 | Similar records are never merged. Resolve is offered only for one exact provider, company and entity key | Contract |
-| D8 | Units stay as supplied: "pack of 2" never becomes "each". Row 14 is excluded and pack pricing stays in Pricing | Contract; [Product pricing Q3](product-pricing-figma-design.md) |
+| D8 | Units stay as supplied: "pack of 2" never becomes "each". Row 14 is excluded and pack pricing stays in Pricing | Contract; Product pricing Q3 (accepted design, PR #789, not yet merged) |
 | D9 | Duplicate matching ignores case, spaces and hyphens (X3) | Dean's brief |
 | D10 | Plan summary gives counts by action, exceptions left, the comparison hash and the whole change set. Submit for review is unavailable while errors remain | Contract; Dean's brief |
 | D11 | Review shows the exact plan read-only, the bound hash and the independence checks. Returned needs a reason; the correction becomes a new plan and the returned plan stays | Contract |
@@ -99,7 +99,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | X3 | Duplicate candidates ignore case, spaces and hyphens, so DP25 meets DP-25 | `src/products/imports.ts` compares whole titles and models in lower case, so it would not flag DP25 |
 | X4 | Mapping frames collapse the rail so that all nine columns fit. The tablet moves Kind and Parent into the row detail | Native cards |
 | X5 | No row checkboxes in the import grids: there is no bulk import command | The Pipedrive register pattern has a checkbox column |
-| X6 | Row detail is a flush right panel | Page contract: "No new modal/drawer". The presentation to Dean said this page had no modal. A flush panel departs from that contract line in the same way as [Product pricing D10](product-pricing-figma-design.md), so Claude declares it here and on the page |
+| X6 | Row detail is a flush right panel | Page contract: "No new modal/drawer". The presentation to Dean said this page had no modal. A flush panel departs from that contract line in the same way as Product pricing D10 (accepted design, PR #789, not yet merged), so Claude declares it here and on the page |
 
 Apply confirmation stays in the page, so it adds no dialog. The Products contract is not changed: it describes the built behaviour, and X1 to X3 change it only when they are built.
 
