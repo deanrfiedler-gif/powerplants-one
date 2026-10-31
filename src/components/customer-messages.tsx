@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { PhoneHeaderAction } from "../shell/phone-header";
 import { ErrorNotice, useResource } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
@@ -425,17 +425,28 @@ function CustomerMessageRecord({
   const r = useResource<MessageDetail>(`customer-communications/${id}`),
     [tab, setTab] = useState("Message"),
     [note, setNote] = useState(""),
+    [actionReason, setActionReason] = useState(""),
     [intent, setIntent] = useState<MessageAction | null>(null);
+  const openAction = useCallback((action: MessageAction) => {
+    setActionReason("");
+    setIntent(action);
+  }, []);
+  const dismissAction = () => {
+    setActionReason("");
+    setIntent(null);
+  };
   const command = useMessageCommand(
     id,
     () => {
       setIntent(null);
       setNote("");
+      setActionReason("");
       r.reload();
       onSaved();
     },
     () => {
       setIntent(null);
+      setActionReason("");
       r.reload();
     },
   );
@@ -450,7 +461,7 @@ function CustomerMessageRecord({
         ? [
             {
               label: "Withdraw",
-              onSelect: () => setIntent("withdraw" as const),
+              onSelect: () => openAction("withdraw"),
             },
           ]
         : []),
@@ -459,13 +470,13 @@ function CustomerMessageRecord({
         : []),
     ]);
     return () => onMore([]);
-  }, [canWithdraw, source, onMore, router]);
+  }, [canWithdraw, source, onMore, router, openAction]);
   const confirmLabel =
     m?.review === "Reviewed" ? "Approve and send" : "Confirm and send";
   async function submit() {
     if (!m || !intent) return;
     const reason =
-      note.trim() ||
+      (intent === "confirm" ? note : actionReason).trim() ||
       (intent === "confirm"
         ? "Named sender confirmed the exact synthetic customer message."
         : intent === "reconcile"
@@ -481,7 +492,7 @@ function CustomerMessageRecord({
     <Button
       variant={primary ? "primary" : "secondary"}
       disabled={disabled}
-      onClick={() => setIntent(a)}
+      onClick={() => openAction(a)}
     >
       {label}
     </Button>
@@ -711,7 +722,7 @@ function CustomerMessageRecord({
                       disabled={
                         disabled || (m.review === "Reviewed" && !note.trim())
                       }
-                      onClick={() => setIntent("confirm")}
+                      onClick={() => openAction("confirm")}
                     >
                       {confirmLabel}
                     </Button>
@@ -796,7 +807,7 @@ function CustomerMessageRecord({
                 : "Check Sent Items"
           }
           onClose={() => {
-            if (!command.busy && !command.pending) setIntent(null);
+            if (!command.busy && !command.pending) dismissAction();
           }}
         >
           <form
@@ -844,9 +855,13 @@ function CustomerMessageRecord({
                 : "Reason"}
               <input
                 required={intent !== "confirm" || m.review === "Reviewed"}
-                value={note}
+                value={intent === "confirm" ? note : actionReason}
                 maxLength={2000}
-                onChange={(e) => setNote(e.target.value)}
+                onChange={(e) =>
+                  intent === "confirm"
+                    ? setNote(e.target.value)
+                    : setActionReason(e.target.value)
+                }
                 disabled={disabled}
               />
             </label>
@@ -856,7 +871,7 @@ function CustomerMessageRecord({
               type="submit"
               disabled={
                 disabled ||
-                (intent !== "confirm" && !note.trim()) ||
+                (intent !== "confirm" && !actionReason.trim()) ||
                 (intent === "confirm" &&
                   m.review === "Reviewed" &&
                   !note.trim())
@@ -870,7 +885,7 @@ function CustomerMessageRecord({
             </Button>
             <Button
               disabled={command.busy || !!command.pending}
-              onClick={() => setIntent(null)}
+              onClick={dismissAction}
             >
               Cancel
             </Button>

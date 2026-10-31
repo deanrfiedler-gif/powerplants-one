@@ -503,3 +503,151 @@ test("EC04-B08 phone record More exposes withdrawal and preserves the sticky act
   await expect(page.locator(".cm-readiness")).toContainText("Withdrawn");
   expect(state.posts[0].path).toMatch(/withdraw$/);
 });
+
+for (const width of [1440, 320]) {
+  for (const reviewed of [false, true]) {
+    test(`EC04-B09 action reasons stay separate from ${reviewed ? "approval" : "sending"} notes at ${width}px`, async ({
+      page,
+    }) => {
+      // Reviewed is a UI-only fixture: this does not claim native M4 source proof.
+      const message = ecMessage(1);
+      if (reviewed) message.review = "Reviewed";
+      const state = await setup(page, [message]);
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`${root}/${message.id}`);
+      const sendingNote = page.locator(".cm-note textarea");
+      await sendingNote.fill("SYN intended sending note");
+      const openWithdrawal = async () => {
+        if (width < 781) {
+          await page
+            .getByRole("button", { name: "More actions", exact: true })
+            .click();
+          await page
+            .getByRole("menu", { name: "More actions", exact: true })
+            .getByRole("menuitem", { name: "Withdraw", exact: true })
+            .click();
+        } else {
+          await page
+            .locator(".cm-withdraw")
+            .getByRole("button", { name: "Withdraw", exact: true })
+            .click();
+        }
+      };
+      const withdrawal = page.getByRole("dialog", {
+        name: "Withdraw message",
+        exact: true,
+      });
+      await openWithdrawal();
+      await expect(
+        withdrawal.getByLabel("Reason", { exact: true }),
+      ).toHaveValue("");
+      await expect(
+        withdrawal.getByRole("button", { name: "Confirm withdrawal" }),
+      ).toBeDisabled();
+      await withdrawal
+        .getByLabel("Reason", { exact: true })
+        .fill("SYN cancelled withdrawal");
+      await withdrawal
+        .getByRole("button", { name: "Cancel", exact: true })
+        .click();
+      await expect(sendingNote).toHaveValue("SYN intended sending note");
+      await openWithdrawal();
+      await expect(
+        withdrawal.getByLabel("Reason", { exact: true }),
+      ).toHaveValue("");
+      await withdrawal
+        .getByLabel("Reason", { exact: true })
+        .fill("SYN escaped withdrawal");
+      await page.keyboard.press("Escape");
+      await expect(withdrawal).not.toBeVisible();
+
+      const label = reviewed ? "Approve and send" : "Confirm and send";
+      await page.getByRole("button", { name: label, exact: true }).click();
+      const confirmation = page.getByRole("dialog", {
+        name: label,
+        exact: true,
+      });
+      const noteLabel = reviewed
+        ? "Approval note (required)"
+        : "Sending note (optional)";
+      await expect(
+        confirmation.getByLabel(noteLabel, { exact: true }),
+      ).toHaveValue("SYN intended sending note");
+      await confirmation
+        .getByRole("button", { name: "Cancel", exact: true })
+        .click();
+      await sendingNote.fill("");
+      await openWithdrawal();
+      await withdrawal
+        .getByLabel("Reason", { exact: true })
+        .fill("SYN must not approve sending");
+      await withdrawal
+        .getByRole("button", { name: "Cancel", exact: true })
+        .click();
+      await expect(sendingNote).toHaveValue("");
+      if (reviewed) {
+        await expect(
+          page.getByRole("button", { name: label, exact: true }),
+        ).toBeDisabled();
+        await sendingNote.fill("SYN explicit approval");
+      }
+      expect(state.posts).toHaveLength(0);
+      await page.getByRole("button", { name: label, exact: true }).click();
+      await confirmation
+        .getByRole("button", { name: label, exact: true })
+        .click();
+      await expect(page.locator(".cm-readiness")).toContainText(
+        "Queued (simulated)",
+      );
+      expect(state.posts).toHaveLength(1);
+      expect(state.posts[0].path).toMatch(/confirm$/);
+      expect(state.posts[0].body.reason).toBe(
+        reviewed
+          ? "SYN explicit approval"
+          : "Named sender confirmed the exact synthetic customer message.",
+      );
+    });
+  }
+}
+
+test("EC04-B10 dismissed reconciliation reasons are not reused", async ({
+  page,
+}) => {
+  const message = ecMessage(5, "OutcomeUnknown");
+  const state = await setup(page, [message]);
+  await page.goto(`${root}/${message.id}`);
+  const dialog = page.getByRole("dialog", {
+    name: "Check Sent Items",
+    exact: true,
+  });
+  for (const dismissal of ["cancel", "escape"]) {
+    await page
+      .getByRole("button", { name: "Check Sent Items", exact: true })
+      .click();
+    await expect(dialog.getByLabel("Reason", { exact: true })).toHaveValue("");
+    await expect(
+      dialog.getByRole("button", { name: "Check Sent Items", exact: true }),
+    ).toBeDisabled();
+    await dialog
+      .getByLabel("Reason", { exact: true })
+      .fill("SYN discarded check reason");
+    if (dismissal === "cancel")
+      await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+    else await page.keyboard.press("Escape");
+    await expect(dialog).not.toBeVisible();
+  }
+  await page
+    .getByRole("button", { name: "Check Sent Items", exact: true })
+    .click();
+  await expect(dialog.getByLabel("Reason", { exact: true })).toHaveValue("");
+  await dialog
+    .getByLabel("Reason", { exact: true })
+    .fill("SYN current reconciliation reason");
+  await dialog
+    .getByRole("button", { name: "Check Sent Items", exact: true })
+    .click();
+  await expect(page.locator(".cm-readiness")).toContainText("Sent (simulated)");
+  expect(state.posts).toHaveLength(1);
+  expect(state.posts[0].path).toMatch(/reconcile$/);
+  expect(state.posts[0].body.reason).toBe("SYN current reconciliation reason");
+});
