@@ -14,11 +14,11 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** Mapped · **Location:** Deals · CR-04 549:2 › Page components (proposal), in the private "PPO - Design" Figma file
+**Status:** Mapped · **Location:** Components 1:4 › Components · Sales parts, in the private "PPO - Design" Figma file
 
 - Deals/Card `551:947`
 
-Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses, because the app has no rotting rule. The card stays on the Deals page; moving it to Components `1:4` is separate work. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Board card on the accepted Deals · CR-04 page (24 October 2026). The Default variant is used; the Rotting variant is a labelled proposal that no frame uses, because the app has no rotting rule. The card moved from the Deals page to Components `1:4` on 25 October 2026 ([Figma file audit](../../figma-file-audit/figma-file-audit-2026-10-24.md) R3); the node ID and every instance are unchanged. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 

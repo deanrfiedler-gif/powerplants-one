@@ -151,16 +151,6 @@ export type Order = {
   blockers: { field: string; message: string; stage: string }[];
   actions: { can_edit: boolean; can_authorise: boolean; can_assess: boolean };
 };
-type Row = {
-  id: string;
-  display_number: string;
-  status: string;
-  site_name: string;
-  customer_name: string;
-  summary: string | null;
-  revision: number | null;
-  coverage_status: string | null;
-};
 const emptyEvidence = (): Evidence => ({
   title: "",
   content_text: "",
@@ -229,91 +219,7 @@ function draftScope(r: Scope | null): ScopeInput {
       })) ?? [],
   };
 }
-export function WorkOrderList() {
-  const [q, setQ] = useState(""),
-    [status, setStatus] = useState(""),
-    [cursor, setCursor] = useState("");
-  const r = useResource<Envelope<Row>>(
-    `service/work-orders?${new URLSearchParams({ q, ...(status ? { status } : {}), ...(cursor ? { cursor } : {}) })}`,
-  );
-  return (
-    <>
-      <PageHeader
-        variant="register"
-        eyebrow="Service / Work preparation"
-        title="Work orders"
-        description="Review the exact scope, authority and controls before work moves to planning."
-        action={
-          <Link className="button" href="/service/work-orders/new">
-            New work order
-          </Link>
-        }
-      />
-      <div className="filter-bar">
-        <Field
-          name="work-order-search"
-          label="Search work orders"
-          value={q}
-          onChange={(v) => {
-            setQ(v);
-            setCursor("");
-          }}
-        />
-        <EnumField
-          name="work-order-status"
-          label="Work order state"
-          value={status}
-          values={["Draft", "Authorised"]}
-          onChange={(v) => {
-            setStatus(v);
-            setCursor("");
-          }}
-        />
-      </div>
-      <ReadState loading={r.loading} error={r.error} retry={r.reload} />
-      {r.data && (
-        <>
-          <Observed envelope={r.data} />
-          <div className="record-grid">
-            {r.data.items.map((w) => (
-              <article className="record-card" key={w.id}>
-                <p className="eyebrow">{w.display_number}</p>
-                <h2>
-                  <Link href={`/service/work-orders/${w.id}`}>
-                    {w.summary ?? "Scope needed"}
-                  </Link>
-                </h2>
-                <p>
-                  {w.customer_name} · {w.site_name}
-                </p>
-                <Status value={w.status} />{" "}
-                <Status value={w.coverage_status ?? "Unknown"} />
-                <p>
-                  {w.revision
-                    ? `Current scope r${String(w.revision).padStart(2, "0")}`
-                    : "No scope saved"}
-                </p>
-              </article>
-            ))}
-          </div>
-          {!r.data.items.length && (
-            <div className="empty-state">
-              <h2>No work orders in this view</h2>
-              <p>
-                Adjust the filters or create a draft from a service request.
-              </p>
-            </div>
-          )}
-          {r.data.next_cursor && (
-            <button onClick={() => setCursor(r.data!.next_cursor!)}>
-              Next page
-            </button>
-          )}
-        </>
-      )}
-    </>
-  );
-}
+export { WorkOrderList } from "./work-order-register";
 export function NewWorkOrder() {
   return (
     <DeliveryCreation kind="Service">

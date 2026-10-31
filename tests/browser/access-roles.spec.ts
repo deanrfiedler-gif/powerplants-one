@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
-import { phoneWidth } from "../helpers/phone-menu";
+import { phoneWidth, openSecondaryMenu } from "../helpers/phone-menu";
 
 test("AD-01 returning to earlier selections waits for a fresh comparison or explanation", async ({
   page,
@@ -77,9 +77,13 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
     baseURL!,
   );
   await page.goto("/admin/access");
-  await page
-    .getByRole("link", { name: "Browse proposed role bundles" })
-    .click();
+  await expect(page.locator("#ppo-access-register")).toBeVisible();
+  const bundles = page.getByRole("link", {
+    name: "Role bundles (proposed)",
+    exact: true,
+  });
+  if (!(await bundles.isVisible())) await openSecondaryMenu(page);
+  await bundles.click();
   // The phone header draws the page name as its title and no breadcrumb (phone header amendment P1, P2).
   await expect(
     phoneWidth(page)
@@ -114,9 +118,22 @@ test("AD-01 retained proposed bundles, scoped comparison and fresh explanation h
     coordinator.getByRole("link", { name: "pack.check", exact: true }),
   ).toBeVisible();
   await page.getByRole("link", { name: "Back to users and access" }).click();
-  await page
-    .locator('a[href="/admin/access/30000000-0000-4000-8000-000000000005"]')
-    .click();
+  // The register is paged and its record links retain workspace context.
+  // Find the same person through the visible register on both layouts.
+  if (phoneWidth(page))
+    await page.locator("#shell-header").getByRole("button", { name: /^(Search identities|Search and filter)$/ }).filter({ visible: true }).click();
+  const search = page.getByRole("textbox", { name: "Find a person", exact: true }).filter({ visible: true });
+  await search.fill("SYN Site observer");
+  await search.press("Enter");
+  await expect(page).toHaveURL((url) => url.searchParams.get("q") === "SYN Site observer");
+  // The phone link contains the name, change date, scope and grant counts.
+  // Keep the original exact person identity while allowing workspace context.
+  const observerPath = "/admin/access/30000000-0000-4000-8000-000000000005";
+  const observer = page.locator(
+    `#ppo-access-register a[href="${observerPath}"], #ppo-access-register a[href^="${observerPath}?"]`,
+  ).filter({ visible: true });
+  await expect(observer).toContainText("SYN Site observer");
+  await observer.click();
   await page
     .getByRole("link", { name: "Compare proposed role bundle", exact: true })
     .click();

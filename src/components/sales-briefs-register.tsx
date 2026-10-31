@@ -131,6 +131,7 @@ function Queue({ query }: { query: URLSearchParams }) {
   return (
     <SecondaryMenuFrame
       id="ppo-sales-briefs"
+      attributes={{ "data-ppo-workspace": "shared" }}
       name="Sales briefs"
       menuId="sales-briefs-menu"
       contentId="sales-briefs-content"

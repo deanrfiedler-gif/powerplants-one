@@ -11,6 +11,9 @@ import {
 } from "./quality-prepare";
 import { submit, review, issue, reportState } from "./quality-report";
 import { png } from "./field";
+import { phoneWidth } from "./phone-menu";
+import { siteContactInput } from "./site-readiness";
+import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
 
 export type ReturnSource = {
   work_order_id: string;
@@ -24,13 +27,20 @@ export type ReturnSource = {
 };
 
 // Continue the actual proposal from this same service/Finance journey. Every
-// mutation uses a rendered control; API reads establish exact persisted facts.
+// original journey mutation uses a rendered control. P4's new prerequisite uses
+// the real contact API, as in the first visit; this is not P4 UI acceptance.
 export async function prepareReturnVisit(
   page: Page,
   info: TestInfo,
   source: ReturnSource,
 ) {
+  const crew = await siteReadinessFixtureCrew();
   let aid = source.return_proposal.record_id;
+  // Every caller has just opened the source report. A record's phone row swaps Menu for Back once the page's own read
+  // returns, which is after the session read that identity() waits for. A press that starts on Menu as it leaves sends
+  // no click, so wait for the record row: the identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "coordinator");
   const before = (await call(page, `appointments/${aid}`)).items[0];
   expect(before.status).toBe("Proposed");
@@ -134,14 +144,14 @@ export async function prepareReturnVisit(
     name: "Confirm appointment",
     exact: true,
   });
-  for (const [i, n] of [9, 2].entries()) {
+  for (const [i, resourceId] of crew.entries()) {
     if (i)
       await booking
         .getByRole("button", { name: "Add crew member", exact: true })
         .click();
     await booking
       .getByLabel(`Resource ${i + 1}`, { exact: true })
-      .selectOption(`a4000000-0000-4000-8000-${String(n).padStart(12, "0")}`);
+      .selectOption(resourceId);
     await booking
       .getByLabel(`Travel before ${i + 1} (minutes)`, { exact: true })
       .fill("0");
@@ -170,6 +180,8 @@ export async function prepareReturnVisit(
   ).toHaveLength(2);
   expect(confirmed.work_order_id).toBe(source.work_order_id);
   expect(confirmed.scope_revision_id).toBe(before.scope_revision_id);
+  await call(page, `appointments/${aid}/contacts`, siteContactInput(confirmed.version));
+  expect((await call(page, `appointments/${aid}`)).items[0].preparation.outcome).toBe("Pass");
   await page.goto(`/service/packs/new?appointment_id=${aid}`);
   await page.getByRole("checkbox", { name: /SYN visual inspection/ }).check();
   for (const k of [

@@ -46,6 +46,7 @@ import "./styles/work-timer.css";
 import "./styles/component-catalogue.css";
 import "./styles/figma-shell.css";
 import "./styles/my-work-figma.css";
+import "./styles/outputs.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",

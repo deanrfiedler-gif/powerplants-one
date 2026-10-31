@@ -89,7 +89,7 @@ export const destinations: ShellDestination[] = [
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "pricing", "label": "Cost sources", "icon": "nav-pricing", "readiness": "ready", "href": "/estimating/cost-sources", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "quotations", "label": "Quotations", "icon": "nav-quotation", "readiness": "ready", "href": "/estimating/quotes", "workspace": "estimate", "requires": ["estimating.quote.read"], "requiresAll": ["estimating.read"]},
-  {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "unavailable", "workspace": "estimate"},
+  {"id": "estimate-reviews", "label": "Reviews & approvals", "icon": "nav-approval", "readiness": "ready", "href": "/estimating/reviews", "requires": ["estimating.read"], "workspace": "estimate"},
   {"id": "fertigation", "label": "Priva Fertigation Configurator", "icon": "nav-fertigation", "readiness": "ready", "href": "/estimating/fertigation", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "engineering", "label": "Engineering workload", "icon": "nav-workload", "readiness": "ready", "href": "/engineering", "workspace": "engineering", "requires": ["engineering.read"]},
   {"id": "basis", "label": "Design basis & interfaces", "icon": "nav-interfaces", "readiness": "ready", "href": "/engineering/basis", "requires": ["engineering.read"], "workspace": "engineering"},
@@ -138,6 +138,7 @@ export const destinations: ShellDestination[] = [
   {"id": "surveys", "label": "Site surveys", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
   {"id": "equipment", "label": "Equipment", "icon": "nav-equipment", "readiness": "ready", "href": "/equipment", "requires": ["shared.read"]},
   {"id": "documents", "label": "Documents", "icon": "nav-documents", "readiness": "unavailable"},
+  {id:"outputs",label:"Outputs",icon:"nav-documents",readiness:"ready",href:"/documents/issues",requiresAny:["pack.prepare","pack.check","pack.issue","service.work_order.edit","report.issue"]},
   {"id": "approvals", "label": "Reviews & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},
   {"id": "recovery", "label": "Integrations & recovery", "icon": "nav-recovery", "readiness": "ready", "href": "/admin", "requires": ["shared.read", "finance.read", "service.work_order.read", "field.read.own"]},
   {"id": "foundation", "label": "Foundation checks", "icon": "settings", "readiness": "ready", "href": "/foundation", "localOnly": true},
@@ -277,6 +278,7 @@ export function pageForPath(path: string) {
     .filter((d) => d.href && matchesPath(path, d.href))
     .toSorted((a, b) => b.href!.length - a.href!.length)[0];
   if (path.startsWith("/service/appointments/")) return destination("planner");
+  if (path === "/documents/issues" || path.startsWith("/documents/issues/")) return destination("outputs");
   if (path.startsWith("/documents/")) return destination("documents");
   return item;
 }
@@ -429,7 +431,7 @@ export function menuGroups(query: string, workspace: WorkspaceId = "sales") {
     { title: "Workspaces", ids: workspaces.map(w => w.primary) },
     { title: "Department pages", ids: [...departmentRails[workspace], ...(workspace === "sales" ? ["sales-estimating","sales-won","sales-aftercare"] : workspace === "estimate" ? ["fertigation"] : workspace === "service" ? ["jobs"] : [])] },
     { title: "My workspace", ids: ["home", "work", "mail", "calendar", "approvals"] },
-    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "reports"] },
+    { title: "Shared records", ids: ["contacts", "people", "customers", "sites", "facilities", "surveys", "equipment", "products", "documents", "outputs", "reports"] },
     { title: "Administration & support", ids: ["access", "settings", "recovery", "foundation"] },
     ...(q ? [{ title: "Workspace pages", ids: destinations.map(d => d.id) }] : []),
   ];

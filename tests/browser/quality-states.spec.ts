@@ -145,7 +145,7 @@ test("P11 PT-29 failed and stale output presentation never claims an issue", asy
   await expect(output.getByText("The output could not be generated or stored. Recover the original output.", { exact: false }).first()).toBeVisible();
   await output.getByRole("button", { name: "Process or recover original output", exact: true }).click();
   await expect(page.getByRole("alert").filter({ hasText: "SYN renderer unavailable" })).toBeVisible();
-  await expect(page.locator('a[href^="/documents/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href^="/documents/"]')).toHaveCount(0);
   await capture(page, info, "SC-06-render-failed-no-issue", { injection: "retained synthetic pack read and renderer 503; not worker proof" });
   pack.jobs[0].state = "StaleSource";
   pack.jobs[0].error_code = "StaleSource";
@@ -154,7 +154,7 @@ test("P11 PT-29 failed and stale output presentation never claims an issue", asy
   await showPackReadiness(page);
   await expect(page.getByRole("button", { name: "Process or recover original output", exact: true })).toHaveCount(0);
   await expect(output.getByText("Original attempt retained. Prepare and check a new revision with current sources.", { exact: true })).toBeVisible();
-  await expect(page.locator('a[href^="/documents/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href^="/documents/"]')).toHaveCount(0);
   await capture(page, info, "SC-06-stale-output-requires-successor", { injection: "retained synthetic pack read; not worker proof" });
 });
 

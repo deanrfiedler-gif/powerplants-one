@@ -237,7 +237,9 @@ export async function receiptAuthority(
   command: string,
   operationId: string,
 ) {
-  if (command === "Cpq:Draft") {
+  if (command.startsWith("Cpq:RuleSet:")) {
+    await (await import("./rule-set-store")).ruleSetReceiptAuthority(c, p, id, command);
+  } else if (command === "Cpq:Draft") {
     await draftAuthority(c, p, id, true);
   } else if (command === "Cpq:Adopt") {
     await adoptionReceiptSources(c, p, operationId, true);

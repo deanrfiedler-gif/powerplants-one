@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "scope_id": "DK-03",
+  "synthetic": true,
+  "fixture_source": "tests/helpers/output-workspace-fixture.ts",
+  "browser_proof": "tests/browser/output-workspace.spec.ts",
+  "states": [
+    "complete-register",
+    "bounded-family",
+    "denied-family",
+    "loading",
+    "failed-family",
+    "empty-permitted-window",
+    "exact-current-issue",
+    "exact-earlier-issue",
+    "missing-original-bytes",
+    "own-recipient-progress",
+    "frozen-report-recipient",
+    "report-content-response",
+    "stale-action",
+    "uncertain-command",
+    "original-receipt-recovery",
+    "unknown-outcome-reconciliation",
+    "original-preparation-recovery"
+  ],
+  "example": {
+    "reference": "SYN-PPO-PACK-000066",
+    "current_revision": 2,
+    "earlier_revision": 1,
+    "permitted_recipients": 2,
+    "acknowledged_recipients": 1,
+    "required_recipients": 1,
+    "required_acknowledged": 1
+  },
+  "review": "Owner visual/device acceptance pending"
+}

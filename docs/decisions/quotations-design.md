@@ -35,7 +35,7 @@ Scope: the existing Estimating destination `quotations` (route `/estimating/quot
 | Reference | Identity |
 |---|---|
 | Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Quotations — Pipedrive pattern, accepted". The file's link is not recorded in this public repository, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
-| Accepted frames | Page "Quotations (accepted)": desktop `123:41`, desktop with two rows selected `123:220`, phone `123:428`. Its notes card `123:448` lists the scope, rules, handovers, decisions, recommendations and open questions |
+| Accepted frames | Page "Quotations · ES-05 · ES-06 · ES-07" `123:40` (formerly "Quotations (accepted)"; renamed on 25 October 2026 by the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md), R1): desktop `123:41`, desktop with two rows selected `123:220`, phone `123:428`. Its notes card `123:448` lists the scope, rules, handovers, decisions, recommendations and open questions |
 | Page components | Quotation grid row `123:493` (Default `123:494`, Hover `123:505`, Selected `123:516`) and header `123:482`; Quotation list row (phone) `123:527`; Quotation snapshot (phone) `123:540` |
 | Shared parts | The Shell v2 (proposal) parts listed in the [Reviews & approvals decision](estimate-reviews-design.md), section 2, unchanged. Two new icon components on the Components page: `Icon/solid/file-invoice-dollar` `123:35` for the selected rail item, and `Icon/scale-balanced` `142:11461` for Negotiation |
 | Prototype | Flows "Quotations — desktop (proposal)" and "Quotations — phone (proposal)". They use the existing Prototype switches |

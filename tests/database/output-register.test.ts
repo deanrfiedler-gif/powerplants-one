@@ -34,6 +34,7 @@ import {
   cancelAppointment,
 } from "../../src/scheduling/planner";
 import { outputSnapshot } from "../helpers/output-register";
+import { readOutputActions } from "../../src/outputs/actions";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -73,6 +74,9 @@ test("DK03-B01 native pack/report journey, literal scoped paging, distinct recip
   const before = await outputSnapshot(),
     register = await listOutputs(p, { limit: 1 });
   assert.equal(register.total_matching, 2);
+  assert.ok(register.facets.customers.length);
+  assert.ok(register.facets.sites.length);
+  assert.ok(register.facets.owners.length);
   assert.equal(register.has_more_in_window, true);
   const second = await listOutputs(p, { limit: 1, offset: 1 });
   assert.notEqual(second.items[0].id, register.items[0].id);
@@ -87,6 +91,10 @@ test("DK03-B01 native pack/report journey, literal scoped paging, distinct recip
   );
   for (const row of [...register.items, ...second.items]) {
     assert.equal(row.availability, "NotChecked");
+    assert.ok(row.labels.company);
+    assert.ok(row.labels.customer);
+    assert.ok(row.labels.site);
+    assert.ok(row.labels.service_owner);
     assert.equal(row.current_revision_number, 1);
     assert.equal(row.current_issue!.revision_number, 1);
     assert.equal(row.preparation!.revision_number, 1);
@@ -151,6 +159,13 @@ test("DK03-B01 native pack/report journey, literal scoped paging, distinct recip
   assert.equal(field.preparation_visibility, "NotProvided");
   assert.deepEqual(field.preparations, []);
   assert.equal(field.selected_issue!.distribution!.recipients.length, 1);
+  assert.equal(field.output.labels.service_owner, null);
+  assert.ok(field.selected_issue!.distribution!.recipients[0].display_name);
+  assert.ok(
+    field.selected_issue!.events.every(
+      (event) => event.actor_name === null && event.actor_id === null,
+    ),
+  );
   assert.deepEqual(field.output.recipient_summary, {
     visibility: "OwnRecipient",
     recipient_count: 1,
@@ -328,6 +343,11 @@ test("DK03-B04 superseded and withdrawn issues retain exact bytes without inheri
   let pack = (await readPack(q.p, q.pack.id)).items[0];
   const successorDraft = (await listOutputs(q.p)).items[0];
   assert.equal(successorDraft.current_revision_number, 2);
+  assert.equal(
+    (await readOutputActions(q.p, q.pack.id, { kind: "JobPack" }))
+      .withdraw_pack,
+    true,
+  );
   assert.equal(successorDraft.current_issue!.revision_number, 1);
   assert.equal(successorDraft.recipient_summary.acknowledged_count, 1);
   assert.equal((await listOutputs(actor)).items[0].current_revision_number, 1);

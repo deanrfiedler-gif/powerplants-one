@@ -21,3 +21,25 @@ The focused suite exercises consolidated native pack/report output, permission-f
 The compiled HTTP proof checks strict queries, source refusals, GET-only routes, private cache headers and exact native report PDF hashes. A separate process restart proof checks native facts, exact hashes, original receipt, unchanged business rows and unchanged migration ledger after PostgreSQL restart.
 
 No schema or permission contract changes, migration upgrade, new UI, new render service or delivery-provider claim is included. Native page implementation, additional output families, generic publication/distribution commands, actual delivery evidence and DK-06 template administration remain open.
+
+## Accepted Outputs workspace — 25 October 2026
+
+Contribution: [PR #701](https://github.com/deanrfiedler-gif/powerplants-one/pull/701), branch `codex/outputs-workspace`, initially cut from main `60a7f7b4`. This section records the later UI contribution; the first receiving increment above retains its original scope and execution history.
+
+The application now provides Outputs at `/documents/issues`, family-qualified Job pack and Service report records, exact older issues via `?issue=`, register views and permitted filters, selection snapshots, Issue/history/Distribution/Preparation views and phone records. Native My jobs and job-pack entry remain. OUT-09 and OUT-10 are the supported families. The register adds no generic publication authority or bulk issue action.
+
+Q4 revision/progress reads are reused: recipient progress counts only the permitted recipient population and exact actor/hash acknowledgements. G2 adds permission-safe names and bounded source facets. Family windows are not complete totals; failed reads clear stale rows. Missing original bytes retain metadata and original responses without regeneration or successor substitution. Attendance acknowledgement, report-content acceptance, simulated distribution, opening and downloading remain separate.
+
+Controlled actions use existing source-domain commands and exact version/review/template/job/attempt bases. Withdraw pack follows the native current-issue rule, including a successor draft. Confirmation retains the original command in actor/workspace-scoped session storage before submission; uncertain outcomes allow only original replay or receipt recovery. Source changes and permission failures require a fresh read before new work.
+
+### Application comparison
+
+Live accepted Figma frames and retained `docs/reference/ui/output-distribution/output-issue-figma-r01/` references were inspected. `workspace/` contains synthetic application captures at desktop, 390 px and 320 px, with external icon-kit traffic blocked. These are implementation captures, not an owner acceptance record. The current shared 56 px phone header convention applies. Native action/recovery details and truthful bounded-read notices supplement the accepted design.
+
+### Verification disposition
+
+The focused browser suite covers register/snapshot keyboard return, exact historical routes and files, missing bytes, denied/loading/empty reads, stale withdrawal, unknown distribution reconciliation, exact command replay across reload, report-content responses and native issue/recovery handovers. Six of seven cases passed in the first completed run; the remaining case had a duplicate count locator and was corrected. Final rerun is pending.
+
+The interrupted native run passed DK03-C10/C11/C12 and recorded a DK03-C01 failure without its diagnostic tail. The temporary PostgreSQL cluster subsequently lacked required directories; a fresh disposable cluster is being prepared. No final native-suite pass or regression attribution is claimed from that interrupted run. Final studio, lint, TypeScript, unit, build and repository results will be recorded after execution completes.
+
+Independent review, owner visual/business acceptance, physical-device/screen-reader observation, merge and deployment remain separate and unclaimed. No migration, new permission/grant, dependency, external provider delivery or operational integration is introduced.

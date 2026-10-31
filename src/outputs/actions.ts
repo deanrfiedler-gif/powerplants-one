@@ -141,11 +141,39 @@ export async function readOutputActions(
       s = sources[kind];
     const jobs = (
       await c.query(
-        `SELECT id,revision_id,operation_id,state,attempts,error_code,issue_id,recovery_owner_id,requested_at FROM ppo.${s.table} WHERE workspace_id=$1 AND ${s.parent}=$2 ORDER BY requested_at,id`,
+        `SELECT j.id,j.revision_id,j.operation_id,j.state,j.attempts,j.error_code,j.issue_id,j.recovery_owner_id,j.requested_at,
+          u.display_name AS recovery_owner_name,
+          j.state IN ('Queued','Running','Durable','Failed') AND (j.lease_until IS NULL OR j.lease_until<clock_timestamp()) AS recoverable
+          FROM ppo.${s.table} j LEFT JOIN ppo.users u ON (u.workspace_id,u.id)=(j.workspace_id,j.recovery_owner_id)
+          WHERE j.workspace_id=$1 AND j.${s.parent}=$2 ORDER BY j.requested_at,j.id`,
         [p.workspace_id, id],
       )
     ).rows;
+    // These are the native command's exact inputs, not a new generic review decision.
+    const reportBasis =
+      kind === "ServiceReport"
+        ? ((
+            await c.query(
+              `SELECT r.revision_id,r.id AS review_id,t.id AS template_id,t.version AS template_version
+       FROM ppo.report_reviews r JOIN ppo.report_template_policy p ON p.workspace_id=r.workspace_id
+       JOIN ppo.report_templates t ON (t.workspace_id,t.id)=(p.workspace_id,p.template_id)
+       WHERE r.workspace_id=$1 AND r.report_id=$2 AND r.revision_id=$3 AND r.decision='Approved'
+       ORDER BY r.reviewed_at DESC,r.id DESC LIMIT 1`,
+              [p.workspace_id, id, record.current_revision_id],
+            )
+          ).rows[0] ?? null)
+        : null;
+    const requestStage =
+      record.status === (kind === "JobPack" ? "Checked" : "Reviewed");
+    const existingJob = jobs.some(
+      (j) => j.revision_id === record.current_revision_id,
+    );
+    const distribution = await distributionHistory(c, p, kind, id);
+    await outputIssuer(c, p, kind, id);
     return {
+      as_at: new Date().toISOString(),
+      actor_id: p.actor_id,
+      workspace_id: p.workspace_id,
       kind,
       id,
       version: record.version,
@@ -154,6 +182,22 @@ export async function readOutputActions(
       current_issue_id: record.current_issue_id,
       command_authority: "NativeService",
       readiness: "RevalidatedOnCommand",
+      request_issue: {
+        available:
+          requestStage && !existingJob && (kind === "JobPack" || !!reportBasis),
+        reason: existingJob
+          ? "Recover the original preparation job."
+          : !requestStage
+            ? "Prepare and review the current revision on its native page."
+            : kind === "ServiceReport" && !reportBasis
+              ? "The exact approved review or template is unavailable."
+              : "Source, template and authority are revalidated on confirmation.",
+        basis: { expected_version: record.version, ...(reportBasis ?? {}) },
+      },
+      withdraw_pack:
+        kind === "JobPack" &&
+        !!record.current_issue_id &&
+        record.status !== "Withdrawn",
       actions: outputActions.filter(
         (a) => a !== "WithdrawPack" || kind === "JobPack",
       ),
@@ -161,7 +205,7 @@ export async function readOutputActions(
         kind === "JobPack" ? `/service/packs/${id}` : `/service/reports/${id}`,
       distribution_support: "SyntheticOnly",
       jobs,
-      distribution_attempts: await distributionHistory(c, p, kind, id),
+      distribution_attempts: distribution,
     };
   });
 }

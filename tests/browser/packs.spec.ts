@@ -3,7 +3,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { renderPack, type PackSnapshot } from "../../src/documents/render";
-import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { openAccountPanel, identityToggle, phoneWidth } from "../helpers/phone-menu";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const keys = [
@@ -371,6 +371,11 @@ test("P06 complete workbench preparation, check, queued output, exact document a
   await expect(page.getByRole("heading", { level: 2 })).toHaveCount(9);
   await capture(page, info, "exact-html");
   await page.goto(`/service/packs/${pid}`);
+  // A record's phone row swaps Menu for Back once the page's own read returns, which is after the session read that
+  // identity() waits for. A press that starts on Menu as it leaves sends no click, so wait for the record row: the
+  // identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "assigned-technician");
   await expect(
     page.getByRole("button", { name: /Acknowledge this exact issue/ }),
