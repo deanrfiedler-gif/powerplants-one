@@ -230,7 +230,8 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
       const list = page.locator(".cs-phone-list");
       const panel = page.getByRole("complementary", { name: "Selected sources" });
       if (width === 390) {
-        await page.getByRole("button", { name: "Select sources", exact: true }).click();
+        await page.getByRole("button", { name: "Cost source actions", exact: true }).click();
+        await page.getByRole("menuitem", { name: "Select sources", exact: true }).click();
         await list.getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true }).check();
       } else {
         // Exercise the touch handler without relying on a real device hold.
@@ -248,7 +249,11 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
       await page.screenshot({ path: `${captures}/selection-${width}.png` });
       await page.getByRole("button", { name: "Show panel", exact: true }).click();
       await expect(panel).toBeVisible();
-      await page.getByRole("button", { name: "Hide panel", exact: true }).click();
+      await page.screenshot({ path: `${captures}/selection-panel-${width}.png` });
+      await panel.getByRole("button", { name: "Hide panel", exact: true }).click();
+      await expect(page.getByRole("button", { name: "Show panel", exact: true })).toBeFocused();
+      await expect(list.getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true })).toBeChecked();
+      await expect(list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true })).toBeChecked();
       await list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).uncheck();
       await expect(panel).toHaveCount(0);
       await list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).check();
