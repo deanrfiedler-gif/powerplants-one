@@ -359,7 +359,11 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
     .locator(".library-desktop")
     .getByRole("link", { name: libraryItem.revision.title, exact: true })
     .click();
-  await expect(page.getByText("1 of 2 shown", { exact: true })).toBeVisible();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Document position" })
+      .getByText("1 of 2 shown", { exact: true }),
+  ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Next document", exact: true }),
   ).toHaveAttribute("href", /91000000-0000-4000-8000-000000000012/);
