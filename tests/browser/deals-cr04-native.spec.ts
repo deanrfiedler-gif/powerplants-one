@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page, type Locator } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { CRM, crmBase, crmDiscovery } from "../helpers/crm";
 const origin =
@@ -11,6 +11,8 @@ async function call(page: Page, path: string, body?: unknown) {
     method: body === undefined ? "GET" : "POST",
     headers: { Origin: origin },
     data: body,
+    // Fixture setup must tolerate cold route compilation; no command is replayed.
+    timeout: 120000,
   });
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
@@ -19,14 +21,34 @@ test.beforeEach(async ({ page }) => {
   await expect(async () => {
     await call(page, "local-session", { profile: "coordinator" });
   }).toPass({ timeout: 60000, intervals: [1000, 3000] });
+  await expect(async () => {
+    await call(page, "crm/opportunities?limit=1");
+  }).toPass({ timeout: 60000, intervals: [1000, 3000] });
 });
+// Only read prerequisites are retried. Commands and uncertain outcomes below
+// retain their explicit native intent/recovery assertions.
+async function readPage(page: Page, url: string, ready: Locator) {
+  await expect(async () => {
+    await page.goto(url);
+    await expect(ready).toBeVisible({ timeout: 10000 });
+  }).toPass({ timeout: 60000, intervals: [1000, 3000] });
+}
+async function readDialog(dialog: Locator, ready: Locator) {
+  await expect(async () => {
+    const retry = dialog.getByRole("button", {
+      name: "Try loading again",
+      exact: true,
+    });
+    if (await retry.isVisible()) await retry.click();
+    await expect(ready).toBeVisible({ timeout: 10000 });
+  }).toPass({ timeout: 60000, intervals: [1000, 3000] });
+}
 async function open(page: Page, id: string, title: string) {
-  await page.goto(
+  await readPage(
+    page,
     origin + "/sales/opportunities?view=Board&q=" + encodeURIComponent(title),
+    page.locator(`[data-opportunity-id="${id}"]`),
   );
-  await expect(page.locator(`[data-opportunity-id="${id}"]`)).toBeVisible({
-    timeout: 30000,
-  });
 }
 async function pick(page: Page, label: string, id: string) {
   await page.getByRole("combobox", { name: label, exact: true }).click();
@@ -35,7 +57,13 @@ async function pick(page: Page, label: string, id: string) {
 test("CR-04 native Add deal modal preserves the original intent after an accepted save loses its response", async ({
   page,
 }, info) => {
-  await page.goto(origin + "/sales/opportunities?view=Grid");
+  await readPage(
+    page,
+    origin + "/sales/opportunities?view=Grid",
+    page
+      .getByRole("button", { name: "Add deal", exact: true })
+      .filter({ visible: true }),
+  );
   await page
     .getByRole("button", { name: "Add deal", exact: true })
     .filter({ visible: true })
@@ -123,6 +151,7 @@ test("CR-04 native keyboard stage change rejects a stale version and keeps the p
     name: "Change deal stage",
     exact: true,
   });
+  await readDialog(dialog, dialog.getByLabel("Deal stage", { exact: true }));
   await dialog
     .getByLabel("Deal stage", { exact: true })
     .selectOption("Scoping");
@@ -169,6 +198,11 @@ test("CR-04 native keyboard stage change rejects a stale version and keeps the p
 test("CR-04 native Won prompt preserves receiving acceptance and Lost recovers an accepted response exactly once", async ({
   page,
 }, info) => {
+  // Compile the real receiving route before checking its client navigation.
+  const receiving = await page.request.get(origin + "/sales/handoffs/won", {
+    timeout: 120000,
+  });
+  expect(receiving.ok()).toBe(true);
   for (const outcome of ["Won", "Lost"] as const) {
     const input = {
       ...crmDiscovery(),
@@ -189,6 +223,10 @@ test("CR-04 native Won prompt preserves receiving acceptance and Lost recovers a
     await page
       .getByRole("button", { name: `Snapshot: ${input.title}`, exact: true })
       .click();
+    await readDialog(
+      page.locator(".crm-deal-dialog"),
+      page.getByRole("button", { name: `Record ${outcome}`, exact: true }),
+    );
     await page
       .getByRole("button", { name: `Record ${outcome}`, exact: true })
       .click();

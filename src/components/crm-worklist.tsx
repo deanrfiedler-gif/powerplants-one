@@ -125,6 +125,47 @@ function FilterPicker({
     </div>
   );
 }
+// Neutral placeholders follow the shared register pattern. They imply no native
+// stage names, counts, amounts or records before the permitted read completes.
+function WorklistLoading({
+  view,
+}: {
+  view: "Board" | "Grid" | "Forecast" | "Archive";
+}) {
+  const columns = view === "Board" || view === "Forecast";
+  return (
+    <div className="crm-read-loading" role="status">
+      <p>Loading permitted sales records…</p>
+      <div
+        className={columns ? "crm-skeleton-columns" : "crm-skeleton-list"}
+        aria-hidden="true"
+      >
+        {Array.from({ length: columns ? 5 : 6 }, (_, i) => (
+          <div
+            className={columns ? "crm-skeleton-lane" : "crm-skeleton-row"}
+            key={i}
+          >
+            {columns && (
+              <div className="crm-skeleton-heading">
+                <i />
+                <i />
+              </div>
+            )}
+            {Array.from({ length: columns ? 2 : 1 }, (_, j) => (
+              <div className="crm-skeleton-card" key={j}>
+                <i />
+                <i />
+                <i />
+                <i />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ActivitySnapshot({
   item,
   onClose,
@@ -848,6 +889,68 @@ export function SalesWorklist() {
           </>
         )}
       </div>
+      {!data.error && data.data && (
+        <div className="crm-workspace-status">
+          <WorklistMenu
+            label="Pipeline totals"
+            text={
+              <>
+                <strong>
+                  {filters.outcome === "Open" ? "Open value" : "Known value"}{" "}
+                  {totals?.formatted}
+                </strong>
+                {totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}
+              </>
+            }
+          >
+            <p>
+              {data.data.completeness === "Complete"
+                ? "All matching results"
+                : "Current result page only"}{" "}
+              · {filters.outcome} · Current filters apply
+            </p>
+            <dl className="crm-total-grid">
+              <div>
+                <dt>Known value · AUD excl. GST</dt>
+                <dd>{totals?.formatted}</dd>
+              </div>
+              <div>
+                <dt>Deals</dt>
+                <dd>{data.data.items.length}</dd>
+              </div>
+              <div>
+                <dt>Not estimated</dt>
+                <dd>{totals?.unknown}</dd>
+              </div>
+            </dl>
+            <p>
+              Unweighted values. Unknown estimates count as deals and do not
+              contribute to monetary totals.
+            </p>
+          </WorklistMenu>
+          <button
+            className="crm-attention-link"
+            disabled={!data.data.items.some(needsAttention)}
+            onClick={() => setReview("triage")}
+          >
+            {data.data.items.filter(needsAttention).length} need attention
+          </button>
+          <span className="crm-status-spacer" />
+          <span>
+            {data.data.items.length} deals ·{" "}
+            {data.data.completeness === "Complete"
+              ? "all matching"
+              : "this page"}{" "}
+            · AUD excl. GST
+          </span>
+          <button
+            className="crm-insights-link"
+            onClick={() => setInsights(true)}
+          >
+            Pipeline insights <ProductIcon name="insights" />
+          </button>
+        </div>
+      )}
       {!isDenied && activeFilters.length > 0 && (
         <div
           className="crm-condition-chips"
@@ -1318,7 +1421,7 @@ export function SalesWorklist() {
         </p>
       )}
       <ErrorNotice error={data.error} />
-      {data.loading && <p role="status">Loading permitted sales records…</p>}
+      {data.loading && <WorklistLoading view={view} />}
       {data.error != null && (
         <button className="secondary" onClick={refresh}>
           Try loading again
@@ -1326,104 +1429,6 @@ export function SalesWorklist() {
       )}
       {!data.error && data.data && (
         <>
-          <div className="crm-workspace-status">
-            <WorklistMenu
-              label="Pipeline totals"
-              text={
-                <>
-                  <strong>
-                    {filters.outcome === "Open" ? "Open value" : "Known value"}{" "}
-                    {totals?.formatted}
-                  </strong>
-                  {totals?.unknown ? ` · ${totals.unknown} not estimated` : ""}
-                </>
-              }
-            >
-              <p>
-                {data.data.completeness === "Complete"
-                  ? "All matching results"
-                  : "Current result page only"}{" "}
-                · {filters.outcome} · Current filters apply
-              </p>
-              <dl className="crm-total-grid">
-                <div>
-                  <dt>Known value · AUD excl. GST</dt>
-                  <dd>{totals?.formatted}</dd>
-                </div>
-                <div>
-                  <dt>Deals</dt>
-                  <dd>{data.data.items.length}</dd>
-                </div>
-                <div>
-                  <dt>Not estimated</dt>
-                  <dd>{totals?.unknown}</dd>
-                </div>
-              </dl>
-              <p>
-                Unweighted values. Unknown estimates count as deals and do not
-                contribute to monetary totals.
-              </p>
-            </WorklistMenu>
-            <button
-              className="crm-attention-link"
-              disabled={!data.data.items.some(needsAttention)}
-              onClick={() => setReview("triage")}
-            >
-              {data.data.items.filter(needsAttention).length} need attention
-            </button>
-            <span className="crm-status-spacer" />
-            <span>
-              {data.data.items.length} deals ·{" "}
-              {data.data.completeness === "Complete"
-                ? "all matching"
-                : "this page"}{" "}
-              · AUD excl. GST
-            </span>
-            <button
-              className="crm-insights-link"
-              onClick={() => setInsights(true)}
-            >
-              Pipeline insights <ProductIcon name="insights" />
-            </button>
-          </div>
-          {!data.data.items.length && (
-            <div className="crm-workspace-empty">
-              <h2>
-                {activeFilters.length
-                  ? "No deals match these filters"
-                  : view === "Archive"
-                    ? "No closed deals"
-                    : "No deals yet"}
-              </h2>
-              <p>
-                {activeFilters.length
-                  ? "Adjust your search or clear filters to see other permitted deals."
-                  : "Start with a qualified lead or add a deal and its initial activity."}
-              </p>
-              {!activeFilters.length && view !== "Archive" && (
-                <p>
-                  <Link href="/sales/leads">Open Leads</Link>
-                  {data.data.can_create && (
-                    <button onClick={() => setAdding(true)}>Add deal</button>
-                  )}
-                </p>
-              )}
-              {activeFilters.length > 0 && (
-                <button
-                  className="secondary"
-                  onClick={() =>
-                    setFilters((old) => ({
-                      ...initial,
-                      pipeline_definition_id: old.pipeline_definition_id,
-                      outcome: view === "Archive" ? "Closed" : "Open",
-                    }))
-                  }
-                >
-                  Clear filters
-                </button>
-              )}
-            </div>
-          )}
           {view === "Board" ? (
             <>
               <div
@@ -1505,6 +1510,50 @@ export function SalesWorklist() {
                 onOpen={(id) => setDialog({ id, mode: "snapshot" })}
               />
             </>
+          )}
+          {!data.data.items.length && (
+            <div
+              className="crm-workspace-empty"
+              data-filtered={activeFilters.length > 0 || undefined}
+              data-board={
+                (view === "Board" && !activeFilters.length) || undefined
+              }
+            >
+              <h2>
+                {activeFilters.length
+                  ? "No deals match these filters"
+                  : view === "Archive"
+                    ? "No closed deals"
+                    : "No deals yet"}
+              </h2>
+              <p>
+                {activeFilters.length
+                  ? "Adjust your search or clear filters to see other permitted deals."
+                  : "Start with a qualified lead or add a deal and its initial activity."}
+              </p>
+              {!activeFilters.length && view !== "Archive" && (
+                <p>
+                  <Link href="/sales/leads">Open Leads</Link>
+                  {data.data.can_create && (
+                    <button onClick={() => setAdding(true)}>Add deal</button>
+                  )}
+                </p>
+              )}
+              {activeFilters.length > 0 && (
+                <button
+                  className="secondary"
+                  onClick={() =>
+                    setFilters((old) => ({
+                      ...initial,
+                      pipeline_definition_id: old.pipeline_definition_id,
+                      outcome: view === "Archive" ? "Closed" : "Open",
+                    }))
+                  }
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
           )}
           <div
             className="crm-actions"

@@ -295,6 +295,9 @@
 #ppo-deals .crm-cell-activity.state-Unavailable {
   color: var(--muted);
 }
+.crm-column-settings + .crm-r38-popover {
+  white-space: normal;
+}
 .crm-column-option {
   display: flex;
   align-items: center;
@@ -1269,4 +1272,138 @@
 #ppo-deals .crm-selection-panel footer button {
   min-width: 0;
   white-space: nowrap;
+}
+
+/* Accepted loading and empty states contain no cached business rows. */
+#ppo-deals .crm-read-loading {
+  overflow: hidden;
+  max-height: calc(100dvh - 118px);
+}
+#ppo-deals .crm-read-loading > p {
+  height: 44px;
+  margin: 0;
+  padding: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-deals .crm-skeleton-columns {
+  display: flex;
+  gap: 8px;
+  padding: 0 8px;
+  min-height: calc(100dvh - 162px);
+}
+#ppo-deals .crm-skeleton-lane {
+  flex: 0 0 228px;
+  padding: 8px;
+  background: var(--surface-2);
+}
+#ppo-deals .crm-skeleton-heading {
+  height: 74px;
+  padding: 8px;
+}
+#ppo-deals .crm-skeleton-card {
+  padding: 14px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+#ppo-deals .crm-read-loading i {
+  display: block;
+  height: 10px;
+  width: 80%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background: var(--line-soft);
+}
+#ppo-deals .crm-read-loading i:nth-child(2) {
+  width: 60%;
+}
+#ppo-deals .crm-read-loading i:nth-child(3) {
+  width: 90%;
+}
+#ppo-deals .crm-read-loading i:last-child {
+  width: 45%;
+  margin-bottom: 0;
+}
+#ppo-deals .crm-skeleton-list {
+  padding: 0 8px;
+}
+#ppo-deals .crm-skeleton-row .crm-skeleton-card {
+  display: flex;
+  gap: 24px;
+  height: 40px;
+  margin: 0;
+  border-radius: 0;
+  border-width: 0 0 1px;
+}
+#ppo-deals .crm-skeleton-row i {
+  margin: 0;
+}
+#ppo-deals:has(.crm-workspace-empty[data-board="true"]) {
+  position: relative;
+}
+#ppo-deals .crm-workspace-empty[data-board="true"] {
+  position: absolute;
+  z-index: 3;
+  top: 236px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(610px, calc(100% - 32px));
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  text-align: center;
+}
+#ppo-deals .crm-workspace-empty[data-board="true"] h2 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+#ppo-deals .crm-workspace-empty[data-board="true"] p {
+  margin: 0 0 10px;
+}
+#ppo-deals .crm-workspace-empty[data-board="true"] p:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+#ppo-deals .crm-phone-list:empty {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-deals .crm-read-loading {
+    max-height: calc(100dvh - 132px);
+  }
+  #ppo-deals .crm-skeleton-lane {
+    flex-basis: calc(100vw - 16px);
+  }
+  #ppo-deals .crm-skeleton-row .crm-skeleton-card {
+    display: block;
+    height: 136px;
+    padding: 16px 8px;
+  }
+  #ppo-deals .crm-skeleton-row i {
+    margin-bottom: 16px;
+  }
+  #ppo-deals .crm-workspace-empty[data-board="true"] {
+    top: 180px;
+    padding: 16px;
+  }
+}
+
+#ppo-deals:has(> .crm-workspace-empty) .crm-grid-scroll {
+  flex: 0 0 auto;
+}
+#ppo-deals .crm-workspace-empty[data-filtered="true"] {
+  text-align: left;
+  padding: 20px 16px;
+}
+#ppo-deals .crm-workspace-empty[data-filtered="true"] h2 {
+  font-size: 14px;
+}
+#ppo-deals .crm-workspace-empty p {
+  color: var(--muted);
 }
