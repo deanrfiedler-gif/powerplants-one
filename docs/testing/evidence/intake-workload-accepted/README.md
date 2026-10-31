@@ -36,7 +36,7 @@ The isolated synthetic PostgreSQL 16 cluster contains current migrations and see
 | Shared shell units | 4 passed: sorted one-line declarations, exact/pattern/module routing and frozen shared-style selector contracts. |
 | Documentation controls | Status source check passed (184 fragments); naming passed (804 document records); migration numbering/registry check passed. |
 | Register and lint | `npm run studio:check` passed (372 entries, 52 component entries, 216 source routes, no errors). ESLint passed for all changed TypeScript/TSX sources and tests. |
-| Foundation | Passed: 22 issued sources, all 78 parent requirements, 14,059 local links, 7,398 marker-scanned files and 182 status fragments; no errors. Contribution scope is checked against `origin/main` after committing and recorded on PR #703. |
+| Foundation | Passed: 22 issued sources, all 78 parent requirements, 14,066 local links, 7,402 marker-scanned files and 184 status fragments; no errors. Contribution scope is checked against `origin/main` after committing and recorded on PR #703. |
 
 The first native boundary attempt used direct SQL for protected CRM changes; database triggers correctly rejected those fixtures. They now use native owner selection and `editDealScope`. On this memory-constrained Windows host, database reset cases exceeded the standard 120-second test limit; the local proof used a 600-second CLI timeout. Repository/CI timeouts remain unchanged. The first phone null-sell assertion selected a hidden desktop cell and was corrected to assert the visible representation. The reload-focus regression discovered during browser verification is covered explicitly. One native reload received a 503 with the existing DatabaseConnectTimeout boundary on this constrained host; its targeted desktop and phone rerun passed. The phone loading test was corrected to observe the shared menu count rather than a desktop-only account control.
 
@@ -48,6 +48,8 @@ The first native boundary attempt used direct SQL for protected CRM changes; dat
 - Short date labels compare the Brisbane year of the record and current instant, matching the timezone used to print the date. The regression covers both sides of New Year in UTC, Los Angeles and Auckland browser zones.
 
 Follow-up execution on the dedicated Windows worktree: 7 workload unit cases; 2 focused native database cases (identical absent/denied item and count projections, native creation refusal and unchanged receipts; exact accepted context and changed-source blocking); 1 native HTTP case; 4 responsive presentation cases; full TypeScript; changed-source ESLint; and studio:check all passed. The isolated database regression prepared in the [earlier handover](https://github.com/deanrfiedler-gif/powerplants-one/pull/703#issuecomment-6538500387) is now executed, rather than source/type inspection only. Both native desktop/phone handover reruns passed, including the generic Sales-context wording, Discovery entry, keyboard focus and URL restoration.
+
+Final foundation, status, naming, migration-registry, documentation-scope and whitespace checks also passed.
 
 No native creation/link command, permission, migration or allocation policy changed. The first review’s findings have been addressed, but review of the new published head remains separate.
 

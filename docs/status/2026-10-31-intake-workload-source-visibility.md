@@ -11,4 +11,6 @@ The second review finding is also corrected: short date labels use Australia/Bri
 
 Validation in the dedicated Windows worktree: seven workload unit cases, two focused native PostgreSQL cases (the new privacy regression and accepted-source drift), one native HTTP case, four responsive presentation cases, full TypeScript, focused ESLint and studio:check passed. The new privacy regression proves identical rows/counts/Start eligibility for absent and inaccessible briefs, native creation-options refusal and unchanged receipts. The three changed desktop/tablet captures were re-inspected; eleven other captures are byte-identical. Both native desktop/phone handover reruns passed, including the generic Sales-context wording, Discovery entry, keyboard focus and URL restoration.
 
+Final foundation, status, naming, migration-registry, documentation-scope and whitespace checks passed.
+
 See the [evidence record](../testing/evidence/intake-workload-accepted/README.md) for the original implementation proof and follow-up validation. Broader suites and compiled-build proof remain with CI, and the corrected head requires a new Claude review. Owner/device acceptance, merge and deployment remain separate.
