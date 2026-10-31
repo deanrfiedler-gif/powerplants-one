@@ -160,6 +160,7 @@ export async function engineeringRegister(p: Principal, input: unknown = {}) {
       counts: original.counts,
       matching_count: original.matching_count,
       count_scope: "AllAuthorisedMatches" as const,
+      source_version: original.fingerprint,
       engineers: {
         items: original.engineers,
         has_more: original.engineer_count > 100,

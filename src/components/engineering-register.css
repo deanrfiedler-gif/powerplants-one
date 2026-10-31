@@ -1,0 +1,129 @@
+/* EN-01 accepted workload, composed from shared shell/register/record/form controls. */
+#ppo-engineering[data-native-register] { height:100%; min-height:0; padding:0; flex-direction:row; overflow:hidden; background:var(--surface-white); font:400 14px/20px PPOShellRoboto,Roboto,Verdana,sans-serif; }
+#ppo-engineering[data-native-register] .mw-content {flex:1;min-width:0;min-height:0;}
+#ppo-engineering[data-native-register] .mw-live {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
+#ppo-engineering[data-native-register] .er-register {height:100%;position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;}
+#ppo-engineering[data-native-register] .er-menu-item {width:100%;height:40px;border:0;background:transparent;text-align:left;justify-content:flex-start;padding:0 12px;gap:12px;font-weight:400;}
+#ppo-engineering[data-native-register] .er-menu-item>span {flex:1;}
+#ppo-engineering[data-native-register] .er-menu-item[aria-pressed=true] {background:var(--selected-surface,#e3e8ee);color:var(--focus);font-weight:500;}
+#ppo-engineering[data-native-register] .er-menu-item .mw-badge {margin-left:auto;font-weight:400;background:transparent;}
+#ppo-engineering[data-native-register] .mw-menu nav {padding:8px;}
+#ppo-engineering[data-native-register] .mw-menu h3 {margin:16px 12px 8px;font-size:11px;line-height:18px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);}
+#ppo-engineering[data-native-register] .er-toolbar {display:flex;align-items:center;gap:8px;padding:10px 16px;height:60px;min-height:60px;border-bottom:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-desktop-filters {display:flex;gap:8px;min-width:0;}
+#ppo-engineering[data-native-register] .er-search {position:relative;width:300px;min-width:150px;display:flex;align-items:center;}
+#ppo-engineering[data-native-register] .er-search input {width:100%;height:40px;padding-left:36px;}
+#ppo-engineering[data-native-register] .er-search>.er-icon {position:absolute;left:12px;}
+#ppo-engineering[data-native-register] .er-count {margin-left:auto;white-space:nowrap;color:var(--text-secondary);}
+#ppo-engineering[data-native-register] .er-new {white-space:nowrap;}
+#ppo-engineering[data-native-register] .ppo-button--primary {background:var(--navy);border-color:var(--navy);color:var(--surface-white);}
+#ppo-engineering[data-native-register] .er-icon-button {width:40px;min-width:40px;height:40px;padding:0;}
+#ppo-engineering[data-native-register] .er-icon, #ppo-engineering[data-native-register] .er-icon svg {width:16px;height:16px;flex:none;}
+#ppo-engineering[data-native-register] .er-grid {flex:1;min-height:0;overflow:auto;}
+#ppo-engineering[data-native-register] .ppo-register {overflow:visible;}
+#ppo-engineering[data-native-register] .ppo-register-table {table-layout:fixed;width:var(--er-width);min-width:var(--er-width);border-collapse:separate;border-spacing:0;}
+#ppo-engineering[data-native-register] .ppo-register-table :is(th,td) {height:40px;padding:0 12px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface-white);font-size:14px;color:var(--ink);}
+#ppo-engineering[data-native-register] .ppo-register-table th {font-weight:500;position:sticky;top:0;z-index:2;}
+#ppo-engineering[data-native-register] .ppo-register-table :is(th,td):first-child {position:sticky;left:0;width:44px;padding:0;text-align:center;z-index:1;border-left:0;}
+#ppo-engineering[data-native-register] .ppo-register-table :is(th,td):last-child {position:sticky;right:0;width:44px;padding:0;text-align:center;z-index:1;border-left:1px solid var(--line);border-right:0;}
+#ppo-engineering[data-native-register] .ppo-register-table th:first-child,#ppo-engineering[data-native-register] .ppo-register-table th:last-child {z-index:3;}
+#ppo-engineering[data-native-register] .ppo-register-table tr:hover td {background:var(--paper);}
+#ppo-engineering[data-native-register] .ppo-register-table tr[data-selected] td {background:var(--selected-surface,#e3e8ee);}
+#ppo-engineering[data-native-register] input[type=checkbox] {width:16px;height:16px;min-height:16px;padding:0;accent-color:var(--focus);}
+#ppo-engineering[data-native-register] .er-cell-link {display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;border:0;background:transparent;padding:0;min-height:36px;font-weight:400;}
+#ppo-engineering[data-native-register] .er-sort {border:0;min-height:38px;padding:0;background:transparent;border-radius:0;width:100%;justify-content:flex-start;font-weight:500;}
+#ppo-engineering[data-native-register] .er-sort span {margin-left:5px;color:var(--muted);}
+#ppo-engineering[data-native-register] .er-resize {position:absolute;right:0;top:0;height:100%;width:6px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;cursor:col-resize;touch-action:none;}
+#ppo-engineering[data-native-register] .er-resize:hover,#ppo-engineering[data-native-register] .er-resize:focus-visible {background:var(--focus);}
+#ppo-engineering[data-native-register] .er-overdue {color:var(--warning,#80530e);display:inline-flex;align-items:center;gap:6px;}
+#ppo-engineering[data-native-register] .er-muted {color:var(--muted);}
+#ppo-engineering[data-native-register] .ppo-register-chip {font-size:12px;line-height:16px;padding:2px 8px;font-weight:400;border-radius:5px;}
+#ppo-engineering[data-native-register] .ppo-register-chip--neutral {background:var(--neutral-surface,#edf0f5);color:var(--neutral,#526078);}
+#ppo-engineering[data-native-register] .er-notice {padding:24px;overflow:auto;}
+#ppo-engineering[data-native-register] .er-notice h2 {font-size:18px;margin-bottom:12px;}
+#ppo-engineering[data-native-register] .er-notice p {margin:12px 0;}
+#ppo-engineering[data-native-register] .er-footnote {font-size:12px;line-height:18px;color:var(--muted);padding:8px 12px;}
+#ppo-engineering[data-native-register] .ppo-register-foot {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;flex:none;padding:8px 16px;font-size:12px;border-top:1px solid var(--line);}
+#ppo-engineering[data-native-register] .ppo-register-foot>span:last-child {display:flex;gap:8px;}
+#ppo-engineering[data-native-register] .er-phone-list,#ppo-engineering[data-native-register] .er-phone-actions {display:none;}
+.er-column-choice {display:flex;align-items:center;gap:10px;padding:8px;}
+#ppo-engineering[data-native-register] .er-selection {position:absolute;right:0;top:60px;bottom:0;width:360px;max-width:100%;background:var(--surface-white);box-shadow:-6px 0 18px #2429381f;border-left:1px solid var(--line);display:flex;flex-direction:column;z-index:4;}
+#ppo-engineering[data-native-register] .er-selection header {padding:16px 20px;border-bottom:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-selection h2 {font-size:15px;font-weight:500;}
+#ppo-engineering[data-native-register] .er-selection-body {flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px;}
+#ppo-engineering[data-native-register] .er-selection article {border:1px solid var(--line);border-radius:7px;padding:10px 12px;}
+#ppo-engineering[data-native-register] .er-selection small {display:block;color:var(--muted);}
+#ppo-engineering[data-native-register] .er-selection h3 {font-size:11px;text-transform:uppercase;color:var(--muted);}
+#ppo-engineering[data-native-register] .er-selection footer {display:flex;justify-content:flex-end;gap:8px;padding:12px 20px;border-top:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-rule {background:var(--neutral-surface,#edf0f5);border-radius:7px;padding:10px 12px;font-size:12px;line-height:18px;color:var(--neutral,#526078);}
+#ppo-engineering[data-native-register] .er-attention {background:var(--warning-surface,#fff2d9);color:var(--warning,#80530e);}
+#ppo-engineering[data-native-register] dialog.er-snapshot {padding:0;max-width:100vw;display:flex;flex-direction:column;overflow:hidden;}
+#ppo-engineering[data-native-register] dialog.er-snapshot:not([open]) {display:none;}
+#ppo-engineering[data-native-register] .er-snapshot>.eng-dialog-head {flex:none;padding:20px 24px 12px;border-bottom:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-snapshot h2 {font-size:18px;line-height:24px;padding-right:36px;}
+#ppo-engineering[data-native-register] .er-snapshot-columns {display:grid;grid-template-columns:46% 54%;flex:1;min-height:0;}
+#ppo-engineering[data-native-register] .er-record {display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-record-scroll {padding:16px 24px;overflow:auto;flex:1;min-height:0;}
+#ppo-engineering[data-native-register] .er-status-line {display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12px;}
+#ppo-engineering[data-native-register] .er-record section {margin-top:22px;}
+#ppo-engineering[data-native-register] .er-record h3 {font-size:14px;font-weight:500;margin-bottom:12px;}
+#ppo-engineering[data-native-register] .er-facts {margin:0;}
+#ppo-engineering[data-native-register] .er-facts>div {display:flex;flex-direction:column-reverse;gap:2px;margin:0 0 12px;}
+#ppo-engineering[data-native-register] .er-facts dt {font-size:12px;color:var(--muted);}
+#ppo-engineering[data-native-register] .er-facts dd {margin:0;overflow-wrap:anywhere;}
+#ppo-engineering[data-native-register] .er-links {margin:0;padding:0;list-style:none;}
+#ppo-engineering[data-native-register] .er-links li {margin-bottom:12px;}
+#ppo-engineering[data-native-register] .er-links a {display:flex;gap:12px;}
+#ppo-engineering[data-native-register] .er-record .er-rule {margin-top:16px;}
+#ppo-engineering[data-native-register] .er-record-footer {display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap;}
+#ppo-engineering[data-native-register] .er-activity {padding:20px 24px;overflow:auto;background:var(--paper);min-height:0;}
+#ppo-engineering[data-native-register] .er-technical {background:var(--surface-white);border:1px solid var(--line);border-radius:7px;overflow:hidden;}
+#ppo-engineering[data-native-register] .er-technical .record-tablist {display:flex;overflow:auto;border-bottom:1px solid var(--line);}
+#ppo-engineering[data-native-register] .er-technical .record-tablist button {border:0;border-bottom:3px solid transparent;border-radius:0;white-space:nowrap;padding:12px 10px;font-size:13px;background:transparent;}
+#ppo-engineering[data-native-register] .er-technical .record-tablist button[aria-selected=true] {border-bottom-color:var(--green);font-weight:500;}
+#ppo-engineering[data-native-register] .er-technical .record-panel {padding:14px;}
+#ppo-engineering[data-native-register] .er-technical .eng-section {margin:0;}
+#ppo-engineering[data-native-register] .er-technical ul {list-style:none;padding:0;margin:0;}
+#ppo-engineering[data-native-register] .er-technical li {border-bottom:1px solid var(--line);padding:10px 0;}
+#ppo-engineering[data-native-register] .er-technical li p {font-size:12px;color:var(--muted);margin-top:5px;}
+#ppo-engineering[data-native-register] .er-history {margin-top:24px;}
+#ppo-engineering[data-native-register] .er-history h3 {font-size:15px;margin-bottom:8px;}
+#ppo-engineering[data-native-register] .er-history article {margin:14px 0;padding:12px;background:var(--surface-white);border:1px solid var(--line);border-radius:7px;}
+#ppo-engineering[data-native-register] .er-history small {display:block;font-size:12px;color:var(--muted);margin:4px 0 8px;}
+#ppo-engineering[data-native-register] .er-note-form {margin-top:16px;}
+#ppo-engineering[data-native-register] .er-snapshot>.eng-dialog-foot {flex:none;display:flex;gap:8px;padding:8px 16px;}
+#ppo-engineering[data-native-register] .er-position {margin-right:auto;font-size:12px;color:var(--muted);}
+@media(max-width:1199px) {
+ #ppo-engineering[data-native-register] .er-desktop-filters {flex:1;}
+ #ppo-engineering[data-native-register] .er-search {width:auto;flex:1;}
+ #ppo-engineering[data-native-register] .er-toolbar {flex-wrap:wrap;height:auto;}
+}
+@media(max-width:780px) {
+ #ppo-engineering[data-native-register] {height:100%;min-height:0;padding:0;}
+ #ppo-engineering[data-native-register] .er-toolbar,#ppo-engineering[data-native-register] .er-grid {display:none;}
+ #ppo-engineering[data-native-register] .er-phone-actions {display:flex;align-items:center;gap:8px;padding:8px 12px;min-height:52px;border-bottom:1px solid var(--line);}
+ #ppo-engineering[data-native-register] .er-phone-actions>span {margin-right:auto;font-size:12px;color:var(--muted);}
+ #ppo-engineering[data-native-register] .er-phone-list {display:block;overflow:auto;flex:1;min-height:0;}
+ #ppo-engineering[data-native-register] .er-phone-row {display:flex;align-items:center;gap:8px;min-height:80px;border-bottom:1px solid var(--line);padding:8px 12px 8px 16px;}
+ #ppo-engineering[data-native-register] .er-phone-open {display:flex;flex-direction:column;gap:5px;border:0;padding:0;border-radius:0;background:transparent;flex:1;min-width:0;text-align:left;align-items:stretch;}
+ #ppo-engineering[data-native-register] .er-phone-main {display:flex;gap:10px;justify-content:space-between;width:100%;font-size:14px;line-height:20px;}
+ #ppo-engineering[data-native-register] .er-phone-main strong {font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+ #ppo-engineering[data-native-register] .er-phone-main>span {white-space:nowrap;}
+ #ppo-engineering[data-native-register] .er-phone-meta {display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;line-height:16px;color:var(--muted);}
+ #ppo-engineering[data-native-register] .er-phone-bottom {display:flex;align-items:center;gap:6px;font-size:12px;width:100%;line-height:16px;}
+ #ppo-engineering[data-native-register] .er-phone-bottom>span:first-of-type {flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+ #ppo-engineering[data-native-register] .er-phone-bottom>span:last-child {color:var(--muted);}
+ #ppo-engineering[data-native-register] .ppo-register-foot {padding:8px 12px;gap:4px;}
+ #ppo-engineering[data-native-register] .er-selection {top:0;width:100%;bottom:0;}
+ #ppo-engineering[data-native-register] dialog.er-snapshot {inset:0!important;width:100vw!important;height:100dvh!important;max-height:100dvh!important;border:0;border-radius:0;margin:0;}
+ #ppo-engineering[data-native-register] .er-snapshot-columns {display:block;overflow:auto;}
+ #ppo-engineering[data-native-register] .er-record {display:block;border:0;}
+ #ppo-engineering[data-native-register] .er-record-scroll {overflow:visible;padding:16px;}
+ #ppo-engineering[data-native-register] .er-record-footer {position:sticky;bottom:0;background:var(--surface-white);z-index:2;padding:8px;}
+ #ppo-engineering[data-native-register] .er-activity {overflow:visible;padding:16px;}
+ #ppo-engineering[data-native-register] .er-snapshot .eng-dialog-head {padding:14px 16px;}
+ #ppo-engineering[data-native-register] .er-snapshot h2 {font-size:16px;}
+ #ppo-engineering[data-native-register] :is(input,select,textarea) {font-size:16px;}
+ #ppo-engineering[data-native-register] .er-technical .record-tablist button {padding:10px 7px;font-size:12px;}
+}
+

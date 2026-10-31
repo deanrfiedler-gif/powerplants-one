@@ -8,11 +8,14 @@ import { sourceBlockers } from "../model";
 export function ControlSummary({
   packageId,
   mode,
+  snapshot,
 }: {
   packageId: string;
   mode: "overview" | "documents" | "queries" | "review";
+  snapshot?: { data: ControlRead | null; loading: boolean; error: unknown; reload: () => void };
 }) {
-  const read = useResource<ControlRead>(`engineering/${packageId}/control`),
+  const resource = useResource<ControlRead>(snapshot ? null : `engineering/${packageId}/control`),
+    read = snapshot ?? resource,
     data = read.data;
   const groups: {
     kind: ControlKind;
@@ -128,7 +131,7 @@ export function ControlSummary({
                   ))}
                 </ul>
               ) : (
-                <p>No {g.kind} records yet.</p>
+                <p>No permitted {g.kind} records returned.</p>
               )}
             </section>
           ))}

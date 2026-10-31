@@ -93,10 +93,12 @@ function tabKeys(
     document.getElementById(prefix + items[next][0])?.focus();
   }
 }
-function Modal({
+export function EngineeringModal({
   open,
   title,
   drawer = false,
+  maxWidth = 750,
+  className = "",
   onClose,
   children,
   footer,
@@ -105,6 +107,8 @@ function Modal({
   open: boolean;
   title: string;
   drawer?: boolean;
+  maxWidth?: number;
+  className?: string;
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
@@ -127,7 +131,7 @@ function Modal({
         d.style.setProperty("--eng-drawer-top", top + "px");
         d.style.setProperty("--eng-drawer-right", right + "px");
         d.style.setProperty("--eng-drawer-height", height + "px");
-        d.style.width = Math.min(750, root.width) + "px";
+        d.style.width = Math.min(maxWidth, root.width) + "px";
       } else {
         d.style.position = "fixed";
         d.style.inset = `${top}px ${right}px ${Math.max(0, innerHeight - root.bottom)}px ${Math.max(0, root.left)}px`;
@@ -149,11 +153,11 @@ function Modal({
       if (d.open) d.close();
       if (open && prior?.isConnected) prior.focus();
     };
-  }, [open, drawer]);
+  }, [open, drawer, maxWidth]);
   return (
     <dialog
       ref={ref}
-      className={drawer ? "eng-drawer" : ""}
+      className={(drawer ? "eng-drawer " : "") + className}
       aria-label={title}
       onCancel={(e) => {
         e.preventDefault();
@@ -735,7 +739,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
     </section>
   );
 }
-function RequestDialog({
+export function RequestDialog({
   open,
   onClose,
   onCreated,
@@ -779,7 +783,7 @@ function RequestDialog({
     open && blocked,
   );
   return (
-    <Modal
+    <EngineeringModal
       open={open}
       title="What needs engineering?"
       onClose={onClose}
@@ -952,7 +956,7 @@ function RequestDialog({
           </ValidationFields>
         </div>
       </form>
-    </Modal>
+    </EngineeringModal>
   );
 }
 function PackageDrawer({
@@ -1005,7 +1009,7 @@ function PackageDrawer({
     resource.reload();
   };
   return (
-    <Modal
+    <EngineeringModal
       open
       title={p?.title ?? "Engineering package"}
       drawer
@@ -1270,10 +1274,10 @@ function PackageDrawer({
           </div>
         </>
       )}
-    </Modal>
+    </EngineeringModal>
   );
 }
-function CoordinationForm({
+export function CoordinationForm({
   p,
   onCancel,
   onSaved,
