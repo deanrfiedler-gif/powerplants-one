@@ -145,21 +145,24 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     // 0051 adds only a nullable relationship to existing coverage rows; retain every original value.
     const expected = name === "coverage_assessments"
       ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }))
-      : beforeRows[name];
+      : name === "contact_outcomes" ? beforeRows[name].map((row: Record<string, unknown>) => ({...row, purpose: "DateAgreement", site_checks: null})) : beforeRows[name];
     assert.deepEqual(upgraded[name], expected);
   }
   // Seed 107 publishes readiness policy SYN-PPO-P04 v2 (field readiness gate): v1's eight criteria plus PartsReadiness.
   const readinessV2 = "94000000-0000-4000-8000-000000000002";
-  assert.deepEqual(upgraded.policy_versions.filter((r: { id: string }) => r.id !== readinessV2), beforeRows.policy_versions);
+  const readinessV3 = "94000000-0000-4000-8000-000000000003";
+  assert.deepEqual(upgraded.policy_versions.filter((r: { id: string }) => ![readinessV2, readinessV3].includes(r.id)), beforeRows.policy_versions);
   assert.deepEqual(
     upgraded.policy_versions.filter((r: { id: string }) => r.id === readinessV2).map((r: { key: string; version: number }) => [r.key, r.version]),
     [["SYN-PPO-P04", 2]],
   );
-  assert.deepEqual(upgraded.policy_criteria.filter((r: { policy_version_id: string }) => r.policy_version_id !== readinessV2), beforeRows.policy_criteria);
+  assert.deepEqual(upgraded.policy_criteria.filter((r: { policy_version_id: string }) => ![readinessV2, readinessV3].includes(r.policy_version_id)), beforeRows.policy_criteria);
   assert.deepEqual(
     upgraded.policy_criteria.filter((r: { policy_version_id: string }) => r.policy_version_id === readinessV2).map((r: { criterion_code: string }) => r.criterion_code).sort(),
     ["CompetencyPlan", "CrewCompetency", "DispatchControls", "MandatoryIsolation", "PartsReadiness", "ShutdownAuthority", "SiteAccess", "SiteControls", "ToolPreparation"],
   );
+  assert.deepEqual(upgraded.policy_versions.filter((r: {id:string}) => r.id === readinessV3).map((r: {key:string;version:number}) => [r.key,r.version]), [["SYN-PPO-P04",3]]);
+  assert.deepEqual(upgraded.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id === readinessV3).map((r: {criterion_code:string}) => r.criterion_code).sort(), ["CompetencyPlan", "CrewCompetency", "CustomerSiteReadiness", "DispatchControls", "MandatoryIsolation", "PartsReadiness", "ShutdownAuthority", "SiteAccess", "SiteControls", "ToolPreparation"]);
   const instrumentIds=new Set(beforeRows.inspection_instruments.map((r:{id:string})=>r.id));
   assert.deepEqual(upgraded.inspection_instruments.filter((r:{id:string})=>instrumentIds.has(r.id)),beforeRows.inspection_instruments);
   const addedInstruments=upgraded.inspection_instruments.filter((r:{id:string})=>!instrumentIds.has(r.id));
@@ -189,19 +192,19 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     )
   ).rows;
   assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
-  assert.equal(ledger.at(-1).version, 118);
+  assert.equal(ledger.at(-1).version, 121);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
     ],
   );
   const receipts = (
     await database().query("SELECT * FROM ppo.seed_receipts ORDER BY version")
   ).rows;
   assert.deepEqual(receipts.filter(r=>r.version<=50), oldReceipts);
-  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84,107, 108, 110]);
+  assert.deepEqual(receipts.filter(r=>r.version>50).map(r=>r.version), [51,52,53,54,55,56,58,59,78,79,80,83,84,107, 108, 110, 120, 121]);
   await transaction(async (db) => {
     const chain = await loadPolicyChain(db, workspace);
     assert.equal(chain.members.length, 1);
@@ -702,7 +705,7 @@ test("fresh installation applies only registered files through 0095, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
     ],
   );
   const first = await snapshot(await tables());

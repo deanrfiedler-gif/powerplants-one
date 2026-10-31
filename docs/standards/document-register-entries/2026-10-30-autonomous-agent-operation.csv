@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-AUTONOMOUS-AGENT-OPERATION-DEC,Autonomous agent operation under Dean's standing order,docs/decisions/autonomous-agent-operation.md,,Owner-adopted repository working rule 30 October 2026; agents decide and merge under fixed gates; no application change,Dean Fiedler,dc32160b5bd9e25e87d22484d841ad52f6f0452e,,,git,

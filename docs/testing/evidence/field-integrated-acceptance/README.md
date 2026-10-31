@@ -30,6 +30,14 @@ The [current-main latency artifact](performance-main.json) contains 320 developm
 
 No assertion weakening, new skip, timeout increase, performance-target change or CI protection bypass is used. The 90-minute full database job, guarded job-owned lock setting and separate compiled HTTP/restart lane are unchanged.
 
+## Keyboard calendar helper regression (PR #741)
+
+The P11 move/reassign helper previously interpreted repeated native day-segment ArrowUp presses as calendar addition. At `af079a2f11abb8e5c80d184d99ba0029702cee47`, October 30 plus three days becomes October 2, not November 2; the exact existing P11 assertion correctly refuses it. The [diagnostic on #738](https://github.com/deanrfiedler-gif/powerplants-one/pull/738#issuecomment-6481548664) separates this shared test defect from that contribution's CRM changes.
+
+[PR #741](https://github.com/deanrfiedler-gif/powerplants-one/pull/741) keeps the existing helper signature and exact final-value assertions. It finds native segments by reversible keyboard probes, moves to day 1 before editing year/month, then selects the destination day and tabs out. All edits remain native keyboard events. The old touch-only `fill()` escape is removed: a browser that exposes no keyboard segment now fails explicitly instead of substituting a programmatic value. No application source changes.
+
+`tests/browser/quality-keyboard.spec.ts` uses literal expected values for same-month, October 30 +3, month-end, first-day, year-end, leap-day entry/exit, ordinary/century February, multiple-month, backward and zero-day cases. A per-input setter guard refuses direct JavaScript value writes. The test also requires keyboard focus to leave the date input. Initial regression execution with Chromium 151.0.7922.173 failed both desktop and touch-emulated October cases at the original exact value assertion. Final reviewed Chrome 156.0.8078.73 results and CI are recorded in the [status fragment](../../../status/2026-10-29-keyboard-date-rollover.md); these isolated native-control checks are not full P11 execution or owner/physical-device acceptance.
+
 ## Human and measurement status
 
 Dean offered participation and selected desktop browser/keyboard. [Human record](human-session.json) distinguishes that fact from unperformed tasks/comments. Service/technician, physical-phone, representative screen-reader and independent visual participation remain pending. Accepted timer r05 stays unchanged; closed-visit/FI07 native accepted mockup gaps remain visible. Technical screenshots/emulation/layout/zoom and agent self-review are not human acceptance.

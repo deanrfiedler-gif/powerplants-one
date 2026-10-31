@@ -6,7 +6,7 @@ These scripts keep the [Powerplants One design system](https://claude.ai/artifac
 
 ## When to run
 
-Resync after a change to the tokens, the shell, the icons, a kit part or `docs/design/development/components.json`. The design system records the commit it was last synced from in `project/tokens.json` (`meta.ref`).
+Resync after a change to the tokens, the shell, the icons, a kit part, `docs/design/development/components.json` or its `component-bindings/` folder. The design system records the commit it was last synced from in `project/tokens.json` (`meta.ref`).
 
 ## Steps
 
@@ -24,7 +24,7 @@ Resync after a change to the tokens, the shell, the icons, a kit part or `docs/d
    python3 scripts/design-system/merge-component-guides.py <components.json at meta.ref> docs/design/development/components.json <guides folder> <output folder>
    ```
 
-   Run it with `--check` first. A guide it reports as `DIFFERS` holds a hand edit in a generated section; the merge keeps that edit.
+   Run it with `--check` first. A guide it reports as `DIFFERS` holds a hand edit in a generated section; the merge keeps that edit. The script reads each `components.json` with the `component-bindings/` folder beside it, so take the `meta.ref` copy from a checkout of that commit (for example `git worktree add tmp/meta-ref <sha>`), not from `git show` alone.
 4. **Check side by side.** Render each preview with the design system's tokens and `bundle.css` at the card's width, and compare it with the app capture in `tmp/design-kit/app/`. Record each difference, then fix it or explain it in the part's guide.
 5. **Publish.** Re-read every design-system file you will replace, and confirm that nobody has changed it since you read it. Then publish the changed files to the design system in one update, with `project/design-system.json` (its `lastChange`) last. Update `meta.ref` in `tokens.json`. Never upload Font Awesome Pro artwork: the design system is shared by link ([ADR-0050](../../docs/decisions/ADR-0050-font-awesome-light-icons.md)).
 

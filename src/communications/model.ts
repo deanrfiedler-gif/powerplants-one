@@ -50,6 +50,9 @@ export const holdReasons = [
   "RecipientChanged",
   "MissingData",
   "TemplateUnavailable",
+  "SourceChanged",
+  "SenderUnauthorised",
+  "PriorOutcomeUnknown",
 ] as const;
 export type HoldReason = (typeof holdReasons)[number];
 
@@ -82,6 +85,9 @@ const holdText: Record<HoldReason, string> = {
   RecipientChanged: "the contact or address changed after preparation",
   MissingData: "a fact the template needs is not recorded",
   TemplateUnavailable: "no customer email template is published for this class",
+  SourceChanged: "the source facts changed after preparation",
+  SenderUnauthorised: "the named sender no longer has authority for this message",
+  PriorOutcomeUnknown: "an earlier dispatch message needs its outcome resolved before a correction",
 };
 export const holdSummary = (reason: HoldReason) => holdText[reason];
 // Every state names the channel: S2 records simulated outcomes only, and Sent never implies delivery.

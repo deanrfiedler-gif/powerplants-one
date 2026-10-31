@@ -5,11 +5,11 @@ Consumer: `scope:CS-01`. Figma local component `555:161360`; no runtime implemen
 
 ## Figma components
 
-**Status:** Proposal only · **Location:** Customer 360 (proposal) 554:2, in the private "PPO - Design" Figma file
+**Status:** Proposal only · **Location:** Customer 360 (proposal) 554:2, archived, in the private "PPO - Design" Figma file
 
 - CS-01 / Summary tile (proposal) `555:161360`
 
-Stays on the proposal page until Customer 360 is accepted. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Stays on the Customer 360 proposal page, which was superseded by Organisations · CS-01 and archived on 25 October 2026 ([Figma file audit](../../figma-file-audit/figma-file-audit-2026-10-24.md) R4). Reference only. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 

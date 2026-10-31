@@ -68,7 +68,7 @@ test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sou
           (
             await c.query(
               // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-              `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
+              `SELECT to_jsonb(x) row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (107,108,110,120, 121)" : t === "permission_grants" ? " WHERE x.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(x)::text`,
             )
           ).rows,
       ),
@@ -94,7 +94,7 @@ test("PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sou
         "SELECT version FROM public.ppo_migrations WHERE version>105 ORDER BY version",
       )
     ).rows,
-    [{ version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }],
+    [{ version: 106 }, { version: 107 }, { version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }],
   );
   assert.equal(
     (await c.query("SELECT count(*)::int n FROM ppo.project_specialist_work"))

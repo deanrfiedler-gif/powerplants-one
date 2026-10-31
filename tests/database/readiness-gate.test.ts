@@ -8,6 +8,7 @@ import {
 } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset } from "../../scripts/database";
+import { seedFiles } from "../../scripts/migration-registry";
 import {
   acknowledgePack,
   answerReturn,
@@ -40,7 +41,16 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Use the disposable test database.");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-beforeEach(reset);
+beforeEach(async (t) => {
+  // Historical P1 journeys acquire their v2 pin before seed 120 is installed.
+  // The helper installs seed 120 after issuing the original pack, so assertions
+  // exercise preserved v2 evidence alongside the current v3 policy.
+  if (!t.name.startsWith("P1 ")) return reset();
+  const i = seedFiles.findIndex(([version]) => version === 120);
+  const seeds = seedFiles as unknown as [number, string][];
+  const [entry] = seeds.splice(i, 1);
+  try { await reset(); } finally { seeds.splice(i, 0, entry); }
+});
 after(closeDatabase);
 const code = (value: string) => (e: unknown) =>
   (e as { code: string }).code === value;

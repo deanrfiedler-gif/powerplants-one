@@ -469,3 +469,13 @@ Resource detail uses existing immutable Resource, WorkingCalendar, SkillEvidence
 # FI-07 additive response context
 
 See [FI-07 contract](field-customer-response.md). Migration 0057 adds immutable customer_response_contexts, keyed to the existing customer response with workspace composite integrity. It records subject (ReportContent or AttendanceFacts), exact approved review_id, optional supersedes_response_id/correction_reason, source_binding and coarse restriction observation. Legacy responses without a companion retain ReportContent semantics. Only one direct successor is allowed; updates/deletes are refused. Existing customer_responses, attendance_acceptances, originals, receipts, templates and installed seeds remain unchanged. The source binding is not exposed through customer or staff response projections; the read contract exposes only permitted lineage and coarse restrictions.
+
+## Field readiness P4/P5 — 24 October 2026 (implementation in review)
+
+Migration 0120 adds `contact_outcomes.purpose` (existing rows default to DateAgreement) and the four typed JSON site checks. Existing contact identities and immutable evidence remain. The independent derived CustomerSiteReadiness criterion is present only on SYN-PPO-P04 v3; prior scopes keep their v1/v2 bindings.
+
+`ppo.scheduling_preparation_policies` holds immutable, explicitly synthetic timing terms, uniquely bound to a readiness-policy version. SYN-POL-000001 v1 opens confirmation 120 hours before the visit, sets its deadline 24 hours before, and sets issue due at minute 720 in the Site time zone on the preceding published working day. The assigned Lead resource's published calendar supplies working intervals and closures; no implicit weekday calendar is used. A working day retains some published working time after closures, translated to the Site's civil day. Missing, expired or ambiguous calendar authority yields no issue deadline. Service owns real values under D-015.
+
+This preparation family does not amend the existing scheduling duration family's fixed-term canonical content, publication reviews, head or booking pins. No old scheduling hash is recalculated. No issued pack, OUT-09 snapshot or acknowledgement is changed.
+
+`ppo.preparation_deadline_follow_ups` is an immutable, workspace-scoped mapping from appointment/schedule version/deadline kind/owner to the owned Activity, exact timing-policy version and due instant. Its unique key supplies worker retry and concurrency recovery. It adds no identity type, Activity kind, user, capability or grant.

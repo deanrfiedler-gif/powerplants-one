@@ -1,3 +1,5 @@
+import { appointmentPreparation } from "../scheduling/site-readiness";
+import { SITE_READINESS } from "../scheduling/site-readiness-model";
 import { policyImpactHolds } from "../scheduling/policy-holds";
 import { visitScopeReviewRequired } from "./work-order-register-model";
 import { createHash, randomUUID } from "node:crypto";
@@ -609,6 +611,9 @@ export async function readiness(
     );
     parts.outcome = parts.parts.outcome;
   }
+  const customer = rows.find((x) => x.criterion_code === SITE_READINESS);
+  if (customer && appointment_id)
+    customer.outcome = (await appointmentPreparation(c, p.workspace_id, appointment_id))?.outcome ?? "Unknown";
   return rows;
 }
 export async function blockers(
@@ -788,6 +793,8 @@ export async function assessWorkReadiness(
           "outcome",
           "Crew competency is derived by booking checks; dispatch needs later issued-pack evidence. Manual assessment cannot clear this control.",
         );
+      if (a.criterion_code === SITE_READINESS && ["Pass", "NotApplicable", "PermittedException"].includes(a.outcome))
+        invalid("outcome", "Customer site readiness is derived from typed contact evidence.");
       const parts = a.criterion_code === PARTS_CRITERION;
       if (parts && a.outcome === "Pass")
         invalid(

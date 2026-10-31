@@ -27,3 +27,8 @@ All three currently applicable Reviewed outcomes plus a submission of the curren
 ## Persistence and fixture
 
 Migration 0058 adds immutable `estimate_review_events`, scoped foreign keys, one ordered sequence, independent-author checks, one decision per submission/kind and deferred atomic receipt/audit/outbox validation. No business identity, existing estimate state or historical output is altered. Seed 58 gives the existing local fictional source reviewer three explicit review duties plus necessary Company A CRM/internal reads. No user, hosted role or operational approval duty is added. Replaying seed receipts cannot revive a revoked grant. See [executed evidence](../delivery/estimating-review-handover.md).
+
+
+## Reviews & approvals register handover
+
+The permission-scoped `/estimating/reviews` register preserves ES-04 and uses the existing `estimating.read` capability. Its read-only [queue/snapshot contract](../decisions/estimating-review-queue.md) has candidate-window counts, independent-review eligibility and exact returned-finding/source context. The native page receives `submission_id` and `kind` query parameters. If the selected submission has a successor, it removes the decision form and offers a deliberate current-review link. The API command contract above remains unchanged; selection and snapshots create no review decision.

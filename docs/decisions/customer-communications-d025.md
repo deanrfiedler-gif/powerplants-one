@@ -4,6 +4,8 @@
 
 **Owner:** Dean Fiedler. **State:** Accepted by the owner, 17 October 2026: "Proceed with your recommendations for C1 and C3 to C8." Proposed 16 October 2026. **D-025 is Partially resolved**, not Resolved; section 2 lists what stays open. Acceptance authorises no sending code, provider account, credential, mailbox, DNS change, migration or customer message. Each build stage still needs its own authorisation (C8). **Companion:** [ADR-0058](ADR-0058-outbound-customer-email.md), Accepted, records the provider choice and its alternatives.
 
+**Pointer, 26 October 2026.** [ADR-0059](ADR-0059-email-sending-from-ppo.md), accepted by Dean on 26 October 2026, sends email a person writes from that person's own mailbox and keeps M1–M4 on the shared mailbox. Nothing in this paper changes.
+
 **Direction, 16 October 2026.** Through the UX benchmark's Decision brief, Dean adopted this direction for D-025: "Email and SMS first, drafted from PPO records and sent by a named person; commission the ADR on SMS and email delivery; approve staff task tests and grower interviews". His words: "I am happy to proceed with all six based on your recommendations." See [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md) (PPO-UXB-DEC-01). It changes this paper in two places, and leaves the rest open:
 - **C2 changes.** A named person sends every customer message, so M1 to M3 are drafted from PPO records and sent by a person rather than sent automatically.
 - **Channels.** SMS joins email as a first channel. ADR-0058 covers email; an SMS delivery record is still to be written.
@@ -302,3 +304,14 @@ Questions that only Dean can answer, all answered on 17 October 2026:
   - any real customer data.
 
 None of this is a production claim.
+
+
+## 24 October 2026 — S3 synthetic implementation authority
+
+Dean authorised the bounded S3 slice: “Proceed with D-025 S3 as recommended, using the synthetic carrier/platform catalogue and delay reasons. Recheck main and open claims first, and take it through to a review-ready PR without merging or deploying.” The implementation claim is [PR #695](https://github.com/deanrfiedler-gif/powerplants-one/pull/695), owned by Codex for Dean.
+
+This supplies S3's carrier/platform and delay-reason prerequisite **for synthetic implementation only**. The fictional catalogue is not an operational carrier list, freight platform choice or verified customer-delay policy. Actual carrier/platform details remain open before operational use. S2's merged Queued, contact-change hold, Off-drafts-nothing and sibling-template behavior is retained. No live channel, provider call, mailbox, customer communication, UI, merge or deployment is authorised.
+
+M1 derives from an exact native PPO Dispatch marked Moved. MYOB shipment observations never trigger it. The named delivery contact and explicit customer ETA are versioned on the customer Demand; supplier ETA and required-on dates remain separate. M2 requires a later explicit date than an ETA actually included in a message with Sent evidence to that same contact. A prepared, queued, submitted or uncertain message is not that baseline. A correction whose predecessor is Submitted or OutcomeUnknown is held until its outcome is resolved, then withdrawn and prepared again against the resolved evidence.
+
+The [communications contract](../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) defines the precise API, snapshot, refusal and recovery rules. No new technology or operational calculation is adopted. Business acceptance and independent review remain separate from code delivery.

@@ -15,6 +15,7 @@ import {
   decideEstimateReview,
 } from "../../src/estimating/review/service";
 import { readEstimatingReviewQueue } from "../../src/estimating/review/queue";
+import { readReviewSnapshot } from "../../src/estimating/review/queue-snapshot";
 import { readRelease } from "../../src/estimating/release/reads";
 import {
   prepareRelease,
@@ -91,6 +92,76 @@ const isCode = (code: string) => (e: unknown) =>
   (e as { code: string }).code === code;
 
 export function registerReviewQueueTests() {
+  test("review snapshots preserve exact returns, successor responses and native independent authority", async () => {
+    const f = await fixture();
+    await decide(f, "SourcePrice", "Returned");
+    const queue = await readEstimatingReviewQueue(f.r, { q: f.title });
+    const row = queue.items.find((r) => r.kind === "SourcePrice")!;
+    const query = {
+      source: row.source,
+      id: row.record_id,
+      submission_id: row.submission_id,
+      kind: row.kind,
+    };
+    const original = await readReviewSnapshot(f.r, query);
+    assert.equal(original.findings[0].detail, "SYN clarify responsibility");
+    assert.equal(original.can_decide, false);
+    assert.ok(row.submitted_by.length);
+    assert.ok(row.href.includes(row.submission_id));
+    assert.ok(original.estimate_href.endsWith(row.estimate_version_id));
+    await submit(f.p, f.input.id);
+    const old = await readReviewSnapshot(f.r, query);
+    assert.equal(old.superseded, true);
+    assert.equal(old.can_decide, false);
+    assert.equal(old.findings[0].detail, original.findings[0].detail);
+    const next = (
+      await readEstimatingReviewQueue(f.r, { q: f.title })
+    ).items.find((r) => r.kind === "SourcePrice")!;
+    const nextQuery = { ...query, submission_id: next.submission_id };
+    const successor = await readReviewSnapshot(f.r, nextQuery);
+    assert.equal(
+      successor.findings[0].response,
+      "SYN clarified source context",
+    );
+    assert.equal(successor.findings[0].prior, true);
+    assert.equal(successor.can_decide, true);
+    assert.equal((await readReviewSnapshot(f.p, nextQuery)).can_decide, false);
+    await assert.rejects(
+      readReviewSnapshot(f.r, { ...query, id: randomUUID() }),
+      isCode("RecordUnavailable"),
+    );
+    await assert.rejects(
+      readReviewSnapshot(f.r, { ...query, submission_id: randomUUID() }),
+      isCode("RecordUnavailable"),
+    );
+  });
+  test("review queue continues beyond 25 candidates without claiming review-row totals", async () => {
+    const title = `SYN Full window ${randomUUID()}`;
+    let f: Awaited<ReturnType<typeof fixture>> | undefined;
+    for (let n = 0; n < 26; n++) f = await fixture(title);
+    const first = await readEstimatingReviewQueue(f!.r, { q: title });
+    assert.equal(first.items.length, 75);
+    assert.equal(first.counts.all, 75);
+    assert.equal(first.next_offset, 25);
+    const second = await readEstimatingReviewQueue(f!.r, {
+      q: title,
+      offset: "25",
+    });
+    assert.equal(second.items.length, 3);
+    assert.equal(second.next_offset, null);
+    assert.equal(
+      new Set([...first.items, ...second.items].map((r) => r.id)).size,
+      78,
+    );
+    const empty = await readEstimatingReviewQueue(f!.p, {
+      q: title,
+      view: "awaiting_me",
+    });
+    assert.equal(empty.items.length, 0);
+    assert.equal(empty.counts.all, 75);
+    assert.equal(empty.next_offset, 25);
+  });
+
   test("review queue preserves submitted identity, current eligibility, own-work and read-only counts", async () => {
     const f = await fixture();
     const original = await readEstimateReview(f.r, f.input.id);
@@ -288,6 +359,23 @@ export function registerReviewQueueTests() {
     assert.equal(queue.items[0].submission_id, input.id);
     assert.equal(queue.items[0].can_decide, true);
     assert.equal(queue.items[0].state, "Pending");
+    const snapshotQuery = {
+      source: "QuotationApproval",
+      id: queue.items[0].record_id,
+      submission_id: input.id,
+      kind: "QuotationApproval",
+    };
+    const snapshot = await readReviewSnapshot(f.approver, snapshotQuery);
+    assert.equal(snapshot.can_decide, true);
+    assert.equal(snapshot.href, `/estimating/quotes/${input.id}/release`);
+    assert.equal(
+      snapshot.estimate_version_id,
+      queue.items[0].estimate_version_id,
+    );
+    assert.equal(
+      (await readReviewSnapshot(f.owner, snapshotQuery)).can_decide,
+      false,
+    );
     assert.equal(
       (
         await readEstimatingReviewQueue(f.owner, {
@@ -306,6 +394,13 @@ export function registerReviewQueueTests() {
       source: "quotations",
     });
     assert.equal(queue.items[0].state, "Returned");
+    const returnedSnapshot = await readReviewSnapshot(
+      f.approver,
+      snapshotQuery,
+    );
+    assert.equal(returnedSnapshot.can_decide, false);
+    assert.equal(returnedSnapshot.findings.length, 1);
+    assert.equal(returnedSnapshot.reviews[0].state, "Returned");
     assert.equal(queue.counts.returned, 1);
     assert.equal(queue.counts.awaiting_me, 0);
     // A newer Draft must retain the prepared return as held evidence.
@@ -323,6 +418,10 @@ export function registerReviewQueueTests() {
     assert.equal(queue.items[0].submission_id, input.id);
     assert.equal(queue.items[0].state, "Changed basis");
     assert.equal(queue.items[0].decision_outcome, "Returned");
+    assert.equal(
+      (await readReviewSnapshot(f.approver, snapshotQuery)).source_current,
+      false,
+    );
     assert.equal(queue.counts.changed, 1);
     assert.equal(queue.counts.awaiting_me, 0);
     const successor = preparation(await readRelease(f.owner, draft.id));

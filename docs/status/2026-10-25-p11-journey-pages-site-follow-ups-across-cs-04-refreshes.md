@@ -1,0 +1,20 @@
+---
+title: P11 journey pages Site follow-ups across CS-04 refreshes
+date: 2026-10-25
+---
+
+The P11 selected UI journey (`tests/browser/quality-journey.spec.ts:5`) failed intermittently in the "P01–P11 browser proof" job on main (79bef1d3, ad3446ce) and on documentation-only pull requests from 22 October 2026. Both symptoms came from the loop in [`quality-prepare.ts`](../../tests/helpers/quality-prepare.ts) that pages a Site's Owned follow-up list by keyboard until the seeded OEM follow-up (`85000000-…-000000000001`) is shown.
+
+- **Cause.** Since 41eb6cea (22 October), the CS-04 host remounts the Owned follow-up page read on every Site Overview observation, keeping the selected cursor ([read-state register](../design/development/components/read-state.md)). The Overview refreshes every 15 s and on window focus, and each response carries a new `observed_at`, so the list returns to "Loading permitted records…" several times while the journey pages it. By test 460 the earlier suites have linked about 200 activities to the Site, so the list runs to four or five pages of 50. In the full browser lane, a refresh landing mid-walk drops focus from the list. The helper's next Tab arrives while the slow 50-item read is still loading and wraps to the top of the document, so the walk needs the whole page again and runs past `keyFocus`'s 200 steps (symptom A). A refresh that starts just as a page arrives hides that page from the loop's one-off `isVisible()`, and the loop presses Next past the page that holds the target (symptom B). In the PR #687 attempt-2 snapshot, the loop stops on the last page (seven items, `fdb3…`–`ffeb…`) without having shown the target.
+- **Change.** The new helper [`owned-follow-up.ts`](../../tests/helpers/owned-follow-up.ts) decides each page from the exact scoped `GET /api/v1/activities` response the UI requested for that cursor. It turns pages with the same native Tab walk and Enter, and repeats a walk only when a refresh of the current cursor was observed during it, at most five times. The journey still asserts the OEM link is visible, now also checks its `/work/<id>` target, and checks status and `private, no-store` on every page read. The application and the CS-04 refresh behaviour are unchanged.
+- **Regression check.** [`quality-owned-follow-up.spec.ts`](../../tests/browser/quality-owned-follow-up.spec.ts) loads the real Site page with synthetic reads: three pages, the target on page 2, and CI's density of earlier Site records. It forces one refresh deep inside the first keyboard walk and one the moment the target page arrives, each with a slow re-read.
+
+Checked locally on 25 October 2026 (Windows, dev server on a disposable PostgreSQL 16 database reset from this commit):
+- With the previous loop under the same forced refreshes: symptom A on 4 of 4 runs, and symptom B in 2 of 8 runs before the slow first-page re-read was added.
+- New spec (final form): passed 5 times on desktop-chromium and 3 times on mobile-chromium. Temporary logging showed the first walk failing with CI's "not reachable in 200 sequential Tab steps" error, followed by a retry that turned the page.
+- Real journey with the new helper, 120 extra Site-linked activities (OEM on page 2 of 3): passed in full (8.1 min) after a reset. One earlier run failed much later, at `quality-report.ts:64` (saved completion draft heading), after the draft was saved. That code is untouched here, and the failure did not recur. With main's helper on a fresh database, the journey passed in full (8.0 min).
+- `tsc --noEmit` and ESLint on the changed files: passed.
+- Not run locally: the compiled application and the full 611-test browser lane. CI's "P01–P11 browser proof" is the deciding run.
+
+Open:
+- A real keyboard user is interrupted the same way: every 15 s, focus inside the Owned follow-up list returns to the document while the page re-reads. This follows from the accepted CS-04 refresh-clearing behaviour. Whether to keep focus across those refreshes is a product decision and is not changed here.

@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-MAINTENANCE-TS02-DEC,Planned maintenance improvements from TS-02,docs/decisions/maintenance-service-ts02-decisions.md,,Dean adopted the recommended answers to TS-02 Q1-Q5 on 30 October 2026; increments M1 M2 C1 proposed; no application change,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,

@@ -1,3 +1,8 @@
 import { readRoute } from "../../../../../shared/http";
 import { accessPeople } from "../../../../../access/service";
-export const GET = readRoute((p, _id, query) => accessPeople(p, query));
+import { accessIdentityRegister } from "../../../../../access/identity-register";
+export const GET = readRoute((p, _id, query) =>
+  query.register === "1"
+    ? accessIdentityRegister(p, query)
+    : accessPeople(p, query),
+);

@@ -152,8 +152,21 @@ test("Reviews queue HTTP is a scoped no-store read with exact source links and n
   assert.equal(queue.waiting_policy, "NotConfigured");
   for (const row of queue.items) {
     assert.equal(row.estimate_version_id, detail.saved.id);
-    assert.equal(row.href, `/estimating/estimates/${input.id}/review`);
+    assert.equal(row.href, `/estimating/estimates/${input.id}/review?submission_id=${row.submission_id}&kind=${row.kind}`);
   }
+  const row = queue.items[0];
+  const snapshotPath = `estimating/reviews/snapshot?${new URLSearchParams({ source: row.source, id: row.record_id, submission_id: row.submission_id, kind: row.kind })}`;
+  const snapshotResponse = await request(reviewer, snapshotPath);
+  assert.equal(snapshotResponse.status, 200);
+  assert.match(snapshotResponse.headers.get("cache-control")!, /no-store/);
+  const snapshot = await snapshotResponse.json();
+  assert.equal(snapshot.estimate_version_id, row.estimate_version_id);
+  assert.equal(snapshot.can_decide, true);
+  assert.equal((await (await request(owner, snapshotPath)).json()).can_decide, false);
+  assert.equal((await request(await session("second-company"), snapshotPath)).status, 404);
+  assert.equal((await request(reviewer, snapshotPath + "&approval=true")).status, 422);
+  assert.equal((await request(reviewer, snapshotPath, {})).status, 405);
+  assert.equal((await fetch(`${origin}/api/v1/${snapshotPath}`)).status, 401);
   const own = await (await request(owner, path + "&view=awaiting_me")).json();
   assert.equal(own.items.length, 0);
   assert.equal(own.counts.all, 3);

@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Date: 12 October 2026. Status: bounded synthetic backend implementation authorised by the backend-completion instruction; independent review, page implementation and owner acceptance remain separate.
+Owner: Dean Fiedler. Date: 12 October 2026. Status: bounded synthetic backend implementation authorised by the backend-completion instruction; page implementation is now recorded below; independent review and owner acceptance remain separate.
 
 Traceability: BC-01 in the backend completion plan; ES-04/05; EST-03/07/08; PPO-010; AT-01/26; existing ES-04 and ES-05 acceptance. This adds no parent requirement, business authority or operative commercial policy.
 
@@ -36,7 +36,7 @@ Read a bounded candidate window ordered by submitted/prepared time descending wi
 
 Counts are computed only from fully authorised rows in the current candidate window, after the search/source selection and before the selected view. Name this basis explicitly in the response; these counts are not global menu totals. Return the window limit/offset, continuation and observation time, plus complete/partial source status. Never return a raw hidden-candidate total. Clients must preserve the difference between an empty complete window, a filtered empty window with continuation, denied sources and a partial window. Separate requests are live reads, not a frozen export; new submissions can change offsets.
 
-No waiting-time SLA, due date or red/overdue state is invented. Return the recorded submission time and `waiting_policy: NotConfigured`. Export and cross-page selection remain future page work and must not relabel window counts as complete totals.
+No waiting-time SLA, due date or red/overdue state is invented. Return the recorded submission time and `waiting_policy: NotConfigured`. The register exports only selected rows in the current window after a fresh authorised read; selection never crosses candidate windows and never relabels window counts as complete totals.
 
 ## Verification
 
@@ -52,4 +52,17 @@ No waiting-time SLA, due date or red/overdue state is invented. Return the recor
 
 ## Relationship to the accepted design
 
-The accepted Figma Reviews & approvals design remains the page reference. This backend resolves queue visibility by reusing source read authority, keeps quotation approvals as a source/view of the same queue and leaves waiting-time policy unconfigured. It does not adopt shared-shell changes, add a navigation destination, certify the page's visual conformance or claim global counts. Window-count presentation, UI loading/error/stale states and record-window integration remain explicit frontend work.
+The accepted Figma Reviews & approvals design remains the page reference. This backend resolves queue visibility by reusing source read authority, keeps quotation approvals as a source/view of the same queue and leaves waiting-time policy unconfigured. The implementation activates the existing estimate-reviews navigation ID at `/estimating/reviews`, retaining ES-04/ES-05. This matches the path already planned in scope:ES-04; no runtime destination existed at the implementation baseline. It makes no global-count or visual-acceptance claim.
+
+
+## Register and exact snapshot implementation — 24 October 2026
+
+Use the accepted register, selection panel and phone list on Figma page 56:2 (desktop 77:635, selection 81:1002, phone 104:1803), with the retained captures and accepted phone-header amendments. Additional estimate/pricing-exception and quotation issue/distribution workflow frames remain review pending; their appearance is not adopted by this increment. The existing native workflows remain the decision destinations.
+
+The shared shell and controls render All reviews, Awaiting my review, Quotation approvals, Returned for changes, Reviewed and Submitted by me. Type/site filters and their menu counts apply to the readable rows in this window; text search is applied by the candidate reader. The footer says candidate limit separately from visible review rows, retains Next window through empty filters and partial reads, and explains live-offset movement. Reviewed includes native Reviewed/Approved/Issued outcomes; this is a view, not a new state. Elapsed time is calculated from recorded submission/preparation and response observation timestamps; completion has no active waiting timer. Missing values remain Not recorded.
+
+`GET /api/v1/estimating/reviews/snapshot` accepts only source, record `id`, exact `submission_id` and review `kind`. It reuses the native readers in one workspace transaction, checks current and historical source access, and returns exact saved/revision identities, submitter/site, review applicability, returned findings and submitted responses, recorded native history, source-change information and native links. It has no command method. Cross-record combinations are unavailable. Full findings are confined to this permitted detail read; queue rows carry only counts. Quotation files hand over to the exact release workflow rather than inventing a second file authority.
+
+Estimate handovers include exact submission and kind. A successor landing shows the selected submission as superseded and requires an explicit Open current review action; it does not silently attach a decision to a later submission. Native commands continue to enforce independence and expected versions. Selection offers oldest-first snapshots and revalidated selected-only CSV, never bulk approval. Phone checkboxes and a dismissible selection panel provide the same controls without requiring a long press. Read failures remove protected content and provide retry; fresh reads and native commands remain mandatory for source/authority changes.
+
+No database, seed, capability, dependency or technology addition is needed. Reuse of the adopted stack follows the alternatives above. See the [page contract](../design/development/pages/route-estimating-reviews.md), [guide register](../design/development/guides.json) and [execution evidence](../testing/evidence/estimating-review-queue/README.md). Source presence, local functional proof, visual comparison, independent review, owner acceptance and deployment remain separate.

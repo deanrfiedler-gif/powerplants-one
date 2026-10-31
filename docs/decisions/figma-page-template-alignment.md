@@ -43,6 +43,8 @@ This record keeps Dean's decision, what changed in the file, how it was checked 
 | Work order record page (accepted) | `312:2` | `1126:5236` |
 | Job pack (accepted) | `272:2` | `1132:11498` (re-skinned later on 17 October, after Dean saved the named version "Field readiness gate — accepted"; declaration from `job-pack-figma-design.md`, with amendment A06 from pull request 541, not yet merged) |
 
+On 25 October 2026 the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md) made a one-time rename (R1): 13 of these pages, all but Leads and Lead record page, now carry "[Page name] · [scope ID]" names. The table keeps the 17 October names; the node IDs are unchanged, and the File index keeps each former name.
+
 **Stale component labels removed.** The main components drawn on these pages moved to Components `1:4` earlier on 17 October, with their IDs unchanged. The 54 headings and labels that described them were removed and replaced by one note per page in Flows and notes. No record here cites any of them:
 - Work orders: 5.
 - My Work: 1.
@@ -76,7 +78,7 @@ No named version was saved. No page was deleted, no component was edited and no 
 
 ## 4. Open
 
-- **Quotations (accepted) `123:40`:** re-skin after the A1 amendment's lock-in (session "Lock in and build Quotations in Sales and Estimating"). The A1 Section stays as it is. When this was checked later on 17 October, that session had been idle since 16 October with no commit or pull request, so the re-skin was not done.
+- **Quotations · ES-05 · ES-06 · ES-07 `123:40` (formerly "Quotations (accepted)"):** re-skin after the A1 amendment's lock-in (session "Lock in and build Quotations in Sales and Estimating"). The A1 Section stays as it is. When this was checked later on 17 October, that session had been idle since 16 October with no commit or pull request, so the re-skin was not done.
 - **Proposal pages:** Deals `549:2`, Customer 360 `554:2` and ES-08 `406:2` are re-skinned when each is accepted.
 - **Top bar:** every page still uses Shell / Top bar `35:138` with the old breadcrumbs. The R1–R9 propagation belongs to the top-bar lock-in.
 - **Captures:** the Captures page `115:2` holds 6 instances of a deleted proposed top bar `1067:117505`. This is reported only.

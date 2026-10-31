@@ -6,7 +6,7 @@ Owner: Dean Fiedler. Status: plan, not yet run. Purpose: check, before any code 
 
 ## Set-up
 
-- **Who.** One engineer or estimator who knows the screen systems, with Dean observing. A second person reviews afterwards.
+- **Who.** One engineer or estimator who knows the screen systems, with Dean observing. A second person reviews afterwards. Dean decided on 26 October 2026 that the participant is the engineering owner for screens once named, and that this walkthrough runs before the Rules studio design is put up for acceptance ([decision](../decisions/rule-sets-real-data-authority.md)).
 - **What.** The Figma prototype in "PPO - Design", page "Rules studio · rule sets, derived values & tables · ES-02 · ES-03", played in Present mode. Start from the flows "Rule sets — desktop (proposal)", "Rule sets — draft v4 capabilities (proposal)" and "Rule sets — phone review (proposal)".
 - **Limits.** The prototype calculates nothing. Tasks ask the participant to show where they would act and to explain what the screen tells them.
 - **Time.** About 45 minutes.
