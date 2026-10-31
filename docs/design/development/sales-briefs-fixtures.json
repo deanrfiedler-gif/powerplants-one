@@ -4,6 +4,7 @@
   "host": "/estimating/intake",
   "source": "tests/helpers/sales-briefs.ts",
   "proof": "tests/browser/sales-briefs.spec.ts",
+  "native_proof": "tests/browser/sales-briefs-native.spec.ts",
   "viewports": [
     {
       "width": 1440,
@@ -24,6 +25,7 @@
   ],
   "states": [
     "Loading",
+    "Slow read beyond polling interval",
     "Empty",
     "Filtered empty",
     "Complete",

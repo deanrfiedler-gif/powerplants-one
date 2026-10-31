@@ -14,6 +14,7 @@ test.setTimeout(90_000);
 async function open(page: Page) {
   const state = {
     mode: "ok",
+    reads: 0,
     data: briefsFixture(),
     snapshotMode: "ok",
     exportMode: "ok",
@@ -38,6 +39,7 @@ async function open(page: Page) {
       const n = Number(url.pathname.split("-").at(-1));
       return route.fulfill({ json: briefSnapshotFixture(n) });
     }
+    if (!selection) state.reads++;
     if (state.mode === "loading")
       await new Promise<void>((resolve) => {
         state.releaseRead = resolve;
@@ -463,4 +465,32 @@ test("CR-02 phone selection and compact header keep views, filters and sequence 
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth),
   ).toBeLessThanOrEqual(321);
+});
+
+test("CR-02 slow queue reads finish without overlapping timer or focus polls", async ({
+  page,
+}, info) => {
+  test.skip(
+    !!info.project.use.isMobile,
+    "Shared read lifecycle; phone native journey is separate",
+  );
+  await page.clock.install();
+  const state = await open(page);
+  const host = page.locator("#ppo-sales-briefs");
+  const before = state.reads;
+  state.mode = "loading";
+  await host
+    .getByRole("button", { name: "Refresh briefs", exact: true })
+    .click();
+  await expect.poll(() => state.releaseRead !== null).toBe(true);
+  await page.clock.fastForward(31_000);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  expect(state.reads).toBe(before + 1);
+  await expect(host.locator("tbody tr")).toHaveCount(0);
+  state.mode = "ok";
+  state.releaseRead!();
+  await expect(host.locator("tbody tr")).toHaveCount(8);
+  await page.clock.fastForward(16_000);
+  await expect.poll(() => state.reads).toBe(before + 2);
+  await expect(host.locator("tbody tr")).toHaveCount(8);
 });

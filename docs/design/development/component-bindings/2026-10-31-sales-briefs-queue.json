@@ -69,7 +69,8 @@
         "src/components/sales-briefs.css",
         "src/sales/receiving-queue.ts",
         "src/sales/receiving-queue-model.ts",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "reference": {
         "path": "docs/reference/ui/estimating/sales-briefs-design-r01/README.md",
@@ -135,7 +136,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -164,7 +166,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -193,7 +196,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -222,7 +226,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -251,7 +256,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -280,7 +286,8 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts"
       ],
       "used_on": [
         "route:/estimating/intake"
@@ -302,6 +309,11 @@
           "id": "sales-briefs-queue",
           "label": "CR-02 receiving queue",
           "description": "Synthetic host fixtures and state transitions in tests/browser/sales-briefs.spec.ts; exact server population and revisions in receiving-queue.ts."
+        },
+        {
+          "id": "sales-handover-slow-read",
+          "label": "Existing Sales lists",
+          "description": "HandoverList opts into serialized timer/focus reads so a successful slow population read can render; receiving commands, states and layouts remain unchanged."
         }
       ],
       "dependencies": [
@@ -309,10 +321,14 @@
         "src/components/sales-briefs-snapshot.tsx",
         "src/components/sales-briefs-ui.tsx",
         "src/components/sales-briefs.css",
-        "docs/design/development/sales-briefs-fixtures.json"
+        "docs/design/development/sales-briefs-fixtures.json",
+        "src/components/crm-state.ts",
+        "src/components/sales-handover.tsx"
       ],
       "used_on": [
-        "route:/estimating/intake"
+        "route:/estimating/intake",
+        "route:/sales/handoffs/estimating",
+        "route:/sales/handoffs/won"
       ],
       "gaps": [
         {

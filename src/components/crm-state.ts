@@ -7,7 +7,7 @@ export function denied(error: unknown) {
   return [401, 403, 404].includes((error as Failure)?.status ?? 0);
 }
 // Online memory only. A denied/current-identity refresh unmounts sensitive forms.
-export function useCrmResource<T>(path: string | null, clearOnError = false) {
+export function useCrmResource<T>(path: string | null, clearOnError = false, serializeReads = false) {
   const [revision, setRevision] = useState(0),
     [state, setState] = useState<{
       path: string | null;
@@ -17,15 +17,19 @@ export function useCrmResource<T>(path: string | null, clearOnError = false) {
   useEffect(() => {
     let live = true;
     let latestRequest = 0;
+    let inFlight = false;
     const load = () => {
-      if (path) {
+      if (path && (!serializeReads || !inFlight)) {
+        inFlight = true;
         const request = ++latestRequest;
         void api<T>(path).then(
           (data) => {
+            inFlight = false;
             if (live && request === latestRequest)
               setState({ path, data, error: null });
           },
           (error) => {
+            inFlight = false;
             if (live && request === latestRequest)
               setState((old) => ({
                 path,
@@ -45,7 +49,7 @@ export function useCrmResource<T>(path: string | null, clearOnError = false) {
       clearInterval(timer);
       window.removeEventListener("focus", load);
     };
-  }, [path, revision, clearOnError]);
+  }, [path, revision, clearOnError, serializeReads]);
   return {
     data: state.path === path ? state.data : null,
     error: state.path === path ? state.error : null,

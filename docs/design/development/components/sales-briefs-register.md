@@ -12,7 +12,7 @@ Rows, facets, counts and pagination share the server's complete permitted submit
 
 ## States and fixtures
 
-`tests/helpers/sales-briefs.ts` supplies synthetic examples of all five states, source change, other receivers, missing dates, long labels, terminal revisions and answered clarification. `tests/browser/sales-briefs.spec.ts` exercises the host's loading, empty, partial, stale, denied, failed/retry, selected, snapshot, phone and 320 px states. Native database and HTTP journeys in `tests/database/sales-briefs.test.ts` and `tests/http/sales-briefs.test.ts` prove that submitted revisions and access determine the population.
+`tests/helpers/sales-briefs.ts` supplies synthetic examples of all five states, source change, other receivers, missing dates, long labels, terminal revisions and answered clarification. `tests/browser/sales-briefs.spec.ts` exercises the host's loading, empty, partial, stale, denied, failed/retry, selected, snapshot, phone and 320 px states, including completion of a read slower than the polling interval without overlapping timer/focus reads. Native database and HTTP journeys in `tests/database/sales-briefs.test.ts` and `tests/http/sales-briefs.test.ts` prove that submitted revisions and access determine the population. `tests/browser/sales-briefs-native.spec.ts` follows native submission, return and draft succession through the queue, snapshot and exact record link.
 
 ## Desktop
 

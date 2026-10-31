@@ -30,4 +30,4 @@ RecordTabs/RecordPanel keep Clarification initially active and Evidence keyboard
 
 ## read-state
 
-Current-authority reads clear denied/failed evidence. Basis changes discard selection; partial counts are visibly lower bounds. Native uncertain-save recovery is unchanged.
+Current-authority reads clear denied/failed evidence. Basis changes discard selection; partial counts are visibly lower bounds. The queue opts into serialized polling in useCrmResource: a slow read is allowed to finish before another timer/focus refresh starts. Explicit refresh and query/identity changes still invalidate older reads. The same opt-in applies narrowly to HandoverList’s receiving/preparation list read, preserving both Sales handover lists through slow reads. Their layout, filters, state projection and commands are unchanged. Native record reads and remaining consumers retain the hook default; native uncertain-save recovery is unchanged.

@@ -13,17 +13,24 @@ test.afterAll(closeDatabase);
 async function call(page: Page, path: string, body?: unknown) {
   const r = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: "http://127.0.0.1:3000" },
+    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin },
     data: body,
   });
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
+}
+function handoverStateRead(page: Page, id: string, state: string) {
+  return page.waitForResponse(async response => {
+    if (new URL(response.url()).pathname !== `/api/v1/sales/handovers/${id}` || response.request().method() !== "GET") return false;
+    return !response.ok() || (await response.json()).record.state === state;
+  });
 }
 async function captureSizes(
   page: Page,
   outputPath: (name: string) => string,
   scope: string,
 ) {
+  const originalViewport = page.viewportSize();
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({
       width,
@@ -50,6 +57,7 @@ async function captureSizes(
       fullPage: false,
     });
   }
+  if (originalViewport) await page.setViewportSize(originalViewport);
 }
 async function deal(page: Page, title: string) {
   await call(page, "local-session", { profile: "coordinator" });
@@ -119,6 +127,9 @@ test("CR01/04 scoped insights drill through eight workspace views and preserve w
 test("CR02 frozen submission survives clarification, acceptance and reload", async ({
   page,
 }, info) => {
+  // This journey now includes the queue, a draft successor, exact historical entry and both preparation lists.
+  // Keep the five-second render assertions; allow the expanded end-to-end journey three minutes.
+  test.setTimeout(180000);
   const o = await deal(page, `SYN Exact Sales intake ${randomUUID()}`),
     id = randomUUID();
   await call(page, "sales/handovers", {
@@ -163,11 +174,15 @@ test("CR02 frozen submission survives clarification, acceptance and reload", asy
     .fill("SYN date remains a customer choice");
   await page.getByRole("button", { name: "Answer clarification" }).click();
   await page.getByRole("button", { name: "Resolve reviewed answer" }).click();
+  const acceptedRead = handoverStateRead(page, id, "Accepted");
   await page.getByRole("button", { name: "Accept exact revision" }).click();
+  expect((await acceptedRead).ok()).toBe(true);
   await expect(
     page.getByRole("button", { name: "Create successor revision" }),
   ).toBeVisible();
+  const reloadedRead = handoverStateRead(page, id, "Accepted");
   await page.reload();
+  expect((await reloadedRead).ok()).toBe(true);
   await expect(
     page.getByText("Accepted", { exact: true }).first(),
   ).toBeVisible();
@@ -189,13 +204,17 @@ test("CR02 frozen submission survives clarification, acceptance and reload", asy
   await call(page, `sales/handovers/${id}`, {...crmBase(), action:"Successor",expected_version:accepted.record.version,note:"SYN successor stays separate"});
   const successor = await call(page, `sales/handovers/${id}`);
   await call(page, `sales/handovers/${id}`, {...crmBase(), action:"Save",expected_version:successor.record.version,content:{...successor.record.content,problem:"SYN newer unsubmitted content"},receiving_owner_id:null,note:"SYN saved draft only"});
+  const historicalRead = handoverStateRead(page, id, "Draft");
   await page.goto(`/sales/handoffs/estimating/${id}?revision=1`);
+  expect((await historicalRead).ok()).toBe(true);
   await expect(page.getByRole("heading",{name:"Submitted Sales brief · revision 1"})).toBeVisible();
   await expect(page.getByText("SYN problem",{exact:true})).toBeVisible();
   await expect(page.getByText("SYN newer unsubmitted content",{exact:true})).toHaveCount(0);
   await expect(page.getByRole("button",{name:"Accept exact revision"})).toHaveCount(0);
   await expect(page.getByRole("link",{name:"Review the current brief separately"})).toHaveAttribute("href",`/sales/handoffs/estimating/${id}`);
+  const preparationRead = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/sales/handovers" && response.request().method() === "GET");
   await page.goto("/sales/handoffs/estimating");
+  expect((await preparationRead).ok()).toBe(true);
   await expect(page.locator(`a[href="/sales/handoffs/estimating/${id}"]`)).toContainText(o.title);
   await page.goto("/sales/handoffs/won");
   await expect(page.getByRole("heading", { name: /Won/ })).toBeVisible();
@@ -203,6 +222,8 @@ test("CR02 frozen submission survives clarification, acceptance and reload", asy
 test("CR03 Won receiving returns, corrects and accepts an exact successor while Due remains immutable", async ({
   page,
 }, info) => {
+  // Includes the existing Won list read after the receiving cycle and viewport captures.
+  test.setTimeout(180000);
   const o = await deal(page, `SYN Won receiving ${randomUUID()}`);
   let version = 1;
   for (const stage_id of ["Scoping", "Quoting", "Negotiation", "Closing"])
@@ -281,16 +302,20 @@ test("CR03 Won receiving returns, corrects and accepts an exact successor while 
   await page
     .getByLabel("Review, clarification or return reason")
     .fill("SYN exact corrected revision received; release still open");
+  const acceptedRead = handoverStateRead(page, id, "Accepted");
   await page
     .getByRole("button", { name: "Accept exact revision", exact: true })
     .click();
+  expect((await acceptedRead).ok()).toBe(true);
   await expect(
     page.getByRole("button", {
       name: "Create successor revision",
       exact: true,
     }),
   ).toBeVisible();
+  const reloadedRead = handoverStateRead(page, id, "Accepted");
   await page.reload();
+  expect((await reloadedRead).ok()).toBe(true);
   await expect(
     page.getByText("Accepted", { exact: true }).first(),
   ).toBeVisible();
@@ -307,6 +332,10 @@ test("CR03 Won receiving returns, corrects and accepts an exact successor while 
   expect(original.handover_due.status).toBe("Due");
   expect(final.handover_due).toEqual(original.handover_due);
   expect(final.version).toBe(original.version);
+  const wonListRead = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/sales/handovers" && response.request().method() === "GET");
+  await page.goto("/sales/handoffs/won");
+  expect((await wonListRead).ok()).toBe(true);
+  await expect(page.locator(`a[href="/sales/handoffs/won/${id}"]`)).toContainText(o.title);
 });
 
 test("CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls", async ({

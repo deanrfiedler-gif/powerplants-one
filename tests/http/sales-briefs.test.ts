@@ -106,7 +106,11 @@ test("CR-02 receiving HTTP: scoped population, pagination, exact snapshots/expor
   const hidden = await call(other, snap),
     missing = await call(other, `sales/handovers/receiving/${randomUUID()}`);
   assert.equal(hidden.status, 404);
-  assert.deepEqual(hidden.body, missing.body);
+  assert.equal(missing.status, 404);
+  assert.deepEqual(
+    { ...hidden.body, correlation_id: undefined },
+    { ...missing.body, correlation_id: undefined },
+  );
   const selection = `sales/handovers/receiving?selection=${row.id}:${row.token}`;
   const exported = await ok(co, selection);
   assert.equal(exported.count, 1);
