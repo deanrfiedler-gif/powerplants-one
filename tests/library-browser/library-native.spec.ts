@@ -8,9 +8,9 @@ import { closeDatabase } from "../../src/platform/database";
 import { CRM, librarySetup } from "../helpers/library";
 
 // Real application and disposable database; no fulfilled library API fixtures.
-if (localConfig().database_name !== "ppo_synthetic_test")
-  throw Error("Disposable ppo_synthetic_test only");
 test.beforeAll(async () => {
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw Error("Disposable ppo_synthetic_test only");
   await librarySetup();
 });
 test.afterAll(closeDatabase);
