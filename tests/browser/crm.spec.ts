@@ -1,4 +1,7 @@
-import { fillOpportunitySearch } from "../helpers/crm-worklist-ui";
+import {
+  fillOpportunitySearch,
+  refreshDeals,
+} from "../helpers/crm-worklist-ui";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { createHash, randomUUID } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -422,7 +425,9 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
   await expect(
     page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeVisible();
-  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("searchbox", { name: "Search deals", exact: true }),
+  ).toBeVisible();
   await page.getByLabel("Next action", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
@@ -444,7 +449,7 @@ test("CA-06/10/13 denied identity clears sensitive forms; real empty, unavailabl
       }),
     }),
   );
-  await page.getByRole("button", { name: "Refresh from start" }).click();
+  await refreshDeals(page);
   await expect(page.locator('.business-error[role="alert"]')).toContainText(
     "temporarily unavailable",
   );
@@ -488,17 +493,15 @@ test("CA-06/10 real CRM permission revocation clears linked Activity content aft
       "INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",
       [createHash("sha256").update(token).digest("hex"), CRM.workspace, user],
     );
-    await page
-      .context()
-      .addCookies([
-        {
-          name: "ppo_local_session",
-          value: token,
-          url: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
-          httpOnly: true,
-          sameSite: "Strict",
-        },
-      ]);
+    await page.context().addCookies([
+      {
+        name: "ppo_local_session",
+        value: token,
+        url: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`,
+        httpOnly: true,
+        sameSite: "Strict",
+      },
+    ]);
     await page.goto("/sales/opportunities/new");
     await expect(
       page.getByRole("heading", { name: "Add deal", exact: true }),

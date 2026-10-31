@@ -8,7 +8,9 @@ import {
 export async function installDealsDesign(page: Page) {
   // Capture the real synthetic session/shell once for repeatable design reads.
   // Native command/authentication proof lives in deals-cr04-native and HTTP/database tests.
-  const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3404"}`;
+  const origin =
+    process.env.PPO_TEST_ORIGIN ??
+    `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
   for (const path of ["local-session", "shell/context"]) {
     let body: unknown;
     await expect(async () => {
@@ -65,19 +67,21 @@ export async function installDealsDesign(page: Page) {
     if (state.empty) items = [];
     if (state.changed)
       items = items.map((r) => ({ ...r, version: r.version + 1 }));
-    if (state.partial) items = items.slice(0, 3);
+    if (state.partial)
+      items = p.has("cursor") ? items.slice(3, 6) : items.slice(0, 3);
     if (p.get("sort") === "Title")
       items = items.toSorted((a, b) => a.title.localeCompare(b.title));
     await route.fulfill({
       json: {
         items,
         completeness: state.partial ? "Partial" : "Complete",
-        next_cursor: null,
+        next_cursor:
+          state.partial && !p.has("cursor") ? "synthetic-next-page" : null,
         observed_at: dealsDesignAsOf,
         window: {
           as_of: dealsDesignAsOf,
-          first_page: true,
-          has_more: state.partial,
+          first_page: !p.has("cursor"),
+          has_more: state.partial && !p.has("cursor"),
           count_basis: "ReturnedPage",
         },
         stages: dealsDesignStages.map((stage_id, i) => ({

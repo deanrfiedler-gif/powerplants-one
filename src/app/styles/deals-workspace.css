@@ -779,7 +779,7 @@
   }
   #ppo-deals .crm-board-headers,
   #ppo-deals .crm-board-columns {
-    min-width: 1188px;
+    min-width: calc(var(--crm-stage-count) * 236px + 8px);
   }
   #ppo-deals .crm-outcome-band {
     width: calc(100vw - 100px);
@@ -1010,7 +1010,8 @@
     color: var(--danger);
   }
   #ppo-deals .crm-actions {
-    position: absolute;
+    padding-right: 80px;
+    position: relative;
     bottom: 0;
     background: var(--white);
     width: 100%;

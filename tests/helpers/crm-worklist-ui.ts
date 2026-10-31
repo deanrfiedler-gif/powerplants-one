@@ -92,3 +92,16 @@ export async function chooseDealsView(
     .filter({ visible: true })
     .click();
 }
+
+// The accepted phone workspace keeps refresh in its view sheet.
+export async function refreshDeals(page: Page) {
+  const refresh = page
+    .getByRole("button", { name: "Refresh from start", exact: true })
+    .filter({ visible: true });
+  if (!(await refresh.isVisible())) {
+    await page
+      .getByRole("button", { name: /^Choose view\. Current view:/ })
+      .click();
+  }
+  await refresh.click();
+}

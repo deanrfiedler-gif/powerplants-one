@@ -1,7 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { CRM, crmBase, crmDiscovery } from "../helpers/crm";
-const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3404"}`;
+const origin =
+  process.env.PPO_TEST_ORIGIN ??
+  `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 test.describe.configure({ timeout: 240000 });
 test.use({ viewport: { width: 1440, height: 960 }, actionTimeout: 30000 });
 async function call(page: Page, path: string, body?: unknown) {

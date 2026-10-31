@@ -95,10 +95,13 @@ function FilterPicker({
         value={value}
         onChange={set}
         options={data.data?.items ?? []}
+        disabled={data.loading || !!data.error}
         empty={
           data.loading
             ? "Loading permitted options…"
-            : `All permitted ${kind === "Company" ? "companies" : kind === "Site" ? "sites" : "owners"}`
+            : data.error
+              ? "Options unavailable"
+              : `All permitted ${kind === "Company" ? "companies" : kind === "Site" ? "sites" : "owners"}`
         }
       />
       <details className="crm-filter-option-search">
@@ -111,6 +114,11 @@ function FilterPicker({
         />
       </details>
       <ErrorNotice error={data.error} />
+      {!!data.error && !denied(data.error) && (
+        <button type="button" className="secondary" onClick={data.reload}>
+          Retry {kind.toLowerCase()} options
+        </button>
+      )}
       {data.data?.next_cursor && (
         <small>More options exist. Refine this filter search.</small>
       )}
@@ -274,6 +282,9 @@ export function SalesWorklist() {
   const currentBasis = useRef(resultBasis);
   useLayoutEffect(() => {
     currentBasis.current = resultBasis;
+    return () => {
+      currentBasis.current = "";
+    };
   }, [resultBasis]);
   const selectedIds = selection.basis === resultBasis ? selection.ids : [];
   const selectedItems = selectedDeals(data.data?.items ?? [], selectedIds);
@@ -556,6 +567,7 @@ export function SalesWorklist() {
     setExportError(null);
     try {
       const fresh = await api<Results>(requestPath);
+      if (!currentBasis.current) return;
       if (
         currentBasis.current !== basis ||
         p.actor_id + requestPath + selectionBasis(fresh.items) !== basis

@@ -3,6 +3,7 @@ import {
   fillOpportunitySearch,
   chooseWorklistSort,
   chooseDealsView,
+  refreshDeals,
   searchNeedsDrawer,
 } from "../helpers/crm-worklist-ui";
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
@@ -140,7 +141,10 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
     if (r.url().includes("/api/v1/") && r.method() !== "GET")
       commands.push(r.method());
   });
-  const search = page.getByRole("searchbox", { name: "Search deals", exact: true });
+  const search = page.getByRole("searchbox", {
+    name: "Search deals",
+    exact: true,
+  });
   if (await searchNeedsDrawer(page)) await toggleWorklistFilters(page);
   await expect(search).toBeVisible();
   const historyLength = await page.evaluate(() => history.length);
@@ -177,17 +181,23 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
   expect(query.get("limit")).toBe("10");
   expect(query.has("cursor")).toBe(false);
   await page.reload();
-  await expect(
-    page.getByRole("button", { name: "List", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+  if (info.project.use.isMobile)
+    await expect(page.locator(".crm-phone-list")).toBeVisible();
+  else
+    await expect(
+      page.getByRole("button", { name: "List", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => ids(page)).toEqual(expected);
   const copy = await context.newPage();
   try {
     await copy.goto(linked);
     await expect.poll(() => ids(copy)).toEqual(expected);
-    await expect(
-      copy.getByRole("button", { name: "List", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
+    if (info.project.use.isMobile)
+      await expect(copy.locator(".crm-phone-list")).toBeVisible();
+    else
+      await expect(
+        copy.getByRole("button", { name: "List", exact: true }),
+      ).toHaveAttribute("aria-pressed", "true");
   } finally {
     await copy.close();
   }
@@ -205,9 +215,12 @@ test("CRM URL restores filtered List, Board stage and sort through reload, a cop
     ).toHaveAttribute("aria-pressed", "true");
   await page.goBack();
   await expect(page).toHaveURL(linked);
-  await expect(
-    page.getByRole("button", { name: "List", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+  if (info.project.use.isMobile)
+    await expect(page.locator(".crm-phone-list")).toBeVisible();
+  else
+    await expect(
+      page.getByRole("button", { name: "List", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
   await capture(page, info, "url-restored-list");
   expect(await snapshot()).toEqual(before);
   expect(commands).toEqual([]);
@@ -345,44 +358,63 @@ test("CA-02/03/05/13 Board/Grid preserve canonical IDs, filters, order, phone st
       commands.push(`${request.method()} ${request.url()}`);
   });
   const boardIDs = (await ids(page)).sort();
-  const gridButton = page.getByRole("button", { name: "List", exact: true });
-  await gridButton.focus();
-  await page.keyboard.press("Enter");
-  await expect(gridButton).toHaveAttribute("aria-pressed", "true");
-  await expect(gridButton).toBeFocused();
+  if (info.project.use.isMobile) await chooseDealsView(page, "List");
+  else {
+    const gridButton = page.getByRole("button", { name: "List", exact: true });
+    await gridButton.focus();
+    await page.keyboard.press("Enter");
+    await expect(gridButton).toHaveAttribute("aria-pressed", "true");
+    await expect(gridButton).toBeFocused();
+  }
   const exact = await call(
     page,
     `crm/opportunities?${new URLSearchParams({ q: marker, company_id: CRM.company, site_id: CRM.site, owner_id: CRM.owner, next_action: "DueNeeded", sort: "Title" })}`,
   );
   expect(await ids(page)).toEqual(exact.items.map((i: { id: string }) => i.id));
   expect((await ids(page)).sort()).toEqual(boardIDs);
-  await expect(page.getByRole("table")).toHaveCount(1);
-  await expect(
-    page.getByRole("columnheader", { name: "Next activity", exact: true }),
-  ).toHaveAttribute("scope", "col");
-  await expect(
-    page.getByText("Action owner: SYN Action colleague", { exact: true }),
-  ).toBeVisible();
-  await capture(page, info, "loaded-grid");
-  const scroll = page.getByRole("region", {
-    name: "Deals List — scroll for all columns",
-    exact: true,
-  });
-  await scroll.evaluate((e) => {
-    e.scrollLeft = 350;
-    e.scrollTop = 100;
-  });
-  const sticky = await page
-    .locator(".crm-accepted-grid tbody th")
-    .first()
-    .evaluate((e) => ({
-      left: e.getBoundingClientRect().left,
-      container: e.closest(".crm-grid-scroll")!.getBoundingClientRect().left,
-      position: getComputedStyle(e).position,
-    }));
-  expect(sticky.position).toBe("sticky");
-  expect(Math.abs(sticky.left - sticky.container)).toBeLessThan(3);
-  await capture(page, info, "grid-contained-scroll");
+  if (info.project.use.isMobile) {
+    await expect(page.locator(".crm-phone-deal")).toHaveCount(3);
+    await expect(page.getByRole("table")).toHaveCount(0);
+    await capture(page, info, "loaded-compact-list");
+  } else {
+    await expect(page.getByRole("table")).toHaveCount(1);
+    await expect(
+      page.getByRole("columnheader", { name: "Next activity", exact: true }),
+    ).toHaveAttribute("scope", "col");
+    await page
+      .getByRole("button", { name: "Column settings", exact: true })
+      .click();
+    await page
+      .getByRole("checkbox", { name: "Activity owner", exact: true })
+      .check();
+    await page.keyboard.press("Escape");
+    const actionOwnerCell = page.getByRole("cell", {
+      name: "SYN Action colleague",
+      exact: true,
+    });
+    await actionOwnerCell.scrollIntoViewIfNeeded();
+    await expect(actionOwnerCell).toBeVisible();
+    await capture(page, info, "loaded-grid");
+    const scroll = page.getByRole("region", {
+      name: "Deals List — scroll for all columns",
+      exact: true,
+    });
+    await scroll.evaluate((e) => {
+      e.scrollLeft = 350;
+      e.scrollTop = 100;
+    });
+    const sticky = await page
+      .locator(".crm-accepted-grid tbody .crm-fixed-select")
+      .first()
+      .evaluate((e) => ({
+        left: e.getBoundingClientRect().left,
+        container: e.closest(".crm-grid-scroll")!.getBoundingClientRect().left,
+        position: getComputedStyle(e).position,
+      }));
+    expect(sticky.position).toBe("sticky");
+    expect(Math.abs(sticky.left - sticky.container)).toBeLessThan(3);
+    await capture(page, info, "grid-contained-scroll");
+  }
   await chooseDealsView(page, "Board");
   for (const stage of ["Enquiry", "Qualified"]) {
     const rendered = await page
@@ -493,7 +525,9 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
   await expect(
     page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeVisible();
-  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("searchbox", { name: "Search deals", exact: true }),
+  ).toBeVisible();
   await page.getByLabel("Next action", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(page.getByLabel("Stage", { exact: true })).toBeFocused();
@@ -572,9 +606,7 @@ test("CA-02/05/13 I2 pagination, long actions, 320px keyboard and error complete
       }),
     }),
   );
-  await page
-    .getByRole("button", { name: "Refresh from start", exact: true })
-    .click();
+  await refreshDeals(page);
   await expect(
     page.locator('.crm-workspace > .business-error[role="alert"]'),
   ).toBeVisible();
@@ -630,18 +662,16 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
     "INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",
     [createHash("sha256").update(token).digest("hex"), CRM.workspace, user],
   );
-  await page
-    .context()
-    .addCookies([
-      {
-        name: "ppo_local_session",
-        value: token,
-        domain: "127.0.0.1",
-        path: "/",
-        httpOnly: true,
-        sameSite: "Strict",
-      },
-    ]);
+  await page.context().addCookies([
+    {
+      name: "ppo_local_session",
+      value: token,
+      domain: "127.0.0.1",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Strict",
+    },
+  ]);
   const input = {
     ...crmCreate(),
     title: `SYN private ${randomUUID()}`,
@@ -684,7 +714,9 @@ test("CA-06/10/13 I2 revocation clears list, filter labels and late responses; i
   await expect(
     page.locator('.crm-workspace > .business-error[role="alert"]'),
   ).toBeVisible();
-  await expect(page.getByRole("searchbox", { name: "Search deals", exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("searchbox", { name: "Search deals", exact: true }),
+  ).toHaveCount(0);
   const late = page.waitForResponse(
     (r) => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 200,
   );
@@ -750,7 +782,9 @@ test("CA-06/13 initial identity must settle before an actor can switch", async (
   await identity(page);
   await expect(strip).toContainText("SYN Coordinator");
   await expect(
-    page.getByRole("button", { name: "Filters and sort", exact: true }),
+    page.getByRole("button", {
+      name: /^(Filters and sort|Filters?|Search and filter)(,|$)/,
+    }),
   ).toBeVisible();
   expect((await call(page, "local-session")).actor_id).toBe(CRM.owner);
 });
@@ -791,19 +825,15 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
       await expect(page.locator(".brand-logo:visible")).toHaveCount(0);
       if (["/", "/work"].includes(path))
         await expect(
-          page
-            .getByRole("banner")
-            .getByRole("button", {
-              name: /^Choose view\. Current view: My Work/,
-            }),
+          page.getByRole("banner").getByRole("button", {
+            name: /^Choose view\. Current view: My Work/,
+          }),
         ).toBeVisible();
       if (path === "/customers")
         await expect(
-          page
-            .getByRole("banner")
-            .getByRole("button", {
-              name: /^Choose view\. Current view: Organisations/,
-            }),
+          page.getByRole("banner").getByRole("button", {
+            name: /^Choose view\. Current view: Organisations/,
+          }),
         ).toBeVisible();
     } else await expect(page.locator(".brand-logo:visible")).toBeVisible();
     if (info.project.use.isMobile) {
@@ -826,7 +856,7 @@ test("CA-13 shared brand consumers retain navigation, readable actions and origi
   }
 });
 
-test("Accepted r08 shell and board retain full-width stages, fixed headers and shared scrolling", async ({
+test("CR-04 shell and native stage counts retain fitting stages, fixed headers and shared scrolling", async ({
   page,
 }, info) => {
   await page.goto("/sales/opportunities?pipeline=I1");

@@ -137,6 +137,47 @@ test("CR-04 chooser, selected CSV, sequential snapshots and changed permission/s
   await expect(
     page.getByText("This identity cannot read deals.", { exact: true }),
   ).toBeVisible();
+
+  // An export read started in this workspace must not download after a client-side departure.
+  state.denied = false;
+  state.changed = false;
+  await page.goto(origin + "/sales/opportunities?view=Grid");
+  await rows.first().getByRole("checkbox").check();
+  let release!: () => void;
+  let held = false;
+  let lateDownload = false;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route(
+    "**/api/v1/crm/opportunities?*",
+    async (route) => {
+      held = true;
+      await pending;
+      await route.fallback();
+    },
+    { times: 1 },
+  );
+  const response = page.waitForResponse(
+    (r) => r.url().includes("/api/v1/crm/opportunities?") && r.status() === 200,
+  );
+  page.on("download", () => {
+    lateDownload = true;
+  });
+  await page.getByRole("button", { name: "Export selected list" }).click();
+  await expect.poll(() => held).toBe(true);
+  await page.getByRole("link", { name: "Leads", exact: true }).click();
+  await expect(page).toHaveURL((url) => url.pathname === "/sales/leads");
+  await expect(page.locator("#ppo-deals")).toHaveCount(0);
+  release();
+  await (await response).finished();
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  expect(lateDownload).toBe(false);
 });
 test("CR-04 filter URL, browser history, Add deal overlay and follow-through retry", async ({
   page,
@@ -267,10 +308,30 @@ test("CR-04 month and outcome grouping, partial/failed/empty reads and compact s
     path: info.outputPath("application-selection-320.png"),
   });
   await page.getByRole("button", { name: "Close selection" }).click();
+  await page.route(
+    /\/api\/v1\/crm\/worklist-options\?kind=Company(?:&|$)/,
+    (route) =>
+      route.fulfill({
+        status: 503,
+        json: {
+          code: "Unavailable",
+          message: "Synthetic company-option read failed. Retry this read.",
+        },
+      }),
+    { times: 1 },
+  );
   await page.getByRole("button", { name: /^Search and filter/ }).click();
   await expect(
     page.getByRole("dialog", { name: /^(Filter deals|Search and filter)$/ }),
   ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Retry company options", exact: true })
+    .click();
+  await expect
+    .poll(() =>
+      page.getByLabel("Company", { exact: true }).locator("option").count(),
+    )
+    .toBeGreaterThan(1);
   for (const label of ["Deal owner", "Company", "Site"]) {
     await expect(
       page.getByLabel(label, { exact: true }).locator("option").first(),
@@ -320,4 +381,30 @@ test("CR-04 month and outcome grouping, partial/failed/empty reads and compact s
     .getByRole("button", { name: "Try loading again", exact: true })
     .click();
   await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
+  await page.setViewportSize({ width: 320, height: 844 });
+  const firstPage = await page
+    .locator("[data-opportunity-id]")
+    .evaluateAll((nodes) =>
+      nodes.map((node) => node.getAttribute("data-opportunity-id")),
+    );
+  const next = page.getByRole("button", { name: "Next page", exact: true });
+  await next.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("application-partial-320.png"),
+  });
+  await next.click();
+  await expect(page).toHaveURL(/cursor=synthetic-next-page/);
+  await expect
+    .poll(
+      async () =>
+        await page
+          .locator("[data-opportunity-id]")
+          .evaluateAll((nodes) =>
+            nodes.map((node) => node.getAttribute("data-opportunity-id")),
+          ),
+    )
+    .not.toEqual(firstPage);
+  await expect(page.locator("[data-opportunity-id]")).toHaveCount(3);
+  await expect(page.locator(".crm-page-context")).toContainText("final page");
+  await expect(next).toHaveCount(0);
 });
