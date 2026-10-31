@@ -100,12 +100,12 @@ Also read:
   - `Reviewed` and `Published` give "Reviewed" only when `reviewer`, `reviewed_at` and `reviewed_content_hash` are present and the hash equals `contentHash`. Otherwise they give "Changes awaiting review".
   - (The existing `guideReviewState` in `src/development/catalog.ts` stays for JSON guides.)
 
-- [ ] **Step 1: Install**
+- [x] **Step 1: Install**
 
 Run: `npm install --save-exact marked@18.1.0 yaml@2.9.1 && npm ls marked yaml`
 Expected: `package.json` gains `"marked": "18.1.0"` and `"yaml": "2.9.1"`; no other new packages appear.
 
-- [ ] **Step 2: Write the failing tests**
+- [x] **Step 2: Write the failing tests**
 
 Add these tests to `tests/unit/guide-markdown.test.ts`, using `node:test` and `node:assert/strict`:
 
@@ -120,20 +120,20 @@ Add these tests to `tests/unit/guide-markdown.test.ts`, using `node:test` and `n
   - Published with a different hash gives "Changes awaiting review".
   - InReview gives "In review".
 
-- [ ] **Step 3: Run the tests**
+- [x] **Step 3: Run the tests**
 
 Run: `node --import tsx --test tests/unit/guide-markdown.test.ts`
 Expected: FAIL (the module is not found).
 
-- [ ] **Step 4: Implement**
+- [x] **Step 4: Implement**
 
 Normalise `\r\n` to `\n` first. Front matter sits between a first line of `---` and the next line of `---`. Map yaml's error and warning positions to file lines.
 
-- [ ] **Step 5: Run the tests**
+- [x] **Step 5: Run the tests**
 
 Same command. Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add package.json package-lock.json src/guides tests/unit/guide-markdown.test.ts
@@ -177,7 +177,7 @@ git commit -m "feat(guides): add marked and yaml with the guide model and front 
     - `guide` is `^guide:[a-z0-9.\-]+#[a-z0-9]+(-[a-z0-9]+)*$`;
     - `https` is a parseable `https:` URL whose host is in the allowlist.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 - **`compiles every allowed construct`:** a lead paragraph, then `## How to use it {#how}` containing:
   - an ordered list item written as `**Find the record**\` with the text on the next line;
@@ -208,12 +208,12 @@ git commit -m "feat(guides): add marked and yaml with the guide model and front 
 - **`keeps typography, and CRLF equals LF`:** a paragraph containing `–`, `“quoted”`, `×`, `°` and a non-breaking space round-trips exactly. The CRLF and LF versions give an equal `contentHash` and equal error lines.
 - **`content hash ignores review fields`:** changing `reviewer` keeps the hash; changing the body changes it.
 
-- [ ] **Step 2: Run the tests**
+- [x] **Step 2: Run the tests**
 
 Run: `node --import tsx --test tests/unit/guide-markdown.test.ts`
 Expected: the new tests FAIL.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 - Walk marked's tokens with a `switch` on `token.type`. Any unmapped type is an error.
 - Work out each token's line by counting `\n` in the preceding `raw` text, starting from `bodyLine`.
@@ -223,11 +223,11 @@ Expected: the new tests FAIL.
   - a heading whose `raw` does not start with `#`.
 - Detect a callout from a blockquote's first paragraph text with `^\[!(NOTE|WARNING|IMPORTANT)\]\s*\n?`, then strip that marker.
 
-- [ ] **Step 4: Run the tests**
+- [x] **Step 4: Run the tests**
 
 Same command. Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 `git commit -m "feat(guides): compile guide Markdown to an allowlisted model with a URL policy"` (after `git add src/guides tests/unit/guide-markdown.test.ts`).
 
@@ -272,7 +272,7 @@ Same command. Expected: PASS.
   - `carried_over_from` is not in `carriedOverSources`.
 - **`scripts/build-guides.ts`** reads the register, calls `readGuideLibrary`, and exits non-zero listing every error. Otherwise it writes `.ppo-guides/released.json`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Use a `mkdtemp` root and an in-memory `Entry[]`.
 
@@ -287,19 +287,19 @@ Use a `mkdtemp` root and an in-memory `Entry[]`.
 - **`guide links resolve to known sections`**
 - **`released library survives a missing release file`:** with `NODE_ENV=production` and no file, the result is empty and the call does not throw.
 
-- [ ] **Step 2: Run the tests**
+- [x] **Step 2: Run the tests**
 
 Run: `node --import tsx --test tests/unit/guide-library.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
-- [ ] **Step 4: Run the tests**
+- [x] **Step 4: Run the tests**
 
 Run: `node --import tsx --test tests/unit/guide-library.test.ts tests/unit/guide-markdown.test.ts`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 `git commit -m "feat(guides): guide library, release file and route matching"` (after adding `src/guides`, `scripts/build-guides.ts`, `package.json`, `.gitignore` and the test).
 
@@ -331,7 +331,7 @@ Expected: PASS.
   - `https` renders as `<a target="_blank" rel="noopener noreferrer">`, with the visible suffix " (opens in a new tab)";
   - `refused` renders the text only.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Use `renderToStaticMarkup` from `react-dom/server`; `phone-header.test.ts` already renders `next/link` this way.
 
@@ -344,18 +344,18 @@ Use `renderToStaticMarkup` from `react-dom/server`; `phone-header.test.ts` alrea
 - **`text is escaped`:** `<script>x</script>` renders as `&lt;script&gt;`.
 - **`no HTML injection API under src/guides`:** no file there contains `dangerouslySetInnerHTML`.
 
-- [ ] **Step 2: Run the tests**
+- [x] **Step 2: Run the tests**
 
 Run: `node --import tsx --test tests/unit/guide-render.test.ts`
 Expected: FAIL.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
-- [ ] **Step 4: Run the tests**
+- [x] **Step 4: Run the tests**
 
 Same command. Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 `git commit -m "feat(guides): render compiled guides with the accepted panel markup and no HTML strings"`
 

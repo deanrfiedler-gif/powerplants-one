@@ -1,3 +1,4 @@
+import { technicianHistory } from "../helpers/quality-report";
 import { observedResponse } from "../helpers/observed-response";
 import type { Page, TestInfo } from "@playwright/test";
 import { test, expect, observeApiCall } from "../helpers/browser-lifecycle";
@@ -9,7 +10,8 @@ import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png, draft } from "../helpers/field";
 import { operation } from "../helpers/offline";
-import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { openAccountPanel, identityToggle, phoneWidth } from "../helpers/phone-menu";
+import { moduleIntegration } from "../helpers/ui-baselines";
 test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
   createHash("sha256").update(v).digest("hex");
@@ -180,14 +182,6 @@ function reportState(page: Page, state: string) {
 }
 async function reportTab(page: Page, name: string) {
   await page.getByRole("tab", { name, exact: true }).click();
-}
-async function technicianEvidence(page: Page) {
-  const details = page.getByRole("tab", { name: "Details", exact: true });
-  if ((page.viewportSize()?.width ?? 1440) <= 780) {
-    await expect(details).toBeVisible();
-    await details.click();
-  }
-  await page.getByRole("link", { name: "Technician evidence and correction" }).filter({ visible: true }).click();
 }
 async function review(page: Page, returned = false, commit = true) {
   if (!(await page.getByLabel("Entry 1 review reason", { exact: true }).isVisible()))
@@ -456,8 +450,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   });
   await staleReview.close();
   await identity(page, "assigned-technician");
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, job.id);
   await page
     .getByRole("button", { name: "Correct this observation entry" })
     .click();
@@ -675,8 +668,7 @@ test("P09 complete UI return, correction, partial acceptance, return proposal, c
   await expect(
     reportState(page, "Draft"),
   ).toBeVisible();
-  await technicianEvidence(page);
-  await page.getByRole("button", { name: "History", exact: true }).click();
+  await technicianHistory(page, job.id);
   await page
     .getByRole("button", { name: "Correct this observation entry" })
     .click();
@@ -997,6 +989,11 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.locator("#sync").click();
   expect((await call(page, "reports/" + id)).items[0].responses).toEqual(replayed.responses);
   await page.goto("/service/reports/" + id);
+  // A record's phone row swaps Menu for Back once the page's own read returns, which is after the session read that
+  // identity() waits for. A press that starts on Menu as it leaves sends no click, so wait for the record row: the
+  // identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "coordinator");
   await reportTab(page, "Customer response");
   await expect(page.getByRole("heading", { name: "Response history", exact: true })).toBeVisible();
@@ -1005,8 +1002,7 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
 });
 
 test("FI07 proposed Service reference and native report register comparison", async ({ page, browser }, info) => {
-  const registry = JSON.parse(await readFile("docs/standards/ui-baselines.json", "utf8"));
-  const contract = registry.module_integrations.find((x: { id: string }) => x.id === "fi07-reports-register");
+  const contract = moduleIntegration("fi07-reports-register")!;
   const context = await browser.newContext({ viewport: { width: info.project.name.startsWith("mobile") ? 390 : 1440, height: 1000 } });
   const reference = await context.newPage();
   try {

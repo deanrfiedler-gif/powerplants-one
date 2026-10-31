@@ -1,3 +1,5 @@
+import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
+import { nextWorkingVisit, siteContactInput } from "./site-readiness";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../../src/platform/identity";
 import { triageTicket, saveIntake } from "../../src/service/intake";
@@ -10,7 +12,7 @@ import {
   proposeVisit,
 } from "../../src/service/work-orders";
 import { readAppointment, recordContact } from "../../src/scheduling/planner";
-import { readPack, acknowledgePack } from "../../src/documents/packs";
+import { createPack, checkPack, requestIssue, readPack, acknowledgePack } from "../../src/documents/packs";
 import { processRenderJob } from "../../src/documents/worker";
 import { readFieldJob } from "../../src/field/reads";
 import { startAttendance } from "../../src/field/start";
@@ -21,7 +23,7 @@ import {
   readReport,
   reviewReport,
 } from "../../src/reports/service";
-import { queued } from "./packs";
+import { confirmed, content } from "./packs";
 import { startInput, entry, draft, photo } from "./field";
 import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
@@ -175,8 +177,8 @@ export async function serviceResult(
     id: appointment,
     scope_revision_id: s.id,
     scope_version: s.version,
-    start_at: "2031-09-25T00:00:00Z",
-    end_at: "2031-09-25T02:00:00Z",
+    start_at: nextWorkingVisit(),
+    end_at: new Date(Date.parse(nextWorkingVisit()) + 2 * 3600000).toISOString(),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -208,12 +210,27 @@ export async function serviceResult(
     occurred_at: new Date().toISOString(),
     notes: "SYN retained fictional contact; no message sent",
   });
-  const q = await queued(n);
-  const issued = await processRenderJob(q.pack.jobs[0].id);
+  // Confirm first so readiness names the final schedule, then snapshot the pack.
+  a = await confirmed(n, await siteReadinessFixtureCrew());
+  await recordContact(p, appointment, siteContactInput(a.version));
+  a = (await readAppointment(p, appointment)).items[0];
+  const packId = randomUUID();
+  await createPack(p, {
+    ...base(), id: packId, appointment_id: appointment,
+    expected_appointment_version: a.version, content: content(),
+  });
+  let readyPack = (await readPack(p, packId)).items[0];
+  await checkPack(p, packId, {
+    ...base(), expected_version: readyPack.version, decision: "Checked",
+  });
+  readyPack = (await readPack(p, packId)).items[0];
+  await requestIssue(p, packId, { ...base(), expected_version: readyPack.version });
+  readyPack = (await readPack(p, packId)).items[0];
+  const issued = await processRenderJob(readyPack.jobs[0].id);
   if (!("issue_id" in issued)) throw Error(JSON.stringify(issued));
   for (const profile of ["assigned-technician", "second-technician"]) {
     const technician = await principal(profile),
-      pack = (await readPack(p, q.pack.id)).items[0],
+      pack = (await readPack(p, packId)).items[0],
       recipient = pack.readiness.recipients.find(
         (x: { user_id: string }) => x.user_id === technician.actor_id,
       )!;

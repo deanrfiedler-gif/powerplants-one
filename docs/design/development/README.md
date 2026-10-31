@@ -18,6 +18,7 @@ Current ES-07 contribution: 330 entries, 176 source routes and 37 component reco
 | `systems/*.md` | Shell, theme, guidance and offline cross-page contracts |
 | `src/app/globals.css`, `src/components/ui/` | Runtime tokens and shared component implementation; the theme page reads these |
 | `docs/reference/ui/module-workflow-maps/` | Automatically discovered journey-map files; earlier issues remain available |
+| [`figjam-workflow-board.md`](figjam-workflow-board.md) | Section index (node IDs, coverage, basis and open items) for the private workflow diagrams FigJam board; cited by name and node ID, never by link |
 
 The imported baseline has 150 scopes and 110 source destinations from r05. Two new development pages and four shared systems extend it to 266 entries, 262 draft articles and 266 design references. Eight existing images are linked across fifteen baseline entries. Their provenance distinguishes design references from implementation captures. Missing images are visible work, not broken placeholder links. The standalone r05 is a retained portable issue; routine changes belong here rather than in a new HTML revision.
 
@@ -83,7 +84,7 @@ The repository-wide naming policy and retained-record boundary are documented in
 
 ## Component catalogue extension
 
-`components.json` is the stable component master; `components/*.md` supplies desktop/mobile rules. The current catalogue includes 21 runnable examples, seventeen host entries and eight reference-only entries. Current integration registers 362 entries and 208 source routes; review status remains separate from coverage. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
+`components.json` is the stable component master, frozen since 27 October 2026; new records and consumer bindings go in one file per change in [`component-bindings/`](component-bindings/README.md), which every reader merges in. `components/*.md` supplies desktop/mobile rules. The current catalogue includes 21 runnable examples, seventeen host entries and eight reference-only entries. Current integration registers 362 entries and 208 source routes; review status remains separate from coverage. `studio:check` also validates component categories, renderer/export bindings, reference anchors, consumer keys and review records. Automatic fingerprints mark reviews stale; no test pass grants design approval.
 
 ## Hosted release model
 

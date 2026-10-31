@@ -1,9 +1,10 @@
+import { createHash } from "node:crypto";
 import type { PoolClient } from "pg";
 import { customerMessageChannel } from "../adapters/synthetic-mailbox";
 import type { ChannelObservation } from "../adapters/contracts";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
-import { sharedOperation } from "../platform/operations";
+import { canonical, recordOperation, sharedOperation } from "../platform/operations";
 import { scopedOwner, companyContext } from "../shared/authority";
 import {
   common,
@@ -39,6 +40,9 @@ export type ResolvedFacts = {
   fact_version: number;
   // Class facts beyond the shared bindings, keyed by allowlisted binding (none exist in S2).
   facts: Readonly<Record<string, string | null>>;
+  // Trigger requirements apply even when a published template omits a field.
+  required?: readonly string[];
+  hold?: HoldReason | null;
   // R1: the named role on the source record, and the contact it names (null when nobody is named).
   recipient: { role: string; contact_id: string | null };
 };
@@ -72,7 +76,7 @@ async function named(c: PoolClient, w: string, table: "organisations" | "sites",
 }
 
 // PPO drafts the message from the source record: content, recipient and template are fixed here.
-export async function prepareCustomerMessage(
+function preparation(
   p: Principal,
   source: MessageSource,
   input: unknown,
@@ -89,18 +93,16 @@ export async function prepareCustomerMessage(
   const rule = classRules[cmd.message_class];
   if (rule.source_type !== cmd.source_type)
     invalid("source_type", "This message class is not prepared from that kind of record.");
-  return sharedOperation(
-    p,
+  return {
     cmd,
-    "PrepareCustomerMessage",
-    async (c) => {
+    authorise: async (c: PoolClient) => {
       const record = await readSource(c, p, cmd.source_type, cmd.source_id);
       const resolved = await source.resolve(c, p, record);
       // The owner must be able to see the follow-up the service may open for them.
       await scopedOwner(c, p, record.owner_id, record.company_id, record.site_id ?? undefined, "activity.read");
       return { record, resolved };
     },
-    async (c, { record, resolved }) => {
+    mutate: async (c: PoolClient, { record, resolved }: { record: SourceRecord; resolved: ResolvedFacts }) => {
       const w = p.workspace_id;
       if ((await switchMode(c, w, record.company_id, cmd.message_class)) === "Off")
         conflict("MessageClassOff", `${rule.label} messages are switched off for this company. Nothing was prepared.`);
@@ -136,7 +138,8 @@ export async function prepareCustomerMessage(
         )
           conflict("CorrectionNotApplicable", "A correction succeeds a sent message about an earlier version of the same fact.");
       }
-      let hold: HoldReason | null = recipient.hold;
+      let hold: HoldReason | null = recipient.hold ?? resolved.hold ?? null;
+      if (resolved.required?.some((key) => !resolved.facts[key])) hold ??= "MissingData";
       const template = await currentTemplate(c, w, record.company_id, cmd.message_class);
       if (!template) hold ??= "TemplateUnavailable";
       const facts: Record<string, string | null> = {
@@ -213,13 +216,29 @@ export async function prepareCustomerMessage(
         },
       };
     },
-    "CustomerCommunication",
-    "CustomerMessagePrepared",
-  );
+  };
+}
+
+export async function prepareCustomerMessage(p: Principal, source: MessageSource, input: unknown) {
+  const action = preparation(p, source, input);
+  return sharedOperation(p, action.cmd, "PrepareCustomerMessage", action.authorise, action.mutate,
+    "CustomerCommunication", "CustomerMessagePrepared");
+}
+
+// The source command already owns the workspace lock. Its draft, source evidence and original
+// preparation receipt commit together; replay of the source command never creates another draft.
+export async function prepareCustomerMessageInTransaction(
+  c: PoolClient, p: Principal, source: MessageSource, input: unknown,
+) {
+  const action = preparation(p, source, input);
+  const result = await action.mutate(c, await action.authorise(c));
+  return recordOperation(c, p, action.cmd, result, "CustomerCommunication", "CustomerMessagePrepared",
+    createHash("sha256").update(canonical({ command: "PrepareCustomerMessage", ...action.cmd })).digest("hex"),
+    { command: "PrepareCustomerMessage", record_version: result.version, ...result.audit_details });
 }
 
 // The sender reads the record through its source and holds the send duty and the class's working duty.
-async function senderContext(c: PoolClient, p: Principal, id: string) {
+export async function senderContext(c: PoolClient, p: Principal, id: string) {
   const m = await communication(c, p.workspace_id, uuid(id, "id"));
   await readSource(c, p, m.source_type, m.source_id);
   await companyContext(c, p, m.company_id, m.site_id, "customer_message.send");

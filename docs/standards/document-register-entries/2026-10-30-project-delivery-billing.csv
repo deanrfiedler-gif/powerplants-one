@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PROJECT-DELIVERY-BILLING-DEC,Project field work and milestone billing,docs/decisions/project-delivery-billing.md,,"Dean answered Q1-Q4 on 30 October 2026; build increments B1-B4 proposed for agent delivery under the standing order; no application change",Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,

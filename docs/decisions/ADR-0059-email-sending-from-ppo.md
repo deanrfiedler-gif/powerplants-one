@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **State:** Proposed, 19 October 2026, for Dean's decision. Not accepted. Acceptance would choose the sending paths and their rules only. It would authorise no app registration, consent, mailbox, credential, DNS change, dependency, migration, capability, sending code, tracking endpoint or customer message; each waits for its own build stage. **Raised by:** Q1 of the Emails EC-01 design record, `docs/decisions/emails-figma-design.md` (PPO-EC01-EMAILS-FIGMA-DEC), which is in [PR #608](https://github.com/deanrfiedler-gif/powerplants-one/pull/608) and not yet on `main`; this record links it by path once that pull request merges. Dean adopted the record's recommended answer to Q1 on 19 October 2026: reading and linking are accepted, while Reply, Reply all, Forward, New email and the composer stay an EC-04 proposal "until an ADR settles sending". It also gates that record's Amendment A1 (sent email tracking), because only email sent through PPO can be tracked.
+**Owner:** Dean Fiedler. **State:** Accepted by the owner, 26 October 2026: "proceed with your recommendations", which adopts option C and the recommended answer to each of E1–E9 ([Dean's decision](#deans-decision-26-october-2026)). Proposed 19 October 2026. Acceptance chooses the sending paths and their rules only. It authorises no app registration, consent, mailbox, credential, DNS change, dependency, migration, capability, sending code, tracking endpoint or customer message; each waits for its own build stage. **Raised by:** Q1 of the [Emails EC-01 design record](emails-figma-design.md) (PPO-EC01-EMAILS-FIGMA-DEC), which reached `main` through [PR #608](https://github.com/deanrfiedler-gif/powerplants-one/pull/608). Dean adopted the record's recommended answer to Q1 on 19 October 2026: reading and linking are accepted, while Reply, Reply all, Forward, New email and the composer stay an EC-04 proposal "until an ADR settles sending". It also gates that record's Amendment A1 (sent email tracking), because only email sent through PPO can be tracked.
 
 **Related:**
 - Decisions: D-025 (Partially resolved); D-020 (identity, privacy and external access); D-022 (hosting and integration platform); D-024 (branding and templates).
@@ -109,9 +109,9 @@ People keep writing and replying in Outlook. PPO reads and links sent mail throu
 | A1 tracking | Possible, but breaks R4 | Needs R4 changed | Correspondence only, as A1-Q1 | Not possible |
 | Accepted decisions | Reverses ADR-0058 | Contradicts lead and deal designs | Keeps all | Drops accepted features |
 
-## Decision (proposed)
+## Decision
 
-Adopt **option C**.
+Adopt **option C**. Proposed on 19 October 2026 and accepted by Dean on 26 October 2026 ([Dean's decision](#deans-decision-26-october-2026)).
 
 ### 1. Which path an email takes
 
@@ -265,6 +265,21 @@ These answers decide none of E1–E9. The ADR stays Proposed.
 | When will the privacy notice say sales email may contain tracking? (A1-Q2) | "We can mention tracking in our Privacy Notice right now for the purpose of developing the Powerplants One app." | **Dean's business decision.** He will add tracking to the privacy notice now. The §5 gate is met once Dean confirms the notice is updated; until then tracking stays off for every real recipient. Updating the notice is a business action outside this repository |
 | Does any correspondence count as a commercial electronic message under the Spam Act 2003, which would need an unsubscribe option? | "No sales emails count as commercial under the Spam Act, so we will not need an unsubscribe button." | **Dean's business position.** Correspondence gets no unsubscribe option on that basis. This record gives no legal view, and does not state this as a legal conclusion. Customer notices keep D-025 R2's plain instruction on how to stop them |
 
+### Dean's decision, 26 October 2026
+
+Claude summarised the open questions and recommended accepting option C with the recommended answer to each of E1–E9. Dean replied on 26 October 2026: "proceed with your recommendations".
+
+| Item | Classification | What it means |
+|---|---|---|
+| ADR-0059 | Accepted by the owner, 26 October 2026 | The State line above. ADR-0058 and the D-025 paper now carry a one-line pointer here; neither decision changes (Consequences) |
+| E1–E9 | Adopted as recommended, 26 October 2026 | Each recommendation in the Questions table above is now the answer, as written there |
+| E4, "Viewed · may be automatic" | Adopted; design not yet redrawn | It adds a sixth tracking state to A1-D2 of the [Emails design](emails-figma-design.md#8-amendment-a1--sent-email-tracking-19-october-2026), which carries a pointer here. The Figma frames and the Email / Tracking status part still show five states; redrawing them is a design change for its own lock-in |
+| E6, link subdomain | Adopted; DNS change not made | The DNS change is Dean's to make before tracking reaches an external recipient. The application's own address remains the fallback for the internal pilot |
+| Tenant, consent and licences | Still unverified | Dean's 19 October statement stands as his belief. Confirming the tenant, licences, mailboxes and who can grant consent with the IT contractor remains a prerequisite of E-S1 and E-S3 |
+| Building E-S1 to E-S4 | Not decided | Each stage in the Sequence needs its own authorisation. The EC-04 composer design must also be accepted before E-S2 |
+
+Acceptance authorises no app registration, consent, mailbox, credential, DNS change, dependency, migration, capability, sending code, tracking endpoint, privacy notice change or customer message.
+
 ## Validation evidence and remaining questions
 
 **Inspected** on main `562b9a575d2500e40ab101fc0f278cb7fd826409`, plus the Emails design record on the `docs/emails-design-lock` branch of PR #608:
@@ -280,4 +295,4 @@ These answers decide none of E1–E9. The ADR stays Proposed.
 - In the pilot, internal addresses only: `202` then a matched Sent Items copy; an invalid address producing a matched non-delivery report and Failed; a send for another user's mailbox refused; withdrawing the grant stops sending.
 - Tracking: the image route returns the same response for any token; the redirect refuses any URL not recorded for the token; stored events hold type and time only; events older than 12 months are deleted.
 
-This is a decision proposal. Nothing here is built, and none of it is a production claim.
+This record was a decision proposal until Dean accepted it on 26 October 2026. Nothing here is built, and none of it is a production claim.
