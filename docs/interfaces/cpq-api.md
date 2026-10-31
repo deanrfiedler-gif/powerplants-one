@@ -222,3 +222,25 @@ New save, release review/seal/activation, calculation, rebase and adoption check
 All package operations use original operation IDs, workspace serialization, expected versions, immutable events, audit, receipts and outbox in one transaction. `GET /operations/:operation_id` and exact command retry reauthorise the original sources and return the original receipt after withdrawal/supersession; they do not rerun workloads or republish. Payload changes under an accepted operation ID conflict. Historical releases, runs, estimates, quality reports and receipts keep their original hashes and source authority rules. Migration 0102 installs empty package tables and a nullable manifest column, with closure/immutability and native identity guards; no historical rows, grants or seed receipts are rewritten.
 
 Native release insertion also checks the complete package snapshot and ordered member hashes against the exact retained rule/table bodies. Empty, forged, reordered or extra snapshot fields refuse atomically before immutable history is created. Member hashing uses the normalized rule/table contract; it is not a general-purpose JSON floating-point serializer.
+
+## Configuration rule sets — definition schema 5 (ADR-0066 R2)
+
+Rule sets are stored apart from releases. The [rule set definition contract](../contracts/rule-set-definition.md) defines them. The existing `cpq.*` duties govern, and every rule set is synthetic.
+
+| Method | Path | Input | Result |
+|---|---|---|---|
+| GET | `/cpq/rule-sets?company_id=UUID` | Company ID | Up to 100 rule sets, with owner, state, current test summary, published version and caller duties |
+| POST | `/cpq/rule-sets` | Envelope, `id`, `company_id`, `expected_version` (zero for new), `owner_id` (new only), `definition` | A new Draft revision with its stored test result. `RuleSetInvalid` lists every problem; failing cases and findings are kept. Body limit 640,000 bytes |
+| GET | `/cpq/rule-sets/:id?revision_id=UUID` | Optional revision ID | The rule set, owner, the selected or current revision, its acceptances and review, revision and publication history, head and caller duties |
+| POST | `/cpq/rule-sets/:id/acceptances` | Envelope, `expected_version`, `revision_id`, `code`, `subject` | Owner-only written acceptance of one blocking finding of the current Draft |
+| POST | `/cpq/rule-sets/:id/review` | Envelope, `expected_version`, `revision_id`, `content_hash`, `outcome` | Independent exact review; the owner authors or reviews. Approval needs every case passing and every blocking finding accepted |
+| POST | `/cpq/rule-sets/:id/publish` | Envelope, `expected_version`, `revision_id`, `content_hash`, `expected_publication_version` | Third-person publication of the exact reviewed revision; the head moves forward and earlier publications never change |
+
+Errors:
+- `RuleSetUnchanged`, `RuleSetKeyChanged`, `RuleSetKeyTaken`, `RuleSetOwnerChanged` and `RuleSetOwnerUnauthorised`;
+- `RuleSetOwnerOnly`, `RuleSetFindingUnknown` and `RuleSetFindingAccepted`;
+- `RuleSetRevisionChanged`, `RuleSetIndependentReview`, `RuleSetOwnerReview`, `RuleSetCasesFailed` and `RuleSetFindingsOpen`;
+- `RuleSetReviewRequired`, `RuleSetIndependentPublication` and `RuleSetReviewerUnauthorised`;
+- `VersionConflict` for a stale `expected_version` or `expected_publication_version`.
+
+Receipts replay only to someone who still holds the command's duty; for an acceptance, that means the owner while they can still author or review.

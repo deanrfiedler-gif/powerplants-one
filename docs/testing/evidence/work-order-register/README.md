@@ -43,3 +43,11 @@ node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeo
 The final expanded run used the `Work order|non-waivable controls` name filter, followed by the corrected `expired and stale readiness` case. Every new database scenario and all seventeen native cases have passing execution as described above; this is not a claim that the original whole-suite run was clean. New database/HTTP files are discovered by the existing Application assurance globs.
 
 The APIs have no business mutation, migration, seed or permission change. Current candidate-window counts are not global menu totals. Broader business history, external document access, frontend integration, visual review and deployment remain open. The unrelated full database/unit suites, browser/device/visual checks and production capacity were not rerun locally for this backend-only increment. PR CI and independent review remain separate; no operational acceptance is inferred.
+
+## Accepted register implementation — 24 October 2026
+
+Worktree: codex/work-orders-register, based on main 60a7f7b4; draft PR #697. Live Figma inspected: page 193:18953, desktop 196:24111, phone 196:24496, notes 196:24515, toolbar/row/menu and snapshot subframes. Phone P1–P9 and the existing shared shell supersede older retained toolbar geometry. No retained reference bytes changed. Exact Pro icons use the existing private Kit under ADR-0050; public/offline fallback glyphs remain distinct from licensed visual fidelity.
+
+Implementation replaces card presentation with native filtered counts/grid, attention views, page selection/export/sequence and source-labelled snapshots. Native command rules remain unchanged. Missing states are adaptations requiring owner review. Review fingerprints remain untouched.
+
+Validation ledger (in progress): three register unit tests passed. An initial full typecheck was interrupted without a result; the bounded-memory rerun is pending. First isolated database reset failed at the unchanged 10-second statement deadline while the shared workstation had approximately 1 GB free memory; no assertion/timeout was relaxed and no baseline attribution is made. Retry, database/HTTP/browser proofs and matching captures remain pending.

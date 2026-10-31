@@ -1,3 +1,4 @@
+import { appointmentPreparation } from "../scheduling/site-readiness";
 import { policyImpactHolds } from "../scheduling/policy-holds";
 import { leadsAvailable } from "../crm/leads/context";
 import { crmAvailable } from "../crm/context";
@@ -53,6 +54,7 @@ export async function listMyJobs(p: Principal, input: unknown = {}) {
           status: a.status,
           version: a.version,
           my_started_at: mine?.received_at ?? null,
+          preparation: await appointmentPreparation(c, p.workspace_id, a.id),
           dispatch_hold: a.dispatch_hold || policy_impacts.some((x) => x.held),
           policy_impacts,
         });

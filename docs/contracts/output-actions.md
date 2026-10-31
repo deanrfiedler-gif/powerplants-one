@@ -34,3 +34,15 @@ Both families expose `channel:Synthetic`, with real `sent_at` and `delivered_at`
 If a request response is lost, recover its original receipt or repeat the identical command. If a simulated distribution outcome is uncertain, read the original attempt and explicitly reconcile it before preparing another. If issue finalisation is interrupted, resume the original native job; exact retained bundles are reused. A missing issued file retains its issue identity and requires restoration by the native storage owner.
 
 [Execution evidence](../testing/evidence/output-actions/README.md) separates application/database/HTTP/restart checks from human acceptance and deployment. UI integration, live delivery providers, other output families and DK-06 remain separate.
+
+## Outputs workspace receiving — 24 October 2026
+
+GET action context adds as_at, actor_id/workspace_id, request_issue {available, reason, basis}, withdraw_pack and job recovery labels/eligibility. These are advisory UI facts, never new authority. The basis carries the native expected_version and, for a report, the current approved revision/review/template IDs and template version. Commands still invoke the existing native validators and revalidate source, template and permissions.
+
+Withdraw pack is available when the native pack has a current_issue_id and its status is not Withdrawn. It is not restricted to the Issued status: a successor draft can retain a withdrawable earlier current issue. The confirmation identifies the current issue/version even when an earlier issue is displayed. It preserves original bytes and responses and uses the native appointment-hold effect.
+
+Recover preparation resumes an original job_id. The action read distinguishes an active lease from a recoverable queued/running/durable/failed job. Terminal issued jobs do not regenerate files. Stale jobs require native source review and a deliberate revision rather than replacement recovery.
+
+The browser keeps an uncertain envelope in session storage scoped to workspace, actor, family and output. Reload restores the exact command; receipt recovery or replay uses the original operation_id, expected source/attempt version and targets. A missing receipt or later authority refusal after a lost response is not proof that the original failed. Definite conflicts retain entered wording for review and require refresh/reconfirmation. Storage failure prevents submission. This local journal is recovery assistance, not the authoritative receipt store.
+
+One explicit confirmation owns one native action. Selection offers snapshot review only. PrepareDistribution targets one exact recipient; RecordDistribution and ReconcileDistribution retain the original attempt/version. UI convenience does not add bulk preparation, bulk issue or a generic issue permission. Simulated outcomes remain separate from external sent/delivered times, opened/downloaded events and recipient responses.
