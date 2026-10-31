@@ -173,7 +173,7 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [117, 118, 119, 120, 121],
+    [117, 118, 119, 120, 121, 122],
   );
   assert.equal((await readAssessment(f.p, f.id)).selected, null);
   await migrate();

@@ -249,7 +249,7 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
   assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
   assert.deepEqual(
     afterLedger.slice(ledger.length).map((r) => r.version),
-    [116, 117, 118, 119, 120, 121],
+    [116, 117, 118, 119, 120, 121, 122],
   );
   assert.equal((await readNursery(p, id)).selected, null);
   await migrate();

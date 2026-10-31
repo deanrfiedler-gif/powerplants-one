@@ -73,6 +73,7 @@ import {
 import { packContext } from "../documents/context";
 import { visibleAppointment, visibleRequest } from "../scheduling/planner";
 import { visibleWorkOrder } from "../service/work-orders";
+import { editableProject } from "../service/project-access";
 import { database, transaction } from "../platform/database";
 import { unavailable } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -89,7 +90,7 @@ export async function readOperation(
 ): Promise<OperationReceipt> {
   const client = database();
   const result = await client.query(
-    `SELECT r.result,r.record_id,i.object_type,a.details->>'command' AS command,a.details->>'configuration_id' AS specialist_id FROM ppo.operation_receipts r JOIN ppo.business_identities i ON (i.workspace_id,i.id)=(r.workspace_id,r.record_id)
+    `SELECT r.result,r.record_id,i.object_type,a.details->>'command' AS command,a.details->>'configuration_id' AS specialist_id,a.details->>'project_id' AS project_id FROM ppo.operation_receipts r JOIN ppo.business_identities i ON (i.workspace_id,i.id)=(r.workspace_id,r.record_id)
     JOIN ppo.audit_events a ON (a.workspace_id,a.actor_id,a.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
     WHERE r.workspace_id=$1 AND r.actor_id=$2 AND r.operation_id=$3`,
     [p.workspace_id, p.actor_id, uuid(operation_id, "operation_id")],
@@ -563,6 +564,17 @@ export async function readOperation(
     )
   ) {
     await visibleAppointment(client, p, r.record_id, "schedule.manage");
+  } else if (
+    r.object_type === "WorkOrder" &&
+    (["LinkWorkOrderProject", "UnlinkWorkOrderProject"].includes(r.command) ||
+      (r.command === "CreateWorkOrder" && r.project_id))
+  ) {
+    // B1 (#752 review R2): these originals needed project.edit on the project they named as well as
+    // work-order edit. Recovery re-checks both against the audited original project, not the work
+    // order's current link, which may since be empty or different.
+    if (!r.project_id) throw unavailable();
+    await visibleWorkOrder(client, p, r.record_id, "service.work_order.edit");
+    await editableProject(client, p, r.project_id);
   } else if (r.object_type === "WorkOrder" || r.object_type === "Appointment") {
     const cap =
       r.command === "AuthoriseWorkOrder"

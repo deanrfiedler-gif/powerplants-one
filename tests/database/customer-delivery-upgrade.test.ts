@@ -144,9 +144,15 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
       row: { ...row, purpose: "DateAgreement", site_checks: null },
     })),
   );
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  assert.deepEqual(
+    afterRows.work_orders,
+    before.work_orders.map(({ row }) => ({ row: { ...row, project_id: null } })),
+  );
   assert.deepEqual(
     {
       ...afterRows,
+      work_orders: before.work_orders,
       policy_versions: afterRows.policy_versions.filter(
         (r) => r.row.id !== readinessV3,
       ),
@@ -163,14 +169,14 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(
-    upgradedLedger.filter((r) => ![119, 120, 121].includes(Number(r.version))),
+    upgradedLedger.filter((r) => ![119, 120, 121, 122].includes(Number(r.version))),
     ledger,
   );
   assert.deepEqual(
     upgradedLedger
-      .filter((r) => [119, 120, 121].includes(Number(r.version)))
+      .filter((r) => [119, 120, 121, 122].includes(Number(r.version)))
       .map((r) => r.version),
-    [119, 120, 121],
+    [119, 120, 121, 122],
   );
   for (const name of [
     "supply_customer_delivery_events",

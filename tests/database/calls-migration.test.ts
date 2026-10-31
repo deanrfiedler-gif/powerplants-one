@@ -52,6 +52,9 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
   after.seed_receipts = after.seed_receipts.filter((r: {version:number}) => ![120, 121].includes(r.version));
   assert.deepEqual(after.contact_outcomes, before.contact_outcomes.map((r: Record<string,unknown>) => ({...r,purpose:"DateAgreement",site_checks:null})));
   after.contact_outcomes = before.contact_outcomes;
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  assert.deepEqual(after.work_orders, before.work_orders.map((r: Record<string,unknown>) => ({...r,project_id:null})));
+  after.work_orders = before.work_orders;
   const oldBindings = new Set(before.customer_email_bindings.map((r: { message_class: string; binding: string }) => `${r.message_class}:${r.binding}`));
   assert.deepEqual(after.customer_email_bindings.filter((r: { message_class: string; binding: string }) => oldBindings.has(`${r.message_class}:${r.binding}`)), before.customer_email_bindings);
   const shape = (rs: { message_class: string; binding: string }[]) => rs.map(r => `${r.message_class}:${r.binding}`).sort(new Intl.Collator("en").compare);
@@ -60,7 +63,7 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
   assert.deepEqual(after, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120, 121]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120, 121, 122]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",

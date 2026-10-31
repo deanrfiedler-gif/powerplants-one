@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "gantt": {
+      "states": [
+        {
+          "id": "b1-field-work-after",
+          "label": "B1 Field work below the schedule",
+          "description": "The optional after slot renders the project's Field work card inside the fixed schedule page, below the schedule card and above the page footer. The card is at most 30% of the viewport high and scrolls on its own; the schedule card keeps at least 240 px while it is present. Without the slot the Gantt renders exactly as before."
+        }
+      ],
+      "dependencies": [
+        "src/components/project-field-work.tsx",
+        "src/service/project-field-work-model.ts"
+      ],
+      "gaps": [
+        {
+          "id": "gantt-b1-field-work-review",
+          "expected": "Paired desktop and phone visual review of the Field work card inside the schedule page",
+          "actual": "Implementation captures only; no exact mockup or HTML for the card",
+          "action": "Review the captures in docs/testing/evidence/work-order-project-link/ and record the outcome",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "b1-field-work-gantt-scope",
+          "label": "B1 shared Button inside the schedule page",
+          "description": "Link a work order, Unlink, Cancel, Link work order and Unlink work order use the shared Button. Inside #ppo-gantt-page the Gantt's button reset is overridden for the Field work card so primary, secondary and danger variants, the 44 px minimum height and the shared font return."
+        }
+      ],
+      "dependencies": ["src/components/project-field-work.tsx"],
+      "used_on": ["route:/projects/[id]"]
+    }
+  }
+}

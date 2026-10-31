@@ -161,6 +161,7 @@ Wire keys remain snake_case; enum/event values retain their current PascalCase c
 | WorkOrder | `authority_mode` enum R; `authoritative_external_key` structured object C ERP-owned | PlatformSynthetic/PlatformOperational/ErpOwned; only PlatformSynthetic enabled in PP-01 |
 | WorkOrder | `billing_mapping_id` Ref(ErpAccountMapping) G financial release; `scope_revision_id` Ref(ScopeRevision) G authorise | Work authorisation may use explicitly reviewed pending-account plan; financial release may not |
 | WorkOrder | `project_reference/opportunity_reference` text O; `close_reason` text G close/cancel | References only, no invented synchronisation |
+| WorkOrder | `project_id` Ref(Project) O (B1, migration 0122) | At most one project; same company and customer; Active when linked; fixed once a visit has started; never inferred from `project_reference`. See the [B1 amendment](service-api.md#b1-typed-project-link-amendment--30-october-2026-implementation-in-review) |
 | WorkOrderTicket | `work_order_id` Ref(WorkOrder) R; `ticket_id` Ref(Ticket) R | Unique pair; many-to-many with explicit issue disposition |
 | ScopeRevision | `work_order_id` Ref(WorkOrder) R; `revision` integer R; `summary/exclusions` text R | Draft editable until authorisation; approved snapshot immutable |
 | ScopeRevision | `coverage_assessment_id` Ref(CoverageAssessment) G authorise; `approved_by/approved_at` User/instant G | Record authority/delegation policy and any permitted diagnostic limit |

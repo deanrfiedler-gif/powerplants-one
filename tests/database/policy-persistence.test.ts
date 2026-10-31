@@ -145,7 +145,9 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     // 0051 adds only a nullable relationship to existing coverage rows; retain every original value.
     const expected = name === "coverage_assessments"
       ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }))
-      : name === "contact_outcomes" ? beforeRows[name].map((row: Record<string, unknown>) => ({...row, purpose: "DateAgreement", site_checks: null})) : beforeRows[name];
+      : name === "contact_outcomes" ? beforeRows[name].map((row: Record<string, unknown>) => ({...row, purpose: "DateAgreement", site_checks: null}))
+      // 0122 adds only an unset typed project link to existing work orders.
+      : name === "work_orders" ? beforeRows[name].map((row: Record<string, unknown>) => ({ ...row, project_id: null })) : beforeRows[name];
     assert.deepEqual(upgraded[name], expected);
   }
   // Seed 107 publishes readiness policy SYN-PPO-P04 v2 (field readiness gate): v1's eight criteria plus PartsReadiness.
@@ -192,12 +194,12 @@ test("populated 0050 upgrade preserves every old row/hash, registers 0051–0090
     )
   ).rows;
   assert.deepEqual(ledger.slice(0, oldLedger.length), oldLedger);
-  assert.equal(ledger.at(-1).version, 121);
+  assert.equal(ledger.at(-1).version, 122);
   assert.deepEqual(
     ledger.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
     ],
   );
   const receipts = (
@@ -705,7 +707,7 @@ test("fresh installation applies only registered files through 0095, retains res
     ).rows.map((r) => r.version),
     [
       ...Array.from({ length: 50 }, (_, i) => i + 1).filter((n) => n !== 16),
-      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
     ],
   );
   const first = await snapshot(await tables());

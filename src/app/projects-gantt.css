@@ -569,3 +569,35 @@ body:has(#ppo-gantt-page) .business-content{display:flex;flex:1;min-height:0;pos
   #ppo-gantt-page .section-tabs > * { flex-shrink: 0; }
   #ppo-gantt-page .section-tabs .preview-state { margin-left: 0; }
 }
+/* B1 project field work: a card below the schedule, using shared controls and tokens. */
+/* Desktop: a bounded card below the schedule inside the fixed page; it scrolls on its own. */
+.project-field-work { flex: none; max-height: 30vh; overflow: auto; margin-top: 12px; padding: 16px; min-width: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); }
+.project-field-work-header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.project-field-work-header h2 { margin: 0 0 4px; font-size: 18px; }
+.project-field-work-header p { margin: 0; color: var(--text-secondary); }
+.project-field-work-status:empty { display: none; }
+.project-field-work-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.project-field-work-list > li { min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-card); }
+.project-field-work-item { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; }
+.project-field-work-item > div { display: grid; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+.project-field-work-item a { font-weight: 600; }
+.project-field-work-item small, .project-field-work-empty { color: var(--text-secondary); }
+.project-field-work-form { margin-top: 12px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface-3); }
+.project-field-work-form fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.project-field-work-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+@media (max-width: 780px) {
+  .project-field-work { max-height: none; overflow: visible; padding: 12px; }
+  .project-field-work-item { grid-template-columns: minmax(0, 1fr) auto; }
+  .project-field-work-item > .ppo-button { grid-column: 1 / -1; justify-self: start; }
+  .project-field-work-header > .ppo-button, .project-field-work-actions > .ppo-button { flex: 1 1 auto; }
+}
+/* Inside the schedule page, restore the shared Button over the Gantt's button reset. */
+#ppo-gantt-page .project-field-work .ppo-button { border: 1px solid var(--control-border); background: var(--white); color: var(--navy); font: 500 14px/1.35 Roboto, Verdana, sans-serif; }
+/* Keep a usable schedule while the Field work card is open; the card scrolls within its own height. */
+#ppo-gantt-page .page:has(> .project-field-work) .schedule-card { min-height: 240px; }
+#ppo-gantt-page .project-field-work .ppo-button--primary { border-color: var(--navy); background: var(--navy); color: var(--white); }
+#ppo-gantt-page .project-field-work .ppo-button--danger { border-color: var(--danger-border); background: var(--danger-surface); color: var(--danger); }
+#ppo-gantt-page .project-field-work .ppo-button:hover:not(:disabled) { background: var(--surface-hover); }
+#ppo-gantt-page .project-field-work .ppo-button--primary:hover:not(:disabled) { background: var(--hover); }
+#ppo-gantt-page .project-field-work .ppo-button--danger:hover:not(:disabled) { background: var(--danger-surface); filter: brightness(0.96); }
+#ppo-gantt-page .project-field-work .ppo-button:disabled { border-color: var(--line-strong); background: var(--surface-2); color: var(--text-secondary); }
