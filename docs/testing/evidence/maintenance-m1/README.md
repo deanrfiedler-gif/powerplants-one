@@ -45,6 +45,35 @@ Local environment: Node 22.23.4 (the repository pins Node 24; `engine-strict` of
 | Static | TypeScript, ESLint on changed files, foundation, prototype, naming, migrations, status sources, documentation unit tests, studio check, whitespace and conflict-marker scans passed. |
 | Deployment / owner approval | Not performed or granted by these checks. |
 
+## Populated 0122 to 0123 upgrade (31 October 2026, local)
+
+Codex review 5720375545 asked for a populated upgrade, not only a reconstructed history. The population used the 0122 application: `claude/work-order-project-link` at f267622, with migrations to 0122. It ran a one-off script with that checkout's own maintenance and warranty commands and test helpers:
+
+- a due maintenance occurrence, prepared under 0122 (Ticket only) and received with a reviewed Complete Service result;
+- a warranty remedy request, received with a reviewed Partial result.
+
+The M1 runner at head 64934c2 then applied 0123 to that database and was run a second time. Each snapshot hashes whole rows as JSON. The request rows exclude only the two new columns, so the before and after hashes are comparable.
+
+```
+before (migrations=120,121,122)
+requests=eeba6dd960c7b4af01928ec772499eb2 n=2
+results=75d115e6a39cecadc386a87987a8e003 n=2
+reports=1254a1b50fdad5b59697d230a4fc4cfe n=2
+occurrences=6f3a0739bde6f7805adbba993fd78f3e n=1
+events=d89758ef3b597be82f904e25c66453d6 n=17
+after  (migrations=120,121,122,123)
+requests=eeba6dd960c7b4af01928ec772499eb2 n=2
+results=75d115e6a39cecadc386a87987a8e003 n=2
+reports=1254a1b50fdad5b59697d230a4fc4cfe n=2
+occurrences=6f3a0739bde6f7805adbba993fd78f3e n=1
+events=d89758ef3b597be82f904e25c66453d6 n=17
+```
+
+- **Rows unchanged:** requests, results, report revisions, occurrences and maintenance events are byte-identical before and after. A repeat `migrate` changed nothing.
+- **New columns:** `work_order_id` and `follow_on_result_id` were absent before and are null on both existing requests after.
+- **Objects installed:** all four new constraints, both indexes (`maintenance_request_one_work_order` and the narrowed `occurrence_one_original_request`) and the `guard_request_links` trigger exist over the populated history.
+- **Boundaries:** this is a local execution proof on one synthetic population, not a committed test. Document rendering used an uncommitted local allowance for this container's Chrome patch, as described above. It is not CI evidence.
+
 ## Captures
 
 [Desktop prepared occurrence](desktop-due-prepared.png), [phone prepared occurrence](phone-due-prepared.png), [desktop work order warning](desktop-work-order-warning.png) and [phone work order warning](phone-work-order-warning.png), taken by the browser spec on synthetic data. They are implementation evidence, not visual acceptance. No exact mockup or HTML exists for these additions.
