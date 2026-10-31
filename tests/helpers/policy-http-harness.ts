@@ -13,6 +13,9 @@ import { GET as publicationRead } from "../../src/app/api/v1/schedule/policy-pub
 import { GET as impactRead } from "../../src/app/api/v1/schedule/policy-impacts/[id]/route";
 import { POST as resolve } from "../../src/app/api/v1/schedule/policy-impacts/[id]/resolve/route";
 import { GET as recordsRead } from "../../src/app/api/v1/schedule/policy-records/route";
+import { GET as settingsRead } from "../../src/app/api/v1/admin/settings/route";
+import { GET as policiesRead } from "../../src/app/api/v1/admin/policies/route";
+import { GET as policyRead } from "../../src/app/api/v1/admin/policies/[id]/route";
 const handlers = {propose,review,publish,resolve,proposalRead,reviewRead,publicationRead,impactRead};
 import { closeDatabase, transaction } from "../../src/platform/database";
 import { createSession, sessionCookie } from "../../src/platform/identity";
@@ -37,6 +40,9 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
     publication: handlers.publicationRead,
     impact: handlers.impactRead,
     records: recordsRead,
+    settings: settingsRead,
+    policies: policiesRead,
+    policy: policyRead,
   };
   let discardPublicationResponse = true;
   const server = createServer(async (req, res) => {
@@ -101,6 +107,19 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
     return response.json();
   };
   try {
+    const observerSession = await createSession("observer");
+    await checked(await request("/settings", undefined, ""), 401);
+    const hub = await checked(await request("/settings"), 200);
+    assert(hub.areas.some((a: {id: string}) => a.id === "policies"));
+    const deniedHub = await checked(await request("/settings", undefined, observerSession.token), 200);
+    assert(!deniedHub.areas.some((a: {id: string}) => a.id === "policies"));
+    const catalogue = await checked(await request("/policies"), 200);
+    assert.equal(catalogue.items.length, 5);
+    const record = await checked(await request(`/policy/${catalogue.items[0].id}`), 200);
+    assert.equal(record.item.id, catalogue.items[0].id);
+    await checked(await request("/policies", undefined, observerSession.token), 403);
+    await checked(await request(`/policy/${catalogue.items[0].id}`, undefined, observerSession.token), 403);
+    await checked(await request("/policies?company_id=untrusted"), 422);
     const chain = await transaction((c) => loadPolicyChain(c, workspace));
     const command = {
       ...base(),
@@ -134,13 +153,13 @@ test("isolated API-C26 HTTP adapters enforce transport/current authority, no-sto
       await request("/propose", { ...command, site_id: randomUUID() }),
       422,
     );
-    const receipt = await checked(await request("/propose", command), 201);
+    const receipt = await checked(await request("/propose", command, publishSession.token), 201);
     const discovered = await checked(await request("/records?kind=proposal&limit=1"), 200);
     assert.equal(discovered.items[0].id, receipt.record_id);
     assert.equal(discovered.can_review, true);
     await checked(await request("/records?site_id=" + randomUUID()), 422);
     assert.deepEqual(
-      await checked(await request("/propose", command), 200),
+      await checked(await request("/propose", command, publishSession.token), 200),
       receipt,
     );
     const { proposal } = await checked(

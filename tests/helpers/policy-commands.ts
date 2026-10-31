@@ -48,7 +48,7 @@ export async function proposed(
     max_visit_minutes: duration,
     effective_from: effective,
   };
-  const result = await proposeSchedulingPolicy(reviewer, command);
+  const result = await proposeSchedulingPolicy(publisher, command);
   const proposal = (
     await readPolicyEvidence(reviewer, "proposal", result.receipt.record_id)
   ).proposal!;

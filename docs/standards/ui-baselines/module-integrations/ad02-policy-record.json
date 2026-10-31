@@ -1,0 +1,15 @@
+{
+  "id": "ad02-policy-record",
+  "route": "/admin/policies/[id]",
+  "scope": "#ppo-settings",
+  "layout": "full-bleed",
+  "scroll_owner": "Settings content",
+  "design": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+  "sha256": "e4e129ecd498148aea2495f26d15aeacde6a111bc479f629585f83797a65e839",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/settings-hub.spec.ts",
+  "application_proof": "tests/database/settings-hub.test.ts",
+  "authority": "Hashes identify retained accepted design inputs only; functional proof, visual review, owner acceptance and deployment remain separate.",
+  "adaptations": "docs/testing/evidence/settings-hub/README.md"
+}

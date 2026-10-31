@@ -5995,7 +5995,7 @@
       "title": "Business configuration and policy publication",
       "kind": "scope",
       "module": "AD",
-      "summary": "Implement governed business configuration and policy publication, including applicable numbering/naming rules.",
+      "summary": "Permission-filtered Settings hub and Business policies, with native independent review/publication and read-only seeded families.",
       "path": "/admin/policies",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -6023,18 +6023,25 @@
         "docs/decisions/workshop-settings-preferences-scope.md",
         "docs/decisions/scheduling-policy-publication.md",
         "docs/decisions/scheduling-policy-impact-review.md",
-        "docs/decisions/readable-reference-namespaces.md"
+        "docs/decisions/readable-reference-namespaces.md",
+        "src/admin/settings.ts",
+        "src/admin/policies.ts",
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "Implementation in progress; AD-02",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
-      "deployment_status": "Not verified",
+      "functional_status": "Validation in progress; see settings-hub evidence",
+      "deployment_status": "Not deployed by this change",
       "review_fingerprint": null,
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 11,
       "related_keys": [
-        "scope:AD-01"
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
       ],
       "reviewer": null
     },
@@ -15936,6 +15943,159 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues"
+      ]
+    },
+    {
+      "key": "route:/admin/policies/[id]",
+      "title": "Business policy record",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Permission-filtered Settings hub and Business policies, with native independent review/publication and read-only seeded families.",
+      "path": "/admin/policies/[id]",
+      "source_paths": [
+        "src/app/(business)/admin/policies/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-admin-policies-id",
+      "design_path": "docs/design/development/pages/route-admin-policies-id.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-01-Desktop-Overview-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-06-Desktop-Publish-Version-2-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-08-Desktop-Record-References-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-09-Tablet-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-10-Phone-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-11-Phone-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-12-Phone-320-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/settings-hub-figma-design.md",
+        "src/admin/settings.ts",
+        "src/admin/policies.ts",
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "scope_status": "Implementation in progress; AD-02",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see settings-hub evidence",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies"
+      ]
+    },
+    {
+      "key": "route:/admin/policies",
+      "title": "Business policies",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Permission-filtered Settings hub and Business policies, with native independent review/publication and read-only seeded families.",
+      "path": "/admin/policies",
+      "source_paths": [
+        "src/app/(business)/admin/policies/page.tsx"
+      ],
+      "guide_key": "guide.route-admin-policies",
+      "design_path": "docs/design/development/pages/route-admin-policies.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-01-Desktop-Overview-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-06-Desktop-Publish-Version-2-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-08-Desktop-Record-References-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-09-Tablet-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-10-Phone-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-11-Phone-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-12-Phone-320-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/settings-hub-figma-design.md",
+        "src/admin/settings.ts",
+        "src/admin/policies.ts",
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "scope_status": "Implementation in progress; AD-02",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see settings-hub evidence",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies/[id]"
+      ]
+    },
+    {
+      "key": "route:/admin/settings",
+      "title": "Settings hub",
+      "kind": "route",
+      "module": "AD",
+      "summary": "Permission-filtered Settings hub and Business policies, with native independent review/publication and read-only seeded families.",
+      "path": "/admin/settings",
+      "source_paths": [
+        "src/app/(business)/admin/settings/page.tsx"
+      ],
+      "guide_key": "guide.route-admin-settings",
+      "design_path": "docs/design/development/pages/route-admin-settings.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-01-Desktop-Overview-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-06-Desktop-Publish-Version-2-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-08-Desktop-Record-References-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-09-Tablet-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-10-Phone-Overview-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-11-Phone-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-12-Phone-320-Policy-r01.png",
+        "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/settings-hub-figma-design.md",
+        "src/admin/settings.ts",
+        "src/admin/policies.ts",
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "scope_status": "Implementation in progress; AD-02",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see settings-hub evidence",
+      "deployment_status": "Not deployed by this change",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:AD-02",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
       ]
     }
   ]
