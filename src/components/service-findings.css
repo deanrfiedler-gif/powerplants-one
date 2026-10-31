@@ -101,7 +101,6 @@
   grid-template-columns: minmax(280px, 44%) minmax(320px, 56%);
   grid-template-rows: auto auto auto 1fr auto;
   overflow: auto;
-  box-shadow: -8px 0 24px #0001;
   outline: none;
 }
 #ppo-findings .sv07-snapshot-nav {
@@ -266,9 +265,9 @@
     font-size: 11px;
   }
   #ppo-findings .sv07-phone-row {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
     width: 100%;
     padding: 16px;
     text-align: left;
@@ -283,6 +282,24 @@
   }
   #ppo-findings .sv07-phone-row small {
     color: var(--muted);
+    grid-column: 1 / -1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-findings .sv07-phone-due {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  #ppo-findings .sv07-phone-row > span:last-child {
+    grid-column: 1 / -1;
+    font-size: 12px;
+  }
+  #ppo-findings .sv07-phone-row .ppo-register-chip {
+    background: transparent;
+    padding: 0;
+    min-height: 0;
   }
   #ppo-findings .sv07-snapshot {
     position: absolute;

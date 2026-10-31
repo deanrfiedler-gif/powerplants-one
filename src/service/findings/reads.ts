@@ -54,6 +54,7 @@ export async function readFindings(p: Principal, input: unknown = {}) {
     for (const { row, source } of permitted) {
       try {
         row.recurrence = await recurrenceFor(c, p, row);
+        partial ||= row.recurrence.partial;
         await authorise(c, p, source);
         rows.push(row);
       } catch (e) {

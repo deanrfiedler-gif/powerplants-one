@@ -75,6 +75,8 @@ function RecordMore({ items, narrow, conversations }: { items: PhoneHeaderAction
 // The menu button and the title come first in the row; the page action, Conversations and Filter follow.
 export function PhoneHeaderLead({ model, unread, menuOpen }: { model: PhoneHeaderModel; unread: boolean; menuOpen: boolean }) {
   if (model.type === "record") {
+    const close = model.config?.record?.back;
+    if (close) return <button type="button" className="ppo-top-action ppo-phone-lead ppo-phone-back" aria-label={close.label} title={close.label} onClick={event => close.onSelect(event.currentTarget)}><ShellIcon name="chevron-left" /></button>;
     const back = model.back ?? { label: "Back" };
     const icon = <ShellIcon name="chevron-left" />;
     return back.href ? (

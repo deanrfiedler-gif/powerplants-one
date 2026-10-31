@@ -13,7 +13,9 @@
       "dependencies": [
         "src/components/service-findings.tsx",
         "src/components/service-findings-action.tsx",
-        "src/components/service-findings.css"
+        "src/components/service-findings.css",
+        "src/components/shell-phone-header.tsx",
+        "src/shell/phone-header.ts"
       ],
       "used_on": [
         "scope:SV-07",
@@ -23,8 +25,8 @@
         {
           "id": "application-shell-sv07-review",
           "expected": "Paired review against accepted SV-07 frames at all four widths.",
-          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
-          "action": "Inspect paired captures and retain differences.",
+          "actual": "Four-width application comparison inspected by Codex; differences retained in the page contract and execution ledger. Owner visual acceptance is unrecorded.",
+          "action": "Review the declared differences and capture final owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -51,8 +53,8 @@
         {
           "id": "register-table-sv07-review",
           "expected": "Paired review against accepted SV-07 frames at all four widths.",
-          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
-          "action": "Inspect paired captures and retain differences.",
+          "actual": "Four-width application comparison inspected by Codex; differences retained in the page contract and execution ledger. Owner visual acceptance is unrecorded.",
+          "action": "Review the declared differences and capture final owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -79,8 +81,8 @@
         {
           "id": "buttons-sv07-review",
           "expected": "Paired review against accepted SV-07 frames at all four widths.",
-          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
-          "action": "Inspect paired captures and retain differences.",
+          "actual": "Four-width application comparison inspected by Codex; differences retained in the page contract and execution ledger. Owner visual acceptance is unrecorded.",
+          "action": "Review the declared differences and capture final owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -107,8 +109,8 @@
         {
           "id": "read-state-sv07-review",
           "expected": "Paired review against accepted SV-07 frames at all four widths.",
-          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
-          "action": "Inspect paired captures and retain differences.",
+          "actual": "Four-width application comparison inspected by Codex; differences retained in the page contract and execution ledger. Owner visual acceptance is unrecorded.",
+          "action": "Review the declared differences and capture final owner/device acceptance separately.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { usePublishPageDescription } from "../shell/page-description";
 import { RecordIdentity } from "../shell/record-identity";
-import { usePhoneHeader } from "../shell/phone-header";
 import { Button, ButtonLink } from "./ui/button";
 import {
   RegisterTable,
@@ -64,9 +63,14 @@ function State({ row }: { row: Finding }) {
     </RegisterChip>
   );
 }
-function Due({ row }: { row: Finding }) {
+function Due({ row, compact = false }: { row: Finding; compact?: boolean }) {
   return row.action?.due_at ? (
-    <Stamp scheduled value={row.action.due_at} timezone={row.site.timezone} />
+    <Stamp
+      scheduled
+      dateOnly={compact}
+      value={row.action.due_at}
+      timezone={row.site.timezone}
+    />
   ) : (
     <>None</>
   );
@@ -143,7 +147,39 @@ export function FindingsScreen() {
       state={menu}
       attributes={{ "data-ppo-workspace": "shared" }}
       message="Synthetic findings. Source records control closure."
-      phoneHeader={{ title: "Findings", count: data?.total }}
+      phoneHeader={{
+        title: "Findings",
+        count: data?.total,
+        record:
+          selected && available
+            ? {
+                back: { label: "Back to findings", onSelect: close },
+                position: rows.some((row) => row.id === selected)
+                  ? `${rows.findIndex((row) => row.id === selected) + 1} of ${rows.length}`
+                  : undefined,
+                previous: {
+                  label: "Previous finding",
+                  disabled: rows.findIndex((row) => row.id === selected) <= 0,
+                  onSelect: () =>
+                    inspect(
+                      rows[rows.findIndex((row) => row.id === selected) - 1].id,
+                    ),
+                },
+                next: {
+                  label: "Next finding",
+                  disabled:
+                    rows.findIndex((row) => row.id === selected) < 0 ||
+                    rows.findIndex((row) => row.id === selected) >=
+                      rows.length - 1,
+                  onSelect: () =>
+                    inspect(
+                      rows[rows.findIndex((row) => row.id === selected) + 1].id,
+                    ),
+                },
+                more: [{ label: "Back to findings", onSelect: close }],
+              }
+            : undefined,
+      }}
       menu={
         <nav aria-label="Service review views">
           <ul className="sv07-review-links">
@@ -219,7 +255,7 @@ export function FindingsScreen() {
             </>
           )}
           {data?.completeness === "Partial" &&
-            " · Partial read; some permissions changed"}
+            " · Partial source or recurrence read"}
         </p>
         {view === "follow_up_completed" && (
           <p className="sv07-notice">
@@ -283,7 +319,10 @@ export function FindingsScreen() {
                           {row.source_record.reference}
                         </button>
                       </td>
-                      <td className="ppo-register-wrap">{row.what_remains}</td>
+                      <td className="ppo-register-wrap">
+                        {!!row.recurrence?.earlier.length && "Recurring · "}
+                        {row.what_remains}
+                      </td>
                       <td>
                         <State row={row} />
                       </td>
@@ -315,8 +354,8 @@ export function FindingsScreen() {
                   onClick={() => inspect(row.id)}
                 >
                   <strong>{row.what_remains}</strong>
-                  <span>
-                    <Due row={row} />
+                  <span className="sv07-phone-due">
+                    <Due row={row} compact />
                   </span>
                   <small>
                     {row.source_record.reference} ·{" "}
@@ -327,6 +366,7 @@ export function FindingsScreen() {
                     {row.state === "NeedsOwner"
                       ? "Unassigned"
                       : (row.action?.owner_name ?? "Unassigned")}
+                    {!!row.recurrence?.earlier.length && " · Recurring"}
                   </span>
                 </button>
               ))}
@@ -407,27 +447,6 @@ function FindingSnapshot({
   useEffect(() => {
     panel.current?.focus();
   }, []);
-  usePhoneHeader(
-    row
-      ? {
-          title: row.what_remains,
-          record: {
-            position: ids.includes(id) ? `${ids.indexOf(id) + 1} of ${ids.length}` : undefined,
-            previous: {
-              label: "Previous finding",
-              disabled: ids.indexOf(id) <= 0,
-              onSelect: () => onSelect(ids[ids.indexOf(id) - 1]),
-            },
-            next: {
-              label: "Next finding",
-              disabled: ids.indexOf(id) < 0 || ids.indexOf(id) >= ids.length - 1,
-              onSelect: () => onSelect(ids[ids.indexOf(id) + 1]),
-            },
-            more: [{ label: "Back to findings", onSelect: onClose }],
-          },
-        }
-      : null,
-  );
   const index = ids.indexOf(id),
     recurrence = r.data?.item.recurrence;
   const saved = () => {
@@ -521,7 +540,10 @@ function FindingSnapshot({
                 { id: "action", label: "Next action" },
                 {
                   id: "recurrence",
-                  label: recurrence?.basis === "FailedCheck" ? `Recurrence · ${recurrence.earlier.length}` : "Recurrence",
+                  label:
+                    recurrence?.basis === "FailedCheck"
+                      ? `Recurrence · ${recurrence.earlier.length}`
+                      : "Recurrence",
                 },
                 { id: "history", label: "History" },
               ]}
@@ -580,9 +602,14 @@ function FindingSnapshot({
             <RecordPanel id="finding-tabs" tab="history" value={tab}>
               <FindingHistory history={history} timezone={row.site.timezone} />
             </RecordPanel>
-            <div className="sv07-history-below">
-              <FindingHistory history={history} timezone={row.site.timezone} />
-            </div>
+            {tab !== "history" && (
+              <div className="sv07-history-below">
+                <FindingHistory
+                  history={history}
+                  timezone={row.site.timezone}
+                />
+              </div>
+            )}
           </div>
           <footer className="sv07-detail-actions">
             <ButtonLink variant="secondary" href={row.source_record.href}>
@@ -596,7 +623,9 @@ function FindingSnapshot({
                     : "visit"}
             </ButtonLink>
             {row.action && (
-              <ButtonLink href={row.action.href}>Open follow-up</ButtonLink>
+              <ButtonLink variant="primary" href={row.action.href}>
+                Open follow-up
+              </ButtonLink>
             )}
           </footer>
         </>
