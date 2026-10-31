@@ -295,7 +295,7 @@
 #ppo-deals .crm-cell-activity.state-Unavailable {
   color: var(--muted);
 }
-.crm-column-settings + .crm-r38-popover {
+.crm-column-settings + .crm-r38-popover > p {
   white-space: normal;
 }
 .crm-column-option {
