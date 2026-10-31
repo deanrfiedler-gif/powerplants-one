@@ -1,0 +1,493 @@
+#ppo-cost-sources {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--surface-white);
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+}
+#ppo-cost-sources .mw-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+}
+#ppo-cost-sources .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#ppo-cost-sources .cs-workspace {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+}
+#ppo-cost-sources .cs-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#ppo-cost-sources .cs-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+#ppo-cost-sources .cs-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  vertical-align: middle;
+}
+#ppo-cost-sources .cs-search {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 10px;
+  height: 40px;
+  width: 250px;
+  min-width: 140px;
+}
+#ppo-cost-sources .cs-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+}
+#ppo-cost-sources .cs-count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+#ppo-cost-sources .cs-menu-note {
+  margin: 20px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-cost-sources .cs-results {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+#ppo-cost-sources .cs-grid {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+}
+#ppo-cost-sources .ppo-register-table {
+  table-layout: fixed;
+  width: max-content;
+  min-width: 100%;
+}
+#ppo-cost-sources .ppo-register-table :is(th, td) {
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--surface-white);
+}
+#ppo-cost-sources .ppo-register-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-weight: 400;
+}
+#ppo-cost-sources .ppo-register-table .cs-fixed-select {
+  position: sticky;
+  left: 0;
+  width: 44px;
+  min-width: 44px;
+  z-index: 3;
+  padding: 0 12px;
+}
+#ppo-cost-sources .ppo-register-table .cs-fixed-actions {
+  position: sticky;
+  right: 0;
+  width: 44px;
+  min-width: 44px;
+  z-index: 3;
+  padding: 0 4px;
+  border-left: 1px solid var(--line);
+}
+#ppo-cost-sources
+  .ppo-register-table
+  th:is(.cs-fixed-select, .cs-fixed-actions) {
+  z-index: 4;
+}
+#ppo-cost-sources .ppo-register-table tr:hover td {
+  background: var(--surface);
+}
+#ppo-cost-sources .ppo-register-table tr[data-selected] td {
+  background: var(--selected);
+}
+#ppo-cost-sources .cs-row-link {
+  color: var(--link);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+#ppo-cost-sources .cs-row-link small {
+  color: var(--muted);
+}
+#ppo-cost-sources .cs-tier {
+  display: flex;
+  flex-direction: column;
+  line-height: 16px;
+}
+#ppo-cost-sources .cs-tier small {
+  font-size: 11px;
+  color: var(--muted);
+}
+#ppo-cost-sources .cs-warning {
+  color: var(--warning);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+#ppo-cost-sources .cs-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+#ppo-cost-sources .cs-notice {
+  padding: 16px 24px;
+}
+#ppo-cost-sources .cs-phone {
+  display: none;
+}
+#ppo-cost-sources .cs-selection {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 360px;
+  max-width: 100%;
+  background: var(--surface-white);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+#ppo-cost-sources .cs-selection > :is(header, footer) {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-cost-sources .cs-selection > div {
+  padding: 20px;
+  overflow: auto;
+  flex: 1;
+}
+#ppo-cost-sources .cs-selection article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-cost-sources .cs-selection footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+}
+#ppo-cost-sources .cs-small {
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-cost-sources .cs-rule {
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 12px;
+}
+#ppo-cost-sources .cs-snapshot {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(320px, 46%) minmax(0, 1fr);
+  background: var(--surface-white);
+  box-shadow: var(--shadow);
+  outline-offset: -3px;
+}
+#ppo-cost-sources .cs-snapshot-controls {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-white);
+  border: 1px solid var(--line);
+  width: 44px;
+}
+#ppo-cost-sources .cs-up {
+  transform: rotate(180deg);
+}
+#ppo-cost-sources .cs-snapshot-record {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--line);
+}
+#ppo-cost-sources .cs-snapshot-scroll {
+  overflow: auto;
+  padding: 20px 24px;
+  min-height: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+#ppo-cost-sources .cs-snapshot h2 {
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0 0 8px;
+}
+#ppo-cost-sources .cs-snapshot h3 {
+  font-size: 14px;
+  margin: 20px 0 12px;
+}
+#ppo-cost-sources .cs-status-line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#ppo-cost-sources .cs-fact {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+#ppo-cost-sources .cs-fact small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+#ppo-cost-sources .cs-tiers {
+  width: 100%;
+  border-collapse: collapse;
+}
+#ppo-cost-sources .cs-tiers :is(th, td) {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-cost-sources .cs-snapshot-footer {
+  min-height: 64px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-cost-sources .cs-snapshot-activity {
+  overflow: auto;
+  min-height: 0;
+}
+#ppo-cost-sources .cs-evidence-tabs > [role="tabpanel"] {
+  padding: 20px 24px;
+  overflow-wrap: anywhere;
+}
+#ppo-cost-sources .cs-history {
+  border-top: 1px solid var(--line);
+  padding: 20px 24px;
+}
+#ppo-cost-sources .cs-history ol {
+  padding-left: 18px;
+}
+#ppo-cost-sources .cs-history li {
+  margin: 16px 0;
+}
+#ppo-cost-sources .cs-history p {
+  margin: 4px 0;
+}
+#ppo-cost-sources .cs-changes pre {
+  white-space: pre-wrap;
+  font: inherit;
+  margin: 4px 0;
+}
+#ppo-cost-sources .cs-changes dd {
+  margin: 8px 0;
+}
+#ppo-cost-sources .cs-identities dd {
+  margin: 4px 0 12px;
+  overflow-wrap: anywhere;
+}
+.cs-filter-form {
+  display: grid;
+  gap: 16px;
+}
+.cs-filter-form label {
+  display: grid;
+  gap: 6px;
+}
+@media (max-width: 1199px) {
+  #ppo-cost-sources .cs-toolbar {
+    flex-wrap: wrap;
+  }
+  #ppo-cost-sources .cs-snapshot-controls {
+    right: 0;
+    top: 0;
+    flex-direction: row;
+    width: auto;
+    z-index: 8;
+  }
+  #ppo-cost-sources .cs-snapshot-scroll {
+    padding-top: 48px;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-cost-sources .cs-desktop {
+    display: none;
+  }
+  #ppo-cost-sources .cs-phone {
+    display: flex;
+  }
+  #ppo-cost-sources .cs-toolbar {
+    min-height: 44px;
+    padding: 4px 12px;
+    gap: 6px;
+  }
+  #ppo-cost-sources .cs-toolbar > .cs-phone {
+    display: none;
+  }
+  #ppo-cost-sources .cs-count {
+    margin-left: 0;
+    flex: 1;
+  }
+  #ppo-cost-sources .cs-phone-list {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding-bottom: 88px;
+  }
+  #ppo-cost-sources .cs-phone-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    min-height: 96px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-cost-sources .cs-phone-row[data-selected] {
+    background: var(--surface);
+  }
+  #ppo-cost-sources .cs-phone-open {
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+    border: 0;
+    background: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+  }
+  #ppo-cost-sources .cs-phone-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  #ppo-cost-sources .cs-phone-title strong {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+  #ppo-cost-sources .cs-phone-title > span {
+    white-space: nowrap;
+  }
+  #ppo-cost-sources .cs-phone-open > small {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #ppo-cost-sources .cs-phone-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+  #ppo-cost-sources .cs-snapshot {
+    display: block;
+    overflow: auto;
+    padding-bottom: 80px;
+  }
+  #ppo-cost-sources .cs-snapshot-record {
+    display: block;
+    border: 0;
+  }
+  #ppo-cost-sources .cs-snapshot-scroll {
+    overflow: visible;
+    padding: 48px 16px 16px;
+  }
+  #ppo-cost-sources .cs-snapshot-activity {
+    overflow: visible;
+  }
+  #ppo-cost-sources .cs-snapshot-footer {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface-white);
+    z-index: 7;
+    padding: 12px 16px;
+  }
+  #ppo-cost-sources .cs-selection {
+    width: 100%;
+    top: 60px;
+  }
+  #ppo-cost-sources .cs-evidence-tabs > [role="tabpanel"],
+  #ppo-cost-sources .cs-history {
+    padding: 16px;
+  }
+}
+
+#ppo-cost-sources .mw-menu ul { list-style:none; padding:0; margin:0; }
+#ppo-cost-sources .mw-menu li a { display:flex; align-items:center; text-decoration:none; }
+#ppo-cost-sources .mw-menu li a > span:nth-child(2) { flex:1; white-space:nowrap; }
+#ppo-cost-sources .ppo-register-table .cs-fixed-actions button { min-height:32px; height:32px; width:32px; padding:4px; }
+#ppo-cost-sources .ppo-register-table :is(th,td) { padding-top:0; padding-bottom:0; height:40px; }
+#ppo-cost-sources .ppo-register-table input[type=checkbox] { margin:0; }
+@media (max-width:780px) {
+ #ppo-cost-sources button.cs-phone-open { display:block; min-height:0; width:100%; text-align:left; }
+ #ppo-cost-sources .ppo-register-foot { flex-wrap:wrap; gap:8px; padding:8px 12px; }
+ #ppo-cost-sources .ppo-register-foot > small { flex-basis:100%; }
+ #ppo-cost-sources .ppo-register-foot > span { flex-basis:100%; }
+}
+
+@media (max-width:780px) { #ppo-cost-sources .cs-snapshot-footer { position:fixed; left:0; right:0; bottom:64px; } }
+
+@media (min-width:781px) and (max-width:1199px) { #ppo-cost-sources .cs-snapshot-activity { padding-top:48px; } }
+
+#ppo-cost-sources .ppo-register-label { height:auto; min-height:0; padding:0; }
+#ppo-cost-sources button.cs-row-link { min-height:0; height:auto; }
+#ppo-cost-sources .cs-fixed-select input[type=checkbox] { width:16px; height:16px; min-height:16px; min-width:16px; }
+#ppo-cost-sources .ppo-register-table tr[data-selected] td { background:var(--ppo-shell-selected); }
+#ppo-cost-sources .cs-selection h2 { font-size:14px; line-height:20px; margin:0; }
+#ppo-cost-sources .cs-selection h3 { font-size:11px; line-height:16px; text-transform:uppercase; letter-spacing:.66px; color:var(--muted); }
+#ppo-cost-sources .cs-selection article { border:1px solid var(--line); border-radius:6px; padding:12px; margin-bottom:14px; }

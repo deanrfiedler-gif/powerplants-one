@@ -180,6 +180,18 @@ export async function listCostSourceRegister(
       )
     ).rows[0];
     const snapshot = await registerSnapshot(c, p, f, clock.validity_date);
+    const createCompanies = async () =>
+      (
+        await c.query<{ id: string; display_name: string }>(
+          `SELECT c.id,c.display_name FROM ppo.companies c WHERE c.workspace_id=$1
+        AND ${scopeSql("c.id", "NULL::uuid", "estimating.read")}
+        AND ${scopeSql("c.id", "NULL::uuid", "shared.read")}
+        AND ${scopeSql("c.id", "NULL::uuid", "estimating.edit")}
+        ORDER BY c.display_name,c.id`,
+          [p.workspace_id, p.actor_id],
+        )
+      ).rows;
+    const companies = await createCompanies();
     const items = [];
     for (const row of snapshot.candidates.slice(0, f.limit)) {
       const source = await sourceContext(c, p, row.id);
@@ -235,8 +247,11 @@ export async function listCostSourceRegister(
     await requireCapability(c, p, "estimating.read");
     await requireCapability(c, p, "shared.read");
     if (canonical(current) !== canonical(snapshot)) throw changed();
+    if (canonical(await createCompanies()) !== canonical(companies))
+      throw changed();
     return {
       items,
+      companies,
       counts: current.counts,
       matching_count: current.matching_count,
       counts_scope: "AllAuthorisedSearchMatches",

@@ -134,9 +134,10 @@ export async function readCostSource(
         version: number;
         display_number: string;
         line_id: string;
+        source_revision_id: string;
         is_current: boolean;
       }>(
-        `SELECT e.id AS estimate_id,v.id AS estimate_version_id,v.version,e.display_number,b.line_id,v.id=e.current_version_id AS is_current
+        `SELECT e.id AS estimate_id,v.id AS estimate_version_id,v.version,e.display_number,b.line_id,b.source_revision_id,v.id=e.current_version_id AS is_current
       FROM ppo.estimate_cost_source_bindings b JOIN ppo.cost_source_revisions r ON (r.workspace_id,r.id)=(b.workspace_id,b.source_revision_id)
       JOIN ppo.estimate_versions v ON (v.workspace_id,v.id)=(b.workspace_id,b.estimate_version_id) JOIN ppo.estimates e ON (e.workspace_id,e.id)=(v.workspace_id,v.estimate_id)
       WHERE b.workspace_id=$1 AND r.source_id=$2 ORDER BY v.created_at DESC,b.line_id LIMIT 100`,
@@ -175,11 +176,15 @@ export async function readCostSource(
       history,
       affected,
       affected_limit: 100,
+      // A bounded source-wide candidate window is not an exhaustive usage count.
+      affected_complete: candidates.length < 100,
+      affected_scope: "SourceCandidateWindow" as const,
       can_revise: current && edit && source.state !== "Submitted",
       can_submit: current && edit && source.state === "Draft",
       can_review:
         current &&
         !own &&
+        revision.created_by !== p.actor_id &&
         source.state === "Submitted" &&
         (await hasPermission(
           c,

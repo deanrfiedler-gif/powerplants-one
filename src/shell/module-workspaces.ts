@@ -19,6 +19,7 @@ export const moduleWorkspaces = [
   { route: "/equipment/lifecycle", moduleId: "EQ-07", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq07-native-r01" },
   { route: "/equipment/lookup", moduleId: "EQ-02", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq02-native-r01" },
   { route: "/estimating/configurations", scope: "ppo-specialist", layout: "full-bleed", navigation: "workspace", baseline: "es08-native-r01" },
+  { route: "/estimating/cost-sources", moduleId: "ES-03", scope: "ppo-cost-sources", layout: "full-bleed", navigation: "workspace", baseline: "es03-cost-sources-register" },
   {route:"/estimating/cpq",moduleId:"ES-02",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-configure-implementation"},
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
   { route: "/estimating/discovery/[id]/costing", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-costing-figma" },

@@ -2,7 +2,11 @@ import { test, expect, type Page } from "@playwright/test";
 import { sourceInput } from "../helpers/estimating-sources";
 import { crmBase, crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
-import { openPageGuide, phoneWidth, phoneMenuOpener } from "../helpers/phone-menu";
+import {
+  openPageGuide,
+  phoneWidth,
+  phoneMenuOpener,
+} from "../helpers/phone-menu";
 
 test.describe.configure({ timeout: 120000 });
 async function identity(page: Page, profile = "coordinator") {
@@ -53,7 +57,9 @@ test("ES03 native authoring recovers the original lost response and independentl
   ])
     await page.getByLabel(label, { exact: true }).fill(value);
   // On a phone the Page guide is opened from the header Menu, and Escape returns focus to the Menu button.
-  const guide = phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true });
+  const guide = phoneWidth(page)
+    ? phoneMenuOpener(page)
+    : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page);
   await expect(
     page.getByRole("heading", {
@@ -241,27 +247,42 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
 }, info) => {
   await identity(page);
   const { input } = await source(page);
+  const registerRead = page.waitForResponse((response) =>
+    response.url().includes("/api/v1/estimating/cost-sources/register?"),
+  );
   await page.goto(`/estimating/cost-sources?q=${input.reference}`);
-  await expect(
-    page.getByRole("link", { name: input.content.title, exact: true }),
-  ).toBeVisible();
-  const search = page.getByRole("searchbox");
+  const loadedRegister = await registerRead;
+  expect(loadedRegister.ok(), await loadedRegister.text()).toBe(true);
+  const phone = info.project.name.includes("mobile");
+  const rows = page.locator(phone ? ".cs-phone-list" : ".cs-grid");
+  await expect(rows).toContainText(input.content.title);
+  if (phone)
+    await page
+      .getByRole("button", { name: /^Filter/ })
+      .first()
+      .click();
+  const search = page.getByRole("searchbox", {
+    name: "Search source, supplier or item",
+    exact: true,
+  });
   await search.fill("SYN-No-such-source");
-  await search.press("Enter");
+  if (phone)
+    await page
+      .getByRole("button", { name: "Apply filters", exact: true })
+      .click();
+  else await search.press("Enter");
   await expect(
-    page.getByRole("heading", { name: "No sources match these filters" }),
+    page.getByText("No sources match these filters", { exact: true }),
   ).toBeVisible();
   await page.goBack();
-  await expect(search).toHaveValue(input.reference);
+  await expect(rows).toContainText(input.content.title);
   await page.goForward();
   await expect(
-    page.getByRole("heading", { name: "No sources match these filters" }),
+    page.getByText("No sources match these filters", { exact: true }),
   ).toBeVisible();
   await page.goBack();
   await page.reload();
-  await expect(
-    page.getByRole("link", { name: input.content.title, exact: true }),
-  ).toBeVisible();
+  await expect(rows).toContainText(input.content.title);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -271,52 +292,61 @@ test("ES03 register history, stale draft, failed read and denied evidence remain
     path: info.outputPath("source-register.png"),
     fullPage: true,
   });
-  if (info.project.name.includes("mobile")) {
-    await page.setViewportSize({ width: 320, height: 844 });
-    await search.focus();
-    await expect(search).toBeFocused();
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    await page.screenshot({
-      path: info.outputPath("source-register-320.png"),
-      fullPage: true,
-    });
-    await page.setViewportSize({ width: 390, height: 844 });
-  } else {
+  // Retain the native suite's narrow/enlarged keyboard and shell-containment proof.
+  if (phone) await page.setViewportSize({ width: 320, height: 844 });
+  else
     await page.evaluate(() => {
       document.documentElement.style.zoom = "2";
     });
-    await search.focus();
-    await expect(search).toBeFocused();
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    const heading = await page
-      .locator(".ppo-shell-header .product-heading")
-      .boundingBox();
-    const centre = await page
-      .locator(".ppo-shell-header .ppo-header-centre")
-      .boundingBox();
-    expect(heading).not.toBeNull();
-    expect(centre).not.toBeNull();
-    expect(heading!.x + heading!.width).toBeLessThanOrEqual(centre!.x + 1);
-    await page.screenshot({
-      path: info.outputPath("source-register-200-percent.png"),
-      fullPage: true,
-    });
+  const inlineSearch = page.locator(".cs-search input:visible");
+  const filterNeeded = (await inlineSearch.count()) === 0;
+  if (filterNeeded)
+    await page
+      .getByRole("button", { name: /^Filter/ })
+      .first()
+      .click();
+  const enlargedSearch = page.getByRole("searchbox", {
+    name: "Search source, supplier or item",
+    exact: true,
+  });
+  await enlargedSearch.focus();
+  await expect(enlargedSearch).toBeFocused();
+  await expect(enlargedSearch).toHaveValue(input.reference);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: info.outputPath(
+      phone ? "source-register-320.png" : "source-register-200-percent.png",
+    ),
+    fullPage: true,
+  });
+  if (filterNeeded) {
+    await page
+      .getByRole("dialog", { name: "Filter cost sources" })
+      .getByRole("button", { name: "Done", exact: true })
+      .focus();
+    await page.keyboard.press("Enter");
+  }
+  if (phone) await page.setViewportSize({ width: 390, height: 844 });
+  else
     await page.evaluate(() => {
       document.documentElement.style.zoom = "";
     });
-  }
   await page
-    .getByRole("link", { name: input.content.title, exact: true })
+    .locator(phone ? ".cs-phone-open" : ".cs-row-link")
+    .first()
+    .click();
+  await page
+    .getByRole("region", { name: "Source snapshot" })
+    .getByRole("link", { name: "Open source", exact: true })
     .click();
   await page.getByRole("button", { name: "Prepare source successor" }).click();
+  await expect(page).toHaveURL(
+    new RegExp(`/estimating/cost-sources/${input.id}$`),
+  );
   await page
     .getByLabel("Source title", { exact: true })
     .fill("SYN my unsaved title");

@@ -251,6 +251,12 @@ test("ES03 explicit successor retains original estimate and quote bytes, carries
   );
   const saved = await readEstimate(p, estimate.id);
   assert.equal(saved.version, 2);
+  const usage = await readCostSource(p, input.id, { revision_id: d.revision.id });
+  assert.equal(usage.affected[0].source_revision_id, d.revision.id);
+  assert.equal(usage.affected[0].estimate_version_id, saved.saved.id);
+  assert.equal(usage.affected_scope, "SourceCandidateWindow");
+  assert.equal(usage.affected_complete, true);
+
   assert.equal(
     saved.saved.source_bindings?.[0].source_revision_id,
     d.revision.id,

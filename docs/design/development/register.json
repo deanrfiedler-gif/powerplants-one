@@ -11768,6 +11768,11 @@
         "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
+          "src/components/cost-source-register.tsx",
+          "src/components/cost-source-register.css",
+          "src/components/cost-source-snapshot.tsx",
+          "src/estimating/cost-source-register-model.ts",
+
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/components/cost-sources-guide.ts",
