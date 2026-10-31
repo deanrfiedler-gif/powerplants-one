@@ -317,6 +317,142 @@ async function writeScope(
     ],
   );
 }
+export type CreateWorkOrderCommand = {
+  id: string;
+  company_id: string;
+  site_id: string;
+  customer_id: string;
+  service_owner_id: string;
+  project_reference: string | null;
+  project_id?: string;
+  opportunity_reference: string | null;
+  tickets: { ticket_id: string; issue_disposition: string }[];
+};
+// The create command's authority checks. Composed commands (maintenance Prepare, M-R2) call this
+// inside their own operation so a work order is never created under weaker rules.
+export async function authoriseCreateWorkOrder(
+  c: QueryClient,
+  p: Principal,
+  cmd: CreateWorkOrderCommand,
+) {
+  await requireCapability(c, p, "service.work_order.edit");
+  await companyContext(
+    c,
+    p,
+    cmd.company_id,
+    cmd.site_id,
+    "service.work_order.edit",
+  );
+  if (
+    !(await hasPermission(
+      c,
+      p,
+      "service.work_order.read",
+      cmd.company_id,
+      cmd.site_id,
+    ))
+  )
+    throw unavailable();
+  const customer = await visible(c, p, "Organisation", cmd.customer_id);
+  if (customer.company_id !== cmd.company_id) throw unavailable();
+  if (
+    !(
+      await c.query(
+        "SELECT 1 FROM ppo.site_parties WHERE workspace_id=$1 AND site_id=$2 AND organisation_id=$3 AND valid_from<=clock_timestamp() AND (valid_to IS NULL OR valid_to>clock_timestamp())",
+        [p.workspace_id, cmd.site_id, cmd.customer_id],
+      )
+    ).rowCount
+  )
+    invalid(
+      "customer_id",
+      "Choose a customer with a current explicit relationship to this site.",
+    );
+  const owner = await scopedOwner(
+    c,
+    p,
+    cmd.service_owner_id,
+    cmd.company_id,
+    cmd.site_id,
+    "service.work_order.edit",
+  );
+  if (
+    !(await hasPermission(
+      c,
+      owner,
+      "service.work_order.read",
+      cmd.company_id,
+      cmd.site_id,
+    ))
+  )
+    throw unavailable();
+  for (const actor of [p, owner])
+    for (const t of cmd.tickets) {
+      const row = await visibleTicket(c, actor, t.ticket_id);
+      if (row.site_id !== cmd.site_id || row.company_id !== cmd.company_id)
+        throw unavailable();
+    }
+  if (cmd.project_id) await authoriseCreateLink(c, p, cmd.project_id, cmd);
+}
+export async function insertWorkOrder(
+  c: QueryClient,
+  p: Principal,
+  cmd: CreateWorkOrderCommand,
+): Promise<WorkOrder> {
+  if (cmd.project_id) await checkCreateLink(c, p, cmd.project_id);
+  const w = await insert(c, "work_orders", {
+    id: cmd.id,
+    workspace_id: p.workspace_id,
+    company_id: cmd.company_id,
+    site_id: cmd.site_id,
+    customer_id: cmd.customer_id,
+    service_owner_id: cmd.service_owner_id,
+    created_by: p.actor_id,
+    updated_by: p.actor_id,
+    project_reference: cmd.project_reference,
+    opportunity_reference: cmd.opportunity_reference,
+    // Omitted when unset, so a create still works against schemas before migration 0122.
+    ...(cmd.project_id ? { project_id: cmd.project_id } : {}),
+  });
+  for (const t of cmd.tickets)
+    await insert(c, "work_order_tickets", {
+      workspace_id: p.workspace_id,
+      company_id: w.company_id,
+      site_id: w.site_id,
+      work_order_id: w.id,
+      ...t,
+    });
+  return w;
+}
+// The first draft scope of a work order, as SaveScopeDraft writes it. A composed command calls it
+// after visibleWorkOrder(..., "service.work_order.edit") in the same transaction.
+export async function startDraftScope(
+  c: QueryClient,
+  p: Principal,
+  w: WorkOrder,
+  input: ScopeInput,
+) {
+  if (w.scope_revision_id)
+    invalid("scope", "This work order already has a scope revision.");
+  const readinessPolicy = await currentPolicy(c, p);
+  const r = await insert(c, "scope_revisions", {
+    ...meta(p, w),
+    work_order_id: w.id,
+    revision: 1,
+    predecessor_id: null,
+    change_reason: null,
+    policy_version_id: readinessPolicy.id,
+  });
+  await c.query(
+    "UPDATE ppo.work_orders SET scope_revision_id=$3 WHERE workspace_id=$1 AND id=$2",
+    [p.workspace_id, w.id, r.id],
+  );
+  await writeScope(c, p, w, r, input);
+  return bump(c, p, w, {
+    scope_revision_id: r.id,
+    revision: r.revision,
+    predecessor_id: null,
+  });
+}
 export async function createWorkOrder(p: Principal, input: unknown) {
   const r = object(input, [
     ...commonKeys,
@@ -369,90 +505,9 @@ export async function createWorkOrder(p: Principal, input: unknown) {
     p,
     cmd,
     "CreateWorkOrder",
+    (c) => authoriseCreateWorkOrder(c, p, cmd),
     async (c) => {
-      await requireCapability(c, p, "service.work_order.edit");
-      await companyContext(
-        c,
-        p,
-        cmd.company_id,
-        cmd.site_id,
-        "service.work_order.edit",
-      );
-      if (
-        !(await hasPermission(
-          c,
-          p,
-          "service.work_order.read",
-          cmd.company_id,
-          cmd.site_id,
-        ))
-      )
-        throw unavailable();
-      const customer = await visible(c, p, "Organisation", cmd.customer_id);
-      if (customer.company_id !== cmd.company_id) throw unavailable();
-      if (
-        !(
-          await c.query(
-            "SELECT 1 FROM ppo.site_parties WHERE workspace_id=$1 AND site_id=$2 AND organisation_id=$3 AND valid_from<=clock_timestamp() AND (valid_to IS NULL OR valid_to>clock_timestamp())",
-            [p.workspace_id, cmd.site_id, cmd.customer_id],
-          )
-        ).rowCount
-      )
-        invalid(
-          "customer_id",
-          "Choose a customer with a current explicit relationship to this site.",
-        );
-      const owner = await scopedOwner(
-        c,
-        p,
-        cmd.service_owner_id,
-        cmd.company_id,
-        cmd.site_id,
-        "service.work_order.edit",
-      );
-      if (
-        !(await hasPermission(
-          c,
-          owner,
-          "service.work_order.read",
-          cmd.company_id,
-          cmd.site_id,
-        ))
-      )
-        throw unavailable();
-      for (const actor of [p, owner])
-        for (const t of tickets) {
-          const row = await visibleTicket(c, actor, t.ticket_id);
-          if (row.site_id !== cmd.site_id || row.company_id !== cmd.company_id)
-            throw unavailable();
-        }
-      if (cmd.project_id)
-        await authoriseCreateLink(c, p, cmd.project_id, cmd);
-    },
-    async (c) => {
-      if (cmd.project_id) await checkCreateLink(c, p, cmd.project_id);
-      const w = await insert(c, "work_orders", {
-        id: cmd.id,
-        workspace_id: p.workspace_id,
-        company_id: cmd.company_id,
-        site_id: cmd.site_id,
-        customer_id: cmd.customer_id,
-        service_owner_id: cmd.service_owner_id,
-        created_by: p.actor_id,
-        updated_by: p.actor_id,
-        project_reference: cmd.project_reference,
-        opportunity_reference: cmd.opportunity_reference,
-        // Omitted when unset, so a create still works against schemas before migration 0122.
-        ...(cmd.project_id ? { project_id: cmd.project_id } : {}),
-      });
-      for (const t of tickets)
-        await insert(c, "work_order_tickets", {
-          workspace_id: p.workspace_id,
-          company_id: w.company_id,
-          site_id: w.site_id,
-          work_order_id: w.id,
-          ...t,
-        });
+      const w = await insertWorkOrder(c, p, cmd);
       // The audit keeps the original project so receipt recovery re-checks that project's
       // authority (#752 review R2). A create without a project records nothing new.
       return {
@@ -1209,10 +1264,26 @@ export async function readWorkOrder(p: Principal, id: string) {
   // B1: the linked project appears only to someone who may read it; its identity never leaks otherwise.
   const { project_id, ...order } = w as WorkOrder & { project_id?: string | null };
   const project = await workOrderProject(c, p, project_id);
+  // M-R2: the exact plan task wording this order receives, one entry per plan task (a repeated
+  // description appears once per task), so the page can warn before an edit that receiving would
+  // refuse. Text only: it repeats the order's own prepared scope.
+  const planned_tasks = (
+    await c.query(
+      "SELECT 1 FROM pg_attribute WHERE attrelid=to_regclass('ppo.maintenance_work_requests') AND attname='work_order_id' AND NOT attisdropped",
+    )
+  ).rowCount
+    ? (
+        await c.query<{ description: string }>(
+          "SELECT t->>'description' AS description FROM ppo.maintenance_work_requests q, jsonb_array_elements(q.content->'tasks') t WHERE q.workspace_id=$1 AND q.work_order_id=$2 ORDER BY 1",
+          [p.workspace_id, w.id],
+        )
+      ).rows.map((x) => x.description)
+    : [];
   return envelope([
     {
       ...order,
       project,
+      planned_tasks,
       site_name: site.display_name,
       site_timezone: site.timezone,
       customer_name: customer.display_name,

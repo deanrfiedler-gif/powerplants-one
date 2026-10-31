@@ -27,19 +27,28 @@ import { confirmed, content } from "./packs";
 import { startInput, entry, draft, photo } from "./field";
 import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
+import { completionRequirementEntries } from "../../src/maintenance/model";
 import { noPartsNeeded } from "./readiness-gate";
+import { mappingFromPairs, pairTasks } from "./task-pairing";
 export async function serviceResult(
   p: Principal,
   request_id: string,
   n = 49,
   outcome = "Complete",
+  // Optional per-task outcomes in request task order, for a Partial visit with some tasks Complete.
+  // Request tasks are paired once with scope items by exact description (tests/helpers/task-pairing.ts).
+  taskOutcomes?: string[],
+  // A second visit for the same crew starts later the same day, so the bookings do not overlap.
+  visitOffsetHours = 0,
 ) {
   const request = (
     await rows("SELECT * FROM ppo.maintenance_work_requests WHERE id=$1", [
       request_id,
     ])
   )[0];
-  const wid = randomUUID(),
+  // M-R2: a maintenance request arrives with its prepared Draft work order; warranty does not.
+  const prepared: string | null = request.work_order_id ?? null;
+  const wid = prepared ?? randomUUID(),
     appointment = `a8000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
   const intake = (
     await rows("SELECT * FROM ppo.tickets WHERE id=$1", [request.ticket_id])
@@ -63,20 +72,21 @@ export async function serviceResult(
     next_action: "Prepare exact authorised Service scope",
   });
   await triageTicket(p, request.ticket_id, { ...base(), expected_version: 2 });
-  await createWorkOrder(p, {
-    ...base(),
-    id: wid,
-    company_id: CRM.company,
-    site_id: CRM.site,
-    customer_id: CRM.org,
-    service_owner_id: CRM.owner,
-    tickets: [
-      {
-        ticket_id: request.ticket_id,
-        issue_disposition: "Receive exact owned Maintenance/Warranty request",
-      },
-    ],
-  });
+  if (!prepared)
+    await createWorkOrder(p, {
+      ...base(),
+      id: wid,
+      company_id: CRM.company,
+      site_id: CRM.site,
+      customer_id: CRM.org,
+      service_owner_id: CRM.owner,
+      tickets: [
+        {
+          ticket_id: request.ticket_id,
+          issue_disposition: "Receive exact owned Maintenance/Warranty request",
+        },
+      ],
+    });
   const evidence = {
     title: "SYN independent Service authority",
     content_text:
@@ -92,7 +102,7 @@ export async function serviceResult(
   ))[0];
   await saveWorkScope(p, wid, {
     ...base(),
-    expected_version: 1,
+    expected_version: (await readWorkOrder(p, wid)).items[0].version,
     scope: {
       summary: "SYN receive exact source request",
       exclusions: "No invasive intervention",
@@ -119,7 +129,7 @@ export async function serviceResult(
           task_kind: "Inspection",
           task_description: t.description,
           expected_outcome: t.expected_outcome,
-          completion_requirements: [t.completion_requirements],
+          completion_requirements: completionRequirementEntries(t.completion_requirements),
           required_skill_codes: ["SYN-VISUAL"],
           shutdown_condition: null,
           access_condition: null,
@@ -177,8 +187,8 @@ export async function serviceResult(
     id: appointment,
     scope_revision_id: s.id,
     scope_version: s.version,
-    start_at: nextWorkingVisit(),
-    end_at: new Date(Date.parse(nextWorkingVisit()) + 2 * 3600000).toISOString(),
+    start_at: new Date(Date.parse(nextWorkingVisit()) + visitOffsetHours * 3600000).toISOString(),
+    end_at: new Date(Date.parse(nextWorkingVisit()) + (visitOffsetHours + 2) * 3600000).toISOString(),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -277,7 +287,19 @@ export async function serviceResult(
       );
   }
   job = (await readFieldJob(technician, appointment)).items[0];
-  await saveCompletionDraft(technician, appointment, draft(job, outcome));
+  const completion = draft(job, outcome);
+  // Pair once against the field job's scope items; the same ids carry the outcomes and the mapping.
+  const pairs = pairTasks(
+    request.content.tasks,
+    job.scope.items as { id: string; description: string }[],
+  );
+  if (taskOutcomes)
+    completion.task_outcomes = pairs.map(({ index, scope_item_id }) => ({
+      scope_item_id,
+      outcome: taskOutcomes[index],
+      reason: "SYN explicit task outcome and remaining-work reason",
+    }));
+  await saveCompletionDraft(technician, appointment, completion);
   job = (await readFieldJob(technician, appointment)).items[0];
   const report_id = randomUUID();
   await submitCompletion(technician, appointment, {
@@ -300,11 +322,10 @@ export async function serviceResult(
     appointment,
     job,
     work_order_id: wid,
-    mapping: request.content.tasks.map((t: { id: string }, i: number) => ({
-      task_id: t.id,
-      scope_item_id: report.revisions[0].snapshot.tasks[i].id,
-      basis:
-        "Exact immutable request/task and reviewed Service scope comparison",
-    })),
+    mapping: mappingFromPairs(
+      pairs,
+      report.revisions[0].snapshot.tasks as { id: string; task_description: string }[],
+      "Exact immutable request/task and reviewed Service scope comparison",
+    ),
   };
 }

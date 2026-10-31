@@ -521,7 +521,7 @@ export const planFields = [
   f("task_set_reference", "Task template reference"),
   f("task_set_revision", "Task template revision"),
   f("interval", "Sourced interval", "select", {
-    options: ["Monthly", "Quarterly"],
+    options: ["Monthly", "Quarterly", "SixMonthly", "Yearly"],
   }),
   f("interval_source", "Interval source", "source"),
   f("anchor", "Original calendar anchor", "date"),

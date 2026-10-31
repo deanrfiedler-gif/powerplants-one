@@ -46,7 +46,8 @@ test("agreement to due maintenance to reviewed Service outcome preserves the ori
   const prepared = await prepareWork(a.p, "due", occurrence.id, prepare);
   const request = (await rows("SELECT * FROM ppo.maintenance_work_requests WHERE occurrence_id=$1", [occurrence.id]))[0];
   assert.equal((await rows("SELECT status FROM ppo.tickets WHERE id=$1", [request.ticket_id]))[0].status, "New");
-  assert.equal((await rows("SELECT * FROM ppo.work_order_tickets WHERE ticket_id=$1", [request.ticket_id])).length, 0);
+  // M-R2: the request arrives with exactly one prepared Draft work order.
+  assert.deepEqual((await rows("SELECT work_order_id FROM ppo.work_order_tickets WHERE ticket_id=$1", [request.ticket_id])).map((x) => x.work_order_id), [request.work_order_id]);
   const result = await serviceResult(a.p, request.id, 78);
   assert.equal(result.report.status, "Reviewed");
   const receive = {

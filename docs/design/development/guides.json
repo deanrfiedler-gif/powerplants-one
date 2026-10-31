@@ -16525,7 +16525,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "No interval is invented. Equipment changes require owned review. The original anchor and timezone remain stable within a plan."
           ],
           "steps": [],
@@ -16569,7 +16569,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "Prepare the exact source, dated evidence, owner and reason for each decision. Use integer minor units only where a financial amount is explicitly requested."
           ],
           "steps": [],
@@ -16738,7 +16738,7 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise."
           ],
           "rows": [],
           "headers": []
@@ -16771,8 +16771,8 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority.",
-            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open to receiving evidence."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise.",
+            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open: Prepare follow-on Service request raises the outstanding tasks with a current Covered entitlement, one follow-on at a time, and its completed result completes the occurrence."
           ],
           "rows": [],
           "headers": []
@@ -71841,7 +71841,7 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise."
           ],
           "rows": [],
           "headers": []
@@ -71874,8 +71874,8 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority.",
-            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open to receiving evidence."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise.",
+            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open: Prepare follow-on Service request raises the outstanding tasks with a current Covered entitlement, one follow-on at a time, and its completed result completes the occurrence."
           ],
           "rows": [],
           "headers": []
@@ -72019,7 +72019,7 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise."
           ],
           "rows": [],
           "headers": []
@@ -72052,8 +72052,8 @@
           "steps": [
             "Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.",
             "Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.",
-            "Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority.",
-            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open to receiving evidence."
+            "Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise.",
+            "Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open: Prepare follow-on Service request raises the outstanding tasks with a current Covered entitlement, one follow-on at a time, and its completed result completes the occurrence."
           ],
           "rows": [],
           "headers": []
@@ -72172,7 +72172,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "No interval is invented. Equipment changes require owned review. The original anchor and timezone remain stable within a plan."
           ],
           "steps": [],
@@ -72216,7 +72216,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "Prepare the exact source, dated evidence, owner and reason for each decision. Use integer minor units only where a financial amount is explicitly requested."
           ],
           "steps": [],
@@ -72350,7 +72350,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "No interval is invented. Equipment changes require owned review. The original anchor and timezone remain stable within a plan."
           ],
           "steps": [],
@@ -72394,7 +72394,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Maintain reviewed task revisions and sourced monthly or quarterly obligations.",
+            "Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations.",
             "Prepare the exact source, dated evidence, owner and reason for each decision. Use integer minor units only where a financial amount is explicitly requested."
           ],
           "steps": [],

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { PageHeader, ReadState, Status, Field, friendly } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
 import { RecordPanel, RecordTabs } from "./record-ui";
@@ -172,14 +172,25 @@ function ReceivingLinks({ sources }: { sources: Record<string, unknown> }) {
   const requests = (sources.requests ?? []) as {
     id: string;
     ticket_id: string;
+    follow_on_result_id?: string | null;
+    work_order?: { id: string; display_number: string } | null;
   }[];
   const claims = (sources.claims ?? []) as { id: string; reference: string }[];
   return (
     <div className="ma-context">
       {requests.map((r) => (
-        <ButtonLink key={r.id} href={`/service/tickets/${r.ticket_id}`}>
-          Open original Service request
-        </ButtonLink>
+        <Fragment key={r.id}>
+          <ButtonLink href={`/service/tickets/${r.ticket_id}`}>
+            {r.follow_on_result_id
+              ? "Open follow-on Service request"
+              : "Open original Service request"}
+          </ButtonLink>
+          {r.work_order && (
+            <ButtonLink href={`/service/work-orders/${r.work_order.id}`}>
+              Open work order {r.work_order.display_number}
+            </ButtonLink>
+          )}
+        </Fragment>
       ))}
       {claims.map((c) => (
         <ButtonLink key={c.id} href={`/warranty/supplier-recovery/${c.id}`}>

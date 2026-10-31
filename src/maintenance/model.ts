@@ -169,6 +169,17 @@ export function scopeIncludes(
     return false;
   return !s.asset_ids.length || (!!asset && s.asset_ids.includes(asset));
 }
+// PPO-MAINTENANCE-TS02-DEC M-R1: months between due dates from the plan's anchor. The generation
+// window stays 1–12 months, so a Yearly plan yields at most one or two dates per run.
+export const intervalMonths = {
+  Monthly: 1,
+  Quarterly: 3,
+  SixMonthly: 6,
+  Yearly: 12,
+} as const;
+export const planIntervals = Object.keys(
+  intervalMonths,
+) as readonly (keyof typeof intervalMonths)[];
 export function planFields(v: unknown) {
   const x = object(v, [
     "title",
@@ -236,7 +247,7 @@ export function planFields(v: unknown) {
     ),
     task_set_reference: label(x.task_set_reference, "task_set_reference", 200),
     task_set_revision: label(x.task_set_revision, "task_set_revision", 100),
-    interval: choice(x.interval, "interval", ["Monthly", "Quarterly"] as const),
+    interval: choice(x.interval, "interval", planIntervals),
     interval_source: sourceFields(x.interval_source),
     anchor: dateOnly(x.anchor, "anchor"),
     timezone,
@@ -269,7 +280,7 @@ export function occurrenceDates(
       "until",
       "Keep the preview inside the sourced bounded generation window.",
     );
-  const step = plan.interval === "Monthly" ? 1 : 3;
+  const step = intervalMonths[plan.interval];
   const months =
     (Number(from.slice(0, 4)) - Number(plan.anchor.slice(0, 4))) * 12 +
     Number(from.slice(5, 7)) -
@@ -344,4 +355,31 @@ export function assessmentFields(v: unknown) {
     ),
     facility_id: optionalId(x.facility_id, "facility_id"),
   };
+}
+// M-R2/M-R4: a plan task's completion requirement may hold 4,000 characters, but a Service scope
+// item takes 1–20 entries of at most 1,000. Prepared scope copies the requirement as ordered
+// entries without dropping any text: each break falls at the last whitespace within the 1,000-
+// character window when that is at least halfway through it, otherwise at 1,000 (999 when that
+// would split a surrogate pair). Every break advances at least 500 code units, so a 4,000-character
+// requirement yields at most 8 entries.
+// A requirement within the limit stays a single, unchanged entry.
+export function completionRequirementEntries(requirement: string, limit = 1000) {
+  const entries: string[] = [];
+  let rest = requirement.trim();
+  while (rest.length > limit) {
+    let at = limit;
+    for (let i = limit; i >= limit / 2; i--)
+      if (/\s/.test(rest[i])) {
+        at = i;
+        break;
+      }
+    // A hard cut never separates a surrogate pair: the whole character moves to the next entry,
+    // so every entry stays well-formed Unicode within the 1,000-code-unit limit (#770 review).
+    if (at === limit && /[\uD800-\uDBFF]/.test(rest[at - 1]) && /[\uDC00-\uDFFF]/.test(rest[at]))
+      at -= 1;
+    entries.push(rest.slice(0, at).trim());
+    rest = rest.slice(at).trim();
+  }
+  if (rest) entries.push(rest);
+  return entries;
 }

@@ -13,6 +13,7 @@ import { object, invalid } from "../shared/validation";
 import { agreementCurrentness } from "./model";
 import { companyContext } from "../shared/authority";
 import { visibleTicket } from "../service/tickets";
+import { visibleWorkOrder } from "../service/work-orders";
 import { reportContext } from "../reports/context";
 import { currentAssessment } from "./assessments";
 import { planRevision } from "./plans";
@@ -276,6 +277,37 @@ export async function register(
     observed_at: new Date().toISOString(),
   };
 }
+// #770 review R1: maintenance history keeps its immutable stored events, but a response names a
+// prepared work order (WorkRequested, FollowOnRequested) only to someone who may read that work
+// order. Otherwise the identifier is omitted from that event's content in this response only.
+async function visibleHistory(
+  c: QueryClient,
+  p: Principal,
+  events: Awaited<ReturnType<typeof history>>,
+) {
+  const readable = new Map<string, boolean>();
+  const shown: typeof events = [];
+  for (const event of events) {
+    const content = (event.content ?? {}) as Record<string, unknown>;
+    const workOrder =
+      typeof content.work_order_id === "string" ? content.work_order_id : null;
+    if (workOrder && !readable.has(workOrder))
+      try {
+        await visibleWorkOrder(c, p, workOrder);
+        readable.set(workOrder, true);
+      } catch (e) {
+        if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
+        readable.set(workOrder, false);
+      }
+    if (!workOrder || readable.get(workOrder)) shown.push(event);
+    else {
+      const { work_order_id: _hidden, ...rest } = content;
+      void _hidden;
+      shown.push({ ...event, content: rest } as (typeof events)[number]);
+    }
+  }
+  return shown;
+}
 export async function workspace(p: Principal, family: Family, id: string) {
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
@@ -393,6 +425,22 @@ export async function workspace(p: Principal, family: Family, id: string) {
       for (const request of requests)
         try {
           await visibleTicket(c, p, request.ticket_id);
+          // M-R2: the prepared work order appears only to someone who may read it.
+          if (request.work_order_id)
+            try {
+              const w = await visibleWorkOrder(c, p, request.work_order_id);
+              request.work_order = {
+                id: w.id,
+                display_number: w.display_number,
+                status: w.status,
+              };
+            } catch (e) {
+              if (!(e instanceof AppError && [403, 404].includes(e.status)))
+                throw e;
+              request.work_order = null;
+              delete request.work_order_id;
+              sources.service_access = "Restricted";
+            }
           (sources.requests as unknown[]).push(request);
           const results = (
             await c.query(
@@ -426,6 +474,7 @@ export async function workspace(p: Principal, family: Family, id: string) {
         "warranty.recovery",
         "service.scope.authorise",
         "service.ticket.edit",
+        "service.work_order.edit",
         "finance.reconcile",
       ] as Capability[]),
     ])
@@ -434,7 +483,7 @@ export async function workspace(p: Principal, family: Family, id: string) {
       family,
       row,
       heading,
-      history: events,
+      history: await visibleHistory(c, p, events),
       sources,
       actions,
       observed_at: new Date().toISOString(),
@@ -531,13 +580,22 @@ export async function receiptAuthority(
   const original = await record(c, p, family, id);
   if (family === "coverage" && (original as Assessment).warranty_case_id)
     cap = "warranty.assess";
-  if (command.includes("PrepareWork"))
+  if (command.includes("PrepareWork") || command.includes("PrepareFollowOn"))
     await companyContext(
       c,
       p,
       original.company_id,
       original.site_id,
       "service.ticket.edit",
+    );
+  // M-R2/M-R4: maintenance preparation now also creates a work order.
+  if (command.includes("PrepareWork:due") || command.includes("PrepareFollowOn"))
+    await companyContext(
+      c,
+      p,
+      original.company_id,
+      original.site_id,
+      "service.work_order.edit",
     );
   if (command.includes("ReceiveResult")) {
     const event = (await history(c, p, id))

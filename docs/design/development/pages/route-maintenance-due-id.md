@@ -22,8 +22,8 @@ Reused components: PageHeader, Field, Button/ButtonLink, Status, ReadState, Reco
 
 1. Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.
 2. Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.
-3. Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority.
-4. Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open to receiving evidence.
+3. Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise.
+4. Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open: Prepare follow-on Service request raises the outstanding tasks with a current Covered entitlement, one follow-on at a time, and its completed result completes the occurrence.
 
 Generation and owned requests create no booking. Requested work cannot be cancelled here. Service controls return visits and actual work.
 
@@ -42,3 +42,7 @@ Native adaptations awaiting owner baseline adoption: current shell/tokens and ro
 ## Evidence and review
 
 See [implementation handover](../../../delivery/maintenance-warranty-handover.md) and [evidence index](../../../testing/evidence/maintenance-warranty/README.md). Source presence, automated proof, visual inspection, owner/device acceptance and deployment remain separately recorded. No review fingerprint is adopted by generation.
+
+## Prepared work orders and follow-on requests (M1) — 30 October 2026
+
+Proposed addition, built as an agent decision under Dean's standing order of 30 October 2026; not Dean's acceptance (rules M-R2 and M-R4 of PPO-MAINTENANCE-TS02-DEC, proposed in [PR #754](https://github.com/deanrfiedler-gif/powerplants-one/pull/754)). Prepare owned Service request is offered while the occurrence is Open or Deferred, and only to someone who may edit both service requests and work orders. It now also creates a Draft work order; the record links "Open work order {reference}" beside each request the reader may see. When the occurrence is Partial, Prepare follow-on Service request takes a current Covered entitlement and an owner and raises only the outstanding tasks, one follow-on at a time; its request is labelled as a follow-on in the links and in the receiving request choice. Existing tab, disclosure and form patterns are reused. Exact images are missing. Functional evidence: `docs/testing/evidence/maintenance-m1/README.md`; no review fingerprint is changed.
