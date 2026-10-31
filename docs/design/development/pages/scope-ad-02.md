@@ -14,7 +14,7 @@ Implement governed business configuration and policy publication, including appl
 
 ## Desktop
 
-Accepted design: the [Settings hub design decision](../../../decisions/settings-hub-figma-design.md) of 22 October 2026 covers the Settings hub (WS-D6) at the proposed route `/admin/settings`, the Business policies register at `/admin/policies`, and the policy record at `/admin/policies/[id]` with its Terms and Version 2 proposal tabs, the Propose change and Publish dialogs, the refused publication and the Readable record references record, with thirteen icon-free captures in [design r01](../../../reference/ui/settings/settings-hub-design-r01/README.md). Departures D1–D8 and answers Q1–Q6 are recorded there. Nothing is built.
+Accepted design: the [Settings hub design decision](../../../decisions/settings-hub-figma-design.md) of 22 October 2026 covers the Settings hub (WS-D6) at the proposed route `/admin/settings`, the Business policies register at `/admin/policies`, and the policy record at `/admin/policies/[id]` with its Terms and Version 2 proposal tabs, the Propose change and Publish dialogs, the refused publication and the Readable record references record, with thirteen icon-free captures in [design r01](../../../reference/ui/settings/settings-hub-design-r01/README.md). Departures D1–D8 and answers Q1–Q6 are recorded there. Implementation is retained in draft PR #802; focused functional proof and Codex visual comparison are recorded in the evidence, separately from owner acceptance and deployment.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -40,8 +40,12 @@ Accepted Figma design captures: [Settings hub design r01](../../../reference/ui/
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: [Settings hub design r01 captures](../../../reference/ui/settings/settings-hub-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/settings-hub-figma-design.md). The History and Affected work tabs, the field readiness and working-hours records, the other configuration areas' pages, the publish success state, the phone propose and publish sheets and 200% zoom are not drawn. Building it is not decided.
+Accepted Figma design: [Settings hub design r01 captures](../../../reference/ui/settings/settings-hub-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/settings-hub-figma-design.md). The History and Affected work tabs, the field readiness and working-hours records, the other configuration areas' pages, the publish success state, the phone propose and publish sheets and 200% zoom are not drawn. Dean authorised this bounded build on 31 October 2026; the unaccepted amendment frames remain excluded.
 
 The draft User Guide `guide.ad.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Application acceptance is pending. Retain matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native AD-02 implementation
+
+The working contracts are [Settings hub](route-admin-settings.md), [Business policies](route-admin-policies.md) and [policy record](route-admin-policies-id.md). Seed-only readiness and working-hours records are read-only uses of the existing record pattern, not implementation of the unaccepted field-readiness amendment. [Evidence and differences](../../../testing/evidence/settings-hub/README.md) track the build. Dean chose to hide unavailable areas rather than show disabled cards on 31 October 2026. No visual acceptance is recorded.

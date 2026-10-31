@@ -30402,25 +30402,23 @@
     {
       "guide_key": "guide.ad.02",
       "entry_key": "scope:AD-02",
-      "title": "Business configuration and policy publication",
+      "title": "Settings and Business policies",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native implementation; validation in progress",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "See docs/testing/evidence/settings-hub/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Business configuration and policy publication to work towards this outcome: Users can identify the applicable policy basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A policy draft is not an operative business rule."
+            "Open permitted configuration areas and read the exact policy terms and saved proposal. Every policy value is synthetic, not an operating rule."
           ],
           "steps": [],
           "rows": [],
@@ -30430,9 +30428,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Policy/configuration revision, applicability and approval basis.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Confirm your identity and workspace. Policy reads require a current dedicated review or publish duty and complete native source visibility. Other areas retain their own permission; the hub has no capability."
           ],
           "steps": [],
           "rows": [],
@@ -30441,56 +30437,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the intended configuration change",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open More › Administration & support › Settings, choose Business policies, search for the policy and open Terms. Inspect the proposal before an explicit action."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Business configuration and policy publication · Pages"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "Needs attention uses each area’s permitted reads. Unavailable destinations are hidden. On phones, Business policies has All policies and Record references links above the other permitted areas. The register supports search, policy-name sorting and the Waiting to publish view. The record has Terms and current proposal tabs, with stacked term rows on phones. On phones, More opens Propose change, View proposal or terms, and Refresh; Compare and Back keep the current record context."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Policy/configuration revision, applicability and approval basis.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Propose requires maximum visit minutes, a future Brisbane effective time and a reason; fixed terms stay unchanged. Quote the policy name, version and proposal revision. No readable reference is allocated."
           ],
           "steps": [],
           "rows": [],
@@ -30500,13 +30468,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "A reviewer or publisher may propose. A different current reviewer performs a complete review. A publisher who is not that reviewer publishes the exact proposal/review against its expected head. Publication note is optional. The server rechecks authority and dependencies."
           ],
-          "steps": [
-            "Prepare the intended configuration change",
-            "Review affected workflows and records",
-            "Publish a controlled successor with effective context"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -30514,9 +30478,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Users can identify the applicable policy basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A policy draft is not an operative business rule."
+            "A saved proposal changes nothing in force. Publication creates a successor and owned booking impacts; it never rewrites pins, bookings or issued documents. Read the receipt. Readiness and working-hours records have no editor."
           ],
           "steps": [],
           "rows": [],
@@ -30525,45 +30487,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Loading/failed/denied reads clear protected data. No permitted areas is distinct from a failed source. A changed proposal revision requires a fresh review. Publication refusal leaves the in-force version unchanged."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare policy/configuration revision, applicability and approval basis. Follow the task sequence and check that users can identify the applicable policy basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Business configuration and policy publication has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A policy draft is not an operative business rule."
+            "Synthetic example: propose 420 minutes against the current 480-minute head at a future start. Another reviewer evaluates the complete population. A separate publisher inspects the frozen evidence and explicitly publishes. These numbers are not operating guidance."
           ],
           "steps": [],
           "rows": [],
@@ -30572,45 +30507,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "For an unknown outcome retain the tab and original operation. Check original receipt or Retry unchanged original; do not create a replacement. Closing the tab or changing identity removes the local copy. Saved records remain discoverable through PL-04."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Compact header and grouped lists work at 390/320 px. The record has one primary action. Forms use the existing modal, not unaccepted amendment sheets. Use labelled keyboard controls, Escape and focus return. Policy commands require online access."
           ],
           "steps": [],
           "rows": [],
@@ -30620,8 +30528,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Use the accepted Settings decision and native scheduling-policy API contract. Other areas keep their own permissions. No operational SOP or deployment is approved by this guide."
           ],
           "steps": [],
           "rows": [],
@@ -30631,9 +30538,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment remain separate. Read docs/testing/evidence/settings-hub/README.md for actual results. No acceptance fingerprint is copied."
           ],
           "steps": [],
           "rows": [],
@@ -30641,13 +30546,18 @@
         }
       ],
       "related_entry_keys": [
-        "scope:AD-01"
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "docs/decisions/settings-hub-figma-design.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "AD-02 native hub, policy terms and independent proposal/review/publication workflow.",
       "document_id": "PPO-GUIDE-AD-02",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -77013,6 +76923,477 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-admin-policies-id",
+      "entry_key": "route:/admin/policies/[id]",
+      "title": "Business policy record",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; validation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Open permitted configuration areas and read the exact policy terms and saved proposal. Every policy value is synthetic, not an operating rule."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm your identity and workspace. Policy reads require a current dedicated review or publish duty and complete native source visibility. Other areas retain their own permission; the hub has no capability."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open More › Administration & support › Settings, choose Business policies, search for the policy and open Terms. Inspect the proposal before an explicit action."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Needs attention uses each area’s permitted reads. Unavailable destinations are hidden. On phones, Business policies has All policies and Record references links above the other permitted areas. The register supports search, policy-name sorting and the Waiting to publish view. The record has Terms and current proposal tabs, with stacked term rows on phones. On phones, More opens Propose change, View proposal or terms, and Refresh; Compare and Back keep the current record context."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Propose requires maximum visit minutes, a future Brisbane effective time and a reason; fixed terms stay unchanged. Quote the policy name, version and proposal revision. No readable reference is allocated."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "A reviewer or publisher may propose. A different current reviewer performs a complete review. A publisher who is not that reviewer publishes the exact proposal/review against its expected head. Publication note is optional. The server rechecks authority and dependencies."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A saved proposal changes nothing in force. Publication creates a successor and owned booking impacts; it never rewrites pins, bookings or issued documents. Read the receipt. Readiness and working-hours records have no editor."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading/failed/denied reads clear protected data. No permitted areas is distinct from a failed source. A changed proposal revision requires a fresh review. Publication refusal leaves the in-force version unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic example: propose 420 minutes against the current 480-minute head at a future start. Another reviewer evaluates the complete population. A separate publisher inspects the frozen evidence and explicitly publishes. These numbers are not operating guidance."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "For an unknown outcome retain the tab and original operation. Check original receipt or Retry unchanged original; do not create a replacement. Closing the tab or changing identity removes the local copy. Saved records remain discoverable through PL-04."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Compact header and grouped lists work at 390/320 px. The record has one primary action. Forms use the existing modal, not unaccepted amendment sheets. Use labelled keyboard controls, Escape and focus return. Policy commands require online access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "Use the accepted Settings decision and native scheduling-policy API contract. Other areas keep their own permissions. No operational SOP or deployment is approved by this guide."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment remain separate. Read docs/testing/evidence/settings-hub/README.md for actual results. No acceptance fingerprint is copied."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "See docs/testing/evidence/settings-hub/README.md",
+      "change_summary": "AD-02 native hub, policy terms and independent proposal/review/publication workflow.",
+      "source_paths": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "docs/decisions/settings-hub-figma-design.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-admin-policies",
+      "entry_key": "route:/admin/policies",
+      "title": "Business policies",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; validation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Open permitted configuration areas and read the exact policy terms and saved proposal. Every policy value is synthetic, not an operating rule."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm your identity and workspace. Policy reads require a current dedicated review or publish duty and complete native source visibility. Other areas retain their own permission; the hub has no capability."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open More › Administration & support › Settings, choose Business policies, search for the policy and open Terms. Inspect the proposal before an explicit action."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Needs attention uses each area’s permitted reads. Unavailable destinations are hidden. On phones, Business policies has All policies and Record references links above the other permitted areas. The register supports search, policy-name sorting and the Waiting to publish view. The record has Terms and current proposal tabs, with stacked term rows on phones. On phones, More opens Propose change, View proposal or terms, and Refresh; Compare and Back keep the current record context."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Propose requires maximum visit minutes, a future Brisbane effective time and a reason; fixed terms stay unchanged. Quote the policy name, version and proposal revision. No readable reference is allocated."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "A reviewer or publisher may propose. A different current reviewer performs a complete review. A publisher who is not that reviewer publishes the exact proposal/review against its expected head. Publication note is optional. The server rechecks authority and dependencies."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A saved proposal changes nothing in force. Publication creates a successor and owned booking impacts; it never rewrites pins, bookings or issued documents. Read the receipt. Readiness and working-hours records have no editor."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading/failed/denied reads clear protected data. No permitted areas is distinct from a failed source. A changed proposal revision requires a fresh review. Publication refusal leaves the in-force version unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic example: propose 420 minutes against the current 480-minute head at a future start. Another reviewer evaluates the complete population. A separate publisher inspects the frozen evidence and explicitly publishes. These numbers are not operating guidance."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "For an unknown outcome retain the tab and original operation. Check original receipt or Retry unchanged original; do not create a replacement. Closing the tab or changing identity removes the local copy. Saved records remain discoverable through PL-04."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Compact header and grouped lists work at 390/320 px. The record has one primary action. Forms use the existing modal, not unaccepted amendment sheets. Use labelled keyboard controls, Escape and focus return. Policy commands require online access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "Use the accepted Settings decision and native scheduling-policy API contract. Other areas keep their own permissions. No operational SOP or deployment is approved by this guide."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment remain separate. Read docs/testing/evidence/settings-hub/README.md for actual results. No acceptance fingerprint is copied."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "See docs/testing/evidence/settings-hub/README.md",
+      "change_summary": "AD-02 native hub, policy terms and independent proposal/review/publication workflow.",
+      "source_paths": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "docs/decisions/settings-hub-figma-design.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-admin-settings",
+      "entry_key": "route:/admin/settings",
+      "title": "Settings hub",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native implementation; validation in progress",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:AD-02",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Open permitted configuration areas and read the exact policy terms and saved proposal. Every policy value is synthetic, not an operating rule."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Confirm your identity and workspace. Policy reads require a current dedicated review or publish duty and complete native source visibility. Other areas retain their own permission; the hub has no capability."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [
+            "Open More › Administration & support › Settings, choose Business policies, search for the policy and open Terms. Inspect the proposal before an explicit action."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Understand this page",
+          "paragraphs": [
+            "Needs attention uses each area’s permitted reads. Unavailable destinations are hidden. On phones, Business policies has All policies and Record references links above the other permitted areas. The register supports search, policy-name sorting and the Waiting to publish view. The record has Terms and current proposal tabs, with stacked term rows on phones. On phones, More opens Propose change, View proposal or terms, and Refresh; Compare and Back keep the current record context."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information you need",
+          "paragraphs": [
+            "Propose requires maximum visit minutes, a future Brisbane effective time and a reason; fixed terms stay unchanged. Quote the policy name, version and proposal revision. No readable reference is allocated."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "A reviewer or publisher may propose. A different current reviewer performs a complete review. A publisher who is not that reviewer publishes the exact proposal/review against its expected head. Publication note is optional. The server rechecks authority and dependencies."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A saved proposal changes nothing in force. Publication creates a successor and owned booking impacts; it never rewrites pins, bookings or issued documents. Read the receipt. Readiness and working-hours records have no editor."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "Statuses, warnings and save state",
+          "paragraphs": [
+            "Loading/failed/denied reads clear protected data. No permitted areas is distinct from a failed source. A changed proposal revision requires a fresh review. Publication refusal leaves the in-force version unchanged."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Worked examples",
+          "paragraphs": [
+            "Synthetic example: propose 420 minutes against the current 480-minute head at a future start. Another reviewer evaluates the complete population. A separate publisher inspects the frozen evidence and explicitly publishes. These numbers are not operating guidance."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Troubleshooting",
+          "paragraphs": [
+            "For an unknown outcome retain the tab and original operation. Check original receipt or Retry unchanged original; do not create a replacement. Closing the tab or changing identity removes the local copy. Saved records remain discoverable through PL-04."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline use",
+          "paragraphs": [
+            "Compact header and grouped lists work at 390/320 px. The record has one primary action. Forms use the existing modal, not unaccepted amendment sheets. Use labelled keyboard controls, Escape and focus return. Policy commands require online access."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance and procedures",
+          "paragraphs": [
+            "Use the accepted Settings decision and native scheduling-policy API contract. Other areas keep their own permissions. No operational SOP or deployment is approved by this guide."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Guide review and feedback",
+          "paragraphs": [
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment remain separate. Read docs/testing/evidence/settings-hub/README.md for actual results. No acceptance fingerprint is copied."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "See docs/testing/evidence/settings-hub/README.md",
+      "change_summary": "AD-02 native hub, policy terms and independent proposal/review/publication workflow.",
+      "source_paths": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "docs/decisions/settings-hub-figma-design.md"
       ]
     }
   ]

@@ -94,6 +94,13 @@ function ProposalTerms({
   );
 }
 
+/** Shared by PL-04 and AD-02: one actor-bound journal and exact original recovery. */
+export function usePolicyOperation() {
+  const identity = useIdentity();
+  return useRecoverableCommand({ key: policyJournalKey, scope: identity,
+    accepts: acceptsPolicyEntry, acceptsReceipt: acceptsPolicyReceipt, transport: api });
+}
+
 export function PolicyPublicationWorkspace() {
   const search = useSearchParams();
   const [kind, setKind] = useState<PolicyRecordKind>("proposal"),
@@ -232,13 +239,7 @@ function PolicyWorkspaceBody({
     kind && id ? `schedule/policy-${kind}s/${id}` : null,
     false,
   );
-  const command = useRecoverableCommand({
-    key: policyJournalKey,
-    scope: identity,
-    accepts: acceptsPolicyEntry,
-    acceptsReceipt: acceptsPolicyReceipt,
-    transport: api,
-  });
+  const command = usePolicyOperation();
   const [editing, setEditing] = useState(false),
     [zone, setZone] = useState("Australia/Brisbane"),
     [minutes, setMinutes] = useState(""),
@@ -482,7 +483,7 @@ function PolicyWorkspaceBody({
               Open original proposal
             </Link>
           )}
-          {canReview &&
+          {(canReview || canPublish) &&
             proposal.proposer_id === identity.actor_id &&
             !evidence?.successor_proposal_id && (
               <Button disabled={frozen} onClick={edit}>
@@ -509,7 +510,7 @@ function PolicyWorkspaceBody({
           )}
         </article>
       )}
-      {canReview && (!kind || editing) && chain && (
+      {(canReview || canPublish) && (!kind || editing) && chain && (
         <form onSubmit={save} className="scheduling-card">
           <h3 ref={mountFormHeading} tabIndex={-1}>
             {editing ? "Unsaved successor edits" : "Unsaved policy proposal"}
@@ -696,7 +697,7 @@ function PolicyWorkspaceBody({
                 required
                 maxLength={1000}
               />
-              {canReview && (
+              {canReview && proposal.proposer_id !== identity.actor_id && (
                 <Button disabled={!reason.trim()} onClick={() => void review()}>
                   Obtain fresh complete review
                 </Button>

@@ -98,10 +98,10 @@ async function review(page: Page) {
 test.beforeEach(setupPolicy);
 test.afterAll(closeDatabase);
 
-test("native reviewer successor and publisher exact lost-response recovery, reload, typed owned handovers and narrow authority", async ({
+test("native independent proposal/review and publisher exact lost-response recovery, reload, typed owned handovers and narrow authority", async ({
   page,
 }, info) => {
-  await login(page.request, "scheduling-policy-reviewer");
+  await login(page.request, "scheduling-policy-publisher");
   await page.goto("/schedule");
   await page
     .getByRole("navigation", { name: "Scheduling workspace" })
@@ -175,6 +175,7 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
   await expect(
     page.getByText("No matching bookings require review. This is not publication or dispatch approval.", { exact: true }),
   ).toBeVisible();
+  await switchTo(page, "scheduling-policy-reviewer");
   const reviewId = await review(page);
   await expect(page.getByText(/Complete workspace family:/)).toBeVisible();
   await expect(page.getByText(/Duration Limit Exceeded/).first()).toBeVisible();
@@ -346,7 +347,7 @@ test("native reviewer successor and publisher exact lost-response recovery, relo
 test("complete empty review, correctable server and ambiguous local time errors, unavailable and denied saved reads", async ({
   page,
 }, info) => {
-  await login(page.request, "scheduling-policy-reviewer");
+  await login(page.request, "scheduling-policy-publisher");
   await page.goto(root);
   await openSavedWorkflow(page);
   await page
@@ -387,6 +388,7 @@ test("complete empty review, correctable server and ambiguous local time errors,
     page.getByLabel("Maximum visit duration (minutes)", { exact: true }),
   ).toHaveValue("0");
   const proposal = await propose(page, "60", "2032-01-01T10:00");
+  await switchTo(page, "scheduling-policy-reviewer");
   await review(page);
   await expect(
     page.getByText(/server evaluated the complete empty population/),
@@ -485,9 +487,10 @@ test("complete population over the limit refuses without a partial saved review"
   page,
 }, info) => {
   for (let i = 1; i <= 200; i++) await populationBooking(i);
-  await login(page.request, "scheduling-policy-reviewer");
+  await login(page.request, "scheduling-policy-publisher");
   await page.goto(root);
   await propose(page);
+  await switchTo(page, "scheduling-policy-reviewer");
   await page
     .getByLabel("Action reason", { exact: true })
     .fill("SYN complete limit refusal");

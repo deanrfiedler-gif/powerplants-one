@@ -105,6 +105,16 @@ export async function policyReadAuthority(c: QueryClient, p: Principal) {
   );
   return { can_review, can_publish };
 }
+/** AD-02 Q1: new reviews must be independent; historical evidence stays readable. */
+export function requireIndependentPolicyReviewer(proposer: string, reviewer: string) {
+  if (proposer === reviewer)
+    throw new AppError(422, "IndependentReviewerRequired", "The proposer cannot review their own policy change. Ask another current policy reviewer.");
+}
+/** AD-02: either current dedicated duty may propose; complete source access still applies. */
+export async function policyProposalAuthority(c: QueryClient, p: Principal) {
+  const allowed = await policyReadAuthority(c, p);
+  return policyAuthority(c, p, allowed.can_review ? "schedule.policy.review" : "schedule.policy.publish");
+}
 export async function ownerEvidence(
   c: QueryClient,
   p: Principal,
@@ -198,6 +208,8 @@ export async function policyReceiptAuthority(
     ).rows[0];
     if (!row) throw unavailable();
     await policyResolutionAuthority(c, p, row.impact_id);
+  } else if (type === "SchedulingPolicyProposal") {
+    await policyProposalAuthority(c, p);
   } else
     await policyAuthority(
       c,

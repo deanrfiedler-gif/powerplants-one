@@ -39,7 +39,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Design the Settings hub around AD-02 | User decision, 22 October 2026 | Dean's request quoted above; WS-D6 of 19 October 2026 |
 | Audit and polish before acceptance | User decision, 22 October 2026 | Quoted above. Section 6 |
 | Departures D1–D8 | Accepted as recommended, 22 October 2026 | Dean's acceptance, quoted above. Section 4 |
-| Q1 Proposer and reviewer | Resolved as recommended | A review by the proposer is refused, as well as a publication by the reviewer, so every publication involves at least two people. The built commands refuse only a publisher who is also the reviewer (`IndependentPublisherRequired`), so this is a build prerequisite (section 5) |
+| Q1 Proposer and reviewer | Resolved as recommended | A review by the proposer is refused, as well as a publication by the reviewer, so every publication involves at least two people. At design time, the built commands refused only a publisher who was also the reviewer (`IndependentPublisherRequired`), so this is a build prerequisite (section 5) |
 | Q2 Routes and permission | Resolved as recommended | The hub is `/admin/settings`; Business policies is `/admin/policies`, the register's recorded destination; a policy record is `/admin/policies/[id]`. The hub has no capability of its own and shows only the areas the person may open |
 | Q3 Other policy families | Resolved as recommended | Field readiness and working hours move onto the same propose, review and publish path one family at a time, before new families are added. Until then they are read-only and say "Seed only, no editor" |
 | Q4 Primary action | Resolved as recommended | "Publish version N" is the record's primary action only for a current publisher when a complete review of the latest revision exists. Otherwise "Propose change" is primary for holders of a policy duty, and anyone else sees no action |
@@ -47,7 +47,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Next frames | Resolved as recommended | The History and Affected work tabs, the field readiness record and the phone propose and publish sheets are drawn after this page as AD-02 amendments. The Integrations area and My account and preferences (WS-D7) are separate designs |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
 | Named Figma version | Saved, 23 October 2026 | "Settings — accepted", at Dean's yes quoted above. Section 7 |
-| Building the page | Not decided | Section 5 |
+| Building the page | Requested by Dean, 31 October 2026 | Native implementation direction below; application acceptance remains separate |
 
 ## 2. Design reference
 
@@ -173,3 +173,10 @@ The audit is recorded on the notes card `2049:13083`.
 - The named Figma version "Settings — accepted" was saved in the Figma desktop app on 23 October 2026 at Dean's yes and confirmed at the top of version history. The page header and notes card were then updated with the lock-in details.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+
+## Native implementation direction — 31 October 2026
+
+Dean explicitly requested the accepted three-route AD-02 build and, when asked how to handle catalogue areas without a real destination or dedicated access rule on current main, chose "Hide unavailable areas (recommended)". The catalogue retains nine areas, but the hub and side menu expose only existing destinations the current person may open. This is a newer implementation instruction, not acceptance of application visuals.
+
+Codex's implementation choices under the standing order are: reuse the shared responsive dialog on phones until the separate phone sheets are accepted; preserve the native required publication reason by supplying explicit confirmation wording when the optional note is blank; and show the most recently saved open proposal branch, with a count and link to all original records in PL-04 if concurrent branches exist. These are agent decisions, reversible in the AD-02 composition without changing the saved command contracts. No History or Affected work tab, new policy editor, migration, capability, grant or dependency is included. Functional proof, visual comparison, owner acceptance and deployment remain separate in the [implementation evidence](../testing/evidence/settings-hub/README.md).

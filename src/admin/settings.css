@@ -1,0 +1,470 @@
+/* AD-02 local composition; shared shell/table/record controls retain their rules. */
+#ppo-settings .mw-content {
+  padding: 0;
+  overflow: auto;
+  background: var(--surface-white);
+}
+#ppo-settings {
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+}
+#ppo-settings .settings-overview {
+  padding: 24px;
+}
+#ppo-settings .settings-intro {
+  color: var(--text-secondary);
+  margin: 0 0 24px;
+  max-width: 880px;
+}
+#ppo-settings h1 {
+  font-size: 24px;
+  line-height: 30px;
+  margin: 0 0 16px;
+}
+#ppo-settings h2 {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 16px 0;
+}
+#ppo-settings h3 {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 4px;
+}
+#ppo-settings .settings-menu-link {
+  display: block;
+  padding: 12px;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-control);
+}
+#ppo-settings .settings-menu-link:hover {
+  background: var(--ppo-shell-selected);
+}
+#ppo-settings .mw-menu-heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 12px;
+  color: var(--text-secondary);
+}
+#ppo-settings .settings-attention {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  margin-bottom: 24px;
+}
+#ppo-settings .settings-attention header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+#ppo-settings .settings-attention header h2 {
+  margin: 0;
+}
+#ppo-settings .settings-attention header > span:last-child {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-settings .settings-attention-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--line);
+}
+#ppo-settings .settings-attention-row p {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+#ppo-settings .settings-attention-row > a {
+  flex-shrink: 0;
+}
+#ppo-settings .settings-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 16px;
+}
+#ppo-settings .settings-area-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  text-decoration: none;
+  min-height: 196px;
+}
+#ppo-settings .settings-area-card small,
+#ppo-settings .settings-area-card p {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+#ppo-settings .settings-area-card p {
+  flex: 1;
+}
+#ppo-settings .settings-area-card footer {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+#ppo-settings .settings-area-card:hover {
+  border-color: var(--ppo-shell-link);
+}
+#ppo-settings .settings-note {
+  background: var(--surface);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  margin: 16px 0;
+  color: var(--text-secondary);
+}
+#ppo-settings .settings-empty {
+  padding: 0 16px 12px;
+}
+#ppo-settings .settings-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 60px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-settings .settings-toolbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+#ppo-settings .settings-toolbar input {
+  margin-left: auto;
+  width: 240px;
+  max-width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+}
+#ppo-settings .settings-register > .settings-note {
+  margin: 16px;
+}
+#ppo-settings .settings-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-white);
+}
+#ppo-settings .settings-tabs button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 14px;
+  background: transparent;
+  color: var(--text-secondary);
+  min-height: 44px;
+}
+#ppo-settings .settings-tabs [aria-selected="true"] {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+}
+#ppo-settings .settings-term-meaning {
+  display: block;
+  color: var(--text-secondary);
+  line-height: 16px;
+  margin-top: 4px;
+}
+#ppo-settings .settings-proposal-callout {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 16px;
+  margin-bottom: 16px;
+  background: var(--surface);
+}
+#ppo-settings .settings-proposal-callout h2 {
+  margin: 0;
+}
+#ppo-settings .shared-record-facts dl {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 12px;
+}
+#ppo-settings .shared-record-facts dd {
+  margin: 0;
+}
+#ppo-settings .shared-record-facts dt {
+  color: var(--text-secondary);
+}
+#ppo-settings[data-policy-record="true"] .shared-record {
+  min-height: 100%;
+}
+#ppo-settings .settings-dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+#ppo-settings :focus-visible {
+  outline: 2px solid var(--ppo-shell-link);
+  outline-offset: 3px;
+}
+@media (max-width: 1199px) {
+  #ppo-settings .settings-area-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 780px) {
+  #ppo-settings .settings-overview {
+    padding: 16px;
+  }
+  #ppo-settings .settings-page-title {
+    display: none;
+  }
+  #ppo-settings .settings-area-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  #ppo-settings .settings-area-card {
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 16px;
+  }
+  #ppo-settings .settings-area-card p {
+    margin: 8px 0;
+  }
+  #ppo-settings .settings-area-card footer {
+    border: 0;
+    padding: 0;
+  }
+  #ppo-settings .settings-attention-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  #ppo-settings .settings-toolbar {
+    flex-wrap: wrap;
+  }
+  #ppo-settings .settings-toolbar input {
+    width: 100%;
+    order: 3;
+    font-size: 16px;
+  }
+  #ppo-settings .settings-register .ppo-register-table {
+    min-width: 0;
+    width: 100%;
+  }
+  #ppo-settings .settings-register .ppo-register-table thead {
+    display: none;
+  }
+  #ppo-settings .settings-register .ppo-register-table tr {
+    display: block;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-settings .settings-register .ppo-register-table td {
+    display: block;
+    padding: 2px 0;
+    border: 0;
+    min-width: 0;
+    white-space: normal;
+  }
+  #ppo-settings .settings-register .ppo-register-table td:nth-child(n + 6) {
+    display: none;
+  }
+  #ppo-settings .shared-record-facts {
+    display: none;
+  }
+  #ppo-settings .shared-record-content {
+    padding: 16px;
+  }
+  #ppo-settings .settings-term-meaning {
+    max-width: 180px;
+  }
+  #ppo-settings .shared-record-header {
+    padding: 16px;
+  }
+  #ppo-settings .shared-record-header h1 {
+    font-size: 22px;
+    line-height: 26px;
+  }
+  #ppo-settings .shared-record-actions {
+    display: none;
+  }
+  #ppo-settings .settings-tabs {
+    overflow-x: auto;
+  }
+  #ppo-settings .ppo-register-wrap {
+    white-space: normal;
+  }
+}
+
+/* The shared table remains the control; the AD-02 term columns wrap within a record. */
+#ppo-settings .shared-record .ppo-register-table {
+  min-width: 0;
+  table-layout: fixed;
+}
+#ppo-settings .shared-record .ppo-register-table :is(td, th) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 780px) {
+  #ppo-settings .shared-record-sticky .ppo-button {
+    width: 100%;
+  }
+  #ppo-settings .settings-proposal-terms thead {
+    display: none;
+  }
+  #ppo-settings .settings-proposal-terms tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-settings .settings-proposal-terms td {
+    display: block;
+    border: 0;
+    min-width: 0;
+  }
+  #ppo-settings .settings-proposal-terms td:first-child {
+    grid-column: 1 / -1;
+    font-weight: 600;
+  }
+  #ppo-settings .settings-proposal-terms td:nth-child(2)::before {
+    content: "In force: ";
+    display: block;
+    color: var(--text-secondary);
+  }
+  #ppo-settings .settings-proposal-terms td:nth-child(3)::before {
+    content: "Proposed: ";
+    display: block;
+    color: var(--text-secondary);
+  }
+  #ppo-settings .settings-proposal-terms td:last-child {
+    grid-column: 1 / -1;
+    color: var(--text-secondary);
+  }
+}
+
+#ppo-settings .shared-record-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#ppo-settings .shared-record-title .business-heading,
+#ppo-settings .shared-record-title h1 {
+  margin: 0;
+}
+#ppo-settings .settings-tabs button {
+  border-radius: 0;
+}
+#ppo-settings .settings-area-card footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#ppo-settings .settings-phone-policies,
+#ppo-settings .settings-phone-term-value,
+#ppo-settings .settings-phone-readonly,
+#ppo-settings .settings-phone-back {
+  display: none;
+}
+#ppo-settings .settings-area-card footer {
+  gap: 12px;
+}
+@media (max-width: 780px) {
+  #ppo-settings .settings-intro,
+  #ppo-settings .settings-area-card[data-area="policies"],
+  #ppo-settings .settings-record-viewer {
+    display: none;
+  }
+  #ppo-settings .settings-phone-policies,
+  #ppo-settings .settings-phone-readonly,
+  #ppo-settings .settings-phone-back {
+    display: block;
+  }
+  #ppo-settings .settings-phone-term-value {
+    display: inline;
+  }
+  #ppo-settings .settings-phone-links {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  #ppo-settings .settings-phone-links a {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  #ppo-settings .settings-phone-links a + a {
+    border-top: 1px solid var(--line);
+  }
+  #ppo-settings .settings-record-read {
+    display: block;
+  }
+  #ppo-settings .settings-current-terms thead,
+  #ppo-settings .settings-current-terms td:nth-child(2) {
+    display: none;
+  }
+  #ppo-settings .settings-current-terms tr,
+  #ppo-settings .settings-current-terms td {
+    display: block;
+    width: 100%;
+  }
+  #ppo-settings .settings-term-meaning {
+    max-width: none;
+  }
+}
+
+/* Fixed native terms inside the shared command dialog. */
+#ppo-settings .settings-fixed-terms {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  margin-top: 12px;
+}
+#ppo-settings .settings-fixed-terms dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px 16px;
+}
+#ppo-settings .settings-fixed-terms dd {
+  margin: 0;
+}
+#ppo-settings .settings-fixed-terms dt {
+  color: var(--text-secondary);
+}
+
+/* Shared table rows have desktop heights; stacked phone cells grow with content. */
+#ppo-settings .settings-register .ppo-register-table th {
+  padding: 12px;
+}
+@media (min-width: 781px) {
+  #ppo-settings .settings-register .ppo-register-table :is(th, td):first-child {
+    min-width: 280px;
+    width: 280px;
+  }
+  #ppo-settings .settings-register .ppo-register-table th {
+    white-space: nowrap;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-settings .settings-register .ppo-register-table :is(tr, td),
+  #ppo-settings .settings-current-terms .ppo-register-table :is(tr, td),
+  #ppo-settings .settings-proposal-terms .ppo-register-table :is(tr, td) {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  #ppo-settings .shared-record-sources,
+  #ppo-settings .settings-tabs {
+    display: none;
+  }
+}
