@@ -1,3 +1,5 @@
+import { compileDiscovery } from "./discovery";
+import { creationSalesBrief } from "./discovery-creation-context";
 import type { Principal } from "../platform/identity";
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
@@ -35,26 +37,32 @@ export async function readEstimatingWorkload(
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
     await requireCapability(c, p, "estimating.read");
-    const candidates = (
-      await c.query<{
-        id: string;
-        workspace_id: string | null;
-        changed_at: Date;
-      }>(
-        `
-      SELECT o.id,g.id AS workspace_id,greatest(o.updated_at,g.updated_at) AS changed_at
-      FROM ppo.opportunities o
-      JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
-      LEFT JOIN ppo.estimating_workspaces g ON (g.workspace_id,g.opportunity_id)=(o.workspace_id,o.id)
-      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND ${scopeSql("o.company_id", "o.site_id", "estimating.read")}
-      AND (o.close_outcome='Open' OR g.id IS NOT NULL)
-      AND ($3='' OR strpos(lower(o.title || ' ' || o.display_number || ' ' || org.display_name || ' ' || o.need_summary),lower($3))>0)
-      AND ($4='all' OR g.owner_id=$2)
-      ORDER BY ${filters.sort === "customer" ? "lower(org.display_name)," : ""}greatest(o.updated_at,g.updated_at) DESC,o.id
-      LIMIT 100`,
-        [p.workspace_id, p.actor_id, filters.q, filters.owner],
+    // Each owner choice keeps its original SQL-before-LIMIT semantics. Read both
+    // windows in one snapshot so All/My counts equal their destinations.
+    const candidates = (await c.query<{
+      id: string; workspace_id: string | null; changed_at: Date;
+      in_all: boolean; in_mine: boolean;
+    }>(`
+      WITH base AS MATERIALIZED (
+        SELECT o.id,g.id AS workspace_id,g.owner_id,lower(org.display_name) AS customer_order,
+          greatest(o.updated_at,g.updated_at) AS changed_at
+        FROM ppo.opportunities o
+        JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
+        LEFT JOIN ppo.estimating_workspaces g ON (g.workspace_id,g.opportunity_id)=(o.workspace_id,o.id)
+        WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND ${scopeSql("o.company_id", "o.site_id", "estimating.read")}
+          AND (o.close_outcome='Open' OR g.id IS NOT NULL)
+          AND ($3='' OR strpos(lower(o.title || ' ' || o.display_number || ' ' || org.display_name || ' ' || o.need_summary),lower($3))>0)
+      ), all_window AS (
+        SELECT * FROM base ORDER BY ${filters.sort === "customer" ? "customer_order," : ""}changed_at DESC,id LIMIT 100
+      ), mine_window AS (
+        SELECT * FROM base WHERE owner_id=$2
+        ORDER BY ${filters.sort === "customer" ? "customer_order," : ""}changed_at DESC,id LIMIT 100
       )
-    ).rows;
+      SELECT coalesce(a.id,m.id) AS id,coalesce(a.workspace_id,m.workspace_id) AS workspace_id,
+        coalesce(a.changed_at,m.changed_at) AS changed_at,a.id IS NOT NULL AS in_all,m.id IS NOT NULL AS in_mine
+      FROM all_window a FULL JOIN mine_window m ON a.id=m.id
+      ORDER BY ${filters.sort === "customer" ? "coalesce(a.customer_order,m.customer_order)," : ""}coalesce(a.changed_at,m.changed_at) DESC,coalesce(a.id,m.id)
+    `, [p.workspace_id,p.actor_id,filters.q])).rows;
     const items = [];
     const counts: Record<WorkloadState, number> = {
       unstarted: 0,
@@ -62,6 +70,7 @@ export async function readEstimatingWorkload(
       ready: 0,
       legacy: 0,
     };
+    const owner_counts = { all: 0, mine: 0 };
     for (const candidate of candidates) {
       try {
         const opportunity = await visibleOpportunity(c, p, candidate.id);
@@ -74,10 +83,11 @@ export async function readEstimatingWorkload(
           (x) => x.option.id === workspace?.selected_option_id,
         );
         const state = workloadState(selected?.revision.scope_readiness ?? null);
-        if (filters.view !== "all" && filters.view !== state) {
-          counts[state] += 1;
-          continue;
-        }
+        if (candidate.in_all) owner_counts.all += 1;
+        if (candidate.in_mine) owner_counts.mine += 1;
+        if (!(filters.owner === "mine" ? candidate.in_mine : candidate.in_all)) continue;
+        counts[state] += 1;
+        if (filters.view !== "all" && filters.view !== state) continue;
         const context = (
           await c.query<{
             customer: string;
@@ -172,7 +182,7 @@ export async function readEstimatingWorkload(
             [p.workspace_id, opportunity.id],
           )
         ).rows[0];
-        const can_start =
+        let can_start =
           !workspace &&
           (await hasPermission(
             c,
@@ -181,6 +191,22 @@ export async function readEstimatingWorkload(
             opportunity.company_id,
             opportunity.site_id ?? undefined,
           ));
+        let sales_brief: Awaited<ReturnType<typeof creationSalesBrief>> | "Unavailable" = null;
+        try { sales_brief = await creationSalesBrief(c, p, opportunity.id); }
+        catch (error) {
+          if (!(error instanceof AppError) || ![403,404].includes(error.status)) throw error;
+          sales_brief = "Unavailable";
+          can_start = false;
+        }
+        if (sales_brief !== "Unavailable" && sales_brief?.selection && sales_brief.source_changed) can_start = false;
+        if (can_start) {
+          try { await relationshipContext(c, p, opportunity, "estimating.edit"); }
+          catch (error) {
+            if (!(error instanceof AppError) || ![403,404].includes(error.status)) throw error;
+            can_start = false;
+          }
+        }
+        const evaluation = selected?.revision.input ? compileDiscovery(selected.revision.input) : null;
         items.push({
           opportunity: {
             id: opportunity.id,
@@ -201,6 +227,9 @@ export async function readEstimatingWorkload(
           sales_handover_due: due ?? null,
           sales_action,
           can_start,
+          sales_brief,
+          readiness_reasons: evaluation?.open_items ?? [],
+          readiness_findings: evaluation?.findings ?? [],
           workspace: workspace
             ? {
                 id: workspace.id,
@@ -219,7 +248,6 @@ export async function readEstimatingWorkload(
             : null,
           estimates,
         });
-        counts[state] += 1;
       } catch (error) {
         // Never disclose hidden-source status, counts, identities or labels.
         if (!(error instanceof AppError) || ![403, 404].includes(error.status))
@@ -229,6 +257,8 @@ export async function readEstimatingWorkload(
     return {
       items,
       counts,
+      owner_counts,
+      observed_at: new Date().toISOString(),
       filters,
       candidate_limit: 100,
       synthetic: true as const,
