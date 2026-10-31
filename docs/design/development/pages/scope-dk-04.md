@@ -18,11 +18,15 @@ Use the application shell for navigation, search, identity and the existing info
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
+Accepted design: the [Knowledge design decision](../../../decisions/knowledge-figma-design.md) of 30 October 2026 covers search with a five-value context, results with three separate statuses, an article at an exact revision, a superseded article with its successor and a suspected fix, at desktop 1440 and tablet 1024, with captures 01–06 in [design r01](../../../reference/ui/knowledge/knowledge-design-r01/README.md). Departures D1–D12 are in the decision. At 1024 the details column folds into the context strip. Nothing is built.
+
 ## Mobile
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+Design and application status are separate. The phone design at 390 and 320 CSS px is owner-accepted as a Figma design (captures below). The application is not built, so its mobile visual, device and assistive-technology review is still pending, and the register keeps its unreviewed application status. Retain mobile application evidence here when it is reviewed; a desktop image is not mobile evidence.
+
+Accepted design: captures 07–13 in [design r01](../../../reference/ui/knowledge/knowledge-design-r01/README.md): search from a job, article, saved offline copies and Set context at 390, and search, article and saved at 320. Compact header, 16 px inputs and one full-width 48 px main action (D12).
 
 ## Shared components and states
 
@@ -32,7 +36,10 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [PPO-Knowledge-Search-and-Article-Detail-r01.html](../../../reference/ui/knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html)
+- [Knowledge design r01 captures](../../../reference/ui/knowledge/knowledge-design-r01/README.md) (accepted Figma design, icon-free)
+- [PPO-Knowledge-Search-and-Article-Detail-r01.html](../../../reference/ui/knowledge/PPO-Knowledge-Search-and-Article-Detail-r01.html) (earlier direction)
+
+Accepted Figma design: [Knowledge design r01 captures](../../../reference/ui/knowledge/knowledge-design-r01/README.md) (twenty-one icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/knowledge-figma-design.md). States are captures 14–20; navigation placement is capture 21. The Saved list on desktop, Browse by type, the Suggest a change form (DK-05), denied access and 200% zoom are not drawn. Authoring, review, publication and withdrawal stay with DK-05.
 
 ## Behaviour, handovers and verification
 
