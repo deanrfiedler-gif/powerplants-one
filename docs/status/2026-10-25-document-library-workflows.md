@@ -1,4 +1,8 @@
-# Document library implementation claim — 25 October 2026
+---
+title: Document library implementation claim
+date: 2026-10-25
+---
+
 
 Owner: Codex for Dean. Dedicated worktree from main `2ae6f23bde421a0092452cce7d7c7363c8c83d16`.
 
