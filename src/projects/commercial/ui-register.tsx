@@ -21,6 +21,7 @@ import {
   useSecondaryMenu,
 } from "../../shell/secondary-menu";
 import type { Project } from "../model";
+import { ValueBreakdown } from "./ui-values";
 import { CommercialCommand } from "./ui-command";
 import {
   PendingCommercialSave,
@@ -31,6 +32,7 @@ import {
 import {
   group,
   obligationOverdue,
+  noticeRelation,
   groupOrder,
   kindLabel,
   moneyLabel,
@@ -57,7 +59,7 @@ export function CommercialRegister() {
   const view = views.some((x) => x.id === selected) ? selected : "Variation";
   const [search, setSearch] = useState("");
   const projects = useResource<Envelope<Project>>(
-    `projects?q=${encodeURIComponent(search)}&limit=100`,
+    `projects?q=${encodeURIComponent(search || project)}&limit=100`,
   );
   const changeProject = (id: string) =>
     router.push(
@@ -140,7 +142,11 @@ function CommercialWorkspace({
     ? groupOrder
         .map((name) => ({
           name,
-          rows: selected.filter((row) => group(row) === name),
+          rows: selected.filter(
+            (row) =>
+              group(row, context?.project.timezone, list.data?.observed_at) ===
+              name,
+          ),
         }))
         .filter((g) => g.rows.length)
     : [{ name: "Permitted records · incomplete list", rows: selected }];
@@ -164,21 +170,26 @@ function CommercialWorkspace({
       phoneHeader={{ title: "Variations & obligations" }}
       menu={
         <>
-          <div className="commercial-menu-heading">This project</div>
           {views.map((v) => (
-            <button
-              type="button"
-              key={v.id}
-              className="commercial-menu-item"
-              aria-current={view === v.id ? "page" : undefined}
-              onClick={() => {
-                onView(v.id);
-                menu.closeOverlay();
-              }}
-            >
-              {v.label}
-            </button>
+            <Fragment key={v.id}>
+              {v.id === "Values" && (
+                <div className="commercial-menu-heading">Finance</div>
+              )}
+              <button
+                type="button"
+                key={v.id}
+                className="commercial-menu-item"
+                aria-current={view === v.id ? "page" : undefined}
+                onClick={() => {
+                  onView(v.id);
+                  menu.closeOverlay();
+                }}
+              >
+                {v.label}
+              </button>
+            </Fragment>
           ))}
+          <div className="commercial-menu-heading">This project</div>
           {project && (
             <Link
               className="commercial-menu-item"
@@ -201,40 +212,45 @@ function CommercialWorkspace({
         <span>One project at a time</span>
         <div className="commercial-toolbar-actions">
           {complete && (
-            <span>
+            <span className="commercial-desktop-utility">
               {selected.length}{" "}
               {views.find((v) => v.id === view)?.label.toLowerCase()}
             </span>
           )}
-          <Button onClick={refresh} disabled={!project || !!intent}>
+          <Button
+            className="commercial-desktop-utility"
+            onClick={refresh}
+            disabled={!project || !!intent}
+          >
             Refresh
           </Button>
           {view !== "Values" && (
             <Button
               variant="primary"
+              className="commercial-create"
+              aria-label={
+                view === "Notice"
+                  ? "Record a notice"
+                  : view === "Basis"
+                    ? "Propose basis"
+                    : `New ${view.toLowerCase()}`
+              }
               disabled={!canCreate}
               onClick={openCreate}
             >
-              {view === "Notice"
-                ? "Record a notice"
-                : view === "Basis"
-                  ? "Propose basis"
-                  : `New ${view.toLowerCase()}`}
+              <span className="commercial-create-text">
+                {view === "Notice"
+                  ? "Record a notice"
+                  : view === "Basis"
+                    ? "Propose basis"
+                    : `New ${view.toLowerCase()}`}
+              </span>
+              <span className="commercial-create-icon" aria-hidden="true">
+                +
+              </span>
             </Button>
           )}
         </div>
-      </div>
-      <div className="commercial-phone-view">
-        <label>
-          View
-          <select value={view} onChange={(e) => onView(e.target.value)}>
-            {views.map((v) => (
-              <option key={v.id} value={v.id}>
-                {v.label}
-              </option>
-            ))}
-          </select>
-        </label>
       </div>
       {!project ? (
         <RegisterEmpty title="Choose a project">
@@ -256,6 +272,22 @@ function CommercialWorkspace({
               retry={finance.reload}
             />
           )}
+          <div className="commercial-phone-view">
+            <label>
+              View
+              <select value={view} onChange={(e) => onView(e.target.value)}>
+                {views.map((v) => (
+                  <option key={v.id} value={v.id}>
+                    {v.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {complete && <span>{selected.length}</span>}
+            <Button onClick={refresh} disabled={!project || !!intent}>
+              Refresh
+            </Button>
+          </div>
           {context?.project.lifecycle !== "Active" && context && (
             <p className="commercial-banner">
               This project is closed. Reopen it through its native workflow
@@ -275,58 +307,24 @@ function CommercialWorkspace({
               counts are not shown.
             </p>
           )}
+          {view === "Notice" && (
+            <p className="commercial-banner">
+              Notices are evidence your team records after a notice was given or
+              received. PPO sends nothing and makes no delivery claim. Plan a
+              future notice as an obligation or an Activity.
+            </p>
+          )}
           {view === "Values" ? (
             <>
               {current &&
                 finance.data &&
                 !finance.error &&
                 !finance.loading && (
-                  <RegisterTable
-                    caption="Variation value breakdown. Requested and priced are alternative valuations."
-                    footer={
-                      <RegisterFooter>
-                        Complete Finance breakdown · synthetic AUD excluding GST
-                      </RegisterFooter>
-                    }
-                  >
-                    <thead>
-                      <tr>
-                        <th>Variation</th>
-                        <th>State</th>
-                        <th>Requested</th>
-                        <th>Priced</th>
-                        <th>Contribution</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {finance.data.breakdown.map((row) => (
-                        <tr key={row.id}>
-                          <td>
-                            <Link href={recordHref(project, row.id)}>
-                              {rows.find((x) => x.id === row.id)?.content
-                                .title ?? "Variation"}
-                            </Link>
-                          </td>
-                          <td>{row.state}</td>
-                          <td>{moneyLabel(row.requested_amount)}</td>
-                          <td>{moneyLabel(row.priced_amount, "Not priced")}</td>
-                          <td>
-                            {row.state === "Approved"
-                              ? "Approved change"
-                              : row.disputed
-                                ? "Disputed"
-                                : [
-                                      "Requested",
-                                      "Assessed",
-                                      "Submitted",
-                                    ].includes(row.state)
-                                  ? "Pending · alternative values"
-                                  : "Not counted"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </RegisterTable>
+                  <ValueBreakdown
+                    data={finance.data}
+                    rows={rows}
+                    project={project}
+                  />
                 )}
             </>
           ) : (
@@ -395,7 +393,7 @@ function CommercialWorkspace({
                         />
                       </th>
                       <th>{kindLabel(view as Kind)}</th>
-                      <th>State</th>
+                      <th>{view === "Notice" ? "Occurred" : "State"}</th>
                       {view === "Variation" ? (
                         <>
                           <th>Requested</th>
@@ -405,30 +403,38 @@ function CommercialWorkspace({
                       ) : view === "Obligation" ? (
                         <>
                           <th>Due</th>
-                          <th>Evidence</th>
+                          <th>Activities</th>
                         </>
                       ) : view === "Notice" ? (
-                        <th>Occurred</th>
+                        <>
+                          <th>Record</th>
+                          <th>Clause</th>
+                        </>
                       ) : (
                         <th>Clause</th>
                       )}
                       <th>{view === "Notice" ? "Recorded by" : "Owner"}</th>
                       <th>
-                        <span>Settings</span>
+                        <span className="commercial-sr-only">Settings</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {groups.map((g) => (
                       <Fragment key={g.name}>
-                        <tr className="commercial-group">
+                        <tr
+                          className="commercial-group"
+                          data-state-group={g.name}
+                        >
                           <th
                             colSpan={
                               view === "Variation"
                                 ? 8
                                 : view === "Obligation"
                                   ? 7
-                                  : 6
+                                  : view === "Notice"
+                                    ? 7
+                                    : 6
                             }
                           >
                             {g.name}
@@ -458,7 +464,10 @@ function CommercialWorkspace({
                               />
                             </td>
                             <td className="ppo-register-wrap">
-                              <Link href={recordHref(project, row.id)}>
+                              <Link
+                                className="ppo-register-row-title"
+                                href={recordHref(project, row.id)}
+                              >
                                 {row.content.title}
                               </Link>
                               {row.source_status === "Changed" && (
@@ -466,7 +475,11 @@ function CommercialWorkspace({
                               )}
                             </td>
                             <td>
-                              <CommercialState row={row} />
+                              {view === "Notice" ? (
+                                <Stamp value={row.content.occurred_at} />
+                              ) : (
+                                <CommercialState row={row} />
+                              )}
                             </td>
                             {view === "Variation" ? (
                               <>
@@ -497,13 +510,18 @@ function CommercialWorkspace({
                                     ) && <small>Overdue</small>}
                                 </td>
                                 <td>
-                                  {row.content.evidence ? "Recorded" : "Needed"}
+                                  {row.activity_counts.open
+                                    ? `${row.activity_counts.open} open`
+                                    : row.activity_counts.closed
+                                      ? `${row.activity_counts.closed} closed`
+                                      : "None"}
                                 </td>
                               </>
                             ) : view === "Notice" ? (
-                              <td>
-                                <Stamp value={row.content.occurred_at} />
-                              </td>
+                              <>
+                                <td>{noticeRelation(row)}</td>
+                                <td>{row.content.clause}</td>
+                              </>
                             ) : (
                               <td>{row.content.clause}</td>
                             )}
@@ -515,11 +533,12 @@ function CommercialWorkspace({
                             <td>
                               <Button
                                 variant="quiet"
+                                className="commercial-row-preview"
                                 aria-label={`Preview ${row.content.title}`}
                                 disabled={!current}
                                 onClick={() => setPreview(row)}
                               >
-                                Preview
+                                <span aria-hidden="true">…</span>
                               </Button>
                             </td>
                           </tr>
@@ -531,14 +550,17 @@ function CommercialWorkspace({
               </div>
               <div className="commercial-phone-list">
                 {groups.map((g) => (
-                  <section key={g.name}>
+                  <section key={g.name} data-state-group={g.name}>
                     <h2>
                       {g.name}
                       {complete ? ` · ${g.rows.length}` : ""}
                     </h2>
                     {g.rows.map((row) => (
                       <article key={row.id}>
-                        <Link href={recordHref(project, row.id)}>
+                        <Link
+                          className="ppo-register-row-title"
+                          href={recordHref(project, row.id)}
+                        >
                           {row.content.title}
                         </Link>
                         <p>
@@ -559,15 +581,18 @@ function CommercialWorkspace({
                             ? `Priced ${moneyLabel(row.content.priced_amount, "not priced")} · requested ${moneyLabel(row.content.requested_amount, "unknown")}`
                             : view === "Obligation"
                               ? (row.content.due_date ?? "Date needed")
-                              : row.note}
+                              : view === "Notice"
+                                ? noticeRelation(row)
+                                : row.note}
                         </p>
                         <Button
                           variant="quiet"
+                          className="commercial-row-preview"
                           disabled={!current}
                           onClick={() => setPreview(row)}
                           aria-label={`Preview ${row.content.title}`}
                         >
-                          Preview
+                          <span aria-hidden="true">…</span>
                         </Button>
                       </article>
                     ))}

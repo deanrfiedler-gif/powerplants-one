@@ -10671,8 +10671,8 @@
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "prepared_at": "2026-10-31",
+      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
       "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
       "sections": [
@@ -10723,7 +10723,7 @@
           "section_id": "information",
           "title": "Information and values",
           "paragraphs": [
-            "Requested and priced amounts are alternative valuations. Blank means unknown or not priced; zero and signed credits are explicit. Source changes hold new decisions and suppress the current adjusted total. Restricted control values say Unavailable."
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
           ],
           "steps": [],
           "headers": [],
@@ -10748,7 +10748,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a confirmed response or original operation receipt is success. Commercial decisions never move a schedule, issue an invoice or contact MYOB. PR #698 is unmerged at this implementation checkpoint; its Project record Commercial view is excluded."
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
           ],
           "steps": [],
           "headers": [],
@@ -76930,14 +76930,14 @@
     {
       "guide_key": "guide.route-projects-id-commercial-entry",
       "entry_key": "route:/projects/[id]/commercial/[entry]",
-      "title": "Contract obligations, notices and variations",
+      "title": "Commercial record",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Bounded native workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
       "related_entry_keys": [
         "scope:PJ-05",
         "route:/projects/commercial",
@@ -76948,7 +76948,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Review one project’s variations, obligations, notice evidence and original commercial basis. Values follow synthetic PJ05-FD08 v1; they are not accounting revenue, billings or cash."
+            "Inspect one variation, obligation, notice or commercial basis and act on its exact current version. Earlier reasons, notes and decisions remain in History."
           ],
           "steps": [],
           "headers": [],
@@ -76969,10 +76969,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Open Projects → Variations & obligations and search for a project.",
-            "Choose Variations, Obligations, Notices, Commercial basis or Value breakdown.",
-            "Open a title for its record, or Preview for its summary.",
-            "Confirm the exact state, source and version before acting."
+            "Read the title, state, owner and source facts.",
+            "Use Overview for the current proposal, Activities for linked work and History for earlier versions. Basis records also offer Sources.",
+            "On phone, use Details for the facts shown in the desktop left column.",
+            "Refresh before acting on a stale read. A preparer cannot decide a proposal they wrote or submitted."
           ],
           "headers": [],
           "rows": []
@@ -76981,7 +76981,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The secondary menu chooses the view. The project picker changes context. Group counts appear only after the whole permitted list is loaded. Refresh rereads current authority; failed refreshes retain old facts with an unconfirmed warning and disable actions."
+            "The header offers the actions allowed for this record. Previous and next follow the complete permitted register for the same kind; they are unavailable while that read is incomplete. Overview keeps requested, priced and approved amounts separate. The source strip warns when the retained basis has changed."
           ],
           "steps": [],
           "headers": [],
@@ -76991,7 +76991,7 @@
           "section_id": "information",
           "title": "Information and values",
           "paragraphs": [
-            "Requested and priced amounts are alternative valuations. Blank means unknown or not priced; zero and signed credits are explicit. Source changes hold new decisions and suppress the current adjusted total. Restricted control values say Unavailable."
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
           ],
           "steps": [],
           "headers": [],
@@ -77016,7 +77016,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a confirmed response or original operation receipt is success. Commercial decisions never move a schedule, issue an invoice or contact MYOB. PR #698 is unmerged at this implementation checkpoint; its Project record Commercial view is excluded."
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
           ],
           "steps": [],
           "headers": [],
@@ -77056,7 +77056,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "Use the project and view pickers on phone. Records offer Details, Overview, Activities and History. Forms and decisions reuse the shared modal/drawer and return focus on close. Commercial work is online only; the session journal retains only pending command recovery, not offline records."
+            "Use Details, Overview, Activities and History on phone. Tabs support arrow-key navigation; dialogs return focus on close. Commercial records require a connection. Pending-save recovery in this browser session is not an offline record cache."
           ],
           "steps": [],
           "headers": [],
@@ -77083,7 +77083,8 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress."
+      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
+      "prepared_at": "2026-10-31"
     },
     {
       "guide_key": "guide.route-projects-commercial",
@@ -77095,7 +77096,7 @@
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Bounded native workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "source_commit": "1b4f59d7fd77e267374f13317a712cdc045fa3d0",
       "related_entry_keys": [
         "scope:PJ-05",
         "route:/projects/commercial",
@@ -77149,7 +77150,7 @@
           "section_id": "information",
           "title": "Information and values",
           "paragraphs": [
-            "Requested and priced amounts are alternative valuations. Blank means unknown or not priced; zero and signed credits are explicit. Source changes hold new decisions and suppress the current adjusted total. Restricted control values say Unavailable."
+            "Requested and priced amounts are alternative valuations. Keep Requested amount unknown or Not priced yet selected until the amount is known; uncheck to enter an explicit amount, including zero or a signed credit. Source changes hold new decisions and suppress the adjusted total. Restricted control values say Unavailable."
           ],
           "steps": [],
           "headers": [],
@@ -77174,7 +77175,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Only a confirmed response or original operation receipt is success. Commercial decisions never move a schedule, issue an invoice or contact MYOB. PR #698 is unmerged at this implementation checkpoint; its Project record Commercial view is excluded."
+            "Only a confirmed response or original operation receipt is success. Refresh the record to confirm its latest state. Commercial decisions never move a schedule, issue an invoice or contact MYOB."
           ],
           "steps": [],
           "headers": [],
@@ -77241,7 +77242,8 @@
           "rows": []
         }
       ],
-      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress."
+      "runtime_evidence": "See docs/testing/evidence/project-commercial/README.md; validation in progress.",
+      "prepared_at": "2026-10-31"
     }
   ]
 }

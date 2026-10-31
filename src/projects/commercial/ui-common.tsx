@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   api,
   isDenied,
@@ -85,7 +84,8 @@ export function useCommercialList(project: string) {
 export function CommercialState({
   row,
 }: {
-  row: Pick<Row, "state" | "disputed" | "kind">;
+  row: Pick<Row, "state" | "disputed" | "kind"> &
+    Partial<Pick<Row, "correction_status">>;
 }) {
   return (
     <RegisterChip
@@ -99,11 +99,15 @@ export function CommercialState({
               : "neutral"
       }
     >
-      {row.kind === "Obligation" && row.state === "Submitted"
-        ? "Waiver requested"
-        : row.state === "RecordedEvidence"
-          ? "Recorded evidence"
-          : row.state}
+      {row.kind === "Notice" && row.correction_status === "Corrected"
+        ? "Corrected"
+        : row.kind === "Notice" && row.correction_status === "Unavailable"
+          ? "Correction status unavailable"
+          : row.kind === "Obligation" && row.state === "Submitted"
+            ? "Waiver requested"
+            : row.state === "RecordedEvidence"
+              ? "Recorded evidence"
+              : row.state}
       {row.disputed && row.state !== "Disputed" ? " · previously disputed" : ""}
     </RegisterChip>
   );
@@ -139,7 +143,12 @@ export function ControlValues({
   const values = [
     ["Original value", moneyLabel(data.original_control_value, "Unavailable")],
     ["Approved changes", moneyLabel(data.approved_change_value, "Unavailable")],
-    ["Adjusted value", moneyLabel(data.adjusted_control_value, "Unavailable")],
+    [
+      "Adjusted value",
+      data.status === "Held"
+        ? "Held"
+        : moneyLabel(data.adjusted_control_value, "Unavailable"),
+    ],
     ["Pending · priced", moneyLabel(data.priced_pending?.value, "Unavailable")],
     [
       "Pending · requested",
@@ -151,6 +160,20 @@ export function ControlValues({
   ];
   return (
     <section className="commercial-values" aria-label="Control values">
+      <div className="commercial-compact-values">
+        <small>Adjusted value</small>
+        <strong>{values[2][1]}</strong>
+        <p>
+          Original {values[0][1]} · approved changes {values[1][1]}
+        </p>
+        <p>
+          Pending: priced {values[3][1]} · requested {values[4][1]}
+          {data.requested_pending?.completeness === "Incomplete"
+            ? ` (${moneyLabel(data.requested_pending.known_subtotal)} known)`
+            : ""}
+        </p>
+        <p>Disputed {values[5][1]} · synthetic AUD excluding GST</p>
+      </div>
       <div className="commercial-measures">
         {values.map(([label, value]) => (
           <div key={label}>
@@ -177,38 +200,22 @@ export function ControlValues({
           .
         </p>
       )}
-      <p>
+      <p className="commercial-value-desktop-note">
         Synthetic · AUD excluding GST · definition PJ05-FD08 v1 · read{" "}
         <Stamp value={data.observed_at} />. Project control values, not revenue,
         billing or cash. Requested and priced are alternatives and are never
         added together.
       </p>
+      <details className="commercial-value-explanation">
+        <summary>About control values</summary>
+        <p>
+          Synthetic · AUD excluding GST · definition PJ05-FD08 v1 · read{" "}
+          <Stamp value={data.observed_at} />. Project control values, not
+          revenue, billing or cash. Requested and priced are alternatives and
+          are never added together.
+        </p>
+      </details>
     </section>
-  );
-}
-export function CommercialBreadcrumb({
-  project,
-  kind,
-}: {
-  project: string;
-  kind?: string;
-}) {
-  return (
-    <nav className="commercial-breadcrumb" aria-label="Commercial breadcrumb">
-      <Link href="/projects">Projects</Link>
-      <span>/</span>
-      <Link
-        href={`/projects/commercial${project ? `?project=${project}` : ""}`}
-      >
-        Variations & obligations
-      </Link>
-      {kind && (
-        <>
-          <span>/</span>
-          <span aria-current="page">{kind}</span>
-        </>
-      )}
-    </nav>
   );
 }
 

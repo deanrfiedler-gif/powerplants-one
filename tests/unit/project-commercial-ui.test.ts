@@ -6,6 +6,7 @@ import {
   group,
   moneyLabel,
   obligationOverdue,
+  noticeRelation,
 } from "../../src/projects/commercial/ui-model";
 import { cents, decimal, total } from "../../src/projects/commercial/model";
 
@@ -88,5 +89,29 @@ test("PJ05 overdue is an open-obligation site calendar date, not an instant or s
       instant,
     ),
     false,
+  );
+});
+
+test("PJ05 notice correction and waiver groups describe retained evidence", () => {
+  assert.equal(
+    group({
+      kind: "Notice",
+      state: "RecordedEvidence",
+      correction_status: "Corrected",
+      disputed: false,
+    }),
+    "Corrected",
+  );
+  assert.equal(
+    group({ kind: "Notice", state: "RecordedEvidence", disputed: false }),
+    "Latest",
+  );
+  assert.equal(
+    noticeRelation({ correction_status: "Latest", predecessor_id: "earlier" }),
+    "Corrects an earlier record",
+  );
+  assert.equal(
+    group({ kind: "Obligation", state: "Submitted", disputed: false }),
+    "Waiting for a waiver decision",
   );
 });

@@ -4,7 +4,6 @@ import {
   api,
   ErrorNotice,
   Field,
-  SelectField,
   ReadState,
   ValidationFields,
   useResource,
@@ -15,6 +14,7 @@ import { Button } from "../../components/ui/button";
 import { WorklistPanel } from "../../components/crm-worklist-tools";
 import {
   LocalDateTimeField,
+  LookupField,
   useUnsavedChanges,
 } from "../../components/record-ui";
 import type { Source } from "./validation";
@@ -29,6 +29,13 @@ import {
   type Pending,
 } from "./ui-model";
 
+const decisionLabels: Record<string, string> = {
+  Approved: "Approve",
+  Rejected: "Reject",
+  Disputed: "Dispute",
+  Returned: "Return",
+  Waived: "Waive",
+};
 type Choices = { items: Option[]; has_more: boolean };
 export function CommercialCommand({
   intent,
@@ -93,22 +100,37 @@ export function CommercialCommand({
   }, [storageKey]);
   const fields = intent.action === "Create" || intent.action === "Revise",
     basis = fields && intent.kind === "Basis" && intent.action === "Create";
+  const [search, setSearch] = useState({
+    owners: "",
+    activities: "",
+    handovers: "",
+    quotations: "",
+    documents: "",
+  });
   const owners = useResource<Choices>(
-    fields ? `${route}/basis-options?picker=owners` : null,
+    fields
+      ? `${route}/basis-options?picker=owners&q=${encodeURIComponent(search.owners)}`
+      : null,
   );
   const activities = useResource<Choices>(
-    fields ? `${route}/basis-options?picker=activities` : null,
+    fields
+      ? `${route}/basis-options?picker=activities&q=${encodeURIComponent(search.activities)}`
+      : null,
   );
   const handovers = useResource<Choices>(
-    basis ? `${route}/basis-options?picker=handovers` : null,
+    basis
+      ? `${route}/basis-options?picker=handovers&q=${encodeURIComponent(search.handovers)}`
+      : null,
   );
   const quotes = useResource<Choices>(
     basis && handover
-      ? `${route}/basis-options?picker=quotations&handover_id=${handover}`
+      ? `${route}/basis-options?picker=quotations&handover_id=${handover}&q=${encodeURIComponent(search.quotations)}`
       : null,
   );
   const documents = useResource<Choices>(
-    basis ? `${route}/basis-options?picker=documents` : null,
+    basis
+      ? `${route}/basis-options?picker=documents&q=${encodeURIComponent(search.documents)}`
+      : null,
   );
   const exact = useResource<{ source: { input: Source; amount: string } }>(
     basis && handover && quote && document
@@ -247,8 +269,9 @@ export function CommercialCommand({
         {pending ? (
           <>
             <p role="status">
-              The save outcome is unconfirmed. The original action and version
-              are locked. Check its receipt or retry the unchanged command.
+              {busy && !uncertain.current
+                ? "Saving this action. Waiting for confirmation."
+                : "The save outcome is unconfirmed. The original action and version are locked. Check its receipt or retry the unchanged command."}
             </p>
             <ErrorNotice error={error} />
             <div className="commercial-actions">
@@ -285,7 +308,7 @@ export function CommercialCommand({
               <fieldset disabled={busy || invalidated || !journalReady}>
                 {basis && (
                   <>
-                    <SelectField
+                    <LookupField
                       name="handover"
                       label="Received Sales handover"
                       value={handover}
@@ -294,33 +317,51 @@ export function CommercialCommand({
                         setQuote("");
                       }}
                       options={handovers.data?.items ?? []}
-                      required
+                      search={search.handovers}
+                      onSearch={(q) =>
+                        setSearch((old) => ({ ...old, handovers: q }))
+                      }
+                      loading={handovers.loading}
+                      error={!!handovers.error}
+                      more={handovers.data?.has_more}
                     />
                     <ReadState
                       loading={handovers.loading}
                       error={handovers.error}
                       retry={handovers.reload}
                     />
-                    <SelectField
+                    <LookupField
                       name="quotation"
                       label="Accepted quotation"
                       value={quote}
                       onChange={setQuote}
                       options={quotes.data?.items ?? []}
-                      required
+                      search={search.quotations}
+                      onSearch={(q) =>
+                        setSearch((old) => ({ ...old, quotations: q }))
+                      }
+                      loading={quotes.loading}
+                      error={!!quotes.error}
+                      more={quotes.data?.has_more}
                     />
                     <ReadState
                       loading={quotes.loading}
                       error={quotes.error}
                       retry={quotes.reload}
                     />
-                    <SelectField
+                    <LookupField
                       name="document"
                       label="Reviewed contract document"
                       value={document}
                       onChange={setDocument}
                       options={documents.data?.items ?? []}
-                      required
+                      search={search.documents}
+                      onSearch={(q) =>
+                        setSearch((old) => ({ ...old, documents: q }))
+                      }
+                      loading={documents.loading}
+                      error={!!documents.error}
+                      more={documents.data?.has_more}
                     />
                     <ReadState
                       loading={documents.loading || exact.loading}
@@ -486,13 +527,19 @@ export function CommercialCommand({
                       </>
                     )}
                     {intent.action === "Create" ? (
-                      <SelectField
+                      <LookupField
                         name="owner_id"
                         label="Owner"
                         value={content.owner_id}
                         onChange={(v) => update("owner_id", v)}
                         options={ownerOptions}
-                        required
+                        search={search.owners}
+                        onSearch={(q) =>
+                          setSearch((old) => ({ ...old, owners: q }))
+                        }
+                        loading={owners.loading}
+                        error={!!owners.error}
+                        more={owners.data?.has_more}
                       />
                     ) : (
                       <p>Owner: {intent.row?.owner_name} · retained</p>
@@ -504,6 +551,14 @@ export function CommercialCommand({
                     />
                     <fieldset>
                       <legend>Linked Activities · up to 20</legend>
+                      <Field
+                        name="activity_search"
+                        label="Find a linked Activity"
+                        value={search.activities}
+                        onChange={(q) =>
+                          setSearch((old) => ({ ...old, activities: q }))
+                        }
+                      />
                       {activities.data?.items.map((a) => (
                         <label className="commercial-check" key={a.id}>
                           <input
@@ -546,14 +601,37 @@ export function CommercialCommand({
                   </>
                 )}
                 {intent.action === "Decide" && (
-                  <SelectField
-                    name="outcome"
-                    label="Decision"
-                    value={outcome}
-                    onChange={setOutcome}
-                    options={choices.map((id) => ({ id, display_name: id }))}
-                    required
-                  />
+                  <fieldset className="commercial-decision-choices">
+                    <legend>Outcome</legend>
+                    {choices.map((choice) => (
+                      <label key={choice}>
+                        <input
+                          type="radio"
+                          name="outcome"
+                          value={choice}
+                          checked={outcome === choice}
+                          onChange={() => setOutcome(choice)}
+                          required
+                        />
+                        <span>
+                          <strong>{decisionLabels[choice] ?? choice}</strong>
+                          <small>
+                            {choice === "Approved"
+                              ? intent.kind === "Basis"
+                                ? "Approves the retained original basis"
+                                : "Records the exact priced terms"
+                              : choice === "Disputed"
+                                ? "Kept disputed until decided again"
+                                : choice === "Rejected"
+                                  ? "Can be revised and resubmitted"
+                                  : choice === "Waived"
+                                    ? "Waives this obligation on the retained evidence"
+                                    : "Returns the proposal for revision"}
+                          </small>
+                        </span>
+                      </label>
+                    ))}
+                  </fieldset>
                 )}
                 <Field
                   name="reason"
@@ -561,8 +639,7 @@ export function CommercialCommand({
                   value={reason}
                   onChange={setReason}
                   required
-                  multiline
-                  maxLength={2000}
+                  maxLength={1000}
                 />
                 <Field
                   name="note"

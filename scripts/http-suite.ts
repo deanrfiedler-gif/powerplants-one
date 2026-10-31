@@ -9,6 +9,7 @@ const exclusive = new Set([
   "crm-owner-transfer.test.ts",
   "estimating-e2-verification.test.ts",
   "project-commercial.test.ts",
+  "project-commercial-ui.test.ts",
   "project-specialist.test.ts",
   "project-specialist-handover.test.ts",
   "project-specialist-work.test.ts",

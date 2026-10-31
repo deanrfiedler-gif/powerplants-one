@@ -1,4 +1,7 @@
-# PJ-05 commercial UI implementation checkpoint
+---
+title: PJ-05 commercial UI implementation checkpoint
+date: 2026-10-31
+---
 
 Date: 2026-10-31. Owner: Codex for Dean. PR #803; scope PJ-05, parents PRJ-01, PRJ-05, PRJ-08 and FIN-05–FIN-08 unchanged.
 

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { ReadState, Stamp, useResource } from "../../components/business-ui";
 import { Button, ButtonLink } from "../../components/ui/button";
 import {
@@ -12,16 +12,33 @@ import { RecordTabs, RecordPanel } from "../../components/record-ui";
 import { WorklistPanel } from "../../components/crm-worklist-tools";
 import { RecordIdentity } from "../../shell/record-identity";
 import { CommercialCommand } from "./ui-command";
-import { PendingCommercialSave, CommercialState } from "./ui-common";
+import {
+  PendingCommercialSave,
+  CommercialState,
+  useCommercialList,
+} from "./ui-common";
 import {
   kindLabel,
+  noticeRelation,
+  group,
+  groupOrder,
   obligationOverdue,
   moneyLabel,
   recordHref,
   type DetailRead,
+  type Finance,
   type Intent,
 } from "./ui-model";
 import "./ui.css";
+
+const phoneQuery = "(max-width: 780px)";
+const subscribePhone = (notify: () => void) => {
+  const query = window.matchMedia(phoneQuery);
+  query.addEventListener("change", notify);
+  return () => query.removeEventListener("change", notify);
+};
+const isPhone = () => window.matchMedia(phoneQuery).matches;
+const serverPhone = () => false;
 
 export function CommercialRecord({
   project,
@@ -31,16 +48,39 @@ export function CommercialRecord({
   entry: string;
 }) {
   const router = useRouter();
+  const phone = useSyncExternalStore(subscribePhone, isPhone, serverPhone);
   const [before, setBefore] = useState<number | null>(null),
     [tab, setTab] = useState("overview"),
     [intent, setIntent] = useState<Intent | null>(null),
     [blocked, setBlocked] = useState(false);
+  const activeTab = !phone && tab === "details" ? "overview" : tab;
   const read = useResource<DetailRead>(
     `projects/${project}/commercial?id=${entry}${before ? `&before_version=${before}` : ""}`,
   );
   const data = read.data,
     row = data?.current,
     context = data?.context;
+  const finance = useResource<Finance>(
+    row?.kind === "Basis" ? `projects/${project}/commercial/finance` : null,
+  );
+  const siblings = useCommercialList(project);
+  const ordered = (siblings.data?.items ?? [])
+    .filter((item) => item.kind === row?.kind)
+    .sort(
+      (a, b) =>
+        groupOrder.indexOf(
+          group(a, context?.project.timezone, data?.observed_at),
+        ) -
+        groupOrder.indexOf(
+          group(b, context?.project.timezone, data?.observed_at),
+        ),
+    );
+  const position = ordered.findIndex((item) => item.id === entry);
+  const canNavigate =
+    !siblings.loading &&
+    !siblings.error &&
+    siblings.data?.completeness === "Complete" &&
+    position >= 0;
   const current = !!row && !read.loading && !read.error;
   const openActions =
     data?.current_actions?.filter(
@@ -55,22 +95,42 @@ export function CommercialRecord({
         basis: row.basis_id ?? undefined,
       });
   };
-  const actions = row ? (
+  const navigation = row ? (
     <>
+      <Button
+        aria-label="Previous commercial record"
+        disabled={!current || !!intent || !canNavigate || position === 0}
+        onClick={() =>
+          router.push(recordHref(project, ordered[position - 1].id))
+        }
+      >
+        <span aria-hidden="true">‹</span>
+      </Button>
+      <Button
+        aria-label="Next commercial record"
+        disabled={
+          !current || !!intent || !canNavigate || position + 1 >= ordered.length
+        }
+        onClick={() =>
+          router.push(recordHref(project, ordered[position + 1].id))
+        }
+      >
+        <span aria-hidden="true">›</span>
+      </Button>
       <Button
         disabled={read.loading || !!intent}
         onClick={() => {
           setBefore(null);
           read.reload();
+          siblings.reload();
         }}
       >
         Refresh
       </Button>
-      {row.basis_id && (
-        <ButtonLink href={recordHref(project, row.basis_id)}>
-          Open basis
-        </ButtonLink>
-      )}
+    </>
+  ) : null;
+  const prepareActions = row ? (
+    <>
       {current && data.can_prepare && (
         <>
           {((row.kind === "Basis" &&
@@ -96,23 +156,11 @@ export function CommercialRecord({
             !["Approved", "Withdrawn"].includes(row.state) && (
               <Button onClick={() => start("Withdraw")}>Withdraw</Button>
             )}
-          {row.kind === "Obligation" && row.state === "Open" && (
-            <Button
-              variant="primary"
-              onClick={() =>
-                openActions.length || !row.content.evidence
-                  ? setBlocked(true)
-                  : start("Satisfy")
-              }
-            >
-              Mark satisfied
-            </Button>
-          )}
           {row.kind === "Obligation" &&
             ["Satisfied", "Waived"].includes(row.state) && (
               <Button onClick={() => start("Reopen")}>Reopen</Button>
             )}
-          {row.kind === "Notice" && (
+          {row.kind === "Notice" && row.correction_status === "Latest" && (
             <Button
               onClick={() =>
                 setIntent({
@@ -143,6 +191,44 @@ export function CommercialRecord({
           )}
         </>
       )}
+    </>
+  ) : null;
+  const actions = row ? (
+    <>
+      {phone ? (
+        <details className="commercial-record-more">
+          <summary>More actions</summary>
+          <div>
+            {navigation}
+            {prepareActions}
+          </div>
+        </details>
+      ) : (
+        <>
+          {navigation}
+          {prepareActions}
+        </>
+      )}
+      {row.basis_id && (
+        <ButtonLink href={recordHref(project, row.basis_id)}>
+          Open basis
+        </ButtonLink>
+      )}
+      {current &&
+        data.can_prepare &&
+        row.kind === "Obligation" &&
+        row.state === "Open" && (
+          <Button
+            variant="primary"
+            onClick={() =>
+              openActions.length || !row.content.evidence
+                ? setBlocked(true)
+                : start("Satisfy")
+            }
+          >
+            Mark satisfied
+          </Button>
+        )}
       {row.state === "Submitted" && (
         <Button
           variant="primary"
@@ -157,7 +243,7 @@ export function CommercialRecord({
     </>
   ) : null;
   const tabs = [
-    { id: "details", label: "Details" },
+    ...(phone ? [{ id: "details", label: "Details" }] : []),
     { id: "overview", label: "Overview" },
     {
       id: "activities",
@@ -171,6 +257,12 @@ export function CommercialRecord({
       <>
         <RecordFactSection title={kindLabel(row.kind)}>
           <dl>
+            {row.kind === "Notice" && (
+              <>
+                <dt>Record</dt>
+                <dd>{noticeRelation(row)}</dd>
+              </>
+            )}
             <dt>State</dt>
             <dd>
               <CommercialState row={row} />
@@ -189,7 +281,9 @@ export function CommercialRecord({
             <dd>
               {row.predecessor_id ? (
                 <Link href={recordHref(project, row.predecessor_id)}>
-                  Open retained predecessor
+                  {row.kind === "Notice"
+                    ? noticeRelation(row)
+                    : "Open retained predecessor"}
                 </Link>
               ) : (
                 "None"
@@ -225,7 +319,11 @@ export function CommercialRecord({
       </>
     ) : null;
   return (
-    <div className="commercial-record-root">
+    <div
+      id="ppo-commercial-record-workspace"
+      className="commercial-record-root"
+      data-ppo-workspace="shared"
+    >
       {context && !intent && (
         <PendingCommercialSave
           context={context}
@@ -265,7 +363,8 @@ export function CommercialRecord({
                 · {context.project.title}
               </>
             }
-            actions={actions}
+            actions={phone ? null : actions}
+            stickyAction={phone ? actions : undefined}
             sourcesLabel="Commercial source and review facts"
             sources={
               <>
@@ -291,15 +390,19 @@ export function CommercialRecord({
                 id="commercial-record"
                 label="Commercial record views"
                 tabs={tabs}
-                value={tab}
+                value={activeTab}
                 onChange={setTab}
               />
             }
           >
-            <RecordPanel id="commercial-record" tab="details" value={tab}>
+            <RecordPanel id="commercial-record" tab="details" value={activeTab}>
               {facts}
             </RecordPanel>
-            <RecordPanel id="commercial-record" tab="overview" value={tab}>
+            <RecordPanel
+              id="commercial-record"
+              tab="overview"
+              value={activeTab}
+            >
               {data.source_status === "Changed" && (
                 <p className="commercial-banner" role="status">
                   The retained source changed. New use and decisions are held;
@@ -313,6 +416,27 @@ export function CommercialRecord({
                     : "Waiting for an independent commercial decision on this exact version."}{" "}
                   Control values update after approval.
                 </p>
+              )}
+              {row.kind === "Basis" && (
+                <section className="commercial-basis-value">
+                  <h2>Original control value</h2>
+                  <strong>
+                    {finance.loading
+                      ? "Loading"
+                      : finance.data && !finance.error
+                        ? moneyLabel(data.source?.amount, "Unavailable")
+                        : "Unavailable"}
+                  </strong>
+                  <p>
+                    Synthetic · AUD excluding GST · retained exact quotation
+                    value. Both Finance read duties are required.
+                  </p>
+                  <ReadState
+                    loading={finance.loading}
+                    error={finance.error}
+                    retry={finance.reload}
+                  />
+                </section>
               )}
               {row.kind === "Variation" && (
                 <section>
@@ -403,7 +527,11 @@ export function CommercialRecord({
                 )}
               </section>
             </RecordPanel>
-            <RecordPanel id="commercial-record" tab="activities" value={tab}>
+            <RecordPanel
+              id="commercial-record"
+              tab="activities"
+              value={activeTab}
+            >
               <h2>Linked Activities</h2>
               <p>
                 Activities keep their own lifecycle. Completing one does not
@@ -417,7 +545,7 @@ export function CommercialRecord({
               ))}
               {!data.current_actions?.length && <p>No linked Activities.</p>}
             </RecordPanel>
-            <RecordPanel id="commercial-record" tab="history" value={tab}>
+            <RecordPanel id="commercial-record" tab="history" value={activeTab}>
               <h2>History</h2>
               {data.history?.map((event) => (
                 <article className="commercial-history" key={event.version}>
@@ -450,7 +578,11 @@ export function CommercialRecord({
               </div>
             </RecordPanel>
             {row.kind === "Basis" && (
-              <RecordPanel id="commercial-record" tab="sources" value={tab}>
+              <RecordPanel
+                id="commercial-record"
+                tab="sources"
+                value={activeTab}
+              >
                 <h2>Retained sources</h2>
                 <p>
                   The exact received handover, accepted quotation and reviewed
@@ -509,6 +641,7 @@ export function CommercialRecord({
           onSaved={(id) => {
             setIntent(null);
             setBefore(null);
+            siblings.reload();
             if (id !== entry) router.push(recordHref(project, id));
             else read.reload();
           }}

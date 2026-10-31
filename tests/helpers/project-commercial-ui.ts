@@ -114,6 +114,13 @@ export async function commercialUIFixture() {
     },
   };
   await commandCommercial(f.owner, f.project.id, notice);
-  entries.notice = notice.id;
-  return { f, entries };
+  entries.original_notice = notice.id;
+  const correction = {
+    ...notice,
+    ...commercialAction(randomUUID(), 0, "Create"),
+    predecessor_id: notice.id,
+  };
+  await commandCommercial(f.owner, f.project.id, correction);
+  entries.notice = correction.id;
+  return { f, entries, notice };
 }

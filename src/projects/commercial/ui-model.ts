@@ -39,7 +39,32 @@ export function moneyLabel(
     [whole, fraction = "00"] = (negative ? value.slice(1) : value).split(".");
   return `${negative ? "−" : ""}$${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.${fraction.padEnd(2, "0")}`;
 }
-export function group(row: Pick<Row, "kind" | "state" | "disputed">) {
+export function group(
+  row: Pick<Row, "kind" | "state" | "disputed"> &
+    Partial<Pick<Row, "content" | "correction_status">>,
+  timezone?: string,
+  observedAt?: string,
+) {
+  if (row.kind === "Notice")
+    return row.correction_status === "Unavailable"
+      ? "Correction status unavailable"
+      : row.correction_status === "Corrected"
+        ? "Corrected"
+        : "Latest";
+  if (
+    row.kind === "Obligation" &&
+    row.content &&
+    timezone &&
+    observedAt &&
+    obligationOverdue(
+      { ...row, content: row.content },
+      timezone,
+      new Date(observedAt),
+    )
+  )
+    return "Overdue";
+  if (row.kind === "Obligation" && row.state === "Submitted")
+    return "Waiting for a waiver decision";
   if (row.disputed) return "Disputed";
   if (row.state === "Submitted") return "Waiting for decision";
   if (
@@ -47,16 +72,19 @@ export function group(row: Pick<Row, "kind" | "state" | "disputed">) {
   )
     return "Open";
   if (row.state === "Approved") return "Approved";
-  if (row.kind === "Notice") return "Recorded evidence";
   return "Closed";
 }
 export const groupOrder = [
+  "Overdue",
+  "Waiting for a waiver decision",
   "Waiting for decision",
   "Open",
   "Disputed",
   "Approved",
   "Closed",
-  "Recorded evidence",
+  "Latest",
+  "Corrected",
+  "Correction status unavailable",
 ];
 export function editableContent(
   content: Content,
@@ -152,3 +180,14 @@ export function obligationOverdue(
     row.content.due_date < `${value("year")}-${value("month")}-${value("day")}`
   );
 }
+
+export const noticeRelation = (
+  row: Pick<Row, "correction_status" | "predecessor_id">,
+) =>
+  row.correction_status === "Unavailable"
+    ? "Correction status unavailable"
+    : row.correction_status === "Corrected"
+      ? "Corrected by a later record"
+      : row.predecessor_id
+        ? "Corrects an earlier record"
+        : "Original";
