@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SC04-RECEIVING-FIGMA-DEC,Receiving design (Figma) owner decision,docs/decisions/receiving-figma-design.md,,Owner-accepted design; application changes and MYOB mappings separate,Dean Fiedler,7eb4432baefcf8b098a37726b250a311f21e67dc,,,git,
+PPO-SC04-RECEIVING-FIGMA-R01,Receiving design retained captures,docs/reference/ui/supply-chain/receiving-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,7eb4432baefcf8b098a37726b250a311f21e67dc,,,retained-record,
