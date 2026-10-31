@@ -10,7 +10,7 @@ Validation in progress. Focused planner/working-hours/workspace units: 24 passed
 
 The original focused database run exceeded the unchanged 120-second deadline. An unchanged-main test (`SV04 detail projects…`, base `1402c87b`) reproduced that timeout. A second run timed out in the retained read/access test, then failed in the new test’s reset hook with the native 3-second connection timeout. The supplemental run of the exact new hold assertions, after separate native migrate/seed and with permission grants restored in finally, passed in 4679 ms. That verifies the current gate values, bounded fields and revoked pack access; it does not turn the official database suite green.
 
-The first browser run failed at sign-in while the database test reset the same fixtures. The server was stopped, native setup restored and later runs are serialized. HTTP, scheduling/P-series browser proof and application visual comparison remain in progress. No unexecuted check is claimed as passing.
+The first browser run failed at sign-in while the database test reset the same fixtures. The server was stopped, native setup restored and later runs are serialized. The focused HTTP hold-contract case passed in 22.96 seconds. Scheduling/P-series browser proof and application visual comparison remain in progress. No unexecuted check is claimed as passing.
 
 ## Visual comparison and differences
 
@@ -19,7 +19,8 @@ The accepted Day, move dialog and phone sheet references were inspected before i
 - On hold contains current filtered held visits. Native work orders have only Draft and Authorised states, so the design's typed held-order causes and release dates cannot be presented truthfully. Missing evidence stays reason unavailable. Source corrections appear on a fresh read; there is no invented timed automatic return.
 - Gate reasons are verbatim and may be longer than the frames. One Review appointment link is the action, using existing source-owned controls. Suggestions are excluded.
 - Existing policy preparation, reviewed versions, complete crew/travel and uncertain-save recovery remain in the forms, making them longer than the compact compositions. No rule or endpoint is added.
-- Existing Appointment state and alternate-timezone list support remain. Retained synthetic seeds differ in labels/counts from the design story; native fallback icons replace Pro artwork.
+- Plan visit uses the existing proposal command, which does not assign or reserve crew. Suggested crew/free-time matching and the board preview from that design composition are not implemented; suggestions remain out of scope.
+- Read provenance, the legend and the retained Proposed/cancelled list remain below the board. Existing Appointment state and alternate-timezone list support remain. Retained synthetic seeds differ in labels/counts from the design story; native fallback icons replace Pro artwork.
 - Historical 9 October owner review is stale. Its date, reviewer and fingerprint are preserved; these changes grant no new review.
 
 ## Acceptance and deployment
