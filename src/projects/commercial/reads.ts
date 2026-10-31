@@ -1,3 +1,5 @@
+import { hasPermission } from "../../platform/permissions";
+import { commercialNames, commercialPresentation } from "./presentation";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
@@ -36,6 +38,7 @@ const projection = (e: Entry, v: Event) => ({
   content: v.content,
   command: v.command,
   note: v.note,
+  reason: v.reason,
   disputed: v.disputed,
   recorded_by: v.created_by,
   recorded_at: v.created_at.toISOString(),
@@ -132,6 +135,15 @@ export async function readCommercial(
       p.workspace_id,
     ]);
     const pr = await authority(c, p, project);
+    const context = {
+      actor_id: p.actor_id, workspace_id: p.workspace_id,
+      project: { id: pr.id, title: pr.title, display_number: pr.display_number,
+        lifecycle: pr.lifecycle, coordinator_id: pr.coordinator_id,
+        coordinator_name: pr.coordinator_name, customer_name: pr.customer_name,
+        site_name: pr.site_name, timezone: pr.timezone },
+      can_prepare: await hasPermission(c, p, "project.commercial.prepare", pr.company_id, pr.site_id),
+      can_review: await hasPermission(c, p, "project.commercial.review", pr.company_id, pr.site_id),
+    };
     if (q.id !== undefined) {
       object(q, ["id", "before_version"]);
       const e = await entryRow(c, p, uuid(q.id, "id"));
@@ -147,12 +159,18 @@ export async function readCommercial(
           : version(Number(q.before_version)),
       );
       const current = (await history(c, p, e.id, undefined, 1))[0];
-      await actions(c, p, pr.id, [
+      const currentActions = await actions(c, p, pr.id, [
         ...new Set([current, ...rows].flatMap((x) => x.content.action_ids)),
       ]);
+      const names = await commercialNames(c, p, [current, ...rows]);
+      const authored = !!(await c.query("SELECT 1 FROM ppo.project_commercial_events WHERE workspace_id=$1 AND entry_id=$2 AND created_by=$3 AND command IN ('Create','Revise','Submit') LIMIT 1", [p.workspace_id, e.id, p.actor_id])).rowCount;
       return {
-        current: projection(e, current),
-        history: rows.slice(0, 50).map((v) => projection(e, v)),
+        context, current_actions: currentActions.filter(a => current.content.action_ids.includes(a.id)),
+        can_prepare: context.can_prepare && pr.lifecycle === "Active" && [pr.coordinator_id, current.content.owner_id].includes(p.actor_id),
+        can_decide: context.can_review && pr.lifecycle === "Active" && !authored,
+        independent_review_required: authored,
+        current: commercialPresentation(projection(e, current), names),
+        history: rows.slice(0, 50).map((v) => commercialPresentation(projection(e, v), names)),
         next_before_version: rows.length > 50 ? rows[49].version : null,
         source,
         source_status: status,
@@ -176,12 +194,12 @@ export async function readCommercial(
     const items: (ReturnType<typeof projection> & {
       source_status: "Current" | "Changed";
     })[] = [];
-    let after = pg.after,
+    let after: string | null = null,
       partial = false;
     // Native signed cursors are encoded, not encrypted. Only a visible record may be their anchor.
     // Scan fixed-size batches until enough permitted rows are found; never return a hidden ID.
     for (;;) {
-      const rows = (
+      const rows: (Entry & Event)[] = (
         await c.query<Entry & Event>(
           `SELECT e.*,v.* FROM ppo.project_commercial_entries e JOIN LATERAL
         (SELECT * FROM ppo.project_commercial_events v WHERE v.workspace_id=e.workspace_id AND v.entry_id=e.id ORDER BY version DESC LIMIT 1) v ON true
@@ -201,17 +219,26 @@ export async function readCommercial(
           if (!denied(e)) throw e;
           partial = true;
         }
-        if (items.length > pg.limit) break;
+
       }
-      if (items.length > pg.limit || rows.length < 200) break;
+      if (rows.length < 200) break;
       after = rows.at(-1)!.id;
     }
-    const selected = items.slice(0, pg.limit);
+    // Sort only authorised records. The signed cursor names a visible anchor; hidden IDs/counts never escape.
+    items.sort((a,b) => b.recorded_at.localeCompare(a.recorded_at) || a.id.localeCompare(b.id));
+    const anchor = pg.after ? items.findIndex(x => x.id === pg.after) : -1;
+    if (pg.after && anchor < 0) invalid("cursor", "The result changed. Start a fresh read.");
+    const remaining = items.slice(anchor + 1);
+    const selected = remaining.slice(0, pg.limit);
+    const names = await commercialNames(c, p, selected.map(x => ({ content: x.content, created_by: x.recorded_by })));
+    const complete = !partial && remaining.length <= pg.limit;
+    const counts = complete && !pg.after ? Object.fromEntries(kinds.map(k => [k, items.filter(x => x.kind === k).length])) : null;
     return {
-      items: selected,
+      context, counts,
+      items: selected.map(x => commercialPresentation(x, names)),
       next_cursor:
-        items.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
-      completeness: partial ? "Partial" : "Page",
+        remaining.length > pg.limit ? pg.cursor(selected.at(-1)!.id) : null,
+      completeness: partial ? "Partial" : complete ? "Complete" : "Page",
       synthetic: true,
       observed_at: new Date().toISOString(),
     };

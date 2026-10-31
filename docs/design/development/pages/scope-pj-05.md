@@ -4,6 +4,10 @@ Stable entry: `scope:PJ-05`. Owner: Dean Fiedler. Status: **Draft for visual rev
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/projects/commercial`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
+## Implementation checkpoint — 31 October 2026
+
+See the [native route contract](route-projects-commercial.md) for current controls, adaptations and exclusions, and the [evidence chapter](../../../testing/evidence/project-commercial/README.md) for executed checks. No review fingerprint or application acceptance is granted.
+
 ## Purpose and task
 
 Implement contract obligations, notices, variations, disputed changes, dates and evidence.
@@ -19,7 +23,7 @@ Accepted design: the [Contract obligations, notices and variations design decisi
 - **Register:** `/projects/commercial` for one project at a time, opened from the Projects menu item "Variations & obligations". The side menu holds Variations, Obligations, Notices and Commercial basis, and Value breakdown for Finance readers. Grids are grouped by state with fixed Select and Settings columns; the control values strip sits above Variations and Value breakdown.
 - **Records:** variation, obligation and basis records on the shared record layout, with a facts bar, a details column and Overview, Activities and History tabs. Decisions use a centred dialog bound to the exact version; creating a variation, recording a notice and proposing the basis use side panels.
 - **Project record:** a Commercial view between Baselines and Acceptance, with the control values, Needs attention and the basis.
-- Nothing is built; the backend reads the design implies are G1–G8 in the decision.
+- Native register and record controls are implemented in draft PR #803; validation and application visual review remain separate. The Project record Commercial view is excluded while #698 is unmerged.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 

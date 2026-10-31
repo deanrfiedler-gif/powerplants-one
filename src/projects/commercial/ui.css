@@ -1,0 +1,454 @@
+/* PJ-05 composes the shared workspace, register and record controls. */
+#ppo-commercial {
+  color: var(--ink);
+  background: var(--white);
+}
+#ppo-commercial .mw-content {
+  overflow: auto;
+  min-width: 0;
+}
+.commercial-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13px;
+}
+.commercial-toolbar {
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.commercial-toolbar > span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.commercial-picker {
+  flex: 1 1 280px;
+  max-width: 440px;
+  min-width: 0;
+}
+.commercial-picker .field {
+  margin: 0;
+}
+.commercial-picker label {
+  font-size: 12px;
+}
+.commercial-picker input {
+  width: 100%;
+}
+.commercial-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 12px;
+}
+#ppo-commercial .commercial-menu-item {
+  display: flex;
+  width: calc(100% - 16px);
+  margin: 4px 8px;
+  padding: 12px;
+  align-items: center;
+  text-align: left;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+#ppo-commercial .commercial-menu-item[aria-current="page"] {
+  background: var(--surface-2);
+  color: var(--link);
+  font-weight: 600;
+}
+.commercial-menu-heading {
+  padding: 20px 20px 8px;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.commercial-values,
+.commercial-values-unavailable {
+  padding: 12px 16px;
+}
+.commercial-measures {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+.commercial-measures > div {
+  min-width: 0;
+  padding-right: 12px;
+  border-right: 1px solid var(--line-soft);
+}
+.commercial-measures > div:last-child {
+  border: 0;
+}
+.commercial-measures small,
+.commercial-amount-card small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.commercial-measures strong {
+  display: block;
+  font-size: 16px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.commercial-measures span,
+.commercial-values > p {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.commercial-values > p {
+  margin: 10px 0 0;
+}
+#ppo-commercial .commercial-group th {
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+#ppo-commercial td small {
+  display: block;
+  color: var(--warning);
+}
+.commercial-banner {
+  padding: 14px 16px;
+  margin: 12px 16px;
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.commercial-phone-view,
+.commercial-phone-list {
+  display: none;
+}
+.commercial-record-root {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  background: var(--white);
+}
+#ppo-commercial-record {
+  min-width: 0;
+}
+#ppo-commercial-record .shared-record-header {
+  padding: 22px 24px;
+}
+#ppo-commercial-record .shared-record-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#ppo-commercial-record .shared-record-title h1 {
+  font-size: 24px;
+}
+#ppo-commercial-record .shared-record-meta {
+  font-size: 13px;
+}
+#ppo-commercial-record .shared-record-sources {
+  padding: 12px 24px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-block: 1px solid var(--line-soft);
+  font-size: 12px;
+}
+#ppo-commercial-record .shared-record-body {
+  display: grid;
+  grid-template-columns: minmax(260px, 32%) minmax(0, 1fr);
+}
+#ppo-commercial-record .shared-record-facts {
+  padding: 16px 24px;
+  border-right: 1px solid var(--line-soft);
+}
+#ppo-commercial-record .shared-record-workspace {
+  background: var(--paper);
+  min-width: 0;
+}
+#ppo-commercial-record .shared-record-content {
+  padding: 24px;
+}
+#ppo-commercial-record .record-tablist {
+  background: var(--white);
+}
+#ppo-commercial-record dl {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px 16px;
+  margin: 14px 0 24px;
+}
+#ppo-commercial-record dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-commercial-record dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+#ppo-commercial-record h2 {
+  font-size: 16px;
+  margin: 24px 0 8px;
+}
+#ppo-commercial-record .shared-record-facts h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.commercial-proposal,
+.commercial-amount-card {
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--white);
+}
+.commercial-amount-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.commercial-amount-card strong {
+  display: block;
+  margin-top: 6px;
+}
+.commercial-history {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 12px 0;
+}
+.commercial-history h3 {
+  font-size: 14px;
+}
+.commercial-history p {
+  white-space: pre-wrap;
+}
+.commercial-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.commercial-command fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  margin: 12px 0;
+}
+.commercial-command fieldset fieldset {
+  border: 1px solid var(--line-soft);
+  padding: 12px;
+}
+.commercial-command .field {
+  margin: 16px 0;
+}
+.commercial-command .field input,
+.commercial-command .field select,
+.commercial-command .field textarea {
+  width: 100%;
+}
+.commercial-command .commercial-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.commercial-check {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+}
+.commercial-check input {
+  width: auto;
+}
+@media (max-width: 1100px) {
+  .commercial-measures {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .commercial-toolbar-actions {
+    margin-left: 0;
+  }
+}
+@media (max-width: 780px) {
+  .commercial-breadcrumb {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .commercial-toolbar {
+    padding: 12px 16px;
+  }
+  .commercial-picker {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .commercial-toolbar > span {
+    display: none;
+  }
+  .commercial-toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .commercial-values {
+    margin: 0 16px 12px;
+    padding: 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+  }
+  .commercial-measures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .commercial-measures > div {
+    border: 0;
+    padding: 0;
+  }
+  .commercial-measures > div:nth-child(3) {
+    grid-column: 1/-1;
+    grid-row: 1;
+  }
+  .commercial-measures strong {
+    font-size: 14px;
+  }
+  .commercial-desktop-table {
+    display: none;
+  }
+  .commercial-phone-view {
+    display: block;
+    padding: 0 16px 12px;
+  }
+  .commercial-phone-view label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .commercial-phone-view select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  .commercial-phone-list {
+    display: block;
+  }
+  .commercial-phone-list h2 {
+    background: var(--surface-2);
+    padding: 8px 16px;
+    margin: 0;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .commercial-phone-list article {
+    position: relative;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .commercial-phone-list article > a {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .commercial-phone-list p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 6px 0;
+    overflow-wrap: anywhere;
+  }
+  #ppo-commercial-record .shared-record-body {
+    display: block;
+  }
+  #ppo-commercial-record .shared-record-facts {
+    display: none;
+  }
+  #ppo-commercial-record .shared-record-header {
+    padding: 16px;
+  }
+  #ppo-commercial-record .shared-record-title h1 {
+    font-size: 20px;
+  }
+  #ppo-commercial-record .shared-record-content {
+    padding: 16px;
+  }
+  #ppo-commercial-record .shared-record-sources {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  #ppo-commercial-record .shared-record-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #ppo-commercial-record .shared-record-actions button {
+    min-height: 44px;
+  }
+  #ppo-commercial-record dl {
+    grid-template-columns: 85px minmax(0, 1fr);
+    gap: 10px;
+  }
+  .commercial-amount-card {
+    grid-template-columns: 1fr;
+  }
+  .commercial-command .commercial-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .commercial-command input,
+  .commercial-command select,
+  .commercial-command textarea {
+    font-size: 16px;
+  }
+  .commercial-command button {
+    min-height: 48px;
+  }
+}
+@media (max-width: 780px) {
+  .crm-r38-panel:has(.commercial-command) {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92dvh;
+    margin: auto 0 0;
+    border-radius: 12px 12px 0 0;
+  }
+  .crm-r38-panel:has(.commercial-command) .crm-r38-panel-body {
+    overflow: auto;
+  }
+}
+
+.commercial-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--surface-2);
+}
+#ppo-commercial .commercial-desktop-table :is(td, th):last-child {
+  position: sticky;
+  right: 0;
+  background: var(--white);
+  z-index: 1;
+}
+#ppo-commercial .commercial-desktop-table .commercial-group th {
+  position: static;
+  background: var(--surface-2);
+}
+
+.commercial-toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.commercial-toggle input {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+}

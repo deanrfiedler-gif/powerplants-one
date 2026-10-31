@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "fields-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "lookup": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial"
+      ],
+      "gaps": [
+        {
+          "id": "lookup-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "validation": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "validation-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "tabs-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial"
+      ],
+      "gaps": [
+        {
+          "id": "menu-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "drawer": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "drawer-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "status": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "status-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/commercial"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "shared-record": {
+      "states": [
+        {
+          "id": "pj05-commercial",
+          "label": "PJ-05 commercial host",
+          "description": "Native register and records; permitted, source-held, blocked satisfaction, stale read and uncertain command recovery."
+        }
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx"
+      ],
+      "used_on": [
+        "route:/projects/[id]/commercial/[entry]"
+      ],
+      "gaps": [
+        {
+          "id": "shared-record-pj05-review",
+          "expected": "Accepted PJ-05 desktop and phone composition with native refusal and recovery.",
+          "actual": "Implemented host; application visual acceptance pending.",
+          "action": "Compare retained captures and record functional, visual and owner review separately.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

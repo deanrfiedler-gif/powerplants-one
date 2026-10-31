@@ -44,6 +44,18 @@ Use stable UUIDs, immutable revisions and explicit references within existing Po
 
 Every command carries the native operation ID, schema version, reason and expected record version. Header and revision changes, source snapshots, audit, receipt and native synthetic outbox evidence commit together. Native workspace transaction locking and exact record versions prevent two concurrent basis approvals or unseen aggregate changes. Use foreign keys/checks to prevent cross-Project, cross-company and orphaned evidence, plus the established immutable-evidence guards.
 
+## Native page contract — PJ-05
+
+The register at `/projects/commercial` reads one chosen project. `/projects/[id]/commercial/[entry]` opens Basis, Variation, Obligation or Notice on the shared record layout. The menu exposes Variations & obligations. The Project record Commercial view is excluded while PR #698 remains unmerged.
+
+Commercial reads add internal owner/actor names only after source and Activity visibility succeeds, retain the distinct stored reason and note, and return project context and current command-duty hints. Independent-review eligibility checks every Create, Revise and Submit author, not only the current history page. Commands remain the final authority. Current Activity states drive the blocked satisfaction explanation.
+
+Register reads scan authorised entries, sort by latest change with ID as a deterministic tie-break, and retain signed visible-record cursors. Complete counts are returned only for a fully visible unpaged result; a partial result exposes no hidden IDs or hidden count. The UI follows pages before grouping and suppresses complete counts if any page is partial or its 4,000-record display bound is reached. Refreshing restarts paging; a vanished cursor requires a fresh read.
+
+The existing basis-options route also accepts `picker=owners|activities|handovers|quotations|documents` and optional search `q`; quotation choices require `handover_id`. Choices are permission checked and do not confer authority. The original three-ID basis-options read resolves and verifies the exact combination; Create rechecks it. Picker results are capped at 100 with `has_more`, without disclosing inaccessible candidate counts.
+
+Decision dialogs omit prospective control values under G8. Existing Finance reads remain the sole source of control totals; access failure is Unavailable, never zero. Known subtotal is labelled incomplete. The UI keeps original pending command bytes and operation ID in scoped session storage before sending; uncertain outcomes lock editing until a confirmed original receipt or unchanged retry succeeds. No offline records or My Work items are added.
+
 ## Lifecycle rules
 
 **Basis:** Draft -> Submitted -> Approved or Returned. A returned basis can revise narrative content and be submitted again. Its exact source selection is fixed; a different source needs withdrawal and a separately created draft before any original has been approved. A preparer may Withdraw an unapproved draft/submission with a reason. Approval requires complete exact source evidence and an independent reviewer. Once approved, the original is retained without editing or replacement in R1.

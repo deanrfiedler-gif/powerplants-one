@@ -2283,7 +2283,7 @@
       "title": "Contract obligations, notices and variations",
       "kind": "scope",
       "module": "PJ",
-      "summary": "Implement contract obligations, notices, variations, disputed changes, dates and evidence.",
+      "summary": "Single-project commercial records with native preparation, independent decisions and permission-gated synthetic control values.",
       "path": "/projects/commercial",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2308,11 +2308,16 @@
       "dependencies": [
         "src/projects/commercial/reads.ts",
         "src/projects/commercial/commands.ts",
-        "docs/decisions/project-commercial-figma-design.md"
+        "docs/decisions/project-commercial-figma-design.md",
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx",
+        "src/projects/commercial/options.ts",
+        "src/projects/commercial/ui.css"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "Bounded native implementation",
       "visual_status": "Needs review",
-      "functional_status": "Bounded commercial backend verified locally; native page controls remain unbuilt",
+      "functional_status": "Validation in progress; see docs/testing/evidence/project-commercial/README.md.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2321,7 +2326,9 @@
       "related_keys": [
         "scope:PJ-01",
         "scope:FN-06",
-        "scope:ES-06"
+        "scope:ES-06",
+        "route:/projects/commercial",
+        "route:/projects/[id]/commercial/[entry]"
       ],
       "reviewer": null
     },
@@ -15936,6 +15943,88 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues"
+      ]
+    },
+    {
+      "key": "route:/projects/[id]/commercial/[entry]",
+      "title": "Commercial record",
+      "kind": "route",
+      "module": "PJ",
+      "summary": "Single-project commercial records with native preparation, independent decisions and permission-gated synthetic control values.",
+      "path": "/projects/[id]/commercial/[entry]",
+      "source_paths": [
+        "src/app/(business)/projects/[id]/commercial/[entry]/page.tsx"
+      ],
+      "guide_key": "guide.route-projects-id-commercial-entry",
+      "design_path": "docs/design/development/pages/route-projects-id-commercial-entry.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-01-Desktop-Variations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-03-Desktop-Variation-Record-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-17-Phone-Variations-r01.png"
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx",
+        "src/projects/commercial/reads.ts",
+        "src/projects/commercial/options.ts",
+        "src/projects/commercial/ui.css",
+        "docs/decisions/project-commercial-figma-design.md"
+      ],
+      "scope_status": "Bounded native implementation",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see docs/testing/evidence/project-commercial/README.md.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PJ-05",
+        "route:/projects/commercial"
+      ]
+    },
+    {
+      "key": "route:/projects/commercial",
+      "title": "Contract obligations, notices and variations",
+      "kind": "route",
+      "module": "PJ",
+      "summary": "Single-project commercial records with native preparation, independent decisions and permission-gated synthetic control values.",
+      "path": "/projects/commercial",
+      "source_paths": [
+        "src/app/(business)/projects/commercial/page.tsx"
+      ],
+      "guide_key": "guide.route-projects-commercial",
+      "design_path": "docs/design/development/pages/route-projects-commercial.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-01-Desktop-Variations-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-03-Desktop-Variation-Record-r01.png",
+        "docs/reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-17-Phone-Variations-r01.png"
+      ],
+      "dependencies": [
+        "src/projects/commercial/ui-register.tsx",
+        "src/projects/commercial/ui-record.tsx",
+        "src/projects/commercial/ui-command.tsx",
+        "src/projects/commercial/reads.ts",
+        "src/projects/commercial/options.ts",
+        "src/projects/commercial/ui.css",
+        "docs/decisions/project-commercial-figma-design.md"
+      ],
+      "scope_status": "Bounded native implementation",
+      "visual_status": "Needs review",
+      "functional_status": "Validation in progress; see docs/testing/evidence/project-commercial/README.md.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PJ-05",
+        "route:/projects/[id]/commercial/[entry]"
       ]
     }
   ]
