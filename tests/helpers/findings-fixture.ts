@@ -55,7 +55,7 @@ export const findingRows: Finding[] = [
           status: [1, 7].includes(i) ? "Completed" : "Open",
           owner_id: uuid(82),
           owner_name: "SYN Morgan Lee",
-          due_at: "2026-10-16T02:00:00Z",
+          due_at: i === 6 ? "2026-10-13T02:00:00Z" : [4, 5].includes(i) ? "2026-10-23T02:00:00Z" : "2026-10-16T02:00:00Z",
           due_date_only: false,
           outcome: null,
           cancellation_reason: null,
@@ -69,7 +69,7 @@ export const findingRows: Finding[] = [
     source === "inspection" ? "InspectionReview" : "ServiceDisposition",
   updated_at: findingsClock,
   recurrence: {
-    basis: source === "inspection" ? "FailedCheck" : "NoStableFaultKey",
+    basis: source === "inspection" && i !== 3 ? "FailedCheck" : "NoStableFaultKey",
     partial: false,
     earlier:
       i === 6

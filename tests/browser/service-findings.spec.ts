@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { findingRows, findingsClock } from "../helpers/findings-fixture";
 import { destinations } from "../../src/shell/navigation";
-import { inView, views } from "../../src/service/findings/model";
+import { dueThisWeek, isOverdue, inView, views } from "../../src/service/findings/model";
 async function setup(
   page: Page,
   { viewOnly = false, uncertain = false, stale = false } = {},
@@ -181,6 +181,10 @@ async function openRemaining(page: Page) {
 test("SV07 all views and source types keep source-owned closure and bounded counts", async ({
   page,
 }) => {
+  for (const row of findingRows) {
+    expect(row.overdue).toBe(isOverdue(row, new Date(findingsClock)));
+    expect(row.due_this_week).toBe(dueThisWeek(row, new Date(findingsClock)));
+  }
   await setup(page);
   await page.goto("/service/findings?department=service");
   const menu = page.getByRole("navigation", { name: "Service review views" });
