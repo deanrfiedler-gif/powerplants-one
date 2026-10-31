@@ -37,7 +37,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Design AD-01 next, on the People CS-02 pattern | User decision, 19 October 2026 | Dean's request quoted above |
 | Audit and polish before acceptance | User decision, 19 October 2026 | Quoted above. Section 6 |
 | Departures D1–D8 | Accepted as recommended, 19 October 2026 | Dean's acceptance, quoted above. Section 4 |
-| Q1 List counts | Resolved as recommended | The identity list read gains current, scheduled and expired grant counts, scope reach, local teams and open requests, computed when read. The built directory reads only a recorded-grant count, so this is a build prerequisite (section 5) |
+| Q1 List counts | Resolved as recommended | The identity list read gains current, scheduled and expired grant counts, scope reach, local teams and open requests, computed when read. The selected register now supplies this projection; the legacy directory response is retained (section 5) |
 | Q2 Nearest grant | Resolved as recommended | When an eligibility check fails, the result names the nearest current grant for the same capability, for example the same capability at a same-name company. It explains and never permits |
 | Q3 Request numbers | Resolved as recommended | Access-change requests take a business number `SYN-PPO-ACR-000nnn` that people can quote. The UUID stays in the saved history |
 | Q4 Primary action | Resolved as recommended | "Check eligibility" is the person record's primary action. "Propose access change" is secondary and appears only with propose authority |
@@ -45,7 +45,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Identifiers | Resolved as recommended | Site identities use the built `SYN-PPO-SITE-000nnn` format everywhere. The accepted Sites design shows `SYN-SITE-000012`; that text is corrected at its next amendment, and this decision does not change it |
 | Accept the design | User decision, 19 October 2026 | Quoted above |
 | Named Figma version | Saved, 19 October 2026 | "Users and access — accepted", at Dean's yes quoted above. Section 7 |
-| Building the page | Not decided | Section 5 |
+| Building the page | Identity register selected for implementation, 24 October 2026 | Current user request; section 5. Other AD-01 page builds remain separate |
 
 ## 2. Design reference
 
@@ -115,6 +115,8 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 ### Departures, accepted
 
+The Built pattern column records the native baseline at design acceptance. The identity register continuation in section 5 implements D1, the register part of D2 and the list part of D8. Other rows retain their original scope.
+
 | ID | Departure | Built pattern |
 |---|---|---|
 | D1 | The identity register is a grid with grant counts by state, scope reach, teams, open requests and last change | A search form and stacked person cards with one recorded-grant count, 50 per page |
@@ -126,12 +128,11 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | D7 | Propose as a dialog, with the UTC start and its Brisbane reading together and the server checks listed before submission | An inline form on the requests page |
 | D8 | Phone: compact list header and status rows; person record as grants-by-scope counts with one main action; denied and working-company states | Stacked cards on narrow screens |
 
-## 5. Not decided and not drawn
+## 5. Implementation scope and remaining work
 
-- **Building the page.** The built AD-01 routes keep their native pages. The build order is not decided.
-- **Prerequisites for a build:**
-  - an identity list read that returns grant counts by state, scope reach, local teams and open requests (Q1);
-  - a company filter on that read;
+- **Identity register selected, 24 October 2026.** Dean requested a review of the PPO Figma file and selection of a page to implement. The bounded `/admin/access` register is selected because its design is accepted and it is first in the build sequence. The [native inspection record](access-review-native.md#identity-register-continuation--24-october-2026) describes the read and adaptations. Other AD-01 routes keep their native pages.
+- **Identity register prerequisites implemented:** the current projection returns counts, scope reach, saved local teams and open requests (Q1), with a company filter. Exact semantics and evidence are in the native continuation linked above.
+- **Remaining prerequisites for other AD-01 pages:**
   - the nearest-grant explanation in the eligibility result (Q2);
   - the request number `SYN-PPO-ACR-000nnn` (Q3);
   - catalogue reads for scheduled and expired counts and scopes in use.
@@ -165,4 +166,4 @@ The audit is recorded on the notes card `1551:24765`.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/access-review/users-and-access-design-r01/README.md).
 - The named Figma version "Users and access — accepted" was saved in the Figma desktop app at Dean's yes and confirmed at the top of version history. The page header was then updated with the lock-in details.
 - Claude did not play the flows in Present mode.
-- Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+- At design acceptance there was no new application evidence. The 24 October identity-register implementation is recorded separately in the [execution evidence](../testing/evidence/access-identity-register/README.md). The thirteen original captures remain design compositions and set no application baseline. No owner device, accessibility or operational review is inferred.

@@ -14,11 +14,12 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** Partial · **Location:** Components › Job pack, in the private "PPO - Design" Figma file
+**Status:** Partial · **Location:** Components › Job pack and Components › Controls, in the private "PPO - Design" Figma file
 
 - Job pack / Form field `287:3282`
+- Controls / Form field (proposed) `2649:7479`
 
-Only the field-level Error state is drawn. No error summary component exists. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Only the field-level Error state is drawn, in Job pack / Form field and in Controls / Form field (proposed). No error summary component exists. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
@@ -157,3 +158,7 @@ The Nursery discovery route consumes the unchanged shared control. Host states a
 ## Automation N2 consumer
 
 The N2 technical assessment reuses this control without API changes. Local FactFields/Pick are extracted unchanged from N1. Host fixtures cover source evidence, saved results/history, stale/uncertain recovery and narrow layouts. Owner visual review and approved Automation frames remain pending. See the N2 page contract and tests/browser/nursery-assessment.spec.ts.
+
+## Outputs consumer — DK-03
+
+The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.

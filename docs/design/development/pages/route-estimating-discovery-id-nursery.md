@@ -14,9 +14,13 @@ Reused controls: PageHeader, Field, ErrorNotice, Button, useCrmResource and useC
 
 ## Desktop
 
+Accepted design: the [Automation Configurator design decision](../../../decisions/automation-configurator-figma-design.md) of 22 October 2026 draws this workbench, under the user-facing name Automation, as ten sections in three groups with separate readiness gates, line capacity with its calculation trace, interface checks, estimating drawings and entry forms (D1–D15). Captures 01–18 in [design r01](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md). Nothing new is built; the native N1 page described below remains the built page.
+
 1440 × 960 and 1024 × 768: one content scroll, bounded content width, source context followed by editing/history controls, scenario fieldsets, delivery decisions and clarifications. Evidence sources remain readable and unknown values never display zero. Save and original-operation recovery are distinct. Read-only history uses disabled fieldsets and exact saved catalogue/source references.
 
 ## Mobile
+
+Accepted design: captures 19 and 20 in [design r01](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md): the phone Overview at 390 and 320, the Process & equipment stage list, the section sheet, and the full-screen scenario and answer editors.
 
 390 × 844 and 320 CSS px: stacked fieldsets and controls, 16 px input text, 44 px action/select targets, wrapping source IDs and narratives, no page-wide horizontal overflow. Every task is available without dragging. Details expose complete source/scenario context and keyboard focus remains visible. Physical-device, screen-reader and 200% zoom acceptance remain pending until evidenced.
 
@@ -27,5 +31,7 @@ Loading has a status. Transient refresh failures show retry, preserve the draft 
 Unknown, Assumed and Conflict remain findings with owner/next action. Conflict requires at least two different attributed values; resolution records a chosen source/value while retaining earlier claims. Delivery applicability, selection, responsibility and coverage evidence stay separate; review is always pending in N1. Catalogue publication is not implied.
 
 ## Departures and evidence
+
+Accepted Figma design: [Automation Configurator design r01 captures](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md) (twenty-one icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/automation-configurator-figma-design.md). Entry from Discovery moves from the Actions menu item "Nursery Automation discovery" to a confirmed System route card and an "Open in a workbench" menu group (D15). Building it is not decided; the `AUT` record type and equipment geometry fields are prerequisites.
 
 This is a proposed composition using shared controls; it is not copied from an accepted Nursery mockup. No visual fingerprint or approval is assigned. The N1 fixture is tests/browser/nursery-automation.spec.ts; persistence and boundary tests are tests/database/nursery-automation.test.ts and tests/unit/nursery-automation.test.ts. [Execution evidence](../../../testing/evidence/nursery-automation-n1/README.md) records actual runs separately from business acceptance and deployment.

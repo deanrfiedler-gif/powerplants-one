@@ -1,6 +1,7 @@
 "use client";
 import { RecordIdentity } from "../shell/record-identity";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   api,
   ErrorNotice,
@@ -32,6 +33,9 @@ const accepts = (e: JournalEntry) =>
     e.path,
   ) && /^\/estimating\/estimates\/[a-f0-9-]{36}\/review$/.test(e.target);
 export function EstimateReview({ id }: { id: string }) {
+  const query = useSearchParams();
+  const requestedSubmission = query.get("submission_id");
+  const requestedKind = query.get("kind");
   const identity = useIdentity(),
     resource = useCrmResource<Detail>(
       `estimating/estimates/${id}/review`,
@@ -54,9 +58,12 @@ export function EstimateReview({ id }: { id: string }) {
       {!resource.data && !!resource.error && (
         <Button onClick={resource.reload}>Retry permitted read</Button>
       )}
-      {resource.data && (
+      {resource.data && requestedSubmission && resource.data.submissions.at(-1)?.id !== requestedSubmission ? (
+        <section role="status"><h2>Selected submission has been superseded</h2><p>The queue link names an earlier submission. Open the current review deliberately before making any decision.</p><ButtonLink href={`/estimating/estimates/${id}/review`}>Open current review</ButtonLink><ButtonLink href="/estimating/reviews">Return to Reviews &amp; approvals</ButtonLink></section>
+      ) : resource.data && (
         <ReviewBody
-          key={`${identity.workspace_id}:${identity.actor_id}:${id}`}
+          key={`${identity.workspace_id}:${identity.actor_id}:${id}:${requestedSubmission}:${requestedKind}`}
+          initialKind={requestedKind}
           detail={resource.data}
           reload={resource.reload}
         />
@@ -67,8 +74,10 @@ export function EstimateReview({ id }: { id: string }) {
 function ReviewBody({
   detail: d,
   reload,
+  initialKind,
 }: {
   detail: Detail;
+  initialKind?: string | null;
   reload: () => void;
 }) {
   const key = `ppo:es04:${d.estimate.id}`,
@@ -91,7 +100,7 @@ function ReviewBody({
   const [reason, setReason] = useState(""),
     [responses, setResponses] = useState<Record<string, string>>({}),
     [kind, setKind] = useState<ReviewKind>(
-      d.statuses.find((s) => s.can_review)?.kind ?? "Completeness",
+      d.statuses.find((s) => s.kind === initialKind)?.kind ?? d.statuses.find((s) => s.can_review)?.kind ?? "Completeness",
     ),
     [outcome, setOutcome] = useState("Reviewed"),
     [finding, setFinding] = useState(""),

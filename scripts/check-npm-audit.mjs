@@ -6,17 +6,7 @@ import { spawnSync } from "node:child_process";
 
 // Each exception names one advisory, the one package it may affect and why it
 // cannot be fixed yet. Remove the entry as soon as a fixed release can be locked.
-const exceptions = [
-  {
-    advisory: "GHSA-vfj7-8cjw-p6xm",
-    package: "braces",
-    recorded: "2026-10-15",
-    reason:
-      "No fixed release exists (affects <=3.0.3, the latest). Reached only through " +
-      "@next/eslint-plugin-next > fast-glob > micromatch, a lint-time dependency " +
-      "that expands the repository's own glob patterns.",
-  },
-];
+const exceptions = [];
 
 // A constant command through the shell resolves npm.cmd on Windows as well.
 const result = spawnSync("npm audit --json", {
