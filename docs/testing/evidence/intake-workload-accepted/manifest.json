@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-31",
+  "owner": "Dean Fiedler",
+  "comparison_by": "Codex",
+  "review_status": "Application captures inspected; owner/device acceptance pending",
+  "base_main": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "implementation_parent": "0b1bde1079959dbc0dc19d533647a99a44a43a5e",
+  "capture_method": "Real application and shared shell, deterministic synthetic API fixtures, Chrome; licensed icon glyphs hidden only during capture",
+  "captures": [
+    {
+      "path": "captures/desktop-1440-collapsed-snapshot.png",
+      "bytes": 171204,
+      "sha256": "3c47f9c5c4f362f25fae602a8d3617bfb9ab4452844a12846314b13d4a66dd7d"
+    },
+    {
+      "path": "captures/desktop-1440-saved-estimates.png",
+      "bytes": 131204,
+      "sha256": "3d743088108d5574f4ea44a9e0bfc0703ac9a6b7a7e9430051e8703205b3538c"
+    },
+    {
+      "path": "captures/desktop-1440-selection.png",
+      "bytes": 193203,
+      "sha256": "b1cb2d3550474534f491e6ed143251d7ea353e6b80003e484edca594cd08064e"
+    },
+    {
+      "path": "captures/desktop-1440-snapshot.png",
+      "bytes": 181440,
+      "sha256": "5ed6f28ff7885c158f41c1826755020a0faccd41938ee1cbc1ad591c9f41c47d"
+    },
+    {
+      "path": "captures/desktop-1440-workload.png",
+      "bytes": 154655,
+      "sha256": "15feffb4f8a3a5f4e821c503e01be787db6e54e47a46ea640395167da0602933"
+    },
+    {
+      "path": "captures/phone-320-saved-estimates.png",
+      "bytes": 63320,
+      "sha256": "a84738e980df7be30d4d6a45628a89e0819d5585a4673834ff6b5c2cfcae7988"
+    },
+    {
+      "path": "captures/phone-320-snapshot.png",
+      "bytes": 46716,
+      "sha256": "d9a32fe78adc3d6827204ebe119ffb531bafc6a94016695abcaa3aadb9dbd58b"
+    },
+    {
+      "path": "captures/phone-320-workload.png",
+      "bytes": 67414,
+      "sha256": "da29732f511de6fe4f6b422cc00dd39820fa686969d53a1dd6aaaf4b5ea2c131"
+    },
+    {
+      "path": "captures/phone-390-saved-estimates.png",
+      "bytes": 64557,
+      "sha256": "2c1787f94725db37061e53d142af7149c3ca9a00f044108109345f3daf98ac05"
+    },
+    {
+      "path": "captures/phone-390-snapshot.png",
+      "bytes": 55614,
+      "sha256": "92ef478bb4a4dc06a70d3f9789198158d742a87337e3362b7993804b3215700e"
+    },
+    {
+      "path": "captures/phone-390-workload.png",
+      "bytes": 83061,
+      "sha256": "3784c2c88677a13786fcea425ef12bb8128c384bbf5636460ae15b8933c417f3"
+    },
+    {
+      "path": "captures/tablet-1024-saved-estimates.png",
+      "bytes": 85397,
+      "sha256": "cdef910c8b55ff60231e88ab594ab30b057e13ee6a23f1cb9a1db99199ef755d"
+    },
+    {
+      "path": "captures/tablet-1024-snapshot.png",
+      "bytes": 118516,
+      "sha256": "62829bbe25c7ac8145732afb9730e328bb8f5e7c8b7c27aee0f4ceed92422824"
+    },
+    {
+      "path": "captures/tablet-1024-workload.png",
+      "bytes": 106916,
+      "sha256": "9a3f045688f58a26ef9159a154ee1f90c25a76a12d321dfe191d5ce5ed11ed40"
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/components/estimating-workload.tsx",
+      "bytes": 36149,
+      "sha256": "a8d2135371a45cb5d21be2f6290904a15a96075923668b5910408ebadbd315e0"
+    },
+    {
+      "path": "src/components/estimating-workload.css",
+      "bytes": 22153,
+      "sha256": "c27a5fb592d8b77b4fd91976dba7920cc107a8cf02871807def496cb3c38daed"
+    },
+    {
+      "path": "src/components/estimating-workload-snapshot.tsx",
+      "bytes": 14558,
+      "sha256": "fd9bcbddf5077eeada48dd0fbdd59156b5c7f8ebece2f6b0147a820d52b31566"
+    },
+    {
+      "path": "src/components/estimating-workload-model.ts",
+      "bytes": 3612,
+      "sha256": "031f0e2eb512a10447ada5dbf06d52e452f0dc3b3614994d91cf7fd578d694aa"
+    },
+    {
+      "path": "src/components/estimating-workload-guide.ts",
+      "bytes": 5362,
+      "sha256": "606fa0538c25eed90a5c6bf82f60708acf9a3e4cea48ca9d457de8a7d06a2fe5"
+    },
+    {
+      "path": "src/estimating/workload.ts",
+      "bytes": 11210,
+      "sha256": "b3d85ceb316ac490afe633fc2b434180f4ec9ae8e2c07d2d307b004e25f9ab46"
+    },
+    {
+      "path": "src/estimating/reads.ts",
+      "bytes": 11697,
+      "sha256": "dd85732605dfaad491369df4585853c251c85c32dc1ebda58c72eac6e57044cf"
+    },
+    {
+      "path": "src/shell/module-workspaces.ts",
+      "bytes": 11254,
+      "sha256": "64f4e292afdcafe4c8cbc6b9f6991d1534b58f85bc944875d4bd6dd7b40c6ee6"
+    },
+    {
+      "path": "tests/unit/estimating-workload.test.ts",
+      "bytes": 5314,
+      "sha256": "1e3ab32e33fd8f9975d3984cdb5048fd655bfbe4bedea7e3044d2206ff23e213"
+    },
+    {
+      "path": "tests/database/estimating-workload.test.ts",
+      "bytes": 17305,
+      "sha256": "f3a791a5b2fcf4a68adfc33be50200c7c399afcfad4a4f00d0198655e3418bf9"
+    },
+    {
+      "path": "tests/browser/estimating-workload.spec.ts",
+      "bytes": 13946,
+      "sha256": "bb388632ab470db2ae0b6c63fd9ec0bf8dfec743b3927a765d5a6db7cf7f8f68"
+    },
+    {
+      "path": "tests/browser/estimating-workload-states.spec.ts",
+      "bytes": 4004,
+      "sha256": "95768f1b74d7217f51db08306119a57e9c4a2834ed82e1974e2960e1f9e8602a"
+    },
+    {
+      "path": "tests/browser/estimating-workload-presentation.spec.ts",
+      "bytes": 5709,
+      "sha256": "4b2a424d9d2fd151ff46bcfbbbf71bf71ee3cacd07c9faf3e9d2c7a453038a3a"
+    },
+    {
+      "path": "tests/helpers/estimating-workload-presentation.ts",
+      "bytes": 6300,
+      "sha256": "cbed9103eaf8246008092cb5f2e972935b18ff44dee9cc49f542bc3595f7629f"
+    }
+  ],
+  "review_correction": "Repeated after Sales-brief non-disclosure and Brisbane-year corrections; original captures remain in Git history."
+}

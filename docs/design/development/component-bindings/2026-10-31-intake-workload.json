@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "intake-workload-actions",
+          "label": "Intake workload actions",
+          "description": "Refresh, exact native handovers, fresh permitted CSV and newest-first sequence; stale reads disable actions."
+        }
+      ],
+      "dependencies": [
+        "src/components/estimating-workload.tsx",
+        "src/components/estimating-workload-snapshot.tsx"
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "intake-workload-register",
+          "label": "Intake workload and saved versions",
+          "description": "40 px workload rows with fixed end columns; saved exact versions; tablet horizontal containment and 80 px phone rows."
+        }
+      ],
+      "used_on": ["scope:ES-01", "route:/estimating"],
+      "dependencies": [
+        "src/components/estimating-workload.tsx",
+        "src/components/estimating-workload.css"
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "intake-workload-views",
+          "label": "Intake workload views and filters",
+          "description": "All/My/readiness/Saved views, supported search and sort, separate bounded counts, compact phone picker."
+        }
+      ],
+      "used_on": ["scope:ES-01", "route:/estimating"],
+      "dependencies": ["src/components/estimating-workload.tsx"]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "intake-workload-snapshot",
+          "label": "Overlapping workload snapshot",
+          "description": "Right-aligned native modal capped at the both-menus-open width, full screen phone, Escape/focus return; filter WorklistPanel."
+        }
+      ],
+      "used_on": ["scope:ES-01", "route:/estimating"],
+      "dependencies": [
+        "src/components/estimating-workload-snapshot.tsx",
+        "src/components/estimating-workload.css"
+      ],
+      "gaps": [
+        {
+          "id": "intake-workload-device-review",
+          "expected": "Owner review and physical-device/assistive-technology acceptance of accepted snapshot geometry.",
+          "actual": "Implementation evidence and automated emulation are separate from owner/device acceptance.",
+          "action": "Review retained source and application captures, keyboard, zoom and physical-device behaviour.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "intake-workload-refresh",
+          "label": "Workload freshness and authority",
+          "description": "Loading, no matches, no permitted rows, denied, failed read and stale refresh; no obsolete rows/counts after failure."
+        }
+      ],
+      "dependencies": [
+        "src/components/estimating-workload.tsx",
+        "src/estimating/workload.ts"
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "intake-workload-compact-header",
+          "label": "Intake compact header",
+          "description": "Reuse secondary menu and phone view/filter registration; menu-collapse state survives view changes."
+        }
+      ],
+      "used_on": ["route:/estimating"],
+      "dependencies": [
+        "src/components/estimating-workload.tsx",
+        "src/shell/module-workspaces.ts"
+      ]
+    }
+  }
+}

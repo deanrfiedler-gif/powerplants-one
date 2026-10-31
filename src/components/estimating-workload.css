@@ -1,635 +1,965 @@
-/* ES-01 intake and workload register. Decisions P1–P9, O1–O2 in
-   docs/decisions/es01-design-board.md. The layout attribute is measured from
-   the register's own width, so browser and CSS zoom follow the same rules. */
-.est-workload {
+/* ES-01 accepted Figma 128:8846 / 9024 / 9231 / 172:1535.
+   Shared shell/table/control behaviour; page geometry and later compact phone header amendment. */
+#ppo-estimating-workload {
+  display: flex;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
   color: var(--ink);
+  background: var(--surface-white);
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+}
+#ppo-estimating-workload .mw-content {
+  flex: 1;
   min-width: 0;
+  min-height: 0;
+  container-type: inline-size;
 }
-.est-workload :focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+#ppo-estimating-workload .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
-
-/* P4: two views of one route as section tabs. */
-.est-workload-tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--line-strong);
-  margin: 0 0 20px;
-}
-.est-workload-tabs a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-bottom: 3px solid transparent;
-  color: var(--text-secondary);
-  font-weight: 500;
-  text-decoration: none;
-}
-.est-workload-tabs a:hover {
-  background: var(--surface-hover);
-  color: var(--navy);
-}
-.est-workload-tabs a[aria-current="page"] {
-  border-bottom-color: #347e2c;
-  color: var(--navy);
-  font-weight: 700;
-}
-
-/* P5: search, owner and sort inline; the disclosure is used only when stacked. */
-.est-workload-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 16px;
-  align-items: flex-end;
-  padding: 16px;
-  background: var(--white);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-}
-.est-workload-filters label {
+#ppo-estimating-workload .ew-register {
+  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin: 0;
-  font-weight: 600;
   min-width: 0;
 }
-.est-workload-search {
-  flex: 1 1 280px;
+#ppo-estimating-workload .mw-menu nav {
+  flex: 1;
 }
-.est-workload-more {
+#ppo-estimating-workload .ew-menu-count {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+#ppo-estimating-workload .ew-rules {
+  margin-top: auto;
+  padding: 18px 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 16px;
+}
+#ppo-estimating-workload .ew-rules h3 {
+  margin: 0 0 10px;
+  padding: 0;
+  font-size: 12px;
+  color: var(--ink);
+}
+#ppo-estimating-workload .ew-rules dl {
+  margin: 0;
+}
+#ppo-estimating-workload .ew-rules dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 6px 0;
+}
+#ppo-estimating-workload .ew-rules dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-rules p {
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 10px;
+  min-height: 60px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+#ppo-estimating-workload .ew-search {
+  display: flex;
+  flex: 0 1 300px;
+  min-width: 160px;
+  height: 40px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--control-border);
+  border-radius: 5px;
+  padding: 0 10px;
+  background: var(--surface-white);
+}
+#ppo-estimating-workload .ew-search input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  height: 36px;
+  background: transparent;
+  font: inherit;
+  color: var(--ink);
+  box-shadow: none;
+}
+#ppo-estimating-workload .ew-search:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-estimating-workload .ew-count {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+}
+#ppo-estimating-workload .ew-time {
+  display: none;
+}
+#ppo-estimating-workload .ew-icon-button {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+#ppo-estimating-workload :is(.shell-icon, .es02-icon, .product-icon) {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+#ppo-estimating-workload .ew-results {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+#ppo-estimating-workload .ew-desktop-grid {
+  min-width: 0;
+}
+#ppo-estimating-workload .ppo-register {
+  overflow: visible;
+  border-top: 0;
+}
+#ppo-estimating-workload .ppo-register-table {
+  table-layout: fixed;
+  width: calc(1784px + max(0px, 100cqw - 960px));
+  min-width: 1784px;
+}
+#ppo-estimating-workload .ew-title-col {
+  width: calc(262px + max(0px, 100cqw - 960px)) !important;
+}
+#ppo-estimating-workload .ew-saved .ppo-register-table {
+  width: 100%;
+  min-width: 960px;
+}
+#ppo-estimating-workload .ppo-register-table :is(th, td) {
+  height: 40px;
+  padding: 0 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+}
+#ppo-estimating-workload .ppo-register-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-weight: 500;
+  text-align: left;
+}
+#ppo-estimating-workload .ppo-register-table th[aria-sort] {
+  padding: 0;
+}
+#ppo-estimating-workload .ppo-register-sort {
+  height: 39px;
+  font: inherit;
+}
+#ppo-estimating-workload .ppo-register-table :is(th, td):first-child {
+  position: sticky;
+  left: 0;
+  width: 44px;
+  padding: 0;
+  text-align: center;
+  z-index: 1;
+}
+#ppo-estimating-workload .ppo-register-table :is(th, td):last-child {
+  position: sticky;
+  right: 0;
+  width: 44px;
+  padding: 0;
+  text-align: center;
+  z-index: 1;
+  border-left: 1px solid var(--line);
+  border-right: 0;
+}
+#ppo-estimating-workload .ppo-register-table th:first-child,
+#ppo-estimating-workload .ppo-register-table th:last-child {
+  z-index: 3;
+}
+#ppo-estimating-workload .ppo-register-table input {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  vertical-align: middle;
+  accent-color: var(--navy);
+}
+#ppo-estimating-workload .ppo-register-table strong {
+  font-weight: 500;
+}
+#ppo-estimating-workload .ppo-register-table small {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-row-title {
+  display: block;
+  min-height: 38px;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+#ppo-estimating-workload .ew-row-title:hover:not(:disabled) {
+  color: var(--ink);
+  background: transparent;
+  text-decoration: underline;
+}
+#ppo-estimating-workload .ew-amount {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+#ppo-estimating-workload .ppo-register-chip,
+#ppo-estimating-workload .ew-snapshot .ppo-register-chip {
+  border: 0;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 5px;
+}
+#ppo-estimating-workload .ppo-register-chip-icon {
+  display: none;
+}
+#ppo-estimating-workload :is(button, a, input, select):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+#ppo-estimating-workload .ew-window,
+#ppo-estimating-workload .ew-basis {
+  margin: 0;
+  padding: 8px 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-window {
+  flex: none;
+}
+#ppo-estimating-workload .ew-loading {
+  margin: 0;
+  padding: 24px 16px;
+}
+#ppo-estimating-workload .ew-notice {
+  padding: 32px 24px;
+  max-width: 660px;
+}
+#ppo-estimating-workload .ew-notice h2 {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0 0 8px;
+}
+#ppo-estimating-workload .ew-notice p {
+  margin: 8px 0 16px;
+}
+#ppo-estimating-workload .ew-notice a {
+  margin-left: 12px;
+}
+#ppo-estimating-workload .ew-selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 16px;
+  background: var(--neutral-surface);
+}
+#ppo-estimating-workload .ew-selection {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 360px;
+  z-index: 4;
+  background: var(--surface-white);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+}
+#ppo-estimating-workload .ew-selection header {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-selection h2 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+#ppo-estimating-workload .ew-selection h3 {
+  font-size: 14px;
+  margin: 10px 0 0;
+}
+#ppo-estimating-workload .ew-selection-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  flex: 1;
+}
+#ppo-estimating-workload .ew-selected-card {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+#ppo-estimating-workload .ew-selected-card strong {
+  font-weight: 500;
+}
+#ppo-estimating-workload .ew-selected-card small {
+  display: block;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+#ppo-estimating-workload .ew-selection footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-rule {
+  background: var(--neutral-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
+}
+#ppo-estimating-workload .ew-snapshot {
+  position: fixed;
+  inset: var(--ew-top, 64px) 0 0 auto;
+  margin: 0;
+  padding: 0;
+  width: calc(100vw - 480px);
+  max-width: none;
+  height: calc(100dvh - var(--ew-top, 64px));
+  max-height: none;
+  overflow: visible;
+  border: 0;
+  border-left: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--surface-white);
+  box-shadow: var(--shadow-card);
+  font: inherit;
+}
+#ppo-estimating-workload .ew-snapshot::backdrop {
+  background: transparent;
+}
+#ppo-estimating-workload .ew-snapshot-inner {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
+}
+#ppo-estimating-workload .ew-record-controls {
+  position: absolute;
+  left: -50px;
+  top: 12px;
+  width: 46px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+}
+#ppo-estimating-workload .ew-record-controls button {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+}
+#ppo-estimating-workload .ew-record {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-record-scroll {
+  overflow: auto;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+#ppo-estimating-workload .ew-snapshot h2 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+#ppo-estimating-workload .ew-snapshot h3 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+#ppo-estimating-workload .ew-snapshot p {
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+#ppo-estimating-workload .ew-snapshot small,
+#ppo-estimating-workload .ew-muted {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-readiness {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#ppo-estimating-workload .ew-facts {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+#ppo-estimating-workload .ew-facts div {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 8px;
+}
+#ppo-estimating-workload .ew-facts dt {
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-estimating-workload .ew-record footer {
+  margin-top: auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 16px;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  min-height: 64px;
+  border-top: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-related {
+  padding: 20px 24px;
   min-width: 0;
+  overflow: auto;
 }
-.est-workload-more label {
-  flex: 0 0 13.5rem;
+#ppo-estimating-workload .ew-tabs-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
 }
-.est-workload-filters input,
-.est-workload-filters select {
+#ppo-estimating-workload .record-tablist {
+  margin: 0;
+  display: flex;
+  padding: 0 12px;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-estimating-workload .record-tablist button {
+  margin: 0;
+  padding: 12px 0;
+  min-height: 44px;
+  font-size: 13px;
+  white-space: normal;
+}
+#ppo-estimating-workload .record-panel {
+  margin: 0;
+  padding: 16px;
+}
+#ppo-estimating-workload .ew-related-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-estimating-workload .ew-related-row:first-child {
+  padding-top: 0;
+}
+#ppo-estimating-workload .ew-related-row:last-child {
+  border-bottom: 0;
+}
+#ppo-estimating-workload .ew-related-row strong,
+#ppo-estimating-workload .ew-sales-action strong {
+  display: block;
+  font-weight: 500;
+}
+#ppo-estimating-workload .ew-related-row small,
+#ppo-estimating-workload .ew-sales-action small {
+  display: block;
+  margin: 4px 0;
+}
+#ppo-estimating-workload .ew-sales-context {
+  margin-top: 24px;
+}
+#ppo-estimating-workload .ew-sales-context p {
+  margin: 8px 0 12px;
+}
+#ppo-estimating-workload .ew-evidence {
+  padding-left: 16px;
+  margin: 0;
+}
+#ppo-estimating-workload .ew-evidence li {
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+#ppo-estimating-workload .ew-filter-form {
+  display: grid;
+  gap: 16px;
+}
+#ppo-estimating-workload .ew-filter-form label {
+  display: grid;
+  gap: 6px;
+}
+#ppo-estimating-workload .ew-filter-form :is(input, select) {
   width: 100%;
   min-width: 0;
   min-height: 44px;
   padding: 8px 12px;
-  font-size: 16px;
+  font: inherit;
   border: 1px solid var(--control-border);
-  border-radius: var(--radius-control);
-  background: var(--white);
+  border-radius: 5px;
+  background: var(--surface-white);
   color: var(--ink);
 }
-.est-workload-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 16px;
-  min-height: 44px;
-}
-.est-workload-toggle {
+#ppo-estimating-workload .ew-phone-list,
+#ppo-estimating-workload .ew-phone-rules,
+#ppo-estimating-workload .ew-phone-snapshot-header {
   display: none;
 }
-.est-workload-readiness-select {
-  display: none !important;
+@media (min-width: 1600px) {
+  #ppo-estimating-workload .ew-time {
+    display: inline;
+  }
+}
+@media (min-width: 781px) and (max-width: 1199px) {
+  #ppo-estimating-workload .ew-toolbar {
+    flex-wrap: wrap;
+  }
+  #ppo-estimating-workload .ew-snapshot {
+    width: calc(100vw - 80px);
+  }
+  #ppo-estimating-workload .ew-snapshot-inner {
+    grid-template-columns: minmax(300px, 44%) minmax(0, 1fr);
+  }
+}
+@media (max-width: 780px) {
+  .workspace:has(#ppo-estimating-workload) .topbar.ppo-shell-header {
+    display: flex;
+  }
+  #ppo-estimating-workload .ew-toolbar,
+  #ppo-estimating-workload .ew-desktop-grid {
+    display: none;
+  }
+  #ppo-estimating-workload .ew-phone-list {
+    display: block;
+  }
+  #ppo-estimating-workload .ew-phone-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-estimating-workload .ew-phone-row > input {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+    margin-left: 12px;
+  }
+  #ppo-estimating-workload .ew-phone-open {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 16px;
+    background: var(--surface-white);
+    border: 0;
+    border-radius: 0;
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+  }
+  #ppo-estimating-workload .ew-phone-open:hover:not(:disabled) {
+    color: var(--ink);
+    background: var(--surface-hover);
+  }
+  #ppo-estimating-workload .ew-phone-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+  #ppo-estimating-workload .ew-phone-title {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: baseline;
+    min-width: 0;
+  }
+  #ppo-estimating-workload .ew-phone-title strong {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-estimating-workload .ew-phone-title time {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex: none;
+  }
+  #ppo-estimating-workload .ew-phone-reference {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    align-items: center;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+  }
+  #ppo-estimating-workload .ew-phone-owner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-secondary);
+    min-width: 0;
+  }
+  #ppo-estimating-workload .ew-phone-owner span:first-of-type {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-estimating-workload .ew-phone-owner span:last-child {
+    flex: none;
+    margin-left: auto;
+    max-width: 42%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-estimating-workload .ew-window {
+    font-size: 11px;
+    padding: 8px 12px;
+    line-height: 15px;
+  }
+  #ppo-estimating-workload .ew-phone-rules {
+    display: block;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 11px;
+    line-height: 15px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--line);
+  }
+  #ppo-estimating-workload .ew-snapshot {
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    overflow: hidden;
+  }
+  #ppo-estimating-workload .ew-snapshot[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-estimating-workload .ew-record-controls {
+    display: none;
+  }
+  #ppo-estimating-workload .ew-phone-snapshot-header {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    min-height: 52px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-estimating-workload .ew-phone-snapshot-header strong {
+    flex: 1;
+    font-size: 14px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-estimating-workload .ew-phone-snapshot-header button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+  }
+  #ppo-estimating-workload .ew-phone-traversal {
+    display: flex;
+  }
+  #ppo-estimating-workload .ew-snapshot-inner {
+    display: block;
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+    height: auto;
+  }
+  #ppo-estimating-workload .ew-record {
+    border: 0;
+  }
+  #ppo-estimating-workload .ew-record-scroll {
+    overflow: visible;
+    padding: 20px 16px;
+    gap: 20px;
+  }
+  #ppo-estimating-workload .ew-related {
+    padding: 0 16px 24px;
+    overflow: visible;
+  }
+  #ppo-estimating-workload .ew-record footer {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+  }
+  #ppo-estimating-workload .ew-facts div {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+  #ppo-estimating-workload .ew-selection {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-height: 65%;
+  }
+  #ppo-estimating-workload .ew-selection-body {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+  #ppo-estimating-workload .ew-selection header {
+    padding: 12px 16px;
+  }
+  #ppo-estimating-workload .ew-selected-card {
+    display: none;
+  }
+  #ppo-estimating-workload .ew-phone-saved {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    line-height: 16px;
+  }
+  #ppo-estimating-workload .ew-phone-saved strong {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+  }
+}
+@media (max-width: 360px) {
+  #ppo-estimating-workload .ew-phone-traversal {
+    display: none;
+  }
+  #ppo-estimating-workload .ew-phone-title {
+    flex-wrap: wrap;
+    gap: 0 8px;
+  }
+  #ppo-estimating-workload .ew-phone-title strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #ppo-estimating-workload .ew-phone-owner {
+    flex-wrap: wrap;
+  }
+  #ppo-estimating-workload .ew-phone-owner span:last-child {
+    max-width: 100%;
+  }
 }
 
-/* P2: readiness as the shared segmented control, with permitted counts. */
-.est-workload-segments {
+/* Snapshot facts follow the accepted value/label hierarchy. */
+#ppo-estimating-workload .ew-record-scroll section > h3 {
+  font-size: 11px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+}
+#ppo-estimating-workload .ew-facts > div {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin: 16px 0 4px;
-}
-.est-workload-segments > span {
-  font-weight: 600;
-}
-.est-workload-segments .view-switch {
-  display: flex;
-  flex-wrap: wrap;
-  min-width: 0;
-}
-.est-workload-segments .view-switch button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
-  font-size: 14px;
-}
-/* shared-layout.css's global button hover outranks the shared .view-switch
-   hover (finding B6); keep the segmented control's own hover on this page. */
-.est-workload .est-workload-segments .view-switch button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.6);
-  color: var(--ink);
-}
-.est-workload
-  .est-workload-segments
-  .view-switch
-  button[aria-pressed="true"]:hover:not(:disabled) {
-  background: var(--white);
-  color: var(--navy);
-}
-.est-workload-count {
-  min-width: 22px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: var(--neutral-surface);
-  color: var(--neutral);
-  font-size: 12px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-.est-workload-summary {
-  margin: 12px 0 2px;
-  font-weight: 500;
-}
-.est-workload-limit {
-  margin: 0 0 16px;
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.est-workload-loading {
-  padding: 24px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  color: var(--text-secondary);
-}
-
-/* P1: register rows with a persistent 448 px detail panel. */
-.est-workload-split {
-  display: grid;
-  gap: 20px;
-  align-items: start;
-}
-[data-layout="panel"] .est-workload-split {
-  grid-template-columns: minmax(0, 1fr) 448px;
-}
-.est-workload-list {
-  min-width: 0;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  overflow: hidden;
-}
-.est-workload-columns,
-.est-workload-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 0.9fr);
-  gap: 16px;
-  padding: 14px 20px;
-}
-.est-workload-columns {
-  padding-block: 10px;
-  border-bottom: 1px solid var(--line-strong);
-  background: var(--surface-2);
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-}
-.est-workload-row {
-  border-bottom: 1px solid var(--line-soft);
-  box-shadow: inset 3px 0 0 transparent;
-}
-.est-workload-row:last-child {
-  border-bottom: 0;
-}
-.est-workload-row[data-selected] {
-  background: #f0f6ed;
-  box-shadow: inset 3px 0 0 #315e43;
-}
-.est-workload-cell {
-  min-width: 0;
-}
-.est-workload-row h2,
-.est-workload-title {
-  margin: 2px 0;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
-}
-.est-workload-row p {
-  margin: 2px 0;
-  overflow-wrap: anywhere;
-}
-.est-workload-select {
-  display: inline;
-  min-height: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--link);
-  font: inherit;
-  text-align: left;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  overflow-wrap: anywhere;
-  cursor: pointer;
-}
-.est-workload-select[aria-pressed="true"] {
-  color: var(--navy);
-}
-/* The global button hover fills navy; these are text controls on this page. */
-.est-workload .est-workload-select:hover:not(:disabled) {
-  background: none;
-  color: var(--navy);
-  text-decoration-thickness: 2px;
-}
-.est-workload .est-workload-toggle:hover:not(:disabled) {
-  background: var(--surface-hover);
-  color: var(--ink);
-}
-.est-workload-ref {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.est-workload-muted {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.est-workload-panel {
-  position: sticky;
-  top: 16px;
-  min-width: 0;
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
-  padding: 20px 24px 24px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
-}
-.est-workload-panel-label {
-  margin: 0 0 4px;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* Detail: the same content in the panel, the drawer and the phone card. */
-.est-workload-detail {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.est-workload-detail header h2 {
-  margin: 2px 0 4px;
-  font-size: 20px;
-  line-height: 28px;
-}
-.est-workload-detail header p,
-.est-workload-detail > p {
-  margin: 4px 0;
-}
-.est-workload-section {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line-soft);
-}
-.est-workload-section h3 {
-  margin: 0 0 6px;
-  font-size: 15px;
-}
-.est-workload-section p {
-  margin: 4px 0 10px;
-}
-.est-workload-section dl {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 4px 12px;
-  margin: 0;
-}
-.est-workload-section dt {
-  color: var(--text-secondary);
-}
-.est-workload-section dd {
-  margin: 0;
-}
-.est-workload-section ul {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.est-workload-detail small,
-.est-saved-table small {
-  display: block;
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.est-workload-notice {
-  display: flex;
-  gap: 8px;
   align-items: flex-start;
-  padding: 10px 12px;
-  border: 1px solid var(--info-border);
-  border-radius: var(--radius-control);
-  background: var(--info-surface);
-  color: var(--info);
+  gap: 12px;
 }
-.est-workload-notice .product-icon {
-  flex: none;
-  width: 18px;
-  height: 18px;
+#ppo-estimating-workload .ew-facts > div > div {
+  display: block;
+}
+#ppo-estimating-workload .ew-facts dt {
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 18px;
+}
+#ppo-estimating-workload .ew-related {
+  background: var(--surface-2);
+}
+#ppo-estimating-workload .ew-tabs-card {
+  background: var(--surface-white);
+}
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-record footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    background: var(--surface-white);
+    margin: 0;
+  }
+  #ppo-estimating-workload .ew-related {
+    padding-bottom: 110px;
+  }
 }
 
-/* P7: below the panel width the detail opens as a right-hand modal drawer
-   with WorklistPanel behaviour (modal dialog, Escape, focus return). */
-.est-workload-register .crm-r38-panel {
-  position: fixed;
-  inset: 0 0 0 auto;
-  width: min(448px, 100vw);
-  max-width: 100vw;
-  height: 100dvh;
-  max-height: 100dvh;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-left: 1px solid var(--line-strong);
-  box-shadow: 0 20px 70px #242a3740;
-  color: var(--ink);
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-filter-form :is(input, select) {
+    font-size: 16px;
+  }
 }
-.est-workload-register .crm-r38-panel[open] {
+
+#ppo-estimating-workload .ew-toolbar .crm-r38-menu-trigger {
+  min-height: 40px;
+  height: 40px;
+}
+#ppo-estimating-workload .ew-phone-snapshot-identity {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
-.est-workload-register .crm-r38-panel::backdrop {
-  background: #242a372b;
+#ppo-estimating-workload .ew-phone-snapshot-identity small {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
 }
-.est-workload-register .crm-r38-panel > header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--line-strong);
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-phone-snapshot-header {
+    min-height: 64px;
+  }
+  #ppo-estimating-workload .ew-record-scroll > header > .ew-muted {
+    display: none;
+  }
 }
-.est-workload-register .crm-r38-panel > header h2 {
-  margin: 0;
-  font-size: 18px;
-  line-height: 26px;
-  overflow-wrap: anywhere;
+
+#ppo-estimating-workload
+  .ppo-register-table
+  :is(.ew-icon-button, .crm-r38-menu-trigger) {
+  height: 32px;
+  min-height: 32px;
+  width: 32px;
+  min-width: 32px;
+  margin: auto;
 }
-.est-workload-register .crm-r38-panel > header button {
+#ppo-estimating-workload .ew-toolbar > .crm-r38-menu-trigger {
+  font: inherit;
+  white-space: nowrap;
   flex: none;
-  width: 44px;
-  min-height: 44px;
-  padding: 10px;
-  border: 1px solid var(--control-border);
-  border-radius: var(--radius-control);
-  background: var(--white);
 }
-.est-workload-register .crm-r38-panel-body {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  padding: 16px 20px 24px;
+#ppo-estimating-workload
+  .ew-toolbar
+  > .crm-r38-menu-trigger[aria-label="Sort workload"] {
+  width: 198px;
 }
-.est-workload-register .crm-r38-panel > footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 12px 20px;
-  border-top: 1px solid var(--line-strong);
-  background: var(--paper);
-}
-.est-workload-register .crm-r38-panel > footer button {
-  min-height: 44px;
-  padding: 8px 20px;
-  border: 1px solid var(--control-border);
-  border-radius: var(--radius-control);
-  background: var(--white);
-  color: var(--navy);
-  font-weight: 500;
+@media (max-width: 780px) {
+  #ppo-estimating-workload .ew-phone-open {
+    min-height: 79px;
+    padding: 8px 16px;
+  }
+  #ppo-estimating-workload .ew-phone-body {
+    gap: 3px;
+  }
 }
 
-/* P9: states. Empty is never failure; failure clears rows. */
-.est-workload-empty {
-  padding: 32px 24px;
-  border: 1px dashed var(--hairline);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  text-align: center;
+/* Match the shared register host reset; keep global element rules out of the menu. */
+#ppo-estimating-workload[data-module-layout] {
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
 }
-.est-workload-empty h2 {
+#ppo-estimating-workload .mw-menu nav ul {
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+#ppo-estimating-workload .mw-menu nav > ul:first-child {
+  margin-top: 0;
+}
+#ppo-estimating-workload .mw-menu li a {
+  text-decoration: none;
+}
+#ppo-estimating-workload
+  :is(aside.mw-menu:not([hidden]), dialog.mw-menu[open]) {
+  display: flex;
+  flex-direction: column;
+}
+#ppo-estimating-workload .mw-menu .ew-rules {
+  padding: 18px 12px;
+}
+#ppo-estimating-workload .mw-menu .ew-rules h3 {
+  padding: 0;
   margin: 0 0 8px;
-  font-size: 18px;
 }
-.est-workload-empty p {
-  max-width: 60ch;
-  margin: 0 auto 12px;
+#ppo-estimating-workload .ew-rules dl div {
+  gap: 4px;
 }
-.est-workload-failed {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 16px;
-  margin: 12px 0;
-}
-.est-workload-failed p {
-  margin: 0;
-}
-.est-workload-boundaries {
-  margin-top: 20px;
-  padding: 20px 24px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-}
-.est-workload-boundaries h2 {
-  margin: 0 0 12px;
-  font-size: 18px;
-}
-.est-workload-need {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-.est-workload-boundaries dl {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: 4px 24px;
-  margin: 0 0 12px;
-}
-.est-workload-boundaries dt {
-  color: var(--text-secondary);
-}
-.est-workload-boundaries dd {
-  margin: 0;
-  font-weight: 600;
-}
-
-/* P8: saved estimates as a table with right-aligned tabular amounts. */
-.est-saved-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 16px;
-  margin-bottom: 12px;
-}
-.est-saved-toolbar .est-workload-summary {
-  margin: 0;
-}
-.est-saved-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-}
-.est-saved-table th,
-.est-saved-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--line-soft);
-  text-align: left;
-  vertical-align: top;
-  overflow-wrap: anywhere;
-}
-.est-saved-table thead th {
-  background: var(--surface-2);
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-}
-.est-saved-table tbody th {
-  font-weight: 500;
-}
-.est-saved-table .est-amount {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+#ppo-estimating-workload .ew-rules dd {
   white-space: nowrap;
 }
 
-/* Stacked (register 760 CSS px wide or less): readiness moves into the
-   disclosure and the retained selections are summarised. A container query,
-   so the first paint is already correct; it matches the measured layout. */
-.est-workload-register {
-  container: est-register / inline-size;
+#ppo-estimating-workload .ew-phone-refresh {
+  display: none;
 }
-@container est-register (max-width: 760px) {
-  .est-workload-segments {
-    display: none;
-  }
-  .est-workload-toggle {
-    display: flex;
-    flex: 1 1 100%;
-    justify-content: flex-start;
-    gap: 8px;
-    align-items: flex-start;
-    min-height: 44px;
-    padding: 10px 0;
-    border: 0;
-    background: none;
-    color: var(--ink);
-    font: inherit;
-    font-weight: 600;
-    text-align: left;
-  }
-  .est-workload-toggle small {
-    display: block;
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 400;
-  }
-  .est-workload-toggle .product-icon {
-    flex: none;
-    width: 20px;
-    height: 20px;
-    margin-top: 1px;
-    transform: rotate(-90deg);
-  }
-  .est-workload-toggle[aria-expanded="true"] .product-icon {
-    transform: none;
-  }
-  .est-workload-more {
-    display: none;
-    flex: 1 1 100%;
-  }
-  .est-workload-more[data-expanded] {
-    display: flex;
-  }
-  .est-workload-more label,
-  .est-workload-search {
-    flex-basis: 100%;
-  }
-  .est-workload-readiness-select {
-    display: flex !important;
-  }
-  [data-layout="stack"] .est-workload-list {
-    display: grid;
-    gap: 12px;
-    border: 0;
-    background: none;
-    overflow: visible;
-  }
+#ppo-estimating-workload .ew-results:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
 }
-/* Stacked cards carry the full detail inline (measured layout). */
-[data-layout="stack"] .est-workload-row h2 {
-  font-size: 18px;
-  line-height: 24px;
-}
-[data-layout="stack"] .est-workload-row {
-  display: block;
-  padding: 16px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-card);
-  background: var(--white);
-}
-@container est-register (max-width: 760px) {
-  .est-workload-boundaries dl {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .est-workload-boundaries dd {
-    margin-bottom: 8px;
-  }
-}
-@media (max-width: 700px) {
-  .est-saved-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
-  .est-saved-table,
-  .est-saved-table tbody,
-  .est-saved-table tr,
-  .est-saved-table th,
-  .est-saved-table td {
-    display: block;
-  }
-  .est-saved-table tr {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--line-strong);
-  }
-  .est-saved-table td,
-  .est-saved-table th {
-    padding: 4px 16px;
-    border: 0;
-  }
-  .est-saved-table td::before {
-    content: attr(data-label);
-    display: block;
-    color: var(--text-secondary);
-    font-size: 13px;
-  }
-  .est-saved-table .est-amount {
-    text-align: left;
-  }
-  .est-workload-tabs a {
-    flex: 1;
-    justify-content: center;
-    padding-inline: 8px;
-    text-align: center;
-  }
-}
-
-/* Local identities enable an older shell grid. Match the current compact shell
-   row on this register, including 200% reflow, without changing other pages. */
 @media (max-width: 780px) {
-  .workspace:has(.est-workload) .topbar.ppo-shell-header {
-    display: flex;
+  #ppo-estimating-workload .ew-phone-refresh {
+    display: block;
   }
 }
