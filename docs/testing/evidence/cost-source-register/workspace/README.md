@@ -15,3 +15,10 @@ Compared register captures at 1440, 1024, 390 and 320 pixels with the retained a
 Inspected the register at four widths, desktop/tablet snapshots and the scrolled 320 px snapshot against retained desktop and phone references. Fixed menu bullets, phone button layout and tablet tab occlusion. Snapshot/selection capture sets are supplied for review. Loading appears while the API read is pending; a deliberately held network-loading case and keyboard tab navigation passed. Manual screen-reader testing, the remaining native creation/review/refresh browser journeys, broader application suites and formal visual acceptance were not run or granted in this increment. No baseline fingerprint is marked reviewed.
 
 Full 25-row fixtures verify the final phone row remains visible above fixed controls at 390 and 320 px. Selection evidence uses two rows. The state badges and action controls reuse the current shared implementations; their fills/weight, action-panel presentation and the paging footer differ from the historic drawing and remain explicit visual-review items.
+
+
+## Phone selection follow-up — 31 October 2026
+
+[Claude’s review of PR 809](https://github.com/deanrfiedler-gif/powerplants-one/pull/809#pullrequestreview-5722534367) reproduced the incorrect Select sources locator and the panel covering Hide panel at 390/320 px. Its diagnostic run bypassed both blockers and is not acceptance of the corrected source. The follow-up uses the actions menu and provides Hide panel within the phone panel, with selection retention and focus return assertions.
+
+The corrected browser spec also requests `selection-panel-390.png` and `selection-panel-320.png`, alongside selection-list captures. None of these new phone selection captures is supplied yet: this runner’s Chrome prerequisite fails. The existing captures above remain evidence of the earlier parent run only. Review finding 3 stays open until actual captures are inspected and committed. Finding 4’s small-movement touch cancellation remains a separate device-validation gap; this follow-up changes no long-press handler and claims no physical-device proof.

@@ -158,7 +158,8 @@ function Register({
     setSnapshot(row);
   }
   function toggle(row: CostSourceRow) {
-    setPanelOpen(true);
+    // The phone panel covers the list; open it only through Show panel.
+    setPanelOpen(menu.phone === false);
     setSelected((old) =>
       old.some((r) => r.id === row.id)
         ? old.filter((r) => r.id !== row.id)
@@ -401,7 +402,11 @@ function Register({
                 >
                   <Icon name="xmark" />
                 </Button>
-                <Button onClick={() => setPanelOpen(!panelOpen)}>
+                <Button
+                  id="cost-source-selection-panel-toggle"
+                  className={menu.phone && panelOpen ? "cs-desktop" : undefined}
+                  onClick={() => setPanelOpen(!panelOpen)}
+                >
                   {panelOpen ? "Hide panel" : "Show panel"}
                 </Button>
               </>
@@ -790,6 +795,14 @@ function Register({
         {data && selected.length > 0 && panelOpen && !snapshot && (
           <aside className="cs-selection" aria-label="Selected sources">
             <header>
+              {menu.phone && (
+                <Button onClick={() => {
+                  setPanelOpen(false);
+                  requestAnimationFrame(() => document.getElementById("cost-source-selection-panel-toggle")?.focus());
+                }}>
+                  Hide panel
+                </Button>
+              )}
               <h2>{selected.length} {selected.length === 1 ? "source" : "sources"} selected</h2>
             </header>
             <div>

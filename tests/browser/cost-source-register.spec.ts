@@ -226,6 +226,40 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
         .click();
     else await page.keyboard.press("Escape");
     await expect(snapshot).toHaveCount(0);
+    if (width <= 780) {
+      const list = page.locator(".cs-phone-list");
+      const panel = page.getByRole("complementary", { name: "Selected sources" });
+      if (width === 390) {
+        await page.getByRole("button", { name: "Cost source actions", exact: true }).click();
+        await page.getByRole("menuitem", { name: "Select sources", exact: true }).click();
+        await list.getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true }).check();
+      } else {
+        // Exercise the touch handler without relying on a real device hold.
+        const row = list.locator(".cs-phone-open").first();
+        await row.dispatchEvent("pointerdown", { pointerType: "touch" });
+        await expect(list.getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true })).toBeChecked();
+        await row.dispatchEvent("pointerup", { pointerType: "touch" });
+        await row.click();
+        await expect(snapshot).toHaveCount(0);
+      }
+      await expect(panel).toHaveCount(0);
+      await list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).check();
+      await expect(page.getByText("2 selected on this page", { exact: true })).toBeVisible();
+      await expect(panel).toHaveCount(0);
+      await page.screenshot({ path: `${captures}/selection-${width}.png` });
+      await page.getByRole("button", { name: "Show panel", exact: true }).click();
+      await expect(panel).toBeVisible();
+      await page.screenshot({ path: `${captures}/selection-panel-${width}.png` });
+      await panel.getByRole("button", { name: "Hide panel", exact: true }).click();
+      await expect(page.getByRole("button", { name: "Show panel", exact: true })).toBeFocused();
+      await expect(list.getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true })).toBeChecked();
+      await expect(list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true })).toBeChecked();
+      await list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).uncheck();
+      await expect(panel).toHaveCount(0);
+      await list.getByRole("checkbox", { name: "Select SYN-SRC-0022", exact: true }).check();
+      await expect(panel).toHaveCount(0);
+      await page.getByRole("button", { name: "Clear selection", exact: true }).click();
+    }
   }
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.getByRole("button", { name: "Next page", exact: true }).click();
