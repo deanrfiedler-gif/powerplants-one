@@ -2,7 +2,7 @@
 
 Owner: Dean Fiedler. Built by Claude for Dean under the standing order of 30 October 2026. Review: local implementation verification only; cross-model review, paired visual review and business acceptance are pending.
 
-Scope: increment M1 of PPO-MAINTENANCE-TS02-DEC (`docs/decisions/maintenance-service-ts02-decisions.md`, proposed in [PR #754](https://github.com/deanrfiedler-gif/powerplants-one/pull/754)): rules M-R1 (six-monthly and yearly intervals), M-R2 (Prepare also creates the work order with the plan's tasks) and M-R4 (follow-on work from a Partial occurrence). TS-02 findings F-12, F2-01 and F2-05. Synthetic fixtures only. Contracts: [maintenance and warranty](../../../contracts/maintenance-warranty-api.md#recurrence-and-service-receiving) and the [Service API M1 amendment](../../../contracts/service-api.md#m1-maintenance-prepared-work-order-amendment--30-october-2026-implementation-in-review). Design register: [`/maintenance/due/[id]`](../../../design/development/pages/route-maintenance-due-id.md) and [`/service/work-orders/[id]`](../../../design/development/pages/route-service-work-orders-id.md).
+Scope: increment M1 of PPO-MAINTENANCE-TS02-DEC ([`docs/decisions/maintenance-service-ts02-decisions.md`](../../../decisions/maintenance-service-ts02-decisions.md), merged to main in [PR #754](https://github.com/deanrfiedler-gif/powerplants-one/pull/754) on 30 October 2026): rules M-R1 (six-monthly and yearly intervals), M-R2 (Prepare also creates the work order with the plan's tasks) and M-R4 (follow-on work from a Partial occurrence). TS-02 findings F-12, F2-01 and F2-05. Synthetic fixtures only. Contracts: [maintenance and warranty](../../../contracts/maintenance-warranty-api.md#recurrence-and-service-receiving) and the [Service API M1 amendment](../../../contracts/service-api.md#m1-maintenance-prepared-work-order-amendment--30-october-2026-implementation-in-review). Design register: [`/maintenance/due/[id]`](../../../design/development/pages/route-maintenance-due-id.md) and [`/service/work-orders/[id]`](../../../design/development/pages/route-service-work-orders-id.md).
 
 ## What was built
 
@@ -28,7 +28,21 @@ These are Claude's choices where the decision record is silent, not Dean's accep
 | Can the original request still be received once a follow-on exists? | No; results are received on the follow-on. | Otherwise a later original result could reopen a second follow-on while one is open. |
 | Should the work order page block an edited task description? | No; it warns before saving. | M-R2 asks for a warning; receiving still refuses the unmatched task. |
 | How does the late-0051 upgrade proof treat 0123? | The reconstruction stops at 0122, and the runner then installs 0051 and 0123 in order. | 0123 alters 0051's own tables, so no real history can hold 0123 without 0051. |
-| Is the decision record linked? | Named with its path and PR #754, not as a relative link. | The record is not on this branch's base yet; the link would break until #754 merges. |
+| Is the decision record linked? | Named with its path and PR #754, not as a relative link. | Historical: when written, the record was not on this branch's base. It now is (#754 merged and taken in through the base), and the scope line above links it. |
+
+## Current status (31 October 2026, head 340ddf2)
+
+This section is current; the Results table below is the original 30 October run at c272e29 and is kept as history.
+
+- **Reviews:** Codex found five P2 findings, all fixed with re-reviews: long completion requirements, surrogate pairs, restricted work-order IDs in history, and plan-wording multiplicity. Migration 0123 had a bounded source review with no defects.
+- **Local runs since then, with the renderer working through an uncommitted local allowance:**
+  - maintenance-m1, maintenance-service and maintenance DB suites: 21/21. These cover the renderer-dependent follow-on, history hiding, Unicode and race cases.
+  - M-R4 and long-requirement cases: 4 of 4 runs.
+  - maintenance-m1 browser spec, desktop and phone: 2/2.
+  - The populated upgrade below.
+- **Test helper:** 64934c2 fixed intermittent follow-on failures in `serviceResult`, which paired tasks by list position.
+- **Coverage limit kept:** the history filter delegates to `visibleWorkOrder`. No independent DB case covers an asset added to the work order's scope after preparation.
+- **Not shown here:** CI on the current head, business acceptance and deployment.
 
 ## Results
 
