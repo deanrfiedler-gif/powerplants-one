@@ -26,25 +26,26 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 band, tray, selection an
       await page.getByRole("button", { name: /^Needs attention and tray/ }).click();
       await expect(page.getByRole("region", { name: "Needs attention", exact: true })).toBeVisible();
       await expect(page.getByRole("heading", { name: "To plan", exact: true })).toBeVisible();
-      await page.screenshot({ path: info.outputPath(`PL01-tray-${width}.png`), fullPage: true });
+      await page.screenshot({ path: info.outputPath(`PL01-tray-${width}.png`), fullPage: false });
       await page.getByRole("button", { name: /Back to planner/ }).click();
     } else {
       await expect(page.getByRole("region", { name: "Needs attention", exact: true })).toBeVisible();
       if (width === 1024) {
         await expect(page.getByRole("button", { name: /^Expand tray/ })).toBeVisible();
         expect(await page.locator(".pl01-tray").evaluate(e => Math.round(e.getBoundingClientRect().width))).toBe(44);
+        await page.screenshot({ path: info.outputPath("PL01-tablet-collapsed.png"), fullPage: false });
         await page.getByRole("button", { name: /^Expand tray/ }).click();
       }
       await expect(page.getByRole("heading", { name: "To plan", exact: true })).toBeVisible();
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await page.screenshot({ path: info.outputPath(`PL01-day-${width}.png`), fullPage: true });
+    await page.screenshot({ path: info.outputPath(`PL01-day-${width}.png`), fullPage: width <= 780 });
     const visit = page.locator('[data-appointment][data-status="Confirmed"]').first();
     await visit.focus(); await visit.press("Enter");
     const details = page.getByRole("complementary", { name: /^Visit details:/ });
     await expect(details).toBeVisible();
     if (width > 780) expect(await page.locator(".pl01-tray").evaluate(e => Math.round(e.getBoundingClientRect().width))).toBe(44);
-    await page.screenshot({ path: info.outputPath(`PL01-details-${width}.png`), fullPage: true });
+    await page.screenshot({ path: info.outputPath(`PL01-details-${width}.png`), fullPage: false });
     await details.getByRole("button", { name: "Move or reassign", exact: true }).click();
     const move = page.getByRole("dialog", { name: "Move or reassign", exact: true });
     await expect(move.getByRole("region", { name: "Current and proposed visit" })).toBeVisible();
@@ -66,7 +67,7 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 Day to Week keeps the me
   await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
   await expect(page.locator('[data-appointment][data-status="Confirmed"]').first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.screenshot({ path: info.outputPath(`PL01-week-${width}.png`), fullPage: true });
+  await page.screenshot({ path: info.outputPath(`PL01-week-${width}.png`), fullPage: width <= 780 });
 });
 
 test("PL-01 tray opens the native proposal without reserving or saving a visit", async ({ page }, info) => {
@@ -82,7 +83,7 @@ test("PL-01 tray opens the native proposal without reserving or saving a visit",
   const panel = await openDemandPanel(page, work.id);
   await expect(panel.getByRole("button", { name: "Save proposal", exact: true })).toBeEnabled();
   await fillProposal(page);
-  await page.screenshot({ path: info.outputPath("PL01-plan-visit.png"), fullPage: true });
+  await page.screenshot({ path: info.outputPath("PL01-plan-visit.png"), fullPage: false });
   await panel.getByRole("button", { name: "Close plan visit" }).click();
   expect(writes).toEqual([]);
 });
@@ -101,7 +102,7 @@ test("PL-01 a timeline drag opens Move this visit without sending a booking comm
   await expect(dialog.getByRole("region", { name: "Current and proposed visit" })).toContainText("Current → Proposed");
   await expect(dialog.getByText(/new customer site readiness confirmation/)).toBeVisible();
   expect(writes).toEqual([]);
-  await page.screenshot({ path: info.outputPath("PL01-drag-comparison.png"), fullPage: true });
+  await page.screenshot({ path: info.outputPath("PL01-drag-comparison.png"), fullPage: false });
   await page.getByRole("button", { name: "Close move", exact: true }).click();
   expect(writes).toEqual([]);
 });
