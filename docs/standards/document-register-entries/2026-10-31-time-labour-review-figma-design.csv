@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-FI01-TIME-REVIEW-FIGMA-DEC,Time & labour review design (Figma) owner decision,docs/decisions/time-labour-review-figma-design.md,,Owner-accepted design; named Figma version waits for Dean; options F1-F3 await review; building the page separate,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,git,
+PPO-FI01-TIME-REVIEW-FIGMA-R01,Time & labour review design retained captures,docs/reference/ui/service/time-labour-review-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,retained-record,
