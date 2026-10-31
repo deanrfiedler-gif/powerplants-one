@@ -15,6 +15,7 @@ const tables = {
   Organisation: "organisations",
   Site: "sites",
   Owner: "users",
+  RecordedOwner: "users",
   Asset: "assets",
   Project: "projects",
   WorkOrder: "work_orders",
@@ -114,6 +115,28 @@ export async function libraryOptions(
               ).rowCount
             )
               continue;
+          } else if (kind === "RecordedOwner") {
+            const candidates = (
+              await c.query<{ id: string }>(
+                "SELECT d.id FROM ppo.library_documents d JOIN ppo.library_revisions r ON r.workspace_id=d.workspace_id AND r.id=d.current_revision_id WHERE d.workspace_id=$1 AND r.owner_id=$2 AND ($3::uuid IS NULL OR d.company_id=$3)",
+                [p.workspace_id, row.id, company],
+              )
+            ).rows;
+            let permitted = false;
+            for (const candidate of candidates) {
+              try {
+                await documentContext(c, p, candidate.id);
+                permitted = true;
+                break;
+              } catch (error) {
+                if (!(
+                  error instanceof AppError && [403, 404].includes(error.status)
+                ))
+                  throw error;
+              }
+            }
+            if (!permitted) continue;
+            if (!row.active) title += " (inactive)";
           } else if (kind === "Owner") {
             if (!company) throw unavailable();
             await companyContext(c, p, company, site, "document.read");

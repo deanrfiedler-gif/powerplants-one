@@ -33,7 +33,9 @@ import {
   linkedDocuments,
   documentHistory,
   downloadDocument,
+  documentRevisions,
 } from "../../src/library/reads";
+import { libraryOptions } from "../../src/library/options";
 import { readOperation } from "../../src/shared/receipts";
 import {
   librarySetup,
@@ -661,7 +663,17 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121],
+      through === 88
+        ? [
+            89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+            105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+            118, 119, 120, 121,
+          ]
+        : [
+            90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+            105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+            118, 119, 120, 121,
+          ],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
@@ -814,4 +826,109 @@ test("DK-B11 storage success followed by database rollback preserves the origina
     (await downloadDocument(p, input.id, input.revision_id)).bytes.toString(),
     input.source.text,
   );
+});
+
+test("DK-UI01 sorted continuations bind filters and actor; revisions retain exact history", async () => {
+  const { p, observer } = await librarySetup();
+  const inputs = [
+    libraryInput(p.actor_id),
+    libraryInput(p.actor_id),
+    libraryInput(p.actor_id),
+  ];
+  for (const [index, input] of inputs.entries()) {
+    input.title = `SYN Library ordering ${index}`;
+    await createDocument(p, input);
+  }
+  for (const sort of ["number", "updated", "registration"]) {
+    const first = await listDocuments(p, {
+      sort,
+      direction: "desc",
+      limit: "2",
+    });
+    assert.equal(first.items.length, 2);
+    assert.ok(first.next_cursor);
+    const last = await listDocuments(p, {
+      sort,
+      direction: "desc",
+      limit: "2",
+      cursor: first.next_cursor!,
+    });
+    assert.equal(last.items.length, 1);
+    assert.equal(
+      new Set([...first.items, ...last.items].map((x) => x.document.id)).size,
+      3,
+    );
+    assert.equal(last.next_cursor, null);
+    await assert.rejects(
+      listDocuments(observer, {
+        sort,
+        direction: "desc",
+        limit: "2",
+        cursor: first.next_cursor!,
+      }),
+      code("InvalidData"),
+    );
+    await assert.rejects(
+      listDocuments(p, {
+        sort,
+        direction: "desc",
+        limit: "2",
+        q: "changed",
+        cursor: first.next_cursor!,
+      }),
+      code("InvalidData"),
+    );
+  }
+  assert.equal((await listDocuments(p, { mine: "true" })).items.length, 3);
+  assert.equal(
+    (await listDocuments(observer, { mine: "true" })).items.length,
+    0,
+  );
+  const next = successor(inputs[0], 1);
+  await reviseDocument(p, inputs[0].id, next);
+  const revisions = await documentRevisions(p, inputs[0].id, { limit: "1" });
+  assert.equal(revisions.items[0].revision.id, next.revision_id);
+  const previous = await documentRevisions(p, inputs[0].id, {
+    before: String(revisions.next_before),
+  });
+  assert.equal(previous.items[0].revision.id, inputs[0].revision_id);
+  assert.equal(previous.items[0].library_current, false);
+  assert.equal(previous.items[0].can_register, true);
+});
+
+test("DK-UI02 permitted choice reads distinguish recorded owners from eligible duty holders", async () => {
+  const { p, observer } = await librarySetup();
+  const input = libraryInput(p.actor_id);
+  await createDocument(p, input);
+  const recorded = await libraryOptions(observer, { kind: "RecordedOwner" });
+  assert.ok(recorded.items.some((x) => x.id === p.actor_id));
+  assert.ok(!recorded.items.some((x) => x.id === observer.actor_id));
+  const owners = await libraryOptions(p, {
+    kind: "Owner",
+    company_id: input.company_id,
+    site_id: input.site_id,
+  });
+  assert.ok(owners.items.some((x) => x.id === p.actor_id));
+  assert.ok(!owners.items.some((x) => x.id === observer.actor_id));
+  assert.ok(
+    (
+      await libraryOptions(p, {
+        kind: "Organisation",
+        company_id: input.company_id,
+      })
+    ).items.some((x) => x.id === input.organisation_id),
+  );
+  assert.ok(
+    (
+      await libraryOptions(p, {
+        kind: "Site",
+        organisation_id: input.organisation_id,
+      })
+    ).items.some((x) => x.id === input.site_id),
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='document.read'",
+    [observer.actor_id],
+  );
+  await assert.rejects(libraryOptions(observer, { kind: "RecordedOwner" }));
 });

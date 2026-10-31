@@ -3,7 +3,7 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
 import { AppError } from "../platform/errors";
-import { hasPermission, requireCapability } from "../platform/permissions";
+import { hasPermission } from "../platform/permissions";
 import { visible } from "../shared/reads";
 import { workingCompanyFor } from "../platform/working-company";
 import { libraryCursor, type LibraryPosition } from "./paging";
@@ -124,6 +124,13 @@ async function status(
           purpose: review.purpose,
           rationale: review.rationale,
           reviewer_id: review.reviewer_id,
+          reviewer_name:
+            (
+              await c.query(
+                "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+                [p.workspace_id, review.reviewer_id],
+              )
+            ).rows[0]?.display_name ?? "Unavailable",
           created_at: review.created_at,
           content_hash: review.content_hash,
         }
@@ -155,6 +162,14 @@ async function presentation(
   const name = (id: string) =>
     people.find((x) => x.id === id)?.display_name ?? "Unavailable";
   return {
+    actor_id: p.actor_id,
+    company_name:
+      (
+        await c.query(
+          "SELECT display_name FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, d.company_id],
+        )
+      ).rows[0]?.display_name ?? "Unavailable",
     organisation_name: organisation.display_name as string,
     site_name,
     owner_name: name(r.owner_id),
@@ -192,7 +207,7 @@ export async function readDocument(
         : current;
     const findings = (
       await c.query(
-        "SELECT id,text,owner_id,due_date::text AS due_date,state,response,response_by,response_at,acceptance,accepted_by,accepted_at,created_by,created_at FROM ppo.library_findings WHERE workspace_id=$1 AND revision_id=$2 ORDER BY created_at,id",
+        "SELECT f.id,f.text,f.owner_id,u.display_name AS owner_name,f.due_date::text AS due_date,f.state,f.response,f.response_by,f.response_at,f.acceptance,f.accepted_by,f.accepted_at,f.created_by,f.created_at FROM ppo.library_findings f LEFT JOIN ppo.users u ON u.workspace_id=f.workspace_id AND u.id=f.owner_id WHERE f.workspace_id=$1 AND f.revision_id=$2 ORDER BY f.created_at,f.id",
         [p.workspace_id, r.id],
       )
     ).rows;
@@ -219,6 +234,7 @@ export async function listDocuments(
     "organisation_id",
     "site_id",
     "owner_id",
+    "mine",
     "availability",
     "review_state",
     "after",
@@ -249,7 +265,11 @@ export async function listDocuments(
           "Returned",
           "ReviewOutdated",
         ] as const);
-  const owner = optionalId(query.owner_id, "owner_id");
+  const mine =
+    query.mine === undefined
+      ? false
+      : choice(query.mine, "mine", ["true"] as const) === "true";
+  const owner = mine ? p.actor_id : optionalId(query.owner_id, "owner_id");
   const type =
     query.document_type === undefined
       ? null
@@ -305,7 +325,6 @@ export async function listDocuments(
   const order = direction === "asc" ? "ASC" : "DESC",
     compare = direction === "asc" ? ">" : "<";
   return readTransaction(p, async (c) => {
-    await requireCapability(c, p, "document.read");
     const items: Array<Awaited<ReturnType<typeof registerItem>>> = [];
     let last: LibraryPosition | null = null;
     const finish = async (more: boolean) => {
@@ -569,6 +588,13 @@ export async function documentHistory(
             command: e.command,
             revision: publicRevision(r),
             actor_id: e.actor_id,
+            actor_name:
+              (
+                await c.query(
+                  "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+                  [p.workspace_id, e.actor_id],
+                )
+              ).rows[0]?.display_name ?? "Unavailable",
             created_at: e.created_at,
             reason: e.reason,
             evidence:

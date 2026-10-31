@@ -21,8 +21,9 @@ export type LibraryRevision = {
 export type Finding = {
   id: string;
   text: string;
-  state: "Open" | "Responded" | "Closed";
+  state: "Open" | "AwaitingReview" | "Closed";
   owner_id: string;
+  owner_name?: string;
   due_date: string;
   created_at: string;
   created_by: string;
@@ -58,9 +59,12 @@ export type LibraryItem = {
     purpose: string;
     rationale: string;
     reviewer_id: string;
+    reviewer_name?: string;
     created_at: string;
     content_hash: string;
   } | null;
+  actor_id: string;
+  company_name?: string;
   organisation_name: string;
   site_name: string | null;
   owner_name: string;
@@ -99,15 +103,30 @@ export const libraryViews = [
 export const revisionName = (n: number) => "r" + String(n).padStart(2, "0");
 export const reviewLabel = (state: string) =>
   state === "ReviewOutdated" ? "Review outdated" : state;
-export const recordHref = (item: Pick<LibraryItem, "document" | "revision">) =>
-  `/documents/library/${item.document.id}?revision_id=${item.revision.id}`;
+export type LibraryListContext = {
+  query: string;
+  listQuery: string;
+  pages: number;
+};
+export const recordHref = (
+  item: Pick<LibraryItem, "document" | "revision">,
+  context?: LibraryListContext,
+) => {
+  const query = new URLSearchParams({ revision_id: item.revision.id });
+  if (context) {
+    query.set("from", context.query);
+    query.set("list_query", context.listQuery);
+    query.set("list_pages", String(context.pages));
+  }
+  return `/documents/library/${item.document.id}?${query}`;
+};
 export const targetPaths: Record<string, string> = {
   Organisation: "/customers",
   Site: "/sites",
-  Asset: "/assets",
+  Asset: "/equipment",
   Project: "/projects",
   WorkOrder: "/service/work-orders",
-  EngineeringPackage: "/engineering/packages",
+  EngineeringPackage: "/engineering",
 };
 export function currentUseReasons(item: LibraryItem) {
   return [

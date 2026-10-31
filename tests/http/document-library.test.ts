@@ -22,6 +22,29 @@ test("DK-HTTP01 compiled register, review, revision, history, links and receipts
     path = "document-library/" + input.id;
   const created = await h.call("coordinator", "document-library", input);
   assert.equal(created.status, 201, JSON.stringify(created.body));
+  const sorted = await h.call(
+    "coordinator",
+    "document-library?sort=number&direction=desc&mine=true",
+  );
+  assert.equal(sorted.status, 200);
+  assert.ok(
+    sorted.body.items.some(
+      (x: { document: { id: string } }) => x.document.id === input.id,
+    ),
+  );
+  const choices = await h.call(
+    "observer",
+    "document-library/options?kind=RecordedOwner",
+  );
+  assert.equal(choices.status, 200);
+  assert.ok(
+    choices.body.items.some((x: { id: string }) => x.id === p.actor_id),
+  );
+  assert.equal(
+    (await h.call("observer", "document-library/options?kind=ArbitraryTable"))
+      .status,
+    422,
+  );
   const replay = await h.call("coordinator", "document-library", input);
   assert.equal(replay.status, 200);
   assert.deepEqual(replay.body, created.body);
@@ -72,6 +95,18 @@ test("DK-HTTP01 compiled register, review, revision, history, links and receipts
   assert.equal(
     (await h.call("coordinator", path + "/revisions", next)).status,
     201,
+  );
+  const revisions = await h.call("coordinator", path + "/revisions");
+  assert.equal(revisions.status, 200);
+  assert.deepEqual(
+    revisions.body.items.map(
+      (x: { revision: { id: string } }) => x.revision.id,
+    ),
+    [next.revision_id, input.revision_id],
+  );
+  assert.equal(
+    (await h.call("second-company", path + "/revisions")).status,
+    404,
   );
   assert.equal(
     (await h.call("coordinator", path + "/usage")).body.items[0].revision_id,
