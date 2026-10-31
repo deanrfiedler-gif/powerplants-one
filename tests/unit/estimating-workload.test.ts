@@ -38,6 +38,7 @@ import {
   workloadLocation,
   workloadSequence,
   savedEstimateHref,
+  shortDate,
   workloadFingerprint,
   type WorkloadItem,
 } from "../../src/components/estimating-workload-model";
@@ -144,4 +145,21 @@ test("ES01 list export has an allowlist, escaped quotes and formula-injection pr
       '"Opportunity","Sales source version","Title","Customer","Readiness","Estimating owner","Sales owner","Last changed"',
     ),
   );
+});
+
+test("ES01 short dates choose the year in Brisbane across browser time zones", (t) => {
+  const previousZone = process.env.TZ;
+  t.after(() => {
+    if (previousZone === undefined) delete process.env.TZ;
+    else process.env.TZ = previousZone;
+  });
+  t.mock.timers.enable({
+    apis: ["Date"],
+    now: new Date("2027-01-01T00:30:00+10:00"),
+  });
+  for (const zone of ["UTC", "America/Los_Angeles", "Pacific/Auckland"]) {
+    process.env.TZ = zone;
+    assert.equal(shortDate("2027-01-02T00:30:00+10:00"), "2 Jan", zone);
+    assert.equal(shortDate("2026-12-31T23:30:00+10:00"), "31 Dec 2026", zone);
+  }
 });

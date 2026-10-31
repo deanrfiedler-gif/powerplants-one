@@ -5469,7 +5469,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Start discovery opens the native creation review. Creating a workspace rechecks edit, receiver, linking and source access; it never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [],
           "rows": [],
@@ -5539,7 +5539,7 @@
           "section_id": "accepted-sales-workspace-link",
           "title": "Continue from the accepted Sales brief",
           "paragraphs": [
-            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Start discovery opens the native creation review. Creating a workspace rechecks edit, receiver, linking and source access; it never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [
             "Review exact Sales acceptance and current source status in its native record.",
@@ -39763,7 +39763,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Starting Discovery checks the native edit/receiver/link rules and never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
+            "Navigation makes no business change. Discovery alternatives retain their option IDs; saved estimates retain exact version IDs and the Discovery revision costed. Start discovery opens the native creation review. Creating a workspace rechecks edit, receiver, linking and source access; it never accepts a Sales brief. An eligible exact accepted brief may be explicitly reviewed and bound during native creation; existing-workspace linking remains a separate review. A changed accepted Sales source must be reconciled before Start. Scope completeness does not approve a price or issue a quotation."
           ],
           "steps": [],
           "rows": [],

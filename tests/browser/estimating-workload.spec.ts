@@ -58,6 +58,11 @@ test("ES01 accepted snapshot, native Discovery entry, filters, view picker and U
   const snapshot = page.getByRole("dialog", { name: input.title, exact: true });
   await expect(snapshot).toBeVisible();
   await expect(
+    snapshot.getByText(
+      "No readable Sales estimating brief. This opportunity remains a candidate brief.",
+    ),
+  ).toBeVisible();
+  await expect(
     snapshot.getByRole("link", { name: "Start discovery", exact: true }),
   ).toHaveAttribute(
     "href",

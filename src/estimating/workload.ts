@@ -200,8 +200,7 @@ export async function readEstimatingWorkload(
             opportunity.company_id,
             opportunity.site_id ?? undefined,
           ));
-        let sales_brief:
-          Awaited<ReturnType<typeof creationSalesBrief>> | "Unavailable" = null;
+        let sales_brief: Awaited<ReturnType<typeof creationSalesBrief>> = null;
         try {
           sales_brief = await creationSalesBrief(c, p, opportunity.id);
         } catch (error) {
@@ -210,14 +209,11 @@ export async function readEstimatingWorkload(
             ![403, 404].includes(error.status)
           )
             throw error;
-          sales_brief = "Unavailable";
-          can_start = false;
+          // Absent and denied briefs have the same projection, including the
+          // navigation hint. Disabling Start only for denied briefs would reveal
+          // their existence. The native creation flow still checks every source.
         }
-        if (
-          sales_brief !== "Unavailable" &&
-          sales_brief?.selection &&
-          sales_brief.source_changed
-        )
+        if (sales_brief?.selection && sales_brief.source_changed)
           can_start = false;
         if (can_start) {
           try {

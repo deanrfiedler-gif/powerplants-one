@@ -44,7 +44,7 @@ export const estimatingWorkloadGuide: PageGuide = {
     ],
     [
       "Continue Discovery",
-      "Start discovery requires current edit and native receiving/linking authority. Starting never accepts a Sales brief or confirms its reported scope. Eligible accepted context is explicitly reviewed in native creation; existing workspaces use the separate link review. Resolve changed accepted sources in their owning workflow.",
+      "Start discovery opens the native creation review. Creating a workspace rechecks edit, receiving, linking and source access. Starting never accepts a Sales brief or confirms its reported scope. Eligible accepted context is explicitly reviewed in native creation; existing workspaces use the separate link review. Resolve changed accepted sources in their owning workflow.",
     ],
     [
       "Open saved work",

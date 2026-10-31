@@ -4,14 +4,14 @@
   "owner": "Dean Fiedler",
   "comparison_by": "Codex",
   "review_status": "Application captures inspected; owner/device acceptance pending",
-  "base_main": "6e939bf0b937fc05f9e477d1cd14f8838c92fd9a",
-  "implementation_parent": "6da0738b8d942ca5246dfff8e2a53f1f19fb5d7f",
+  "base_main": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "implementation_parent": "0b1bde1079959dbc0dc19d533647a99a44a43a5e",
   "capture_method": "Real application and shared shell, deterministic synthetic API fixtures, Chrome; licensed icon glyphs hidden only during capture",
   "captures": [
     {
       "path": "captures/desktop-1440-collapsed-snapshot.png",
-      "bytes": 171386,
-      "sha256": "a58111e396b89bec6cee1090f361d713cf7a04a948b928cce506042144d672be"
+      "bytes": 171204,
+      "sha256": "3c47f9c5c4f362f25fae602a8d3617bfb9ab4452844a12846314b13d4a66dd7d"
     },
     {
       "path": "captures/desktop-1440-saved-estimates.png",
@@ -25,8 +25,8 @@
     },
     {
       "path": "captures/desktop-1440-snapshot.png",
-      "bytes": 181628,
-      "sha256": "0ab1f64caddde75c30b5957eb0fca34f3f82487ea1f990e1f294583969ef26e5"
+      "bytes": 181440,
+      "sha256": "5ed6f28ff7885c158f41c1826755020a0faccd41938ee1cbc1ad591c9f41c47d"
     },
     {
       "path": "captures/desktop-1440-workload.png",
@@ -70,8 +70,8 @@
     },
     {
       "path": "captures/tablet-1024-snapshot.png",
-      "bytes": 118457,
-      "sha256": "ceaf34d19fbc80eff0cc8cdb13f1fb47f8c3a8d63480c98e8b828bf8fcee4cca"
+      "bytes": 118516,
+      "sha256": "62829bbe25c7ac8145732afb9730e328bb8f5e7c8b7c27aee0f4ceed92422824"
     },
     {
       "path": "captures/tablet-1024-workload.png",
@@ -92,23 +92,23 @@
     },
     {
       "path": "src/components/estimating-workload-snapshot.tsx",
-      "bytes": 14669,
-      "sha256": "ad21b721371285da77811933473dac6c7f3fe0b240177e76a194eac4609e1740"
+      "bytes": 14558,
+      "sha256": "fd9bcbddf5077eeada48dd0fbdd59156b5c7f8ebece2f6b0147a820d52b31566"
     },
     {
       "path": "src/components/estimating-workload-model.ts",
-      "bytes": 3485,
-      "sha256": "91eedee96b16aad29baf01439da165155aadc1ed5315503889742440823ba160"
+      "bytes": 3612,
+      "sha256": "031f0e2eb512a10447ada5dbf06d52e452f0dc3b3614994d91cf7fd578d694aa"
     },
     {
       "path": "src/components/estimating-workload-guide.ts",
-      "bytes": 5316,
-      "sha256": "9ba056516b63067fe53620f32e53622db09ba1edac4f44ed447e1e47051af66f"
+      "bytes": 5362,
+      "sha256": "606fa0538c25eed90a5c6bf82f60708acf9a3e4cea48ca9d457de8a7d06a2fe5"
     },
     {
       "path": "src/estimating/workload.ts",
-      "bytes": 11135,
-      "sha256": "d2ccb4ef2c2acab59935f1f50e546055e03c1c228bf73d308359f2dcc6b56cda"
+      "bytes": 11210,
+      "sha256": "b3d85ceb316ac490afe633fc2b434180f4ec9ae8e2c07d2d307b004e25f9ab46"
     },
     {
       "path": "src/estimating/reads.ts",
@@ -122,18 +122,18 @@
     },
     {
       "path": "tests/unit/estimating-workload.test.ts",
-      "bytes": 4689,
-      "sha256": "905ecd19d6283c64919fa254a29a8dc3665e7187c9788a49b7c3721b32218af0"
+      "bytes": 5314,
+      "sha256": "1e3ab32e33fd8f9975d3984cdb5048fd655bfbe4bedea7e3044d2206ff23e213"
     },
     {
       "path": "tests/database/estimating-workload.test.ts",
-      "bytes": 14839,
-      "sha256": "9cade3b64e1ce0f897f6efc6731e62adc7086832f00420598ccaebfa622ae36d"
+      "bytes": 17305,
+      "sha256": "f3a791a5b2fcf4a68adfc33be50200c7c399afcfad4a4f00d0198655e3418bf9"
     },
     {
       "path": "tests/browser/estimating-workload.spec.ts",
-      "bytes": 13791,
-      "sha256": "ab930197f09c303cf902ae7056e437bd65ad0d1e7850271984b2eaf82b1d13a4"
+      "bytes": 13946,
+      "sha256": "bb388632ab470db2ae0b6c63fd9ec0bf8dfec743b3927a765d5a6db7cf7f8f68"
     },
     {
       "path": "tests/browser/estimating-workload-states.spec.ts",
@@ -150,5 +150,6 @@
       "bytes": 6300,
       "sha256": "cbed9103eaf8246008092cb5f2e972935b18ff44dee9cc49f542bc3595f7629f"
     }
-  ]
+  ],
+  "review_correction": "Repeated after Sales-brief non-disclosure and Brisbane-year corrections; original captures remain in Git history."
 }

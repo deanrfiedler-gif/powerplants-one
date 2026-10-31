@@ -1,12 +1,12 @@
 # Intake & workload accepted-design implementation evidence
 
-Owner: Dean Fiedler. Implementation and application comparison: Codex, 31 October 2026, dedicated branch `codex/intake-workload-accepted`, PR [#703](https://github.com/deanrfiedler-gif/powerplants-one/pull/703). Integrated main: `6e939bf0b937fc05f9e477d1cd14f8838c92fd9a`. This is synthetic implementation evidence, not owner acceptance, business acceptance or deployment.
+Owner: Dean Fiedler. Implementation and application comparison: Codex, 31 October 2026, dedicated branch `codex/intake-workload-accepted`, PR [#703](https://github.com/deanrfiedler-gif/powerplants-one/pull/703). Integrated main: `1402c87b9069def4dcd4d82f291cd991cff40ca5`. This is synthetic implementation evidence, not owner acceptance, business acceptance or deployment.
 
 ## Accepted source and comparison
 
 Accepted page 128:8845; desktop 128:8846; selection 128:9024; Saved estimates 172:1535; phone 128:9231. Live design context and screenshots were inspected before implementation, including the named accepted version and later compact-header amendment. The [design decision](../../../decisions/intake-workload-design.md) and [immutable source captures](../../../reference/ui/estimating/intake-workload-design-r01/README.md) preserve provenance. The later compact header supersedes the original phone toolbar.
 
-All 14 application captures below were visually inspected. They use the real application shell and ES-01 controls with deterministic synthetic API-boundary fixtures from `tests/helpers/estimating-workload-presentation.ts`. They do not prove database rules. Native database/API/browser proofs are listed separately below. Licensed icon glyphs are hidden with screenshot-only CSS; controls retain their space and accessible names. Synthetic fixture counts and values differ from the accepted artwork.
+All 14 application captures below were visually inspected. The presentation suite was repeated after the independent-review corrections: three desktop/tablet snapshots changed only in the generic Sales-brief wording and were re-inspected; the other eleven captures are byte-identical to the original run. Earlier application captures remain in Git history. They use the real application shell and ES-01 controls with deterministic synthetic API-boundary fixtures from `tests/helpers/estimating-workload-presentation.ts`. They do not prove database rules. Native database/API/browser proofs are listed separately below. Licensed icon glyphs are hidden with screenshot-only CSS; controls retain their space and accessible names. Synthetic fixture counts and values differ from the accepted artwork.
 
 | Surface | Application captures | Comparison and bounded adaptation |
 |---|---|---|
@@ -25,8 +25,8 @@ The isolated synthetic PostgreSQL 16 cluster contains current migrations and see
 
 | Check | Result and scope |
 |---|---|
-| Workload unit suite | 6 passed: literal/strict query rules, URL restoration, exact version links, newest-first sequence, changed-fact selection fingerprint and allowlisted formula-safe CSV. |
-| Native workload database suite | All 6 cases passed across the initial four-case success and corrected two-case rerun. Covers read-only behaviour, exact Discovery/saved basis, permission revocation, all owner/readiness combinations, independent SQL-before-limit owner windows and Sales receiving context. |
+| Workload unit suite | 7 passed: literal/strict query rules, URL restoration, exact version links, newest-first sequence, changed-fact selection fingerprint, allowlisted formula-safe CSV and Brisbane-year labels across three browser time zones. |
+| Native workload database suite | The original six-case implementation proof passed across the initial four-case success and corrected two-case rerun; the new seventh case is verified in the follow-up below. Covers read-only behaviour, exact Discovery/saved basis, permission revocation, all owner/readiness combinations, independent SQL-before-limit owner windows and Sales receiving context. |
 | Native boundary fixtures | 101 newer unstarted opportunities do not hide two older actor-owned Discovery workspaces from My work. Sales owner is deliberately different. Search and both supported sorts retain their own bounded counts; readiness counts are before view filtering. |
 | Sales handover fixture | Submitted and accepted brief revisions/receiver context remain explicit; reading never accepts or links. Changing the accepted source through native `editDealScope` disables Start. Existing creation/link commands retain authority. |
 | Native HTTP workload | 1 passed: current authority, no-store, strict filter validation, read-only route and denied/cross-company access. |
@@ -34,11 +34,22 @@ The isolated synthetic PostgreSQL 16 cluster contains current migrations and see
 | Native and negative-state browser suites | All 12 cases passed across the final ten-case success and targeted four-case rerun (two repeated successes). Desktop and phone cover native Discovery entry, snapshot tabs/Escape/focus after reload, view/filter controls, My work, URL Back/Forward, sequence, fresh CSV/stale selection rejection, exact Saved versions/null sell, initial loading, no matches, no permitted rows, no-edit presentation, failed/denied reads and recovery. A controlled clock proves polling does not supersede an in-flight read. Four targeted stale/failure cases passed again after adding visible phone refresh feedback. |
 | Application types | Full TypeScript check passed (`tsc --noEmit --pretty false`, 2 GiB heap cap). |
 | Shared shell units | 4 passed: sorted one-line declarations, exact/pattern/module routing and frozen shared-style selector contracts. |
-| Documentation controls | Status source check passed (182 fragments); naming passed (803 document records); migration numbering/registry check passed. |
+| Documentation controls | Status source check passed (184 fragments); naming passed (804 document records); migration numbering/registry check passed. |
 | Register and lint | `npm run studio:check` passed (372 entries, 52 component entries, 216 source routes, no errors). ESLint passed for all changed TypeScript/TSX sources and tests. |
 | Foundation | Passed: 22 issued sources, all 78 parent requirements, 14,059 local links, 7,398 marker-scanned files and 182 status fragments; no errors. Contribution scope is checked against `origin/main` after committing and recorded on PR #703. |
 
 The first native boundary attempt used direct SQL for protected CRM changes; database triggers correctly rejected those fixtures. They now use native owner selection and `editDealScope`. On this memory-constrained Windows host, database reset cases exceeded the standard 120-second test limit; the local proof used a 600-second CLI timeout. Repository/CI timeouts remain unchanged. The first phone null-sell assertion selected a hidden desktop cell and was corrected to assert the visible representation. The reload-focus regression discovered during browser verification is covered explicitly. One native reload received a 503 with the existing DatabaseConnectTimeout boundary on this constrained host; its targeted desktop and phone rerun passed. The phone loading test was corrected to observe the shared menu count rather than a desktop-only account control.
+
+## Independent review corrections — 31 October 2026
+
+[Claude’s review of `0b1bde10`](https://github.com/deanrfiedler-gif/powerplants-one/pull/703#pullrequestreview-5720597983) identified two defects. Both are corrected:
+
+- Absent and unreadable Sales briefs now have the same null projection, generic wording and opportunity-based Start navigation. Disabling Start only for an unreadable brief would still reveal its existence. The native creation review continues to reject unreadable sources; readable accepted-source drift still blocks Start. The [recorded decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/703#issuecomment-6538451426) and route contract describe this boundary.
+- Short date labels compare the Brisbane year of the record and current instant, matching the timezone used to print the date. The regression covers both sides of New Year in UTC, Los Angeles and Auckland browser zones.
+
+Follow-up execution on the dedicated Windows worktree: 7 workload unit cases; 2 focused native database cases (identical absent/denied item and count projections, native creation refusal and unchanged receipts; exact accepted context and changed-source blocking); 1 native HTTP case; 4 responsive presentation cases; full TypeScript; changed-source ESLint; and studio:check all passed. The isolated database regression prepared in the [earlier handover](https://github.com/deanrfiedler-gif/powerplants-one/pull/703#issuecomment-6538500387) is now executed, rather than source/type inspection only. Both native desktop/phone handover reruns passed, including the generic Sales-context wording, Discovery entry, keyboard focus and URL restoration.
+
+No native creation/link command, permission, migration or allocation policy changed. The first review’s findings have been addressed, but review of the new published head remains separate.
 
 ## Remaining review boundaries
 

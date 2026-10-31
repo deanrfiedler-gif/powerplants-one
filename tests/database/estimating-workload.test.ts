@@ -16,6 +16,7 @@ import {
 import { emptyHandover } from "../../src/sales/handover-model";
 import { listEstimates } from "../../src/estimating/reads";
 import { readEstimatingWorkload } from "../../src/estimating/workload";
+import { discoveryCreationOptions } from "../../src/estimating/discovery-creation-context";
 import {
   createDiscoveryWorkspace,
   previewDiscoveryCreate,
@@ -372,7 +373,7 @@ test("ES01 Sales context reports exact acceptance without accepting or linking; 
     await database().query("SELECT count(*) FROM ppo.operation_receipts")
   ).rows;
   const submitted = (await readEstimatingWorkload(p, { q: o.title })).items[0];
-  assert.ok(submitted.sales_brief && submitted.sales_brief !== "Unavailable");
+  assert.ok(submitted.sales_brief);
   assert.equal(submitted.sales_brief.state, "Submitted");
   assert.equal(submitted.sales_brief.selection, null);
   assert.deepEqual(
@@ -390,7 +391,7 @@ test("ES01 Sales context reports exact acceptance without accepting or linking; 
     note: "SYN receiver acceptance",
   });
   const accepted = (await readEstimatingWorkload(p, { q: o.title })).items[0];
-  assert.ok(accepted.sales_brief && accepted.sales_brief !== "Unavailable");
+  assert.ok(accepted.sales_brief);
   assert.equal(accepted.sales_brief.selection?.handover_id, id);
   assert.ok(accepted.sales_brief.selection?.acceptance_event_id);
   assert.equal(accepted.can_start, true);
@@ -409,8 +410,75 @@ test("ES01 Sales context reports exact acceptance without accepting or linking; 
     },
   });
   const changed = (await readEstimatingWorkload(p, { q: o.title })).items[0];
-  assert.ok(changed.sales_brief && changed.sales_brief !== "Unavailable");
+  assert.ok(changed.sales_brief);
   assert.equal(changed.sales_brief.source_changed, true);
   assert.equal(changed.can_start, false);
   assert.equal(changed.workspace, null);
+});
+
+test("ES01 absent and denied Sales briefs have identical workload projections, including Start navigation", async () => {
+  const { p, opportunity } = await setup();
+  const revokeActivityRead = async () =>
+    (
+      await database().query<{ id: string }>(
+        `UPDATE ppo.permission_grants SET valid_to=clock_timestamp()
+       WHERE workspace_id=$1 AND user_id=$2 AND capability='activity.read'
+         AND valid_to IS NULL RETURNING id`,
+        [p.workspace_id, p.actor_id],
+      )
+    ).rows.map((r) => r.id);
+  const grants = await revokeActivityRead();
+  assert.ok(grants.length);
+  const absent = await readEstimatingWorkload(p, { q: opportunity.title });
+  assert.equal(absent.items.length, 1);
+  assert.equal(absent.items[0].sales_brief, null);
+  assert.equal(absent.items[0].can_start, true);
+
+  // Build the brief through the native commands while authorised, then revoke
+  // its underlying Activity read again without hiding the Opportunity itself.
+  await database().query(
+    "UPDATE ppo.permission_grants SET valid_to=NULL WHERE id=ANY($1::uuid[])",
+    [grants],
+  );
+  const id = randomUUID();
+  await createHandover(p, {
+    ...crmBase(),
+    id,
+    opportunity_id: opportunity.id,
+    kind: "Estimating",
+  });
+  await commandHandover(p, id, {
+    ...crmBase(),
+    action: "Save",
+    expected_version: 1,
+    receiving_owner_id: p.actor_id,
+    note: "SYN hidden brief projection",
+    content: {
+      ...emptyHandover(),
+      next_activity_id: opportunity.initial_action.id,
+    },
+  });
+  assert.equal((await readHandover(p, id)).record.id, id);
+  await revokeActivityRead();
+  const denied = (e: unknown) =>
+    [403, 404].includes((e as { status: number }).status);
+  await assert.rejects(readHandover(p, id), denied);
+  const receipts = (
+    await database().query("SELECT count(*) FROM ppo.operation_receipts")
+  ).rows;
+  const hidden = await readEstimatingWorkload(p, { q: opportunity.title });
+  assert.deepEqual(hidden.items, absent.items);
+  assert.deepEqual(hidden.counts, absent.counts);
+  assert.deepEqual(hidden.owner_counts, absent.owner_counts);
+  // Start is only a link to the native creation review. It cannot bypass that
+  // flow's source authority or turn an inaccessible brief into an absent one.
+  await assert.rejects(
+    discoveryCreationOptions(p, { opportunity_id: opportunity.id }),
+    denied,
+  );
+  assert.deepEqual(
+    (await database().query("SELECT count(*) FROM ppo.operation_receipts"))
+      .rows,
+    receipts,
+  );
 });

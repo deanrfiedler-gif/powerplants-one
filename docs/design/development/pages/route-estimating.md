@@ -17,9 +17,13 @@ Source presence is separate from application comparison, owner acceptance and de
 
 Use the current application shell, a flush 240 px collapsible secondary menu, 60 px toolbar and full-width register. All workload, My estimating work, four Scope readiness views and Saved estimates share the menu. Its foot names the unconfigured intake rules. Search is literal; supported sorts are Recently changed and Customer. Owner and readiness controls also remain available in Search and filters.
 
+Displayed dates and the decision to include a year both use Australia/Brisbane, including around New Year for browsers in another time zone.
+
 The register has 40 px rows with opportunity/source version, title, customer, readiness, changed date, both owners, Discovery, site and Sales context. Its checkbox and action columns remain fixed while wider fields scroll. Title takes the extra width when menus collapse. Opening a record never changes register width. A right-aligned modal snapshot overlaps it, capped at the width with both menus open (960 px at 1440). Close, previous and next sit at its left edge. At tablet width the snapshot fits the viewport and keeps its own scroll, with no fixed 1360 px docked-panel threshold.
 
 The snapshot shows brief, next step, readiness reasons, both owners, exact Discovery alternatives and saved cost revisions. Sales brief state, receiving owner, source drift and exact acceptance context are explicitly attributed. Open Sales opportunity and Open/Start discovery remain native handovers.
+
+An absent or unreadable Sales brief has the same `sales_brief: null` projection and generic “No readable Sales estimating brief” copy. Neither the row, counts nor Start discovery navigation distinguishes those cases. Start is an opportunity-based entry to the native creation review, not evidence that all creation sources are accessible; that flow rechecks source authority and refuses an unreadable brief. Readable accepted-source drift still disables Start here.
 
 Selecting rows opens a 360 px overlapping panel. Open in sequence follows most recently changed order with an ID tie-break, independent of displayed Customer sort. Export list re-reads current permissions and compares selected record facts before downloading an allowlisted CSV; changed or inaccessible rows clear selection and require a fresh selection. Filtering, changing view/identity or changed source facts clears selection. No selection command accepts or assigns anything.
 

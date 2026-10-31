@@ -22,6 +22,8 @@ The native modal snapshot implements the accepted overlap as page-scoped geometr
 
 Reuse useResource and ErrorNotice with explicit host states. Initial loading has no current rows/counts; refresh marks retained rows unconfirmed and disables actions. Failure or denial removes old rows/counts/selection/snapshot. Tests distinguish native permission revocation from API-boundary failed/stale/no-edit presentation fixtures.
 
+Within a permitted workload row, absent and denied Sales briefs both use generic no-readable-brief copy and expose no brief identity or status. Start navigation is identical for both; native creation retains its source checks. See the route contract for this projection boundary.
+
 ## application-shell
 
 Reuse the existing module rail, secondary menu collapse, guide and compact phone header. The route joins existing styles through data-ppo-workspace=shared and adds one sorted module-workspace declaration to remove the obsolete section tabs. No shared shell CSS is changed. The adopted phone header replaces the original capture's duplicate toolbar. Physical-device, screen-reader and owner acceptance remain review items.

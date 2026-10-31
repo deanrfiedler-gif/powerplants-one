@@ -92,11 +92,15 @@ export function workloadCsv(items: WorkloadItem[]) {
     .map((row) => row.map(cell).join(","))
     .join("\r\n");
 }
+const brisbaneYear = new Intl.DateTimeFormat("en-AU", {
+  year: "numeric",
+  timeZone: "Australia/Brisbane",
+});
 export const shortDate = (value: string) =>
   new Intl.DateTimeFormat("en-AU", {
     day: "numeric",
     month: "short",
-    ...(new Date(value).getFullYear() !== new Date().getFullYear()
+    ...(brisbaneYear.format(new Date(value)) !== brisbaneYear.format(new Date())
       ? { year: "numeric" as const }
       : {}),
     timeZone: "Australia/Brisbane",

@@ -341,9 +341,7 @@ export function WorkloadSnapshot({
           </div>
           <section className="ew-sales-context">
             <h3>Sales context</h3>
-            {brief === "Unavailable" ? (
-              <p>Sales brief unavailable under current access.</p>
-            ) : brief ? (
+            {brief ? (
               <>
                 <p>
                   <strong>
@@ -367,7 +365,7 @@ export function WorkloadSnapshot({
               </>
             ) : (
               <p>
-                No Sales estimating brief recorded. This opportunity remains a
+                No readable Sales estimating brief. This opportunity remains a
                 candidate brief.
               </p>
             )}
