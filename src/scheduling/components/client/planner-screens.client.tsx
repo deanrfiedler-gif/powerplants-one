@@ -43,6 +43,7 @@ import { AppointmentSnapshot, PlannerTimeline, PlannerWeek } from "./planner-tim
 import { PlannerPhone } from "./planner-phone.client";
 export type Resource = {
   id: string;
+  user_id?: string | null;
   name: string;
   resource_type?: string;
   version: number;
@@ -59,7 +60,7 @@ export type Resource = {
   };
   skills: { skill_code: string; status: string; valid_to: string }[];
   blocks?: { id: string; start_at: string; end_at: string; kind: string }[];
-  exceptions?: { id: string; start_at: string; end_at: string; kind: string }[];
+  exceptions?: { id: string; start_at: string; end_at: string; kind: string; reason?: string }[];
   busy?: { start_at: string; end_at: string }[];
 };
 type Request = {

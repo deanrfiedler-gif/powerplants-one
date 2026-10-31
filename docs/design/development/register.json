@@ -3113,7 +3113,7 @@
       "title": "Visit route and travel review",
       "kind": "scope",
       "module": "PL",
-      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
+      "summary": "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order.",
       "path": "/schedule/travel",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -3139,11 +3139,15 @@
         "src/app/styles/scheduling-workspaces.css",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/travel-review-figma-design.md"
+        "docs/decisions/travel-review-figma-design.md",
+        "src/scheduling/travel-review-model.ts",
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "docs/testing/evidence/scheduling-resources/travel-review.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "Travel route implementation and 16 focused Scheduling unit tests passed; browser and final repository checks pending. Historical evidence remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -11568,7 +11572,7 @@
       "title": "Visit route and travel review",
       "kind": "route",
       "module": "PL",
-      "summary": "Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.",
+      "summary": "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order.",
       "path": "/schedule/travel",
       "source_paths": [
         "src/app/(business)/schedule/travel/page.tsx"
@@ -11593,11 +11597,15 @@
         "src/app/styles/scheduling-workspaces.css",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/travel-review-figma-design.md"
+        "docs/decisions/travel-review-figma-design.md",
+        "src/scheduling/travel-review-model.ts",
+        "src/scheduling/components/client/travel-review.client.tsx",
+        "src/scheduling/components/client/travel-review.css",
+        "docs/testing/evidence/scheduling-resources/travel-review.md"
       ],
       "scope_status": "built",
       "visual_status": "Needs review",
-      "functional_status": "Focused units/database and desktop/phone workflow proof recorded; full Windows check has reproduced baseline failures; owner acceptance separate",
+      "functional_status": "Travel route implementation and 16 focused Scheduling unit tests passed; browser and final repository checks pending. Historical evidence remains separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,

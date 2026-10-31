@@ -6,10 +6,10 @@ Stable entry: `route:/schedule/travel`. Owner: Dean Fiedler. Status: **Draft for
 
 Page type: **Review / comparison**. Canonical destination: `/schedule/travel`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
-1. Select one local day, timezone and permitted site. Choose a resource/crew member to review its ordered visits and anonymous busy intervals.
-2. Check each site/customer, appointment time in site timezone, supplied customer window, travel-before/after allowance and recorded reason.
-3. Review buffered gaps/overlaps, unavailable blocks and unknown route sufficiency. Select Earlier or Later to compare a manual sequence; booking times stay unchanged.
-4. Use Review booking change to open PL-04 with the exact appointment, resource, day and timezone. Reset sequence comparison discards the analytical order.
+1. Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.
+2. Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.
+3. Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.
+4. Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site.
 
 No map, provider, inferred distance/speed, traffic or optimiser is configured. Planned travel allowance, unknown route estimate and actual field Travel are independent facts.
 
@@ -24,9 +24,9 @@ Accepted design: the [Travel review design decision](../../../decisions/travel-r
 - **Conflicts:** an availability block or calendar closure is named in words on the leg or visit it overlaps (D4).
 - **Default:** one person, the first with a conflict or the signed-in technician, not All permitted resources (Q2).
 - **Shell:** the proposed Conversations action sits left of the information icon.
-- Nothing new is built.
+- The route implementation follows D1–D5 and Q1/Q2; [current proof and differences](../../../testing/evidence/scheduling-resources/travel-review.md) remain separate from owner acceptance.
 
-Show one local day, permitted site and resource filters, followed by separately ordered resource visits. Cards retain customer/site, site-time interval, supplied customer window, before/after allowances, reasons and buffered gaps/overlaps. Compare a manual order only after selecting one resource.
+Show one local day, permitted site and one person. The current Scheduling navigation is retained pending the separate Service planner build. Depot identity is not supplied by the source; display that absence and identify allowance boundaries rather than assert a routed journey.
 
 ## Mobile
 
@@ -36,7 +36,7 @@ At 390 x 844 and 320 CSS px, use a vertical visit sequence with wrapping context
 
 ## Shared components and states
 
-TravelWorkspaceScreen, travelSequences, shared WindowControls/ReviewSelect over business-ui fields/read states, Button/ButtonLink and SchedulingNavigation. No mapping or routing library is added.
+TravelWorkspaceScreen, TravelReview, travelSequences and travelAvailabilityConflicts; shared WindowControls/ReviewSelect over business-ui fields/read states, Status, Button/ButtonLink and SchedulingNavigation. The route legs reuse the planner tl-travel colour with page-local positioning. [Component bindings](../component-bindings/2026-10-31-travel-review.md) describe fixtures and limitations. No mapping or routing library is added.
 
 Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
 
@@ -48,13 +48,13 @@ Incoming: current permitted scheduling assignments and anonymous busy/block inte
 
 Accepted Figma design: [Travel review design r01 captures](../../../reference/ui/service/travel-review-design-r01/README.md) (six icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/travel-review-figma-design.md). Images of all permitted resources at once, an overlap between reservations, the site filter note, denied access, the loading state, desktop and tablet states and 200% zoom are still missing.
 
-No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
+No page-specific retained HTML exists. Accepted mockups are the six r01 captures above; current implementation comparison remains unaccepted.
 
 [Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
 
 ## Post-merge refinement
 
-Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. Displayed gap figures are explicitly the original schedule when comparing a manual order. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.
+Resource selection survives reload. Travel review flags calendar closures as well as availability blocks against the complete buffered reservation, using exclusive end boundaries. The baseline shows original buffered gaps; comparison says Not recalculated and does not relocate those gap figures. A site-filter warning explains omitted visits; the change handover retains exact site/resource/appointment/day/timezone. No routing estimate or booking mutation is introduced.
 
 [Refinement verification](../../../testing/evidence/scheduling-refinement/README.md) records actual checks and review limits. Visual status remains Needs review; no fingerprint is adopted.
 

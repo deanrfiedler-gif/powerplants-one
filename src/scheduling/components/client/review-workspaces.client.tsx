@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
-import { notifyLocationSearchChanged, useCurrentLocationSearch } from "../../../components/current-location-search";
-import { useState, type ComponentProps } from "react";
+import {
+  notifyLocationSearchChanged,
+  useCurrentLocationSearch,
+} from "../../../components/current-location-search";
+import { useState, useSyncExternalStore, type ComponentProps } from "react";
 import {
   Field,
   SelectField,
@@ -11,7 +14,10 @@ import {
   useResource,
   type Envelope,
 } from "../../../components/business-ui";
-import { Button, ButtonLink } from "../../../components/ui/button";
+import { Button } from "../../../components/ui/button";
+import { TravelReview } from "./travel-review.client";
+import { usePhoneHeader } from "../../../shell/phone-header";
+import { useIdentity } from "../../../components/business-session";
 import type { Schedule } from "../../index";
 import { SchedulingNavigation } from "./workspace-navigation.client";
 import {
@@ -21,12 +27,7 @@ import {
   reviewCriteria,
 } from "../../navigation";
 import { addDays, utcFromLocal } from "../../time";
-import {
-  travelSequences,
-  scenarioSummary,
-  travelAvailabilityConflicts,
-  type CapacityWorkspace,
-} from "../../workspace-model";
+import { scenarioSummary, type CapacityWorkspace } from "../../workspace-model";
 
 function ReviewSelect(props: ComponentProps<typeof SelectField>) {
   const all = props.options.find((option) => option.id === "");
@@ -132,235 +133,139 @@ function WindowControls({
     </div>
   );
 }
+function TravelWindowControls({
+  w,
+  phone,
+}: {
+  w: ReviewWindow;
+  phone: boolean;
+}) {
+  const zone = (
+    <ReviewSelect
+      name="review-zone"
+      label="Display timezone"
+      value={w.context.zone}
+      onChange={(timezone) => w.update({ timezone })}
+      options={plannerZones.map((id) => ({ id, display_name: id }))}
+    />
+  );
+  return (
+    <>
+      <div className="travel-date">
+        <Field
+          name="review-day"
+          label="Review day"
+          type="date"
+          value={w.context.day}
+          onChange={(day) =>
+            w.update({ day, appointment_id: "", selected_id: "" })
+          }
+        />
+      </div>
+      {!phone && <div className="travel-zone">{zone}</div>}
+      <details className="travel-filters">
+        <summary aria-label="Time zone and site filters">
+          {phone ? "Filters" : w.context.site ? "Site · filtered" : "Site"}
+        </summary>
+        <div className="travel-filter-body">
+          {phone && zone}
+          <ReviewSelect
+            name="review-site"
+            label="Site"
+            value={w.context.site}
+            onChange={(site_id) =>
+              w.update({
+                site_id,
+                appointment_id: "",
+                selected_id: "",
+                resource_id: "",
+              })
+            }
+            options={[
+              { id: "", display_name: "All permitted sites" },
+              ...(w.sites.data?.items ?? []),
+            ]}
+          />
+          {!!w.sites.error && (
+            <p>Site options unavailable. Refresh the page to retry.</p>
+          )}
+        </div>
+      </details>
+    </>
+  );
+}
+const phoneTravelQuery = "(max-width: 780px)";
+const subscribePhoneTravel = (changed: () => void) => {
+  const media = window.matchMedia(phoneTravelQuery);
+  media.addEventListener("change", changed);
+  return () => media.removeEventListener("change", changed);
+};
+const compactTravelQuery = "(max-width: 350px)";
+const subscribeCompactTravel = (changed: () => void) => {
+  const media = window.matchMedia(compactTravelQuery);
+  media.addEventListener("change", changed);
+  return () => media.removeEventListener("change", changed);
+};
 export function TravelWorkspaceScreen() {
+  const phone = useSyncExternalStore(
+    subscribePhoneTravel,
+    () => window.matchMedia(phoneTravelQuery).matches,
+    () => false,
+  );
+  const compact = useSyncExternalStore(
+    subscribeCompactTravel,
+    () => window.matchMedia(compactTravelQuery).matches,
+    () => false,
+  );
+  usePhoneHeader({ title: compact ? "Travel" : "Travel review" });
   const w = useReviewWindow("/schedule/travel", 1);
-  // Keep the permitted resource choices available when changing this local filter.
+  const identity = useIdentity();
   w.query.delete("resource_id");
-  // Travel always reads one local day, including DST transitions.
   w.query.set(
     "to",
     utcFromLocal(addDays(w.context.day, 1) + "T00:00", w.context.zone),
   );
-  const read = useResource<Schedule>("schedule?" + w.query),
-    data = !read.loading && !read.error ? read.data : null;
+  const read = useResource<Schedule>("schedule?" + w.query);
+  const data = !read.loading && !read.error ? read.data : null;
   return (
-    <section className="scheduling-workspace">
+    <section
+      id="ppo-travel-review"
+      className="scheduling-workspace travel-workspace"
+    >
       <SchedulingNavigation />
       <PageHeader
+        variant="register"
         eyebrow="PL-05 · Scheduling"
         title="Travel review"
-        description="Review visit order, explicit travel allowances and gaps before requesting a booking change."
+        description="Review planned allowances and visit order; bookings remain unchanged."
       />
-      <WindowControls w={w} dayOnly />
-      <Button onClick={read.reload}>Refresh visits</Button>
-      <ReadState {...read} retry={read.reload} />
+      {!data && (
+        <>
+          <WindowControls w={w} dayOnly />
+          <p>— visits · Current results unconfirmed</p>
+          <div className={read.error ? "travel-load-error" : undefined}>
+            {!!read.error && (
+              <>
+                <h2>Travel could not be loaded</h2>
+                <p>No route is shown. Bookings are unchanged.</p>
+              </>
+            )}
+            <ReadState {...read} retry={read.reload} />
+          </div>
+        </>
+      )}
       {data && (
         <TravelReview
           key={w.search.toString() + data.observed_at}
           data={data}
-          w={w}
+          context={w.context}
+          actorId={identity.actor_id}
+          controls={<TravelWindowControls w={w} phone={phone} />}
+          refresh={read.reload}
+          selectResource={(id) => w.update({ resource_id: id })}
         />
       )}
     </section>
-  );
-}
-function TravelReview({ data, w }: { data: Schedule; w: ReviewWindow }) {
-  const resource = w.context.resource;
-  const [sequence, setSequence] = useState<string[]>([]);
-  const visits = travelSequences(data.items, resource),
-    selected = data.resources.find((r) => r.id === resource);
-  const ordered = sequence.length
-    ? sequence.map((k) => visits.find((v) => v.key === k)!).filter(Boolean)
-    : visits;
-  function move(index: number, direction: number) {
-    const keys = ordered.map((v) => v.key),
-      other = index + direction;
-    if (other < 0 || other >= keys.length) return;
-    [keys[index], keys[other]] = [keys[other], keys[index]];
-    setSequence(keys);
-  }
-  return (
-    <>
-      <div className="scheduling-toolbar">
-        <ReviewSelect
-          name="travel-resource"
-          label="Resource / crew member"
-          value={resource}
-          onChange={(v) => {
-            w.update({ resource_id: v });
-          }}
-          options={[
-            { id: "", display_name: "All permitted resources" },
-            ...data.resources.map((r) => ({ id: r.id, display_name: r.name })),
-          ]}
-        />
-        <Button disabled={!sequence.length} onClick={() => setSequence([])}>
-          Reset sequence comparison
-        </Button>
-      </div>
-      <p className="read-meta">
-        Read at <Stamp value={data.observed_at} /> · {data.display_timezone}.
-        Ordered separately per resource. Planned allowance, route estimate and
-        actual field Travel are separate facts.
-      </p>
-      <p>
-        Route estimate: <strong>Unknown — no provider configured</strong>.
-        Sequence changes are analytical and do not change appointment times.
-        Select one resource to compare a different order.
-      </p>
-      {w.context.site && (
-        <p>
-          Site filter active: other visits may be outside this list. Busy
-          intervals still include all reservations for the selected resource.
-        </p>
-      )}
-      {selected && (
-        <details>
-          <summary>Other busy intervals and availability blocks</summary>
-          {selected.busy?.map((b, i) => (
-            <p key={"busy" + i}>
-              Busy including travel: <Stamp value={b.start_at} /> to{" "}
-              <Stamp value={b.end_at} />
-            </p>
-          ))}
-          {selected.blocks?.map((b) => (
-            <p key={b.id}>
-              {b.kind}: <Stamp value={b.start_at} /> to{" "}
-              <Stamp value={b.end_at} />
-            </p>
-          ))}
-        </details>
-      )}
-      {!visits.length && (
-        <p>
-          {data.items.length
-            ? "No assigned open visits match this resource. Proposed visits without crew remain in the planner."
-            : "No permitted visits in this day. Availability is not certified by an empty list."}
-        </p>
-      )}
-      <ol className="scheduling-travel-list">
-        {ordered.map((v, i) => {
-          const a = v.appointment,
-            original = visits.findIndex((x) => x.key === v.key) + 1;
-          const reversed =
-            i > 0 &&
-            ordered[i - 1].resource_id === v.resource_id &&
-            Date.parse(ordered[i - 1].appointment.start_at) >
-              Date.parse(a.start_at);
-          const conflicts = travelAvailabilityConflicts(
-            v,
-            data.resources.find((r) => r.id === v.resource_id),
-          );
-          return (
-            <li key={v.key} className="scheduling-card">
-              <h2>
-                {v.resource_name} · {a.display_number}
-              </h2>
-              <p>
-                {a.customer_name ?? "Customer unavailable"} · {a.site_name} ·{" "}
-                {a.work_order_display_number} · {a.scope_summary}
-              </p>
-              <p>
-                <Stamp value={a.start_at} timezone={a.site_timezone} /> to{" "}
-                <Stamp value={a.end_at} timezone={a.site_timezone} /> ·{" "}
-                {a.site_timezone} · {a.status}
-              </p>
-              <p>
-                Customer window:{" "}
-                {a.requested_window_start ? (
-                  <>
-                    <Stamp
-                      value={a.requested_window_start}
-                      timezone={a.site_timezone}
-                    />{" "}
-                    to{" "}
-                    <Stamp
-                      value={a.requested_window_end}
-                      timezone={a.site_timezone}
-                    />
-                  </>
-                ) : (
-                  "Not supplied"
-                )}
-              </p>
-              <p>
-                Planned travel before <strong>{v.before} min</strong> · after{" "}
-                <strong>{v.after} min</strong> ·{" "}
-                {v.reason || "Unknown / unreviewed basis"}
-              </p>
-              <p>
-                Original order {original}. Original schedule:{" "}
-                {v.gap_minutes === null
-                  ? "First reservation for this resource."
-                  : v.overlap
-                    ? `Reservation overlap: ${-v.gap_minutes} min — review conflict.`
-                    : `Gap after previous buffered reservation: ${v.gap_minutes} min; route sufficiency unknown.`}
-              </p>
-              {conflicts.blocks.length > 0 && (
-                <p role="status">
-                  Availability block overlaps this reservation — review with the
-                  coordinator.
-                </p>
-              )}
-              {conflicts.closures.length > 0 && (
-                <p role="status">
-                  Calendar closure overlaps this visit or its travel allowance —
-                  review with the coordinator.
-                </p>
-              )}
-              {reversed && (
-                <p role="status">
-                  Proposed order reverses current booking times. A controlled
-                  move is required to apply it.
-                </p>
-              )}
-              <div className="button-row">
-                <Button
-                  disabled={!resource || i === 0}
-                  onClick={() => move(i, -1)}
-                  aria-label={
-                    "Move " + a.display_number + " earlier in comparison"
-                  }
-                >
-                  Earlier
-                </Button>
-                <Button
-                  disabled={!resource || i === ordered.length - 1}
-                  onClick={() => move(i, 1)}
-                  aria-label={
-                    "Move " + a.display_number + " later in comparison"
-                  }
-                >
-                  Later
-                </Button>
-                <ButtonLink
-                  href={
-                    "/schedule/changes?" +
-                    new URLSearchParams({
-                      day: w.context.day,
-                      timezone: w.context.zone,
-                      appointment_id: a.id,
-                      resource_id: v.resource_id,
-                      ...(w.context.site ? { site_id: w.context.site } : {}),
-                    })
-                  }
-                >
-                  Review booking change
-                </ButtonLink>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-      {data.items.some(
-        (a) => a.status === "Proposed" && !a.assignments.some((x) => x.active),
-      ) && (
-        <p>
-          Unassigned proposals have no resource sequence or travel basis. Review
-          them in the Planner.
-        </p>
-      )}
-    </>
   );
 }
 export function CapacityWorkspaceScreen() {
