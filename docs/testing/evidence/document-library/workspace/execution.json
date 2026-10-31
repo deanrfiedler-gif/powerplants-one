@@ -1,7 +1,9 @@
 {
-  "recorded_at": "2026-10-31T01:36:27Z",
-  "application_source_commit": "f78fc093fe142113191a5c6a5bd08208a7a4ab9c",
+  "recorded_at": "2026-10-31T03:38:42Z",
+  "application_source_commit": "2ae0b19796f886dba0a827db1aea050aeb941678",
+  "main_commit": "1402c87b",
   "main_control_commit": "6e939bf0b937fc05f9e477d1cd14f8838c92fd9a",
+  "main_control_note": "src, scripts and db are unchanged between the control archive and current main.",
   "scope": [
     "DK-01",
     "DK-02"
@@ -15,16 +17,18 @@
     "database": "ppo_synthetic_test"
   },
   "checks": {
-    "build": "passed",
-    "typecheck": "passed in build",
-    "lint": "full and final focused passed",
-    "studio": "passed, visual reviews remain pending",
+    "build": "passed on final application source",
+    "typecheck": "passed in final build",
+    "lint": "focused passed; final focus correction passed",
+    "studio": "passed; visual reviews pending",
     "foundation": "passed",
-    "naming": "passed",
-    "status": "passed, 183 fragments",
-    "browser_runtime": "passed",
+    "status": "passed, 185 fragments",
+    "focused_unit": {
+      "passed": 25,
+      "failed": 0
+    },
     "compiled_fixture_browser": {
-      "passed": 5,
+      "passed": 6,
       "failed": 0
     },
     "compiled_http": {
@@ -32,28 +36,34 @@
       "failed": 0
     },
     "library_database": {
-      "full_run_passed": 13,
-      "full_run_failed": 1,
-      "corrected_case": "DK-B03",
-      "main_control": "passed",
-      "corrected_rerun": "passed"
-    },
-    "unit": {
-      "passed": 1280,
-      "failed": 5,
-      "failures_reproduced_on_main": 4,
-      "remaining_case": "CPQ rule worker",
-      "remaining_serial_retry": "passed"
+      "full_run_passed": 11,
+      "full_run_failed": 3,
+      "failures": {
+        "DK-B02": "migration statement timeout",
+        "DK-B03": "migration statement timeout",
+        "DK-B10": "old UUID-order expectation; updated to registration chronology"
+      },
+      "unchanged_main_control": {
+        "passed": 3,
+        "failed": 0
+      },
+      "corrected_branch_rerun": {
+        "passed": 3,
+        "failed": 0
+      },
+      "note": "Full run plus focused correction proof; not a clean fourteen-case rerun. New DK-UI01/02 authority and pagination cases passed in the full run."
     }
   },
   "browser_evidence": "Synthetic API fixtures rendered through the compiled application; native database and HTTP proof is separate.",
   "not_run": [
-    "All other module database/HTTP/browser suites",
+    "Other module database/HTTP/browser suites",
     "Complete native browser command journey",
     "Manual screen-reader audit",
-    "Browser 200 percent zoom"
+    "Browser 200 percent zoom",
+    "Full unit suite repeated after review fixes; earlier bounded full-unit results are retained separately"
   ],
-  "review_status": "Pending independent Claude and visual review",
+  "prior_execution": "execution-before-review.json",
+  "review_status": "Fresh exact-head Claude review and CI pending",
   "owner_acceptance": "Pending",
   "deployment": "Not performed"
 }
