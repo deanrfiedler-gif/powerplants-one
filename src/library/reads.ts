@@ -3,6 +3,10 @@ import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
 import type { QueryClient } from "../platform/permissions";
 import { AppError } from "../platform/errors";
+import { hasPermission } from "../platform/permissions";
+import { visible } from "../shared/reads";
+import { workingCompanyFor } from "../platform/working-company";
+import { libraryCursor, type LibraryPosition } from "./paging";
 import {
   choice,
   invalid,
@@ -50,6 +54,7 @@ function publicRevision(r: Revision) {
       content_hash: r.source.content_hash,
       byte_count: r.source.byte_count,
       content_type: r.source.content_type,
+      author_id: r.source.author_id,
     },
   };
 }
@@ -119,12 +124,76 @@ async function status(
           purpose: review.purpose,
           rationale: review.rationale,
           reviewer_id: review.reviewer_id,
+          reviewer_name:
+            (
+              await c.query(
+                "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+                [p.workspace_id, review.reviewer_id],
+              )
+            ).rows[0]?.display_name ?? "Unavailable",
           created_at: review.created_at,
           content_hash: review.content_hash,
         }
       : null,
   };
 }
+
+async function presentation(
+  c: QueryClient,
+  p: Principal,
+  d: DocumentRow,
+  r: Revision,
+) {
+  const organisation = await visible(c, p, "Organisation", d.organisation_id);
+  let site_name: string | null = null;
+  if (d.site_id) {
+    try {
+      site_name = (await visible(c, p, "Site", d.site_id)).display_name;
+    } catch (e) {
+      if (!hidden(e)) throw e;
+    }
+  }
+  const people = (
+    await c.query<{ id: string; display_name: string }>(
+      "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=ANY($2::uuid[])",
+      [p.workspace_id, [r.owner_id, r.created_by, r.source.author_id]],
+    )
+  ).rows;
+  const name = (id: string) =>
+    people.find((x) => x.id === id)?.display_name ?? "Unavailable";
+  return {
+    actor_id: p.actor_id,
+    company_name:
+      (
+        await c.query(
+          "SELECT display_name FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, d.company_id],
+        )
+      ).rows[0]?.display_name ?? "Unavailable",
+    organisation_name: organisation.display_name as string,
+    site_name,
+    owner_name: name(r.owner_id),
+    registered_by_name: name(r.created_by),
+    source_author_name: name(r.source.author_id),
+    can_register: await hasPermission(
+      c,
+      p,
+      "document.register",
+      d.company_id,
+      d.site_id ?? undefined,
+    ),
+    can_review: await hasPermission(
+      c,
+      p,
+      "document.review",
+      d.company_id,
+      d.site_id ?? undefined,
+    ),
+    independent_reviewer:
+      p.actor_id !== r.created_by && p.actor_id !== r.source.author_id,
+  };
+}
+
 export async function readDocument(
   p: Principal,
   id: string,
@@ -138,7 +207,7 @@ export async function readDocument(
         : current;
     const findings = (
       await c.query(
-        "SELECT id,text,owner_id,due_date::text AS due_date,state,response,response_by,response_at,acceptance,accepted_by,accepted_at,created_by,created_at FROM ppo.library_findings WHERE workspace_id=$1 AND revision_id=$2 ORDER BY created_at,id",
+        "SELECT f.id,f.text,f.owner_id,u.display_name AS owner_name,f.due_date::text AS due_date,f.state,f.response,f.response_by,f.response_at,f.acceptance,f.accepted_by,f.accepted_at,f.created_by,f.created_at FROM ppo.library_findings f LEFT JOIN ppo.users u ON u.workspace_id=f.workspace_id AND u.id=f.owner_id WHERE f.workspace_id=$1 AND f.revision_id=$2 ORDER BY f.created_at,f.id",
         [p.workspace_id, r.id],
       )
     ).rows;
@@ -147,10 +216,12 @@ export async function readDocument(
       revision: publicRevision(r),
       ...(await status(c, p, d, r)),
       findings,
+      ...(await presentation(c, p, d, r)),
       synthetic: true,
     };
   });
 }
+
 export async function listDocuments(
   p: Principal,
   query: Record<string, string> = {},
@@ -163,9 +234,13 @@ export async function listDocuments(
     "organisation_id",
     "site_id",
     "owner_id",
+    "mine",
     "availability",
     "review_state",
     "after",
+    "cursor",
+    "sort",
+    "direction",
     "limit",
   ]);
   const q =
@@ -190,7 +265,11 @@ export async function listDocuments(
           "Returned",
           "ReviewOutdated",
         ] as const);
-  const owner = optionalId(query.owner_id, "owner_id");
+  const mine =
+    query.mine === undefined
+      ? false
+      : choice(query.mine, "mine", ["true"] as const) === "true";
+  const owner = mine ? p.actor_id : optionalId(query.owner_id, "owner_id");
   const type =
     query.document_type === undefined
       ? null
@@ -198,26 +277,106 @@ export async function listDocuments(
   const company = optionalId(query.company_id, "company_id"),
     organisation = optionalId(query.organisation_id, "organisation_id"),
     site = optionalId(query.site_id, "site_id");
-  let after = optionalId(query.after, "after");
+  const sort =
+    query.sort === undefined
+      ? "registration"
+      : choice(query.sort, "sort", [
+          "registration",
+          "number",
+          "updated",
+        ] as const);
+  const direction =
+    query.direction === undefined
+      ? "asc"
+      : choice(query.direction, "direction", ["asc", "desc"] as const);
+  const after = optionalId(query.after, "after");
+  if (after && (query.cursor || sort !== "registration" || direction !== "asc"))
+    invalid("after", "Use the returned cursor for sorted pages.");
   const limit = query.limit === undefined ? 25 : Number(query.limit);
   if (!Number.isInteger(limit) || limit < 1 || limit > 50)
     invalid("limit", "Choose 1–50 records.");
+  const cursor = libraryCursor({
+    workspace: p.workspace_id,
+    actor: p.actor_id,
+    working: workingCompanyFor(p.actor_id),
+    q,
+    state,
+    availability,
+    review_state,
+    owner,
+    type,
+    company,
+    organisation,
+    site,
+    sort,
+    direction,
+    limit,
+  });
+  let position: LibraryPosition | null = cursor.decode(query.cursor);
+  const column = {
+    registration: "created_at",
+    number: "display_number",
+    updated: "updated_at",
+  }[sort];
+  const cast = {
+    registration: "timestamptz",
+    number: "text",
+    updated: "timestamptz",
+  }[sort];
+  const order = direction === "asc" ? "ASC" : "DESC",
+    compare = direction === "asc" ? ">" : "<";
   return readTransaction(p, async (c) => {
-    const items = [];
-    // Scan in bounded batches; current authority precedes filtering and public pagination.
+    if (after) {
+      await documentContext(c, p, after);
+      const prior = (
+        await c.query<{ key: string }>(
+          "SELECT created_at::text AS key FROM ppo.library_documents WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, after],
+        )
+      ).rows[0];
+      position = { id: after, key: prior.key };
+    }
+    const items: Array<Awaited<ReturnType<typeof registerItem>>> = [];
+    let last: LibraryPosition | null = null;
+    const finish = async (more: boolean) => {
+      // Recheck authority after the full scan, including any slow exact-storage reads.
+      for (const item of items) await documentContext(c, p, item.document.id);
+      return {
+        items,
+        next_after:
+          more && sort === "registration" && direction === "asc"
+            ? last!.id
+            : null,
+        next_cursor: more ? cursor.encode(last!) : null,
+        sort,
+        direction,
+        can_register: await hasPermission(c, p, "document.register"),
+        coverage: "VisibleDocuments",
+        synthetic: true,
+      };
+    };
     for (;;) {
       const candidates = (
-        await c.query(
-          `SELECT id FROM ppo.library_documents WHERE workspace_id=$1 AND ($2::uuid IS NULL OR id>$2)
-      AND ($3='All' OR state=$3) AND ($4::uuid IS NULL OR company_id=$4) AND ($5::uuid IS NULL OR organisation_id=$5)
-      AND ($6::uuid IS NULL OR site_id=$6) ORDER BY id LIMIT 100`,
-          [p.workspace_id, after, state, company, organisation, site],
+        await c.query<{ id: string; sort_key: string }>(
+          `SELECT id,${column}::text AS sort_key FROM ppo.library_documents WHERE workspace_id=$1
+        AND ($2::uuid IS NULL OR (${column},id) ${compare} ($7::${cast},$2::uuid))
+        AND ($3='All' OR state=$3) AND ($4::uuid IS NULL OR company_id=$4)
+        AND ($5::uuid IS NULL OR organisation_id=$5) AND ($6::uuid IS NULL OR site_id=$6)
+        ORDER BY ${column} ${order},id ${order} LIMIT 100`,
+          [
+            p.workspace_id,
+            position?.id ?? null,
+            state,
+            company,
+            organisation,
+            site,
+            position?.key ?? null,
+          ],
         )
       ).rows;
-      if (!candidates.length)
-        return { items, next_after: null, synthetic: true };
+      if (!candidates.length) return finish(false);
       for (const candidate of candidates) {
-        after = candidate.id;
+        position = { id: candidate.id, key: candidate.sort_key };
         try {
           const { d, r } = await documentContext(c, p, candidate.id);
           if (
@@ -239,15 +398,72 @@ export async function listDocuments(
             (review_state && observed.review_state !== review_state)
           )
             continue;
+          if (items.length === limit) return finish(true);
+          items.push(await registerItem(c, p, d, r, observed));
+          last = position;
+        } catch (e) {
+          if (!hidden(e)) throw e;
+        }
+      }
+    }
+  });
+}
+async function registerItem(
+  c: QueryClient,
+  p: Principal,
+  d: DocumentRow,
+  r: Revision,
+  observed: Awaited<ReturnType<typeof status>>,
+) {
+  return {
+    document: d,
+    revision: publicRevision(r),
+    ...observed,
+    ...(await presentation(c, p, d, r)),
+  };
+}
+export async function documentRevisions(
+  p: Principal,
+  id: string,
+  query: Record<string, string> = {},
+) {
+  object(query, ["before", "limit"]);
+  const before = query.before === undefined ? 2147483647 : Number(query.before),
+    limit = query.limit === undefined ? 25 : Number(query.limit);
+  if (!Number.isSafeInteger(before) || before < 1 || before > 2147483647)
+    invalid("before", "Use a positive revision number.");
+  if (!Number.isInteger(limit) || limit < 1 || limit > 50)
+    invalid("limit", "Choose 1–50 revisions.");
+  return readTransaction(p, async (c) => {
+    const { d } = await documentContext(c, p, id),
+      items = [];
+    let scan = before,
+      coverage: "VisibleRevisions" | "Partial" = "VisibleRevisions";
+    for (;;) {
+      const candidates = (
+        await c.query<{ id: string; revision: number }>(
+          "SELECT id,revision FROM ppo.library_revisions WHERE workspace_id=$1 AND document_id=$2 AND revision<$3 ORDER BY revision DESC LIMIT 100",
+          [p.workspace_id, d.id, scan],
+        )
+      ).rows;
+      if (!candidates.length)
+        return { items, next_before: null, coverage, synthetic: true };
+      for (const candidate of candidates) {
+        scan = candidate.revision;
+        try {
+          const r = await revisionContext(c, p, d, candidate.id);
+          const observed = await status(c, p, d, r);
           if (items.length === limit)
             return {
               items,
-              next_after: items.at(-1)!.document.id,
+              next_before: items.at(-1)!.revision.revision,
+              coverage,
               synthetic: true,
             };
-          items.push({ document: d, revision: publicRevision(r), ...observed });
+          items.push(await registerItem(c, p, d, r, observed));
         } catch (e) {
           if (!hidden(e)) throw e;
+          coverage = "Partial";
         }
       }
     }
@@ -288,7 +504,13 @@ export async function documentUsage(
         scan = link.id;
         try {
           await revisionContext(c, p, d, link.revision_id);
-          await targetContext(c, p, link.target_kind, link.target_id, d);
+          const target = await targetContext(
+            c,
+            p,
+            link.target_kind,
+            link.target_id,
+            d,
+          );
           if (items.length === limit)
             return {
               items,
@@ -301,6 +523,12 @@ export async function documentUsage(
             revision_id: link.revision_id,
             target_kind: link.target_kind,
             target_id: link.target_id,
+            target_label:
+              target.display_name ??
+              target.title ??
+              target.description ??
+              target.display_number ??
+              link.target_kind,
             purpose: link.purpose,
             created_at: link.created_at,
             created_by: link.created_by,
@@ -371,6 +599,13 @@ export async function documentHistory(
             command: e.command,
             revision: publicRevision(r),
             actor_id: e.actor_id,
+            actor_name:
+              (
+                await c.query(
+                  "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+                  [p.workspace_id, e.actor_id],
+                )
+              ).rows[0]?.display_name ?? "Unavailable",
             created_at: e.created_at,
             reason: e.reason,
             evidence:

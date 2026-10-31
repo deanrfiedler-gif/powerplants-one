@@ -1,0 +1,96 @@
+{
+  "recorded_at": "2026-10-31T04:33:10.976405+00:00",
+  "application_source_commit": "c2b6ec405f10db7eecf67327821002a599d82cc0",
+  "main_commit": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "scope": [
+    "DK-01",
+    "DK-02"
+  ],
+  "runtime": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "chrome": "156.0.8078.80",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "database_port": 55477,
+    "application_port": 3476
+  },
+  "command": "node --env-file=.env.local node_modules/@playwright/test/cli.js test --config playwright.library.config.ts",
+  "local_invocation_note": "An ignored wrapper overrides only the database port/role to the separately provisioned cluster. The committed configuration and supported compiled launcher were exercised.",
+  "checks": {
+    "native_browser": {
+      "passed": 3,
+      "failed": 0,
+      "duration_seconds": 48.2
+    },
+    "typecheck": "passed, including the committed configuration",
+    "focused_lint": "passed",
+    "studio": "passed: 374 entries, 52 component entries, no integrity errors; visual reviews remain pending",
+    "status": "passed: 186 fragments",
+    "application_build": "unchanged from the prior execution; not rebuilt for test/evidence-only changes"
+  },
+  "coverage": [
+    "registration and original operation receipt",
+    "independent review and independent finding acceptance",
+    "successor with retained exact historical review, finding and download",
+    "declared site link and history",
+    "removed original file remains unavailable, exact recovery, no successor substitution",
+    "withdrawal retains historical evidence and another-company reads/downloads are denied",
+    "stale revision command preserves form input",
+    "server-committed lost response retries original body/operation and receipt without duplicate revision",
+    "320 px record and snapshot keyboard/focus/overflow",
+    "real Chrome 200% zoom, 720 CSS px at DPR 2 in a 1440 px viewport"
+  ],
+  "response_fixtures": false,
+  "fault_injection": "A real revision POST is forwarded to the server; after its 201 commit, the browser response is aborted once. The retry reaches the real server.",
+  "setup_and_harness_corrections": [
+    "shared/unseeded database replaced with isolated cluster",
+    "supported compiled local launcher used for synthetic identity",
+    "receipt read through operation recovery after navigation",
+    "strict link field and stored source envelope assertions corrected",
+    "selectors matched to phone accessible names",
+    "physical viewport captures avoid full-page CSS clipping at browser zoom"
+  ],
+  "source_sha256_lf": {
+    "tests/browser/library-native.spec.ts": "5c9ab103957abbb918c76a9b2cd9c5d44f1a2da959a28d258aa0d85d9f1f2880",
+    "playwright.library.config.ts": "18054e28d844aa1f0f9d48a79a4a93f20998a79e2554e0b4a3bb87cb2732ed20"
+  },
+  "captures": {
+    "native-historical-unavailable-320.png": {
+      "sha256": "d3ac287254ac0fdb5d0cea68f76a061d79de1dad74dd9c34bc0214023e6fb2c5",
+      "width": 320,
+      "height": 844
+    },
+    "native-record-320.png": {
+      "sha256": "0d3f3076b38935cf0b0c4e9c6a63690e7ebb52590546c9e341680d59d9133e14",
+      "width": 320,
+      "height": 844
+    },
+    "native-record-zoom200.png": {
+      "sha256": "20e71ebebc9fddd079c05214cf699fdb48d4c85e5a86e30841d8569e641da58a",
+      "width": 1440,
+      "height": 900
+    },
+    "native-register-zoom200.png": {
+      "sha256": "725ec1f0e25344929495d0414cfd49acd1eaceddbcf1e8a0da075cca4a36cbd7",
+      "width": 1440,
+      "height": 900
+    },
+    "native-snapshot-320.png": {
+      "sha256": "9e4f7dfe6c7be44cf165bcc5845aa9d6984dc236845540369bf4d3f975da0fdc",
+      "width": 320,
+      "height": 844
+    }
+  },
+  "prior_execution": "execution.json",
+  "not_run": [
+    "new full database-suite run",
+    "other module suites",
+    "new full unit-suite run",
+    "manual screen-reader audit"
+  ],
+  "review_status": "Fresh exact-head cross-model review and GitHub CI pending; developer capture comparison only",
+  "owner_acceptance": "Pending",
+  "merge": "Not performed",
+  "deployment": "Not performed"
+}

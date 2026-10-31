@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "status": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "dk01-dk02-library-host",
+          "label": "Document library native host",
+          "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
+      ],
+      "used_on": [
+        "route:/documents",
+        "route:/documents/library/[id]"
+      ]
+    }
+  }
+}

@@ -41,3 +41,7 @@ Runtime/test source: `a15c5f40cc5a3a3b0c3b8b7e394136d68ed03f5f`, carried by [PR 
 ## Remaining boundary
 
 Native workspace/visual review, live SharePoint, arbitrary uploads, CAD comparison, automatic impact actions, DK-03 controlled publication/distribution, DK-06 template publication, operational approval and deployment are not delivered by this increment. Audience text is descriptive; document grants and native source authority enforce visibility. No hosted tester receives the new permissions by default.
+
+## Native workspace continuation — 31 October 2026
+
+PR #706 now implements the accepted DK-01/DK-02 routes. See the [native workspace ledger](workspace/README.md) for current screenshots, execution and limitations. The source-bound backend evidence above remains unchanged; it is not relabelled as proof of the new UI.

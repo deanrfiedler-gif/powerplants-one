@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-10-31T01:36:27Z",
+  "application_source_commit": "f78fc093fe142113191a5c6a5bd08208a7a4ab9c",
+  "main_control_commit": "6e939bf0b937fc05f9e477d1cd14f8838c92fd9a",
+  "scope": [
+    "DK-01",
+    "DK-02"
+  ],
+  "runtime": {
+    "node": "24.22.2",
+    "npm": "11.19.0",
+    "playwright": "1.64.1",
+    "chrome": "156.0.8078.80",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test"
+  },
+  "checks": {
+    "build": "passed",
+    "typecheck": "passed in build",
+    "lint": "full and final focused passed",
+    "studio": "passed, visual reviews remain pending",
+    "foundation": "passed",
+    "naming": "passed",
+    "status": "passed, 183 fragments",
+    "browser_runtime": "passed",
+    "compiled_fixture_browser": {
+      "passed": 5,
+      "failed": 0
+    },
+    "compiled_http": {
+      "passed": 2,
+      "failed": 0
+    },
+    "library_database": {
+      "full_run_passed": 13,
+      "full_run_failed": 1,
+      "corrected_case": "DK-B03",
+      "main_control": "passed",
+      "corrected_rerun": "passed"
+    },
+    "unit": {
+      "passed": 1280,
+      "failed": 5,
+      "failures_reproduced_on_main": 4,
+      "remaining_case": "CPQ rule worker",
+      "remaining_serial_retry": "passed"
+    }
+  },
+  "browser_evidence": "Synthetic API fixtures rendered through the compiled application; native database and HTTP proof is separate.",
+  "not_run": [
+    "All other module database/HTTP/browser suites",
+    "Complete native browser command journey",
+    "Manual screen-reader audit",
+    "Browser 200 percent zoom"
+  ],
+  "review_status": "Pending independent Claude and visual review",
+  "owner_acceptance": "Pending",
+  "deployment": "Not performed"
+}
