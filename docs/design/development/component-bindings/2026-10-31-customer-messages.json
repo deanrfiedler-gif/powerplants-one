@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "ec04-customer-messages",
+          "label": "EC-04 customer message workflow",
+          "description": "Prepared M1/M2, held do-not-notify, failed bounce, unknown outcome, exact confirmation, pending original-operation recovery, stale/denied/failed read and reasoned switch fixtures in the EC-04 browser/native tests."
+        }
+      ],
+      "dependencies": [
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "tests/browser/customer-messages.spec.ts"
+      ],
+      "used_on": [
+        "scope:EC-04",
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-ec04-review",
+          "expected": "Accepted EC-04 D1–D8 at 1440/1024/390/320 with keyboard and focus evidence.",
+          "actual": "Implementation and paired proof in progress; source acceptance does not approve the application.",
+          "action": "Inspect EC-04 execution evidence and resolve remaining differences before visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "ec04-customer-messages",
+          "label": "EC-04 customer message workflow",
+          "description": "Prepared M1/M2, held do-not-notify, failed bounce, unknown outcome, exact confirmation, pending original-operation recovery, stale/denied/failed read and reasoned switch fixtures in the EC-04 browser/native tests."
+        }
+      ],
+      "dependencies": [
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "tests/browser/customer-messages.spec.ts"
+      ],
+      "used_on": [
+        "scope:EC-04",
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-ec04-review",
+          "expected": "Accepted EC-04 D1–D8 at 1440/1024/390/320 with keyboard and focus evidence.",
+          "actual": "Implementation and paired proof in progress; source acceptance does not approve the application.",
+          "action": "Inspect EC-04 execution evidence and resolve remaining differences before visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "ec04-customer-messages",
+          "label": "EC-04 customer message workflow",
+          "description": "Prepared M1/M2, held do-not-notify, failed bounce, unknown outcome, exact confirmation, pending original-operation recovery, stale/denied/failed read and reasoned switch fixtures in the EC-04 browser/native tests."
+        }
+      ],
+      "dependencies": [
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "tests/browser/customer-messages.spec.ts"
+      ],
+      "used_on": [
+        "scope:EC-04",
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-ec04-review",
+          "expected": "Accepted EC-04 D1–D8 at 1440/1024/390/320 with keyboard and focus evidence.",
+          "actual": "Implementation and paired proof in progress; source acceptance does not approve the application.",
+          "action": "Inspect EC-04 execution evidence and resolve remaining differences before visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "ec04-customer-messages",
+          "label": "EC-04 customer message workflow",
+          "description": "Prepared M1/M2, held do-not-notify, failed bounce, unknown outcome, exact confirmation, pending original-operation recovery, stale/denied/failed read and reasoned switch fixtures in the EC-04 browser/native tests."
+        }
+      ],
+      "dependencies": [
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "tests/browser/customer-messages.spec.ts"
+      ],
+      "used_on": [
+        "scope:EC-04",
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-ec04-review",
+          "expected": "Accepted EC-04 D1–D8 at 1440/1024/390/320 with keyboard and focus evidence.",
+          "actual": "Implementation and paired proof in progress; source acceptance does not approve the application.",
+          "action": "Inspect EC-04 execution evidence and resolve remaining differences before visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "ec04-customer-messages",
+          "label": "EC-04 customer message workflow",
+          "description": "Prepared M1/M2, held do-not-notify, failed bounce, unknown outcome, exact confirmation, pending original-operation recovery, stale/denied/failed read and reasoned switch fixtures in the EC-04 browser/native tests."
+        }
+      ],
+      "dependencies": [
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "tests/browser/customer-messages.spec.ts"
+      ],
+      "used_on": [
+        "scope:EC-04",
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-ec04-review",
+          "expected": "Accepted EC-04 D1–D8 at 1440/1024/390/320 with keyboard and focus evidence.",
+          "actual": "Implementation and paired proof in progress; source acceptance does not approve the application.",
+          "action": "Inspect EC-04 execution evidence and resolve remaining differences before visual acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

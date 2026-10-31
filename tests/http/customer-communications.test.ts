@@ -78,6 +78,7 @@ test("D-025 S2 over HTTP: templates, switch, prepared message, named sender, tim
 
   // R9: Off by default; only the switch duty changes it.
   const switches = await call("cs-reviewer", `customer-communications/switches?company_id=${CRM.company}`);
+  assert.equal(switches.body.can_switch, true);
   assert.deepEqual(switches.body.classes.map((c: { mode: string }) => c.mode), ["Off", "Off", "Off", "Off"]);
   const on = { ...base(), company_id: CRM.company, message_class: "DispatchNotice", mode: "Synthetic", expected_version: 0 };
   assert.equal((await call("cs-reviewer", "customer-communications/switches", on)).status, 404);
@@ -110,6 +111,16 @@ test("D-025 S2 over HTTP: templates, switch, prepared message, named sender, tim
   assert.equal(detail.body.state, "Sent");
   assert.equal(detail.body.display_state, "Sent (simulated) — delivery not confirmed");
   assert.equal(detail.body.sent_by, reviewer.display_name);
+  assert.equal(detail.body.actions.confirm, false);
+  assert.equal(detail.body.actions.reconcile, false);
+  assert.equal(detail.body.sender.name, coordinator.display_name);
+  const all = await call("coordinator", "customer-communications/queue?view=all");
+  assert.equal(all.status, 200);
+  assert.ok(all.body.items.some((i: { id: string }) => i.id === prepared.id));
+  assert.match(all.body.coverage, /200 candidates/);
+  assert.ok(!(await call("coordinator", "customer-communications/queue")).body.items.some((i: { id: string }) => i.id === prepared.id));
+  assert.equal((await call("coordinator", "customer-communications/queue?view=provider")).status, 422);
+  assert.equal((await call("other-workspace", "customer-communications/queue?view=all")).body.items.length, 0);
   assert.deepEqual(detail.body.history.map((h: { state: string }) => h.state), ["Prepared", "Queued", "Submitted", "Sent"]);
   assert.match(detail.body.body, /To stop these emails, reply to this email and ask us to stop\./);
   const customer = await call("coordinator", `customer-communications?organisation_id=${CRM.org}`);

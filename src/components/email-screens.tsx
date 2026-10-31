@@ -5,6 +5,7 @@ import { ErrorNotice, isDenied, useCommand, useResource } from "./business-ui";
 import { useIdentity } from "./business-session";
 import { ProductIcon } from "./product-icons";
 import "./email-calendar.css";
+import { EmailWorkspaceFrame } from "./email-workspace-menu";
 type Summary = {
   id: string;
   subject: string;
@@ -54,7 +55,7 @@ export function EmailInbox() {
     `email?search=${encodeURIComponent(search)}`,
   );
   return (
-    <section className="ec-page">
+    <EmailWorkspaceFrame inbox><section className="ec-page">
       <Tabs />
       <div className="ec-heading">
         <div>
@@ -104,7 +105,7 @@ export function EmailInbox() {
       <p className="ec-note">
         Fictional correspondence. Microsoft is not connected.
       </p>
-    </section>
+    </section></EmailWorkspaceFrame>
   );
 }
 export function EmailDetail({ id }: { id: string }) {
