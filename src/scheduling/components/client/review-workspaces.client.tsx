@@ -241,8 +241,10 @@ export function TravelWorkspaceScreen() {
       />
       {!data && (
         <>
-          <WindowControls w={w} dayOnly />
-          <p>— visits · Current results unconfirmed</p>
+          <div className="travel-toolbar travel-unconfirmed-toolbar">
+            <TravelWindowControls w={w} phone={phone} />
+            <p className="read-meta">— visits · Current results unconfirmed</p>
+          </div>
           <div className={read.error ? "travel-load-error" : undefined}>
             {!!read.error && (
               <>

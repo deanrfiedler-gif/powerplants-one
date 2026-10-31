@@ -38,7 +38,7 @@ At 390 x 844 and 320 CSS px, use a vertical visit sequence with wrapping context
 
 ## Shared components and states
 
-TravelWorkspaceScreen, TravelReview, travelSequences and travelAvailabilityConflicts; shared WindowControls/ReviewSelect over business-ui fields/read states, Status, Button/ButtonLink and SchedulingNavigation. The route legs reuse the planner tl-travel colour with page-local positioning. [Component bindings](../component-bindings/2026-10-31-travel-review.md) describe fixtures and limitations. No mapping or routing library is added.
+TravelWorkspaceScreen, TravelReview, travelSequences and travelAvailabilityConflicts; TravelWindowControls over shared business-ui fields/read states, Status, Button/ButtonLink and SchedulingNavigation. The route legs reuse the planner tl-travel colour with page-local positioning. [Component bindings](../component-bindings/2026-10-31-travel-review.md) describe fixtures and limitations. No mapping or routing library is added.
 
 Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. These review pages have no source-mutation save action; analytical state is explicitly disposable.
 
@@ -48,7 +48,7 @@ Incoming: current permitted scheduling assignments and anonymous busy/block inte
 
 ## Visual references and verification
 
-Accepted Figma design: [Travel review design r01 captures](../../../reference/ui/service/travel-review-design-r01/README.md) (six icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/travel-review-figma-design.md). Images of all permitted resources at once, an overlap between reservations, the site filter note, denied access, the loading state, desktop and tablet states and 200% zoom are still missing.
+Accepted Figma design: [Travel review design r01 captures](../../../reference/ui/service/travel-review-design-r01/README.md) (six icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/travel-review-figma-design.md). Native route, comparison, summary, empty and failed/denied captures at 1440, 1024, 390 and 320 px are linked in the [Travel evidence](../../../testing/evidence/scheduling-resources/travel-review.md). Dedicated reservation-overlap, active-site-filter, loading and native-browser 200% zoom captures remain missing. This design starts on one person; an all-person route is not implemented.
 
 No page-specific retained HTML exists. Accepted mockups are the six r01 captures above; current implementation comparison remains unaccepted.
 
@@ -64,4 +64,4 @@ Resource selection survives reload. Travel review flags calendar closures as wel
 
 Travel review has a specific breadcrumb. Retain existing day/timezone/site/resource context and source checks.
 
-Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+The retained shell and its navigation differences are recorded in the Travel evidence. Desktop retains the primary rail and horizontal Scheduling links; mobile retains the four-item bar with Schedule active; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.

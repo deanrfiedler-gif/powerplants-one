@@ -99,6 +99,16 @@ function fixture(actor = "") {
     to: "2031-09-23T00:00:00+10:00",
   };
 }
+async function routeStart(page: Page) {
+  await page.locator("#ppo-travel-review").evaluate((root) => {
+    for (
+      let scroller: Element | null = root;
+      scroller;
+      scroller = scroller.parentElement
+    )
+      scroller.scrollTop = 0;
+  });
+}
 async function identity(page: Page) {
   const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
   const response = await page.request.post("/api/v1/local-session", {
@@ -108,19 +118,26 @@ async function identity(page: Page) {
   expect(response.ok(), await response.text()).toBeTruthy();
   return (await response.json()).actor_id as string;
 }
-async function mock(page: Page, data = fixture()) {
-  await page.route("**/api/v1/schedule?**", (route) =>
-    route.fulfill({ json: data }),
-  );
-  await page.goto(`/schedule/travel?day=${day}`);
-  await expect(page.getByLabel("Resource / crew member")).toHaveValue(
-    resourceId(1),
-  );
+async function readyShell(page: Page) {
+  // Establish the real identity/permission read before testing the synthetic route.
+  await expect(
+    page.getByText("Loading demonstration identity…", { exact: true }),
+  ).toHaveCount(0, { timeout: 15000 });
   await expect(
     page
       .getByRole("navigation", { name: "Scheduling workspace" })
       .getByRole("link", { name: "Travel review", exact: true }),
   ).toBeVisible({ timeout: 15000 });
+}
+async function mock(page: Page, data = fixture()) {
+  await page.route("**/api/v1/schedule?**", (route) =>
+    route.fulfill({ json: data }),
+  );
+  await page.goto(`/schedule/travel?day=${day}`);
+  await readyShell(page);
+  await expect(page.getByLabel("Resource / crew member")).toHaveValue(
+    resourceId(1),
+  );
 }
 test("Travel route selects the conflict person, places named conflicts on the right leg and retains exact handover", async ({
   page,
@@ -185,9 +202,14 @@ test("Keyboard comparison changes no bookings, preserves booked times, warns on 
     await page.locator(".travel-visit-heading strong").allTextContents(),
   ).toEqual([...before].reverse());
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.getByLabel("Resource / crew member").scrollIntoViewIfNeeded();
+  await routeStart(page);
   await page.screenshot({
     path: info.outputPath("travel-compare-1440.png"),
+    fullPage: true,
+  });
+  await page.locator(".travel-visit").last().scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: info.outputPath("travel-compare-end-1440.png"),
     fullPage: true,
   });
   const reset = page.getByRole("button", { name: "Reset comparison" });
@@ -216,7 +238,7 @@ test("Keyboard comparison changes no bookings, preserves booked times, warns on 
       await expect(
         page.locator(".ppo-shell-header").getByText("Travel", { exact: true }),
       ).toBeVisible();
-    await page.getByLabel("Resource / crew member").scrollIntoViewIfNeeded();
+    await routeStart(page);
     await page.screenshot({
       path: info.outputPath(`travel-route-${width}.png`),
       fullPage: true,
@@ -244,6 +266,7 @@ test("No visits, signed-in technician fallback and limited resources remain dist
     route.fulfill({ json: data }),
   );
   await page.goto(`/schedule/travel?day=${day}`);
+  await readyShell(page);
   await expect(page.getByLabel("Resource / crew member")).toHaveValue(
     resourceId(2),
   );
@@ -288,15 +311,17 @@ test("Failed and denied refreshes remove previous routes and comparison; retry r
         status === 200
           ? fixture()
           : {
-              error: {
-                code: status === 403 ? "Forbidden" : "DependencyUnavailable",
-                message: "SYN source unavailable",
-                retryable: true,
-              },
+              code: status === 403 ? "Forbidden" : "DependencyUnavailable",
+              message:
+                status === 403
+                  ? "SYN travel access denied"
+                  : "SYN travel source unavailable",
+              retryable: status !== 403,
             },
     }),
   );
   await page.goto(`/schedule/travel?day=${day}`);
+  await readyShell(page);
   await expect(page.locator(".travel-visit")).toHaveCount(2);
   await page
     .getByRole("button", {
@@ -310,6 +335,13 @@ test("Failed and denied refreshes remove previous routes and comparison; retry r
       page.getByRole("heading", { name: "Travel could not be loaded" }),
     ).toBeVisible();
     await expect(page.locator(".travel-route")).toHaveCount(0);
+    await expect(
+      page.locator("#ppo-travel-review").getByRole("alert"),
+    ).toContainText(
+      failure === 403
+        ? "SYN travel access denied"
+        : "SYN travel source unavailable",
+    );
     await expect(
       page.getByText("— visits · Current results unconfirmed"),
     ).toBeVisible();
@@ -354,6 +386,7 @@ test("Late earlier-day reads cannot replace the current day or leave a stale rou
     }
   });
   await page.goto(`/schedule/travel?day=${day}`);
+  await readyShell(page);
   await requested;
   await page.getByLabel("Review day", { exact: true }).fill("2031-09-23");
   await expect(page.locator(".travel-visit")).toHaveCount(0);

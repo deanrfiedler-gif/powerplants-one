@@ -14679,7 +14679,7 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
             "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
             "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
             "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
@@ -14691,7 +14691,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained because the Service planner side-menu build has not started.",
+            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained under the initial-preflight fallback; the separate Service planner build started after this Travel claim.",
             "The day summary keeps visits, planned travel, original-schedule gaps, conflicts, anonymous busy intervals, blocks and closures together. Route estimate remains Unknown; actual field Travel is separate."
           ],
           "steps": [],
@@ -14715,7 +14715,7 @@
             "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order."
           ],
           "steps": [
-            "Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
             "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
             "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
             "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
@@ -63842,7 +63842,7 @@
           "title": "Using this page",
           "paragraphs": [],
           "steps": [
-            "Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
             "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
             "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
             "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."
@@ -63854,7 +63854,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained because the Service planner side-menu build has not started.",
+            "The route and day summary sit side by side on desktop/tablet and stack on phones. Current Scheduling navigation is retained under the initial-preflight fallback; the separate Service planner build started after this Travel claim.",
             "The day summary keeps visits, planned travel, original-schedule gaps, conflicts, anonymous busy intervals, blocks and closures together. Route estimate remains Unknown; actual field Travel is separate."
           ],
           "steps": [],
@@ -63878,7 +63878,7 @@
             "One permitted person’s day is shown as a route with planned travel legs, booked visits and a day summary. Named availability/closure overlaps stay on their booked leg or visit. Earlier/Later compares only; gaps are not recalculated, reversal requires a controlled booking change and Reset comparison discards the order."
           ],
           "steps": [
-            "Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
+            "Choose a local day, timezone and permitted site. On phones, open Filters for timezone and site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.",
             "Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.",
             "Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.",
             "Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site."

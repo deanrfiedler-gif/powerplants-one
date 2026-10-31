@@ -418,3 +418,46 @@
   border: 0;
   background: transparent;
 }
+
+#ppo-travel-review .travel-layout-empty .travel-empty {
+  background: var(--white);
+}
+@media (min-width: 781px) and (max-width: 1100px) {
+  #ppo-travel-review .travel-toolbar {
+    gap: 8px;
+  }
+  #ppo-travel-review .travel-toolbar > .field {
+    flex: 0 1 150px;
+    max-width: 150px;
+  }
+  #ppo-travel-review .travel-date {
+    flex-basis: 150px;
+  }
+  #ppo-travel-review .travel-zone {
+    flex-basis: 160px;
+  }
+  #ppo-travel-review .travel-refresh {
+    width: 40px;
+    padding: 8px;
+  }
+  #ppo-travel-review .travel-refresh-icon {
+    display: inline;
+    font-size: 20px;
+  }
+  #ppo-travel-review .travel-refresh-label {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-travel-review .travel-unconfirmed-toolbar {
+    grid-template-columns: minmax(0, 1fr) 60px;
+  }
+  #ppo-travel-review .travel-unconfirmed-toolbar .read-meta {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    text-align: left;
+  }
+  #ppo-travel-review .travel-unconfirmed-toolbar .travel-filters {
+    grid-column: 2;
+  }
+}
