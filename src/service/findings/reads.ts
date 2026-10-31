@@ -11,10 +11,12 @@ import {
   findingQuery,
   inView,
   isOverdue,
+  dueThisWeek,
   views,
   type Finding,
 } from "./model";
 import { authorise, candidateSql, project, type Candidate } from "./sources";
+import { recurrenceFor } from "./recurrence";
 import { candidateWindow } from "./window";
 
 async function begin(c: QueryClient, p: Principal) {
@@ -51,6 +53,7 @@ export async function readFindings(p: Principal, input: unknown = {}) {
     const rows: Finding[] = [];
     for (const { row, source } of permitted) {
       try {
+        row.recurrence = await recurrenceFor(c, p, row);
         await authorise(c, p, source);
         rows.push(row);
       } catch (e) {
@@ -73,10 +76,34 @@ export async function readFindings(p: Principal, input: unknown = {}) {
     await requireCapability(c, p, "schedule.read");
     const now = (await c.query<{ now: Date }>("SELECT clock_timestamp() now"))
       .rows[0].now;
-    for (const row of rows) row.overdue = isOverdue(row, now);
+    for (const row of rows) {
+      row.overdue = isOverdue(row, now);
+      row.due_this_week = dueThisWeek(row, now);
+    }
     const selected = rows.filter((r) => inView(r, f.view));
     return {
       items: selected,
+      options: {
+        owners: Array.from(
+          new Map(
+            rows.flatMap((r) =>
+              r.action
+                ? [
+                    [
+                      r.action.owner_id,
+                      { id: r.action.owner_id, label: r.action.owner_name },
+                    ] as const,
+                  ]
+                : [],
+            ),
+          ).values(),
+        ),
+        sites: Array.from(
+          new Map(
+            rows.map((r) => [r.site.id, { id: r.site.id, label: r.site.name }]),
+          ).values(),
+        ),
+      },
       total: selected.length,
       counts: Object.fromEntries(
         views.map((v) => [v, rows.filter((r) => inView(r, v)).length]),
@@ -110,10 +137,12 @@ export async function readFinding(
     ).rows[0];
     if (!source) throw unavailable();
     const item = await project(c, p, source);
+    item.recurrence = await recurrenceFor(c, p, item);
     await authorise(c, p, source);
     const now = (await c.query<{ now: Date }>("SELECT clock_timestamp() now"))
       .rows[0].now;
     item.overdue = isOverdue(item, now);
+    item.due_this_week = dueThisWeek(item, now);
     return { item, as_of: now.toISOString(), synthetic: true };
   });
 }

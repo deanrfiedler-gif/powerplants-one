@@ -13,6 +13,12 @@ export async function candidateWindow(
   c: QueryClient,
   p: Principal,
   f: ReturnType<typeof findingQuery>,
+  recurrence?: {
+    equipment: string;
+    check: string;
+    procedure: string;
+    at: string;
+  },
 ) {
   const field = `(${scopeSql("a.company_id", "a.site_id", "field.read.own")}
     AND EXISTS(SELECT 1 FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id)
@@ -30,6 +36,7 @@ export async function candidateWindow(
     WITH sources AS (${candidateSql}), contexts AS (
       SELECT f.*, COALESCE(d.host_id,i.appointment_id,report.appointment_id,CASE WHEN f.source='schedule' THEN f.parent_id END) AS appointment_id,
         COALESCE(ib.asset_id,b.asset_id) AS asset_id,
+        t.procedure_key,t.checks->((plan_check.ordinality-1)::int)->>'key' AS fault_check,attempt.occurred_at AS defect_occurred,
         d.reference AS defect_reference,d.title AS defect_title,d.source_attempt_id,ir.evaluation,
         i.state AS incident_state,i.reporter_id,i.company_id AS incident_company,i.site_id AS incident_site,i.work_order_id AS incident_work_order,
         ia.instruction,report.display_number AS report_reference,report.company_id AS report_company,report.site_id AS report_site,
@@ -39,6 +46,10 @@ export async function candidateWindow(
       FROM sources f
       LEFT JOIN ppo.inspection_defects d ON f.source='inspection' AND d.workspace_id=$1 AND d.id=f.id
       LEFT JOIN ppo.service_inspection_bindings ib ON (ib.workspace_id,ib.attempt_id)=(d.workspace_id,d.source_attempt_id)
+      LEFT JOIN ppo.inspection_attempts attempt ON (attempt.workspace_id,attempt.id)=(d.workspace_id,d.source_attempt_id)
+      LEFT JOIN ppo.service_inspection_templates t ON (t.workspace_id,t.id)=(ib.workspace_id,ib.template_id)
+      LEFT JOIN LATERAL (SELECT pc.ordinality FROM jsonb_array_elements(attempt.plan) WITH ORDINALITY pc(definition,ordinality)
+        WHERE pc.definition->>'key'=d.check_key) plan_check ON true
       LEFT JOIN ppo.inspection_results ir ON (ir.workspace_id,ir.attempt_id,ir.check_key)=(d.workspace_id,d.source_attempt_id,d.check_key)
       LEFT JOIN ppo.incident_actions ia ON f.source='incident' AND ia.workspace_id=$1 AND ia.id=f.id
       LEFT JOIN ppo.incidents i ON (i.workspace_id,i.id)=(ia.workspace_id,ia.incident_id)
@@ -69,6 +80,9 @@ export async function candidateWindow(
         WHEN 'schedule' THEN true
         ELSE ${scopeSql("a.company_id", "a.site_id", "report.read")} AND ${scopeSql("f.report_company", "f.report_site", "report.read")}
           AND (${scopeSql("f.report_company", "f.report_site", "service.work_order.edit")} OR ${field}) END
+      AND ($10::uuid IS NULL OR (f.source='inspection' AND f.asset_id=$10 AND f.fault_check=$11 AND f.procedure_key=$13
+        AND f.evaluation='Fail' AND f.defect_occurred < $12::timestamptz
+        AND f.defect_occurred >= $12::timestamptz - interval '2160 hours'))
       AND ($4::uuid IS NULL OR a.company_id=$4) AND ($5::uuid IS NULL OR a.site_id=$5) AND ($6::uuid IS NULL OR task.owner_id=$6)
       AND strpos(lower(concat_ws(' ',a.display_number,
         CASE f.source WHEN 'inspection' THEN a.display_number||' · '||f.defect_reference
@@ -90,6 +104,10 @@ export async function candidateWindow(
         f.q,
         f.limit + 1,
         f.offset,
+        recurrence?.equipment ?? null,
+        recurrence?.check ?? null,
+        recurrence?.at ?? null,
+        recurrence?.procedure ?? null,
       ],
     )
   ).rows;

@@ -61,3 +61,23 @@ Backend R2 adds `GET/POST /api/v1/service/findings/{source}:{source_id}/next-act
 The draft User Guide `guide.sv.07` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Native page and build decisions — 31 October 2026
+
+The native route is `/service/findings`, in the Service review workspace. Reused components: SecondaryMenuFrame (shared workspace attribute), RegisterTable, Button, WorklistChoice, RecordTabs/RecordPanel, ReadState, Field/SelectField and LocalDateTimeField. Incoming sources are the five native types above; outgoing links open their own source and the same My Work activity. No new rail item or finding number is added. No migration, capability, grant or dependency is added.
+
+The page exposes All open, Needs an owner, Due this week, Overdue, Waiting on review, Ready to close, Recurring and Closed findings. Ready to close displays the backend's follow-up-completed view, explicitly qualified as requiring the source reviewer; it asserts no additional source readiness. Closed findings has no 30-day cutoff. Counts, filter options and pagination remain the authorised candidate window. Missing/failed reads clear results and counts; uncertain saves retain the exact operation and fields; stale versions require an explicit comparison before using the current version.
+
+### Desktop
+
+At 1440 px the 240 px Service review side menu sits beside the flush ten-column shared register. At 1024 px it collapses to the shared overlay trigger. A selected row opens a large snapshot: remaining work and source closure on the left; next action, recurrence and history on the right. The source action and My Work handover remain visible. No bulk-assignment checkbox or unsupported settings/remote-diagnosis control is shown.
+
+### Mobile
+
+At 390 and 320 px show labelled finding rows, a view selector, filters, explicit window/read-time copy and paging. The selected finding is one scroll with the full title and source reference, remaining work, next action, closure, recurrence and activity history. Form inputs are 16 px; shared buttons and local-time fields remain keyboard/touch reachable. Source history stays in its owning record; next-action history is identified as such. Phone source buttons wrap instead of hiding a handover behind a new menu.
+
+### Differences and open work
+
+D7 and the Escalations/Closed cases menu require SV-08 and are omitted. No stable fault-category key exists on the other source types; they say recurrence cannot be assessed rather than matching titles or broad safety classifications. Native failed checks support the equipment/check comparison. The current read has no combined source-event timeline; the page exposes native activity history and source links. IDs, dates and equipment details come from native records, so they need not equal the design's story fixtures. Longer truthful count/closure copy changes some spacing. Shared fallback icons replace licensed artwork. The full phone title improves on the truncated reference title. These are implementation differences for review, not visual acceptance.
+
+Functional proof, inspected visual comparison, owner acceptance and deployment remain separate. Application captures and executed results are recorded in the PR and the execution ledger. The retained accepted images above remain unchanged.

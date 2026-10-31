@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "sv07-findings",
+          "label": "SV-07 Findings host",
+          "description": "All eight views, five sources, snapshot, phone list, read failure, view-only, version conflict and uncertain-save fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx",
+        "src/components/service-findings.css"
+      ],
+      "used_on": [
+        "scope:SV-07",
+        "route:/service/findings"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-sv07-review",
+          "expected": "Paired review against accepted SV-07 frames at all four widths.",
+          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
+          "action": "Inspect paired captures and retain differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "sv07-findings",
+          "label": "SV-07 Findings host",
+          "description": "All eight views, five sources, snapshot, phone list, read failure, view-only, version conflict and uncertain-save fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx",
+        "src/components/service-findings.css"
+      ],
+      "used_on": [
+        "scope:SV-07",
+        "route:/service/findings"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-sv07-review",
+          "expected": "Paired review against accepted SV-07 frames at all four widths.",
+          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
+          "action": "Inspect paired captures and retain differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "sv07-findings",
+          "label": "SV-07 Findings host",
+          "description": "All eight views, five sources, snapshot, phone list, read failure, view-only, version conflict and uncertain-save fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx",
+        "src/components/service-findings.css"
+      ],
+      "used_on": [
+        "scope:SV-07",
+        "route:/service/findings"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-sv07-review",
+          "expected": "Paired review against accepted SV-07 frames at all four widths.",
+          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
+          "action": "Inspect paired captures and retain differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "sv07-findings",
+          "label": "SV-07 Findings host",
+          "description": "All eight views, five sources, snapshot, phone list, read failure, view-only, version conflict and uncertain-save fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx",
+        "src/components/service-findings.css"
+      ],
+      "used_on": [
+        "scope:SV-07",
+        "route:/service/findings"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-sv07-review",
+          "expected": "Paired review against accepted SV-07 frames at all four widths.",
+          "actual": "Implementation and focused proof in progress; visual acceptance unrecorded.",
+          "action": "Inspect paired captures and retain differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

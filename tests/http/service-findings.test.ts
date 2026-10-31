@@ -24,6 +24,14 @@ test("SV07 HTTP uses authenticated no-store reads and strict query validation", 
   assert.match(all.headers.get("cache-control")!, /private, no-store/);
   assert.equal(all.body.count_scope, "AuthorisedCandidateWindow");
   assert.ok(all.body.items.length <= 1);
+  for (const view of ["open", "needs_owner", "due_this_week", "overdue", "waiting_review", "follow_up_completed", "recurring", "closed"]) {
+    const response = await get(cookie, `?view=${view}&limit=1`);
+    assert.equal(response.status, 200);
+    assert.equal(response.body.count_scope, "AuthorisedCandidateWindow");
+    assert.equal(response.body.view, view);
+    assert.equal(typeof response.body.counts[view], "number");
+  }
+
   for (const q of [
     "limit=51",
     "source=private",

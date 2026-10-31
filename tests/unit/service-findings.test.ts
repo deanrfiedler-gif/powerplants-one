@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  dueThisWeek,
+  withinRecurrenceWindow,
   findingKey,
   findingQuery,
   followUpState,
@@ -77,4 +79,29 @@ test("Overdue compares the retained deadline instant and never active-looking cl
     ),
     false,
   );
+});
+
+
+test("SV07 recurring means strictly earlier within an inclusive 90 elapsed days, not a similar title", () => {
+ const at="2026-10-31T12:00:00Z",start=new Date(Date.parse(at)-90*86400000).toISOString();
+ assert.equal(withinRecurrenceWindow(start,at),true);
+ assert.equal(withinRecurrenceWindow(new Date(Date.parse(start)-1).toISOString(),at),false);
+ assert.equal(withinRecurrenceWindow(at,at),false);
+ assert.equal(withinRecurrenceWindow("2026-11-01T12:00:00Z",at),false);
+ const row={state:"Open",recurrence:{earlier:[]}} as unknown as Finding;
+ assert.equal(inView(row,"recurring"),false);
+ assert.equal(inView({...row,recurrence:{basis:"FailedCheck",partial:false,earlier:[{id:"inspection:prior"} as never]}},"recurring"),true);
+ assert.equal(inView({...row,state:"Closed",recurrence:{basis:"FailedCheck",partial:false,earlier:[{id:"inspection:prior"} as never]}},"recurring"),false);
+});
+test("SV07 site week crosses UTC midnight and DST without changing strict overdue or closing a source",()=>{
+ const row={state:"Open",site:{timezone:"Australia/Sydney"},action:{status:"Open",due_at:"2026-10-04T13:00:00Z"}} as Finding;
+ const now=new Date("2026-10-04T13:00:00Z"); // Monday midnight after Sydney DST begins.
+ assert.equal(dueThisWeek(row,now),true);
+ assert.equal(isOverdue(row,now),false);
+ assert.equal(dueThisWeek({...row,action:{...row.action!,due_at:"2026-10-04T12:59:59.999Z"}},now),false);
+ assert.equal(dueThisWeek({...row,action:{...row.action!,due_at:"2026-10-11T12:59:59.999Z"}},now),true);
+ assert.equal(dueThisWeek({...row,action:{...row.action!,due_at:"2026-10-11T13:00:00Z"}},now),false);
+ for(const status of ["Completed","Cancelled"])assert.equal(dueThisWeek({...row,action:{...row.action!,status}},now),false);
+ for(const state of ["Closed","Superseded"] as const)assert.equal(dueThisWeek({...row,state},now),false);
+ assert.equal(inView({...row,due_this_week:true},"due_this_week"),true);
 });

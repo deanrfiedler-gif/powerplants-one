@@ -13357,25 +13357,23 @@
     {
       "guide_key": "guide.sv.07",
       "entry_key": "scope:SV-07",
-      "title": "Unresolved findings and follow-up worklist",
+      "title": "Findings and follow-up",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Focused verification in progress; see SV-07 PR evidence",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Unresolved findings and follow-up worklist to work towards this outcome: Remaining work is visible across visits.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Findings and follow-up shows permitted inspection defects, incident actions, remaining report work, customer responses and scheduling follow-up. Each row keeps its source identity; the page never creates a finding number or closes a source."
           ],
           "steps": [],
           "rows": [],
@@ -13385,9 +13383,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Unresolved finding, affected asset/area, owner and linked work.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Read access follows every native source and its activity, company, site and equipment. Coordinators need scoped service work-order and activity edit authority to change the next action. Technicians see their own permitted findings view-only."
           ],
           "steps": [],
           "rows": [],
@@ -13396,56 +13392,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify what remains unresolved and its evidence",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open Findings from the Service review side menu. Start with All open; search or choose Owner, Source and Site. Open a row to inspect what remains and what closes it."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Unresolved findings and follow-up worklist · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The desktop register has Source record, What remains, State, Owner, Due, Next action, Closes when, Source, Equipment and Site. The snapshot has Next action, Recurrence and History. A phone shows a list and one scrolling finding."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Unresolved finding, affected asset/area, owner and linked work.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Counts and filter options describe the authorised candidate window, never global totals. Read the As at time. Next window may remain available even when this view has no rows. Due is shown in site time; Due this week uses the site Monday-to-Sunday week."
           ],
           "steps": [],
           "rows": [],
@@ -13455,13 +13423,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Choose Set the next action or Change next action. Enter owner, due date/time, instruction, optional evidence needed and a reason. Save once. Check the returned result and the same activity in My Work. Owner eligibility is checked again by the server."
           ],
-          "steps": [
-            "Identify what remains unresolved and its evidence",
-            "Assign a next action and accountable owner",
-            "Close only when the required outcome is evidenced"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -13469,9 +13433,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Remaining work is visible across visits.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Saving changes one owned activity and retains its history. It changes no source record. Open the report, inspection, incident or visit to satisfy its native closure rules. Ready to close means follow-up completed, not verified closure readiness."
           ],
           "steps": [],
           "rows": [],
@@ -13480,45 +13442,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "All open excludes Closed and Superseded. Needs an owner includes a missing or cancelled action. Waiting on review reflects native correction/evidence. Recurring uses permitted earlier failed inspection checks on the same equipment within 90 days. Other sources without a stable fault key are explicitly not assessed. Closed findings has no date cutoff, within its candidate window."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare unresolved finding, affected asset/area, owner and linked work. Follow the task sequence and check that remaining work is visible across visits. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Unresolved findings and follow-up worklist has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Synthetic example: a Partial report has a corroded cable gland. Assign the replacement and required photo to its permitted owner. Completing the activity does not prove the report scope complete. A successor report revision remains a superseding observation, not a false closure."
           ],
           "steps": [],
           "rows": [],
@@ -13527,45 +13462,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "A failed or pending read hides rows and counts until confirmed. Retry the read. A stale save preserves entries: compare the current next action, then explicitly use its version before saving again. An uncertain save locks editing and retries exactly the original operation; do not invent a second action. Revoked access removes the editor."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the finding list, then scroll through What remains, Next action, What closes it, Recurrence and next-action history. Keyboard buttons open rows; Escape closes a snapshot with unsaved-change protection. Native local date/time entry converts through the site timezone. This page requires online reads and writes."
           ],
           "steps": [],
           "rows": [],
@@ -13575,8 +13483,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Use the source link for source evidence/history and Open in My Work for the owned activity. Remote diagnosis and the Escalations group remain outstanding until SV-08 exists; this page shows no inactive control."
           ],
           "steps": [],
           "rows": [],
@@ -13586,9 +13493,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the synthetic implementation. Functional execution, visual comparison, owner acceptance and deployment are separate. No visual acceptance or deployment is recorded."
           ],
           "steps": [],
           "rows": [],
@@ -77014,6 +76919,53 @@
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-service-findings",
+      "entry_key": "route:/service/findings",
+      "title": "Findings and follow-up",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "New source; review needed",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Findings and follow-up shows permitted inspection defects, incident actions, remaining report work, customer responses and scheduling follow-up. Each row keeps its source identity; the page never creates a finding number or closes a source."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open Findings from the Service review side menu. Start with All open; search or choose Owner, Source and Site. Open a row to inspect what remains and what closes it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "A failed or pending read hides rows and counts until confirmed. Retry the read. A stale save preserves entries: compare the current next action, then explicitly use its version before saving again. An uncertain save locks editing and retries exactly the original operation; do not invent a second action. Revoked access removes the editor."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "Focused verification in progress; see SV-07 PR evidence"
     }
   ]
 }
