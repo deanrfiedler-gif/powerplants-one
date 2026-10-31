@@ -152,3 +152,21 @@ test("P05 HTTP rejects spoofing and inaccessible IDs/filters/selectors; no resou
     ),
   );
 });
+
+
+test("PL-01 HTTP exposes bounded native hold evidence without extra pack or supply fields", async () => {
+  const cookie = await session("coordinator");
+  const response = await call(cookie, "schedule?" + period);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("cache-control")!, /private, no-store/);
+  const evidence = response.body.items.filter((a: { dispatch_readiness: unknown }) => a.dispatch_readiness);
+  assert.ok(evidence.length);
+  for (const a of evidence) {
+    assert.deepEqual(Object.keys(a.dispatch_readiness).sort(), ["dispatch_hold", "reasons"]);
+    assert.equal(typeof a.dispatch_readiness.dispatch_hold, "boolean");
+    assert.ok(a.dispatch_readiness.reasons.every((r: unknown) => typeof r === "string"));
+  }
+  const denied = await call(await session("systems"), "schedule?" + period);
+  assert.equal(denied.status, 403);
+  assert.equal(denied.body.items, undefined);
+});

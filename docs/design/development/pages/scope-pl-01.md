@@ -15,6 +15,14 @@ Page type: **Planning workspace**. Canonical destination: `/schedule`. Source au
 
 Existing same-tab booking recovery and server commands are preserved. Request decisions now show current versus proposed time, named crew, travel and version differences.
 
+## Accepted design implementation
+
+The D1–D6 implementation uses `SecondaryMenuFrame` with `data-ppo-workspace="shared"`, existing Day/Week and booking controls, a source-derived Needs attention band and a 44 px collapsed tray. The move form compares current/proposed times and crew and warns about new site readiness; existing expected versions, policy preparation, refusal and unchanged uncertain retry remain authoritative. The phone details stay above the tab bar; Needs attention and tray has a return control. No migration, capability, grant or dependency is added.
+
+Differences from the frames: On hold contains held visits rather than invented work-order hold states; reasons are exact native gate narratives when permitted, otherwise reason unavailable. There is no hold expiry, suggestion read or timed automatic return. Review appointment is the one handover per attention row. Existing policy, crew/travel, version and recovery controls remain in Plan visit and Move, so those forms are longer than the compositions. Native filters retain Appointment state and alternate timezone/list support. Synthetic seed names/counts and fallback icons differ. See [implementation evidence](../../../testing/evidence/service-planner-build/README.md) for verification and the remaining visual comparison.
+
+The historical 9 October owner review below is retained as evidence but is stale for these changed sources. No fingerprint is copied. Functional proof, inspected visual comparison, owner acceptance and deployment are separate.
+
 ## Desktop
 
 Accepted design: the [Service planner design decision](../../../decisions/service-planner-figma-design.md) of 17 October 2026, with captures 01–05 (desktop 1440 × 960) and 06 (tablet 1024) in [design r01](../../../reference/ui/service/service-planner-design-r01/README.md). UXB-12 is adopted for this page.
@@ -23,7 +31,7 @@ Accepted design: the [Service planner design decision](../../../decisions/servic
 - **Cards:** title, time and site in 12 px type inside one border; crew initials in the time line, only on shared visits; no reason line. Travel is a muted tint of the visit's colour inside the same border, with a muted car on segments of 30 minutes or more. Attention cards carry an amber warning icon.
 - **People:** pastel purple circle avatars, the role and one total. Away or inactive people sit last in full-height dimmed rows.
 - **Moves:** a drop opens Move this visit?, comparing current and proposed times and warning when a new site readiness confirmation is needed (D5). Desktop frames are 1440 × 960 (D6).
-- Nothing new is built. Hold reasons start as Parts, Customer and Access window. The band is built with the gate's existing reasons before suggestions, which need a backend read.
+- The accepted layout is implemented in draft. The band reads existing gate reasons. To plan remains authorised unassigned work; On hold contains held visits in the current planner filter. Work orders have no typed hold status or release date; no cause or expiry is invented. Suggestions remain excluded.
 
 Day/week resource lanes keep date, display timezone, site and resource filters visible. Unassigned authorised work remains distinct from Proposed visits. At 1440 x 960 and 1024 x 768, review named lanes, calendar evidence and travel reservations before opening the existing booking panel.
 
@@ -37,7 +45,7 @@ At 390 x 844 and 320 CSS px, use Day for a compact list or keyboard/labelled lan
 
 PlannerBoard, AppointmentCard and existing booking/request controls; shared shell, SchedulingNavigation and business-ui fields/read states. Existing planner buttons retain their scoped legacy styles.
 
-Loading, empty/filtered empty, failed and denied reads remove prior evidence. Words identify Unknown and source completeness. Existing validation, stale-version, saving, uncertain outcome, unchanged retry and success states remain in the authoritative booking controls.
+Loading and transient failed reads can retain a labelled last successful board with moves disabled and current counts unknown. Denied and changed-scope reads remove prior evidence. Words identify Unknown and source completeness. Existing validation, stale-version, saving, uncertain outcome, unchanged retry and success states remain in the authoritative booking controls.
 
 ## Handovers and authority
 

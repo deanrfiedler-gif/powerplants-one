@@ -91,6 +91,9 @@ test("today's free time starts from now", () => {
 test("what needs attention follows Dean's decision, with live holds first", () => {
   const ok = { status: "Confirmed", customer_commitment: "Confirmed", pack_requirement: "Acknowledged", scope_review_required: false };
   assert.equal(visitState(ok).kind, "ok");
+  assert.equal(visitState({ ...ok, dispatch_hold: true }).short, "Dispatch held");
+  assert.equal(visitState({ ...ok, dispatch_hold: true, dispatch_readiness: { dispatch_hold: false } }).kind, "ok");
+  assert.equal(visitState({ ...ok, dispatch_readiness: { dispatch_hold: true } }).short, "Dispatch held");
   assert.equal(visitState({ ...ok, pack_requirement: "AwaitingAcknowledgement" }).kind, "ok");
   assert.equal(visitState({ ...ok, pack_requirement: "PreparationRequired" }).short, "Pack needed");
   assert.equal(visitState({ ...ok, pack_requirement: "ReviewRequired" }).short, "Pack review");

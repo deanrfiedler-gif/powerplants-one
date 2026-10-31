@@ -1,3 +1,5 @@
+import { packContext } from "../documents/context";
+import { dispatchReadiness } from "../documents/packs";
 import { appointmentPreparation, appointmentPreparations, preparationInstalled } from "./site-readiness";
 import { siteChecks, siteCheckKeys } from "./site-readiness-model";
 import { canResolvePolicyImpact, policyReads } from "./policy-authority";
@@ -1470,10 +1472,31 @@ export async function scheduleSummaries(c: QueryClient, p: Principal, ids: strin
     for (const row of affected) impacts.set(row.appointment_id, await policyImpactHolds(c, p, row.appointment_id));
   }
   const preparations = await appointmentPreparations(c, p.workspace_id, permitted);
+  // Gate evidence is evaluated in this same repeatable-read snapshot. Keep pack
+  // narratives behind their existing permission; a bare hold remains reasonless.
+  const dispatch = new Map<string, { dispatch_hold: boolean; reasons: string[] }>();
+  const packs = (await c.query<{ id: string; appointment_id: string }>(
+    "SELECT id,appointment_id FROM ppo.packs WHERE workspace_id=$1 AND appointment_id=ANY($2::uuid[])",
+    [p.workspace_id, permitted],
+  )).rows;
+  for (const a of rows) {
+    if (!["Proposed", "Confirmed"].includes(a.status) || a.actual_start_at ||
+        !await hasPermission(c, p, "pack.read", a.company_id, a.site_id)) continue;
+    try {
+      const pack = packs.find(pack => pack.appointment_id === a.id);
+      if (pack) await packContext(c, p, pack.id);
+      else if (!await hasPermission(c, p, "pack.prepare", a.company_id, a.site_id)) continue;
+      const gate = await dispatchReadiness(c, p, a.id);
+      dispatch.set(a.id, { dispatch_hold: gate.dispatch_hold, reasons: gate.reasons });
+    } catch (error) {
+      if (!(error instanceof AppError) || ![403, 404].includes(error.status)) throw error;
+    }
+  }
   return rows.map(({ can_manage, can_read_supply, can_request, can_contact, can_resolve_policy, ...a }) => ({
     ...a,
     projection: "ScheduleSummary" as const,
     preparation: preparations.get(a.id) ?? null,
+    dispatch_readiness: dispatch.get(a.id) ?? null,
     policy_impacts: impacts.get(a.id) ?? [],
     assignments: assignments.filter((x) => x.appointment_id === a.id),
     requests: requests

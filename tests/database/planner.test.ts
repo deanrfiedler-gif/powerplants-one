@@ -1149,3 +1149,21 @@ test("PL-04 stale request still refuses changed appointment, request and mismatc
   assert.deepEqual(await rows("SELECT * FROM ppo.resources WHERE id=$1",[id("a4",1)]),resourceBefore);
   assert.equal((await appointment(1)).requests.find(r=>r.id===rid)?.status,"Pending");
 });
+
+
+test("PL-01 schedule hold evidence equals the current native dispatch gate and respects pack access", async () => {
+  const { dispatchReadiness } = await import("../../src/documents/packs");
+  const principal = await p();
+  const query = { from: "2031-09-21T14:00:00Z", to: "2031-09-28T14:00:00Z", timezone: "Australia/Brisbane" };
+  const schedule = await readSchedule(principal, query);
+  const row = schedule.items.find(a => a.dispatch_readiness);
+  assert.ok(row, "a coordinator gets current gate evidence");
+  const gate = await transaction(c => dispatchReadiness(c, principal, row.id));
+  assert.deepEqual(row.dispatch_readiness, { dispatch_hold: gate.dispatch_hold, reasons: gate.reasons });
+  assert.ok(row.dispatch_readiness.reasons.length);
+  assert.deepEqual(Object.keys(row.dispatch_readiness).sort(), ["dispatch_hold", "reasons"]);
+  await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='pack.read'", [principal.workspace_id, principal.actor_id]);
+  const restricted = await readSchedule(principal, query);
+  assert.ok(restricted.items.length);
+  assert.ok(restricted.items.every(a => a.dispatch_readiness === null), "schedule access alone cannot expose pack narratives");
+});

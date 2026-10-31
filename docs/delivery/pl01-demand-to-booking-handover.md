@@ -19,6 +19,12 @@ Authority: Dean's PL-01 instruction of 19 September 2026, recorded in [ADR-0039]
 - **Worktree:** `C:/Users/Dean.Fiedler/Projects/ppo-wt/pl01-booking-from-demand`
 - **Origin:** the 19 September work began on main `8b33b4e` in an uncommitted worktree. It was preserved as local commit `7cf1354` on 22 September and applied here with the corrections listed below.
 
+## Accepted planner presentation
+
+PL-01 now enters the same proposal from **To plan** in the planner tray. The tray is beside the board, collapses to a 44 px count strip at tablet width or while details are open, and is reached through **Needs attention and tray** on phones. **On hold** identifies unstarted held visits in the selected planner period and filters, with current native gate evidence when permitted. Work orders remain Draft/Authorised; there is no typed waiting-order reason, release date or timed return. No Parts/Customer/Access window category is inferred from a title or a boolean.
+
+A drop opens **Move this visit?** with current/proposed times, crew and the site-readiness warning. The existing booking commands, policy checks, expected versions and uncertain-save recovery are unchanged. **Move or reassign** is the non-drag alternative. Failed reads show Unknown and disable moves; a denied source removes retained records. The four count tiles are removed and Scheduling views use the shared collapsed side menu. Suggestions and Map remain out of scope. [Build evidence](../testing/evidence/service-planner-build/README.md) separates execution, visual comparison, owner acceptance and deployment.
+
 ## What it does
 
 - Each unassigned demand card in the planner offers **Plan visit**. It opens a panel showing the exact work order, the authorised scope revision and the site timezone.

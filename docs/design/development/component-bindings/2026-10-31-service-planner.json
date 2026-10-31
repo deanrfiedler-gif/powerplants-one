@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "planner": {
+      "states": [
+        {
+          "id": "pl01-accepted-host",
+          "label": "PL-01 accepted workspace host",
+          "description": "Day/Week, native holds, missing reasons, tray/44 px strip, failed/denied read, drop comparison and phone sheet. See service-planner.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
+      ],
+      "used_on": [
+        "route:/schedule",
+        "scope:PL-01"
+      ],
+      "gaps": [
+        {
+          "id": "planner-pl01-accepted-review",
+          "expected": "Paired application comparison against accepted PL-01 frames and owner/device review.",
+          "actual": "Implementation in draft; historical review stale. Source-owned hold and form adaptations documented.",
+          "action": "Complete visual comparison and independent review; obtain separate owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "pl01-accepted-host",
+          "label": "PL-01 accepted workspace host",
+          "description": "Day/Week, native holds, missing reasons, tray/44 px strip, failed/denied read, drop comparison and phone sheet. See service-planner.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
+      ],
+      "used_on": [
+        "route:/schedule",
+        "scope:PL-01"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-pl01-accepted-review",
+          "expected": "Paired application comparison against accepted PL-01 frames and owner/device review.",
+          "actual": "Implementation in draft; historical review stale. Source-owned hold and form adaptations documented.",
+          "action": "Complete visual comparison and independent review; obtain separate owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "pl01-accepted-host",
+          "label": "PL-01 accepted workspace host",
+          "description": "Day/Week, native holds, missing reasons, tray/44 px strip, failed/denied read, drop comparison and phone sheet. See service-planner.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
+      ],
+      "used_on": [
+        "route:/schedule",
+        "scope:PL-01"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-pl01-accepted-review",
+          "expected": "Paired application comparison against accepted PL-01 frames and owner/device review.",
+          "actual": "Implementation in draft; historical review stale. Source-owned hold and form adaptations documented.",
+          "action": "Complete visual comparison and independent review; obtain separate owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "pl01-accepted-host",
+          "label": "PL-01 accepted workspace host",
+          "description": "Day/Week, native holds, missing reasons, tray/44 px strip, failed/denied read, drop comparison and phone sheet. See service-planner.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
+      ],
+      "used_on": [
+        "route:/schedule",
+        "scope:PL-01"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-pl01-accepted-review",
+          "expected": "Paired application comparison against accepted PL-01 frames and owner/device review.",
+          "actual": "Implementation in draft; historical review stale. Source-owned hold and form adaptations documented.",
+          "action": "Complete visual comparison and independent review; obtain separate owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "pl01-accepted-host",
+          "label": "PL-01 accepted workspace host",
+          "description": "Day/Week, native holds, missing reasons, tray/44 px strip, failed/denied read, drop comparison and phone sheet. See service-planner.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
+      ],
+      "used_on": [
+        "route:/schedule",
+        "scope:PL-01"
+      ],
+      "gaps": [
+        {
+          "id": "fields-pl01-accepted-review",
+          "expected": "Paired application comparison against accepted PL-01 frames and owner/device review.",
+          "actual": "Implementation in draft; historical review stale. Source-owned hold and form adaptations documented.",
+          "action": "Complete visual comparison and independent review; obtain separate owner acceptance.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

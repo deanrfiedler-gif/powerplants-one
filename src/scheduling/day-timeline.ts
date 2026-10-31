@@ -212,9 +212,13 @@ export function visitState(a: {
   pack_requirement: string;
   scope_review_required: boolean;
   policy_impacts?: { held: boolean }[];
+  dispatch_hold?: boolean;
+  dispatch_readiness?: { dispatch_hold: boolean } | null;
 }): VisitState {
   if (a.status === "Cancelled") return { kind: "cancelled", short: "Cancelled", long: "Cancelled · no reservation" };
   if (a.status !== "Confirmed") return { kind: "proposed", short: "Proposed", long: "Proposed · no crew reserved" };
+  if (a.dispatch_readiness?.dispatch_hold ?? a.dispatch_hold)
+    return { kind: "attention", short: "Dispatch held", long: "Dispatch held" };
   if (a.policy_impacts?.some((x) => x.held))
     return { kind: "attention", short: "Policy hold", long: "Scheduling policy hold" };
   if (a.scope_review_required) return { kind: "attention", short: "Scope review", long: "Scope review required" };
