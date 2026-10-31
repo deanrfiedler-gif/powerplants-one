@@ -51,8 +51,8 @@ async function dataCounts() {
 }
 async function visit(
   n = 1,
-  start = "2026-11-20T00:00:00Z",
-  end = "2026-11-20T02:00:00Z",
+  start = "2031-11-21T00:00:00Z",
+  end = "2031-11-21T02:00:00Z",
 ) {
   const { p, w, r } = await draft(n);
   const id = randomUUID();
@@ -202,8 +202,8 @@ test("Work order register preserves draft visit review and selects earliest acti
   const later = await visit();
   const earlier = await visit(
     1,
-    "2026-11-19T00:00:00Z",
-    "2026-11-19T02:00:00Z",
+    "2031-11-20T00:00:00Z",
+    "2031-11-20T02:00:00Z",
   );
   const d = await readWorkOrderRecord(p, wo());
   assert.equal(d.work_order.next_visit?.id, earlier);

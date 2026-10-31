@@ -1,0 +1,16 @@
+---
+title: Preventive coverage for live-clock test fixtures
+date: 2026-10-31
+---
+
+Owner: Codex for Dean. Separate [PR #797](https://github.com/deanrfiedler-gif/powerplants-one/pull/797), branch `codex/fixture-expiry-coverage`, follows the merged Conversations repair #777 at `6e939bf0b937fc05f9e477d1cd14f8838c92fd9a`. Dean explicitly requested investigation, safeguards, regression tests and independent review. Its detailed audit and maintenance limits are in the existing [ADR-0030 chapter](../decisions/ADR-0030-test-fixture-time-dependence.md#live-clock-fixture-coverage--31-october-2026).
+
+Two further genuine cancellation cliffs were found: work-order register visits on 19/20 November 2026, and the closed-visit database proposal on 21 December 2026. The positive dates move by 261 weeks to 20/21 November and 22 December 2031. Proposal creation itself accepts historical ordered dates; their subsequent cancellation requires a future start. No application guard changes.
+
+The existing P05 seed warning now runs alongside a source-aware inventory of 25 positive literals in 12 files: Conversations API/form inputs, cancellation fixtures, readiness expiry, policy effective dates and SUP-1 promise timing. Instant gates use UTC elapsed time; civil-date gates use Brisbane or Sydney as appropriate. Less than 90 days fails with source location and maintenance guidance. Missing/changed selection counts and stale/duplicated explicit exclusions fail too. Negative, historical, retained-upgrade and explicit-pricing fixtures remain unchanged, including customer ETAs from 3 November 2026. No migration, runtime, dependency, workflow or infrastructure changes.
+
+Validation: 18 focused guard tests pass, including the #777 Brisbane rollover, both newly found cliffs restored in memory, exact runway boundaries, Sydney DST, browser form selection and coverage-loss/negative controls. A full unit run with concurrency limited to two passed **1,300/1,300**; the unrestricted attempt ended without a complete summary and is not counted as full proof. Focused ESLint passed. Initial type checking found a new helper narrowing error, corrected before final verification. Final TypeScript, foundation, naming and status-source checks passed, as did 25 documentation regression tests. Published-head CI remains separate and pending.
+
+Runtime: Node 24.22.1 (within the repository's Node range), npm 11.9.0 (repository pin 11.19.0); install used `--engine-strict=false --ignore-scripts`, with no lockfile change. Local database, HTTP and browser suites were not run: this environment has no PostgreSQL installation or configured disposable database. Production build was not run for this test-only correction. CI must prove the changed database cases before merge. No business acceptance or deployment is claimed.
+
+Independent review by Claude is required and remains pending; the PR handover names the exact published head and asks for a COMMENT review. Keep draft until review, all CI and the other autonomous merge gates pass. This source inventory is bounded; new files/validation paths, indirect dates, embedded SQL and relative-date midnight races still need review. It emits warnings when the unit suite runs, not on a separate timer. Hosted demo seed receipts remain outside scope.
