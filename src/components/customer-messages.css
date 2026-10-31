@@ -1,0 +1,700 @@
+/* EC-04 uses shared workspace tokens, menu and register controls. */
+#ppo-customer-messages,
+#ppo-email-inbox {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--surface-white);
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+}
+#ppo-customer-messages .mw-content,
+#ppo-email-inbox .mw-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+#ppo-customer-messages .mw-live,
+#ppo-email-inbox .mw-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#ppo-customer-messages .mw-menu-item,
+#ppo-email-inbox .mw-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--ink);
+  border-radius: 6px;
+}
+#ppo-customer-messages .mw-menu-item[aria-current="page"],
+#ppo-email-inbox .mw-menu-item[aria-current="page"] {
+  background: var(--ppo-shell-selected);
+  color: var(--ppo-shell-link);
+}
+.cm-menu-count {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cm-mailbox-status {
+  padding: 12px;
+  color: var(--text-secondary);
+}
+.cm-toolbar {
+  min-height: 60px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.cm-toolbar > span {
+  margin-left: auto;
+  color: var(--text-secondary);
+}
+.cm-simulated,
+.cm-filter-summary {
+  margin: 0;
+  padding: 8px 20px;
+  color: var(--text-secondary);
+  background: var(--ppo-shell-surface);
+  font-size: 12px;
+}
+.cm-desktop-grid .ppo-register-table {
+  min-width: 1100px;
+}
+.cm-desktop-grid .ppo-register-table td {
+  height: 48px;
+}
+.cm-message-link {
+  color: var(--ppo-shell-link);
+  background: none;
+  border: 0;
+  text-align: left;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.cm-message-link:hover {
+  text-decoration: underline;
+}
+.cm-phone-list,
+.cm-phone-more {
+  display: none;
+}
+.cm-read {
+  padding: 20px;
+}
+.cm-record-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-white);
+}
+.cm-record-tools > button {
+  margin-left: auto;
+}
+.cm-record {
+  display: grid;
+  grid-template-columns: minmax(280px, 46%) minmax(0, 54%);
+  min-height: calc(100dvh - 165px);
+}
+.cm-facts {
+  padding: 24px;
+  border-right: 1px solid var(--line);
+  background: var(--surface-white);
+  overflow-wrap: anywhere;
+}
+.cm-facts h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.cm-facts h3 {
+  margin: 28px 0 12px;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+.cm-facts p {
+  margin: 8px 0 20px;
+}
+.cm-facts small {
+  color: var(--text-secondary);
+}
+.cm-source-facts div {
+  margin: 8px 0;
+}
+.cm-source-facts dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cm-source-facts dd {
+  margin: 0;
+}
+.cm-information {
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--ppo-shell-selected);
+  font-size: 12px;
+}
+.cm-review {
+  margin: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-white);
+  min-width: 0;
+  align-self: start;
+}
+.cm-record-host {
+  background: var(--ppo-shell-surface);
+}
+.cm-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 4px 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cm-tabs .ppo-button {
+  border-radius: 0;
+  min-height: 44px;
+  border: 0;
+}
+.cm-tabs [aria-pressed="true"] {
+  color: var(--ppo-shell-link);
+  border-bottom: 2px solid var(--ppo-shell-link);
+}
+.cm-preview-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 18px 16px 12px;
+}
+.cm-preview-heading > span {
+  margin-left: auto;
+  color: var(--text-secondary);
+  background: var(--ppo-shell-selected);
+  border-radius: 4px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+.cm-preview-heading small {
+  width: 100%;
+  color: var(--text-secondary);
+}
+.cm-review code,
+.cm-dialog code {
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+.cm-email {
+  margin: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.cm-email[data-dimmed="true"] {
+  background: var(--ppo-shell-surface);
+  color: var(--text-secondary);
+}
+.cm-email dl {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 4px 8px;
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.cm-email dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.cm-email dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cm-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 16px;
+  line-height: 22px;
+}
+.cm-readiness,
+.cm-note,
+.cm-review > p {
+  display: block;
+  margin: 16px;
+}
+.cm-readiness p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.cm-note textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 6px;
+}
+.cm-actions {
+  display: flex;
+  gap: 8px;
+  margin: 16px;
+  flex-wrap: wrap;
+}
+.cm-template-link {
+  display: block;
+  margin: 20px 16px;
+}
+.cm-warning {
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--ppo-shell-selected);
+  margin: 12px 16px;
+}
+.cm-warning p {
+  margin: 6px 0;
+}
+.cm-fact-list {
+  padding: 16px;
+}
+.cm-fact-list dl > div {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+}
+.cm-fact-list dt {
+  color: var(--text-secondary);
+}
+.cm-fact-list dd {
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+.cm-history {
+  margin: 20px 20px 20px 40px;
+  padding: 0;
+}
+.cm-history li {
+  padding: 0 0 20px 8px;
+}
+.cm-history p {
+  margin: 4px 0;
+}
+.cm-classes {
+  padding: 20px;
+}
+.cm-classes h2 {
+  margin: 0 0 12px;
+}
+.cm-classes > label {
+  display: block;
+  margin: 12px 0;
+}
+.cm-classes .ppo-register {
+  margin-top: 12px;
+}
+.cm-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cm-dialog p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cm-dialog label,
+.cm-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cm-filters {
+  display: grid;
+  gap: 16px;
+}
+.cm-dialog input,
+.cm-dialog select,
+.cm-dialog textarea {
+  width: 100%;
+  min-height: 40px;
+  font: inherit;
+}
+.crm-r38-panel:has(.cm-dialog) {
+  width: min(560px, calc(100vw - 32px));
+  background: var(--surface-white);
+}
+.crm-r38-panel:has(.cm-dialog) > footer {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-customer-messages,
+  #ppo-email-inbox {
+    min-height: 0;
+    height: 100%;
+  }
+  .cm-toolbar,
+  .cm-desktop-grid {
+    display: none;
+  }
+  .cm-phone-list {
+    display: block;
+  }
+  .cm-phone-message {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+    text-align: left;
+    padding: 16px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--surface-white);
+    color: var(--ink);
+    font: inherit;
+  }
+  .cm-phone-message > strong {
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cm-phone-message > span,
+  .cm-phone-message small {
+    color: var(--text-secondary);
+  }
+  .cm-record-tools {
+    padding: 8px 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .cm-record {
+    display: block;
+    padding-bottom: 88px;
+  }
+  .cm-facts {
+    border: 0;
+    padding: 16px;
+  }
+  .cm-facts h3 {
+    margin-top: 20px;
+  }
+  .cm-review {
+    margin: 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+  }
+  .cm-preview-heading {
+    padding: 16px;
+  }
+  .cm-preview-heading code {
+    display: block;
+  }
+  .cm-email {
+    margin: 0 16px;
+  }
+  .cm-email dl {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 12px;
+  }
+  .cm-note textarea,
+  .cm-dialog input,
+  .cm-dialog select,
+  .cm-dialog textarea {
+    font-size: 16px;
+  }
+  .cm-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 64px;
+    z-index: 2;
+    background: var(--surface-white);
+    margin: 0;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .cm-actions:empty {
+    display: none;
+  }
+  .cm-actions > .ppo-button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .cm-withdraw {
+    display: none;
+  }
+  .cm-phone-more {
+    display: block;
+    margin: 16px;
+  }
+  .cm-phone-more summary {
+    min-height: 44px;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  .cm-phone-more a {
+    display: block;
+    padding: 12px 0;
+  }
+  .cm-classes {
+    padding: 16px;
+  }
+  .cm-classes .ppo-register-table {
+    min-width: 800px;
+  }
+  .crm-r38-panel:has(.cm-dialog) {
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: 0;
+    padding: 0;
+    border-radius: 12px 12px 0 0;
+  }
+  .crm-r38-panel:has(.cm-dialog) > header {
+    background: var(--ppo-shell-surface);
+  }
+  .cm-dialog > .ppo-button {
+    min-height: 48px;
+    width: 100%;
+  }
+}
+
+/* Explicit column geometry prevents the exact subject being squeezed by nowrap evidence. */
+#ppo-customer-messages .cm-desktop-grid .ppo-register-table {
+  table-layout: fixed;
+  width: 1570px;
+  min-width: 1570px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(1) {
+  width: 300px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(2) {
+  width: 150px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(3) {
+  width: 280px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(4) {
+  width: 190px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(5) {
+  width: 170px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(6) {
+  width: 170px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(7) {
+  width: 190px;
+}
+#ppo-customer-messages .cm-desktop-grid th:nth-child(8) {
+  width: 120px;
+}
+#ppo-customer-messages .cm-desktop-grid td {
+  height: 40px;
+  padding: 8px 12px;
+}
+#ppo-customer-messages .cm-desktop-grid td:first-child {
+  white-space: normal;
+  overflow-wrap: normal;
+}
+#ppo-customer-messages .cm-desktop-grid .cm-message-link {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cm-source-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+.cm-source-facts div {
+  margin: 0;
+}
+.crm-r38-panel:has(.cm-dialog) {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+  box-shadow: 0 12px 40px #24293833;
+}
+.crm-r38-panel:has(.cm-dialog)::backdrop {
+  background: #24293866;
+}
+.crm-r38-panel:has(.cm-dialog) > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--ppo-shell-surface);
+}
+.crm-r38-panel:has(.cm-dialog) > header h2 {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+}
+.crm-r38-panel:has(.cm-dialog) > header button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+}
+.crm-r38-panel:has(.cm-dialog) > .crm-r38-panel-body {
+  padding: 24px;
+  overflow: auto;
+}
+.cm-dialog .cm-warning {
+  margin: 0;
+}
+@media (max-width: 780px) {
+  .cm-record-tools {
+    display: none;
+  }
+  .cm-built-from {
+    display: none;
+  }
+  .crm-r38-panel:has(.cm-dialog) {
+    border: 0;
+    border-radius: 12px 12px 0 0;
+  }
+  .crm-r38-panel:has(.cm-dialog) > header {
+    flex-direction: row-reverse;
+    padding: 10px 16px;
+  }
+  .crm-r38-panel:has(.cm-dialog) > header h2 {
+    flex: 1;
+    text-align: center;
+    padding-right: 40px;
+  }
+  .crm-r38-panel:has(.cm-dialog) > .crm-r38-panel-body {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 780px) {
+  .cm-recipient-context {
+    display: none;
+  }
+  .cm-facts {
+    padding: 16px 16px 12px;
+  }
+  .cm-facts h2 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .cm-facts > p {
+    margin: 8px 0 12px;
+    font-size: 12px;
+  }
+  .cm-tabs {
+    gap: 4px;
+  }
+  .cm-preview-heading {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+  .cm-preview-heading strong {
+    font-weight: 400;
+  }
+  .cm-preview-heading code {
+    display: inline;
+  }
+  .cm-email {
+    border: 0;
+    border-radius: 0;
+  }
+  .cm-email dl {
+    padding: 8px 0 12px;
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+  .cm-body {
+    padding: 16px 0;
+  }
+}
+
+.cm-toolbar {
+  gap: 8px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+.cm-toolbar > .cm-filters {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  align-items: center;
+}
+.cm-toolbar .cm-filters > label {
+  font-size: 0;
+  gap: 0;
+  min-width: 0;
+  flex: 1;
+}
+.cm-toolbar .cm-filters > label:first-child {
+  flex: 1.3;
+}
+.cm-toolbar .cm-filters input,
+.cm-toolbar .cm-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  font:
+    400 14px/20px PPOShellRoboto,
+    Roboto,
+    Verdana,
+    sans-serif;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px;
+  background: var(--surface-white);
+  color: var(--ink);
+}
+.cm-toolbar > span {
+  font-size: 12px;
+}
+
+/* Override shell button/label defaults only for these native register consumers. */
+#ppo-customer-messages .cm-toolbar .cm-filters label {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  height: 40px;
+}
+#ppo-customer-messages .cm-message-link {
+  min-height: 0;
+}
+@media (max-width: 780px) {
+  #ppo-customer-messages .cm-phone-message {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

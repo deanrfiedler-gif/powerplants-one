@@ -1,54 +1,35 @@
-# Communication draft, approval and delivery review — design reference
+# Customer messages — EC-04 working page contract
 
-Stable entry: `scope:EC-04`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/email/drafts`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+<!-- versioning: git; committed history is authoritative -->
+
+Stable scope: `scope:EC-04`. Owner: Dean Fiedler. Application: `/email/customer-messages` and `/email/customer-messages/[id]`. Source design: owner accepted 22 October 2026, named version "Customer messages — accepted". Application visual review: **Needs review**; no review fingerprint is assigned.
 
 ## Purpose and task
 
-Implement communication drafting, review, exact attachments, delivery status and history.
-
-1. Prepare the message and verify recipient scope
-2. Review exact attachment revisions and any required approval
-3. Track actual sending and delivery outcomes separately
+Review the exact customer-safe message prepared by native Supply (M1/M2), then confirm as a named authorised sender, withdraw before hand-over, or reconcile an unknown simulated outcome. No provider, mailbox or customer is contacted. Parent CRM-03, DOC-05, OUT-17, TR-03, PRJ-07, SCM-07, SCM-08, SVC-05 and NFR-11 remain unchanged; AT-25/AT-36 acceptance is separate.
 
 ## Desktop
 
-Accepted design: the [Customer messages design decision](../../../decisions/customer-messages-figma-design.md) of 22 October 2026 covers the outbound queue for customer notices at desktop, tablet and phone, with 28 icon-free captures in [design r01](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md). Departures D1–D8 and answers Q1–Q4 are recorded there: a Customer messages group in the Email side menu (proposed route `/email/customer-messages`, D1), a register of messages with plain states, a snapshot with the recipient, the source facts and the exact email, Confirm and send through a dialog that names the sender, a second person to approve M4, held, outcome-unknown and failed follow-ups without a resend, and the class switches. Nothing new is built; the S2 API remains the only implementation.
+Follow [accepted D1–D8/Q1–Q4](../../../decisions/customer-messages-figma-design.md) and [28 retained captures](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md). At 1440 use the existing Sales Inbox rail, 240 px Email side menu, compact register toolbar and shared RegisterTable. The snapshot replaces the list content with recipient/source facts left and the exact message/review card right. Full record uses that same layout. At 1024 the shared secondary menu collapses; the rail retains its current shared state (expanded in the recorded capture), a recorded difference from the accepted icon rail; the grid retains horizontally scrollable columns. No page IDs are added to shared CSS lists; SecondaryMenuFrame opts in with `data-ppo-workspace="shared"`.
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+Message, Class, State, Customer, To, Source, Prepared and Owner use bound facts. To send includes Prepared; Needs follow-up includes Held/Failed/OutcomeUnknown. All messages includes terminal states. Counts, search, class/customer/date filters cover the disclosed 200-candidate read window only. Source access is checked for every returned row. No M3/M4 examples are fabricated.
 
 ## Mobile
 
-Accepted design: captures 13–21 in [design r01](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md): the compact phone header (D8, since adopted for every phone page), the To send and Needs follow-up lists at 390 and 320, the message with one full-width Confirm and send in a sticky bar, and the confirm, view and filter sheets.
-
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+At 390 and 320 use the shared compact header with Choose view and combined search/filter behaviour. The list becomes labelled rows; exact records stack flush sections. The main confirmation/reconcile control is full-width and at least 48 px in a fixed action bar above phone navigation. Confirmation and filter dialogs become sheets with white bodies and grey headings. More exposes withdrawal separately; no resend is offered. Longer source/time/hash facts wrap rather than clip. Keyboard, focus return and 200% zoom need explicit evidence.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
+Reuse SecondaryMenuFrame, shared phone header, Button/ButtonLink, RegisterTable/Chip/Footer/Empty, WorklistPanel and ErrorNotice/useResource. The dedicated [consumer binding](../component-bindings/2026-10-31-customer-messages.md) records fixtures, states and unresolved alignment. Loading or failed reads expose no stale actions/counts; denied sources are unavailable. Confirmation restates recipient, subject, exact content check, template and signed-in sender. M1–M3 note is optional; Reviewed approval note, withdrawal/reconciliation and switch reasons are required. Native command checks remain authoritative.
 
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+Held/Failed retain prepared content dimmed with follow-up primary. OutcomeUnknown offers Check Sent Items only. Uncertain saves retain the original operation across reloads within this tab and offer Check original result; they never generate a second operation. Switches are Off/Synthetic only and versioned. Restoring a grant or switching on does not resend a held message.
 
 ## Visual references
 
-Accepted Figma design: [Customer messages design r01 captures](../../../reference/ui/email-calendar/customer-messages-design-r01/README.md) (28 icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/customer-messages-figma-design.md). No HTML reference exists.
+Desktop: captures 01–04 and 06–11; tablet: 12; phone: 13–21; refusal/read states: 22–28. The images are retained design compositions, not application evidence. No HTML reference exists. Phone follow-up records, classes and 200% zoom are not drawn; their adaptations remain unaccepted.
 
 ## Behaviour, handovers and verification
 
-Accepted Figma design: see the [decision](../../../decisions/customer-messages-figma-design.md). SMS, M3 visit confirmations, correction messages, template publishing, My Work follow-up cards, phone records for M4 and follow-up messages, phone states and 200% zoom are not drawn. The named Figma version "Customer messages — accepted" was saved on 22 October 2026.
+The [API contract](../../../contracts/customer-communications.md#ec-04-customer-messages-page) owns duties, versions, source rules and recovery. Demand handovers use material readiness, people use their existing records, follow-ups use `/work/[id]`. Template management is unbuilt on the integrated base: show the retained template version/hash and unavailable handover. No guessed work-order relation, line counts, template publisher or mailbox status is displayed.
 
-The draft User Guide `guide.ec.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
-
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
-
-
-## S3 backend consumer contract — 24 October 2026
-
-[D-025 S3](../../../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) supplies native dispatch/delay drafts and versioned customer delivery evidence in PR #695. The source API exposes exact movement/outstanding quantities, fictional carrier/platform/tracking fields, the named contact, explicit customer ETA, immutable message-source hashes and sent-baseline evidence. Native commands use Demand versions and actor-private original-operation recovery; a sender still confirms the fixed CUS-EMAIL content.
-
-Future controls must distinguish source evidence from email content and explicit customer ETA from supplier dates. Show SourceChanged, SenderUnauthorised and PriorOutcomeUnknown as held follow-up states; restoring a grant or editing a source does not send a held message. Withdrawal, source correction/reconciliation, fresh preparation and named confirmation are separate actions. The tracking URL is fictional. No new visible surface, accepted screenshot, UI wiring, visual review, business acceptance or deployment is claimed by this backend work.
+Guides `guide.ec.04` and both route guides describe the same actual workflow and stay Draft. [Execution and comparison evidence](../../../testing/evidence/customer-messages/README.md) separates functional proof, inspected visual comparison, unresolved design differences, owner acceptance and deployment. No accepted visual review or production readiness is claimed.

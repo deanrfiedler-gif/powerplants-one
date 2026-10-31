@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-**Owner:** Dean Fiedler. **Status:** S2 merged in PR #569. S3 is being implemented under the 24 October authority recorded in [D-025](../decisions/customer-communications-d025.md#24-october-2026--s3-synthetic-implementation-authority), in draft PR #695. Review, executed business acceptance and deployment remain separate. Nothing here reaches a provider, mailbox or customer.
+**Owner:** Dean Fiedler. **Status:** S2 merged in PR #569. S3 merged in PR #695 on 29 October 2026 under the 24 October authority recorded in [D-025](../decisions/customer-communications-d025.md#24-october-2026--s3-synthetic-implementation-authority). Review, executed business acceptance and deployment remain separate. Nothing here reaches a provider, mailbox or customer.
 
 ## Boundary and authority
 
@@ -29,7 +29,7 @@ All endpoints start with `/api/v1` and use the existing session, origin, JSON, n
 | Method and path | Result |
 |---|---|
 | GET `/customer-communications?organisation_id=` or `?project_id=` or `?demand_id=` | The customer, project or order timeline: exactly one filter, newest first, at most 200 rows. |
-| GET `/customer-communications/queue[?owner=me]` | The outbound queue: Prepared messages waiting for a named sender, and Held, Failed and OutcomeUnknown messages with their follow-up. |
+| GET `/customer-communications/queue[?owner=me][&view=all]` | Default: Prepared, Held, Failed and OutcomeUnknown. Explicit `view=all` includes completed states, newest preparation first. Each read examines at most 200 candidates and returns only currently source-readable rows; counts and client filters describe that bounded window, never the whole customer population. |
 | GET `/customer-communications/:id` | One message: exact subject and body, bound facts, template version and hash, every ledger event with its display state, and follow-ups. |
 | POST `/customer-communications/:id/confirm` | `{ operation_id, schema_version, reason, expected_version, content_hash }`. The named sender confirms the exact content hash: Prepared to Queued. If the switch, preference or recipient no longer allows sending, the message is Held with a follow-up instead. Refuses `ContentChanged`, `MessageNotPrepared`, `IndependentSenderRequired`, `VersionConflict`. |
 | POST `/customer-communications/:id/withdraw` | `{ …, expected_version }`. Prepared or Held to Withdrawn; refuses `MessageNotWithdrawable` once confirmed. |
@@ -38,6 +38,20 @@ All endpoints start with `/api/v1` and use the existing session, origin, JSON, n
 | GET, POST `/people/:id/notice-preferences` | `?company_id=`; POST `{ …, company_id, message_class, preference: "Allowed" \| "DoNotNotify", expected_version }`. The reason records why. With nothing recorded, the basis is `NamedRecipient`. |
 | GET, POST `/customer-email-templates` | `?company_id=`: current publication, history and proposals per class. POST `{ …, company_id, message_class, definition }` proposes a CUS-EMAIL definition. |
 | POST `/customer-email-templates/proposals/:id/publish` | `{ …, definition_hash, approval_note }`: publishes the exact proposal as the next version for its company and class. Refuses `IndependentPublisherRequired`, `DefinitionChanged`, `AlreadyPublished`. |
+
+## EC-04 Customer messages page
+
+The accepted EC-04 composition is implemented at `/email/customer-messages` and `/email/customer-messages/[id]`, with To send, Needs follow-up, All messages and Message classes in the Email side menu. The existing Sales Inbox rail label stays. Personal mailbox status belongs only to Inbox. This is synthetic prototype code; it is not live sending, business acceptance or deployment.
+
+Queue rows add the stored `customer.name`, company identity and latest ledger evidence. Detail reads add the signed-in sender name, current notice preference, read-time hold result and action availability derived through the existing `senderContext`. Confirmation remains conditional on Prepared content and independent sender for Reviewed records; withdraw and reconcile retain their native state rules. Availability is advisory and every command repeats its authority/version/source checks. These fields grant no capability. Switch reads add `can_switch` under the existing company duty.
+
+The page renders only stored facts, not the Figma story's inferred lines or work-order linkage. M1/M2 navigate to their exact Supply Demand through material readiness. M3/M4 messages appear only when real source-readable records exist. Class rows default to M1/M2, adding other classes represented in the readable window. The from address is the explicit synthetic placeholder `customers@powerplants.example`, not configured mailbox evidence. Template management has no route on the integrated base; the page shows its stored template version/hash and an unavailable handover, without authoring templates here.
+
+Confirm and send always opens a named confirmation dialog/sheet with recipient, exact subject, content hash and template version. M1–M3 sending notes are optional: an omitted note uses the explicit standard confirmation reason, satisfying the native required command reason. A Reviewed message requires an approval note. Withdrawal, reconciliation and class switches require reasons. Held and failed content remains visible and dimmed; owned follow-up is primary and there is no resend. Sent is always simulated and delivery remains unconfirmed without positive evidence.
+
+Commands retain their exact original operation, fields and expected version in actor/workspace/target-scoped session storage before submission. A network, unreadable-response or server failure retains that original; Check original result replays it through the same native actor-private receipt path. Once uncertain, a later refusal cannot erase the original. Storage failure blocks submission. Reconcile is distinct: it resolves an existing OutcomeUnknown communication through synthetic Sent Items, never a fresh confirmation. Outstanding/failed reads hide obsolete actionable details and counts; refresh is explicit.
+
+Functional proof and visual comparison are recorded separately in [EC-04 evidence](../testing/evidence/customer-messages/README.md). The source design, implementation review, owner acceptance and deployment are separate statuses.
 
 ## Template definition
 

@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { hasPermission } from "../platform/permissions";
 import { transaction } from "../platform/database";
 import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
@@ -76,6 +77,7 @@ export async function readMessageClassSwitches(p: Principal, query: Record<strin
     ).rows;
     return {
       company_id: company,
+      can_switch: await hasPermission(c, p, "customer_message.switch", company),
       channel: "Synthetic",
       classes: messageClasses.map((cls) => {
         const r = rows.find((x) => x.message_class === cls);

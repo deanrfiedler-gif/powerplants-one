@@ -1,0 +1,14 @@
+{
+  "id": "customer-message-record",
+  "route": "/email/customer-messages/[id]",
+  "scope": "#ppo-customer-messages",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/email-calendar/customer-messages-design-r01/PPO-CustomerMessages-02-Desktop-To-Send-M1-Exact-Message-r01.png",
+  "sha256": "93667b8d9e45c14323f7c84cec1c3feabc4c39c1d46e7a3e1480b9aecdeecce0",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/customer-messages.spec.ts",
+  "application_proof": "tests/browser/customer-messages.spec.ts",
+  "authority": "Accepted EC-04 design inputs only; application review and owner acceptance remain separate.",
+  "adaptations": "docs/testing/evidence/customer-messages/README.md"
+}
