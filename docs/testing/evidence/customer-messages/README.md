@@ -9,7 +9,7 @@ Owner: Dean Fiedler. Implementer and capture inspector: Codex, 31 October 2026. 
 | Unit | `node --import tsx --test tests/unit/customer-communications.test.ts tests/unit/customer-messages-ui.test.ts` | 11 passed |
 | Native database | Existing S2 suite, existing S3 suite, new EC-04 suite; serial, 600000 ms local test deadline | 9 + 13 + 1 passed |
 | HTTP | `tests/http/customer-communications.test.ts` against the task server | 3 passed |
-| Browser | `tests/browser/customer-messages.spec.ts`, Chromium, one worker, task server port 3224 | 8 passed, including phone More and the 48 px sticky action |
+| Browser | `tests/browser/customer-messages.spec.ts`, Chromium, one worker, task server port 3224 | 8 passed in the original report, including phone More and the 48 px sticky action; project selection was not recorded, so this is not proof of both Playwright projects |
 | Repository | Required typecheck, lint, studio, foundation, naming and status checks | Typecheck, full lint plus final changed-file lint, studio, foundation, naming and status passed |
 
 Real `npm ci` succeeded on Node 24.22.2/npm 11.19.0 without engine override or a junction. No dependency, migration, capability or grant was added. Native tests use only `ppo_synthetic_test` in a task-owned loopback PostgreSQL cluster on port 55484. The application uses `PPO_PORT=3224`. No production or hosted-demo environment was used.
@@ -48,3 +48,9 @@ Additional inspected desktop states: [held](captures/held-1440.png), [failed](ca
 ## Acceptance and deployment
 
 Functional proof: focused synthetic proof as listed above; the complete eight-scenario run passed after the capture-write correction, followed by a passing focused capture refresh for the Message owner label. Application visual review: Codex inspection with differences recorded, independent review pending, **no accepted fingerprint**. Owner acceptance: accepted source design only; no application acceptance. Deployment: not performed. The draft PR still requires Claude's `[REVIEWED]` on its exact final head and every CONTRIBUTING merge gate.
+
+## Phone refresh follow-up — 1 November 2026
+
+[Claude’s review of #811](https://github.com/deanrfiedler-gif/powerplants-one/pull/811#pullrequestreview-5724367416) ran 26 cases: 25 passed, with EC04-B05 failing on mobile because the record toolbar was hidden. The same failure reproduced using parent #804’s component. Those results used Chrome for Testing 153.0.8010.12 and a temporary configuration without warm-up/globalSetup, not the reviewed browser setup. They do not establish both-project success for the original eight-case report.
+
+The correction hides only the phone toolbar’s navigation links, keeping the existing Refresh message button and its native reload/disabled behavior. EC04-B05 is unchanged. Fresh browser execution and 390/320 px visual comparison remain required; historical captures are unchanged. No owner acceptance or deployment is claimed.
