@@ -2808,13 +2808,16 @@
     },
     {
       "key": "scope:SV-07",
-      "title": "Unresolved findings and follow-up worklist",
+      "title": "Findings and follow-up",
       "kind": "scope",
       "module": "SV",
-      "summary": "Extend existing owned remaining-work records into a consolidated unresolved-findings, recurrence and follow-up worklist.",
+      "summary": "Review five native source types, assign an owned next action and inspect permitted failed-check recurrence without closing sources.",
       "path": "/service/findings",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/service/findings/page.tsx",
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx"
       ],
       "guide_key": "guide.sv.07",
       "design_path": "docs/design/development/pages/scope-sv-07.md",
@@ -2833,11 +2836,13 @@
       "dependencies": [
         "docs/decisions/findings-figma-design.md",
         "docs/decisions/service-findings-backend.md",
-        "docs/contracts/service-findings.md"
+        "docs/contracts/service-findings.md",
+        "src/service/findings/reads.ts",
+        "src/service/findings/recurrence.ts"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Focused verification in progress; see PR evidence",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2846,7 +2851,8 @@
       "related_keys": [
         "route:/service/reports/[id]",
         "route:/service/reports",
-        "scope:SV-06"
+        "scope:SV-06",
+        "route:/service/findings"
       ],
       "reviewer": null
     },
@@ -15936,6 +15942,51 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues"
+      ]
+    },
+    {
+      "key": "route:/service/findings",
+      "title": "Findings and follow-up",
+      "kind": "route",
+      "module": "Unassigned",
+      "summary": "Review five native source types, assign an owned next action and inspect permitted failed-check recurrence without closing sources.",
+      "path": "/service/findings",
+      "source_paths": [
+        "src/app/(business)/service/findings/page.tsx",
+        "src/components/service-findings.tsx",
+        "src/components/service-findings-action.tsx"
+      ],
+      "guide_key": "guide.route-service-findings",
+      "design_path": "docs/design/development/pages/route-service-findings.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-02-Desktop-Snapshot-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-03-Desktop-Assign-Next-Action-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-04-Desktop-Recurrence-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-06-Phone-List-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-07-Phone-Finding-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-08-Phone-320-Finding-r01.png",
+        "docs/reference/ui/service/findings-design-r01/PPO-Findings-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/contracts/service-findings.md",
+        "docs/decisions/findings-figma-design.md",
+        "src/service/findings/reads.ts",
+        "src/service/findings/recurrence.ts"
+      ],
+      "scope_status": "New source; editorial review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Focused verification in progress; see PR evidence",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SV-07"
       ]
     }
   ]

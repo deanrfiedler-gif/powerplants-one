@@ -1,0 +1,26 @@
+diff --git a/src/components/report-register.tsx b/src/components/report-register.tsx
+index 156b92e0..c4300264 100644
+--- a/src/components/report-register.tsx
++++ b/src/components/report-register.tsx
+@@ -1,4 +1,5 @@
+ "use client";
++import { FindingsMenu } from "./service-findings-menu";
+ import { Fragment, useRef, useState } from "react";
+ import Link from "next/link";
+ import {
+@@ -166,6 +167,7 @@ export function ReportListScreen() {
+       message="Synthetic reports. Nothing is sent to customers."
+       menu={
+         <nav aria-label="Report queues">
++          <h2>Service reports</h2>
+           {reportQueues.map((item) => (
+             <Fragment key={item.id}>
+               {"group" in item && <h2>{item.group}</h2>}
+@@ -188,6 +190,7 @@ export function ReportListScreen() {
+               </button>
+             </Fragment>
+           ))}
++          <FindingsMenu />
+         </nav>
+       }
+     >

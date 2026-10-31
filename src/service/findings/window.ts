@@ -13,6 +13,12 @@ export async function candidateWindow(
   c: QueryClient,
   p: Principal,
   f: ReturnType<typeof findingQuery>,
+  recurrence?: {
+    equipment: string;
+    check: string;
+    procedure: string;
+    at: string;
+  },
 ) {
   const field = `(${scopeSql("a.company_id", "a.site_id", "field.read.own")}
     AND EXISTS(SELECT 1 FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id)
@@ -30,6 +36,7 @@ export async function candidateWindow(
     WITH sources AS (${candidateSql}), contexts AS (
       SELECT f.*, COALESCE(d.host_id,i.appointment_id,report.appointment_id,CASE WHEN f.source='schedule' THEN f.parent_id END) AS appointment_id,
         COALESCE(ib.asset_id,b.asset_id) AS asset_id,
+        d.check_key AS fault_bound_check,
         d.reference AS defect_reference,d.title AS defect_title,d.source_attempt_id,ir.evaluation,
         i.state AS incident_state,i.reporter_id,i.company_id AS incident_company,i.site_id AS incident_site,i.work_order_id AS incident_work_order,
         ia.instruction,report.display_number AS report_reference,report.company_id AS report_company,report.site_id AS report_site,
@@ -69,6 +76,17 @@ export async function candidateWindow(
         WHEN 'schedule' THEN true
         ELSE ${scopeSql("a.company_id", "a.site_id", "report.read")} AND ${scopeSql("f.report_company", "f.report_site", "report.read")}
           AND (${scopeSql("f.report_company", "f.report_site", "service.work_order.edit")} OR ${field}) END
+      AND ($10::uuid IS NULL OR (f.source='inspection' AND EXISTS (
+        SELECT 1 FROM ppo.inspection_defect_attempts dl
+        JOIN ppo.inspection_attempts obs ON (obs.workspace_id,obs.id)=(dl.workspace_id,dl.attempt_id)
+        JOIN ppo.service_inspection_bindings ob ON (ob.workspace_id,ob.attempt_id)=(obs.workspace_id,obs.id)
+        JOIN ppo.service_inspection_templates ot ON (ot.workspace_id,ot.id)=(ob.workspace_id,ob.template_id)
+        JOIN ppo.inspection_results ores ON (ores.workspace_id,ores.attempt_id,ores.check_key)=(obs.workspace_id,obs.id,f.fault_bound_check)
+        JOIN LATERAL jsonb_array_elements(obs.plan) WITH ORDINALITY pc(definition,ordinality) ON pc.definition->>'key'=ores.check_key
+        WHERE dl.workspace_id=$1 AND dl.defect_id=f.id AND ob.asset_id=$10 AND ot.procedure_key=$13
+          AND ot.checks->((pc.ordinality-1)::int)->>'key'=$11 AND ores.evaluation='Fail'
+          AND obs.occurred_at < $12::timestamptz AND obs.occurred_at >= $12::timestamptz - interval '2160 hours'
+      )))
       AND ($4::uuid IS NULL OR a.company_id=$4) AND ($5::uuid IS NULL OR a.site_id=$5) AND ($6::uuid IS NULL OR task.owner_id=$6)
       AND strpos(lower(concat_ws(' ',a.display_number,
         CASE f.source WHEN 'inspection' THEN a.display_number||' · '||f.defect_reference
@@ -90,6 +108,10 @@ export async function candidateWindow(
         f.q,
         f.limit + 1,
         f.offset,
+        recurrence?.equipment ?? null,
+        recurrence?.check ?? null,
+        recurrence?.at ?? null,
+        recurrence?.procedure ?? null,
       ],
     )
   ).rows;

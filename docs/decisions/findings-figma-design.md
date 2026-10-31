@@ -157,6 +157,14 @@ A row opens the large snapshot, with previous and next.
   - 200% zoom, reviewed separately.
 - **Data in the frames:** the findings, people, sites, equipment, readings and times are synthetic. They are not operational records.
 
+## Build decisions — 31 October 2026
+
+Dean explicitly requested the native SV-07 build on the already merged findings backend. Earlier statements that no read or next-action service exists describe the 18 October design checkpoint; the [native contract](../contracts/service-findings.md) supersedes those prerequisites as implementation evidence, without changing the accepted reference bytes.
+
+Codex decision under the standing order: retain **Closed findings**, with no date cutoff, rather than **Closed, last 30 days**. This matches the existing source-state read, keeps older source history reachable and avoids confusing an update timestamp with a closure date. Counts remain the authorised candidate window, never all-history totals. Reversal requires an explicit closure-date predicate and matching label/tests.
+
+Due this week uses Monday through Sunday in each site's civil time. Ready to close is the completed-follow-up view, qualified as requiring source review rather than inventing source closure readiness. Recurrence compares native failed checks on the same equipment within 90 days; sources without a stable fault key remain explicitly unassessed. D7 and the Escalations group remain outstanding for SV-08. These implementation choices are not Dean's visual acceptance.
+
 ## 6. Audit and polish
 
 Dean asked to "give all the pages an audit and polish". Claude checked the seven new proposal pages together:
