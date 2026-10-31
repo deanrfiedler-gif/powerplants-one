@@ -38,6 +38,30 @@ The [execution summary](execution.json) records application source `2ae0b19796f8
 
 The unchanged control is `6e939bf0`; `src`, `scripts` and `db` have no differences from current main `1402c87b`. The final screenshots were compared with the retained accepted captures. Developer comparison identified and corrected clipped toolbar labels. Shared fallback icons are used; the browser blocks Font Awesome network requests. This does not constitute independent visual acceptance.
 
-Not run: all other module database/HTTP/browser suites, a complete native browser command journey, a manual screen-reader audit or 200% browser zoom. The full unit suite was not repeated after these scoped review fixes; its previous baseline failures remain in the earlier execution record. GitHub CI was still queued/pending and fresh Claude review is required for the pushed head.
+At that execution, the complete native browser journey and 200% zoom were not run; the supplemental proof below closes those two gaps. Other module database/HTTP/browser suites and a manual screen-reader audit remain unrun. The full unit suite was not repeated after these scoped review fixes; its previous baseline failures remain in the earlier execution record. GitHub CI was still queued/pending and fresh Claude review is required for the pushed head.
 
 The isolated PostgreSQL 16.15 cluster uses only `ppo_synthetic_test` on port 55476; the compiled application uses port 3476. No migration, capability, grant, dependency, operational data or external integration was introduced. Independent review, owner acceptance and deployment remain pending.
+
+## Native browser continuation — 31 October 2026
+
+The [supplemental execution manifest](native-execution.json) records three passing native browser tests against the unchanged compiled application at `c2b6ec405f10db7eecf67327821002a599d82cc0`. `tests/browser/library-native.spec.ts` calls the real application and PostgreSQL database: no library command or read is fulfilled with a response fixture. The only business-response fault injection lets a real revision commit before dropping delivery of that response. External Font Awesome requests are blocked for repository-safe captures.
+
+- Registration, finding ownership/response/independent acceptance, independent review, a declared site link and a successor revision complete through the panels. The registrar cannot review or accept their own finding response. The successor starts Unreviewed with no inherited findings; r01 retains its Reviewed decision, closed finding and exact original download.
+- Only the test-created original source envelope is removed after checking its document, operation, revision and text. Historical download then returns `ExactDocumentUnavailable`, the UI removes Download r01, and the recovery panel restores only the matching original. The successor still downloads its different bytes. Withdrawal retains the original; another-company identity cannot read its record or download.
+- A concurrent link command makes an open revision form stale. The server refuses its save with 409 and the form retains entered text. A later revision commits before the browser loses its response; retry sends the unchanged body and operation ID, returns the original receipt and leaves exactly two revisions. Pending controls prevent edits or cancellation.
+- At 320 px, keyboard arrows/Home/End select and focus record tabs. Enter opens the snapshot and Escape restores focus to its trigger. Root horizontal overflow checks pass. Chrome's own 200% setting produces a 720 CSS-pixel layout in a 1440-pixel viewport, with devicePixelRatio 2; register/record reflow and keyboard tab movement pass. Zoom captures use the physical viewport because a full-page CSS clip would crop this zoomed image.
+
+| Native state | Capture |
+|---|---|
+| Historical unavailable content, 320 px | [Unavailable r01](native-historical-unavailable-320.png) |
+| Exact successor, 320 px | [Record](native-record-320.png) |
+| Keyboard-opened snapshot, 320 px | [Snapshot](native-snapshot-320.png) |
+| Real Chrome 200% zoom | [Register](native-register-zoom200.png), [record](native-record-zoom200.png) |
+
+Developer comparison used the retained accepted phone register, phone record and 320 px unavailable-content references, alongside the desktop comparison above. The captures retain the current card/header density, eligibility placement, unavailable state, bottom actions and snapshot flow for visual review. Synthetic titles, chronology and review state differ from the design examples. Reflow and functional checks pass; spacing and composition still require independent visual review, and no pixel-equivalence or owner acceptance is claimed.
+
+The browser proof runs on a separate loopback PostgreSQL cluster on port 55477, with only `ppo_synthetic_test`; the compiled application uses port 3476. Initial attempts exposed an unseeded/shared test database and use of the wrong local launcher, followed by harness corrections for navigation-time response capture, strict command fields and phone accessible names. They are not application regressions. The final suite uses the supported `scripts/local-server.ts --compiled` launcher and passes all three tests without application changes. Existing backend/restart evidence is retained separately, without claiming a new complete database-suite run.
+
+To repeat on a dedicated disposable database, configure `.env.local`, run the repository build/migrate/seed procedures, then run `node --env-file=.env.local node_modules/@playwright/test/cli.js test --config playwright.library.config.ts`. The configuration starts the compiled loopback launcher or reuses an existing local server. The fixture grants synthetic test identities document permissions and deliberately removes/restores only its own generated source file; do not point it at another concurrent test run's database.
+
+CI, fresh exact-head cross-model review, manual screen-reader review and owner visual/workflow acceptance remain separate review items. No merge or deployment is performed by this continuation.
