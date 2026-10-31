@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { DealFollowThrough } from "./crm-deal-followthrough";
+import { dealWorkspaceHref } from "./deal-workspace-link";
 import { useEffect, useRef, useState } from "react";
 import { ProductIcon } from "./product-icons";
 import {
@@ -79,7 +81,9 @@ export function DealDialog({
   undo,
   onClose,
   onSaved,
+  sequence,
 }: {
+  sequence?: {position:number;total:number;onPrevious?:()=>void;onNext?:()=>void};
   id: string;
   mode?: DealMode;
   targetStage?: string;
@@ -256,6 +260,7 @@ export function DealDialog({
                   <p className="crm-snapshot-context">{o.need_summary}</p>
                 </section>
               </div>
+              {!resource.error && <DealFollowThrough id={o.id} version={o.version}/>}
             </>
           ) : (
             <DealEditor
@@ -276,11 +281,12 @@ export function DealDialog({
       </div>
       {currentMode === "snapshot" && (
         <footer className="crm-dialog-footer">
+          {sequence && <nav className="crm-sequence" aria-label="Selected deals"><button className="secondary" disabled={!sequence.onPrevious} onClick={sequence.onPrevious} aria-label="Previous selected deal">←</button><span>{sequence.position} of {sequence.total}</span><button className="secondary" disabled={!sequence.onNext} onClick={sequence.onNext} aria-label="Next selected deal">→</button></nav>}
           <button className="secondary" onClick={close}>
             Close
           </button>
           {o && !resource.error && (
-            <Link className="primary-link" href={`/sales/opportunities/${o.id}`}>
+            <Link className="primary-link" href={dealWorkspaceHref(o.id)}>
               Open full deal
             </Link>
           )}

@@ -1,0 +1,4 @@
+import { readDealFollowThrough } from "../../../../../../../crm/worklist-followthrough";
+import { readRoute } from "../../../../../../../shared/http";
+export const dynamic="force-dynamic";
+export const GET=readRoute((p,id,q)=>readDealFollowThrough(p,id,q));

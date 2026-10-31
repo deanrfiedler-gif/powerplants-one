@@ -11,6 +11,7 @@ import { OutcomeSourceHistory } from "./opportunity-outcome-source";
 import { ProductIcon } from "./product-icons";
 import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
 import { useRouter, useSearchParams } from "next/navigation";
+import type { OperationReceipt } from "../platform/operations";
 import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
 import {
@@ -197,7 +198,7 @@ function ActionFields({
 export function NewOpportunity() {
   return <SalesActivityCreation kind="Opportunity">{sales => <NewOpportunityForm sales={sales}/>}</SalesActivityCreation>;
 }
-function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
+export function NewOpportunityForm({sales, embedded = false, onSaved, onState}:{sales?:ActivitySalesCreation; embedded?:boolean; onSaved?:(receipt:OperationReceipt)=>void; onState?:(state:{dirty:boolean;blocked:boolean})=>void}) {
   const initial = useSearchParams();
   const p = useIdentity(),
     router = useRouter(),
@@ -218,8 +219,9 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
   const available = useCrmResource<Options>("crm/options?kind=Company");
   const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
   const command = useCrmCommand((r) =>
-    router.push(`/sales/opportunities/${r.record_id}`),
+    onSaved ? onSaved(r) : router.push(`/sales/opportunities/${r.record_id}`),
   );
+  useEffect(() => { onState?.({dirty:command.hasUnsavedChanges, blocked:command.busy || command.uncertain}); },[onState,command.hasUnsavedChanges,command.busy,command.uncertain]);
   const context = {
     company_id: company,
     organisation_id: org,
@@ -230,12 +232,12 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
     return <ErrorNotice error={command.error ?? available.error} />;
   return (
     <>
-      <PageHeader
+      {!embedded && <><PageHeader
         eyebrow="CRM · Synthetic · Online"
         title="Add deal"
         description="Select existing customer context. Creating saves one Open deal and its initial owned Activity together."
       />
-      <Link className="ppo-back-link" href="/sales/opportunities">Back to sales worklist</Link>
+      <Link className="ppo-back-link" href="/sales/opportunities">Back to sales worklist</Link></>}
       <ResourceState {...available} />
       {available.data && (
         <>
@@ -246,6 +248,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
           <SaveState command={command} />
           <ValidationFields error={command.error}>
             <form
+              id="crm-add-deal-form"
               className="crm-form"
               onChange={command.dirty}
               noValidate
@@ -279,6 +282,13 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
             >
               <fieldset disabled={command.busy || command.uncertain || sales?.blocked}>
                 <legend>Deal and customer context</legend>
+                <Field
+                  name="title"
+                  label="Deal title"
+                  value={title}
+                  onChange={setTitle}
+                  required
+                />
                 <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
                 <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the deal owner.</p>
                 <SelectField
@@ -360,13 +370,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                     />
                   </>
                 )}
-                <Field
-                  name="title"
-                  label="Deal title"
-                  value={title}
-                  onChange={setTitle}
-                  required
-                />
+
                 <Field
                   name="need_summary"
                   label="Customer need"
@@ -404,7 +408,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                   context={context}
                   enabled={!siteRequired || !!site}
                 />
-                <button type="submit" disabled={siteRequired && !site}>Add deal and action</button>
+                {!embedded && <button type="submit" disabled={siteRequired && !site}>Add deal and action</button>}
               </fieldset>
             </form>
           </ValidationFields>

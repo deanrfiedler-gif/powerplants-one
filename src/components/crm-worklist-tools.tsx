@@ -76,9 +76,22 @@ export function WorklistViews({ filters, actor, setFilters }: { filters: Worklis
   </WorklistMenu>;
 }
 
-export function ForecastWorklist({ items, asOf, onEdit }: { items: WorklistItem[]; asOf: string; onEdit: (id: string) => void }) {
+export function ForecastWorklist({ items, asOf, onEdit, stages, complete = false }: { items: WorklistItem[]; asOf: string; onEdit: (id: string) => void; stages?: string[]; complete?: boolean }) {
   const [months, setMonths] = useState(3);
-  return <section className="crm-forecast-workspace" aria-label="Deal forecast"><header className="crm-view-intro"><div><h2>Forecast</h2><p>Expected close dates · {valueSummary(items).formatted} known · AUD excl. GST</p></div><label>Show<select aria-label="Forecast period" value={months} onChange={e => setMonths(Number(e.target.value))}>{[3, 6, 12].map(n => <option key={n} value={n}>{n} months</option>)}</select></label></header><div className="crm-forecast-scroll"><div className="crm-forecast-grid">{forecastGroups(items, asOf, months).map(group => <section className="crm-forecast-month" key={group.id} aria-label={group.label}><header><h3>{group.label}</h3><strong>{valueSummary(group.items).formatted}</strong><span>{group.items.length} deals · {valueSummary(group.items).unknown} not estimated</span></header><div>{group.items.map(item => <article key={item.id} className="crm-forecast-card"><Link href={dealWorkspaceHref(item.id)}>{item.title}</Link><p>{item.organisation_name}</p><div><span>{item.stage_id}</span><strong>{dealAmount(item.value_amount)}</strong></div><p>{item.owner_name}</p><button className="secondary" disabled={!item.can_edit || item.close_outcome !== "Open"} aria-label={`Change expected close date for ${item.title}`} onClick={() => onEdit(item.id)}><ProductIcon name="calendar"/>{dealClose(item.expected_close_date)}</button></article>)}{!group.items.length && <p className="crm-stage-empty">No matching deals</p>}</div></section>)}</div></div><p className="crm-view-footnote">Totals cover this result page. Stage probabilities are not configured; values are unweighted and are not committed revenue.</p></section>;
+  const stageOrder = stages ?? [...new Set(items.map(item=>item.stage_id))];
+  return <section className="crm-forecast-workspace" aria-label="Deal forecast">
+    <header className="crm-view-intro"><div><h2>Forecast</h2><p>By expected close month and stage · unweighted AUD excl. GST</p></div><label>Show<select aria-label="Forecast period" value={months} onChange={e => setMonths(Number(e.target.value))}>{[3,6,12].map(n=><option key={n} value={n}>{n} months</option>)}</select></label></header>
+    <div className="crm-forecast-scroll"><div className="crm-forecast-grid">{forecastGroups(items,asOf,months).map(group=><section className="crm-forecast-month" key={group.id} aria-label={group.label}>
+      <header><h3>{group.label}</h3><strong>{valueSummary(group.items).formatted}</strong><span>{group.items.length} deals · {valueSummary(group.items).unknown} not estimated</span></header>
+      <div>{stageOrder.map(stage=>{
+        const rows=group.items.filter(item=>item.stage_id===stage), totals=valueSummary(rows);
+        if(!rows.length)return null;
+        return <section className="crm-forecast-stage" key={stage} aria-label={`${group.label} · ${stage}`}><h4>{stage}<span>{rows.length} · {totals.formatted}{totals.unknown ? ` · ${totals.unknown} not estimated` : ""}</span></h4>
+          {rows.map(item=><article key={item.id} className="crm-forecast-card"><Link href={dealWorkspaceHref(item.id)} title={item.title}>{item.title}</Link><p>{item.organisation_name}</p><div><button className="crm-forecast-date" disabled={!item.can_edit || item.close_outcome!=="Open"} aria-label={`Change expected close date for ${item.title}`} onClick={()=>onEdit(item.id)}>{dealClose(item.expected_close_date)}</button><span title={item.owner_name}>{item.owner_name.split(" ").map(x=>x[0]).slice(-2).join("")}</span><strong>{dealAmount(item.value_amount)}</strong></div></article>)}
+        </section>;
+      })}{!group.items.length&&<p className="crm-stage-empty">No matching deals</p>}</div>
+    </section>)}</div></div><p className="crm-view-footnote">Counts and subtotals: {complete?"all matching results":"current result page only"}. Unknown estimates are excluded from monetary totals. Values are unweighted and are not committed revenue.</p>
+  </section>;
 }
 
 export function WorklistReview({ kind, items, asOf, onOpen, onClose }: { kind: "triage" | "changes" | "help"; items: WorklistItem[]; asOf: string; onOpen: (id: string) => void; onClose: () => void }) {
