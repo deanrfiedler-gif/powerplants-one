@@ -6,6 +6,11 @@ import { appointmentClosed, type AppointmentMode } from "../../appointment-prese
 import { useSearchParams } from "next/navigation";
 import { SchedulingNavigation } from "./workspace-navigation.client";
 import { DemandPanel } from "./demand-panel.client";
+import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
+import { PlannerAttention } from "./planner-attention.client";
+import { plannerHeld, plannerHoldReasons } from "../../planner-attention";
+import { formatRange } from "../../../shell/date-format";
+import "./service-planner.css";
 import {
   BookingContinuation,
 } from "./booking-continuation.client";
@@ -177,6 +182,7 @@ export type ScheduleAppointment = Omit<
 > & {
   requests: Pick<Request, "id" | "status">[];
   projection: "ScheduleSummary";
+  dispatch_readiness?: { dispatch_hold: boolean; reasons: string[] } | null;
 };
 type BookingBasis = Omit<ScheduleAppointment, "requests" | "projection">;
 export type Schedule = Envelope<ScheduleAppointment> & {
@@ -245,6 +251,7 @@ function BookingForm({
   onSaved,
   initialStart,
   initialCrew,
+  compareMove = false,
   onClose,
 }: {
   appointment: BookingBasis;
@@ -252,6 +259,7 @@ function BookingForm({
   onSaved: () => void;
   initialStart?: string;
   initialCrew?: CrewInput;
+  compareMove?: boolean;
   onClose?: () => void;
 }) {
   const [basis, setBasis] = useState(appointment),
@@ -333,7 +341,7 @@ function BookingForm({
     mode === "confirm"
       ? "Confirm appointment"
       : mode === "move"
-        ? "Move or reassign"
+        ? initialStart ? "Move this visit?" : "Move or reassign"
         : "Propose a schedule change";
   const patch = (i: number, field: string, value: string) =>
     setCrew(crew.map((x, n) => (n === i ? { ...x, [field]: value } : x)));
@@ -445,6 +453,15 @@ function BookingForm({
         {basis.work_order_display_number}
       </p>
       <VersionLine a={basis} />
+      {mode === "move" && compareMove && <section className="pl01-move-comparison" aria-label="Current and proposed visit">
+        <h3>Current → Proposed</h3>
+        <p>Current: {formatRange(basis.start_at, basis.end_at, basis.site_timezone)}</p>
+        <p>Proposed: {start.replace("T", " ")} → {end.replace("T", " ")} · {basis.site_timezone}</p>
+        <p>Current crew: {basis.assignments.filter(x => x.active).map(x => x.name).join(", ") || "None"}</p>
+        <p>Proposed crew: {crew.map(x => resources.data?.items.find(r => r.id === x.resource_id)?.name ?? "Choose a person").join(", ")}</p>
+        <p className="planner-warning">Moving a confirmed visit needs a new customer site readiness confirmation for the changed schedule. Dispatch stays held until the current gate passes.</p>
+        <p>Nothing changes until the server accepts the move.</p>
+      </section>}
       <ReadState {...resources} retry={resources.reload} />
       {mode === "confirm" && <BookingRecovery command={durableCommand} />}
       <ErrorNotice
@@ -1339,6 +1356,10 @@ export function PlannerBoard({
 
 export function PlannerScreen() {
   useIdentity();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menu = useSecondaryMenu(menuOpen, setMenuOpen);
+  const [trayChoice, setTrayChoice] = useState<boolean | null>(null);
+  const [phoneTray, setPhoneTray] = useState(false);
   const search = useSearchParams();
   const context = plannerContext(new URLSearchParams(search.toString()));
   const { day, mode, zone, site, resource: resourceFilter, status } = context;
@@ -1503,13 +1524,17 @@ export function PlannerScreen() {
       );
     }
   }
+  const held = data?.items.filter(plannerHeld) ?? [];
+  const trayCollapsed = !!selected || (trayChoice ?? !menu.docked);
+  const trayUsable = !!demand.data && !demand.loading && !demand.error;
+  const trayCount = trayUsable ? `${demand.data!.completeness === "Partial" ? "≥ " : ""}${demand.data!.items.length}` : "Unknown";
   return (
-    <>
+    <SecondaryMenuFrame state={menu} id="ppo-service-planner" name="Scheduling" menuId="planner-menu" contentId="planner-content"
+      attributes={{ "data-ppo-workspace": "shared" }} menu={<><h2 className="pl01-menu-heading">Scheduling</h2><SchedulingNavigation side /></>} message="">
       {/* The shell banner and the module tab strip both already name this
           page, so the heading block is redundant on screen. It stays in the
           document for assistive technology and heading order. */}
       <h1 className="sr-only">Service planner</h1>
-      <SchedulingNavigation />
       <BookingContinuation />
       {search.get("returnTo") && (
         <p>
@@ -1566,13 +1591,13 @@ export function PlannerScreen() {
           </button>
         </div>
         {(wide || showFilters) && (
-          <EnumField
+          <div className="pl01-zone" title={`${zone}. ${EXTENDED_HOURS_ADVICE}`}><EnumField
             name="display-timezone"
             label="Display timezone"
             value={zone}
             onChange={setZone}
             values={["Australia/Brisbane", "Australia/Melbourne", "UTC"]}
-          />
+          /></div>
         )}
         {/* The removed heading block carried the only route to work orders,
             so it moves into the control bar with the other page actions. */}
@@ -1580,7 +1605,7 @@ export function PlannerScreen() {
           <button className="secondary" onClick={result.reload}>
             Refresh planner
           </button>
-          {!wide && (
+          {(
             <button
               className="secondary"
               aria-expanded={showFilters}
@@ -1592,13 +1617,12 @@ export function PlannerScreen() {
                 : ""}
             </button>
           )}
-          {(wide || showFilters) && (
+          {showFilters && (
             <Link className="button secondary" href="/service/work-orders">
               Work orders
             </Link>
           )}
         </div>
-      </section>
       {(wide || showFilters) && (
       <div className="planner-filters">
         <SelectField
@@ -1608,21 +1632,21 @@ export function PlannerScreen() {
           onChange={(v) => {
             setSite(v);
           }}
-          empty="All permitted sites"
+          empty="Site: All sites"
           options={sites.data?.items ?? []}
         />
         <SelectField
           name="resource-filter"
-          label="Resource"
+          label="People"
           value={resourceFilter}
           onChange={setResourceFilter}
-          empty="All permitted resources"
+          empty="People: Everyone"
           options={(data?.resources ?? []).map((r) => ({
             id: r.id,
             display_name: r.name,
           }))}
         />
-        <SelectField
+        {showFilters && <SelectField
           name="status-filter"
           label="Appointment state"
           value={status}
@@ -1632,66 +1656,127 @@ export function PlannerScreen() {
             id,
             display_name: id,
           }))}
-        />
+        />}
       </div>
       )}
-      <ReadState {...result} retry={result.reload} />
+      </section>
+      <ReadState {...result} retained={!!data} retry={result.reload} />
       {!!sites.error && (
         <p className="planner-warning">Site choices could not be refreshed.</p>
       )}
-      {result.error && (
+      {!!result.error && (
         <p className="planner-warning">
           Availability is unknown. A failed read does not mean resources are
           free. Refresh before proposing a move.
         </p>
       )}
+      {wide && <PlannerAttention items={data?.items ?? []} usable={usable} returnTo={returnTo} />}
+      {!wide && <button className="pl01-tray-launch secondary" onClick={() => setPhoneTray(!phoneTray)} aria-expanded={phoneTray}>
+        {phoneTray ? "← Back to planner" : "Needs attention and tray"} · To plan {trayCount} · On hold {usable ? held.length : "Unknown"}
+      </button>}
+      <div className={`pl01-workspace${trayCollapsed ? " tray-collapsed" : ""}${phoneTray ? " phone-tray-open" : ""}`}>
+        <aside className="pl01-tray" aria-label="Planner tray" hidden={!wide && !phoneTray}>
+          {wide && <button className="pl01-tray-toggle secondary" onClick={() => { setSelectedId(null); setTrayChoice(!trayCollapsed); }} aria-expanded={!trayCollapsed}>
+            {trayCollapsed ? <><span className="sr-only">Expand tray</span><span className="pl01-tray-expand" aria-hidden="true">›</span><span className="pl01-tray-count"><strong className={!trayUsable ? "unknown" : ""}>{trayCount}</strong><small>To plan</small></span><span className="pl01-tray-count"><strong className={!usable ? "unknown" : ""}>{usable ? held.length : "Unknown"}</strong><small>On hold</small></span></> : <span>‹ Collapse tray</span>}
+          </button>}
+          {(!wide || !trayCollapsed) && <>
+            {!wide && <PlannerAttention items={data?.items ?? []} usable={usable} returnTo={returnTo} />}
+      <section className="pl01-tray-content" hidden={!scheduleSettled}>
+        <h2 id="unassigned-demand-heading" tabIndex={-1}>
+          To plan
+        </h2>
+        <p className="pl01-tray-help">
+          Authorised work waiting for a visit. Choose Plan visit to propose a time. The site filter applies; calendar dates and people do not.
+        </p>
+        {demand.loading && <p role="status">Loading permitted records…</p>}
+        {/* Demand is a secondary read on this page, so it reports its own
+            failure in place — the same treatment the site selector above
+            gets — instead of raising a second page-level alert. When one
+            identity is refused both reads fail for the same reason, and two
+            identical permission banners carrying two different support
+            references tell the reader nothing the first did not. */}
+        {!!demand.error && (
+          <>
+            <p className="planner-warning" role="status">
+              Unassigned demand is unknown. A failed read does not mean every
+              authorised work order is scheduled.
+            </p>
+            <button className="secondary compact" onClick={demand.reload}>
+              Retry loading demand
+            </button>
+          </>
+        )}
+        {demand.data && !demand.error && (
+          <>
+            <div className="proposal-grid">
+              {demand.data.items.map((w) => (
+                <article
+                  className="appointment-card proposed"
+                  key={w.id}
+                  aria-label={`${w.display_number} unassigned`}
+                >
+                  <strong className="card-scope">{w.authorised_scope_summary}</strong>
+                  <p><Link href={`/service/work-orders/${w.id}`}>{w.display_number}</Link> · {w.site_name}</p>
+                  <small>
+                    {w.customer_name} · Authorised scope r
+                    {String(w.authorised_scope_revision).padStart(2, "0")}
+                  </small>
+                  <p className="card-hold">Needs a visit proposal</p>
+                  <small>{w.site_timezone}</small>
+                  <button
+                    className="pl01-primary"
+                    disabled={!trayUsable}
+                    onClick={() => setPlanId(w.id)}
+                  >
+                    Plan visit
+                  </button>
+                </article>
+              ))}
+            </div>
+            {!demand.data.items.length && (
+              <p className="empty-state">
+                No eligible unassigned work in the permitted result.
+              </p>
+            )}
+            <p className="read-meta">
+              {demand.data.items.length} shown ·{" "}
+              {demand.data.completeness === "Complete"
+                ? "Complete permitted result"
+                : `Partial result · bounded to ${demand.data.limit}; more eligible work may exist`}{" "}
+              · Observed{" "}
+              <Stamp value={demand.data.observed_at} timezone={zone} /> ({zone})
+            </p>
+            {demand.data.completeness === "Partial" &&
+              (demandLimit < 200 ? (
+                <button
+                  className="secondary"
+                  onClick={() => setDemandLimit(200)}
+                >
+                  Show up to 200 permitted orders
+                </button>
+              ) : (
+                <p>
+                  Narrow by site to inspect this bounded result. There is no
+                  next page.
+                </p>
+              ))}
+          </>
+        )}
+        <h2>On hold · {usable ? held.length : "Unknown"}</h2>
+        <p>Visits in the current planner filter. Review the appointment to resolve its hold.</p>
+        {!usable ? <p>Current holds are unknown.</p> : held.map(a => <article key={a.id} className="pl01-held-card">
+          <strong>{a.scope_summary}</strong><p>{a.work_order_display_number} · {a.site_name}</p>
+          <span className="tl-pill attention">On hold</span>
+          <ul>{plannerHoldReasons(a).map(reason => <li key={reason}>{reason}</li>)}</ul>
+          <Link href={appointmentHref(a.id, returnTo)}>Review appointment</Link>
+        </article>)}
+        {usable && !held.length && <p>No held visits in this filter.</p>}
+      </section>
+          </>}
+        </aside>
+        <div className="pl01-board-content" hidden={!wide && phoneTray}>
       {data && (
         <>
-          <div className="planner-stat-row">
-            <div>
-              <strong>
-                {usable
-                  ? data.items.filter((a) => a.status === "Confirmed").length
-                  : "—"}
-              </strong>
-              <span>Confirmed visits</span>
-            </div>
-            <div>
-              <strong>
-                {usable
-                  ? data.items.filter((a) => a.status === "Proposed").length
-                  : "—"}
-              </strong>
-              <span>Proposed · no reservation</span>
-            </div>
-            <div>
-              <strong>
-                {usable
-                  ? data.items.filter((a) =>
-                      a.requests.some((r) => r.status === "Pending"),
-                    ).length
-                  : "—"}
-              </strong>
-              <span>Visits with pending requests</span>
-            </div>
-            <div>
-              <strong>{usable ? data.resources.length : "—"}</strong>
-              <span>Permitted resource lanes</span>
-            </div>
-          </div>
-          <p className="read-meta">
-            {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
-            Display {zone} · Observed{" "}
-            <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
-            {usable
-              ? "Complete permitted result within this date/site/resource filter"
-              : "Last successful read · current counts unavailable"}
-          </p>
-          <p className="planner-legend">
-            <span>Confirmed = reserved crew</span>
-            <span>Proposed = no capacity reserved</span>
-            <span>Dispatch remains held</span>
-          </p>
           {mode === "week" && !boardView && !phoneView && (
             <p className="planner-scroll-hint">
               Scroll within each resource lane to compare days. Keyboard: focus
@@ -1780,6 +1865,19 @@ export function PlannerScreen() {
               />
             </>
           )}
+          <p className="read-meta">
+            {displayDay(day)} – {displayDay(addDays(day, days.length - 1))} ·
+            Display {zone} · Observed{" "}
+            <Stamp value={data.observed_at} timezone={zone} /> ·{" "}
+            {usable
+              ? "Complete permitted result within this date/site/resource filter"
+              : "Last successful read · current counts unavailable"}
+          </p>
+          <p className="planner-legend">
+            <span>Confirmed = reserved crew</span>
+            <span>Proposed = no capacity reserved</span>
+            <span>Dispatch is checked by the current readiness gate</span>
+          </p>
           <section className="panel proposal-section" id="planner-proposals">
             <h2>Proposed and cancelled appointments</h2>
             <p>
@@ -1807,96 +1905,8 @@ export function PlannerScreen() {
           )}
         </>
       )}
-      <section className="panel proposal-section" hidden={!scheduleSettled}>
-        <h2 id="unassigned-demand-heading" tabIndex={-1}>
-          Unassigned demand
-        </h2>
-        <p>
-          Authorised work without a non-cancelled appointment. Work whose only
-          visits were cancelled can appear again. Draft work is excluded. Demand
-          is independent of calendar dates, resource and status filters; the
-          selected site and your permitted scope apply.
-        </p>
-        {demand.loading && <p role="status">Loading permitted records…</p>}
-        {/* Demand is a secondary read on this page, so it reports its own
-            failure in place — the same treatment the site selector above
-            gets — instead of raising a second page-level alert. When one
-            identity is refused both reads fail for the same reason, and two
-            identical permission banners carrying two different support
-            references tell the reader nothing the first did not. */}
-        {!!demand.error && (
-          <>
-            <p className="planner-warning" role="status">
-              Unassigned demand is unknown. A failed read does not mean every
-              authorised work order is scheduled.
-            </p>
-            <button className="secondary compact" onClick={demand.reload}>
-              Retry loading demand
-            </button>
-          </>
-        )}
-        {demand.data && !demand.error && (
-          <>
-            <div className="proposal-grid">
-              {demand.data.items.map((w) => (
-                <article
-                  className="appointment-card proposed"
-                  key={w.id}
-                  aria-label={`${w.display_number} unassigned`}
-                >
-                  <Link href={`/service/work-orders/${w.id}`}>
-                    {w.display_number}
-                  </Link>
-                  <p>{w.site_name}</p>
-                  <p className="card-scope">{w.authorised_scope_summary}</p>
-                  <small>
-                    {w.customer_name} · Authorised scope r
-                    {String(w.authorised_scope_revision).padStart(2, "0")}
-                  </small>
-                  <p className="card-hold">Needs a visit proposal</p>
-                  <small>
-                    Work order v{w.version} · {w.site_timezone}
-                  </small>
-                  <button
-                    className="pl01-primary"
-                    disabled={demand.loading}
-                    onClick={() => setPlanId(w.id)}
-                  >
-                    Plan visit
-                  </button>
-                </article>
-              ))}
-            </div>
-            {!demand.data.items.length && (
-              <p className="empty-state">
-                No eligible unassigned work in the permitted result.
-              </p>
-            )}
-            <p className="read-meta">
-              {demand.data.items.length} shown ·{" "}
-              {demand.data.completeness === "Complete"
-                ? "Complete permitted result"
-                : `Partial result · bounded to ${demand.data.limit}; more eligible work may exist`}{" "}
-              · Observed{" "}
-              <Stamp value={demand.data.observed_at} timezone={zone} /> ({zone})
-            </p>
-            {demand.data.completeness === "Partial" &&
-              (demandLimit < 200 ? (
-                <button
-                  className="secondary"
-                  onClick={() => setDemandLimit(200)}
-                >
-                  Show up to 200 permitted orders
-                </button>
-              ) : (
-                <p>
-                  Narrow by site to inspect this bounded result. There is no
-                  next page.
-                </p>
-              ))}
-          </>
-        )}
-      </section>
+        </div>
+      </div>
       {planId && (
         <DemandPanel
           key={planId}
@@ -1917,6 +1927,7 @@ export function PlannerScreen() {
       <dialog
         ref={modal}
         className="planner-dialog"
+        aria-label={move?.start ? "Move this visit?" : "Move or reassign"}
         onCancel={(e) => {
           e.preventDefault();
           close();
@@ -1937,6 +1948,7 @@ export function PlannerScreen() {
                 data?.items.find((a) => a.id === move.a.id) ?? move.a
               }
               mode="move"
+              compareMove
               initialStart={move.start}
               initialCrew={move.crew}
               onSaved={() => {
@@ -1950,6 +1962,6 @@ export function PlannerScreen() {
           </>
         )}
       </dialog>
-    </>
+    </SecondaryMenuFrame>
   );
 }

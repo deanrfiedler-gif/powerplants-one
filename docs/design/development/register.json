@@ -2898,7 +2898,7 @@
       "title": "Service planner and unassigned demand",
       "kind": "scope",
       "module": "PL",
-      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
+      "summary": "Accepted PL-01 presentation: collapsed Scheduling side menu, native Needs attention, To plan and On hold tray, Day/Week board and controlled move comparison. Holds remain source-owned; no suggestion or new dispatch rule.",
       "path": "/schedule",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -2930,11 +2930,16 @@
         "src/app/styles/scheduling-workspaces.css",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
-        "docs/decisions/service-planner-figma-design.md"
+        "docs/decisions/service-planner-figma-design.md",
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
       ],
       "scope_status": "built",
-      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
+      "visual_status": "Needs review; 9 October owner review is stale after the accepted PL-01 implementation.",
+      "functional_status": "PL-01 implementation verification in docs/testing/evidence/service-planner-build/README.md; full validation in progress.",
       "deployment_status": "Not verified",
       "review_fingerprint": "38098ccc0a388a33826ec1fa480267e454ba4e2e5ca91068b02719301f09d3a8",
       "reviewed_at": "2026-10-09",
@@ -8248,7 +8253,7 @@
       "title": "Service planner",
       "kind": "route",
       "module": "PL",
-      "summary": "Calendar closures span every intersecting day in the display timezone, including a continuing closure that starts before the visible day. The end boundary is exclusive. Published working intervals and busy reservations remain independent; this display correction changes no booking guard.",
+      "summary": "Accepted PL-01 presentation: collapsed Scheduling side menu, native Needs attention, To plan and On hold tray, Day/Week board and controlled move comparison. Holds remain source-owned; no suggestion or new dispatch rule.",
       "path": "/schedule",
       "source_paths": [
         "src/app/(business)/schedule/page.tsx"
@@ -8279,11 +8284,16 @@
         "src/app/styles/scheduling-workspaces.css",
         "src/scheduling/policy-holds.ts",
         "src/scheduling/components/client/policy-holds.client.tsx",
-        "docs/decisions/service-planner-figma-design.md"
+        "docs/decisions/service-planner-figma-design.md",
+        "src/scheduling/components/client/planner-screens.client.tsx",
+        "src/scheduling/components/client/planner-attention.client.tsx",
+        "src/scheduling/components/client/service-planner.css",
+        "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner.ts"
       ],
       "scope_status": "built",
-      "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
-      "functional_status": "Scheduling Step 4: exact source and executed checks in docs/testing/evidence/scheduling-policy-enforcement/README.md; owner/device review pending.",
+      "visual_status": "Needs review; 9 October owner review is stale after the accepted PL-01 implementation.",
+      "functional_status": "PL-01 implementation verification in docs/testing/evidence/service-planner-build/README.md; full validation in progress.",
       "deployment_status": "Not verified",
       "review_fingerprint": "58cf3272ee8dbd9c26462bb8ebf7d2d7e4f0474df878e1f14bc08e009633c0a0",
       "reviewed_at": "2026-10-09",

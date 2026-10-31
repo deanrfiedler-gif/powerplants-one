@@ -20,7 +20,7 @@ import {
 import { extendedHours } from "../../working-hours";
 import type { Resource, Schedule, ScheduleAppointment } from "./planner-screens.client";
 
-const identity = ["#e3ecf6", "#ece4f7", "#dff1ec", "#f6e8dc", "#e9eef3", "#f3e3ea"];
+const identity = ["var(--planner-avatar-surface, #ece7fb)"];
 const pct = (n: number) => `${n.toFixed(3)}%`;
 const between = (a: number, b: number) => ({ left: pct(axisPercent(a)), width: pct(axisPercent(b) - axisPercent(a)) });
 const isWeekend = (day: string) => [0, 6].includes(new Date(day + "T12:00:00Z").getUTCDay());
@@ -82,6 +82,7 @@ function PhoneCard({
         }
       }}
     >
+      <span className="t"><span className="pl01-visit-title" title={a.scope_summary}>{a.scope_summary}</span>{state.kind === "attention" && <span aria-hidden="true">⚠</span>}</span>
       <span className="r1">
         <b>{time}</b>
         {ext && (
@@ -97,17 +98,8 @@ function PhoneCard({
             />
           </span>
         )}
-        {(everyone || crew.length > 1) && crew.length > 0 && (
-          <span className="tl-crew" aria-hidden="true">
-            {crew.map((x) => (
-              <span key={x.resource_id} title={x.name}>
-                {initials(x.name)}
-              </span>
-            ))}
-          </span>
-        )}
+        {(everyone || crew.length > 1) && crew.length > 0 && <span className="pl01-crew-inline">{crew.map(x => initials(x.name)).join(", ")}</span>}
       </span>
-      <span className="t">{a.scope_summary}</span>
       <span className="m">{a.site_name}</span>
     </div>
   );
@@ -135,8 +127,6 @@ export function PlannerPhone({
   onOpenDay: (day: string) => void;
 }) {
   const live = data.items.filter((a) => a.status !== "Cancelled");
-  const proposed = live.filter((a) => a.status === "Proposed").length,
-    attention = live.filter((a) => visitState(a).kind === "attention").length;
   const todayIs = (d: string) => {
     const m = dayMinute(now, zone, d);
     return m >= 0 && m < 1440;
@@ -171,16 +161,6 @@ export function PlannerPhone({
             })}
         </div>
       )}
-      {(proposed > 0 || attention > 0) && (
-        <a className="pq-attn" href="#planner-proposals">
-          <span>
-            {proposed > 0 && <b>{proposed} proposed</b>}
-            {proposed > 0 && attention > 0 && " · "}
-            {attention > 0 && `${attention} need${attention === 1 ? "s" : ""} attention`}
-          </span>
-          <span aria-hidden="true">›</span>
-        </a>
-      )}
       {mode === "day"
         ? people(day).map(({ r, lane, visits, colour, off }) => {
             const tip = lane.capacityMinutes ? `${hoursText(lane.bookedMinutes)} of ${hoursText(lane.capacityMinutes)} h booked · ${lane.free}` : "Not working";
@@ -192,6 +172,7 @@ export function PlannerPhone({
                     {initials(r.name)}
                   </span>
                   <Link href={`/service/technicians/${r.id}`}>{r.name}</Link>
+                  {r.resource_type && <span className="pl01-phone-role">{r.resource_type}</span>}
                   <small>
                     {!r.active
                       ? "Inactive · cannot book"

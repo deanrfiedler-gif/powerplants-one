@@ -1,0 +1,159 @@
+/* PL-01 accepted workspace. Shared shell opt-in is the root attribute, never a CSS ID list edit. */
+#ppo-service-planner {
+  --planner-confirmed-surface: #eef4fa;
+  --planner-confirmed-border: #c8d6e5;
+  --planner-confirmed-travel: #e9eef4;
+  --planner-attention-selected: #fff5df;
+  --planner-attention-travel: #f6efe2;
+  --planner-avatar-surface: #ece7fb;
+  --planner-avatar-text: #4f3a9c;
+}
+#ppo-service-planner .mw-content { min-width: 0; overflow: auto; }
+#ppo-service-planner .pl01-menu-heading { font-size: 12px; padding: 20px 16px 8px; color: var(--muted); }
+#ppo-service-planner .pl01-navigation { display: grid; padding: 8px; gap: 4px; }
+#ppo-service-planner .pl01-navigation a { padding: 12px; color: var(--ink); border-radius: var(--radius-card); text-decoration: none; }
+#ppo-service-planner .pl01-navigation a[aria-current=page] { background: var(--surface-3); font-weight: 600; }
+#ppo-service-planner .planner-toolbar { margin: 0; padding: 10px 16px; border-radius: 0; gap: 8px; align-items: end; }
+#ppo-service-planner .planner-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; background: transparent; }
+#ppo-service-planner .planner-filters .field { min-width: 120px; width: auto; margin: 0; }
+#ppo-service-planner .planner-date { gap: 6px; }
+#ppo-service-planner .planner-date .field { width: 145px; }
+#ppo-service-planner .pl01-attention { background: var(--warning-bg, #fff9ef); border-block: 1px solid var(--warning-border, #ecd2a2); padding: 10px 16px; }
+#ppo-service-planner .pl01-attention h2 { font-size: 12px; margin: 0 0 8px; text-transform: uppercase; }
+#ppo-service-planner .pl01-attention-rows { max-height: 150px; overflow: auto; }
+#ppo-service-planner .pl01-attention article { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 6px 0; }
+#ppo-service-planner .pl01-attention article > div { min-width: 0; }
+#ppo-service-planner .pl01-attention ul { margin: 4px 0; padding-left: 16px; font-size: 12px; color: var(--muted); }
+#ppo-service-planner .pl01-attention .button { flex-shrink: 0; }
+#ppo-service-planner .pl01-workspace { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: 550px; }
+#ppo-service-planner .pl01-workspace.tray-collapsed { grid-template-columns: 44px minmax(0, 1fr); }
+#ppo-service-planner .pl01-tray { min-width: 0; background: var(--surface-3); border-right: 1px solid var(--line-soft); }
+#ppo-service-planner .pl01-tray-toggle { display: grid; gap: 10px; width: 100%; border: 0; border-radius: 0; font-size: 11px; padding: 10px 4px; }
+#ppo-service-planner .tray-collapsed .pl01-tray-toggle { writing-mode: vertical-rl; width: 44px; min-height: 230px; align-items: center; }
+#ppo-service-planner .pl01-tray-content { padding: 12px 16px; max-height: 700px; overflow: auto; }
+#ppo-service-planner .pl01-tray-content h2 { font-size: 12px; text-transform: uppercase; margin: 12px 0; }
+#ppo-service-planner .pl01-tray-content p, #ppo-service-planner .pl01-tray-content small { font-size: 12px; color: var(--muted); }
+#ppo-service-planner .pl01-tray-help { line-height: 1.45; }
+#ppo-service-planner .pl01-tray-content .proposal-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; }
+#ppo-service-planner .pl01-tray-content article { padding: 12px; border: 1px solid var(--line-soft); background: var(--white); border-radius: var(--radius-card); overflow-wrap: anywhere; margin-bottom: 10px; }
+#ppo-service-planner .pl01-held-card ul { padding-left: 16px; font-size: 12px; }
+#ppo-service-planner .pl01-board-content { min-width: 0; }
+#ppo-service-planner .planner-view-layout { margin: 0; gap: 0; }
+#ppo-service-planner .planner-timeline, #ppo-service-planner .planner-week { border-radius: 0; border: 0; }
+#ppo-service-planner .tl-grid { grid-template-columns: 190px minmax(560px, 1fr); }
+#ppo-service-planner .tl-person, #ppo-service-planner .tl-lane { min-height: 72px; }
+#ppo-service-planner .tl-corner, #ppo-service-planner .tl-axis { height: 36px; }
+#ppo-service-planner .tl-av { border-radius: 50%; color: var(--planner-avatar-text); width: 28px; height: 28px; }
+#ppo-service-planner .tl-person.off .tl-av, #ppo-service-planner .wk-row.off .tl-av { background: var(--surface-3) !important; color: var(--muted); }
+#ppo-service-planner .tl-card { background: var(--planner-confirmed-surface); border-color: var(--planner-confirmed-border); }
+#ppo-service-planner .tl-card .t, #ppo-service-planner .tl-card .m { font-size: 12px; }
+#ppo-service-planner .tl-card.held { background: var(--planner-attention-selected); }
+#ppo-service-planner .tl-card.sel { outline: 2px solid var(--ink); outline-offset: 1px; }
+#ppo-service-planner .tl-card.held.sel { border-color: var(--warning-border, #ecd2a2); }
+#ppo-service-planner .tl-travel { background: var(--planner-confirmed-travel); border-color: var(--planner-confirmed-border); }
+#ppo-service-planner .tl-travel.held { background: var(--planner-attention-travel); }
+#ppo-service-planner .planner-legend { margin: 4px 12px; font-size: 11px; }
+#ppo-service-planner .read-meta { margin: 6px 12px; }
+#ppo-service-planner .proposal-section { margin: 12px; }
+#ppo-service-planner .pl01-move-comparison { background: var(--surface-3); padding: 12px; border: 1px solid var(--line-soft); border-radius: var(--radius-card); }
+#ppo-service-planner .pl01-move-comparison h3 { font-size: 12px; text-transform: uppercase; }
+#ppo-service-planner .planner-dialog { max-width: 680px; }
+@media (max-width: 780px) {
+  #ppo-service-planner .pl01-workspace, #ppo-service-planner .pl01-workspace.tray-collapsed { display: block; min-height: 0; }
+  #ppo-service-planner .pl01-tray-launch { margin: 8px 12px; width: calc(100% - 24px); text-align: left; white-space: normal; }
+  #ppo-service-planner .pl01-tray { border: 0; }
+  #ppo-service-planner .pl01-tray-content { max-height: none; }
+  #ppo-service-planner .planner-toolbar { padding: 8px 12px; }
+  #ppo-service-planner .pl01-attention article { display: block; }
+  #ppo-service-planner .pl01-attention-rows { max-height: none; }
+  #ppo-service-planner .tl-snapshot { bottom: 64px; max-height: calc(100dvh - 120px); }
+  #ppo-service-planner .planner-dialog { max-width: calc(100vw - 16px); }
+}
+
+#ppo-service-planner .pl01-phone-role { grid-column: 2 / -1; font-size: 12px; color: var(--muted); }
+#ppo-service-planner .pl01-crew-inline { font-size: 12px; color: var(--muted); }
+#ppo-service-planner .pq-card .t { font-size: 14px; }
+#ppo-service-planner .pq-card.held { background: var(--planner-attention-selected); }
+
+/* Accepted 72 px people rows and compact visits, including away rows. */
+#ppo-service-planner .tl-person, #ppo-service-planner .tl-person.off { padding: 8px 16px; grid-template-columns: 28px minmax(0,1fr); }
+#ppo-service-planner .tl-role, #ppo-service-planner .tl-total { grid-column: 2; margin-top: 0; }
+#ppo-service-planner .tl-lane, #ppo-service-planner .tl-lane.off { height: 72px; }
+#ppo-service-planner .tl-group { top: 5px; height: 62px; }
+#ppo-service-planner .tl-group:hover, #ppo-service-planner .tl-group:focus-within { top: 2px; height: 68px; }
+#ppo-service-planner .tl-card { padding: 5px 8px; box-shadow: none; }
+#ppo-service-planner .tl-card .t { display: block; white-space: nowrap; text-overflow: ellipsis; line-height: 16px; }
+#ppo-service-planner .tl-card.sel { box-shadow: none; }
+#ppo-service-planner .planner-toolbar { background: var(--white); }
+#ppo-service-planner .planner-toolbar > .field { min-width: 0; width: 170px; }
+#ppo-service-planner .planner-filters { order: 2; }
+#ppo-service-planner .planner-toolbar > .field { order: 3; }
+#ppo-service-planner .planner-toolbar-actions { order: 4; }
+#ppo-service-planner .planner-filters .field { width: 145px; min-width: 0; }
+#ppo-service-planner .planner-toolbar label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+#ppo-service-planner .planner-toolbar .field { gap: 0; }
+#ppo-service-planner .planner-toolbar .planner-date .field { width: 142px; }
+#ppo-service-planner .planner-toolbar input, #ppo-service-planner .planner-toolbar select { width: 100%; }
+
+#ppo-service-planner .tl-person, #ppo-service-planner .tl-person.off { height: 72px; box-sizing: border-box; }
+#ppo-service-planner .tl-person .tl-av { grid-row: 1 / span 3; align-self: start; }
+#ppo-service-planner .tl-name { display: block; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; }
+#ppo-service-planner .tl-role { grid-row: 2; }
+#ppo-service-planner .tl-total { grid-row: 3; }
+#ppo-service-planner .pl01-workspace:not(.tray-collapsed) .pl01-tray-toggle { display: flex; justify-content: flex-end; height: 32px; padding: 6px 16px; }
+#ppo-service-planner .pl01-attention-rows { max-height: 116px; }
+#ppo-service-planner .pl01-attention strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 780px) {
+  #ppo-service-planner .pl01-attention-rows { max-height: none; }
+  #ppo-service-planner .pl01-attention strong { white-space: normal; }
+}
+
+#ppo-service-planner .tray-collapsed .pl01-tray-toggle { writing-mode: horizontal-tb; display: flex; flex-direction: column; gap: 16px; padding: 12px 4px; justify-content: flex-start; }
+#ppo-service-planner .pl01-tray-expand { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--line-soft); border-radius: var(--radius-control); font-size: 20px; }
+#ppo-service-planner .pl01-tray-count { display: grid; gap: 4px; text-align: center; }
+#ppo-service-planner .pl01-tray-count strong { font-size: 14px; }
+#ppo-service-planner .pl01-tray-count small, #ppo-service-planner .pl01-tray-count strong.unknown { font-size: 9px; line-height: 12px; }
+#ppo-service-planner .pl01-attention article { padding: 4px 0; }
+#ppo-service-planner .pl01-attention strong { font-size: 13px; line-height: 16px; }
+#ppo-service-planner .pl01-attention ul { margin: 2px 0; line-height: 14px; }
+
+#ppo-service-planner .pl01-zone { order: 3; width: 170px; min-width: 0; }
+#ppo-service-planner .pl01-attention h2 { font-size: 10px; line-height: 12px; margin-bottom: 6px; }
+#ppo-service-planner .pl01-attention article { padding: 2px 0; }
+#ppo-service-planner .pl01-attention-rows { max-height: 104px; }
+#ppo-service-planner .wk-row { min-width: 750px; }
+#ppo-service-planner .wk-corner, #ppo-service-planner .wk-day { height: 36px; }
+#ppo-service-planner .wk-cell { min-height: 72px; padding: 6px; gap: 4px; }
+#ppo-service-planner .wk-person, #ppo-service-planner .wk-row.off .wk-person { min-height: 72px; padding: 8px 16px; box-sizing: border-box; grid-template-columns: 28px minmax(0,1fr); }
+#ppo-service-planner .wk-person .tl-av { grid-row: 1 / span 3; align-self: start; }
+#ppo-service-planner .wk-tile { padding: 3px 6px; min-width: 0; }
+#ppo-service-planner .wk-tile .r1 { font-size: 12px; line-height: 16px; }
+#ppo-service-planner .wk-tile .r1 b { overflow: hidden; text-overflow: ellipsis; }
+#ppo-service-planner .wk-tile.held { background: var(--planner-attention-selected); }
+#ppo-service-planner .wk-tile.sel { outline: 2px solid var(--ink); outline-offset: 1px; box-shadow: none; }
+@media (max-width: 780px) {
+  #ppo-service-planner .pl01-attention-rows { max-height: none; }
+}
+
+/* Phone person cards and title-first visits from the accepted composition. */
+@media (max-width: 780px) {
+  #ppo-service-planner .planner-phone { padding: 12px 16px; gap: 12px; }
+  #ppo-service-planner .pq-person { background: var(--white); border: 1px solid var(--line-soft); padding: 12px 16px; }
+  #ppo-service-planner .pq-person.off { background: var(--surface-3); min-height: 72px; }
+  #ppo-service-planner .pq-person.off .tl-av { background: var(--surface-3) !important; color: var(--muted); }
+  #ppo-service-planner .pq-person header { grid-template-columns: 28px minmax(0,1fr) auto; gap: 4px 8px; }
+  #ppo-service-planner .pq-person header .tl-av { grid-row: 1 / span 2; align-self: start; }
+  #ppo-service-planner .pq-person header a { grid-column: 2; grid-row: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #ppo-service-planner .pq-person header small { grid-column: 3; grid-row: 1; font-size: 11px; }
+  #ppo-service-planner .pl01-phone-role { grid-row: 2; grid-column: 2 / -1; font-size: 11px; }
+  #ppo-service-planner .pq-day { background: transparent; padding: 0; }
+  #ppo-service-planner .pq-card:not(.held):not(.prop) { background: var(--planner-confirmed-surface); border-color: var(--planner-confirmed-border); }
+  #ppo-service-planner .pq-card { box-shadow: none; }
+  #ppo-service-planner .pq-card .t { display: flex; gap: 6px; justify-content: space-between; font-weight: 600; }
+  #ppo-service-planner .pl01-visit-title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  #ppo-service-planner .pq-card .r1 { font-size: 12px; color: var(--muted); }
+  #ppo-service-planner .pq-card .r1 b { font-weight: 400; }
+  #ppo-service-planner .pq-card .m { font-size: 12px; }
+  #ppo-service-planner .pq-card.sel { outline: 2px solid var(--ink); outline-offset: 1px; }
+  #ppo-service-planner .pq-card.held.sel { border-color: var(--warning-border, #ecd2a2); }
+}

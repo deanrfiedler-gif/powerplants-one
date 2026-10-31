@@ -48,6 +48,7 @@ export const moduleWorkspaces = [
   { route: "/projects", scope: "ppo-projects", layout: "full-bleed", navigation: "workspace", baseline: "projects-figma-register" },
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
+  { route: "/schedule", moduleId: "PL-01", scope: "ppo-service-planner", layout: "full-bleed", navigation: "workspace", baseline: "pl01-service-planner" },
   { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-register" },
   { route: "/service/incidents/[id]", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-record" },
   { route: "/service/incidents/new", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-capture" },

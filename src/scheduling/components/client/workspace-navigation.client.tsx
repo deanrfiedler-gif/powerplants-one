@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useShell } from "../../../components/shell-provider";
 import { plannerContext } from "../../navigation";
 
-export function SchedulingNavigation() {
+export function SchedulingNavigation({ side = false }: { side?: boolean }) {
   const { context, error } = useShell(),
     path = usePathname(),
     search = useSearchParams();
@@ -13,7 +13,7 @@ export function SchedulingNavigation() {
   // does not move down when the tabs arrive. Without the Planner permission the row still goes.
   if (!context && !error)
     return (
-      <nav className="scheduling-navigation" aria-label="Scheduling workspace" aria-hidden>
+      <nav className={side ? "pl01-navigation" : "scheduling-navigation"} aria-label="Scheduling workspace" aria-hidden>
         <a className="scheduling-navigation-placeholder">&nbsp;</a>
       </nav>
     );
@@ -26,7 +26,7 @@ export function SchedulingNavigation() {
     ...(c.resource ? { resource_id: c.resource } : {}),
   });
   return (
-    <nav className="scheduling-navigation" aria-label="Scheduling workspace">
+    <nav className={side ? "pl01-navigation" : "scheduling-navigation"} aria-label="Scheduling workspace">
       {[
         ["/schedule", "Planner"],
         ["/service/technicians", "Resources"],
