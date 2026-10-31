@@ -178,6 +178,28 @@ async function dueOccurrence(tasks = twoTasks()) {
   const entitlement = await assessment(a.p, a.revision);
   return { ...a, occurrence, entitlement, tasks };
 }
+// #770 review R1: a reader without work-order read gets no prepared work-order identity anywhere in
+// the maintenance response, history included; stored events keep it and access restores it.
+const workOrderRead = (user: string, on: boolean) =>
+  database().query(
+    `UPDATE ppo.permission_grants SET valid_to=${on ? "NULL" : "clock_timestamp()"} WHERE user_id=$1 AND capability='service.work_order.read'`,
+    [user],
+  );
+async function hidesWorkOrders(p: Awaited<ReturnType<typeof principal>>, occurrence: string, ids: string[], actions: string[]) {
+  await workOrderRead(p.actor_id, false);
+  const hidden = await workspace(p, "due", occurrence);
+  const body = JSON.stringify(hidden);
+  for (const wid of ids) assert.equal(body.includes(wid), false, wid);
+  assert.equal(hidden.sources.service_access, "Restricted");
+  for (const action of actions) assert.ok(hidden.history.some((e) => e.action === action), action);
+  const stored = (
+    await rows("SELECT content->>'work_order_id' AS w FROM ppo.maintenance_events WHERE record_id=$1 AND action=ANY($2) ORDER BY version", [occurrence, actions])
+  ).map((r) => r.w);
+  assert.deepEqual(stored, ids);
+  await workOrderRead(p.actor_id, true);
+  const shown = JSON.stringify(await workspace(p, "due", occurrence));
+  for (const wid of ids) assert.equal(shown.includes(wid), true, wid);
+}
 const countRows = async () =>
   (
     await rows(
@@ -264,6 +286,7 @@ test("M-R2 Prepare creates the request and its Draft work order with exactly the
     (d.sources.requests as { work_order: { id: string; display_number: string } }[])[0].work_order,
     { id: w.id, display_number: w.display_number, status: "Draft" },
   );
+  await hidesWorkOrders(a.p, a.occurrence.id, [request.work_order_id], ["WorkRequested"]);
 });
 
 test("M-R2 retrying Prepare never creates a second request or work order, and refusal precedes any write", async () => {
@@ -437,6 +460,7 @@ test("M-R4 a Partial occurrence offers one follow-on request carrying only the o
   });
   assert.equal(completed.receipt.state, "Completed");
   assert.equal((await workspace(p, "due", a.occurrence.id)).row.state, "Completed");
+  await hidesWorkOrders(p, a.occurrence.id, [original.work_order_id, followOn.work_order_id], ["WorkRequested", "FollowOnRequested"]);
   await assert.rejects(
     prepareFollowOn(p, a.occurrence.id, { ...cmd, operation_id: randomUUID(), expected_version: completed.receipt.record_version }),
     code("SourceReviewRequired"),

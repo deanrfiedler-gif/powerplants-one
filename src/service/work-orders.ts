@@ -1264,8 +1264,9 @@ export async function readWorkOrder(p: Principal, id: string) {
   // B1: the linked project appears only to someone who may read it; its identity never leaks otherwise.
   const { project_id, ...order } = w as WorkOrder & { project_id?: string | null };
   const project = await workOrderProject(c, p, project_id);
-  // M-R2: the exact plan task wording this order receives, so the page can warn before an edit
-  // that receiving would refuse. Text only: it repeats the order's own prepared scope.
+  // M-R2: the exact plan task wording this order receives, one entry per plan task (a repeated
+  // description appears once per task), so the page can warn before an edit that receiving would
+  // refuse. Text only: it repeats the order's own prepared scope.
   const planned_tasks = (
     await c.query(
       "SELECT 1 FROM pg_attribute WHERE attrelid=to_regclass('ppo.maintenance_work_requests') AND attname='work_order_id' AND NOT attisdropped",
@@ -1273,7 +1274,7 @@ export async function readWorkOrder(p: Principal, id: string) {
   ).rowCount
     ? (
         await c.query<{ description: string }>(
-          "SELECT DISTINCT t->>'description' AS description FROM ppo.maintenance_work_requests q, jsonb_array_elements(q.content->'tasks') t WHERE q.workspace_id=$1 AND q.work_order_id=$2 ORDER BY 1",
+          "SELECT t->>'description' AS description FROM ppo.maintenance_work_requests q, jsonb_array_elements(q.content->'tasks') t WHERE q.workspace_id=$1 AND q.work_order_id=$2 ORDER BY 1",
           [p.workspace_id, w.id],
         )
       ).rows.map((x) => x.description)

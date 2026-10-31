@@ -18,6 +18,7 @@ import { DeliverySalesSources } from "./sales-delivery-link";
 import type { LinkedProject } from "../service/project-field-work-model";
 import { useIdentity } from "./business-session";
 import { useCreateDraft } from "./record-ui";
+import { plannedTaskWordingGaps } from "../service/planned-task-wording";
 import {
   EnumField,
   ErrorNotice,
@@ -989,22 +990,45 @@ function ScopeForm({
         </p>
         {(() => {
           // M-R2: receiving a maintenance result matches task text exactly, so warn before saving.
-          const planned = new Set(w.planned_tasks ?? []);
-          const changed = planned.size
-            ? value.items.flatMap((item, n) =>
-                planned.has(item.task_description) ? [] : [n + 1],
-              )
-            : [];
-          return changed.length ? (
-            <p className="notice" role="status">
-              {changed.length === 1 ? "Task" : "Tasks"} {changed.join(", ")}{" "}
-              no longer {changed.length === 1 ? "matches" : "match"} the
-              maintenance plan task wording exactly. Receiving the maintenance
-              result will refuse a task whose description differs from the
-              plan. Restore the plan wording unless the plan itself is being
-              revised.
-            </p>
-          ) : null;
+          const planned = w.planned_tasks ?? [];
+          if (!planned.length) return null;
+          const { unmatched, missing } = plannedTaskWordingGaps(
+            planned,
+            value.items.map((item) => item.task_description),
+          );
+          if (!unmatched.length && !missing.length) return null;
+          return (
+            <div className="notice" role="status">
+              {unmatched.length > 0 && (
+                <p>
+                  {unmatched.length === 1 ? "Task" : "Tasks"}{" "}
+                  {unmatched.join(", ")} no longer{" "}
+                  {unmatched.length === 1 ? "matches" : "match"} the
+                  maintenance plan task wording exactly.
+                </p>
+              )}
+              {missing.length > 0 && (
+                <>
+                  <p>
+                    {missing.length === 1
+                      ? "This maintenance plan task has"
+                      : "These maintenance plan tasks have"}{" "}
+                    no scope task with its exact wording:
+                  </p>
+                  <ul>
+                    {missing.map((description, n) => (
+                      <li key={n}>{description}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <p>
+                Receiving the maintenance result needs one scope task with the
+                exact wording of each plan task. Restore the plan wording
+                unless the plan itself is being revised.
+              </p>
+            </div>
+          );
         })()}
         <button disabled={cmd.busy}>
           {successor ? "Create successor draft" : "Save scope draft"}

@@ -213,4 +213,21 @@ test("six-monthly plans, prepared work orders, Partial-only follow-on and the pl
   await page.screenshot({ path: test.info().outputPath("work-order-warning.png") });
   await first.fill(tasks[0]);
   await expect(warning).toHaveCount(0);
+  // #770 review R2: replacing task 2 with task 1's wording leaves every item matching some plan
+  // task, yet plan task 2 has no item, so the warning names the missing plan wording.
+  const second = page.getByLabel("Task description", { exact: false }).nth(1);
+  const missing = page.getByText(/no scope task with its exact wording/);
+  await expect(missing).toHaveCount(0);
+  await second.fill(tasks[0]);
+  await expect(missing).toBeVisible();
+  await expect(page.getByRole("listitem").filter({ hasText: tasks[1] })).toBeVisible();
+  await expect(warning).toHaveCount(0);
+  expect(await noOverflow(page)).toBe(true);
+  await second.fill(tasks[1]);
+  await expect(missing).toHaveCount(0);
+  // Removing a required task warns the same way; nothing blocks saving.
+  await page.getByRole("button", { name: "Remove task 2" }).click();
+  await expect(missing).toBeVisible();
+  await expect(page.getByRole("listitem").filter({ hasText: tasks[1] })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Save scope draft" })).toBeEnabled();
 });

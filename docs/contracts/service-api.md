@@ -158,7 +158,7 @@ Builds rules M-R2 and M-R4 of PPO-MAINTENANCE-TS02-DEC (`docs/decisions/maintena
 
 | Contract / route | M1 behaviour |
 |---|---|
-| API-R03 GET `/service/work-orders/:id` | Adds `planned_tasks`: the exact maintenance plan task descriptions the work order receives, sorted, or an empty list. Text only; no maintenance identity is returned. The scope form warns before saving a task description that is not one of them, because maintenance receiving refuses an unmatched task. |
+| API-R03 GET `/service/work-orders/:id` | Adds `planned_tasks`: the exact maintenance plan task descriptions the work order receives, one entry per plan task (a repeated description appears once per task), sorted, or an empty list. Text only; no maintenance identity is returned. The scope form compares description counts and warns, without blocking, before saving when a scope task matches no plan wording or a plan task has no scope task with its exact wording (edited, replaced by another task's wording, or removed), because maintenance receiving needs a distinct matching scope task for each plan task. |
 
 ### P03 implementation amendment — current bounded contract
 
