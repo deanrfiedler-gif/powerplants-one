@@ -73,7 +73,7 @@ export function CustomerMessages({ id }: { id?: string }) {
   const params = useSearchParams(),
     router = useRouter();
   const view = (messageViews.find((v) => v.id === params.get("view"))?.id ??
-    "to-send") as MessageView;
+    (id ? "all" : "to-send")) as MessageView;
   const selected = id ?? params.get("message");
   const queue = useResource<MessageQueue>(
     "customer-communications/queue?view=all",
@@ -185,31 +185,27 @@ export function CustomerMessages({ id }: { id?: string }) {
       phoneHeader={{
         record: selected
           ? {
-              position: data?.items.some((m) => m.id === selected)
-                ? `${data.items.findIndex((m) => m.id === selected) + 1} of ${data.items.length}`
+              position: items.some((m) => m.id === selected)
+                ? `${items.findIndex((m) => m.id === selected) + 1} of ${items.length}`
                 : "Message",
               previous: {
                 label: "Previous message",
                 disabled:
-                  !data || data.items.findIndex((m) => m.id === selected) < 1,
+                  !data || items.findIndex((m) => m.id === selected) < 1,
                 onSelect: () => {
-                  const i =
-                    data?.items.findIndex((m) => m.id === selected) ?? -1;
-                  if (i > 0) open(data!.items[i - 1].id);
+                  const i = items.findIndex((m) => m.id === selected) ?? -1;
+                  if (i > 0) open(items[i - 1].id);
                 },
               },
               next: {
                 label: "Next message",
                 disabled:
                   !data ||
-                  data.items.findIndex((m) => m.id === selected) < 0 ||
-                  data.items.findIndex((m) => m.id === selected) >=
-                    data.items.length - 1,
+                  items.findIndex((m) => m.id === selected) < 0 ||
+                  items.findIndex((m) => m.id === selected) >= items.length - 1,
                 onSelect: () => {
-                  const i =
-                    data?.items.findIndex((m) => m.id === selected) ?? -1;
-                  if (i >= 0 && i < data!.items.length - 1)
-                    open(data!.items[i + 1].id);
+                  const i = items.findIndex((m) => m.id === selected) ?? -1;
+                  if (i >= 0 && i < items.length - 1) open(items[i + 1].id);
                 },
               },
               more: [
@@ -494,7 +490,11 @@ function CustomerMessageRecord({
     <div className="cm-record-host">
       <div className="cm-record-tools">
         <Link href={back}>← Back to messages</Link>
-        {!full && <Link href={`${root}/${id}`}>Open full record</Link>}
+        {!full && (
+          <Link href={`${root}/${id}${back.slice(root.length)}`}>
+            Open full record
+          </Link>
+        )}
         <Button
           onClick={() => r.reload()}
           disabled={command.busy || !!command.pending || r.loading}
@@ -578,7 +578,7 @@ function CustomerMessageRecord({
                     </div>
                   ))}
               </dl>
-              <p>Follow-up owner: {m.owner.name}</p>
+              <p>Message owner: {m.owner.name}</p>
               <p className="cm-information">
                 Confirmation checks the current source, recipient, preference,
                 class switch and your authority again. Sent is simulated and
@@ -684,7 +684,11 @@ function CustomerMessageRecord({
                 {m.follow_up && (
                   <p>
                     <ButtonLink
-                      variant="primary"
+                      variant={
+                        ["Held", "Failed"].includes(m.state)
+                          ? "primary"
+                          : "secondary"
+                      }
                       href={`/work/${m.follow_up.activity_id}`}
                     >
                       Open follow-up
@@ -759,7 +763,13 @@ function CustomerMessageRecord({
               <ol className="cm-history">
                 {m.history.map((e) => (
                   <li key={e.version}>
-                    <strong>{e.display_state}</strong>
+                    <strong>
+                      {messageState({
+                        state: e.state,
+                        hold_reason: e.hold_reason,
+                        last_evidence: e.evidence,
+                      })}
+                    </strong>
                     <p>
                       {messageDate(e.occurred_at)} · {e.actor}
                     </p>
@@ -998,13 +1008,33 @@ function ClassRows({
                           : "Not published"}
                   </td>
                   <td>
-                    Customer send duty + {classRules[c.message_class].working}
+                    Customer send duty +{" "}
+                    {c.message_class === "VisitConfirmation"
+                      ? "schedule management"
+                      : c.message_class === "ProjectUpdate"
+                        ? "project editing"
+                        : "supply coordination"}
                   </td>
                 </tr>
               ))}
           </tbody>
         </RegisterTable>
       )}
+      {data &&
+        data.classes
+          .filter((c) => available.includes(c.message_class) && c.reason)
+          .map((c) => (
+            <p key={c.message_class} className="cm-class-change">
+              <strong>
+                {c.code} {c.label}:{" "}
+                {c.mode === "Off" ? "Off" : "On · synthetic"}
+              </strong>
+              {c.recorded_by ? ` · ${c.recorded_by}` : ""}
+              {c.recorded_at ? ` · ${messageDate(c.recorded_at)}` : ""}
+              <br />
+              {c.reason}
+            </p>
+          ))}
       {data && !data.can_switch && (
         <p>
           View only · changing switches needs the customer message switch duty.

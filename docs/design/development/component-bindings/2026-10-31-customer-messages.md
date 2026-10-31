@@ -23,4 +23,3 @@ Customer messages binds the existing dialog implementation in the queue, snapsho
 ## read-state
 
 Customer messages binds the existing read-state implementation in the queue, snapshot, record and classes view. Fixtures cover Prepared M1/M2, Held/Failed dimmed content, OutcomeUnknown reconciliation, send-duty denial, stale/failed reads, exact-operation recovery and reasoned switches. Desktop retains register columns and two-column detail; phone stacks sections and uses sheets with 48 px primary actions. No new shared rule or accepted fingerprint is asserted. See [page contract](../pages/scope-ec-04.md) and [execution evidence](../../../testing/evidence/customer-messages/README.md).
-

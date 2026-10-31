@@ -10,7 +10,7 @@ import {
 } from "../helpers/customer-messages-fixture";
 import type { MessageDetail } from "../../src/communications/ui-model";
 const root = "/email/customer-messages",
-  captures = "docs/testing/evidence/customer-messages/captures";
+  captures = "tmp/customer-messages-captures";
 test.setTimeout(180000);
 async function setup(
   page: Page,
@@ -23,6 +23,7 @@ async function setup(
     ecMessage(6, "Sent"),
   ],
 ) {
+  await mkdir(captures, { recursive: true });
   const posts: { path: string; body: Record<string, unknown> }[] = [];
   const state = {
     items,
@@ -30,8 +31,15 @@ async function setup(
     failDetail: false,
     loseResponse: false,
     staleCommand: false,
-    switchMode: "Synthetic",
-    switchVersion: 1,
+    switchMode: {
+      DispatchNotice: "Synthetic",
+      DelayNotice: "Synthetic",
+    } as Record<string, string>,
+    switchVersion: { DispatchNotice: 1, DelayNotice: 1 } as Record<
+      string,
+      number
+    >,
+    switchReasons: {} as Record<string, string>,
     posts,
   };
   await page.route(/^https:\/\//, (r) => r.abort());
@@ -99,8 +107,9 @@ async function setup(
         return r.abort("failed");
       }
       if (path.endsWith("switches")) {
-        state.switchMode = body.mode;
-        state.switchVersion++;
+        state.switchMode[body.message_class] = body.mode;
+        state.switchVersion[body.message_class]++;
+        state.switchReasons[body.message_class] = body.reason;
       } else {
         const m = state.items.find((m) => path.includes(m.id))!;
         m.version++;
@@ -109,6 +118,22 @@ async function setup(
           : path.endsWith("withdraw")
             ? "Withdrawn"
             : "Sent";
+        m.history.push({
+          version: m.version,
+          state: m.state,
+          action: path.endsWith("confirm")
+            ? "Confirm"
+            : path.endsWith("withdraw")
+              ? "Withdraw"
+              : "Reconcile",
+          hold_reason: null,
+          display_state: m.state,
+          provider_message_id: null,
+          actor: "SYN Sasha Cole",
+          reason: body.reason,
+          evidence: "Synthetic action recorded; delivery is not confirmed.",
+          occurred_at: "2026-10-13T23:01:00.000Z",
+        });
         m.actions = {
           ...m.actions,
           confirm: false,
@@ -134,11 +159,15 @@ async function setup(
               code: `M${i + 1}`,
               label: i ? "Delay notice" : "Dispatch notice",
               review: "Factual",
-              mode: state.switchMode,
-              version: state.switchVersion,
-              reason: null,
-              recorded_by: null,
-              recorded_at: null,
+              mode: state.switchMode[message_class],
+              version: state.switchVersion[message_class],
+              reason: state.switchReasons[message_class] ?? null,
+              recorded_by: state.switchReasons[message_class]
+                ? "SYN Sasha Cole"
+                : null,
+              recorded_at: state.switchReasons[message_class]
+                ? "2026-10-13T23:12:00.000Z"
+                : null,
             }),
           ),
         },
@@ -249,6 +278,9 @@ test("EC04-B03 held, failed and unknown keep content and never offer resend; rec
         "data-dimmed",
         "true",
       );
+    await page.screenshot({
+      path: `${captures}/${n === 3 ? "held" : n === 4 ? "failed" : "unknown"}-1440.png`,
+    });
   }
   await page
     .getByRole("button", { name: "Check Sent Items", exact: true })
@@ -267,6 +299,8 @@ test("EC04-B03 held, failed and unknown keep content and never offer resend; rec
     "Sent (simulated) · delivery not confirmed",
   );
   expect(state.posts[0].path).toMatch(/reconcile$/);
+  await page.getByRole("button", { name: /^History ·/ }).click();
+  await page.screenshot({ path: `${captures}/history-1440.png` });
 });
 test("EC04-B04 withdrawal and class switch require their native reason and version", async ({
   page,
@@ -293,17 +327,29 @@ test("EC04-B04 withdrawal and class switch require their native reason and versi
   await expect(page.locator(".cm-readiness")).toContainText("Withdrawn");
   expect(state.posts[0].body.expected_version).toBe(1);
   await page.goto(root + "?view=classes");
+  await expect(
+    page.getByRole("switch", { name: "Delay notice sending" }),
+  ).toBeVisible();
+  await page.screenshot({ path: `${captures}/classes-1440.png` });
   await page.getByRole("switch", { name: "Delay notice sending" }).click();
   dialog = page.getByRole("dialog", { name: "Turn off delay notice" });
   await expect(
     dialog.getByRole("button", { name: "Confirm switch change" }),
   ).toBeDisabled();
   await dialog.getByLabel("Reason (required)").fill("SYN pause delay notices");
+  await page.screenshot({ path: `${captures}/switch-1440.png` });
   await dialog.getByRole("button", { name: "Confirm switch change" }).click();
   await expect(
     page.getByRole("switch", { name: "Delay notice sending" }),
   ).toHaveAttribute("aria-checked", "false");
   expect(state.posts.at(-1)?.body.reason).toBe("SYN pause delay notices");
+  await expect(
+    page.getByRole("switch", { name: "Dispatch notice sending" }),
+  ).toHaveAttribute("aria-checked", "true");
+  await expect(page.locator(".cm-class-change")).toContainText(
+    "SYN pause delay notices",
+  );
+  await page.screenshot({ path: `${captures}/classes-off-1440.png` });
 });
 test("EC04-B05 send-duty denial and failed/restricted reads clear obsolete controls and counts", async ({
   page,
@@ -397,6 +443,9 @@ test("EC04-B07 320px search/filter and follow-up views retain qualified states",
   );
   await expect(page.locator(".cm-phone-list")).toContainText("Outcome unknown");
   await page.screenshot({ path: `${captures}/follow-up-320.png` });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: `${captures}/follow-up-390.png` });
+  await page.setViewportSize({ width: 320, height: 844 });
   await page
     .getByRole("button", { name: "Search and filter", exact: true })
     .click();
@@ -404,6 +453,7 @@ test("EC04-B07 320px search/filter and follow-up views retain qualified states",
     name: "Search and filter",
     exact: true,
   });
+  await page.screenshot({ path: `${captures}/filter-320.png` });
   await dialog
     .getByLabel("Search messages", { exact: true })
     .fill("no such synthetic subject");
@@ -418,4 +468,38 @@ test("EC04-B07 320px search/filter and follow-up views retain qualified states",
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+});
+
+test("EC04-B08 phone record More exposes withdrawal and preserves the sticky action", async ({
+  page,
+}) => {
+  const state = await setup(page, [ecMessage(1)]);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto(`${root}/${ecMessage(1).id}`);
+  const confirm = page.getByRole("button", {
+    name: "Confirm and send",
+    exact: true,
+  });
+  await expect(confirm).toBeVisible();
+  const box = await confirm.boundingBox();
+  expect(box!.height).toBeGreaterThanOrEqual(48);
+  expect(box!.width).toBeGreaterThanOrEqual(288);
+  await page.getByRole("button", { name: "More actions", exact: true }).click();
+  await page
+    .getByRole("menu", { name: "More actions", exact: true })
+    .getByRole("menuitem", { name: "Withdraw", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Withdraw message",
+    exact: true,
+  });
+  await expect(dialog).toBeVisible();
+  await dialog
+    .getByLabel("Reason", { exact: true })
+    .fill("SYN phone withdrawal after review");
+  await dialog
+    .getByRole("button", { name: "Confirm withdrawal", exact: true })
+    .click();
+  await expect(page.locator(".cm-readiness")).toContainText("Withdrawn");
+  expect(state.posts[0].path).toMatch(/withdraw$/);
 });

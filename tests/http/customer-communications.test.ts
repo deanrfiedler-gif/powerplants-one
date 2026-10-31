@@ -78,7 +78,8 @@ test("D-025 S2 over HTTP: templates, switch, prepared message, named sender, tim
 
   // R9: Off by default; only the switch duty changes it.
   const switches = await call("cs-reviewer", `customer-communications/switches?company_id=${CRM.company}`);
-  assert.equal(switches.body.can_switch, true);
+  assert.equal(switches.body.can_switch, false);
+  assert.equal((await call("coordinator", `customer-communications/switches?company_id=${CRM.company}`)).body.can_switch, true);
   assert.deepEqual(switches.body.classes.map((c: { mode: string }) => c.mode), ["Off", "Off", "Off", "Off"]);
   const on = { ...base(), company_id: CRM.company, message_class: "DispatchNotice", mode: "Synthetic", expected_version: 0 };
   assert.equal((await call("cs-reviewer", "customer-communications/switches", on)).status, 404);

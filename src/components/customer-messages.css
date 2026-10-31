@@ -681,3 +681,20 @@
 .cm-toolbar > span {
   font-size: 12px;
 }
+
+/* Override shell button/label defaults only for these native register consumers. */
+#ppo-customer-messages .cm-toolbar .cm-filters label {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  height: 40px;
+}
+#ppo-customer-messages .cm-message-link {
+  min-height: 0;
+}
+@media (max-width: 780px) {
+  #ppo-customer-messages .cm-phone-message {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
