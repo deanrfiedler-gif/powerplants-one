@@ -6,6 +6,8 @@ Owner: Dean Fiedler. ES-05. r20 page types: Review / comparison and Document & e
 
 ## Desktop
 
+Accepted design for the Distribution step only: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 draws the Send quotation composer (captures 13–15 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md)): the covering note, a locked View quotation block, the PDF switch and its warning, and tracking off by the privacy gate. That record accepts no other step. Real sending needs ADR-0059 and QV-S2.
+
 At 1440 and 1024 CSS px retain the PPO shell and one page scroll owner. Four cards distinguish preparation, approval, issue and distribution. Put non-operative conditions before decisions. Exact source/recipient/template disclosure, safe output preview/download and original recovery remain visible alongside attributable history. Avoid printing internal costs in customer output. Long identities and hashes wrap.
 
 ## Mobile
@@ -31,3 +33,9 @@ Required host states: Draft source, Prepared, render pending/failed/ready, Appro
 ## ES-06 receiving link
 
 An exact issued revision now links to the staff response page. Reported acceptance, corrections and negotiation remain separate from ES-05 approval/issue; the link passes this exact revision. See [response contract](../../../contracts/quotation-response.md). The shared panel stylesheet also serves ES-06; its controls and tokens are unchanged.
+
+## Accepted Figma design
+
+Dean accepted the Figma design for this page on 30 October 2026: see the [decision](../../../decisions/quotation-release-figma-design.md). It brings the page onto the shell and shared record layout, with four release steps and six tabs (Overview, Source & output, Approval, Issue register, Distribution, Revisions). Desktop 1440 has 13 frames, tablet 1024 shows approval, and phone 390 and 320 show approval with Approve and Return sheets. States cover loading, no access, stale, Output failed, tracking off and a changed recipient contact. Retained captures: [Quotation release design r01](../../../reference/ui/estimating/quotation-release-design-r01/README.md).
+
+This design is ahead of the running page, which keeps the bounded behaviour described above: appendices need estimating model step B5, real sending needs ADR-0059 and QV-S2, and customer views need QV-S1. The Withdraw request dialog, Compare v6 and v7, and issue and send on the phone are not drawn. The named Figma version "Quotation release — shared record layout, accepted" was saved on 30 October 2026. Owner acceptance of the design is not visual acceptance of the application, and no review fingerprint is recorded.
