@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 REP-07 is pending on RP-01 but published here | Resolved as recommended; nothing published | Publish REP-07 v1 (baseline, date authority, attribution, second approver) before building RP-03. Until then the Definition pending frame is what ships |
 | Q7 Capability names | Resolved as recommended; still proposed | `engineering.workload.read`, `engineering.review.read`, `project.read`, `project.commercial.read` and `engineering.commissioning.read` are proposed. Confirm them with Users and access (AD-01) before any build |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved | "Delivery performance · RP-03 — accepted" waits for Dean (section 8) |
+| Named Figma version | Saved by Dean | "Delivery performance · RP-03 — accepted": "I have saved the named version as Delivery performance · RP-03 — accepted". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -75,7 +75,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Accepted: section 4 |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | Not saved; waits for Dean |
+| Named version | "Delivery performance · RP-03 — accepted", saved by Dean |
 
 ## 4. What the design shows
 
@@ -143,5 +143,5 @@ None. The rename of the five report parts changes their Figma names only; their 
 - The fifteen captures are copies of the accepted frames on the "Captures (icon-free)" page, from y = 1,452,000 (`3096:20492` to `3096:72560`). Prototype reactions were removed and each Font Awesome icon instance was swapped for `Icon/placeholder`: 631 swaps. A scan of all twenty-one capture frames then found no Font Awesome instance and no prototype link. Unlike RP-02, stored text colours were not compared with their bound variables.
 - The captures were exported at scale 1 with the Figma connector and reviewed as images. The export is capped at 4,096 px, so the two full-length reports (desktop 9,281 px, tablet 9,297 px) were each split into three clipped frames at section boundaries, `3096:61397` to `3096:63271` and `3096:70686` to `3096:72560`. The hashes are in the [captures README](../reference/ui/reporting/delivery-performance-design-r01/README.md). In the tablet, only the top of the report (06a) was viewed at this stage; 06b and 06c were exported but not looked at individually.
 - The flows have 22 links. Claude did not play them in Present mode.
-- **The named version.** "Delivery performance · RP-03 — accepted" is not saved. The lock-in protocol keeps that for Dean, or for Claude on his explicit yes.
+- **The named version.** Dean saved "Delivery performance · RP-03 — accepted" and told Claude so; Claude did not check the version history. It is a version of the whole file, so it also holds whatever other sessions had drawn by then. The page header and the File index row were updated afterwards to record it, so those two text changes post-date the named version.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
