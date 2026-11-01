@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "source_head": "0428d20569e0e8c6964d62aa7c17ec5855bbc648",
+  "project": "mobile-chromium",
+  "started_at_ms": 1793219101075,
+  "events": [
+    {
+      "event": "request",
+      "elapsed_ms": 218,
+      "request": 1
+    },
+    {
+      "event": "held-route-entered",
+      "elapsed_ms": 218,
+      "request": 1
+    },
+    {
+      "event": "held-upstream-response",
+      "elapsed_ms": 5340,
+      "request": 1,
+      "status": 200
+    },
+    {
+      "event": "held-delay-completed",
+      "elapsed_ms": 11342,
+      "request": 1
+    },
+    {
+      "event": "held-route-fulfilled",
+      "elapsed_ms": 11345,
+      "request": 1
+    },
+    {
+      "event": "response",
+      "elapsed_ms": 11346,
+      "request": 1,
+      "status": 200
+    },
+    {
+      "event": "test-matched-response",
+      "elapsed_ms": 11346,
+      "request": 1,
+      "status": 200
+    },
+    {
+      "event": "request-finished",
+      "elapsed_ms": 11347,
+      "request": 1
+    },
+    {
+      "event": "tab-assertion-started",
+      "elapsed_ms": 11418
+    },
+    {
+      "event": "tab-assertion-passed",
+      "elapsed_ms": 11557
+    }
+  ],
+  "browser": [
+    {
+      "event": "state",
+      "at_ms": 1793219101103,
+      "main": false,
+      "loading": false,
+      "customer_review_tab": false,
+      "resource_alert": false,
+      "visibility": "visible"
+    },
+    {
+      "event": "state",
+      "at_ms": 1793219101104,
+      "main": true,
+      "loading": false,
+      "customer_review_tab": false,
+      "resource_alert": false,
+      "visibility": "visible"
+    },
+    {
+      "event": "state",
+      "at_ms": 1793219101288,
+      "main": true,
+      "loading": true,
+      "customer_review_tab": false,
+      "resource_alert": false,
+      "visibility": "visible"
+    },
+    {
+      "event": "state",
+      "at_ms": 1793219112444,
+      "main": true,
+      "loading": false,
+      "customer_review_tab": true,
+      "resource_alert": false,
+      "visibility": "visible"
+    },
+    {
+      "event": "final-state",
+      "at_ms": 1793219112648,
+      "main": true,
+      "loading": false,
+      "customer_review_tab": true,
+      "resource_alert": false,
+      "visibility": "visible"
+    }
+  ]
+}
