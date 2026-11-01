@@ -44,7 +44,7 @@ const noOverflow = async (page: Page) =>
     ),
   ).toBe(true);
 async function openFirst(page: Page, index = 0) {
-  if ((page.viewportSize()?.width ?? 1440) < 768)
+  if ((page.viewportSize()?.width ?? 1440) <= 780)
     await page.locator(".er-phone-open").nth(index).click();
   else
     await page
@@ -344,7 +344,7 @@ test("EN01 loading, denied, partial technical source and retry never present unc
     snapshot.getByRole("tab", { name: "Deliverables", exact: true }),
   ).toBeVisible();
   await page.unroute("**/api/v1/engineering/" + s.packages[0].id + "/control");
-  if (page.viewportSize()!.width < 768) {
+  if (page.viewportSize()!.width <= 780) {
     await snapshot
       .getByRole("button", { name: "More package actions", exact: true })
       .click();
@@ -372,14 +372,14 @@ test("EN01 loading, denied, partial technical source and retry never present unc
       }),
     }),
   );
-  if (page.viewportSize()!.width < 768) {
+  if (page.viewportSize()!.width <= 780) {
     await page.getByRole("button", { name: /^Filter/ }).click();
   }
   await page
     .getByRole("button", { name: "Refresh packages", exact: true })
     .filter({ visible: true })
     .click();
-  if (page.viewportSize()!.width < 768) {
+  if (page.viewportSize()!.width <= 780) {
     await page
       .getByRole("button", {
         name: "Close Filter engineering packages",
@@ -480,6 +480,7 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
   for (const [width, height] of [
     [1440, 900],
     [1024, 768],
+    [781, 900],
     [768, 900],
     [390, 844],
     [320, 844],
@@ -506,7 +507,7 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
     await expect(
       snapshot.getByRole("button", { name: "Close package", exact: true }),
     ).toBeInViewport();
-    if (width < 768) {
+    if (width <= 780) {
       const reference = snapshot.locator(".eng-dialog-head > h2");
       await expect(reference).toHaveText(/^SYN-ENG-\d+$/);
       await expect(reference).toBeInViewport();
@@ -523,7 +524,7 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
     });
     await page.keyboard.press("Escape");
     await expect(snapshot).toHaveCount(0);
-    if (width < 768) {
+    if (width <= 780) {
       await expect(page.locator(".er-phone-open").nth(2)).toBeFocused();
       await page
         .getByRole("button", { name: "Select packages", exact: true })

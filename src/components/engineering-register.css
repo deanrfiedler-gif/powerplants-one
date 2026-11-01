@@ -637,7 +637,7 @@
     height: auto;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 780px) {
   #ppo-engineering[data-native-register] {
     height: 100%;
     min-height: 0;
@@ -818,7 +818,7 @@
   gap: 12px;
   flex: none;
 }
-@media (max-width: 767px) {
+@media (max-width: 780px) {
   #ppo-engineering[data-native-register] .er-selection {
     display: none;
   }
@@ -904,7 +904,7 @@
 #ppo-engineering[data-native-register] .er-snapshot-phone-more {
   display: none;
 }
-@media (max-width: 767px) {
+@media (max-width: 780px) {
   #ppo-engineering[data-native-register] .er-snapshot-phone-more {
     display: block;
     flex: none;
@@ -944,7 +944,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 780px) {
   #ppo-engineering[data-native-register]
     .er-snapshot-phone-more
     > .crm-r38-menu-trigger {
@@ -986,7 +986,7 @@
 }
 
 /* Paging remains usable underneath an overlapping selection panel. */
-@media (min-width: 768px) {
+@media (min-width: 781px) {
   #ppo-engineering[data-native-register]
     .er-register[data-paged="true"]
     .er-selection {
@@ -1000,7 +1000,7 @@
 #ppo-engineering[data-native-register] .er-close-phone {
   display: none;
 }
-@media (max-width: 767px) {
+@media (max-width: 780px) {
   #ppo-engineering[data-native-register]
     .er-register[data-paged="true"]
     .er-phone-new {
