@@ -1,8 +1,7 @@
 // Request-time adapters keep filesystem/Git reads local and immutable build data hosted.
 import {
   buildCatalog,
-  guideDocument,
-  readGuides,
+  readGuideDocument,
   readPageGuide,
   readReference,
 } from "./catalog";
@@ -38,17 +37,21 @@ export async function developmentComponents(
 export async function developmentGuide(key: string) {
   if (process.env.PPO_ENV === "azure-demo")
     return (await snapshot()).guides.find((g) => g.guide_key === key);
-  const guide = (await readGuides(process.cwd())).find(
-    (g) => g.guide_key === key,
-  );
-  return guide ? guideDocument(process.cwd(), guide) : undefined;
+  return readGuideDocument(process.cwd(), key);
 }
 export async function developmentPageGuide(pathname: string) {
   if (process.env.PPO_ENV !== "azure-demo")
     return readPageGuide(process.cwd(), pathname);
   const value = await snapshot();
-  const key = matchEntry(value.catalog.entries, pathname)?.guide_key;
-  return value.guides.find((g) => g.guide_key === key);
+  const entry = matchEntry(value.catalog.entries, pathname);
+  if (!entry) return undefined;
+  // The entry's own guide, otherwise the Markdown guide that lists the entry in also_applies_to (as readPageGuide).
+  return (
+    value.guides.find((g) => g.guide_key === entry.guide_key) ??
+    value.guides.find((g) =>
+      g.markdown?.front.also_applies_to.includes(entry.key),
+    )
+  );
 }
 export async function developmentPreview() {
   if (process.env.PPO_ENV === "azure-demo") {

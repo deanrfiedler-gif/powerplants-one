@@ -1,3 +1,6 @@
+import type { CompiledGuide, GuideStatus } from "../guides/model";
+import type { GuideState } from "../guides/status";
+
 export type GuideSection = {
   section_id: string;
   title: string;
@@ -10,7 +13,7 @@ export type Guide = {
   guide_key: string;
   entry_key: string;
   title: string;
-  status: string;
+  status: GuideStatus;
   owner_role: string;
   reviewer: string | null;
   reviewed_at: string | null;
@@ -29,10 +32,36 @@ export type FileHistory = {
   history_url: string | null;
   source_url: string | null;
 };
+// A guide as the design workspace reads it. A Markdown guide (docs/guides) carries its compiled form in `markdown`, and
+// its history is its own file's; a JSON draft (guides.json) has no `markdown`, and its history is the library file's.
 export type GuideDocument = Guide & {
   history: FileHistory;
-  review_state: "Draft" | "Reviewed" | "Changes awaiting review";
+  review_state: GuideState;
+  markdown?: CompiledGuide;
 };
+// A compiled guide whose section anchors cannot collide with another copy of the same guide on the page, such as the
+// released page guide that the shell panel shows below the development guide. Plain data, so client components use it.
+export function scopedGuide(
+  guide: CompiledGuide,
+  prefix: string,
+): CompiledGuide {
+  const rename = <T>(map: Record<string, T> | undefined) =>
+    Object.fromEntries(
+      Object.entries(map ?? {}).map(([id, value]) => [prefix + id, value]),
+    );
+  return {
+    ...guide,
+    front: {
+      ...guide.front,
+      contents: rename(guide.front.contents),
+      list_styles: rename(guide.front.list_styles),
+    },
+    sections: guide.sections.map((section) => ({
+      ...section,
+      id: prefix + section.id,
+    })),
+  };
+}
 export type Entry = {
   key: string;
   title: string;
