@@ -15,9 +15,10 @@ Checked:
 - No Font Awesome instance is left in the capture copies, and no copy carries a navigation link.
 - The page's navigation links stay on the page. The flows were traced in code, not played in Present mode.
 
+Dean saved the named Figma version "Migration & cutover — accepted".
+
 Not done:
 - `/admin/migration` is not built.
-- The named Figma version "Migration & cutover — accepted" is not saved yet.
 - The AD-03, AD-04, AD-05, AD-07 and AD-10 pages this design hands to aren't accepted by this decision.
 
 No application code, route, migration, permission, grant, adapter, workflow or parent ID changes. This authorises no real migration, integration or cutover.

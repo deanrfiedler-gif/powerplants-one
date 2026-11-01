@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Where duplicates are merged | Resolved as recommended | Only in Data quality (AD-03). This page flags and hands over |
 | Q6 How long rehearsal spaces and reports are kept | Resolved as recommended, subject to D-012 | The space is discarded after sign-off or 10 days. Reports and sign-offs are kept in Audit history (AD-07) under the retention rules of D-012, which is still open |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | Section 7 |
 | Building the page | Not decided | Section 5 |
 
 Q1 to Q3 shape the drawn plan. They set no date and start nothing. The page's own label stays "Proposed plan: not a decision", and the calendar dates in the frames belong to the synthetic story.
@@ -116,4 +116,4 @@ Open for the next change to the page, not changed here:
 
 ## 7. Named version
 
-Named Figma version "Migration & cutover — accepted": not saved yet. It waits for Dean, or for his explicit instruction to Claude.
+Named Figma version "Migration & cutover — accepted": saved by Dean on 1 November 2026. He reported: "I have saved the named version as Migration & cutover — accepted". Claude did not open the version history to confirm it.
