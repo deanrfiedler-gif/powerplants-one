@@ -382,12 +382,16 @@ export function ExcelImport() {
           {selected?.revision.observed_context?.organisation.display_name ??
             "Customer unavailable"}{" "}
           ·{" "}
-          {selected?.revision.observed_context?.site?.display_name ??
-            "Site unavailable"}{" "}
+          {basis
+            ? (basis.site_name ?? "Site unavailable")
+            : (selected?.revision.observed_context?.site?.display_name ??
+              "Site unavailable")}{" "}
           · {w.data.context.owner} · Alternative{" "}
-          {selected?.option.label ?? "Unknown"} · Discovery r
-          {selected?.revision.version ?? "?"}{" "}
-          {selected?.revision.scope_readiness ?? "Unknown"}
+          {basis?.option_label ?? selected?.option.label ?? "Unknown"} ·
+          Discovery r{basis?.revision ?? selected?.revision.version ?? "?"}{" "}
+          {basis
+            ? "Complete"
+            : (selected?.revision.scope_readiness ?? "Unknown")}
         </>
       }
     />
@@ -560,6 +564,7 @@ function ImportWorkflow({
     }
   }
   const ready =
+    eligible &&
     !!review?.validation_passed &&
     !!basis &&
     (!basis.target.estimate_id || !!comparison) &&
@@ -567,6 +572,29 @@ function ImportWorkflow({
       comparison.omissions.every((l) => !!decisions[l.line_id])) &&
     !error &&
     !command.error;
+  const canSave =
+    ready &&
+    !blocked &&
+    confirmed.length === 4 &&
+    !!reason.trim() &&
+    (!comparison || changesConfirmed);
+  const workflowStatus = command.accepted
+    ? "Saved"
+    : command.pending
+      ? command.busy
+        ? "Saving or checking original operation"
+        : "Save outcome uncertain"
+      : !eligible
+        ? "Import unavailable"
+        : busy
+          ? "Checking workbook"
+          : canSave
+            ? "Ready to save"
+            : review
+              ? review.validation_passed
+                ? "Review required"
+                : "Blocked"
+              : "Choose workbook";
   const proposed = comparison ? proposedTotals(comparison, decisions) : null;
   const summary = (
     <>
@@ -578,11 +606,7 @@ function ImportWorkflow({
           review?.validation_passed ? "success" : review ? "danger" : "neutral"
         }
       >
-        {review
-          ? review.validation_passed
-            ? "Review required"
-            : "Blocked"
-          : "Choose workbook"}
+        {workflowStatus}
       </Tag>
       {comparison ? (
         <dl>
@@ -633,17 +657,7 @@ function ImportWorkflow({
   if (estimate && mode !== "workbook")
     return <SavedWorkflow estimate={estimate} mode={mode} context={context} />;
   const save = () => {
-    if (
-      !ready ||
-      !file ||
-      !basis ||
-      !review ||
-      confirmed.length !== 4 ||
-      !reason.trim() ||
-      blocked ||
-      (comparison && !changesConfirmed)
-    )
-      return;
+    if (!canSave || !file || !basis || !review) return;
     void command.send(
       `estimating/workspaces/${w.workspace.id}/excel-import/${comparison ? "reimport" : "commit"}`,
       {
@@ -683,13 +697,7 @@ function ImportWorkflow({
       summary={summary}
       footer={
         <>
-          <span className="es02-bottom-state">
-            {command.pending
-              ? "Save outcome uncertain"
-              : review?.validation_passed
-                ? "Ready for review"
-                : "Nothing saved yet"}
-          </span>
+          <span className="es02-bottom-state">{workflowStatus}</span>
           {step > 0 && !command.accepted && (
             <Button disabled={blocked} onClick={() => setStep(step - 1)}>
               Previous
@@ -721,17 +729,7 @@ function ImportWorkflow({
                 Continue to confirm
               </Button>
             ) : (
-              <Button
-                variant="primary"
-                disabled={
-                  blocked ||
-                  !ready ||
-                  confirmed.length !== 4 ||
-                  !reason.trim() ||
-                  (!!comparison && !changesConfirmed)
-                }
-                onClick={save}
-              >
+              <Button variant="primary" disabled={!canSave} onClick={save}>
                 {comparison ? "Save revised estimate" : "Save as estimate v1"}
               </Button>
             ))}
@@ -1039,9 +1037,11 @@ function SavedWorkflow({
       context={context}
       step={
         mode === "pricing" || mode === "quotation"
-          ? reviewSummary
-            ? 2
-            : continuationStep
+          ? continuationStep === 3
+            ? 3
+            : reviewSummary
+              ? 2
+              : continuationStep
           : 3
       }
       stepLabels={
@@ -1086,7 +1086,11 @@ function SavedWorkflow({
               onStage={setContinuationStep}
             />
           ) : mode === "quotation" ? (
-            <ExcelQuotation estimate={e} onReview={setReviewSummary} />
+            <ExcelQuotation
+              estimate={e}
+              onReview={setReviewSummary}
+              onStage={setContinuationStep}
+            />
           ) : (
             <>
               <section className="es02-card xi-ready">

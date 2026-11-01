@@ -74,6 +74,9 @@ async function capture(page: Page, name: string, width = 1440, height = 1000) {
   await expect(page.locator('script[src*="kit.fontawesome.com"]')).toHaveCount(
     0,
   );
+  await page.locator("#ppo-excel-import .es02-scroll").evaluate((el) => {
+    el.scrollTop = 0;
+  });
   await page.screenshot({
     path: `tmp/excel-import-ui/captures/${name}-${width}.png`,
     fullPage: false,
@@ -137,6 +140,9 @@ test("XI-01 to XI-08 native upload, comparison, pricing and explicit Draft choic
     name: "Summary",
     exact: true,
   });
+  await expect(
+    page.locator(".xi-phone-totals .xi-reconciliation"),
+  ).toContainText("Exact to the cent");
   await summaryButton.click();
   await expect(
     page.getByRole("dialog", { name: "Import summary", exact: true }),
@@ -157,8 +163,26 @@ test("XI-01 to XI-08 native upload, comparison, pricing and explicit Draft choic
     .getByRole("button", { name: "Continue to confirm", exact: true })
     .click();
   await confirm(page);
+  await expect(page.locator(".es02-bottom-state")).toHaveText("Ready to save");
   await capture(page, "confirm");
   const stale = await page.context().newPage();
+  // Freeze this tab's already-read workspace to exercise a truly stale native commit,
+  // even if the shared resource poll runs after the other tab saves.
+  const workspaceId = new URL(
+    fixture.route,
+    info.project.use.baseURL,
+  ).searchParams.get("workspace");
+  const workspacePath = `/api/v1/estimating/workspaces/${workspaceId}`;
+  const workspaceSnapshot = await stale.request.get(workspacePath);
+  expect(workspaceSnapshot.ok()).toBeTruthy();
+  const workspaceBody = await workspaceSnapshot.text();
+  await stale.route(`**${workspacePath}`, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: workspaceBody,
+    }),
+  );
   await stale.goto(fixture.route);
   await upload(stale, "ready");
   await stale
@@ -321,6 +345,9 @@ test("XI-01 to XI-08 native upload, comparison, pricing and explicit Draft choic
   await expect(
     page.getByRole("heading", { name: "Estimate saved", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.locator('[aria-label="Excel import steps"] [aria-current="step"]'),
+  ).toContainText("4. Priced");
   const pricedEstimateId = new URL(page.url()).searchParams.get("estimate");
   await page.route(
     `**/api/v1/estimating/estimates/${pricedEstimateId}`,
@@ -389,6 +416,9 @@ test("XI-01 to XI-08 native upload, comparison, pricing and explicit Draft choic
   await expect(
     page.getByRole("heading", { name: "Draft saved", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.locator('[aria-label="Excel import steps"] [aria-current="step"]'),
+  ).toContainText("4. Draft saved");
   await page
     .getByRole("button", { name: "Open saved result", exact: true })
     .click();

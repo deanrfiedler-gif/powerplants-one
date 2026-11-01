@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-01",
+  "basis": "65a05e8e plus local mobile reconciliation, saved-stage and saved-context refinements; before final eligibility/status refinement",
+  "status": "Builder-inspected synthetic captures from the incomplete browser rerun; not visual acceptance",
+  "captures": [
+    {
+      "file": "workbook-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "d9fcab6fa35f43c890cc8118645994ceebb94572ac8fecdffee3510648565790"
+    },
+    {
+      "file": "blocked-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "3695f12aaeb08be4d3dd0567389e8211c54d56306b590a1b694c80d7b037581c"
+    },
+    {
+      "file": "review-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "2faec6ee31186b667148e48ccfa59c0db05d50992532fe8a7db8dd9470a85a62"
+    },
+    {
+      "file": "review-1024.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "ab664bfb15f67069a745824ee51b62dc4045cb59de076ca4edd822d3cf615c5f"
+    },
+    {
+      "file": "review-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "53ce6ee35852b1e8197543a06bc0436e874b3479fdf00e23ee63b20ec55d7008"
+    },
+    {
+      "file": "review-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "c154ba2bf4992d17a9f1e98760abc023551672b98559272659de665e5d3f6196"
+    },
+    {
+      "file": "confirm-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "bafa5bd0ac32bd453fae7f07a809b35efc9c09373ce4ff648dd9417affcf192f"
+    }
+  ]
+}

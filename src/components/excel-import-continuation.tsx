@@ -77,6 +77,9 @@ export function ExcelPricing({
     !!command.accepted ||
     !command.ready;
   const editable = e.can_edit && e.saved.id === e.current_version_id;
+  useEffect(() => {
+    if (command.accepted) onStage(3);
+  }, [command.accepted, onStage]);
   useUnsavedChanges(
     dirty && !command.accepted,
     command.busy || !!command.pending,
@@ -722,9 +725,11 @@ export function ExcelPricing({
 export function ExcelQuotation({
   estimate: e,
   onReview,
+  onStage,
 }: {
   estimate: Estimate;
   onReview: (value: ReviewSummary | null) => void;
+  onStage: (value: number) => void;
 }) {
   const router = useRouter(),
     [initial, setInitial] = useState<QuoteReview | null>(null),
@@ -786,6 +791,9 @@ export function ExcelQuotation({
     },
     [],
   );
+  useEffect(() => {
+    onStage(command.accepted ? 3 : review ? 2 : 0);
+  }, [command.accepted, review, onStage]);
   const complete = initial?.proposals.every(
     (p) =>
       typeof choices[p.line_id]?.included === "boolean" &&

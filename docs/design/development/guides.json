@@ -74682,60 +74682,6 @@
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
       ]
-    },
-    {
-      "guide_key": "guide.route-estimating-import",
-      "entry_key": "route:/estimating/import",
-      "title": "Excel estimate import and review",
-      "status": "Draft",
-      "owner_role": "Prototype content owner: Dean Fiedler",
-      "reviewer": null,
-      "reviewed_at": null,
-      "reviewed_content_hash": null,
-      "content_mode": "Native synthetic workflow",
-      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
-      "related_entry_keys": [],
-      "sections": [
-        {
-          "section_id": "purpose",
-          "title": "Purpose and applicability",
-          "paragraphs": [
-            "Import a synthetic PPO workbook into one exact selected option and Complete discovery revision. Review evidence and save one immutable estimate version. Re-import, reviewed-source pricing and Draft preparation are separate commands."
-          ],
-          "steps": [],
-          "headers": [],
-          "rows": []
-        },
-        {
-          "section_id": "quick-start",
-          "title": "Using this page",
-          "paragraphs": [
-            "Choose workbook, then Validate workbook. Review errors, warnings, every line and reconciliation. Correct errors in Excel and upload again. Continue to confirm, give all four declarations and a reason, then save. Open saved result and verify the exact receipt/version."
-          ],
-          "steps": [],
-          "headers": [],
-          "rows": []
-        },
-        {
-          "section_id": "recovery",
-          "title": "If something is unavailable",
-          "paragraphs": [
-            "If the save outcome is uncertain, use Check original outcome or Retry exact original. The same-tab journal keeps the original operation identity and intent; it does not invent a replacement. A missing receipt is inconclusive. Do not clear browser recovery data to force a second save.",
-            "The browser must store the pending intent before sending. If tab storage is unavailable or full, no command is sent; keep the original workbook and resolve storage first. Large files can hit the browser’s quota below the parser’s 5 MiB limit."
-          ],
-          "steps": [],
-          "headers": [],
-          "rows": []
-        }
-      ],
-      "prepared_at": "2026-10-31",
-      "runtime_evidence": "Synthetic workflow executed; results and limits: docs/testing/evidence/excel-import-ui/README.md; owner guide acceptance open",
-      "change_summary": "Contextual native import, review, comparison, pricing, Draft and recovery guidance.",
-      "source_paths": [
-        "docs/decisions/excel-import-figma-design.md",
-        "docs/contracts/excel-estimate-import.md",
-        "src/app/(business)/estimating/import/page.tsx"
-      ]
     }
   ]
 }

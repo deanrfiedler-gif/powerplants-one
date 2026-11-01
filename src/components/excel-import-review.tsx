@@ -151,6 +151,21 @@ export function ReviewWorkbook({ review }: { review: WorkbookReview }) {
       </div>
       <div className="xi-phone-totals">
         <ImportTotals review={review} />
+        <dl className="xi-reconciliation">
+          <Row label="Reconciliation">
+            <Tag
+              tone={
+                review.reconciliation.every((r) => r.matches)
+                  ? "success"
+                  : "warning"
+              }
+            >
+              {review.reconciliation.every((r) => r.matches)
+                ? "Exact to the cent"
+                : "Review differences"}
+            </Tag>
+          </Row>
+        </dl>
       </div>
       {(["Error", "Warning"] as const)
         .filter((severity) =>
