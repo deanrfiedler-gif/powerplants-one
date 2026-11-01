@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "used_on": [
+        "route:/sales/tasks"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-sh02-tasks-grid",
+          "expected": "The accepted Sales Pulse and Tasks design (PPO-SH02-SALES-PULSE-TASKS-FIGMA-DEC) shows Tasks as one grid grouped by due, reusing the My Work activity grid row, with no checkbox and the Owner column hidden on Owner: Mine. Pulse uses the Figma page parts Pulse / Action row and Pulse / Deal attention row.",
+          "actual": "The native /sales/tasks and /sales/pulse pages keep their Lead and Deal cards built on ActivityRow; they are not built to this design. The two parts and two solid rail icons stay on the SH-02 Figma page and are not on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for Tasks and record any departure; move the parts to Components only when another page needs them.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
