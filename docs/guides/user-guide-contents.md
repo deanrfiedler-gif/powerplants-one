@@ -126,7 +126,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Specialist configuration workbench | ES-08 | Built |
 | Priva fertigation configurator | — (route `/estimating/fertigation`) | Partly built |
 | Configure & price, and the Rules studio | — (routes `/estimating/cpq`, `/estimating/rules`) | Built |
-| Excel estimate import | excel-import | Not built |
+| Excel estimate import | excel-import | Native UI in PR #800; proof and acceptance separate |
 | Estimate-to-actual outcome review | ES-09 | Not built |
 | Reference cases and calibration | ES-10 | Not built |
 

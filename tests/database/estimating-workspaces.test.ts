@@ -185,7 +185,7 @@ test("E2 persistence creates one selected option and exact immutable scope under
     5,
   );
   assert.equal(v.delivery_routing.status, "NotConfigured");
-  assert.equal(v.costing_import.status, "NotImplemented");
+  assert.equal(v.costing_import.status, "Implemented");
   assert.equal(
     (await rows("SELECT count(*)::int n FROM ppo.estimates"))[0].n,
     0,

@@ -82,16 +82,26 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 The synthetic amounts reconcile across versions: v1 import (cost AUD 61,240.50, sell AUD 84,915.00), v2 priced (cost AUD 61,285.70), v3 with a PPO-only line, v4 re-import (cost AUD 61,320.50, sell AUD 85,305.00) and a Draft total of AUD 84,155.00. They are illustrative, not operational prices or policies.
 
-## 5. Not decided
+## 5. Boundaries at design acceptance
 
-- **Building the pages.** The route, the Wizard's Review action (Q1) and the estimate-record actions need implementation against the merged APIs. The Wizard action adds to the accepted Wizard design; it is recorded here, not drawn on the Wizard page.
+- **Building the pages.** These were not authorised by the 15 October design acceptance itself. Dean requested the route, the Wizard's Review action (Q1) and the estimate-record actions on 31 October; PR #800 implements them against the merged APIs. The Wizard action adds to the accepted Wizard design; it is recorded here, not drawn on the Wizard page.
 - **Still open:** native FX authoring and review controls for Cost Sources are not implemented (reviewed FX contract); operational workbook compatibility has not been assessed, because no redacted departmental workbook has been supplied.
 - **Not drawn yet:** pricing steps 1 and 2 (the line and source picker and the charge entry form), the full line list, the estimate record page with its Import evidence section (Q3), and prototype links.
 
+## Implementation recommendations — 31 October 2026
+
+Codex recommendation under Dean's standing order, recorded on [PR #800](https://github.com/deanrfiedler-gif/powerplants-one/pull/800). Dean explicitly requested this build and raised the concurrent-page limit to ten in the task. This is not another acceptance of undrawn design.
+
+- Pricing steps 1 and 2 use existing Field, SelectField and Button controls for exact line/source revisions, pricing date and optional authored AUD landed charges. Native source/version/evidence validation remains authoritative; native FX authoring/review is outside scope.
+- The full line list uses the Wizard TableScroll and a filterable table, with every populated row and its original cells/formula caches reachable. Phone users explicitly open the list.
+- The estimate record gains a read-only Import evidence section and exact-version continuation links. The import page shows authenticated review and original-download access; current access checks remain server-owned.
+- Alternative considered: leave these tasks unavailable. Composition of established controls completes the authorised workflow without new rules, dependencies or endpoints. Reversal is a later presentation PR; historical source and saved versions stay immutable.
+- These additions, and any differences identified in [application evidence](../testing/evidence/excel-import-ui/README.md), remain agent recommendations/application adaptations. Accepted frame bytes, named version and visual acceptance are unchanged.
+
 ## 6. Consequences
 
-- No application code, route, migration, permission or capability changes. No scope or parent requirement ID changes; all 78 parent IDs remain.
-- The [Excel import register entry](../design/development/pages/scope-excel-import.md) now links this design and its captures. Its visual status stays "Needs review": nothing is built.
+- The 15 October design issue changed no application code, route, migration, permission or capability. The 31 October implementation adds the native route and actions, with no new migration, grant, capability or dependency. No scope or parent requirement ID changes; all 78 parent IDs remain.
+- The [Excel import register entry](../design/development/pages/scope-excel-import.md) now links this design and its captures. Its visual status stays "Needs review": source implementation and paired application comparison do not grant visual acceptance.
 - When the pages are built, they are compared with these captures and the Figma frames at the same viewports, following ADR-0053 rule 7.
 - A later change to this design receives a new named version and a new capture revision folder; these bytes stay unchanged.
 
@@ -100,4 +110,4 @@ The synthetic amounts reconcile across versions: v1 import (cost AUD 61,240.50, 
 - Claude checked every frame with screenshots taken inside Figma while drawing, and recomputed the synthetic amounts so that every total reconciles. Claude cannot run Present mode through the connector, so no click-through was exercised.
 - The thirteen captures are copies of the accepted frames with every Font Awesome icon instance swapped for `Icon/placeholder`. A scan after the swap found no Font Awesome instance left, and a second scan found no text whose stored colour differed from its bound variable or matched its background. They were exported at scale 1 with the Figma connector, and each image was inspected. The hashes are in the [captures README](../reference/ui/estimating/excel-import-figma-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change.
-- Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+- At the design issue there was no application or device evidence. The 31 October [implementation evidence](../testing/evidence/excel-import-ui/README.md) records native proof and paired inspection separately. This decision does not grant application visual acceptance.

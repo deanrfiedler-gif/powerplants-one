@@ -2,22 +2,30 @@
 document_id: PPO-010-EXCEL-SPEC
 date: 2026-09-15
 owner: Dean Fiedler - prototype owner
-status: Design package; application implementation pending
+status: Native synthetic UI in PR 800; owner acceptance open
 source_commit: dcabfec1b5cde1c2cf220359e6cf1c63408512d6
 versioning: git
 ---
 
 # Excel estimate import specification
 
-**Receiving update — 14 October 2026:** The [validated upload/review API](excel-import-review.md) implements the transient preview portion with exact native UUID context mapping. [Durable first save](excel-import-persistence.md) and [controlled re-import](excel-import-revision.md) extend that backend. [Verified quotation continuation](excel-import-quotation.md) binds the exact imported version to a separately reviewed native Draft. Native UI remains a subsequent increment. The design baseline below is retained.
+**Receiving update — 14 October 2026:** The [validated upload/review API](excel-import-review.md) implements the transient preview portion with exact native UUID context mapping. [Durable first save](excel-import-persistence.md) and [controlled re-import](excel-import-revision.md) extend that backend. [Verified quotation continuation](excel-import-quotation.md) binds the exact imported version to a separately reviewed native Draft. Native UI was subsequently implemented in PR 800; see Native page continuation below. The original design baseline remains distinguishable.
 
 ## 1. Outcome and authority
 
-An estimator transfers reviewed results from an Excel workbook into an owned PPO draft estimate, retaining the source, reconciliation and exact selected estimating basis. Dean authorised the recommended design package: workbook assessment, standard workbook r01, field mapping, interactive preview and bounded implementation plan. This contribution delivers those design artifacts. It changes no application route, schema, grant, price policy, customer document or external integration.
+An estimator transfers reviewed results from an Excel workbook into an owned PPO draft estimate, retaining the source, reconciliation and exact selected estimating basis. Dean authorised the recommended design package: workbook assessment, standard workbook r01, field mapping, interactive preview and bounded implementation plan. The original September contribution delivered those design artifacts without changing an application route, schema, grant, price policy, customer document or external integration. The October native continuation is recorded separately below.
 
 Parent work package remains PPO-010 / [issue #10](https://github.com/deanrfiedler-gif/powerplants-one/issues/10). EST-02–EST-05, EST-07/08 and DOC-01/02 are relevant; their parent acceptance remains open. Read [BP-04](../blueprints/BP-04-estimating-quotation.md), [E1](estimating-e1.md), [E2](estimating-e2-design.md), [ADR-0027](../decisions/ADR-0027-estimating-discovery-cost-basis.md) and the [implementation plan](../delivery/excel-estimate-import-plan.md).
 
-The preview operates on fictional data in browser memory. A demo save is neither a durable PPO save nor approval. The workbook is a populated reusable example, with 100 prepared line rows. Operational company workbooks were not supplied and have not been assessed. [Assessment and outstanding evidence](../blueprints/excel-estimate-workbook-assessment.md).
+The retained HTML preview operates on fictional data in browser memory. Its demo save is neither a durable PPO save nor approval; the native page uses the existing durable APIs. The workbook is a populated reusable example, with 100 prepared line rows. Operational company workbooks were not supplied and have not been assessed. [Assessment and outstanding evidence](../blueprints/excel-estimate-workbook-assessment.md).
+
+## Native page continuation
+
+The contextual `/estimating/import` page composes the existing APIs under the [review](excel-import-review.md), [persistence](excel-import-persistence.md), [revision](excel-import-revision.md), [source pricing](excel-import-source-pricing.md), [landed-cost](excel-import-landed-costs.md) and [quotation](excel-import-quotation.md) contracts. Wizard Review offers Import Excel estimate only on saved Complete selected discovery with no estimate; imported estimates expose exact-version evidence and permitted continuations. No rail item, parser rule, calculation or business authority is added.
+
+Source corrections remain in Excel. The page preserves native expected versions and review hashes, distinguishes independent include/print choices, requires every omitted-line decision, and renders only `customer_content` in the Draft customer preview. Unknown totals remain Unknown. Comparison totals use the unchanged native projection and exact-decimal calculation, include explicit Keep choices and remain unknown until all omission choices are made. Workbook included sell remains separate from proposed estimate sell. The same-tab recovery journal stores an exact pending intent before sending and uses the original operation receipt or explicit unchanged retry; unavailable storage refuses the command. Storage quota can constrain uploads below the server's 5 MiB parser limit. It is not an offline queue.
+
+See the [route contract](../design/development/pages/route-estimating-import.md), [design recommendation](../decisions/excel-import-figma-design.md#implementation-recommendations--31-october-2026) and [execution evidence](../testing/evidence/excel-import-ui/README.md). XI-01 to XI-08 proof and EST-02–EST-05, EST-07/08, DOC-01/02 owner acceptance remain separate. Operational workbook compatibility and native FX authoring/review remain open.
 
 ## 2. First pilot boundary
 

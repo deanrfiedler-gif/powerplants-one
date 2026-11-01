@@ -34491,22 +34491,20 @@
       "title": "Excel estimate import and review",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Native synthetic workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Synthetic workflow executed; results and limits: docs/testing/evidence/excel-import-ui/README.md; owner guide acceptance open",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Excel estimate import and review to work towards this outcome: One traceable import produces the intended reviewed estimate.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "The workbook and HTML designs exist; application integration remains outstanding in the retained register baseline."
+            "Import a synthetic PPO workbook into one exact selected option and Complete discovery revision. Review evidence and save one immutable estimate version. Re-import, reviewed-source pricing and Draft preparation are separate commands."
           ],
           "steps": [],
           "rows": [],
@@ -34516,9 +34514,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Workbook, sheet/range, mapping, units, exceptions and target estimate.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Open Import Excel estimate from the Wizard Review Actions when no estimate exists, or an Excel action from an imported estimate. An exact Draft workspace, selected Active option, Complete discovery and Site are required. Estimating read/edit and ownership apply; Draft preparation additionally requires quotation prepare/read.",
+            "Use only a synthetic macro-free .xlsx within 5 MiB and the current PPO named-table contract. Recalculate and save in Excel. No operational departmental workbook has been supplied or verified."
           ],
           "steps": [],
           "rows": [],
@@ -34527,56 +34524,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Upload or stage the intended workbook in the planned flow",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Choose workbook, then Validate workbook. Review errors, warnings, every line and reconciliation. Correct errors in Excel and upload again. Continue to confirm, give all four declarations and a reason, then save. Open saved result and verify the exact receipt/version."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Excel estimate import and review · Upload + review flow"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The Wizard context and four step cards stay above the scrolling review. Desktop has an Import summary; Summary opens it on narrower screens. The action bar keeps Previous and the current action. Findings name their sheet, table, row and field."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Workbook, sheet/range, mapping, units, exceptions and target estimate.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Keep exact native reference IDs in the workbook. Unknown values are not zero. Original cells, cached formula evidence, section membership, source dates, independent include/print proposals and totals remain inspectable. Workbook reviewer declarations are source evidence, not authenticated PPO approval."
           ],
           "steps": [],
           "rows": [],
@@ -34586,13 +34555,11 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Revised workbook: validate, inspect changes and source-binding disposition, explicitly Keep or Remove every omitted line, then confirm replacements and the four source declarations.",
+            "Pricing: search permitted Cost Sources, select exact reviewed revisions for saved lines and a pricing date. Optionally enter authored AUD freight/duty charges with evidence and exact Product targets. Review workbook/current/proposed prices, tiers, recorded FX and every allocation before saving. Sell remains unchanged.",
+            "Draft: give separate include and print choices for kept lines without a current workbook proposal. Review the native reconciliation and customer-safe preview, confirm customer wording, choices and reconciliation, then prepare the Draft."
           ],
-          "steps": [
-            "Upload or stage the intended workbook in the planned flow",
-            "Review validation, mapping and every rejected line",
-            "Save only the reviewed estimate basis and retain import provenance"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -34600,9 +34567,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "One traceable import produces the intended reviewed estimate.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "The workbook and HTML designs exist; application integration remains outstanding in the retained register baseline."
+            "A receipt proves command acceptance. Open its exact estimate version. A saved Draft is not a rendered PDF, issued quotation, customer delivery or commercial approval. Retained original downloads verify bytes; source_retained alone is not an availability probe."
           ],
           "steps": [],
           "rows": [],
@@ -34611,45 +34576,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "Blocked means workbook errors prevent the whole save. Ready for review means automated checks passed, not approval. A changed basis requires a fresh review; refused access clears protected data. Historical versions are readable but cannot be used as current pricing/Draft targets."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare workbook, sheet/range, mapping, units, exceptions and target estimate. Follow the task sequence and check that one traceable import produces the intended reviewed estimate. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Excel estimate import and review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The workbook and HTML designs exist; application integration remains outstanding in the retained register baseline."
+            "The browser proof creates its own synthetic workspace and native-bound workbook, corrects a missing unit cost, imports a revision with an omitted line kept, prices a selected line and explicitly decides the kept line’s quotation flags. These are proof fixtures, not departmental operating data."
           ],
           "steps": [],
           "rows": [],
@@ -34658,45 +34596,19 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "If the save outcome is uncertain, use Check original outcome or Retry exact original. The same-tab journal keeps the original operation identity and intent; it does not invent a replacement. A missing receipt is inconclusive. Do not clear browser recovery data to force a second save.",
+            "The browser must store the pending intent before sending. If tab storage is unavailable or full, no command is sent; keep the original workbook and resolve storage first. Large files can hit the browser’s quota below the parser’s 5 MiB limit."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390/320 px use Show all lines to reach the complete scrollable grid. Summary opens a keyboard-dismissable dialog and returns focus. Controls retain labels and readable input text. This is an online workflow; the recovery journal is not an offline queue."
           ],
           "steps": [],
           "rows": [],
@@ -34706,8 +34618,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Authoritative behaviour is in excel-estimate-import.md and its persistence, revision, pricing, FX, landed-cost and quotation continuations. Accepted image references are retained unchanged. Undrawn controls follow the recorded Codex recommendation, not new owner acceptance."
           ],
           "steps": [],
           "rows": [],
@@ -34717,9 +34628,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide; functional proof, paired visual inspection, owner acceptance and deployment remain separate. No review fingerprint is assigned by implementation."
           ],
           "steps": [],
           "rows": [],
@@ -34738,9 +34647,12 @@
       "source_paths": [
         "docs/delivery/excel-estimate-import-handover.md",
         "docs/blueprints/excel-estimate-import.html",
-        "docs/blueprints/BP-04-estimating-quotation.md"
+        "docs/blueprints/BP-04-estimating-quotation.md",
+        "docs/decisions/excel-import-figma-design.md",
+        "docs/contracts/excel-estimate-import.md",
+        "src/app/(business)/estimating/import/page.tsx"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Contextual native import, review, comparison, pricing, Draft and recovery guidance.",
       "document_id": "PPO-GUIDE-EXCEL-IMPORT",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -77013,6 +76925,60 @@
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/output-distribution/PPO-Output-Issue-and-Distribution-Centre-r01.html",
         "docs/blueprints/contextual-help-design.md"
+      ]
+    },
+    {
+      "guide_key": "guide.route-estimating-import",
+      "entry_key": "route:/estimating/import",
+      "title": "Excel estimate import and review",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Native synthetic workflow",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Import a synthetic PPO workbook into one exact selected option and Complete discovery revision. Review evidence and save one immutable estimate version. Re-import, reviewed-source pricing and Draft preparation are separate commands."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Choose workbook, then Validate workbook. Review errors, warnings, every line and reconciliation. Correct errors in Excel and upload again. Continue to confirm, give all four declarations and a reason, then save. Open saved result and verify the exact receipt/version."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "If the save outcome is uncertain, use Check original outcome or Retry exact original. The same-tab journal keeps the original operation identity and intent; it does not invent a replacement. A missing receipt is inconclusive. Do not clear browser recovery data to force a second save.",
+            "The browser must store the pending intent before sending. If tab storage is unavailable or full, no command is sent; keep the original workbook and resolve storage first. Large files can hit the browser’s quota below the parser’s 5 MiB limit."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "Synthetic workflow executed; results and limits: docs/testing/evidence/excel-import-ui/README.md; owner guide acceptance open",
+      "change_summary": "Contextual native import, review, comparison, pricing, Draft and recovery guidance.",
+      "source_paths": [
+        "docs/decisions/excel-import-figma-design.md",
+        "docs/contracts/excel-estimate-import.md",
+        "src/app/(business)/estimating/import/page.tsx"
       ]
     }
   ]

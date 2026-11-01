@@ -128,7 +128,7 @@ export function breadcrumb({ path, query, record, signedIn, permitted, hosted, p
   const recordCrumb = find("record"), workbench = find("workbench");
   // The nearest list the current item belongs to.
   const owner = engineering ? viewCrumb : workView ? viewCrumb : parent ? moduleCrumb : pageCrumb;
-  const shown: (Crumb | undefined)[] = fertigation
+  const shown: (Crumb | undefined)[] = path === "/estimating/import" ? trail : fertigation
     ? trail
     : workbench
       ? [pageCrumb, workbench]
