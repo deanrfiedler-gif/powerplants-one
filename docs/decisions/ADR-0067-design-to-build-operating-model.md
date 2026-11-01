@@ -92,7 +92,7 @@ Option D for tokens and option C for files.
 |---|---|---|
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
 | 2. Freeze and build the library | Finish pending named versions and in-progress drawing, save "Before split", freeze with a committed manifest and a private backup, and move the file from Drafts to `PPO Record`. Duplicate it into `PPO Library`, delete Captures and Archive from the duplicate, read the meter, clean up and publish | The library is published, with the memory reading recorded |
-| 3. Pilot and go live | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
+| 3. Pilot and go live (the "cut-over") | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
 | 4. Copy or redraw on change | New pages in domain files, other pages under decision 8 when next changed | Each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
 
