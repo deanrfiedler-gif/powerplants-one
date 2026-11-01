@@ -1,0 +1,11 @@
+---
+title: Service performance RP-04 design accepted
+date: 2026-11-01
+---
+
+Dean accepted the Figma design for the management report RP-04: "Accept, use recommendations", answering "Do you accept the RP-04 proposal, and with which answers to Q1–Q8?". Claude then found its Q1 recommendation of 24 hours had wrongly cited the field readiness gate, whose issue lead time is 12:00 site time on the last working day before the visit, and asked again. Dean answered "Use the gate's rule". The [design decision](../decisions/service-performance-figma-design.md) (PPO-RP04-SERVICE-PERFORMANCE-FIGMA-DEC) records D1–D14 and the answers to Q1–Q8: the gate's cutoff; a 14-day return-visit window, with KPI-06 still withheld until its definition is published; Dean as owner until a service manager is named; technicians see their own rows only; and service definitions live in Measure definitions. Twenty-two icon-free captures of eighteen frames, with hashes, are retained in [service-performance-design-r01](../reference/ui/reporting/service-performance-design-r01/README.md), and the design register page for `scope:RP-04` cites the decision and captures. In Figma the File index has its row in the Reporting group, the two new parts moved to the Components page, and the capture copies sit on the Captures page from y = 1,403,173.
+
+Checked: the corrected wording was searched by script across the source frames, and the permission names that do not exist were replaced with real ones on the frames. Not done: the named Figma version "Service performance · RP-04 — accepted" waits for Dean, the flows were not played in Present mode, and not every frame was opened at reading size after the correction (the decision's section 7). The page is not built. No application code, route, migration, capability, grant, published definition or parent ID changes.
+
+<!-- decision-index -->
+[Service performance design](../decisions/service-performance-figma-design.md) (PPO-RP04-SERVICE-PERFORMANCE-FIGMA-DEC) records Dean's 1 November 2026 acceptance of the management report RP-04: field readiness first, every rate with its counts in words, no target, baseline or utilisation score, and any value withheld until its definition is published. Building it is not decided.
