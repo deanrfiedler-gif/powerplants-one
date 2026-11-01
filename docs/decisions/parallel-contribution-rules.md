@@ -43,7 +43,7 @@ Agents are contributors under the same rules. Enforcement by tooling is preferre
 
 ## Amendment — 26 October 2026: Codex build limit
 
-Superseded on the number and the finishing rule by the [31 October 2026 amendment](#amendment--31-october-2026-codex-build-limit-raised-to-twenty). The record below stays as written.
+Superseded on the number and the finishing rule by the [1 November 2026 amendment](#amendment--1-november-2026-codex-build-limit-set-to-ten). The record below stays as written.
 
 On 26 October 2026 Codex held sixteen open draft pull requests, twelve of them building accepted pages (#696 to #707). Ten held only a claim, about ten lines in one file (#693, #698, #699, #702 to #707 and #712). Of the six with implementation pushed (#690, #695, #696, #697, #700 and #701), five had failing checks and four had merge conflicts. Many builds in flight at once multiply conflicts and the migration-ledger repairs that every merge brings ([migration test expectations](migration-test-expectations.md)).
 
@@ -57,20 +57,20 @@ The rule, added to [CONTRIBUTING.md — Working in parallel](../../CONTRIBUTING.
 
 This changes no claim already made and no application behaviour.
 
-## Amendment — 31 October 2026: Codex build limit raised to twenty
+## Amendment — 1 November 2026: Codex build limit set to ten
 
-On 31 October 2026 Dean told Codex in a Codex chat: "I approve you to build up to as many as 10 pages at a time." Codex recorded this on [#705](https://github.com/deanrfiedler-gif/powerplants-one/pull/705) as an override of the three-build limit. By that evening six Codex pull requests had implementation pushed (#703, #704, #705, #706, #801 and #803), while `CONTRIBUTING.md` still said three.
+On 31 October 2026 Dean told Codex in a Codex chat: "I approve you to build up to as many as 10 pages at a time." Codex recorded this on [#705](https://github.com/deanrfiedler-gif/powerplants-one/pull/705) as an override of the three-build limit, and six Codex pull requests then had implementation pushed (#703, #704, #705, #706, #801 and #803) while `CONTRIBUTING.md` still said three. Asked "Should I draft the change raising the Codex build limit to match your authorisation?", Dean replied: "Yes, draft it", and then: "We can increase it to 20". That change was never merged.
 
-Claude pointed out the difference and asked: "Should I draft the change raising the Codex build limit to match your authorisation?" Dean replied: "Yes, draft it", and then: "We can increase it to 20".
+On 31 October no pull request merged for 21 hours while 79 were open and 171 pull request runs were queued, and on 1 November Dean paused the agents. Claude then recommended ten rather than twenty: about 14 substantial Codex pull requests were open, so twenty would hold nothing back. Dean replied: "You can set the limit to ten if that is your professional recommendation."
 
 The rule in [CONTRIBUTING.md — Working in parallel](../../CONTRIBUTING.md#working-in-parallel) is now:
 
-- Codex has at most **twenty implementation pull requests in progress** at once. A draft that holds only its claim does not count until implementation is pushed to it.
-- **At the limit**, Codex finishes a build it has already implemented, with every check passing and conflicts resolved, before it pushes implementation to another claim.
+- Codex has at most **ten implementation pull requests in progress** at once. A draft that holds only its claim does not count until implementation is pushed to it.
+- **At or above the limit**, Codex finishes a build it has already implemented, with every check passing and conflicts resolved, before it pushes implementation to another claim.
 - Claims beyond the limit may stay open as markers.
 
-The words "at the limit" are Claude's drafting, not Dean's. The 26 October wording required every implemented build to finish before implementation went to another claim, which would have allowed only one new build at a time under any number.
+The finishing wording is Claude's drafting, not Dean's, and formed part of the recommendation he answered. The 26 October wording required every implemented build to finish before implementation went to another claim, which would have allowed only one new build at a time under any number. "Or above" was added because Codex holds more than ten builds now: they stay open and are finished first.
 
-Every other rule still applies, including one owner per branch, claims, integration against current `main`, independent review and the merge gates. The 26 October evidence about conflicts and failing checks was gathered at a lower level and has not been retested at twenty.
+Every other rule still applies, including one owner per branch, claims, integration against current `main`, independent review and the merge gates. The limit has not been measured against conflict or check-failure rates at ten.
 
 This changes no claim already made and no application behaviour.
