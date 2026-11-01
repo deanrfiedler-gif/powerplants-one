@@ -14,6 +14,8 @@ My Jobs and job execution already exist, including start, evidence capture and c
 
 ## Desktop
 
+Accepted coordinator design: the [Time & labour review design decision](../../../decisions/time-labour-review-figma-design.md) of 31 October 2026 covers the coordinator side of FI-01, traced to SVC-08, at a proposed route `/service/time`, with captures 01–17 (desktop 1440) and 18 (tablet 1024) in [design r01](../../../reference/ui/service/time-labour-review-design-r01/README.md): the time register, the visit record with its day timeline, query and reply, adjusting a segment, billable marking, accept, send with the Finance handoff, history, the multi-visit allowance with a hand-off to the planner, and exceptions. Departures D1, D3, D8, D9 and D12 and answers Q1–Q14 are recorded there. It is not built and has no route. Options F1–F3 are drawn in Figma and await Dean's review.
+
 Accepted successor design: the [My jobs design decision](../../../decisions/my-jobs-figma-design.md) of 15 October 2026, with captures 23–31 (desktop 1440) and 32–39 (tablet 1024) in [My jobs design r01](../../../reference/ui/service/my-jobs-design-r01/README.md). Desktop and tablet use the accepted register grid and shared record layout:
 
 - the My jobs register is grouped into Today, Upcoming and Recently finished, with fixed Select and Settings columns;
@@ -30,6 +32,8 @@ At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order.
 Accepted on 16 October 2026 ([My jobs design amendment A07](../../../decisions/my-jobs-figma-design.md); [field readiness gate record](../../../decisions/field-readiness-gate-proposal.md), section 10). Frames: My jobs page section A1 `959:243132`; captures 08–10 in [field readiness gate r01](../../../reference/ui/service/field-readiness-gate-r01/README.md). The named Figma version waits for Dean's explicit yes. On the built page, Your attendance shows "You returned job pack rNN · waiting for a revision" with the reasons and time, the preparer's "No change needed" answer, a "Parts:" line and a link that opens the Return sheet on the pack page. The A1-D5 list wording and the "Checked for this visit" checks come with the build of the accepted design.
 
 ## Mobile
+
+Accepted coordinator design, technician side: captures 19–24 in [Time & labour review design r01](../../../reference/ui/service/time-labour-review-design-r01/README.md): a question waiting, replying to a query and a reply waiting to send at 390, and replying and "my reviewed time", read-only, at 390 and 320. The compact phone header, My jobs' tab bar on the list, and one 48 px action on the reply. Replies never change recorded time.
 
 Accepted successor design: captures 01–22 in [My jobs design r01](../../../reference/ui/service/my-jobs-design-r01/README.md), drawn phone first at 390 and 320 px.
 
@@ -51,6 +55,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted coordinator design: [Time & labour review design r01 captures](../../../reference/ui/service/time-labour-review-design-r01/README.md) (thirty-four icon-free PNGs; not a UI baseline).
 
 Accepted Figma successor design: [My jobs design r01 captures](../../../reference/ui/service/my-jobs-design-r01/README.md) (thirty-nine icon-free PNGs; not application captures) and its [decision](../../../decisions/my-jobs-figma-design.md).
 
