@@ -23,7 +23,19 @@ if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
-before(reset);
+// Installing the complete synthetic history is fixture preparation, not a queue read.
+// Give setup its own bound; queue assertions retain the runner's normal deadline.
+before(
+  async () => {
+    console.info("CR-02 synthetic fixture setup started");
+    const started = performance.now();
+    await reset();
+    console.info(
+      `CR-02 synthetic fixture setup completed in ${Math.round(performance.now() - started)} ms`,
+    );
+  },
+  { timeout: 600_000 },
+);
 after(closeDatabase);
 const code = (expected: string) => (e: unknown) =>
   (e as { code: string }).code === expected;
