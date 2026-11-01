@@ -175,5 +175,5 @@ Polish in the same pass: design wording removed from page copy, purple annotatio
 | Unchanged | Rows stay longest without a next activity first. There is no total on Pulse; totals stay on Pipeline insights |
 | New wording | "Not estimated" follows Deals. "no expected close" is new, and is stated on the states sheet rather than drawn on a row |
 | Captures | [r02](../reference/ui/crm/sales-pulse-tasks-design-r02/README.md): the fifteen changed images, 1,152 icons swapped with none left on recount. The temporary page was deleted after export |
-| Named version | Awaits Dean: "Sales Pulse & Tasks — Q12 amendment" |
+| Named version | "Sales Pulse & Tasks — Q12 amendment", saved by Dean on 1 November 2026: "I have saved the named version as Sales Pulse & Tasks — Q12 amendment". Figma's version history was not opened to confirm it |
 | Not authorised | Extending `PlanningGap` and `OverdueOpportunity`, or changing the built pages |
