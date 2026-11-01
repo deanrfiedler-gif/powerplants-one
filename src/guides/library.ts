@@ -25,10 +25,6 @@ export const carriedOverSources = [
   "src/shell/guide.ts",
 ] as const;
 
-// Guide files that still use the old page guide template. They are skipped, not compiled; plan Task 5 (the CRM
-// pilot rewrite) removes this entry.
-export const awaitingRewrite = ["docs/guides/crm-deals.md"] as const;
-
 // What one file contributes. `front` holds the front matter lines of a guide that compiled, so that a cross-check can
 // name the file line of a key (the front matter starts on file line 2). A file that is not a guide has no errors.
 type FileRead = { guide?: CompiledGuide; errors: GuideError[]; front: string[] };
@@ -85,9 +81,8 @@ const frontMatterLines = (text: string) => {
   return lines.slice(1, lines.indexOf("---", 1));
 };
 
-// Every file under docs/guides that is not waiting for its rewrite, as sorted repository paths.
+// Every file under docs/guides, as sorted repository paths.
 async function filePaths(root: string): Promise<string[]> {
-  const skipped = new Set<string>(awaitingRewrite);
   const found: string[] = [];
   const walk = async (folder: string): Promise<void> => {
     let children;
@@ -101,7 +96,7 @@ async function filePaths(root: string): Promise<string[]> {
       if (child.isSymbolicLink()) continue;
       const path = `${folder}/${child.name}`;
       if (child.isDirectory()) await walk(path);
-      else if (child.isFile() && !skipped.has(path)) found.push(path);
+      else if (child.isFile()) found.push(path);
     }
   };
   await walk(guidesFolder);

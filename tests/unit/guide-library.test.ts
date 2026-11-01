@@ -9,7 +9,6 @@ import { readMaster } from "../../src/development/catalog";
 import { matchEntry, type Entry } from "../../src/development/model";
 import { compileGuide, declaresGuideKey } from "../../src/guides/compile";
 import {
-  awaitingRewrite,
   carriedOverSources,
   readGuideLibrary,
   releasedFile,
@@ -349,18 +348,27 @@ test("a file that makes the compiler throw is reported and the others still comp
   assert.match(result.errors[0].message, /could not be compiled/);
 });
 
-test("a guide awaiting its rewrite is skipped and any other malformed file is an error", async (t) => {
-  assert.deepEqual([...awaitingRewrite], ["docs/guides/crm-deals.md"]);
-  const oldTemplate = ["---", "document_id: PPO-HELP-CRM", "guide_key: crm.deals.worklist", "status: InReview - pilot", "route_patterns: /crm/opportunities", "---", "", "# Old template", ""].join("\n");
-  const root = await makeRoot(t, {
-    "docs/guides/crm-deals.md": oldTemplate,
-    "docs/guides/other.md": oldTemplate,
-  });
-  const result = await readGuideLibrary(root, entries);
+test("the CRM Deals guide compiles in the real library and stays hidden while it is in review", async () => {
+  const { entries: real } = await readMaster(process.cwd());
+  const result = await readGuideLibrary(process.cwd(), real);
 
-  assert.deepEqual(result.guides, []);
-  assert.ok(result.errors.length > 0);
-  assert.ok(result.errors.every((error) => error.path === "docs/guides/other.md"));
+  assert.deepEqual(result.errors, []);
+  const deals = result.guides.find((guide) => guide.path === "docs/guides/crm-deals.md");
+  assert.ok(deals, "docs/guides/crm-deals.md is read as a guide, not skipped");
+  assert.equal(deals.front.document_id, "PPO-HELP-CRM");
+  assert.equal(deals.front.guide_key, "guide.page.sales.opportunities");
+  assert.equal(deals.front.status, "InReview");
+  assert.equal(deals.front.shown_before_review, false);
+  assert.deepEqual(
+    deals.sections.map((section) => section.id),
+    ["purpose", "before", "quick-start", "page-tour", "information", "tasks", "completion", "states", "examples", "recovery", "mobile", "resources", "review"],
+  );
+
+  // InReview without shown_before_review is not released, so the Deals panel still reads "being prepared".
+  const released = releasedGuides(result, real);
+  assert.equal(released.guides.some((guide) => guide.front.guide_key === "guide.page.sales.opportunities"), false);
+  assert.equal(guideForPath(released, "/sales/opportunities"), null);
+  assert.equal(guideForPath(released, "/sales/opportunities/SYN-1"), null);
 });
 
 test("discovery finds guides by their guide_key and ignores other files", async (t) => {
@@ -881,15 +889,13 @@ function runBuild(root: string) {
 }
 const writtenRelease = (root: string) => access(join(root, releasedFile)).then(() => true, () => false);
 
-test("the build writes the release file with the visible guides and skips the guide awaiting its rewrite", async (t) => {
+test("the build writes the release file with the visible guides", async (t) => {
   const leads = { spec: shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }), path: "docs/guides/leads.md" };
   const draft = { spec: { guide_key: "guide.page.a", entry_key: "route:/a" }, path: "docs/guides/a.md" }; // Draft, so hidden
-  const oldTemplate = ["---", "document_id: PPO-HELP-CRM", "guide_key: crm.deals.worklist", "status: InReview - pilot", "route_patterns: /crm/opportunities", "---", "", "# Old template", ""].join("\n");
   const root = await makeRoot(t, {
     "docs/design/development/register.json": buildRegister,
     [leads.path]: guideText(leads.spec),
     [draft.path]: guideText(draft.spec),
-    [awaitingRewrite[0]]: oldTemplate,
   });
   const run = runBuild(root);
 
@@ -897,7 +903,6 @@ test("the build writes the release file with the visible guides and skips the gu
   assert.equal(run.stderr, "");
   assert.equal(run.status, 0, run.stdout);
   assert.deepEqual(run.stdout.split("\n"), [
-    `Skipped until rewritten (plan Task 5): ${awaitingRewrite[0]}`,
     `Guides compiled: 2. Guides released: 1 (${releasedFile}).`,
     "",
   ]);
