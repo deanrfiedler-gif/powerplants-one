@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Permitted exceptions | Resolved as recommended | Same-day callouts booked after the cutoff, and visits the customer asked to bring forward. Anything else stays in the rate and shows a reason |
 | Q8 Where service definitions live | Resolved as recommended | Measure definitions (FN-06), as a Service group, with versions, effective dates and two-person approval |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved | "Service performance · RP-04 — accepted" waits for Dean. Section 8 |
+| Named Figma version | Saved by Dean, 1 November 2026 | "I have saved the named version as Service performance · RP-04 — accepted". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -79,7 +79,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Accepted: section 4 |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | Not saved; waits for Dean |
+| Named version | "Service performance · RP-04 — accepted", saved by Dean on 1 November 2026 |
 
 ## 4. What the design shows
 
@@ -158,5 +158,5 @@ Before presenting the page Claude screenshotted most frames inside Figma and che
 - All eighteen source frames, the page header and the notes card were searched by script after the correction. The only matches left are the unrelated "24 h" axis label on the KPI-04 frame, Q1's account of the correction, and the proposed capability `reporting.service.read`.
 - Claude did not play the flows in Present mode.
 - The captures are copies of the accepted frames on the "Captures (icon-free)" page, from y = 1,403,173. Prototype reactions were removed and each Font Awesome instance was swapped for `Icon/placeholder`. The two full-length reports (desktop 9,700 px, tablet 9,874 px) were each split into three clipped frames at section boundaries, because the export is capped at 4,096 px. The hashes are in the [captures README](../reference/ui/reporting/service-performance-design-r01/README.md).
-- **The named version.** "Service performance · RP-04 — accepted" is not saved, and this pull request stays a draft until Dean confirms it. It is a version of the whole file, so it will also hold whatever other sessions have drawn by then.
+- **The named version.** Dean saved "Service performance · RP-04 — accepted" himself on 1 November 2026 and said so: "I have saved the named version as Service performance · RP-04 — accepted". Claude did not open the version history to confirm it. It is a version of the whole file, so it also holds whatever other sessions had drawn by then. The page header and the File index row were updated afterwards to record it, so those two text changes post-date the named version.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
