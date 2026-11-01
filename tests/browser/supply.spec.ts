@@ -159,11 +159,12 @@ for (const spec of supplyPages)
       await surface.getByRole("button", { name: "Returns register", exact: true }).click();
     }
     await openPageGuide(page);
-    await expect(
-      page.getByText(`${spec.scope} — purpose and prerequisites`, {
-        exact: true,
-      }),
-    ).toBeVisible();
+    const purpose = page.getByText(`${spec.scope} — purpose and prerequisites`, { exact: true });
+    if (spec.scope === "SC-05") {
+      // The rewritten guide awaits owner publication; carried-over guides remain visible.
+      await expect(page.getByText("The detailed Inventory guide is being prepared.", { exact: true })).toBeVisible();
+      await expect(purpose).toBeHidden();
+    } else await expect(purpose).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(guide).toBeFocused();
     const overflow = await page.evaluate(

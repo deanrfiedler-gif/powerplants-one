@@ -34,7 +34,7 @@ No Product link is recorded. Product mapping persistence remains outstanding; a 
 1. **Find an item**\
    Search Inventory and filter by location, unit or completeness. The toolbar reports the actual bounded result as N shown · limit 100. The secondary menu has no counts. Locations are flat rows.
 2. **Read its evidence**\
-   Select a snapshot or open the item record. Quantities, Locations, Demand, Activity and Source evidence retain exact source references. Back, filters and selection remain in the URL.
+   Select a snapshot or open the item record. Quantities, Locations, Demand, Activity and Source evidence retain exact source references. Within Inventory, filters and selection remain in the URL. The native observation form retains the source record; its Back action returns without Inventory filters.
 3. **Record an observation**\
    Record observation opens the existing native Supply form. For an existing item, review its current source version and give a reason. Saved appears only after the server receipt; expected versions and original-operation recovery remain active.
 4. **Complete the handover**\

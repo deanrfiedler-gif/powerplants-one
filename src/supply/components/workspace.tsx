@@ -125,7 +125,7 @@ function Workspace({ slug }: { slug: string }) {
     );
   }
   const canCreate = opts.data?.can_create?.[page.kind] ?? false;
-  const observationAllowed = panel?.type === "create" ? canCreate : panel?.type !== "edit" || !!detail.data?.capabilities.edit;
+  const observationAllowed = panel?.type === "create" ? canCreate : panel?.type !== "edit" || (!!r && !!detail.data?.capabilities.edit);
   return (
     <section
       id="ppo-supply"
@@ -565,7 +565,7 @@ function Workspace({ slug }: { slug: string }) {
           )}
         </section>
       </div>
-      {panel && (slug !== "stock" || params.get("observation") !== "1" || observationAllowed) && (panel.type !== "edit" || !!r) && (opts.data || panel.type === "fact") && (
+      {panel && (slug !== "stock" || params.get("observation") !== "1" || observationAllowed) && (opts.data || panel.type === "fact") && (
         <WorklistPanel
           title={
             panel.type === "fact"

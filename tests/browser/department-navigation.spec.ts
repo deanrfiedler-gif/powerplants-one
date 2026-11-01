@@ -41,7 +41,7 @@ const rails = {
   engineering: ["My Work", "Engineering workload", "Design basis & interfaces", "Drawings", "Technical queries", "Materials & substitutions", "Change review", "Technical reviews", "Commissioning & as-built"],
   projects: ["My Work", "Projects", "Programme", "Acceptance & closeout"],
   service: ["My Work", "Service requests", "Work orders", "Schedule", "Field team", "Job packs", "Service review", "Incidents and actions", "Inspection review", "Equipment", "Service agreements", "Maintenance", "Warranty"],
-  supply: ["My Work", "Material demand", "Purchasing", "Inbound shipments", "Receiving", "Inventory", "Workshop", "Dispatch & delivery", "Returns & claims"],
+  supply: ["My Work", "Material demand", "Purchasing", "Inbound shipments", "Receiving", "Inventory", "Dispatch & delivery", "Returns & claims"],
   finance: ["My Work", "Finance handoffs", "Customer accounts"],
 };
 test("Sales Tasks uses the same saved action as My Work and completes that action once", async ({ page }) => {
@@ -99,6 +99,7 @@ test("all seven actual department rails retain canonical order and dimensions", 
     await page.goto(department === "finance" ? "/finance/handoffs" : `/work?department=${department}`);
     const nav = page.locator(".ppo-primary-nav");
     await expect(nav.getByRole("link").first()).toBeVisible();
+    if (department === "supply") await expect(nav.getByRole("link", { name: "Workshop", exact: true })).toHaveCount(0);
     const expected = labels;
     await expect(nav.getByRole("link")).toHaveCount(expected.length);
     await expect.poll(() => nav.getByRole("link").evaluateAll(items => items.map(i => i.getAttribute("aria-label")))).toEqual(expected);

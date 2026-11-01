@@ -20,4 +20,4 @@ usePlatformResource removes stale or denied content by identity/query generation
 
 ## Receiving lock-in integration — 1 November 2026
 
-Merged PR #787 reserves Workshop between Inventory and Dispatch & delivery. The shared rail uses its existing unavailable state and native maintenance glyph: there is no Workshop route, new capability or manufactured handover. Inventory remains Supply-only. The rewritten Markdown guide remains InReview; its historical carry-over visibility exception is retired, and general-user publication awaits genuine review evidence under the current guide contract.
+Merged PR #787 reserves Workshop between Inventory and Dispatch & delivery. Its existing unavailable state withholds it from rendered navigation; the contract reserves the native maintenance glyph: there is no Workshop route, new capability or manufactured handover. Inventory remains Supply-only. The rewritten Markdown guide remains InReview; its historical carry-over visibility exception is retired, and general-user publication awaits genuine review evidence under the current guide contract.
