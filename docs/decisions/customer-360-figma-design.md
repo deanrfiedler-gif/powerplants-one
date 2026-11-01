@@ -1,6 +1,6 @@
 # Customer 360 Figma design
 
-Owner: Dean Fiedler. Status: **Proposed; owner review pending**. Created 13 October 2026; refined 14 October 2026.
+Owner: Dean Fiedler. Status: **Superseded** by the [Organisations and Customer 360 design decision](organisations-figma-design.md) (accepted 18 October 2026); never accepted; page archived 25 October 2026. Created 13 October 2026; refined 14 October 2026.
 Scope: **CS-01**; parents **CRM-01, CRM-04, CRM-06, SVC-06** remain unchanged.
 
 Dean requested an editable Customer 360 page in the existing private PPO - Design Figma file, using the issued Customer 360 HTML and report as reference. The supplied node was the accepted Leads page. A separate **Customer 360 (proposal)** page, node `554:2`, preserves that work.
@@ -50,3 +50,7 @@ The [r04 manifest](../reference/ui/customers/customer-360-figma-r04/README.md) i
 ## Superseded as the design reference — 18 October 2026
 
 Dean accepted a redrawn CS-01 design on the "Organisations · CS-01" Figma page, recorded in the [Organisations and Customer 360 design decision](organisations-figma-design.md). That decision is now the design reference for `/customers`, `/customers/[id]` and `/customers/new`. This proposal, page `554:2` and its r01–r04 captures are kept unchanged as history and were never accepted.
+
+## Archived — 25 October 2026
+
+Under decision R4 of the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md), adopted by Dean on 24 October 2026, the page `554:2` moved to the end of the "— Archive —" group with an "Archived note" at the top (`2636:2408`). Its File index row moved to the Evidence and archive table and reads "Archived". The page name, node ID and content are unchanged, so every citation of `554:2` still resolves.

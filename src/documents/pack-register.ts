@@ -1,3 +1,4 @@
+import type { SitePreparation } from "../scheduling/site-readiness-model";
 import { statusPresentation } from "./pack-view";
 
 // Allowlisted register projection. Null readiness/preparer means withheld or unavailable, never zero.
@@ -27,6 +28,8 @@ export type PackRegisterRow = {
   recipients: number | null;
   // Current-issue returns still waiting for a revision or an answer (field readiness gate P2).
   returned?: number | null;
+  // P4/P5 is present in current API responses; older retained fixtures may omit it.
+  preparation?: SitePreparation | null;
   dispatch_hold: boolean;
   can_prepare: boolean;
 };

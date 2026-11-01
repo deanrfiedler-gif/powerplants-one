@@ -1,3 +1,5 @@
+import { nextWorkingVisit } from "./site-readiness";
+import { siteReadinessFixtureCrew } from "./site-readiness-fixture-crew";
 import { randomUUID } from "node:crypto";
 import { prepareFieldAppointment } from "./field-http";
 import { base, id } from "./packs";
@@ -100,5 +102,11 @@ export async function prepareIsolatedFieldAppointment(
     scope_revision_id: scope.id as string,
     scope_version: scope.version as number,
   };
-  return { ...await prepareFieldAppointment(call, day, source), ...source };
+  // The original day remains the legacy v1/v2 fixture input. New v3 scopes use
+  // a current-window date and independent crew, so parallel journeys never
+  // compete for a narrow set of real-time slots or weaken the readiness gate.
+  const current = scope.policy_version_id === "94000000-0000-4000-8000-000000000003";
+  const visitDay = current ? nextWorkingVisit().slice(0,10) : day;
+  const crew = current ? await siteReadinessFixtureCrew() : undefined;
+  return { ...await prepareFieldAppointment(call, visitDay, source, crew), ...source };
 }

@@ -88,3 +88,7 @@ If a trigger occurs:
 
 - The page order was read back after the change. It holds 41 pages: the 31 original, nine dividers and the template. Every original page ID and name was unchanged.
 - The File index and the template header were inspected at full size in Figma. The index has one row for each of the 32 design pages, which is every page except the nine dividers.
+
+## Amendment — 25 October 2026: one-time page rename
+
+Dean adopted decision R1 of the [Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md) on 24 October 2026 ("Proceed with your recommendations for R1–R11"). It made one exception to the first point of rule 3: on 25 October 2026, 16 cited pages were renamed to "[Page name] · [scope ID]", dropping the "(accepted)" and "(proposal)" suffixes. The same change updated the records that give each page's current location, and the File index gained a "Former name" column. Node IDs did not change. Pages without a real scope ID, CPQ among them, kept their names. Rule 3 otherwise stands: a cited page name does not change again without a decision like R1.

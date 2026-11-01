@@ -1,0 +1,392 @@
+/* AD-01 identity register: accepted 60px toolbar, 40px grid and 85px phone rows.
+   The shared shell, menu, table, controls and tokens retain their own authority. */
+#ppo-access-register .mw-content {
+  padding: 0;
+  overflow: auto;
+}
+#ppo-access-register .access-register {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100%;
+  background: var(--surface-white);
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+}
+#ppo-access-register .mw-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+#ppo-access-register .mw-menu nav :is(a, button) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink);
+  font:
+    14px/20px Roboto,
+    sans-serif;
+  text-align: left;
+  text-decoration: none;
+}
+#ppo-access-register .mw-menu nav small {
+  margin-left: auto;
+  color: var(--text-secondary);
+}
+#ppo-access-register .mw-menu nav [aria-current="page"] {
+  background: var(--ppo-shell-selected);
+  color: var(--ppo-shell-link);
+}
+#ppo-access-register
+  :is(.access-toolbar, .access-phone-row, .access-actions, .mw-menu)
+  :is(svg, .ppo-fa) {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+#ppo-access-register .access-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 9px 16px 10px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-access-register .access-toolbar :is(button, .ppo-button) {
+  min-height: 40px;
+  height: 40px;
+}
+#ppo-access-register .access-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  min-width: 140px;
+  flex-shrink: 1;
+  height: 40px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--surface-white);
+}
+#ppo-access-register .access-search input {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  min-width: 0;
+  width: 100%;
+  min-height: 36px;
+  font: inherit;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+}
+#ppo-access-register .access-search button {
+  width: 16px;
+  min-width: 16px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+}
+#ppo-access-register .access-search:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#ppo-access-register .access-count {
+  margin: 0 0 0 auto;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-size: 14px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ppo-access-register .access-icon-button {
+  width: 40px;
+  padding: 0;
+  flex: none;
+}
+#ppo-access-register .access-desktop {
+  min-width: 0;
+}
+#ppo-access-register .ppo-register {
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+}
+#ppo-access-register .ppo-register-table {
+  table-layout: fixed;
+  width: max-content;
+  min-width: 100%;
+  font-size: 14px;
+}
+#ppo-access-register .ppo-register-table :is(th, td) {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  background: var(--surface-white);
+  color: var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ppo-access-register .ppo-register-table th {
+  padding: 0;
+  font-weight: 500;
+}
+#ppo-access-register
+  .ppo-register-table
+  :is(.ppo-register-sort, .ppo-register-label) {
+  height: 39px;
+  min-height: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-access-register .ppo-register-label {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+#ppo-access-register .ppo-register-table td a {
+  color: inherit;
+  text-decoration: none;
+}
+#ppo-access-register .ppo-register-table td a:hover {
+  text-decoration: underline;
+}
+#ppo-access-register .access-col-name {
+  width: 190px;
+  min-width: 190px;
+  max-width: 190px;
+}
+#ppo-access-register .access-col-name a {
+  font-weight: 500;
+}
+#ppo-access-register .access-col-identity {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+}
+#ppo-access-register :is(.access-col-status, .access-col-scheduled) {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+#ppo-access-register :is(.access-col-current, .access-col-expired) {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+#ppo-access-register .access-col-scope {
+  width: 152px;
+  min-width: 152px;
+  max-width: 152px;
+}
+#ppo-access-register .access-col-teams {
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+#ppo-access-register .access-col-requests {
+  width: 130px;
+  min-width: 130px;
+  max-width: 130px;
+}
+#ppo-access-register .access-col-changed {
+  width: 190px;
+  min-width: 190px;
+  max-width: 190px;
+  color: var(--text-secondary);
+}
+#ppo-access-register
+  :is(.access-col-current, .access-col-scheduled, .access-col-expired) {
+  text-align: right;
+}
+#ppo-access-register
+  :is(.access-col-current, .access-col-scheduled, .access-col-expired)
+  button {
+  justify-content: flex-end;
+}
+#ppo-access-register .ppo-register-table :is(.access-check, .access-actions) {
+  position: sticky;
+  z-index: 1;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  padding: 0;
+  text-align: center;
+}
+#ppo-access-register .access-check {
+  left: 0;
+}
+#ppo-access-register .access-actions {
+  right: 0;
+}
+#ppo-access-register .access-check input {
+  margin: 0;
+  padding: 0;
+  min-height: 16px;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  accent-color: var(--link);
+}
+#ppo-access-register .access-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 39px;
+  min-height: 39px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+}
+#ppo-access-register .access-actions .crm-r38-popover :is(button, a) {
+  width: 100%;
+  min-height: 44px;
+  justify-content: flex-start;
+}
+#ppo-access-register .ppo-register-table tr[data-selected] td {
+  background: var(--ppo-shell-selected);
+}
+#ppo-access-register .access-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: var(--neutral-surface);
+  color: var(--neutral);
+  font:
+    12px/16px Roboto,
+    sans-serif;
+}
+#ppo-access-register .access-tag[data-active="true"] {
+  background: var(--success-surface);
+  color: var(--success);
+}
+#ppo-access-register .access-read-state:empty {
+  display: none;
+}
+#ppo-access-register .access-read-state:has(> *) {
+  padding: 24px;
+}
+#ppo-access-register .access-empty {
+  padding: 32px 24px;
+}
+#ppo-access-register .access-empty h2 {
+  font-size: 18px;
+}
+#ppo-access-register .access-phone-list,
+#ppo-access-register .access-phone-tools {
+  display: none;
+}
+#ppo-access-register .access-column-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+#ppo-access-register .access-column-choice input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+}
+#ppo-access-register .crm-r38-panel .access-search {
+  width: 100%;
+}
+#ppo-access-register .crm-r38-panel input {
+  font-size: 16px;
+}
+@media (min-width: 781px) and (max-width: 1439px) {
+  #ppo-access-register .access-count span {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-access-register .access-desktop,
+  #ppo-access-register .access-toolbar {
+    display: none;
+  }
+  #ppo-access-register .access-phone-list {
+    display: block;
+  }
+  #ppo-access-register .access-phone-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 85px;
+    padding: 12px 12px 12px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  #ppo-access-register .access-phone-row > div {
+    flex: 1;
+    min-width: 0;
+  }
+  #ppo-access-register .access-phone-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  #ppo-access-register .access-phone-title strong {
+    flex: 1;
+    min-width: 0;
+    font:
+      500 14px/20px Roboto,
+      sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-access-register .access-phone-title time {
+    font:
+      12px/16px Roboto,
+      sans-serif;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  #ppo-access-register .access-phone-row p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 0;
+    color: var(--muted);
+    font:
+      12px/16px Roboto,
+      sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #ppo-access-register .access-phone-row p svg {
+    width: 14px;
+    height: 14px;
+  }
+  #ppo-access-register .access-phone-row .access-warning {
+    color: var(--warning);
+  }
+  #ppo-access-register .access-phone-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px 100px;
+  }
+  #ppo-access-register .ppo-register-foot {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+  }
+}

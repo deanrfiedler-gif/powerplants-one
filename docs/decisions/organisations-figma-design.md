@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q3 Accounts tab | Resolved as recommended | Each Finance account is listed by company with its source "as at" time and never combined into one balance. People without Finance access see Restricted and no counts |
 | Q4 Phone | Resolved as recommended | Overview, Sales, Service and Sites are the phone tabs; Projects, Accounts and Activity are reached by scrolling the tab strip. The sticky action is Create follow-up |
 | Accept the design | User decision, 18 October 2026 | Quoted above |
-| Named Figma version | Waiting for Dean's explicit yes | Proposed title "Organisations — accepted". Section 7 |
+| Named Figma version | Saved | "Organisations — accepted", 18 October 2026; confirmed in version history on 25 October 2026 ([Figma file audit](../design/figma-file-audit/figma-file-audit-2026-10-24.md) R3). Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -74,7 +74,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D7 in section 4, accepted |
 | Status | Owner-accepted design, 18 October 2026 |
 | Decision record | This file |
-| Named version | Waiting for Dean's explicit yes |
+| Named version | "Organisations — accepted" (saved 18 October 2026) |
 
 ## 4. What the design shows
 
@@ -153,6 +153,6 @@ The audit is recorded on the notes card `1443:3606`.
   - none of 935 visible texts had a stored colour that differed from its bound variable;
   - no copy carries a prototype link or a flow starting point.
 - The captures were exported at scale 1 with the Figma connector and downloaded directly into the captures folder. The hashes are in the [captures README](../reference/ui/customers/organisations-design-r01/README.md).
-- The named Figma version "Organisations — accepted" is not saved yet; it needs Dean's explicit yes. This pull request stays in draft until then.
+- The named Figma version "Organisations — accepted" was saved on 18 October 2026. The Figma file audit confirmed it in version history on 25 October 2026; until then this record and the page header still said it was waiting.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.

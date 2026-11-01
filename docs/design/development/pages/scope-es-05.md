@@ -53,3 +53,6 @@ An exact issued revision now links to the staff response page. Reported acceptan
 Filter by estimate reference/title and continue through older windows of up to 100 scoped estimates. offset and q are shareable state; each quotation receives an exact access check. Missing or restricted sources are partial, not an empty complete register.
 
 Desktop uses the existing shell with a 76 px compact or 232 px labelled primary rail. Mobile uses labelled destinations and More > Workspace; Home/search/help remain reachable. Check 320/390/780/781/1199/1200 px where applicable, long labels, visible focus and Escape/return focus. Missing accepted images remain explicit; no new accepted image or review fingerprint is recorded. Functional results and screenshot observations are in the NAV ledger; owner/device review and deployment remain separate.
+
+
+The shared [Reviews & approvals register](route-estimating-reviews.md) now supplies the permission-scoped ES-04/ES-05 queue and exact native handovers at `/estimating/reviews`. Earlier standalone workflow proposals remain separate from this accepted register implementation.

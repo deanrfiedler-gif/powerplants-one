@@ -1,5 +1,5 @@
 import { test, expect, type Page, type Request } from "@playwright/test";
-import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { openAccountPanel, identityToggle, phoneWidth } from "../helpers/phone-menu";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function appointmentMenuAction(page: Page, name: string) {
@@ -585,6 +585,11 @@ test("P05 project requests reject then accept through keyboard; technician reque
   await expect(request.getByText("Accepted", { exact: true })).toBeVisible();
   await capture(page, info, "project-accepted-held");
   await page.goto("/service/appointments/" + id("a8", 1));
+  // A record's phone row swaps Menu for Back once the page's own read returns, which is after the session read that
+  // identity() waits for. A press that starts on Menu as it leaves sends no click, so wait for the record row: the
+  // identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "assigned-technician");
   await expect(
     page.getByRole("button", { name: "Move or reassign", exact: true }),

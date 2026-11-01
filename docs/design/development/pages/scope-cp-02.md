@@ -14,11 +14,15 @@ Implement customer support list/new/detail/reply and safe attachment flows.
 
 ## Desktop
 
+Accepted design: the [Support requests design decision](../../../decisions/support-requests-figma-design.md) of 30 October 2026 covers the Support list, New request in three steps and a review, Received, uncertain receipt, request detail with reply, later-stage Visit booked and Resolved, and the staff public-reply amendment to SV-02, with thirty-five icon-free captures in [design r01](../../../reference/ui/customer-portal/support-requests-design-r01/README.md). Departures D1–D16 and answers Q1–Q8 are recorded there. The portal uses its own shell (CP-01 D1–D2), not the application shell described below. Nothing is built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 16–31, 34 and 35 in [design r01](../../../reference/ui/customer-portal/support-requests-design-r01/README.md): the list, the new request flow, Received and detail with reply at 390 and 320, reply sent and the just-received detail at 390, and nine phone states (D15).
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,9 +36,12 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-- [customer-portal-mockup.html](../../../blueprints/customer-portal-mockup.html)
+- [Support requests design r01 captures](../../../reference/ui/customer-portal/support-requests-design-r01/README.md) (accepted Figma design, icon-free)
+- [customer-portal-mockup.html](../../../blueprints/customer-portal-mockup.html) (earlier direction)
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Support requests design r01 captures](../../../reference/ui/customer-portal/support-requests-design-r01/README.md) (thirty-five icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/support-requests-figma-design.md). Attachments are CP2a; the design shows "Photos coming soon" and no upload. Dark mode, 200% zoom, a two-site view and a desktop closed request are not drawn. D-024 stays open, and Resolved and Closed depend on ADR-0043, still proposed. Building it is not decided.
 
 The draft User Guide `guide.cp.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

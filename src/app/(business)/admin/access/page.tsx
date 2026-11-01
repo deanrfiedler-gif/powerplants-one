@@ -1,4 +1,4 @@
-import { AccessPeopleScreen } from "../../../../access/screens";
+import { AccessIdentityRegister } from "../../../../access/identity-register-screen";
 export default function Page() {
-  return <AccessPeopleScreen />;
+  return <AccessIdentityRegister />;
 }

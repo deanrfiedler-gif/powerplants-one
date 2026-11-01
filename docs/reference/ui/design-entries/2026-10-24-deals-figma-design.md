@@ -1,0 +1,7 @@
+# Deals (CR-04)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Deals — Board / List / Forecast / Archive — `/sales/opportunities` | [Design r02 captures](../crm/deals-design-r02/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 24 October 2026 | [Decision](../../../decisions/deals-figma-design.md#acceptance--24-october-2026). CR-04 with PPO-009; the app's worklist is built but not to this design. Board, List, Forecast and Archive with the snapshot, filters, selection, column settings, Add deal, Won and Lost and a refused stage move, at desktop, tablet and phone, with nine states. No probabilities; values unweighted. |
+
+**Deals design, 24 October 2026:** Dean accepted the finished Deals page, renamed from "Deals (proposal)" to "Deals · CR-04", after it was reconciled with the code: what the app does not have (probabilities, rotting, health signals, waiting-on, task badges, email on cards) was removed, and fifteen departures are recorded with the app's behaviour beside each. Pipeline settings stays a labelled proposal that is not in the app. The 13–14 October r37 evidence stays unchanged; the r02 captures are the reference. The named Figma version "Deals · CR-04 — Pipedrive pattern, accepted" is saved; the page is not built to this design. Listing it here does not repeat the dated inventory audit.

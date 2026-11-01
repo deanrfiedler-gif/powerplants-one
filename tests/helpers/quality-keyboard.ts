@@ -49,48 +49,83 @@ export async function keyAdvanceDays(
   target: Locator,
   days: number,
 ) {
+  if (!Number.isSafeInteger(days))
+    throw Error("Date movement requires whole days.");
   await keyFocus(page, target);
   const before = await target.inputValue();
-  const desired = new Date(Date.parse(before + "Z") + days * 86400000)
-    .toISOString()
-    .slice(0, 16);
-  const oneDay = new Date(Date.parse(before + "Z") + 86400000)
-    .toISOString()
-    .slice(0, 16);
-  // Native datetime controls expose separate locale-dependent segments. Find
-  // the day segment using reversible arrow input and inspect the actual value.
-  for (let segment = 0; segment < 14; segment++) {
-    await page.keyboard.press("ArrowUp");
-    if ((await target.inputValue()) === oneDay) {
-      for (let n = 1; n < days; n++) await page.keyboard.press("ArrowUp");
-      await page.keyboard.press("Tab");
-      await expect(target).toHaveValue(desired);
-      return;
+  const date = new Date(before + "Z");
+  date.setUTCDate(date.getUTCDate() + days);
+  const desired = date.toISOString().slice(0, 16);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(desired))
+    throw Error("Date movement exceeds the supported four-digit year range.");
+
+  // Native day arrows wrap within the selected month; they do not add calendar
+  // days. Locate segments by their observable values, not locale-specific order.
+  async function findSegment(
+    start: number,
+    end: number,
+    next: number,
+    direction = "ArrowUp",
+  ) {
+    const value = await target.inputValue();
+    const probe =
+      value.slice(0, start) +
+      String(next).padStart(end - start, "0") +
+      value.slice(end);
+    for (let n = 0; n < 14; n++) await page.keyboard.press("ArrowLeft");
+    for (let n = 0; n < 14; n++) {
+      await page.keyboard.press(direction);
+      const found = (await target.inputValue()) === probe;
+      await page.keyboard.press(
+        direction === "ArrowUp" ? "ArrowDown" : "ArrowUp",
+      );
+      await expect(
+        target,
+        "Native segment probing must restore the original value",
+      ).toHaveValue(value);
+      if (found) return;
+      await page.keyboard.press("ArrowRight");
     }
-    await page.keyboard.press("ArrowDown");
-    await expect(target).toHaveValue(before);
-    await page.keyboard.press("ArrowRight");
-  }
-  // Chrome 154 stopped accepting keyboard input in the native datetime control
-  // under touch emulation: neither arrow-key segment editing nor typed digits
-  // change it, though Tab still reaches it and every other keyboard step works.
-  // Typing the day is tried first because it stays keyboard only.
-  await keyFocus(page, target);
-  await page.keyboard.type(desired.slice(8, 10));
-  await page.keyboard.press("Tab");
-  if ((await target.inputValue()) === desired) return;
-  // A phone user taps the picker, so on a touch profile there is no keyboard
-  // path left to emulate. Set the value there and keep every other step of the
-  // journey keyboard-driven. A pointing-device profile still fails: on desktop
-  // this control must remain operable by keyboard.
-  const touch = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
-  if (!touch)
     throw Error(
-      "The native date control did not expose its day segment to the tested keyboard sequence.",
+      "The native date control did not expose the requested segment to keyboard input.",
     );
-  await target.fill(desired);
-  await expect(
-    target,
-    "the native date control accepted neither keyboard editing nor a set value",
-  ).toHaveValue(desired);
+  }
+  async function changeBy(amount: number) {
+    for (let n = 0; n < Math.abs(amount); n++)
+      await page.keyboard.press(amount > 0 ? "ArrowUp" : "ArrowDown");
+  }
+  if (days !== 0) {
+    const year = Number(before.slice(0, 4));
+    const month = Number(before.slice(5, 7));
+    const day = Number(before.slice(8, 10));
+    await findSegment(
+      8,
+      10,
+      day > 1 ? day - 1 : 2,
+      day > 1 ? "ArrowDown" : "ArrowUp",
+    );
+    // Day 1 is valid in every month/year, including a leap-year transition.
+    // This prevents temporary impossible dates while changing other segments.
+    await changeBy(1 - day);
+    if (Number(desired.slice(0, 4)) !== year) {
+      await findSegment(0, 4, year + 1);
+      await changeBy(Number(desired.slice(0, 4)) - year);
+    }
+    if (Number(desired.slice(5, 7)) !== month) {
+      await findSegment(5, 7, month === 12 ? 1 : month + 1);
+      await changeBy(Number(desired.slice(5, 7)) - month);
+    }
+    await findSegment(8, 10, 2);
+    await changeBy(Number(desired.slice(8, 10)) - 1);
+  }
+  // Commit the native edit by leaving every internal segment with Tab.
+  for (let n = 0; n < 14; n++) {
+    await page.keyboard.press("Tab");
+    if (
+      !(await target.evaluate((element) => element === document.activeElement))
+    )
+      break;
+  }
+  await expect(target).not.toBeFocused();
+  await expect(target).toHaveValue(desired);
 }

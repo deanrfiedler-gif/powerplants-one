@@ -1,3 +1,4 @@
+import { nextWorkingVisit, siteContactInput } from "./site-readiness";
 import { randomUUID } from "node:crypto";
 import {
   createWorkOrder,
@@ -163,8 +164,8 @@ export async function twoTaskStarted() {
     expected_version: w.version,
     scope_revision_id: scope.id,
     scope_version: scope.version,
-    start_at: "2031-12-05T00:00:00Z",
-    end_at: "2031-12-05T02:00:00Z",
+    start_at: nextWorkingVisit(),
+    end_at: new Date(Date.parse(nextWorkingVisit()) + 2 * 3600000).toISOString(),
     customer_commitment: "Proposed",
     preparation_status: "Preparing",
   });
@@ -216,6 +217,8 @@ export async function twoTaskStarted() {
       travel_reason: "SYN explicitly zero same-site allowance",
     })),
   });
+  a = (await readAppointment(co, aid)).items[0];
+  await recordContact(co, aid, siteContactInput(a.version));
   a = (await readAppointment(co, aid)).items[0];
   await createPack(co, {
     ...base(),

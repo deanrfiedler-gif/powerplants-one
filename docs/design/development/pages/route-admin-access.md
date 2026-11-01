@@ -4,44 +4,32 @@ Stable entry: `route:/admin/access`. Scope: AD-01. Owner: Dean Fiedler. Status: 
 
 ## Purpose and authority
 
-Inspect current workspace identities and grants using an active Workspace admin.access.read grant. Clear the working company before workspace inspection. Native read-only increment; no provisioning, role/team membership, changes, attestation or invented grant history.
+Inspect workspace identities and recorded grants with an active Workspace admin.access.read grant and no working company selected. The identity register implements the selected accepted composition; person details, proposed roles, local teams and access requests retain their existing routes and authority. A positive grant count does not establish authentication or permission to perform a business action.
 
 ## Desktop
 
-Accepted design: the [Users and access design decision](../../../decisions/users-and-access-figma-design.md) of 19 October 2026 draws this register as a grid of identities with current, scheduled and expired grant counts, scope reach, local teams, open requests and last grant change, under one Administration side menu (D1, D2). Captures 01 and 09 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md). Nothing new is built; the native page described below remains the built page.
+The [accepted Users and access design](../../../decisions/users-and-access-figma-design.md), captures 01 and 09 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md), supplies the desktop grid and Administration secondary menu. The native implementation uses SecondaryMenuFrame, shared register table, sort header/footer, Button, WorklistChoice/Menu/Panel, ReadState and existing icon mappings. Shared shell and tokens remain authoritative.
 
-Use the application shell, PageHeader, native record cards, Field/SelectField, ReadState, Status and shared Button. At 1440 × 960 and 1024 × 768, keep clear identity, grant scope and validity; wrap long capability keys and show exact ERP company keys beside same-name companies. The directory searches literal name text, filters active/inactive and pages in groups of 50. The person route is the proposed native adaptation of the reference's persistent inspector.
+At 1440 × 900, retain the 240 px secondary menu, 60 px toolbar, 40 px table rows and horizontally scrolling columns within the content region. At 1024 × 900 the shared secondary menu collapses. Search is literal text, submitted explicitly; All, Active, Inactive and Hosted views combine with a company reach filter. Page size is 50 with stable server ordering. Current, Scheduled and Expired columns sort; column selection and row selection stay local to the page. Selection offers only an existing person handover. Company keys remain explicit, including same-name companies.
 
 ## Mobile
 
-Accepted design: captures 10 and 13 in [design r01](../../../reference/ui/access-review/users-and-access-design-r01/README.md): the Active list with the adopted compact header, and five phone states, including inspection not permitted and working company selected.
-
-At 390 × 844 and 320 px, stack labelled grant cards and controls. Keep company key, site number, validity and eligibility result available without a wide permission matrix. Shared controls retain focus indicators, 16 px inputs and phone targets. Verify no horizontal page overflow, keyboard order and readable long keys.
+Captures 10 and 13 supply the Active list and compact header. At 390 × 844 and 320 × 844, use the shared phone header, view chooser and search/filter panel, 85 px minimum identity rows, scope/team summary and grant attention text. The 320 px shared header combines search and filter. The page defaults to Active and most recently recorded change; an explicit URL view/order takes precedence. Retain visible date years under the shared date convention. Phone rows open the same person route as desktop, preserving department context. No horizontal page overflow is permitted.
 
 ## States and recovery
 
-Loading hides prior records; error offers the existing retry; denied or expired authority clears the data. Empty/filtered-empty has explicit copy. Hosted names and subject identifiers remain masked. Explain checks the server at submit time; changing any input clears the old explanation. Refresh reads current authority again. A positive grant result does not approve business actions or verify hosted authentication.
+Loading, failed, denied and working-company-selected reads hide prior rows and counts. Refresh rechecks current authority. Empty/filtered-empty has explicit copy and Clear filters. Hosted names are masked, provider subject identifiers are omitted, and local-only team/request metadata is unavailable in hosted mode. Approved requests remain ineffective until the existing independent apply workflow succeeds.
 
 ## Sources and handovers
 
-Existing reference: [AD-01 working HTML](../../access-review/access-review.html); original [issued r01](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html). Native scope [decision](../../../decisions/access-review-native.md). Incoming: users, exact grants and company/site keys; outgoing: current grant eligibility only. Draft guide is linked in the live register.
+Incoming: current users, exact permission grants and company/site keys, plus existing saved local teams and access requests in local synthetic mode. Outgoing: person details, capability catalogue, proposed-role comparison, saved local teams and access requests. No new write command is introduced. The [native contract continuation](../../../decisions/access-review-native.md#identity-register-continuation--24-october-2026) defines the bounded register read and design adaptations.
+
+Preserve the [AD-01 working HTML](../../access-review/access-review.html), [issued r01](../../../reference/ui/access-review/PPO-Users-Roles-and-Access-Review-r01.html) and all parent IDs. This is implementation of the accepted design, not a revision to issued sources or new owner acceptance.
 
 ## Evidence and open review
 
-Accepted Figma design: [Users and access design r01 captures](../../../reference/ui/access-review/users-and-access-design-r01/README.md) (thirteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/users-and-access-figma-design.md). The list read needs grant counts by state, scope reach, teams and open requests (Q1). Building it is not decided; the native page remains the built page.
+The [identity-register evidence](../../../testing/evidence/access-identity-register/README.md) separates real database/HTTP proof from Figma example rows used only for visual comparison. [Fixture inventory](../access-identity-register-fixtures.json) binds desktop, tablet, phone and state coverage. Historical [native evidence](../../../testing/evidence/access-inspection/README.md) remains historical.
 
-[Execution ledger](../../../testing/evidence/access-inspection/README.md). The execution ledger links source-bound native and reference captures at 1440/390/320 px and records the observed layout differences. These are implementation/reference evidence, not accepted mockups. Owner, physical-device, keyboard/zoom and screen-reader review remain open; accepted native images are still missing. No review fingerprint is set by implementation.
+Recorded departures: no fabricated grant-history timestamp; Last recorded change means the latest applied access request, otherwise Not recorded. Scope reach covers recorded grants, including future/expired grants. Request cells show actual Submitted/Approved totals rather than an invented request reference. Dates retain years and timestamp zones; the changed column is wider to label its narrower meaning. Shell controls depend on actual principal authority, so the Systems preview does not gain illustrative Service navigation or Conversation access. Licensed icon artwork is supplied only by the existing runtime kit; public fallback glyphs and retained icon-free captures do not establish exact production-icon review.
 
-## Capability catalogue continuation
-
-Browse the capability catalogue from people/person access to inspect permissions across the workspace. Holder links carry the capability and matching company/site into the person form; they never imply a positive result. Submit a fresh eligibility check. See the [catalogue contract](route-admin-access-capabilities.md), [holder contract](route-admin-access-capabilities-id.md) and [execution ledger](../../../testing/evidence/access-capabilities/README.md). Existing review records remain unchanged.
-
-The [CPQ live implementation](../../../decisions/cpq-figma-ui.md) extends the generated hosted tester fixture from 31 to 34 duties with cpq.read, cpq.author and cpq.calculate. Company A scope and invitation expiry remain explicit. Review and publish remain absent; the catalogue is inspection, not a hosted grant-changing command. This derived-reference update grants no new visual acceptance.
-
-## Proposed-role continuation
-
-Users and access links to the seven proposed bundles; Person access links to the exact company/site comparison. See the [role comparison contract](route-admin-access-id-roles.md) and [evidence](../../../testing/evidence/access-roles/README.md). This implements inspection only; teams, assignments, access-changing commands and campaigns remain open. Existing captures retain their original source and do not establish review of the new links.
-
-## Request and independent-review continuation
-
-Local synthetic single-add proposals can be submitted and independently decided from [Access-change requests](route-admin-access-requests.md). Approved remains ineffective: apply, teams and campaigns remain open. Existing captures retain their original source; no acceptance of the new handover is inferred.
+Owner visual acceptance, physical-device, screen-reader and zoom review remain open. Source presence, functional checks, visual comparison and deployment remain separate; no review fingerprint is copied into acceptance records.

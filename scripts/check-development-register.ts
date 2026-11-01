@@ -1,139 +1,45 @@
 import { buildComponentLibrary } from "../src/development/component-catalog";
-import { mkdir, writeFile, readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import {
+  frozenComponentManifestErrors,
+  specificationGrowthErrors,
+} from "../src/development/component-model";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import {
   buildCatalog,
-  readMaster,
-  readGuides,
-  sourceRoutes,
-  registerPath,
-  guidePath,
-  documentationSlug,
+  componentManifestPath,
+  specificationSizesPath,
 } from "../src/development/catalog";
-import type { Entry, Guide } from "../src/development/model";
+import { syncNewRoutes } from "../src/development/sync";
 const root = process.cwd();
 if (process.argv.includes("--sync")) {
-  const [master, guides, routes] = await Promise.all([
-    readMaster(root),
-    readGuides(root),
-    sourceRoutes(root),
-  ]);
-  let added = 0;
-  for (const route of routes) {
-    if (
-      route.path.startsWith("/crm/") ||
-      master.entries.some((e) => e.kind === "route" && e.path === route.path)
-    )
-      continue;
-    const key = "route:" + route.path,
-      title =
-        route.path
-          .split("/")
-          .filter(Boolean)
-          .map((p) => p.replace(/[-[\]]/g, " "))
-          .join(" / ") || "Home";
-    const design =
-        "docs/design/development/pages/" + documentationSlug({ key }) + ".md",
-      guideKey = "guide." + documentationSlug({ key });
-    const entry: Entry = {
-      key,
-      title,
-      kind: "route",
-      module: route.path.startsWith("/development")
-        ? "Development"
-        : "Unassigned",
-      summary:
-        "New source page. Confirm its scope, guide and desktop/mobile design in this change.",
-      path: route.path,
-      source_paths: [route.source],
-      guide_key: guideKey,
-      design_path: design,
-      html_path: null,
-      image_paths: [],
-      dependencies: [],
-      scope_status: "New source; editorial review pending",
-      visual_status: "Needs review",
-      functional_status: "Not recorded here",
-      deployment_status: "Not verified",
-      review_fingerprint: null,
-      reviewed_at: null,
-      reviewer: null,
-      owner: "Dean Fiedler",
-      build_rank: null,
-      related_keys: [],
-    };
-    master.entries.push(entry);
-    const guide: Guide = {
-      guide_key: guideKey,
-      entry_key: key,
-      title,
-      status: "Draft",
-      owner_role: "Prototype content owner: Dean Fiedler",
-      reviewer: null,
-      reviewed_at: null,
-      reviewed_content_hash: null,
-      content_mode: "New source; review needed",
-      source_commit: master.source_baseline,
-      related_entry_keys: [],
-      sections: [
-        {
-          section_id: "purpose",
-          title: "Purpose and applicability",
-          paragraphs: [
-            entry.summary,
-            "This guide was registered when the source page was discovered. Confirm the exact workflow before operational use.",
-          ],
-          steps: [],
-          headers: [],
-          rows: [],
-        },
-        {
-          section_id: "quick-start",
-          title: "Using this page",
-          paragraphs: [],
-          steps: [
-            "Open the intended local environment and confirm the page context.",
-            "Read the available page instructions and required inputs.",
-            "Inspect the result and retain any unresolved question for the page owner.",
-          ],
-          headers: [],
-          rows: [],
-        },
-        {
-          section_id: "recovery",
-          title: "If something is unavailable",
-          paragraphs: [
-            "Return to the development register to inspect source and design references. Source presence is separate from deployment, permissions and acceptance.",
-          ],
-          steps: [],
-          headers: [],
-          rows: [],
-        },
-      ],
-    };
-    guides.push(guide);
-    await mkdir(dirname(resolve(root, design)), { recursive: true });
-    await writeFile(
-      resolve(root, design),
-      `# ${title} — design reference\n\nStable entry: ${key}. Draft; owner review pending.\n\n## Desktop\n\nUse the existing shell and shared controls. Retain one scrolling owner, visible page context, descriptive actions and the relevant source/reference links. Verify 1440 × 960 and 1024 × 768.\n\n## Mobile\n\nStack dense content at 390 × 844 and 320 CSS px. Preserve every task, visible focus, readable labels and reachable close actions. Verify long content and 200% zoom.\n\n## Evidence and boundaries\n\nSource: ${route.source}. Visual review, functional checks and deployment remain separately recorded. Replace this discovery brief with the page-specific contract in the same implementation PR.\n`,
-    );
-    added++;
-  }
-  await writeFile(
-    resolve(root, registerPath),
-    JSON.stringify(master, null, 2) + "\n",
-  );
-  await writeFile(
-    resolve(root, guidePath),
-    JSON.stringify({ schema_version: 2, guides }, null, 2) + "\n",
-  );
+  const added = await syncNewRoutes(root);
   console.log(
-    `Registered ${added} newly discovered pages. Existing editorial content and statuses retained.`,
+    `Registered ${added} newly discovered pages, each with a Draft guide stub under docs/guides/pages. Existing editorial content and statuses retained.`,
   );
 }
 const catalog = await buildCatalog(root);
 const components = await buildComponentLibrary(root, catalog);
 catalog.errors.push(...components.errors);
+// components.json is frozen; new components and consumer items go in binding files.
+catalog.errors.push(
+  ...frozenComponentManifestErrors(
+    JSON.parse(await readFile(resolve(root, componentManifestPath), "utf8")),
+  ),
+);
+// So are the specifications' sizes; a page's consumer note goes beside its binding file.
+const specificationSizes: Record<string, number> = JSON.parse(
+  await readFile(resolve(root, specificationSizesPath), "utf8"),
+).blocks;
+const specifications: Record<string, string> = {};
+for (const name of Object.keys(specificationSizes))
+  specifications[name] = await readFile(
+    resolve(root, "docs/design/development/components", name),
+    "utf8",
+  ).catch(() => "");
+catalog.errors.push(
+  ...specificationGrowthErrors(specificationSizes, specifications),
+);
 for (const entry of catalog.entries) {
   const spec = await readFile(resolve(root, entry.design_path), "utf8");
   if (!/^## Desktop\s*$/m.test(spec) || !/^## Mobile\s*$/m.test(spec))
@@ -156,6 +62,9 @@ console.log(
         (e) => e.review_state === "Not reviewed",
       ).length,
       stale: catalog.entries.filter((e) => e.review_state === "Stale").length,
+      stale_entries: catalog.entries
+        .filter((e) => e.review_state === "Stale")
+        .map((e) => e.key),
       scope:
         "Coverage and reference integrity; visual/functional acceptance is separately recorded.",
     },

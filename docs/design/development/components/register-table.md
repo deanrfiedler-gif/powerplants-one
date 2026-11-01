@@ -30,8 +30,10 @@ The application implementation and exact consumer bindings are maintained in `..
 - Grid / Checkbox cell `74:48`
 - Grid / Row actions cell `74:50`
 - Grid / Done cell (proposed) `408:430`
+- Grid / Group band (proposed) `2651:7352`
+- Grid / List row (phone, proposed) `2651:7385`
 
-Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+Module row and header pairs (for example Work order grid row 196:24549) are composed from these cells and sit in the module parts sections. Grid / Group band (proposed) spans the select and settings columns in its group's colour, and Grid / List row (phone, proposed) is the drawn candidate for the register-table-phone gap; the Figma file audit (R6, 25 October 2026) drew them, and no accepted page uses them yet. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 
@@ -147,3 +149,18 @@ FI-04 uses RegisterTable, RegisterChip, RegisterEmpty and RegisterFooter for the
 ## PL-04 consumer
 
 Changes and follow-up (`/schedule/changes`) and Policy impact (`/schedule/policy-impact`) reuse this family. Host fixtures in `tests/browser/changes-follow-up.spec.ts` cover the drawn desktop/tablet/390/320 layouts, current/unavailable reads, exact handovers and permission states. No shared runtime variant or approval is added. The page contracts and PL-04 build evidence record alignment differences; owner visual review remains pending.
+
+
+Reviews & approvals consumes this shared control at `route:/estimating/reviews`; see the [page-specific composition and states](../pages/route-estimating-reviews.md). Existing consumers and review records remain independent.
+
+## AD-01 identity register host
+
+The `/admin/access` register reuses this component with the accepted 60 px toolbar, 40 px grid and compact phone rows. Host states and consumer bindings are in [the fixture inventory](../access-identity-register-fixtures.json); [execution evidence](../../../testing/evidence/access-identity-register/README.md) distinguishes real database/HTTP checks from the visual-only Figma fixture. Existing component behaviour and review records remain unchanged. Owner/device/screen-reader acceptance is pending.
+
+## Outputs consumer — DK-03
+
+The Outputs register and exact issue records reuse this component. Host states: tests/browser/output-workspace.spec.ts and tests/helpers/output-workspace-fixture.ts. See [execution evidence](../../../testing/evidence/output-register/README.md). Shared behaviour is unchanged; scoped 40 px rows and record/phone geometry follow the accepted design. Owner visual/device review remains pending.
+
+## SV-03 register consumer — 24 October 2026
+
+The Work orders register composes this existing control with local SV-03 geometry and native permission-scoped reads. The host state binding covers queues, filtering, selection, snapshot, denied/empty/error/partial states and 390/320 px. The shell adds only a neutral work-order count mount; its established rail and phone controls remain shared. See [work-order evidence](../../../testing/evidence/work-order-register/README.md). Owner visual review is pending; no review fingerprint is changed.

@@ -10,7 +10,7 @@ The host groups the workbench context facts, readiness checks, seven view links,
 
 ## Figma components
 
-**Status:** Proposal only · **Location:** ES-08 · Screen Configurator Workbench 406:2, in the private "PPO - Design" Figma file
+**Status:** Proposal only · **Location:** Screen Configurator Workbench · ES-08 406:2 (formerly "ES-08 · Screen Configurator Workbench"), in the private "PPO - Design" Figma file
 
 - Workbench / Context strip `415:4566`
 - Workbench / Context fact `413:93834`

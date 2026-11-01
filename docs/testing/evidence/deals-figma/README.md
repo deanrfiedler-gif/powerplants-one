@@ -1,12 +1,14 @@
 # Deals Figma design evidence
 
-**Date:** 14 October 2026 (desktop refinement); phone capture remains 13 October · **Inspector:** Codex (agent visual inspection) · **Owner review:** Pending.
+**Date:** 14 October 2026 (desktop refinement); phone capture remains 13 October · **Inspector:** Codex (agent visual inspection) · **Owner review:** Pending for these r01 images; the finished design was accepted on 24 October 2026.
+
+**24 October 2026:** the Figma page is now named "Deals · CR-04" (same node `549:2`, same frame IDs). Dean accepted the finished design, which supersedes these captures as the reference: see the [acceptance section](../../../decisions/deals-figma-design.md#acceptance--24-october-2026) and the [r02 captures](../../../reference/ui/crm/deals-design-r02/README.md). The images and text below are the 13–14 October r01 evidence, kept unchanged; they predate R11, so they still show weighted values and probabilities.
 
 Repository documentation baseline: `5eb55f0`. This contribution changes design records only. The Figma source was the user-selected r37 HTML, SHA-256 `3b0d7806907bc97e9db37f5ae7d0cedf385abb6d9ec2781b0bedd1e8e7c4ca39`.
 
 ## Delivered frames
 
-All frames are on the Deals (proposal) page (`549:2`) in the "PPO - Design" Figma file. Screenshots below are direct Figma exports, not screenshots imported as UI layers.
+All frames are on the Deals page (`549:2`, then named "Deals (proposal)", now "Deals · CR-04") in the "PPO - Design" Figma file. Screenshots below are direct Figma exports, not screenshots imported as UI layers.
 
 | View | Node | Viewport | Capture |
 |---|---|---|---|

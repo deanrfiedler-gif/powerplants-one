@@ -4,6 +4,8 @@
 
 **Owner:** Dean Fiedler. **State:** Accepted by the owner, 17 October 2026, through C3 of the decision paper: "Proceed with your recommendations for C1 and C3 to C8." Proposed 16 October 2026. Acceptance chooses the provider and the channel design only. It authorises no app registration, mailbox, credential, DNS change, dependency, migration, sending code or customer message; each waits for its own build stage (decision paper C8). **Raised by:** the [D-025 customer communications decision paper](customer-communications-d025.md), which holds the message classes, policy rules, data gaps and sequence. D-025 is now Partially resolved; what stays open is listed in section 2 of the paper.
 
+**Pointer, 26 October 2026.** [ADR-0059](ADR-0059-email-sending-from-ppo.md), accepted by Dean on 26 October 2026, sends email a person writes from that person's own mailbox. This decision is unchanged: its decision 3 governs the communications service's notice channel, and customer notices stay on the shared mailbox.
+
 **Related:**
 - Decisions: D-025; D-020 (identity, privacy and external access); D-022 (hosting and integration platform); D-024 (branding and templates).
 - Requirements and outputs: CRM-03, DOC-05, PRJ-07, SCM-07, SCM-08, SVC-05; TR-03; OUT-11, OUT-17; IF-09; NFR-11.

@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-AUTOMATION-CONFIGURATOR-FIGMA-DEC,Automation Configurator workbench design (Figma) owner decision,docs/decisions/automation-configurator-figma-design.md,,Owner-accepted design; native implementation and UI baseline acceptance separate,Dean Fiedler,612ebecbfc328a20a035b71c363729f3223efe7f,,,git,
+PPO-AUTOMATION-CONFIGURATOR-FIGMA-R01,Automation Configurator design retained captures,docs/reference/ui/estimating/automation-configurator-figma-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,612ebecbfc328a20a035b71c363729f3223efe7f,,,retained-record,

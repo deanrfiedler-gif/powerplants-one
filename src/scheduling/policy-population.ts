@@ -500,11 +500,12 @@ export async function evaluatePolicyBooking(
       );
     });
   const contacts = s.by("contact_outcomes", "appointment_id", a.id);
+  const dateContacts = contacts.filter((x) => x.purpose === undefined || x.purpose === "DateAgreement");
   // Initial confirmation increments schedule_version and retains the exact contact
   // it accepted in booking_snapshot. A controlled move explicitly sets review=true
   // and must never reuse that initial agreement for its new dates.
   const latest =
-    contacts
+    dateContacts
       .filter((x) => x.schedule_version === a.schedule_version)
       .sort(
         (x, y) => +y.created_at - +x.created_at || y.id.localeCompare(x.id),

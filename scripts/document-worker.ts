@@ -1,3 +1,4 @@
+import { runPreparationDeadlines } from "../src/scheduling/preparation-worker";
 import { runReportJobs } from "../src/reports/worker";
 import { runFinanceJobs } from "../src/finance/worker";
 import { runPendingQuoteJobs } from "../src/estimating/worker";
@@ -8,6 +9,8 @@ import { closeDatabase } from "../src/platform/database";
 import { localConfig } from "../src/platform/config";
 localConfig();
 try {
+  const preparation = await runPreparationDeadlines();
+  console.log(`Preparation deadlines: ${preparation.examined} visits, ${preparation.created} owned Activities, ${preparation.unavailable} unavailable calendar/owner projections.`);
   const count = await runPendingRenderJobs();
   const reports = await runReportJobs();
   const finance = await runFinanceJobs();
