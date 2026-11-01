@@ -239,6 +239,9 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'database-') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_DATABASE_SHARD: ${{ matrix.database_shard }}
+          # P12 runs the offline restart proof; serve the completed build so its
+          # unchanged notice deadline is not spent on development route compilation.
+          PPO_PROOF_COMPILED: "1"
         run: |
           mkdir -p verification-evidence/native-database
           # Preserve the full transcript independently of the runner log tail.
@@ -310,6 +313,8 @@ jobs:
         if: ${{ matrix.suite == 'http' && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+          # Same compiled build as the HTTP routes step above; assertions and deadlines unchanged.
+          PPO_PROOF_COMPILED: "1"
         run: |
           node --env-file=.env.local --import tsx scripts/offline-restart-proof.ts write
           docker restart "$PPO_POSTGRES_CONTAINER"

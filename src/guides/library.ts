@@ -3,7 +3,7 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import { readMaster } from "../development/catalog";
 import type { Entry } from "../development/model";
-import { compileGuide, declaresGuideKey } from "./compile";
+import { compileGuide, declaresGuideKey, decodeYamlEscapes } from "./compile";
 import { linkShape } from "./links";
 import type { CompiledGuide, GuideError, GuideLibrary } from "./model";
 import { isRouteEntry, releasedGuides, routeForPath, visibleRelease, type ReleasedLibrary, type ReleasedRoute } from "./released";
@@ -37,7 +37,8 @@ type FileRead = { guide?: CompiledGuide; errors: GuideError[]; front: string[] }
 // document. Elsewhere under docs/guides a Markdown file is a guide when its front matter declares a guide key, in any
 // YAML form (declaresGuideKey in compile.ts), or when a line in its first 40 looks like a guide key line. That second
 // test is loose on purpose (leading space, quotes, - for _, any case), so that a guide whose opening --- or key is
-// mistyped is reported by the compiler instead of dropping out of the library.
+// mistyped is reported by the compiler instead of dropping out of the library. It also reads those lines as YAML
+// would decode them, so a key written with escapes is caught wherever the same key written plainly would be.
 const pagesFolder = `${guidesFolder}/pages/`;
 const guideKeyLine = /^\s*["']?guide[_-]key["']?\s*:/i;
 const guideKeyWindow = 40;
@@ -46,8 +47,36 @@ const isMarkdown = (path: string) => /\.md$/i.test(path);
 const errorCode = (error: unknown): string | undefined =>
   typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
 
-// CRLF and a lone CR are line breaks, as they are to the compiler and to marked.
-const hasGuideKeyLine = (text: string) => text.replace(/\r\n?/g, "\n").split("\n", guideKeyWindow).some((line) => guideKeyLine.test(line));
+// CRLF and a lone CR are line breaks, as they are to the compiler and to marked. Every line that starts in the first
+// 40 is also read, from its own start, as YAML would decode it. A line ending in an escaped line break (an odd number
+// of backslashes) continues onto the next, however far, so line 40 cannot cut a key in half. Each line is checked from
+// where it starts, so an earlier line ending in a backslash (a comment or a plain value, which YAML does not continue)
+// cannot hide the key on the next. Each run of continued lines is decoded once, so the work stays linear in the
+// length of the file.
+const escapedLineBreak = /(?:^|[^\\])(?:\\\\)*\\$/;
+const decodedGuideKeyLine = /\s*["']?guide[_-]key["']?\s*:/iy;
+const hasGuideKeyLine = (text: string) => {
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  if (lines.slice(0, guideKeyWindow).some((line) => guideKeyLine.test(line))) return true;
+  for (let index = 0; index < Math.min(lines.length, guideKeyWindow); ) {
+    // One run of lines joined by escaped line breaks, decoded line by line, and where each line in the window starts.
+    let decoded = "";
+    const starts: number[] = [];
+    for (let first = true; index < lines.length; first = false) {
+      const line = lines[index];
+      const continues = escapedLineBreak.test(line);
+      if (index++ < guideKeyWindow) starts.push(decoded.length);
+      decoded += decodeYamlEscapes((first ? line : line.replace(/^[ \t]*/, "")).slice(0, continues ? -1 : undefined));
+      if (!continues) break;
+    }
+    const keyAt = (at: number) => {
+      decodedGuideKeyLine.lastIndex = at;
+      return decodedGuideKeyLine.test(decoded);
+    };
+    if (starts.some(keyAt)) return true;
+  }
+  return false;
+};
 
 // The lines between the opening --- and the closing ---. Only a guide that compiled is asked, and its front matter
 // is well formed.

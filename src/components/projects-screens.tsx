@@ -25,6 +25,7 @@ import { DeliverySalesSources } from "./sales-delivery-link";
 import { ProjectsGantt } from "./projects-gantt";
 import { ProjectTaskPanel } from "./project-task-panel";
 import { ProjectBaselines } from "./project-baselines";
+import { ProjectFieldWork } from "./project-field-work";
 import {
   formatDate,
   type Project,
@@ -454,6 +455,15 @@ export function ProjectSchedulePage({
         onBaselines={() => setBaselines(true)}
         onSalesContext={() => setSales(true)}
         onRefresh={resource.reload}
+        after={
+          resource.data.field_work && (
+            <ProjectFieldWork
+              project={resource.data.project}
+              fieldWork={resource.data.field_work}
+              onChanged={resource.reload}
+            />
+          )
+        }
       />
       {resource.error && (
         <div className="project-load-error">

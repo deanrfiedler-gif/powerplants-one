@@ -1,0 +1,7 @@
+# Drafting and domain help (AI-04)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Drafting and domain help — register destination `/assistant/drafts`, not a page in the pilot; drafts open in the Emails composer and the Stakeholder updates editor, and equipment help in the assistant panel | [Design r01 captures](../my-work/drafting-domain-help-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 31 October 2026 | [Decision](../../../decisions/drafting-domain-help-figma-design.md). AI-04; not built. Drafts from messages a person ticks, with a provenance banner, sources and marked gaps; each project-update statement beside its source, with approval unchanged; equipment steps only from validated procedures that apply, with hypotheses, conflicts and failed fixes shown as such; escalate when nothing applies; untrusted instructions ignored with a notice |
+
+**Drafting and domain help design, 31 October 2026:** Dean accepted the Figma design for AI-04 at desktop, tablet and phone, with ten states. Carl drafts and people decide: it never sends, approves, prepares, changes settings or advises beyond reviewed knowledge. The [decision](../../../decisions/drafting-domain-help-figma-design.md) records it, and the [retained captures](../my-work/drafting-domain-help-design-r01/README.md) are fifteen icon-free PNGs with hashes. No route, capability or provider call follows. Listing it here does not repeat the dated inventory audit.
