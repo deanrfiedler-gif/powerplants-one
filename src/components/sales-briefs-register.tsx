@@ -83,6 +83,7 @@ function Queue({ query }: { query: URLSearchParams }) {
   const resource = useCrmResource<ReceivingQueue>(
     `${endpoint}?${request}`,
     true,
+    false,
     true,
   );
   const data = resource.error ? null : resource.data;

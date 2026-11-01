@@ -93,6 +93,7 @@ export function HandoverList({
   const list = useCrmResource<Awaited<ReturnType<typeof listHandovers>>>(
     `sales/handovers?kind=${kind}&receiving=${receiving}`,
     true,
+    false,
     true,
   );
   const deals = useCrmResource<Awaited<ReturnType<typeof listOpportunities>>>(
