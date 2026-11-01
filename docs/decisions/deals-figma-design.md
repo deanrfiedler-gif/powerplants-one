@@ -9,7 +9,7 @@ versioning: git
 
 # Deals Figma design
 
-**Owner:** Dean Fiedler · **Date:** 14 October 2026 · **Status:** Owner-accepted design, 24 October 2026 ([Acceptance — 24 October 2026](#acceptance--24-october-2026)), with one later amendment ([Amendment — 31 October 2026](#amendment--31-october-2026)). The sections from "Request and source" to "Acceptance boundary" are the 14 October proposal record, kept as written; the page they call "Deals (proposal)" is now named "Deals · CR-04".
+**Owner:** Dean Fiedler · **Date:** 14 October 2026 · **Status:** Owner-accepted design, 24 October 2026 ([Acceptance — 24 October 2026](#acceptance--24-october-2026)), with two later amendments ([Amendment — 31 October 2026](#amendment--31-october-2026) and [Amendment — 1 November 2026](#amendment--1-november-2026)). The sections from "Request and source" to "Acceptance boundary" are the 14 October proposal record, kept as written; the page they call "Deals (proposal)" is now named "Deals · CR-04".
 
 ## Request and source
 
@@ -254,3 +254,11 @@ The count agrees with the List `555:5333` as at Thursday 15 October 2026: seven 
 - A page check found no Section overlapping another and no node outside its Section. The two flow names are unchanged, and the existing Close and Done links were not touched. Present mode was not played.
 - Each capture copy was compared with its frame layer by layer, across 1,381 layers on Filters and 81 on the phone: no difference in visibility, size or text outside the swapped icons. All 269 and 11 icon instances are `Icon/placeholder`, and no prototype link remains.
 - Nothing is built, so there is no application or device evidence, and this record implies no visual review of the application.
+
+## Amendment — 1 November 2026
+
+This section adds Activity kind to the Add deal form (`2368:8381`). Earlier sections stay as written. This is a design change only: no application code, read, route, migration, permission or capability changes, and no page, scope or parent requirement ID changes.
+
+Dean accepted the [Create forms pattern](create-forms-pattern-figma-design.md) on 1 November 2026 with the words "Accept recommendations", which adopted the recommended answers to its questions. Its Q8 reads: "Add Activity kind to the accepted Deals Add deal 2368:8381? The code requires it and that frame omits it. Recommended: yes, at this lock-in." `NewOpportunityForm` has required it throughout; the frame had left it out.
+
+Activity kind joins Due and Action owner in one row of three, valued Customer contact, the code's default. No other frame on this page changes. The new capture is number 57 in [Create forms design r01](../reference/ui/create-forms-design-r01/README.md); the captures in [r03](../reference/ui/crm/deals-design-r03/README.md) keep their bytes, so its Add deal image predates this change. The named version "Deals · CR-04 — Pipedrive pattern, accepted" also predates it; "Create forms · shared pattern — accepted" will hold it once Dean saves that version.

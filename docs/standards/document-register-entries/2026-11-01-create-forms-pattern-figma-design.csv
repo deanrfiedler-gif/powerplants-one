@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CREATE-FORMS-FIGMA-DEC,Create forms shared pattern design (Figma) owner decision,docs/decisions/create-forms-pattern-figma-design.md,,Owner-accepted design; application changes and operating rules separate,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
+PPO-CREATE-FORMS-FIGMA-R01,Create forms design retained captures,docs/reference/ui/create-forms-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,retained-record,

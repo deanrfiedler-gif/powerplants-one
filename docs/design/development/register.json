@@ -6862,10 +6862,14 @@
         "docs/reference/ui/supply-chain/workshop-builds-design-r01/PPO-WorkshopBuilds-13-State-No-Matches-r01.png",
         "docs/reference/ui/supply-chain/workshop-builds-design-r01/PPO-WorkshopBuilds-14-State-Could-Not-Load-r01.png",
         "docs/reference/ui/supply-chain/workshop-builds-design-r01/PPO-WorkshopBuilds-15-State-Released-Materials-Changed-r01.png",
-        "docs/reference/ui/supply-chain/workshop-builds-design-r01/PPO-WorkshopBuilds-16-State-MYOB-Send-Not-Confirmed-r01.png"
+        "docs/reference/ui/supply-chain/workshop-builds-design-r01/PPO-WorkshopBuilds-16-State-MYOB-Send-Not-Confirmed-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-28-Build-Panel-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-29-Build-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-30-Build-Phone390-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/workshop-builds-figma-design.md"
+        "docs/decisions/workshop-builds-figma-design.md",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
@@ -7574,7 +7578,10 @@
         "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-02-Desktop-Record-Window-r01.png",
         "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-03-Desktop-Selection-Small-Panel-r01.png",
         "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-04-Phone-Package-List-r01.png",
-        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-05-Phone-Record-View-r01.png"
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-05-Phone-Record-View-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-31-Engineering-Panel-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-32-Engineering-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-33-Engineering-Phone390-r01.png"
       ],
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
@@ -7585,7 +7592,8 @@
         "src/engineering/register.ts",
         "src/engineering/register-query.ts",
         "src/app/api/v1/engineering/register/route.ts",
-        "docs/decisions/engineering-workload-backend.md"
+        "docs/decisions/engineering-workload-backend.md",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -8636,7 +8644,13 @@
         "docs/reference/ui/crm/leads-design-r01/PPO-Leads-02-Desktop-Record-Window-r01.png",
         "docs/reference/ui/crm/leads-design-r01/PPO-Leads-03-Desktop-Selection-Small-Panel-r01.png",
         "docs/reference/ui/crm/leads-design-r01/PPO-Leads-04-Phone-Lead-List-r01.png",
-        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-05-Phone-Record-View-r01.png"
+        "docs/reference/ui/crm/leads-design-r01/PPO-Leads-05-Phone-Record-View-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-11-Lead-Quick-Add-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-12-Lead-Full-Form-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-13-Lead-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-14-Lead-Phone390-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-15-Lead-Phone320-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-16-Lead-Phone390-Saved-r01.png"
       ],
       "dependencies": [
         "docs/contracts/lead-to-delivery-continuity.md",
@@ -8645,7 +8659,8 @@
         "docs/testing/evidence/lead-context-resolution/README.md",
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
-        "docs/decisions/leads-design.md"
+        "docs/decisions/leads-design.md",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Accept (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -8735,11 +8750,51 @@
       "guide_key": "guide.page.sales.opportunities.new",
       "design_path": "docs/design/development/pages/route-sales-opportunities-new.md",
       "html_path": null,
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-01-Pattern-Duplicate-Check-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-02-Pattern-Unknown-With-Reason-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-03-Pattern-Review-Before-Save-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-04-Pattern-Uncertain-Save-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-05-Pattern-Validation-Errors-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-06-Pattern-Permission-Limited-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-07-Pattern-Search-Picker-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-08-Pattern-Top-Bar-Menu-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-09-Pattern-Tablet-Full-Form-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-10-Pattern-Tablet-Quick-Add-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-17-Deal-Quick-Add-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-18-Deal-Full-Form-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-19-Deal-From-Lead-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-20-Deal-From-Lead-Contact-Unknown-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-21-Deal-From-Lead-Follow-Up-Kept-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-22-Deal-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-23-Deal-Phone390-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-24-Deal-Phone390-From-Lead-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-38-State-Loading-Options-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-39-State-Option-List-Failed-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-40-State-Duplicate-Chosen-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-41-State-Save-Refused-Stale-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-42-State-Saving-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-43-State-Leave-Unsaved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-44-State-Not-Permitted-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-45-State-No-Options-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-46-State-Opened-From-Record-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-47-State-Panel-Validation-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-48-State-Panel-Uncertain-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-49-State-Phone390-Duplicate-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-50-State-Phone390-Validation-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-51-State-Phone390-Uncertain-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-52-State-Phone390-Picker-Sheet-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-53-State-Phone390-Loading-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-54-State-Phone390-Option-List-Failed-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-55-State-Phone390-Save-Refused-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-56-State-Phone390-Not-Permitted-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-57-Deals-Add-Deal-Amended-r01.png"
+      ],
       "dependencies": [
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -9475,12 +9530,17 @@
       "guide_key": "guide.page.service.work-orders.new",
       "design_path": "docs/design/development/pages/route-service-work-orders-new.md",
       "html_path": "docs/reference/ui/service/PPO-Work-Orders-Workspace-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-25-Work-Order-Full-Form-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-26-Work-Order-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-27-Work-Order-Phone390-r01.png"
+      ],
       "dependencies": [
         "docs/decisions/won-delivery-continuity.md",
         "docs/testing/evidence/won-delivery-continuity/README.md",
         "src/components/sales-delivery-link.tsx",
-        "src/components/sales-delivery-creation.tsx"
+        "src/components/sales-delivery-creation.tsx",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
@@ -9919,11 +9979,17 @@
       "guide_key": "guide.page.work.new",
       "design_path": "docs/design/development/pages/route-work-new.md",
       "html_path": "docs/reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-34-Activity-Full-Form-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-35-Activity-Saved-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-36-Activity-Phone390-r01.png",
+        "docs/reference/ui/create-forms-design-r01/PPO-Create-Forms-37-Activity-Phone320-r01.png"
+      ],
       "dependencies": [
         "src/components/sales-followup.tsx",
         "src/sales/followup.ts",
-        "docs/design/development/lead-continuity-fixtures.json"
+        "docs/design/development/lead-continuity-fixtures.json",
+        "docs/decisions/create-forms-pattern-figma-design.md"
       ],
       "scope_status": "built",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
