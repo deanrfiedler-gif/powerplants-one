@@ -19,7 +19,9 @@ All 14 application captures below were visually inspected. The 1 November set ad
 
 Automated geometry checks assert the menu, toolbar, row and snapshot measurements, unchanged register width, opaque modal background and absence of page overflow. They also exercise phone view/filter controls, Enter/Escape, focus return and tablet keyboard scrolling. Visual comparison remains separate from Dean's review and physical-device/assistive-technology acceptance.
 
-## Functional proof
+## Original implementation proof — through 31 October 2026
+
+These results describe the original implementation and the 31 October correction, not a fresh pass of every suite on the 1 November head. The latest rerun and its limits are recorded separately below.
 
 The isolated synthetic PostgreSQL 16 cluster contains current migrations and seeds, database `ppo_synthetic_test`, and runs only on loopback. No migration, seed, grant or capability changes are part of this PR. Browser/HTTP tests use the native app at port 3143; presentation and negative-state fixtures are explicitly separated.
 
@@ -59,11 +61,13 @@ No native creation/link command, permission, migration or allocation policy chan
 
 The accepted W6 footer defines two native handovers. Its illustrated third ellipsis has no adopted command and is deliberately omitted. Native reference lengths require a documented column adaptation: 216 px reference columns, balanced against Title and (for Saved) Customer, with the workload table set to its explicit 1760 px column sum. The viewport, leading Changed column and Saved sell remain available at desktop width. Long titles remain in their snapshot or record.
 
-Main’s Markdown guide migration is preserved. The revised route guide stays InReview and is not published by this code change. Its obsolete carry-over fixture is removed; the current fallback is checked by the native browser case. No owner-review hash is invented.
+Main’s Markdown guide migration is preserved. The revised route guide stays InReview and is not published by this code change. Its obsolete carry-over fixture is removed; the current fallback is asserted by the native browser case, whose latest full execution remains incomplete below. No owner-review hash is invented.
 
 The f15c7a24 head completed 17 successful workflows, including application and compiled-browser assurance. CRM refinements failed because the new module-workspace entry had no integration contract. The new per-file contract retains the accepted source hashes and proof paths; the exact previously failing adopted-module conformance case passes locally.
 
-Current follow-up validation: 66 workload/guide/parity/baseline unit cases, guide compilation (21 guides, 19 released), studio:check and the CRM module conformance case passed. Held-request desktop/phone regressions prove focus retention, cleared retries and snapshot recovery. The initial polling test installed its clock too late; it was corrected before the successful rerun. A geometry assertion exposed a four-pixel shared-button height shift, then a distributed spare-column-width overlap; both were corrected and rechecked. No production data or business mutation was used for presentation proof.
+Current follow-up validation: 66 workload/guide/parity/baseline unit cases, guide compilation (21 guides, 19 released), studio:check, changed-source ESLint and the CRM module conformance case passed. Across targeted runs, 18 distinct API-fixture UI cases passed: ten review regressions, four negative-state cases and four responsive presentation cases. These are separate from native database-backed workflow checks. The final full TypeScript check passed after integrating main at 26deea85. Documentation scope passed against origin/main; the final status source check passed with 219 fragments. Naming (844 records) and migration-registry checks passed before the final documentation-only edit. The full foundation rerun was still pending when this evidence record was committed; its eventual result belongs in the PR handoff, not the earlier-pass table. Held-request desktop/phone regressions prove focus retention, cleared retries and snapshot recovery. The initial polling test installed its clock too late; it was corrected before the successful rerun. A geometry assertion exposed a four-pixel shared-button height shift, then a distributed spare-column-width overlap; both were corrected and rechecked. No production data or business mutation was used for presentation proof.
+
+The 1 November native browser rerun passed the desktop manual-refresh/failed-read/no-edit case, but the other seven cases did not pass. A warm retry of those seven also did not pass. Observed failures include local-session HTTP 503 responses with `DatabaseConnectTimeout`, expected controls not becoming available in time, and the existing 120-second case deadline during later workflow steps. This is an incomplete native rerun, not a green result or a confirmed product regression. It was not reproduced against an unmodified main runtime, so the cause is not attributed to this change or conclusively to the environment. The earlier successful native evidence above remains historical. Full new-head CI and independent review are still required.
 
 ## Remaining review boundaries
 

@@ -148,7 +148,7 @@
     {
       "path": "docs/guides/pages/guide.page.estimating.md",
       "bytes": 6905,
-      "sha256": "50edddba702b0e430d65d6b4c4e079375bc7d64c870ce3e04e56a13c24143c76"
+      "sha256": "1a69b097be7ce0d3c18cac27136b010540ce16cc692f434a94e28f797512abf5"
     },
     {
       "path": "src/components/estimating-register-read.ts",
