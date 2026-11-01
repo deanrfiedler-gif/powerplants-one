@@ -1,7 +1,7 @@
 # Workshop settings — design reference
 
 Stable entry: `scope:CX-02/settings`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `89283a16027fa90fa988d31a47a4f53dd3d1e0b1`. Proposed application destination: `/workshop/settings`.
+Source baseline: `89283a16027fa90fa988d31a47a4f53dd3d1e0b1`. Proposed application destination: `/admin/settings/workshop`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
 ## Purpose and task
@@ -14,7 +14,7 @@ Settings page within `scope:CX-02`, reached from the Settings hub (`scope:AD-02`
 
 Workshop settings reviewed, with any change recorded.
 
-The destination `/workshop/settings` is proposed; no route or source exists yet.
+The destination `/admin/settings/workshop` is proposed; no route or source exists yet.
 
 ## Desktop
 

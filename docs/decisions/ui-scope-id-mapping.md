@@ -21,7 +21,7 @@ Most pages fit an existing scope. Four new identities are added now, and a fifth
 | --- | --- | --- |
 | Leads and Lead record page | `scope:CR-06` | `/sales/leads`, which exists, with `/sales/leads/[id]` |
 | Time & labour review | `scope:FI-01/time-review` | `/service/time`, proposed in the FI-01 design; no route exists |
-| Workshop settings | `scope:CX-02/settings` | `/workshop/settings`, proposed by this record; no route exists |
+| Workshop settings | `scope:CX-02/settings` | `/admin/settings/workshop`, proposed on that Figma page; no route exists |
 | Customer quotation page | `scope:ES-05/customer-page` | `/quote/[token]`, the [indicative path](quote-view-tracking.md); no route exists |
 
 `scope:CR-06` is the only new top-level identity. The other three follow the `scope:CX-02/kitting` form for a page within a scope.
@@ -52,7 +52,7 @@ These set rules across pages, so they map to existing system entries and gain no
 
 ## Figma
 
-Git stays the authority. [ADR-0055](ADR-0055-figma-file-structure.md) keeps page names stable because repository records quote them, so these pages keep their names. Any scope label in the Figma file follows this record.
+Git stays the authority. [ADR-0055](ADR-0055-figma-file-structure.md) keeps page names stable because repository records quote them, so these pages keep their names. The Scope identity field on the Leads, Lead record, Time & labour review, Workshop settings and Quotation page & customer views pages was updated on 1 November 2026, along with the File index rows for the accepted pages. Named versions saved earlier do not include these label changes.
 
 ## What this does not change
 

@@ -7038,7 +7038,7 @@
       "kind": "scope",
       "module": "CX",
       "summary": "Settings page within scope:CX-02 (PPO-UI-SCOPE-ID-MAPPING-DEC), reached from the Settings hub (scope:AD-02). Planned page; the route is proposed and no source exists yet.",
-      "path": "/workshop/settings",
+      "path": "/admin/settings/workshop",
       "source_paths": [
         "docs/decisions/ui-scope-id-mapping.md"
       ],
