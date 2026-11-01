@@ -14,7 +14,7 @@ Dean accepted the Figma design for AD-10, user onboarding, learning and support:
 
 Twenty-five icon-free captures with hashes are retained in [onboarding-support-design-r01](../reference/ui/administration/onboarding-support-design-r01/README.md), and the request queue capture in [onboarding-support-design-r02](../reference/ui/administration/onboarding-support-design-r02/README.md). The design register page for `scope:AD-10` cites both.
 
-Dean saved the named Figma version "Onboarding & support — accepted" on 1 November 2026. The later version "Onboarding & support — request queue accepted" is awaiting Dean's yes.
+Dean saved the named Figma version "Onboarding & support — accepted" on 1 November 2026. He saved the later version "Onboarding & support — request queue accepted" the same day.
 
 Checked:
 - Overlap, section-bounds and spacing scripts, and in-Figma screenshots.

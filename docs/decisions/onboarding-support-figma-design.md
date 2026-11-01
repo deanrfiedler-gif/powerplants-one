@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q9 Screenshot default | Resolved as recommended | Off until the person ticks it. F5 shows Robin's choice. Storage and retention go to AD-08 |
 | Q10 Who writes task paths and exercises | Resolved as recommended | Written in the repository with each module's guide chapter and reviewed by that module's business reviewer, under stage 5 of the direction |
 | Named Figma version | Saved by Dean, 1 November 2026 | "I have saved the named version as Onboarding & support — accepted" (section 7) |
-| Later named Figma version | Awaiting Dean's yes | "Onboarding & support — request queue accepted" covers F11 (section 7) |
+| Later named Figma version | Saved by Dean, 1 November 2026 | "I have saved the named version as Onboarding & support — request queue accepted". It covers F11 as accepted (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -130,4 +130,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - The 25 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance and no prototype link. They sit on the Captures page at y = 1,530,000.
 - After the owner's acceptance Claude changed the page's status wording, the notes card's wording and the Decision record and Named version fields in the header, and added the File index row. No frame accepted in the first answer changed visually. F11 was added beside them, its Owner view link and the Open request queue link on F8 were wired, and the notes card's Q5 row and "not drawn" list say so. The F11 capture is a separate copy at y = 1,610,000, with no Font Awesome instance or prototype link on scan, and it was read by eye.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.
-- Dean saved the named version "Onboarding & support — accepted" on 1 November 2026, on his own word. Claude did not check Figma's version history. That version may hold F11 under its earlier "awaits review" label. "Onboarding & support — request queue accepted" is the version for F11 as accepted, and has not been saved.
+- Dean saved the named version "Onboarding & support — accepted" on 1 November 2026, on his own word. Claude did not check Figma's version history. That version may hold F11 under its earlier "awaits review" label. Dean saved "Onboarding & support — request queue accepted", the version for F11 as accepted, later on 1 November 2026, also on his own word.
