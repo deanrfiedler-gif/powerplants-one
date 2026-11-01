@@ -2,7 +2,7 @@
 document_id: PPO-SITE-FOLLOW-UP-FOCUS-DEC
 date: 2026-10-31
 owner: Dean Fiedler
-status: Dean chose option (a) on 31 October 2026; built in PR #785; second-model review, screen-reader, device and owner visual review pending
+status: Dean chose option (a) on 31 October 2026; built in PR #785; Dean waived second-model review on 1 November 2026, so none took place; screen-reader, device and owner visual review pending
 source_commit: 7eb4432baefcf8b098a37726b250a311f21e67dc
 versioning: git
 ---

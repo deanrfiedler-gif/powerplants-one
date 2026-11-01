@@ -9,7 +9,7 @@ Before the change, on the real Site page (dev server, Chrome through Playwright,
 
 Checked locally: the six cases in `tests/browser/sites-follow-up-focus.spec.ts` pass at desktop and phone viewports and all fail on the previous code. The CS-04 follow-up case in `sites-native.spec.ts` and `quality-owned-follow-up.spec.ts` pass at both viewports. CI's browser lanes are the deciding run for the wider suite.
 
-Not checked: a screen reader, the compiled application, the live API or a real window switch. Not built: focus still falls to the document when the whole Overview read fails, and nothing explains why when recovery returns the list to its first page. Both are tracked as follow-ups in the decision record. Second-model review, device review and owner visual review are pending. No API, permission or migration change.
+Not checked: a screen reader, the compiled application, the live API or a real window switch. Not built: focus still falls to the document when the whole Overview read fails, and nothing explains why when recovery returns the list to its first page. Both are tracked as follow-ups in the decision record. Dean waived second-model review on 1 November 2026 ("I am happy to skip the Codex review as I trust your work"), so none took place. Device review and owner visual review are pending. No API, permission or migration change.
 
 <!-- decision-index -->
 [Keeping keyboard focus when the Site follow-up list refreshes](../decisions/site-follow-up-focus.md) (PPO-SITE-FOLLOW-UP-FOCUS-DEC) records Dean's choice to keep the list on screen during routine refreshes.
