@@ -32,6 +32,8 @@ Reference: docs/reference/ui/customers/PPO-Contacts-Stakeholders-and-Relationshi
 
 ## Verification and acceptance
 
+Accepted amendment (not yet drawn on the People page): the [Portal home and access design decision](../../../decisions/portal-home-access-figma-design.md) (D11, D18) adds "Propose portal access…" to the record menu and a Portal access summary to the details column. A site contact role grants nothing on the portal; access starts only when an independently reviewed request is applied.
+
 Accepted Figma design: [People design r01 captures](../../../reference/ui/customers/people-design-r01/README.md) (nine icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/people-figma-design.md). The Notices and History tabs at full size, ending an affiliation, creating a person, restricted-affiliation and denied states are not drawn.
 
 The detailed page guide is `guide.cs.02`. [CS receiving handover](../../../delivery/cs-native-completion-handover.md) records executed behaviour, visual inspection, source hashes and open business definitions. Owner/device acceptance and deployment remain separate.

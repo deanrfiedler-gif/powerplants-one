@@ -11,6 +11,7 @@ import {
   base,
 } from "../helpers/service-inspections";
 import { startInput } from "../helpers/field";
+import { moduleIntegration } from "../helpers/ui-baselines";
 import type { loadServiceInspections } from "../../src/inspections/service-context";
 import {
   openPageGuide,
@@ -24,12 +25,7 @@ test("FI03/FI04 retained proposed Quality and r20 references are compared with t
   page,
   baseURL,
 }, info) => {
-  const registry = JSON.parse(
-    await readFile("docs/standards/ui-baselines.json", "utf8"),
-  );
-  const contract = registry.module_integrations.find(
-    (x: { id: string }) => x.id === "fi03-inspections-native",
-  );
+  const contract = moduleIntegration("fi03-inspections-native")!;
   const context = await browser.newContext({
     viewport: {
       width: info.project.name.startsWith("mobile") ? 390 : 1440,

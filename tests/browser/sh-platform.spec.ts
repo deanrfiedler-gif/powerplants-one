@@ -532,7 +532,18 @@ test("SH failure, partial and successful empty presentations retain retry and cl
   ).toBeVisible();
   await page.screenshot({ path: info.outputPath("search-failed.png") });
   mode = "partial";
-  await page.getByRole("button", { name: "Refresh results" }).click();
+  // The real search read can outlive the render assertion window. Observe the
+  // exact refreshed read first, then retain the original UI assertion deadline.
+  const [partialRead] = await Promise.all([
+    page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return response.request().method() === "GET" &&
+        url.pathname === "/api/v1/search" && url.searchParams.get("q") === "SYN";
+    }),
+    page.getByRole("button", { name: "Refresh results" }).click(),
+  ]);
+  expect(partialRead.status()).toBe(200);
+  expect(await partialRead.json()).toMatchObject({ state: "partial" });
   await expect(page.getByText(/Partial results/)).toBeVisible();
   await expect(page.locator(".sh-register .sh-title").first()).toBeVisible();
   await page.screenshot({ path: info.outputPath("search-partial.png") });

@@ -33,7 +33,7 @@ Required states: loading, empty, filtered-empty, unknown data, conflicting sourc
 
 ## References and registration
 
-Exact Automation mockups, HTML, desktop and phone images: **not supplied; missing**. Existing Screen/Priva patterns are reuse references, not accepted Automation visuals. No fingerprint or reviewer attribution is created.
+Accepted Figma design, 22 October 2026: [Automation Configurator design decision](../../decisions/automation-configurator-figma-design.md) and [design r01 captures](../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md) (twenty-one icon-free PNGs at desktop, tablet and phone, with twelve states). Before that date, exact Automation mockups, HTML, desktop and phone images were **not supplied; missing**. Existing Screen/Priva patterns are reuse references, not accepted Automation visuals. No fingerprint or reviewer attribution is created.
 
 The N0 reference-only note was linked from `scope:ES-02` through its maintained design contract and register dependency. N1 now has an actual registered route, page-specific guide, component fixtures and evidence below. Future stages must update these alongside implementation. Any HTML package must select the applicable r20 page type under the existing conformance standard before baseline adoption.
 

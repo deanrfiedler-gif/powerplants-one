@@ -18,6 +18,8 @@ Reuse PageHeader, Field, Button, ErrorNotice, useCrmResource/useCrmCommand, shel
 
 ## Desktop
 
+Accepted design: the [Automation Configurator design decision](../../../decisions/automation-configurator-figma-design.md) of 22 October 2026 draws this assessment as the Process & equipment, Line capacity, Interfaces & site and Layout & drawings sections of the workbench, with the calculation trace and the resolve-a-source-conflict drawers (D3–D6, D9–D11). Captures 04–07, 11 and 12 in [design r01](../../../reference/ui/estimating/automation-configurator-figma-design-r01/README.md). Nothing new is built; the native N2 page remains the built page.
+
 1440 × 960 and 1024 × 768: one bounded content scroll, source context, history/actions, ordered process, scenario evidence, interfaces and saved results.
 ## Mobile
 

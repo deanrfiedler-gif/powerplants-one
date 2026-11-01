@@ -28,6 +28,8 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
+Accepted amendment (not yet drawn on the Customer messages page): a new request notice class. On a staff public reply, the contact's notice choice sends a short shared-mailbox email with a link, never the message text ([Support requests design decision](../../../decisions/support-requests-figma-design.md), D13). D-025's later stages must authorise any sending.
+
 ## Shared components and states
 
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
@@ -45,3 +47,10 @@ Accepted Figma design: see the [decision](../../../decisions/customer-messages-f
 The draft User Guide `guide.ec.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+
+## S3 backend consumer contract — 24 October 2026
+
+[D-025 S3](../../../contracts/customer-communications.md#s3-native-dispatch-and-delay-notices) supplies native dispatch/delay drafts and versioned customer delivery evidence in PR #695. The source API exposes exact movement/outstanding quantities, fictional carrier/platform/tracking fields, the named contact, explicit customer ETA, immutable message-source hashes and sent-baseline evidence. Native commands use Demand versions and actor-private original-operation recovery; a sender still confirms the fixed CUS-EMAIL content.
+
+Future controls must distinguish source evidence from email content and explicit customer ETA from supplier dates. Show SourceChanged, SenderUnauthorised and PriorOutcomeUnknown as held follow-up states; restoring a grant or editing a source does not send a held message. Withdrawal, source correction/reconciliation, fresh preparation and named confirmation are separate actions. The tracking URL is fictional. No new visible surface, accepted screenshot, UI wiring, visual review, business acceptance or deployment is claimed by this backend work.

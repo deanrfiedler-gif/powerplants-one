@@ -97,8 +97,9 @@ export function workOrderRegisterQuery(input: unknown) {
         : choice(r.view, "view", workOrderViews),
     sort:
       r.sort === undefined
-        ? ("updated_desc" as const)
+        ? ("reference_desc" as const)
         : choice(r.sort, "sort", [
+            "reference_desc",
             "updated_desc",
             "updated_asc",
             "reference_asc",

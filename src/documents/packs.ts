@@ -1,3 +1,4 @@
+import { appointmentPreparation } from "../scheduling/site-readiness";
 import { policyImpactHolds } from "../scheduling/policy-holds";
 import { selectedTemplate } from "./use/policy";
 import { incidentHolds } from "../incidents/holds";
@@ -146,11 +147,12 @@ async function preparerTask(
   returnDue: boolean,
 ) {
   const id = randomUUID();
+  const issueDue = returnDue ? null : (await appointmentPreparation(c, p.workspace_id, appointment_id))?.issue_due_at ?? null;
   await c.query(
     `INSERT INTO ppo.activities(id,workspace_id,company_id,site_id,created_by,updated_by,kind,owner_id,summary,due_at,due_needed,access_class)
     SELECT $1,a.workspace_id,a.company_id,a.site_id,$3,$3,'TechnicalFollowUp',$4,$5,
-    CASE WHEN $6::boolean THEN least(((a.start_at AT TIME ZONE a.site_timezone)::date+time '09:00') AT TIME ZONE a.site_timezone,a.start_at-interval '2 hours') END,
-    NOT $6::boolean,'RestrictedService' FROM ppo.appointments a WHERE a.workspace_id=$2 AND a.id=$7`,
+    CASE WHEN $6::boolean THEN least(((a.start_at AT TIME ZONE a.site_timezone)::date+time '09:00') AT TIME ZONE a.site_timezone,a.start_at-interval '2 hours') ELSE $8::timestamptz END,
+    NOT $6::boolean AND $8::timestamptz IS NULL,'RestrictedService' FROM ppo.appointments a WHERE a.workspace_id=$2 AND a.id=$7`,
     [
       id,
       p.workspace_id,
@@ -159,6 +161,7 @@ async function preparerTask(
       summary.slice(0, 2000),
       returnDue,
       appointment_id,
+      issueDue,
     ],
   );
   await c.query(
@@ -547,6 +550,9 @@ export async function dispatchReadiness(
   }
   // P1. Derived at every evaluation, before attendance begins. Once a visit has started, the parts
   // on site are a field fact and a later supply change never reopens its authority.
+  const preparation = await appointmentPreparation(c, p.workspace_id, a.id);
+  if (!a.actual_start_at && preparation && preparation.outcome !== "Pass")
+    reasons.push(`Customer site readiness: ${preparation.outcome}. Record the four checks for this schedule version within the synthetic window.`);
   let parts: PartsReadiness | null = null;
   if (!a.actual_start_at) {
     parts = await partsCriterion(c, p.workspace_id, a);
@@ -561,6 +567,7 @@ export async function dispatchReadiness(
     reasons,
     recipients,
     parts,
+    preparation,
   };
 }
 export async function acknowledgePack(
@@ -1363,6 +1370,7 @@ export async function listPacks(p: Principal) {
           prepared_by: staff ? (rev?.created_by ?? null) : null,
           prepared_by_name: staff ? (rev?.prepared_by_name ?? null) : null,
           updated_at: pack.updated_at.toISOString(),
+          preparation: ready.preparation,
           job_state: job?.state ?? null,
           readiness: assessed
             ? {

@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-RULE-SETS-AUTHORITY-DEC,Real rule sets: storage authority and Rules studio acceptance order,docs/decisions/rule-sets-real-data-authority.md,,Owner decision 26 October 2026 answering ADR-0066 Q6; authorises no build or environment or real data,Dean Fiedler,55722e8226b62c2a0e2e3bfe67b38b104bb09590,,,git,

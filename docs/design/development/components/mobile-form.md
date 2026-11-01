@@ -14,9 +14,11 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** None · **Location:** Components, in the private "PPO - Design" Figma file
+**Status:** Partial · **Location:** Components › Controls, in the private "PPO - Design" Figma file
 
-No main component on the Components page yet. Page frames may draw this pattern; add a component when an accepted design needs one. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
+- Controls / Form field (proposed) `2649:7479`
+
+Controls / Form field (proposed) draws the field family that phone frames use. Its value text is 14 px, as on the accepted pages, while the runtime uses at least 16 px on phones; no phone-specific variant is drawn. The mapping is kept in `../components.json` (`figma`); node IDs are stable, and the file link stays out of this repository (ADR-0053). It records where the design component is, not visual alignment or review.
 
 ## Desktop
 

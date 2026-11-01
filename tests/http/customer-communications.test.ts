@@ -1,3 +1,6 @@
+import { details, newDemand, fact, recordVersion, setupNotices } from "../helpers/customer-delivery";
+import { supplyFact } from "../helpers/supply";
+import { database } from "../../src/platform/database";
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -145,4 +148,62 @@ test("D-025 S2 over HTTP: notice preference holds, withdraw, and reconcile befor
     (await rows("SELECT count(*)::int AS n FROM ppo.synthetic_mailbox_messages WHERE communication_id=$1", [lost.id]))[0].n,
     1,
   );
+});
+
+
+test("S3 HTTP enforces delivery-role/source duties, exact replay and recovery, and drafts only native Moved dispatch", async () => {
+  const { actor } = await setupNotices();
+  const id = await newDemand(actor), person = await contact("s3.http@example.invalid");
+  const path = `supply/records/${id}`;
+  const options = await call("coordinator", `supply/customer-delivery-options?company_id=${CRM.company}`);
+  assert.equal(options.status, 200);
+  assert.equal(options.body.options.length, 7);
+  assert.equal(options.body.synthetic, true);
+  assert.ok([403, 404].includes((await call("second-company", `supply/customer-delivery-options?company_id=${CRM.company}`)).status));
+  const cmd = { ...base(), expected_version: await recordVersion(id), contact_id: person, customer_eta: "2026-11-03", delay_reason_code: null };
+  for (const profile of ["observer", "second-company", "other-workspace"])
+    assert.ok([403, 404].includes((await call(profile, `${path}/customer-delivery`, cmd)).status));
+  const accepted = await call("coordinator", `${path}/customer-delivery`, cmd);
+  assert.equal(accepted.status, 201, JSON.stringify(accepted.body));
+  const replay = await call("coordinator", `${path}/customer-delivery`, cmd);
+  assert.equal(replay.status, 200);
+  assert.deepEqual(replay.body, accepted.body);
+  assert.equal((await call("coordinator", `${path}/customer-delivery`, { ...cmd, customer_eta: "2026-11-04" })).body.code, "OperationConflict");
+  assert.equal((await call("coordinator", `${path}/customer-delivery`, { ...cmd, ...base() })).body.code, "VersionConflict");
+  assert.deepEqual((await call("coordinator", `supply/operations/${cmd.operation_id}`)).body, accepted.body);
+  assert.ok([403, 404].includes((await call("observer", `supply/operations/${cmd.operation_id}`)).status));
+  assert.equal((await call("coordinator", `${path}/customer-delivery`, { ...cmd, ...base(), recipient_address: "injected@example.invalid" })).status, 422);
+  const prepared = await fact(actor, id, "Dispatch", { state: "Prepared", quantity: "4" });
+  assert.equal((await call("coordinator", `${path}/customer-delivery`)).body.notices.length, 0);
+  const movement = { ...supplyFact("Dispatch", await recordVersion(id), { state: "Moved", quantity: "4", movement_at: "2026-10-24T02:00:00.000Z" }),
+    predecessor_id: prepared.cmd.id, dispatch_notice: details };
+  const moved = await call("coordinator", `${path}/facts`, movement);
+  assert.equal(moved.status, 201, JSON.stringify(moved.body));
+  assert.deepEqual((await call("coordinator", `${path}/facts`, movement)).body, moved.body);
+  const source = await call("coordinator", `${path}/customer-delivery`);
+  assert.equal(source.body.notices.length, 1);
+  assert.equal(source.body.current.contact_id, person);
+  const messageId = source.body.notices[0].communication_id;
+  const draft = await call("coordinator", `customer-communications/${messageId}`);
+  assert.equal(draft.status, 200);
+  assert.match(draft.body.body, /6 outstanding/);
+  assert.equal((await call("coordinator", `${path}/customer-notices`, { ...base(), expected_version: await recordVersion(id), dispatch_fact_id: movement.id })).body.code, "MessageAlreadyPrepared");
+  assert.ok([403, 404].includes((await call("second-company", `${path}/customer-delivery`)).status));
+  const confirmed = await call("coordinator", `customer-communications/${messageId}/confirm`, { ...base(), expected_version: 1, content_hash: draft.body.content_hash });
+  assert.equal(confirmed.status, 201);
+  await runCustomerMessageJobs(100);
+  assert.equal((await latest(messageId)).state, "Sent");
+  const later = { ...base(), expected_version: await recordVersion(id), contact_id: person, customer_eta: "2026-11-07", delay_reason_code: "SYN-DLR-000001" };
+  assert.equal((await call("coordinator", `${path}/customer-delivery`, later)).status, 201);
+  const delaySource = await call("coordinator", `${path}/customer-delivery`);
+  const delayId = delaySource.body.notices.at(-1).communication_id;
+  const delay = await call("coordinator", `customer-communications/${delayId}`);
+  assert.match(delay.body.body, /2026-11-03 to 2026-11-07/);
+  const grants = await rows("DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='supply.coordinate' RETURNING *", [actor.actor_id]);
+  assert.ok([403, 404].includes((await call("coordinator", `${path}/customer-delivery`, later)).status));
+  assert.ok([403, 404].includes((await call("coordinator", `supply/operations/${later.operation_id}`)).status));
+  for (const g of grants) {
+    const keys = Object.keys(g);
+    await database().query(`INSERT INTO ppo.permission_grants(${keys.join(",")}) VALUES(${keys.map((_, i) => `$${i + 1}`).join(",")})`, Object.values(g));
+  }
 });

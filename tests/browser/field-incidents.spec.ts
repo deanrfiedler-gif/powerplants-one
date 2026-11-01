@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { prepareIsolatedFieldAppointment } from "../helpers/isolated-field-http";
 import { base } from "../helpers/service-inspections";
+import { moduleIntegration } from "../helpers/ui-baselines";
 import type { incidentRead } from "../../src/incidents/service";
 import {
   openPageGuide,
@@ -18,12 +19,7 @@ test("FI06 retained historical reference and current native shell comparison", a
   browser,
   baseURL,
 }, info) => {
-  const registry = JSON.parse(
-      await readFile("docs/standards/ui-baselines.json", "utf8"),
-    ),
-    contract = registry.module_integrations.find(
-      (x: { id: string }) => x.id === "fi06-incidents-register",
-    );
+  const contract = moduleIntegration("fi06-incidents-register")!;
   const context = await browser.newContext({
       viewport: {
         width: info.project.name.startsWith("mobile") ? 390 : 1440,

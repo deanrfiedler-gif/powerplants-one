@@ -5,6 +5,7 @@ import { hasPermission, requireCapability } from "../../platform/permissions";
 import { estimateVisibility } from "../context";
 import { estimateReviewInTransaction } from "./reads";
 import { releaseInTransaction } from "../release/reads";
+import { queuePerson, queueSite } from "./queue-context";
 import {
   inQueueView,
   queueCounts,
@@ -107,6 +108,8 @@ export async function readEstimatingReviewQueue(
             saved.created_by,
             submission.created_by,
           ].includes(p.actor_id);
+          const submittedBy = await queuePerson(c, p, submission.created_by);
+          const site = await queueSite(c, p, submission.basis.context.site_id);
           for (const status of d.statuses) {
             const current =
               submission.basis.fingerprints[status.kind] ===
@@ -132,6 +135,8 @@ export async function readEstimatingReviewQueue(
               title: saved.title,
               customer: candidate.customer,
               owner: candidate.owner,
+              submitted_by: submittedBy,
+              site,
               kind: status.kind,
               sequence: d.sequence,
               submitted_at: submission.created_at.toISOString(),
@@ -151,7 +156,7 @@ export async function readEstimatingReviewQueue(
               sell_total: saved.sell_total,
               currency: "AUD",
               tax_basis: "Excluding tax; tax not calculated",
-              href: `/estimating/estimates/${candidate.id}/review`,
+              href: `/estimating/estimates/${candidate.id}/review?submission_id=${submission.id}&kind=${status.kind}`,
             });
           }
         } else {
@@ -180,6 +185,13 @@ export async function readEstimatingReviewQueue(
             title: d.revision.snapshot.title,
             customer: d.revision.snapshot.customer,
             owner: candidate.owner,
+            submitted_by: await queuePerson(c, p, base.created_by),
+            site: base.basis.recipient.site_id
+              ? {
+                  id: base.basis.recipient.site_id,
+                  name: base.basis.recipient.site ?? "Recorded site",
+                }
+              : null,
             kind: "QuotationApproval",
             sequence: d.sequence,
             submitted_at: base.created_at.toISOString(),
@@ -243,6 +255,15 @@ export async function readEstimatingReviewQueue(
     return {
       items: rows.filter((row) => inQueueView(row, filters.view)),
       counts: queueCounts(rows),
+      quotation_count: rows.filter((row) => row.source === "QuotationApproval")
+        .length,
+      sites: [
+        ...new Map(
+          rows.flatMap((row) =>
+            row.site ? [[row.site.id, row.site] as const] : [],
+          ),
+        ).values(),
+      ],
       counts_scope: "CurrentCandidateWindow",
       completeness: partial ? "PartialWindow" : "CompleteWindow",
       quotation_source:

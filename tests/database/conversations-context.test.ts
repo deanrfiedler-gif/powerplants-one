@@ -33,7 +33,7 @@ test("T1c-3 a deal thread's panel: the record, its people, this thread and its o
   const thread = await begin(sam, deal, {
     body: "@{1} SYN when does the controller arrive?",
     mentions: [person(dealer.actor_id)],
-    asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2026-10-30" }],
+    asks: [{ ordinal: 1, question: "SYN delivery date", reply_by: "2031-12-01" }],
   });
   const panel = await readThreadContext(sam, thread);
   const number = (await rows("SELECT display_number FROM ppo.opportunities WHERE id=$1", [deal]))[0].display_number;
@@ -58,7 +58,7 @@ test("T1c-3 a deal thread's panel: the record, its people, this thread and its o
   assert.equal(participants.detail, "2 participants");
   assert.match(participants.why[0], /^Started by /);
   assert.match(ask.title, /: SYN delivery date$/);
-  assert.equal(ask.detail, "Open question · reply by 30 Oct 2026");
+  assert.equal(ask.detail, "Open question · reply by 1 Dec 2031");
   assert.match(ask.why[0], /^Asked by /);
   // A deal's documents are its quotations; this deal has none, and nothing is invented.
   assert.deepEqual(panel.documents, []);

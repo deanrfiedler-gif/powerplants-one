@@ -92,7 +92,7 @@ Built from the accepted canvas proposal ([decision](../../../decisions/ui-build-
   - the weather card is hidden until a weather provider is connected;
   - the five quick actions show their names under the icons;
   - the agenda header carries the year ("5–11 Oct 2026").
-- **Page guide (S9):** the information icon opens the My Work guide (`src/activities/work-guide.ts`). It stays a draft until Dean reviews it in the running app.
+- **Page guide (S9):** the information icon opens the My Work guide, now `docs/guides/pages/guide.page.work.md` (carried over unchanged from `src/activities/work-guide.ts` in user guide stage 1). It stays a draft until Dean reviews it in the running app.
 - **Review state:** the 9 October review is stale until Dean looks at the built page again.
 
 ## Figma application increment — 13 October 2026

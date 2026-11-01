@@ -1,0 +1,15 @@
+---
+title: Page-build shared-list hotspots measured; restructuring adopted
+date: 2026-10-27
+---
+
+The [merge-conflict record](../decisions/merge-conflict-reduction.md#amendment--27-october-2026-page-builds-stop-appending-to-shared-lists) gains a 27 October amendment. Claude first proposed it with three questions. Dean replied "Proceed however you believe is the most professional", which delegates the choice, so the recommendations are adopted as written. This contribution changes no application, test, script or workflow file; each hotspot changes in its own pull request.
+
+What was measured, with `git merge-tree` on exact heads (26 October 2026, about 21:45 UTC, `main` at `923f1284`): all six pairs of the four page builds later merged by #717 (#696, #697, #700, #701) conflict, and so did #717's own merges of #700, #701 and #697. In the author's sample of 200 merges since 19 October, taken from a shallow clone and not a census, 70 had conflicted; the independent review found 224 such merges on `main` alone. Ranked page-build hotspots: `components.json` and the component specifications (every pair, 24 merges each in that sample), the root-ID selector lists in `my-work.css` and `figma-shell.css` (165 lists each new page joins), `module_integrations` in `ui-baselines.json`, the route table in `module-workspaces.ts`, `register.json` and `guides.json`, and dated sections at the end of contracts. `STATUS.md` and the decisions index did not conflict in the sample's merges since 23 October.
+
+Adopted: consumer binding files instead of appends to `components.json` and the specifications; frozen ID lists plus one opt-in attribute (`data-ppo-workspace="shared"`) with unchanged specificity; one file per `module_integrations` entry; sorted, order-independent route entries; no change yet for the register and guides; and a placement rule for contract changes, now in [CONTRIBUTING.md](../../CONTRIBUTING.md#working-in-parallel). There is no extra hold on Codex, but the existing three-build limit and completion rule in `CONTRIBUTING.md` still apply; a build in progress converts once for each change that lands under it.
+
+Checked for this contribution: the Python documentation checks and `build_status.py --check`. `npm run check` and the browser suites were not run locally, because no application file changed; CI ran the full suites on the first head. The independent second-model review (27 October) found four defects in the amendment's wording: the historical sample, the canonical binding order, the fingerprint proof and the Codex completion rule. All four are corrected in the record; the binding-order defect in #720's loader is fixed separately in #729. Also found: three design builds pin `docs/contracts/document-issue-distribution.md` by hash, and on `main` after #717 the file no longer matches the pin, so those builds refuse to run until the change is reviewed and the pins are updated.
+
+<!-- decision-index -->
+[Merge-conflict reduction](../decisions/merge-conflict-reduction.md) (PPO-MERGE-CONFLICT-DEC) gains a 27 October amendment: page builds stop appending to shared lists, adopted under Dean's delegation.

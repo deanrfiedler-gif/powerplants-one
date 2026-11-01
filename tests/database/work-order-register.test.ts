@@ -320,8 +320,7 @@ test("Work order register scopes rows, counts, evidence and direct history to cu
     await assert.rejects(readWorkOrderRecord(actor, wo()), denied);
   await assert.rejects(readWorkOrderRegister(systems), denied);
   assert.equal(
-    (await readWorkOrderRegister(other, { q: "SYN-WO-000001" })).items
-      .length,
+    (await readWorkOrderRegister(other, { q: "SYN-WO-000001" })).items.length,
     0,
   );
   const observed = await readWorkOrderRegister(observer);
@@ -427,16 +426,18 @@ test("Work order record rechecks current grants after collecting evidence and hi
   assert.equal((await readWorkOrderRecord(p, wo())).work_order.id, wo());
 });
 
-test("Work order register has literal search, stable bounded windows, explicit window counts and filtered continuation", async () => {
+test("Work order register filters before paging and counts the entire permitted matching population", async () => {
   const p = await principal();
+  const original = await readWorkOrderRegister(p);
   const a = await readWorkOrderRegister(p, {
     limit: "1",
     sort: "reference_asc",
   });
   assert.equal(a.items.length, 1);
   assert.equal(a.next_offset, 1);
-  assert.equal(a.counts.all, 1);
-  assert.equal(a.count_scope, "AuthorisedCandidateWindow");
+  assert.equal(a.counts.all, original.counts.all);
+  assert.equal(a.total, original.total);
+  assert.equal(a.count_scope, "PermissionScopedMatchingFilters");
   const b = await readWorkOrderRegister(p, {
     limit: "1",
     sort: "reference_asc",
@@ -449,8 +450,8 @@ test("Work order register has literal search, stable bounded windows, explicit w
     view: "scope_needed",
   });
   assert.equal(empty.items.length, 0);
-  assert.equal(empty.next_offset, 1);
-  assert.equal(empty.counts.all, 1);
+  assert.equal(empty.next_offset, null);
+  assert.equal(empty.counts.all, original.counts.all);
   assert.equal((await readWorkOrderRegister(p, { q: "%_" })).items.length, 0);
   const exact = await readWorkOrderRegister(p, {
     q: a.items[0].display_number,
@@ -473,4 +474,51 @@ test("Work order register has literal search, stable bounded windows, explicit w
       (e) => (e as { code: string }).code === "InvalidData",
     );
   await assert.rejects(readWorkOrderRecord(p, wo(), { history_offset: "-1" }));
+});
+
+test("SV-03 complete view totals and stable filtered paging exceed a page without leaking other company records", async () => {
+  const { p, w } = await draft();
+  const ids: string[] = [];
+  for (let i = 0; i < 31; i++) {
+    const id = randomUUID();
+    await createWorkOrder(p, {
+      ...base(),
+      id,
+      company_id: w.company_id,
+      customer_id: w.customer_id,
+      site_id: w.site_id,
+      service_owner_id: w.service_owner_id,
+      tickets: w.tickets.map((t) => ({
+        ticket_id: t.id,
+        issue_disposition: "SYN pagination proof",
+      })),
+    });
+    ids.push(id);
+  }
+  const query = {
+    view: "scope_needed",
+    sort: "reference_asc",
+    site_id: w.site_id,
+    owner_id: w.service_owner_id,
+  };
+  const first = await readWorkOrderRegister(p, query);
+  const second = await readWorkOrderRegister(p, {
+    ...query,
+    offset: first.next_offset,
+  });
+  assert.equal(first.items.length, 25);
+  assert.equal(first.total, 31);
+  assert.equal(first.counts.scope_needed, 31);
+  assert.equal(first.next_offset, 25);
+  assert.equal(second.items.length, 6);
+  assert.equal(second.next_offset, null);
+  assert.deepEqual(second.counts, first.counts);
+  assert.deepEqual(
+    [...first.items, ...second.items].map((r) => r.id).sort(),
+    ids.sort(),
+  );
+  assert.equal(first.completeness, "Complete");
+  const other = await readWorkOrderRegister(await principal("second-company"));
+  assert.ok(other.items.every((row) => !ids.includes(row.id)));
+  assert.equal(other.counts.scope_needed, 0);
 });

@@ -4,6 +4,7 @@ export function matchesConfirmedContact(
   contact:
     | {
         outcome: string;
+        purpose?: string;
         start_at: Date;
         end_at: Date;
         recipient_id: string;
@@ -16,6 +17,7 @@ export function matchesConfirmedContact(
 ) {
   return (
     !!contact &&
+    (contact.purpose === undefined || contact.purpose === "DateAgreement") &&
     contact.outcome === "Confirmed" &&
     +contact.start_at === +start &&
     +contact.end_at === +end &&

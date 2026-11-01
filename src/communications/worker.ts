@@ -1,4 +1,7 @@
 import type { PoolClient } from "pg";
+import { AppError } from "../platform/errors";
+import { senderContext } from "./service";
+import type { HoldReason } from "./model";
 import {
   ChannelOutcomeUnknown,
   type ChannelSubmission,
@@ -69,7 +72,14 @@ async function claim(id: string): Promise<Claim | null> {
       await finish(c, id, latest.state === "Held" ? "Blocked" : "Done", latest.hold_reason);
       return null;
     }
-    const hold = await gate(c, m);
+    let hold: HoldReason | null;
+    try {
+      await senderContext(c, sender, m.id);
+      hold = await gate(c, m);
+    } catch (e) {
+      if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+      hold = "SenderUnauthorised";
+    }
     if (hold) {
       const e = await appendEvent(c, sender, m, {
         version: latest.version + 1,

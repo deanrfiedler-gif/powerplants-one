@@ -22,7 +22,7 @@ The application implementation and exact consumer bindings are maintained in `..
 
 ## Figma components
 
-**Status:** Proposal only · **Location:** ES-08 · Screen Configurator Workbench 406:2, in the private "PPO - Design" Figma file
+**Status:** Proposal only · **Location:** Screen Configurator Workbench · ES-08 406:2 (formerly "ES-08 · Screen Configurator Workbench"), in the private "PPO - Design" Figma file
 
 - Drawing / Live section · Gable, 2 of 6 spans `408:83278`
 - Drawing / 02 Cross section · Gable `410:83942`

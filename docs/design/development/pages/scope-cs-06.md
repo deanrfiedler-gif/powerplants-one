@@ -15,3 +15,7 @@ The route contract specifies the full-bleed record, 380 px facts column, six tab
 ## Mobile
 
 The route contract specifies the compact shared header, check-first 390/320 layout, semantic tab order, sticky footer and source-changed/empty states. Every section remains reachable; owner/device review is pending.
+
+## P4/P5 backend consumer note — 24 October 2026
+
+[PR #690](https://github.com/deanrfiedler-gif/powerplants-one/pull/690) implements the authorised backend/API slice in draft. The [service API amendment](../../../contracts/service-api.md) defines typed contact checks and the narrow preparation projection. UI wiring of the accepted P4/P5 designs is a separate follow-up; existing unavailable-state copy remains until that work is accepted and built. This note adds no visual-review evidence or acceptance claim.

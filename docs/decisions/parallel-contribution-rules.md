@@ -40,3 +40,17 @@ Agents are contributors under the same rules. Enforcement by tooling is preferre
 - Earlier "current repository-writing session" entries in `docs/STATUS-log.md` remain as historical records.
 - At Dean's request the same day, branch protection on `main` now requires branches to be up to date before merging, so GitHub enforces the integration rule. `docs/STATUS.md` records the configured state.
 - The same day, secret scanning, push protection, Dependabot alerts and Dependabot security updates were enabled on the repository at Dean's request; that settings change is recorded in `docs/STATUS.md`.
+
+## Amendment — 26 October 2026: Codex build limit
+
+On 26 October 2026 Codex held sixteen open draft pull requests, twelve of them building accepted pages (#696 to #707). Ten held only a claim, about ten lines in one file (#693, #698, #699, #702 to #707 and #712). Of the six with implementation pushed (#690, #695, #696, #697, #700 and #701), five had failing checks and four had merge conflicts. Many builds in flight at once multiply conflicts and the migration-ledger repairs that every merge brings ([migration test expectations](migration-test-expectations.md)).
+
+Claude recommended limiting Codex to three builds at once and finishing the failing ones first. Dean replied: "proceed with your recommendations".
+
+The rule, added to [CONTRIBUTING.md — Working in parallel](../../CONTRIBUTING.md#working-in-parallel):
+
+- Codex has at most **three implementation pull requests in progress** at once. A draft that holds only its claim does not count until implementation is pushed to it.
+- Codex **finishes the builds it has already implemented**, with every check passing and conflicts resolved, before it pushes implementation to another claim.
+- Claims beyond the limit may stay open as markers.
+
+This changes no claim already made and no application behaviour.
