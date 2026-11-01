@@ -15,6 +15,8 @@ Dean then asked for an audit: "Give the pages an audit and polish". It compared 
 
 Asked "Do you accept the Pulse and Tasks proposal with its recommended answers?", Dean answered: "Accept, lock in". That adopts D1–D28 and the recommended answers to Q1–Q12.
 
+Dean then answered "Draw Q12", and asked "Do you accept the Q12 amendment as drawn?", answered: "Accept, lock in". Section 9 records it as D29.
+
 Claude drew the pages from these sources:
 - the built pages and reads: `src/components/sales-navigation-views.tsx`, `src/activities/work-overview.ts`, `src/crm/planning-gaps.ts`, `src/activities/components/client/my-work-dialogs.tsx`, `my-work-forms.tsx`, `my-work-list.tsx`, `src/components/business-ui.tsx` and `src/shell/navigation.ts`;
 - the [My Work design](my-work-page-design.md) and its [Sales overview](my-work-sales-overview-integration.md) and [phone](my-work-sales-mobile-r07-integration.md) integrations;
@@ -46,9 +48,10 @@ This is a design decision. It authorises no application code, route, read model,
 | Q9 Priya Shah's organisation differs | Resolved as recommended | SYN Hillview Growers on Calling and SYN Northbank Nursery on Leads. This page keeps Calling's wording; correct Calling when it is next changed |
 | Q10 Register relates Pulse to CR-04, and its page guide describes a Board and List | Resolved as recommended | Keep the SH-02 page name and leave the IDs as they are. The stale guide text is replaced in this change (section 6) |
 | Q11 My Work on the Sales rail (My Work Q4, still open) | Resolved as recommended | Leave it out. Pulse carries an "All my work" link and the phone bar has My Work |
-| Q12 Should Deal attention show value and expected close? | Resolved as recommended | Yes. It needs both fields added to two reads. **Not yet drawn:** the accepted frames and captures show the fields the reads return today (section 6) |
+| Q12 Should Deal attention show value and expected close? | Resolved as recommended | Yes. It needs both fields added to two reads. Drawn and accepted as D29 (section 9) |
 | Corrections made before acceptance | Claude's audit, disclosed here | Section 7 |
 | Named Figma version | Saved 1 November 2026 | Dean: "I have saved the named version as Sales Pulse & Tasks — accepted" |
+| Q12 amendment | Accepted as drawn, 1 November 2026 | Dean's words quoted above. Section 9 |
 | Changing the built pages | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -66,7 +69,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Page parts | Pulse / Action row `2985:6303` (Default, Hover, Focus, Touch); Pulse / Deal attention row, whose Desktop variant is `2967:167` (Desktop, Phone); Icon/solid/heart-pulse `2967:126`; Icon/solid/clipboard-check `2967:130`. They stay on this page until another page needs them |
 | Prototype | Flows "Pulse — desktop" from `2968:152` and "Pulse — phone" from `2973:3975`. Summary cells scroll to their sections. Row, ring, Plan next, rail, Owner, Filters and sheet links run between the frames. No link leaves the page |
 | Story | Synthetic, as at Tue 13 Oct 2026, 09:00 AEST, signed in as Dean Fiedler, matching Pipeline insights. Two deals have no next activity: Glasshouse climate renewal and Climate and dosing integration. LED propagation lighting moved three times (+56 days) and its date has passed. Deals-only frame: Kate Morgan. Leads-only frame: Alex Lee |
-| Retained captures | [Sales Pulse and Tasks design r01](../reference/ui/crm/sales-pulse-tasks-design-r01/README.md): thirty icon-free PNGs with hashes. The copies were made on a temporary page and deleted after export |
+| Retained captures | [Sales Pulse and Tasks design r01](../reference/ui/crm/sales-pulse-tasks-design-r01/README.md): thirty icon-free PNGs with hashes, with [r02](../reference/ui/crm/sales-pulse-tasks-design-r02/README.md) replacing fifteen of them for the Q12 amendment. The copies were made on temporary pages and deleted after export |
 
 ## 3. Conformance declaration
 
@@ -93,7 +96,7 @@ This is a design decision. It authorises no application code, route, read model,
 | D5 | Item actions. At rest an activity row shows the done ring and "…"; Record outcome and Plan next appear on hover and focus, and stay visible on touch screens. Plan next on an activity row adds a linked follow-up and never moves the record's next action, so it cannot hide an overdue action. Only Record outcome, or Plan on a deal with no next activity, sets that pointer, and only for the record's owner. A deal with no next activity has Plan next and Open deal. A deal whose action is someone else's has Open action and Open deal. Calls have Log and Skip. A meeting has Open | My Work R1; built `can_plan`; R1 of the audit |
 | D6 | The row title opens the activity window over Pulse. Plan next is added to the window footer | Departure from `413:1812` |
 | D7 | Pulse rows are overdue and today; upcoming is a count with a link | Pulse stays a short daily read; 9 October pagination finding |
-| D8 | Deal attention rows use only what the reads return: organisation, stage, contact and time without a next action; on overdue rows the action, its due date and its owner. References are not shown, because Deals and Pipeline insights show none and none is invented | `PlanningGap`, `OverdueOpportunity`. See Q12 |
+| D8 | Deal attention rows show organisation, stage, contact and time without a next action; on overdue rows the action, its due date and its owner. D29 adds value and expected close. References are not shown, because Deals and Pipeline insights show none and none is invented | `PlanningGap`, `OverdueOpportunity`; Q12 |
 | D9 | Proposed signal: "Close date passed" and "Moved 3 times" on LED propagation lighting. No chart or list is repeated; the row links to Pipeline insights | Values match Pipeline insights. Needs expected close and deal snapshots |
 | D10 | Upcoming meetings: Meeting activities you own, linked to a lead or deal, next 7 days. They also count within upcoming actions, so the two are not added. An Outlook meeting shows only if linked | The built line says "upcoming work" but has no section |
 | D11 | Calls to log is the Calling section, your own calls only, and is absent until Calling stages 1b and 1c are built | Calling Q4 |
@@ -114,6 +117,7 @@ This is a design decision. It authorises no application code, route, read model,
 | D26 | Owner choices are the built mine and all, labelled "Mine" and "Everyone I can see". Filters use built criteria. First page and Next page appear only beyond 25 tasks | Audit G4; `work-criteria.ts` |
 | D27 | Calling R9 wording. The count stays, the cell says "May be missing calls", and the list never claims to be complete | Audit G6 |
 | D28 | States, keyboard order and long-name rules are on the states sheet | Audit G7 |
+| D29 | A value and expected close line on every Deal attention row. No value reads "Not estimated", never $0.00. No date reads "no expected close". Rows are not sorted or totalled by value | Q12; section 9 |
 
 ## 5. Departures from today's pages
 
@@ -123,7 +127,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Pulse layout | Page heading, then a card per section | Toolbar, summary strip with labelled rules, two columns | A short daily read, distinct from My Work |
 | Activity rows on Pulse | `ActivityRow`, all active rows paged at 25 | Quiet rows with hover actions, overdue and today only, capped at 5 | D5, D7, D19 |
 | Plan next on a row | Offered only after Record outcome | Also on the row, as a linked follow-up | D5 |
-| Deal attention rows | "number · title" links | Title, organisation, stage, contact and time without a next action | D8 |
+| Deal attention rows | "number · title" links | Title, organisation, stage, value, expected close, contact and time without a next action | D8, D29 |
 | Close date signals | None | Proposed group, linking to Pipeline insights | D9 |
 | Upcoming meetings | None | New section | D10 |
 | Calls to log | None | The Calling section | D11; not built |
@@ -133,7 +137,7 @@ This is a design decision. It authorises no application code, route, read model,
 ## 6. What follows, and what is not decided
 
 - **Stale guide text:** this change replaces the Purpose and task text in the design pages and the draft `guides.json` articles for both routes, which described a Board, a List, a Forecast, an Archive and My Work views the routes do not have. The new text describes the built pages. The articles stay drafts.
-- **Q12, not yet drawn:** value and expected close are accepted for Deal attention but need two reads extended. The frames and captures show today's fields. Drawing them is an amendment to this page, with a new capture revision.
+- **Q12, reads not extended:** value and expected close are accepted and drawn (section 9), but `PlanningGap` and `OverdueOpportunity` do not return them yet.
 - **Still Dean's decision:** R6, a 44 px hit area on the shared phone row's done ring, in its own change. New features F1 Start here, F2 Work through, F3 customer signals in Deal attention, F4 voice outcome on phone, F5 suggested next activity, F6 Reschedule presets and F7 saved views on Tasks. Each needs building and its own go-ahead.
 - **Not decided:** changing the built pages, Calling stages 1b and 1c, and extending the reads.
 - **Not drawn:** phone Plan activity and Reschedule at 320 px (same as 390), Skip reasons (Calling has them), Everyone on a phone.
@@ -161,3 +165,15 @@ Polish in the same pass: design wording removed from page copy, purple annotatio
 | Present mode | Not played. The summary-cell scroll links are set but untested |
 | Named version | "Sales Pulse & Tasks — accepted", saved by Dean on 1 November 2026. Figma's version history was not opened to confirm it |
 | Repository checks | Recorded in the pull request that adds this record |
+
+## 9. Q12 amendment
+
+| Item | Record |
+|---|---|
+| Decision | Dean answered "Draw Q12", and then, asked "Do you accept the Q12 amendment as drawn?", "Accept, lock in" |
+| Change | A new layer, Value line, in Pulse / Deal attention row, on all 57 rows, for example "$125,000.00 · expected close 17 Nov 2026". Amounts and dates come from the accepted Deals page. Close-date rows move their date into this line, so the detail reads "+56 days across 3 moves". The line is hidden on phone Calls to log rows, which reuse the part |
+| Unchanged | Rows stay longest without a next activity first. There is no total on Pulse; totals stay on Pipeline insights |
+| New wording | "Not estimated" follows Deals. "no expected close" is new, and is stated on the states sheet rather than drawn on a row |
+| Captures | [r02](../reference/ui/crm/sales-pulse-tasks-design-r02/README.md): the fifteen changed images, 1,152 icons swapped with none left on recount. The temporary page was deleted after export |
+| Named version | Awaits Dean: "Sales Pulse & Tasks — Q12 amendment" |
+| Not authorised | Extending `PlanningGap` and `OverdueOpportunity`, or changing the built pages |
