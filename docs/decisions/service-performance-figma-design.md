@@ -143,7 +143,7 @@ None. The [field readiness gate](field-readiness-gate-proposal.md) keeps P5 as w
 
 ## 7. Audit and polish
 
-Before presenting the page Claude screenshotted most frames inside Figma and checked section bounds and overlaps by script. For the main report it also checked fonts, placeholder text, percentages without counts and wording. Not every frame was opened at reading size: of the retained images Claude opened 01a, 02, S3 and S6, and the other corrected frames were checked by text search only.
+Before presenting the page Claude screenshotted most frames inside Figma and checked section bounds and overlaps by script. For the main report it also checked fonts, placeholder text, percentages without counts and wording. Not every retained image was opened at reading size: Claude opened the final 02, 10, 14 and 16, and 01a and 17 before their last small fix. The others were checked by text search and script only.
 
 - **Corrected before presenting:** the export form footer hidden behind its body and a short scrim; the tablet's axis label and two table columns that clipped; a faint icon on the selected rail item.
 - **Corrected at lock-in, on 1 November 2026:**
