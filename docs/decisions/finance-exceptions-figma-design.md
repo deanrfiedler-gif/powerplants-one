@@ -2,7 +2,7 @@
 document_id: PPO-FN-EXCEPTIONS-FIGMA-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version waits for Dean; building the page, its data model and any credit rule separate
+status: Owner-accepted design; named Figma version saved; building the page, its data model and any credit rule separate
 source_commit: 1fc002978ee2a6871121d9252609a49c6dc31b9a
 versioning: git
 ---
@@ -41,14 +41,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Below-minimum price "approved elsewhere" | Resolved as recommended | Keep the row type, raised only once a pricing policy exists. Estimate review ES-04 says the policy is not configured, so SYN-QUO-000091 and its −$312.00 are illustrative |
 | Q8 SYN-FH-000069 and "Returned" | Resolved as recommended | Add the sync item on AD-04 when it is next changed, and treat FN-01's source-changed state as Returned. Neither page is edited now |
 | Q9 Two Northbank customers | Resolved as recommended | The Block C customer is SYN Northbank Nursery (SYN-C-00233). SYN-DIF-000014 belongs to SYN Northbank Growers. They stay separate |
-| Named version | Waits for Dean | Section 2 |
+| Named version | Saved by Dean, 1 November 2026 | "I have saved the named version as Finance exceptions — accepted". Section 2 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Finance exceptions — accepted" waits for Dean to save it |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Finance exceptions — accepted", saved by Dean on 1 November 2026 |
 | Page | "Finance exceptions · FN-01 · FN-02" `2948:1497`, last under "— Finance —". Header `2948:1498`, notes card `2964:8686`. File index row `3090:490441` |
 | Desktop 1440 | Section `2948:1543`:<br>• worklist, All open `2953:229`; by owner `2961:3281`<br>• SYN-DIF-000014 line comparison `2957:1171`; evidence supplied, awaiting verification `2957:2089`; verified and resolved `2957:2925`<br>• Needs Finance review, credit hold `2959:2856`; Hold recorded `2959:3517`<br>• unknown outcome lookup `2959:4134` |
 | Tablet 1024 | Section `2948:1547`: worklist `2961:4646` |

@@ -1,3 +1,3 @@
 document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
-PPO-FN-EXCEPTIONS-FIGMA-DEC,Finance exceptions design (Figma) owner decision,docs/decisions/finance-exceptions-figma-design.md,,Owner-accepted design; named Figma version waits for Dean; building the page separate,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
+PPO-FN-EXCEPTIONS-FIGMA-DEC,Finance exceptions design (Figma) owner decision,docs/decisions/finance-exceptions-figma-design.md,,Owner-accepted design; named Figma version saved; building the page separate,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
 PPO-FN-EXCEPTIONS-FIGMA-R01,Finance exceptions design retained captures,docs/reference/ui/finance/finance-exceptions-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,retained-record,
