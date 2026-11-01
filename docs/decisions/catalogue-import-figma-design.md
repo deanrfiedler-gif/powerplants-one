@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, read model, route,
 | Q5 Excluded rows kept for audit | Resolved as recommended | Yes, as the contract requires. Original values, row number and rationale stay with the batch and appear in every plan and in the result |
 | Q6 Is 50 rows enough | Resolved as recommended | Yes for the synthetic pilot. Measure a real supplier file before raising it; the 12,000-byte bound usually limits first |
 | Q7 Story extension | Resolved as recommended | This story assumes more accessories and pumps on the catalogue (`SYN-PROD-000041` to `000050`) and uses `SYN-PROD-000051` to `000054` for new products. Rows 5, 8 and 14 carry `SYN-PROD-000039`, `000038` and `000055` as supplied, and create nothing. Products `653:38` stays unchanged |
-| Named Figma version | Awaiting Dean's yes | "Catalogue import — accepted" (section 7) |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Catalogue import — accepted" (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -122,4 +122,5 @@ Apply confirmation stays in the page, so it adds no dialog. The Products contrac
 - The 27 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance, no stray vector and no prototype link. They sit on the Captures page from y = 1,100,000.
 - The first exports showed swapped icons that should be hidden in the step cards. Claude re-hid every icon to match its source frame, then re-exported captures 02 to 10. Three retained images were opened and read by eye (05, 08 and 15); the rest were checked by scan and PNG header.
 - After the owner's acceptance Claude changed the page's status wording, departure X6, the D6 wording and the notes card's answers, moved the two parts to Components and added the File index row. One visible change reached the frames: the "Changes · 18 rows" label on the two phone review frames gained its 16 px left margin.
+- Dean saved the named Figma version "Catalogue import — accepted". Dean confirmed on 1 November 2026: "I have saved the three file versions below." Claude did not open the version history to check it.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.

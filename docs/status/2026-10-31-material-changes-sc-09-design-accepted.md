@@ -19,7 +19,6 @@ Checked:
 Not done:
 - The prototype flows weren't played in Figma Present mode. Devices, keyboard and screen reader weren't checked.
 - `/supply/changes` isn't changed.
-- The named Figma version "Material changes — accepted" waits for Dean.
 - Pages this one draws on that are still proposals stay proposals; accepting SC-09 doesn't accept them. The decision lists the differences on Material demand and Change review.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.
