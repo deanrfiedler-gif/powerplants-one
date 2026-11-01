@@ -14,7 +14,7 @@ Implement role-based onboarding, learning, support, feedback and release-note pa
 
 ## Desktop
 
-Accepted design: the [onboarding and support design decision](../../../decisions/onboarding-support-figma-design.md) of 1 November 2026 covers Getting started, the task path, practice in progress and finished, Ask for help, My requests, What's new, the Owner view, feedback and the proposed entry points, with twenty-five icon-free captures in [design r01](../../../reference/ui/administration/onboarding-support-design-r01/README.md). Where it differs from the text below, it governs. The page is not built.
+Accepted design: the [onboarding and support design decision](../../../decisions/onboarding-support-figma-design.md) of 1 November 2026 covers Getting started, the task path, practice in progress and finished, Ask for help, My requests, What's new, the Owner view, feedback and the proposed entry points, with twenty-five icon-free captures in [design r01](../../../reference/ui/administration/onboarding-support-design-r01/README.md). The support owner's request queue, accepted the same day, is in [design r02](../../../reference/ui/administration/onboarding-support-design-r02/README.md). Where it differs from the text below, it governs. The page is not built.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -37,6 +37,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [Onboarding & support design r01 captures](../../../reference/ui/administration/onboarding-support-design-r01/README.md) (accepted Figma design, icon-free)
+- [Onboarding & support design r02 capture](../../../reference/ui/administration/onboarding-support-design-r02/README.md) (accepted request queue, icon-free)
 
 No HTML reference exists.
 

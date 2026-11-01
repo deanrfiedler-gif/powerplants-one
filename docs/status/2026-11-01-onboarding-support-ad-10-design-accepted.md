@@ -9,11 +9,12 @@ Dean accepted the Figma design for AD-10, user onboarding, learning and support:
 - Ask for help routes requests to the PPO support owner, possible incidents to AD-09 and guide gaps to DK-07;
 - feedback, and What's new by release and job function, in-app only until email delivery exists;
 - an Owner view of counts, with KPI-15 only as its defined measure and its definition status;
-- Dean holds the support owner role during the pilot, with one named back-up.
+- Dean holds the support owner role during the pilot, with one named back-up;
+- a request queue where the support owner answers, by age, which Dean accepted separately: "Accept F11".
 
-Twenty-five icon-free captures with hashes are retained in [onboarding-support-design-r01](../reference/ui/administration/onboarding-support-design-r01/README.md), and the design register page for `scope:AD-10` cites them.
+Twenty-five icon-free captures with hashes are retained in [onboarding-support-design-r01](../reference/ui/administration/onboarding-support-design-r01/README.md), and the request queue capture in [onboarding-support-design-r02](../reference/ui/administration/onboarding-support-design-r02/README.md). The design register page for `scope:AD-10` cites both.
 
-Dean saved the named Figma version "Onboarding & support — accepted" on 1 November 2026.
+Dean saved the named Figma version "Onboarding & support — accepted" on 1 November 2026. The later version "Onboarding & support — request queue accepted" is awaiting Dean's yes.
 
 Checked:
 - Overlap, section-bounds and spacing scripts, and in-Figma screenshots.

@@ -6813,7 +6813,8 @@
         "docs/reference/ui/administration/onboarding-support-design-r01/PPO-Onboarding-Support-22-State-Adoption-Definition-Pending-r01.png",
         "docs/reference/ui/administration/onboarding-support-design-r01/PPO-Onboarding-Support-23-State-Incident-Routed-r01.png",
         "docs/reference/ui/administration/onboarding-support-design-r01/PPO-Onboarding-Support-24-State-Uncertain-Send-r01.png",
-        "docs/reference/ui/administration/onboarding-support-design-r01/PPO-Onboarding-Support-25-State-Offline-r01.png"
+        "docs/reference/ui/administration/onboarding-support-design-r01/PPO-Onboarding-Support-25-State-Offline-r01.png",
+        "docs/reference/ui/administration/onboarding-support-design-r02/PPO-Onboarding-Support-26-Desktop-Request-Queue-r02.png"
       ],
       "dependencies": [
         "docs/decisions/onboarding-support-figma-design.md"
