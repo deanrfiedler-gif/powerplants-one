@@ -24,7 +24,11 @@ He then raised the design goal:
 
 He named Pipedrive, Wrike, inFlow Inventory, ServiceTitan and simPRO. This permits proposing improvements; each changed design still needs his acceptance. Decision 14 sets how this works.
 
-Asked "Do you approve task tests with Powerplants staff on the flagship designs?", he answered "Yes, approved". This confirms for the flagships the staff task tests he approved in principle on 16 October ([UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md)). It contacts nobody and does not cover growers or customers. Facilitator, staff names, timing and a privacy check of the consent wording remain open.
+He first approved task tests with Powerplants staff, then replaced them the same day:
+
+> "Actually, as I am designing and developing this app myself, and have access to all internal departments, I will be the only person testing and review the UI page designs and builds."
+
+Dean is therefore the only human tester and reviewer. This withdraws staff testing for the flagships, including the approval in principle given for task tests in the [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md). Nobody was contacted. A separate AI session still checks the gates, which is not human testing.
 
 ## Context
 
@@ -83,7 +87,7 @@ Option D for tokens and option C for files.
 11. **Quality gates, checked by a second session.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. A session other than the author checks them, and a graded comparison decides what must be fixed. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
 12. **Captures are temporary in Figma and selective in Git.** Copies are made on a temporary page, exported with hashes, and the page is deleted. Only frames a builder needs are retained. Existing captures stay unchanged.
 13. **Unchanged:** Dean accepts every page design. Named versions remain the acceptance marker. The file link and Pro artwork stay out of the repository. A private Figma team, one page per app page and real scope IDs all continue.
-14. **Raise the design language first, then redesign in waves.** Pipedrive's grammar stays the base, with Dean's recorded preferences. Improvements go first into the library's tokens, type, density, shell, grid, record, form and state patterns, then into five flagship journeys benchmarked against the named products. Other pages follow in tiers, module by module. "More professional" is judged by a scorecard, and "better than the market" is claimed only after task tests with Powerplants staff. Standard section 14 holds the detail. This narrows decision 8: a page in a redesign wave is redrawn, not copied.
+14. **Raise the design language first, then redesign in waves.** Pipedrive's grammar stays the base, with Dean's recorded preferences. Improvements go first into the library's tokens, type, density, shell, grid, record, form and state patterns, then into five flagship journeys benchmarked against the named products. Other pages follow in tiers, module by module. "More professional" is judged by a scorecard and Dean's own timed task runs. "Better than the market" is recorded as the owner's judgement, not independent evidence. Standard section 14 holds the detail. This narrows decision 8: a page in a redesign wave is redrawn, not copied.
 
 ## What this changes in earlier rules
 
@@ -105,7 +109,7 @@ Option D for tokens and option C for files.
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
 | 2. Freeze and build the library | Set a cut-off and finish pending named versions and in-progress drawing. Save "Before split". Commit a manifest and take a private backup, restoring one to prove it works. Move a small test file from Drafts to confirm its link, history and comments survive, then move `PPO - Design` to `PPO Record`. Duplicate it, delete Captures and Archive from the duplicate, read the meter and decide on the browsing copy. Make the library in `PPO Library`, clean up and publish | The library is published, with the memory readings recorded |
 | 3. Pilot and go live (the "cut-over") | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
-| 3b. Raise the design language | Benchmark the five products, improve the library, redraw the five flagship journeys, and test them with staff | Dean accepts the language and flagships; scorecard and task-test results are recorded |
+| 3b. Raise the design language | Benchmark the five products, improve the library, redraw the five flagship journeys, and have Dean run them as scripted tasks | Dean accepts the language and flagships; scorecard and task-run results are recorded |
 | 4. Redesign waves, then copy or redraw on change | Tier by tier under the standard, with new pages in domain files and other pages under decisions 8 and 14 | Each page passes its gates, and each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
 
@@ -113,7 +117,9 @@ Option D for tokens and option C for files.
 
 **Cost of decision 14.** Redrawing reopens accepted designs, adds to a review backlog of 293 entries, and means rebuilding built pages. At about 40 connector calls a page, the daily limit allows roughly five pages a day. This is why it runs in tiers, and why a page's visual-only build work waits while its redesign is due, while functional work continues.
 
-**Follow-ups, each needing its own change.** Automated accessibility tests, which add a dependency and need their own record. A trial of Code Connect after the pilot. Marking accepted frames Ready for dev is manual, because no Plugin API for it appears in the typings, and Professional can't clear the Changed state.
+**Single human reviewer.** Dean knows every design and every department, which helps with correctness and hides what a first-time user would find confusing. His task times are a best case. Other people's confusion stays untested until they use the app, so the plan relies more on the scorecard, the second AI session and automated checks.
+
+**Follow-ups, each needing its own change.** Automated accessibility tests, which add a dependency and need their own record. With one human reviewer, these come first. A trial of Code Connect after the pilot. Marking accepted frames Ready for dev is manual, because no Plugin API for it appears in the typings, and Professional can't clear the Changed state.
 
 **Stop rule.** If no linking method passes stage 3, the library file already holds every page except Captures and Archive, so it becomes the single working file with a published library, and this record is revisited. Until stage 2 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Only decisions 1 to 4, 11 and the capture rule take effect immediately.
 

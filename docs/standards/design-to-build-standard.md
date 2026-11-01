@@ -284,7 +284,7 @@ The goal is for Powerplants One to be more professional and easier to use than P
 1. **Benchmark.** Compare each flagship journey with its product, using public material and any account Dean provides. Record what is better, what is worse and what to do about it.
 2. **Improve the library.** Raise tokens, type, spacing, density, shell, grid, record, form and state patterns, so most pages improve at once.
 3. **Redraw the flagships.** Show each beside its accepted design, for Dean's acceptance.
-4. **Test.** Run task tests with Powerplants staff on the prototypes.
+4. **Test.** Dean runs scripted tasks on the prototypes, and a separate AI session reviews them.
 5. **Roll out.** Work through the tiers, finishing modules whole and announcing what moved.
 
 | Flagship journey | Benchmark | Pages |
@@ -315,6 +315,10 @@ While a page's redesign is due, its visual-only build work waits. Functional wor
 
 **Scorecard.** Score each flagship 1 to 5 against its benchmark on the five quality outcomes in the [product direction](../decisions/product-direction-quality.md) (finding work, understanding state and next action, completing connected journeys, recovering saved work, timely response), plus visual clarity and accessibility. The score records a reviewer's judgement, not proof.
 
-**Task tests.** With a small group of Powerplants staff, measure completion, errors and time on the flagship tasks, against the tools they use today. Only this supports a claim that a page is better. Dean approved these tests on 1 November 2026. They use the private user research kit from the October benchmark, adapted to the flagship tasks and its roles for sales, projects, stores, dispatch and technicians. Synthetic data only.
+**Testing.** Dean is the only human tester and reviewer, using his access to every department. No staff, customer or grower takes part.
 
-Before the first session: Dean names the facilitator, note-taker, staff and timing, and a lawyer or privacy adviser checks the consent wording and recording plan. Dean stays out of the room for most sessions, because staff may soften criticism of an app the owner designed. Taking part is voluntary and in work time. No customer or grower is contacted without Dean's separate approval.
+- **Task runs.** A session writes the flagship tasks in advance, in the words of each department's real work, with synthetic data. Dean runs them and records completion, errors and time, against the same task in the tool used today where he can, including Pipedrive. Field tasks run on a real phone, where the work happens.
+- **AI review.** A session other than the author scores the design against the scorecard and walks each task as a first-time user would, recording every point where a label, state or next step is unclear.
+- **Automated checks.** Accessibility and visual checks cover what one person can miss, once their tooling is decided.
+
+**What this can and can't show.** It shows that a task works, and how Dean finds it. He already knows the designs, so his times are a best case, and it can't show how quickly someone new learns a page. Record a claim that a page is better than a market product as the owner's judgement.
