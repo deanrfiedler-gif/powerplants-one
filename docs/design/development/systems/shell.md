@@ -231,3 +231,13 @@ The combined PR tree exposed an R9 regression at 1280 and 1366 px with the rail 
 ## Phone header amendment — 19 October 2026
 
 Dean adopted one compact phone header row for every phone page ([decision](../../../decisions/phone-header-amendment.md), rules P1–P9). It replaces S2's phone title rule and the global phone header on phone widths: the menu button and a view chooser on every list page, at most three icons (page action, Conversations, Filter), and back, position, previous/next and More on records. The page guide, notifications and global search move into the menu at every phone width, which widens the T1c-2 rule that moved only the page guide at 360 px and narrower. Desktop and tablet are unchanged. The application now draws it (draft PR #609, 19 October 2026); the Figma component is proposed until the named version is saved. See the [application shell master](../components/application-shell.md#phone-header-amendment--19-october-2026).
+
+## System pages design — 1 November 2026
+
+The [System pages design decision](../../../decisions/system-pages-figma-design.md) accepts the whole-page messages and shared patterns that sit in the shell, with [System pages design r01 captures](../../../reference/ui/application-shell/system-pages-design-r01/README.md) (not a UI baseline). `src/app/not-found.tsx` and `src/app/error.tsx` have no route, so this contract records them. Not built.
+
+- **Page unavailable:** built wording kept; it never separates missing from no access. Captures 07, 11, 12 and 14.
+- **Workspace access denied:** workspace roots only, naming who to ask; no self-service request, because AD-01 does not support one. Captures 08, 11 and 13.
+- **Error:** a support reference with Copy and Return to Home, no stack trace; "could not start" with no shell where the root layout itself fails. Captures 09, 11, 12, 14 and 28.
+- **Uncertain outcome:** one "Outcome unknown" banner and dialog, with "Check the outcome" and "Retry the same action". The original operation is kept and no second one is created. External sends keep their own wording. Captures 15–19.
+- **Offline, inline notices, loading and session changed:** captures 19, 20 and 27.
