@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PD02-PRODUCT-PUBLICATION-FIGMA-DEC,Product publication design (Figma) owner decision,docs/decisions/product-publication-figma-design.md,,Owner-accepted design; building separate,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,git,
+PPO-PD02-PRODUCT-PUBLICATION-FIGMA-R01,Product publication design retained captures,docs/reference/ui/products/product-publication-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,6e939bf0b937fc05f9e477d1cd14f8838c92fd9a,,,retained-record,

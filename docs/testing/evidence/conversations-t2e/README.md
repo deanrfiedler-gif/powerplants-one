@@ -95,7 +95,7 @@ Materialised once from implementation commit `ef93b007443229cdd0100d2942dba429f9
 
 At validator correction commit `e2bf9f7bf65ecba6318c721ecf921d70509bbd94`, catalogue-only checks were tightened to reject unsupported canonical field values and gold/definition contradictions. Read-only reinspection of the same 117 members proved that only the tool-source hash changed: all IDs, sources, gold, evidence hashes and request bounds were identical. The original private export remains intact (inventory hash `510fd742699194ca019a6e6742aa9591696eacf6fe40e84ce016a3cc07e816ac`); the corrected export is retained separately with explicit provenance. No messages, run or approval were replaced.
 
-The [complete proposed inventory](proposed-inventory.json) retains one member per line for review; [numeric fitting/cost CSV](offline-bounds.csv) has all 117 exact rows. The public copy was checked against the generated object, inspected for the allowed synthetic-only projection and confirmed to exclude prohibited source values, message/provider bodies and approval fields. Private operator/approval mappings are absent. IDs and source facts here are synthetic; no real account material is included.
+On 25 October the committed inventory was re-recorded with corrected reviewer annotations; the [port section](#scoring-and-review-document-port--25-october-2026) records the new hashes. The hashes in this section describe the 24 October version, which remains in Git history. The [complete proposed inventory](proposed-inventory.json) retains one member per line for review; [numeric fitting/cost CSV](offline-bounds.csv) has all 117 exact rows. The public copy was checked against the generated object, inspected for the allowed synthetic-only projection and confirmed to exclude prohibited source values, message/provider bodies and approval fields. Private operator/approval mappings are absent. IDs and source facts here are synthetic; no real account material is included.
 
 - Catalogue canonical hash: `5c7ec2f723a9d342d11d2fb72af51e822c1b918de45080228c6cd3c234c5891a`.
 - Proposed inventory canonical hash: `ef3c0fa9aad2a60737edfcc4c2622aa717925b8be659f9cd170455240c7b6502`.
@@ -178,3 +178,56 @@ At reviewed correction head `f8a4481c1f7d85f52a2aca176d2277cfc61b4b95`, [CI data
 PR #683 merged as `ab18a604bd726a6f1e1a1d40a25f52802bcec0a0`; #680 integrates that main with the prepared conditional-authority documentation correction. The incoming change is limited to Zod 4.6.7 in the lockfile and its status record. The nine hashed preparation sources, catalogue, retained inventory and numeric CSV remain unchanged. No corpus is replaced or re-materialised; the owned proposal cluster remains stopped. The inherited DK06-OUT09-1 template-fingerprint consequence is recorded by #683; this integration performs no template republishing.
 
 The earlier documentation-head CI was deliberately cancelled in coordination to free capacity for #683, apart from completed checks and its failing old-lock dependency audit. Cancelled checks are not passes. Fresh integration-head CI and any failures/retries are recorded on PR #680. Claude reviewed f8a4481c; the later documentation and dependency integration are not claimed as a new Claude review. The coordination chat retains the final merge. No corpus approval, calibration, live evaluation or spending is granted.
+
+## Scoring and review-document port — 25 October 2026
+
+[Draft PR #708](https://github.com/deanrfiedler-gif/powerplants-one/pull/708) ports #686's distinct scoring/gold corrections and review-document verification onto #680's tooling, by Dean's decision recorded in the [plan](../../../decisions/conversations-t2e-evaluation.md#scoring-and-review-document-port--25-october-2026). Owner: Dean; author: a Claude Code session. Dedicated worktree and branch `test/t2e-scoring-review-port` from main `80243addf3584d2c858e3f2460b27b0fc87ea091`. The shared checkout and #686's branch were not edited. Node 24.22.1, npm 11.19.0, `npm ci` from the unchanged lockfile without overrides.
+
+Evidence class: **Persisted synthetic integration** for re-recording and export, **offline pure construction** for catalogue, rendering and review-package checks. No live model evidence exists, and no scoring rubric was executed on any answer.
+
+### Retained corpus re-recorded
+
+The retained #680 proposal cluster (PostgreSQL 16, loopback 51483, never run or reset) would not start: its `Temp` data directory had lost the 12 directories that PostgreSQL leaves empty after a clean shutdown (`pg_notify`, `pg_twophase`, `pg_wal/archive_status` and nine others). Its data files, WAL segments and control file were present. The data directory was copied to `pg-proposal-backup-20261025` beside it (4,066 files, identical names and sizes). Only those empty directories were recreated, and no file was changed or removed. The server then started from its 24 October 11:07:20 shutdown without recovery. Any damaged data would have made the comparison below refuse.
+
+From clean source commit `39dac05ea57421d17bf299fe796249bcfea0d8da`, the supported `rerecord` command read the retained `proposed-review-corrections` state, checked baseline `ef3c0fa9aad2a60737edfcc4c2622aa717925b8be659f9cd170455240c7b6502` and the exact previous main catalogue (`5c7ec2f723a9d342d11d2fb72af51e822c1b918de45080228c6cd3c234c5891a`). It wrote a new once-only directory, `proposed-scoring-review-port`, outside Git. All 117 instances, 483 human-message IDs, 642 source entries, 315 gold support mappings, evidence hashes and numeric bounds are identical. The [provenance](rerecording-provenance.json) lists 25 annotation changes: the catalogue schema version, the L03 setup, the L03 and L11 claims, six assessment reclassifications and 15 `scoring` declarations. A separate `export --baseline` then verified all 117 members and both review documents against the new directory, and the cluster was stopped again with its data retained. No answer, reservation, run or approval was created.
+
+- Catalogue canonical hash: `a5f1e61b860d70c47ce2397428006dd031c6ab4e832fd28f4702c0640907de4e`.
+- Proposed inventory canonical hash: `4e3cd1911a88219f76967ca17788f0abaeb97035bae679fb22def2add5b3f5f8`.
+- Canonical preparation/request source hash: `5b5d05bbf628240e9d7092a35830c3c69319c5895d037324f030d03fa283de13`.
+
+The committed [inventory](proposed-inventory.json), [case cards](cases.md), [sample table](review.md) and provenance are byte copies of the tool output, and `review` passes on them. A separate Python comparison with the previous committed inventory found differences only in the two hashes and the claim/assessment annotations of C03, L03, L06, L10, L11 and L12. Every row of the unchanged [CSV](offline-bounds.csv) still matches the inventory, so the price scenarios above stand.
+
+### Validation
+
+- Preparation unit suite **8/8 passed**, including the scoring-declaration pins, reviewer-reannotation acceptance/refusal and the committed review package. It also rejects changed cards or table, a corrupt or re-hashed altered inventory, a different catalogue binding, a rewritten layout and either missing document; it accepts a CRLF copy.
+- Persisted preparation suite **11/11 passed** (257.7 seconds) on a separate disposable cluster in this session's scratch storage, never the retained one. It includes reviewer reannotation with the listed provenance and refusal of baseline gold that differs from its own catalogue. Canonical materialisation took 115.5 seconds of its unchanged 120-second limit.
+- Full `tsc --noEmit --incremental false`, ESLint on the six touched source/test files, and the naming and status-source checks passed. Repository-wide checks and CI are recorded on the PR.
+
+### Limits
+
+This was author work before the independent review recorded below. The case cards and table are projections of the inventory; they grant no corpus approval. The widened re-recording rule is a proposal for Dean's review. Corpus approval, the retained naming limitation, run/cost approval, calibration and live evaluation remain pending. The retained cluster lives under `Temp`, where something has already removed folders; its location is Dean's decision.
+
+## Independent review corrections — 26 October 2026
+
+ChatGPT reviewed #708 at `b22ab65d682697077c6ece1ef431b4e6f470e0b6`; Dean relayed its findings on 26 October 2026 and they are posted on the pull request. Author: a Claude session for Dean, on the same branch after merging main `55722e8226b62c2a0e2e3bfe67b38b104bb09590`. Node 24.21.0, npm 11.19.0, `npm ci` from the unchanged lockfile; PostgreSQL 16.15 on a disposable loopback cluster in session storage, never the retained one.
+
+**Reproduced first, on the unchanged code.** Changing C01's `expected[0]` and `gold[0].claim` together to "The deal is Won." passed both `validateCatalogue` and `assertCatalogueReannotation`. L01 changed to `AnswerOrDeclined` with `DeclineUnsupportedActions`, and L08 or L09 with refusal `NotApplicable`, passed both as well.
+
+**Corrections** (the rules are in the [plan](../../../decisions/conversations-t2e-evaluation.md#scoring-and-review-document-port--25-october-2026)):
+
+- `scripts/t2e-catalogue.ts`: `scoringPolicy` and `assertScoringPolicy` fix each case's scoring by its ID, and `validateCatalogue` enforces them.
+- `scripts/t2e-preparation.ts`: `permittedGoldCorrections` lists the two claim corrections and six assessment reclassifications of this port. `assertCatalogueReannotation` refuses any other claim or assessment change, requires each expected assertion to equal its claim on both sides, and applies the scoring policy.
+
+**What still passes.** The real #680 catalogue from main (hash `5c7ec2f723a9d342d11d2fb72af51e822c1b918de45080228c6cd3c234c5891a`) re-annotates to the current one, and `catalogueAnnotationChanges` reproduces all 25 entries of the committed provenance exactly. A unit test rebuilds that previous catalogue from the provenance and checks its hash, so the allowlist is tied to the real port, not to a synthetic example.
+
+**What `validateCatalogue` still accepts.** It checks structure, policy and field support; it cannot judge whether claim prose matches the bound field values, so the C01 "Won" catalogue on its own still validates. A changed catalogue materialised fresh gets a new catalogue hash, a new corpus and new case cards for review. A retained corpus can only take new wording through re-recording, which is where the review found the gap and where the allowlist now applies.
+
+### Validation
+
+- Unit preparation suite **10/10 passed**. The two new tests failed on the unchanged scripts and pass on the corrected ones. They cover claim and assertion changed together, a claim without its assertion, a listed correction reversed, listed wording on another case, unlisted and reversed assessment changes, and seven prohibited scoring combinations (L01, L07, L08, L09 twice, L11 and C01) in both validation and re-recording.
+- Persisted preparation suite **11/11 passed** in 82.6 seconds after merging main. The reviewer-reannotation test now uses the real L03 correction and also proves that `rerecordPreparation` refuses an unlisted earlier wording. Its first run used the synthetic wording and failed as expected, refused by the new rule.
+- Full `tsc --noEmit --incremental false` and ESLint on the four touched source and test files passed. `t2e-prepare.ts validate` reports the unchanged catalogue hash `a5f1e61b…de4e`, and `review` passes on the committed package (117 members, inventory `4e3cd191…f5f8`).
+
+### Re-recording not repeated
+
+The catalogue, corpus and committed review package are unchanged. The tool source hash moves from `5b5d05bbf628240e9d7092a35830c3c69319c5895d037324f030d03fa283de13` to `c0b06894edfb0cab637b7dc10a9c71e1e962e947dd72deb7df4a2263d86180a9`, because two preparation scripts changed. The committed inventory still names the tool source that produced it, which is accurate. An `export` against the retained cluster with the corrected tools would therefore report drift until the corpus is re-recorded into a new directory with an unchanged catalogue (operator chapter, `rerecord` without `--previous-catalogue`). That cluster is on Dean's workstation and was not reachable from this session, so the re-recording was not run. No retained file, corpus, approval, calibration, live call or spending is involved.
