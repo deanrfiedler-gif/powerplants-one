@@ -37,3 +37,7 @@ The accepted Figma page, shell rollout, export, independent/owner review, physic
 ## Publication
 
 [PR #457](https://github.com/deanrfiedler-gif/powerplants-one/pull/457) carries the implementation and this evidence. Initial-head CI was running without a reported failure at the evidence checkpoint; final-head CI and independent review are separate. No merge or deployment is claimed.
+
+## Accepted UI continuation
+
+The [1 November UI execution ledger](2026-11-01-ui-execution.md) records PR #707's implementation, validation and visual comparison separately from this retained backend proof and owner acceptance.

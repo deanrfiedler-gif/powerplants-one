@@ -14,6 +14,7 @@ import {
   coordinateEngineering,
   readEngineering,
   listEngineering,
+  engineeringOptions,
 } from "../../src/engineering/service";
 import { engineeringRegister } from "../../src/engineering/register";
 import { engineeringInput, engineeringUpdate } from "../helpers/engineering";
@@ -80,6 +81,54 @@ test("EN01 register sorts the whole authorised set, counts 101 matches and pages
     ids,
   );
   assert.equal(third.counts.all, 101);
+  assert.equal(first.source_version, second.source_version);
+  assert.equal(first.source_version, third.source_version);
+  const filteredQuery = {
+    q: s.marker + " 0",
+    owner_id: s.p.actor_id,
+    view: "mine",
+    state: "Queued",
+    sort: "Name",
+    limit: 50,
+  };
+  const filtered = await engineeringRegister(s.p, filteredQuery);
+  assert.equal(filtered.matching_count, 100);
+  assert.equal(filtered.counts.all, 100);
+  assert.equal(filtered.counts.mine, 100);
+  assert.equal(filtered.counts.states.Queued, 100);
+  assert.equal(filtered.engineers.items.length, 1);
+  assert.equal(filtered.items.length, 50);
+  assert(filtered.next_cursor);
+  const filteredNext = await engineeringRegister(s.p, {
+    ...filteredQuery,
+    cursor: filtered.next_cursor,
+  });
+  assert.equal(filteredNext.matching_count, 100);
+  assert.equal(filteredNext.next_cursor, null);
+  assert.equal(
+    new Set([...filtered.items, ...filteredNext.items].map((r) => r.id)).size,
+    100,
+  );
+
+  const all = [...first.items, ...second.items, ...third.items];
+  const byReference = [...all].sort((a, b) =>
+    a.display_number.toLowerCase() < b.display_number.toLowerCase() ? -1 : 1,
+  );
+  for (const direction of ["asc", "desc"]) {
+    const refQuery = { q: s.marker, sort: "Reference", direction, limit: 100 };
+    const refFirst = await engineeringRegister(s.p, refQuery);
+    assert(refFirst.next_cursor);
+    const refNext = await engineeringRegister(s.p, {
+      ...refQuery,
+      cursor: refFirst.next_cursor,
+    });
+    assert.deepEqual(
+      [...refFirst.items, ...refNext.items].map((r) => r.id),
+      (direction === "asc" ? byReference : [...byReference].reverse()).map(
+        (r) => r.id,
+      ),
+    );
+  }
   assert.equal(first.engineers.items.length, 1);
   const old = await listEngineering(s.p, { q: s.marker, limit: 100 });
   assert.equal(old.items.length, 100);
@@ -132,6 +181,15 @@ test("EN01 date ordering keeps nulls last both ways, stable ties and exact atten
   });
   assert.equal(action.items[0].id, b.id);
   assert.equal(action.items.at(-1)!.id, c.id);
+  const actionDescending = await engineeringRegister(s.p, {
+    q: s.marker,
+    sort: "ActionDate",
+    direction: "desc",
+  });
+  assert.deepEqual(
+    actionDescending.items.map((row) => row.id),
+    [...[a.id, d.id].sort(), b.id, c.id],
+  );
   await coordinateEngineering(s.p, d.id, {
     ...engineeringUpdate(),
     state: "Awaiting information",
@@ -182,6 +240,30 @@ test("EN01 filter choices retain recorded inactive owners without granting assig
     const inactive = await engineeringRegister(s.p, { q: b.id });
     assert.equal(inactive.items[0].owner_active, false);
     assert.equal(inactive.engineers.items[0].active, false);
+    const assignment = await engineeringOptions(s.p, {
+      kind: "owner",
+      context_kind: "Project",
+      context_id: s.project.id,
+    });
+    assert(
+      !assignment.items.some((person) => person.id === MATERIALS.author.id),
+    );
+    const stillFilterable = await engineeringRegister(s.p, {
+      q: s.marker,
+      owner_id: MATERIALS.author.id,
+    });
+    assert.deepEqual(
+      stillFilterable.items.map((row) => row.id),
+      [b.id],
+    );
+    await assert.rejects(
+      createEngineeringRequest(s.p, {
+        ...engineeringInput(s.project.id),
+        owner_id: MATERIALS.author.id,
+      }),
+      (error: unknown) =>
+        error instanceof AppError && error.status >= 400 && error.status < 500,
+    );
     assert.equal(
       (await readEngineering(s.p, b.id)).package.owner_id,
       MATERIALS.author.id,
@@ -238,6 +320,7 @@ test("EN01 continuation binds filters, actor, source and working company; source
   );
   const refresh = await engineeringRegister(s.p, query);
   assert(refresh.next_cursor);
+  assert.notEqual(refresh.source_version, first.source_version);
   assert.equal(
     (await engineeringRegister(s.p, { ...query, cursor: refresh.next_cursor }))
       .items.length,

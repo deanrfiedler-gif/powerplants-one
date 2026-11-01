@@ -23,7 +23,7 @@ Scope: the existing Engineering destination `engineering` ("Engineering workload
 | Reuse the accepted pattern | Prior user decisions | The [Reviews & approvals decision](estimate-reviews-design.md), section 1. It covers the labelled rail, the flush secondary menu, and a full-width grid "that extended all the way to the edges of the container, with individual cells". Record windows "overlap them instead" of condensing the table. The checkbox and gear columns are fixed, and the phone has list rows and an icons-only tab bar. Also the record window's maximum width, which Dean set while Intake & workload was being drawn: "make the maximum width of the record container working on a scenario when both the primary and secondary menus are open" |
 | Accept the design with Claude's recommendations | User decision, 11 October 2026 | "Proceed with your recommendations." This adopts the recommendations on the notes card and the recommended answer to each question Claude had left open (section 4) |
 | Menus and icons change by department | Prior user direction | The Engineering rail, menu, More panel and phone tabs follow `departmentRails.engineering` in `src/shell/navigation.ts` and the icon mapping in `src/components/font-awesome-icons.ts` |
-| Building the page, the server sort and count read, or the shell | Not decided | Section 5 |
+| Implementation follow-through | Subsequent user instruction | BC-01 supplies the native register read; PR #707 implements the accepted page under Dean's explicit continuation, including the 1 November three-build-limit exception. All other review/merge gates remain. Section 5 records implementation adaptations, not new visual acceptance |
 
 ## 2. Design reference
 
@@ -84,7 +84,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Menu counts | Shown for every view, from a new count read over the same permitted, searched set. Today's tabs have no counts |
 | Needs attention | The server rule above. Today's footer count ignores missing prerequisite evidence and can disagree with the filter; the count follows the server rule |
 | In design colour | The neutral tag. Only Awaiting information keeps a colour (amber, as today). The shared Tag has no teal, and colour is kept for what needs attention |
-| Engineer filter | Lists every eligible engineer; "Assigned to me" becomes the My work view. The list read already accepts an owner |
+| Engineer filter | The accepted label is Engineer and My work replaces Assigned to me. The later [BC-01 read contract](engineering-workload-backend.md) resolves the choice basis: permitted recorded owners, explicitly including inactive owners. New assignment continues to use separate native eligibility options |
 | Rail badge on this page | The count beside Engineering workload is your Author actions, neutral, like the Reviews & approvals badge. Section 5 keeps the shell-wide rule open |
 | Phone tabs | My Work, Engineering workload and Drawings (today's three), Technical reviews as the fifth, then More |
 | Update coordination | Stays in the record window, as in today's drawer, because it is the page's own command. It needs `engineering.edit` and is hidden for read-only users. Add note is in the "…" menu |
@@ -105,13 +105,9 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 | E8 | The small panel for a selection offers Open in sequence and Export list only. Its rule note says coordination is updated one package at a time | No selection |
 | E9 | Phone: flush list rows (title and required date; reference and status; customer and engineer). The five-tab bar is in section 4 | Cards at 820 px and below; the labelled three-and-More bar |
 
-## 5. Not decided
+## 5. Implementation follow-through and open review
 
-- **Building the page.** The read needs several additions:
-  - a server-side sort;
-  - a count per view;
-  - a list of eligible engineers for the filter;
-  - single-line columns for the grid.
+- **Building the page.** The user-authorised implementation is tracked in PR #707 and the [page contract](../design/development/pages/route-engineering.md). It uses BC-01 server sorting (including Reference), full matching counts and recorded-owner choices with the accepted single-line grid. Implementation, functional proof, visual review, owner acceptance and deployment remain separate.
 - **What the grid keeps from today.** Column resizing, column choice under the gear, and paging beyond the first 50 rows (today Previous and Next) are not drawn. They belong to the shared register table (PR #400) rather than to this page. Reading keeps `engineering.read` and the context checks. No new capability is proposed.
 - **Rolling out the shell.** As for Reviews & approvals, the adopted Shell page and the app stay as built until a shell implementation is planned and recorded.
 - **Department rails.** In the build, each department's rail comes from `navigation.ts`. The Figma file draws this page's rail as a page component; whether every department rail becomes a variant of v2 / Rail is a library choice for the shell rollout.

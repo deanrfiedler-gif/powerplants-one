@@ -11,6 +11,7 @@ export const moduleWorkspaces = [
   {route:"/documents/issues",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-output-issue"},
   {route:"/documents/issues/job-packs/[id]",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-job-pack-record"},
   {route:"/documents/issues/service-reports/[id]",moduleId:"DK-03",scope:"ppo-outputs",layout:"full-bleed",navigation:"workspace",baseline:"dk03-accepted-service-report-record"},
+  { route: "/engineering", moduleId: "EN-01", scope: "ppo-engineering", layout: "full-bleed", navigation: "workspace", baseline: "engineering-workload-figma-register" },
   { route: "/equipment", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-register-native-r01" },
   { route: "/equipment/[id]", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-record-native-r01" },
   { route: "/equipment/backups", moduleId: "EQ-08", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq08-native-r01" },

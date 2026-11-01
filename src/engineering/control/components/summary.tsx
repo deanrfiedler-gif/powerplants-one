@@ -82,7 +82,7 @@ export function ControlSummary({
     <section className="eng-section" aria-label="Native technical work">
       <ErrorNotice error={read.error} />
       {read.loading && <p role="status">Loading technical work…</p>}
-      {data && !read.error && (
+      {data && !read.loading && !read.error && (
         <>
           {groups.map((g) => (
             <section key={g.kind}>

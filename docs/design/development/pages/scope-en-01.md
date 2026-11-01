@@ -1,59 +1,35 @@
 # Engineering workload and deliverables — design reference
 
-Stable entry: `scope:EN-01`. Owner: Dean Fiedler. Status: **Draft for visual review**.
-Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/engineering`.
-This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
+Stable entry: `scope:EN-01`. Owner: Dean Fiedler. Application destination: `/engineering`.
+Status: **Implementation under validation; visual review and owner acceptance pending**.
+Parent trace: ENG-01–ENG-04. No parent ID is changed.
 
 ## Purpose and task
 
-Extend existing engineering intake/coordination with deliverable ownership, effort, prerequisites and author/reviewer workloads.
-
-1. Confirm the accepted engineering basis
-2. Review workload and blocked deliverables
-3. Assign a next action without bypassing technical review
+Coordinate permitted Engineering packages and follow accountable deliverables, author actions, assigned reviews and current exact formal issues. Package coordination cannot approve or release technical content. Actual effort, availability and utilisation remain unknown.
 
 ## Desktop
 
-Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
-
-At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
+The [route contract](route-engineering.md) is the authoritative composition and interaction specification for the accepted rail, secondary menu, compact toolbar, shared grid, overlapping snapshot and selected-package panel. It names every native queue, filter, column, server sort and exact-package handover. [Accepted captures 01–03](../../../reference/ui/engineering/engineering-workload-design-r01/README.md) replace the r02 composition for this register; the issued r02 source and full package route remain unchanged.
 
 ## Mobile
 
-At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
-
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+The route contract applies the shared phone header and Engineering's five-icon navigation to the flush list and full-screen snapshot. It requires 390 and 320 px reflow and keyboard proof. Phone selection uses an explicit Select control and shared selection sheet; this adaptation remains for owner review.
 
 ## Shared components and states
 
-Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
-
-Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
+The [consumer binding](../component-bindings/2026-11-01-engineering-workload.md) records shared shell, table, controls and feedback reuse. Loading, empty, filtered-empty, denied, partial technical read, changed source, refresh, error and native uncertain-save recovery are required states. Published technical authority and permission checks are retained.
 
 ## Visual references
 
-- [PPO-Engineering-Container-r02.html](../../../reference/ui/engineering/PPO-Engineering-Container-r02.html)
+- [Engineering workload accepted design decision](../../../decisions/engineering-workload-design.md), page 184:1047, desktop 184:1048, selected rows 189:23728, phone 184:1435.
+- [Five retained design captures](../../../reference/ui/engineering/engineering-workload-design-r01/README.md).
+- [Earlier issued Engineering r02](../../../reference/ui/engineering/PPO-Engineering-Container-r02.html), retained unchanged.
 
 ## Behaviour, handovers and verification
 
-The draft User Guide `guide.en.01` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
+`GET /api/v1/engineering/register` supplies the common permitted basis for rows, full matching counts and recorded-owner choices. Sorting and paging stay on the server. A source-bound continuation cannot combine incompatible pages; selection, CSV and sequence navigation retain the exact displayed query/source. Inactive recorded owners stay filterable without becoming assignable.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+The [BC-01 contract](../../../decisions/engineering-workload-backend.md) and [native technical interface](../../../interfaces/engineering-native-control.md) define queue membership, source restrictions and release authority. Package detail and technical reads are reconciled before showing combined facts. Incoming Project/Opportunity context and outgoing EN-02–EN-08 package IDs are preserved.
 
-## Native workflow reconciliation — 24 September 2026
-
-EN-01 retains package identity, intake, Project/Opportunity context, coordination history, versioning and bookmarks. It now reads native EN-02–EN-05 records. Parent trace: ENG-01–ENG-04.
-
-All packages and My work retain their original package ownership meaning. Author actions shows owned draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows submitted reviews assigned to this person. Released requires a current exact formal issue; coordination state cannot populate it. Search, discipline, ownership and attention filters remain scoped. Attention includes missing deliverable prerequisite evidence.
-
-The inspector's Overview links exact basis and issues. Deliverables lists accountable owners, dates, prerequisites, next actions and controlled documents. Technical queries opens persisted queries/submittals. Review & history separates independent technical decisions from coordination notes. Add deliverables in Drawings; planned hours need a source and authorised hours need authority evidence. Actual effort and staff availability are unknown; no utilisation is calculated.
-
-Incoming: existing packages and permitted Project/Opportunity/customer/site context. Outgoing: package-scoped EN-02–EN-05 records and existing EN-06–EN-08 handovers. The r02 HTML remains an issued design source; new compositions require owner review. Browser evidence and current validation are recorded in `docs/delivery/engineering-native-control-handover.md`; no design/business/deployment approval is inferred.
-
-Native destinations use the department rail; contextual query and retained handover links wrap inside the EN-01 heading. The phone page must not overflow horizontally or shift its modal drawer outside the viewport. Existing intake/review-note browser journeys prove this boundary.
-
-## Register backend continuation — 13 October 2026
-
-The [BC-01 contract](../../../decisions/engineering-workload-backend.md) adds a separate Engineering register API with server ordering, complete permitted-match view/status counts, recorded-owner choices and source-bound pagination. The accepted desktop/phone composition remains to implement; the current page still calls its original list. Native command and technical-source authority remain unchanged. Filter choices include explicitly inactive recorded owners and do not recommend new assignment.
-
-The [execution ledger](../../../testing/evidence/engineering-workload/README.md) records actual backend and compiled HTTP proof separately from visual review. Existing review fingerprints and captures are preserved. New application captures are not produced because this increment changes no UI. No guide workflow or shared component changed.
+The [Engineering guide](../../../guides/pages/guide.page.engineering.md) covers this route and the retained full package workflow. Its review/publication status is independent. The [execution ledger](../../../testing/evidence/engineering-workload/README.md) records checks and visual comparisons separately from owner acceptance and deployment. No review fingerprint is assigned by implementation.

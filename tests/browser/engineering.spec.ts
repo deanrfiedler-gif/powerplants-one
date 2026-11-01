@@ -6,7 +6,14 @@ test.describe.configure({ timeout: 120000 });
 async function call(page: Page, path: string, body?: unknown) {
   const response = await page.request.fetch(`/api/v1/${path}`, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { Origin: new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin },
+    headers:
+      body === undefined
+        ? {}
+        : {
+            Origin: new URL(
+              test.info().project.use.baseURL ?? "http://127.0.0.1:3000",
+            ).origin,
+          },
     data: body,
   });
   expect(response.ok(), await response.text()).toBe(true);
@@ -22,8 +29,12 @@ test("accepted container creates a real request; an uncertain note retries once 
   };
   await call(page, "projects", project);
   await page.goto("/engineering");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-  await page.getByRole("button", { name: "＋ Request", exact: true }).click();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth + 1,
+    ),
+  ).toBe(true);
+  await page.getByRole("button", { name: "New request", exact: true }).click();
   const requestDialog = page.getByRole("dialog");
   const title = `SYN Engineering ${info.project.name} ${Date.now()}`;
   await requestDialog
@@ -52,22 +63,28 @@ test("accepted container creates a real request; an uncertain note retries once 
   const packageDialog = page.getByRole("dialog").filter({
     has: page.getByRole("button", { name: "Close package", exact: true }),
   });
-  await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
+  await expect(packageDialog.locator(".er-record-title")).toHaveText(title);
   await expect(packageDialog).toBeInViewport();
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);
   const id = list.items[0].id;
   await expect(page).toHaveURL(new RegExp(`package_id=${id}`));
   await packageDialog
-    .getByRole("tab", { name: "Review & history", exact: true })
+    .getByRole("tab", { name: "Reviews & issues", exact: true })
+    .click();
+  await packageDialog
+    .getByRole("button", { name: "Package actions", exact: true })
+    .click();
+  await packageDialog
+    .getByRole("button", { name: "Add note", exact: true })
     .click();
   const note = "SYN Retain a service clearance check for the design review.";
-  await packageDialog.getByLabel("Add a review note", { exact: true }).fill(note);
   await packageDialog
-    .getByRole("tab", { name: "Deliverables", exact: true })
-    .click();
+    .getByLabel("Add a review note", { exact: true })
+    .fill(note);
+  await packageDialog.getByRole("tab", { name: /^Deliverables/ }).click();
   await packageDialog
-    .getByRole("tab", { name: "Review & history", exact: true })
+    .getByRole("tab", { name: "Reviews & issues", exact: true })
     .click();
   await expect(
     packageDialog.getByLabel("Add a review note", { exact: true }),
@@ -99,8 +116,10 @@ test("accepted container creates a real request; an uncertain note retries once 
   ).toBeVisible();
   await expect(page).toHaveURL(/section=review/);
   await page.reload();
-  await expect(packageDialog.getByRole("tab",{name:"Review & history",exact:true})).toHaveAttribute("aria-selected","true");
-  await expect(packageDialog.getByText(note,{exact:true})).toBeVisible();
+  await expect(
+    packageDialog.getByRole("tab", { name: "Reviews & issues", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  await expect(packageDialog.getByText(note, { exact: true })).toBeVisible();
   await page.goto(`/engineering/${id}`);
   await expect(packageDialog.getByRole("heading").first()).toHaveText(title);
   const saved = await call(page, `engineering/${id}`);

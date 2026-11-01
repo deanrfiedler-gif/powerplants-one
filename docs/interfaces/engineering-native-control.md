@@ -14,6 +14,8 @@ POST at the same path uses schema_version 1, operation_id UUID, kind, action, id
 
 Record kinds are basis, document, query, submittal, review, issue and deliverable. Typed basis children retain stable IDs and distinct requirement/input/interface/calculation structures inside the versioned basis snapshot. Review and issue content is constructed on the server, never supplied as a client-generated manifest.
 
+EN-01 reads `GET /api/v1/engineering/register` for server-sorted pages, full matching queue/status counts and recorded-owner filter choices from one permitted basis; see the [BC-01 contract](../decisions/engineering-workload-backend.md). Its opaque `source_version` binds displayed-page selection and sequence handovers, not command authority. Snapshots separately read native package detail and this control endpoint, withhold mismatched/unavailable technical facts, and carry the exact package ID into every technical destination. CSV contains only revalidated selected package facts. The native control bounds, source visibility and command duties above remain unchanged.
+
 ## Decisions and evidence
 
 Draft saves require engineering.edit. Assigned review, issue, distribution and restricted source access have separate capabilities and versioned synthetic policy. Policy matches current person, company/site, discipline and purpose. A configured independent reviewer cannot be a contributor; independent issue excludes contributors and reviewer. Named interface parties confirm their own exact inputs. Findings retain separate owner response and reviewer closure.

@@ -4,7 +4,9 @@ import { test } from "node:test";
 import { projectInput } from "../helpers/projects";
 import { engineeringInput, engineeringUpdate } from "../helpers/engineering";
 
-const origin = process.env.PPO_TEST_ORIGIN ?? `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
+const origin =
+  process.env.PPO_TEST_ORIGIN ??
+  `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
 async function session(profile = "coordinator") {
   const r = await fetch(origin + "/api/v1/local-session", {
     method: "POST",
@@ -60,6 +62,15 @@ test("EN01 HTTP native coordination feeds sorted scoped counts and invalidates s
   );
   assert.equal(second.body.items[0].id, a.id);
   assert.equal(second.body.next_cursor, null);
+  assert.equal(typeof first.body.source_version, "string");
+  assert.equal(second.body.source_version, first.body.source_version);
+  const references = await call(
+    cookie,
+    path + "&sort=Reference&direction=desc",
+  );
+  assert.equal(references.status, 200);
+  assert.equal(references.body.items[0].id, b.id);
+  assert.equal(references.body.matching_count, 2);
   const command = {
     ...engineeringUpdate(),
     state: "Awaiting information",
@@ -83,6 +94,7 @@ test("EN01 HTTP native coordination feeds sorted scoped counts and invalidates s
     422,
   );
   const refreshed = await call(cookie, path);
+  assert.notEqual(refreshed.body.source_version, first.body.source_version);
   assert.equal(refreshed.body.counts.states["Awaiting information"], 1);
   assert.equal(refreshed.body.counts.attention, 2);
   const detail = await call(cookie, `engineering/${a.id}`);

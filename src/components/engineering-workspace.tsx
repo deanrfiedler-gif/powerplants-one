@@ -98,6 +98,8 @@ export function EngineeringModal({
   title,
   drawer = false,
   maxWidth = 750,
+  navigation,
+  hideFooter = false,
   className = "",
   onClose,
   children,
@@ -108,6 +110,8 @@ export function EngineeringModal({
   title: string;
   drawer?: boolean;
   maxWidth?: number;
+  navigation?: ReactNode;
+  hideFooter?: boolean;
   className?: string;
   onClose: () => void;
   children: ReactNode;
@@ -177,14 +181,15 @@ export function EngineeringModal({
         <h2 ref={titleRef} tabIndex={-1}>
           {title}
         </h2>
+        {navigation}
       </header>
       {children}
-      <footer className="eng-dialog-foot">
+      {!hideFooter && <footer className="eng-dialog-foot">
         {footer}
         <button type="button" disabled={blocked} onClick={onClose}>
           Close
         </button>
-      </footer>
+      </footer>}
     </dialog>
   );
 }

@@ -1,70 +1,80 @@
 ---
 guide_key: guide.page.engineering
 entry_key: route:/engineering
-also_applies_to: ["route:/engineering/[id]"]
-carried_over_from: src/engineering/control/guide.ts
+also_applies_to: ["route:/engineering/[id]", "scope:EN-01"]
 title: Engineering workload & deliverables
 status: InReview
-shown_before_review: true
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: b95d335987ee3b8f2c9f19509e7832c5200db67d
-contents: { overview: "Overview", how: "How to use", journey: "Journey map" }
+source_commit: 79be8557
+contents: { overview: "Overview", how: "How to use", journey: "Journey map", recovery: "Recovery" }
 list_styles: { journey: journey }
+workflow_basis: "EN-01 native package coordination, BC-01 permitted register reads and EN-02–EN-08 technical authority."
+runtime_evidence: "Validation in progress in PR #707; see the Engineering workload execution ledger."
+change_summary: "Use the view menu, server-sorted grid, package snapshot and selected-package actions."
 ---
 
-Coordinate owned packages and follow their exact technical work in the same Project/Opportunity and customer/site context.
+Find Engineering packages you may read, identify the next action and follow their exact technical records.
 
 ## From request to accountable technical work {#overview}
 
-Identify accountable work, missing prerequisites and next actions. Technical decisions remain separate from coordination notes.
+All packages includes your permitted matching packages. My work means you own the package. Author actions follows your draft or returned bases, open or returned queries, returned submittals and open findings. Reviews assigned to me shows submitted technical reviews assigned to you. Released requires a current exact formal issue.
 
-### Workload queues
-
-All packages and My work retain package ownership. Author actions shows your draft/returned bases, open/returned queries, returned submittals and open findings. Reviews shows submitted reviews assigned to you. Released requires a current formal issue.
-
-### Accountable deliverables
-
-Open Deliverables for owner, discipline, due date, prerequisites, next action and controlled documents. Add or amend them in Drawings. Missing prerequisite evidence is blocked work.
-
-### Technical context
-
-Overview links bases and issues. Technical queries opens formal questions/submittals. Review & history keeps technical decisions separate from existing coordination notes.
+Needs attention includes a recorded blocker, missing deliverable prerequisite evidence, an overdue required date or an overdue action date. The three coordination statuses describe coordination only. A note or an In design status never approves or releases technical content.
 
 ## How to use it {#how}
 
-1. **Capture or find the request**\
-   Use the existing intake form for an authorised Project/Opportunity brief, owner, date and next action. Existing package references and bookmarks are retained.
-2. **Choose the work queue**\
-   Search or filter by discipline, package owner and attention, then select a package. Counts include only records and sources you may read.
-3. **Prepare the technical work**\
-   Follow Design basis, Drawings, Technical queries or Technical reviews. Retain exact source revisions and independent review; a coordination note is not a formal technical answer.
+1. **Find the package**\
+   Choose a view and any coordination status or Needs attention filter. Search by package, customer or Project/Opportunity, then narrow Engineer and Discipline. Counts cover all permitted matches, including later pages. The selected view and status determine the toolbar count.
+2. **Choose the order**\
+   Select Reference, Work package or Required by in the grid header. Other sort choices are in the register actions or phone filter sheet. Sorting covers the full matching list. Missing dates stay last. Previous and Next move between server pages.
+3. **Read the snapshot**\
+   Open a row for its summary, next action, design brief, technical tabs and coordination history. Technical records can have different read restrictions. If their read is unavailable, refresh it before relying on its counts. Open package continues to the existing full package page.
+4. **Continue exact technical work**\
+   Follow the package's Design basis, Drawings, Queries, Reviews & issues, Materials, Changes or Commissioning links. Deliverables retain their owner, dates, prerequisites and effort evidence. Formal technical answers, independent reviews and issues stay in their native workflows.
+5. **Coordinate the package**\
+   New request uses a permitted Project or Opportunity and an eligible assigned engineer. Update coordination needs a reason and checks the current package version. Package actions contains Add note. These commands do not authorise technical effort or issue documents.
+6. **Work with selected packages**\
+   Tick rows on the current page. Open in sequence follows those exact packages in register order. Export list (CSV) contains only the selected package facts, after checking the current read again. A changed source clears the selection; refresh and select again.
+
+The Engineer filter includes recorded inactive owners, explicitly labelled. This helps find existing work; it does not make that person eligible for a new assignment.
 
 ## Your journey {#journey}
 
-Each module retains its own accountable evidence and authority.
-
 1. **Intake**\
-   Confirm scope and prerequisites.
+   Record the brief, accountable engineer, required date and next action.
 2. **Author**\
-   Retain exact basis, documents and formal responses.
+   Retain exact basis, deliverables, controlled documents and formal responses.
 3. **Review and issue**\
-   Use configured independent duties and retain exact recipient evidence.
+   Use the assigned independent duties and retain the exact issue and recipient evidence.
 
 ## On your phone {#mobile}
 
-Use labelled package cards and the same context tabs on a phone. Long references wrap. These Engineering commands require a connection; they do not create an offline queue.
+Use the header view/menu and filter controls with the flush package list. The bottom buttons open My Work, Engineering workload, Drawings, Technical reviews and More. The floating plus opens New request. A package opens a full-screen snapshot with previous/next navigation and actions at the bottom.
+
+Choose Select to reveal row checkboxes, then the selected-count button to open the selection sheet. These actions require a connection; Engineering writes do not create an offline queue.
 
 ## Keyboard shortcuts {#shortcuts}
 
 | Key | Action |
 |---|---|
 | `Tab / Shift+Tab` | Move between labelled controls. |
-| `Escape` | Close a supported dialog and return to its opener. |
+| `Enter / Space` | Activate a button or select a checkbox. |
+| `Left / Right` on a column resize handle | Change that column's width. |
+| `Home` on a column resize handle | Restore its default width. |
+| `Escape` | Close a supported window and return to its opener, unless a save outcome is unresolved. |
 
 ## If something is unavailable {#recovery}
 
-Keep the draft if a save is refused. Compare a newer version before deciding again. If the outcome is unknown, recover or retry the unchanged original operation; do not create a duplicate. Access is checked again on recovery.
+Loading and failed refreshes withhold unconfirmed rows, counts and filter choices. Retry loading after an error. Clear filters when no package matches. Denied access does not mean there are no packages.
+
+If the workload changes while paging, the register starts a fresh first page and discards incompatible selections. A snapshot may still show permitted package details while technical facts are unavailable; refresh the snapshot to reconcile them. Its coordination history identifies when only the latest 100 events are shown.
+
+Keep a draft after a refused save. If the package version changed, read the latest version before deciding again. If the outcome is unknown, retry the unchanged original operation; do not create a duplicate. Notes remain while switching technical tabs. Dirty coordination changes need an explicit discard decision before leaving.
 
 > [!NOTE]
-> Planned hours require a planning source; authorised hours require authority evidence. Actual effort and availability are ungoverned, so utilisation is not calculated. Coordination progress never grants technical issue, purchase or Project completion.
+> Planned hours require a planning source; authorised hours require authority evidence. Actual effort and staff availability are unknown, so utilisation is not calculated. Coordination progress never grants technical issue, purchase or Project completion.
+
+## Resources and review {#resources}
+
+No approved SOP linked yet. This guide is InReview. Implementation, functional checks, visual review, owner acceptance and deployment have separate evidence.
