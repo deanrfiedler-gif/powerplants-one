@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CP06-QUOTATIONS-ACCOUNT-FIGMA-DEC,Quotations and account design (Figma) owner decision,docs/decisions/quotations-account-figma-design.md,,Owner-accepted design; implementation and live customer access separate,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,git,
+PPO-CP06-QUOTATIONS-ACCOUNT-FIGMA-R01,Quotations and account design retained captures,docs/reference/ui/customer-portal/quotations-account-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,fa15714324b1dcb939355666023272e0a4ffb0f3,,,retained-record,
