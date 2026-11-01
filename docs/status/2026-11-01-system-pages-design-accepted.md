@@ -10,10 +10,9 @@ Dean accepted the Figma design for PPO's system pages: "Accept recommendations".
 - one "Outcome unknown" banner and dialog replace seven headings, and external sends keep their own wording;
 - no maintenance page or synthetic banner is added.
 
-Twenty-eight icon-free captures with hashes are retained in [system-pages-design-r01](../reference/ui/application-shell/system-pages-design-r01/README.md), and the design register entries for `route:/login` and `system:shell` cite them. In Figma the page is `3031:776966`, the File index row is `3098:5075`, the parts moved to Components section `3098:532053`, and the capture copies sit on the Captures page from y = 1,460,000.
+Twenty-eight icon-free captures with hashes are retained in [system-pages-design-r01](../reference/ui/application-shell/system-pages-design-r01/README.md), and the design register entries for `route:/login` and `system:shell` cite them. In Figma the page is `3031:776966`, the File index row is `3098:5075`, the parts moved to Components section `3098:532053`, and the capture copies sit on the Captures page from y = 1,460,000, and Dean saved the named version "System pages — accepted" on 1 November 2026.
 
 Not done:
-- Dean hasn't saved the named version "System pages — accepted" yet.
 - The prototype flows have not been played in Present mode.
 - Real 200% browser zoom, screen readers, physical devices and live Microsoft sign-in remain open.
 - Request access (D4) and ideas I1–I6 are outside the accepted baseline.

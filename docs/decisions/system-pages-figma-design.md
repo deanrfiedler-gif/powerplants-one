@@ -2,7 +2,7 @@
 document_id: PPO-SYSTEM-PAGES-FIGMA-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version not yet saved; Request access and ideas I1-I6 outside the baseline; building the pages separate
+status: Owner-accepted design; named Figma version saved; Request access and ideas I1-I6 outside the baseline; building the pages separate
 source_commit: 1fc002978ee2a6871121d9252609a49c6dc31b9a
 versioning: git
 ---
@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q11 Replace two pieces of built jargon? | Resolved as recommended | Yes. "Refresh your identity context" becomes "Your session changed in another tab", and "This identity cannot read this record, or it does not exist." becomes "You can't open this record, or it doesn't exist." The frames show the new words; the application keeps the built words until built |
 | Q12 Change the skip-link focus ring on navy? | Resolved as recommended | Yes, white on navy (D12). `#3b6b99` measures 2.57:1 against the navy panel, below the 3:1 needed for focus |
 | Q13 Which ideas go forward? | Resolved as recommended | I1–I4 as proposals, I5 and I6 later. None is part of the accepted baseline (section 5) |
-| Named version | Not yet saved | Section 7 |
+| Named version | Saved by Dean, 1 November 2026 | Section 7 |
 | Building the pages | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -86,7 +86,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D2–D9 and D11–D13 in section 4, accepted |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | To be "System pages — accepted"; not yet saved (section 7) |
+| Named version | "System pages — accepted", saved by Dean on 1 November 2026 (section 7) |
 
 ## 4. What the design shows
 
@@ -173,5 +173,5 @@ At Dean's request Claude read the frames at full size and checked them against t
 - After Dean's acceptance, Q11 and Q12 were applied to the frames, the parts moved to Components, and instances checked as still linked.
 - The twenty-eight captures are copies on the Captures page from y = 1,460,000. All 434 visible Font Awesome instances were swapped for `Icon/placeholder`. A separate re-scan found none left, no visible vector outside a placeholder, the logo or the login's local drawings, and no prototype action on any copy. The flow entry the cloning added to the Captures page was removed.
 - The captures were exported at scale 1. The hashes are in the [captures README](../reference/ui/application-shell/system-pages-design-r01/README.md).
-- **Named version:** "System pages — accepted" has not been saved. Mark the pull request ready only after Dean confirms it.
+- **Named version:** Dean saved "System pages — accepted" in Figma on 1 November 2026: "I have saved the named version as System pages — accepted". Claude did not open version history to confirm it.
 - **Not done:** the flows have not been played in Present mode. Real 200% browser zoom, screen readers, physical devices and live Microsoft sign-in remain open; the 200% frame is a composition, not a test, as the login decision requires. No owner device, accessibility or operational review is inferred. There is no new application evidence.
