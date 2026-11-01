@@ -40,7 +40,7 @@ Measured on 1 November 2026, read-only:
 | The file is close to its limit | Figma's meter read **80.4%, with 682,382 layers**, on a fresh load in the desktop app with only Start here open (1 November 2026). The reading repeated on a second load. Figma alerts at 90% and locks at 100% |
 | Viewing pages uses memory | Opening one average page (`Assistant · AI-01`) raised the reading to **82.5%, with 687,991 layers**. If that rate holds, about 5 opened pages reach the alert and about 9 reach the lock. This is one test |
 | Captures' share of memory is not proven | Figma shows no per-page figure, and why 682,382 layers count with one page open is unexplained. Stage 2 measures the effect of removing Captures directly |
-| Most scopes are drawn | 139 of the 149 scope IDs in the design register have a page. Undrawn: EQ-02, EQ-03, EQ-05, FI-02, MA-05 and five conditional CX scopes. Future work is mostly accepting and amending, not new drawing |
+| Most scopes are drawn | The file audit of 1 November found 167 UI pages covering 147 of the 152 scopes on `main`; the other five are conditional CX options. 107 pages are accepted and 60 wait for Dean, with about 420 open questions. Future work is mostly accepting and amending, not new drawing |
 | Review is the bottleneck | 293 of 372 register entries say "Needs review", and 26 have a recorded reviewer |
 | The file sits in Drafts | Figma requires a file to be in a folder before it can publish a library |
 | Captures are duplicated | The repository holds 1,178 PNGs under `docs/reference/ui` (610 MB), including the exported captures. Each worktree costs about 0.95 GB, nearly all of it `docs` |
