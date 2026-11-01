@@ -67,7 +67,7 @@ Moving a deal between stages does not create, issue or accept an estimate or quo
 | **Deal data options** | **Export current page as CSV** works. Import, clean-up and restore are shown as unavailable. |
 | **Refresh from start**, **Next page** | Restart the list, or read the next page of results. |
 
-The filters in **Filter deals** are **Search deals** (deal title, reference or organisation), **Company**, **Site**, **Deal owner**, **Sales outcome** (**Open**, **Won**, **Lost** or **All**), **Next action**, **Stage**, **Sort**, **Page size** (10, 25 or 50 records) and **Owned by me**. Use **Find company filter**, **Find site filter** and **Find owner filter** to search a long list. Changing **Company** clears **Site**. **Clear filters** returns to the defaults. Select **Done** to close the panel.
+The filters in **Filter deals** are **Search deals** (deal title, reference or organisation), **Company**, **Site**, **Deal owner**, **Sales outcome** (**Open**, **Won**, **Lost** or **All**), **Next action**, **Stage**, **Sort**, **Page size** (10, 25 or 50 records) and **Owned by me**. Use **Find company filter**, **Find site filter** and **Find owner filter** to search a long list. Changing **Company** clears **Site**. **Clear filters** returns the search and filters to their defaults, but keeps the **Pipeline** you chose. Select **Done** to close the panel.
 
 ### Board cards
 
@@ -86,7 +86,7 @@ The **List** shows these columns: **Deal**, **Organisation**, **Primary contact*
 
 ### The Forecast
 
-The **Forecast** groups open deals by expected close date: **Overdue**, each of the coming months (**Forecast period** of 3, 6 or 12 months), **Later** and **No close date**. Amounts are unweighted. They are not committed revenue.
+The **Forecast** groups open deals by expected close date: **Overdue**, each of the coming months (**Show** 3, 6 or 12 months), **Later** and **No close date**. Amounts are unweighted. They are not committed revenue.
 
 ### The full deal page
 
@@ -145,15 +145,16 @@ Every new deal starts in **Discovery**, whether you add it with **Add deal** or 
 | Stage | Position | What the application does |
 |---|---|---|
 | **Discovery** | 1 | Where every new deal starts. The deal is saved with its qualification outcome and its first activity. |
-| **Scoping** | 2 | A stage you move the deal to. The application adds no extra requirement. |
+| **Scoping** | 2 | A stage you move the deal to. The only extra rule is the contact rule below. |
 | **Quoting** | 3 | A stage you move the deal to. It does not create or issue a quotation. |
-| **Negotiation** | 4 | A stage you move the deal to. The application adds no extra requirement. |
+| **Negotiation** | 4 | A stage you move the deal to. The only extra rule is the contact rule below. |
 | **Closing** | 5 | The final stage, and the only stage from which **Won** can be recorded. |
 
-The stage records where the deal has reached. The application checks only the direction of the move, so the rest of the work (estimates, quotations, customer contact) is done and recorded in its own places.
+The stage records where the deal has reached. Beyond the direction of the move and the contact rule below, the application attaches no stage-specific requirement. Estimates and quotations are done and recorded in their own places.
 
 - **Moving forward:** one stage at a time. Moving from **Discovery** straight to **Quoting** is refused.
 - **Moving back:** to any earlier stage. Earlier history is kept.
+- **Contact rule:** this applies to every stage change, forward or back, while the deal has no **Customer contact**. The deal must still hold its contact-identification activity, which is the initial activity set when the deal had no contact. That activity must be open (not completed or cancelled), of kind **Customer Contact** or **Relationship Review**, and owned by the person who owned the deal when it was created. If it is not, the stage change is refused. To avoid the rule, choose a **Customer contact** with **Edit deal** and **Save deal** first; once the deal has a contact, stage changes no longer check the activity. A deal that already has a contact is not affected.
 - **After an outcome:** once **Won** or **Lost** is recorded, the stage cannot change and the outcome cannot be reopened.
 - **Lost** can be recorded from any stage. **Won** can be recorded only from **Closing**.
 
@@ -207,7 +208,7 @@ The next action is one chosen activity. The activity owner is responsible for th
 
 **Finished when:** the stage track shows the new **Current stage** and **Deal history** shows **Deal stage changed**, with the previous and new stage. On the board, **Undo stage move** reverses the last move by making another stage change. It does not delete the first one.
 
-If you drag a card to a stage instead, the status line shows that the move is pending. The card stays where the server confirms it, not where you dropped it.
+If you drag a card to a stage instead, the card moves to the new column straight away and the board shows "moving to" that stage. That is not proof of saving. The move is saved when the board shows **Stage saved:** followed by the stage and the status reads **Saved to the server**. If the server refuses the move or its result is uncertain, the card returns to its original column.
 
 ### Record the sales outcome
 
@@ -261,7 +262,7 @@ Quotations and estimates have their own pages. See [Estimating](/estimating). A 
 
 ### A new deal moves to Scoping
 
-**Starting point:** SYN Fernvale Nursery asks about an automated tray-filling line. You own the follow-up. The synthetic deal will be SYN-OPP-0001.
+**Starting point:** SYN Fernvale Nursery asks about an automated tray-filling line. You own the follow-up. For this example the deal is called SYN-OPP-0001; the application gives each real deal its own reference.
 
 **Actions:**
 1. Select **Deal**. Choose the company, then the organisation "SYN Fernvale Nursery", its site and its contact.
@@ -291,6 +292,9 @@ Quotations and estimates have their own pages. See [Estimating](/estimating). A 
 | Symptom | Check and recover |
 |---|---|
 | I cannot find a deal. | Check **Filters** and the condition chips, **Sales outcome** (a closed deal is under **Archive**), the **Pipeline** choice and **Page size**. Select **Clear filters**. A missing result is not proof that a deal was deleted, because access can hide it. |
+| A stage change is refused with "Choose an active action. The completed or cancelled outcome remains in history." | The deal has no **Customer contact**, and its contact-identification activity has been completed or cancelled. Choose a **Customer contact** with **Edit deal**, then change the stage again. See the contact rule under The five stages. |
+| A stage change is refused with "Contact identification needs an active Customer contact or Relationship review action owned by the opportunity owner." | The deal has no **Customer contact**, and its contact-identification activity is not a **Customer Contact** or **Relationship Review** activity owned by the person who owned the deal when it was created. Choose a **Customer contact** with **Edit deal**, then change the stage again. |
+| A stage change is refused with "Select an owned active contact-identification action before qualification." | The deal has no **Customer contact** and no contact-identification activity is recorded. Choose a **Customer contact** with **Edit deal**, then change the stage again. |
 | The deal is in **Enquiry** or **Qualified**. | It belongs to the earlier pipeline, **Fictional sales enquiry — I1**. Choose that pipeline in **Pipeline**. On the deal page an **Enquiry** deal shows **Record qualification** and **Progress to Qualified**. That pipeline has no **Won** or **Lost** outcome. |
 | I cannot edit the deal. | Check whether you are the deal owner. A read-only deal is intentional. Ask the deal owner, or ask for the deal to be transferred. |
 | **Change stage** is missing or disabled. | The deal is already **Won** or **Lost**, you are not the deal owner, or a save is in progress or uncertain. |
