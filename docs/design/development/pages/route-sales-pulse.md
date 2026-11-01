@@ -36,7 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted Figma design captures: [Sales Pulse and Tasks design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md) (thirty icon-free PNGs; design compositions, not application captures).
+Accepted Figma design captures: [Sales Pulse and Tasks design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md) (thirty icon-free PNGs; design compositions, not application captures), with [r02](../../../reference/ui/crm/sales-pulse-tasks-design-r02/README.md) replacing fifteen for the accepted value and expected close line in Deal attention.
 
 - [ppo-deal-pipeline_r38.html](../../../reference/ui/crm/ppo-deal-pipeline_r38.html)
 

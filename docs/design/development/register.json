@@ -12512,7 +12512,22 @@
         "docs/reference/ui/crm/sales-pulse-tasks-design-r01/PPO-Sales-Pulse-Tasks-27-Phone-320-Frames-r01.png",
         "docs/reference/ui/crm/sales-pulse-tasks-design-r01/PPO-Sales-Pulse-Tasks-28-States-S1-To-S6-r01.png",
         "docs/reference/ui/crm/sales-pulse-tasks-design-r01/PPO-Sales-Pulse-Tasks-29-States-S7-S8-S14-S16-r01.png",
-        "docs/reference/ui/crm/sales-pulse-tasks-design-r01/PPO-Sales-Pulse-Tasks-30-Row-Control-Keyboard-States-r01.png"
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r01/PPO-Sales-Pulse-Tasks-30-Row-Control-Keyboard-States-r01.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-01-Desktop-Pulse-Full-Length-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-03-Desktop-Pulse-Record-Outcome-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-04-Desktop-Pulse-Outcome-Saved-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-05-Desktop-Pulse-Next-Activity-Not-Saved-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-06-Desktop-Pulse-Plan-Activity-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-07-Desktop-Pulse-Plan-Next-Follow-Up-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-08-Desktop-Pulse-Jump-From-Summary-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-10-Desktop-Pulse-Deals-Only-Person-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-22-Tablet-Pulse-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-23-Phone-390-Pulse-Frames-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-26-Phone-390-States-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-27-Phone-320-Frames-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-28-States-S1-To-S6-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-29-States-S7-S8-S14-S16-r02.png",
+        "docs/reference/ui/crm/sales-pulse-tasks-design-r02/PPO-Sales-Pulse-Tasks-30-Row-Control-Keyboard-States-r02.png"
       ],
       "dependencies": [
         "docs/decisions/sales-pulse-tasks-figma-design.md"
