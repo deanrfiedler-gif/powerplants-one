@@ -164,10 +164,11 @@ export function PartsView({ bench }: { bench: Bench }) {
                             className="es08-icon-button"
                             aria-label={`Working for ${l.key}`}
                             title={`Working for ${l.key}`}
-                            disabled={!fresh}
+                            aria-disabled={!fresh}
                             aria-expanded={l.key === working}
                             aria-controls={selected ? "es08-working-panel" : undefined}
                             onClick={() => {
+                              if (!fresh) return;
                               openerKey.current = l.key;
                               openWorking(l.key === working ? null : l.key);
                             }}

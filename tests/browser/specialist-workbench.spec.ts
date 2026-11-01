@@ -667,17 +667,11 @@ test("ES08 Working waits for the saved calculation preview before phone activati
   const gate = new Promise<void>((resolve) => { release = resolve; });
   let reached!: () => void;
   const held = new Promise<void>((resolve) => { reached = resolve; });
-  let delivered!: () => void;
-  const finished = new Promise<void>((resolve) => { delivered = resolve; });
   await page.route(`**${api}/preview`, async (route) => {
     const response = await route.fetch();
     reached();
     await gate;
-    try {
-      await route.fulfill({ response });
-    } finally {
-      delivered();
-    }
+    await route.fulfill({ response });
   }, { times: 1 });
 
   try {
@@ -700,6 +694,51 @@ test("ES08 Working waits for the saved calculation preview before phone activati
     await expect(opener).toBeFocused();
   } finally {
     release();
-    await finished;
+    await page.unrouteAll({ behavior: "wait" });
+  }
+});
+
+test("ES08 Working returns focus and blocks activation while an edited preview is held", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await login(page);
+  await view(page, "Parts & working");
+  await page.getByRole("combobox", { name: "Position state", exact: true }).selectOption("all");
+  const opener = page.getByRole("button", { name: "Working for CE-LINE-223", exact: true });
+  await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  await opener.click();
+  const working = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
+  await expect(working).toBeVisible();
+
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => { release = resolve; });
+  let reached!: () => void;
+  const held = new Promise<void>((resolve) => { reached = resolve; });
+  await page.route(`**${api}/preview`, async (route) => {
+    const response = await route.fetch();
+    reached();
+    await gate;
+    await route.fulfill({ response });
+  }, { times: 1 });
+
+  try {
+    await working.getByRole("checkbox", { name: "Estimator exclusion (underlying quantity retained)", exact: true }).click();
+    await held;
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeDisabled();
+    await expect(opener).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(working).toBeHidden();
+    release();
+    await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+    await expect(opener).toBeEnabled();
+    await opener.click();
+    await expect(working).toBeVisible();
+    await expect(working.getByRole("checkbox", { name: "Estimator exclusion (underlying quantity retained)", exact: true })).toBeChecked();
+    expect((await working.boundingBox())!.width).toBe(390);
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeFocused();
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: "wait" });
   }
 });
