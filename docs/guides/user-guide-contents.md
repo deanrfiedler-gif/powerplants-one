@@ -91,7 +91,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 
 | Page guide | Scope | Build state |
 |---|---|---|
-| Leads | — (route `/sales/leads`) | Built |
+| Leads and lead record | CR-06 (route `/sales/leads`) | Built |
 | Deals: pipeline and forecast review | CR-04 | Built |
 | Deal detail and internal work | CR-01 | Built |
 | Sales-to-Estimating handover | CR-02 | Built |
@@ -121,6 +121,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Cost sources and supplier prices | ES-03 | Built |
 | Saved estimate review | ES-04 | Built |
 | Quotation approval, issue and distribution | ES-05 | Built |
+| Customer quotation page | ES-05/customer-page | Not built |
 | Quotation response and negotiation | ES-06 | Built |
 | Receiving, one-off items and conversion | ES-07 | Built |
 | Specialist configuration workbench | ES-08 | Built |
@@ -166,6 +167,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Readiness and change-impact review | PJ-07 | Not built |
 | Stakeholder updates | PJ-08 | Not built |
 | Staged acceptance and closeout | PJ-09 | Partly built |
+| Site assurance | PJ-09/site-assurance | Not built |
 
 ### 4.7 Service operations
 
@@ -190,6 +192,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Page guide | Scope | Build state |
 |---|---|---|
 | My jobs: today and job execution | FI-01 | Built |
+| Time and labour review | FI-01/time-review | Not built |
 | Offline downloads, queue and conflicts | FI-02 | Built |
 | Inspection and commissioning forms | FI-03 | Built |
 | Inspection review, defects and retests | FI-04 | Built |
@@ -240,6 +243,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Workshop builds | CX-02 | Not built |
 | Kitting and controller preparation | CX-02/kitting | Not built |
 | Bench testing and returned units | CX-02/bench-testing | Not built |
+| Workshop settings | CX-02/settings | Not built |
 
 ### 4.12 Finance
 
