@@ -502,3 +502,27 @@
 #ppo-cost-sources button.cs-row-link { display:flex; align-items:center; gap:4px; }
 #ppo-cost-sources .cs-row-link span { min-width:0; overflow:hidden; text-overflow:ellipsis; }
 #ppo-cost-sources .cs-row-link small { margin-left:0; flex-shrink:0; }
+
+/* Same route-owned count slot as Projects/Work orders; never a separate count read. */
+#header-cost-source-count:not(:empty) {
+  margin-left: auto;
+  flex: none;
+}
+.cs-rail-count {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--navy);
+  color: var(--white);
+  font: 500 12px/18px PPOShellRoboto, Roboto, Verdana, sans-serif;
+  text-align: center;
+}
+.app-frame:not([data-rail="expanded"]) .ppo-rail-item[aria-describedby="header-cost-source-count"] {
+  position: relative;
+}
+.app-frame:not([data-rail="expanded"]) #header-cost-source-count:not(:empty) {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

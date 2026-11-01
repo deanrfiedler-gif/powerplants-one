@@ -19,7 +19,7 @@ This online workflow separates source evidence, its review, and the estimate ver
 
 ### Source register
 
-Search reference, supplier, item or title and filter the current header state. Menu counts cover every permitted search and supplier match; the selected view has its own count and paged results. My sources means owner, while Awaiting my review requires independence from both owner and revision author. Select rows on the current page to open exact evidence in sequence or export their list.
+Search reference, supplier, item or title and filter the current header state. Menu counts cover every permitted search and supplier match; the selected view has its own count and paged results. The rail badge repeats Awaiting my review for that same search and supplier basis; it is not a visible-page total. A missing badge means no current confirmed count, while a confirmed zero is shown as zero. My sources means owner, while Awaiting my review requires independence from both owner and revision author. Select rows on the current page to open exact evidence in sequence or export their list.
 
 ### Exact evidence
 

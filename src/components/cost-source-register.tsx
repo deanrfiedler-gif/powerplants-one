@@ -11,6 +11,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useIdentity } from "./business-session";
 import { api, ErrorNotice } from "./business-ui";
+import { HeaderContent } from "./header-content";
 import { useCrmResource } from "./crm-state";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { Button, ButtonLink } from "./ui/button";
@@ -464,6 +465,21 @@ function Register({
         </nav>
       }
     >
+      <HeaderContent slot="cost-source-count">
+        {data && (
+          <span
+            className="cs-rail-count"
+            title={`${data.counts.awaiting_my_review} sources awaiting my review in the current search and supplier basis`}
+          >
+            {data.counts.awaiting_my_review}
+            <span className="sr-only">
+              {" "}
+              sources awaiting my review in the current search and supplier
+              basis
+            </span>
+          </span>
+        )}
+      </HeaderContent>
       <div className="cs-workspace">
         <h1 className="sr-only" tabIndex={-1}>
           Cost sources

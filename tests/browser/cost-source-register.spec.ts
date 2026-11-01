@@ -31,6 +31,13 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
     empty = false,
     stale = false,
     excludeOpen = false;
+  let actor = "synthetic-reader";
+  let awaitingReviewCount = 20;
+  let holdIdentityRead = false;
+  let releaseIdentityRead!: () => void;
+  const identityReadGate = new Promise<void>((resolve) => {
+    releaseIdentityRead = resolve;
+  });
   let holdSelection = false;
   let releaseSelection!: () => void;
   let selectionHeld!: () => void;
@@ -55,7 +62,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await page.route("**/api/v1/local-session", (r) =>
     r.fulfill({
       json: {
-        actor_id: "synthetic-reader",
+        actor_id: actor,
         workspace_id: "synthetic-workspace",
         display_name: "SYN Reviewer",
       },
@@ -74,6 +81,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   );
   await page.route("**/api/v1/estimating/cost-sources/register*", async (r) => {
     if (firstRead) await firstReadGate;
+    if (holdIdentityRead) await identityReadGate;
     if (holdSelection) {
       holdSelection = false;
       selectionHeld();
@@ -109,7 +117,12 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
             counts: {
               all: empty ? 0 : 101,
               mine: 70,
-              awaiting_my_review: 20,
+              awaiting_my_review:
+                empty || noMatch
+                  ? 0
+                  : new URL(r.request().url()).searchParams.get("q") === "Pump"
+                    ? 7
+                    : awaitingReviewCount,
               states: {
                 Draft: 30,
                 Submitted: 20,
@@ -205,6 +218,10 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   );
   const captures = "docs/testing/evidence/cost-source-register/workspace";
   await mkdir(captures, { recursive: true });
+  const railBadge = page.locator(".cs-rail-count");
+  const railSource = page.locator(
+    '#primary-navigation a[aria-label="Cost sources"]',
+  );
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/estimating/cost-sources");
@@ -215,6 +232,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
       await expect(
         page.getByText("Loading permitted cost sources…", { exact: true }),
       ).toBeVisible();
+      await expect(railBadge).toHaveCount(0);
       releaseRead();
     }
     await expect(page.locator(".cs-count")).toContainText("101 sources");
@@ -226,7 +244,23 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+    if (width > 780) {
+      // Only one visible row is reviewable: the rail must use the full API count.
+      await expect(railBadge).toHaveText(
+        "20 sources awaiting my review in the current search and supplier basis",
+      );
+      await expect(railSource).toHaveAccessibleDescription(
+        "20 sources awaiting my review in the current search and supplier basis",
+      );
+    } else await expect(railBadge).toHaveCount(0);
     await page.screenshot({ path: `${captures}/register-${width}.png` });
+    if (width === 1440) {
+      await page.setViewportSize({ width: 320, height: 900 });
+      await expect(railBadge).toHaveCount(0);
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await expect(railBadge).toContainText("20 sources awaiting my review");
+    }
+
     if (width <= 780) {
       await page.locator(".cs-phone-list").evaluate((el) => {
         el.scrollTop = el.scrollHeight;
@@ -438,6 +472,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await search.press("Enter");
   await expect(page).toHaveURL(/q=Pump/);
   await expect(search).toBeFocused();
+  await expect(railBadge).toContainText("7 sources awaiting my review");
   await expect(page.locator("#ppo-cost-sources")).toHaveAttribute(
     "data-menu",
     "collapsed",
@@ -451,6 +486,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await page.goForward();
   await expect(page).not.toHaveURL(/q=Pump/);
   await expect(search).toHaveValue("");
+  await expect(railBadge).toContainText("20 sources awaiting my review");
   await page.getByRole("button", { name: "Next page", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "Next page", exact: true }),
@@ -465,6 +501,7 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await expect
     .poll(() => queries.some((q) => q.includes("offset=25")))
     .toBe(true);
+  await expect(railBadge).toContainText("20 sources awaiting my review");
   await page
     .getByRole("checkbox", { name: "Select SYN-SRC-0021", exact: true })
     .check();
@@ -491,6 +528,8 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
     .first()
     .click();
   await expect(page.locator(".cs-grid")).toHaveCount(0);
+  await expect(railBadge).toHaveCount(0);
+  await expect(railSource).toHaveAccessibleDescription("");
   await expect(
     page.getByRole("button", { name: "Retry loading" }),
   ).toBeVisible();
@@ -502,18 +541,21 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await expect(
     page.getByText("No sources match these filters", { exact: true }),
   ).toBeVisible({ timeout: 30000 });
+  await expect(railBadge).toContainText("0 sources awaiting my review");
   noMatch = false;
   empty = true;
   await page.goto("/estimating/cost-sources");
   await expect(
     page.getByText("No cost sources yet", { exact: true }),
   ).toBeVisible();
+  await expect(railBadge).toContainText("0 sources awaiting my review");
   empty = false;
   stale = true;
   await page.reload();
   await expect(
     page.getByText("Cost sources changed during this read", { exact: true }),
   ).toBeVisible();
+  await expect(railBadge).toHaveCount(0);
   stale = false;
   await page.getByRole("button", { name: "Retry loading" }).click();
   await expect(page.locator(".cs-grid")).toContainText("SYN-SRC-0021");
@@ -561,8 +603,39 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
     await expect(page).toHaveURL(
       new RegExp(`${item.id}\\?revision_id=${item.revision_id}#source-review$`),
     );
+    await expect(railBadge).toHaveCount(0);
     await expect(page.locator("#source-review")).toBeFocused();
     await expect(page.locator("#source-review")).toBeInViewport();
     await page.screenshot({ path: `${captures}/review-step-${width}.png` });
   }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/estimating/cost-sources");
+  await expect(railBadge).toContainText("20 sources awaiting my review");
+  await page
+    .getByRole("button", { name: "Collapse primary navigation", exact: true })
+    .click();
+  await expect(railBadge).toBeVisible();
+  await expect(railSource).toHaveAccessibleDescription(
+    "20 sources awaiting my review in the current search and supplier basis",
+  );
+  await page.screenshot({ path: `${captures}/rail-collapsed-1440.png` });
+  await page
+    .getByRole("button", { name: "Expand primary navigation", exact: true })
+    .click();
+  await page.locator("#identity-toggle").click();
+  await page.getByLabel("Identity", { exact: true }).selectOption("observer");
+  actor = "synthetic-other-reader";
+  awaitingReviewCount = 3;
+  holdIdentityRead = true;
+  await page
+    .getByRole("button", { name: "Use this identity", exact: true })
+    .click();
+  await expect(
+    page.getByText("Loading permitted cost sources…", { exact: true }),
+  ).toBeVisible();
+  await expect(railBadge).toHaveCount(0);
+  releaseIdentityRead();
+  holdIdentityRead = false;
+  await expect(railBadge).toContainText("3 sources awaiting my review");
 });
