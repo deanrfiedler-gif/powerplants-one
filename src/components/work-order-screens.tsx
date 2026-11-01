@@ -15,6 +15,7 @@ import {
   type SalesCreation,
 } from "./sales-delivery-creation";
 import { DeliverySalesSources } from "./sales-delivery-link";
+import type { LinkedProject } from "../service/project-field-work-model";
 import { useIdentity } from "./business-session";
 import { useCreateDraft } from "./record-ui";
 import {
@@ -132,6 +133,8 @@ export type Order = {
   version: number;
   display_number: string;
   status: string;
+  // B1: the linked project, present only when the reader may read it.
+  project?: LinkedProject | null;
   site_name: string;
   site_timezone: string;
   customer_name: string;
@@ -1431,6 +1434,15 @@ export function WorkOrderDetail({ id }: { id: string }) {
                 : "No scope revision"}
             </span>
             <span>Service owner: {w.owner_name}</span>
+            {w.project && (
+              <span>
+                Project:{" "}
+                <Link href={`/projects/${w.project.id}`}>
+                  {w.project.display_number} · {w.project.title}
+                </Link>
+                {w.project.lifecycle === "Closed" ? " (closed)" : ""}
+              </span>
+            )}
           </div>
           {w.authorised_scope_revision_id &&
             w.authorised_scope_revision_id !== w.scope_revision_id && (
