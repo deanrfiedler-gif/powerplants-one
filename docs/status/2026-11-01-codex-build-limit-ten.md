@@ -5,7 +5,7 @@ date: 2026-11-01
 
 Dean set the limit on Codex builds in progress to ten on 1 November 2026, in place of the three still written in `CONTRIBUTING.md` and the twenty drafted on 31 October. [CONTRIBUTING.md — Working in parallel](../../CONTRIBUTING.md#working-in-parallel) now states the number. The rule that Codex finishes an implemented build before starting another applies at or above the limit, so the builds already open above ten are finished first.
 
-What remains open: this pull request changes `CONTRIBUTING.md`, so under the autonomous agent protocol Dean merges it. It also changes an owner decision record, so it needs a second-model review first. The limit has not been measured against conflict or check-failure rates at ten.
+What remains open: this pull request changes `CONTRIBUTING.md`, so under the autonomous agent protocol Dean merges it. It also changes an owner decision record, which normally takes a second-model review. Dean decided against the different-model review for this change on 1 November 2026: "We can skip the Codex review as I trust your work." The limit has not been measured against conflict or check-failure rates at ten.
 
 No application code changed.
 
