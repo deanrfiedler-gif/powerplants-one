@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT = 'docs/design/figma-variables.json'
-PROPERTY = re.compile(r'(--[a-z0-9-]+)\s*:\s*([^;}]+)[;}]', re.I)
+PROPERTY = re.compile(r'(?<![\w-])(--[a-z0-9-]+)\s*:\s*([^;{}]+)[;}]', re.I)
 HEX = re.compile(r'#[0-9a-f]{3,8}\b', re.I)
 ALIAS = re.compile(r'var\((--[a-z0-9-]+)\)')
 STATUSES = {'mapped', 'design-only', 'unmapped'}

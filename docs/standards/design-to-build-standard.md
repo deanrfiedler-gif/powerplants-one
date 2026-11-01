@@ -86,7 +86,7 @@ Compare the running page with the accepted capture side by side, at the capture'
 | | `PPO - Administration` | Administration, settings |
 | | `PPO - Customer Portal` | Customer portal |
 | | Powerplants One configurator workflows | The existing FigJam board, name unchanged |
-| | Priva Fertigation Configurator workflows | The existing FigJam board, name unchanged |
+| | The Priva Fertigation Configurator workflow board | The existing FigJam board, name unchanged |
 | `PPO Record` | `PPO - Design` | The frozen original, Captures included |
 
 - Keep every PPO file in its team folder, not Drafts. Figma requires a file to be in a folder before it can publish a library.

@@ -59,6 +59,10 @@ class DesignTokenCheckTest(unittest.TestCase):
         self.assertEqual(tokens.check(root), [])
         self.assertEqual(tokens.mapped_multi_valued(root), ['--ink'])
 
+    def test_class_names_are_not_properties(self):
+        root = self.tree('.button--danger:hover { color: red; } :root{--danger:#993b2a}', [])
+        self.assertEqual(dict(tokens.read_css(root)[0]), {'--danger': {'#993b2a'}})
+
     def test_comments_do_not_count(self):
         root = self.tree('/* --ink:#242a37; */ a{color:#123456}', [self.variable()])
         self.assertIn('not defined', tokens.check(root)[0])

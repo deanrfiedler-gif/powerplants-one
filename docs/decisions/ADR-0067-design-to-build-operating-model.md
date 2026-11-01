@@ -36,7 +36,7 @@ Measured on 1 November 2026, read-only:
 | Nothing is published | 702 publishable components and sets, and all variables, are local to the one file |
 | The library rule is not being followed | 127 of the 702 are named "proposed", although ADR-0053 rule 5 admits only what the app has. 37 are legacy Deals parts |
 | Components also sit on design pages | 626 main components on 61 design pages, 110 of them on `CPQ · 2` |
-| Mapped tokens have their Figma value in the CSS, but the CSS has two generations | All 63 variables with a CSS name have that value on their property somewhere in `src/`, which doesn't prove every page uses it. 51 of the 114 colour and layout variables have no CSS name. 57 of 200 CSS properties hold more than one value: newer pages use a Figma-aligned block in `my-work.css`, while `globals.css` still differs for `--line`, `--muted` and `--paper`. 1,997 hard-coded hex colours remain |
+| Mapped tokens have their Figma value in the CSS, but the CSS has two generations | All 63 variables with a CSS name have that value on their property somewhere in `src/`, which doesn't prove every page uses it. 51 of the 114 colour and layout variables have no CSS name. 56 of 198 CSS properties hold more than one value, 29 of them mapped tokens: newer pages use a Figma-aligned block in `my-work.css`, while `globals.css` still differs for `--line`, `--muted` and `--paper`. 1,998 hard-coded hex colours remain |
 | Practice had already moved past the rules | Pages are designed and accepted in Figma, then built to match. ADR-0053 rules 4 and 5 describe the reverse |
 
 ## Options
