@@ -34,6 +34,8 @@
   overflow: hidden;
 }
 #ppo-engineering[data-native-register] .er-menu-item {
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 40px;
   border: 0;
@@ -44,8 +46,14 @@
   gap: 12px;
   font-weight: 400;
 }
-#ppo-engineering[data-native-register] .er-menu-item > span {
+#ppo-engineering[data-native-register] .er-menu-item > span:not(.er-icon) {
   flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  text-align: left;
+}
+#ppo-engineering[data-native-register] .er-menu-item > .er-icon {
+  flex: 0 0 16px;
 }
 #ppo-engineering[data-native-register] .er-menu-item[aria-pressed="true"] {
   background: var(--selected-surface, #e3e8ee);
@@ -58,10 +66,11 @@
   background: transparent;
 }
 #ppo-engineering[data-native-register] .mw-menu nav {
-  padding: 8px;
+  padding: 0;
 }
 #ppo-engineering[data-native-register] .mw-menu h3 {
-  margin: 16px 12px 8px;
+  margin: 0;
+  padding: 18px 12px 2px;
   font-size: 11px;
   line-height: 18px;
   text-transform: uppercase;
@@ -780,7 +789,7 @@
 #header-engineering-count:not(:empty) {
   margin-left: auto;
 }
-.er-rail-count {
+.ppo-rail #header-engineering-count .er-rail-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -788,10 +797,12 @@
   height: 18px;
   padding: 0 5px;
   border-radius: 10px;
-  background: var(--navy);
-  color: var(--surface-white);
-  font-size: 11px;
-  line-height: 18px;
+  background: var(--ppo-rail-ink);
+  color: var(--ppo-rail-text);
+  font:
+    500 11px/18px PPOShellRoboto,
+    Roboto,
+    sans-serif;
 }
 .app-frame:not([data-rail="expanded"]) #header-engineering-count {
   display: none;
@@ -946,4 +957,29 @@
     width: 100%;
     min-height: 44px;
   }
+}
+
+#ppo-engineering[data-native-register] .er-grid td:nth-child(2) .er-cell-link {
+  font-weight: 500;
+}
+#ppo-engineering[data-native-register]
+  .er-grid
+  td:last-child
+  .crm-r38-menu-trigger {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#ppo-engineering[data-native-register] .er-selection-body > .ppo-button--quiet {
+  border: 0;
+  background: transparent;
+  justify-content: flex-start;
+  padding: 0;
+  min-height: 24px;
+}
+#ppo-engineering[data-native-register] .er-selection-body > p:not(.er-rule) {
+  margin: -10px 0 0 28px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 16px;
 }
