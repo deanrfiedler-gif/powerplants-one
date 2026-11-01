@@ -17,7 +17,7 @@ These thirteen images retain the AD-02 amendments that Dean accepted on 1 Novemb
 
 The decisions, conformance declaration and departures are in [the design decision](../../../../decisions/settings-amendments-figma-design.md). Retain these bytes unchanged; a revised design receives a new revision folder.
 
-Each image comes from Figma file "PPO - Design", page "Settings amendments · AD-02" `2997:1271`, exported at scale 1. Images 08, 09 and 13 hold copies of several frames side by side, 40 px apart on a grey background. The copies were temporary and are deleted, so this table cites the source frames. No named version is recorded yet: "Settings amendments — accepted" waits for Dean's yes.
+Each image comes from Figma file "PPO - Design", page "Settings amendments · AD-02" `2997:1271`, exported at scale 1. Images 08, 09 and 13 hold copies of several frames side by side, 40 px apart on a grey background. The copies were temporary and are deleted, so this table cites the source frames. Dean saved the named version "Settings amendments — accepted" on 1 November 2026.
 
 Every Font Awesome icon was replaced by a plain placeholder square before export, as [ADR-0053](../../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The Powerplants logo is the company's own. The policies, people, references, bookings and times are synthetic fixtures; they are not adopted operating rules.
 

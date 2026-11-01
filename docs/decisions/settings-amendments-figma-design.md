@@ -46,7 +46,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Audit history link | Resolved as recommended | AD-07's record route needs a readable reference, but AD-02 Q5 gives policies none. The link opens Audit history filtered by policy name and version. AD-07 is still a proposal, so the link is by name only |
 | Q7 Review tasks before publication | Resolved as recommended | None. PL-04 shows the exact visit read-only and raises nothing until publication |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved | "Settings amendments — accepted" waits for Dean's yes |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Settings amendments — accepted". Dean: "I have saved the named version as Settings amendments — accepted". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -79,7 +79,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D9 in section 4, accepted |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | Not saved; "Settings amendments — accepted" waits for Dean's yes |
+| Named version | "Settings amendments — accepted", saved by Dean on 1 November 2026 |
 
 ## 4. What the design shows
 
@@ -155,5 +155,6 @@ Before presenting the page Claude checked every frame: section bounds and overla
 - Claude checked the frames with screenshots taken inside Figma. The desktop and States sections were reviewed section by section. The phone frames were reviewed at overview scale, and Affected work 390, Publish 390 and Review 390 more closely.
 - The hidden phone More sheets were positioned by script and not opened afterwards.
 - The captures were temporary copies on a page named "Capture · in progress", which was deleted after export, because "PPO - Design" is short of memory. This follows the capture rule in the design-to-build standard proposed in PR #818. The copies had every Font Awesome icon swapped for `Icon/placeholder` and all prototype links removed. A scan of the copies found no remaining Font Awesome instance and no link. Hashes are in the [captures README](../reference/ui/settings/settings-amendments-design-r01/README.md).
+- Dean saved the named Figma version "Settings amendments — accepted" on 1 November 2026: "I have saved the named version as Settings amendments — accepted". Claude did not check it in version history. The page header was updated to name it after the save, so that one text change is not in the version.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
