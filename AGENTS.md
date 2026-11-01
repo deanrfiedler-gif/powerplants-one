@@ -40,6 +40,8 @@ A new `Capability` in `src/platform/permissions.ts` is not confined to permissio
 
 ### Maintain the live design register
 
+For Figma, token and page-build work, follow the [design-to-build standard](docs/standards/design-to-build-standard.md) ([ADR-0067](docs/decisions/ADR-0067-design-to-build-operating-model.md)): new tokens and components start in Figma, and Git keeps acceptance and shipped values.
+
 For page, shell, shared-control, guide or theme work, update the working master in `docs/design/development/` in the same PR. Run `npm run studio:sync` for new routes, then replace discovery stubs with page-specific guidance and desktop/mobile design requirements. Add exact mockup/HTML references when available; record missing images explicitly. Preserve stable keys, source provenance and existing scope IDs. Keep source presence, visual review, functional proof and deployment separate.
 
 For component changes, add a binding file and its consumer note in `docs/design/development/component-bindings/` (`components.json` and the `components/*.md` specifications are frozen; correct them in place, and change a specification only for the component's own rules), with fixture/state examples, consumer bindings and alignment items, in the same PR. Keep reference-only work visible and review evidence separate. Follow `docs/design/development/components/README.md`.
