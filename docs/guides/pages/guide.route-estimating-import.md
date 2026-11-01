@@ -7,7 +7,7 @@ versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
 source_commit: 65a05e8e61a124e88e079dcaef73c6352c800871
 workflow_basis: "Native Excel import, reimport, reviewed-source pricing and Draft quotation contracts"
-runtime_evidence: "See docs/testing/evidence/excel-import-ui/README.md; final validation in progress"
+runtime_evidence: "See docs/testing/evidence/excel-import-ui/README.md; bounded validation and outstanding runtime proof recorded"
 ---
 
 ## Purpose and outcome {#purpose}
