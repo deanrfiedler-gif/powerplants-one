@@ -97,3 +97,5 @@ Production integration must reuse canonical Asset/Site/Facility/configuration/lo
 r01 SHA-256 remains `24c8196564e1636c9ab846d5adf34dd462f66c9017ce8c28a83e7ea01e34d310` (171,342 bytes). Its [evidence manifest](../testing/evidence/equipment-workspace-r01.json), original model checks and DOM check remain unchanged for comparison.
 
 The initial r01 PR head `61aff57dbbb72e40d04bce4e25e3c739a5bfd9c4` failed eight application jobs at the same three forbidden CommonJS imports in its new DOM script. PR #183's continuation replaced those imports with ES modules, preserved the HTML and reconciled current main. The r02 check uses ES modules from the start and is included in full repository lint. The later audit found cases outside r01's original demonstration checks; r02's regression suite records those additional cases without rewriting the earlier evidence as broader acceptance.
+
+**Dated pointer, 31 October 2026:** Dean accepted a Figma design for service bulletins and support lifecycle: see the [Bulletins and lifecycle design decision](bulletins-lifecycle-figma-design.md). This record's earlier text is unchanged.
