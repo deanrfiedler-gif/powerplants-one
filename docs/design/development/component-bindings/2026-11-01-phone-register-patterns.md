@@ -2,6 +2,10 @@
 
 The accepted [Phone register patterns amendment](../../../decisions/phone-register-patterns-amendment.md) changes no application component yet. This binding records what the shell, the register table and the dialog must gain when a build is requested, so the gap stays visible in the catalogue.
 
+## Where the application stands
+
+The shared phone header has no list More and no selection state. Work orders has its own long press and selection aside; Leads shows a count and Clear selection; `notifications/state` changes all or nothing. Desktop is unchanged by this amendment. Adoption order is Q4 in the decision.
+
 ## New Figma parts
 
 Drawn on page `3036:32928`; they move to Components `1:4` › Shell and navigation once the named version is saved:
