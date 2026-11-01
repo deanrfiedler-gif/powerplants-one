@@ -2,7 +2,7 @@
 document_id: PPO-SH06-FIGMA-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Owner-accepted design amendment; named Figma version not yet saved; building the views, the newer sources and any source receipt separate
+status: Owner-accepted design amendment; named Figma version saved; building the views, the newer sources and any source receipt separate
 source_commit: 1fc002978ee2a6871121d9252609a49c6dc31b9a
 versioning: git
 ---
@@ -42,14 +42,14 @@ This is a design decision. It authorises no application code, read, migration, c
 | Q9 REP-02 return | Resolved as recommended | Avery Lin's return at Tue 08:20 is new for this story. RP-06 shows v1 Draft and states the open point. The item is labelled Report definitions RP-06, where the record lives |
 | Q10 Sent submissions holds 3 | Resolved as recommended | FN-06 and FN-04 name Dean as submitter of Earned value v1 and Claim 3, so they are listed with the won handover. FN-06 also makes Dean approver of Actual cost v2, left out to keep the four waiting items; a real queue lists it |
 | Q11 Ages | Resolved as recommended | r01's calendar-day rule applies in this queue, so a handoff FN-01 shows as 3 d reads 4 d. Ages for Claim 3, Earned value and the Settings request are story values; Settings is drawn at Thu 22 Oct |
-| Named version | Not saved | Section 7 |
+| Named version | Saved by Dean, 1 November 2026 | Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Reviews & handovers · SH-06 — accepted" |
 | Page | "Reviews & handovers · SH-06" `2998:12031`, under "— My Work —", after My Work · SH-01 · SH-02 `404:2`. Header `2998:12032`, notes card `3006:17978`. File index row `3093:16575` |
 | Base frame, not edited | `415:91696` on `404:2` |
 | Desktop 1440 | Section `2998:12077`: Owned reviews with detail `3000:2059`; All permitted open tasks, full length `3001:3963`; Returned submissions `3001:4804`; Handovers `3001:5255`; Sent submissions `3001:5748`; Historical outcomes, read only `3001:6241`; Filters open `3002:1935` |
@@ -125,4 +125,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 
 ## 7. Named version
 
-Not saved. Dean saves "Reviews & handovers · SH-06 — accepted", or says that Claude may. The pull request stays a draft until he confirms it.
+Dean saved "Reviews & handovers · SH-06 — accepted" on 1 November 2026 and said so in words: "I have saved the named version as Reviews & handovers · SH-06 — accepted". The page header's Named version field was updated after the save.
