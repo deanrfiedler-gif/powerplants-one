@@ -104,6 +104,15 @@ export function assertAccessInspectionSnapshot(
     if (Array.isArray(preserved)) preserved[ci] = oldContacts;
     else preserved.contact_outcomes = oldContacts;
   }
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  const wi = names?.indexOf("work_orders") ?? -1;
+  const oldOrders = Array.isArray(original) ? original[wi] : original.work_orders;
+  if (oldOrders?.length && !("project_id" in grant(oldOrders[0]))) {
+    const newOrders = Array.isArray(actual) ? actual[wi] : actual.work_orders;
+    assert.deepEqual(newOrders.map(grant), oldOrders.map(r => ({ ...grant(r), project_id: null })));
+    if (Array.isArray(preserved)) preserved[wi] = oldOrders;
+    else preserved.work_orders = oldOrders;
+  }
   assert.deepEqual(preserved, original);
 }
 
