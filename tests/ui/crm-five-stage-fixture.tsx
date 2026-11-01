@@ -12,6 +12,10 @@ import {
   dealsDesignStages,
   dealsDesignAsOf,
 } from "../helpers/deals-accepted-fixture";
+import { GuideLibraryProvider } from "../../src/guides/provider";
+import type { ReleasedLibrary } from "../../src/guides/released";
+// .ppo-guides/released.json, which scripts/build-crm-ui-review.mjs compiles and defines here.
+declare const PPO_RELEASED_GUIDES: ReleasedLibrary;
 const CRM = {
   workspace: "10000000-0000-4000-8000-000000000001",
   company: "20000000-0000-4000-8000-000000000001",
@@ -199,6 +203,7 @@ window.fetch = async (input) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
+  <GuideLibraryProvider value={PPO_RELEASED_GUIDES}>
   <ShellProvider
     hosted={new URLSearchParams(location.search).get("mode") !== "local"}
   >
@@ -217,5 +222,6 @@ createRoot(document.getElementById("root")!).render(
         </main>
       </div>
     </div>
-  </ShellProvider>,
+  </ShellProvider>
+  </GuideLibraryProvider>,
 );

@@ -5,13 +5,17 @@ import { createHash } from "node:crypto";
 import type {
   Catalog,
   Entry,
+  FileHistory,
   Guide,
   GuideDocument,
   Register,
   Resource,
 } from "./model";
 import { fileHistories } from "./history";
-import { matchEntry } from "./model";
+import { readGuideLibrary } from "../guides/library";
+import { guideStatuses, type CompiledGuide } from "../guides/model";
+import { guideStateFor, hasVisibleText } from "../guides/status";
+import { entryGuide, matchEntry, type GuideCandidate } from "./model";
 import {
   applyComponentBindings,
   type ComponentBinding,
@@ -188,13 +192,11 @@ export function guideContentHash(guide: Guide): string {
     }),
   );
 }
+// A JSON draft reads the same as a Markdown guide (src/guides/status.ts); a status outside the six reads as Draft.
 export function guideReviewState(guide: Guide): GuideDocument["review_state"] {
-  if (guide.status !== "Reviewed") return "Draft";
-  return guide.reviewer &&
-    guide.reviewed_at &&
-    guide.reviewed_content_hash === guideContentHash(guide)
-    ? "Reviewed"
-    : "Changes awaiting review";
+  return guideStatuses.includes(guide.status)
+    ? guideStateFor(guide, guideContentHash(guide))
+    : "Draft";
 }
 export async function guideDocument(
   root: string,
@@ -206,18 +208,111 @@ export async function guideDocument(
     review_state: guideReviewState(guide),
   };
 }
+// A Markdown guide in the workspace's guide shape. Its body is the compiled guide; the JSON section list stays empty.
+export function markdownGuideDocument(
+  compiled: CompiledGuide,
+  history: FileHistory,
+): GuideDocument {
+  const front = compiled.front;
+  return {
+    guide_key: front.guide_key,
+    entry_key: front.entry_key,
+    title: front.title,
+    status: front.status,
+    owner_role: front.owner_role,
+    reviewer: front.reviewer,
+    reviewed_at: front.reviewed_at,
+    reviewed_content_hash: front.reviewed_content_hash,
+    content_mode: "Markdown guide",
+    source_commit: front.source_commit,
+    sections: [],
+    related_entry_keys: front.also_applies_to,
+    history,
+    review_state: guideStateFor(front, compiled.contentHash),
+    markdown: compiled,
+  };
+}
+// The two guide sources: the Markdown guides under docs/guides that compiled and passed every check, and guides.json.
+export type GuideSources = {
+  json: Guide[];
+  markdown: CompiledGuide[];
+  errors: string[];
+  // Both sources as candidates for entryGuide, Markdown first.
+  candidates: (GuideCandidate & { found: FoundGuide })[];
+};
+export async function readGuideSources(
+  root: string,
+  entries: Entry[],
+): Promise<GuideSources> {
+  const [json, library] = await Promise.all([
+    readGuides(root),
+    readGuideLibrary(root, entries),
+  ]);
+  return {
+    json,
+    markdown: library.guides,
+    errors: library.errors.map((e) => `${e.path}:${e.line} ${e.message}`),
+    candidates: [
+      ...library.guides.map((guide) => ({
+        guide_key: guide.front.guide_key,
+        markdown: guide,
+        found: { kind: "markdown" as const, guide },
+      })),
+      ...json.map((guide) => ({
+        guide_key: guide.guide_key,
+        found: { kind: "json" as const, guide },
+      })),
+    ],
+  };
+}
+export type FoundGuide =
+  { kind: "json"; guide: Guide } | { kind: "markdown"; guide: CompiledGuide };
+// An entry's guide, chosen as the released shell panel chooses it (entryGuide in model.ts).
+export function guideForEntry(
+  sources: GuideSources,
+  entry: Pick<Entry, "key" | "guide_key">,
+): FoundGuide | undefined {
+  return entryGuide(sources.candidates, entry)?.found;
+}
+export function guideForKey(
+  sources: GuideSources,
+  key: string,
+): FoundGuide | undefined {
+  const markdown = sources.markdown.find((g) => g.front.guide_key === key);
+  if (markdown) return { kind: "markdown", guide: markdown };
+  const json = sources.json.find((g) => g.guide_key === key);
+  return json ? { kind: "json", guide: json } : undefined;
+}
+export async function foundGuideDocument(
+  root: string,
+  found: FoundGuide,
+): Promise<GuideDocument> {
+  if (found.kind === "json") return guideDocument(root, found.guide);
+  const path = found.guide.path;
+  return markdownGuideDocument(
+    found.guide,
+    (await fileHistories(root, [path])).get(path)!,
+  );
+}
 // Page help needs its binding and current guide, not every source fingerprint.
-// Read both living masters each time; full catalogue assurance remains separate.
+// Read both living masters and the guide files each time; full catalogue assurance remains separate.
 export async function readPageGuide(root: string, pathname: string) {
-  const key = matchEntry((await readMaster(root)).entries, pathname)?.guide_key;
-  if (!key) return undefined;
-  const guide = (await readGuides(root)).find((g) => g.guide_key === key);
-  return guide ? guideDocument(root, guide) : undefined;
+  const { entries } = await readMaster(root);
+  const entry = matchEntry(entries, pathname);
+  if (!entry) return undefined;
+  const found = guideForEntry(await readGuideSources(root, entries), entry);
+  return found ? foundGuideDocument(root, found) : undefined;
+}
+// The guide with this guide key, from either source.
+export async function readGuideDocument(root: string, key: string) {
+  const { entries } = await readMaster(root);
+  const found = guideForKey(await readGuideSources(root, entries), key);
+  return found ? foundGuideDocument(root, found) : undefined;
 }
 export async function buildCatalog(root: string): Promise<Catalog> {
-  const [master, guides, routes, journeyFiles, css] = await Promise.all([
-    readMaster(root),
-    readGuides(root),
+  const master = await readMaster(root);
+  const [sources, routes, journeyFiles, css] = await Promise.all([
+    readGuideSources(root, master.entries),
     sourceRoutes(root),
     files(root, "docs/reference/ui/module-workflow-maps"),
     readReference(root, "src/app/globals.css"),
@@ -255,7 +350,8 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     ]),
     ...journeyFiles,
   ]);
-  const errors: string[] = [],
+  const guides = sources.json,
+    errors: string[] = [...sources.errors],
     cache = new Map<string, Promise<Buffer | null>>();
   const raw = (path: string) => {
     if (!cache.has(path))
@@ -367,7 +463,7 @@ export async function buildCatalog(root: string): Promise<Catalog> {
   const entries = await Promise.all(
     master.entries.map(async (entry) => {
       const issues: string[] = [],
-        guide = guides.find((g) => g.guide_key === entry.guide_key);
+        found = guideForEntry(sources, entry);
       const matchedSource = routes.find(
         (r) =>
           r.path === entry.path?.split("?")[0].replace(/\{([^}]+)\}/g, "[$1]"),
@@ -392,15 +488,20 @@ export async function buildCatalog(root: string): Promise<Catalog> {
           return path + ":" + (hash || "missing");
         }),
       );
+      // A Markdown guide contributes its content hash, which leaves out the review fields; a JSON draft its JSON.
       const fingerprint = digest(
-        hashes.join("\n") + "\n" + JSON.stringify(guide || null),
+        hashes.join("\n") +
+          "\n" +
+          (found?.kind === "markdown"
+            ? found.guide.contentHash
+            : JSON.stringify(found?.guide || null)),
       );
       const present =
         routes.some((r) => r.path === entry.path) ||
         entry.path === "/offline/index.html" ||
         (entry.kind === "system" &&
           entry.source_paths.some((p) => p.startsWith("src/")));
-      if (entry.kind !== "system" && !guide) issues.push("User guide missing");
+      if (entry.kind !== "system" && !found) issues.push("User guide missing");
       if (!entry.image_paths.length) issues.push("UI image not linked");
       if (!entry.review_fingerprint || !entry.reviewer || !entry.reviewed_at)
         issues.push("Desktop/mobile visual review pending");
@@ -424,8 +525,10 @@ export async function buildCatalog(root: string): Promise<Catalog> {
             : entry.review_fingerprint === fingerprint
               ? ("Current" as const)
               : ("Stale" as const),
-        guide_status: guide
-          ? guideReviewState(guide)
+        guide_status: found
+          ? found.kind === "markdown"
+            ? guideStateFor(found.guide.front, found.guide.contentHash)
+            : guideReviewState(found.guide)
           : entry.kind === "system"
             ? "Reference document"
             : "Missing",
@@ -444,6 +547,13 @@ export async function buildCatalog(root: string): Promise<Catalog> {
     errors.push("Duplicate stable entry keys.");
   if (new Set(guides.map((g) => g.guide_key)).size !== guides.length)
     errors.push("Duplicate guide keys.");
+  // A key lives in Markdown or in guides.json, never both.
+  for (const guide of sources.markdown)
+    if (guides.some((g) => g.guide_key === guide.front.guide_key))
+      errors.push(
+        "Guide key exists in Markdown and guides.json: " +
+          guide.front.guide_key,
+      );
   for (const guide of guides)
     if (
       !entries.some(
@@ -454,13 +564,15 @@ export async function buildCatalog(root: string): Promise<Catalog> {
   for (const guide of guides) {
     if (
       "revision" in guide ||
-      !["Draft", "Reviewed"].includes(guide.status) ||
+      !guideStatuses.includes(guide.status) ||
       !guide.owner_role
     )
       errors.push("Guide needs living-master metadata: " + guide.guide_key);
     if (
-      guide.status === "Reviewed" &&
-      (!guide.reviewer || !guide.reviewed_at || !guide.reviewed_content_hash)
+      (guide.status === "Reviewed" || guide.status === "Published") &&
+      (!hasVisibleText(guide.reviewer) ||
+        !hasVisibleText(guide.reviewed_at) ||
+        !hasVisibleText(guide.reviewed_content_hash))
     )
       errors.push("Guide review evidence missing: " + guide.guide_key);
   }

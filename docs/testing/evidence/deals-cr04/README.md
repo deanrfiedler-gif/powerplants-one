@@ -6,7 +6,7 @@ This is application evidence for PR #699 and the [24 October accepted design](..
 
 Board, List, Forecast, Archive, snapshots, filters, column settings, selection and CSV, sequential opening, Add deal, outcomes, explicit receiving handover and stage-refusal recovery are implemented at `/sales/opportunities`. Native commands, permissions and expected versions remain authoritative. The supplementary snapshot read uses exact native estimate versions, issued quotation revisions and handover versions, with independent source permissions and bounded partial/unavailable states. Exit guidance is advisory and never a transition gate.
 
-No migration, capability, grant or dependency is added. Bulk stage changes, pipeline settings/rotting, Deal record and Pipeline insights rebuilds are excluded. Expected close filtering remains outstanding while PR #790 is unmerged; its status was checked during implementation.
+No migration, capability, grant or dependency is added. Bulk stage changes, pipeline settings/rotting, Deal record and Pipeline insights rebuilds are excluded. Expected close filtering was excluded because PR #790 was unmerged when implementation and publication finished. It merged on 1 November 2026 after publication; its design record and r03 captures are preserved on integration, and implementation remains a separately recorded follow-up under the original conditional scope.
 
 ## Fixtures and denominators
 
