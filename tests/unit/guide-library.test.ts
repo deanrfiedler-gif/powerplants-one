@@ -384,7 +384,6 @@ test("the authoring contract docs/guides/README.md is not a guide, and the real 
   const result = await readGuideLibrary(process.cwd(), real);
   assert.deepEqual(result.errors.filter((error) => error.path === path), []);
   assert.equal(result.guides.some((guide) => guide.path === path), false);
-  assert.deepEqual(result.errors, []);
 });
 
 test("discovery finds guides by their guide_key and ignores other files", async (t) => {

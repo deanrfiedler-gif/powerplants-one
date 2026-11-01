@@ -37,7 +37,7 @@ The file starts with a line of `---`, then one key per line written `key: value`
 
 Quote a value that holds `[`, `]`, `: ` or ` #`, or that YAML would read as a number, true, false or null. Lists and maps may be written on one line, as the examples show. The order of keys does not matter.
 
-The example below is the front matter of a carried-over guide. A new guide normally has fewer keys.
+The example below is the front matter of a carried-over guide, abridged: the real file's `also_applies_to` also lists `route:/estimating/estimates/[id]/sources`. A new guide normally has fewer keys.
 
 ```yaml
 ---
@@ -75,9 +75,9 @@ list_styles: { journey: journey }
 | `also_applies_to` | List of entry keys | Other register entries the guide covers, such as a record page beside its list. Each must be in the register, and no entry may be claimed by two guides |
 | `shown_before_review` | `true` or `false` | Only for a carried-over guide. When true, `carried_over_from` is required |
 | `carried_over_from` | Text | The retired TypeScript module the guide was carried over from. It must be one of the seven paths in `carriedOverSources` in `src/guides/library.ts`; no new value is ever added |
-| `contents` | Map of section ID to button label | The contents buttons of the panel, in this order. Each ID must be a section of the guide and each label must have visible text. See section 7 |
+| `contents` | Map of section ID to button label | The contents buttons of the panel, in this order. Each ID must be a section of the guide, and a label may not be empty or only spaces. See section 7 |
 | `list_styles` | Map of section ID to `journey` | Draws the numbered steps of that section as the journey band. `journey` is the only style |
-| `section_aliases` | Map of old section ID to current section ID | Keeps an old `guide:` link or deep link working after a section is renamed. Each target must be a section of the guide |
+| `section_aliases` | Map of old section ID to current section ID | Keeps existing `guide:` links to a renamed section passing the link check: a `guide:` link may name an alias in place of a section ID. Each target must be a section of the guide |
 | `document_id` | Text | Only for a guide registered in the [document register](../standards/document-register.csv), such as `PPO-HELP-CRM`. It must match the register row |
 | `issued_revision` | Text | Only for a separately issued, frozen copy of a guide. Never a counter on the working file |
 | `audience` | Text | Who the guide is for, and any restriction. The repository is public, so nothing restricted goes in a guide |
@@ -97,8 +97,8 @@ Any other key is refused, naming the file and line.
 
 The [page guide template](../standards/page-guide-template.md) (PPO-HELP-TPL) is still the guide to what a page guide says: its user sections, from Purpose and outcome to Guide review and feedback, and its author evidence checklist. Its author metadata becomes the front matter above, with these changes:
 
-- **`route_patterns` becomes `entry_key` and `also_applies_to`.** A guide names register entries, not routes. The register maps each entry to its route, so the first route of the old list is the guide's own entry (`entry_key`) and the others go in `also_applies_to`. Exact routes still win over dynamic patterns: `/sales/opportunities/new` never shows the guide of `/sales/opportunities/[id]`.
-- **`entry_sections` becomes the section IDs in the headings**, as `## Title {#section-id}` (section 6). Retired anchors go in `section_aliases`.
+- **`route_patterns` becomes `entry_key` and `also_applies_to`.** A guide names register entries, not routes; the register maps each entry to its route. `entry_key` is the register entry whose `guide_key` equals the guide's own `guide_key`, and the library refuses any other. Every other entry the guide covers goes in `also_applies_to`. Exact routes still win over dynamic patterns: `/sales/opportunities/new` never shows the guide of `/sales/opportunities/[id]`.
+- **`entry_sections` becomes the section IDs in the headings**, as `## Title {#section-id}` (section 6). Retired section IDs go in `section_aliases`, so existing `guide:` links to them still pass the check.
 - **`route_patterns` and `entry_sections` are refused** if they appear, with a message saying to use `entry_key` and `also_applies_to`.
 - **`workflow_basis` is one piece of text.** The JSON drafts in `guides.json` hold it as a list; a Markdown guide does not.
 - **The `USER GUIDE START` and `USER GUIDE END` markers are not used in Markdown guides.** The whole body after the front matter is the article. HTML comments are refused, so the markers cannot be copied in.
@@ -244,7 +244,7 @@ The panel draws the compiled guide with React, never from an HTML string. A few 
 A link is its text in square brackets followed by its target in round brackets, and the target must have one of three shapes:
 
 - **A page:** a path starting with a single `/` that matches a registered route, such as `/sales/leads`. No query (`?`), fragment (`#`), backslash, square brackets or `.` and `..` segments. A dynamic pattern such as `/sales/opportunities/[id]` is not a link: link to the list page instead.
-- **A section of a guide:** `guide:<guide key>#<section ID>`, such as `guide:guide.page.sales.opportunities#purpose`. The guide must exist, and the section must be one of its section IDs or `section_aliases`.
+- **A section of a guide:** `guide:<guide key>#<section ID>`, such as `guide:guide.page.sales.opportunities#purpose`. The guide must exist, and the section must be one of its section IDs or `section_aliases`. The build checks the link, but the released page panel shows a `guide:` link as plain text. Only the design workspace reader opens it, and it opens the target guide at the top, not at the section.
 - **An approved website:** `https:` to a host on `allowedHttpsHosts` in `src/guides/links.ts`. The list is empty, so no web link is accepted today; adding a host is a reviewed change. Such a link opens in a new tab and says so.
 
 Everything else is refused: `http:`, `mailto:`, `javascript:`, `data:`, `file:`, protocol-relative `//` addresses, link titles (`[text](/path "title")`), spaces or invisible characters in a target, and character references such as `&amp;`. A bare web or email address in the text becomes a link, so it is refused too. Write it as inline code if it must appear.
@@ -264,7 +264,7 @@ A quote without a marker, a marker followed by text on the same line, a callout 
 
 ## 10. What is refused
 
-The compiler refuses each of these with the file, the line and a message saying what to write instead. Nothing is silently dropped.
+The compiler and the library refuse each of these with the file, the line and a message saying what to write instead, and both `npm run studio:check` and the build fail. Nothing is silently dropped. One exception: a guide key present in both a Markdown guide and `guides.json` is a catalogue error that only `npm run studio:check` reports, without a file or line; the build does not check it.
 
 - **HTML**, inline or as a block, including HTML comments.
 - **Code blocks**, fenced or indented by four spaces. Use inline code. (The code blocks in this README are allowed only because it is not a guide.)
@@ -279,7 +279,7 @@ The compiler refuses each of these with the file, the line and a message saying 
 - **Character references** such as `&amp;` or `&#169;`: type the character itself.
 - **Nesting** deeper than 8 levels.
 - **Front matter problems:** an unknown, missing or misspelt key, a wrong value type, a duplicate key, an alias, a tag, a status outside the six, `versioning` other than `git`, a date that is not real, `shown_before_review: true` without `carried_over_from`, and a `contents`, `list_styles` or `section_aliases` entry that names a section the guide does not have.
-- **Register problems:** an `entry_key` or `also_applies_to` entry that is not registered, a `guide_key` that does not match the register, a guide key used twice or present in both Markdown and `guides.json`, and an entry claimed by two guides.
+- **Register problems:** an `entry_key` or `also_applies_to` entry that is not registered, a `guide_key` that does not match the register, a guide key used twice, an entry claimed by two guides, and a guide key present in both Markdown and `guides.json` (`studio:check` only, as above).
 
 ## 11. Add a guide for a new page
 

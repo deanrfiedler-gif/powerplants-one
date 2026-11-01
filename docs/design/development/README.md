@@ -14,7 +14,7 @@ Current ES-07 contribution: 330 entries, 176 source routes and 37 component reco
 |---|---|
 | `register.json` | Stable scope/route/system keys, source and design links, owners, dependencies, review fingerprints and separate delivery states |
 | [`docs/guides/`](../../guides/README.md) | Markdown page guides, one file per guide: the single source of the help users see. Front matter binds each guide to its entry (`entry_key`, `also_applies_to`) and holds its status and review evidence. The authoring contract is `docs/guides/README.md` |
-| `guides.json` | Legacy JSON draft articles for entries that have no Markdown guide yet; stable section IDs, status, tasks, recovery, evidence and applicability. A guide key lives here or in a Markdown guide, never both; a draft moves to Markdown when its module's guide is written |
+| `guides.json` | Legacy JSON draft articles for entries that have no Markdown guide yet, or that a Markdown guide covers only through `also_applies_to`; stable section IDs, status, tasks, recovery, evidence and applicability. A guide key lives here or in a Markdown guide, never both; a draft moves to Markdown when its module's guide is written |
 | `pages/*.md` | Editable desktop and mobile design contracts, exact images/HTML and observable review requirements |
 | `systems/*.md` | Shell, theme, guidance and offline cross-page contracts |
 | `src/app/globals.css`, `src/components/ui/` | Runtime tokens and shared component implementation; the theme page reads these |
