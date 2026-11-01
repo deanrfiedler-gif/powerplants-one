@@ -76,6 +76,7 @@ A proposal is never a source of truth. A Figma design never becomes a production
 | | Powerplants One configurator workflows | The existing FigJam board, name unchanged |
 | `PPO Record` | `PPO - Design` | The frozen original, Captures included |
 
+- Keep every file in its team folder, not Drafts. Figma requires a file to be in a folder before it can publish a library.
 - Create a domain file only when its first page needs it.
 - Enable `PPO - Library` for all team files.
 - Never edit, rename or delete from `PPO - Design`. There is no lock control, so this is enforced by this rule, a committed manifest and a private `.fig` backup.
@@ -180,7 +181,7 @@ Cite the file name, node ID and named version: `PPO - Sales & Products`, `123:45
 ## 10. File health
 
 - Read **Main menu > View > Memory usage** on a fresh load before each library publish, before a large drawing session and at least monthly. Record it in the status fragment of the work it precedes.
-- Act at 70%: remove scratch work and hidden layers, or split the file by surface. This is a working threshold, to be reviewed once real readings exist. Figma alerts at 90% and locks at 100%.
+- Act at 70%: remove scratch work and hidden layers, or split the file by surface. This is a working threshold, to be reviewed as readings build up. Figma alerts at 90% and locks at 100%. First reading of "PPO - Design": 80.4% on 1 November 2026.
 - Do not load every page unless an audit needs it. Figma counts loaded pages, and `use_figma` is limited to about 10 calls a minute and 200 a day across all sessions.
 - One session edits a page at a time, and one session edits the library at a time. A session drawing in a file states this in its draft pull request.
 

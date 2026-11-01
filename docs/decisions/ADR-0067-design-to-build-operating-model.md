@@ -19,7 +19,9 @@ Measured on 1 November 2026, read-only:
 | Finding | Evidence |
 |---|---|
 | The file is large and one page dominates it | 191 pages, about 800,000 frames, instances and text layers. `Captures (icon-free)` holds 373,471 of them in 2,037 top-level frames. The next largest page holds 9,475 |
-| The memory cause is not proven | Figma counts memory only for loaded pages, and layers are a proxy. No meter reading has been taken |
+| The file is close to its limit | Figma's meter read **80.4%, with 682,382 layers**, on a fresh load in the desktop app with only Start here open (1 November 2026). Figma alerts at 90% and locks at 100%. At that rate an average page of about 3,000 layers costs about 0.35%, so roughly 25 to 30 more pages reach the alert. This is an estimate |
+| Captures' share of memory is not proven | Figma shows no per-page figure, and 682,382 can't be split from here. If all 373,471 Captures layers are in that total, removing them would take the file to about 36%. Stage 2 measures this directly |
+| The file sits in Drafts | Figma requires a file to be in a folder before it can publish a library |
 | Captures are duplicated | The repository holds 1,178 PNGs under `docs/reference/ui` (610 MB), including the exported captures. Each worktree costs about 0.95 GB, nearly all of it `docs` |
 | The design is cited everywhere | 309 documents name "PPO - Design", and 118 mention its File index |
 | Nothing is published | 702 publishable components and sets, and all variables, are local to the one file |
@@ -83,10 +85,12 @@ Option D for tokens and option C for files.
 | Stage | Work | Pass condition |
 |---|---|---|
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
-| 2. Measure and rehearse | Read the meter on a fresh load. On a throwaway duplicate, test the hardest pages: `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page | Every criterion in the standard passes |
-| 3. Cut over | Finish pending named versions, save "Before split", freeze with a committed manifest and a private backup, create the library, clean it and publish | The library is published, and a new page can be drawn from it |
+| 2. Measure and rehearse | On a throwaway duplicate, delete Captures and read the meter, which settles its share of memory. Then test the hardest pages: `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page | Every criterion in the standard passes |
+| 3. Cut over | Finish pending named versions, save "Before split", freeze with a committed manifest and a private backup, move the file from Drafts to `PPO Record`, create the library in `PPO Library`, clean it and publish | The library is published, and a new page can be drawn from it |
 | 4. Copy on change | New pages in domain files, other pages when next changed | Each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
+
+**Priority.** The 80.4% reading is above the 70% action level, so stages 2 and 3 come before further bulk drawing, and no new capture copies are kept in the file from now on.
 
 **Stop rule.** If no linking method passes stage 2, do not cut over. Fall back to option A with a published library, and revisit this record. Until stage 3 finishes, pages are still drawn in "PPO - Design". Only decisions 1 to 4, 11 and the capture rule take effect immediately.
 
