@@ -6,7 +6,7 @@ title: Engineering workload & deliverables
 status: InReview
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: 79be8557
+source_commit: fd6dfb63
 contents: { overview: "Overview", how: "How to use", journey: "Journey map", recovery: "Recovery" }
 list_styles: { journey: journey }
 workflow_basis: "EN-01 native package coordination, BC-01 permitted register reads and EN-02–EN-08 technical authority."
@@ -36,6 +36,10 @@ Needs attention includes a recorded blocker, missing deliverable prerequisite ev
    New request uses a permitted Project or Opportunity and an eligible assigned engineer. Update coordination needs a reason and checks the current package version. Package actions contains Add note. These commands do not authorise technical effort or issue documents.
 6. **Work with selected packages**\
    Tick rows on the current page. Open in sequence follows those exact packages in register order. Export list (CSV) contains only the selected package facts, after checking the current read again. A changed source clears the selection; refresh and select again.
+
+On a phone, Choose view, Select packages and Filter are in the compact header. Filter also contains sorting and Refresh packages. Selection mode exposes checkboxes and a selected-count button. Snapshot More keeps menu access, Conversations and refresh; at 320 px it also contains previous/next package actions.
+
+A successful coordination or note save changes the workload source. The register returns to its first page and asks for a fresh selection before another sequence or export handover. An unchanged background recheck or browser Back preserves the existing selection. A temporary read failure leaves it available for a guarded retry.
 
 The Engineer filter includes recorded inactive owners, explicitly labelled. This helps find existing work; it does not make that person eligible for a new assignment.
 

@@ -73,6 +73,28 @@ test("EN01 full counts and native queues survive paging; a changed continuation 
   await expect(page.locator(".er-register")).toContainText(
     "1 shown · 51 matching · Page 2",
   );
+  await page.locator(".er-grid tbody input[type=checkbox]").first().check();
+  await openFirst(page);
+  await expect(
+    page.getByRole("dialog").locator(".er-record-title"),
+  ).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.locator(".er-register")).toContainText("Page 2");
+  await expect(
+    page.locator(".er-grid tbody input[type=checkbox]").first(),
+  ).toBeChecked();
+  const sameSource = page.waitForResponse(
+    (r) =>
+      r.url().includes("/engineering/register?") &&
+      new URL(r.url()).searchParams.get("q") === s.marker,
+  );
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await sameSource;
+  await expect(page.locator(".er-register")).toContainText("Page 2");
+  await expect(
+    page.locator(".er-grid tbody input[type=checkbox]").first(),
+  ).toBeChecked();
   await page.getByRole("button", { name: "Previous", exact: true }).click();
   await expect(page.locator(".er-grid tbody tr")).toHaveCount(50);
   await call(page, "engineering/" + s.packages[0].id + "/coordination", {
@@ -122,9 +144,17 @@ test("EN01 full counts and native queues survive paging; a changed continuation 
   );
   await expect(page.locator(".er-grid tbody tr")).toHaveCount(1);
   await expect(page.locator(".er-count")).toHaveText("1 package");
-  await page
-    .getByRole("searchbox", { name: "Search engineering packages" })
-    .fill(s.marker + " missing");
+  const search = page.getByRole("searchbox", {
+    name: "Search engineering packages",
+  });
+  await search.fill(s.marker);
+  await search.pressSequentially(" missing");
+  await search.press("Home");
+  await search.pressSequentially("X");
+  await expect(search).toHaveValue("X" + s.marker + " missing");
+  await expect(page).toHaveURL(
+    (url) => url.searchParams.get("q") === "X" + s.marker + " missing",
+  );
   await expect(
     page.getByRole("heading", { name: "No packages match these filters" }),
   ).toBeVisible();
@@ -149,6 +179,42 @@ test("EN01 selected CSV and sequence retain exact packages and refuse a changed 
     name: "Selected packages",
   });
   await expect(selection).toContainText("2 packages selected");
+  await openFirst(page, 1);
+  await expect(page.getByRole("dialog")).toContainText("2 of 3 on this page");
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("button", { name: "Next package", exact: true }),
+  ).toBeEnabled();
+  await page.goBack();
+  await expect(selection).toContainText("2 packages selected");
+  // A failed read is retryable; it must not be treated as a changed source.
+  await page.route("**/api/v1/engineering/register?*", async (route) => {
+    if (new URL(route.request().url()).searchParams.get("q") !== s.marker) {
+      await route.continue();
+      return;
+    }
+    await route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({
+        code: "DependencyUnavailable",
+        message: "SYN temporary read failure",
+        retryable: true,
+        field_errors: [],
+      }),
+    });
+  });
+  await selection
+    .getByRole("button", { name: "Export list (CSV)", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "last confirmed results" }),
+  ).toBeVisible();
+  await expect(selection).toContainText("2 packages selected");
+  await expect(boxes.nth(0)).toBeChecked();
+  await expect(boxes.nth(2)).toBeChecked();
+  await page.unroute("**/api/v1/engineering/register?*");
   const downloadPromise = page.waitForEvent("download");
   await selection
     .getByRole("button", { name: "Export list (CSV)", exact: true })
@@ -183,6 +249,13 @@ test("EN01 selected CSV and sequence retain exact packages and refuse a changed 
   await expect(
     snapshot.getByRole("button", { name: "Next package", exact: true }),
   ).toBeDisabled();
+  await page.goBack();
+  await expect(page).toHaveURL(new RegExp("package_id=" + s.packages[0].id));
+  await expect(snapshot).toContainText("1 of 2 on this page");
+  await snapshot
+    .getByRole("button", { name: "Next package", exact: true })
+    .click();
+  await expect(page).toHaveURL(new RegExp("package_id=" + s.packages[2].id));
   await call(
     page,
     "engineering/" + s.packages[2].id + "/coordination",

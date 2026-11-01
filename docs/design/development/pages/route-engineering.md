@@ -53,3 +53,13 @@ Tab and Shift+Tab reach labelled controls. Enter/Space activates row links and c
 The [Engineering guide](../../../guides/pages/guide.page.engineering.md) describes this register and the retained full package page. A rewritten guide remains InReview and is not treated as published.
 
 The [execution ledger](../../../testing/evidence/engineering-workload/README.md) keeps functional proof, application/reference comparison, independent review, owner acceptance and deployment separate. Capture and inspect 1440 × 900, 1024 × 768, 390 × 844 and 320 × 844. Missing-date sorting, all native queues, counts beyond a page, stale continuation, inactive owners, source restrictions and exact-package handovers are required functional proof. Passing checks or captured images never grant visual acceptance.
+
+## Revalidation and navigation
+
+Returning to the window checks the current permitted register source in the background. An unchanged source preserves the current page, selection, sequence and keyboard location. A source rejection/change or denied scope clears incompatible selection and restarts at page one. A temporary failed recheck labels the last confirmed facts and retains selection for a guarded retry. Snapshot drafts remain mounted until the user refreshes or leaves.
+
+Browser Back changes the open package without discarding the current page; a real filter change resets it. Search uses a local text draft and a 250 ms read debounce. Opening an unselected row uses the current page sequence rather than claiming an invalid selected sequence.
+
+A confirmed native write changes the source: the UI announces the successful save, restarts the register at page one and requires a fresh selection. It does not silently bind an old selection to new results, even after the user's own save. This deliberately preserves the source-bound continuation contract.
+
+The rail badge is the unfiltered permitted Author actions count from the same native register endpoint (limit one); the secondary menu counts continue to describe the active filtered register. Neither count is assignment eligibility or release authority.

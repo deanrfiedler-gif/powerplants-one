@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CoordinationForm, EngineeringModal } from "./engineering-workspace";
 import {
   ErrorNotice,
@@ -82,18 +82,6 @@ export function EngineeringSnapshot({
     detail.reload();
     technical.reload();
   };
-  const latest = useRef({ reload, blocked, editDirty });
-  useEffect(() => {
-    latest.current = { reload, blocked, editDirty };
-  });
-  useEffect(() => {
-    const recheck = () => {
-      const current = latest.current;
-      if (!current.blocked && !current.editDirty) current.reload();
-    };
-    window.addEventListener("focus", recheck);
-    return () => window.removeEventListener("focus", recheck);
-  }, []);
   const leave = (action: () => void) => {
     if (blocked) return;
     if (

@@ -1,8 +1,20 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { api, ErrorNotice, useResource, type Failure } from "./business-ui";
+import {
+  api,
+  ErrorNotice,
+  isDenied,
+  useResource,
+  type Failure,
+} from "./business-ui";
 import { Button } from "./ui/button";
 import {
   RegisterTable,
@@ -84,6 +96,13 @@ export function EngineeringRegister() {
   const filters = readFilters(params);
   const filterKey = JSON.stringify(filters);
   const [shownFilterKey, setShownFilterKey] = useState(filterKey);
+  const [searchText, setSearchText] = useState(filters.q);
+  const [seenSearch, setSeenSearch] = useState(filters.q);
+  const [submittedSearch, setSubmittedSearch] = useState<string | null>(null);
+  if (seenSearch !== filters.q) {
+    setSeenSearch(filters.q);
+    if (filters.q !== submittedSearch) setSearchText(filters.q);
+  }
   const [readNotice, setReadNotice] = useState("");
   const [sequenceSource, setSequenceSource] = useState<{
     basis: string;
@@ -128,6 +147,17 @@ export function EngineeringRegister() {
   const resource = useResource<EngineeringRegisterData>(
     "engineering/register?" + queryString,
   );
+  // The rail describes the actor's whole permitted Author actions queue.
+  // Menu counts remain bound to the active register's filters.
+  const railResource = useResource<EngineeringRegisterData>(
+    "engineering/register?view=author&limit=1",
+  );
+  const railCount =
+    railResource.loading || railResource.error
+      ? undefined
+      : railResource.data?.matching_count;
+  const reloadRegister = resource.reload;
+  const reloadRail = railResource.reload;
   const shell = useShell();
   const busy = resource.loading || !!resource.error;
   const data = busy ? null : resource.data;
@@ -160,7 +190,9 @@ export function EngineeringRegister() {
       setSequenceSource({
         basis: data.source_version,
         query: queryString,
-        ids: (selectedRows.length ? selectedRows : rows).map((r) => r.id),
+        ids: (selectedRows.some((r) => r.id === id) ? selectedRows : rows).map(
+          (r) => r.id,
+        ),
       });
     if (!id) setSequenceSource(null);
     const next = new URLSearchParams(params);
@@ -183,24 +215,42 @@ export function EngineeringRegister() {
     const href = "/engineering?" + next;
     navigateWithReview(() => router.push(href, { scroll: false }), { href });
   }, [request, params, router]);
-  const clearSelection = () => setSelected({ basis: "", query: "", ids: [] });
-  const change = (next: Partial<typeof filters>) => {
-    const target = new URLSearchParams(window.location.search);
-    for (const [key, value] of Object.entries({ ...filters, ...next })) {
-      if (value !== "" && value !== false) target.set(key, String(value));
-      else target.delete(key);
-    }
-    window.history.replaceState(null, "", "/engineering?" + target);
-    setCursors([null]);
-    clearSelection();
-    setExportError(null);
-    setReadNotice("");
-  };
+  const clearSelection = useCallback(
+    () => setSelected({ basis: "", query: "", ids: [] }),
+    [],
+  );
+  const change = useCallback(
+    (next: Partial<ReturnType<typeof readFilters>>) => {
+      const target = new URLSearchParams(window.location.search);
+      for (const [key, value] of Object.entries({
+        ...readFilters(target),
+        ...next,
+      })) {
+        if (value !== "" && value !== false) target.set(key, String(value));
+        else target.delete(key);
+      }
+      window.history.replaceState(null, "", "/engineering?" + target);
+      setCursors([null]);
+      clearSelection();
+      setExportError(null);
+      setReadNotice("");
+    },
+    [clearSelection, setCursors, setExportError, setReadNotice],
+  );
+  useEffect(() => {
+    if (searchText === filters.q) return;
+    const timer = setTimeout(() => {
+      setSubmittedSearch(searchText);
+      change({ q: searchText });
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [searchText, filters.q, change]);
   const refresh = () => {
+    reloadRail();
     clearSelection();
     setExportError(null);
     if (cursors.length > 1) setCursors([null]);
-    else resource.reload();
+    else reloadRegister();
   };
   // A source-bound cursor can only continue its original result. Never append or retain it after rejection.
   useEffect(() => {
@@ -222,26 +272,6 @@ export function EngineeringRegister() {
       };
     }
   }, [resource.error, cursors.length]);
-  useEffect(() => {
-    const restore = () => {
-      setCursors([null]);
-      setSelected({ basis: "", query: "", ids: [] });
-      setSequenceSource(null);
-      setReadNotice("");
-      setExportError(null);
-    };
-    window.addEventListener("popstate", restore);
-    return () => window.removeEventListener("popstate", restore);
-  }, []);
-  const refreshRef = useRef(refresh);
-  useEffect(() => {
-    refreshRef.current = refresh;
-  });
-  useEffect(() => {
-    const focus = () => refreshRef.current();
-    window.addEventListener("focus", focus);
-    return () => window.removeEventListener("focus", focus);
-  }, []);
   const currentSelection = useRef("");
   useEffect(() => {
     currentSelection.current = JSON.stringify([
@@ -271,31 +301,70 @@ export function EngineeringRegister() {
       };
     return current;
   };
-  const changedSource = (error: unknown) => {
-    clearSelection();
-    setSequenceSource(null);
-    if (continuationExpired(error)) {
-      setReadNotice(
-        "The workload changed. Select packages again on the fresh first page.",
-      );
-      if (cursors.length > 1) setCursors([null]);
-      else resource.reload();
-    } else {
-      setExportError(error);
-      resource.reload();
-    }
-  };
+  const changedSource = useCallback(
+    (error: unknown) => {
+      if (continuationExpired(error) || isDenied(error)) {
+        clearSelection();
+        setSequenceSource(null);
+        setReadNotice(
+          "The workload changed. Select packages again on the fresh first page.",
+        );
+        setExportError(isDenied(error) ? error : null);
+        if (cursors.length > 1) setCursors([null]);
+        else reloadRegister();
+      } else {
+        setExportError(error);
+        setReadNotice(
+          "The workload could not be rechecked. Showing the last confirmed results; retry the selected action or refresh.",
+        );
+      }
+    },
+    [
+      clearSelection,
+      cursors.length,
+      reloadRegister,
+      setSequenceSource,
+      setReadNotice,
+      setExportError,
+      setCursors,
+    ],
+  );
+  useEffect(() => {
+    let active = true;
+    const recheck = async () => {
+      reloadRail();
+      if (!data) return;
+      try {
+        const current = await api<EngineeringRegisterData>(
+          "engineering/register?" + queryString,
+        );
+        if (active && current.source_version !== data.source_version) {
+          changedSource({ code: "ReadConflict" });
+        }
+      } catch (error) {
+        if (active) changedSource(error);
+      }
+    };
+    window.addEventListener("focus", recheck);
+    return () => {
+      active = false;
+      window.removeEventListener("focus", recheck);
+    };
+  }, [data, queryString, changedSource, reloadRail]);
   const navigateSequence = async (id: string) => {
     if (exporting || !data) return;
+    setExportError(null);
     setExporting(true);
     const selectionKey = currentSelection.current;
     try {
       await checkSource();
       if (currentSelection.current !== selectionKey) return;
+      setReadNotice("");
+      setExportError(null);
       open(id);
       setSelectionOpen(false);
     } catch (error) {
-      changedSource(error);
+      if (currentSelection.current === selectionKey) changedSource(error);
     } finally {
       setExporting(false);
     }
@@ -345,6 +414,8 @@ export function EngineeringRegister() {
       // Revalidate current source authority and the complete source basis before exporting.
       const current = await checkSource();
       if (currentSelection.current !== selectionKey) return;
+      setReadNotice("");
+      setExportError(null);
       const exact = current.items.filter((r) =>
         selectedRows.some((s) => s.id === r.id && s.version === r.version),
       );
@@ -365,7 +436,7 @@ export function EngineeringRegister() {
       a.click();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (error) {
-      changedSource(error);
+      if (currentSelection.current === selectionKey) changedSource(error);
     } finally {
       setExporting(false);
     }
@@ -391,8 +462,8 @@ export function EngineeringRegister() {
           type="search"
           maxLength={200}
           placeholder="Search packages, customers or projects"
-          value={filters.q}
-          onChange={(e) => change({ q: e.target.value })}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </label>
       <WorklistChoice
@@ -580,15 +651,15 @@ export function EngineeringRegister() {
       }
     >
       <HeaderContent slot="engineering-count">
-        {data && (
+        {railCount !== undefined && (
           <span
             className="er-rail-count"
             aria-label={
-              data.counts.author +
-              " packages with author actions in the matching set"
+              railCount +
+              " packages with author actions across all permitted packages"
             }
           >
-            {data.counts.author}
+            {railCount}
           </span>
         )}
       </HeaderContent>
@@ -1028,7 +1099,13 @@ export function EngineeringRegister() {
               setNotes((old) => ({ ...old, [inspect]: value }))
             }
             onClose={() => open(null)}
-            onSaved={refresh}
+            onSaved={() => {
+              refresh();
+              setSequenceSource(null);
+              setReadNotice(
+                "Package saved. The workload source changed; continue from the fresh first page and select packages again.",
+              );
+            }}
             workloadNotice={readNotice}
             handoverError={exportError ?? resource.error}
             onRefreshRegister={refresh}
