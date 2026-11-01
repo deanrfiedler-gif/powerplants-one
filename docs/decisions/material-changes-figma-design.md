@@ -40,7 +40,7 @@ This is a design decision. It authorises no application code, migration, capabil
 | Q7 Who owns the order line | Resolved as recommended; design direction | Quinn Avery on this page. Change review lists Robin Hale as owner with Quinn Avery approving; align it at Change review's own lock-in |
 | Q8 "Remind" on an overdue acknowledgement | Resolved as recommended; design direction | Keep it as a My Work reminder a person sends, with no automatic escalation. The built page doesn't have it |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | Section 7 |
 | Changing the application page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -82,7 +82,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md):
 | Proposed departures | V1 Material changes is a group in the Material demand side menu; today SC-09 sits under the Material demand rail item with no menu entry. V2 The status words New, Owners notified, In progress, Resolved and Resolved with holds are names over the built Impact states. V3 A record-level Acknowledge, separate from a demand owner's Accepted, Returned or Held. V4 The grid register and record tabs replace the one-third / two-thirds worklist and detail grid in the design contract. V5 At 1024 the details column moves to a strip above the tabs. V6 Four proposal-only parts on the page. No token or shared component changes. Accepted |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Material changes — accepted" waits for Dean (section 7) |
+| Named version | "Material changes — accepted", saved by Dean on 1 November 2026 (section 7) |
 
 ## 4. What the design shows
 
@@ -124,4 +124,4 @@ Design acceptance is not functional, business or deployment acceptance.
 
 ## 7. Named version
 
-The named Figma version "Material changes — accepted" hasn't been saved. It waits for Dean, who saves it or tells Claude to.
+Dean saved the named Figma version "Material changes — accepted". Dean confirmed on 1 November 2026: "I have saved the three file versions below." Claude did not open the version history to check it.
