@@ -10964,7 +10964,7 @@
         "src/app/api/development/catalog/route.ts",
         "src/shell/breadcrumb.ts"
       ],
-      "guide_key": null,
+      "guide_key": "guide.system.shell",
       "design_path": "docs/design/development/systems/shell.md",
       "html_path": "docs/reference/ui/application-shell/PPO-Application-Shell-r17.html",
       "image_paths": [
