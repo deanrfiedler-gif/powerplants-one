@@ -50,7 +50,7 @@ This is a design decision. It authorises no application code, route, capability,
 | Q10 Later dates on Bench testing copies | Resolved as recommended | Left as drawn. Those copies show Thu 15 Oct, after this story's as-at date, and the dates don't affect the guide |
 | Q11 Print layout | Resolved as recommended | Draw the A4 layout with the first written chapter. Only the Print button is drawn. The direction paper's stage 2 names a print layout, so this part of stage 2 stays open |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved yet | "Help Centre & page guides — accepted" waits for Dean. Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Help Centre & page guides — accepted". Dean's words: "I have saved the named version as Help Centre & page guides — accepted". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -84,7 +84,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Five, accepted: marked in section 4 |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | "Help Centre & page guides — accepted", waiting for Dean |
+| Named version | "Help Centre & page guides — accepted", saved by Dean 1 November 2026 |
 
 ## 4. What the design shows
 
@@ -134,4 +134,4 @@ On main, the rewritten Deals guide is InReview, no guide is Published, and the s
 - Those copies were deleted from Figma after export, on Claude's judgement, because the file is at about 80% of Figma's memory limit and that page is its largest. Earlier pages keep their copies. The retained PNGs are the evidence, and Figma's version history keeps the copies.
 - The flows were wired and not played in Present mode.
 - Nothing is built, so there is no application, keyboard, screen-reader, zoom or device evidence. The captures are design compositions, not application captures, and set no UI baseline.
-- The named Figma version has not been saved. It waits for Dean's word, and this pull request stays a draft until then.
+- Dean saved the named Figma version on 1 November 2026. Dean's words: "I have saved the named version as Help Centre & page guides — accepted". Claude did not open version history, so this rests on his word. The page header was then updated to say so; no frame changed after the save.

@@ -36,7 +36,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Owner-accepted Figma design, 1 November 2026: [the design decision](../../../decisions/help-centre-figma-design.md) (PPO-DK07-HELP-CENTRE-FIGMA-DEC), with [nineteen retained captures](../../../reference/ui/help-centre/help-centre-design-r01/README.md). They are icon-free design compositions, not application captures, and set no UI baseline. The print layout is not drawn. The named Figma version is recorded in the decision once it is saved.
+Owner-accepted Figma design, 1 November 2026: [the design decision](../../../decisions/help-centre-figma-design.md) (PPO-DK07-HELP-CENTRE-FIGMA-DEC), with [nineteen retained captures](../../../reference/ui/help-centre/help-centre-design-r01/README.md). They are icon-free design compositions, not application captures, and set no UI baseline. The print layout is not drawn. The named Figma version is "Help Centre & page guides — accepted", saved by Dean on 1 November 2026.
 
 ## Behaviour, handovers and verification
 
