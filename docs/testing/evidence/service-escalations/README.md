@@ -15,7 +15,7 @@ Codex inspected the original references and application captures. Corrections ma
 | `next-action-1440.png` | `9d01319b076f9b20e09769ba12b4118b8184160fbc1e34b5915cf3d58c093c68` |
 | `next-action-320.png` | `30512f55d56589d652dccb8b40e07e8239336271f0d58a0abfc76bd9e4d3a6b1` |
 | `next-action-390.png` | `02d4a2abea1df3618669007c0a040e94e52c526d7717c748cde50b98283e55be` |
-| `record-sent-1440.png` | `bda12ba2a2afe2518207c8c316a770eaab3493b5940c649d8499d4c3840dda7a` |
+| `record-sent-1440.png` | `6981dec7313dfed8e8dd74bc27625d5a92b9338faf9703f8995471e63d7ca187` |
 | `register-1024.png` | `b071de89a494d729c3b14106ac98f9039fa19ebb0828b35094c8de78929cd41e` |
 | `register-1440.png` | `77750117bcdf765c718ff06e387071cfcdfd971925788fbdac4f098ef06cb784` |
 | `register-320.png` | `56910dcb9970a61813df034a8e50bce34c805a150c1263a0f98af8d86727925b` |
@@ -38,6 +38,6 @@ Codex inspected the original references and application captures. Corrections ma
 
 ## Functional proof
 
-The focused unit suite covers lifecycle and input boundaries, projection exclusions, escaping, hashing and attachment validation. Native database proof covers scope/denial, replay, optimistic versions, withdrawal, immutable packs/files, My Work chase ownership, reply cancellation, native next action, grower-approval gating and closure without source closure. The separate inspection proof uses submitted native readings and instrument/calibration attribution under the senior technician's capability. HTTP and historical upgrade execution are recorded in the dated status fragment; a pending or failed run is not a pass.
+The focused unit suite covers lifecycle and input boundaries, projection exclusions, escaping, hashing and attachment validation. Native database proof covers scope/denial, replay, optimistic versions, withdrawal, immutable packs/files, My Work chase ownership, reply cancellation, native next action, grower-approval gating and closure without source closure. The separate inspection proof uses submitted native readings, instrument/calibration attribution and correction history under the senior technician's capability. Correction changes invalidate the previous evidence review. Populated upgrade across 0026 preserves existing estimates; focused Products and Findings upgrade cases prove exact grant additions and repeat-seed preservation. HTTP and historical upgrade execution are recorded in the dated status fragment; a pending or failed run is not a pass.
 
-Browser proof covers denied reads, retained draft entries across tabs, exact retry of an uncertain command, responsive layout and the diagnosing/sending/reply task states. These fixture tests do not replace native database/HTTP execution or independent review.
+Browser proof covers denied reads, retained draft entries across tabs, exact retry of an uncertain command, responsive layout, the diagnosing/sending/reply task states, and retained earlier correspondence after a new sending. The Findings browser proof verifies the capability-gated Request remote diagnosis handover and shared menu destinations. These fixture tests do not replace native database/HTTP execution or independent review.

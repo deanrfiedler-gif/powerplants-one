@@ -20,7 +20,7 @@ An EscalationCase has a stable UUID, its own SYN-ESC-000nnn number, workspace/co
 | Any nonterminal state | Withdraw with outcome | Withdrawn |
 | Closed or Withdrawn | Read retained facts and files | None |
 
-A fresh diagnostic or configuration snapshot invalidates pack review. Sending requires the latest reviewed pack, matching current evidence/configuration, a maintained manufacturer route, a named eligible sender, actual past sending time and a later reply-expected instant. Recording sends nothing. A reply cannot predate the sending. Reply attachments are retained, never executed or sent. Closing requires an owned native next action for the current reply and an outcome; it never completes that Activity or closes the finding. A cancelled or replaced action blocks closing.
+A fresh diagnostic or configuration snapshot invalidates pack review. Sending requires the latest reviewed pack, matching current evidence/configuration, a maintained manufacturer route, a named eligible sender, actual past sending time and a later reply-expected instant. Recording sends nothing. A reply cannot predate the sending. Reply attachments are retained, never executed or sent. A later sending clears the current-reply pointer while retaining earlier replies, attachments, sender names and exact sent-pack hashes in History; each reply remains linked to its own sending. Closing requires an owned native next action for the current reply and an outcome; it never completes that Activity or closes the finding. A cancelled or replaced action blocks closing.
 
 ## Evidence boundary
 

@@ -198,6 +198,19 @@ test("SV08 HTTP persists the complete lifecycle, exact replay, downloads, owned 
   assert.equal((await read()).record.state, "Diagnosing");
   assert.equal((await read()).record.reviewed_pack_id, null);
   await send(await prepare());
+  const secondSending = await read();
+  assert.equal(secondSending.record.last_reply_id, null);
+  assert.equal(
+    secondSending.events.filter((e: { kind: string }) => e.kind === "Reply")
+      .length,
+    1,
+  );
+  assert.equal(
+    typeof secondSending.events.find(
+      (e: { id: string }) => e.id === secondSending.record.last_sent_id,
+    ).details.sent_by_name,
+    "string",
+  );
   await reply();
   const current = await read();
   await command("next_action", {

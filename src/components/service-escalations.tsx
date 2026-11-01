@@ -1034,12 +1034,21 @@ function CaseDetail({
                   <code className="sv08-hash">
                     PDF {String(sent.details.pdf_sha256)}
                   </code>
+                  <p>
+                    Sent by{" "}
+                    {String(sent.details.sent_by_name ?? sent.details.sent_by)}.
+                    Recorded by {String(sent.recorded_by)}.
+                  </p>
                   <p>Recording sends nothing.</p>
                 </section>
               )}
               {row.next_action_id && (
                 <section className="sv08-card">
-                  <h2>Owned next action</h2>
+                  <h2>
+                    {row.next_action_reply_id === row.last_reply_id
+                      ? "Owned next action"
+                      : "Earlier owned next action"}
+                  </h2>
                   <p>{data.finding.action?.summary}</p>
                   <p>
                     {data.finding.action?.owner_name} ·{" "}
@@ -1110,6 +1119,88 @@ function CaseDetail({
                             "",
                         )}
                       </p>
+                      {e.kind === "Sent" && (
+                        <>
+                          <p>
+                            {String(e.details.method)} ·{" "}
+                            {String(e.details.recipient)}
+                          </p>
+                          <p>
+                            Sent by{" "}
+                            {String(
+                              e.details.sent_by_name ?? e.details.sent_by,
+                            )}
+                            . Reply expected{" "}
+                            <Stamp
+                              value={String(e.details.reply_expected_at)}
+                              timezone={data.site.timezone}
+                              scheduled
+                            />
+                            .
+                          </p>
+                          <p>
+                            <a
+                              href={fileUrl(
+                                row.id,
+                                String(e.details.pack_id),
+                                "html",
+                              )}
+                              download
+                            >
+                              Retained sent HTML
+                            </a>{" "}
+                            ·{" "}
+                            <a
+                              href={fileUrl(
+                                row.id,
+                                String(e.details.pack_id),
+                                "pdf",
+                              )}
+                              download
+                            >
+                              Retained sent PDF
+                            </a>
+                          </p>
+                          <code className="sv08-hash">
+                            HTML {String(e.details.html_sha256)}
+                          </code>
+                          <code className="sv08-hash">
+                            PDF {String(e.details.pdf_sha256)}
+                          </code>
+                        </>
+                      )}
+                      {e.kind === "Reply" && (
+                        <>
+                          <p>
+                            In reply to{" "}
+                            {String(
+                              data.events.find(
+                                (s) => s.id === e.details.sent_id,
+                              )?.details.manufacturer_reference ??
+                                "recorded sending",
+                            )}
+                          </p>
+                          <p className="sv08-prose">
+                            {String(e.details.advice)}
+                          </p>
+                          {e.details.settings_change && (
+                            <p>
+                              Grower approval is required before changing
+                              settings.
+                            </p>
+                          )}
+                          {data.files
+                            .filter((f) => f.reply_id === e.id)
+                            .map((f) => (
+                              <p key={f.id}>
+                                <a href={attachmentUrl(row.id, f.id)} download>
+                                  Retained reply attachment ({f.bytes} bytes)
+                                </a>
+                                <code className="sv08-hash">{f.sha256}</code>
+                              </p>
+                            ))}
+                        </>
+                      )}
                     </article>
                   ))}
               </section>

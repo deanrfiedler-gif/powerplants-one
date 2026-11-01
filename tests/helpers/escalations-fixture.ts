@@ -100,6 +100,10 @@ export function escalationRecord(
               created_at: findingsClock,
               recorded_by: "SYN Morgan Lee",
               details: {
+                sent_by: owner,
+                sent_by_name: "SYN Morgan Lee",
+                pack_id: pack,
+                html_sha256: "c".repeat(64),
                 method: "Email",
                 recipient: "support@example.invalid",
                 manufacturer_reference: "SYN CASE-17",
@@ -123,6 +127,7 @@ export function escalationRecord(
                 advice:
                   "Check the sensor plug and wiring. A firmware change requires the grower’s approval first.",
                 settings_change: true,
+                sent_id: sent,
               },
             },
           ]

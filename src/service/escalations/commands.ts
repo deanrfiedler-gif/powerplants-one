@@ -533,11 +533,19 @@ export async function commandCase(p: Principal, id: string, input: unknown) {
             activity,
             row.id,
           );
+          const sent_by_name = (
+            await c.query<{ display_name: string }>(
+              "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+              [p.workspace_id, sent_by],
+            )
+          ).rows[0].display_name;
+          changes.last_reply_id = null; // Earlier replies remain immutable events, not replies to this sending.
           changes.last_sent_id = await event(c, p, row, "Sent", sent_at, {
             pack_id: pack.id,
             html_sha256: pack.html_sha256,
             pdf_sha256: pack.pdf_sha256,
             sent_by,
+            sent_by_name,
             method: route.method,
             recipient: route.recipient,
             manufacturer_reference,

@@ -204,3 +204,45 @@ test("SV08 diagnosing and Record as sent expose the retained desktop task states
     fullPage: true,
   });
 });
+
+test("SV08 a new sending keeps earlier replies and attachments in History", async ({
+  page,
+}) => {
+  const { detail } = await setup(page);
+  const oldReply = detail.record.last_reply_id!;
+  detail.record.state = "WaitingOnManufacturer";
+  detail.record.last_reply_id = null;
+  detail.files.push({
+    id: "retained-reply-file",
+    kind: "ReplyAttachment",
+    reply_id: oldReply,
+    media_type: "image/png",
+    bytes: 125,
+    sha256: "f".repeat(64),
+    created_at: detail.record.updated_at,
+  });
+  await page.goto(`/service/escalations?case=${escalationId}`);
+  await expect(
+    page.getByRole("button", { name: "Record reply", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("tab", { name: "Correspondence" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Manufacturer reply", exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole("tab", { name: "History", exact: true }).click();
+  await expect(
+    page.getByText("In reply to SYN CASE-17", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "Retained reply attachment (125 bytes)",
+      exact: true,
+    }),
+  ).toHaveAttribute(
+    "href",
+    `/api/v1/service/escalations/${escalationId}/files?kind=attachment&file_id=retained-reply-file`,
+  );
+  await expect(
+    page.getByRole("link", { name: "Retained sent PDF", exact: true }),
+  ).toBeVisible();
+});

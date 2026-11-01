@@ -61,4 +61,4 @@ The existing Service review menu gains Escalations and separate Closed findings/
 
 The draft User Guide `guide.sv.08` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Application captures at 1440, 1024, 390 and 320 px have been inspected against the original references; the comparison ledger records differences and functional proof separately. Owner acceptance remains pending. Keyboard/focus acceptance, 200% zoom and owner-device review remain outstanding. Do not replace a comparison image simply to make a test pass.
