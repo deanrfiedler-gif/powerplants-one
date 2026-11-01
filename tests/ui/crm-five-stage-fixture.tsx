@@ -8,6 +8,10 @@ import {
 } from "../../src/components/product-navigation";
 import { SalesWorklist } from "../../src/components/crm-worklist";
 import type { WorklistItem } from "../../src/crm/worklist";
+import { GuideLibraryProvider } from "../../src/guides/provider";
+import type { ReleasedLibrary } from "../../src/guides/released";
+// .ppo-guides/released.json, which scripts/build-crm-ui-review.mjs compiles and defines here.
+declare const PPO_RELEASED_GUIDES: ReleasedLibrary;
 const CRM = {
   workspace: "10000000-0000-4000-8000-000000000001",
   company: "20000000-0000-4000-8000-000000000001",
@@ -190,7 +194,7 @@ window.fetch = async (input) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
-  <ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"}><div className="app-frame">
+  <GuideLibraryProvider value={PPO_RELEASED_GUIDES}><ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"}><div className="app-frame">
     <ProductNavigation />
     <div className="workspace">
       <ProductHeader />
@@ -202,5 +206,5 @@ createRoot(document.getElementById("root")!).render(
         </BusinessSession>
       </main>
     </div>
-  </div></ShellProvider>,
+  </div></ShellProvider></GuideLibraryProvider>,
 );

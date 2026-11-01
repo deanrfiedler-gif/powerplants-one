@@ -194,7 +194,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
     await rows(
       "SELECT version FROM public.ppo_migrations WHERE version>113 ORDER BY version",
     ),
-    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }],
+    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }],
   );
   await assert.rejects(
     database().query(

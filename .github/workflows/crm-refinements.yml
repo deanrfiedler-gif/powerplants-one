@@ -1,6 +1,8 @@
 name: CRM refinements assurance
 on:
   pull_request:
+    # A draft runs only the scope job; marking it ready runs every suite (scripts/ci_scope.py).
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
   workflow_dispatch:
@@ -23,6 +25,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       docs_only: ${{ steps.scope.outputs.docs_only }}
+      draft: ${{ steps.scope.outputs.draft }}
     steps:
       # Pull requests only. Skipping the suites below is safe only for a
       # documentation-only change (scripts/ci_scope.py); any other event, or a fault
@@ -44,7 +47,7 @@ jobs:
   crm-layout:
     name: CRM header and board visual checks
     needs: scope
-    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' && needs.scope.outputs.draft != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -72,7 +75,7 @@ jobs:
   crm-refinements:
     name: CRM desktop and mobile persistence and interaction proof
     needs: scope
-    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' }}
+    if: ${{ !cancelled() && needs.scope.outputs.docs_only != 'true' && needs.scope.outputs.draft != 'true' }}
     runs-on: ubuntu-24.04
     # Full retained suites include two ten-minute-bounded P11 journeys and
     # actual database/application/browser restarts. Keep individual deadlines.
