@@ -404,6 +404,10 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
       name: `Snapshot of ${libraryItem.revision.title}`,
     }),
   ).toBeVisible();
+  if (test.info().project.name === "desktop-chromium")
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/snapshot-1440.png`,
+    });
   await page.keyboard.press("Escape");
   await expect(snapshot).toBeFocused();
   await page
