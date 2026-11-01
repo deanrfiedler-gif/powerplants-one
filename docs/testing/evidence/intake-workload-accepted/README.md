@@ -69,6 +69,16 @@ Current follow-up validation: 66 workload/guide/parity/baseline unit cases, guid
 
 The 1 November native browser rerun passed the desktop manual-refresh/failed-read/no-edit case, but the other seven cases did not pass. A warm retry of those seven also did not pass. Observed failures include local-session HTTP 503 responses with `DatabaseConnectTimeout`, expected controls not becoming available in time, and the existing 120-second case deadline during later workflow steps. This is an incomplete native rerun, not a green result or a confirmed product regression. It was not reproduced against an unmodified main runtime, so the cause is not attributed to this change or conclusively to the environment. The earlier successful native evidence above remains historical. Full new-head CI and independent review are still required.
 
+## Phone selection CI correction — 2 November 2026
+
+CI on fe29c8d6 passed the E1 database, database-2 and quality jobs, all Application database/HTTP/report/finance and desktop-browser jobs, and CRM visual/browser assurance. E1 browser passed 52 cases and failed the phone selection journey; the full mobile suite passed 604 cases and failed that same journey plus the separate CR05 capture deadline. The ES-01 failure clicked a second checkbox underneath the deliberately overlapping selection panel. The native test now uses **Hide panel** between phone selections and confirms it closes; it preserves all sequence, CSV, stale-selection and geometry assertions. The 320 px regression now selects two rows through that same interaction and verifies both clear with focus returned. No application behaviour or business rule changed.
+
+The separate CR05 failure reached the final captureSizes viewport loop after its saved-state assertions and exceeded its existing 120-second deadline. A local reproduction on port 3143 stopped at the synthetic-origin guard because that test uses port 3000 explicitly; it does not reproduce or explain the CI deadline. No Sales code, timeout or assertion was changed. Its new-head CI rerun remains required.
+
+Local validation passed: all four native phone workload cases, the native desktop selection/export case, the strengthened 320 px two-row regression, changed-test ESLint, studio:check (377 entries, no errors) and all 14 development-workspace unit cases. The earlier local phone workload gap is now covered by this successful targeted run.
+
+Current main’s accepted design-document batch was integrated cleanly. The newer cross-register phone amendment remains separately recorded as application work not yet built; this bounded CI repair exercises the existing ES-01 Hide panel control. The captures above are unchanged because production UI code is unchanged.
+
 ## Remaining review boundaries
 
 - Exact-head independent review and new-head GitHub CI must complete before any merge decision. Prior-head passes and local results do not imply the new head passed.

@@ -219,7 +219,13 @@ test("ES01 selection opens newest first, exports only fresh permitted rows and p
       `/api/v1/estimating/workload?q=${encodeURIComponent(input.title)}`,
     )
   ).json();
-  for (const item of current.items)
+  for (const [index, item] of current.items.entries()) {
+    if (phoneWidth(page) && index > 0) {
+      await page.getByRole("button", { name: "Hide panel", exact: true }).click();
+      await expect(
+        page.getByRole("complementary", { name: "Selected opportunities" }),
+      ).toHaveCount(0);
+    }
     await page
       .getByRole("checkbox", {
         name: `Select ${item.opportunity.display_number}`,
@@ -227,6 +233,7 @@ test("ES01 selection opens newest first, exports only fresh permitted rows and p
       })
       .filter({ visible: true })
       .check();
+  }
   const selected = page.getByRole("complementary", {
     name: "Selected opportunities",
   });

@@ -281,6 +281,15 @@ test("ES01 narrow phone selection can hide its panel and clear back to a visible
   await page.getByRole("button", { name: "Hide panel", exact: true }).click();
   await expect(panel).toHaveCount(0);
   await expect(check).toBeChecked();
+  const second = page.locator(".ew-phone-row input").nth(1);
+  await second.check();
+  await expect(check).toBeChecked();
+  await expect(second).toBeChecked();
+  await expect(
+    panel.getByRole("heading", { name: "2 opportunities selected" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Hide panel", exact: true }).click();
+  await expect(panel).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -288,5 +297,6 @@ test("ES01 narrow phone selection can hide its panel and clear back to a visible
   ).toBe(true);
   await page.getByRole("button", { name: /^Clear selection \(/ }).click();
   await expect(check).not.toBeChecked();
+  await expect(second).not.toBeChecked();
   await expect(check).toBeFocused();
 });

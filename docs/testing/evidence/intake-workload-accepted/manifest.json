@@ -127,8 +127,8 @@
     },
     {
       "path": "tests/browser/estimating-workload.spec.ts",
-      "bytes": 14412,
-      "sha256": "ae7efb83a166c1696c143f97ca748d3090a03b71d35ab1567218d938d1911347"
+      "bytes": 14688,
+      "sha256": "103993a3f6ebfbcab23917958fad900ab2e93800479aa57c729d8d56bd3c6d93"
     },
     {
       "path": "tests/browser/estimating-workload-states.spec.ts",
@@ -157,8 +157,8 @@
     },
     {
       "path": "tests/browser/estimating-workload-review.spec.ts",
-      "bytes": 10249,
-      "sha256": "0d9f6d52afe214b1468a97e32d128c7e018837709bdc344db56eb29727486d83"
+      "bytes": 10673,
+      "sha256": "38f5ca3d35bf1f2c0c1f8556b05f11fed7728fc99a124ee30053eb9ff2bd91e8"
     },
     {
       "path": "docs/standards/ui-baselines/module-integrations/intake-workload-accepted.json",
@@ -166,5 +166,6 @@
       "sha256": "eecafdb03cc27a3879341d59af57f10789edbc5a1fac5618e83d9d9ebde446d5"
     }
   ],
-  "review_correction": "Replaced application captures after the ten findings in review 5721353147; complete reference/version, stable selection toolbar, read time, owned readiness reason and phone sell. Owner acceptance remains separate."
+  "review_correction": "Replaced application captures after the ten findings in review 5721353147; complete reference/version, stable selection toolbar, read time, owned readiness reason and phone sell. Owner acceptance remains separate.",
+  "ci_repair": "2 November: test-only Hide panel interaction and two-row 320 px regression; application captures unchanged."
 }
