@@ -22,7 +22,7 @@ test("seven full ordered compositions retain withheld positions and My Work plac
     engineering: "My Work|Engineering workload|Design basis & interfaces|Drawings|Technical queries|Materials & substitutions|Change review|Technical reviews|Commissioning & as-built",
     projects: "My Work|Projects|Programme|Delivery readiness|Risks & issues|Variations & obligations|Site assurance|Acceptance & closeout",
     service: "My Work|Service requests|Work orders|Schedule|Field team|Job packs|Service review|My jobs|My inspections|Incidents and actions|Inspection review|Equipment|Service agreements|Maintenance|Warranty",
-    supply: "My Work|Material demand|Purchasing|Inbound shipments|Receiving|Inventory|Dispatch & delivery|Returns & claims",
+    supply: "My Work|Material demand|Purchasing|Inbound shipments|Receiving|Inventory|Workshop|Dispatch & delivery|Returns & claims",
     finance: "My Work|Finance handoffs|Customer accounts|Project performance|Claims & obligations|Cash outlook|Reconciliation|Exceptions",
   };
   for (const [workspace, labels] of Object.entries(expected)) assert.equal(departmentRails[workspace as keyof typeof departmentRails].map(id => destination(id).label).join("|"), labels);
@@ -111,4 +111,13 @@ test("Reviews & approvals activates its reserved identity only for estimating re
   assert.equal(railDestinationForLocation("/estimating/reviews", new URLSearchParams(), "estimate"), "estimate-reviews");
   assert.ok(navigationForCapabilities(new Set(["estimating.read"]), true).includes("estimate-reviews"));
   assert.ok(!navigationForCapabilities(new Set(["estimating.quote.approve"]), true).includes("estimate-reviews"));
+});
+
+test("Receiving lock-in reserves Workshop without inventing a route or permission", () => {
+  const workshop = destination("workshop");
+  assert.equal(workshop.href, undefined);
+  assert.equal(workshop.readiness, "unavailable");
+  assert.deepEqual(workshop.requires, ["supply.read"]);
+  assert.equal(departmentRails.supply.indexOf("workshop"), departmentRails.supply.indexOf("stock") + 1);
+  assert.ok(!navigationForCapabilities(["supply.read"]).includes("workshop"));
 });

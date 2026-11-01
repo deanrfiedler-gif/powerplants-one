@@ -11,10 +11,12 @@ import {
   type GuideDocument,
   type Resource,
   origin,
+  scopedGuide,
   resolveDestination,
   resourceHref,
 } from "./model";
 import { DocumentDetails } from "./document-details";
+import { GuideArticle } from "../guides/render";
 
 function download(name: string, value: unknown) {
   const url = URL.createObjectURL(
@@ -866,41 +868,61 @@ export function DevelopmentWorkspace({
                 reviewedAt={guide.reviewed_at}
               />
               <p className="studio-note">
-                History covers the guide library file; review is recorded for
-                this article separately.
+                {guide.markdown
+                  ? "History covers this guide's own file; review is recorded for this article separately."
+                  : "History covers the guide library file; review is recorded for this article separately."}
               </p>
-              <label>
-                Search this guide
-                <input
-                  type="search"
-                  value={searchGuide}
-                  onChange={(e) => setSearchGuide(e.target.value)}
+              {/* A Markdown guide renders as the shell panel does, with its own contents; JSON drafts keep this reader. */}
+              {guide.markdown ? (
+                <GuideArticle
+                  guide={scopedGuide(guide.markdown, "read-")}
+                  eyebrow="User guide"
+                  onOpenGuide={(key) =>
+                    open({
+                      kind: "guide",
+                      key,
+                      title:
+                        catalog.entries.find((e) => e.guide_key === key)
+                          ?.title ?? key,
+                    })
+                  }
                 />
-              </label>
-              <nav
-                className="studio-guide-contents"
-                aria-label="Guide contents"
-              >
-                {guide.sections.map((s) => (
-                  <a
-                    key={s.section_id}
-                    href={"#read-" + s.section_id}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSearchGuide("");
-                      requestAnimationFrame(() => {
-                        const heading = document.getElementById(
-                          "read-" + s.section_id,
-                        );
-                        heading?.focus();
-                        heading?.scrollIntoView({ block: "start" });
-                      });
-                    }}
+              ) : (
+                <>
+                  <label>
+                    Search this guide
+                    <input
+                      type="search"
+                      value={searchGuide}
+                      onChange={(e) => setSearchGuide(e.target.value)}
+                    />
+                  </label>
+                  <nav
+                    className="studio-guide-contents"
+                    aria-label="Guide contents"
                   >
-                    {s.title}
-                  </a>
-                ))}
-              </nav>
+                    {guide.sections.map((s) => (
+                      <a
+                        key={s.section_id}
+                        href={"#read-" + s.section_id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSearchGuide("");
+                          requestAnimationFrame(() => {
+                            const heading = document.getElementById(
+                              "read-" + s.section_id,
+                            );
+                            heading?.focus();
+                            heading?.scrollIntoView({ block: "start" });
+                          });
+                        }}
+                      >
+                        {s.title}
+                      </a>
+                    ))}
+                  </nav>
+                </>
+              )}
               {guide.sections
                 .filter((s) =>
                   JSON.stringify(s)
@@ -948,11 +970,12 @@ export function DevelopmentWorkspace({
                     )}
                   </section>
                 ))}
-              {!guide.sections.some((s) =>
-                JSON.stringify(s)
-                  .toLowerCase()
-                  .includes(searchGuide.toLowerCase()),
-              ) && (
+              {!guide.markdown &&
+                !guide.sections.some((s) =>
+                  JSON.stringify(s)
+                    .toLowerCase()
+                    .includes(searchGuide.toLowerCase()),
+                ) && (
                 <p role="status">
                   No sections match. Clear the search to read the full guide.
                 </p>

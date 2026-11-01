@@ -104,10 +104,10 @@ for (const through of [117, 118, 119])
         `SELECT version FROM public.ppo_migrations WHERE version>${through} ORDER BY version`,
       ),
       through === 117
-        ? [{ version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }]
+        ? [{ version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }]
         : through === 118
-          ? [{ version: 119 }, { version: 120 }, { version: 121 }]
-          : [{ version: 120 }, { version: 121 }],
+          ? [{ version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }]
+          : [{ version: 120 }, { version: 121 }, { version: 122 }],
     );
     assert.deepEqual(
       await rows(
