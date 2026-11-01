@@ -1407,7 +1407,7 @@
         "src/components/estimating-workload-model.ts",
         "src/components/estimating-workload-snapshot.tsx",
         "src/components/estimating-workload.css",
-        "src/components/estimating-workload-guide.ts",
+        "docs/guides/pages/guide.page.estimating.md",
         "src/estimating/reads.ts",
         "docs/design/development/component-bindings/2026-10-31-intake-workload.json",
         "docs/testing/evidence/intake-workload-accepted/README.md"
@@ -8026,7 +8026,7 @@
         "src/components/estimating-workload-model.ts",
         "src/components/estimating-workload-snapshot.tsx",
         "src/components/estimating-workload.css",
-        "src/components/estimating-workload-guide.ts",
+        "docs/guides/pages/guide.page.estimating.md",
         "src/estimating/reads.ts",
         "docs/design/development/component-bindings/2026-10-31-intake-workload.json",
         "docs/testing/evidence/intake-workload-accepted/README.md"

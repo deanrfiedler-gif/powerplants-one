@@ -4,7 +4,7 @@ Owner: Dean Fiedler. Review: pending owner visual and device acceptance. Scope: 
 
 ## buttons
 
-Reuse Button for filter, refresh, selection, sequence, export and snapshot controls. Native links retain exact record/revision identities. Refresh disables previously read actions; export revalidates the selected facts and current authority. No allocation or acceptance command is implied.
+Reuse Button for filter, refresh, selection, sequence, export and snapshot controls. Native links retain exact record/revision identities. Manual refresh disables previously read actions; background checks retain focus and confirmed controls; export revalidates the selected facts and current authority. No allocation or acceptance command is implied.
 
 ## register-table
 
@@ -20,7 +20,7 @@ The native modal snapshot implements the accepted overlap as page-scoped geometr
 
 ## read-state
 
-Reuse useResource and ErrorNotice with explicit host states. Initial loading has no current rows/counts; refresh marks retained rows unconfirmed and disables actions. Failure or denial removes old rows/counts/selection/snapshot. Tests distinguish native permission revocation from API-boundary failed/stale/no-edit presentation fixtures.
+Reuse api and ErrorNotice with a local estimating register read adapter; shared useResource is unchanged. Initial loading has no current rows/counts; manual refresh marks retained rows unconfirmed and disables actions. Background polls retain confirmed controls and counts; a pending retry preserves its error without resurrecting obsolete data. Failure or denial removes old rows/counts/selection/snapshot. Tests distinguish native permission revocation from API-boundary failed/stale/no-edit presentation fixtures.
 
 Within a permitted workload row, absent and denied Sales briefs both use generic no-readable-brief copy and expose no brief identity or status. Start navigation is identical for both; native creation retains its source checks. See the route contract for this projection boundary.
 

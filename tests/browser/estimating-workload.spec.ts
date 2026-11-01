@@ -131,11 +131,15 @@ test("ES01 accepted snapshot, native Discovery entry, filters, view picker and U
   await page.goBack();
   await expect(opener).toBeEnabled();
   await openPageGuide(page);
+  // The rewritten Markdown guide awaits owner review/publication (ADR-0065).
+  await expect(
+    page.getByText(/The detailed .* guide is being prepared\./),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", {
       name: "Workload, source context and authority",
     }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await page.keyboard.press("Escape");
   await page.screenshot({
     path: info.outputPath("workload.png"),
@@ -362,7 +366,16 @@ test("ES01 refresh withholding, failed/denied reads, no matches and no-edit perm
       json: { code: "Unavailable", message: "Synthetic workload read failed" },
     });
   });
-  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  if (page.viewportSize()!.width < 781) {
+    await page.getByRole("button", { name: /^Filter/ }).click();
+    await page
+      .getByRole("dialog", { name: /filters$/ })
+      .getByRole("button", { name: "Refresh", exact: true })
+      .click();
+  } else
+    await page
+      .getByRole("button", { name: "Refresh register", exact: true })
+      .click();
   await expect(
     page
       .getByText("Refreshing — earlier results unconfirmed", { exact: true })

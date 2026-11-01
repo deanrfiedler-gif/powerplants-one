@@ -66,7 +66,19 @@ export function workloadPresentation() {
     },
     can_start: states[i] === "unstarted",
     sales_brief: null,
-    readiness_reasons: [],
+    readiness_reasons:
+      states[i] === "clarification"
+        ? [
+            {
+              key: "controller-wiring",
+              blocks_scope: true,
+              follow_up: {
+                owner_id: workloadId(92),
+                reason: "Confirm sensor wiring and valve counts",
+              },
+            },
+          ]
+        : [],
     readiness_findings: [],
     workspace:
       states[i] === "unstarted"
@@ -155,7 +167,15 @@ export async function mountWorkloadPresentation(page: Page) {
         companies: [],
         conversations: true,
       });
-    if (path === "estimating/estimates") return reply(fixture.saved);
+    if (path === "estimating/estimates")
+      return reply({
+        ...fixture.saved,
+        items: fixture.saved.items.filter((item) =>
+          item.title
+            .toLowerCase()
+            .includes((url.searchParams.get("q") ?? "").toLowerCase()),
+        ),
+      });
     if (path === "estimating/workload") {
       const q = url.searchParams.get("q") ?? "",
         owner = url.searchParams.get("owner") ?? "all",

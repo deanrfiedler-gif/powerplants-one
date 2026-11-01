@@ -228,7 +228,8 @@ export function WorkloadSnapshot({
                         {r.blocks_scope
                           ? "Blocks scope completion"
                           : "Follow-up; does not block scope"}{" "}
-                        · owner {r.follow_up.owner_id}
+                        · owner:{" "}
+                        {r.follow_up.owner_id ? "Saved owner" : "Not recorded"}
                       </small>
                     </li>
                   ))}

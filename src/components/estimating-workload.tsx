@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useIdentity } from "./business-session";
-import { api, ErrorNotice, isDenied, useResource } from "./business-ui";
+import { api, ErrorNotice, isDenied } from "./business-ui";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { Button, ButtonLink } from "./ui/button";
 import {
@@ -18,6 +18,7 @@ import {
 } from "./crm-worklist-tools";
 import { ShellIcon } from "./shell-icon";
 import { DiscoveryRegisterIcon } from "./discovery-register-icon";
+import { useEstimatingRegisterRead } from "./estimating-register-read";
 import { WorkloadSnapshot } from "./estimating-workload-snapshot";
 import {
   workloadLabels,
@@ -60,36 +61,13 @@ export function WorkloadReadiness({ item }: { item: WorkloadItem }) {
     </RegisterChip>
   );
 }
-function useRegisterRead<T>(path: string) {
-  const resource = useResource<T>(path),
-    latest = useRef(resource);
-  useEffect(() => {
-    latest.current = resource;
-  });
-  useEffect(() => {
-    // Do not supersede a slow initial/read refresh with another polling request.
-    const refresh = () => {
-      if (!latest.current.loading) latest.current.reload();
-    };
-    const timer = setInterval(refresh, 15000);
-    window.addEventListener("focus", refresh);
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener("focus", refresh);
-    };
-  }, [path]);
-  return resource;
-}
 export function EstimatingWorkload() {
   const params = useSearchParams(),
     identity = useIdentity();
   const [menuOpen, setMenuOpen] = useState(true);
-  const basis = new URLSearchParams();
-  for (const key of [...workloadFilterKeys, "tab", "estimate_q"])
-    if (params.has(key)) basis.set(key, params.get(key)!);
   return (
     <Register
-      key={identity.actor_id + "|" + basis}
+      key={identity.actor_id}
       query={new URLSearchParams(params.toString())}
       menuOpen={menuOpen}
       setMenuOpen={setMenuOpen}
@@ -139,7 +117,8 @@ function Register({
   const [filterOpen, setFilterOpen] = useState(false),
     [selection, setSelection] = useState<string[]>([]),
     [sequence, setSequence] = useState(false),
-    [selectMode, setSelectMode] = useState(false);
+    [selectMode, setSelectMode] = useState(false),
+    [panelVisible, setPanelVisible] = useState(true);
   const [exporting, setExporting] = useState(false),
     [exportError, setExportError] = useState<unknown>(null),
     [notice, setNotice] = useState("");
@@ -153,8 +132,8 @@ function Register({
   for (const key of workloadFilterKeys)
     if (query.has(key)) filters.set(key, query.get(key)!);
   const endpoint = `estimating/workload?${filters}`;
-  const workload = useRegisterRead<Workload>(endpoint);
-  const estimates = useRegisterRead<SavedEstimates>(
+  const workload = useEstimatingRegisterRead<Workload>(endpoint);
+  const estimates = useEstimatingRegisterRead<SavedEstimates>(
     `estimating/estimates?${new URLSearchParams({ q: query.get("estimate_q") ?? "" })}`,
   );
   const current = saved ? estimates : workload;
@@ -163,10 +142,14 @@ function Register({
   const items = data?.items ?? [],
     activeData = saved ? savedData : data;
   const fresh = !!activeData && !current.loading && !current.error;
-  const fingerprint = workloadFingerprint(items),
+  const basis = [...workloadFilterKeys, "tab", "estimate_q"]
+      .map((key) => query.get(key) ?? "")
+      .join("|"),
+    fingerprint = basis + "|" + workloadFingerprint(items),
     [seen, setSeen] = useState(fingerprint);
   if (seen !== fingerprint) {
     setSeen(fingerprint);
+    setPanelVisible(true);
     setSelection([]);
     setSequence(false);
   }
@@ -210,10 +193,12 @@ function Register({
     return () => cancelAnimationFrame(frame);
   }, [snapshot, workload.loading]);
   function closeSnapshot() {
+    setSequence(false);
     focusAfterClose.current = snapshot?.opportunity.id ?? null;
     change({ record: "" }, true);
   }
-  function openSnapshot(id: string, source?: HTMLElement) {
+  function openSnapshot(id: string, source?: HTMLElement, inSequence = false) {
+    setSequence(inSequence);
     if (source) opener.current = source;
     change({ record: id }, true);
   }
@@ -222,6 +207,27 @@ function Register({
       old.includes(id) ? old.filter((x) => x !== id) : [...old, id],
     );
     setSequence(false);
+    setPanelVisible(true);
+  }
+  function clearSelection() {
+    setSelection([]);
+    setSequence(false);
+    requestAnimationFrame(() =>
+      [
+        ...document.querySelectorAll<HTMLElement>(
+          ".ew-results input:not(:disabled), .ew-phone-open:not(:disabled)",
+        ),
+      ]
+        .find((element) => element.getClientRects().length > 0)
+        ?.focus(),
+    );
+  }
+  const searchQuery = query.get("q") ?? "";
+  const [search, setSearch] = useState(searchQuery),
+    [seenSearch, setSeenSearch] = useState(searchQuery);
+  if (seenSearch !== searchQuery) {
+    setSeenSearch(searchQuery);
+    setSearch(searchQuery);
   }
   const viewName = saved
     ? "Saved estimates"
@@ -235,12 +241,12 @@ function Register({
       ? savedData!.items.length
       : items.length
     : undefined;
-  const readNote = current.loading
-    ? activeData
-      ? "Refreshing — earlier results unconfirmed"
-      : "Loading permitted " + (saved ? "saved estimates" : "workload") + "…"
-    : current.error
-      ? "Current results unavailable"
+  const readNote = current.error
+    ? "Current results unavailable"
+    : current.loading
+      ? activeData
+        ? "Refreshing — earlier results unconfirmed"
+        : "Loading permitted " + (saved ? "saved estimates" : "workload") + "…"
       : `${count ?? 0} ${saved ? "saved estimates" : "opportunities"}`;
   const counts = data && !workload.loading ? data.counts : null;
   const ownerCounts = data && !workload.loading ? data.owner_counts : null;
@@ -478,83 +484,129 @@ function Register({
       }
     >
       <div className="ew-register">
-        <div className="ew-toolbar">
-          {saved ? (
-            <>
-              {savedData?.can_create && (
-                <ButtonLink variant="primary" href="/estimating/new">
-                  <ShellIcon name="plus" />
-                  New estimate
-                </ButtonLink>
+        {!saved && selected.length > 0 ? (
+          <div className="ew-toolbar ew-selection-toolbar">
+            <Button
+              disabled={!fresh}
+              onClick={(e) =>
+                openSnapshot(selected[0].opportunity.id, e.currentTarget, true)
+              }
+            >
+              <DiscoveryRegisterIcon name="arrow-right" />
+              Open in sequence
+            </Button>
+            <Button
+              disabled={!fresh || exporting}
+              onClick={() => void exportList()}
+            >
+              <ShellIcon name="documents" />
+              Export list
+            </Button>
+            <Button
+              className="ew-selection-chip"
+              aria-label={`Clear selection (${selected.length} selected)`}
+              onClick={clearSelection}
+            >
+              {selected.length} selected <ShellIcon name="close" />
+            </Button>
+            <Button
+              aria-expanded={panelVisible}
+              onClick={() => setPanelVisible(!panelVisible)}
+            >
+              {panelVisible ? "Hide panel" : "Show panel"}
+            </Button>
+            <WorklistMenu label="Selection actions" icon="more">
+              <Button data-menu-close onClick={clearSelection}>
+                Clear selection
+              </Button>
+            </WorklistMenu>
+          </div>
+        ) : (
+          <div className="ew-toolbar">
+            {saved ? (
+              <>
+                {savedData?.can_create && (
+                  <ButtonLink variant="primary" href="/estimating/new">
+                    <ShellIcon name="plus" />
+                    New estimate
+                  </ButtonLink>
+                )}
+              </>
+            ) : (
+              <form
+                className="ew-search"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  change({
+                    q: String(new FormData(e.currentTarget).get("q") ?? ""),
+                  });
+                }}
+              >
+                <ShellIcon name="search" />
+                <input
+                  aria-label="Search workload"
+                  name="q"
+                  type="search"
+                  placeholder="Search customer, opportunity or brief"
+                  maxLength={100}
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                />
+                <button type="submit" className="sr-only">
+                  Search workload
+                </button>
+              </form>
+            )}
+            {!saved && (
+              <WorklistChoice
+                label="Sort workload"
+                prefix="Sort: "
+                value={sort}
+                options={[
+                  { id: "updated", label: "Recently changed" },
+                  { id: "customer", label: "Customer" },
+                ]}
+                onChange={(value) => change({ sort: value })}
+              />
+            )}
+            <span className="ew-count" role="status">
+              {readNote}
+              {fresh && current.observedAt && (
+                <span className="ew-time">
+                  {" "}
+                  · read{" "}
+                  {readTime(
+                    saved ? current.observedAt : data!.observed_at,
+                  )}{" "}
+                  AEST
+                </span>
               )}
-            </>
-          ) : (
-            <form
-              className="ew-search"
-              onSubmit={(e) => {
-                e.preventDefault();
-                change({
-                  q: String(new FormData(e.currentTarget).get("q") ?? ""),
-                });
+            </span>
+            <Button
+              className="ew-icon-button"
+              aria-label="Refresh register"
+              aria-disabled={current.loading}
+              onClick={() => {
+                if (!current.loading) current.reload();
               }}
             >
-              <ShellIcon name="search" />
-              <input
-                aria-label="Search workload"
-                name="q"
-                type="search"
-                placeholder="Search customer, opportunity or brief"
-                maxLength={100}
-                defaultValue={query.get("q") ?? ""}
-              />
-              <button type="submit" className="sr-only">
-                Search workload
-              </button>
-            </form>
-          )}
-          {!saved && (
-            <WorklistChoice
-              label="Sort workload"
-              prefix="Sort: "
-              value={sort}
-              options={[
-                { id: "updated", label: "Recently changed" },
-                { id: "customer", label: "Customer" },
-              ]}
-              onChange={(value) => change({ sort: value })}
-            />
-          )}
-          <span className="ew-count" role="status">
-            {readNote}
-            {fresh && !saved && data?.observed_at && (
-              <span className="ew-time">
-                {" "}
-                · updated {readTime(data.observed_at)} AEST
-              </span>
-            )}
-          </span>
-          <Button
-            className="ew-icon-button"
-            aria-label="Refresh register"
-            disabled={current.loading}
-            onClick={current.reload}
-          >
-            <DiscoveryRegisterIcon name="refresh" />
-          </Button>
-          <WorklistMenu label="Workload actions" icon="more">
-            <Button data-menu-close onClick={() => setFilterOpen(true)}>
-              Search and filters
+              <DiscoveryRegisterIcon name="refresh" />
             </Button>
-            {!saved && (
-              <Button
-                data-menu-close
-                onClick={() => setSelectMode(!selectMode)}
-              >
-                {selectMode ? "Finish selecting" : "Select opportunities"}
+            <WorklistMenu label="Workload actions" icon="more">
+              <Button data-menu-close onClick={() => setFilterOpen(true)}>
+                Search and filters
               </Button>
-            )}
-          </WorklistMenu>
-        </div>
+              {!saved && (
+                <Button
+                  data-menu-close
+                  onClick={() => setSelectMode(!selectMode)}
+                >
+                  {selectMode ? "Finish selecting" : "Select opportunities"}
+                </Button>
+              )}
+            </WorklistMenu>
+          </div>
+        )}
         {!saved && owner === "mine" && (
           <p className="ew-basis">
             Estimating owner: me · readiness counts use my estimating window.
@@ -589,23 +641,8 @@ function Register({
             </p>
             <Button onClick={current.reload}>Try loading again</Button>
           </section>
-        ) : activeData ? (
+        ) : activeData || current.loading ? (
           <>
-            {!saved && selected.length > 0 && (
-              <div className="ew-selection-bar">
-                <Button onClick={() => setSelectMode(true)}>
-                  {selected.length} selected
-                </Button>
-                <Button
-                  onClick={() => {
-                    setSelection([]);
-                    setSequence(false);
-                  }}
-                >
-                  Clear selection
-                </Button>
-              </div>
-            )}
             <div
               className="ew-results"
               role="region"
@@ -619,7 +656,17 @@ function Register({
               aria-busy={current.loading}
             >
               {saved ? (
-                <SavedGrid data={savedData!} fresh={fresh} />
+                <SavedGrid
+                  data={
+                    savedData ?? {
+                      items: [],
+                      can_create: false,
+                      limit: 100,
+                      next_offset: null,
+                    }
+                  }
+                  fresh={fresh}
+                />
               ) : (
                 <WorkloadGrid
                   items={items}
@@ -627,54 +674,64 @@ function Register({
                   selection={selection}
                   selectMode={selectMode}
                   toggle={toggle}
-                  selectAll={() =>
+                  selectAll={() => {
+                    setSequence(false);
+                    setPanelVisible(true);
                     setSelection(
                       selected.length === items.length
                         ? []
                         : items.map((i) => i.opportunity.id),
-                    )
-                  }
+                    );
+                  }}
                   open={openSnapshot}
                   sort={sort}
                   changeSort={(value) => change({ sort: value })}
                 />
               )}
-              {(saved ? savedData!.items.length : items.length) === 0 && (
-                <section className="ew-notice">
-                  <h2>
-                    {saved
-                      ? "No saved estimates"
-                      : query.get("q") || owner === "mine" || view !== "all"
-                        ? "No workload matches these filters"
-                        : "No permitted estimating workload"}
-                  </h2>
-                  <p>
-                    {saved
-                      ? "Unpriced scope is not zero."
-                      : "An opportunity appearing here is a candidate brief, not an accepted estimating request."}
-                  </p>
-                  <Button
-                    onClick={() =>
-                      change(
-                        saved
-                          ? { estimate_q: "" }
-                          : {
-                              q: "",
-                              view: "",
-                              owner: "",
-                              sort: "",
-                            },
-                      )
-                    }
-                  >
-                    Clear filters
-                  </Button>
-                  <Link href="/sales/opportunities">
-                    Open Sales opportunities
-                  </Link>
-                </section>
-              )}
+              {!current.loading &&
+                (saved ? savedData?.items.length : items.length) === 0 && (
+                  <section className="ew-notice">
+                    <h2>
+                      {saved
+                        ? query.get("estimate_q")
+                          ? "No saved estimates match this search"
+                          : "No saved estimates"
+                        : query.get("q") || owner === "mine" || view !== "all"
+                          ? "No workload matches these filters"
+                          : "No permitted estimating workload"}
+                    </h2>
+                    <p>
+                      {saved
+                        ? "Unpriced scope is not zero."
+                        : "An opportunity appearing here is a candidate brief, not an accepted estimating request."}
+                    </p>
+                    <Button
+                      onClick={() =>
+                        change(
+                          saved
+                            ? { estimate_q: "" }
+                            : {
+                                q: "",
+                                view: "",
+                                owner: "",
+                                sort: "",
+                              },
+                        )
+                      }
+                    >
+                      Clear filters
+                    </Button>
+                    <Link href="/sales/opportunities">
+                      Open Sales opportunities
+                    </Link>
+                  </section>
+                )}
             </div>
+            {current.loading && !activeData && (
+              <p className="ew-loading" role="status">
+                {readNote}
+              </p>
+            )}
             <p className="ew-window">
               {saved
                 ? "Up to 100 permitted estimates, most recently saved first. Each row opens the exact saved revision. Saved sell is in AUD, excluding tax; tax is not calculated. An estimate without cost lines is Not estimated, not zero."
@@ -692,7 +749,7 @@ function Register({
             {readNote}
           </p>
         )}
-        {!saved && selected.length > 0 && !snapshot && (
+        {!saved && selected.length > 0 && panelVisible && !snapshot && (
           <aside className="ew-selection" aria-label="Selected opportunities">
             <header>
               <h2>{selected.length} opportunities selected</h2>
@@ -719,8 +776,11 @@ function Register({
               <Button
                 disabled={!fresh}
                 onClick={(e) => {
-                  setSequence(true);
-                  openSnapshot(selected[0].opportunity.id, e.currentTarget);
+                  openSnapshot(
+                    selected[0].opportunity.id,
+                    e.currentTarget,
+                    true,
+                  );
                 }}
               >
                 Open in sequence
@@ -740,13 +800,16 @@ function Register({
               </small>
             </div>
             <footer>
-              <Button onClick={() => setSelection([])}>Cancel</Button>
+              <Button onClick={clearSelection}>Cancel</Button>
               <Button
                 variant="primary"
                 disabled={!fresh}
                 onClick={(e) => {
-                  setSequence(true);
-                  openSnapshot(selected[0].opportunity.id, e.currentTarget);
+                  openSnapshot(
+                    selected[0].opportunity.id,
+                    e.currentTarget,
+                    true,
+                  );
                 }}
               >
                 Open in sequence
@@ -761,12 +824,22 @@ function Register({
             onClose={closeSnapshot}
             previous={
               index > 0
-                ? () => openSnapshot(navigation[index - 1].opportunity.id)
+                ? () =>
+                    openSnapshot(
+                      navigation[index - 1].opportunity.id,
+                      undefined,
+                      sequence,
+                    )
                 : undefined
             }
             next={
               index >= 0 && index < navigation.length - 1
-                ? () => openSnapshot(navigation[index + 1].opportunity.id)
+                ? () =>
+                    openSnapshot(
+                      navigation[index + 1].opportunity.id,
+                      undefined,
+                      sequence,
+                    )
                 : undefined
             }
           />
@@ -825,7 +898,7 @@ function WorkloadGrid({
           caption="Permitted estimating workload. Open a title to inspect; check rows for sequence or export."
         >
           <colgroup>
-            {[44, 182, 262, 176, 156, 96, 150, 210, 210, 140, 90, 44].map(
+            {[44, 216, 228, 176, 156, 96, 150, 210, 210, 140, 90, 44].map(
               (n, i) => (
                 <col
                   key={i}
@@ -901,7 +974,7 @@ function WorkloadGrid({
                     onChange={() => toggle(i.opportunity.id)}
                   />
                 </td>
-                <td>
+                <td className="ew-reference">
                   <strong>{i.opportunity.display_number}</strong>{" "}
                   <small>v{i.opportunity.version}</small>
                 </td>
@@ -984,6 +1057,13 @@ function WorkloadGrid({
     </>
   );
 }
+const aud = new Intl.NumberFormat("en-AU", {
+  style: "currency",
+  currency: "AUD",
+  maximumFractionDigits: 2,
+});
+const savedSell = (value: string | null) =>
+  value == null ? "Not estimated" : aud.format(Number(value));
 function SavedGrid({ data, fresh }: { data: SavedEstimates; fresh: boolean }) {
   return (
     <>
@@ -993,7 +1073,7 @@ function SavedGrid({ data, fresh }: { data: SavedEstimates; fresh: boolean }) {
           caption="Saved estimates, most recently saved first. Links open the exact saved revision."
         >
           <colgroup>
-            {[44, 150, 250, 192, 100, 180, 44].map((n, i) => (
+            {[44, 216, 216, 160, 100, 180, 44].map((n, i) => (
               <col key={i} style={{ width: n }} />
             ))}
           </colgroup>
@@ -1022,7 +1102,7 @@ function SavedGrid({ data, fresh }: { data: SavedEstimates; fresh: boolean }) {
                 <td>
                   <ShellIcon name="documents" />
                 </td>
-                <td>
+                <td className="ew-reference">
                   <strong>{e.display_number}</strong>{" "}
                   <small>v{e.version}</small>
                 </td>
@@ -1035,15 +1115,7 @@ function SavedGrid({ data, fresh }: { data: SavedEstimates; fresh: boolean }) {
                 </td>
                 <td>{e.customer}</td>
                 <td>{shortDate(e.updated_at)}</td>
-                <td className="ew-amount">
-                  {e.sell_total == null
-                    ? "Not estimated"
-                    : new Intl.NumberFormat("en-AU", {
-                        style: "currency",
-                        currency: "AUD",
-                        maximumFractionDigits: 2,
-                      }).format(Number(e.sell_total))}
-                </td>
+                <td className="ew-amount">{savedSell(e.sell_total)}</td>
                 <td>
                   {fresh && (
                     <Link
@@ -1075,9 +1147,7 @@ function SavedGrid({ data, fresh }: { data: SavedEstimates; fresh: boolean }) {
             <span>
               {e.customer} · {shortDate(e.updated_at)}
             </span>
-            <span>
-              Saved sell, AUD excl. tax: {e.sell_total ?? "Not estimated"}
-            </span>
+            <span>Saved sell, AUD excl. tax: {savedSell(e.sell_total)}</span>
           </div>
         ))}
       </div>

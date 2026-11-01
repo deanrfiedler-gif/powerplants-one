@@ -11,7 +11,7 @@ The [route contract](route-estimating.md) is the current desktop, tablet, phone,
 
 ## Desktop
 
-Follow the [route desktop contract](route-estimating.md#desktop): secondary menu, full-width register, overlapping snapshot and 360 px selection panel. Keep both owners, exact option/revision handovers and bounded counts visible.
+Follow the [route desktop contract](route-estimating.md#desktop): secondary menu, full-width register, overlapping snapshot and 360 px selection panel. Selection replaces the toolbar without moving the register; Hide/Show panel retains selection. Background reads preserve controls and focus; failed reads stay cleared during retries. Keep both owners, exact option/revision handovers and bounded counts visible.
 
 ## Mobile
 
@@ -39,6 +39,6 @@ Reuse the existing Sales link forms, command journal and native Discovery workfl
 
 ## Components, guides and review
 
-The [consumer binding](../component-bindings/2026-10-31-intake-workload.md) records reused shell, register, menu, dialog, form, button and feedback controls with host states. The draft `guide.es.01` and `guide.page.estimating` describe the current route and remain subject to owner review.
+The [consumer binding](../component-bindings/2026-10-31-intake-workload.md) records reused shell, register, menu, dialog, form, button and feedback controls with host states. The draft `guide.es.01` and `guide.page.estimating` describe the current route and remain subject to owner review. The rewritten route guide now lives in Markdown and awaits publication; no carry-over exception or owner review is inferred.
 
 See the [programme handover](../../../delivery/estimating-programme-handover.md) for native proof and remaining policy limits. Source presence, functional verification, application visual comparison, owner/device acceptance and deployment are separate. No test pass changes the review status.

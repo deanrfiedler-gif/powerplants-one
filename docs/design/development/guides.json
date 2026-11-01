@@ -5499,7 +5499,7 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Loading, no matches, no permitted workload, failed reads and denied access are different states. During refresh, earlier results are marked unconfirmed, counts are withheld and row/selection actions are disabled. Failure removes obsolete rows, counts, selection and snapshot; use Try loading again. No edit authority removes Start discovery while permitted context remains readable. Narrow search to find older work outside the bounded window. Resolve stale or uncertain saves in the owning workflow."
+            "Loading, no matches, no permitted workload, failed reads and denied access are different states. Background checks retain confirmed controls and focus. During manual refresh, earlier results are marked unconfirmed, counts are withheld and row/selection actions are disabled. Failure removes obsolete rows, counts, selection and snapshot; use Try loading again. Pending retries keep the error visible and never revive old rows. No edit authority removes Start discovery while permitted context remains readable. Narrow search to find older work outside the bounded window. Resolve stale or uncertain saves in the owning workflow."
           ],
           "steps": [],
           "rows": [],

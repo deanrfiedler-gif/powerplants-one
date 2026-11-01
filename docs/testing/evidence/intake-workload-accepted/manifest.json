@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "recorded_on": "2026-10-31",
+  "recorded_on": "2026-11-01",
   "owner": "Dean Fiedler",
   "comparison_by": "Codex",
   "review_status": "Application captures inspected; owner/device acceptance pending",
-  "base_main": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
-  "implementation_parent": "0b1bde1079959dbc0dc19d533647a99a44a43a5e",
+  "base_main": "26deea85d000878ca8df2c1b7a91e1ffdedd68f6",
+  "implementation_parent": "228a2c570de312cf15ba1303bb036d5cf3cbda66",
   "capture_method": "Real application and shared shell, deterministic synthetic API fixtures, Chrome; licensed icon glyphs hidden only during capture",
   "captures": [
     {
       "path": "captures/desktop-1440-collapsed-snapshot.png",
-      "bytes": 171204,
-      "sha256": "3c47f9c5c4f362f25fae602a8d3617bfb9ab4452844a12846314b13d4a66dd7d"
+      "bytes": 172757,
+      "sha256": "fffc441f6363508fcec9d328326d7e534db0e6de1cfe9db5f368977b44c1b95a"
     },
     {
       "path": "captures/desktop-1440-saved-estimates.png",
-      "bytes": 131204,
-      "sha256": "3d743088108d5574f4ea44a9e0bfc0703ac9a6b7a7e9430051e8703205b3538c"
+      "bytes": 133348,
+      "sha256": "11de2c5648404f0028fad4238958f8b84ad1a80c3a11742c92ba8c8a9ebb6a02"
     },
     {
       "path": "captures/desktop-1440-selection.png",
-      "bytes": 193203,
-      "sha256": "b1cb2d3550474534f491e6ed143251d7ea353e6b80003e484edca594cd08064e"
+      "bytes": 187728,
+      "sha256": "1578941348968886a93c686084c0fd20e8296d4f9e1ccd907517e4f706ba041e"
     },
     {
       "path": "captures/desktop-1440-snapshot.png",
-      "bytes": 181440,
-      "sha256": "5ed6f28ff7885c158f41c1826755020a0faccd41938ee1cbc1ad591c9f41c47d"
+      "bytes": 182175,
+      "sha256": "c17b35dc5e4296923fe99866c4e581970846e256d01aef3b4b0cfa23c61d51e4"
     },
     {
       "path": "captures/desktop-1440-workload.png",
-      "bytes": 154655,
-      "sha256": "15feffb4f8a3a5f4e821c503e01be787db6e54e47a46ea640395167da0602933"
+      "bytes": 155798,
+      "sha256": "26dce2caf00261090a834d161053b8039476317dfe0548040da1e4b27ea52d85"
     },
     {
       "path": "captures/phone-320-saved-estimates.png",
-      "bytes": 63320,
-      "sha256": "a84738e980df7be30d4d6a45628a89e0819d5585a4673834ff6b5c2cfcae7988"
+      "bytes": 64887,
+      "sha256": "088f4e4bd42c3a7f4b83578ff85856ebab727d83de289bffa72731a52e0662ac"
     },
     {
       "path": "captures/phone-320-snapshot.png",
@@ -50,13 +50,13 @@
     },
     {
       "path": "captures/phone-390-saved-estimates.png",
-      "bytes": 64557,
-      "sha256": "2c1787f94725db37061e53d142af7149c3ca9a00f044108109345f3daf98ac05"
+      "bytes": 66120,
+      "sha256": "36a2ce6ea7917adf7fbf85430831a30a34fdffc8254802b1afc18dd232c52cf2"
     },
     {
       "path": "captures/phone-390-snapshot.png",
-      "bytes": 55614,
-      "sha256": "92ef478bb4a4dc06a70d3f9789198158d742a87337e3362b7993804b3215700e"
+      "bytes": 54371,
+      "sha256": "8b66d4b68f0931b4f8b6c408c226fbfd892f5a1f5b10e5736c17330ce3625dc8"
     },
     {
       "path": "captures/phone-390-workload.png",
@@ -65,8 +65,8 @@
     },
     {
       "path": "captures/tablet-1024-saved-estimates.png",
-      "bytes": 85397,
-      "sha256": "cdef910c8b55ff60231e88ab594ab30b057e13ee6a23f1cb9a1db99199ef755d"
+      "bytes": 87079,
+      "sha256": "e84beb58466631e6fb84b3c22acd2b2bf6fa6753397d9292e98c1eb0871a3795"
     },
     {
       "path": "captures/tablet-1024-snapshot.png",
@@ -75,35 +75,30 @@
     },
     {
       "path": "captures/tablet-1024-workload.png",
-      "bytes": 106916,
-      "sha256": "9a3f045688f58a26ef9159a154ee1f90c25a76a12d321dfe191d5ce5ed11ed40"
+      "bytes": 109382,
+      "sha256": "71982ee722697f73e463ce770a3743a6b3e7ec49eb6e9079921c455fa4f35d6a"
     }
   ],
   "sources": [
     {
       "path": "src/components/estimating-workload.tsx",
-      "bytes": 36149,
-      "sha256": "a8d2135371a45cb5d21be2f6290904a15a96075923668b5910408ebadbd315e0"
+      "bytes": 38685,
+      "sha256": "a11665e69834f25ca9c3d31d87f604aba97ffbeb07a2f9b9c385b5ec97a1a340"
     },
     {
       "path": "src/components/estimating-workload.css",
-      "bytes": 22153,
-      "sha256": "c27a5fb592d8b77b4fd91976dba7920cc107a8cf02871807def496cb3c38daed"
+      "bytes": 23331,
+      "sha256": "95c99025cc852683e2fd11faeea47aecf9c0108f955a4bd7a7961865132bfe00"
     },
     {
       "path": "src/components/estimating-workload-snapshot.tsx",
-      "bytes": 14558,
-      "sha256": "fd9bcbddf5077eeada48dd0fbdd59156b5c7f8ebece2f6b0147a820d52b31566"
+      "bytes": 14621,
+      "sha256": "81c1f70ec27be19c24eb7d853db89fb041681e1d591563f61a78492e74a46bd2"
     },
     {
       "path": "src/components/estimating-workload-model.ts",
       "bytes": 3612,
       "sha256": "031f0e2eb512a10447ada5dbf06d52e452f0dc3b3614994d91cf7fd578d694aa"
-    },
-    {
-      "path": "src/components/estimating-workload-guide.ts",
-      "bytes": 5362,
-      "sha256": "606fa0538c25eed90a5c6bf82f60708acf9a3e4cea48ca9d457de8a7d06a2fe5"
     },
     {
       "path": "src/estimating/workload.ts",
@@ -132,24 +127,44 @@
     },
     {
       "path": "tests/browser/estimating-workload.spec.ts",
-      "bytes": 13946,
-      "sha256": "bb388632ab470db2ae0b6c63fd9ec0bf8dfec743b3927a765d5a6db7cf7f8f68"
+      "bytes": 14412,
+      "sha256": "ae7efb83a166c1696c143f97ca748d3090a03b71d35ab1567218d938d1911347"
     },
     {
       "path": "tests/browser/estimating-workload-states.spec.ts",
-      "bytes": 4004,
-      "sha256": "95768f1b74d7217f51db08306119a57e9c4a2834ed82e1974e2960e1f9e8602a"
+      "bytes": 4291,
+      "sha256": "b69ab2daada428985ca62df069797105e1ec69e3f43e19614bb2b9830994b16b"
     },
     {
       "path": "tests/browser/estimating-workload-presentation.spec.ts",
-      "bytes": 5709,
-      "sha256": "4b2a424d9d2fd151ff46bcfbbbf71bf71ee3cacd07c9faf3e9d2c7a453038a3a"
+      "bytes": 5782,
+      "sha256": "1d9440896d87da6a799d8710b375cda8b8e5757fdcd0007215518b9bcfc6142b"
     },
     {
       "path": "tests/helpers/estimating-workload-presentation.ts",
-      "bytes": 6300,
-      "sha256": "cbed9103eaf8246008092cb5f2e972935b18ff44dee9cc49f542bc3595f7629f"
+      "bytes": 6836,
+      "sha256": "b554e99dea4cac283a81e3b5c960ff52779a62c2384cbdeb8997063359540d26"
+    },
+    {
+      "path": "docs/guides/pages/guide.page.estimating.md",
+      "bytes": 6905,
+      "sha256": "50edddba702b0e430d65d6b4c4e079375bc7d64c870ce3e04e56a13c24143c76"
+    },
+    {
+      "path": "src/components/estimating-register-read.ts",
+      "bytes": 1930,
+      "sha256": "c642ce9c5a425f0ae83e6bd27e0a8835294d7c5b111449bbdcd8d23a9224f97d"
+    },
+    {
+      "path": "tests/browser/estimating-workload-review.spec.ts",
+      "bytes": 10249,
+      "sha256": "0d9f6d52afe214b1468a97e32d128c7e018837709bdc344db56eb29727486d83"
+    },
+    {
+      "path": "docs/standards/ui-baselines/module-integrations/intake-workload-accepted.json",
+      "bytes": 931,
+      "sha256": "eecafdb03cc27a3879341d59af57f10789edbc5a1fac5618e83d9d9ebde446d5"
     }
   ],
-  "review_correction": "Repeated after Sales-brief non-disclosure and Brisbane-year corrections; original captures remain in Git history."
+  "review_correction": "Replaced application captures after the ten findings in review 5721353147; complete reference/version, stable selection toolbar, read time, owned readiness reason and phone sell. Owner acceptance remains separate."
 }

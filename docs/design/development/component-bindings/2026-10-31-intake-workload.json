@@ -22,7 +22,10 @@
           "description": "40 px workload rows with fixed end columns; saved exact versions; tablet horizontal containment and 80 px phone rows."
         }
       ],
-      "used_on": ["scope:ES-01", "route:/estimating"],
+      "used_on": [
+        "scope:ES-01",
+        "route:/estimating"
+      ],
       "dependencies": [
         "src/components/estimating-workload.tsx",
         "src/components/estimating-workload.css"
@@ -36,8 +39,13 @@
           "description": "All/My/readiness/Saved views, supported search and sort, separate bounded counts, compact phone picker."
         }
       ],
-      "used_on": ["scope:ES-01", "route:/estimating"],
-      "dependencies": ["src/components/estimating-workload.tsx"]
+      "used_on": [
+        "scope:ES-01",
+        "route:/estimating"
+      ],
+      "dependencies": [
+        "src/components/estimating-workload.tsx"
+      ]
     },
     "dialog": {
       "states": [
@@ -47,7 +55,10 @@
           "description": "Right-aligned native modal capped at the both-menus-open width, full screen phone, Escape/focus return; filter WorklistPanel."
         }
       ],
-      "used_on": ["scope:ES-01", "route:/estimating"],
+      "used_on": [
+        "scope:ES-01",
+        "route:/estimating"
+      ],
       "dependencies": [
         "src/components/estimating-workload-snapshot.tsx",
         "src/components/estimating-workload.css"
@@ -68,12 +79,13 @@
         {
           "id": "intake-workload-refresh",
           "label": "Workload freshness and authority",
-          "description": "Loading, no matches, no permitted rows, denied, failed read and stale refresh; no obsolete rows/counts after failure."
+          "description": "Background checks preserve confirmed controls/focus; manual refresh withholds actions. Failed reads clear obsolete rows/counts through pending retries. Loading, denied, no matches and no permitted rows remain distinct."
         }
       ],
       "dependencies": [
         "src/components/estimating-workload.tsx",
-        "src/estimating/workload.ts"
+        "src/estimating/workload.ts",
+        "src/components/estimating-register-read.ts"
       ]
     },
     "application-shell": {
@@ -84,7 +96,9 @@
           "description": "Reuse secondary menu and phone view/filter registration; menu-collapse state survives view changes."
         }
       ],
-      "used_on": ["route:/estimating"],
+      "used_on": [
+        "route:/estimating"
+      ],
       "dependencies": [
         "src/components/estimating-workload.tsx",
         "src/shell/module-workspaces.ts"

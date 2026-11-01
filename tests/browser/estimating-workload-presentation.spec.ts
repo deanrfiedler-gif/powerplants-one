@@ -13,6 +13,7 @@ for (const width of [1440, 1024, 390, 320])
       width,
       height: width === 1440 ? 900 : width === 1024 ? 768 : 844,
     });
+    await page.clock.setFixedTime(new Date("2026-10-11T00:42:00.000Z"));
     const fixture = await mountWorkloadPresentation(page);
     const rows = page.locator(width < 781 ? ".ew-phone-open" : ".ew-row-title");
     await expect(rows).toHaveCount(7);

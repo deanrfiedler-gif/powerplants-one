@@ -78,7 +78,16 @@ test("ES01 Saved estimates withholds stale links and clears failed or denied res
       },
     });
   });
-  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  if (page.viewportSize()!.width < 781) {
+    await page.getByRole("button", { name: /^Filter/ }).click();
+    await page
+      .getByRole("dialog", { name: /filters$/ })
+      .getByRole("button", { name: "Refresh", exact: true })
+      .click();
+  } else
+    await page
+      .getByRole("button", { name: "Refresh register", exact: true })
+      .click();
   await expect(
     page
       .getByText("Refreshing — earlier results unconfirmed", { exact: true })
