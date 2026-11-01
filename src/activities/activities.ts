@@ -544,6 +544,8 @@ export async function activityCommand(
       // Recover an accepted original before this new-operation guard. Native
       // owner start/complete/cancel remain available; adopted tasks use R2.
       if (action === "update") {
+        if (await isEscalationChase(c,p,a.id))
+          throw new AppError(422,"SourceWorkflowRequired","The case owns this reminder’s owner and reply-expected date.");
         if (await isManagedFindingActivity(c,p,a.id))
           throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
         await legacyFindingActivityAuthority(c,p,a,"owner_id" in changes ? changes.owner_id : undefined);
@@ -553,6 +555,10 @@ export async function activityCommand(
     "Activity",
     names[action][1],
   );
+}
+async function isEscalationChase(c: QueryClient,p: Principal,id:string) {
+  if(!(await c.query("SELECT to_regclass('ppo.service_escalation_cases') AS table_name")).rows[0].table_name) return false;
+  return !!(await c.query("SELECT 1 FROM ppo.service_escalation_cases WHERE workspace_id=$1 AND chase_activity_id=$2",[p.workspace_id,id])).rowCount;
 }
 export async function readActivity(p: Principal, id: string) {
   return readActivityWithClient(database(), p, id);
@@ -608,6 +614,7 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     can_edit:
       ["Open", "InProgress"].includes(a.status) &&
       (await canEditFindingActivity(c,p,a)) &&
+      !(await isEscalationChase(c,p,a.id)) &&
       (await hasPermission(
         c,
         p,

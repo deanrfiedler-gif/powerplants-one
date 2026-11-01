@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { customerDeliveryBindings } from "../helpers/customer-delivery-contract";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
@@ -46,10 +47,10 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
   const readinessV3 = "94000000-0000-4000-8000-000000000003";
   assert.equal(after.policy_versions.filter((r: {id:string}) => r.id === readinessV3).length, 1);
   assert.equal(after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id === readinessV3).length, 10);
-  assert.deepEqual(after.seed_receipts.filter((r: {version:number}) => r.version > 117).map((r: {version:number}) => r.version), [120, 121]);
+  assert.deepEqual(after.seed_receipts.filter((r: {version:number}) => r.version > 117).map((r: {version:number}) => r.version), [120, 121, 124]);
   after.policy_versions = after.policy_versions.filter((r: {id:string}) => r.id !== readinessV3);
   after.policy_criteria = after.policy_criteria.filter((r: {policy_version_id:string}) => r.policy_version_id !== readinessV3);
-  after.seed_receipts = after.seed_receipts.filter((r: {version:number}) => ![120, 121].includes(r.version));
+  after.seed_receipts = after.seed_receipts.filter((r: {version:number}) => ![120, 121, 124].includes(r.version));
   assert.deepEqual(after.contact_outcomes, before.contact_outcomes.map((r: Record<string,unknown>) => ({...r,purpose:"DateAgreement",site_checks:null})));
   after.contact_outcomes = before.contact_outcomes;
   // 0122 gives every existing work order an unset typed project link and changes nothing else.
@@ -60,10 +61,14 @@ test("0118 upgrades populated 0117 without changing any existing row and keeps e
   const shape = (rs: { message_class: string; binding: string }[]) => rs.map(r => `${r.message_class}:${r.binding}`).sort(new Intl.Collator("en").compare);
   assert.deepEqual(shape(after.customer_email_bindings.filter((r: { message_class: string; binding: string }) => !oldBindings.has(`${r.message_class}:${r.binding}`))), shape(customerDeliveryBindings));
   after.customer_email_bindings = before.customer_email_bindings;
+  const expectedCaseGrants = escalationSeedGrants(before.permission_grants);
+  const grantShape=(xs: Record<string,unknown>[])=>xs.map(x=>JSON.stringify(x,Object.keys(x).sort())).sort();
+  assert.deepEqual(grantShape(after.permission_grants.filter((g:Record<string,unknown>)=>g.capability==='service_escalation.record')),grantShape(expectedCaseGrants));
+  after.permission_grants=after.permission_grants.filter((g:Record<string,unknown>)=>g.capability!=='service_escalation.record');
   assert.deepEqual(after, before);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(upgraded.slice(0, ledger.length), ledger);
-  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120, 121, 122]);
+  assert.deepEqual(upgraded.slice(ledger.length).map((r) => r.version), [118, 119, 120, 121, 122, 124]);
   assert.deepEqual(
     await rows(
       "SELECT person_id,organisation_id,label,entered,e164,region,needs_checking,is_primary,position,created_by,updated_by FROM ppo.contact_numbers ORDER BY person_id",

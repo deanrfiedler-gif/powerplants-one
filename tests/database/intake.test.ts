@@ -1,6 +1,6 @@
 import { recordTicketStatement, ticketStatements } from "../../src/service/statements";
 import assert from "node:assert/strict";
-import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
 import {
@@ -1216,13 +1216,14 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   await seed();
   const grantsAfter = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), grantIds = new Set(grantsBefore.map(g => g.id));
   assert.deepEqual(grantsAfter.filter(g => grantIds.has(g.id)), grantsBefore);
-  assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id)), agentAskSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }]);
+  assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id) && g.capability !== "service_escalation.record"), agentAskSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(grantsAfter.filter(g => !grantIds.has(g.id) && g.capability === "service_escalation.record"), escalationSeedGrants(grantsBefore).sort((a,b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }, { version: 124 }]);
   assert.deepEqual(await snapshot(), before);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   const previousVersions = new Set(ledger.map((row) => row.version));
   assert.deepEqual(migrated.filter((row) => previousVersions.has(row.version)), ledger);
-  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] : through === 113 ? [112, 114, 115, 116, 117, 118, 119, 120, 121, 122] : through === 114 ? [112, 115, 116, 117, 118, 119, 120, 121, 122] : through === 115 ? [112, 116, 117, 118, 119, 120, 121, 122] : through === 116 ? [112, 117, 118, 119, 120, 121, 122] : through === 117 ? [112, 118, 119, 120, 121, 122] : through === 118 ? [112, 119, 120, 121, 122] : through === 119 ? [112, 120, 121, 122] : [112, 121, 122]);
+  assert.deepEqual(migrated.filter((row) => !previousVersions.has(row.version)).map((row) => row.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 124] : through === 113 ? [112, 114, 115, 116, 117, 118, 119, 120, 121, 122, 124] : through === 114 ? [112, 115, 116, 117, 118, 119, 120, 121, 122, 124] : through === 115 ? [112, 116, 117, 118, 119, 120, 121, 122, 124] : through === 116 ? [112, 117, 118, 119, 120, 121, 122, 124] : through === 117 ? [112, 118, 119, 120, 121, 122, 124] : through === 118 ? [112, 119, 120, 121, 122, 124] : through === 119 ? [112, 120, 121, 122, 124] : [112, 121, 122, 124]);
   assert.deepEqual((await triageTicket(p, input.id, command)).receipt, original.receipt);
   assert.equal((await ticketStatements(p, input.id)).items.length, 0);
   const upgraded = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");

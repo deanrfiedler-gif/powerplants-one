@@ -2961,13 +2961,14 @@
     },
     {
       "key": "scope:SV-08",
-      "title": "Remote diagnosis and OEM escalation",
+      "title": "Remote diagnosis and escalation",
       "kind": "scope",
       "module": "SV",
-      "summary": "Implement remote diagnosis and OEM escalation with exact configuration, attempted troubleshooting, response evidence and owned next actions.",
+      "summary": "Synthetic finding-linked cases, technical evidence, recorded manufacturer correspondence and owned next actions.",
       "path": "/service/escalations",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/service/escalations/page.tsx"
       ],
       "guide_key": "guide.sv.08",
       "design_path": "docs/design/development/pages/scope-sv-08.md",
@@ -2984,11 +2985,14 @@
         "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/escalations-figma-design.md"
+        "docs/decisions/escalations-figma-design.md",
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations.css"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Implementation under validation",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -2998,7 +3002,8 @@
         "scope:SV-02",
         "scope:EQ-01",
         "scope:EQ-03",
-        "scope:SV-07"
+        "scope:SV-07",
+        "route:/service/escalations"
       ],
       "reviewer": null
     },
@@ -16638,6 +16643,49 @@
       "owner": "Dean Fiedler",
       "build_rank": null,
       "related_keys": [
+        "scope:SV-07"
+      ]
+    },
+    {
+      "key": "route:/service/escalations",
+      "title": "Remote diagnosis and escalation",
+      "kind": "route",
+      "module": "SV",
+      "summary": "Synthetic finding-linked cases, technical evidence, recorded manufacturer correspondence and owned next actions.",
+      "path": "/service/escalations",
+      "source_paths": [
+        "src/app/(business)/service/escalations/page.tsx"
+      ],
+      "guide_key": "guide.route-service-escalations",
+      "design_path": "docs/design/development/pages/route-service-escalations.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-02-Desktop-Diagnosis-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-03-Desktop-Record-As-Sent-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-04-Desktop-Reply-To-Act-On-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-06-Phone-List-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-07-Phone-Reply-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-08-Phone-320-Reply-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "scope_status": "New source; editorial review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation under validation",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SV-08",
         "scope:SV-07"
       ]
     }

@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -146,10 +147,11 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
         "seed_receipts",
       ].map((t) =>
         rows(
-          `SELECT to_jsonb(t) AS row FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (120,121)" : ""} ORDER BY to_jsonb(t)::text`,
+          `SELECT to_jsonb(t) AS row FROM ppo.${t} t${t === "permission_grants" ? " WHERE t.capability<>'service_escalation.record'" : t === "seed_receipts" ? " WHERE t.version NOT IN (120,121,124)" : ""} ORDER BY to_jsonb(t)::text`,
         ),
       ),
     );
+  const caseGrantBase=(await database().query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
   const before = await snapshotTables(),
     original = (
       await rows(
@@ -165,6 +167,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
   await migrate();
   await seed();
   assert.deepEqual(await snapshotTables(), before);
+  assert.deepEqual((await database().query("SELECT * FROM ppo.permission_grants WHERE capability='service_escalation.record' ORDER BY id")).rows,escalationSeedGrants(caseGrantBase).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=120")).rows, [{version:120}]);
   assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version=121"), [{ version: 121 }]);
   const upgraded = (
@@ -194,7 +197,7 @@ test("0115 preserves populated legacy attempts, instrument snapshots, hashes and
     await rows(
       "SELECT version FROM public.ppo_migrations WHERE version>113 ORDER BY version",
     ),
-    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }],
+    [{ version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 124 }],
   );
   await assert.rejects(
     database().query(

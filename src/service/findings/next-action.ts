@@ -1,3 +1,4 @@
+import type { PoolClient } from "pg";
 import { randomUUID, createHash } from "node:crypto";
 import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
@@ -78,7 +79,7 @@ export function nextActionInput(key: string, input: unknown) {
   };
 }
 
-async function sourceContext(c: QueryClient, p: Principal, key: string) {
+export async function sourceContext(c: QueryClient, p: Principal, key: string) {
   await requireCapability(c, p, "shared.read");
   await requireCapability(c, p, "service.work_order.read");
   await requireCapability(c, p, "schedule.read");
@@ -199,117 +200,7 @@ export async function setNextAction(p: Principal, key: string, input: unknown) {
     command,
     nextActionCommand,
     (c) => writeAuthority(c, p, key),
-    async (c, ctx) => {
-      if (ctx.source_token !== command.source_token)
-        throw new AppError(
-          409,
-          "FindingChanged",
-          "The source changed. Keep your entries and reload the finding.",
-        );
-      if ((ctx.authority.activity?.version ?? 0) !== command.expected_version)
-        throw new AppError(
-          409,
-          "VersionConflict",
-          "This Activity changed. Keep your entries and compare its current version.",
-        );
-      const reason = blocked(ctx);
-      if (reason)
-        throw new AppError(
-          422,
-          reason,
-          "Use the owning workflow to resolve this source or terminal Activity.",
-        );
-      const a = ctx.authority.activity;
-      const changes = {
-        owner_id: command.owner_id,
-        summary: command.instruction,
-        due_at: command.due_at,
-        due_needed: false,
-        due_date_only: false,
-      };
-      const fields: ActivityInput = a
-        ? { ...a, ...changes, links: await activityLinks(c, p, a.id) }
-        : {
-            id: randomUUID(),
-            company_id: ctx.item.company_id,
-            site_id: ctx.item.site.id,
-            kind: "TechnicalFollowUp",
-            access_class: "RestrictedService",
-            ...changes,
-            links: [
-              { object_type: "Site", object_id: ctx.item.site.id },
-              ...(ctx.item.equipment
-                ? [
-                    {
-                      object_type: "Asset" as const,
-                      object_id: ctx.item.equipment.id,
-                    },
-                  ]
-                : []),
-            ],
-          };
-      await authoriseActivityInput(c, p, fields);
-      const owner = await scopedOwner(
-        c,
-        p,
-        fields.owner_id,
-        fields.company_id,
-        fields.site_id ?? undefined,
-        "activity.edit",
-      );
-      await authorise(c, owner, ctx.source);
-      const previousEvidence = a
-        ? await activityRequirements(c, p, a.id)
-        : null;
-      const result = a
-        ? await mutateActivity(
-            c,
-            p,
-            a,
-            command.expected_version,
-            changes,
-            "update",
-          )
-        : await insertActivity(c, p, fields);
-      await c.query(
-        `INSERT INTO ppo.service_finding_activity_bindings(workspace_id,source,source_id,parent_id,activity_id)
-        VALUES($1,$2,$3,$4,$5) ON CONFLICT(workspace_id,source,source_id) DO NOTHING`,
-        [
-          p.workspace_id,
-          ctx.source.source,
-          ctx.source.id,
-          ctx.source.parent_id,
-          result.id,
-        ],
-      );
-      await c.query(
-        `INSERT INTO ppo.service_finding_action_details(workspace_id,activity_id,required_evidence,updated_by)
-        VALUES($1,$2,$3,$4) ON CONFLICT(workspace_id,activity_id) DO UPDATE SET
-        required_evidence=EXCLUDED.required_evidence,updated_by=EXCLUDED.updated_by,updated_at=clock_timestamp()`,
-        [p.workspace_id, result.id, command.required_evidence, p.actor_id],
-      );
-      return {
-        ...result,
-        audit_details: {
-          ...result.audit_details,
-          finding_key: `${command.source}:${command.source_id}`,
-          source_token: command.source_token,
-          before: a
-            ? {
-                ...result.audit_details.before,
-                required_evidence: previousEvidence,
-              }
-            : null,
-          after: {
-            ...(result.audit_details?.after ?? {
-              ...changes,
-              status: result.state,
-            }),
-            required_evidence: command.required_evidence,
-          },
-        },
-      };
-    },
+    (c, ctx) => applyFindingNextAction(c, p, command, ctx),
     "Activity",
     command.expected_version === 0 ? "ActivityCreated" : "ActivityUpdated",
   );
@@ -334,4 +225,117 @@ export async function nextActionReceiptAuthority(
   if (!audit) throw unavailable();
   const ctx = await writeAuthority(c, p, audit.key);
   if (ctx.authority.activity?.id !== activityId) throw unavailable();
+}
+
+// Caller must authorise the native source and the command-specific write duty.
+export async function applyFindingNextAction(c: PoolClient, p: Principal, command: ReturnType<typeof nextActionInput>, ctx: Awaited<ReturnType<typeof sourceContext>>) {
+  if (ctx.source_token !== command.source_token)
+    throw new AppError(
+      409,
+      "FindingChanged",
+      "The source changed. Keep your entries and reload the finding.",
+    );
+  if ((ctx.authority.activity?.version ?? 0) !== command.expected_version)
+    throw new AppError(
+      409,
+      "VersionConflict",
+      "This Activity changed. Keep your entries and compare its current version.",
+    );
+  const reason = blocked(ctx);
+  if (reason)
+    throw new AppError(
+      422,
+      reason,
+      "Use the owning workflow to resolve this source or terminal Activity.",
+    );
+  const a = ctx.authority.activity;
+  const changes = {
+    owner_id: command.owner_id,
+    summary: command.instruction,
+    due_at: command.due_at,
+    due_needed: false,
+    due_date_only: false,
+  };
+  const fields: ActivityInput = a
+    ? { ...a, ...changes, links: await activityLinks(c, p, a.id) }
+    : {
+        id: randomUUID(),
+        company_id: ctx.item.company_id,
+        site_id: ctx.item.site.id,
+        kind: "TechnicalFollowUp",
+        access_class: "RestrictedService",
+        ...changes,
+        links: [
+          { object_type: "Site", object_id: ctx.item.site.id },
+          ...(ctx.item.equipment
+            ? [
+                {
+                  object_type: "Asset" as const,
+                  object_id: ctx.item.equipment.id,
+                },
+              ]
+            : []),
+        ],
+      };
+  await authoriseActivityInput(c, p, fields);
+  const owner = await scopedOwner(
+    c,
+    p,
+    fields.owner_id,
+    fields.company_id,
+    fields.site_id ?? undefined,
+    "activity.edit",
+  );
+  await authorise(c, owner, ctx.source);
+  const previousEvidence = a
+    ? await activityRequirements(c, p, a.id)
+    : null;
+  const result = a
+    ? await mutateActivity(
+        c,
+        p,
+        a,
+        command.expected_version,
+        changes,
+        "update",
+      )
+    : await insertActivity(c, p, fields);
+  await c.query(
+    `INSERT INTO ppo.service_finding_activity_bindings(workspace_id,source,source_id,parent_id,activity_id)
+    VALUES($1,$2,$3,$4,$5) ON CONFLICT(workspace_id,source,source_id) DO NOTHING`,
+    [
+      p.workspace_id,
+      ctx.source.source,
+      ctx.source.id,
+      ctx.source.parent_id,
+      result.id,
+    ],
+  );
+  await c.query(
+    `INSERT INTO ppo.service_finding_action_details(workspace_id,activity_id,required_evidence,updated_by)
+    VALUES($1,$2,$3,$4) ON CONFLICT(workspace_id,activity_id) DO UPDATE SET
+    required_evidence=EXCLUDED.required_evidence,updated_by=EXCLUDED.updated_by,updated_at=clock_timestamp()`,
+    [p.workspace_id, result.id, command.required_evidence, p.actor_id],
+  );
+  return {
+    ...result,
+    audit_details: {
+      ...result.audit_details,
+      finding_key: `${command.source}:${command.source_id}`,
+      source_token: command.source_token,
+      before: a
+        ? {
+            ...result.audit_details.before,
+            required_evidence: previousEvidence,
+          }
+        : null,
+      after: {
+        ...(result.audit_details?.after ?? {
+          ...changes,
+          status: result.state,
+        }),
+        required_evidence: command.required_evidence,
+      },
+    },
+  };
 }

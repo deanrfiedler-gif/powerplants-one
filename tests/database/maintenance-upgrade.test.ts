@@ -13,7 +13,7 @@ import { draftBytes, readQuoteJob, runQuoteJob } from "../../src/estimating/work
 import { crmCreate } from "../helpers/crm";
 import { estimateInput, quoteCommand } from "../helpers/estimating";
 import { principal, rows } from "../helpers/maintenance";
-import { maintenanceSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { maintenanceSeedGrants, conversationSeedGrants, agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { snapshot } from "../helpers/policy-commands";
 import { recoverSchema } from "../helpers/recover-schema";
 
@@ -73,7 +73,7 @@ test("late reserved Maintenance migration preserves the current schema, original
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"), seeds);
   const everything = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
   // Seed 108 copies Opportunity and Project reads as conversation duties; everything else is this suite's subject.
-  const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation."));
+  const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation.") && g.capability !== "service_escalation.record");
   assert.deepEqual(actual.filter((g) => ids.has(g.id)), grants);
   const normal = (g: Record<string, unknown>) => Object.fromEntries(Object.entries(g).filter(([k]) => k !== "id"));
   const sorted = (g: Record<string, unknown>[]) => g.map(normal).map((r) => JSON.stringify(r, Object.keys(r).sort())).sort();
@@ -85,6 +85,8 @@ test("late reserved Maintenance migration preserves the current schema, original
   assert.deepEqual(shape(conversationAdded), shape(grants.some((g) => String(g.capability).startsWith("conversation.")) ? [] : conversationSeedGrants([...grants, ...maintenanceSeedGrants(grants)])));
   assert.deepEqual(shape(everything.filter(g => g.capability === "conversation.agent.ask" && !ids.has(g.id))),
     shape(seeds.some(s => s.version === 110) ? [] : agentAskSeedGrants([...grants, ...maintenanceSeedGrants(grants), ...conversationAdded])));
+  assert.deepEqual(shape(everything.filter(g => g.capability === "service_escalation.record" && !ids.has(g.id))),
+    shape(seeds.some(s => s.version === 124) ? [] : escalationSeedGrants([...grants, ...maintenanceSeedGrants(grants), ...conversationAdded])));
   const extended = (await rows("SELECT pg_get_functiondef('ppo.identity_has_typed_record()'::regprocedure) AS definition"))[0].definition;
   for (const branch of identity.match(/WHEN '[^']+'[^\n]*/g) ?? []) assert.ok(extended.includes(branch), branch);
   assert.match(extended, /ServiceAgreement/);

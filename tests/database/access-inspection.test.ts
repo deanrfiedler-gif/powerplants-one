@@ -20,7 +20,7 @@ import {
   compareAccessRole,
 } from "../../src/access/service";
 import { capabilityLabels } from "../../src/access/capabilities";
-import { accessInspectionSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -71,6 +71,7 @@ test("AD01-01 populated 0077 upgrade preserves identities and grants; reseed add
   );
   // This historical proof stops at 0078: no conversation.post source or seed 110 is present.
   assert.deepEqual(shape(upgraded.filter(g => g.capability === "conversation.agent.ask")), shape(agentAskSeedGrants(grants)));
+  assert.deepEqual(shape(upgraded.filter(g => g.capability === "service_escalation.record")), shape(escalationSeedGrants(grants)));
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);
   const next = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
