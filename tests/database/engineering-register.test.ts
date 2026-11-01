@@ -21,6 +21,14 @@ import { engineeringInput, engineeringUpdate } from "../helpers/engineering";
 import { projectInput } from "../helpers/projects";
 import { CRM } from "../helpers/crm";
 import { MATERIALS } from "../helpers/engineering-materials";
+import { sourceCommand } from "../../src/engineering/materials/commands";
+import { controlCommand } from "../../src/engineering/control/commands";
+import { controlRead } from "../../src/engineering/control/reads";
+import {
+  command,
+  saveFields,
+  basisContent,
+} from "../helpers/engineering-control";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Only disposable ppo_synthetic_test");
@@ -402,4 +410,255 @@ test("EN01 final source check refuses late scope revocation before any captured 
       [s.p.actor_id],
     );
   }
+});
+
+test("EN01 all five register queues and attention follow native authorship, assigned review and exact issue authority", async () => {
+  // Use the already seeded permitted site; this proof concerns Engineering queue
+  // transitions, not the separate shared Site creation/timezone validator.
+  const s = await scenario();
+  const pkg = await s.add({
+    owner_id: MATERIALS.author.id,
+    required_date: "2099-01-01",
+    action_due: "2099-01-01",
+  });
+  const author = await principal("materials-author");
+  const reviewer = await principal("materials-reviewer");
+  const issuer = await principal("materials-release");
+  const query = { q: pkg.id };
+  await coordinateEngineering(s.p, pkg.id, {
+    ...engineeringUpdate(),
+    owner_id: MATERIALS.author.id,
+    state: "In design",
+  });
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "all" }))
+      .matching_count,
+    1,
+  );
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "mine" }))
+      .matching_count,
+    1,
+  );
+  assert.equal(
+    (await engineeringRegister(reviewer, { ...query, view: "mine" }))
+      .matching_count,
+    0,
+  );
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "released" }))
+      .matching_count,
+    0,
+  );
+
+  const source = randomUUID();
+  await sourceCommand(
+    s.p,
+    pkg.id,
+    command({
+      action: "publish",
+      id: source,
+      kind: "DesignBasis",
+      reference: "SYN-INPUT-" + source.slice(0, 8),
+      title: "SYN fictional Engineering queue input",
+      revision: "A",
+      file_version: "1",
+      permitted_purpose: "DesignCoordination",
+      content: "SYNTHETIC queue proof. No operational engineering authority.",
+    }),
+  );
+  const basis = saveFields("basis", basisContent(source));
+  await controlCommand(author, pkg.id, command(basis));
+  await controlCommand(
+    author,
+    pkg.id,
+    command(
+      saveFields("deliverable", {
+        schema_version: 1,
+        source_ids: [source],
+        discipline: "Hydraulics",
+        document_id: null,
+        prerequisite: "SYN exact input",
+        prerequisite_evidence: null,
+        next_action: "Obtain prerequisite",
+        planned_hours: null,
+        effort_source: null,
+        authorised_hours: null,
+        authorisation_reference: null,
+      }),
+    ),
+  );
+  const authorQueue = await engineeringRegister(author, {
+    ...query,
+    view: "author",
+  });
+  assert.equal(authorQueue.matching_count, 1);
+  assert.equal(authorQueue.counts.author, 1);
+  assert.equal(authorQueue.items[0].technical.blocked, 1);
+  assert.equal(
+    (await engineeringRegister(author, { ...query, attention: "true" }))
+      .matching_count,
+    1,
+  );
+  assert.equal(
+    (await engineeringRegister(reviewer, { ...query, view: "author" }))
+      .matching_count,
+    0,
+  );
+
+  await controlCommand(
+    author,
+    pkg.id,
+    command({
+      kind: "basis",
+      action: "submit_basis",
+      id: basis.id,
+      expected_version: 1,
+      reviewer_id: MATERIALS.reviewer.id,
+    }),
+  );
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "author" }))
+      .matching_count,
+    0,
+  );
+  const assigned = await engineeringRegister(reviewer, {
+    ...query,
+    view: "review",
+  });
+  assert.equal(assigned.matching_count, 1);
+  assert.equal(assigned.counts.review, 1);
+  assert.equal(assigned.items[0].technical.reviews, 1);
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "review" }))
+      .matching_count,
+    0,
+  );
+  const pendingBasisReview = (await controlRead(author, pkg.id)).records
+    .review[0];
+
+  const document = saveFields("document", {
+    schema_version: 1,
+    source_ids: [source],
+    discipline: "Hydraulics",
+    document_type: "Drawing",
+  });
+  await controlCommand(author, pkg.id, command(document));
+  const revision = randomUUID();
+  await controlCommand(
+    author,
+    pkg.id,
+    command({
+      kind: "document",
+      action: "revise_document",
+      id: document.id,
+      expected_version: 1,
+      revision_id: revision,
+      engineering_revision: "A",
+      native_system: "SYN native CAD",
+      native_reference: "SYN-PPO/models/queue.sldasm",
+      native_version: "1",
+      configuration: "SYN queue fixture",
+      basis_id: null,
+      outputs: [
+        {
+          reference: "SYN-PPO/queue.pdf",
+          version: "1",
+          content_hash: "a".repeat(64),
+        },
+      ],
+    }),
+  );
+  const reviewId = randomUUID();
+  await controlCommand(
+    author,
+    pkg.id,
+    command({
+      kind: "review",
+      action: "submit_review",
+      id: reviewId,
+      reference: "SYN-REVIEW-" + reviewId.slice(0, 8),
+      title: "SYN exact queue issue",
+      reviewer_id: MATERIALS.reviewer.id,
+      due_date: "2099-01-01",
+      purpose: "TechnicalReleaseForProcurement",
+      basis_id: null,
+      document_revision_ids: [revision],
+      submittal_ids: [],
+      source_ids: [],
+      predecessor_id: null,
+    }),
+  );
+  let review = (await controlRead(author, pkg.id)).records.review.find(
+    (r) => r.id === reviewId,
+  )!;
+  await controlCommand(
+    reviewer,
+    pkg.id,
+    command({
+      kind: "review",
+      action: "decide_review",
+      id: review.id,
+      expected_version: review.version,
+      outcome: "Reviewed",
+      rationale: "SYN independent technical checks retained",
+    }),
+  );
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "released" }))
+      .matching_count,
+    0,
+  );
+  review = (await controlRead(author, pkg.id)).records.review.find(
+    (r) => r.id === reviewId,
+  )!;
+  const issueId = randomUUID();
+  await controlCommand(
+    issuer,
+    pkg.id,
+    command({
+      kind: "issue",
+      action: "issue",
+      id: issueId,
+      reference: "SYN-ISSUE-" + issueId.slice(0, 8),
+      title: "SYN exact formal issue",
+      review_id: review.id,
+      expected_version: review.version,
+      recipient_ids: [MATERIALS.viewer.id],
+    }),
+  );
+  const released = await engineeringRegister(author, {
+    ...query,
+    view: "released",
+  });
+  assert.equal(released.matching_count, 1);
+  assert.equal(released.counts.released, 1);
+  assert.equal(released.items[0].state, "In design");
+  assert.equal(released.items[0].technical.released, 1);
+  await sourceCommand(
+    s.p,
+    pkg.id,
+    command({ action: "withdraw", source_id: source }),
+  );
+  assert.equal(
+    (await engineeringRegister(author, { ...query, view: "released" }))
+      .matching_count,
+    0,
+  );
+  await assert.rejects(
+    () =>
+      controlCommand(
+        reviewer,
+        pkg.id,
+        command({
+          kind: "review",
+          action: "decide_review",
+          id: pendingBasisReview.id,
+          expected_version: pendingBasisReview.version,
+          outcome: "Reviewed",
+          rationale: "SYN stale input must prevent review",
+        }),
+      ),
+    (error: unknown) => error instanceof AppError && error.status === 409,
+  );
 });

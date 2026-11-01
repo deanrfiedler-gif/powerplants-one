@@ -141,6 +141,14 @@ export function EngineeringSnapshot({
       drawer
       maxWidth={960}
       className="er-snapshot"
+      closeIcon={
+        <>
+          <span className="er-close-desktop">×</span>
+          <span className="er-close-phone">
+            <Icon name="chevron-left" />
+          </span>
+        </>
+      }
       hideFooter
       title={p?.display_number ?? "Engineering package"}
       onClose={() => leave(onClose)}

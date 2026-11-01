@@ -297,6 +297,7 @@
   flex-wrap: wrap;
   align-items: center;
   flex: none;
+  min-height: 56px;
   padding: 8px 16px;
   font-size: 12px;
   border-top: 1px solid var(--line);
@@ -406,7 +407,7 @@
 #ppo-engineering[data-native-register]
   .er-snapshot
   > .eng-dialog-head
-  :is(h2, .er-position) {
+  :where(h2, .er-position) {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -721,7 +722,7 @@
     width: 100%;
     line-height: 16px;
   }
-  #ppo-engineering[data-native-register] .er-phone-bottom > span:first-of-type {
+  #ppo-engineering[data-native-register] .er-phone-bottom > span:nth-child(2) {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -827,7 +828,7 @@
     justify-content: center;
     position: absolute;
     right: 20px;
-    bottom: 94px;
+    bottom: 16px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -982,4 +983,78 @@
   color: var(--muted);
   font-size: 12px;
   line-height: 16px;
+}
+
+/* Paging remains usable underneath an overlapping selection panel. */
+@media (min-width: 781px) {
+  #ppo-engineering[data-native-register]
+    .er-register[data-paged="true"]
+    .er-selection {
+    bottom: 56px;
+  }
+  #ppo-engineering[data-native-register] .ppo-register-foot {
+    height: 56px;
+    flex-wrap: nowrap;
+  }
+}
+#ppo-engineering[data-native-register] .er-close-phone {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-engineering[data-native-register]
+    .er-register[data-paged="true"]
+    .er-phone-new {
+    bottom: 110px;
+  }
+  #ppo-engineering[data-native-register] .er-close-desktop {
+    display: none;
+  }
+  #ppo-engineering[data-native-register] .er-close-phone {
+    display: inline-flex;
+  }
+  #ppo-engineering[data-native-register] .er-phone-bottom > .er-icon {
+    flex: 0 0 16px;
+  }
+  #ppo-engineering[data-native-register] .er-phone-bottom > span:last-child {
+    max-width: 40%;
+  }
+}
+/* WorklistPanel supplies modal focus and Escape; retain its shared sheet spacing. */
+#ppo-engineering[data-native-register] .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+#ppo-engineering[data-native-register] .crm-r38-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-engineering[data-native-register] .crm-r38-panel > header h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 26px;
+}
+#ppo-engineering[data-native-register] .crm-r38-panel > header button {
+  flex: none;
+  width: 44px;
+  min-height: 44px;
+  padding: 10px;
+}
+#ppo-engineering[data-native-register] .crm-r38-panel-body {
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#ppo-engineering[data-native-register] .crm-r38-panel > footer {
+  padding: 12px 16px;
+}
+#ppo-engineering[data-native-register] .crm-r38-panel button {
+  min-height: 44px;
 }

@@ -663,7 +663,10 @@ export function EngineeringRegister() {
           </span>
         )}
       </HeaderContent>
-      <div className="er-register">
+      <div
+        className="er-register"
+        data-paged={!!data?.next_cursor || cursors.length > 1}
+      >
         <h1 className="sr-only">Engineering workload</h1>
         <div className="er-toolbar">
           {shell.context?.actions.some((a) => a.id === "engineering") && (
@@ -1007,27 +1010,29 @@ export function EngineeringRegister() {
                 </div>
               ))}
             </div>
-            <RegisterFooter>
-              <span>
-                {rows.length} shown · {data.matching_count} matching · Page{" "}
-                {cursors.length}
-                {data.next_cursor ? " · More packages available" : ""}
-              </span>
-              <span>
-                <Button
-                  disabled={cursors.length === 1 || busy}
-                  onClick={() => page(cursors.slice(0, -1))}
-                >
-                  Previous
-                </Button>
-                <Button
-                  disabled={!data.next_cursor || busy}
-                  onClick={() => page([...cursors, data.next_cursor])}
-                >
-                  Next
-                </Button>
-              </span>
-            </RegisterFooter>
+            {(data.next_cursor || cursors.length > 1) && (
+              <RegisterFooter>
+                <span>
+                  {rows.length} shown · {data.matching_count} matching · Page{" "}
+                  {cursors.length}
+                  {data.next_cursor ? " · More packages available" : ""}
+                </span>
+                <span>
+                  <Button
+                    disabled={cursors.length === 1 || busy}
+                    onClick={() => page(cursors.slice(0, -1))}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    disabled={!data.next_cursor || busy}
+                    onClick={() => page([...cursors, data.next_cursor])}
+                  >
+                    Next
+                  </Button>
+                </span>
+              </RegisterFooter>
+            )}
           </>
         )}
         {data?.engineers.has_more && (

@@ -505,6 +505,17 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
     await expect(
       snapshot.getByRole("button", { name: "Close package", exact: true }),
     ).toBeInViewport();
+    if (width < 768) {
+      const reference = snapshot.locator(".eng-dialog-head > h2");
+      await expect(reference).toHaveText(/^SYN-ENG-\d+$/);
+      await expect(reference).toBeInViewport();
+      expect(
+        await reference.evaluate((el) => getComputedStyle(el).clipPath),
+      ).toBe("none");
+      expect(
+        await reference.evaluate((el) => el.scrollWidth <= el.clientWidth),
+      ).toBe(true);
+    }
     await noOverflow(page);
     await page.screenshot({
       path: info.outputPath("engineering-snapshot-" + width + ".png"),

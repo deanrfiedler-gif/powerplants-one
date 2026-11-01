@@ -99,6 +99,7 @@ export function EngineeringModal({
   drawer = false,
   maxWidth = 750,
   navigation,
+  closeIcon = "×",
   hideFooter = false,
   className = "",
   onClose,
@@ -111,6 +112,7 @@ export function EngineeringModal({
   drawer?: boolean;
   maxWidth?: number;
   navigation?: ReactNode;
+  closeIcon?: ReactNode;
   hideFooter?: boolean;
   className?: string;
   onClose: () => void;
@@ -176,7 +178,7 @@ export function EngineeringModal({
           aria-label={`Close ${drawer ? "package" : "request"}`}
           onClick={onClose}
         >
-          ×
+          {closeIcon}
         </button>
         <h2 ref={titleRef} tabIndex={-1}>
           {title}
