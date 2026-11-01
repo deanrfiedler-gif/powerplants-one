@@ -6,19 +6,23 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.
+Your daily Sales attention: lead and deal actions, upcoming work, missing next steps and overdue follow-up. The rows are the same records as My Work; there is no second task store. Source presence does not establish deployment or full-scope acceptance.
 
-1. Use Board or List to inspect the same permitted worklist
-2. Use Forecast to review timing and known values
-3. Review Archive separately from active opportunities
+1. Review your lead and deal actions, starting with anything overdue
+2. Check Deals needing a next step and Deals with overdue follow-up
+3. Complete or reschedule the original activity, or open the deal to plan its next step
 
 ## Desktop
+
+Accepted design: the [Sales Pulse and Tasks design decision](../../../decisions/sales-pulse-tasks-figma-design.md) of 1 November 2026 covers Pulse with its summary strip, labelled count rules, Lead actions, Deal actions, Calls to log, Deal attention and Upcoming meetings; the activity window; Record outcome and its results; Plan activity; Plan next as a linked follow-up; outside access; leads-only and deals-only people; and the states. The built page is not yet changed to this design.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 23, 24, 26 and 27 in [design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md): stacked sections that start collapsed when nothing is overdue or due today, an activity screen, full-screen sheets with 16 px inputs, and phone states at 390 and 320.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design captures: [Sales Pulse and Tasks design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md) (thirty icon-free PNGs; design compositions, not application captures).
 
 - [ppo-deal-pipeline_r38.html](../../../reference/ui/crm/ppo-deal-pipeline_r38.html)
 

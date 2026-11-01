@@ -6,19 +6,23 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-This route is present in application source at ccc2251b. Review its specific workflow and release evidence; source presence does not establish deployment or full-scope acceptance.
+Your active tasks linked to leads and deals: activities of type Task, the same records as My Work. Complete or reschedule the original action. Source presence does not establish deployment or full-scope acceptance.
 
-1. Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue
-2. Narrow the list to the relevant owner and work
+1. Review your active tasks linked to leads and deals
+2. Work through Lead tasks and Deal tasks, starting with anything overdue
 3. Open the activity and record an outcome when completing it
 
 ## Desktop
+
+Accepted design: the [Sales Pulse and Tasks design decision](../../../decisions/sales-pulse-tasks-figma-design.md) of 1 November 2026 covers one grid grouped by due, with a side menu for due views and linked type; Owner and Linked filters; a Filters panel; Reschedule, Set a date and their failures; Owner: Everyone with view-only rows; and Next page beyond 25 tasks. The built page is not yet changed to this design.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 24, 25 and 27 in [design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md): the My Work phone list, Choose view, a full-screen filter panel, the Reschedule sheet, and one search and filter screen at 320.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design captures: [Sales Pulse and Tasks design r01](../../../reference/ui/crm/sales-pulse-tasks-design-r01/README.md) (thirty icon-free PNGs; design compositions, not application captures).
 
 - [PPO-My-Work-and-Action-Centre-r01.html](../../../reference/ui/my-work/PPO-My-Work-and-Action-Centre-r01.html)
 
