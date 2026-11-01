@@ -270,7 +270,9 @@ test("DK native browser: independent findings, review, exact history and missing
     path: test.info().outputPath("native-historical-unavailable-320.png"),
     fullPage: true,
   });
-  await action(page, "Recover exact content");
+  await page
+    .getByRole("button", { name: "Recover original text", exact: true })
+    .click();
   await page
     .getByRole("dialog")
     .getByLabel("Original exact synthetic text", { exact: true })

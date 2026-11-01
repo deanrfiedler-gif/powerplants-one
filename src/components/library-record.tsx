@@ -312,7 +312,19 @@ function LibraryRecordBody({
               Download {revisionName(item.revision.revision)}
             </ButtonLink>
           )}
-          {writable && (
+          {item.can_register &&
+            item.availability !== "Available" &&
+            item.revision.source.kind === "SyntheticText" && (
+              <Button
+                variant="primary"
+                className="library-recover-action"
+                disabled={refreshing}
+                onClick={() => action("Recover")}
+              >
+                Recover original text
+              </Button>
+            )}
+          {writable && item.availability === "Available" && (
             <Button variant="primary" onClick={() => action("Revise")}>
               Add revision
             </Button>
@@ -322,10 +334,17 @@ function LibraryRecordBody({
               Review {revisionName(item.revision.revision)}
             </Button>
           )}
-          <WorklistMenu label="Document actions" icon="more">
+          <WorklistMenu
+            label="Document actions"
+            icon="more"
+            className="library-record-menu"
+          >
             <Button onClick={refresh}>Refresh</Button>
             {writable && (
               <>
+                {item.availability !== "Available" && (
+                  <Button onClick={() => action("Revise")}>Add revision</Button>
+                )}
                 <Button onClick={() => action("Open finding")}>
                   Open a finding
                 </Button>
@@ -335,13 +354,6 @@ function LibraryRecordBody({
                 </Button>
               </>
             )}
-            {item.can_register &&
-              item.availability !== "Available" &&
-              item.revision.source.kind === "SyntheticText" && (
-                <Button onClick={() => action("Recover")}>
-                  Recover exact content
-                </Button>
-              )}
           </WorklistMenu>
         </div>
       </header>
@@ -414,15 +426,6 @@ function LibraryRecordBody({
                 {item.availability !== "Available" && (
                   <div className="library-content-unavailable">
                     <ExactContent key={item.revision.id} item={item} />
-                    {item.can_register &&
-                      item.revision.source.kind === "SyntheticText" && (
-                        <Button
-                          disabled={refreshing}
-                          onClick={() => action("Recover")}
-                        >
-                          Recover original text
-                        </Button>
-                      )}
                   </div>
                 )}
                 <ReadState

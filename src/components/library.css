@@ -668,3 +668,18 @@
 #ppo-library .library-content-unavailable h2 {
   margin-top: 0;
 }
+
+@media (max-width: 767px) {
+  #ppo-library
+    .library-record-header
+    > .library-actions
+    > .library-record-menu {
+    order: -1;
+  }
+  #ppo-library
+    .library-record-header
+    > .library-actions
+    > .library-recover-action {
+    flex: 1;
+  }
+}

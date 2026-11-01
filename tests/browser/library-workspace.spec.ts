@@ -355,6 +355,9 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
   await expect(
     page.getByText("Exact content unavailable.", { exact: false }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Recover original text", exact: true }),
+  ).toBeInViewport();
   await page.screenshot({
     path: `${capture}/${test.info().project.name}/record-unavailable-320.png`,
   });
