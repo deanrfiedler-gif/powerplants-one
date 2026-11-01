@@ -3,7 +3,7 @@ title: Onboarding and support AD-10 design accepted
 date: 2026-11-01
 ---
 
-Dean accepted the Figma design for AD-10, user onboarding, learning and support: "Accept as recommended". The [design decision](../decisions/onboarding-support-figma-design.md) (PPO-AD10-ONBOARDING-SUPPORT-FIGMA-DEC) records D1–D15, departures X1–X6 and answers Q1–Q10:
+Dean accepted the Figma design for AD-10, user onboarding, learning and support: "Accept as recommended". The [design decision](../decisions/onboarding-support-figma-design.md) (PPO-AD10-ONBOARDING-SUPPORT-FIGMA-DEC) records D1–D16, departures X1–X6 and answers Q1–Q10:
 - a short task path by job function, counted as tasks done, with no score and no requirement before access;
 - scripted practice on labelled synthetic records that never touch real work;
 - Ask for help routes requests to the PPO support owner, possible incidents to AD-09 and guide gaps to DK-07;
