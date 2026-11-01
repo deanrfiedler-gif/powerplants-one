@@ -62,7 +62,7 @@ export function CostSourceRegister() {
     [hidden, setHidden] = useState<string[]>([]);
   return (
     <Register
-      key={`${params}:${JSON.stringify(identity)}`}
+      key={JSON.stringify(identity)}
       query={params.toString()}
       columns={columns}
       setColumns={setColumns}
@@ -86,6 +86,9 @@ function Register({
 }) {
   const router = useRouter(),
     params = new URLSearchParams(query);
+  const [previousQuery, setPreviousQuery] = useState(query);
+  const [search, setSearch] = useState(params.get("q") ?? "");
+  const [widthDrafts, setWidthDrafts] = useState<Record<string, string>>({});
   const [menuOpen, setMenuOpen] = useState(true),
     menu = useSecondaryMenu(menuOpen, setMenuOpen);
   const [filters, setFilters] = useState(false),
@@ -102,6 +105,16 @@ function Register({
     selectAll = useRef<HTMLInputElement>(null),
     press = useRef<ReturnType<typeof setTimeout> | null>(null),
     longPressed = useRef(false);
+  const pressOrigin = useRef({ x: 0, y: 0 });
+  const openerKey = useRef<string | null>(null);
+  const pagingFocus = useRef<string | null>(null);
+  const selectionScope = useRef<object | null>(null);
+  useEffect(() => {
+    selectionScope.current = {};
+    return () => {
+      selectionScope.current = null;
+    };
+  }, [query]);
   const request = `estimating/cost-sources/register${query ? `?${query}` : ""}`;
   const [blockedRead, setBlockedRead] = useState<CostSourceRegisterData | null>(
     null,
@@ -111,6 +124,27 @@ function Register({
       resource.error || (blockedRead !== null && blockedRead === resource.data)
         ? null
         : resource.data;
+  // Keep the controls mounted across URL changes, but never carry a selection
+  // or evidence read into a different result basis. The resource hides old paths.
+  if (previousQuery !== query) {
+    setPreviousQuery(query);
+    setSearch(params.get("q") ?? "");
+    setSelected([]);
+    setSnapshot(null);
+    setSequence(null);
+    setSelectionMode(false);
+    setBusy(false);
+    setActionError(null);
+    setNotice("");
+  }
+  useEffect(() => {
+    if (data && pagingFocus.current) {
+      document
+        .getElementById(pagingFocus.current)
+        ?.focus({ preventScroll: true });
+      pagingFocus.current = null;
+    }
+  }, [data]);
   const rows = data?.items ?? [],
     validSelection = sourceSelectionCurrent(selected, rows),
     chosen = rows.filter((r) => selected.some((s) => s.id === r.id));
@@ -135,16 +169,38 @@ function Register({
     return `${path}${next.size ? `?${next}` : ""}`;
   }
   function change(values: Record<string, string>, paging = false) {
+    if (paging)
+      pagingFocus.current = (document.activeElement as HTMLElement)?.id || null;
     router.push(href(values, paging), { scroll: false });
   }
   const view = params.get("view") ?? "all",
     state = params.get("state") ?? "all",
     validity = params.get("validity") ?? "all";
   const label = sourceViews.find((v) => v.id === view)?.label ?? "Cost sources";
+  function rememberOpener(source: HTMLElement) {
+    const popup = source.closest<HTMLElement>("[popover]");
+    opener.current = popup
+      ? document.querySelector<HTMLElement>(
+          `[aria-controls="${CSS.escape(popup.id)}"]`,
+        )
+      : source;
+    openerKey.current = source.dataset.csFocus ?? null;
+  }
   function closeSnapshot() {
     setSnapshot(null);
     setSequence(null);
-    requestAnimationFrame(() => opener.current?.focus({ preventScroll: true }));
+    requestAnimationFrame(() => {
+      const target = openerKey.current
+        ? document.querySelector<HTMLElement>(
+            `[data-cs-focus="${openerKey.current}"]`,
+          )
+        : opener.current;
+      const available = target?.isConnected && target.getClientRects().length && !target.matches(":disabled") && !target.closest("[inert]");
+      (available
+        ? target
+        : document.querySelector<HTMLElement>("#ppo-cost-sources h1")
+      )?.focus({ preventScroll: true });
+    });
   }
   function refresh() {
     closeSnapshot();
@@ -153,12 +209,13 @@ function Register({
     resource.reload();
   }
   function inspect(row: CostSourceRow, source: HTMLElement) {
-    opener.current = source;
-    setSequence(null);
+    rememberOpener(source);
+    setSequence(rows);
     setSnapshot(row);
   }
   function toggle(row: CostSourceRow) {
-    setPanelOpen(true);
+    // The phone panel covers the list; open it only through Show panel.
+    setPanelOpen(menu.phone === false);
     setSelected((old) =>
       old.some((r) => r.id === row.id)
         ? old.filter((r) => r.id !== row.id)
@@ -167,10 +224,17 @@ function Register({
   }
   async function selectionAction(exporting: boolean, source: HTMLElement) {
     if (!validSelection || busy) return;
+    const scope = selectionScope.current;
+    const currentContext = () =>
+      scope !== null &&
+      selectionScope.current === scope &&
+      window.location.pathname === path &&
+      new URLSearchParams(window.location.search).toString() === query;
     setBusy(true);
     setActionError(null);
     try {
       const current = await api<CostSourceRegisterData>(request);
+      if (!currentContext()) return;
       if (!sourceSelectionCurrent(selected, current.items)) {
         setBlockedRead(resource.data);
         setSelected([]);
@@ -196,18 +260,19 @@ function Register({
           `${ordered.length} selected sources exported. No evidence decision or price changed.`,
         );
       } else {
-        opener.current = source;
+        rememberOpener(source);
         setSequence(ordered);
         setSnapshot(ordered[0]);
       }
     } catch (error) {
+      if (!currentContext()) return;
       setActionError(error);
       setBlockedRead(resource.data);
       setSelected([]);
       closeSnapshot();
       resource.reload();
     } finally {
-      setBusy(false);
+      if (currentContext()) setBusy(false);
     }
   }
   function menuLink(
@@ -243,9 +308,11 @@ function Register({
         return (
           <button
             className="cs-row-link"
+            title={`${row.reference} r${row.revision}`}
             onClick={(e) => inspect(row, e.currentTarget)}
           >
-            {row.reference} <small>r{row.revision}</small>
+            <span>{row.reference}</span>
+            <small>r{row.revision}</small>
           </button>
         );
       case "title":
@@ -293,6 +360,7 @@ function Register({
   const actions = (
     <>
       <Button
+        data-cs-focus="open-sequence"
         disabled={!validSelection || busy}
         onClick={(e) => void selectionAction(false, e.currentTarget)}
       >
@@ -386,7 +454,9 @@ function Register({
       }
     >
       <div className="cs-workspace">
-        <h1 className="sr-only">Cost sources</h1>
+        <h1 className="sr-only" tabIndex={-1}>
+          Cost sources
+        </h1>
         <div className="cs-list" inert={!!snapshot}>
           <div className="cs-toolbar">
             {data && selected.length ? (
@@ -401,7 +471,11 @@ function Register({
                 >
                   <Icon name="xmark" />
                 </Button>
-                <Button onClick={() => setPanelOpen(!panelOpen)}>
+                <Button
+                  id="cost-source-selection-panel-toggle"
+                  className={menu.phone && panelOpen ? "cs-desktop" : undefined}
+                  onClick={() => setPanelOpen(!panelOpen)}
+                >
                   {panelOpen ? "Hide panel" : "Show panel"}
                 </Button>
               </>
@@ -431,9 +505,10 @@ function Register({
                     type="search"
                     name="q"
                     aria-label="Search source, supplier or item"
-                    placeholder="Search source, supplier or item"
+                    placeholder="Search sources"
                     maxLength={100}
-                    defaultValue={params.get("q") ?? ""}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                   <button type="submit" className="sr-only">
                     Search sources
@@ -570,6 +645,7 @@ function Register({
                           {visibleColumns.map((c) => (
                             <th
                               key={c.key}
+                              data-column={c.key}
                               style={{ width: c.width, minWidth: c.width }}
                               aria-sort={
                                 c.key === "updated" ? "descending" : undefined
@@ -633,6 +709,7 @@ function Register({
                             {visibleColumns.map((c) => (
                               <td
                                 key={c.key}
+                                data-column={c.key}
                                 style={
                                   {
                                     width: c.width,
@@ -706,6 +783,10 @@ function Register({
                           onPointerDown={(e) => {
                             if (e.pointerType === "touch") {
                               longPressed.current = false;
+                              pressOrigin.current = {
+                                x: e.clientX,
+                                y: e.clientY,
+                              };
                               press.current = setTimeout(() => {
                                 longPressed.current = true;
                                 setSelectionMode(true);
@@ -719,8 +800,15 @@ function Register({
                           onPointerCancel={() => {
                             if (press.current) clearTimeout(press.current);
                           }}
-                          onPointerMove={() => {
-                            if (press.current) clearTimeout(press.current);
+                          onPointerMove={(e) => {
+                            if (
+                              press.current &&
+                              Math.hypot(
+                                e.clientX - pressOrigin.current.x,
+                                e.clientY - pressOrigin.current.y,
+                              ) > 10
+                            )
+                              clearTimeout(press.current);
                           }}
                           onClick={(e) => {
                             if (longPressed.current) {
@@ -761,6 +849,7 @@ function Register({
                   · newest update first
                 </span>
                 <Button
+                  id="cs-previous-page"
                   disabled={data.offset === 0}
                   onClick={() =>
                     change(
@@ -772,6 +861,7 @@ function Register({
                   Previous page
                 </Button>
                 <Button
+                  id="cs-next-page"
                   disabled={data.next_offset === null}
                   onClick={() =>
                     change({ offset: String(data.next_offset) }, true)
@@ -790,7 +880,24 @@ function Register({
         {data && selected.length > 0 && panelOpen && !snapshot && (
           <aside className="cs-selection" aria-label="Selected sources">
             <header>
-              <h2>{selected.length} {selected.length === 1 ? "source" : "sources"} selected</h2>
+              {menu.phone && (
+                <Button
+                  onClick={() => {
+                    setPanelOpen(false);
+                    requestAnimationFrame(() =>
+                      document
+                        .getElementById("cost-source-selection-panel-toggle")
+                        ?.focus(),
+                    );
+                  }}
+                >
+                  Hide panel
+                </Button>
+              )}
+              <h2>
+                {selected.length} {selected.length === 1 ? "source" : "sources"}{" "}
+                selected
+              </h2>
             </header>
             <div>
               {chosen.map((r) => (
@@ -819,6 +926,7 @@ function Register({
               <Button onClick={() => setSelected([])}>Cancel</Button>
               <Button
                 variant="primary"
+                data-cs-focus="open-first"
                 disabled={!validSelection || busy}
                 onClick={(e) => void selectionAction(false, e.currentTarget)}
               >
@@ -950,9 +1058,20 @@ function Register({
                     type="number"
                     min={60}
                     max={500}
-                    step={4}
-                    value={c.width}
+                    step={1}
+                    value={widthDrafts[c.key] ?? String(c.width)}
+                    onBlur={() =>
+                      setWidthDrafts((old) => {
+                        const next = { ...old };
+                        delete next[c.key];
+                        return next;
+                      })
+                    }
                     onChange={(e) => {
+                      setWidthDrafts((old) => ({
+                        ...old,
+                        [c.key]: e.target.value,
+                      }));
                       const width = Number(e.target.value);
                       if (width >= 60 && width <= 500)
                         setColumns(
@@ -990,6 +1109,7 @@ function Register({
           ))}
           <Button
             onClick={() => {
+              setWidthDrafts({});
               setColumns(initialColumns);
               setHidden([]);
             }}

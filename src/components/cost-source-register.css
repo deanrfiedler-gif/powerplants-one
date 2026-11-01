@@ -491,3 +491,14 @@
 #ppo-cost-sources .cs-selection h2 { font-size:14px; line-height:20px; margin:0; }
 #ppo-cost-sources .cs-selection h3 { font-size:11px; line-height:16px; text-transform:uppercase; letter-spacing:.66px; color:var(--muted); }
 #ppo-cost-sources .cs-selection article { border:1px solid var(--line); border-radius:6px; padding:12px; margin-bottom:14px; }
+
+#ppo-cost-sources [data-column="cost"] { text-align:right; }
+#ppo-cost-sources [data-column="cost"] .cs-tier { align-items:flex-end; }
+#ppo-cost-sources .cs-row-link { font-weight:600; }
+#ppo-cost-sources .cs-row-link small { font-weight:400; }
+#ppo-cost-sources [data-state="Rejected"] { color:var(--muted); }
+#ppo-cost-sources [data-column="cost"] .ppo-register-label { justify-content:flex-end; }
+#ppo-cost-sources [data-state="Rejected"] .ppo-register-chip { color:var(--muted); }
+#ppo-cost-sources button.cs-row-link { display:flex; align-items:center; gap:4px; }
+#ppo-cost-sources .cs-row-link span { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+#ppo-cost-sources .cs-row-link small { margin-left:0; flex-shrink:0; }

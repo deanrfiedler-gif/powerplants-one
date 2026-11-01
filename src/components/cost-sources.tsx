@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   api,
@@ -693,6 +693,25 @@ export function CostSourceDetail({ id }: { id: string }) {
       true,
     ),
     [edit, setEdit] = useState(false);
+  const reviewStep = useRef<HTMLElement>(null);
+  const reviewNavigation = useRef<string | null>(null);
+  useEffect(() => {
+    const reveal = () => {
+      if (!data.data || window.location.hash !== "#source-review") return;
+      const key = `${id}:${revision ?? "current"}`;
+      if (reviewNavigation.current === key) return;
+      reviewNavigation.current = key;
+      reviewStep.current?.scrollIntoView({ block: "start" });
+      reviewStep.current?.focus({ preventScroll: true });
+    };
+    reveal();
+    const changed = () => {
+      reviewNavigation.current = null;
+      reveal();
+    };
+    window.addEventListener("hashchange", changed);
+    return () => window.removeEventListener("hashchange", changed);
+  }, [data.data, id, revision]);
   return (
     <div className="est-screen source-screen">
       <Link href="/estimating/cost-sources">Cost sources</Link>
@@ -730,7 +749,13 @@ export function CostSourceDetail({ id }: { id: string }) {
             </Link>
           </nav>
           {edit && data.data.can_revise && <SourceForm initial={data.data} />}
-          <section id="source-review" aria-label="Source review">
+          <section
+            id="source-review"
+            aria-label="Source review"
+            ref={reviewStep}
+            tabIndex={-1}
+            style={{ scrollMarginTop: 80 }}
+          >
             <SourceDecision detail={data.data} />
           </section>
           <section className="est-panel">

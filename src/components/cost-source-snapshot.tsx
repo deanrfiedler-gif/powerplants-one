@@ -67,7 +67,7 @@ export function CostSourceSnapshot({
     content = revision?.content;
   const index = rows.findIndex((r) => r.id === row.id),
     previous = index > 0 ? rows[index - 1] : null,
-    next = rows[index + 1];
+    next = index >= 0 ? rows[index + 1] : null;
   useEffect(() => {
     panel.current?.focus({ preventScroll: true });
   }, []);
@@ -76,8 +76,11 @@ export function CostSourceSnapshot({
       ? {
           title: "Source snapshot",
           record: {
-            position: `${index + 1} of ${rows.length}`,
-          back: { label: "Back to cost sources", onSelect: onClose },
+            position:
+              index >= 0
+                ? `${index + 1} of ${rows.length}`
+                : "Outside current results",
+            back: { label: "Back to cost sources", onSelect: onClose },
             previous: {
               label: "Previous source",
               disabled: !previous,
@@ -370,11 +373,39 @@ export function CostSourceSnapshot({
                       <dd>{revision!.created_by}</dd>
                     </dl>
                     {content!.fx && (
-                      <p>
-                        This revision retains reviewed FX evidence. Open the
-                        native source for its exact currency, rate and
-                        confirmation details.
-                      </p>
+                      <div>
+                        <p>
+                          This revision retains FX evidence. Its presence does
+                          not establish independent review.
+                        </p>
+                        <dl className="cs-identities">
+                          <dt>Original currency / AUD rate</dt>
+                          <dd>
+                            {content!.fx.currency} / {content!.fx.rate}
+                          </dd>
+                          <dt>Rate date</dt>
+                          <dd>{sourceDate(content!.fx.rate_date)}</dd>
+                          <dt>FX effective / expiry</dt>
+                          <dd>
+                            {sourceDate(content!.fx.effective_from)} /{" "}
+                            {sourceDate(content!.fx.valid_until)}
+                          </dd>
+                          <dt>FX evidence reference</dt>
+                          <dd>{content!.fx.evidence_reference}</dd>
+                        </dl>
+                        <p className="cs-narrative">
+                          {content!.fx.evidence_excerpt}
+                        </p>
+                        <ul>
+                          {content!.fx.tiers.map((tier) => (
+                            <li key={tier.minimum_quantity}>
+                              From {tier.minimum_quantity} {content!.unit}:{" "}
+                              {content!.fx!.currency} {tier.unit_cost} per{" "}
+                              {content!.unit}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
                   </>
                 )}
