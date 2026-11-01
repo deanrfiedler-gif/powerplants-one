@@ -88,6 +88,13 @@ function Register({
     params = new URLSearchParams(query);
   const [previousQuery, setPreviousQuery] = useState(query);
   const [search, setSearch] = useState(params.get("q") ?? "");
+  const [searchFocused, setSearchFocused] = useState(false);
+  useEffect(() => {
+    const restoreSearch = () =>
+      setSearch(new URLSearchParams(window.location.search).get("q") ?? "");
+    window.addEventListener("popstate", restoreSearch);
+    return () => window.removeEventListener("popstate", restoreSearch);
+  }, []);
   const [widthDrafts, setWidthDrafts] = useState<Record<string, string>>({});
   const [menuOpen, setMenuOpen] = useState(true),
     menu = useSecondaryMenu(menuOpen, setMenuOpen);
@@ -128,7 +135,7 @@ function Register({
   // or evidence read into a different result basis. The resource hides old paths.
   if (previousQuery !== query) {
     setPreviousQuery(query);
-    setSearch(params.get("q") ?? "");
+    if (!searchFocused) setSearch(params.get("q") ?? "");
     setSelected([]);
     setSnapshot(null);
     setSequence(null);
@@ -195,7 +202,11 @@ function Register({
             `[data-cs-focus="${openerKey.current}"]`,
           )
         : opener.current;
-      const available = target?.isConnected && target.getClientRects().length && !target.matches(":disabled") && !target.closest("[inert]");
+      const available =
+        target?.isConnected &&
+        target.getClientRects().length &&
+        !target.matches(":disabled") &&
+        !target.closest("[inert]");
       (available
         ? target
         : document.querySelector<HTMLElement>("#ppo-cost-sources h1")
@@ -493,11 +504,11 @@ function Register({
                   className="cs-search cs-desktop"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    change({
-                      q: String(
-                        new FormData(e.currentTarget).get("q") ?? "",
-                      ).trim(),
-                    });
+                    const q = String(
+                      new FormData(e.currentTarget).get("q") ?? "",
+                    ).trim();
+                    setSearch(q);
+                    change({ q });
                   }}
                 >
                   <Icon name="magnifying-glass" />
@@ -508,6 +519,8 @@ function Register({
                     placeholder="Search sources"
                     maxLength={100}
                     value={search}
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setSearchFocused(false)}
                     onChange={(e) => setSearch(e.target.value)}
                   />
                   <button type="submit" className="sr-only">

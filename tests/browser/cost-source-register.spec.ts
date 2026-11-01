@@ -445,6 +445,12 @@ test("ES03 full matching counts, exact tier, responsive list, selection and deni
   await search.fill("");
   await search.press("Enter");
   await expect(page).not.toHaveURL(/q=Pump/);
+  await page.goBack();
+  await expect(page).toHaveURL(/q=Pump/);
+  await expect(search).toHaveValue("Pump");
+  await page.goForward();
+  await expect(page).not.toHaveURL(/q=Pump/);
+  await expect(search).toHaveValue("");
   await page.getByRole("button", { name: "Next page", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "Next page", exact: true }),
