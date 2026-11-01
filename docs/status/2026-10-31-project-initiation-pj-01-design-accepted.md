@@ -13,7 +13,6 @@ Dean accepted the Figma design for PJ-01, project initiation and receiving revie
 Forty-one icon-free captures with hashes are retained in [project-initiation-design-r01](../reference/ui/projects/project-initiation-design-r01/README.md), and the design register pages for `scope:PJ-01` and `route:/projects/new` cite them. In Figma the capture copies sit on the Captures page from y = 1,300,000, and the new part moved to Components.
 
 Not done:
-- The named Figma version "Project initiation — accepted" is not saved yet.
 - The prototype flows have not been played in Present mode.
 - `/projects/new` keeps its current form. Building this design, and the records it needs, each need a go-ahead.
 - Dean still has to name the three project classes (Q11).
