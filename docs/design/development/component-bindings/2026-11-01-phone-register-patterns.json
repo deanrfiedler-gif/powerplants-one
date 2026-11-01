@@ -37,7 +37,7 @@
         {
           "id": "dialog-phone-confirmation-sheet",
           "expected": "A phone confirmation sheet lists exactly what changes and on how many, never grows past the screen less the header row, and keeps its buttons in view while its records scroll (PR8, PR14).",
-          "actual": "No shared phone sheet does this. It is drawn on Figma page 3036:32928 only.",
+          "actual": "No shared phone sheet does this. It is drawn in Figma only, on page 3036:32928.",
           "action": "Build it with the first adopting register; test on real phones, including 320 x 568.",
           "priority": "Medium",
           "owner": "Dean Fiedler"

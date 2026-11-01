@@ -3,7 +3,7 @@ document_id: PPO-SHELL-PHONE-REGISTER-PATTERNS-DEC
 title: Phone register patterns amendment
 date: 2026-11-01
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version waits; application not built; owner visual review, device testing and deployment separate
+status: Owner-accepted design; named Figma version saved 1 November 2026; application not built; owner visual review, device testing and deployment separate
 versioning: git
 ---
 
@@ -20,6 +20,7 @@ Quoted as written:
 1. 31 October 2026: "Your task is to design and build a shared "Phone register patterns" amendment in Figma, covering multi-select, bulk actions and list actions on phone registers, as a proposal for my review."
 2. 31 October 2026, twice: "Give the pages an audit and polish" and "Give the pages one more final audit and polish", each to determine improvements, new and innovative features, whether the pages could be more professional, and any gaps.
 3. 1 November 2026, asked "Do you accept the amendment with the recommended answers to Q1–Q17?": "Accept recommendations" — recorded as accepting the drawn design and adopting every recommended answer in section 4.
+4. 1 November 2026: "I have saved the named version as Phone register patterns amendment — accepted"
 
 ## 2. Decisions and evidence
 
@@ -27,7 +28,7 @@ Quoted as written:
 |---|---|---|
 | One shared pattern; both ways in; selection bar; action bar of at most three; confirmation sheet; per-record results; recovery through the original operation; swipe only where a page defines it; no selection without bulk actions; never invent a bulk action | User decision | Dean's brief, 31 October 2026 |
 | Rules PR1–PR17, decisions D1–D24 and answers Q1–Q17 | Claude's recommendations, adopted | Quote 3 |
-| Acceptance of the drawn design | User decision | Quote 3 |
+| Acceptance of the drawn design | User decision | Quotes 3 and 4; the version is recorded on Dean's word, and Claude did not open the version history |
 | Bulk actions listed in the affected-registers table | Read from source: documented decision or code. Not new decisions | Section 6 |
 | Long press 550 ms, moving 10 px cancels, Shift+Space | Existing application behaviour on the Work orders phone row | `src/components/work-order-register.tsx` |
 | Per-notice results, Next page unavailable while selecting, a sequence with a summary, Undo, share sheet, export history | Adopted design direction, not built and not verified | Sections 4 and 8 |
@@ -82,7 +83,7 @@ Quoted as written:
 |---|---|
 | Design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Phone register patterns · amendment" `3036:32928`, under "— System —" after "Phone header amendment" |
-| Declaration, rules and new parts | Page header `3036:32929`; rules `3040:11906`; new parts `3036:38330` |
+| Declaration, rules and new parts | Page header `3036:32929`; rules `3040:11906`; instances of the new parts `3036:38330` |
 | Register flows | Leads `3036:32982`, Work orders `3036:38325`, Updates inbox `3036:38326`: list, long press, More then Select, selection, confirmation sheet, partial result and Done, at 390 and 320 |
 | Completing a selection | `3044:37382`: Open in sequence on Work orders (C1–C3) and Leads (C6–C8); export finished (C4, C5) |
 | Quick actions and no bulk actions | `3036:38327`: swipe `3040:9254`, the same action in the row's menu `3040:9439`, My actions `3040:9611`, each also at 320 |
@@ -92,8 +93,8 @@ Quoted as written:
 | Ideas | `3044:39915`: I1, I4 and I5 adopted; I2 and I3 later |
 | Decisions and answers | D1–D24 `3041:18392`, Q1–Q17 `3041:18474`, audit card `3045:28186`, in section `3036:32993` |
 | Prototype | Flow "Phone register patterns — phone" starts at `3038:6205`. Links cover the 390 frames only |
-| New proposed components | Shell / Phone header · selection `3036:38343`, Phone action bar `3036:38353`, Phone action bar / Item `3036:38352`, Phone row checkbox `3047:24512`, Phone sheet heading `3047:24513`, Phone status line `3047:24519`, Phone result row `3036:38374`, Phone menu row `3036:38381`. They stay on the page until the named version is saved, then move to Components `1:4` › Shell and navigation |
-| Named version | To save: "Phone register patterns amendment — accepted". Not saved at the time of this record |
+| New components | On Components `1:4` › Shell and navigation `1095:257404` since the named version: Shell / Phone header · selection `3036:38343`, Phone action bar `3036:38353`, Phone action bar / Item `3036:38352`, Phone row checkbox `3047:24512`, Phone sheet heading `3047:24513`, Phone status line `3047:24519`, Phone result row `3036:38374`, Phone menu row `3036:38381`. "(proposed)" was dropped from their names |
+| Named version | "Phone register patterns amendment — accepted", saved by Dean on 1 November 2026, before the lock-in pass in section 8 |
 | Captures | [phone-register-patterns-r01](../reference/ui/application-shell/phone-register-patterns-r01/README.md): thirteen icon-free images; copies on "Captures (icon-free)" `115:2` under the heading "Phone register patterns amendment r01" |
 | File index | Row `3093:580733` in the System table of the File index |
 
@@ -140,16 +141,23 @@ The actions drawn, read from source:
 
 Unchanged: the desktop and tablet panels, the tab bar outside selection, and every existing reference. S1 uses an illustrative longer view of 27 work orders over 2 pages; the accepted page shows 12.
 
-## 8. Not done
+## 8. Figma lock-in pass
 
-- **Named version.** Dean saves "Phone register patterns amendment — accepted". The new parts then move to Components `1:4`, and the pull request can be marked ready.
+Made on 1 November 2026, after Dean said the named version was saved:
+
+- **Library.** The eight new parts moved to Components `1:4` › Shell and navigation by `appendChild`. Node IDs were kept, and 1,306 instances stay linked across their variants. Nothing overlaps or sits outside the section. The frame `3036:38330` on the amendment page now shows instances.
+- **Records in the file.** The page header reads Accepted with the named version, and File index row `3093:580733` names it.
+- **Captures predate this pass.** They were made before the named version, so capture 01 reads "Named version waits" and capture 02 shows the parts on the amendment page. Their bytes stay as retained.
+
+## 9. Not done
+
 - **Application.** Nothing is built, and this record authorises no build. Adoption follows Q4.
 - **Prototype.** It has not been played in Present. Its links were checked by reading them: all stay on the page, and they cover the 390 frames only.
 - **Real phones.** Nothing has been tried on one. Long press may trigger the browser's own text selection or link menu on iPhone or Android. Landscape and 200% text are proposals, not measurements.
 - **The table.** Its "No" rows rest on a keyword search of records and code, not a full reading of each page.
 - **Considered and left out:** selecting across pages; swipe to archive; asking Carl to act on a selection, which would be a new bulk action and remains Dean's to propose.
 
-## 9. Verification
+## 10. Verification
 
 Checked in Figma on 31 October and 1 November 2026, all by script and screenshot, none on a device:
 
@@ -159,7 +167,8 @@ Checked in Figma on 31 October and 1 November 2026, all by script and screenshot
 - Every prototype link stays on the page.
 - Colours on drawn frames use tokens. The 200% text state overrides font sizes on purpose, so its text carries no text style.
 - Tappable parts checked are 44 px or larger; neutral tags remain visible on the selected tint; rows hold their height on entering selection.
+- After the move to Components, the Updates section and the parts frame were compared by eye with the earlier render. A byte comparison was not made: the script that would have taken it timed out, though its move had landed.
 
-## 10. Boundaries
+## 11. Boundaries
 
 This record authorises no business transaction, production integration, customer communication, migration, permission or capability change. A Figma design is not a production claim. Owner visual review of the application and deployment are separate.

@@ -8,18 +8,18 @@ The shared phone header has no list More and no selection state. Work orders has
 
 ## New Figma parts
 
-Drawn on page `3036:32928`; they move to Components `1:4` › Shell and navigation once the named version is saved:
+On Components `1:4` › Shell and navigation since the named version was saved; drawn on page `3036:32928`:
 
 | Part | Node |
 |---|---|
-| Shell / Phone header · selection (proposed), Width=390 and 320 | `3036:38343` |
-| Phone action bar (proposed) | `3036:38353` |
-| Phone action bar / Item (proposed), Default and Disabled | `3036:38352` |
-| Phone row checkbox (proposed), Off and On | `3047:24512` |
-| Phone sheet heading (proposed) | `3047:24513` |
-| Phone status line (proposed) | `3047:24519` |
-| Phone result row (proposed) | `3036:38374` |
-| Phone menu row (proposed) | `3036:38381` |
+| Shell / Phone header · selection, Width=390 and 320 | `3036:38343` |
+| Phone action bar | `3036:38353` |
+| Phone action bar / Item, Default and Disabled | `3036:38352` |
+| Phone row checkbox, Off and On | `3047:24512` |
+| Phone sheet heading | `3047:24513` |
+| Phone status line | `3047:24519` |
+| Phone result row | `3036:38374` |
+| Phone menu row | `3036:38381` |
 
 ## Fixture and state examples
 
