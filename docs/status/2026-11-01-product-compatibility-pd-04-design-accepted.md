@@ -13,7 +13,7 @@ Dean accepted the Figma design for PD-04, compatibility, replacements and lifecy
 
 Twenty icon-free captures with hashes are retained in [product-compatibility-design-r01](../reference/ui/products/product-compatibility-design-r01/README.md), and the design register page for `scope:PD-04` cites them.
 
-The named Figma version "Product compatibility — accepted" has not been saved.
+Dean saved the named Figma version "Product compatibility — accepted" on 1 November 2026: "I have saved the named version as Product compatibility — accepted".
 
 Checked:
 - Layout, truncation, clipping and off-page link scripts, and in-Figma screenshots.

@@ -38,7 +38,7 @@ This is a design decision. It authorises no application code, read model, route,
 | Q5 Where lifecycle is recorded | Resolved as recommended; build separate | Product lifecycle (Current, Last-time buy, Discontinued, Unknown) is recorded here on the product revision with source and date. Support dates and installed impact stay in EQ-07, which reads PD-04's chain as evidence. Supported becomes Current across Products |
 | Q6 Flow in L/h | Resolved as recommended; build separate | Add L/h as a typed flow unit, still never converted, so DP-25 and MD-20 compare as typed values. The contract's vocabulary has L/min only until that is built |
 | Q7 Compare limit | Resolved as recommended | Up to four products |
-| Named Figma version | Not saved | "Product compatibility — accepted" waits for Dean (section 7) |
+| Named Figma version | Saved by Dean, 1 November 2026 | Dean: "I have saved the named version as Product compatibility — accepted" (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -112,5 +112,5 @@ These are recorded, not changed:
 - **Present mode was not run**, so the prototype links are untested in play.
 - The 20 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance, no stray vector and no prototype link. They sit on the Captures page from y = 1,400,000.
 - After acceptance Claude changed status wording on the page, the "Recommended" wording in the notes and the location of the parts, and added the File index row. Two small corrections followed, found while checking the captures: the register heading "Interface criteria" was clipped and now reads "Criteria", and the register footnote gained padding.
-- The named version "Product compatibility — accepted" has not been saved.
+- Dean saved the named version "Product compatibility — accepted" on 1 November 2026: "I have saved the named version as Product compatibility — accepted". Claude did not open version history to confirm it. After the save, Claude changed only the named-version wording in the page header.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.
