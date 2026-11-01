@@ -315,6 +315,7 @@ export function CaseCommandEditor({
     <section
       className="sv08-card sv08-editor"
       aria-label={actionLabels[action]}
+      data-action={action}
     >
       <h2>{actionLabels[action]}</h2>
       <ValidationFields error={cmd.error}>
@@ -432,15 +433,19 @@ export function CaseCommandEditor({
                 {pack && (
                   <code className="sv08-hash">PDF {pack.pdf_sha256}</code>
                 )}
-                {people("sent_by", "Who sent it")}
-                {time("sent_at", "When it was sent")}
-                {field(
-                  "manufacturer_reference",
-                  "Manufacturer’s reference",
-                  false,
-                  200,
-                )}
-                {time("reply_expected_at", "Reply expected")}
+                <div className="sv08-field-row">
+                  {people("sent_by", "Who sent it")}
+                  {time("sent_at", "When it was sent")}
+                </div>
+                <div className="sv08-field-row">
+                  {field(
+                    "manufacturer_reference",
+                    "Manufacturer’s reference",
+                    false,
+                    200,
+                  )}
+                  {time("reply_expected_at", "Reply expected")}
+                </div>
               </>
             )}
             {action === "record_reply" && (
@@ -549,14 +554,13 @@ export function CaseCommandEditor({
                 </p>
               </>
             )}
-            {field("reason", "Reason for this record", true, 1000)}
+            {field(
+              "reason",
+              "Reason for this record",
+              action !== "record_sent",
+              1000,
+            )}
           </fieldset>
-          {action === "record_sent" && (
-            <p className="sv08-notice">
-              Recording sends nothing. Send the pack from your mailbox or their
-              portal first, then record it here.
-            </p>
-          )}
           {uncertain && (
             <p role="status">
               The result is unconfirmed. Your original entries are locked; retry
@@ -564,6 +568,12 @@ export function CaseCommandEditor({
             </p>
           )}
           <div className="sv08-actions">
+            {action === "record_sent" && (
+              <p className="sv08-send-notice">
+                Recording sends nothing. Send the pack from your mailbox or
+                their portal first, then record it here.
+              </p>
+            )}
             <Button
               type="submit"
               variant="primary"

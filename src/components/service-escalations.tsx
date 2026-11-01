@@ -522,6 +522,22 @@ function CaseDetail({
           ["Customer details left out", !!row.reviewed_pack_id],
           ["Recipient chosen", !!data.support_route],
         ];
+  const editor = editing && (
+    <div hidden={actualTab !== editorTab}>
+      <CaseCommandEditor
+        key={editing}
+        data={data}
+        action={editing}
+        guardRef={guardRef}
+        onSaved={() => {
+          setEditing(null);
+          onReload();
+        }}
+        onCancel={() => setEditing(null)}
+        onRevoked={onRevoked}
+      />
+    </div>
+  );
   const config = (
     <section className="sv08-card">
       <h2>Read-only configuration</h2>
@@ -631,9 +647,6 @@ function CaseDetail({
       <RecordIdentity reference={row.display_number} title={row.fault} />
       <header className="sv08-case-heading">
         <div>
-          <Button variant="quiet" onClick={onBack}>
-            Back to cases
-          </Button>
           <h1>{row.fault}</h1>
           <p>
             <State state={row.state} /> <strong>{row.display_number}</strong> ·{" "}
@@ -645,6 +658,11 @@ function CaseDetail({
           </p>
         </div>
         <div className="sv08-actions">
+          <span className="sv08-desktop">
+            <Button variant="quiet" onClick={onBack}>
+              Back to cases
+            </Button>
+          </span>
           <ButtonLink
             href={`/service/findings?${new URLSearchParams({ finding: row.finding_key })}`}
           >
@@ -911,7 +929,7 @@ function CaseDetail({
               </section>
             </RecordPanel>
             <RecordPanel id="sv08-tabs" tab="correspondence" value={actualTab}>
-              {reply ? (
+              {editing === "record_sent" ? null : reply ? (
                 <section className="sv08-card">
                   <h2>Manufacturer reply</h2>
                   <p>
@@ -989,6 +1007,7 @@ function CaseDetail({
                   )}
                 </section>
               )}
+              {editorTab === "correspondence" && editor}
               {sent && (
                 <section className="sv08-card">
                   <h2>Recorded as sent</h2>
@@ -1095,22 +1114,7 @@ function CaseDetail({
                   ))}
               </section>
             </RecordPanel>
-            {editing && (
-              <div hidden={actualTab !== editorTab}>
-                <CaseCommandEditor
-                  key={editing}
-                  data={data}
-                  action={editing}
-                  guardRef={guardRef}
-                  onSaved={() => {
-                    setEditing(null);
-                    onReload();
-                  }}
-                  onCancel={() => setEditing(null)}
-                  onRevoked={onRevoked}
-                />
-              </div>
-            )}
+            {editorTab !== "correspondence" && editor}
           </div>
         </section>
       </div>

@@ -99,7 +99,22 @@ export async function technicalEvidence(
   )
     throw Error("Retained photo hash mismatch");
   const observations: TechnicalEvidence["observations"] = [];
+  let correction: TechnicalEvidence["finding"]["correction"] = null;
   if (finding.source.source === "inspection") {
+    const defect = (
+      await c.query<{
+        correction_note: string | null;
+        correction_at: Date | null;
+      }>(
+        "SELECT correction_note,correction_at FROM ppo.inspection_defects WHERE workspace_id=$1 AND id=$2",
+        [p.workspace_id, finding.source.id],
+      )
+    ).rows[0];
+    if (defect?.correction_note)
+      correction = {
+        note: redactedTechnical(defect.correction_note),
+        recorded_at: defect.correction_at?.toISOString() ?? null,
+      };
     const attempts = (
       await c.query<{ id: string; occurred_at: Date | null; state: string }>(
         `SELECT DISTINCT a.id,a.occurred_at,a.state FROM ppo.inspection_defect_attempts d JOIN ppo.inspection_attempts a ON (a.workspace_id,a.id)=(d.workspace_id,d.attempt_id) WHERE d.workspace_id=$1 AND d.defect_id=$2 AND a.company_id=$3 AND a.site_id=$4 AND a.state<>'Draft' ORDER BY a.occurred_at,a.id`,
@@ -159,6 +174,8 @@ export async function technicalEvidence(
       reference: finding.item.source_record.reference,
       source: finding.item.source,
       state: finding.item.native_state,
+      summary: redactedTechnical(finding.item.what_remains),
+      correction,
     },
     photos,
   };

@@ -127,12 +127,19 @@ for (const width of [1440, 1024, 390, 320])
     await setup(page);
     await page.setViewportSize({
       width,
-      height: width === 1440 ? 900 : width === 1024 ? 768 : 844,
+      height: width === 1440 ? 900 : width === 1024 ? 900 : 844,
     });
     await page.goto("/service/escalations");
+    if (width === 1024)
+      await page
+        .getByRole("button", {
+          name: "Collapse primary navigation",
+          exact: true,
+        })
+        .click();
     await expect(
-      page.getByText("Boiler controller BC-2 shows fault E-17", {
-        exact: true,
+      page.getByRole("button", {
+        name: /Boiler controller BC-2 shows fault E-17/,
       }),
     ).toBeVisible();
     await mkdir("tmp/sv08-captures", { recursive: true });
@@ -166,3 +173,34 @@ for (const width of [1440, 1024, 390, 320])
       fullPage: true,
     });
   });
+
+test("SV08 diagnosing and Record as sent expose the retained desktop task states", async ({
+  page,
+}) => {
+  const { detail } = await setup(page, { state: "Diagnosing" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/service/escalations?case=${escalationId}`);
+  await expect(
+    page.getByRole("heading", { name: "Diagnostics already tried" }),
+  ).toBeVisible();
+  await mkdir("tmp/sv08-captures", { recursive: true });
+  await page.screenshot({
+    path: "tmp/sv08-captures/diagnosing-1440.png",
+    fullPage: true,
+  });
+  detail.record.reviewed_pack_id = detail.record.latest_pack_id;
+  detail.packs[0].reviewed_at = detail.record.updated_at;
+  await page.reload();
+  await page.getByRole("tab", { name: "Correspondence" }).click();
+  await page
+    .getByRole("button", { name: "Record as sent", exact: true })
+    .click();
+  await expect(page.getByLabel("Who sent it")).toBeVisible();
+  await expect(
+    page.getByText(/Recording sends nothing. Send the pack/),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "tmp/sv08-captures/record-sent-1440.png",
+    fullPage: true,
+  });
+});

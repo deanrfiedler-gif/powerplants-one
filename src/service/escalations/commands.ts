@@ -73,7 +73,8 @@ async function event(
   );
   return id;
 }
-// Child changes share the case transaction and operation; their native history remains visible.
+// Child changes share the case transaction; only its primary audit owns the operation ID.
+// Native Activity history links back through parent_operation_id, as other composite commands do.
 async function activityAudit(
   c: PoolClient,
   p: Principal,
@@ -83,16 +84,16 @@ async function activityAudit(
   caseId: string,
 ) {
   await c.query(
-    "INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,operation_id,outcome,reason,details) VALUES($1,$2,$3,'Activity',$4,$5,'Accepted',$6,$7)",
+    "INSERT INTO ppo.audit_events(id,workspace_id,actor_id,object_type,object_id,outcome,reason,details) VALUES($1,$2,$3,'Activity',$4,'Accepted',$5,$6)",
     [
       randomUUID(),
       p.workspace_id,
       p.actor_id,
       row.id,
-      operation,
       reason,
       {
         command: "ServiceEscalation:Activity",
+        parent_operation_id: operation,
         case_id: caseId,
         record_version: row.version,
         ...row.audit_details,

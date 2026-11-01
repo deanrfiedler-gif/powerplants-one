@@ -19,6 +19,28 @@ import { caseActions, allowedAction, hashBytes } from "./model";
 import { currentConfiguration } from "../../equipment/changes";
 const denied = (e: unknown) =>
   e instanceof AppError && [403, 404].includes(e.status);
+// Keep the case DTO independent of Equipment's private notes and commercial fields.
+function equipmentView(asset: Record<string, unknown>) {
+  const text = (key: string) =>
+    typeof asset[key] === "string" ? (asset[key] as string) : null;
+  const end = asset.warranty_end;
+  const warranty_end =
+    end instanceof Date
+      ? `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, "0")}-${String(end.getDate()).padStart(2, "0")}`
+      : text("warranty_end");
+  return {
+    id: String(asset.id),
+    company_id: String(asset.company_id),
+    site_id: String(asset.site_id),
+    version: Number(asset.version),
+    display_number: String(asset.display_number),
+    description: String(asset.description),
+    manufacturer: text("manufacturer"),
+    model: text("model"),
+    serial: text("serial"),
+    warranty_end,
+  };
+}
 export async function owners(
   c: QueryClient,
   p: Principal,
@@ -73,7 +95,7 @@ export async function caseOptions(p: Principal, input: unknown = {}) {
           r.id,
         );
         equipment.push({
-          ...asset,
+          ...equipmentView(asset),
           support_route: await supportRoute(c, p, asset),
           owners: await owners(c, p, q.finding_key as string, r.id),
         });
@@ -265,7 +287,7 @@ export async function readCase(p: Principal, id: string, input: unknown = {}) {
     ).rows[0].display_name;
     return {
       record: { ...row, owner_name: ownerName },
-      equipment: ctx.asset,
+      equipment: equipmentView(ctx.asset),
       site: ctx.finding.item.site,
       finding: ctx.finding.item,
       source_token: ctx.finding.source_token,

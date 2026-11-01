@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 const exclusive = new Set([
   "site-readiness.test.ts",
   "service-finding-next-action.test.ts",
+  "service-escalations.test.ts",
   "crm-owner-transfer.test.ts",
   "estimating-e2-verification.test.ts",
   "project-commercial.test.ts",

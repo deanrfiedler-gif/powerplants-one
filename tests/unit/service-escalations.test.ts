@@ -65,7 +65,16 @@ const evidence: TechnicalEvidence = {
       ],
     },
   ],
-  finding: { reference: "SYN-DEF-001", source: "inspection", state: "Open" },
+  finding: {
+    reference: "SYN-DEF-001",
+    source: "inspection",
+    state: "Open",
+    summary: "SYN pressure outside range",
+    correction: {
+      note: "SYN replaced sensor; contact grower@example.invalid; AUD 200",
+      recorded_at: "2026-11-01T00:00:00Z",
+    },
+  },
   photos: [],
 };
 test("SV08 lifecycle permits only the accepted next duties and retains terminal cases", () => {

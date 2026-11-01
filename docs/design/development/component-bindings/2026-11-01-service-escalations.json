@@ -24,8 +24,8 @@
         {
           "id": "application-shell-sv08-review",
           "expected": "Paired review of accepted frames at all four widths.",
-          "actual": "Application comparison pending; no owner acceptance.",
-          "action": "Inspect application captures and retain differences separately from functional proof.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -53,8 +53,8 @@
         {
           "id": "register-table-sv08-review",
           "expected": "Paired review of accepted frames at all four widths.",
-          "actual": "Application comparison pending; no owner acceptance.",
-          "action": "Inspect application captures and retain differences separately from functional proof.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -82,8 +82,8 @@
         {
           "id": "buttons-sv08-review",
           "expected": "Paired review of accepted frames at all four widths.",
-          "actual": "Application comparison pending; no owner acceptance.",
-          "action": "Inspect application captures and retain differences separately from functional proof.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }
@@ -111,8 +111,8 @@
         {
           "id": "read-state-sv08-review",
           "expected": "Paired review of accepted frames at all four widths.",
-          "actual": "Application comparison pending; no owner acceptance.",
-          "action": "Inspect application captures and retain differences separately from functional proof.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
           "priority": "Medium",
           "owner": "Dean Fiedler"
         }

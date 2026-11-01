@@ -1,3 +1,6 @@
+import { png } from "./field";
+import { hashBytes } from "../../src/service/escalations/model";
+import { createAsset } from "../../src/shared/commands";
 import { randomUUID } from "node:crypto";
 import { confirmed, principal, base } from "./packs";
 import { readFindings } from "../../src/service/findings/reads";
@@ -16,8 +19,25 @@ export async function escalationFixture() {
     await readFindings(p, { source: "schedule", q: appointment.display_number })
   ).items[0];
   if (!finding) throw Error("Expected native scheduling follow-up");
+  // The seed intentionally invents no manufacturer. This test explicitly authors
+  // equipment using the fictional manufacturer already present in accepted frame 04.
+  const equipmentId = randomUUID();
+  await createAsset(p, {
+    ...base(),
+    id: equipmentId,
+    company_id: finding.company_id,
+    site_id: finding.site.id,
+    description: "SYN escalation test controller",
+    identity_status: "Unresolved",
+    manufacturer: "SYN Boiler Controls",
+    model: "BC-200",
+    serial: `SYN-${equipmentId}`,
+    effective_at: "2026-09-01T00:00:00.000Z",
+    configuration: "SYN firmware 4.1; observation only; no settings changed",
+    warranty_end: "2027-03-31",
+  });
   const options = await caseOptions(p, { finding_key: finding.id });
-  const asset = options.equipment.find((a) => a.manufacturer);
+  const asset = options.equipment.find((a) => a.id === equipmentId);
   if (!asset)
     throw Error("Expected permitted seeded equipment with manufacturer");
   const id = randomUUID(),
@@ -54,6 +74,13 @@ export async function preparedEscalation() {
     diagnostic: "SYN inspected external status indicators",
     result: "Intermittent indicator remains; no controller settings changed",
     source_reference: "SYN technical observation",
+  });
+  const photo = png();
+  await act(f, "photo", {
+    media_type: "image/png",
+    content_base64: photo.toString("base64"),
+    sha256: hashBytes(photo),
+    confirmed_exclusions: true,
   });
   await act(f, "capture_configuration");
   await act(f, "prepare_pack");
@@ -94,7 +121,13 @@ export async function repliedEscalation() {
     reply: "SYN manufacturer recommends checking the sensor input",
     advice: "Record a new reading and compare it with the retained evidence",
     settings_change: true,
-    attachments: [],
+    attachments: [
+      {
+        media_type: "image/png",
+        content_base64: png().toString("base64"),
+        sha256: hashBytes(png()),
+      },
+    ],
   });
   return f;
 }

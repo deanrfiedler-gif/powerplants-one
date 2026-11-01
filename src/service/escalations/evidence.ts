@@ -50,7 +50,13 @@ export type TechnicalEvidence = {
       calibration: string;
     }[];
   }[];
-  finding: { reference: string; source: string; state: string };
+  finding: {
+    reference: string;
+    source: string;
+    state: string;
+    summary: string;
+    correction: { note: string; recorded_at: string | null } | null;
+  };
   photos: {
     id: string;
     media_type: string;
@@ -62,8 +68,18 @@ export type TechnicalEvidence = {
 export function evidenceHtml(input: TechnicalEvidence) {
   const t = (v: unknown) =>
     escapeHtml(redactedTechnical(String(v ?? "Not recorded")));
+  // Revalidate the image boundary even when a caller bypasses the database loader.
+  for (const photo of input.photos)
+    fileInput(
+      {
+        media_type: photo.media_type,
+        content_base64: photo.content_base64,
+        sha256: photo.sha256,
+      },
+      true,
+    );
   // Explicit projection, including nested arrays. Extra contact/price properties are ignored.
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>${t(input.case_reference)} evidence</title><style>body{font:14px Roboto,Verdana,sans-serif;color:#242a37;margin:32px;line-height:1.5}h1{font-size:24px}h2{font-size:18px;border-bottom:2px solid #62bb46;padding-bottom:8px}article{break-inside:avoid;margin:16px 0}img{max-width:100%;max-height:480px}code{overflow-wrap:anywhere;font-size:11px}table{border-collapse:collapse;width:100%}td,th{padding:8px;border:1px solid #ccd3dd;text-align:left}.notice{background:#f1f4f8;padding:12px}</style></head><body><header><p>Synthetic prototype · technical evidence · not for operational use</p><h1>${t(input.fault)}</h1><p>${t(input.case_reference)} · ${t(input.site)}</p></header><h2>Equipment</h2><p>${t(input.equipment.reference)} · ${t(input.equipment.manufacturer)} · ${t(input.equipment.model)} · ${t(input.equipment.serial)}</p><h2>Diagnostics already tried</h2>${input.diagnostics.map((d) => `<article><strong>${t(d.diagnostic)}</strong><p>${t(d.result)}</p><p>${t(d.recorded_by)} · ${t(d.attempted_at)} · ${t(d.source_reference)}</p></article>`).join("")}<h2>Read-only configuration</h2><p>Settings belong to the grower. No settings are changed here.</p><p>${t(input.configuration.description)}</p><p>Revision ${t(input.configuration.revision)} · <code>${t(input.configuration.sha256)}</code></p><h2>Inspection attempts and readings</h2>${input.observations.map((a) => `<article><p>${t(a.attempt_id)} · ${t(a.occurred_at)} · ${t(a.state)}</p><table><thead><tr><th>Check</th><th>Reading</th><th>Instrument</th><th>Calibration</th></tr></thead><tbody>${a.readings.map((r) => `<tr><td>${t(r.check)}</td><td>${t(r.value)} ${t(r.unit)}</td><td>${t(r.instrument)}</td><td>${t(r.calibration)}</td></tr>`).join("")}</tbody></table></article>`).join("") || "<p>No permitted inspection readings linked.</p>"}<h2>Finding</h2><p>${t(input.finding.reference)} · ${t(input.finding.source)} · ${t(input.finding.state)}</p><h2>Reviewed technical photos</h2>${input.photos.map((p) => `<article><img alt="Reviewed technical evidence" src="data:${p.media_type};base64,${p.content_base64}"><p>${t(p.bytes)} bytes · SHA-256 <code>${t(p.sha256)}</code></p></article>`).join("") || "<p>No reviewed technical photos.</p>"}<p class="notice">Customer contact details and prices · left out. This pack names the site, not customer contacts. PPO sends nothing.</p></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>${t(input.case_reference)} evidence</title><style>body{font:14px Roboto,Verdana,sans-serif;color:#242a37;margin:32px;line-height:1.5}h1{font-size:24px}h2{font-size:18px;border-bottom:2px solid #62bb46;padding-bottom:8px}article{break-inside:avoid;margin:16px 0}img{max-width:100%;max-height:480px}code{overflow-wrap:anywhere;font-size:11px}table{border-collapse:collapse;width:100%}td,th{padding:8px;border:1px solid #ccd3dd;text-align:left}.notice{background:#f1f4f8;padding:12px}</style></head><body><header><p>Synthetic prototype · technical evidence · not for operational use</p><h1>${t(input.fault)}</h1><p>${t(input.case_reference)} · ${t(input.site)}</p></header><h2>Equipment</h2><p>${t(input.equipment.reference)} · ${t(input.equipment.manufacturer)} · ${t(input.equipment.model)} · ${t(input.equipment.serial)}</p><h2>Diagnostics already tried</h2>${input.diagnostics.map((d) => `<article><strong>${t(d.diagnostic)}</strong><p>${t(d.result)}</p><p>${t(d.recorded_by)} · ${t(d.attempted_at)} · ${t(d.source_reference)}</p></article>`).join("")}<h2>Read-only configuration</h2><p>Settings belong to the grower. No settings are changed here.</p><p>${t(input.configuration.description)}</p><p>Revision ${t(input.configuration.revision)} · <code>${t(input.configuration.sha256)}</code></p><h2>Inspection attempts and readings</h2>${input.observations.map((a) => `<article><p>${t(a.attempt_id)} · ${t(a.occurred_at)} · ${t(a.state)}</p><table><thead><tr><th>Check</th><th>Reading</th><th>Instrument</th><th>Calibration</th></tr></thead><tbody>${a.readings.map((r) => `<tr><td>${t(r.check)}</td><td>${t(r.value)} ${t(r.unit)}</td><td>${t(r.instrument)}</td><td>${t(r.calibration)}</td></tr>`).join("")}</tbody></table></article>`).join("") || "<p>No permitted inspection readings linked.</p>"}<h2>Finding</h2><p>${t(input.finding.reference)} · ${t(input.finding.source)} · ${t(input.finding.state)}</p><p>${t(input.finding.summary)}</p>${input.finding.correction ? `<p>Recorded correction · ${t(input.finding.correction.recorded_at)}</p><p>${t(input.finding.correction.note)}</p>` : "<p>No correction recorded on this source.</p>"}<h2>Reviewed technical photos</h2>${input.photos.map((p) => `<article><img alt="Reviewed technical evidence" src="data:${p.media_type};base64,${p.content_base64}"><p>${t(p.bytes)} bytes · SHA-256 <code>${t(p.sha256)}</code></p></article>`).join("") || "<p>No reviewed technical photos.</p>"}<p class="notice">Customer contact details and prices · left out. This pack names the site, not customer contacts. PPO sends nothing.</p></body></html>`;
 }
 export async function renderEvidence(input: TechnicalEvidence) {
   const html = evidenceHtml(input),

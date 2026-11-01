@@ -15,12 +15,17 @@ import {
 } from "../../src/service/escalations/reads";
 import { readFinding } from "../../src/service/findings/reads";
 import { hashBytes } from "../../src/service/escalations/model";
-import { readActivity } from "../../src/activities/activities";
+import { png } from "../helpers/field";
+import {
+  readActivity,
+  listActivities,
+  activityCommand,
+} from "../../src/activities/activities";
 import { readOperation } from "../../src/shared/receipts";
 import {
   escalationFixture,
   preparedEscalation,
-  repliedEscalation,
+  sentEscalation,
   act,
   principal,
   base,
@@ -133,6 +138,9 @@ test("SV08 retained HTML/PDF hashes, explicit exclusions and changed evidence in
       assert.ok(html.includes(f.command.fault));
       assert.ok(!html.includes("synthetic-support@example.invalid"));
       assert.ok(!html.includes("unit_price"));
+      assert.ok(
+        html.includes(`data:image/png;base64,${png().toString("base64")}`),
+      );
     }
   }
   await assert.rejects(
@@ -167,8 +175,60 @@ test("SV08 retained HTML/PDF hashes, explicit exclusions and changed evidence in
   );
 });
 test("SV08 sent fact creates one owned chase, reply retires it, and advice becomes native owned work without closing source", async () => {
-  const f = await repliedEscalation(),
-    d = await readCase(f.p, f.id);
+  const f = await sentEscalation();
+  const waiting = await readCase(f.p, f.id),
+    reminder = await readActivity(f.p, waiting.record.chase_activity_id!);
+  assert.equal(reminder.status, "Open");
+  assert.equal(reminder.can_edit, false);
+  assert.equal(reminder.escalation_source?.id, f.id);
+  const upcoming = await listActivities(f.p, {
+    owner_id: f.p.actor_id,
+    status: "Active",
+    due: "Upcoming",
+    q: waiting.record.display_number,
+  });
+  assert.ok(upcoming.items.some((a) => a.id === reminder.id));
+  await assert.rejects(
+    activityCommand(
+      f.p,
+      reminder.id,
+      {
+        ...base(),
+        expected_version: reminder.version,
+        owner_id: f.p.actor_id,
+        summary: "SYN changed",
+        due_at: reminder.due_at,
+        due_needed: false,
+      },
+      "update",
+    ),
+    rejected,
+  );
+  const photo = png();
+  await act(f, "record_reply", {
+    received_at: new Date().toISOString(),
+    reply: "SYN manufacturer recommends checking the sensor input",
+    advice: "Record a new reading",
+    settings_change: true,
+    attachments: [
+      {
+        media_type: "image/png",
+        content_base64: photo.toString("base64"),
+        sha256: hashBytes(photo),
+      },
+    ],
+  });
+  const d = await readCase(f.p, f.id);
+  const attachment = d.files.find((file) => file.kind === "ReplyAttachment")!;
+  assert.deepEqual(
+    (
+      await retainedFile(f.p, f.id, {
+        kind: "attachment",
+        file_id: attachment.id,
+      })
+    ).bytes,
+    photo,
+  );
   assert.equal(d.record.state, "ReplyToActOn");
   const chase = await readActivity(f.p, d.record.chase_activity_id!);
   assert.equal(chase.owner_id, f.p.actor_id);

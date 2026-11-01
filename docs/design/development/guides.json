@@ -13483,7 +13483,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Use the source link for source evidence/history and Open in My Work for the owned activity. Remote diagnosis and the Escalations group remain outstanding until SV-08 exists; this page shows no inactive control."
+            "Use the source link for source evidence/history and Open in My Work for the owned activity. With the case duty, Request remote diagnosis opens an escalation linked to this active finding. Choose its matching Equipment and eligible owner. The shared menu includes Escalations and separate Closed findings/Closed cases; closing a case does not close its finding."
           ],
           "steps": [],
           "rows": [],
