@@ -19,6 +19,7 @@ import {
   guideReviewState,
 } from "../../src/development/catalog";
 import {
+  entryGuide,
   matchEntry,
   origin,
   resolveDestination,
@@ -522,19 +523,26 @@ test("a guide key in both sources is an error", async () => {
 
 test("JSON guides accept the six statuses", async () => {
   const statuses = ["Draft", "InReview", "Reviewed", "Published", "Superseded", "Withdrawn"];
-  const entries = statuses.map((status) => fixtureEntry(`route:/${status.toLowerCase()}`, `/${status.toLowerCase()}`, `guide.${status.toLowerCase()}`));
+  const row = (name: string, status: string, review: Record<string, string | null> = {}) => ({
+    guide_key: `guide.${name}`,
+    entry_key: `route:/${name}`,
+    status,
+    owner_role: "Fixture owner",
+    reviewer: null,
+    reviewed_at: null,
+    reviewed_content_hash: null,
+    ...review,
+  });
+  const guides = [
+    ...statuses.map((status) => row(status.toLowerCase(), status)),
+    // A status outside the six is refused, and a blank reviewer is no review evidence.
+    row("approved", "Approved"),
+    row("blank", "Reviewed", { reviewer: " ", reviewed_at: "2026-10-01", reviewed_content_hash: "fixture-hash" }),
+  ];
   const fixture = await guideFixture(
     "ppo-studio-statuses-",
-    entries,
-    statuses.map((status) => ({
-      guide_key: `guide.${status.toLowerCase()}`,
-      entry_key: `route:/${status.toLowerCase()}`,
-      status,
-      owner_role: "Fixture owner",
-      reviewer: null,
-      reviewed_at: null,
-      reviewed_content_hash: null,
-    })),
+    guides.map((g) => fixtureEntry(g.entry_key, g.entry_key.slice("route:".length), g.guide_key)),
+    guides,
     {},
   );
   try {
@@ -542,11 +550,63 @@ test("JSON guides accept the six statuses", async () => {
     assert.deepEqual(catalog.errors, [
       "Guide review evidence missing: guide.reviewed",
       "Guide review evidence missing: guide.published",
+      "Guide needs living-master metadata: guide.approved",
+      "Guide review evidence missing: guide.blank",
     ]);
     const status = (key: string) => catalog.entries.find((e) => e.key === key)?.guide_status;
     assert.equal(status("route:/inreview"), "In review");
     assert.equal(status("route:/published"), "Changes awaiting review");
     assert.equal(status("route:/withdrawn"), "Withdrawn");
+    assert.equal(status("route:/blank"), "Changes awaiting review");
+  } finally {
+    await fixture.remove();
+  }
+});
+
+test("a page in also_applies_to shows the Markdown guide, not its own leftover JSON draft", async () => {
+  const draft = {
+    guide_key: "guide.sample.id",
+    entry_key: "route:/sample/[id]",
+    title: "Leftover draft",
+    status: "Draft",
+    owner_role: "Fixture owner",
+    sections: [],
+  };
+  const front =
+    'guide_key: guide.sample\nentry_key: "route:/sample"\nalso_applies_to: ["route:/sample/[id]"]\ntitle: Sample guide\nstatus: InReview';
+  const fixture = await guideFixture(
+    "ppo-studio-claim-",
+    [
+      fixtureEntry("route:/sample", "/sample", "guide.sample"),
+      fixtureEntry("route:/sample/[id]", "/sample/[id]", "guide.sample.id"),
+    ],
+    [draft],
+    { "docs/guides/pages/guide.sample.md": markdownGuide(front) },
+  );
+  const detail = async () => (await buildCatalog(fixture.root)).entries.find((e) => e.key === "route:/sample/[id]")!;
+  try {
+    const catalog = await buildCatalog(fixture.root);
+    assert.deepEqual(catalog.errors, []);
+    const before = await detail();
+    assert.equal(before.guide_status, "In review");
+    const page = await readPageGuide(fixture.root, "/sample/123");
+    assert.equal(page?.markdown?.front.guide_key, "guide.sample");
+    assert.equal(page?.title, "Sample guide");
+    // The fingerprint follows the Markdown guide: the draft no user sees does not move it, the guide's text does.
+    await fixture.put(
+      "docs/design/development/guides.json",
+      JSON.stringify({ schema_version: 2, guides: [{ ...draft, title: "Changed draft" }] }),
+    );
+    assert.equal((await detail()).fingerprint, before.fingerprint);
+    await fixture.put("docs/guides/pages/guide.sample.md", markdownGuide(front, "## Purpose {#purpose}\n\nChanged text.\n"));
+    assert.notEqual((await detail()).fingerprint, before.fingerprint);
+    // The hosted snapshot chooses with the same helper.
+    const hosted = [
+      { guide_key: "guide.sample.id", title: "Leftover draft" },
+      { guide_key: "guide.sample", title: "Sample guide", markdown: page!.markdown },
+    ];
+    assert.equal(entryGuide(hosted, { key: "route:/sample/[id]", guide_key: "guide.sample.id" })?.title, "Sample guide");
+    assert.equal(entryGuide(hosted, { key: "route:/other", guide_key: "guide.sample.id" })?.title, "Leftover draft");
   } finally {
     await fixture.remove();
   }

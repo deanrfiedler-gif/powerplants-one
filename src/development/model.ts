@@ -62,6 +62,26 @@ export function scopedGuide(
     })),
   };
 }
+// The guide a register entry shows, in the order the released shell panel uses (src/guides/released.ts): first the
+// Markdown guide that claims the entry, through its entry_key or also_applies_to, then the guide with the entry's own
+// guide_key, Markdown or JSON. The catalogue, the page guide and the hosted snapshot all choose with this.
+export type GuideCandidate = { guide_key: string; markdown?: CompiledGuide };
+export function entryGuide<T extends GuideCandidate>(
+  guides: readonly T[],
+  entry: Pick<Entry, "key" | "guide_key">,
+): T | undefined {
+  return (
+    guides.find(
+      (g) =>
+        !!g.markdown &&
+        (g.markdown.front.entry_key === entry.key ||
+          g.markdown.front.also_applies_to.includes(entry.key)),
+    ) ??
+    (entry.guide_key
+      ? guides.find((g) => g.guide_key === entry.guide_key)
+      : undefined)
+  );
+}
 export type Entry = {
   key: string;
   title: string;

@@ -14,8 +14,8 @@ import type {
 import { fileHistories } from "./history";
 import { readGuideLibrary } from "../guides/library";
 import { guideStatuses, type CompiledGuide } from "../guides/model";
-import { guideStateFor } from "../guides/status";
-import { matchEntry } from "./model";
+import { guideStateFor, hasVisibleText } from "../guides/status";
+import { entryGuide, matchEntry, type GuideCandidate } from "./model";
 import {
   applyComponentBindings,
   type ComponentBinding,
@@ -237,6 +237,8 @@ export type GuideSources = {
   json: Guide[];
   markdown: CompiledGuide[];
   errors: string[];
+  // Both sources as candidates for entryGuide, Markdown first.
+  candidates: (GuideCandidate & { found: FoundGuide })[];
 };
 export async function readGuideSources(
   root: string,
@@ -250,24 +252,27 @@ export async function readGuideSources(
     json,
     markdown: library.guides,
     errors: library.errors.map((e) => `${e.path}:${e.line} ${e.message}`),
+    candidates: [
+      ...library.guides.map((guide) => ({
+        guide_key: guide.front.guide_key,
+        markdown: guide,
+        found: { kind: "markdown" as const, guide },
+      })),
+      ...json.map((guide) => ({
+        guide_key: guide.guide_key,
+        found: { kind: "json" as const, guide },
+      })),
+    ],
   };
 }
 export type FoundGuide =
   { kind: "json"; guide: Guide } | { kind: "markdown"; guide: CompiledGuide };
-// An entry's guide: the guide with its own guide_key (a key lives in one source only), otherwise the Markdown guide
-// that lists the entry in also_applies_to.
+// An entry's guide, chosen as the released shell panel chooses it (entryGuide in model.ts).
 export function guideForEntry(
   sources: GuideSources,
   entry: Pick<Entry, "key" | "guide_key">,
 ): FoundGuide | undefined {
-  const own = entry.guide_key
-    ? guideForKey(sources, entry.guide_key)
-    : undefined;
-  if (own) return own;
-  const applied = sources.markdown.find((g) =>
-    g.front.also_applies_to.includes(entry.key),
-  );
-  return applied ? { kind: "markdown", guide: applied } : undefined;
+  return entryGuide(sources.candidates, entry)?.found;
 }
 export function guideForKey(
   sources: GuideSources,
@@ -565,7 +570,9 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       errors.push("Guide needs living-master metadata: " + guide.guide_key);
     if (
       (guide.status === "Reviewed" || guide.status === "Published") &&
-      (!guide.reviewer || !guide.reviewed_at || !guide.reviewed_content_hash)
+      (!hasVisibleText(guide.reviewer) ||
+        !hasVisibleText(guide.reviewed_at) ||
+        !hasVisibleText(guide.reviewed_content_hash))
     )
       errors.push("Guide review evidence missing: " + guide.guide_key);
   }

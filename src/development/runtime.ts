@@ -5,7 +5,7 @@ import {
   readPageGuide,
   readReference,
 } from "./catalog";
-import { matchEntry } from "./model";
+import { entryGuide, matchEntry } from "./model";
 import {
   buildComponentLibrary,
   readComponentManifest,
@@ -45,13 +45,8 @@ export async function developmentPageGuide(pathname: string) {
   const value = await snapshot();
   const entry = matchEntry(value.catalog.entries, pathname);
   if (!entry) return undefined;
-  // The entry's own guide, otherwise the Markdown guide that lists the entry in also_applies_to (as readPageGuide).
-  return (
-    value.guides.find((g) => g.guide_key === entry.guide_key) ??
-    value.guides.find((g) =>
-      g.markdown?.front.also_applies_to.includes(entry.key),
-    )
-  );
+  // Chosen as the catalogue and the released shell panel choose.
+  return entryGuide(value.guides, entry);
 }
 export async function developmentPreview() {
   if (process.env.PPO_ENV === "azure-demo") {
