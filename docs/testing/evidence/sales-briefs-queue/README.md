@@ -10,7 +10,7 @@ CR-02 receiving queue at `/estimating/intake`, navigation ID `intake`, label Sal
 
 The accepted Figma version and nodes were inspected during the original work. Current implementation comparison uses the [retained five icon-free design captures](../../../reference/ui/estimating/sales-briefs-design-r01/README.md) and adopted shell/phone amendments. No private file link/key or Font Awesome Pro artwork is retained. Application captures use repository fallback SVGs and synthetic fixtures, with the Kit unset.
 
-## Functional proof
+## Functional proof before the 1 November integration
 
 Validation used Node 24.22.2, npm 11.19.0, PostgreSQL 16 and Chrome 156.0.8078.80 / Playwright 1.64.1. `npm ci --no-audit --no-fund` passed on the repository pin; no engine override was used. Runtime configuration stayed outside the repository. The task-owned preview used `PPO_PORT=3037`, and database suites used only a disposable `ppo_synthetic_test` on the task's own local PostgreSQL server.
 
@@ -40,11 +40,27 @@ A native queue trace then exposed a real starvation defect: a full permitted rea
 
 Not run: every repository-wide unit/database/HTTP/browser suite, the populated-upgrade suites for unchanged migrations, physical-device or screen-reader testing, a production-scale load benchmark, owner/business acceptance or deployment. The read deliberately establishes correctness from the full permitted submitted population; its repeated native authorization reads still need scale measurement before any production-capacity claim.
 
+## 1 November main integration
+
+Dean explicitly approved a one-PR exception to the ten-build publication limit in this chat. Main was merged through `26deea85d000878ca8df2c1b7a91e1ffdedd68f6` (local merge `4076d6ae`). PR #703 remained open, so `/estimating` was not changed. Main's additive Aftercare test setup was retained. The shared read-hook conflict preserves main's third `clearUnanswered` argument and adds serialization as the fourth argument; only the queue and existing HandoverList list read opt into serialization. Site follow-up keeps its independent unanswered-read policy.
+
+The earlier functional results above remain evidence of the implementation before these merges. Post-merge checks are reported separately:
+
+- Production builds on merges `1b9f4a6b` and `4076d6ae` passed, including TypeScript and all 82 static pages. The latter is the current merged application source.
+- Current-head TypeScript on `4076d6ae` passed with the same 8 GB limit, using TypeScript's valid `.next/cache/.tsbuildinfo` incremental cache. Focused lint of the shared hook, both receiving consumers and merged Sales workflow browser test passed.
+- Seven focused queue/current-resource-read units passed. Studio, foundation, naming, status and documentation-scope checks passed after integration. Studio retained 346 unreviewed and 26 stale entries; these are not acceptance claims.
+- The complete current fixture suite plus main's Site follow-up unanswered-read regression passed: 10 passed, 6 intentional project skips. This proves both the fourth-argument serialized queue policy and the unchanged third-argument Site policy on desktop and phone. All nine regenerated captures were byte-identical to the inspected retained images.
+- The first post-merge native database attempt exceeded the unchanged 180-second test budget. A retry failed in setup with `Connection terminated due to connection timeout`, before a queue assertion ran. After the build and browser processes were stopped, a final isolated retry again exceeded 180 seconds (227.9 seconds including file/setup overhead). These failed runs do not replace the earlier passing native journey and are not declared unrelated: no matching failure was established on unmodified current main.
+- Both current native browser projects stopped at the initial local-session request with `FixturesUnavailable`, before any queue assertion. The existing identity contract returns that response when the synthetic coordinator user is absent. The task database health command succeeded, but setup was not completed within the isolated test budget; a separate connection-wait diagnostic also timed out. Current-head native database/HTTP/browser CI remains a merge gate. No failed rerun is counted as a pass.
+- An explicit earlier TypeScript attempt and broad guide-unit attempt were interrupted during host memory pressure; neither is counted as a pass. The completed production build and later focused checks are the reported results.
+
+Current published-head CI and independent review must resolve any remaining native validation limits before merge. No application connection/query timeout or five-second browser assertion was increased.
+
 ## Visual inspection
 
 Codex inspected all nine application captures on 31 October 2026 against the five retained accepted references and the adopted phone/shell amendments. The register preserves the 240 px rail and secondary menu, 60 px toolbar, 40 px desktop rows, horizontally scrollable columns and fixed selection/action edges. The 1440 px snapshot preserves its large two-column composition and the selection panel is 360 px. At 390 px the list has one compact header and the snapshot has a separate record header and sticky footer; at 320 px the content wraps without page overflow and the step controls move into More. Browser assertions exercise keyboard focus restoration/Escape, compact menus, paging and selection recovery.
 
-The [capture manifest](captures.json) records dimensions and SHA-256 hashes. Captures use deterministic synthetic read fixtures, not native database responses. Native behaviour is covered separately above. After the polling fix, the rebuilt application reproduced all nine retained PNGs byte-for-byte. Inspection does not grant visual acceptance.
+The [capture manifest](captures.json) records dimensions and SHA-256 hashes. Captures use deterministic synthetic read fixtures, not native database responses. Native behaviour is covered separately above. After the polling fix, the rebuilt application reproduced all nine retained PNGs byte-for-byte. The 1 November build on `4076d6ae` reproduced those same nine PNGs byte-for-byte again. Inspection does not grant visual acceptance.
 
 | Width | Inspected application captures |
 |---|---|
