@@ -7,7 +7,8 @@ export function denied(error: unknown) {
   return [401, 403, 404].includes((error as Failure)?.status ?? 0);
 }
 // Online memory only. A denied/current-identity refresh unmounts sensitive forms.
-export function useCrmResource<T>(path: string | null, clearOnError = false) {
+// clearUnanswered drops retained data when a re-read outlasts the next interval.
+export function useCrmResource<T>(path: string | null, clearOnError = false, clearUnanswered = false) {
   const [revision, setRevision] = useState(0),
     [state, setState] = useState<{
       path: string | null;
@@ -17,35 +18,50 @@ export function useCrmResource<T>(path: string | null, clearOnError = false) {
   useEffect(() => {
     let live = true;
     let latestRequest = 0;
+    let overdue = false;
     const load = () => {
       if (path) {
         const request = ++latestRequest;
         void api<T>(path).then(
           (data) => {
-            if (live && request === latestRequest)
+            if (live && request === latestRequest) {
+              overdue = false;
               setState({ path, data, error: null });
+            }
           },
           (error) => {
-            if (live && request === latestRequest)
+            if (live && request === latestRequest) {
+              overdue = false;
               setState((old) => ({
                 path,
                 data: !clearOnError && !denied(error) && old.path === path ? old.data : null,
                 error,
               }));
+            }
           },
         );
       }
     };
+    const tick = () => {
+      if (clearUnanswered && overdue)
+        setState({
+          path,
+          data: null,
+          error: { message: "The current records could not be confirmed. Try again.", retryable: true } satisfies Failure,
+        });
+      load();
+      overdue = !!path;
+    };
     if (!path) queueMicrotask(() => { if (live) setState({path:null,data:null,error:null}); });
     load();
-    const timer = setInterval(load, 15000);
+    const timer = setInterval(tick, 15000);
     window.addEventListener("focus", load);
     return () => {
       live = false;
       clearInterval(timer);
       window.removeEventListener("focus", load);
     };
-  }, [path, revision, clearOnError]);
+  }, [path, revision, clearOnError, clearUnanswered]);
   return {
     data: state.path === path ? state.data : null,
     error: state.path === path ? state.error : null,
