@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ApplicationFrame } from "../components/application-frame";
+import { releasedGuideLibrary } from "../guides/released-server";
+import { GuideLibraryProvider } from "../guides/provider";
 import { appleTouchIconPath, navy } from "../platform/installation";
 import { developmentRequest } from "../development/access";
 import { cookies, headers } from "next/headers";
@@ -86,7 +88,9 @@ export default async function RootLayout({
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
+        <GuideLibraryProvider value={await releasedGuideLibrary()}>
+          <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
+        </GuideLibraryProvider>
       </body>
     </html>
   );
