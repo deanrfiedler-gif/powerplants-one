@@ -14,15 +14,19 @@ Implement role-based onboarding, learning, support, feedback and release-note pa
 
 ## Desktop
 
+Accepted design: the [onboarding and support design decision](../../../decisions/onboarding-support-figma-design.md) of 1 November 2026 covers Getting started, the task path, practice in progress and finished, Ask for help, My requests, What's new, the Owner view, feedback and the proposed entry points, with twenty-five icon-free captures in [design r01](../../../reference/ui/administration/onboarding-support-design-r01/README.md). Where it differs from the text below, it governs. The page is not built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
 
+Accepted design: captures 12–17, 24 and 25 in [design r01](../../../reference/ui/administration/onboarding-support-design-r01/README.md): Getting started, the practice exercise and Ask for help at 390 and 320, uncertain send and offline. Inputs use 16 px text and main buttons 48 px.
+
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
-The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
+The accepted mobile composition is in the design above; no application evidence exists yet. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
 ## Shared components and states
 
@@ -32,7 +36,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+- [Onboarding & support design r01 captures](../../../reference/ui/administration/onboarding-support-design-r01/README.md) (accepted Figma design, icon-free)
+
+No HTML reference exists.
 
 ## Behaviour, handovers and verification
 
