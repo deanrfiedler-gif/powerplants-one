@@ -178,7 +178,8 @@
         "src/components/engineering-register.tsx",
         "src/components/engineering-register-snapshot.tsx",
         "src/components/engineering-register.css",
-        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md",
+        "src/components/engineering-workspace.tsx"
       ],
       "used_on": [
         "route:/engineering",

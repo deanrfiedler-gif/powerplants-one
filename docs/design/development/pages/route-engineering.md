@@ -17,7 +17,7 @@ The authority is the [accepted Engineering workload decision](../../../decisions
 - New request reuses the native intake dialog, scoped context/assignment options and original-operation recovery. Search, Engineer and Discipline are filters. Engineer choices are **recorded owners**, including explicitly labelled inactive people; they are not assignment recommendations.
 - The 40 px grid retains Reference, Work package, Customer, Status, Required by, Engineer, Next action, Action due, Deliverables, Discipline and Project or opportunity. Checkbox and row-action columns remain fixed. Columns can be hidden or resized, including with the keyboard. Server sorting supports Required by, Reference, Work package, Action due and Last updated; date nulls are last in both directions.
 - Opening a row overlays a right-aligned snapshot, capped at 960 px. Summary, next action/blocker, design brief and exact-package links sit beside Deliverables, Queries, Reviews & issues and coordination history. Open package retains the existing full record route; Update coordination retains its native version/reason checks.
-- Selected current-page rows appear in a 360 px panel. CSV and Open in sequence recheck the permitted register source first. Neither action changes a package or releases content.
+- Selected current-page rows appear in a 360 px panel. When paging is needed, its shared footer remains below the panel; a single-page result has no paging footer. CSV and Open in sequence recheck the permitted register source first. Neither action changes a package or releases content.
 
 At 1024 px the shared menu can collapse and the toolbar wraps when necessary. The grid keeps its column widths and scrolls internally. A window never compresses the grid.
 
@@ -26,7 +26,7 @@ At 1024 px the shared menu can collapse and the toolbar wraps when necessary. Th
 The current shared phone header supplies the title, view/menu access, count, filters and conversations; it supersedes the earlier header composition in capture 04. The Engineering bottom bar has five icon buttons with accessible names: My Work, Engineering workload, Drawings, Technical reviews and More.
 
 - Flush rows show title/date, reference/status and customer/recorded engineer. New request uses the floating primary action. Missing dates and inactive owners remain explicit.
-- A row opens a full-screen stacked snapshot with Close, Previous, Next and Refresh. Open package and Update coordination remain reachable at the bottom.
+- A row opens a full-screen stacked snapshot with a back control, the full package reference, Previous, Next and More (including Refresh). Open package and Update coordination remain reachable at the bottom.
 - At 390 and 320 px the list, filter sheet and snapshot must stay within the viewport. The compact header provides Select packages; selection mode exposes checkboxes and a selected-count button opening the shared sheet. No permanent toolbar or count row sits below the phone header. Refresh is available in Filter and on return to the page. At 320 px snapshot sequence controls move into More, preserving the reference and 44 px header targets. This is an implementation adaptation for the accepted design's unresolved phone-selection interaction; it requires owner review.
 - Inputs retain readable phone text sizing. Long context and technical facts wrap; the grid is replaced by the list.
 

@@ -6,11 +6,11 @@ title: Engineering workload & deliverables
 status: InReview
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: fd6dfb63
+source_commit: 569ce5a3
 contents: { overview: "Overview", how: "How to use", journey: "Journey map", recovery: "Recovery" }
 list_styles: { journey: journey }
 workflow_basis: "EN-01 native package coordination, BC-01 permitted register reads and EN-02–EN-08 technical authority."
-runtime_evidence: "Validation in progress in PR #707; see the Engineering workload execution ledger."
+runtime_evidence: "Native register, queue, recovery and responsive proof is recorded in the Engineering workload execution ledger for PR #707. Content-owner acceptance remains separate."
 change_summary: "Use the view menu, server-sorted grid, package snapshot and selected-package actions."
 ---
 

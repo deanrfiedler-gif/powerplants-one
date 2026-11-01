@@ -113,7 +113,7 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 - **Department rails.** In the build, each department's rail comes from `navigation.ts`. The Figma file draws this page's rail as a page component; whether every department rail becomes a variant of v2 / Rail is a library choice for the shell rollout.
 - **Open questions:**
   - What does a rail count mean across the whole shell? Here it is your Author actions. The recommendation is to decide this once for the shell rather than page by page.
-  - How should several rows be selected on the phone? The recommendation is the same as for Reviews & approvals: press and hold a row.
+  - Phone selection was originally open, with press-and-hold recommended. For PR #707, Codex chose the visible **Select packages** header action and shared selection sheet under the autonomous standing order on 1 November 2026. It exposes the same bounded current-page selection to touch and keyboard users without an undiscoverable gesture. The alternative is press-and-hold plus an equivalent accessible control; the choice is reversible in the page interaction, requires no data change and is not Dean’s visual acceptance.
 - **Not drawn yet:** loading and failed-read states. Empty states: "No engineering packages yet", "No packages match these filters", and the Reviews and Released empty states. Also:
   - the stale state ("The package changed…");
   - read-only access;
@@ -125,8 +125,8 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 
 ## 6. Consequences
 
-- No application code, read model, route, migration, permission or capability changes. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
-- The [Engineering workspace register entry](../design/development/pages/route-engineering.md) now links this design and its captures. Its visual status stays "Needs review", because the app does not yet match the design.
+- The original design-only adoption changed no application code, read model, route, migration, permission or capability. The subsequent implementation is separately tracked in section 5. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
+- The [Engineering workspace register entry](../design/development/pages/route-engineering.md) now links this design and its captures. Its visual status stays "Needs review", pending application comparison and owner review of the subsequent implementation.
 - The Engineering r02 HTML and audit stay unchanged as the issued source of the earlier accepted design.
 - When the page is built, compare it with these captures and the Figma frames at the same viewports, following ADR-0053 rule 7.
 - A later change to this design receives a new named version and a new capture revision folder; these bytes stay unchanged.
@@ -142,7 +142,7 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 - Cloning the Reviews frames had carried prototype links to the Reviews page. A scan found the remaining two, on the header checkbox, and removed them. A final scan found no instance of a Reviews page component on this page.
 - The five captures are copies of the accepted frames, with every Font Awesome icon swapped for `Icon/placeholder`. A check after the swap found no Font Awesome instance left in any copy. They were exported at scale 1 with the Figma connector, and each image was inspected. The hashes are in the [captures README](../reference/ui/engineering/engineering-workload-design-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change.
-- Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+- At the original design-only adoption nothing was built, so that verification supplies no application or device evidence. Subsequent implementation evidence is linked from section 5 and does not grant owner visual acceptance or a UI baseline.
 
 ## Backend continuation — 13 October 2026
 

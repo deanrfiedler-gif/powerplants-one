@@ -8,7 +8,7 @@ Engineering rail author-action count, shared secondary menu/phone header and fiv
 
 ## register-table
 
-Accepted 40 px single-line grid with server sorting/paging, fixed end columns, keyboard resizing and exact-source selection; flush phone rows replace the grid.
+Accepted 40 px single-line grid with server sorting/paging, fixed end columns, keyboard resizing, unobstructed multi-page controls and exact-source selection; flush phone rows replace the grid.
 
 ## buttons
 
@@ -36,7 +36,7 @@ Shared register actions, recorded-owner/discipline choices, column settings, pac
 
 ## dialog
 
-Overlapping package snapshot, native intake dialog and accessible phone selection sheet with Escape/focus-return and blocked-save handling.
+Overlapping package snapshot, native intake dialog and accessible phone selection sheet with Escape/focus-return and blocked-save handling. The shared EngineeringModal accepts an optional close icon while preserving its existing default. The phone snapshot uses a back icon and untruncated reference; WorklistPanel retains its shared focus behaviour with scoped sheet spacing and 44 px targets.
 
 ## read-state
 
