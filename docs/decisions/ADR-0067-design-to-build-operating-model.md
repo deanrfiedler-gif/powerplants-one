@@ -24,6 +24,8 @@ He then raised the design goal:
 
 He named Pipedrive, Wrike, inFlow Inventory, ServiceTitan and simPRO. This permits proposing improvements; each changed design still needs his acceptance. Decision 14 sets how this works.
 
+Asked "Do you approve task tests with Powerplants staff on the flagship designs?", he answered "Yes, approved". This confirms for the flagships the staff task tests he approved in principle on 16 October ([UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md)). It contacts nobody and does not cover growers or customers. Facilitator, staff names, timing and a privacy check of the consent wording remain open.
+
 ## Context
 
 Measured on 1 November 2026, read-only:
