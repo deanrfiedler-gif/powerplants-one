@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Status: accepted direction; the stage 2 build is not authorised. On 23 October 2026 Dean accepted one native app with no separate companion, and Capacitor as the recommended wrapper (the calling paper's Q10, accepted as recommended). Capacitor remains subject to the stage 2 spike below.
+Status: accepted direction; the stage 2 build is not authorised. On 23 October 2026 Dean accepted one native app with no separate companion, and Capacitor as the recommended wrapper (the calling paper's Q10, accepted as recommended). Capacitor remains subject to the stage 2 spike below. On 1 November 2026 Dean authorised the spike only, not the build ([decision](design-audit-open-decisions.md)).
 Date: 23 October 2026. Owner: Dean Fiedler. Builder: Claude.
 
 Related: [Calling, caller ID and call logging, design paper](calling-and-caller-id-design.md) (PPO-CALLS-CALLER-ID-PROP); [ADR-0032](ADR-0032-mobile-installation.md), which this amends for phones; NFR-01, NFR-03, NFR-07 and NFR-08; D-020; BP-01's open item to "validate mobile/offline needs on actual devices".
