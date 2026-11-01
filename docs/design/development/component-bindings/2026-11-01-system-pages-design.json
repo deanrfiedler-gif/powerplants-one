@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "gaps": [
+        {
+          "id": "application-shell-system-pages",
+          "expected": "The accepted System pages design (PPO-SYSTEM-PAGES-FIGMA-DEC) uses the Figma part System / Message panel for page unavailable, workspace access denied, error and could not start, and adds global-error.tsx, a support reference with Copy, and focus moved to the heading.",
+          "actual": "not-found.tsx and error.tsx render a plain card, and there is no global-error.tsx. The application isn't built to this design.",
+          "action": "When a build is requested, add a shared message panel and record any departure.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "gaps": [
+        {
+          "id": "read-state-system-pages-outcome",
+          "expected": "The accepted System pages design uses one System / Outcome unknown banner and dialog, with the actions Check the outcome and Retry the same action, and one System / Offline banner on online-only pages.",
+          "actual": "Built surfaces use seven different headings and varying actions for an uncertain save. The offline notice is built separately on individual pages.",
+          "action": "When a build is requested, adopt one shared notice. External sends keep their own wording.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
