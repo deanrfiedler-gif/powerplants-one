@@ -3,7 +3,6 @@ title: Document library review corrections
 date: 2026-11-01
 ---
 
-# Document library review corrections
 
 Owner: Dean Fiedler. Scope DK-01/DK-02, DOC-01/DOC-02/DOC-04/DOC-06. Implementation and acceptance remain separate.
 
