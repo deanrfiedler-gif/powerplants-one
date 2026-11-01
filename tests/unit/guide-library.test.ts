@@ -8,16 +8,10 @@ import { fileURLToPath } from "node:url";
 import { readMaster } from "../../src/development/catalog";
 import { matchEntry, type Entry } from "../../src/development/model";
 import { compileGuide, declaresGuideKey } from "../../src/guides/compile";
-import {
-  awaitingRewrite,
-  carriedOverSources,
-  readGuideLibrary,
-  releasedFile,
-  releasedGuideLibrary,
-  type GuideLibrary,
-} from "../../src/guides/library";
+import { carriedOverSources, readGuideLibrary, type GuideLibrary } from "../../src/guides/library";
 import type { CompiledGuide } from "../../src/guides/model";
 import { guideForPath, releasedGuides, routeForPath } from "../../src/guides/released";
+import { readReleasedLibrary, releasedFile, releasedGuideLibrary } from "../../src/guides/released-server";
 
 // User guide stage 1 (ADR-0065, decision 8): the library finds the guide files, checks them against the
 // development register and against each other, and decides which guides general users may see. These tests use a
@@ -349,18 +343,42 @@ test("a file that makes the compiler throw is reported and the others still comp
   assert.match(result.errors[0].message, /could not be compiled/);
 });
 
-test("a guide awaiting its rewrite is skipped and any other malformed file is an error", async (t) => {
-  assert.deepEqual([...awaitingRewrite], ["docs/guides/crm-deals.md"]);
-  const oldTemplate = ["---", "document_id: PPO-HELP-CRM", "guide_key: crm.deals.worklist", "status: InReview - pilot", "route_patterns: /crm/opportunities", "---", "", "# Old template", ""].join("\n");
-  const root = await makeRoot(t, {
-    "docs/guides/crm-deals.md": oldTemplate,
-    "docs/guides/other.md": oldTemplate,
-  });
-  const result = await readGuideLibrary(root, entries);
+test("the CRM Deals guide compiles in the real library and stays hidden while it is in review", async () => {
+  const { entries: real } = await readMaster(process.cwd());
+  const result = await readGuideLibrary(process.cwd(), real);
 
-  assert.deepEqual(result.guides, []);
-  assert.ok(result.errors.length > 0);
-  assert.ok(result.errors.every((error) => error.path === "docs/guides/other.md"));
+  assert.deepEqual(result.errors, []);
+  const deals = result.guides.find((guide) => guide.path === "docs/guides/crm-deals.md");
+  assert.ok(deals, "docs/guides/crm-deals.md is read as a guide, not skipped");
+  assert.equal(deals.front.document_id, "PPO-HELP-CRM");
+  assert.equal(deals.front.guide_key, "guide.page.sales.opportunities");
+  assert.equal(deals.front.status, "InReview");
+  assert.equal(deals.front.shown_before_review, false);
+  assert.deepEqual(
+    deals.sections.map((section) => section.id),
+    ["purpose", "before", "quick-start", "page-tour", "information", "tasks", "completion", "states", "examples", "recovery", "mobile", "resources", "review"],
+  );
+
+  // InReview without shown_before_review is not released, so the Deals panel still reads "being prepared".
+  const released = releasedGuides(result, real);
+  assert.equal(released.guides.some((guide) => guide.front.guide_key === "guide.page.sales.opportunities"), false);
+  assert.equal(guideForPath(released, "/sales/opportunities"), null);
+  assert.equal(guideForPath(released, "/sales/opportunities/SYN-1"), null);
+});
+
+test("the authoring contract docs/guides/README.md is not a guide, and the real library reports nothing for it", async () => {
+  const path = "docs/guides/README.md";
+  const text = await readFile(join(process.cwd(), path), "utf8");
+  // The README does show front matter, but only after line 40 and inside code blocks, where discovery does not look.
+  assert.match(text, /^guide_key: /m, "the README shows a front matter example");
+  const firstLines = text.replace(/\r\n?/g, "\n").split("\n").slice(0, 40);
+  assert.equal(firstLines.some((line) => /^\s*["']?guide[_-]key["']?\s*:/i.test(line)), false, "no guide key line in the first 40 lines");
+  assert.equal(declaresGuideKey(text), false);
+
+  const { entries: real } = await readMaster(process.cwd());
+  const result = await readGuideLibrary(process.cwd(), real);
+  assert.deepEqual(result.errors.filter((error) => error.path === path), []);
+  assert.equal(result.guides.some((guide) => guide.path === path), false);
 });
 
 test("discovery finds guides by their guide_key and ignores other files", async (t) => {
@@ -719,13 +737,27 @@ test("the development cache keeps a file's result until its mtime changes", asyn
 
 test("released library survives a missing release file", async (t) => {
   const root = await makeRoot(t);
-  const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+  const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
 
   assert.deepEqual(result, { guides: [], routes: [], shell: null });
   assert.equal(logged.length, 1);
   assert.equal(logged[0].length, 1);
   assert.equal(typeof logged[0][0], "string");
   assert.doesNotMatch(String(logged[0][0]), /\n/);
+
+  // The empty result is kept for that file, so the failure is logged once, not on every request.
+  const again = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  assert.deepEqual(again.result, { guides: [], routes: [], shell: null });
+  assert.deepEqual(again.logged, []);
+});
+
+test("released library logs a damaged release file once", async (t) => {
+  const root = await makeRoot(t, { [releasedFile]: "{ not json" });
+  const first = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  const second = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  assert.equal(first.logged.length, 1);
+  assert.deepEqual(second.logged, []);
+  assert.deepEqual(second.result, { guides: [], routes: [], shell: null });
 });
 
 test("released library refuses an unreadable or misshapen release file without leaking it", async (t) => {
@@ -740,7 +772,7 @@ test("released library refuses an unreadable or misshapen release file without l
   };
   for (const [name, text] of Object.entries(files)) {
     const root = await makeRoot(t, { [releasedFile]: text });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(result, { guides: [], routes: [], shell: null }, name);
     assert.equal(logged.length, 1, name);
     assert.doesNotMatch(String(logged[0][0]), new RegExp(secret), name);
@@ -767,7 +799,7 @@ test("released library refuses a release file with a malformed guide or route, s
   };
   for (const [name, data] of Object.entries(files)) {
     const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(result, { guides: [], routes: [], shell: null }, name);
     assert.equal(logged.length, 1, name);
     assert.match(String(logged[0][0]), /does not have the expected shape/, name);
@@ -778,7 +810,7 @@ test("released library refuses a release file with a malformed guide or route, s
   const shell = compiled(shown({ guide_key: "guide.shell", entry_key: "system:shell" }));
   const whole = { guides: [leads, shell], routes: [route, { path: "/a", guide_key: null }], shell };
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(whole) });
-  const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+  const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
   assert.deepEqual(logged, []);
   assert.deepEqual(result, JSON.parse(JSON.stringify(whole)));
   assert.equal(guideForPath(result, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
@@ -806,7 +838,7 @@ test("released library applies the visibility rule again to the release file it 
     const shellGuide = { ...guide, front: { ...guide.front, guide_key: "guide.shell", entry_key: "system:shell" } };
     const data = { guides: [guide, shellGuide], routes: [route, { path: "/a", guide_key: null }], shell: shellGuide };
     const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(logged, [], name);
     assert.deepEqual(result.guides, [], name);
     assert.equal(result.shell, null, name);
@@ -818,7 +850,7 @@ test("released library applies the visibility rule again to the release file it 
   // A Published guide whose evidence matches its hash, and a carried-over guide in review, are still read as written.
   const visible = { guides: [edited(published)], routes: [route], shell: null };
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(visible) });
-  const result = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const result = await readReleasedLibrary(join(root, releasedFile));
   assert.deepEqual(result, JSON.parse(JSON.stringify(visible)));
   assert.equal(guideForPath(result, "/sales/leads")?.front.status, "Published");
 });
@@ -828,13 +860,31 @@ test("released library reads the release file in production and remembers it", a
   const released = releasedGuides(library(leads), entries);
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(released) });
 
-  const first = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const first = await readReleasedLibrary(join(root, releasedFile));
   assert.deepEqual(first, JSON.parse(JSON.stringify(released)));
   assert.equal(guideForPath(first, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
 
   await rm(join(root, releasedFile));
-  const second = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const second = await readReleasedLibrary(join(root, releasedFile));
   assert.equal(second, first, "a successful read is kept for the process");
+});
+
+test("released library reads the release file under the working directory in production", async (t) => {
+  // The layout's call: no root, and the path the production build traces statically.
+  const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
+  const released = releasedGuides(library(leads), entries);
+  const root = await makeRoot(t, { [releasedFile]: JSON.stringify(released) });
+  const before = process.cwd();
+  process.chdir(root);
+  try {
+    const result = await withNodeEnv("production", () => releasedGuideLibrary());
+    assert.deepEqual(result, JSON.parse(JSON.stringify(released)));
+    // In production a root is not used: the release file is always the one under the working directory.
+    const other = await makeRoot(t);
+    assert.equal(await withNodeEnv("production", () => releasedGuideLibrary(other)), result);
+  } finally {
+    process.chdir(before);
+  }
 });
 
 test("released library compiles the guide files and the register in development", async (t) => {
@@ -881,15 +931,13 @@ function runBuild(root: string) {
 }
 const writtenRelease = (root: string) => access(join(root, releasedFile)).then(() => true, () => false);
 
-test("the build writes the release file with the visible guides and skips the guide awaiting its rewrite", async (t) => {
+test("the build writes the release file with the visible guides", async (t) => {
   const leads = { spec: shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }), path: "docs/guides/leads.md" };
   const draft = { spec: { guide_key: "guide.page.a", entry_key: "route:/a" }, path: "docs/guides/a.md" }; // Draft, so hidden
-  const oldTemplate = ["---", "document_id: PPO-HELP-CRM", "guide_key: crm.deals.worklist", "status: InReview - pilot", "route_patterns: /crm/opportunities", "---", "", "# Old template", ""].join("\n");
   const root = await makeRoot(t, {
     "docs/design/development/register.json": buildRegister,
     [leads.path]: guideText(leads.spec),
     [draft.path]: guideText(draft.spec),
-    [awaitingRewrite[0]]: oldTemplate,
   });
   const run = runBuild(root);
 
@@ -897,7 +945,6 @@ test("the build writes the release file with the visible guides and skips the gu
   assert.equal(run.stderr, "");
   assert.equal(run.status, 0, run.stdout);
   assert.deepEqual(run.stdout.split("\n"), [
-    `Skipped until rewritten (plan Task 5): ${awaitingRewrite[0]}`,
     `Guides compiled: 2. Guides released: 1 (${releasedFile}).`,
     "",
   ]);
