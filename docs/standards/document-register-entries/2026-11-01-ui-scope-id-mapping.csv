@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-UI-SCOPE-ID-MAPPING-DEC,Scope IDs for unscoped UI pages,docs/decisions/ui-scope-id-mapping.md,,"Dean adopted the mapping on 1 November 2026; register identity only; no route, code, migration, permission or acceptance change",Dean Fiedler,89283a16027fa90fa988d31a47a4f53dd3d1e0b1,,,git,
