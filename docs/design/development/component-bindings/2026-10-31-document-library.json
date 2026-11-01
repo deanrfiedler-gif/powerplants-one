@@ -102,12 +102,18 @@
           "id": "dk01-dk02-library-host",
           "label": "Document library native host",
           "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        },
+        {
+          "id": "dk02-panel-composition",
+          "label": "Library command drawer and review dialog",
+          "description": "WorklistPanel uses Library-scoped token styling: 480 px right drawer, 560 px centred review dialog, bounded scrolling and 320 px reflow. Native focus/Escape behaviour is retained; no shared runtime component is changed."
         }
       ],
       "dependencies": [
         "src/components/library-register.tsx",
         "src/components/library-record.tsx",
-        "src/components/library-command.tsx"
+        "src/components/library-command.tsx",
+        "src/components/library.css"
       ],
       "used_on": [
         "route:/documents",

@@ -11,3 +11,5 @@ PR #706 integrates current main and the released #814 native-test discovery corr
 No migration, capability, permission grant, dependency or external integration is added by these corrections. SharePoint remains business-document authority. `/documents/[id]` remains the issued job-pack viewer. Validation and source-bound captures are recorded in `docs/testing/evidence/document-library/workspace/README.md`; fresh exact-head review, visual/workflow acceptance and deployment remain separate.
 
 The final state pass also clears unsubmitted search text on Reset, labels unreadable saved choices as unavailable, and places the exact-content-unavailable warning first in Overview, with authorised recovery as the primary record action.
+
+Capture comparison also found the missing WorklistPanel consumer styling. Library-scoped tokens now provide the right drawer and centred review dialog with bounded scrolling and phone reflow; shared component behaviour is unchanged.

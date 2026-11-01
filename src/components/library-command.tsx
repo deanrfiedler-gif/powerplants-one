@@ -254,6 +254,7 @@ export function LibraryCommand({
       drawer={intent !== "Review"}
     >
       <form
+        className="library-command-form"
         onSubmit={(e) => {
           e.preventDefault();
           void send();

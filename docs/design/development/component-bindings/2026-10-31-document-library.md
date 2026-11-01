@@ -24,7 +24,7 @@ WorklistMenu groups lower-frequency record commands; the accepted SecondaryMenuF
 
 ## dialog
 
-WorklistPanel renders register/revision/finding/link/recovery drawers and a centred review decision. Dirty navigation warns; pending unknown commands cannot close until confirmed.
+WorklistPanel renders register/revision/finding/link/recovery drawers and a centred review decision. Dirty navigation warns; pending unknown commands cannot close until confirmed. Library-scoped token styling binds the shared dialog to a 480 px right drawer and a 560 px centred review dialog, with bounded body scrolling, a retained header and full-width phone layout. Command forms use their own Cancel/submit actions; the generic Done footer is hidden for those forms. The shared component and other consumers are unchanged.
 
 ## read-state
 

@@ -139,6 +139,10 @@ test("DK-UI uncertain review retries the same operation and denied refresh clear
     .getByLabel("Rationale", { exact: true })
     .fill("SYN exact evidence checked");
   await dialog.getByLabel("Reason", { exact: true }).fill("SYN review proof");
+  expect((await dialog.boundingBox())!.width).toBeLessThanOrEqual(560);
+  await dialog.locator(".crm-r38-panel-body").evaluate((body) => {
+    body.scrollTop = 0;
+  });
   await page.screenshot({
     path: `${capture}/${test.info().project.name}/review-panel.png`,
     fullPage: true,
@@ -522,6 +526,10 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     .getByLabel("Exact synthetic text", { exact: true })
     .fill("SYN exact text");
   await dialog.getByLabel("Reason", { exact: true }).fill("SYN creation proof");
+  expect((await dialog.boundingBox())!.width).toBeLessThanOrEqual(480);
+  await dialog.locator(".crm-r38-panel-body").evaluate((body) => {
+    body.scrollTop = 0;
+  });
   await page.screenshot({
     path: `${capture}/${test.info().project.name}/registration-panel.png`,
     fullPage: true,
@@ -580,6 +588,10 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     .press("Enter");
   await expect(dialog).toBeVisible();
   expect(revised).toBe(false);
+  expect((await dialog.boundingBox())!.width).toBeLessThanOrEqual(480);
+  await dialog.locator(".crm-r38-panel-body").evaluate((body) => {
+    body.scrollTop = 0;
+  });
   await page.screenshot({
     path: `${capture}/${test.info().project.name}/revision-panel.png`,
     fullPage: true,
