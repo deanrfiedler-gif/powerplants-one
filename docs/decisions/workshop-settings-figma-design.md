@@ -33,7 +33,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 WI-FDU-4's revision | Resolved as recommended | The brief said revision 3; accepted frame `1690:208` has SYN-PPO-BLD-000042 on revision 5. The page now has revision 5 in force and revision 6 next, and reads "Builds in progress keep revision 5" |
 | Q8 Forcing adoption | Resolved as recommended | A tighter limit doesn't force builds in progress to adopt it. Affected work names each such build so the workshop lead decides. A safety-related limit that should force adoption would need its own decision |
 | Q9 Reference | Resolved as recommended | SYN-TDF-000nnn for test definitions under the [20 October rule](readable-reference-namespaces.md). Proposals take no reference, as AD-02 Q5 decided |
-| Named Figma version | Waits for Dean | "Workshop settings — accepted". Not saved or claimed |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Workshop settings — accepted". Dean: "I have saved the named version as Workshop settings — accepted". Claude did not open the version history to check it. |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -68,7 +68,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Verification | Section 5 |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | "Workshop settings — accepted", waits for Dean |
+| Named version | "Workshop settings — accepted", saved by Dean, 1 November 2026 |
 
 ## 4. What the design shows
 

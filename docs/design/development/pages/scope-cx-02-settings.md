@@ -40,7 +40,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted Figma design: [Workshop settings design r01 captures](../../../reference/ui/settings/workshop-settings-design-r01/README.md) (icon-free), including six states in captures 15–20. No exact HTML reference exists. The named Figma version "Workshop settings — accepted" waits for Dean.
+Accepted Figma design: [Workshop settings design r01 captures](../../../reference/ui/settings/workshop-settings-design-r01/README.md) (icon-free), including six states in captures 15–20. No exact HTML reference exists. Named Figma version: "Workshop settings — accepted", saved by Dean.
 
 ## Behaviour, handovers and verification
 

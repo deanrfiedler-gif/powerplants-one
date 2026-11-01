@@ -12,13 +12,14 @@ Dean accepted the Figma design for Workshop settings, `scope:CX-02/settings`: "A
 
 Two story details disagreed with the accepted Workshop builds frames. The page was relabelled to agree with them (Q6, Q7), and those frames and their captures are unchanged. Q1–Q9 are design direction, not verified operating rules, and every limit shown is synthetic. Twenty icon-free captures with hashes are retained in [workshop-settings-design-r01](../reference/ui/settings/workshop-settings-design-r01/README.md), and the design register page for `scope:CX-02/settings` cites them. In Figma the capture copies sit on the Captures page at y = 1,580,000.
 
+Dean saved the named Figma version "Workshop settings — accepted".
+
 Checked:
 - No Font Awesome instance or stray vector is left in the capture copies, and no copy carries a prototype link.
 - The page has no overlaps, and all its prototype links stay on the page.
 
 Not done:
 - The prototype flows weren't played in Figma Present mode. Devices, keyboard and screen reader weren't checked.
-- The named Figma version "Workshop settings — accepted" waits for Dean.
 - Whether MYOB tracks serials for these items is open with the MYOB partner (Q4).
 - The proposals this page draws on stay proposals; accepting it doesn't accept them.
 
