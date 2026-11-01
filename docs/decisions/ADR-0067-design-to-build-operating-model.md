@@ -18,6 +18,12 @@ Later the same day he proposed the direction this record now follows:
 
 Claude's advice, adopted here, is to start the files fresh but not redraw every page or rebuild the library from a blank file. At about 40 connector calls a page (one measured session) and a limit of 200 a day, redrawing 170 pages would use about 34 days of the whole allowance, and 107 accepted pages would need re-accepting.
 
+He then raised the design goal:
+
+> "when we are rebuilding the new page files from scratch, I'm happy for you to make improvements and refinements to the UI pages to ensure they look like truly world class and professional designs that align with industry best practices. I like the UI that Pipedrive uses, but I think we can still improve on this so that our UI pages are modern, use the most recent techniques and features relating to UI designs, etc. My goal is to basically have the Powerplants One designed as professional as possible so it is more superior and user friendly than the likes of the existing apps that are already in the marketplace"
+
+He named Pipedrive, Wrike, inFlow Inventory, ServiceTitan and simPRO. This permits proposing improvements; each changed design still needs his acceptance. Decision 14 sets how this works.
+
 ## Context
 
 Measured on 1 November 2026, read-only:
@@ -75,6 +81,7 @@ Option D for tokens and option C for files.
 11. **Quality gates, checked by a second session.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. A session other than the author checks them, and a graded comparison decides what must be fixed. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
 12. **Captures are temporary in Figma and selective in Git.** Copies are made on a temporary page, exported with hashes, and the page is deleted. Only frames a builder needs are retained. Existing captures stay unchanged.
 13. **Unchanged:** Dean accepts every page design. Named versions remain the acceptance marker. The file link and Pro artwork stay out of the repository. A private Figma team, one page per app page and real scope IDs all continue.
+14. **Raise the design language first, then redesign in waves.** Pipedrive's grammar stays the base, with Dean's recorded preferences. Improvements go first into the library's tokens, type, density, shell, grid, record, form and state patterns, then into five flagship journeys benchmarked against the named products. Other pages follow in tiers, module by module. "More professional" is judged by a scorecard, and "better than the market" is claimed only after task tests with Powerplants staff. Standard section 14 holds the detail. This narrows decision 8: a page in a redesign wave is redrawn, not copied.
 
 ## What this changes in earlier rules
 
@@ -96,10 +103,13 @@ Option D for tokens and option C for files.
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
 | 2. Freeze and build the library | Set a cut-off and finish pending named versions and in-progress drawing. Save "Before split". Commit a manifest and take a private backup, restoring one to prove it works. Move a small test file from Drafts to confirm its link, history and comments survive, then move `PPO - Design` to `PPO Record`. Duplicate it, delete Captures and Archive from the duplicate, read the meter and decide on the browsing copy. Make the library in `PPO Library`, clean up and publish | The library is published, with the memory readings recorded |
 | 3. Pilot and go live (the "cut-over") | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
-| 4. Copy or redraw on change | New pages in domain files, other pages under decision 8 when next changed | Each copy passes the comparison in the standard |
+| 3b. Raise the design language | Benchmark the five products, improve the library, redraw the five flagship journeys, and test them with staff | Dean accepts the language and flagships; scorecard and task-test results are recorded |
+| 4. Redesign waves, then copy or redraw on change | Tier by tier under the standard, with new pages in domain files and other pages under decisions 8 and 14 | Each page passes its gates, and each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
 
 **Priority.** The 80.4% reading is above the 70% action level, so stages 2 and 3 come before further bulk drawing, and no new capture copies are kept in the file from now on. Because most scopes are drawn, copying and accepting existing pages will be the main route into the new files.
+
+**Cost of decision 14.** Redrawing reopens accepted designs, adds to a review backlog of 293 entries, and means rebuilding built pages. At about 40 connector calls a page, the daily limit allows roughly five pages a day. This is why it runs in tiers, and why a page's visual-only build work waits while its redesign is due, while functional work continues.
 
 **Follow-ups, each needing its own change.** Automated accessibility tests, which add a dependency and need their own record. A trial of Code Connect after the pilot. Marking accepted frames Ready for dev is manual, because no Plugin API for it appears in the typings, and Professional can't clear the Changed state.
 
@@ -118,7 +128,7 @@ Cross-file behaviour is untested: whether duplicates keep node IDs, and whether 
 
 ## Reversing this
 
-Decisions 1 to 4 and 10 to 12 can be reversed by amending this record, with nothing lost. Stages 2 to 4 add files without changing the frozen record's contents, so a reversal stops using them. Pages drawn only in a domain file would need copying back.
+Decisions 1 to 4, 10 to 12 and 14 can be reversed by amending this record, with nothing lost. Stages 2 to 4 add files without changing the frozen record's contents, so a reversal stops using them. Pages drawn only in a domain file would need copying back.
 
 ## Sources
 

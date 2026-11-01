@@ -10,7 +10,7 @@ versioning: git
 
 How Powerplants One UI pages are designed in Figma and built in the app. The reasons are in [ADR-0067](../decisions/ADR-0067-design-to-build-operating-model.md). This page says what to do, and everyone follows it: Dean, Claude and Codex.
 
-**Transition.** Until stage 2 of ADR-0067 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Sections 1, 2, 7, 8, 10, 12 and 13 and the capture rule in section 9 apply now. Sections 3 to 6 apply from stage 3.
+**Transition.** Until stage 2 of ADR-0067 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Sections 1, 2, 7, 8, 10, 12, 13 and 14 and the capture rule in section 9 apply now, though section 14's redesign starts at stage 3b. Sections 3 to 6 apply from stage 3.
 
 ## 1. Who decides what, and what is true
 
@@ -154,8 +154,8 @@ Decide when a page next needs to change. A page that doesn't change stays where 
 
 | Situation | Action |
 |---|---|
-| New page | Draw it new from the library |
-| Accepted page, no change needed | Leave it in `PPO - Design` |
+| New page, or a page in a redesign wave (section 14) | Draw it new from the library, using any old page as the reference. A changed design needs Dean's acceptance |
+| Accepted page, no change needed and no wave due | Leave it in `PPO - Design` |
 | Accepted page, small amendment | Copy it, then amend it. The amendment needs Dean's acceptance |
 | Accepted page being reworked, or built from many detached parts | Redraw it from the library, using the old page as the reference. It needs Dean's acceptance as an amendment |
 | Proposal | Copy it when next worked on, then accept it in its new home |
@@ -272,3 +272,47 @@ No check proves acceptance. That remains Dean's decision, recorded in Git.
 | A library publish goes wrong | Publish a correcting version. A move between files can't be undone by restoring a version |
 | A page was changed by mistake | Compare it with its named version, and copy the correct frames back, or restore from the file's history |
 | A file is lost | Restore it from Figma's trash, or from the private `.fig` backup |
+
+## 14. Design quality
+
+The goal is for Powerplants One to be more professional and easier to use than Pipedrive, Wrike, inFlow Inventory, ServiceTitan and simPRO for Powerplants' own work. Dean accepts every changed design.
+
+**Starting point.** Pipedrive's grammar stays the base: grid registers, a flush secondary menu, a snapshot panel and a shared record page. Dean's recorded preferences stay, including no brand green fill on the navy rail. Borrow patterns, never another product's branding or artwork.
+
+**Order of work.**
+
+1. **Benchmark.** Compare each flagship journey with its product, using public material and any account Dean provides. Record what is better, what is worse and what to do about it.
+2. **Improve the library.** Raise tokens, type, spacing, density, shell, grid, record, form and state patterns, so most pages improve at once.
+3. **Redraw the flagships.** Show each beside its accepted design, for Dean's acceptance.
+4. **Test.** Run task tests with Powerplants staff on the prototypes.
+5. **Roll out.** Work through the tiers, finishing modules whole and announcing what moved.
+
+| Flagship journey | Benchmark | Pages |
+|---|---|---|
+| Find, update and win a deal | Pipedrive | Deals CR-04, Deal record CR-01 |
+| Plan and track a project | Wrike | Project record PJ-02, Baseline PJ-03 |
+| Receive and find stock | inFlow Inventory | Receiving SC-04, Inventory SC-05 |
+| Plan and dispatch service work | ServiceTitan, simPRO | Service planner PL-01 |
+| Complete a job on a phone | ServiceTitan, simPRO | My jobs FI-01 |
+
+| Tier | Pages | Treatment |
+|---|---|---|
+| 1 | The flagships | Redrawn first, to set the language |
+| 2 | Proposals and accepted pages not yet built | Redrawn or copied to the new language when next worked on, before the build |
+| 3 | Accepted and built pages in daily use | Redesigned module by module, as a planned wave |
+| 4 | Rarely used and superseded pages | Left alone until they need to change |
+
+While a page's redesign is due, its visual-only build work waits. Functional work continues.
+
+**Techniques.** Use a technique when it helps a real task, is accessible, and works at real data volumes.
+
+| Decision | Technique |
+|---|---|
+| Adopt | One search and command box, inline editing with undo, saved shareable views, compact and comfortable density, instant feedback with loading skeletons, autosave and recovery, full keyboard use, status in words |
+| Adopt with limits | AI inside the task, with evidence shown and a person confirming before anything changes. Voice capture with a read-back. Motion that explains a change and respects reduced-motion settings. View transitions only as an enhancement, with a plain fallback |
+| Not now | Dark mode, which needs a second token set. Consider a high-contrast outdoor mode for field use after testing |
+| Avoid | Glass effects, decorative gradients and heavy animation. Chat as the only way to do a task. AI acting on customers, money or approvals without review. Dashboards that look impressive but don't lead to an action |
+
+**Scorecard.** Score each flagship 1 to 5 against its benchmark on the five quality outcomes in the [product direction](../decisions/product-direction-quality.md) (finding work, understanding state and next action, completing connected journeys, recovering saved work, timely response), plus visual clarity and accessibility. The score records a reviewer's judgement, not proof.
+
+**Task tests.** With a small group of Powerplants staff, measure completion, errors and time on the flagship tasks, against the tools they use today. Only this supports a claim that a page is better. Staff, numbers and timing are Dean's to set, and no customer or grower is contacted without his approval.
