@@ -18,6 +18,7 @@ All paths below start with `/api/v1`. The existing session, origin/JSON protecti
 
 | Method/path | Contract |
 |---|---|
+| GET /document-template-drafts/scopes | Required family; optional purpose Read or Propose, limit 1–50 and cursor. Current permitted site choices; Propose applies the native proposal duty before paging. |
 | GET /document-template-drafts/bindings | Required family, company_id, site_id. Returns only currently permitted binding metadata and schema_version 1. |
 | GET /document-template-drafts | Required family; optional limit 1–50 and cursor. Current permitted proposal summaries only; no global total. |
 | POST /document-template-drafts | Create a Draft and exact first revision. |
@@ -27,7 +28,7 @@ All paths below start with `/api/v1`. The existing session, origin/JSON protecti
 | GET /document-template-drafts/:id/history | Required kind Revision or Review; optional limit and cursor. Current-permission-filtered immutable history. |
 | GET /operations/:operation_id | Existing actor-private original receipt recovery under current write duty and original/current revision source permissions. |
 
-All reads explicitly return synthetic:true, publication_eligible:false and supported_runtime_version:null. Complete means no more currently permitted rows in this query, not complete workspace knowledge. Signed cursors bind actor, workspace, working company, family/proposal, kind and page size; hidden candidate IDs and totals are never returned.
+Proposal, binding and history reads explicitly return synthetic:true, publication_eligible:false and supported_runtime_version:null. Scope choices return synthetic:true with scoped duty hints, without publication eligibility or a supported runtime version. Complete means no more currently permitted rows in this query, not complete workspace knowledge. Signed cursors bind actor, workspace, working company, family/proposal, kind and page size; hidden candidate IDs and totals are never returned.
 
 ## Commands and schema
 

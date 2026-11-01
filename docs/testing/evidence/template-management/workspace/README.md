@@ -1,5 +1,7 @@
 # Templates workspace execution evidence
 
+This record and its execution manifest describe the 31 October implementation. The [1 November review-correction evidence](review-corrections/README.md) records later checks separately; these results are not a claim that every native suite passed again on the revised head.
+
 Owner: Dean Fiedler. Implementer: Codex. PR #704, DK-06. Delivered source, functional proof, independent visual review and owner acceptance are separate. Keep the PR draft until its current-head review and CI gates pass; no deployment is claimed.
 
 Source: PPO - Design, page 793:6155, named version “Template management — accepted”, with the accepted phone-header amendment. [Retained icon-free captures](../../../../reference/ui/template-management/template-management-figma-r01/README.md) remain unchanged. Application captures block Font Awesome network requests and use local fallback glyphs. The fixture captures contain synthetic examples; `native-published-proposal-320.png` comes from the real synthetic database journey. Neither grants design acceptance.

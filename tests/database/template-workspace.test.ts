@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { reset } from "../../scripts/database";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { withWorkingCompany } from "../../src/platform/working-company";
 import { readTemplateScopes } from "../../src/documents/workspace-reads";
@@ -18,13 +22,19 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
   await grantDraft(p, ["template.read", "shared.read", "pack.read"]);
   const site = (n: number) =>
     `fe000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-  for (let n = 1; n <= 55; n++)
-    await database().query(
+  // This is bulk fixture setup, not an application operation. Keep ordinary
+  // read/command timeouts unchanged after the transaction, as recoverSchema does.
+  await transaction(async (c) => {
+    await c.query("SET LOCAL statement_timeout = '120s'");
+    await c.query(
       `INSERT INTO ppo.sites
-      (id,workspace_id,company_id,created_by,updated_by,owner_id,display_number,display_name,location_description,timezone)
-      VALUES ($1,$2,$3,$4,$4,$4,$5,$5,'SYN paging fixture','Australia/Brisbane')`,
-      [site(n), p.workspace_id, id("20"), p.actor_id, `SYN paging site ${n}`],
+      (id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,location_description,timezone)
+      SELECT ('fe000000-0000-4000-8000-' || lpad(n::text,12,'0'))::uuid,
+        $1,$2,$3,$3,$3,'SYN paging site ' || n,'SYN paging fixture','Australia/Brisbane'
+      FROM generate_series(1,55) AS n`,
+      [p.workspace_id, id("20"), p.actor_id],
     );
+  });
   const visible = await readTemplateScopes(p, { family: "OUT-09" });
   assert.equal(visible.items.length, 50);
   assert.ok(visible.next_cursor);
@@ -38,8 +48,8 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
   for (const n of [54, 55])
     await database().query(
       `INSERT INTO ppo.permission_grants
-      (workspace_id,user_id,company_id,capability,scope_type,scope_id)
-      VALUES ($1,$2,$3,'template.propose','Site',$4)`,
+      (workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id)
+      VALUES ($1,$2,$3,'template.propose','Site',$4,$4)`,
       [p.workspace_id, p.actor_id, id("20"), site(n)],
     );
   const query = { family: "OUT-09", purpose: "Propose", limit: "1" };
