@@ -1,0 +1,7 @@
+# Service, maintenance and resource performance (RP-04)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Service, maintenance and resource performance — `/reports/service` (planned route) | [Design r01 captures](../reporting/service-performance-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 1 November 2026 | [Decision](../../../decisions/service-performance-figma-design.md). RP-04; not built. One report page for KPI-01 to KPI-07, REP-12 and capacity context, each section with a chart, a table and a drill, plus Definition pending, export, tablet, a phone summary and drill list, and seven states |
+
+**Service performance design, 1 November 2026:** Dean accepted the Figma design for the management report RP-04, with the recommended answers and the field readiness gate's rule as the pack cutoff. Field readiness leads. Every rate shows its counts in words, the report shows no target, baseline or utilisation score, it withholds any value whose definition is unpublished, and it shows August beside September without judging either. The acceptance publishes no measure definition. The [decision](../../../decisions/service-performance-figma-design.md) records it, and the [retained captures](../reporting/service-performance-design-r01/README.md) are twenty-two icon-free PNGs of eighteen frames, with hashes. Nothing is built. Listing it here does not repeat the dated inventory audit.

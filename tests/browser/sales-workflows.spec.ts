@@ -1,10 +1,12 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page, type Request } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmBase, crmDiscovery } from "../helpers/crm";
 import { emptyHandover } from "../../src/sales/handover-model";
 import { emptyReview } from "../../src/sales/aftercare-model";
 import { reportIssued } from "../helpers/reports";
 import { closeDatabase } from "../../src/platform/database";
+import { aftercareReadDiagnostics } from "../helpers/aftercare-read-diagnostics";
+import { currentResourceRead } from "../helpers/current-resource-read";
 test.describe.configure({ timeout: 120000 });
 test.beforeAll(() => {
   if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
@@ -18,6 +20,18 @@ async function call(page: Page, path: string, body?: unknown) {
   });
   expect(r.ok(), await r.text()).toBe(true);
   return r.json();
+}
+async function aftercareRecordId(page: Page) {
+  // The projects share the issued fixture; issuing it twice would confirm an
+  // already completed visit. Each review correction remains explicit below.
+  const available = await call(page, "sales/aftercare");
+  let id = available.items[0]?.record.id as string | undefined;
+  if (!id) {
+    const reportId = available.sources[0]?.id ?? (await reportIssued()).report.id;
+    id = randomUUID();
+    await call(page, "sales/aftercare", { ...crmBase(), id, source_report_id: reportId });
+  }
+  return id;
 }
 async function captureSizes(
   page: Page,
@@ -298,20 +312,7 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   page,
 }, info) => {
   await call(page, "local-session", { profile: "coordinator" });
-  // The projects share the one issued fixture and use deliberate corrections;
-  // issuing the pack twice would try to confirm an already completed visit.
-  const available = await call(page, "sales/aftercare");
-  let id = available.items[0]?.record.id as string | undefined;
-  if (!id) {
-    const reportId =
-      available.sources[0]?.id ?? (await reportIssued()).report.id;
-    id = randomUUID();
-    await call(page, "sales/aftercare", {
-      ...crmBase(),
-      id,
-      source_report_id: reportId,
-    });
-  }
+  const id = await aftercareRecordId(page);
   let saved = await call(page, `sales/aftercare/${id}`);
   if (saved.record.state !== "Open") {
     await call(page, `sales/aftercare/${id}`, {
@@ -336,26 +337,48 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   });
   const options = await call(page, `sales/aftercare/${id}/options`);
   expect(options.people.length).toBeGreaterThan(0);
+  const readiness = await aftercareReadDiagnostics(page, info, `/api/v1/sales/aftercare/${id}`);
+  const currentRead = currentResourceRead(page, `/api/v1/sales/aftercare/${id}`);
+  let heldRequest: Request | undefined;
   // Navigation can finish before the exact saved review reaches the browser.
   // Hold the real response beyond the unchanged UI assertion window so this
   // ordering is exercised on both viewports without retrying or replacing data.
   await page.route(`**/api/v1/sales/aftercare/${id}`, async (route) => {
+    heldRequest = route.request();
+    readiness.mark("held-route-entered", route.request());
     const response = await route.fetch();
+    readiness.mark("held-upstream-response", route.request(), response.status());
     await new Promise((resolve) => setTimeout(resolve, 6000));
+    readiness.mark("held-delay-completed", route.request());
     await route.fulfill({ response });
+    readiness.mark("held-route-fulfilled", route.request());
   }, { times: 1 });
   const reviewRead = page.waitForResponse((response) =>
     new URL(response.url()).pathname === `/api/v1/sales/aftercare/${id}` &&
-    response.request().method() === "GET",
+    response.request().method() === "GET" && response.request() === heldRequest,
   );
-  await page.goto(`/sales/aftercare/${id}`);
-  const response = await reviewRead;
-  expect(response.status()).toBe(200);
-  expect(await response.finished()).toBeNull();
-  expect((await response.json()).record.id).toBe(id);
-  await expect(
-    page.getByRole("tab", { name: "Customer review", exact: true }),
-  ).toBeVisible();
+  try {
+    await page.goto(`/sales/aftercare/${id}`);
+    const response = await reviewRead;
+    readiness.mark("test-matched-response", response.request(), response.status());
+    expect(response.status()).toBe(200);
+    expect(await response.finished()).toBeNull();
+    expect((await response.json()).record.id).toBe(id);
+    // A focus/poll read can supersede the held response. Preserve the response
+    // checks and start the same render deadline after the current read finishes.
+    const current = await currentRead.finished();
+    expect(current.status()).toBe(200);
+    expect((await current.json()).record.id).toBe(id);
+    readiness.mark("current-read-completed", current.request(), current.status());
+    readiness.mark("tab-assertion-started");
+    await expect(
+      page.getByRole("tab", { name: "Customer review", exact: true }),
+    ).toBeVisible();
+    readiness.mark("tab-assertion-passed");
+  } finally {
+    currentRead.dispose();
+    await readiness.finish();
+  }
   for (const tab of await page.getByRole("tab").all()) {
     await tab.click();
     await expect(tab).toHaveAttribute("aria-selected", "true");
@@ -540,4 +563,76 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     path: info.outputPath("sales-cr05-200-percent-css-zoom.png"),
     fullPage: false,
   });
+});
+
+test("CR05 a superseded success cannot start the current-read render deadline", async ({ page }, info) => {
+  await call(page, "local-session", { profile: "coordinator" });
+  const id = await aftercareRecordId(page), path = `/api/v1/sales/aftercare/${id}`;
+  // Use a real permitted synthetic record as the transport fixture. This case
+  // controls response order only; the journey above still fetches each real GET
+  // and the CRM revocation case separately proves actual permission removal.
+  const fixture = await page.request.get(path);
+  expect(fixture.status()).toBe(200);
+  expect((await fixture.json()).record.id).toBe(id);
+  const initialSeen = Promise.withResolvers<void>(), newerSeen = Promise.withResolvers<void>();
+  const releaseInitial = Promise.withResolvers<void>(), releaseNewer = Promise.withResolvers<void>();
+  const readiness = await aftercareReadDiagnostics(page, info, path);
+  const currentRead = currentResourceRead(page, path);
+  let count = 0;
+  await page.route(`**${path}`, async route => {
+    if (++count === 1) {
+      initialSeen.resolve();
+      await releaseInitial.promise;
+    } else {
+      newerSeen.resolve();
+      await releaseNewer.promise;
+    }
+    await route.fulfill({ response: fixture });
+  });
+  try {
+    await page.goto(`/sales/aftercare/${id}`);
+    await initialSeen.promise;
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+    await newerSeen.promise;
+    let settled = false;
+    const ready = currentRead.finished();
+    void ready.then(() => { settled = true; }, () => { settled = true; });
+    const obsolete = page.waitForResponse(response =>
+      new URL(response.url()).pathname === path && response.request().method() === "GET");
+    releaseInitial.resolve();
+    const response = await obsolete;
+    expect(response.status()).toBe(200);
+    expect(await response.finished()).toBeNull();
+    expect((await response.json()).record.id).toBe(id);
+    readiness.mark("superseded-response-completed", response.request(), response.status());
+    const obsoleteAssertion = expect(page.getByRole("tab", { name: "Customer review", exact: true }))
+      .toBeVisible().then(() => false, (error: unknown) => {
+        if (!(error instanceof Error) || !error.message.includes("toBeVisible")) throw error;
+        readiness.mark("obsolete-tab-assertion-failed");
+        return true;
+      });
+    // Recreate the old gate's failure condition: six seconds after a complete
+    // valid HTTP 200, the latest read is pending and the tab is correctly absent.
+    await new Promise(resolve => setTimeout(resolve, 6000));
+    expect(await obsoleteAssertion, "the former gate must reproduce its premature visibility failure").toBe(true);
+    expect(settled, "the obsolete success must not complete current-read readiness").toBe(false);
+    await expect(page.getByRole("status").filter({ hasText: /^Loading aftercare review…$/ })).toBeVisible();
+    await expect(page.getByRole("tab", { name: "Customer review", exact: true })).toHaveCount(0);
+    readiness.mark("superseded-response-still-loading");
+    releaseNewer.resolve();
+    const current = await ready;
+    expect(current.status()).toBe(200);
+    expect((await current.json()).record.id).toBe(id);
+    readiness.mark("current-read-completed", current.request(), current.status());
+    readiness.mark("tab-assertion-started");
+    await expect(page.getByRole("tab", { name: "Customer review", exact: true })).toBeVisible();
+    readiness.mark("tab-assertion-passed");
+  } finally {
+    releaseInitial.resolve();
+    releaseNewer.resolve();
+    await page.unrouteAll({ behavior: "wait" });
+    currentRead.dispose();
+    await readiness.finish();
+    await fixture.dispose();
+  }
 });
