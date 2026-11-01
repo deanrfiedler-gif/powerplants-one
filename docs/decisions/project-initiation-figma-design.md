@@ -2,7 +2,7 @@
 document_id: PPO-PJ01-INITIATION-FIGMA-DEC
 date: 2026-10-31
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version awaited; building the page, its data model and operational rules separate
+status: Owner-accepted design; named Figma version saved; building the page, its data model and operational rules separate
 source_commit: 6e939bf0b937fc05f9e477d1cd14f8838c92fd9a
 versioning: git
 ---
@@ -49,7 +49,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q12 Waiting limit | Resolved as recommended | One company-wide limit set by a Projects lead, in calendar days, starting at 5, with per-class limits only if needed. The frames draw 4 days as a synthetic example, so that one row is flagged; at 5 that row would not be flagged |
 | Q13 Does an open source difference stop Started | Resolved as recommended | Yes. It must be looked at, as a question or as no conflict with a reason. It need not be resolved |
 | Accept the design | User decision, 31 October 2026 | Quoted above |
-| Named Figma version | Awaited | Dean saves "Project initiation — accepted", or tells Claude to. Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Project initiation — accepted". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -93,7 +93,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D15 in section 4, accepted |
 | Status | Owner-accepted design, 31 October 2026 |
 | Decision record | This file |
-| Named version | "Project initiation — accepted", awaited |
+| Named version | "Project initiation — accepted", saved by Dean on 1 November 2026 |
 
 ## 4. What the design shows
 
@@ -136,4 +136,4 @@ Design acceptance is not functional, business or deployment acceptance. No devic
 
 ## 7. Named version
 
-Awaited. The version "Project initiation — accepted" has not been saved at the time of this record. It is recorded here only once it is seen in the file's version history.
+Dean saved the version "Project initiation — accepted" in Figma. Dean confirmed on 1 November 2026: "I have saved the three file versions below." Claude did not open the version history to check it.
