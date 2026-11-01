@@ -118,10 +118,11 @@ test("real working register covers routes and retains stable imported scope iden
     ]);
   assert.deepEqual(catalog.errors, []);
   const scopes = master.entries.filter((e) => e.kind === "scope"),
-    imported = scopes.filter((e) => !e.key.includes("/"));
+    // scope:CR-06 is the one owner-added top-level identity (PPO-UI-SCOPE-ID-MAPPING-DEC).
+    imported = scopes.filter((e) => !e.key.includes("/") && e.key !== "scope:CR-06");
   assert.equal(imported.length, 150);
   // Owner-decided pages within a scope (e.g. scope:CX-02/kitting) extend an imported identity, never replace one.
-  for (const e of scopes.filter((s) => !imported.includes(s)))
+  for (const e of scopes.filter((s) => !imported.includes(s) && s.key !== "scope:CR-06"))
     assert(imported.some((s) => e.key.startsWith(s.key + "/")), e.key);
   assert(catalog.entries.some((e) => e.key === "system:shell"));
   for (const route of routes.filter((r) => !r.path.startsWith("/crm/")))

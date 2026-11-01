@@ -1218,7 +1218,8 @@
         "route:/sales/opportunities/[id]",
         "scope:CS-01",
         "scope:CS-02",
-        "scope:SH-05"
+        "scope:SH-05",
+        "scope:CR-06"
       ],
       "reviewer": null
     },
@@ -1366,6 +1367,37 @@
       "reviewer": null
     },
     {
+      "key": "scope:CR-06",
+      "title": "Leads and lead record",
+      "kind": "scope",
+      "module": "CR",
+      "summary": "Identity given to the existing Leads routes by PPO-UI-SCOPE-ID-MAPPING-DEC: the lead register and the lead record, before a lead becomes a deal. The routes and accepted design predate this identity.",
+      "path": "/sales/leads",
+      "source_paths": [
+        "docs/decisions/ui-scope-id-mapping.md"
+      ],
+      "guide_key": "guide.cr.06",
+      "design_path": "docs/design/development/pages/scope-cr-06.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "built",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "route:/sales/leads",
+        "route:/sales/leads/[id]",
+        "scope:CR-01",
+        "scope:CS-01"
+      ],
+      "reviewer": null
+    },
+    {
       "key": "scope:ES-01",
       "title": "Estimating intake and workload",
       "kind": "scope",
@@ -1477,7 +1509,10 @@
         "route:/estimating/cpq",
         "route:/estimating/cpq/[id]",
         "route:/estimating/rules",
-        "route:/estimating/rules/[id]"
+        "route:/estimating/rules/[id]",
+        "route:/estimating/fertigation",
+        "route:/estimating/fertigation/[id]",
+        "route:/estimating/fertigation/new"
       ],
       "reviewer": null
     },
@@ -1612,7 +1647,38 @@
         "scope:DK-06",
         "route:/estimating/quotes/[id]/release",
         "route:/estimating/quotes/[id]/response",
-        "route:/estimating/reviews"
+        "route:/estimating/reviews",
+        "scope:ES-05/customer-page"
+      ],
+      "reviewer": null
+    },
+    {
+      "key": "scope:ES-05/customer-page",
+      "title": "Customer quotation page",
+      "kind": "scope",
+      "module": "ES",
+      "summary": "Customer-facing page within scope:ES-05 (PPO-UI-SCOPE-ID-MAPPING-DEC): the quotation page customers open outside the application shell. Planned page; the path is indicative and no source exists yet.",
+      "path": "/quote/[token]",
+      "source_paths": [
+        "docs/decisions/ui-scope-id-mapping.md"
+      ],
+      "guide_key": "guide.es.05.customer-page",
+      "design_path": "docs/design/development/pages/scope-es-05-customer-page.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:ES-05",
+        "scope:ES-06",
+        "scope:CR-01"
       ],
       "reviewer": null
     },
@@ -3323,9 +3389,40 @@
         "route:/my-jobs/[id]",
         "route:/my-jobs",
         "route:/service/appointments/[id]",
-        "route:/service/work-orders/[id]"
+        "route:/service/work-orders/[id]",
+        "scope:FI-01/time-review"
       ],
       "reviewer": "Dean Fiedler"
+    },
+    {
+      "key": "scope:FI-01/time-review",
+      "title": "Time and labour review",
+      "kind": "scope",
+      "module": "FI",
+      "summary": "Coordinator page within scope:FI-01 (PPO-UI-SCOPE-ID-MAPPING-DEC): reviewing recorded technician time. Planned page; the route is proposed and no source exists yet.",
+      "path": "/service/time",
+      "source_paths": [
+        "docs/decisions/ui-scope-id-mapping.md"
+      ],
+      "guide_key": "guide.fi.01.time-review",
+      "design_path": "docs/design/development/pages/scope-fi-01-time-review.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:FI-01",
+        "scope:FI-02",
+        "scope:FN-01"
+      ],
+      "reviewer": null
     },
     {
       "key": "scope:FI-02",
@@ -6867,7 +6964,8 @@
         "scope:CX-02/bench-testing",
         "scope:EN-08",
         "scope:PL-02",
-        "scope:FI-04"
+        "scope:FI-04",
+        "scope:CX-02/settings"
       ],
       "reviewer": null
     },
@@ -6931,6 +7029,37 @@
         "scope:MA-06",
         "scope:SC-08",
         "scope:EQ-09"
+      ],
+      "reviewer": null
+    },
+    {
+      "key": "scope:CX-02/settings",
+      "title": "Workshop settings",
+      "kind": "scope",
+      "module": "CX",
+      "summary": "Settings page within scope:CX-02 (PPO-UI-SCOPE-ID-MAPPING-DEC), reached from the Settings hub (scope:AD-02). Planned page; the route is proposed and no source exists yet.",
+      "path": "/workshop/settings",
+      "source_paths": [
+        "docs/decisions/ui-scope-id-mapping.md"
+      ],
+      "guide_key": "guide.cx.02.settings",
+      "design_path": "docs/design/development/pages/scope-cx-02-settings.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:CX-02",
+        "scope:CX-02/kitting",
+        "scope:CX-02/bench-testing",
+        "scope:AD-02"
       ],
       "reviewer": null
     },
@@ -8599,7 +8728,9 @@
       "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
-      "related_keys": [],
+      "related_keys": [
+        "scope:CR-06"
+      ],
       "reviewer": "Dean Fiedler"
     },
     {
@@ -8639,7 +8770,9 @@
       "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": 1,
-      "related_keys": [],
+      "related_keys": [
+        "scope:CR-06"
+      ],
       "reviewer": "Dean Fiedler"
     },
     {
@@ -10880,7 +11013,9 @@
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 47,
-      "related_keys": [],
+      "related_keys": [
+        "scope:ES-02"
+      ],
       "reviewer": null
     },
     {
@@ -10924,7 +11059,9 @@
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 47,
-      "related_keys": [],
+      "related_keys": [
+        "scope:ES-02"
+      ],
       "reviewer": null
     },
     {
@@ -10950,7 +11087,9 @@
       "reviewed_at": null,
       "owner": "Dean Fiedler",
       "build_rank": 47,
-      "related_keys": [],
+      "related_keys": [
+        "scope:ES-02"
+      ],
       "reviewer": null
     },
     {
@@ -11579,7 +11718,10 @@
       "reviewed_at": "2026-10-09",
       "owner": "Dean Fiedler",
       "build_rank": null,
-      "related_keys": [],
+      "related_keys": [
+        "route:/login",
+        "route:/"
+      ],
       "reviewer": "Dean Fiedler",
       "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed. Shell top bar amendment accepted 16 Oct 2026 and implemented on a branch (docs/decisions/shell-top-bar-amendment.md); review fingerprint not refreshed."
     },
