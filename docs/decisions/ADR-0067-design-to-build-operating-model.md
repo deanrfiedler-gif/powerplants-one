@@ -25,15 +25,18 @@ Measured on 1 November 2026, read-only:
 | Finding | Evidence |
 |---|---|
 | The file is large and one page dominates it | 191 pages, about 800,000 frames, instances and text layers. `Captures (icon-free)` holds 373,471 of them in 2,037 top-level frames. The next largest page holds 9,475 |
-| The file is close to its limit | Figma's meter read **80.4%, with 682,382 layers**, on a fresh load in the desktop app with only Start here open (1 November 2026). Figma alerts at 90% and locks at 100%. At that rate an average page of about 3,000 layers costs about 0.35%, so roughly 25 to 30 more pages reach the alert. This is an estimate |
-| Captures' share of memory is not proven | Figma shows no per-page figure, and 682,382 can't be split from here. If all 373,471 Captures layers are in that total, removing them would take the file to about 36%. Stage 2 measures this directly |
+| The file is close to its limit | Figma's meter read **80.4%, with 682,382 layers**, on a fresh load in the desktop app with only Start here open (1 November 2026). The reading repeated on a second load. Figma alerts at 90% and locks at 100% |
+| Viewing pages uses memory | Opening one average page (`Assistant · AI-01`) raised the reading to **82.5%, with 687,991 layers**. If that rate holds, about 5 opened pages reach the alert and about 9 reach the lock. This is one test |
+| Captures' share of memory is not proven | Figma shows no per-page figure, and why 682,382 layers count with one page open is unexplained. Stage 2 measures the effect of removing Captures directly |
+| Most scopes are drawn | 139 of the 149 scope IDs in the design register have a page. Undrawn: EQ-02, EQ-03, EQ-05, FI-02, MA-05 and five conditional CX scopes. Future work is mostly accepting and amending, not new drawing |
+| Review is the bottleneck | 293 of 372 register entries say "Needs review", and 26 have a recorded reviewer |
 | The file sits in Drafts | Figma requires a file to be in a folder before it can publish a library |
 | Captures are duplicated | The repository holds 1,178 PNGs under `docs/reference/ui` (610 MB), including the exported captures. Each worktree costs about 0.95 GB, nearly all of it `docs` |
 | The design is cited everywhere | 309 documents name "PPO - Design", and 118 mention its File index |
 | Nothing is published | 702 publishable components and sets, and all variables, are local to the one file |
 | The library rule is not being followed | 127 of the 702 are named "proposed", although ADR-0053 rule 5 admits only what the app has. 37 are legacy Deals parts |
 | Components also sit on design pages | 626 main components on 61 design pages, 110 of them on `CPQ · 2` |
-| Figma and CSS agree where they are mapped, but the CSS has two generations | All 63 variables with a CSS name match a value in `src/`. 51 of the 114 colour and layout variables have no CSS name. 57 of 200 CSS properties hold more than one value: newer pages use a Figma-aligned block in `my-work.css`, while `globals.css` still differs for `--line`, `--muted` and `--paper`. 1,997 hard-coded hex colours remain |
+| Mapped tokens have their Figma value in the CSS, but the CSS has two generations | All 63 variables with a CSS name have that value on their property somewhere in `src/`, which doesn't prove every page uses it. 51 of the 114 colour and layout variables have no CSS name. 57 of 200 CSS properties hold more than one value: newer pages use a Figma-aligned block in `my-work.css`, while `globals.css` still differs for `--line`, `--muted` and `--paper`. 1,997 hard-coded hex colours remain |
 | Practice had already moved past the rules | Pages are designed and accepted in Figma, then built to match. ADR-0053 rules 4 and 5 describe the reverse |
 
 ## Options
@@ -44,7 +47,7 @@ Measured on 1 November 2026, read-only:
 |---|---|---|
 | A. Keep ADR-0053: code is the source and Figma follows | Code is what ships | Contradicts the actual workflow, and promotes CSS that predates any plan |
 | B. Figma alone is the master | Simple for a designer | The file is private, has no diff or pull-request review, and no check can read it. Figma cannot hold behaviour, permissions or data rules |
-| C. Tokens in a repository file generate both Figma and CSS | Used by large system teams, for example GitLab | Needs a build pipeline, and Figma's Variables REST API requires an Enterprise plan. Too much for one owner today |
+| C. Tokens in a repository file generate both Figma and CSS | Used by large system teams; GitLab authors tokens in JSON in code | Needs a build pipeline and a route into Figma, which on Professional means a plugin or the connector, because the Variables REST API requires Enterprise. Too much for one owner today |
 | **D. Figma leads design, Git records acceptance and shipped values, and a check catches differences** | Fits a design-led team, keeps one owner per fact, and works on the Professional plan | The saved snapshot must be refreshed by a session |
 
 ### File architecture
@@ -59,17 +62,17 @@ Measured on 1 November 2026, read-only:
 
 Option D for tokens and option C for files.
 
-1. **Source of truth depends on the question.** Accepted Figma design: how a page should look. Figma: new visual decisions. Git decision record: whether it was accepted. Git token file: what the app ships. Git blueprints, contracts and tests: behaviour, permissions and data. The running app: what users see. Proposals are never a source of truth.
+1. **Source of truth depends on the question.** Accepted Figma design: how a page should look. Figma: new visual decisions. Git decision record: whether it was accepted. Git stylesheets: what the app ships, in the interim token homes the standard names until stage 5 merges them. Git blueprints, contracts and tests: behaviour, permissions and data. The running app: what users see. Proposals are never a source of truth.
 2. **New tokens and components start in Figma.** Each token gets a role-based name and its CSS name when created, and is added to the app in the pull request that builds its page. Code may go first only for an urgent fix or something found during the build, and that change goes back into Figma in the same pull request.
 3. **One owner per token, with an automated check.** `scripts/check_design_tokens.py` compares a committed snapshot of the Figma variables with the CSS. It enforces mapped values and new unmapped variables now. Hard-coded colours and multi-valued properties are report-only until the reconciliation stage, because 61 pull requests are open and an immediate limit would fail unrelated work.
 4. **The accepted Figma value wins** where it differs from the CSS, unless it fails contrast or the difference is a documented page override. Reconciliation lists every difference first, and converts hard-coded colours as pages are built, not in one sweep.
-5. **Freeze "PPO - Design" as the permanent record.** Its name, node IDs and named versions stay valid, so no record is rewritten. A citation with no file name means this file. Nothing is deleted from it.
+5. **Freeze "PPO - Design" as the permanent record.** Its name, node IDs and named versions stay valid, so no record is rewritten. A citation with no file name means this file. Nothing is deleted from it. Viewing it still uses memory, so people reload every few pages, prefer the captures in Git, and use a browsing copy without Captures if stage 2 shows one reads 60% or less.
 6. **One published library, `PPO - Library`.** It holds variables, styles, icons, shared components, the page template and shared patterns. One library suits one owner. Split it only if a licence or sharing need appears or memory requires it. It starts as a duplicate of the frozen file because Figma documents copying variables between files, not moving their bindings.
 7. **Domain files are created on demand, from a fixed map of ten.** No empty file is created ahead of need.
 8. **Start fresh; copy, redraw or leave each old page.** A new page is drawn in its domain file. An accepted page that doesn't change stays in the frozen file. A small amendment or a proposal is copied when next worked on. A page being reworked, or built from many detached parts, is redrawn from the library using the old page as the reference. Nothing moves in bulk. This follows ADR-0055's "start with new designs" and protects accepted designs from silent change.
 9. **Every page has one live home**, recorded by its decision record and design entry. The hand-kept File index stops at the freeze.
-10. **Named lifecycle for components:** Proposed, Accepted, Built, Deprecated, held in the description. Publishing follows a checklist with a release note. One session edits the library at a time.
-11. **Quality gates.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
+10. **Named lifecycle for components:** Proposed, Accepted, Built, Deprecated, held in the description; these are PPO's own labels. Publishing follows a checklist with a release note graded Low, Medium or High. Medium and High need Dean's acceptance, and High is tried on a duplicate first, because Figma doesn't flag library updates as design changes. One session edits the library at a time.
+11. **Quality gates, checked by a second session.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. A session other than the author checks them, and a graded comparison decides what must be fixed. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
 12. **Captures are temporary in Figma and selective in Git.** Copies are made on a temporary page, exported with hashes, and the page is deleted. Only frames a builder needs are retained. Existing captures stay unchanged.
 13. **Unchanged:** Dean accepts every page design. Named versions remain the acceptance marker. The file link and Pro artwork stay out of the repository. A private Figma team, one page per app page and real scope IDs all continue.
 
@@ -91,12 +94,14 @@ Option D for tokens and option C for files.
 | Stage | Work | Pass condition |
 |---|---|---|
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
-| 2. Freeze and build the library | Finish pending named versions and in-progress drawing, save "Before split", freeze with a committed manifest and a private backup, and move the file from Drafts to `PPO Record`. Duplicate it into `PPO Library`, delete Captures and Archive from the duplicate, read the meter, clean up and publish | The library is published, with the memory reading recorded |
+| 2. Freeze and build the library | Set a cut-off and finish pending named versions and in-progress drawing. Save "Before split". Commit a manifest and take a private backup, restoring one to prove it works. Move a small test file from Drafts to confirm its link, history and comments survive, then move `PPO - Design` to `PPO Record`. Duplicate it, delete Captures and Archive from the duplicate, read the meter and decide on the browsing copy. Make the library in `PPO Library`, clean up and publish | The library is published, with the memory readings recorded |
 | 3. Pilot and go live (the "cut-over") | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
 | 4. Copy or redraw on change | New pages in domain files, other pages under decision 8 when next changed | Each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
 
-**Priority.** The 80.4% reading is above the 70% action level, so stages 2 and 3 come before further bulk drawing, and no new capture copies are kept in the file from now on.
+**Priority.** The 80.4% reading is above the 70% action level, so stages 2 and 3 come before further bulk drawing, and no new capture copies are kept in the file from now on. Because most scopes are drawn, copying and accepting existing pages will be the main route into the new files.
+
+**Follow-ups, each needing its own change.** Automated accessibility tests, which add a dependency and need their own record. A trial of Code Connect after the pilot. Marking accepted frames Ready for dev is manual, because no Plugin API for it appears in the typings, and Professional can't clear the Changed state.
 
 **Stop rule.** If no linking method passes stage 3, the library file already holds every page except Captures and Archive, so it becomes the single working file with a published library, and this record is revisited. Until stage 2 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Only decisions 1 to 4, 11 and the capture rule take effect immediately.
 
@@ -109,7 +114,7 @@ Option D for tokens and option C for files.
 
 ## Limits
 
-Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 3 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. An independent reviewer audited the recommendation before this decision, and its findings are reflected here. This record has not had the cross-model review its pull request requires.
+Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 3 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. Two independent reviews, of the recommendation and then of the reference built from it, are reflected here. Primitive colour tokens were considered and deferred to stage 5, because they change nothing for one light theme. This record has not had the cross-model review its pull request requires.
 
 ## Reversing this
 

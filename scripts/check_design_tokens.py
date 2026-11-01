@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Compare the committed Figma variable snapshot with the application's CSS.
 
-Enforced: each mapped variable's CSS property exists with the Figma value, and
-every variable without a CSS name is listed as design-only or in the dated
-unmapped baseline. Report-only until ADR-0067 stage 5: properties holding more
-than one value, and hard-coded hex colours.
+Enforced: each mapped variable's CSS property holds the Figma value somewhere in
+src/, and every variable without a CSS name is listed as design-only or in the
+dated unmapped baseline. A pass does not prove every page uses that value.
+Report-only until ADR-0067 stage 5: properties holding more than one value, and
+hard-coded hex colours.
 """
 import json
 import re
@@ -81,10 +82,22 @@ def check(root=ROOT):
     return failures
 
 
+def mapped_multi_valued(root=ROOT):
+    """Return mapped CSS properties whose other values a passing check does not rule out."""
+    data = json.loads((root / SNAPSHOT).read_text(encoding='utf-8'))
+    definitions, _ = read_css(root)
+    props = (ALIAS.fullmatch(v.get('code', '')) for v in data['variables'] if v.get('status') == 'mapped')
+    return sorted({p.group(1) for p in props if p and len(definitions.get(p.group(1), ())) > 1})
+
+
 def report(root=ROOT):
     definitions, hard_coded = read_css(root)
     multi = sorted(name for name, values in definitions.items() if len(values) > 1)
+    mapped = mapped_multi_valued(root)
     print(f'Custom properties: {len(definitions)}; holding more than one value: {len(multi)}')
+    print(f'Mapped properties holding more than one value: {len(mapped)}. The check only proves the Figma value is one of them.')
+    for name in mapped:
+        print(f'  {name}: ' + ', '.join(sorted(definitions[name])))
     print(f'Hard-coded hex colours outside token definitions: {sum(hard_coded.values())}')
     for path, count in sorted(hard_coded.items(), key=lambda item: -item[1])[:10]:
         print(f'  {count:5} {path}')

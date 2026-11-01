@@ -54,6 +54,11 @@ class DesignTokenCheckTest(unittest.TestCase):
         root = self.tree(':root{--ink:#242a37}', [dict(self.variable(), note='https://www.figma.com/design/x')])
         self.assertIn('Figma links', tokens.check(root)[0])
 
+    def test_mapped_property_with_other_values_is_reported_not_failed(self):
+        root = self.tree(':root{--ink:#242a37}.old{--ink:#000000;--other:#1;--other:#2}', [self.variable()])
+        self.assertEqual(tokens.check(root), [])
+        self.assertEqual(tokens.mapped_multi_valued(root), ['--ink'])
+
     def test_comments_do_not_count(self):
         root = self.tree('/* --ink:#242a37; */ a{color:#123456}', [self.variable()])
         self.assertIn('not defined', tokens.check(root)[0])
