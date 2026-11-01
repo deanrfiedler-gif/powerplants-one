@@ -77,6 +77,26 @@ async function record(
     },
   };
 }
+// The deal whose owner a contact-identification action must match. The action keeps its owner when the deal is
+// transferred, so a five-stage deal is checked against the owner it had when it was created; a deal still in the original
+// I1 stages (Enquiry, Qualified), or a database without owner history, is checked against its current owner. Stage
+// changes and Edit deal both use this, so a receiver can do with a deal that has no contact whatever its stage allows.
+async function identificationOwner(
+  c: PoolClient,
+  p: Principal,
+  old: Opportunity,
+): Promise<Opportunity> {
+  if (["Enquiry", "Qualified"].includes(old.stage_id)) return old;
+  const history = await c.query<{ relation: string | null }>(
+    "SELECT to_regclass('ppo.opportunity_origins') AS relation",
+  );
+  if (!history.rows[0].relation) return old;
+  const original = await c.query<{ owner_id: string }>(
+    "SELECT ppo.crm_owner_at($1,$2,1) AS owner_id",
+    [p.workspace_id, old.id],
+  );
+  return { ...old, owner_id: original.rows[0].owner_id };
+}
 const returned =
   "RETURNING *, expected_close_date::text AS expected_close_date";
 export async function editDealInformation(
@@ -108,7 +128,7 @@ export async function editDealInformation(
         await linkedActiveAction(
           c,
           p,
-          old,
+          await identificationOwner(c, p, old),
           old.identification_activity_id,
           true,
         );
@@ -201,7 +221,7 @@ export async function changeDealStage(
         : old.identification_activity_id;
       if (carriesQualification(command.stage_id)) {
         if (identification && (legacy || !old.primary_person_id))
-          await linkedActiveAction(c, p, legacy || !(await c.query("SELECT to_regclass('ppo.opportunity_origins') AS relation")).rows[0].relation ? old : {...old,owner_id:(await c.query<{owner_id:string}>("SELECT ppo.crm_owner_at($1,$2,1) AS owner_id",[p.workspace_id,id])).rows[0].owner_id}, identification, true);
+          await linkedActiveAction(c, p, await identificationOwner(c, p, old), identification, true);
         if (!old.primary_person_id && !identification)
           throw new AppError(
             422,
