@@ -39,7 +39,16 @@ section 4.
 A pull request that deletes or renames a file is never documentation only: the
 living masters in docs/design/development name 167 prose files as sources, and a
 missing named file is an error in `npm run studio:check`, which the heavy suites run.
+
+Drafts. It also writes `draft=true|false`, read from the pull request event
+($GITHUB_EVENT_PATH). The heavy jobs skip a draft pull request, and the workflows
+run again on `ready_for_review`, so the full suites run once the pull request is
+marked ready. `draft` is true only when the event says so; a missing or unreadable
+event, or any other event, answers false and runs everything. `docs_only` is
+decided exactly as before and does not depend on it. Dean decided this on
+1 November 2026 (docs/decisions/merge-conflict-reduction.md section 4).
 """
+import json
 import os
 import subprocess
 import sys
@@ -152,11 +161,27 @@ def merge_parents(rev='HEAD'):
     return done.stdout.split()[1:]
 
 
-def report(docs_only, reason):
+def is_draft(event_path=None):
+    """True only when the pull request event file says the pull request is a draft."""
+    path = event_path if event_path is not None else os.environ.get('GITHUB_EVENT_PATH')
+    if not path:
+        return False
+    try:
+        with open(path, encoding='utf-8') as handle:
+            event = json.load(handle)
+    except (OSError, ValueError):
+        return False
+    pull_request = event.get('pull_request') if isinstance(event, dict) else None
+    return isinstance(pull_request, dict) and pull_request.get('draft') is True
+
+
+def report(docs_only, reason, draft=False):
     value = 'true' if docs_only else 'false'
-    line = f'docs_only={value} ({reason})'
+    draft_value = 'true' if draft else 'false'
+    line = f'docs_only={value} ({reason}); draft={draft_value}'
     print(line)
-    for variable, text in (('GITHUB_OUTPUT', f'docs_only={value}\n'), ('GITHUB_STEP_SUMMARY', f'Change scope: {line}\n')):
+    output = f'docs_only={value}\ndraft={draft_value}\n'
+    for variable, text in (('GITHUB_OUTPUT', output), ('GITHUB_STEP_SUMMARY', f'Change scope: {line}\n')):
         target = os.environ.get(variable)
         if target:
             with open(target, 'a', encoding='utf-8', newline='\n') as handle:
@@ -170,16 +195,17 @@ def argument(flag, argv):
 def run(argv):
     if os.environ.get('GITHUB_EVENT_NAME', 'pull_request') != 'pull_request':
         return report(False, 'only pull requests are scoped; this event runs the full suites')
+    draft = is_draft()
     base, head = argument('--base', argv), argument('--head', argv)
     try:
         if not (base and head):
             if len(merge_parents()) != 2:
-                return report(False, 'HEAD is not a merge of the base and the pull request; running the full suites')
+                return report(False, 'HEAD is not a merge of the base and the pull request; running the full suites', draft)
             base, head = 'HEAD^1', 'HEAD'
         docs_only, reason = classify(changed_files(base, head), deleted=changed_files(base, head, '--diff-filter=D'))
     except (subprocess.CalledProcessError, RuntimeError, OSError) as error:
-        return report(False, f'could not decide ({str(error).strip()[:160]}); running the full suites')
-    return report(docs_only, reason)
+        return report(False, f'could not decide ({str(error).strip()[:160]}); running the full suites', draft)
+    return report(docs_only, reason, draft)
 
 
 def unread_still_unread():
@@ -268,12 +294,33 @@ def self_test():
     for paths, consumers, deleted, want, what in checks:
         if classify(paths, consumers, deleted)[0] != want:
             failures.append(([what], want))
+    # (event file content or None for no file, wanted draft answer, what it proves)
+    drafts = [
+        ('{"pull_request": {"draft": true}}', True, 'a draft pull request'),
+        ('{"pull_request": {"draft": false}}', False, 'a pull request marked ready'),
+        ('{"pull_request": {}}', False, 'an event without the draft field'),
+        ('{"pull_request": {"draft": "true"}}', False, 'a draft value that is not a boolean'),
+        ('{"ref": "refs/heads/main"}', False, 'a push event'),
+        ('[]', False, 'an event that is not an object'),
+        ('not json', False, 'an unreadable event'),
+        (None, False, 'no event file'),
+    ]
+    with tempfile.TemporaryDirectory() as folder:
+        for index, (content, want, what) in enumerate(drafts):
+            path = os.path.join(folder, f'event-{index}.json')
+            if content is not None:
+                with open(path, 'w', encoding='utf-8') as handle:
+                    handle.write(content)
+            if is_draft(path) != want:
+                failures.append(([f'draft: {what}'], want))
+    if is_draft('') is not False:
+        failures.append((['draft: an empty event path'], False))
     for paths, want in failures:
         print(f'FAIL: {paths} should be docs_only={want}')
     problems = unread_still_unread()
     for problem in problems:
         print(f'FAIL: {problem}')
-    total = len(cases) + len(checks) + 1
+    total = len(cases) + len(checks) + len(drafts) + 2
     failed = len(failures) + len(problems)
     print(f'{total - failed} of {total} classifier cases passed')
     return 1 if failed else 0

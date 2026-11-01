@@ -37,6 +37,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 ## Visual references
 
 - [Deals design r02](../../../reference/ui/crm/deals-design-r02/README.md): the accepted Figma design, 28 icon-free captures (design compositions, not application captures)
+- [Deals design r03](../../../reference/ui/crm/deals-design-r03/README.md): the Filters and phone Search and filter frames with Expected close, amended 31 October 2026; the other 26 r02 captures stay current
 - [sales-deals-populated.png](../../../testing/evidence/department-navigation/sales-deals-populated.png)
 - [ppo-deal-pipeline_r38.html](../../../reference/ui/crm/ppo-deal-pipeline_r38.html)
 
@@ -95,3 +96,5 @@ Dean accepted the finished Deals page, renamed "Deals · CR-04" (`549:2`): "I ac
 - **Not drawn:** the phone Board with stage navigation, the Choose view sheet, phone selection, tablet Forecast and Archive, open menus and a drag in progress.
 
 [Decision](../../../decisions/deals-figma-design.md#acceptance--24-october-2026), [captures r02](../../../reference/ui/crm/deals-design-r02/README.md). Visual status stays "Needs review": the app has not been built to this design. Building it, the new reads (snapshot follow-through) and paired source/application review are separate work.
+
+**Amendment, 31 October 2026.** Filters `555:6470` gains an Expected close range with quick choices, so Deals and Pipeline insights keep the same filters. Open deals with no close date are left out unless No date is chosen. Sort and Page size stay. Phone 320 Search and filter `2369:818269` gains the same group, with larger quick choices and From and To stacked. The named Figma version "Deals · CR-04 — Expected close amendment, phone" holds both changes. [Amendment](../../../decisions/deals-figma-design.md#amendment--31-october-2026), [captures r03](../../../reference/ui/crm/deals-design-r03/README.md). The app has no such filter.
