@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** adopted on the owner's instruction, 14 October 2026. This record adds to [ADR-0053](ADR-0053-figma-page-design.md). It reverses none of its rules, and adds one step to the lock-in sequence in rule 3 (Decision 6).
+Owner: Dean Fiedler. **Status:** adopted on the owner's instruction, 14 October 2026. This record adds to [ADR-0053](ADR-0053-figma-page-design.md). It reverses none of its rules, and adds one step to the lock-in sequence in rule 3 (Decision 6). **[ADR-0067](ADR-0067-design-to-build-operating-model.md) treats this record's file-size trigger as met and replaces rules 1, 2, 5 and 6 at cut-over; until then this record governs "PPO - Design". Afterwards it describes that frozen file, and rules 3, 4 and 9 continue for new files in the form set by the [design-to-build standard](../standards/design-to-build-standard.md).**
 
 Related: [ADR-0053](ADR-0053-figma-page-design.md) (Figma for page design); [ADR-0050](ADR-0050-font-awesome-light-icons.md) (Font Awesome Pro licence limits); the [UI conformance standard](../standards/html-module-conformance.md); the [design and build workflow](../design/development/README.md); the [CCE Figma brief](../delivery/cce-figma-design-prompt.md), which says not to create a competing library or a new file by default.
 

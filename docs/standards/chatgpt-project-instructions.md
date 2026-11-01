@@ -50,7 +50,7 @@ Prevent duplicates; reconcile Unknown. Keep offline context/evidence; separate l
 
 Australian English; intact logo; ui-style-specification.md; crm-desktop-mobile-refinements.md; department-navigation-icons.md; ADR-0050. Show synthetic/environment.
 
-Figma: match accepted pages; generally no module cards.
+Figma: ADR-0067; match accepted pages; generally no module cards.
 
 product-quality-{register,plan}.md.
 

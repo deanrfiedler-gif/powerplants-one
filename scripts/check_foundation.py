@@ -268,11 +268,14 @@ def check_conflict_controls():
     docs/decisions/merge-conflict-reduction.md for why they exist.
     """
     import build_status
+    import check_design_tokens
     import check_migrations
     for message in build_status.check_status():
         problem(message)
     for message in check_migrations.check_tree():
         problem(message)
+    for message in check_design_tokens.check():
+        problem('Design tokens: ' + message)
     check_ui_index_frozen()
     # The UI build sequence is no longer committed; deriving it still proves every register entry places.
     derived = subprocess.run([sys.executable, str(ROOT / 'scripts/build-ui-sequence.py'), '--check'], cwd=ROOT, capture_output=True, text=True)
