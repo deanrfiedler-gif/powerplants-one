@@ -295,6 +295,15 @@ Dean adopted the [Phone header amendment](../../../decisions/phone-header-amendm
 
 Integration review of PR #609 found that unchanged phone action labels could retain callbacks from an older page render. The registration now keeps its displayed shape stable while forwarding the view chooser, page action, filters and record actions to the latest page state. The phone-header unit regression includes a record action retained by an already-open More menu. This is functional verification, not owner or device acceptance.
 
+## Phone register patterns amendment — 1 November 2026
+
+Dean accepted the [Phone register patterns amendment](../../../decisions/phone-register-patterns-amendment.md) on 1 November 2026 ("Accept recommendations"). It extends the Phone header amendment above for phone registers. Nothing is built.
+
+- **Mobile requirements (PR1–PR17).** Only a register whose source defines a bulk action gets selection. Enter by long press (550 ms) or More, then Select. The header row becomes the count, Select all on this page and Done; a bottom action bar of at most three actions replaces the tab bar and Quick add. An action that changes a record or makes a file opens a sheet listing what changes, except Open in sequence and Mark read or Mark unread. Results are per record, in words. An uncertain outcome is recovered by repeating the original operation.
+- **Desktop.** Unchanged.
+- **Figma.** Page "Phone register patterns · amendment" `3036:32928`; new parts in the [binding note](../component-bindings/2026-11-01-phone-register-patterns.md). The named version "Phone register patterns amendment — accepted" had not been saved when this was written.
+- **Application.** The shared phone header has no list More and no selection state. Work orders has its own long press and selection aside; Leads shows a count and Clear selection; `notifications/state` changes all or nothing. Adoption order is Q4 in the decision.
+
 ## CS-01 native consumer — 19 October 2026
 
 The [Organisations implementation](../../../decisions/organisations-figma-implementation.md) reuses this component under D1–D7. [Host fixtures](../organisations-native-fixtures.json) cover the changed consumer and [evidence](../../../testing/evidence/organisations-native-r01/README.md) records actual checks. Existing People/Contacts consumers remain separate. Owner visual/device review and baseline adoption are pending; no review fingerprint is replaced.
