@@ -66,7 +66,7 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Supply chain | 4 | Inbound shipments | /supply/shipments | nav-inbound | supply.read | Source route present | inbound | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Supply chain | 5 | Receiving | /supply/receipts | nav-receiving | supply.read | Source route present | receiving | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Supply chain | 6 | Inventory | /supply/stock | nav-stock | supply.read | Source route present | stock | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Supply chain | 7 | Workshop | Withheld | nav-maintenance | supply.read | Unavailable | None |  |
+| Supply chain | 7 | Workshop | Withheld | nav-maintenance | supply.read | Unavailable | None | Receiving SC-04 rail position reserved; no native Workshop route exists. |
 | Supply chain | 8 | Dispatch & delivery | /supply/dispatch | nav-dispatch | supply.read | Source route present | deliveries | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Supply chain | 9 | Returns & claims | /supply/returns | nav-returns | supply.read | Source route present | returns | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Finance | 1 | My Work | /work | nav-work | activity.read | Source route present | work | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |

@@ -4,7 +4,7 @@ Owner: Dean Fiedler. Builder and comparison: Codex, [PR #805](https://github.com
 
 ## Separate statuses
 
-- Functional proof: focused Inventory unit, database, HTTP and desktop/phone browser checks passed; native Supply regression passed. Quotation-to-Supply regression rerun is in progress; see the validation record below.
+- Functional proof: focused Inventory unit, database, HTTP and desktop/phone browser checks passed; native Supply regression passed. The 31 October quotation rerun was interrupted; post-merge verification is recorded below.
 - Visual comparison: all 14 retained application captures inspected against the accepted compositions at 1440, 1024, 390 and 320 px. This is a builder comparison with recorded differences, not visual acceptance.
 - Owner acceptance: the 15 October decision accepts the source design. Application acceptance and independent exact-head review remain pending; no accepted application fingerprint is recorded.
 - Deployment: not performed. All data and execution are local and synthetic.
@@ -56,7 +56,7 @@ Real `npm ci` used pinned Node 24.22.2 and npm 11.19.0, without an engine overri
 | Inventory browser | 7 passed; 1 intentional duplicate capture-matrix skip. Desktop/phone keyboard, snapshot identity after a newer observation, native form, read-only handover denial, Unknown at 320 px, failed read/retry and stale response tested |
 | Native Supply browser | All 30 desktop/phone cases passed, including native revision, uncertain-save recovery, stale proposals, denial and Partial evidence |
 | Department-navigation browser | All 11 desktop cases passed across the initial run and the complete Sales Tasks rerun; mobile cases are intentionally excluded by that suite |
-| Quotation-to-Supply browser | Final full rerun in progress; previous comparison described below |
+| Quotation-to-Supply browser | Interrupted: first desktop case timed out, second passed; remaining results were not recovered. Previous comparison described below |
 | Typecheck | Passed with `NODE_OPTIONS=--max-old-space-size=8192 npx tsc --noEmit`, repeated after the final source edit |
 | Lint | Full `npm run lint` passed; changed TSX and browser files rechecked after final edits |
 | Design studio | Passed: 372 entries, 52 components, no errors; 346 unreviewed and 26 stale remain visible |
@@ -74,3 +74,11 @@ The Sales Tasks navigation case first timed out while loading; its full focused 
 The first three quotation desktop cases timed out at 300 seconds on the branch. An archive of unmodified main `1402c87b9069def4dcd4d82f291cd991cff40ca5` was compared with the same three scenarios and 300-second local budget: lost-response and unsent-original cases passed; owned-referral timed out during `/work` loading. The 2,306 application/script blobs were verified against that commit. Only the local port/config and timeout harness differed. This comparison does not establish a common cause for the branch failures; they are not labelled unrelated. The final branch run is recorded above when complete.
 
 Historical Supply screenshots were redirected to ignored output during regression; quotation time budgets were temporarily enlarged for local execution. Those test-file adaptations are restored before commit. The committed native Supply test changes only the SC-05 handover to `?native=1` so it continues exercising its existing form contract.
+
+## Integration and resumed proof — 1 November 2026
+
+Main `5c533e93` was merged, including Receiving lock-in PR #787 and the Markdown guide runtime. Workshop now occupies the accepted position between Inventory and Dispatch & delivery as an unavailable shared-rail item. No native Workshop route exists; no route or capability was invented. It reuses the native maintenance glyph. The navigation coverage record and tests follow this composition.
+
+The live guide is now `docs/guides/pages/guide.route-supply-stock.md`. Its rewrite retires the old carry-over exception and its single parity-fixture line. It is InReview with no invented reviewer, date or approval hash. Under [the guide publication contract](../../../guides/README.md#13-retire-a-carried-over-guide), ordinary users see the preparation fallback until it is published with genuine review evidence. Guide publication needs Dean's review and remains separate from this code delivery.
+
+The resumed focused unit and guide-library/parity run passed all 76 cases. The isolated PostgreSQL cluster recovered after the interrupted session and now uses explicit port 15485. Its first post-recovery database test attempt failed acquiring a connection within the existing three-second boundary, before Inventory assertions; no unrelated-failure claim is made. The optimized build has compiled and its typecheck is running. Post-merge browser/capture and static verification remain in progress. The 14 images above currently retain the inspected 31 October application, before Workshop was added; their manifest records that source, not acceptance of the merged application.

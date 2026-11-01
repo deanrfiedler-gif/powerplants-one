@@ -119,5 +119,5 @@ test("Receiving lock-in reserves Workshop without inventing a route or permissio
   assert.equal(workshop.readiness, "unavailable");
   assert.deepEqual(workshop.requires, ["supply.read"]);
   assert.equal(departmentRails.supply.indexOf("workshop"), departmentRails.supply.indexOf("stock") + 1);
-  assert.ok(!navigationForCapabilities(["supply.read"]).includes("workshop"));
+  assert.ok(!navigationForCapabilities(new Set(["supply.read"]), false).includes("workshop"));
 });
