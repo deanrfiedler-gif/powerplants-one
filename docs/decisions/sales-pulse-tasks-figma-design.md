@@ -48,14 +48,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q11 My Work on the Sales rail (My Work Q4, still open) | Resolved as recommended | Leave it out. Pulse carries an "All my work" link and the phone bar has My Work |
 | Q12 Should Deal attention show value and expected close? | Resolved as recommended | Yes. It needs both fields added to two reads. **Not yet drawn:** the accepted frames and captures show the fields the reads return today (section 6) |
 | Corrections made before acceptance | Claude's audit, disclosed here | Section 7 |
-| Named Figma version | Not yet saved | "Sales Pulse & Tasks — accepted" awaits Dean. Section 8 |
+| Named Figma version | Saved 1 November 2026 | Dean: "I have saved the named version as Sales Pulse & Tasks — accepted" |
 | Changing the built pages | Not decided | Section 6 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Sales Pulse & Tasks — accepted". The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Sales Pulse & Tasks · SH-02" `2966:12981`, first under "— Sales —", before Leads `190:20237`. The page header `2966:12982` holds the conformance declaration; the notes card `2976:6179` holds D1–D28, Q1–Q12 and what is not drawn. File index: the row "Row / Sales Pulse & Tasks · SH-02" `3093:508970`, first in the Sales group |
 | Desktop 1440, Pulse | Full length `2968:152`; activity window `2969:710`; Record outcome `2970:1112`; outcome saved `2991:8652`; outcome saved, next activity not saved `2991:9266`; Plan activity `2972:3150`; Plan next from a row `2991:10781`; jump from the summary `2988:8020`; outside access `2970:1299`; deals-only person `2970:1436` |
 | Desktop 1440, Tasks | List `2971:1719`; filtered to overdue `2971:2421`; Reschedule `2972:2692`; can no longer be changed `2991:9906`; newer saved version `2991:10367`; Set a date `2992:15009`; Owner menu `2992:12645`; Filters panel `2992:12710`; Owner: Everyone `2992:10365`; activity window, owner completes `2992:11556`; Next page `2992:13517` |
@@ -159,5 +159,5 @@ Polish in the same pass: design wording removed from page copy, purple annotatio
 | Icon-free captures | 2,153 Font Awesome instances swapped for `Icon/placeholder` in the capture copies, and a recount found none left. All prototype links stripped from the copies. The temporary page was deleted after export |
 | Retained bytes | The thirty PNGs and their SHA-256 hashes are listed in the [captures README](../reference/ui/crm/sales-pulse-tasks-design-r01/README.md) |
 | Present mode | Not played. The summary-cell scroll links are set but untested |
-| Named version | Not yet saved |
+| Named version | "Sales Pulse & Tasks — accepted", saved by Dean on 1 November 2026. Figma's version history was not opened to confirm it |
 | Repository checks | Recorded in the pull request that adds this record |
