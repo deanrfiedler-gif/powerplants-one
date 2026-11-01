@@ -1,10 +1,35 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { zoneDisplayName } from "../shell/date-format";
 import { Field, useFieldError, type Option } from "./business-ui";
 import { localDateTime, utcFromLocal } from "../scheduling/time";
 import { usePendingWork } from "./pending-work";
 import { guardBrowserNavigation } from "./navigation-intent";
+
+// When the focused control inside `scope` is removed, focus would fall to the
+// document. Move it to a surviving target, unless the user has moved elsewhere.
+export function useFocusFallback(scope: RefObject<HTMLElement | null>, target: RefObject<HTMLElement | null>) {
+  const focused = useRef<Element | null>(null);
+  useEffect(() => {
+    const note = (event: Event) => {
+      focused.current = scope.current?.contains(event.target as Node) ? (event.target as Element) : null;
+    };
+    const pointer = (event: Event) => {
+      if (!focused.current?.contains(event.target as Node)) focused.current = null;
+    };
+    document.addEventListener("focusin", note);
+    document.addEventListener("pointerdown", pointer);
+    return () => {
+      document.removeEventListener("focusin", note);
+      document.removeEventListener("pointerdown", pointer);
+    };
+  }, [scope]);
+  useLayoutEffect(() => {
+    if (!focused.current || focused.current.isConnected) return;
+    focused.current = null;
+    if (!document.activeElement || document.activeElement === document.body) target.current?.focus();
+  });
+}
 
 export function RecordTabs({ id, label, tabs, value, onChange, disabled = false }: {
   id: string; label: string; tabs: { id: string; label: React.ReactNode }[];
