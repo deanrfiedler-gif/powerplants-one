@@ -93,6 +93,20 @@ function readFilters(params: Pick<URLSearchParams, "get">) {
 export function EngineeringRegister() {
   const params = useSearchParams(),
     router = useRouter();
+  const toolbar = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const node = toolbar.current;
+    if (!node) return;
+    const measure = () =>
+      node.parentElement?.style.setProperty(
+        "--er-toolbar-height",
+        node.offsetHeight + "px",
+      );
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
   const filters = readFilters(params);
   const filterKey = JSON.stringify(filters);
   const [shownFilterKey, setShownFilterKey] = useState(filterKey);
@@ -668,7 +682,7 @@ export function EngineeringRegister() {
         data-paged={!!data?.next_cursor || cursors.length > 1}
       >
         <h1 className="sr-only">Engineering workload</h1>
-        <div className="er-toolbar">
+        <div className="er-toolbar" ref={toolbar}>
           {shell.context?.actions.some((a) => a.id === "engineering") && (
             <Button
               className="er-new"

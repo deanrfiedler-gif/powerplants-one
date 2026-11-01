@@ -114,6 +114,9 @@ test("accepted container creates a real request; an uncertain note retries once 
   await expect(
     packageDialog.getByText("Note saved.", { exact: true }),
   ).toBeVisible();
+  await expect(packageDialog).toContainText(
+    "Package saved. The workload source changed; continue from the fresh first page and select packages again.",
+  );
   await expect(page).toHaveURL(/section=review/);
   await page.reload();
   await expect(

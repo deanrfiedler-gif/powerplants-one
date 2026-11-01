@@ -320,7 +320,7 @@
 #ppo-engineering[data-native-register] .er-selection {
   position: absolute;
   right: 0;
-  top: 60px;
+  top: var(--er-toolbar-height, 60px);
   bottom: 0;
   width: 360px;
   max-width: 100%;
@@ -637,7 +637,7 @@
     height: auto;
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 767px) {
   #ppo-engineering[data-native-register] {
     height: 100%;
     min-height: 0;
@@ -818,7 +818,7 @@
   gap: 12px;
   flex: none;
 }
-@media (max-width: 780px) {
+@media (max-width: 767px) {
   #ppo-engineering[data-native-register] .er-selection {
     display: none;
   }
@@ -986,7 +986,7 @@
 }
 
 /* Paging remains usable underneath an overlapping selection panel. */
-@media (min-width: 781px) {
+@media (min-width: 768px) {
   #ppo-engineering[data-native-register]
     .er-register[data-paged="true"]
     .er-selection {
@@ -1000,7 +1000,7 @@
 #ppo-engineering[data-native-register] .er-close-phone {
   display: none;
 }
-@media (max-width: 780px) {
+@media (max-width: 767px) {
   #ppo-engineering[data-native-register]
     .er-register[data-paged="true"]
     .er-phone-new {

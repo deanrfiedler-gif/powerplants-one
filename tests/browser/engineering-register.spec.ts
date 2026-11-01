@@ -156,7 +156,7 @@ test("EN01 full counts and native queues survive paging; a changed continuation 
     (url) => url.searchParams.get("q") === "X" + s.marker + " missing",
   );
   await expect(
-    page.getByRole("heading", { name: "No packages match these filters" }),
+    page.getByText("No packages match these filters", { exact: true }),
   ).toBeVisible();
 });
 
@@ -480,6 +480,7 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
   for (const [width, height] of [
     [1440, 900],
     [1024, 768],
+    [768, 900],
     [390, 844],
     [320, 844],
   ]) {
@@ -548,6 +549,11 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
       ).toBeFocused();
       await page.locator(".er-grid tbody input[type=checkbox]").nth(2).check();
       await page.locator(".er-grid tbody input[type=checkbox]").nth(7).check();
+      const panelTop = (await page.locator(".er-selection").boundingBox())!.y;
+      const toolbarBounds = (await page.locator(".er-toolbar").boundingBox())!;
+      expect(panelTop).toBeGreaterThanOrEqual(
+        toolbarBounds.y + toolbarBounds.height,
+      );
       await page.screenshot({
         path: info.outputPath("engineering-selection-" + width + ".png"),
       });
