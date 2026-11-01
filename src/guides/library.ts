@@ -6,13 +6,11 @@ import type { Entry } from "../development/model";
 import { compileGuide, declaresGuideKey, decodeYamlEscapes } from "./compile";
 import { linkShape } from "./links";
 import type { CompiledGuide, GuideError, GuideLibrary } from "./model";
-import { isRouteEntry, releasedGuides, routeForPath, visibleRelease, type ReleasedLibrary, type ReleasedRoute } from "./released";
+import { isRouteEntry, releasedGuides, routeForPath, type ReleasedLibrary } from "./released";
 
 export type { GuideLibrary } from "./model";
 
 const guidesFolder = "docs/guides";
-// Written by scripts/build-guides.ts and read by the production server (ADR-0065, decision 8).
-export const releasedFile = ".ppo-guides/released.json";
 
 // The TypeScript guides that stage 1 carried over to Markdown. A guide's carried_over_from names one of these. The
 // modules are retired: these paths are provenance, kept so carried_over_from stays valid, and need not exist.
@@ -259,68 +257,10 @@ function crossCheck(candidates: Candidate[], entries: Entry[]): Map<Candidate, G
   return problems;
 }
 
-// The guides general users may see, for the shell. Production reads the file that the build wrote; development
-// compiles the guide files on request. It never throws: any failure is logged once and the shell shows no guides.
-const empty = (): ReleasedLibrary => ({ guides: [], routes: [], shell: null });
-const remembered = new Map<string, ReleasedLibrary>();
-
-export async function releasedGuideLibrary(root = process.cwd()): Promise<ReleasedLibrary> {
-  try {
-    if (process.env.NODE_ENV === "production") {
-      const key = resolve(root);
-      const kept = remembered.get(key);
-      if (kept) return kept;
-      const released = await readReleaseFile(root);
-      remembered.set(key, released);
-      return released;
-    }
-    const { entries } = await readMaster(root);
-    return releasedGuides(await readGuideLibrary(root, entries), entries);
-  } catch (error) {
-    console.error(`User guides are unavailable: ${describeFailure(error)}.`);
-    return empty();
-  }
-}
-
-async function readReleaseFile(root: string): Promise<ReleasedLibrary> {
-  let text: string;
-  try {
-    text = await readFile(resolve(root, releasedFile), "utf8");
-  } catch (error) {
-    throw new Error(errorCode(error) === "ENOENT" ? `${releasedFile} is missing: the build writes it` : `${releasedFile} could not be read`);
-  }
-  let data: unknown;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    throw new Error(`${releasedFile} is not valid JSON`);
-  }
-  if (!isReleased(data)) throw new Error(`${releasedFile} does not have the expected shape`);
-  return visibleRelease(data);
-}
-
-// The build writes the file from the same types, but a damaged file must not break the shell, which calls guideForPath
-// while it renders. So every element that guideForPath reads is checked: each route's path and guide key, and each
-// guide's front matter guide key. A guide's sections and lead must be lists; the renderer tolerates anything inside them.
-const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
-
-const isReleasedGuide = (value: unknown): value is CompiledGuide =>
-  isRecord(value) && isRecord(value.front) && typeof value.front.guide_key === "string" && Array.isArray(value.sections) && Array.isArray(value.lead);
-
-const isReleasedRoute = (value: unknown): value is ReleasedRoute =>
-  isRecord(value) && typeof value.path === "string" && (typeof value.guide_key === "string" || value.guide_key === null);
-
-function isReleased(data: unknown): data is ReleasedLibrary {
-  if (!isRecord(data)) return false;
-  const { guides, routes, shell } = data;
-  return Array.isArray(guides) && guides.every(isReleasedGuide) && Array.isArray(routes) && routes.every(isReleasedRoute) && (shell === null || isReleasedGuide(shell));
-}
-
-// One short reason with no stack and no file contents: a JSON error message quotes the text it could not read.
-function describeFailure(error: unknown): string {
-  if (error instanceof SyntaxError) return "a file is not valid JSON";
-  const code = errorCode(error);
-  if (code) return `the file system reported ${code}`;
-  if (error instanceof Error) return error.message.split("\n")[0];
-  return "an unknown error";
+// Development only: the guides general users may see, compiled from the guide files and the register on request.
+// released-server.ts imports this module only outside production, so that this module and the register reader stay
+// out of the production build trace. Production reads the file that scripts/build-guides.ts wrote instead.
+export async function compiledReleasedLibrary(root: string): Promise<ReleasedLibrary> {
+  const { entries } = await readMaster(root);
+  return releasedGuides(await readGuideLibrary(root, entries), entries);
 }

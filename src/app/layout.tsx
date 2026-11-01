@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ApplicationFrame } from "../components/application-frame";
-import { releasedGuideLibrary } from "../guides/library";
+import { releasedGuideLibrary } from "../guides/released-server";
 import { GuideLibraryProvider } from "../guides/provider";
 import { appleTouchIconPath, navy } from "../platform/installation";
 import { developmentRequest } from "../development/access";

@@ -385,7 +385,7 @@ test("no HTML injection API under src/guides", () => {
 // register's types, and provider.tsx the release's types, which are erased.
 const clientSafe = ["render.tsx", "released.ts", "links.ts", "model.ts", "status.ts", "provider.tsx"];
 const clientImports = new Set(["react", "next/link", "./model", "./links", "./status"]);
-const serverOnly = /^(?:node:|marked$|yaml$|\.\/compile$|\.\/library$)/;
+const serverOnly = /^(?:node:|marked$|yaml$|\.\/compile$|\.\/library$|\.\/released-server$)/;
 
 // The module specifiers of a source file: import and export ... from statements, side-effect imports, import() and
 // require(). `typeOnly` is true for a whole statement written `import type` or `export type`.
@@ -421,7 +421,7 @@ test("the client-safe guide modules import only React, next/link and each other"
   ]);
 });
 
-test("no client component under src imports the guide compiler or library", () => {
+test("no client component under src imports the guide compiler, library or release reader", () => {
   const src = fileURLToPath(new URL("../../src/", import.meta.url));
   const files = readdirSync(src, { recursive: true, encoding: "utf8" }).filter((name) => /\.[cm]?[jt]sx?$/.test(name) && statSync(join(src, name)).isFile());
   const clients = files.filter((name) => /^\s*["']use client["']/.test(readFileSync(join(src, name), "utf8")));
@@ -430,7 +430,7 @@ test("no client component under src imports the guide compiler or library", () =
     for (const { specifier } of importsOf(readFileSync(join(src, name), "utf8"))) {
       // A relative specifier is resolved against the file, so ./compile from src/guides is found as well.
       const target = specifier.startsWith(".") ? join(dirname(join(src, name)), specifier) : specifier;
-      assert.doesNotMatch(target.replace(/\.[cm]?[jt]sx?$/, ""), /(?:^|[\\/])guides[\\/](?:compile|library)$/, `${name} is a client component and must not import ${specifier}`);
+      assert.doesNotMatch(target.replace(/\.[cm]?[jt]sx?$/, ""), /(?:^|[\\/])guides[\\/](?:compile|library|released-server)$/, `${name} is a client component and must not import ${specifier}`);
     }
   }
 });

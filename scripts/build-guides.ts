@@ -4,8 +4,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { readMaster } from "../src/development/catalog";
-import { readGuideLibrary, releasedFile } from "../src/guides/library";
+import { readGuideLibrary } from "../src/guides/library";
 import { releasedGuides } from "../src/guides/released";
+import { releasedFile } from "../src/guides/released-server";
 
 const root = process.cwd();
 const { entries } = await readMaster(root);

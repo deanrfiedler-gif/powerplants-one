@@ -8,15 +8,10 @@ import { fileURLToPath } from "node:url";
 import { readMaster } from "../../src/development/catalog";
 import { matchEntry, type Entry } from "../../src/development/model";
 import { compileGuide, declaresGuideKey } from "../../src/guides/compile";
-import {
-  carriedOverSources,
-  readGuideLibrary,
-  releasedFile,
-  releasedGuideLibrary,
-  type GuideLibrary,
-} from "../../src/guides/library";
+import { carriedOverSources, readGuideLibrary, type GuideLibrary } from "../../src/guides/library";
 import type { CompiledGuide } from "../../src/guides/model";
 import { guideForPath, releasedGuides, routeForPath } from "../../src/guides/released";
+import { readReleasedLibrary, releasedFile, releasedGuideLibrary } from "../../src/guides/released-server";
 
 // User guide stage 1 (ADR-0065, decision 8): the library finds the guide files, checks them against the
 // development register and against each other, and decides which guides general users may see. These tests use a
@@ -742,13 +737,27 @@ test("the development cache keeps a file's result until its mtime changes", asyn
 
 test("released library survives a missing release file", async (t) => {
   const root = await makeRoot(t);
-  const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+  const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
 
   assert.deepEqual(result, { guides: [], routes: [], shell: null });
   assert.equal(logged.length, 1);
   assert.equal(logged[0].length, 1);
   assert.equal(typeof logged[0][0], "string");
   assert.doesNotMatch(String(logged[0][0]), /\n/);
+
+  // The empty result is kept for that file, so the failure is logged once, not on every request.
+  const again = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  assert.deepEqual(again.result, { guides: [], routes: [], shell: null });
+  assert.deepEqual(again.logged, []);
+});
+
+test("released library logs a damaged release file once", async (t) => {
+  const root = await makeRoot(t, { [releasedFile]: "{ not json" });
+  const first = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  const second = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
+  assert.equal(first.logged.length, 1);
+  assert.deepEqual(second.logged, []);
+  assert.deepEqual(second.result, { guides: [], routes: [], shell: null });
 });
 
 test("released library refuses an unreadable or misshapen release file without leaking it", async (t) => {
@@ -763,7 +772,7 @@ test("released library refuses an unreadable or misshapen release file without l
   };
   for (const [name, text] of Object.entries(files)) {
     const root = await makeRoot(t, { [releasedFile]: text });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(result, { guides: [], routes: [], shell: null }, name);
     assert.equal(logged.length, 1, name);
     assert.doesNotMatch(String(logged[0][0]), new RegExp(secret), name);
@@ -790,7 +799,7 @@ test("released library refuses a release file with a malformed guide or route, s
   };
   for (const [name, data] of Object.entries(files)) {
     const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(result, { guides: [], routes: [], shell: null }, name);
     assert.equal(logged.length, 1, name);
     assert.match(String(logged[0][0]), /does not have the expected shape/, name);
@@ -801,7 +810,7 @@ test("released library refuses a release file with a malformed guide or route, s
   const shell = compiled(shown({ guide_key: "guide.shell", entry_key: "system:shell" }));
   const whole = { guides: [leads, shell], routes: [route, { path: "/a", guide_key: null }], shell };
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(whole) });
-  const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+  const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
   assert.deepEqual(logged, []);
   assert.deepEqual(result, JSON.parse(JSON.stringify(whole)));
   assert.equal(guideForPath(result, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
@@ -829,7 +838,7 @@ test("released library applies the visibility rule again to the release file it 
     const shellGuide = { ...guide, front: { ...guide.front, guide_key: "guide.shell", entry_key: "system:shell" } };
     const data = { guides: [guide, shellGuide], routes: [route, { path: "/a", guide_key: null }], shell: shellGuide };
     const root = await makeRoot(t, { [releasedFile]: JSON.stringify(data) });
-    const { result, logged } = await capturingErrors(() => withNodeEnv("production", () => releasedGuideLibrary(root)));
+    const { result, logged } = await capturingErrors(() => readReleasedLibrary(join(root, releasedFile)));
     assert.deepEqual(logged, [], name);
     assert.deepEqual(result.guides, [], name);
     assert.equal(result.shell, null, name);
@@ -841,7 +850,7 @@ test("released library applies the visibility rule again to the release file it 
   // A Published guide whose evidence matches its hash, and a carried-over guide in review, are still read as written.
   const visible = { guides: [edited(published)], routes: [route], shell: null };
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(visible) });
-  const result = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const result = await readReleasedLibrary(join(root, releasedFile));
   assert.deepEqual(result, JSON.parse(JSON.stringify(visible)));
   assert.equal(guideForPath(result, "/sales/leads")?.front.status, "Published");
 });
@@ -851,13 +860,31 @@ test("released library reads the release file in production and remembers it", a
   const released = releasedGuides(library(leads), entries);
   const root = await makeRoot(t, { [releasedFile]: JSON.stringify(released) });
 
-  const first = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const first = await readReleasedLibrary(join(root, releasedFile));
   assert.deepEqual(first, JSON.parse(JSON.stringify(released)));
   assert.equal(guideForPath(first, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
 
   await rm(join(root, releasedFile));
-  const second = await withNodeEnv("production", () => releasedGuideLibrary(root));
+  const second = await readReleasedLibrary(join(root, releasedFile));
   assert.equal(second, first, "a successful read is kept for the process");
+});
+
+test("released library reads the release file under the working directory in production", async (t) => {
+  // The layout's call: no root, and the path the production build traces statically.
+  const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
+  const released = releasedGuides(library(leads), entries);
+  const root = await makeRoot(t, { [releasedFile]: JSON.stringify(released) });
+  const before = process.cwd();
+  process.chdir(root);
+  try {
+    const result = await withNodeEnv("production", () => releasedGuideLibrary());
+    assert.deepEqual(result, JSON.parse(JSON.stringify(released)));
+    // In production a root is not used: the release file is always the one under the working directory.
+    const other = await makeRoot(t);
+    assert.equal(await withNodeEnv("production", () => releasedGuideLibrary(other)), result);
+  } finally {
+    process.chdir(before);
+  }
 });
 
 test("released library compiles the guide files and the register in development", async (t) => {
