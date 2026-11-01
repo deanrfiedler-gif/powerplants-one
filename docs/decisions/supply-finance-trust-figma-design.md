@@ -22,7 +22,7 @@ Claude drew the page from these sources:
 - the [conformance standard](../standards/html-module-conformance.md);
 - the drawn pages Reports overview RP-01 and Sales performance RP-02, Material demand, Purchasing, Inbound shipments, Receiving, Inventory, Returns & claims, Finance handoffs, Customer accounts, Project financial performance, Cash outlook, Measure definitions, Integrations and Mappings & reconciliation.
 
-On 1 November 2026 Dean answered "Do you accept the RP-05 design, with my recommended answers to Q1–Q8?": "Accept". The button he chose was offered as accepting the design with its recommendations, so this record reads his answer as adopting D1–D12 and the recommended answers to Q1–Q8. The named Figma version is section 8.
+On 1 November 2026 Dean answered "Do you accept the RP-05 design, with my recommended answers to Q1–Q8?": "Accept". The button he chose was offered as accepting the design with its recommendations, so this record reads his answer as adopting D1–D12 and the recommended answers to Q1–Q8. The named Figma version is recorded in section 8.
 
 Scope:
 - `scope:RP-05` "Supply and Finance trust/exceptions", at `/reports/reconciliation`. No new scope is added.
@@ -45,7 +45,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q7 Claim and credit amounts | Resolved as recommended | Expected and differing credit amounts appear, labelled "not cash" and apart from every count |
 | Q8 Sent with no reply | Resolved as recommended | A document sent with no reply counts in the backlog from the first minute, with its age shown |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Waiting for Dean | Section 8 |
+| Named Figma version | Saved by Dean, 1 November 2026 | "Supply & Finance trust · RP-05 — accepted". Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -78,7 +78,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | Accepted: section 4 |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | Waiting for Dean: section 8 |
+| Named version | "Supply & Finance trust · RP-05 — accepted", saved by Dean on 1 November 2026: section 8 |
 
 ## 4. What the design shows
 
@@ -160,5 +160,5 @@ Before presenting the page Claude screenshotted the frames inside Figma, checked
 - Claude checked the frames with screenshots taken inside Figma and did not play the flows in Present mode. The scripted pass found no overlapping frames, no frame outside its section, no text outside Roboto, no text fill unbound from a colour variable and no off-page navigation link.
 - The nineteen captures are copies of the accepted frames on the "Captures (icon-free)" page, from y = 1,570,000 (`3093:640918` to `3098:543229`). Prototype reactions were removed and each Font Awesome icon instance was swapped for `Icon/placeholder`: 1,124 swaps across the copies. A scan then found no Font Awesome instance left, no copy with a prototype link, and none of 6,162 visible texts with a stored colour that differs from its bound variable.
 - The captures were exported at scale 1 with the Figma connector. The export is capped at 4,096 px, so the full-length desktop report (7,390 px) and tablet report (7,489 px) were each split into two clipped frames at section boundaries, giving twenty-one images. The hashes are in the [captures README](../reference/ui/reporting/supply-finance-trust-design-r01/README.md).
-- **The named version.** Waiting for Dean: "Supply & Finance trust · RP-05 — accepted". This pull request stays a draft until he confirms it.
+- **The named version.** Dean saved "Supply & Finance trust · RP-05 — accepted" in the Figma version history on 1 November 2026 and told Claude so; Claude did not see the version history itself.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
