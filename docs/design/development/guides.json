@@ -5391,6 +5391,73 @@
       "reviewed_content_hash": null
     },
     {
+      "guide_key": "guide.cr.06",
+      "entry_key": "scope:CR-06",
+      "title": "Leads and lead record",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Existing routes; identity added",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-11-01",
+      "source_commit": "89283a16027fa90fa988d31a47a4f53dd3d1e0b1",
+      "related_entry_keys": [
+        "route:/sales/leads",
+        "route:/sales/leads/[id]",
+        "scope:CR-01",
+        "scope:CS-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Identity for the existing Leads register and Lead record page.",
+            "This identity comes from PPO-UI-SCOPE-ID-MAPPING-DEC, 1 November 2026. Confirm the steps against the running release before relying on them."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Confirm these steps against the running release."
+          ],
+          "steps": [
+            "Find or add a lead",
+            "Work the lead on its record",
+            "Convert the lead to a deal or close it"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A lead worked to a recorded outcome, with a converted lead continuing as a deal."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "If the page is unavailable, check your access and the page's current state before retrying."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
+    },
+    {
       "guide_key": "guide.es.01",
       "entry_key": "scope:ES-01",
       "title": "Estimating intake and workload",
@@ -6456,6 +6523,72 @@
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
+    },
+    {
+      "guide_key": "guide.es.05.customer-page",
+      "entry_key": "scope:ES-05/customer-page",
+      "title": "Customer quotation page",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-11-01",
+      "source_commit": "89283a16027fa90fa988d31a47a4f53dd3d1e0b1",
+      "related_entry_keys": [
+        "scope:ES-05",
+        "scope:ES-06",
+        "scope:CR-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Customer-facing page within scope:ES-05: the quotation page customers open outside the application shell.",
+            "This identity comes from PPO-UI-SCOPE-ID-MAPPING-DEC, 1 November 2026. No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Prepare the release from the quotation",
+            "Check what the customer will see",
+            "Review the customer views and response"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A customer quotation page reviewed before any live use. This identity authorises no live customer communication."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
     },
     {
       "guide_key": "guide.es.06",
@@ -12004,6 +12137,74 @@
       "reviewed_content_hash": null
     },
     {
+      "guide_key": "guide.pj.09.site-assurance",
+      "entry_key": "scope:PJ-09/site-assurance",
+      "title": "Site assurance",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-11-01",
+      "source_commit": "2c2dba51a4c7945747ca052e69dffe378ac37af3",
+      "related_entry_keys": [
+        "scope:PJ-09",
+        "scope:FI-03",
+        "scope:FI-06",
+        "scope:EN-08",
+        "scope:PJ-06"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Project page within scope:PJ-09, traced to PRJ-06: inspection and test plans per work package, with hold and witness points, defects, retests and the scoped release of a package.",
+            "This identity comes from PPO-UI-SCOPE-ID-MAPPING-DEC, 1 November 2026. No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Open the work package and its plan revision",
+            "Run or review the checks, including hold and witness points",
+            "Raise defects and retests, then release the package to acceptance"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "A work package released as assurance complete, with evidence tied to the tested package and revision. Whether Powerplants runs plans this way remains to be confirmed."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
+    },
+    {
       "guide_key": "guide.sv.01",
       "entry_key": "scope:SV-01",
       "title": "Service desk and triage worklist",
@@ -15008,6 +15209,72 @@
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
+    },
+    {
+      "guide_key": "guide.fi.01.time-review",
+      "entry_key": "scope:FI-01/time-review",
+      "title": "Time and labour review",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-11-01",
+      "source_commit": "89283a16027fa90fa988d31a47a4f53dd3d1e0b1",
+      "related_entry_keys": [
+        "scope:FI-01",
+        "scope:FI-02",
+        "scope:FN-01"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Coordinator page within scope:FI-01 for reviewing recorded technician time.",
+            "This identity comes from PPO-UI-SCOPE-ID-MAPPING-DEC, 1 November 2026. No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Open the time records to review",
+            "Compare recorded time with the work",
+            "Resolve or hand over any difference"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Recorded time reviewed, with any difference owned. The page never edits recorded time, invoices or pays anyone."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
     },
     {
       "guide_key": "guide.fi.02",
@@ -33437,6 +33704,73 @@
           "paragraphs": [
             "A recorded outcome for the returned unit: repaired, or rejected with the reason.",
             "MYOB Acumatica stays the book of record for items, stock, purchasing and financial reporting."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "The register holds a planned destination. Review the design and dependencies; do not treat the link as a working feature."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ]
+    },
+    {
+      "guide_key": "guide.cx.02.settings",
+      "entry_key": "scope:CX-02/settings",
+      "title": "Workshop settings",
+      "status": "Draft",
+      "locale": "en-AU",
+      "content_mode": "Confirmed scope; proposed page",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "prepared_at": "2026-11-01",
+      "source_commit": "89283a16027fa90fa988d31a47a4f53dd3d1e0b1",
+      "related_entry_keys": [
+        "scope:CX-02",
+        "scope:CX-02/kitting",
+        "scope:CX-02/bench-testing",
+        "scope:AD-02"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Settings page within scope:CX-02, reached from the Settings hub (scope:AD-02).",
+            "This identity comes from PPO-UI-SCOPE-ID-MAPPING-DEC, 1 November 2026. No page is built yet; steps describe intended operation, not available controls."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Complete the main task",
+          "paragraphs": [
+            "Proposed workflow: confirm the implemented subset before using these steps."
+          ],
+          "steps": [
+            "Open the workshop settings",
+            "Review the current values",
+            "Propose or apply a permitted change"
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Workshop settings reviewed, with any change recorded."
           ],
           "steps": [],
           "rows": [],
