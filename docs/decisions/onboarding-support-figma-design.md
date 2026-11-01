@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q8 Very small groups in the Owner view | Resolved as recommended | Show "Fewer than 3" for any job function under three people. F8 shows no such group |
 | Q9 Screenshot default | Resolved as recommended | Off until the person ticks it. F5 shows Robin's choice. Storage and retention go to AD-08 |
 | Q10 Who writes task paths and exercises | Resolved as recommended | Written in the repository with each module's guide chapter and reviewed by that module's business reviewer, under stage 5 of the direction |
-| Named Figma version | Awaiting Dean's yes | "Onboarding & support — accepted" (section 7) |
+| Named Figma version | Saved by Dean, 1 November 2026 | "I have saved the named version as Onboarding & support — accepted" (section 7) |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -127,4 +127,4 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - The 25 captures are copies of the accepted frames with every Font Awesome icon swapped for `Icon/placeholder`. A scan of the copies found no Font Awesome instance and no prototype link. They sit on the Captures page at y = 1,530,000.
 - After the owner's acceptance Claude changed the page's status wording, the notes card's wording and the Decision record and Named version fields in the header, and added the File index row. No accepted frame changed. F11 was added beside them (section 5), and the notes card's Q5 row and "not drawn" list now say so.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.
-- The named version "Onboarding & support — accepted" has not been saved. Claude cannot save it through the Figma plugin.
+- Dean saved the named version "Onboarding & support — accepted" on 1 November 2026, on his own word. Claude did not check Figma's version history. F11 and the notes-card wording about it may fall either side of that version; F11 stays outside this acceptance either way.
