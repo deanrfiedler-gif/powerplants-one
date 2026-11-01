@@ -128,6 +128,31 @@ test("DK-HTTP01 compiled register, review, revision, history, links and receipts
     (await h.call("coordinator", path + "/usage")).body.items[0].revision_id,
     input.revision_id,
   );
+  const assessed = await h.call(
+    "coordinator",
+    `${path}/usage?state=NeedsAssessment&revision_id=${input.revision_id}`,
+  );
+  assert.equal(assessed.status, 200);
+  assert.equal(assessed.body.items[0].revision, 1);
+  assert.equal(assessed.body.items[0].needs_revision_assessment, true);
+  assert.match(assessed.body.items[0].created_by_name, /^SYN /);
+  assert.deepEqual(
+    (await h.call("coordinator", path + "/usage?state=Retired")).body.items,
+    [],
+  );
+  assert.equal(
+    (await h.call("coordinator", path + "/usage?state=Unknown")).status,
+    422,
+  );
+  assert.equal(
+    (
+      await h.call(
+        "second-company",
+        `${path}/usage?state=Active&revision_id=${input.revision_id}`,
+      )
+    ).status,
+    404,
+  );
   assert.equal(
     (await h.call("coordinator", path + "?revision_id=" + input.revision_id))
       .body.review_state,

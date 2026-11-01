@@ -208,8 +208,17 @@ test("DK native browser: independent findings, review, exact history and missing
   ).toBeVisible();
   expect(current.review_state).toBe("Unreviewed");
   expect(current.findings).toHaveLength(0);
-  const historical = `${doc.path}?revision_id=${doc.command.revision_id}`;
+  const historical = entry.toString();
   await page.goto(historical);
+  const currentLink = new URL(
+    (await page
+      .getByRole("link", { name: "Open current revision", exact: true })
+      .getAttribute("href"))!,
+    page.url(),
+  );
+  expect(currentLink.searchParams.get("revision_id")).toBe(current.revision.id);
+  for (const key of ["from", "list_query", "list_pages"])
+    expect(currentLink.searchParams.get(key)).toBe(entry.searchParams.get(key));
   await download(page, "Download r01", original);
   const old = await (
     await page.request.get(
