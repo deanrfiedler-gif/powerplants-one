@@ -58,7 +58,7 @@ test("seven workspace preferences validate schema and retain r15 identifiers", (
 test("More finds workspace names and existing page names, including former rail destinations", () => {
   assert.deepEqual(
     menuGroups("sales").flatMap((g) => g.items.map((d) => d.id)),
-    ["deals", "pulse", "leads", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "insights"],
+    ["deals", "pulse", "leads", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "insights", "intake"],
   );
   assert.deepEqual(
     menuGroups("Contact").flatMap((g) => g.items.map((d) => d.id)),
@@ -69,6 +69,10 @@ test("More finds workspace names and existing page names, including former rail 
       .flatMap((g) => g.items)
       .some((d) => d.id === "packs"),
   );
+  const briefs = menuGroups("Sales briefs").flatMap((g) => g.items);
+  assert.deepEqual(briefs.map((d) => d.id), ["intake"]);
+  assert.equal(briefs[0].workspace, "estimate");
+  assert.equal(briefs[0].href, "/estimating/intake");
   assert.deepEqual(menuGroups("no such page"), []);
 });
 test("AU-08 the Service rail is grouped without reordering, and other rails stay flat", async () => {
