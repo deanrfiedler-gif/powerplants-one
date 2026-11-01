@@ -126,8 +126,9 @@ Changed in Figma on 1 November 2026:
 
 Not changed: both earlier named versions and all earlier captures. The phone and states frames have no rail.
 
+Named version: Dean saved it himself and reported it: "I have saved the named version as Reference cases & calibration — rail amendment, accepted". Claude did not check it in version history. The page header's named-version line was updated just after the save.
+
 Still open:
-- The named version for this amendment has not been saved.
 - The rail items on the two pages do not link to each other in the prototypes, because a prototype link cannot cross pages.
 - Configure & price shows on the ES-10 rail but is switched off on the ES-09 rail, as drawn on each page. This amendment did not settle which is right.
 - Northbank differs between the pages. ES-10 keeps r01's Draft / Partial, as its brief required. ES-09 shows SYN-EAR-0001 as In review with partial actuals, submitted on 9 October and claimed on 12 October. ES-10 excludes it either way, because neither page shows a concluded review as at 13 October.

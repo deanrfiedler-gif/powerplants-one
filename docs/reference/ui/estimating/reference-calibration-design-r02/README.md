@@ -37,5 +37,6 @@ Each image is one Figma frame exported at scale 1 at its exact frame size. Every
 | Item | Identity |
 |---|---|
 | Figma file | "PPO - Design", private to Dean's Figma team. Its link is not recorded here, because the file holds Font Awesome Pro artwork (ADR-0050, ADR-0053) |
+| Named version | "Reference cases & calibration — rail amendment, accepted", saved by Dean after these captures were made |
 | Source frames | In image order: `2245:733046`, `2245:737030`, `2245:741363`, `2245:750791`, `2245:751205`, `2245:763200`, `2245:775017`, `2245:775528`, `2245:787972`, `2245:796591`, `2244:733390`, `2245:776157` |
 | Capture copies | Temporary. Each copy had its prototype reactions removed and its 503 Font Awesome instances in total swapped for `Icon/placeholder`; a scan found none left and no visible vector outside a placeholder or the logo. The copies were deleted from the Captures page after export to ease the file's memory use |

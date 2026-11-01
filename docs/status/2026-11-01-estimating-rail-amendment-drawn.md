@@ -10,9 +10,10 @@ Checked:
 - No Font Awesome instance or stray vector was left in the capture copies.
 
 Not done:
-- The named version for this amendment has not been saved.
 - The prototypes have not been played in Present mode.
 - The rail items do not link across the two pages, the Configure & price difference between the rails remains, and the Northbank state differs between the pages.
 - Neither page is built.
+
+Dean saved the named Figma version himself: "I have saved the named version as Reference cases & calibration — rail amendment, accepted".
 
 Earlier named versions and captures are unchanged. No application code, route, capability or parent ID changes.
