@@ -4798,8 +4798,31 @@
       "guide_key": "guide.fn.01",
       "design_path": "docs/design/development/pages/scope-fn-01.md",
       "html_path": "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
-      "image_paths": [],
-      "dependencies": [],
+      "image_paths": [
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-01-Desktop-Worklist-All-Open-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-02-Desktop-By-Owner-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-03-Desktop-Difference-Record-Requested-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-04-Desktop-Evidence-Awaiting-Verification-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-05-Desktop-Verified-And-Resolved-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-06-Desktop-Finance-Review-Credit-Hold-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-07-Desktop-Hold-Recorded-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-08-Desktop-Unknown-Outcome-Lookup-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-09-Tablet-Worklist-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-10-Phone390-Worklist-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-11-Phone320-Worklist-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-12-Phone390-Exception-Record-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-13-Phone320-Exception-Record-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-14-State-Loading-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-15-State-Nothing-Open-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-16-State-Could-Not-Load-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-17-State-No-Finance-Access-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-18-State-MYOB-Out-Of-Date-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-19-State-Verifier-Is-Supplier-Refused-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-20-State-Stale-Evidence-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/finance-exceptions-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
@@ -4832,9 +4855,14 @@
       "design_path": "docs/design/development/pages/scope-fn-02.md",
       "html_path": "docs/reference/ui/finance/PPO-Finance-and-Commercial-Controls-r02.html",
       "image_paths": [
-        "docs/testing/evidence/department-navigation/finance-exact-account.png"
+        "docs/testing/evidence/department-navigation/finance-exact-account.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-01-Desktop-Worklist-All-Open-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-06-Desktop-Finance-Review-Credit-Hold-r01.png",
+        "docs/reference/ui/finance/finance-exceptions-design-r01/PPO-Finance-Exceptions-07-Desktop-Hold-Recorded-r01.png"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "docs/decisions/finance-exceptions-figma-design.md"
+      ],
       "scope_status": "refine",
       "visual_status": "Needs review",
       "functional_status": "Not recorded here",
