@@ -2645,7 +2645,40 @@
         "scope:EN-08",
         "scope:SV-06",
         "scope:PJ-08",
-        "scope:DK-03"
+        "scope:DK-03",
+        "scope:PJ-09/site-assurance"
+      ],
+      "reviewer": null
+    },
+    {
+      "key": "scope:PJ-09/site-assurance",
+      "title": "Site assurance",
+      "kind": "scope",
+      "module": "PJ",
+      "summary": "Project page within scope:PJ-09, traced to PRJ-06 (PPO-UI-SCOPE-ID-MAPPING-DEC): inspection and test plans per work package, hold and witness points, defects, retests and scoped release. Planned page; the route is proposed and no source exists yet.",
+      "path": "/projects/assurance",
+      "source_paths": [
+        "docs/decisions/ui-scope-id-mapping.md"
+      ],
+      "guide_key": "guide.pj.09.site-assurance",
+      "design_path": "docs/design/development/pages/scope-pj-09-site-assurance.md",
+      "html_path": null,
+      "image_paths": [],
+      "dependencies": [],
+      "scope_status": "unbuilt",
+      "visual_status": "Needs review",
+      "functional_status": "Not recorded here",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:PJ-09",
+        "scope:FI-03",
+        "scope:FI-06",
+        "scope:EN-08",
+        "scope:PJ-06"
       ],
       "reviewer": null
     },

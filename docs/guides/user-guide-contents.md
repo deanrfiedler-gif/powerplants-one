@@ -167,6 +167,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Readiness and change-impact review | PJ-07 | Not built |
 | Stakeholder updates | PJ-08 | Not built |
 | Staged acceptance and closeout | PJ-09 | Partly built |
+| Site assurance | PJ-09/site-assurance | Not built |
 
 ### 4.7 Service operations
 

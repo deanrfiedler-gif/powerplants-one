@@ -13,7 +13,7 @@ versioning: git
 
 The Figma design file audit of 1 November 2026 found pages with no scope of their own. Claude proposed a mapping, and Dean said: "Adopt the mapping".
 
-Most pages fit an existing scope. Four new identities are added now, and a fifth waits for a decision. No existing scope ID, route key or parent requirement ID changes.
+Most pages fit an existing scope, and five new identities are added. No existing scope ID, route key or parent requirement ID changes.
 
 ## New identities
 
@@ -23,14 +23,15 @@ Most pages fit an existing scope. Four new identities are added now, and a fifth
 | Time & labour review | `scope:FI-01/time-review` | `/service/time`, proposed in the FI-01 design; no route exists |
 | Workshop settings | `scope:CX-02/settings` | `/admin/settings/workshop`, proposed on that Figma page; no route exists |
 | Customer quotation page | `scope:ES-05/customer-page` | `/quote/[token]`, the [indicative path](quote-view-tracking.md); no route exists |
+| Site assurance | `scope:PJ-09/site-assurance` | `/projects/assurance`, proposed on that Figma page; no route exists |
 
-`scope:CR-06` is the only new top-level identity. The other three follow the `scope:CX-02/kitting` form for a page within a scope.
+`scope:CR-06` is the only new top-level identity. The other four follow the `scope:CX-02/kitting` form for a page within a scope.
 
-A registered address is not a route. The three proposed addresses stay proposals until a build decision confirms them.
+A registered address is not a route. The four proposed addresses stay proposals until a build decision confirms them.
 
-## Waiting for a decision
+## Site assurance
 
-Site assurance becomes `scope:PJ-09/site-assurance` only if Dean's answer to Q1 on that page keeps it as its own page. Otherwise it joins Inspections (`scope:FI-03`, `scope:FI-04`). No entry is added until Q1 is answered.
+Claude recommended keeping Site assurance as its own page rather than folding it into Inspections (Q1 on that Figma page), and Dean said: "Yes, keep it". The page stays a proposal awaiting his acceptance, and its other questions stay open. Claude has no evidence yet that Powerplants formally runs inspection and test plans this way, so that needs checking when the page is reviewed.
 
 ## Linked to existing identities
 
@@ -52,7 +53,7 @@ These set rules across pages, so they map to existing system entries and gain no
 
 ## Figma
 
-Git stays the authority. [ADR-0055](ADR-0055-figma-file-structure.md) keeps page names stable because repository records quote them, so these pages keep their names. The Scope identity field on the Leads, Lead record, Time & labour review, Workshop settings and Quotation page & customer views pages was updated on 1 November 2026, along with the File index rows for the accepted pages. Named versions saved earlier do not include these label changes.
+Git stays the authority. [ADR-0055](ADR-0055-figma-file-structure.md) keeps page names stable because repository records quote them, so these pages keep their names. The Scope identity field on the Leads, Lead record, Time & labour review, Workshop settings, Quotation page & customer views and Site assurance pages was updated on 1 November 2026, along with the File index rows for the accepted pages. Named versions saved earlier do not include these label changes.
 
 ## What this does not change
 
