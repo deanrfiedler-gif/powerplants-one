@@ -1078,7 +1078,7 @@ test("DK-UI04 site-scoped registration choices explain the required site", async
     [p.workspace_id, p.actor_id],
   );
   await rows(
-    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,'document.register','Site',$4)",
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) VALUES($1,$2,$3,'document.register','Site',$4,$4)",
     [p.workspace_id, p.actor_id, CRM.company, CRM.site],
   );
   const scope = {
