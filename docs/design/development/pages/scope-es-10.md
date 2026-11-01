@@ -30,12 +30,15 @@ The exact mobile composition has not been visually accepted for this entry. Reta
 
 ## Shared components and states
 
+Estimating rail: Reference cases sits after Cost sources with the folder-open icon, and Outcomes after Reviews & approvals with chart-column, under the [estimating navigation amendment](../../../decisions/estimating-navigation-amendment.md) and section 7 of the [design decision](../../../decisions/reference-calibration-figma-design.md). Rail captures: [design r02](../../../reference/ui/estimating/reference-calibration-design-r02/README.md).
+
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
 
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
 
+- [Reference cases and calibration design r02 captures](../../../reference/ui/estimating/reference-calibration-design-r02/README.md) (accepted rail amendment, icon-free)
 - [Reference cases and calibration design r01 captures](../../../reference/ui/estimating/reference-calibration-design-r01/README.md) (accepted Figma design, icon-free)
 - [PPO-Reference-Cases-and-Calibration-Proposals-r01.html](../../../reference/ui/reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html)
 

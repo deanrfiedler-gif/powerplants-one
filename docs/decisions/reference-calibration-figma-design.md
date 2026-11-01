@@ -37,7 +37,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q2 Who reviews proposals | Accepted as design direction; authority still to be granted | An estimating lead who is not the author, consulting the ES-08 owner whenever a specialist formula is involved. The role is granted later in Users and access |
 | Q3 Who adopts, and how | Accepted as direction for later work; adoption stays unavailable | Dean, or an estimating manager he names, through a separate governed rule registry with versioned definition packs. Adoption invalidates dependants and never edits past estimates. Not part of ES-10's first build |
 | Q4 Where the panel appears | Resolved as recommended | ES-08 first, then Estimation Wizard lines, then Discovery costing, Automation and Fertigation once they have reviewed outcomes |
-| Q5 Rail item | Resolved as recommended; one conflict open | "Reference cases" after Cost sources with the chart-column icon, with ES-09 beside it. See section 7 |
+| Q5 Rail item | Accepted 30 October 2026, then superseded in part | First accepted as "Reference cases" after Cost sources with the chart-column icon, with ES-09 beside it. Current decision: section 7 |
 | Named Figma version | Saved on Dean's instruction, 30 October 2026 | Section 6 |
 | Building the page | Not decided | Section 5 |
 
@@ -52,7 +52,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Phone 390 and 320 | Case detail `2245:801087`, `2245:801342`; Independent review `2245:801197`, `2245:801453` |
 | States | S1–S8 `2247:2647`: loading, nothing matches, could not load, read-only, source changed, sample too small, proposal returned, adoption unavailable |
 | Prototype | Flows "ES-10 — desktop" and "ES-10 — phone" |
-| Retained captures | [Design r01](../reference/ui/estimating/reference-calibration-design-r01/README.md): fifteen icon-free PNGs with hashes |
+| Retained captures | [Design r01](../reference/ui/estimating/reference-calibration-design-r01/README.md): fifteen icon-free PNGs with hashes, as accepted. [Design r02](../reference/ui/estimating/reference-calibration-design-r02/README.md): twelve for the rail amendment |
 | File index | Row added under Estimating & quotation |
 
 ## 3. Conformance declaration
@@ -113,6 +113,21 @@ Not done:
 
 Named version: asked whether he had saved it, Dean answered "Save it for me". Claude saved "Reference cases & calibration — Pipedrive pattern, accepted" in the Figma desktop app on 30 October 2026 and confirmed it at the top of the version history.
 
-## 7. Open item: the rail
+## 7. Rail amendment
 
-Q5 accepts "Reference cases" after Cost sources, with ES-09 beside it. ES-09 was drawn separately, without that item, and with its own "Outcomes" item after Reviews & approvals. The two pages therefore show different rails. Reconciling them needs Dean's choice; nothing in this record changes the ES-09 page.
+The earlier wording stays above as dated history. The current decision is the [estimating navigation amendment](estimating-navigation-amendment.md), which records Dean's reply "1" of 30 October 2026: Outcomes after Reviews & approvals, and Reference cases after Cost sources.
+
+On 1 November 2026 Claude, not knowing of that record, recommended one Outcomes item, and Dean said "Yes, amend ES-10". Claude found the record before changing anything, showed Dean the conflict and recommended keeping two items. Dean replied "Keep two items". That reply confirms the arrangement and also covers one change to it: Reference cases moves to the folder-open icon, because Outcomes keeps chart-column.
+
+Changed in Figma on 1 November 2026:
+- ES-10: the rails on the ten frames that have one (desktop and tablet) now carry Outcomes and the new icon.
+- ES-09: the shared component "Rail · Estimating with Outcomes" `2244:50786` gained a Reference cases item after Cost sources, so all 15 rail instances on the ES-09 page show it.
+- Older ES-09 capture copies: their 15 rail instances follow that component, so the new item is hidden on them to match what was captured.
+
+Not changed: both earlier named versions and all earlier captures. The phone and states frames have no rail.
+
+Still open:
+- The named version for this amendment has not been saved.
+- The rail items on the two pages do not link to each other in the prototypes, because a prototype link cannot cross pages.
+- Configure & price shows on the ES-10 rail but is switched off on the ES-09 rail, as drawn on each page. This amendment did not settle which is right.
+- Northbank differs between the pages. ES-10 keeps r01's Draft / Partial, as its brief required. ES-09 shows SYN-EAR-0001 as In review with partial actuals, submitted on 9 October and claimed on 12 October. ES-10 excludes it either way, because neither page shows a concluded review as at 13 October.
