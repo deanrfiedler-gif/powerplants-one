@@ -13,7 +13,7 @@ source_commit: 95ce53f30e884c1f165bb031f5ac826a72a6f5c2
 workflow_basis: Five-stage synthetic deal workflow (Discovery, Scoping, Quoting, Negotiation, Closing)
 runtime_evidence: Not run. Written from the application source at source_commit; no application walkthrough or user test has been performed.
 resource_ids: []
-change_summary: Rewritten for the five-stage Deals workflow, replacing the two-stage Enquiry and Qualified guide.
+change_summary: Rewritten for the five-stage Deals workflow, replacing the two-stage Enquiry and Qualified guide. Stage meanings added as team practice from the proposed stage definitions; Edit deal now applies the same contact-owner rule as a stage change.
 ---
 
 This guide covers the Deals worklist and the full deal page in the synthetic five-stage pipeline: **Discovery**, **Scoping**, **Quoting**, **Negotiation** and **Closing**. The records are synthetic. A deal in the earlier pipeline, which uses **Enquiry** and **Qualified**, is described under Troubleshooting.
@@ -129,7 +129,7 @@ Times are entered and shown in Brisbane time. If the contact is unknown, the ini
 
 | Information | Where | Rules |
 |---|---|---|
-| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** Outside **Enquiry**, a deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the current deal owner. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
+| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** A deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the person who owned the deal when it was created, the same rule as for a stage change. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
 | **Customer need and objective** | **Edit requirements and scope** | Required. Up to 2,000 characters. |
 | **Inclusions**, **Exclusions**, **Assumptions**, **Constraints**, **Acceptance requirements**, **Required timing**, **Delivery arrangements** | **Edit requirements and scope** | Optional. Up to 5,000 characters each. Unrecorded items show **Not recorded**. |
 | **Action choice**, **Activity kind**, **Activity owner**, **Action purpose**, **Due date and time** | **Plan next action** | Choose **New** to create an activity, or **Existing** to pick an active activity already linked to this deal. |
@@ -142,15 +142,16 @@ Times are entered and shown in Brisbane time. If the contact is unknown, the ini
 
 Every new deal starts in **Discovery**, whether you add it with **Add deal** or convert it from a lead. It then moves through the stages in this order.
 
-| Stage | Position | What the application does |
+| Stage | Move the deal here when | Move it on when |
 |---|---|---|
-| **Discovery** | 1 | Where every new deal starts. The deal is saved with its qualification outcome and its first activity. |
-| **Scoping** | 2 | A stage you move the deal to. The only extra rule is the contact rule below. |
-| **Quoting** | 3 | A stage you move the deal to. It does not create or issue a quotation. |
-| **Negotiation** | 4 | A stage you move the deal to. The only extra rule is the contact rule below. |
-| **Closing** | 5 | The final stage, and the only stage from which **Won** can be recorded. |
+| **Discovery** | A new enquiry is worth pursuing. Every new deal starts here, saved with its qualification outcome and its first activity. | The customer contact and the need are recorded, and the decision to pursue is made. |
+| **Scoping** | The need is understood. | The scope is defined well enough to price. |
+| **Quoting** | The scope is ready to price. | A quotation has been issued to the customer. |
+| **Negotiation** | The quotation has been issued. | Commercial terms are agreed in principle. |
+| **Closing** | Terms are agreed in principle. | An order or acceptance is received (record **Won**), or the deal is lost (record **Lost**). |
 
-The stage records where the deal has reached. Beyond the direction of the move and the contact rule below, the application attaches no stage-specific requirement. Estimates and quotations are done and recorded in their own places.
+> [!NOTE]
+> These are team practice. The application does not check them: beyond the direction of the move and the contact rule below, a stage carries no requirement. Moving to **Quoting** does not create or issue a quotation; estimates and quotations are done and recorded in their own places. Move a deal back when an earlier condition no longer holds, for example when the customer changes the scope after a quotation.
 
 - **Moving forward:** one stage at a time. Moving from **Discovery** straight to **Quoting** is refused.
 - **Moving back:** to any earlier stage. Earlier history is kept.
@@ -293,10 +294,10 @@ Quotations and estimates have their own pages. See [Estimating](/estimating). A 
 |---|---|
 | I cannot find a deal. | Check **Filters** and the condition chips, **Sales outcome** (a closed deal is under **Archive**), the **Pipeline** choice and **Page size**. Select **Clear filters**. A missing result is not proof that a deal was deleted, because access can hide it. |
 | A stage change or **Edit deal** is refused with "Choose an active action. The completed or cancelled outcome remains in history." | The deal has no **Customer contact**, and its contact-identification activity has been completed or cancelled. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. Once the deal has a contact, neither checks the activity. See the contact rule under The five stages. |
-| A stage change or **Edit deal** is refused with "Contact identification needs an active Customer contact or Relationship review action owned by the opportunity owner." | The deal has no **Customer contact**, and its contact-identification activity is not a **Customer Contact** or **Relationship Review** activity with the owner the check expects. A stage change expects the person who owned the deal when it was created. **Edit deal** expects the current deal owner, so after **Transfer deal owner** the new owner cannot save the deal without a contact. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. |
+| A stage change or **Edit deal** is refused with "Contact identification needs an active Customer contact or Relationship review action owned by the opportunity owner." | The deal has no **Customer contact**, and its contact-identification activity is not a **Customer Contact** or **Relationship Review** activity owned by the person who owned the deal when it was created. A transfer of the deal does not change this: the activity keeps its owner. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. |
 | **Edit deal** is refused with "A qualified deal needs a contact or an owned active contact-identification action." | You cleared the **Customer contact** on a deal that holds no contact-identification activity, usually because it was added with a contact. That deal must keep a contact: choose one in **Customer contact** and select **Save deal** again. |
 | A stage change is refused with "Select an owned active contact-identification action before qualification." | The deal has no **Customer contact** and no contact-identification activity is recorded. Choose a **Customer contact** with **Edit deal**, then change the stage again. |
-| The deal is in **Enquiry** or **Qualified**. | It belongs to the earlier pipeline, **Fictional sales enquiry — I1**. Choose that pipeline in **Pipeline**. On the deal page an **Enquiry** deal shows **Record qualification** and **Progress to Qualified**. That pipeline has no **Won** or **Lost** outcome. |
+| The deal is in **Enquiry** or **Qualified**. | It belongs to the earlier pipeline, **Fictional sales enquiry — I1**. Choose that pipeline in **Pipeline** to see it. That pipeline follows earlier rules that this guide does not describe; ask the prototype owner before changing such a deal. |
 | I cannot edit the deal. | Check whether you are the deal owner. A read-only deal is intentional. Ask the deal owner, or ask for the deal to be transferred. |
 | **Change stage** is missing or disabled. | The deal is already **Won** or **Lost**, you are not the deal owner, or a save is in progress or uncertain. |
 | **Won** is not offered. | The deal is not in **Closing**. Move it there one stage at a time. |
