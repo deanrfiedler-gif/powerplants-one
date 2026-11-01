@@ -12444,7 +12444,20 @@
         "docs/reference/ui/application-shell/system-pages-design-r01/PPO-System-Pages-19-Phone-Uncertain-And-Offline-r01.png",
         "docs/reference/ui/application-shell/system-pages-design-r01/PPO-System-Pages-20-Offline-Markers-Inline-Notices-r01.png",
         "docs/reference/ui/application-shell/system-pages-design-r01/PPO-System-Pages-27-Desktop-Loading-And-Session-Changed-r01.png",
-        "docs/reference/ui/application-shell/system-pages-design-r01/PPO-System-Pages-28-Desktop-Could-Not-Start-r01.png"
+        "docs/reference/ui/application-shell/system-pages-design-r01/PPO-System-Pages-28-Desktop-Could-Not-Start-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-01-Declaration-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-02-Rules-Parts-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-03-Leads-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-04-Work-Orders-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-05-Updates-Inbox-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-06-Completing-A-Selection-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-07-Quick-Actions-No-Bulk-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-08-Affected-Registers-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-09-Accessibility-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-10-States-390-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-11-States-320-Other-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-12-Ideas-r01.png",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/PPO-Phone-Register-13-Decisions-Answers-r01.png"
       ],
       "dependencies": [
         "src/components/shell-controls.tsx",
@@ -12472,7 +12485,9 @@
         "src/guides/render.tsx",
         "docs/guides/pages/guide.page.work.md",
         "docs/decisions/shell-top-bar-amendment.md",
-        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md"
+        "docs/reference/ui/application-shell/shell-top-bar-amendment-r01/README.md",
+        "docs/decisions/phone-register-patterns-amendment.md",
+        "docs/reference/ui/application-shell/phone-register-patterns-r01/README.md"
       ],
       "scope_status": "Shared source",
       "visual_status": "Owner visual review 9 Oct 2026: Refine (docs/testing/evidence/ui-review-phase-00-r01)",
@@ -12487,7 +12502,7 @@
         "route:/"
       ],
       "reviewer": "Dean Fiedler",
-      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed. Shell top bar amendment accepted 16 Oct 2026 and implemented on a branch (docs/decisions/shell-top-bar-amendment.md); review fingerprint not refreshed."
+      "notes": "PT-27: both shell prefetch experiments are withdrawn and the original main policy is restored on desktop and phone. See docs/testing/evidence/pt27-loading/README.md for retained failures, session-read diagnosis and actual navigation proof. Existing review records remain unchanged. Figma first increment: shared shell and /work overview implemented from accepted frames; source review, synthetic proof, owner acceptance and deployment remain separate. See docs/decisions/figma-ui-implementation.md. Existing review fingerprint retained, not refreshed. Shell top bar amendment accepted 16 Oct 2026 and implemented on a branch (docs/decisions/shell-top-bar-amendment.md); review fingerprint not refreshed. Phone register patterns amendment accepted 1 Nov 2026 (docs/decisions/phone-register-patterns-amendment.md): design only, application not built; review fingerprint not refreshed."
     },
     {
       "key": "system:theme",
