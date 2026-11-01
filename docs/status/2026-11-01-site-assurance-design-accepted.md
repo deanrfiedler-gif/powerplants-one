@@ -10,7 +10,7 @@ Dean accepted the Figma design for Site assurance, `scope:PJ-09/site-assurance`,
 - a changed plan is a new revision, with completed checks kept against theirs;
 - a release names what's included and excluded, is reviewed by someone other than the preparer, and goes to PJ-09. It never accepts for the customer.
 
-Q2–Q9 are design direction, not verified operating rules. Whether Powerplants runs ITPs this way is still to be checked before any build. Twenty-three icon-free captures with hashes are retained in [site-assurance-design-r01](../reference/ui/projects/site-assurance-design-r01/README.md), and the design register page for `scope:PJ-09` cites them. In Figma the capture copies sit on the Captures page at y = 1,500,000.
+Q2–Q9 are design direction, not verified operating rules. Whether Powerplants runs ITPs this way is still to be checked before any build. Twenty-three icon-free captures with hashes are retained in [site-assurance-design-r01](../reference/ui/projects/site-assurance-design-r01/README.md), and the design register page for `scope:PJ-09` cites them. In Figma the capture copies sit on the Captures page at y = 1,500,000. Dean saved the named version "Site assurance — accepted".
 
 Checked:
 - No Font Awesome instance or stray vector is left in the capture copies, and no copy carries a prototype link.
@@ -19,7 +19,6 @@ Checked:
 Not done:
 - The prototype flows weren't played in Figma Present mode. Devices, keyboard and screen reader weren't checked.
 - `/projects/assurance` doesn't exist, and the rail item stays unavailable in the application.
-- The named Figma version "Site assurance — accepted" waits for Dean.
 - PJ-09 isn't edited, so "Assurance released" isn't on its checks bar. Pages this one draws on that are still proposals stay proposals; the decision lists the differences on EN-08, PJ-06 and PJ-09.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.

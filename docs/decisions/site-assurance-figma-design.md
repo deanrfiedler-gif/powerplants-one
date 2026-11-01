@@ -41,7 +41,7 @@ This is a design decision. It authorises no application code, route, migration, 
 | Q8 Defect severity words | Resolved as recommended; design direction | Minor, Major and Critical, with Critical prompting an FI-06 report. Synthetic until Dean sets them |
 | Q9 Reference types SYN-ITP- and SYN-ASR- | Resolved as recommended | Design labels for now, with no allocation rule until a build |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | "I have saved the named version as Site assurance — accepted". Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
@@ -92,7 +92,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md):
 | Proposed departures | D1–D12 in section 4. Accepted |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | "Site assurance — accepted" waits for Dean (section 7) |
+| Named version | "Site assurance — accepted", saved by Dean (section 7) |
 
 ## 4. What the design shows
 
@@ -130,4 +130,4 @@ Not run: click-through in Figma Present mode, physical devices, keyboard or scre
 
 ## 7. Named version
 
-The named Figma version "Site assurance — accepted" hasn't been saved. It waits for Dean, who saves it or tells Claude to.
+Dean saved the named Figma version on 1 November 2026: "I have saved the named version as Site assurance — accepted". Claude did not open the version history to check it. After the save, Claude updated the Named version field on the page header to say so; that text change isn't in the version.
