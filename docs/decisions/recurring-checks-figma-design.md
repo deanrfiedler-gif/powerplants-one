@@ -43,7 +43,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q5 Who receives a quotation follow-up suggestion | Resolved as recommended | The check's owner for "My records", and each record's account owner for team scope. Quote view tracking Q7 says the quotation owner and the Quotation page draws the deal owner. Section 6 |
 | Q6 A separate share of the US$30 budget | Resolved as recommended | Not in the pilot. Show each check's spend and estimate; revisit if checks pass US$5 a month |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Waits for Dean | "Recurring checks — accepted". Section 8 |
+| Named Figma version | Saved, 1 November 2026 | "Recurring checks — accepted", saved by Dean. Section 8 |
 | Building the page | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -76,7 +76,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Proposed departures | D1–D14 in section 4, accepted. D1, D4, D12 and D13 are the departures from the register text or the Pipedrive register pattern |
 | Status | Owner-accepted design, 1 November 2026 |
 | Decision record | This file |
-| Named version | "Recurring checks — accepted", waits for Dean |
+| Named version | "Recurring checks — accepted", saved 1 November 2026 |
 
 ## 4. Decisions, accepted
 
@@ -127,5 +127,5 @@ Before presenting it, on 24 October 2026, Claude screenshotted the main frames i
 - **The copies were then deleted.** Figma warned on 1 November that the file is running out of memory, and the Captures page holds 46% of its layers. The PNGs in Git are the evidence; a copy can be remade from the page. This departs from earlier lock-ins, which kept their copies.
 - The captures were exported at scale 1 with the Figma connector. The hashes are in the [captures README](../reference/ui/my-work/recurring-checks-design-r01/README.md). Claude viewed images 01, 10 and 16 after export; the others were viewed as their source frames inside Figma.
 - Claude did not play the flows in Present mode.
-- The named Figma version "Recurring checks — accepted" is not saved. It needs Dean's yes.
+- Dean saved the named Figma version himself on 1 November 2026: "I have saved the named version as Recurring checks — accepted". Claude did not open version history to confirm it. Claude updated the page header and File index row after that save, so those two lines read differently in the saved version, which says the version was still to be saved.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
