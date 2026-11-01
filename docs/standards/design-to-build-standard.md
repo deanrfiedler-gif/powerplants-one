@@ -10,7 +10,7 @@ versioning: git
 
 How Powerplants One UI pages are designed in Figma and built in the app. The reasons are in [ADR-0067](../decisions/ADR-0067-design-to-build-operating-model.md). This page says what to do, and everyone follows it: Dean, Claude and Codex.
 
-**Transition.** Until cut-over (stage 3 of ADR-0067), pages are still drawn in "PPO - Design". Sections 1, 2, 7 and 8 and the capture rule in section 9 apply now. Sections 3 to 6 apply from cut-over.
+**Transition.** Until stage 2 of ADR-0067 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Sections 1, 2, 7 and 8 and the capture rule in section 9 apply now. Sections 3 to 6 apply from stage 3.
 
 ## 1. Who decides what, and what is true
 
@@ -111,7 +111,7 @@ Draw each new page from the template in `PPO - Library`. Do not keep a separate 
 
 **Naming.** `Area / Component`, matching the code name where one exists. Use one name per component. Do not use scope IDs or version numbers as name prefixes.
 
-**Before the first publish.** Clean up near-duplicates and confirm which items are hidden from publishing. Hide `Prototype`, `Deals · r37 reference` and internal parts, unless the rehearsal shows they are needed. Add a code name to every variable that the app uses. Unwanted community libraries are not enabled.
+**Before the first publish.** Clean up near-duplicates and confirm which items are hidden from publishing. Hide `Prototype`, `Deals · r37 reference` and internal parts, unless the pilot shows they are needed. Add a code name to every variable that the app uses. Unwanted community libraries are not enabled.
 
 **Each publish.**
 
@@ -127,16 +127,27 @@ A change that would visibly alter an accepted page needs Dean's acceptance first
 
 ## 6. Moving a page into a domain file
 
-Do this only when the page next changes.
+Decide when a page next needs to change. A page that doesn't change stays where it is.
 
-1. Copy the page, using the method that passed the rehearsal, and bring its own main components with it.
+| Situation | Action |
+|---|---|
+| New page | Draw it new from the library |
+| Accepted page, no change needed | Leave it in `PPO - Design` |
+| Accepted page, small amendment | Copy it, then amend it. The amendment needs Dean's acceptance |
+| Accepted page being reworked, or built from many detached parts | Redraw it from the library, using the old page as the reference. It needs Dean's acceptance as an amendment |
+| Proposal | Copy it when next worked on, then accept it in its new home |
+| Superseded page, or an amendment already merged | Leave it in `PPO - Design` |
+
+To copy a page:
+
+1. Copy it, using the method that passed the pilot, and bring its own main components with it.
 2. Compare the copy with the source: layer count, instance links, missing components, variable bindings, flow starting points, prototype actions and hidden layers. Compare an icon-free export hash where the page must look identical.
 3. If it looks identical, it keeps its acceptance. If not, it is an amendment and needs Dean's acceptance.
 4. Add the new location to the page's decision record and design entry. Review its open comments, which do not travel with a copy.
 
-### Rehearsal pass criteria (stage 2)
+### Pilot pass criteria (stage 3)
 
-Run on a throwaway duplicate, with pages including `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations and Estimation Wizard. A method passes only if:
+Run in a pilot file, against the published library, with pages including `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations and Estimation Wizard. Delete the pilot file afterwards. A method passes only if:
 
 - Instances link to the library, with none missing.
 - No duplicate local variables or styles appear in the destination.
@@ -146,7 +157,7 @@ Run on a throwaway duplicate, with pages including `CPQ · 2` to `CPQ · 4`, Scr
 - An icon-free export matches the source, or each difference is listed.
 - The memory meter is recorded before and after.
 
-Test two methods: pasting from a published duplicate, and pasting from the frozen file followed by a scripted swap by component key. Prefer the second, because it leaves the library free of design pages. If neither passes, follow the stop rule in ADR-0067.
+Test two methods: pasting from the published library file while its design pages remain, and pasting from the frozen file followed by a scripted swap by component key. Prefer the second, because it leaves the library free of design pages. If neither passes, follow the stop rule in ADR-0067.
 
 ## 7. Tokens
 

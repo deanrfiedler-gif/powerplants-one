@@ -12,6 +12,12 @@ Figma warned that the file was running out of memory. Dean supplied a general SO
 
 This covers the UI design-and-build process. It does not accept any page design, settle a business rule, authorise production work or decide a licence question.
 
+Later the same day he proposed the direction this record now follows:
+
+> "My thought process is that as the original Figma design page file wasn't setup correctly from the beginning, we will start again from scratch and create new pages files and structures as per your recommendations. We can keep the existing file and use it as a reference, or to copy across pages to the new file structure if needed."
+
+Claude's advice, adopted here, is to start the files fresh but not redraw every page or rebuild the library from a blank file. At about 40 connector calls a page (one measured session) and a limit of 200 a day, redrawing 170 pages would use about 34 days of the whole allowance, and 107 accepted pages would need re-accepting.
+
 ## Context
 
 Measured on 1 November 2026, read-only:
@@ -60,7 +66,7 @@ Option D for tokens and option C for files.
 5. **Freeze "PPO - Design" as the permanent record.** Its name, node IDs and named versions stay valid, so no record is rewritten. A citation with no file name means this file. Nothing is deleted from it.
 6. **One published library, `PPO - Library`.** It holds variables, styles, icons, shared components, the page template and shared patterns. One library suits one owner. Split it only if a licence or sharing need appears or memory requires it. It starts as a duplicate of the frozen file because Figma documents copying variables between files, not moving their bindings.
 7. **Domain files are created on demand, from a fixed map of ten.** No empty file is created ahead of need.
-8. **Pages are copied when they next change.** A new page goes straight into its domain file. A proposal or accepted page is copied when it is next worked on, not in bulk. This follows ADR-0055's "start with new designs" and protects accepted designs from silent change.
+8. **Start fresh; copy, redraw or leave each old page.** A new page is drawn in its domain file. An accepted page that doesn't change stays in the frozen file. A small amendment or a proposal is copied when next worked on. A page being reworked, or built from many detached parts, is redrawn from the library using the old page as the reference. Nothing moves in bulk. This follows ADR-0055's "start with new designs" and protects accepted designs from silent change.
 9. **Every page has one live home**, recorded by its decision record and design entry. The hand-kept File index stops at the freeze.
 10. **Named lifecycle for components:** Proposed, Accepted, Built, Deprecated, held in the description. Publishing follows a checklist with a release note. One session edits the library at a time.
 11. **Quality gates.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
@@ -85,14 +91,14 @@ Option D for tokens and option C for files.
 | Stage | Work | Pass condition |
 |---|---|---|
 | 1. This change | Decision, standard, amendments, token check | Repository checks pass |
-| 2. Measure and rehearse | On a throwaway duplicate, delete Captures and read the meter, which settles its share of memory. Then test the hardest pages: `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page | Every criterion in the standard passes |
-| 3. Cut over | Finish pending named versions, save "Before split", freeze with a committed manifest and a private backup, move the file from Drafts to `PPO Record`, create the library in `PPO Library`, clean it and publish | The library is published, and a new page can be drawn from it |
-| 4. Copy on change | New pages in domain files, other pages when next changed | Each copy passes the comparison in the standard |
+| 2. Freeze and build the library | Finish pending named versions and in-progress drawing, save "Before split", freeze with a committed manifest and a private backup, and move the file from Drafts to `PPO Record`. Duplicate it into `PPO Library`, delete Captures and Archive from the duplicate, read the meter, clean up and publish | The library is published, with the memory reading recorded |
+| 3. Pilot and go live | Draw one new page from the library. Copy `CPQ · 2` to `CPQ · 4`, Screen Configurator, Quotations, Estimation Wizard and one simple page into a pilot file. Move new work across if a method passes | Every criterion in the standard passes |
+| 4. Copy or redraw on change | New pages in domain files, other pages under decision 8 when next changed | Each copy passes the comparison in the standard |
 | 5. Reconcile tokens | Merge the two CSS generations into one token home, then make the report-only checks enforcing | No unlisted difference between Figma and CSS |
 
 **Priority.** The 80.4% reading is above the 70% action level, so stages 2 and 3 come before further bulk drawing, and no new capture copies are kept in the file from now on.
 
-**Stop rule.** If no linking method passes stage 2, do not cut over. Fall back to option A with a published library, and revisit this record. Until stage 3 finishes, pages are still drawn in "PPO - Design". Only decisions 1 to 4, 11 and the capture rule take effect immediately.
+**Stop rule.** If no linking method passes stage 3, the library file already holds every page except Captures and Archive, so it becomes the single working file with a published library, and this record is revisited. Until stage 2 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Only decisions 1 to 4, 11 and the capture rule take effect immediately.
 
 ## Consequences
 
@@ -103,11 +109,11 @@ Option D for tokens and option C for files.
 
 ## Limits
 
-Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 2 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. An independent reviewer audited the recommendation before this decision, and its findings are reflected here. This record has not had the cross-model review its pull request requires.
+Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 3 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. An independent reviewer audited the recommendation before this decision, and its findings are reflected here. This record has not had the cross-model review its pull request requires.
 
 ## Reversing this
 
-Decisions 1 to 4 and 10 to 12 can be reversed by amending this record, with nothing lost. Stages 3 and 4 add files without changing the frozen record, so a reversal stops using them. Pages drawn only in a domain file would need copying back.
+Decisions 1 to 4 and 10 to 12 can be reversed by amending this record, with nothing lost. Stages 2 to 4 add files without changing the frozen record's contents, so a reversal stops using them. Pages drawn only in a domain file would need copying back.
 
 ## Sources
 
