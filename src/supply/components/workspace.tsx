@@ -132,7 +132,7 @@ function Workspace({ slug }: { slug: string }) {
       className="supply-workspace"
       aria-label={page.title}
     >
-      {slug === "stock" && <Link href={`/supply/stock${selected ? `?record=${selected}` : ""}`}>Back to inventory</Link>}
+      {slug === "stock" && <Link href={`/supply/stock${selected && r?.data.supply_kind === "Stock" ? `?record=${selected}` : ""}`}>Back to inventory</Link>}
       {slug === "changes" && <SupplyFollowupQueue />}
       <header className="supply-header">
         <div>
@@ -643,7 +643,7 @@ function AssessmentEvidence({ value }: { value: string }) {
       <p>Demand version {basis.demand_version}</p>
       {basis.sources.map((source) => (
         <p key={source.id}>
-          <Link href={`/supply/stock?record=${source.id}`}>
+          <Link href={`/supply/stock?native=1&record=${source.id}`}>
             Source version {source.version}
           </Link>{" "}
           · {source.completeness} · usable {source.usable ?? "Unknown"} ·{" "}

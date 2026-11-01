@@ -464,3 +464,34 @@ test("denied identity and Partial evidence do not become authorised or zero avai
     page.getByRole("button", { name: "Revise record", exact: true }),
   ).not.toBeVisible();
 });
+
+
+test("assessed Shipment evidence retains its native source handover", async ({ page, baseURL }) => {
+  const origin = baseURL!;
+  const demand = supplyInput();
+  const source = supplyInput("Supply", {
+    title: "SYN assessed shipment source",
+    data: { ...supplyInput("Supply").data, supply_kind: "Shipment", shipment_id: randomUUID() },
+  });
+  await post(page, origin, "supply/records", demand);
+  await post(page, origin, "supply/records", source);
+  await post(page, origin, "supply/allocations", {
+    ...supplyBase(), id: randomUUID(), expected_version: null,
+    demand_id: demand.id, supply_id: source.id, demand_version: 1,
+    supply_version: 1, quantity: "2", unit: "EA", basis: "Incoming",
+  });
+  const current = await (await page.request.get(origin + `/api/v1/supply/records/${demand.id}`)).json();
+  await post(page, origin, `supply/records/${demand.id}/facts`,
+    supplyFact("Assessment", current.record.version, { scope: "SYN exact shipment evidence only" }));
+  await page.goto(`/supply/material-readiness?record=${demand.id}`);
+  await page.getByText("Exact assessed source versions", { exact: true }).click();
+  const link = page.getByRole("link", { name: "Source version 1", exact: true });
+  await expect(link).toHaveAttribute("href", `/supply/stock?native=1&record=${source.id}`);
+  await link.click();
+  await expect(page.locator("#ppo-supply")).toBeVisible();
+  await expect(page.locator("#ppo-supply").getByRole("heading", { name: source.title, exact: true })).toBeVisible();
+  const back = page.getByRole("link", { name: "Back to inventory", exact: true });
+  await expect(back).toHaveAttribute("href", "/supply/stock");
+  await back.click();
+  await expect(page.locator("#ppo-inventory")).toBeVisible();
+});
