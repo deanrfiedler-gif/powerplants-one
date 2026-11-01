@@ -10,10 +10,9 @@ Dean accepted the Figma design for the coordinator's Time & labour review, the c
 - reviewed billable hours attach to the work order's Finance handoff, and this page never invoices;
 - payroll is out of scope, and workshop hours stay on Workshop builds.
 
-Thirty-four icon-free captures with hashes are retained in [time-labour-review-design-r01](../reference/ui/service/time-labour-review-design-r01/README.md), and the design register page for `scope:FI-01` cites them. In Figma the File index row is `2960:12231` and the capture copies sit on the Captures page from y = 1,335,000.
+Thirty-four icon-free captures with hashes are retained in [time-labour-review-design-r01](../reference/ui/service/time-labour-review-design-r01/README.md), and the design register page for `scope:FI-01` cites them. In Figma the File index row is `2960:12231`, the capture copies sit on the Captures page from y = 1,335,000, and Dean saved the named version "Time & labour review — accepted" on 1 November 2026.
 
 Not done:
-- The named Figma version "Time & labour review — accepted" waits for Dean's explicit yes.
 - Options F1–F3 are drawn on the page and await Dean's review. They are not part of this acceptance or the captures.
 - The prototype flows have not been played in Present mode.
 - The page is not built. It needs a time-entry and adjustment model, an allowance source, capabilities and a go-ahead, and the route `/service/time` does not exist.

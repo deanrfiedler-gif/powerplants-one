@@ -2,7 +2,7 @@
 document_id: PPO-FI01-TIME-REVIEW-FIGMA-DEC
 date: 2026-10-31
 owner: Dean Fiedler
-status: Owner-accepted design; named Figma version waits for Dean; options F1-F3 await review; building the page, its data model and any Finance or payroll treatment separate
+status: Owner-accepted design; named Figma version saved; options F1-F3 await review; building the page, its data model and any Finance or payroll treatment separate
 source_commit: 6e939bf0b937fc05f9e477d1cd14f8838c92fd9a
 versioning: git
 ---
@@ -50,14 +50,14 @@ This is a design decision. It authorises no application code, route, read model,
 | Q13 Is waiting billable, including safety and approval stops (r05 open point 2)? | Resolved as recommended | Non-billable by default, the coordinator deciding with a reason. Not a verified rule |
 | Q14 Can accepted time be reopened? | Resolved as recommended | Yes, until Finance approves the handoff; after that a correction goes through Finance. Reopening keeps the earlier acceptance in History |
 | Payroll | User instruction, 31 October 2026 | "payroll is out of scope: say so, and ask me". Asked as Q3 |
-| Named version | **Waiting for Dean's explicit yes** | Section 7 |
+| Named version | Saved by Dean, 1 November 2026 | Section 7 |
 | Building the page | Not decided | Section 5 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Time & labour review — accepted": not saved yet |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053). Named version "Time & labour review — accepted" |
 | Page | "Time & labour review · FI-01" `2920:2650`, under "— Service operations —", after My jobs · FI-01 `845:44`. Header `2920:2651`, notes card `2941:7667`. File index row `2960:12231` |
 | Desktop 1440 | Section `2920:2686`:<br>• register `2929:347`; visit record, To review `2929:1071`; after the adjustment `2930:3398`; reviewed and sent `2930:5260`; history `2947:8362`<br>• query `2930:1378`; reply `2930:2009`; adjust `2930:2700`; billable `2930:4022`; accept `2947:7666`; send `2930:4601`<br>• allowance `2934:8391`; planner hand-off `2934:8729`<br>• outside hours `2934:8924`; long waiting `2947:8899`; cancelled visit `2947:9254`; queries `2947:9620` |
 | Tablet 1024 | Section `2920:2690`: visit record `2936:11047` |
@@ -160,4 +160,4 @@ Workshop hours are not on this page (Q4).
 
 ## 7. Named version
 
-"Time & labour review — accepted" is **not saved**. It needs Dean's explicit yes, and it would also include the F1–F3 section, marked as awaiting review. This pull request stays in draft until he confirms it.
+Dean saved "Time & labour review — accepted" on 1 November 2026 and said so in words. It also holds the F1–F3 section, marked as awaiting review, so saving it does not accept those options. The page header's Named version field was updated after the save.
