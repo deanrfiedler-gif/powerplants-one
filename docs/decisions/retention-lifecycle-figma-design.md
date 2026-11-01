@@ -43,7 +43,7 @@ This is a design decision. It authorises no application code, migration, capabil
 | Q9 Where D-024 touches this page | Resolved as recommended | Only the wording of a reply to the requester. No reply letter is drawn, and D-024 stays open |
 | Q10 Export file kept 90 days on a deletion request | Resolved as recommended; frame changed | No. The file is removed once the handover is recorded, and the manifest and hash stay. The export manifest frame was changed to show this before capture (section 5) |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | Saved by Dean, 1 November 2026 | Section 7 |
 | Building `/admin/retention` | Not decided | Section 6 |
 
 ## 2. Design reference
@@ -117,7 +117,7 @@ A separate Claude session on AD-08 audited the page before Dean accepted it and 
 
 ## 7. Named version and verification
 
-The named Figma version "Retention & lifecycle — accepted" is not saved yet and waits for Dean.
+Dean saved the named Figma version on 1 November 2026, in his words: "I have saved the named version as - Retention & lifecycle — accepted". Claude did not inspect the version history.
 
 Checked:
 - Each frame by screenshot inside Figma. A script found no overlaps, nothing outside its section, no off-page links and no stray nodes before the post-acceptance changes, and the layout pass was re-run after them.

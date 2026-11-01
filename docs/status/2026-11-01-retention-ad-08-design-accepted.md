@@ -16,10 +16,11 @@ Checked:
 - No Font Awesome instance is left in the capture copies, which were temporary and were deleted from Figma after export.
 - The page has no overlaps or off-page links.
 
+Dean saved the named Figma version: "I have saved the named version as - Retention & lifecycle — accepted".
+
 Not done:
 - The prototype flows weren't played in Figma Present mode. Devices, keyboard and screen reader weren't checked.
 - `/admin/retention` isn't built.
-- The named Figma version "Retention & lifecycle — accepted" waits for Dean.
 - No privacy contact is named, no advice has been sought, and D-012, D-020, D-021 and D-024 stay open.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.

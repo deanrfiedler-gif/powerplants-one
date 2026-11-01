@@ -15,7 +15,7 @@ These twenty-two images retain the Retention and information lifecycle design (A
 
 The decisions, D1–D14 and the answers to Q1–Q10 are in [the design decision](../../../decisions/retention-lifecycle-figma-design.md). All names and counts are fictional, and nothing here gives a legal view. Retain these bytes unchanged; a revised design receives a new revision folder.
 
-Each image is one Figma frame exported at scale 1 at its exact frame size. The source frame is on page "Retention & lifecycle · AD-08" `3017:123` in "PPO - Design". The named version "Retention & lifecycle — accepted" waits for Dean. The capture copies were temporary and were deleted from Figma after export.
+Each image is one Figma frame exported at scale 1 at its exact frame size. The source frame is on page "Retention & lifecycle · AD-08" `3017:123` in "PPO - Design". Dean saved the named version "Retention & lifecycle — accepted" on 1 November 2026. The capture copies were temporary and were deleted from Figma after export.
 
 Every Font Awesome icon was replaced by a plain placeholder square before export, as [ADR-0053](../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The Powerplants logo is the company's own, from the [logo pack r01](../ppo-logo-pack/README.md).
 
