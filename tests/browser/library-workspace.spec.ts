@@ -276,7 +276,7 @@ test("DK-UI awaiting review accepts only independently and old links open their 
             },
           ],
           next_after: null,
-          coverage: "VisibleUsage",
+          coverage: "VisibleReferences",
         },
       }),
   );
@@ -340,6 +340,9 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
       }),
   );
   await page.goto(path);
+  await expect(page.locator(".library-content-unavailable")).toContainText(
+    "No other revision will be substituted",
+  );
   await expect(
     page.getByText("Historical revision — read only.", { exact: false }),
   ).toBeVisible();
@@ -584,13 +587,14 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
 }) => {
   await setup(page);
   const customer = libraryItem.document.organisation_id;
+  let selectedAvailable = true;
   await page.route("**/api/v1/document-library/options?*", (r) => {
     const q = new URL(r.request().url()).searchParams;
     const found = q.has("after") || q.has("selected_id");
     return r.fulfill({
       json: {
         items:
-          q.get("kind") === "Organisation" && found
+          q.get("kind") === "Organisation" && found && selectedAvailable
             ? [{ id: customer, display_name: "SYN customer beyond first page" }]
             : [],
         next_after: found ? null : customer,
@@ -632,6 +636,15 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
   await type.press("ArrowDown");
   await expect(type).toBeFocused();
   await expect(panel).toBeVisible();
+  selectedAvailable = false;
+  await page.reload();
+  await page.getByRole("button", { name: /^Filters/ }).click();
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("combobox", { name: "Customer", exact: true })
+      .locator("option:checked"),
+  ).toHaveText("Selected record unavailable");
   await page.route(
     `**/api/v1/document-library/${libraryItem.document.id}/usage*`,
     (r) =>
@@ -678,7 +691,9 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
   await expect(
     page.getByRole("tab", { name: "Links", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
-  await expect(page.getByText("SYN site", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Site: SYN site", exact: true }),
+  ).toBeVisible();
 });
 
 test("DK-UI accepted evidence tables, link filters, history and tablet filter reset", async ({
@@ -846,5 +861,15 @@ test("DK-UI accepted evidence tables, link filters, history and tablet filter re
     .getByRole("dialog")
     .getByRole("button", { name: "Reset filters", exact: true })
     .click();
+  await expect(page).toHaveURL(/view=Withdrawn&sort=number&direction=desc$/);
+  const filterPanel = page.getByRole("dialog");
+  const draftSearch = filterPanel.getByRole("textbox", {
+    name: "Search title, number, type",
+  });
+  await draftSearch.fill("SYN unsubmitted search");
+  await filterPanel
+    .getByRole("button", { name: "Reset filters", exact: true })
+    .click();
+  await expect(draftSearch).toHaveValue("");
   await expect(page).toHaveURL(/view=Withdrawn&sort=number&direction=desc$/);
 });

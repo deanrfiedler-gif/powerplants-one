@@ -26,3 +26,5 @@ Review corrections retain register filters/menu and keyboard focus across query 
 
 
 1 November review corrections: restore the accepted Revisions table and Selected revision panel (review, source, active declared links and exact content), and Links table (target/type, revision, purpose, added date/actor, status/retirement). Status filtering precedes server paging; no partial-page totals appear on filter buttons. History uses immutable event summaries. The compact desktop toolbar keeps quick customer/site/owner selects; searchable choices and Type use Filters, with an applied indicator at tablet widths. Reset preserves view/sort. New revisions and Open current revision preserve list context. Register-only site requirements are explained before Owner selection. These are implementation changes pending the source-bound validation ledger and independent visual review; no review fingerprint or acceptance is assigned.
+
+At 320 px, unavailable original content precedes link/review details and exposes the existing Recover original text action when authorised. The warning never substitutes a later revision.

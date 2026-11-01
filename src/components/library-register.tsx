@@ -285,6 +285,7 @@ function LibraryRegisterView({
   ];
   const appliedFilters = filterKeys.filter((key) => params.has(key));
   const resetFilters = () => {
+    setSearch("");
     const q = new URLSearchParams(query);
     for (const key of [...filterKeys, "cursor"]) q.delete(key);
     navigate(q.toString());

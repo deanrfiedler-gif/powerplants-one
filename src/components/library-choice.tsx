@@ -107,7 +107,10 @@ function LibraryChoiceControl({
               {selected.error
                 ? "Selected record unavailable"
                 : (selected.data?.items.find((i) => i.id === value)
-                    ?.display_name ?? "Checking selected record…")}
+                    ?.display_name ??
+                  (selected.loading
+                    ? "Checking selected record…"
+                    : "Selected record unavailable"))}
             </option>
           )}
           {data?.items.map((i) => (

@@ -203,6 +203,9 @@ test("DK native browser: independent findings, review, exact history and missing
     expect(new URL(page.url()).searchParams.get(key)).toBe(
       entry.searchParams.get(key),
     );
+  await expect(
+    page.getByText("Revision added.", { exact: true }),
+  ).toBeVisible();
   expect(current.review_state).toBe("Unreviewed");
   expect(current.findings).toHaveLength(0);
   const historical = `${doc.path}?revision_id=${doc.command.revision_id}`;

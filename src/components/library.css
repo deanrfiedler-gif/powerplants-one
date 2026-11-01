@@ -656,3 +656,15 @@
     min-height: 44px;
   }
 }
+
+#ppo-library .library-content-unavailable {
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  color: var(--danger);
+  background: var(--danger-surface);
+  border: 1px solid var(--danger-border);
+  border-radius: 6px;
+}
+#ppo-library .library-content-unavailable h2 {
+  margin-top: 0;
+}

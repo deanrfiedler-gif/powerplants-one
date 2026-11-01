@@ -40,3 +40,5 @@ The Documents shared destination opens DK-01 while preserving the current depart
 
 
 1 November consumer correction: RegisterTable panel variant now hosts Revisions and Links, with selected-row state, keyboard revision buttons and local table scrolling at 320 px. The selected panel uses exact-revision read metadata and permission-filtered usage. Link status buttons use Button with aria-pressed; shared RegisterChip identifies attention/active/retired states. History shows readable retained summaries. LibraryChoice explains site-only registration and disables Owner until its required context is selected. The toolbar exposes Filters with an applied count; searchable choices and Type live in the existing WorklistPanel. Fixtures cover selection, status-filter reads, readable history and tablet reset; execution is recorded separately.
+
+Unavailable originals appear first in Overview, with shared danger tokens and the existing exact-text recovery command where authorised. Empty selected-choice reads say Selected record unavailable; Reset also clears an unsubmitted search draft.

@@ -116,6 +116,10 @@ export function LibraryRecord({ id }: { id: string }) {
     );
   const item = !resource.error ? resource.data : null;
   const [tab, setTab] = useState("Overview");
+  const [savedResult, setSavedResult] = useState<{
+    id: string;
+    message: string;
+  } | null>(null);
   const [readAttempt, setReadAttempt] = useState(0);
   const refresh = () => {
     setReadAttempt((a) => a + 1);
@@ -141,6 +145,8 @@ export function LibraryRecord({ id }: { id: string }) {
           setTab={setTab}
           refreshing={resource.loading}
           readAttempt={readAttempt}
+          saved={savedResult?.id === id ? savedResult.message : ""}
+          setSaved={(message) => setSavedResult({ id, message })}
         />
       )}
     </div>
@@ -153,6 +159,8 @@ function LibraryRecordBody({
   setTab,
   refreshing,
   readAttempt,
+  saved,
+  setSaved,
 }: {
   item: LibraryItem;
   refresh: () => void;
@@ -160,6 +168,8 @@ function LibraryRecordBody({
   setTab: (tab: string) => void;
   refreshing: boolean;
   readAttempt: number;
+  saved: string;
+  setSaved: (message: string) => void;
 }) {
   const params = useSearchParams(),
     router = useRouter();
@@ -188,7 +198,6 @@ function LibraryRecordBody({
     [linkId, setLinkId] = useState<string>();
   const current = item.library_current && item.document.state === "Current",
     writable = current && item.can_register && !refreshing;
-  const [saved, setSaved] = useState("");
   const usage = useRecordEvidence<Usage>(
     `document-library/${item.document.id}/usage`,
     item.document.version + readAttempt,
@@ -402,6 +411,20 @@ function LibraryRecordBody({
           >
             {tab === "Overview" && (
               <>
+                {item.availability !== "Available" && (
+                  <div className="library-content-unavailable">
+                    <ExactContent key={item.revision.id} item={item} />
+                    {item.can_register &&
+                      item.revision.source.kind === "SyntheticText" && (
+                        <Button
+                          disabled={refreshing}
+                          onClick={() => action("Recover")}
+                        >
+                          Recover original text
+                        </Button>
+                      )}
+                  </div>
+                )}
                 <ReadState
                   loading={usage.loading}
                   error={usage.error}
@@ -478,7 +501,9 @@ function LibraryRecordBody({
                     <p>No review recorded for this exact revision.</p>
                   )}
                 </section>
-                <ExactContent key={item.revision.id} item={item} />
+                {item.availability === "Available" && (
+                  <ExactContent key={item.revision.id} item={item} />
+                )}
               </>
             )}
             {tab === "Revisions" && (
