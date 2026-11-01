@@ -22,7 +22,8 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
   await grantDraft(p, ["template.read", "shared.read", "pack.read"]);
   const site = (n: number) =>
     `fe000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-  // This is bulk fixture setup, not an application operation. Keep ordinary
+  // Three sites exercise native continuation at limit 1; the browser regression covers 51 choices.
+  // This is fixture setup, not an application operation. Keep ordinary
   // read/command timeouts unchanged after the transaction, as recoverSchema does.
   await transaction(async (c) => {
     await c.query("SET LOCAL statement_timeout = '120s'");
@@ -31,21 +32,21 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
       (id,workspace_id,company_id,created_by,updated_by,owner_id,display_name,location_description,timezone)
       SELECT ('fe000000-0000-4000-8000-' || lpad(n::text,12,'0'))::uuid,
         $1,$2,$3,$3,$3,'SYN paging site ' || n,'SYN paging fixture','Australia/Brisbane'
-      FROM generate_series(1,55) AS n`,
+      FROM generate_series(1,3) AS n`,
       [p.workspace_id, id("20"), p.actor_id],
     );
   });
-  const visible = await readTemplateScopes(p, { family: "OUT-09" });
-  assert.equal(visible.items.length, 50);
+  const visible = await readTemplateScopes(p, { family: "OUT-09", limit: "1" });
+  assert.equal(visible.items.length, 1);
   assert.ok(visible.next_cursor);
   assert.ok(visible.items.every((s) => !s.can_propose));
-  assert.ok(!visible.items.some((s) => s.id === site(55)));
+  assert.ok(!visible.items.some((s) => s.id === site(3)));
   assert.deepEqual(
     (await readTemplateScopes(p, { family: "OUT-09", purpose: "Propose" }))
       .items,
     [],
   );
-  for (const n of [54, 55])
+  for (const n of [2, 3])
     await database().query(
       `INSERT INTO ppo.permission_grants
       (workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id)
@@ -56,7 +57,7 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
   const first = await readTemplateScopes(p, query);
   assert.deepEqual(
     first.items.map((s) => s.id),
-    [site(54)],
+    [site(2)],
   );
   assert.equal(first.items[0].can_propose, true);
   assert.ok(first.next_cursor);
@@ -66,7 +67,7 @@ test("DK06 proposable scopes filter duties before paging and bind purpose, famil
   });
   assert.deepEqual(
     next.items.map((s) => s.id),
-    [site(55)],
+    [site(3)],
   );
   assert.equal(next.next_cursor, null);
   for (const changed of [{ purpose: "Read" }, { family: "OUT-10" }])
