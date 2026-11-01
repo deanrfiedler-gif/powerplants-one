@@ -110,3 +110,5 @@ Use the [current owner walkthrough](../../../delivery/field-integrated-owner-wal
 ## P4/P5 backend consumer note — 24 October 2026
 
 [PR #690](https://github.com/deanrfiedler-gif/powerplants-one/pull/690) implements the authorised backend/API slice in draft. The [service API amendment](../../../contracts/service-api.md) defines typed contact checks and the narrow preparation projection. UI wiring of the accepted P4/P5 designs is a separate follow-up; existing unavailable-state copy remains until that work is accepted and built. This note adds no visual-review evidence or acceptance claim.
+
+Accepted amendment (not yet drawn on this page): a visit opens Knowledge with the job’s equipment, site, facility and crop filled in, and the phone technician tab bar becomes My Work, My jobs, Knowledge, Equipment, More, with My inspections moving into More ([Knowledge design decision](../../../decisions/knowledge-figma-design.md), section 5).
