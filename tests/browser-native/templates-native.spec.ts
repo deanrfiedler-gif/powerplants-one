@@ -15,6 +15,8 @@ test.use({
   hasTouch: false,
 });
 test.beforeAll(async () => {
+  // Complete schema/seed setup has its own bound; the browser journey stays at 180s.
+  test.setTimeout(900000);
   await reset();
   const { reviewer } = await setupDraft();
   await grantDraft(reviewer, [
