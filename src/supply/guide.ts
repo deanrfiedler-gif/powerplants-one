@@ -66,8 +66,8 @@ export const supplyTasks: Record<
   ],
   "SC-05": [
     [
-      "Read the observation basis",
-      "Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.",
+      "Read Inventory and its observation basis",
+      "Use the bounded register, snapshot and item tabs. The toolbar says N shown · limit 100. No Product link is recorded; mapping persistence is outstanding. Record observation opens the existing native form. Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.",
     ],
     [
       "Review competing demand",
@@ -192,7 +192,7 @@ export function supplyGuide(path: string): PageGuide | undefined {
     journeyIntro:
       "Evidence enters once and is followed through the appropriate native workspace.",
     journey: supplyTasks[page.scope],
-    mobile:
+    mobile: page.scope === "SC-05" ? "Inventory uses full-width phone rows, a compact Search and filter control, separate quantity meanings and flat location observations at 390 and 320 px. Tab and Enter open an item; the shared menu restores focus with Escape. Record observation keeps the native form and original-operation recovery. Online only." :
       "At 390 and 320 CSS pixels the worklist and detail stack, capture fields use 16px text and controls retain 44px targets. Receipt, picking/dispatch and delivery have focused mobile forms. This workflow is online; no offline queue is implied.",
     shortcuts: [
       ["Tab / Shift Tab", "Move between labelled controls."],

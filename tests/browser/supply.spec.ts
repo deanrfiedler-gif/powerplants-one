@@ -98,7 +98,7 @@ for (const spec of supplyPages)
         supplyFact("Custody", 1, { held: "10", state: "Open" }),
       );
     }
-    await page.goto(`/supply/${spec.slug}`);
+    await page.goto(`/supply/${spec.slug}${spec.slug === "stock" ? "?native=1" : ""}`);
     const surface = page.locator("#ppo-supply");
     await expect(surface).toBeVisible();
     await expect(

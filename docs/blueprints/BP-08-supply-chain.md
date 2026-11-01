@@ -25,7 +25,7 @@ The four closed aggregate kinds in `supply_records` are Demand, Supply line, Ret
 | SC-09 | `/supply/changes` | SCM-08: exact before/after impact evidence and an owned shared Activity; downstream records unchanged |
 | SC-10 | `/supply/service-stock` | SVC-09/SCM-07: issued custody and mutually exclusive held/job/used/returned/damaged/quarantine/missing outcomes, exact Field evidence and inventory reconciliation |
 
-The existing seven-item rail is preserved. Changes shares Material demand; Service stock shares Stock & reservations; Dispatch and Deliveries share Dispatch & delivery. The global information icon resolves `guide.sc.01` through `guide.sc.10`, with page-specific native guidance and separately maintained development drafts.
+The existing seven-item rail is preserved. Changes shares Material demand; Service stock shares Inventory; Dispatch and Deliveries share Dispatch & delivery. The global information icon resolves `guide.sc.01` through `guide.sc.10`, with page-specific native guidance and separately maintained development drafts.
 
 ## Quantity and state contracts
 

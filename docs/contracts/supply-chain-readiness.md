@@ -50,6 +50,18 @@ An empty allocation register is a known zero, so an approved demand with nothing
 
 Changing or withdrawing a confirmed promise, usable quantity, allocation or inspection result creates an owned impact review against affected demands. One reasoned command may create one shared Activity per declared impact identity; idempotent recovery returns the same Activity/receipt. The recipient reviews the effect using existing Project/Service controls. Lost or duplicate notifications cannot serve as authority to move a booking.
 
+### Inventory SC-05 per-item read
+
+`GET /api/v1/supply/records?view=inventory` is a read-only projection of existing native records. Optional `record` identifies an authorised Supply anchor; it reads the same exact recorded company, item and unit across observations. `q`, `location`, `unit`, `completeness` and `inventory_view` filter the register. At most 100 item groups are returned; the UI says `N shown · limit 100`, never a complete-stock count. No secondary-menu counts are asserted.
+
+The transaction uses a repeatable-read snapshot, `supply.read`, working-company and company/Site scope, plus every record's linked-context and conversion-source authority. Permission-denied records never enter items, search, location choices, activity or allocations. Detail reads authorise their anchor independently of the register limit. The source scan is bounded at 2,000; a truncated scan is explicit and leaves item totals Unknown.
+
+Stock-basis Supply observations group by the existing exact company/item/unit relationship used by Supply allocation validation. This does not create a catalogue identity or Product mapping. Quantities add exact decimals only across distinct site/warehouse/bin rows; overlapping observations, an unlocated warehouse or a missing site/bin that cannot establish distinctness leave totals Unknown. No precedence between conflicting sources is invented. Any missing component remains Unknown, unavailable source values remain Unknown, and known zero remains zero. Evidenced usable uses the existing `ppo.supply_usable` rule. All source records retain their own observed times, source keys and versions; the header labels the latest time rather than claiming simultaneous observation or freshness.
+
+Activity lists permitted native Supply-domain records mentioning the exact company/item/unit, with their native record handovers. It is evidence history, not a movement ledger. Incoming allocations include permitted Shipment or other Supply records for the same exact item, without adding their quantities to Stock observations. They remain coordination evidence; Demand hands over for readiness rather than deriving it here. Locations are flat observation rows. Source evidence hands back to retained native revisions and attachments.
+
+No Product link is recorded: mapping persistence is outstanding under Q1. The illustrative design match is not displayed as data. `Record observation` hands over on `/supply/stock?native=1&observation=1`, with `record` for a revision, to the existing native form, command permissions, expected versions and original-operation recovery. This read and restyle introduce no migration, capability, grant, dependency or ERP operation. See the [accepted design](../decisions/inventory-figma-design.md) and [implementation evidence](../testing/evidence/inventory/README.md).
+
 ## Fictional acceptance examples
 
 | Case | Exact input | Required observable result |

@@ -1,0 +1,35 @@
+{
+  "captured_at": "2026-10-31T22:46:24.370115+10:00",
+  "base_commit": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "provenance": "Local synthetic working tree for PR #805; exact file hashes below. Not an accepted application fingerprint.",
+  "visual_comparison": "Builder inspected all 14 captures; differences in README.md; owner acceptance pending.",
+  "sources": {
+    "src/supply/inventory.ts": "331fa6611bcdded31944486d587ce590ba95f42bcc8ff2d753fc92e75864bb2d",
+    "src/supply/inventory-model.ts": "439a71a77204f915ac7baf8b9a314b3009c86ea299b0f10ce7d5e0db025f4e65",
+    "src/supply/components/inventory.tsx": "f3fca196d2f447b163dff40dc6c21d459e67b11ef04df8ed30347c4a0a6f0645",
+    "src/supply/components/inventory.css": "13d967fc22db615f922daff6283e816a234fc6d712d33054a2d98f1880fb4cbf",
+    "src/supply/components/workspace.tsx": "68abcb03d095d413faa63600597060ee5314f7e3dacb05dadd22766b1fadcd53",
+    "src/supply/navigation.ts": "79b1e6b174a1bcf0c2fede9e766c409969514f0c675a743cd73e3bf55104df6c",
+    "src/shell/navigation.ts": "e9008e0e1aed834a3d6004eddc7ea8f88ed94780305080fc0d1c92870ec89c4d",
+    "src/shell/module-workspaces.ts": "34824a2b8143b0b15cbbb05d2b5eca1eaff256739ce36fc2c32ffd311eaa39c9",
+    "src/app/api/v1/supply/records/route.ts": "0df835e5f580a77fcaa9995f33709ff5150b1b029f02623684a14d76f08f85c6",
+    "tests/browser/inventory.spec.ts": "9e4659b2de566f90fd4371f3780ddf1351de148629c29e07caf4c688262276f7",
+    "playwright.inventory.config.ts": "5655277b3eaa38ac477f1b213f8bc22c16ce859ebf2934e8e6c55121abfcc6d8"
+  },
+  "captures": {
+    "activity-1024.png": "1efc0c9a5a82f1f5164a509657b6518fcba33c8d427eb0d6495fe4f87419e887",
+    "activity-1440.png": "51ea2970cffbc84b898487abdd392b54678bb92f8bbd9edf41d9d3b27ce20ae8",
+    "activity-320.png": "d0d2ce5b28cb0253a408af1296f6432af168a26ed1b8b8bc2cb5421507780067",
+    "activity-390.png": "7cb974791d7b3048c93d4adbb5633f6273c28e8e9d153f079c2655b1830321e1",
+    "quantities-1024.png": "c3b31f20e84e75c76c3939c4de563997258ab04046e3d62ebf1fb6e86ffcf5d1",
+    "quantities-1440.png": "fce0186f4c3998238786480371afee2d5894c2e1a1249d1721eb09f3455fce13",
+    "quantities-320.png": "45ca73fa56b37996e849ed21b17c4df92c0c15c4745b3bfcf2a69295c9b09ca6",
+    "quantities-390.png": "34b9f3e8bf01b29852d9be02b86f1a8981b83e0c9da1256468a76388afb214b7",
+    "register-1024.png": "6cc09cd4f1e4ce87be9837585c4c3eac3bb0e0d4627916c1a1e4a17631ce54f0",
+    "register-1440.png": "3581315737625bd0b3dd46bb5e16918931c9cff3f3e56d92fe76b5ca8cc69655",
+    "register-320.png": "320ba68cf20398ba5fa1bc164a33d66c8925212e3d80b9f8a8ab7aee03cfa81f",
+    "register-390.png": "1574a2ddd0bc3b37a88f617d1382af14d2a53ccd44dbab2b569f376265c76cba",
+    "snapshot-1440.png": "a0db61733b26782ffd959286aba8957e39489e00b2d837b8c953b007cb39df62",
+    "unknown-320.png": "c2245f5d18837508b06e74d4ce4010f4146b3e39750a0f516152ead9eff134c8"
+  }
+}

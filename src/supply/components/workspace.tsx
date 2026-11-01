@@ -1,4 +1,5 @@
 "use client";
+import { InventoryPage } from "./inventory";
 import { SupplyFollowupQueue } from "../../components/quotation-supply-followup";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -26,7 +27,10 @@ type Panel =
   | { type: "fact"; kind: FactKind; previous?: Fact };
 export function SupplyWorkspacePage({ slug }: { slug: string }) {
   const { context } = useShell();
-  return <Workspace key={`${context?.preference_scope}:${slug}`} slug={slug} />;
+  const params = useSearchParams();
+  return slug === "stock" && params.get("native") !== "1"
+    ? <InventoryPage key={`${context?.preference_scope}:${slug}`} />
+    : <Workspace key={`${context?.preference_scope}:${slug}`} slug={slug} />;
 }
 function Workspace({ slug }: { slug: string }) {
   const page = supplyPages.find((p) => p.slug === slug)!;
@@ -36,7 +40,7 @@ function Workspace({ slug }: { slug: string }) {
     search = params.get("q") ?? "",
     filter = params.get("completeness") ?? "",
     view = params.get("view") ?? "register";
-  const [panel, setPanel] = useState<Panel | null>(null),
+  const [panel, setPanel] = useState<Panel | null>(() => slug === "stock" && params.get("observation") === "1" ? { type: selected ? "edit" : "create" } : null),
     [history, setHistory] = useState(false);
   const focusAfterClose = useRef<string | null>(null);
   const detailRegion = useRef<HTMLElement | null>(null);
@@ -121,12 +125,14 @@ function Workspace({ slug }: { slug: string }) {
     );
   }
   const canCreate = opts.data?.can_create?.[page.kind] ?? false;
+  const observationAllowed = panel?.type === "create" ? canCreate : panel?.type !== "edit" || !!detail.data?.capabilities.edit;
   return (
     <section
       id="ppo-supply"
       className="supply-workspace"
       aria-label={page.title}
     >
+      {slug === "stock" && <Link href={`/supply/stock${selected ? `?record=${selected}` : ""}`}>Back to inventory</Link>}
       {slug === "changes" && <SupplyFollowupQueue />}
       <header className="supply-header">
         <div>
@@ -559,7 +565,7 @@ function Workspace({ slug }: { slug: string }) {
           )}
         </section>
       </div>
-      {panel && (opts.data || panel.type === "fact") && (
+      {panel && (slug !== "stock" || params.get("observation") !== "1" || observationAllowed) && (panel.type !== "edit" || !!r) && (opts.data || panel.type === "fact") && (
         <WorklistPanel
           title={
             panel.type === "fact"

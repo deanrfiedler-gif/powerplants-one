@@ -123,7 +123,7 @@ export const destinations: ShellDestination[] = [
   {"id": "purchasing", "label": "Purchasing", "icon": "nav-purchasing", "href": "/supply/purchasing", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "inbound", "label": "Inbound shipments", "icon": "nav-inbound", "href": "/supply/shipments", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "receiving", "label": "Receiving", "icon": "nav-receiving", "href": "/supply/receipts", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
-  {"id": "stock", "label": "Stock & reservations", "icon": "nav-stock", "href": "/supply/stock", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
+  {"id": "stock", "label": "Inventory", "icon": "nav-stock", "href": "/supply/stock", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "deliveries", "label": "Dispatch & delivery", "icon": "nav-dispatch", "href": "/supply/dispatch", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "returns", "label": "Returns & claims", "icon": "nav-returns", "href": "/supply/returns", "requires": ["supply.read"], "readiness": "ready", "workspace": "supply"},
   {"id": "finance", "label": "Finance handoffs", "icon": "nav-inbox", "readiness": "ready", "href": "/finance/handoffs", "workspace": "finance", "requires": ["finance.read"]},

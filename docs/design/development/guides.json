@@ -18209,24 +18209,23 @@
     {
       "guide_key": "guide.sc.05",
       "entry_key": "scope:SC-05",
-      "title": "Stock & reservations",
+      "title": "Inventory",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Native synthetic coordination; source/business policy gaps explicit",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-25",
-      "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
+      "prepared_at": "2026-10-31",
+      "source_commit": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate",
+      "runtime_evidence": "Inventory and Supply proof, comparison and limits: docs/testing/evidence/inventory/README.md. Application acceptance remains separate.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Dated source observations, explicit units and completeness. Live reservations are not configured."
+            "Inventory register, snapshot and item record over permitted native source observations. Unknown is never zero; Product mapping persistence remains outstanding. MYOB remains the intended ERP authority."
           ],
           "steps": [],
           "rows": [],
@@ -18236,7 +18235,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm current capability and exact company/Site context. Prepare existing origin identity, exact item/unit, source evidence and an accountable owner."
+            "Use supply.read in the exact company and Site scope. Source observations, units and completeness remain explicit. Recording requires the existing supply.coordinate authority."
           ],
           "steps": [],
           "rows": [],
@@ -18246,10 +18245,9 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Search and completeness filters remain in the URL. Select a record; Back and reload restore the selected line under your current permissions.",
-            "Review source time, completeness, current quantities and retained revisions. Missing evidence remains unknown; there is no assumed observation-age threshold.",
-            "Use the relevant workflow action and enter evidence, observation time, completeness and a reason. Saved is shown only after a server receipt. Review / correct capture retains its original.",
-            "Follow canonical context links and the one owned Activity. Keep technical, commercial, scheduling, document and Finance decisions with their owners."
+            "Search Inventory and filter by location, unit or completeness. The toolbar reports the actual bounded result as N shown · limit 100. The secondary menu has no counts.",
+            "Select a snapshot or open an item. Quantities, Locations, Demand, Activity and Source evidence preserve the company, item and unit. Back, filters and selection are URL-backed.",
+            "Record observation opens the existing native Supply form on the same route. Review the exact source version and record a reason; expected versions and uncertain-save recovery remain active."
           ],
           "steps": [],
           "rows": [],
@@ -18259,7 +18257,7 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Search and completeness filters, restorable worklist selection, selected detail, scoped actions, evidence and retained revisions."
+            "The desktop register uses the shared table and a docked snapshot. Item records separate context from view tabs. Phone lists and quantity rows reflow at 390 and 320 px. Source evidence uses the native record handover; location rows stay flat."
           ],
           "steps": [],
           "rows": [],
@@ -18269,9 +18267,9 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.",
-            "Open line allocations and their native demand handovers. Incoming coordination allocation is not a source reservation; usable allocation needs complete evidence.",
-            "Live reservation policy is Not configured. Reservation observations can be recorded from fulfilment, but no external command is sent and no unit conversion is inferred."
+            "On hand, source available, source reserved, held and evidenced usable are distinct. Missing values and unavailable evidence read Unknown; known zero remains 0.",
+            "Totals combine distinct permitted site/warehouse/bin observations in the same recorded company, item and unit. Overlapping or missing locations leave totals Unknown rather than choosing a source. Each observation retains its time and version.",
+            "No Product link is recorded. Mapping persistence is outstanding; names, SKU and family are never used to infer a link."
           ],
           "steps": [],
           "rows": [],
@@ -18281,9 +18279,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.",
-            "Open line allocations and their native demand handovers. Incoming coordination allocation is not a source reservation; usable allocation needs complete evidence.",
-            "Live reservation policy is Not configured. Reservation observations can be recorded from fulfilment, but no external command is sent and no unit conversion is inferred."
+            "Review quantities and source times, open a location observation, then follow a permitted demand allocation to Material demand for its readiness review.",
+            "Activity lists native Supply records mentioning the exact item; it is evidence history, not a stock ledger. PPO posts no stock movement."
           ],
           "steps": [],
           "rows": [],
@@ -18303,7 +18300,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Unknown/Partial is not zero. Read-only and denied are server-enforced. Saved requires a durable receipt. A stale revision needs comparison; uncertain saves retain their original content."
+            "Complete, Partial and Unavailable describe evidence. Loading and failed reads remove previous projections; Retry read keeps the selected item and filters. The source scan is bounded at 2,000 records and a partial scan cannot establish totals.",
+            "Linked to products is empty while mapping persistence is absent. This is an outstanding capability, not evidence of a real link."
           ],
           "steps": [],
           "rows": [],
@@ -18313,7 +18311,7 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority."
+            "Two distinct locations reporting 6 EA and 0 EA show 6 EA on hand. If either available quantity is absent, available stays Unknown. Two overlapping location observations do not add into a stock balance."
           ],
           "steps": [],
           "rows": [],
@@ -18333,7 +18331,7 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "At 390 and 320 CSS pixels the worklist and detail stack, capture fields use 16px text and controls retain 44px targets. Receipt, picking/dispatch and delivery have focused mobile forms. This workflow is online; no offline queue is implied."
+            "On phones, use full-width item links and labelled buttons. Tab/Shift+Tab moves focus; Enter activates links and buttons; Space selects a snapshot. The shared secondary menu closes with Escape and restores focus. This workflow is online; no offline posting is offered."
           ],
           "steps": [],
           "rows": [],
@@ -18353,7 +18351,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Draft guide and native functional work; owner acceptance and deployment remain pending."
+            "Draft guide. Functional tests, inspected captures, visual acceptance, independent review and deployment are separate. No accepted review fingerprint is asserted."
           ],
           "steps": [],
           "rows": [],
@@ -18382,9 +18380,11 @@
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/inventory-figma-design.md",
+        "docs/contracts/supply-chain-readiness.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Inventory register, snapshot and item record with native observation handover; no Product mapping or stock ledger.",
       "document_id": "PPO-GUIDE-SC-05",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -18394,7 +18394,9 @@
       "workflow_basis": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
         "docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/blueprints/BP-01-master-blueprint.md",
+        "docs/decisions/inventory-figma-design.md",
+        "docs/contracts/supply-chain-readiness.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -68156,22 +68158,21 @@
     {
       "guide_key": "guide.route-supply-stock",
       "entry_key": "route:/supply/stock",
-      "title": "Stock & reservations",
+      "title": "Inventory",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
       "content_mode": "Native synthetic coordination; source/business policy gaps explicit",
-      "source_commit": "0f10b7fb46a8ab512e9b019573ece272cf5920b9",
+      "source_commit": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
       "related_entry_keys": [],
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.",
-            "Dated source observations, explicit units and completeness. Live reservations are not configured."
+            "Inventory register, snapshot and item record over permitted native source observations. Unknown is never zero; Product mapping persistence remains outstanding. MYOB remains the intended ERP authority."
           ],
           "steps": [],
           "headers": [],
@@ -68181,10 +68182,9 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Search and completeness filters remain in the URL. Select a record; Back and reload restore the selected line under your current permissions.",
-            "Review source time, completeness, current quantities and retained revisions. Missing evidence remains unknown; there is no assumed observation-age threshold.",
-            "Use the relevant workflow action and enter evidence, observation time, completeness and a reason. Saved is shown only after a server receipt. Review / correct capture retains its original.",
-            "Follow canonical context links and the one owned Activity. Keep technical, commercial, scheduling, document and Finance decisions with their owners."
+            "Search Inventory and filter by location, unit or completeness. The toolbar reports the actual bounded result as N shown · limit 100. The secondary menu has no counts.",
+            "Select a snapshot or open an item. Quantities, Locations, Demand, Activity and Source evidence preserve the company, item and unit. Back, filters and selection are URL-backed.",
+            "Record observation opens the existing native Supply form on the same route. Review the exact source version and record a reason; expected versions and uncertain-save recovery remain active."
           ],
           "steps": [],
           "headers": [],
@@ -68199,10 +68199,95 @@
           "steps": [],
           "headers": [],
           "rows": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before",
+          "paragraphs": [
+            "Use supply.read in the exact company and Site scope. Source observations, units and completeness remain explicit. Recording requires the existing supply.coordinate authority."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "The desktop register uses the shared table and a docked snapshot. Item records separate context from view tabs. Phone lists and quantity rows reflow at 390 and 320 px. Source evidence uses the native record handover; location rows stay flat."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information",
+          "paragraphs": [
+            "On hand, source available, source reserved, held and evidenced usable are distinct. Missing values and unavailable evidence read Unknown; known zero remains 0.",
+            "Totals combine distinct permitted site/warehouse/bin observations in the same recorded company, item and unit. Overlapping or missing locations leave totals Unknown rather than choosing a source. Each observation retains its time and version.",
+            "No Product link is recorded. Mapping persistence is outstanding; names, SKU and family are never used to infer a link."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [
+            "Review quantities and source times, open a location observation, then follow a permitted demand allocation to Material demand for its readiness review.",
+            "Activity lists native Supply records mentioning the exact item; it is evidence history, not a stock ledger. PPO posts no stock movement."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "Complete, Partial and Unavailable describe evidence. Loading and failed reads remove previous projections; Retry read keeps the selected item and filters. The source scan is bounded at 2,000 records and a partial scan cannot establish totals.",
+            "Linked to products is empty while mapping persistence is absent. This is an outstanding capability, not evidence of a real link."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Examples",
+          "paragraphs": [
+            "Two distinct locations reporting 6 EA and 0 EA show 6 EA on hand. If either available quantity is absent, available stays Unknown. Two overlapping location observations do not add into a stock balance."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile",
+          "paragraphs": [
+            "On phones, use full-width item links and labelled buttons. Tab/Shift+Tab moves focus; Enter activates links and buttons; Space selects a snapshot. The shared secondary menu closes with Escape and restores focus. This workflow is online; no offline posting is offered."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review",
+          "paragraphs": [
+            "Draft guide. Functional tests, inspected captures, visual acceptance, independent review and deployment are separate. No accepted review fingerprint is asserted."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
         }
       ],
-      "prepared_at": "2026-09-25",
-      "runtime_evidence": "See native handover; visual and owner acceptance separate"
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "Inventory and Supply proof, comparison and limits: docs/testing/evidence/inventory/README.md. Application acceptance remains separate.",
+      "change_summary": "Inventory register, snapshot and item record with native observation handover; no Product mapping or stock ledger."
     },
     {
       "guide_key": "guide.route-my-jobs-site-readiness",
