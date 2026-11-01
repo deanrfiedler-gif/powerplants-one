@@ -6,6 +6,8 @@ Owner: Dean Fiedler. ES-05. r20 page types: Review / comparison and Document & e
 
 ## Desktop
 
+Accepted design for the Distribution step only: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 draws the Send quotation composer (captures 13–15 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md)): the covering note, a locked View quotation block, the PDF switch and its warning, and tracking off by the privacy gate. That record accepts no other step. Real sending needs ADR-0059 and QV-S2.
+
 At 1440 and 1024 CSS px retain the PPO shell and one page scroll owner. Four cards distinguish preparation, approval, issue and distribution. Put non-operative conditions before decisions. Exact source/recipient/template disclosure, safe output preview/download and original recovery remain visible alongside attributable history. Avoid printing internal costs in customer output. Long identities and hashes wrap.
 
 ## Mobile
