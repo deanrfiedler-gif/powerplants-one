@@ -57,7 +57,9 @@ export function ProposalForm({
     { retainUnconfirmed: true },
   );
   const scopes = useTemplatePages<Scope>(
-    proposal ? null : `document-template-drafts/scopes?family=${family}`,
+    proposal
+      ? null
+      : `document-template-drafts/scopes?family=${family}&purpose=Propose`,
   );
   const definitions = useTemplatePages<Template>(
     proposal || base ? null : `document-templates?family=${family}`,
@@ -222,7 +224,7 @@ export function ProposalForm({
                         }}
                       />
                     </div>
-                    <Paging read={scopes} scope="permitted sites" />
+                    <Paging read={scopes} scope="sites where you can propose" />
                     {base ? (
                       <p>
                         Base: {base.name} · version {base.version} · {base.id}

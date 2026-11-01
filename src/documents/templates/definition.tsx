@@ -46,7 +46,7 @@ export function DefinitionRecord({
     ),
     t = read.data;
   const scopes = useTemplatePages<Scope>(
-    `document-template-drafts/scopes?family=${family}&limit=50`,
+    `document-template-drafts/scopes?family=${family}&purpose=Propose&limit=50`,
   );
   const [tab, setTab] = useState(
       ["definition", "usage", "publication"].includes(initialTab ?? "")
@@ -57,7 +57,9 @@ export function DefinitionRecord({
   const router = useRouter(),
     canCreate =
       !!t &&
-      (!!scopes.data?.items.some((s) => s.can_propose) || scopes.hasMore);
+      !scopes.loading &&
+      !scopes.error &&
+      !!scopes.data?.items.some((s) => s.can_propose);
   usePublishRecordIdentity(
     t ? `${family} · Version ${t.version}` : null,
     t?.name ?? "Definition",

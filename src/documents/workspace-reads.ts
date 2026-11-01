@@ -100,9 +100,11 @@ export async function readTemplateScopes(
   p: Principal,
   q: Record<string, string>,
 ) {
-  object(q, ["family", "limit", "cursor"]);
+  object(q, ["family", "purpose", "limit", "cursor"]);
   const family = choice(q.family, "family", families),
-    pg = paging(p, q, `scopes:${family}`);
+    purpose = choice(q.purpose ?? "Read", "purpose", ["Read", "Propose"]),
+    duty = purpose === "Propose" ? "template.propose" : "template.read",
+    pg = paging(p, q, `scopes:${family}:${purpose}`);
   return transaction(async (c) => {
     await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
       p.workspace_id,
@@ -130,7 +132,7 @@ export async function readTemplateScopes(
         after = row.id;
         const scope = { family, company_id: row.company_id, site_id: row.id };
         try {
-          await scopeAuthority(c, p, scope);
+          await scopeAuthority(c, p, scope, duty);
         } catch (e) {
           if (hidden(e)) continue;
           throw e;
@@ -168,7 +170,8 @@ export async function readTemplateScopes(
       if (rows.length < 100) break;
     }
     const selected = items.slice(0, pg.limit);
-    for (const row of selected) await scopeAuthority(c, p, { ...row, family });
+    for (const row of selected)
+      await scopeAuthority(c, p, { ...row, family }, duty);
     return {
       synthetic: true,
       items: selected,

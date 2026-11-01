@@ -30,6 +30,17 @@ test("DK06 UI native scope, publication and use reads retain exact labels and re
   );
   assert.ok(scope.company_name && scope.site_name && scope.timezone);
   assert.equal(scope.can_assign, true);
+  const proposeScopes = await h.call(
+    "cs-reviewer",
+    "document-template-drafts/scopes?family=OUT-09&purpose=Propose",
+  );
+  assert.equal(proposeScopes.status, 200);
+  assert.ok(proposeScopes.body.items.length > 0);
+  assert.ok(
+    proposeScopes.body.items.every(
+      (s: { can_propose: boolean }) => s.can_propose,
+    ),
+  );
   const listed = await h.call(
     "cs-reviewer",
     "document-template-publications?" + query,

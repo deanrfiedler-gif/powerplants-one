@@ -166,6 +166,6 @@ test("DK06 native browser creates, independently reviews, publishes and assigns 
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "docs/testing/evidence/template-management/workspace/native-published-proposal-320.png",
+    path: `${process.env.PPO_TEMPLATE_CAPTURE_DIR ?? "tmp/templates-captures"}/native-published-proposal-320.png`,
   });
 });

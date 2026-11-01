@@ -15,7 +15,7 @@ test.use({
   isMobile: false,
   hasTouch: false,
 });
-const capture = "docs/testing/evidence/template-management/workspace";
+const capture = process.env.PPO_TEMPLATE_CAPTURE_DIR ?? "tmp/templates-captures";
 const definitionPath = `/documents/templates/OUT-09/${tmId(3)}`;
 const proposalPath = `/documents/templates/proposals/${tmId(4)}`;
 const usePath = `/documents/templates/use?company=${tmId(1)}&site=${tmId(2)}`;
@@ -780,4 +780,99 @@ test("DK06 actual Chrome 200 percent zoom reflows both registers and exact recor
   } finally {
     await context.close();
   }
+});
+
+test("DK06 proposal choices continue beyond 50 at 320 px and readonly sites never imply authoring duty", async ({
+  page,
+}) => {
+  await setup(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  const scopes = Array.from({ length: 51 }, (_, i) => ({
+    ...tmScope,
+    id: tmId(100 + i),
+    site_id: tmId(100 + i),
+    site_name: `SYN site ${i + 1}`,
+  }));
+  let allowed = true;
+  const purposes: string[] = [];
+  await page.route(
+    /\/api\/v1\/document-template-drafts\/scopes\?/,
+    async (r) => {
+      const q = new URL(r.request().url()).searchParams;
+      purposes.push(q.get("purpose") ?? "Read");
+      const items = q.get("cursor") ? scopes.slice(50) : scopes.slice(0, 50);
+      await r.fulfill({
+        json: {
+          ...pageOf(
+            allowed ? items : items.map((s) => ({ ...s, can_propose: false })),
+          ),
+          next_cursor: q.get("cursor") ? null : "SYN-next-scopes",
+        },
+      });
+    },
+  );
+  let created: Record<string, unknown> | undefined;
+  await page.route("**/api/v1/document-template-drafts", async (r) => {
+    if (r.request().method() !== "POST") return r.fallback();
+    created = r.request().postDataJSON();
+    await r.fulfill({
+      status: 201,
+      json: { state: "Draft", record_version: 1 },
+    });
+  });
+  await page.goto(definitionPath);
+  await page
+    .getByRole("button", { name: "Propose a change", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByLabel("Company", { exact: true }).selectOption(tmId(1));
+  await expect(
+    dialog
+      .getByLabel("Site", { exact: true })
+      .locator("option", { hasText: "SYN site 51" }),
+  ).toHaveCount(0);
+  await dialog.getByRole("button", { name: "Load more", exact: true }).click();
+  await expect(
+    dialog.getByText(
+      "End of list · sites where you can propose · identity order",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await dialog.getByLabel("Site", { exact: true }).selectOption(tmId(150));
+  await dialog
+    .getByLabel("Title", { exact: true })
+    .fill("SYN last site proposal");
+  await dialog.getByLabel("Field 1 key", { exact: true }).fill("site");
+  await dialog.getByLabel("Field 1 label", { exact: true }).fill("Site");
+  await dialog
+    .getByLabel("Field 1 source", { exact: true })
+    .selectOption("site.name");
+  await dialog.getByLabel("Reason", { exact: true }).fill("SYN paging proof");
+  expect(await dialog.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(
+    true,
+  );
+  await page.screenshot({ path: "tmp/templates-proposal-paging-320.png" });
+  await dialog
+    .getByRole("button", { name: "Create proposal", exact: true })
+    .click();
+  await expect.poll(() => created?.site_id).toBe(tmId(150));
+  expect(created?.company_id).toBe(tmId(1));
+  expect(purposes.every((p) => p === "Propose")).toBe(true);
+  allowed = false;
+  await page.goto("/documents/templates?view=proposals&family=OUT-09");
+  await expect(
+    page
+      .getByRole("link", { name: tmProposal.revision.body.title, exact: false })
+      .first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "New proposal", exact: true }),
+  ).toHaveCount(0);
+  await page.goto(definitionPath);
+  await expect(
+    page.getByRole("heading", { name: tmDefinition.name, exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Propose a change", exact: true }),
+  ).toHaveCount(0);
 });

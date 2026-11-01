@@ -74812,7 +74812,7 @@
           "section_id": "purpose",
           "title": "Purpose and applicability",
           "paragraphs": [
-            "Read-only exact definition and dependency evidence; Usage is paged by kind and current permission. Publication is available for managed definitions. Propose a change starts from the exact retained base.",
+            "Read-only exact definition and dependency evidence; Usage is paged by kind and current permission. Publication is available for managed definitions. Propose a change starts from the exact retained base when your proposal duty is confirmed for a site. Use Load more in the drawer for additional permitted sites.",
             "Implementation is in progress. Visual review, owner acceptance and deployment are pending."
           ],
           "steps": [],
@@ -74885,7 +74885,7 @@
           "title": "Using this page",
           "paragraphs": [],
           "steps": [
-            "Choose a family, inspect a definition or open its record. Proposals are review evidence and never imply a supported runtime version.",
+            "Choose a family, inspect a definition or open its record. New proposal appears when your proposal duty is confirmed for a site; use Load more in the drawer for additional permitted sites. Proposals are review evidence and never imply a supported runtime version.",
             "Confirm the exact revision, fingerprint and scope before a decision. Publication does not assign site use."
           ],
           "headers": [],

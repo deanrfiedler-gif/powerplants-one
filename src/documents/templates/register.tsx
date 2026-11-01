@@ -49,7 +49,7 @@ function Register({ query }: { query: URLSearchParams }) {
       : null,
   );
   const scopes = useTemplatePages<Scope>(
-    `document-template-drafts/scopes?family=${family ?? "OUT-09"}`,
+    `document-template-drafts/scopes?family=${family ?? "OUT-09"}&purpose=Propose`,
   );
   const [selectedSnapshot, setSnapshot] = useState<Template | null>(null),
     [create, setCreate] = useState(false),
@@ -76,7 +76,9 @@ function Register({ query }: { query: URLSearchParams }) {
   }
   const read = view === "definitions" ? definitions : proposals;
   const canCreate =
-    !!scopes.data?.items.some((x) => x.can_propose) || scopes.hasMore;
+    !scopes.loading &&
+    !scopes.error &&
+    !!scopes.data?.items.some((x) => x.can_propose);
   const choose = (value: string) => {
     const next = new URLSearchParams(query);
     next.set("family", value);

@@ -12,7 +12,7 @@ Definitions/proposals use identity-order native pages. Load more re-reads the vi
 
 ## fields
 
-Proposal drawers preserve the exact base and immutable review scope on revision. Ordered fields use permitted native binding choices. Phone fields stack at 320 px; a stale decision retains typed values.
+Proposal drawers preserve the exact base and immutable review scope on revision. New proposal company/site selectors use the purpose-bound native proposable-site read, with Load more beyond the first 50 choices. The register and definition record expose authoring actions only after a confirmed proposable scope. Ordered fields use permitted native binding choices. Phone fields stack at 320 px; a stale decision retains typed values.
 
 ## tabs
 

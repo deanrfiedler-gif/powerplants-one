@@ -1,8 +1,9 @@
 import { defineConfig } from "@playwright/test";
 // Dedicated compiled synthetic app; never start or reuse Dean's port-3000 server.
 export default defineConfig({
-  testDir: "tests/browser",
-  testMatch: /templates-(workspace|native)\.spec\.ts$/,
+  testDir: "tests",
+  testMatch:
+    /(?:browser[\\/]templates-workspace|browser-native[\\/]templates-native)\.spec\.ts$/,
   workers: 1,
   fullyParallel: false,
   timeout: 180000,
