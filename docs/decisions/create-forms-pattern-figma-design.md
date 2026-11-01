@@ -33,14 +33,14 @@ This is a design decision. It authorises no application code, migration, capabil
 | D1–D17 | Accepted as recommended, 1 November 2026 | "Accept recommendations". Section 4 |
 | Q1–Q16 | Resolved as recommended; design direction | Section 5 |
 | Accept the design | User decision, 1 November 2026 | Quoted above |
-| Named Figma version | Not saved yet | Section 7 |
+| Named Figma version | User action, 1 November 2026 | Dean saved it himself: "I have saved the named version as Create forms · shared pattern — accepted" |
 | Changing any application form | Not decided | Section 6 |
 
 ## 2. Design reference
 
 | Reference | Identity |
 |---|---|
-| Accepted design | Figma file "PPO - Design", private to Dean's Figma team. The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
+| Accepted design | Figma file "PPO - Design", private to Dean's Figma team, at the named version "Create forms · shared pattern — accepted". The file's link is not recorded in this public repository (ADR-0050, ADR-0053) |
 | Page | "Create forms · shared pattern" `3036:220`, under "— System —". The page header `3036:221` holds the conformance declaration. File index row `3110:306` |
 | Pattern | Quick add `3041:24222`; full form `3036:36929`; duplicate check `3036:41897`; unknown with a reason `3036:42238`; review before save `3036:42561`; saved and next step `3036:42901`; uncertain save `3036:43073`; validation errors `3036:43397`; permission-limited `3036:43723`; search picker `3044:15889`; top-bar + menu `3044:16220`; tablet full form `3044:16617`; tablet quick add `3048:12208` |
 | + Lead | Quick add `3039:65763`; full form `3039:66252`; saved `3039:66722`; phone 390 `3039:66901`; phone 320 `3039:67023`; phone saved `3039:67145` |
@@ -174,4 +174,4 @@ Verdicts come from viewing each cited frame. "Not drawn" rests on a search of th
 - Links were traced in the file data: 25 on-page links, each visible, each reaching its intended frame.
 - **Present mode was not played.** Dean declined Figma app access for that check. Devices, keyboard and screen reader were not checked. Nothing is built, so there is no application evidence, and this record implies no visual review of the application.
 - Captures were made on a temporary page under the capture rule in the design-to-build standard, which is still in pull request #818, then the page was deleted.
-- The named Figma version "Create forms · shared pattern — accepted" waits for Dean.
+- Dean saved the named version "Create forms · shared pattern — accepted" himself and told Claude so. Claude did not open version history to confirm it, because Figma app access was declined.

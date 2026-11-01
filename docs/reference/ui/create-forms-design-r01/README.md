@@ -13,7 +13,7 @@ These fifty-seven images retain the Create forms shared pattern that Dean accept
 
 The decisions, conformance declaration, D1–D17 and Q1–Q16 are in [the design decision](../../../decisions/create-forms-pattern-figma-design.md). Retain these bytes unchanged; a revised design receives a new revision folder.
 
-Each image is one Figma frame exported at scale 1 at its exact frame size. The copies were made on a temporary page, which was deleted after export, so the table cites each source frame on "PPO - Design". The named version "Create forms · shared pattern — accepted" waits for Dean.
+Each image is one Figma frame exported at scale 1 at its exact frame size. The copies were made on a temporary page, which was deleted after export, so the table cites each source frame on "PPO - Design". Dean saved the named version "Create forms · shared pattern — accepted" on 1 November 2026.
 
 Every Font Awesome icon was replaced by a plain placeholder square before export, as [ADR-0053](../../../decisions/ADR-0053-figma-page-design.md) requires, so no Pro artwork is in this repository. The Powerplants logo is the company's own, from the [logo pack r01](../ppo-logo-pack/README.md).
 

@@ -10,7 +10,7 @@ Dean accepted the Figma design for the shared Create forms pattern: "Accept reco
 - a duplicate check that is always a prompt and never merges; an uncertain save that recovers the original request and cannot create a second record;
 - a coverage table of every create route, where it is drawn and whether it follows the pattern.
 
-Q1–Q16 are design direction, not verified operating rules. Under Q8, Activity kind was added to Deals Add deal, recorded as an [amendment](../decisions/deals-figma-design.md#amendment--1-november-2026). Icon-free captures with hashes are retained in [create-forms-design-r01](../reference/ui/create-forms-design-r01/README.md). The Figma copies were on a temporary page and were deleted after export.
+Q1–Q16 are design direction, not verified operating rules. Under Q8, Activity kind was added to Deals Add deal, recorded as an [amendment](../decisions/deals-figma-design.md#amendment--1-november-2026). Dean saved the named version "Create forms · shared pattern — accepted". Icon-free captures with hashes are retained in [create-forms-design-r01](../reference/ui/create-forms-design-r01/README.md). The Figma copies were on a temporary page and were deleted after export.
 
 Checked:
 - No Font Awesome instance was left on the capture copies, and none carried a prototype link.
@@ -20,7 +20,6 @@ Not done:
 - The prototype flows weren't played in Figma Present mode; Dean declined app access for that check. Devices, keyboard and screen reader weren't checked.
 - No application form is changed. Check before creating on leads and deals needs a new read, and New build has no model, route or capability.
 - Eight coverage rows, including People and Sites, are still not drawn.
-- The named Figma version "Create forms · shared pattern — accepted" waits for Dean.
 - Pages this one draws on that are still proposals stay proposals.
 
 No application code, route, migration, permission, grant, adapter or parent ID changes.
