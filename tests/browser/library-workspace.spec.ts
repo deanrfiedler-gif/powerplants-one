@@ -645,7 +645,9 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
   await expect(panel).toBeVisible();
   selectedAvailable = false;
   await page.reload();
-  await page.getByRole("button", { name: /^Filters/ }).click();
+  await page
+    .getByRole("button", { name: "Filter, a filter is applied", exact: true })
+    .click();
   await expect(
     page
       .getByRole("dialog")
