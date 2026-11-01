@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-ad02-amendments",
+          "expected": "The accepted Settings amendments design (PPO-AD02-SETTINGS-AMENDMENTS-FIGMA-DEC) uses grid registers on the policy record for History and Affected work, with the Figma page parts Policy history row and Affected work row.",
+          "actual": "The policy record tabs are not built. The two Figma parts stay on the amendments page and are not on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for both tabs and record any departure; move the two parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# Sales aftercare and renewal worklist (CR-05)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Sales aftercare: `/sales/aftercare` and `/sales/aftercare/[id]` | [Design r01 captures](../sales-aftercare/sales-aftercare-design-r01/README.md) (Figma, icon-free PNGs); the earlier [r01 HTML](../sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html) stays as issued | Owner-accepted design, 30 October 2026 | [Decision](../../../decisions/sales-aftercare-figma-design.md). CR-05; built natively, acceptance pending, and not yet changed to this design. A grid worklist grouped by source event, the customer review with an eleven-line outcome ledger, a Complete review dialog that sets exactly one outcome, statements with a basis beside verified results, Service referral, training and renewal handovers in words, at desktop, tablet and phone, with eight states |
+
+**Sales aftercare design, 30 October 2026:** Dean accepted the Figma design for the Sales aftercare and renewal worklist CR-05. Eleven outcomes stay separate, each with its own value, source and date, and completing a review sets exactly one. No follow-up interval is invented: a date comes from a user choice, a recorded commitment or a sourced rule, otherwise the record shows "Date needed". Customer statements sit beside verified results, never merged with them. Changing the built pages is not decided.
