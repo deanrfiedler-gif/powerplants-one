@@ -1,5 +1,7 @@
 # Templates review-correction evidence
 
+Subsequent [native completion evidence](../native-completion/README.md) records successful canonical reruns and closes the execution limits below. This earlier record remains source-bound to its original attempts.
+
 Date: 1 November 2026. Implementer: Codex. Scope: DK-06, PR #704. Application source: `dbff42b3b8b66a3c018a9f4365818996af13c9ad`, including main `26deea85d000878ca8df2c1b7a91e1ffdedd68f6`. Later changes in this pass affect test fixtures, documentation and evidence only. The [31 October evidence](../README.md) and its capture hashes remain unchanged.
 
 The correction filters native scope choices by `purpose=Propose` before paging and binds signed cursors to that purpose. Register and definition authoring controls require confirmed proposal duty; continuation alone grants nothing. The existing proposal panel retains Load more. Commands still make their own scope, duty, revision, review and fingerprint checks. Catalogue and proposals cover OUT-09, OUT-10 and OUT-14; publication and site assignment remain OUT-09 only.
