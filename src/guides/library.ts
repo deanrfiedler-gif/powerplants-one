@@ -14,7 +14,8 @@ const guidesFolder = "docs/guides";
 // Written by scripts/build-guides.ts and read by the production server (ADR-0065, decision 8).
 export const releasedFile = ".ppo-guides/released.json";
 
-// The TypeScript guides that stage 1 carries over to Markdown. A guide's carried_over_from names one of these.
+// The TypeScript guides that stage 1 carried over to Markdown. A guide's carried_over_from names one of these. The
+// modules are retired: these paths are provenance, kept so carried_over_from stays valid, and need not exist.
 export const carriedOverSources = [
   "src/components/leads-guide.ts",
   "src/activities/work-guide.ts",

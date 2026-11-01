@@ -5,12 +5,17 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { createElement, isValidElement, type ReactElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { PageGuide } from "../../src/components/leads-guide";
 import { compileGuide } from "../../src/guides/compile";
 import { allowedHttpsHosts } from "../../src/guides/links";
 import { maxNesting, type BlockNode, type CompiledGuide, type InlineNode } from "../../src/guides/model";
 import { GuideArticle, type GuideLinkProps } from "../../src/guides/render";
-import { acceptedPanel } from "./guide-render-accepted";
+import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { ShellPageGuide } from "../../src/components/shell-page-guide";
+import { readMaster } from "../../src/development/catalog";
+import { readGuideLibrary } from "../../src/guides/library";
+import { GuideLibraryProvider } from "../../src/guides/provider";
+import { releasedGuides } from "../../src/guides/released";
+import { acceptedPanel, type PageGuide } from "./guide-render-accepted";
 
 // User guide stage 1 (ADR-0065, decision 7): React renders the compiled model and reproduces the accepted
 // page-guide panel. These tests use synthetic values only.
@@ -377,8 +382,8 @@ test("no HTML injection API under src/guides", () => {
 
 // The guide modules a client component may import. The browser receives the compiled model, never the parser
 // (ADR-0065, decision 8), so these import only React, next/link and each other; released.ts may also import the
-// register's types, which are erased.
-const clientSafe = ["render.tsx", "released.ts", "links.ts", "model.ts", "status.ts"];
+// register's types, and provider.tsx the release's types, which are erased.
+const clientSafe = ["render.tsx", "released.ts", "links.ts", "model.ts", "status.ts", "provider.tsx"];
 const clientImports = new Set(["react", "next/link", "./model", "./links", "./status"]);
 const serverOnly = /^(?:node:|marked$|yaml$|\.\/compile$|\.\/library$)/;
 
@@ -398,7 +403,7 @@ test("the client-safe guide modules import only React, next/link and each other"
   for (const name of clientSafe) {
     for (const { specifier, typeOnly } of importsOf(readFileSync(join(root, name), "utf8"))) {
       assert.doesNotMatch(specifier, serverOnly, `${name} must not import ${specifier}`);
-      const allowed = clientImports.has(specifier) || (name === "released.ts" && specifier === "../development/model" && typeOnly);
+      const allowed = clientImports.has(specifier) || (name === "released.ts" && specifier === "../development/model" && typeOnly) || (name === "provider.tsx" && specifier === "./released" && typeOnly);
       assert.ok(allowed, `${name} imports ${specifier}${typeOnly ? " (types only)" : ""}, which is not on the client allowlist`);
     }
   }
@@ -676,67 +681,37 @@ test("renders a carried-over guide exactly as the accepted panel", () => {
   assert.equal(rendered, accepted);
 });
 
-// Task 7 rewrites shell-page-guide.tsx, and deletes the accepted-panel oracle and this guard together.
-// The oracle copies lines of the shell panel, so the parity test is only as good as the copy. This guard compares the
-// copy with the file as it stands now. The declared differences are the eyebrow expression on line 35, the choice of
-// guide on line 33, the line 43 button and the indentation of the jump statements; any other difference is drift.
-const shellEyebrow = '{showShell || !pageGuide ? "User guide" : "Page guide"}';
-const sourceLines = (source: string) => source.split("\n").map((line) => line.trim());
-const copiedSpan = (lines: string[], from: string, to: string) => {
-  const start = lines.findIndex((line) => line.startsWith(from));
-  const end = start < 0 ? -1 : lines.indexOf(to, start);
-  return end > start ? lines.slice(start, end + 1) : undefined;
-};
-const firstDifference = (actual: string[], expected: string[]) => {
-  for (let at = 0; at < Math.max(actual.length, expected.length); at++) {
-    if (actual[at] !== expected[at]) return `line ${at + 1} of the block: the oracle has ${JSON.stringify(actual[at])} but the shell has ${JSON.stringify(expected[at])}`;
-  }
-  return undefined;
-};
-function oracleDrift(shellSource: string, oracleSource: string): string[] {
-  const shell = sourceLines(shellSource);
-  const oracle = sourceLines(oracleSource);
-  const problems: string[] = [];
-  const shellJump = copiedSpan(shell, "const jump = ", "};");
-  const oracleJump = copiedSpan(oracle, "const jump = ", "};");
-  const shellPanel = copiedSpan(shell, "const numbered = ", "</article>;");
-  const oraclePanel = copiedSpan(oracle, "const numbered = ", "</article>;");
-  if (!shellJump || !oracleJump || !shellPanel || !oraclePanel) return ["a copied block was not found: the jump handler or the panel from `const numbered` to `</article>;`"];
-  if (!shellPanel.some((line) => line.includes(shellEyebrow))) problems.push("the shell no longer holds the eyebrow expression the oracle replaces with {eyebrow}");
-  const expectedPanel = shellPanel
-    .filter((line) => !line.startsWith("const guide: PageGuide = ") && !line.startsWith("{!showShell && <button"))
-    .map((line) => line.replace(shellEyebrow, "{eyebrow}"));
-  const panelDifference = firstDifference(oraclePanel, expectedPanel);
-  if (panelDifference) problems.push(`panel markup drifted, ${panelDifference}`);
-  const jumpDifference = firstDifference(oracleJump, shellJump);
-  if (jumpDifference) problems.push(`jump handler drifted, ${jumpDifference}`);
-  return problems;
-}
-// A file that cannot be read fails the guard: it never skips.
-const readSource = (relative: string) => {
-  try {
-    return readFileSync(fileURLToPath(new URL(relative, import.meta.url)), "utf8");
-  } catch (error) {
-    return assert.fail(`cannot read ${relative}, so the oracle cannot be checked: ${error instanceof Error ? error.message : String(error)}`);
-  }
-};
-
-test("the accepted-panel oracle still copies shell-page-guide.tsx", () => {
-  assert.deepEqual(oracleDrift(readSource("../../src/components/shell-page-guide.tsx"), readSource("./guide-render-accepted.tsx")), []);
+// The shell reads the released guides from the provider the root layout supplies. With no provider (a component
+// fixture, or a layout that failed to read the release) every page shows the existing fallback and nothing throws.
+// /sales/leads showed the Leads guide from a TypeScript module before the released guides moved to Markdown.
+test("ShellPageGuide falls back without a provider", () => {
+  const markup = renderToStaticMarkup(createElement(PathnameContext.Provider, { value: "/sales/leads" }, createElement(ShellPageGuide, { page: "Leads" })));
+  assert.match(markup, /<span class="ppo-guide-eyebrow">Page guide<\/span><h3>Leads<\/h3><p>The detailed Leads guide is being prepared\.<\/p>/);
+  assert.match(markup, /<div class="ppo-guide-note">The page guide will explain its purpose, how to use it, the journey through its key tasks and where to go next\.<\/div>/);
+  assert.doesNotMatch(markup, /<article/, "no guide is drawn without the released library");
+  // With no shell guide to open, the button that opens it is not offered.
+  assert.doesNotMatch(markup, /Read the application shell guide/);
 });
 
-test("the oracle drift guard fails when the shell panel changes, and when a file cannot be read", () => {
-  const shell = readSource("../../src/components/shell-page-guide.tsx");
-  const oracle = readSource("./guide-render-accepted.tsx");
-  const changed = (find: string, replacement: string) => {
-    assert.ok(shell.includes(find), `the shell should hold ${find}`);
-    return shell.replace(find, replacement);
-  };
-  assert.match(oracleDrift(changed("How to use it", "How to use this"), oracle).join("\n"), /panel markup drifted/);
-  assert.match(oracleDrift(changed('<section className="ppo-guide-section"><h3>On your phone</h3>', '<section className="ppo-guide-section"><h3>Extra</h3></section>\n    <section className="ppo-guide-section"><h3>On your phone</h3>'), oracle).join("\n"), /panel markup drifted/);
-  assert.match(oracleDrift(changed(shellEyebrow, '"Guide"'), oracle).join("\n"), /eyebrow expression/);
-  assert.match(oracleDrift(changed('section?.focus({ preventScroll: true });', 'section?.focus();'), oracle).join("\n"), /jump handler drifted/);
-  assert.match(oracleDrift(changed("const numbered = ", "const renamed = "), oracle).join("\n"), /was not found/);
-  assert.match(oracleDrift(shell, oracle.replace("<h4>{title}</h4>", "<h5>{title}</h5>")).join("\n"), /panel markup drifted/);
-  assert.throws(() => readSource("../../src/components/no-such-file.tsx"), /cannot read/);
+// With the released library the root layout supplies, a page shows the guide its route is bound to, followed by the
+// button that opens the shell guide; the application shell opens the shell guide directly as the user guide; and a
+// page with no visible guide keeps the fallback and the button.
+test("ShellPageGuide shows the released guide for the route, and the shell guide for the application shell", async () => {
+  const root = fileURLToPath(new URL("../../", import.meta.url));
+  const { entries } = await readMaster(root);
+  const released = releasedGuides(await readGuideLibrary(root, entries), entries);
+  const shellOn = (pathname: string, page: string) =>
+    renderToStaticMarkup(createElement(GuideLibraryProvider, { value: released, children: createElement(PathnameContext.Provider, { value: pathname }, createElement(ShellPageGuide, { page })) }));
+  const leads = released.guides.find((guide) => guide.front.guide_key === "guide.page.sales.leads");
+  assert.ok(leads && released.shell, "the released library holds the Leads guide and the shell guide");
+  const shellButton = /<button class="ppo-guide-link">.*?<span>Read the application shell guide<\/span>.*?<\/button>/;
+  const leadsMarkup = shellOn("/sales/leads", "Leads");
+  assert.ok(leadsMarkup.startsWith(render(leads).replace(/<\/article>$/, "")), "the Leads guide is drawn as GuideArticle draws it");
+  assert.match(leadsMarkup, new RegExp(`${shellButton.source}</article>$`));
+  const shellMarkup = shellOn("/", "Application shell");
+  assert.equal(shellMarkup, render(released.shell, { eyebrow: "User guide" }));
+  assert.doesNotMatch(shellMarkup, /Read the application shell guide/);
+  const deals = shellOn("/sales/opportunities", "Deals");
+  assert.match(deals, /<h3>Deals<\/h3><p>The detailed Deals guide is being prepared\.<\/p>/);
+  assert.match(deals, shellButton);
 });
