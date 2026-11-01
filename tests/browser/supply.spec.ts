@@ -485,7 +485,8 @@ test("assessed Shipment evidence retains its native source handover", async ({ p
     supplyFact("Assessment", current.record.version, { scope: "SYN exact shipment evidence only" }));
   await page.goto(`/supply/material-readiness?record=${demand.id}`);
   await page.getByText("Exact assessed source versions", { exact: true }).click();
-  const link = page.getByRole("link", { name: "Source version 1", exact: true });
+  const sourceRead = await (await page.request.get(origin + `/api/v1/supply/records/${source.id}`)).json();
+  const link = page.getByRole("link", { name: `Source version ${sourceRead.record.version}`, exact: true });
   await expect(link).toHaveAttribute("href", `/supply/stock?native=1&record=${source.id}`);
   await link.click();
   await expect(page.locator("#ppo-supply")).toBeVisible();
