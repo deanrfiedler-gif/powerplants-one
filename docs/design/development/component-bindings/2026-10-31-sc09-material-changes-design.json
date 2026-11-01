@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-sc09-change-grid",
+          "expected": "The accepted SC-09 Material changes design (PPO-SC09-MATERIAL-CHANGES-FIGMA-DEC) uses a grid register grouped by status and a change record, with the Figma page parts Material changes / Change grid header, Change grid row, Affected record row and Compare row.",
+          "actual": "The native /supply/changes page keeps its worklist and detail grid; it isn't built to this design. The four Figma parts stay on the SC-09 page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for SC-09 and record any departure; move the four parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

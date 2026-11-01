@@ -92,3 +92,9 @@ Exact new-state mockup/HTML images are missing. Retained module references above
 ## Additive backend contract
 
 The [Work orders backend](../../../decisions/work-order-register-backend.md) supplies permission-scoped register and record projections. Counts explicitly cover one authorised candidate window; they must not be presented as global menu totals. Evidence and history identify their native source scope. The existing screen and commands remain compatible; accepted Figma page integration, global counts and visual review remain pending. [Execution evidence](../../../testing/evidence/work-order-register/README.md) records actual checks. No review fingerprint is changed.
+
+## Linked project (B1) — 30 October 2026
+
+Proposed addition, built as an agent decision under Dean's standing order of 30 October 2026; not Dean's acceptance. When the work order belongs to a project (rule R1 of the project field work and milestone billing decision, proposed in [PR #751](https://github.com/deanrfiedler-gif/powerplants-one/pull/751)) and the reader may read that project, the state row shows "Project: {reference} · {title}" as a link to `/projects/{id}`, with "(closed)" when the project is closed. A reader who may not read the project sees nothing about it. Linking and unlinking happen on the project page, which needs both project and work-order edit; this page adds no action, layout or control.
+
+Desktop and phone keep the existing wrapping state row; the link wraps with long titles and keeps the shared focus style. Exact images are missing. Functional evidence: `docs/testing/evidence/work-order-project-link/README.md`; no review fingerprint is changed.

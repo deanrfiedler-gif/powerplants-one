@@ -1,0 +1,7 @@
+# Service bulletins and support lifecycle (EQ-06 · EQ-07)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Bulletins and lifecycle: `/equipment/bulletins` and `/equipment/lifecycle` | [Design r01 captures](../equipment/bulletins-lifecycle-design-r01/README.md) (Figma, icon-free PNGs); the earlier [r02 HTML](../equipment/PPO-Equipment-and-Installed-Base-Workspace-r02.html) stays as issued | Owner-accepted design, 31 October 2026 | [Decision](../../../decisions/bulletins-lifecycle-figma-design.md). EQ-06 and EQ-07; built natively with synthetic verification, and not yet changed to this design. Grid registers grouped by review and support state, a bulletin record with one review per candidate, revisions linked to their predecessor, dated supplier evidence never overwritten, and handovers that authorise nothing, at desktop, tablet and phone, with eight states |
+
+**Bulletins and lifecycle design, 31 October 2026:** Dean accepted the Figma design for Service bulletin applicability EQ-06 and Support lifecycle EQ-07. A matching asset is a candidate only, and each needs its own review with a reason and evidence. Manufacturer claims stay quoted as theirs. Support evidence never changes the physical lifecycle, and end of support reaches Sales only after a review, as an upgrade conversation, never a quotation. Changing the built pages is not decided.
