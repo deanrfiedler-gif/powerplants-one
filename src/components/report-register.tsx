@@ -1,4 +1,5 @@
 "use client";
+import { FindingsMenu } from "./service-findings-menu";
 import { Fragment, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -166,6 +167,7 @@ export function ReportListScreen() {
       message="Synthetic reports. Nothing is sent to customers."
       menu={
         <nav aria-label="Report queues">
+          <h2>Service reports</h2>
           {reportQueues.map((item) => (
             <Fragment key={item.id}>
               {"group" in item && <h2>{item.group}</h2>}
@@ -188,6 +190,7 @@ export function ReportListScreen() {
               </button>
             </Fragment>
           ))}
+          <FindingsMenu />
         </nav>
       }
     >

@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+(node:39036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tmp\sv07\main-baseline\tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer (58.1s)
+
+
+  1) tmp\sv07\main-baseline\tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/my-jobs\/11000000-0000-4000-8000-000000000035$/
+    Received string:  "http://127.0.0.1:3148/service/reports/16000000-0000-4000-8000-000000000001?department=service"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="en-AU">…</html>
+           - unexpected value "http://127.0.0.1:3148/service/reports/16000000-0000-4000-8000-000000000001?department=service"
+
+
+      306 |       });
+      307 |       await handover.click();
+    > 308 |       await expect(page).toHaveURL(
+          |                          ^
+      309 |         new RegExp(`/my-jobs/${reportFixture.appointment.id}$`),
+      310 |       );
+      311 |     }
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tmp\sv07\main-baseline\tests\browser\service-reports-design.spec.ts:308:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\baseline-browser\service-reports-design-SV--7094a-action-and-view-only-footer\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\baseline-browser\service-reports-design-SV--7094a-action-and-view-only-footer\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\baseline-browser\service-reports-design-SV--7094a-action-and-view-only-footer\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\baseline-browser\service-reports-design-SV--7094a-action-and-view-only-footer\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tmp\sv07\main-baseline\tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer 

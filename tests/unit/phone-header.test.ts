@@ -24,6 +24,7 @@ test("unchanged header labels dispatch to the latest page state, including an al
       pageAction: { label: "Search", icon: "search", onSelect: run("action") },
       filter: { open: run("filter"), searchAndFilter: run("combined") },
       record: {
+        back: { label: "Back to findings", onSelect: run("back") },
         previous: { label: "Previous", onSelect: run("previous") },
         next: { label: "Next", onSelect: run("next") },
         more: [{ label: "Edit", onSelect: run("edit") }],
@@ -39,10 +40,11 @@ test("unchanged header labels dispatch to the latest page state, including an al
   shown.pageAction!.onSelect(opener);
   shown.filter!.open(opener);
   shown.filter!.searchAndFilter!(opener);
+  shown.record!.back!.onSelect(opener);
   shown.record!.previous!.onSelect(opener);
   shown.record!.next!.onSelect(opener);
   openMenuAction(opener);
-  assert.deepEqual(calls, ["view", "action", "filter", "combined", "previous", "next", "edit"].map((name) => `current:${name}`));
+  assert.deepEqual(calls, ["view", "action", "filter", "combined", "back", "previous", "next", "edit"].map((name) => `current:${name}`));
 });
 
 test("P2 a page without views shows its name as a plain title, not a button", () => {
