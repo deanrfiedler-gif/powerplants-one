@@ -181,6 +181,7 @@ test("DK native browser: independent findings, review, exact history and missing
     .filter({ hasText: doc.command.title })
     .first()
     .click();
+  await page.waitForURL((url) => url.pathname === doc.path);
   const entry = new URL(page.url());
   expect(entry.searchParams.get("revision_id")).toBe(doc.command.revision_id);
   expect(entry.searchParams.has("list_query")).toBe(true);
