@@ -1,12 +1,27 @@
-import type { PageGuide } from "../../src/components/leads-guide";
+// The shape of the retired TypeScript page guides (src/components/leads-guide.ts until the released guides moved to
+// Markdown), which the accepted panel below draws.
+export type PageGuide = {
+  title: string;
+  intro: string;
+  overviewTitle: string;
+  purpose: string;
+  features: readonly (readonly [string, string])[];
+  steps: readonly (readonly [string, string])[];
+  journeyIntro: string;
+  journey: readonly (readonly [string, string])[];
+  mobile: string;
+  shortcuts: readonly (readonly [string, string])[];
+  recovery: string;
+  boundary: string;
+};
 
-// A verbatim copy of src/components/shell-page-guide.tsx lines 32 to 42 and the article's closing tag: the accepted
-// page-guide panel, without the line 43 button that opens the application shell guide. The parity test in
-// guide-render.test.ts renders a guide through this copy and through GuideArticle, and the two must match exactly.
-// If they differ, fix the renderer in src/guides/render.tsx: never edit this copy to follow it. The eyebrow stands in
-// for the expression on line 35, and `guide` for line 33's choice between the page guide and the shell guide.
-// The click handlers are copied too, though renderToStaticMarkup never shows them.
-// guide-render.test.ts compares this copy with shell-page-guide.tsx line by line, so drift fails a test.
+// A verbatim copy of the accepted page-guide panel as src/components/shell-page-guide.tsx drew it from the TypeScript
+// guides (commit c235cb18, lines 32 to 42 and the article's closing tag), without the button that opens the
+// application shell guide. The parity test in guide-render.test.ts renders a guide through this copy and through
+// GuideArticle, and the two must match exactly. If they differ, fix the renderer in src/guides/render.tsx: never edit
+// this copy to follow it. The eyebrow stands in for the panel's eyebrow expression, and `guide` for its choice between
+// the page guide and the shell guide. The click handlers are copied too, though renderToStaticMarkup never shows them.
+// The shell now draws every guide with GuideArticle, so this copy is frozen: it no longer follows shell-page-guide.tsx.
 const jump = (id: string) => {
   const section = document.getElementById(id);
   section?.focus({ preventScroll: true });
