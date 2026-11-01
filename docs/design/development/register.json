@@ -2798,12 +2798,36 @@
       "design_path": "docs/design/development/pages/scope-pj-09.md",
       "html_path": null,
       "image_paths": [
-        "docs/reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Desktop-UI-Mockup-r01.png"
+        "docs/reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Desktop-UI-Mockup-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-01-Desktop-Overview-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-02-Desktop-ITP-Record-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-03-Desktop-Hold-Point-Blocking-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-04-Desktop-Witness-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-05-Desktop-Defect-Retest-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-06-Desktop-Plan-Revision-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-07-Desktop-Release-Exclusions-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-08-Desktop-Handover-PJ09-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-09-Desktop-Run-A-Check-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-10-Tablet-ITP-Record-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-11-Phone390-Today-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-12-Phone390-Hold-Point-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-13-Phone390-Witness-Attendance-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-14-Phone320-Today-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-15-Phone320-Hold-Point-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-16-Phone320-Witness-Attendance-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-17-State-Loading-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-18-State-No-ITP-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-19-State-Could-Not-Load-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-20-State-Read-Only-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-21-State-Plan-Changed-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-22-State-Release-Blocked-r01.png",
+        "docs/reference/ui/projects/site-assurance-design-r01/PPO-Site-Assurance-23-State-Evidence-Expired-r01.png"
       ],
       "dependencies": [
         "docs/decisions/ADR-0033-staged-acceptance.md",
         "docs/delivery/pj09-staged-acceptance-handover.md",
-        "docs/testing/evidence/project-acceptance-r01/README.md"
+        "docs/testing/evidence/project-acceptance-r01/README.md",
+        "docs/decisions/site-assurance-figma-design.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
