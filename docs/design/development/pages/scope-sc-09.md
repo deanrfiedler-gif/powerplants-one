@@ -12,9 +12,13 @@ Review before and after evidence through the owning module. Bookings and issued 
 
 ## Desktop
 
+Accepted design: the [Material change impact design decision](../../../decisions/material-changes-figma-design.md) of 31 October 2026 covers a register grouped by status, a change record with before and after evidence, affected records by type, holds, unmet demand and an "Unchanged" statement, and a Record follow-through side form, with twenty-one icon-free captures in [design r01](../../../reference/ui/supply-chain/material-changes-design-r01/README.md). The grid register and record tabs depart from the worklist and detail grid below (V4). The native page isn't changed yet; the text below describes it until a build is requested.
+
 Use the existing PPO shell, r20 Register / worklist with selected Detail workspace, and Review / comparison for retained history. At 1440 × 960 and 1024 × 768, the module uses a two-column worklist/detail grid (one third / two thirds), 20px padding, 16px gaps, white bordered panels, 26px title and compact wrapped evidence rows. The shell's normal main region owns page scrolling. No second rail or viewport-height allocation is introduced. Page-specific actions appear only for permitted native capabilities.
 
 ## Mobile
+
+Accepted design: captures 09–14 in [design r01](../../../reference/ui/supply-chain/material-changes-design-r01/README.md): my action, the Acknowledge sheet and acknowledged at 390 and 320. Compact header, stacked cards and 16 px input text (D11).
 
 At 390 × 844 and 320 CSS px the worklist/detail grid and capture fields become a single column. Module padding is 12px; the title is 22px. Every field remains available with a visible label, 16px input text and 44px target. Receipt, pick/stage/dispatch, POD and custody capture use focused stacked forms. Dense evidence uses labelled definition lists rather than an inaccessible table-only view. Content and long identifiers wrap within the viewport. Selecting a record on mobile opens its detail in place of the worklist, with an explicit Back to worklist control; browser Back also restores the list. Mobile browser/keyboard evidence is separate from physical-device acceptance.
 
@@ -28,7 +32,7 @@ Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order dema
 
 ## References and review evidence
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`. Historical bytes are unchanged.
+Accepted Figma design: [Material changes design r01 captures](../../../reference/ui/supply-chain/material-changes-design-r01/README.md) (icon-free). Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Supply-Chain-Material-Readiness-r03.html`. Historical bytes are unchanged.
 
 No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.
 
