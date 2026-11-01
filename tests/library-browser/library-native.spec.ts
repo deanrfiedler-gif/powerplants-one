@@ -172,6 +172,18 @@ test("DK native browser: independent findings, review, exact history and missing
     .getByLabel("Purpose", { exact: true })
     .fill("SYN declared site reference");
   await submit(page, "Add link", `${doc.api}/links`);
+  // Enter through the register's exact link, preserving its return/list context.
+  await page.goto(
+    `/documents?q=${encodeURIComponent(doc.command.title)}&sort=number&direction=desc`,
+  );
+  await page
+    .locator("a[data-document]")
+    .filter({ hasText: doc.command.title })
+    .first()
+    .click();
+  const entry = new URL(page.url());
+  expect(entry.searchParams.get("revision_id")).toBe(doc.command.revision_id);
+  expect(entry.searchParams.has("list_query")).toBe(true);
   await page.getByRole("button", { name: "Add revision", exact: true }).click();
   await page
     .getByRole("dialog")
@@ -184,6 +196,13 @@ test("DK native browser: independent findings, review, exact history and missing
   const current = await (
     await page.request.get(`/api/v1/document-library${doc.api}`)
   ).json();
+  expect(new URL(page.url()).searchParams.get("revision_id")).toBe(
+    current.revision.id,
+  );
+  for (const key of ["from", "list_query", "list_pages"])
+    expect(new URL(page.url()).searchParams.get(key)).toBe(
+      entry.searchParams.get(key),
+    );
   expect(current.review_state).toBe("Unreviewed");
   expect(current.findings).toHaveLength(0);
   const historical = `${doc.path}?revision_id=${doc.command.revision_id}`;

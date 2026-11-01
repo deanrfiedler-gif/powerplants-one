@@ -22127,14 +22127,14 @@
       "title": "Document register and linked library",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Synthetic backend + planned workspace",
+      "content_mode": "Synthetic native workspace",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Implementation in progress; see PR #706 for executed checks.",
+      "runtime_evidence": "Source-bound checks are recorded in docs/testing/evidence/document-library/workspace/README.md; independent acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -22160,7 +22160,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register."
+            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register.",
+            "Use Filters for searchable customer, site and owner choices and Type. Applied filters remain visible at tablet widths. Reset filters keeps the selected view and sort. A site-scoped registrar must choose a site before an owner."
           ],
           "steps": [],
           "rows": [],
@@ -22170,7 +22171,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata."
+            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata.",
+            "Revisions has a selectable table and a Selected revision panel with retained review, source, declared links and exact download. Links filters All, Active, Needs assessment and Retired on the server before paging. History describes retained events in plain language."
           ],
           "steps": [],
           "rows": [],
@@ -22190,7 +22192,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly."
+            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly.",
+            "After Add revision succeeds, the new exact revision opens with the original list context retained. Earlier review and links stay on the earlier revision."
           ],
           "steps": [],
           "rows": [],
@@ -22299,14 +22302,14 @@
       "title": "Document viewer, revision and review workspace",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Synthetic backend + planned workspace",
+      "content_mode": "Synthetic native workspace",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
       "prepared_at": "2026-09-23",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Implementation in progress; see PR #706 for executed checks.",
+      "runtime_evidence": "Source-bound checks are recorded in docs/testing/evidence/document-library/workspace/README.md; independent acceptance remains pending.",
       "sections": [
         {
           "section_id": "purpose",
@@ -22332,7 +22335,8 @@
           "section_id": "quick-start",
           "title": "Quick start",
           "paragraphs": [
-            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register."
+            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register.",
+            "Use Filters for searchable customer, site and owner choices and Type. Applied filters remain visible at tablet widths. Reset filters keeps the selected view and sort. A site-scoped registrar must choose a site before an owner."
           ],
           "steps": [],
           "rows": [],
@@ -22342,7 +22346,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata."
+            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata.",
+            "Revisions has a selectable table and a Selected revision panel with retained review, source, declared links and exact download. Links filters All, Active, Needs assessment and Retired on the server before paging. History describes retained events in plain language."
           ],
           "steps": [],
           "rows": [],
@@ -22362,7 +22367,8 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly."
+            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly.",
+            "After Add revision succeeds, the new exact revision opens with the original list context retained. Earlier review and links stay on the earlier revision."
           ],
           "steps": [],
           "rows": [],
@@ -74560,7 +74566,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "New source; review needed",
+      "content_mode": "Synthetic native workspace",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [],
       "sections": [
@@ -74588,7 +74594,8 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register."
+            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register.",
+            "Use Filters for searchable customer, site and owner choices and Type. Applied filters remain visible at tablet widths. Reset filters keeps the selected view and sort. A site-scoped registrar must choose a site before an owner."
           ],
           "steps": [],
           "rows": [],
@@ -74598,7 +74605,8 @@
           "section_id": "page-tour",
           "title": "Page Tour",
           "paragraphs": [
-            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata."
+            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata.",
+            "Revisions has a selectable table and a Selected revision panel with retained review, source, declared links and exact download. Links filters All, Active, Needs assessment and Retired on the server before paging. History describes retained events in plain language."
           ],
           "steps": [],
           "rows": [],
@@ -74618,7 +74626,8 @@
           "section_id": "tasks",
           "title": "Tasks",
           "paragraphs": [
-            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly."
+            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly.",
+            "After Add revision succeeds, the new exact revision opens with the original list context retained. Earlier review and links stay on the earlier revision."
           ],
           "steps": [],
           "rows": [],
@@ -74695,7 +74704,7 @@
           "headers": []
         }
       ],
-      "runtime_evidence": "Implementation in progress; see PR #706 for executed checks."
+      "runtime_evidence": "Source-bound checks are recorded in docs/testing/evidence/document-library/workspace/README.md; independent acceptance remains pending."
     },
     {
       "guide_key": "guide.route-documents",
@@ -74706,7 +74715,7 @@
       "reviewer": null,
       "reviewed_at": null,
       "reviewed_content_hash": null,
-      "content_mode": "New source; review needed",
+      "content_mode": "Synthetic native workspace",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "related_entry_keys": [],
       "sections": [
@@ -74734,7 +74743,8 @@
           "section_id": "quick-start",
           "title": "Using this page",
           "paragraphs": [
-            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register."
+            "Open Document library, choose a view, search or filter, then open a document title. Snapshot inspects the current row without leaving the register.",
+            "Use Filters for searchable customer, site and owner choices and Type. Applied filters remain visible at tablet widths. Reset filters keeps the selected view and sort. A site-scoped registrar must choose a site before an owner."
           ],
           "steps": [],
           "rows": [],
@@ -74744,7 +74754,8 @@
           "section_id": "page-tour",
           "title": "Page Tour",
           "paragraphs": [
-            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata."
+            "Desktop uses a secondary menu and register. Phone uses the compact shell header and list. The record has Overview, Revisions, Findings, Links and History; its context shows exact source hash and metadata.",
+            "Revisions has a selectable table and a Selected revision panel with retained review, source, declared links and exact download. Links filters All, Active, Needs assessment and Retired on the server before paging. History describes retained events in plain language."
           ],
           "steps": [],
           "rows": [],
@@ -74764,7 +74775,8 @@
           "section_id": "tasks",
           "title": "Tasks",
           "paragraphs": [
-            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly."
+            "Register a document or add a revision. Open and respond to findings; an independent reviewer accepts a response. Reviewed requires closed findings and exact available current content; Returned permits unresolved findings. Add or retire declared links explicitly.",
+            "After Add revision succeeds, the new exact revision opens with the original list context retained. Earlier review and links stay on the earlier revision."
           ],
           "steps": [],
           "rows": [],
@@ -74841,7 +74853,7 @@
           "headers": []
         }
       ],
-      "runtime_evidence": "Implementation in progress; see PR #706 for executed checks."
+      "runtime_evidence": "Source-bound checks are recorded in docs/testing/evidence/document-library/workspace/README.md; independent acceptance remains pending."
     }
   ]
 }

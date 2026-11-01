@@ -524,3 +524,135 @@
 #ppo-library .library-link-notice p {
   margin: 0 0 8px;
 }
+
+/* The complete searchable choices and Type live in the filter panel; keep the register toolbar compact. */
+#ppo-library .library-toolbar .library-choice {
+  flex: 0 1 128px;
+  min-width: 100px;
+}
+#ppo-library .library-toolbar .library-choice details,
+#ppo-library .library-toolbar .library-type-filter {
+  display: none;
+}
+#ppo-library .library-toolbar form {
+  flex: 1 1 160px;
+  min-width: 100px;
+}
+#ppo-library .library-toolbar .library-filter-trigger {
+  flex: none;
+}
+.library-choice-hint {
+  font-size: 12px;
+  margin: 4px 0;
+  color: var(--text-secondary);
+}
+#ppo-library .library-link-notice[data-tone="warning"] {
+  color: var(--warning);
+  background: var(--warning-surface);
+  border-color: var(--warning);
+}
+.library-evidence-table {
+  min-width: 0;
+  max-width: 100%;
+}
+#ppo-library .library-evidence-table .ppo-register-table {
+  min-width: 660px;
+  width: 100%;
+}
+#ppo-library .library-evidence-table th {
+  padding: 10px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+#ppo-library .library-evidence-table td {
+  padding: 10px 12px;
+  height: 56px;
+  vertical-align: top;
+  white-space: normal;
+}
+#ppo-library .library-evidence-table td small {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-library .library-evidence-table .ppo-button {
+  min-height: 32px;
+  padding: 4px 8px;
+}
+#ppo-library .library-evidence-table tr[data-selected] {
+  background: var(--surface-muted, #eff2f6);
+}
+.library-selected-revision {
+  border: 1px solid var(--hairline);
+  border-radius: 7px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.library-selected-revision > h3 {
+  padding: 12px 16px;
+  margin: 0;
+  background: var(--surface-muted, #eff2f6);
+}
+.library-selected-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding: 16px;
+  gap: 20px;
+}
+.library-selected-grid h4 {
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.library-selected-grid p {
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+.library-link-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.library-link-controls [role="group"] {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.library-link-controls [aria-pressed="true"] {
+  background: var(--surface-muted, #eff2f6);
+  border-color: var(--ink);
+}
+.library-history-event {
+  border: 1px solid var(--hairline);
+  border-bottom: 0;
+  padding: 14px 16px;
+  overflow-wrap: anywhere;
+}
+.library-history-event:last-of-type {
+  border-bottom: 1px solid var(--hairline);
+}
+.library-history-event h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+.library-history-event p {
+  margin: 6px 0;
+}
+.library-history-event h3 + p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+@media (max-width: 767px) {
+  .library-selected-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #ppo-library .library-link-controls .ppo-button,
+  #ppo-library .library-evidence-table .ppo-button {
+    min-height: 44px;
+  }
+}

@@ -50,6 +50,7 @@ export type LibraryItem = {
   availability: string;
   source_current: boolean;
   library_current: boolean;
+  superseded_by_revision?: number;
   review_state: string;
   unresolved_findings: number;
   eligible_for_current_use: boolean;
@@ -117,7 +118,7 @@ export const libraryLabel = (value: string) =>
       "Link:Add": "Link added",
       "Link:Retire": "Link retired",
       Register: "Document registered",
-    Create: "Document registered",
+      Create: "Document registered",
       Revise: "Revision added",
       Review: "Review recorded",
       Withdraw: "Document withdrawn",

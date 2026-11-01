@@ -275,6 +275,20 @@ function LibraryRegisterView({
     else q.delete(name);
     navigate(q.toString());
   };
+  const filterKeys = [
+    "q",
+    "company_id",
+    "organisation_id",
+    "site_id",
+    "owner_id",
+    "document_type",
+  ];
+  const appliedFilters = filterKeys.filter((key) => params.has(key));
+  const resetFilters = () => {
+    const q = new URLSearchParams(query);
+    for (const key of [...filterKeys, "cursor"]) q.delete(key);
+    navigate(q.toString());
+  };
   const refresh = () => {
     setSnapshot(null);
     setSelected([]);
@@ -430,6 +444,13 @@ function LibraryRegisterView({
           {searchForm}
           {controls}
           <Button
+            className="library-filter-trigger"
+            onClick={() => setFilters(true)}
+          >
+            Filters
+            {appliedFilters.length ? ` (${appliedFilters.length} applied)` : ""}
+          </Button>
+          <Button
             onClick={refresh}
             disabled={resource.loading}
             aria-label="Refresh documents"
@@ -445,7 +466,7 @@ function LibraryRegisterView({
           </Button>
           <WorklistMenu label="Library options" icon="more">
             <Button onClick={() => setFilters(true)}>Search and filters</Button>
-            <Button onClick={() => navigate("")}>Reset filters</Button>
+            <Button onClick={resetFilters}>Reset filters</Button>
             <p>Live permitted results; no total is claimed.</p>
           </WorklistMenu>
         </div>
@@ -700,7 +721,7 @@ function LibraryRegisterView({
           >
             {searchForm}
             {controls}
-            <Button onClick={() => navigate("")}>Reset filters</Button>
+            <Button onClick={resetFilters}>Reset filters</Button>
           </WorklistPanel>
         )}
         {current && (

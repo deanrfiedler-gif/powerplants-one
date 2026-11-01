@@ -37,3 +37,6 @@ Status labels keep review distinct from availability and source currency. Curren
 ## application-shell
 
 The Documents shared destination opens DK-01 while preserving the current department rail. DK-02 publishes RecordIdentity and compact phone actions. The issued job-pack route stays separate; no component specification or shell-wide styling is changed.
+
+
+1 November consumer correction: RegisterTable panel variant now hosts Revisions and Links, with selected-row state, keyboard revision buttons and local table scrolling at 320 px. The selected panel uses exact-revision read metadata and permission-filtered usage. Link status buttons use Button with aria-pressed; shared RegisterChip identifies attention/active/retired states. History shows readable retained summaries. LibraryChoice explains site-only registration and disables Owner until its required context is selected. The toolbar exposes Filters with an applied count; searchable choices and Type live in the existing WorklistPanel. Fixtures cover selection, status-filter reads, readable history and tablet reset; execution is recorded separately.

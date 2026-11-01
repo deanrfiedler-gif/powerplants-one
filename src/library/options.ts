@@ -61,6 +61,28 @@ export async function libraryOptions(
     ]);
     await requireCapability(c, p, "document.read");
     const d = document ? (await documentContext(c, p, document)).d : null;
+    // A site-scoped registrar may browse the company but cannot create a no-site document.
+    let canRegisterWithoutSite = false;
+    if (purpose === "Register" && company && organisation) {
+      try {
+        const customer = await visible(c, p, "Organisation", organisation);
+        if (customer.company_id === company) {
+          await companyContext(c, p, company, null, "document.register");
+          canRegisterWithoutSite = true;
+        }
+      } catch (e) {
+        if (!(e instanceof AppError && [403, 404].includes(e.status))) throw e;
+      }
+    }
+    const registration =
+      purpose === "Register"
+        ? {
+            can_register_without_site: canRegisterWithoutSite,
+            choose_site_first:
+              !!company && !!organisation && !site && !canRegisterWithoutSite,
+          }
+        : {};
+
     const items: Array<{
       id: string;
       display_name: string;
@@ -74,7 +96,12 @@ export async function libraryOptions(
         )
       ).rows;
       if (!rows.length)
-        return { items, next_after: null, coverage: "PermittedChoices" };
+        return {
+          items,
+          next_after: null,
+          coverage: "PermittedChoices",
+          ...registration,
+        };
       for (const row of rows) {
         scan = row.id;
         try {
@@ -198,6 +225,7 @@ export async function libraryOptions(
               items,
               next_after: items.at(-1)!.id,
               coverage: "PermittedChoices",
+              ...registration,
             };
           items.push({
             id: row.id,

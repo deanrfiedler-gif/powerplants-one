@@ -42,7 +42,7 @@ export function LibraryCommand({
   finding?: Finding;
   linkId?: string;
   onClose: () => void;
-  onSaved: (id: string) => void;
+  onSaved: (id: string, revisionId?: string) => void;
 }) {
   const [values, setValues] = useState<Record<string, string>>({
     title: item?.revision.title ?? "",
@@ -232,7 +232,12 @@ export function LibraryCommand({
       );
       setPending(null);
       release();
-      onSaved(result.record_id ?? item?.document.id ?? ids.current!.id);
+      onSaved(
+        result.record_id ?? item?.document.id ?? ids.current!.id,
+        intent === "Register" || intent === "Revise"
+          ? String(original.body.revision_id)
+          : undefined,
+      );
     } catch (e) {
       setError(e);
       if (!(e as Failure).retryable) setPending(null);

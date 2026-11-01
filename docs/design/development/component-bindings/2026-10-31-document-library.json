@@ -25,6 +25,11 @@
           "id": "dk01-dk02-library-host",
           "label": "Document library native host",
           "description": "Synthetic register, exact record, historical/denied/unavailable/uncertain states; visual and functional verification pending."
+        },
+        {
+          "id": "dk02-exact-revision-evidence",
+          "label": "Revision and declared-link tables",
+          "description": "Selectable revision rows and exact evidence panel; server-filtered link status, empty and partial pages; keyboard buttons and 320 px local scrolling. Review remains pending."
         }
       ],
       "dependencies": [

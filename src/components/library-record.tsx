@@ -11,6 +11,7 @@ import {
   useResource,
 } from "./business-ui";
 import { Button, ButtonLink } from "./ui/button";
+import { RegisterTable, RegisterChip } from "./ui/register-table";
 import { WorklistMenu } from "./crm-worklist-tools";
 import { RecordTabs } from "./record-ui";
 import { RecordIdentity } from "../shell/record-identity";
@@ -35,6 +36,9 @@ type Usage = {
   items: {
     id: string;
     revision_id: string;
+    revision: number;
+    created_at: string;
+    created_by_name: string;
     target_kind: string;
     target_id: string;
     target_label: string;
@@ -55,7 +59,7 @@ type History = {
     actor_name?: string;
     created_at: string;
     reason: string;
-    evidence: unknown;
+    summary: string;
   }[];
   next_before: number | null;
   coverage: string;
@@ -346,7 +350,13 @@ function LibraryRecordBody({
             ? "Withdrawn document. Retained evidence remains readable."
             : "Historical revision — read only. Links and review still belong to this exact revision."}{" "}
           {!item.library_current && (
-            <Link href={`/documents/library/${item.document.id}`}>
+            <Link
+              href={contextualRevisionHref(
+                item.document.id,
+                item.document.current_revision_id,
+                params,
+              )}
+            >
               Open current revision
             </Link>
           )}
@@ -399,7 +409,20 @@ function LibraryRecordBody({
                   focusOnError={false}
                 />
                 {usage.data && (
-                  <section className="library-link-notice" role="status">
+                  <section
+                    className="library-link-notice"
+                    role="status"
+                    data-tone={
+                      usage.data.coverage === "Partial" ||
+                      usage.data.next_after ||
+                      usage.data.items.some(
+                        (link) =>
+                          !link.retired_at && link.needs_revision_assessment,
+                      )
+                        ? "warning"
+                        : undefined
+                    }
+                  >
                     {usage.data.items.some(
                       (link) =>
                         !link.retired_at && link.needs_revision_assessment,
@@ -536,8 +559,26 @@ function LibraryRecordBody({
           finding={finding}
           linkId={linkId}
           onClose={() => setIntent(null)}
-          onSaved={() => {
-            setSaved(`${intent} saved. Refreshing the exact revision.`);
+          onSaved={(_id, revisionId) => {
+            setSaved(
+              {
+                Register: "Document registered.",
+                Revise: "Revision added.",
+                Review: "Review recorded.",
+                "Open finding": "Finding opened.",
+                Respond: "Response recorded.",
+                "Accept response": "Response accepted.",
+                "Add link": "Link added.",
+                "Retire link": "Link retired.",
+                Withdraw: "Document withdrawn.",
+                Recover: "Exact content recovered.",
+              }[intent],
+            );
+            if (revisionId) {
+              const query = new URLSearchParams(params.toString());
+              query.set("revision_id", revisionId);
+              router.push(`/documents/library/${item.document.id}?${query}`);
+            }
             setIntent(null);
             refresh();
           }}
@@ -632,14 +673,30 @@ function ExactContent({ item }: { item: LibraryItem }) {
     </section>
   );
 }
+function contextualRevisionHref(
+  id: string,
+  revision: string,
+  params: { toString(): string },
+) {
+  const query = new URLSearchParams(params.toString());
+  query.set("revision_id", revision);
+  return `/documents/library/${id}?${query}`;
+}
 function RevisionList({ id }: { id: string }) {
-  const [before, setBefore] = useState<number | null>(null),
-    r = useResource<Revisions>(
-      `document-library/${id}/revisions${before ? `?before=${before}` : ""}`,
-    ),
-    data = !r.loading && !r.error ? r.data : null;
+  const params = useSearchParams();
+  const [before, setBefore] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState(params.get("revision_id"));
+  const r = useResource<Revisions>(
+    `document-library/${id}/revisions${before ? `?before=${before}` : ""}`,
+  );
+  const data = !r.loading && !r.error ? r.data : null;
+  const selected =
+    data?.items.find((item) => item.revision.id === selectedId) ??
+    data?.items[0];
   return (
     <>
+      <h2>Revisions</h2>
+      <p>Each revision keeps its exact content, source and review.</p>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {data && (
         <>
@@ -648,30 +705,195 @@ function RevisionList({ id }: { id: string }) {
               ? "Partial coverage: some revisions cannot be shown."
               : "Permitted revisions, newest first."}
           </p>
-          {data.items.map((item) => (
-            <article className="library-card" key={item.revision.id}>
-              <Link href={recordHref(item)}>
-                {revisionName(item.revision.revision)} · {item.revision.title}
-              </Link>
-              <p>{item.revision.reason}</p>
-              <Status value={reviewLabel(item.review_state)} />
-              <p>
-                {libraryLabel(item.availability)} ·{" "}
-                {item.source_current ? "Source current" : "Source superseded"}
-              </p>
-            </article>
-          ))}
-          {data.next_before && (
-            <Button onClick={() => setBefore(data.next_before)}>
-              Older revisions
-            </Button>
-          )}
-          {before && (
-            <Button onClick={() => setBefore(null)}>Newest revisions</Button>
+          <div className="library-evidence-table">
+            <RegisterTable
+              variant="panel"
+              caption="Document revisions. Select a revision to inspect its retained evidence."
+              empty={
+                !data.items.length ? (
+                  <p>No permitted revisions on this page.</p>
+                ) : undefined
+              }
+            >
+              <thead>
+                <tr>
+                  {["Revision", "State", "Review", "Registered", "Reason"].map(
+                    (label) => (
+                      <th scope="col" key={label}>
+                        {label}
+                      </th>
+                    ),
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {data.items.map((item) => (
+                  <tr
+                    key={item.revision.id}
+                    data-selected={
+                      item.revision.id === selected?.revision.id || undefined
+                    }
+                  >
+                    <td>
+                      <Button
+                        aria-pressed={
+                          item.revision.id === selected?.revision.id
+                        }
+                        onClick={() => setSelectedId(item.revision.id)}
+                      >
+                        {revisionName(item.revision.revision)}
+                      </Button>
+                    </td>
+                    <td>
+                      {item.library_current
+                        ? item.document.state === "Withdrawn"
+                          ? "Withdrawn"
+                          : "Current"
+                        : item.superseded_by_revision
+                          ? `Superseded by ${revisionName(item.superseded_by_revision)}`
+                          : "Historical revision"}
+                    </td>
+                    <td>
+                      <Status value={reviewLabel(item.review_state)} />
+                    </td>
+                    <td>
+                      <Stamp value={item.revision.created_at} />
+                      <small>
+                        {item.registered_by_name} ·{" "}
+                        {item.revision.source.byte_count.toLocaleString()} bytes
+                      </small>
+                    </td>
+                    <td className="ppo-register-wrap">
+                      {item.revision.reason}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </RegisterTable>
+          </div>
+          <div className="library-actions">
+            {data.next_before && (
+              <Button onClick={() => setBefore(data.next_before)}>
+                Older revisions
+              </Button>
+            )}
+            {before && (
+              <Button onClick={() => setBefore(null)}>Newest revisions</Button>
+            )}
+          </div>
+          {selected && (
+            <SelectedRevision key={selected.revision.id} item={selected} />
           )}
         </>
       )}
     </>
+  );
+}
+function SelectedRevision({ item }: { item: LibraryItem }) {
+  const params = useSearchParams();
+  const links = useResource<Usage>(
+    `document-library/${item.document.id}/usage?revision_id=${item.revision.id}&state=Active`,
+  );
+  const usage = !links.loading && !links.error ? links.data : null;
+  return (
+    <section
+      className="library-selected-revision"
+      aria-label={`Selected revision ${revisionName(item.revision.revision)}`}
+    >
+      <h3>Selected revision · {revisionName(item.revision.revision)}</h3>
+      <div className="library-selected-grid">
+        <section>
+          <h4>Review</h4>
+          <Status value={reviewLabel(item.review_state)} />
+          {item.review ? (
+            <>
+              <p>
+                {item.review.reviewer_name ?? "Unavailable"} ·{" "}
+                <Stamp value={item.review.created_at} />
+              </p>
+              <p>Purpose: {item.review.purpose}</p>
+              <p>{item.review.rationale}</p>
+            </>
+          ) : (
+            <p>No independent decision recorded.</p>
+          )}
+        </section>
+        <section>
+          <h4>Source</h4>
+          <p>
+            {libraryLabel(item.revision.source.kind)} ·{" "}
+            {item.source_current ? "Source current" : "Source superseded"}
+          </p>
+          <p>
+            {item.source_author_name} ·{" "}
+            {item.revision.source.byte_count.toLocaleString()} bytes
+          </p>
+          <p className="library-hash">
+            SHA-256 {item.revision.source.content_hash}
+          </p>
+        </section>
+        <section>
+          <h4>Declared links</h4>
+          <ReadState
+            loading={links.loading}
+            error={links.error}
+            retry={links.reload}
+          />
+          {usage && (
+            <>
+              <p>
+                {usage.coverage === "Partial"
+                  ? "Partial coverage; restricted references omitted."
+                  : "Permitted active declared references."}{" "}
+                {usage.next_after
+                  ? "More references available in Links."
+                  : `${usage.items.length} on this page.`}
+              </p>
+              {usage.items.map((link) => (
+                <p key={link.id}>
+                  <Link
+                    href={`${targetPaths[link.target_kind]}/${link.target_id}`}
+                  >
+                    {libraryLabel(link.target_kind)}: {link.target_label}
+                  </Link>{" "}
+                  · {link.purpose}
+                </p>
+              ))}
+            </>
+          )}
+        </section>
+        <section>
+          <h4>Content</h4>
+          <p>{libraryLabel(item.availability)}</p>
+          {item.availability === "Available" ? (
+            <ButtonLink
+              href={`/api/v1/document-library/${item.document.id}/content?revision_id=${item.revision.id}`}
+            >
+              Download exact revision
+            </ButtonLink>
+          ) : (
+            <p>Exact bytes unavailable. No successor will be substituted.</p>
+          )}
+          <p>
+            <Link
+              href={contextualRevisionHref(
+                item.document.id,
+                item.revision.id,
+                params,
+              )}
+            >
+              Open exact revision record
+            </Link>
+          </p>
+        </section>
+      </div>
+      {!item.library_current && (
+        <p className="library-link-notice">
+          Historical content and review are retained. Earlier declared links
+          stay on their exact revision until assessed.
+        </p>
+      )}
+    </section>
   );
 }
 function LinkList({
@@ -681,23 +903,47 @@ function LinkList({
   item: LibraryItem;
   action: (intent: LibraryIntent, f?: Finding, id?: string) => void;
 }) {
-  const [after, setAfter] = useState<string | null>(null),
-    r = useResource<Usage>(
-      `document-library/${item.document.id}/usage${after ? `?after=${after}` : ""}`,
-    ),
-    data = !r.loading && !r.error ? r.data : null;
+  const params = useSearchParams();
+  const [after, setAfter] = useState<string | null>(null);
+  const [state, setState] = useState("All");
+  const query = new URLSearchParams({ state, ...(after ? { after } : {}) });
+  const r = useResource<Usage>(
+    `document-library/${item.document.id}/usage?${query}`,
+  );
+  const data = !r.loading && !r.error ? r.data : null;
   return (
     <>
       <h2>Declared links</h2>
       <p>
-        Receiving workflows retain their own authority. Earlier revision links
-        are never moved automatically.
+        Exact revision references. Receiving workflows retain their own
+        authority; these declarations do not prove every organisation-wide use.
       </p>
-      {item.library_current &&
-        item.document.state === "Current" &&
-        item.can_register && (
-          <Button onClick={() => action("Add link")}>Add a link</Button>
-        )}
+      <div className="library-link-controls">
+        <div role="group" aria-label="Filter declared links">
+          {[
+            ["All", "All"],
+            ["Active", "Active"],
+            ["NeedsAssessment", "Needs assessment"],
+            ["Retired", "Retired"],
+          ].map(([value, label]) => (
+            <Button
+              key={value}
+              aria-pressed={state === value}
+              onClick={() => {
+                setState(value);
+                setAfter(null);
+              }}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+        {item.library_current &&
+          item.document.state === "Current" &&
+          item.can_register && (
+            <Button onClick={() => action("Add link")}>Add a link</Button>
+          )}
+      </div>
       <ReadState loading={r.loading} error={r.error} retry={r.reload} />
       {data && (
         <>
@@ -708,46 +954,109 @@ function LinkList({
                 ? "More permitted references available."
                 : `${data.items.length} references on this page.`}
           </p>
-          {!data.items.length && (
-            <p>No visible declared references on this page.</p>
-          )}
-          {data.items.map((link) => (
-            <article className="library-card" key={link.id}>
-              <Link href={`${targetPaths[link.target_kind]}/${link.target_id}`}>
-                {link.target_label}
-              </Link>
-              <p>{link.purpose}</p>
-              <p>
-                {link.retired_at
-                  ? "Retired"
-                  : link.needs_revision_assessment
-                    ? "Needs assessment — earlier revision or withdrawn document"
-                    : "Active reference"}
-              </p>
-              {link.revision_id !== item.revision.id && (
-                <Link
-                  href={`/documents/library/${item.document.id}?revision_id=${link.revision_id}`}
-                >
-                  Open linked revision
-                </Link>
-              )}
-              {!link.retired_at &&
-                item.can_register &&
-                link.revision_id === item.revision.id && (
-                  <Button
-                    onClick={() => action("Retire link", undefined, link.id)}
-                  >
-                    Retire reference
-                  </Button>
-                )}
-            </article>
-          ))}
-          {data.next_after && (
-            <Button onClick={() => setAfter(data.next_after)}>
-              More links
-            </Button>
-          )}
-          {after && <Button onClick={() => setAfter(null)}>First links</Button>}
+          <div className="library-evidence-table">
+            <RegisterTable
+              variant="panel"
+              caption={`${state === "NeedsAssessment" ? "Needs assessment" : state} declared links to exact document revisions.`}
+              empty={
+                !data.items.length ? (
+                  <p>No visible declared references match this filter.</p>
+                ) : undefined
+              }
+            >
+              <thead>
+                <tr>
+                  {[
+                    "Linked record",
+                    "Revision",
+                    "Purpose",
+                    "Added",
+                    "Status",
+                  ].map((label) => (
+                    <th scope="col" key={label}>
+                      {label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.items.map((link) => (
+                  <tr key={link.id}>
+                    <td className="ppo-register-wrap">
+                      <Link
+                        href={`${targetPaths[link.target_kind]}/${link.target_id}`}
+                      >
+                        {libraryLabel(link.target_kind)}: {link.target_label}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link
+                        href={contextualRevisionHref(
+                          item.document.id,
+                          link.revision_id,
+                          params,
+                        )}
+                      >
+                        {revisionName(link.revision)}
+                      </Link>
+                    </td>
+                    <td className="ppo-register-wrap">{link.purpose}</td>
+                    <td>
+                      <Stamp value={link.created_at} />
+                      <small>{link.created_by_name}</small>
+                      {link.retired_at && (
+                        <small>
+                          Retired <Stamp value={link.retired_at} />
+                        </small>
+                      )}
+                    </td>
+                    <td>
+                      <RegisterChip
+                        tone={
+                          link.retired_at
+                            ? "neutral"
+                            : link.needs_revision_assessment
+                              ? "attention"
+                              : "positive"
+                        }
+                      >
+                        {link.retired_at
+                          ? "Retired"
+                          : link.needs_revision_assessment
+                            ? "Needs assessment"
+                            : "Active"}
+                      </RegisterChip>
+                      {!link.retired_at &&
+                        item.can_register &&
+                        link.revision_id === item.revision.id && (
+                          <Button
+                            onClick={() =>
+                              action("Retire link", undefined, link.id)
+                            }
+                          >
+                            Retire reference
+                          </Button>
+                        )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </RegisterTable>
+          </div>
+          <div className="library-actions">
+            {data.next_after && (
+              <Button onClick={() => setAfter(data.next_after)}>
+                More links
+              </Button>
+            )}
+            {after && (
+              <Button onClick={() => setAfter(null)}>First links</Button>
+            )}
+          </div>
+          <p className="library-link-notice">
+            Links never move to a newer revision automatically. Assess each
+            earlier reference in its receiving workflow.
+          </p>
         </>
       )}
     </>
@@ -771,22 +1080,17 @@ function HistoryList({ id }: { id: string }) {
               : "Permitted events, newest first."}
           </p>
           {data.items.map((event) => (
-            <article className="library-card" key={event.id}>
+            <article className="library-history-event" key={event.id}>
               <h3>
                 {libraryLabel(event.command)} ·{" "}
                 {revisionName(event.revision.revision)}
               </h3>
               <p>
                 <Stamp value={event.created_at} /> · actor{" "}
-                {event.actor_name ?? "Unavailable"}
+                {event.actor_name ?? "Unavailable"} · Event {event.version}
               </p>
               <p>{event.reason}</p>
-              {event.evidence !== null && (
-                <details>
-                  <summary>Retained event evidence</summary>
-                  <pre>{JSON.stringify(event.evidence, null, 2)}</pre>
-                </details>
-              )}
+              <p>{event.summary}</p>
             </article>
           ))}
           {data.next_before && (

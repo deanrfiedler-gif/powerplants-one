@@ -9,8 +9,10 @@ import {
   revisionInput,
 } from "../../src/library/validation";
 const path = `/documents/library/${libraryItem.document.id}`,
-  capture = "docs/testing/evidence/document-library/workspace";
+  capture =
+    "docs/testing/evidence/document-library/workspace/review-2026-11-01";
 async function setup(page: Page) {
+  await mkdir(`${capture}/${test.info().project.name}`, { recursive: true });
   await page.route(/^https:\/\/[^/]+\.fontawesome\.com\//, (r) => r.abort());
   await page.route("**/api/v1/**", (r) =>
     r.fulfill({
@@ -85,7 +87,7 @@ test("DK-UI register and exact record at desktop, tablet, phone and 320", async 
 }) => {
   test.setTimeout(180000);
   await setup(page);
-  await mkdir(capture, { recursive: true });
+  await mkdir(`${capture}/${test.info().project.name}`, { recursive: true });
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({ width, height: width >= 1024 ? 900 : 844 });
     await page.goto("/documents?department=service");
@@ -100,7 +102,9 @@ test("DK-UI register and exact record at desktop, tablet, phone and 320", async 
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({ path: `${capture}/register-${width}.png` });
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/register-${width}.png`,
+    });
     await page.goto(path);
     await expect(
       page.getByRole("heading", {
@@ -116,7 +120,9 @@ test("DK-UI register and exact record at desktop, tablet, phone and 320", async 
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({ path: `${capture}/record-${width}.png` });
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/record-${width}.png`,
+    });
   }
 });
 test("DK-UI uncertain review retries the same operation and denied refresh clears details", async ({
@@ -133,6 +139,10 @@ test("DK-UI uncertain review retries the same operation and denied refresh clear
     .getByLabel("Rationale", { exact: true })
     .fill("SYN exact evidence checked");
   await dialog.getByLabel("Reason", { exact: true }).fill("SYN review proof");
+  await page.screenshot({
+    path: `${capture}/${test.info().project.name}/review-panel.png`,
+    fullPage: true,
+  });
   const bodies: unknown[] = [];
   await page.route(
     `**/api/v1/document-library/${libraryItem.document.id}/review`,
@@ -152,6 +162,10 @@ test("DK-UI uncertain review retries the same operation and denied refresh clear
   await expect(
     dialog.getByRole("button", { name: "Cancel", exact: true }),
   ).toBeDisabled();
+  await page.screenshot({
+    path: `${capture}/${test.info().project.name}/uncertain-review.png`,
+    fullPage: true,
+  });
   await dialog
     .getByRole("button", { name: "Retry original operation" })
     .click();
@@ -237,6 +251,9 @@ test("DK-UI awaiting review accepts only independently and old links open their 
             {
               id: "91000000-0000-4000-8000-000000000010",
               revision_id: previous,
+              revision: 2,
+              created_at: libraryItem.revision.created_at,
+              created_by_name: libraryItem.registered_by_name,
               target_kind: "Site",
               target_id: libraryItem.document.site_id,
               target_label: "SYN older site reference",
@@ -247,6 +264,9 @@ test("DK-UI awaiting review accepts only independently and old links open their 
             {
               id: "91000000-0000-4000-8000-000000000011",
               revision_id: libraryItem.revision.id,
+              revision: 3,
+              created_at: libraryItem.revision.created_at,
+              created_by_name: libraryItem.registered_by_name,
               target_kind: "Site",
               target_id: libraryItem.document.site_id,
               target_label: "SYN current site reference",
@@ -262,7 +282,7 @@ test("DK-UI awaiting review accepts only independently and old links open their 
   );
   await page.getByRole("tab", { name: "Links", exact: true }).click();
   await expect(
-    page.getByRole("link", { name: "Open linked revision" }),
+    page.getByRole("link", { name: "r02", exact: true }),
   ).toHaveAttribute("href", `${path}?revision_id=${previous}`);
   await expect(
     page.getByRole("button", { name: "Retire reference" }),
@@ -332,7 +352,9 @@ test("DK-UI unavailable historical content never substitutes bytes; register ret
   await expect(
     page.getByText("Exact content unavailable.", { exact: false }),
   ).toBeVisible();
-  await page.screenshot({ path: `${capture}/record-unavailable-320.png` });
+  await page.screenshot({
+    path: `${capture}/${test.info().project.name}/record-unavailable-320.png`,
+  });
   await page.setViewportSize({ width: 1440, height: 900 });
   let firstReads = 0;
   await page.route(/\/api\/v1\/document-library\?.*$/, (r) => {
@@ -424,7 +446,8 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
 }) => {
   await setup(page);
   await page.route("**/api/v1/document-library/options?*", (r) => {
-    const kind = new URL(r.request().url()).searchParams.get("kind");
+    const choiceQuery = new URL(r.request().url()).searchParams;
+    const kind = choiceQuery.get("kind");
     const id =
       kind === "Company"
         ? libraryItem.document.company_id
@@ -434,7 +457,13 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
             ? libraryItem.document.site_id
             : libraryItem.revision.owner_id;
     return r.fulfill({
-      json: { items: [{ id, display_name: `SYN ${kind}` }], next_after: null },
+      json: {
+        items: [{ id, display_name: `SYN ${kind}` }],
+        next_after: null,
+        can_register_without_site: false,
+        choose_site_first:
+          !!choiceQuery.get("organisation_id") && !choiceQuery.get("site_id"),
+      },
     });
   });
   let created = false,
@@ -457,6 +486,15 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
   await dialog
     .getByLabel("Customer", { exact: true })
     .selectOption(libraryItem.document.organisation_id);
+  await expect(dialog.getByLabel("Owner", { exact: true })).toBeDisabled();
+  await expect(
+    dialog.getByText("Choose a site before choosing an owner.", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(dialog.getByLabel("Site", { exact: true })).not.toContainText(
+    "No site",
+  );
   await dialog
     .getByLabel("Site", { exact: true })
     .selectOption(libraryItem.document.site_id!);
@@ -474,6 +512,10 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     .getByLabel("Exact synthetic text", { exact: true })
     .fill("SYN exact text");
   await dialog.getByLabel("Reason", { exact: true }).fill("SYN creation proof");
+  await page.screenshot({
+    path: `${capture}/${test.info().project.name}/registration-panel.png`,
+    fullPage: true,
+  });
   await dialog.getByRole("button", { name: "Register", exact: true }).click();
   await expect(page).toHaveURL(
     new RegExp(`/documents/library/${libraryItem.document.id}$`),
@@ -528,6 +570,10 @@ test("DK-UI registration and revision forms submit strict exact-source commands"
     .press("Enter");
   await expect(dialog).toBeVisible();
   expect(revised).toBe(false);
+  await page.screenshot({
+    path: `${capture}/${test.info().project.name}/revision-panel.png`,
+    fullPage: true,
+  });
   await dialog.getByRole("button", { name: "Revise", exact: true }).click();
   await expect(dialog).not.toBeVisible();
   expect(revised).toBe(true);
@@ -551,8 +597,10 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
       },
     });
   });
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/documents");
-  const toolbar = page.locator(".library-toolbar");
+  await page.getByRole("button", { name: "Filters", exact: true }).click();
+  const toolbar = page.getByRole("dialog");
   await toolbar.getByText("Find customer", { exact: true }).click();
   await toolbar
     .getByRole("button", { name: "More choices", exact: true })
@@ -573,12 +621,7 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
   await expect(customerSelect.locator("option:checked")).toHaveText(
     "SYN customer beyond first page",
   );
-  await page
-    .getByRole("button", { name: "Library options", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Search and filters", exact: true })
-    .click();
+
   await page.setViewportSize({ width: 390, height: 844 });
   const panel = page.getByRole("dialog");
   const type = panel.getByRole("combobox", { name: "Type", exact: true });
@@ -598,6 +641,9 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
             {
               id: "SYN-link",
               revision_id: "SYN-old",
+              revision: 2,
+              created_at: libraryItem.revision.created_at,
+              created_by_name: libraryItem.registered_by_name,
               target_kind: "Site",
               target_id: libraryItem.document.site_id,
               target_label: "SYN site",
@@ -633,4 +679,172 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
     page.getByRole("tab", { name: "Links", exact: true }),
   ).toHaveAttribute("aria-selected", "true");
   await expect(page.getByText("SYN site", { exact: true })).toBeVisible();
+});
+
+test("DK-UI accepted evidence tables, link filters, history and tablet filter reset", async ({
+  page,
+}, testInfo) => {
+  await setup(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const old = {
+    ...libraryItem,
+    library_current: false,
+    superseded_by_revision: 3,
+    revision: {
+      ...libraryItem.revision,
+      id: "91000000-0000-4000-8000-000000000012",
+      revision: 2,
+      reason: "SYN earlier issued reference",
+    },
+    review_state: "Returned",
+    review: {
+      id: "SYN-review",
+      outcome: "Returned",
+      purpose: "SYN installation reference",
+      rationale: "SYN add isolation detail",
+      reviewer_id: libraryItem.actor_id,
+      reviewer_name: "SYN Alex Chen",
+      created_at: libraryItem.revision.created_at,
+      content_hash: libraryItem.revision.source.content_hash,
+    },
+  };
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/revisions*`,
+    (r) =>
+      r.fulfill({
+        json: {
+          items: [libraryItem, old],
+          next_before: null,
+          coverage: "VisibleRevisions",
+        },
+      }),
+  );
+  const link = {
+    id: "SYN-reference",
+    revision_id: old.revision.id,
+    revision: 2,
+    target_kind: "Site",
+    target_id: libraryItem.document.site_id,
+    target_label: "SYN Northbank Block C",
+    purpose: "SYN installation reference",
+    created_at: libraryItem.revision.created_at,
+    created_by_name: "SYN Morgan Lee",
+    retired_at: null,
+    needs_revision_assessment: true,
+  };
+  const queried: string[] = [];
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/usage*`,
+    (r) => {
+      const q = new URL(r.request().url()).searchParams;
+      queried.push(q.get("state") ?? "All");
+      return r.fulfill({
+        json: {
+          items: q.get("state") === "Retired" ? [] : [link],
+          next_after: null,
+          coverage: "VisibleReferences",
+        },
+      });
+    },
+  );
+  await page.route(
+    `**/api/v1/document-library/${libraryItem.document.id}/history*`,
+    (r) =>
+      r.fulfill({
+        json: {
+          items: [
+            {
+              id: "SYN-event",
+              version: 2,
+              command: "Review",
+              revision: old.revision,
+              actor_name: "SYN Alex Chen",
+              created_at: old.revision.created_at,
+              reason: "SYN independent inspection",
+              summary:
+                "Returned · Purpose: SYN installation reference · SYN add isolation detail",
+              evidence: { workspace_id: "MUST-NOT-RENDER-RAW-JSON" },
+            },
+          ],
+          next_before: null,
+          coverage: "VisibleHistory",
+        },
+      }),
+  );
+  await page.goto(path);
+  await page.getByRole("tab", { name: "Revisions", exact: true }).click();
+  await page.getByRole("button", { name: "r02", exact: true }).click();
+  await expect(
+    page.getByRole("region", { name: "Selected revision r02" }),
+  ).toContainText("SYN add isolation detail");
+  await expect(
+    page.getByRole("cell", { name: "Superseded by r03", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Download exact revision", exact: true }),
+  ).toHaveAttribute("href", new RegExp(`revision_id=${old.revision.id}$`));
+  if (testInfo.project.name === "desktop-chromium")
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/revisions-1440.png`,
+      fullPage: true,
+    });
+  await page.setViewportSize({ width: 320, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  if (testInfo.project.name === "desktop-chromium")
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/revisions-320.png`,
+      fullPage: true,
+    });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.getByRole("tab", { name: "Links", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Needs assessment", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Needs assessment", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => queried.includes("NeedsAssessment")).toBe(true);
+  await expect(
+    page.getByRole("columnheader", { name: "Added", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "r02", exact: true }),
+  ).toHaveAttribute("href", `${path}?revision_id=${old.revision.id}`);
+  if (testInfo.project.name === "desktop-chromium")
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/links-1440.png`,
+      fullPage: true,
+    });
+  await page.getByRole("button", { name: "Retired", exact: true }).click();
+  await expect(
+    page.getByText("No visible declared references match this filter."),
+  ).toBeVisible();
+  await page.getByRole("tab", { name: "History", exact: true }).click();
+  await expect(page.getByRole("tabpanel")).toContainText(
+    "Returned · Purpose: SYN installation reference",
+  );
+  await expect(page.getByRole("tabpanel")).not.toContainText(
+    "MUST-NOT-RENDER-RAW-JSON",
+  );
+  if (testInfo.project.name === "desktop-chromium")
+    await page.screenshot({
+      path: `${capture}/${test.info().project.name}/history-1440.png`,
+      fullPage: true,
+    });
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto(
+    `/documents?view=Withdrawn&sort=number&direction=desc&organisation_id=${libraryItem.document.organisation_id}`,
+  );
+  await page
+    .getByRole("button", { name: "Filters (1 applied)", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Reset filters", exact: true })
+    .click();
+  await expect(page).toHaveURL(/view=Withdrawn&sort=number&direction=desc$/);
 });

@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 type Choices = {
   items: { id: string; display_name: string }[];
   next_after: string | null;
+  can_register_without_site?: boolean;
+  choose_site_first?: boolean;
 };
 type ChoiceProps = {
   label: string;
@@ -53,6 +55,21 @@ function LibraryChoiceControl({
       ? `document-library/options?${selectedQuery}`
       : null,
   );
+  const registration = scope.purpose === "Register";
+  const needsSite =
+    registration && kind === "Site" && !data?.can_register_without_site;
+  const chooseContext =
+    registration &&
+    ["Site", "Owner"].includes(kind) &&
+    (!scope.company_id || !scope.organisation_id);
+  const chooseSite = kind === "Owner" && data?.choose_site_first;
+  const hint = chooseContext
+    ? "Choose a company and customer first."
+    : chooseSite
+      ? "Choose a site before choosing an owner. Your registration access requires a site."
+      : needsSite && data
+        ? "Choose a site. Your registration access requires a site."
+        : "";
   return (
     <div className="library-choice">
       <label>
@@ -73,13 +90,14 @@ function LibraryChoiceControl({
                       : "target_id"
           }
           aria-label={label}
-          required={required}
+          required={required || needsSite}
           value={value}
-          disabled={!data}
+          disabled={!data || chooseContext || !!chooseSite}
+          aria-describedby={hint ? `${controlId}-hint` : undefined}
           onChange={(e) => onChange(e.target.value)}
         >
           <option value="">
-            {required
+            {required || needsSite
               ? "Choose…"
               : (emptyLabel ??
                 `${label}: ${kind === "RecordedOwner" ? "Anyone" : "All"}`)}
@@ -99,6 +117,11 @@ function LibraryChoiceControl({
           ))}
         </select>
       </label>
+      {hint && (
+        <p id={`${controlId}-hint`} className="library-choice-hint">
+          {hint}
+        </p>
+      )}
       <details>
         <summary>Find {label.toLowerCase()}</summary>
         <input

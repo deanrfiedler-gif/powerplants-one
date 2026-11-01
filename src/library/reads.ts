@@ -7,6 +7,7 @@ import { hasPermission } from "../platform/permissions";
 import { visible } from "../shared/reads";
 import { workingCompanyFor } from "../platform/working-company";
 import { libraryCursor, type LibraryPosition } from "./paging";
+import { libraryLabel, revisionName } from "./model";
 import {
   choice,
   invalid,
@@ -460,7 +461,25 @@ export async function documentRevisions(
               coverage,
               synthetic: true,
             };
-          items.push(await registerItem(c, p, d, r, observed));
+          const successor = (
+            await c.query<{ id: string }>(
+              "SELECT id FROM ppo.library_revisions WHERE workspace_id=$1 AND document_id=$2 AND revision=$3",
+              [p.workspace_id, d.id, r.revision + 1],
+            )
+          ).rows[0];
+          let supersededBy: number | undefined;
+          if (successor) {
+            try {
+              supersededBy = (await revisionContext(c, p, d, successor.id))
+                .revision;
+            } catch (e) {
+              if (!hidden(e)) throw e;
+            }
+          }
+          items.push({
+            ...(await registerItem(c, p, d, r, observed)),
+            superseded_by_revision: supersededBy,
+          });
         } catch (e) {
           if (!hidden(e)) throw e;
           coverage = "Partial";
@@ -474,7 +493,14 @@ export async function documentUsage(
   id: string,
   query: Record<string, string> = {},
 ) {
-  object(query, ["after", "limit"]);
+  object(query, ["after", "limit", "state", "revision_id"]);
+  const state = choice(query.state ?? "All", "state", [
+    "All",
+    "Active",
+    "NeedsAssessment",
+    "Retired",
+  ] as const);
+  const revisionId = optionalId(query.revision_id, "revision_id");
   const after = optionalId(query.after, "after"),
     limit = query.limit === undefined ? 25 : Number(query.limit);
   if (!Number.isInteger(limit) || limit < 1 || limit > 50)
@@ -482,6 +508,7 @@ export async function documentUsage(
   return readTransaction(p, async (c) => {
     const { d } = await documentContext(c, p, id),
       items = [];
+    if (revisionId) await revisionContext(c, p, d, revisionId);
     let coverage: "VisibleReferences" | "Partial" = "VisibleReferences",
       scan = after;
     for (;;) {
@@ -503,7 +530,7 @@ export async function documentUsage(
       for (const link of links) {
         scan = link.id;
         try {
-          await revisionContext(c, p, d, link.revision_id);
+          const revision = await revisionContext(c, p, d, link.revision_id);
           const target = await targetContext(
             c,
             p,
@@ -511,6 +538,15 @@ export async function documentUsage(
             link.target_id,
             d,
           );
+          const needsAssessment =
+            !link.retired_at &&
+            (link.revision_id !== d.current_revision_id ||
+              d.state === "Withdrawn");
+          // Apply status and exact-revision filters to the full permitted scan, before paging.
+          if (revisionId && link.revision_id !== revisionId) continue;
+          if (state === "Active" && link.retired_at) continue;
+          if (state === "Retired" && !link.retired_at) continue;
+          if (state === "NeedsAssessment" && !needsAssessment) continue;
           if (items.length === limit)
             return {
               items,
@@ -521,6 +557,7 @@ export async function documentUsage(
           items.push({
             id: link.id,
             revision_id: link.revision_id,
+            revision: revision.revision,
             target_kind: link.target_kind,
             target_id: link.target_id,
             target_label:
@@ -532,12 +569,16 @@ export async function documentUsage(
             purpose: link.purpose,
             created_at: link.created_at,
             created_by: link.created_by,
+            created_by_name:
+              (
+                await c.query(
+                  "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+                  [p.workspace_id, link.created_by],
+                )
+              ).rows[0]?.display_name ?? "Unavailable",
             retired_at: link.retired_at,
             retired_by: link.retired_by,
-            needs_revision_assessment:
-              !link.retired_at &&
-              (link.revision_id !== d.current_revision_id ||
-                d.state === "Withdrawn"),
+            needs_revision_assessment: needsAssessment,
           });
         } catch (e) {
           if (!hidden(e)) throw e;
@@ -546,6 +587,38 @@ export async function documentUsage(
       }
     }
   });
+}
+// Summaries use each immutable event snapshot, never the revision's later review/finding state.
+function historySummary(
+  command: string,
+  payload: Record<string, unknown>,
+  r: Revision,
+  target?: string,
+) {
+  const value = (key: string) =>
+    typeof payload?.[key] === "string" ? String(payload[key]) : "";
+  switch (command) {
+    case "Create":
+    case "Revise":
+      return `${r.title} · ${libraryLabel(r.source.kind)} · ${r.source.byte_count} bytes · Starts Unreviewed.`;
+    case "Review":
+      return `${value("outcome")} · Purpose: ${value("purpose")} · ${value("rationale")} · Bound to SHA-256 ${value("content_hash")}`;
+    case "Finding:Open":
+      return `Finding opened: ${value("text")} · Due ${value("due_date")}`;
+    case "Finding:Respond":
+      return `Response awaiting independent acceptance: ${value("response")}`;
+    case "Finding:Accept":
+      return `Response accepted: ${value("response")} · Acceptance: ${value("acceptance")}`;
+    case "Link:Add":
+    case "Link:Retire":
+      return `${revisionName(r.revision)} → ${libraryLabel(value("target_kind"))}: ${target} · ${value("purpose")}`;
+    case "Withdraw":
+      return "Document withdrawn. Earlier exact revisions and references are retained.";
+    case "Recover":
+      return `Original exact content recovered · SHA-256 ${r.source.content_hash}`;
+    default:
+      return "Change recorded against this exact revision.";
+  }
 }
 export async function documentHistory(
   p: Principal,
@@ -577,14 +650,15 @@ export async function documentHistory(
         scan = e.document_version;
         try {
           const r = await revisionContext(c, p, d, e.revision_id);
-          if (e.command.startsWith("Link:"))
-            await targetContext(
-              c,
-              p,
-              e.payload.target_kind,
-              e.payload.target_id,
-              d,
-            );
+          const target = e.command.startsWith("Link:")
+            ? await targetContext(
+                c,
+                p,
+                e.payload.target_kind,
+                e.payload.target_id,
+                d,
+              )
+            : null;
           if (items.length === limit)
             return {
               items,
@@ -608,6 +682,20 @@ export async function documentHistory(
               ).rows[0]?.display_name ?? "Unavailable",
             created_at: e.created_at,
             reason: e.reason,
+            summary: historySummary(
+              e.command,
+              e.payload,
+              r,
+              target
+                ? String(
+                    target.display_name ??
+                      target.title ??
+                      target.description ??
+                      target.display_number ??
+                      libraryLabel(e.payload.target_kind),
+                  )
+                : undefined,
+            ),
             evidence:
               e.command === "Create" || e.command === "Revise"
                 ? null
