@@ -371,6 +371,22 @@ test("the CRM Deals guide compiles in the real library and stays hidden while it
   assert.equal(guideForPath(released, "/sales/opportunities/SYN-1"), null);
 });
 
+test("the authoring contract docs/guides/README.md is not a guide, and the real library reports nothing for it", async () => {
+  const path = "docs/guides/README.md";
+  const text = await readFile(join(process.cwd(), path), "utf8");
+  // The README does show front matter, but only after line 40 and inside code blocks, where discovery does not look.
+  assert.match(text, /^guide_key: /m, "the README shows a front matter example");
+  const firstLines = text.replace(/\r\n?/g, "\n").split("\n").slice(0, 40);
+  assert.equal(firstLines.some((line) => /^\s*["']?guide[_-]key["']?\s*:/i.test(line)), false, "no guide key line in the first 40 lines");
+  assert.equal(declaresGuideKey(text), false);
+
+  const { entries: real } = await readMaster(process.cwd());
+  const result = await readGuideLibrary(process.cwd(), real);
+  assert.deepEqual(result.errors.filter((error) => error.path === path), []);
+  assert.equal(result.guides.some((guide) => guide.path === path), false);
+  assert.deepEqual(result.errors, []);
+});
+
 test("discovery finds guides by their guide_key and ignores other files", async (t) => {
   const crlf = guideText({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }).replace(/\n/g, "\r\n");
   const unclosed = "---\nguide_key: guide.page.a\nentry_key: route:/a\n";

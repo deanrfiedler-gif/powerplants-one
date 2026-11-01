@@ -6092,7 +6092,7 @@
       "source_paths": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
-        "src/components/cost-sources-guide.ts",
+        "docs/guides/pages/guide.route-estimating-cost-sources.md",
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
@@ -42380,7 +42380,7 @@
       "source_paths": [
         "src/app/(business)/sales/leads/[id]/page.tsx",
         "docs/blueprints/BP-03-crm.md",
-        "src/components/leads-guide.ts",
+        "docs/guides/pages/guide.page.sales.leads.md",
         "docs/decisions/lead-customer-context.md"
       ],
       "change_summary": "LC-12 customer resolution and owned Lead transfer preserve captured enquiry facts, source Activities and exact original recovery. Native customer/contact/site creation returns to an explicit Lead selection review.",
@@ -42393,7 +42393,7 @@
       "workflow_basis": [
         "src/app/(business)/sales/leads/[id]/page.tsx",
         "docs/blueprints/BP-03-crm.md",
-        "src/components/leads-guide.ts"
+        "docs/guides/pages/guide.page.sales.leads.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null
@@ -63220,7 +63220,7 @@
       "source_paths": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
-        "src/components/cost-sources-guide.ts",
+        "docs/guides/pages/guide.route-estimating-cost-sources.md",
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
@@ -63455,7 +63455,7 @@
       "source_paths": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
-        "src/components/cost-sources-guide.ts",
+        "docs/guides/pages/guide.route-estimating-cost-sources.md",
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
@@ -63690,7 +63690,7 @@
       "source_paths": [
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
-        "src/components/cost-sources-guide.ts",
+        "docs/guides/pages/guide.route-estimating-cost-sources.md",
         "docs/contracts/estimating-cost-sources.md",
         "docs/delivery/estimating-cost-sources-handover.md",
         "docs/reference/ui/supplier-pricing/PPO-Supplier-Pricing-and-Cost-Sources-r01.html"
