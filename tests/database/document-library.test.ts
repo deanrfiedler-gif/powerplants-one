@@ -995,15 +995,19 @@ test("DK-UI03 link status and exact revision filters scan beyond a page before p
   await createDocument(p, input);
   let version = 1;
   const ids: string[] = [];
+  const targets: string[] = [];
   for (let i = 1; i <= 30; i++) {
     const link_id = `80000000-0000-4000-8000-${String(i).padStart(12, "0")}`;
     ids.push(link_id);
+    const project = projectInput();
+    await createProject(p, project);
+    targets.push(project.id);
     await linkDocument(p, input.id, {
       ...action(input.revision_id, version++),
       action: "Add",
       link_id,
-      target_kind: "Site",
-      target_id: CRM.site,
+      target_kind: "Project",
+      target_id: targets[i - 1],
       purpose: `SYN reference ${i}`,
     });
   }
@@ -1020,8 +1024,8 @@ test("DK-UI03 link status and exact revision filters scan beyond a page before p
       ...action(next.revision_id, version++),
       action: "Add",
       link_id: `80000000-0000-4000-8000-${String(i).padStart(12, "0")}`,
-      target_kind: "Site",
-      target_id: CRM.site,
+      target_kind: "Project",
+      target_id: targets[i - 31],
       purpose: `SYN current reference ${i}`,
     });
   for (const [state, expected] of [
@@ -1058,8 +1062,8 @@ test("DK-UI03 link status and exact revision filters scan beyond a page before p
   const oldLink = history.items.find(
     (x) => x.command === "Link:Add" && x.revision.id === input.revision_id,
   )!;
-  assert.match(oldLink.summary, /r01 → Site:/);
-  assert.ok(!oldLink.summary.includes(CRM.site));
+  assert.match(oldLink.summary, /r01 → Project:/);
+  assert.ok(!oldLink.summary.includes(targets[0]));
   assert.match(
     history.items.find((x) => x.command === "Revise")!.summary,
     /Starts Unreviewed/,
