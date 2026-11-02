@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Request } from "@playwright/test";
+import { test, expect, type Page, type Request, type Response } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmBase, crmDiscovery } from "../helpers/crm";
 import { emptyHandover } from "../../src/sales/handover-model";
@@ -430,21 +430,22 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   // CompleteReview acknowledges the command before its separate saved-record
   // refresh. Exercise that ordering with the real response beyond the unchanged
   // render assertion window; no receipt or record content is substituted.
-  // Hold only the first completed read. Holding every poll left later handlers
-  // asleep past the unroute below, so they fulfilled routes already handled and
-  // delivered stale reads after the page had moved on.
-  let completedReadHeld = false;
+  // Every completed read waits at one barrier, released 6 seconds after the
+  // receipt arrives, so no overlapping focus or interval read can deliver the
+  // saved record early. Each held handler had its own timer before, and some
+  // were still asleep when the route was removed, fulfilling routes already
+  // handled and delivering stale reads after the page had moved on.
+  let releaseCompletedReads: () => void = () => {};
+  const completedReadsReleased = new Promise<void>((resolve) => {
+    releaseCompletedReads = resolve;
+  });
+  let receiptObservedAt = 0;
+  let completedReadsReleasedAt = 0;
   await page.route(completedPattern, async (route) => {
     if (route.request().method() !== "GET") return route.continue();
     const response = await route.fetch();
-    if (
-      !completedReadHeld &&
-      response.ok() &&
-      (await response.json()).record?.state === "ReviewCompleted"
-    ) {
-      completedReadHeld = true;
-      await new Promise((resolve) => setTimeout(resolve, 6000));
-    }
+    if (response.ok() && (await response.json()).record?.state === "ReviewCompleted")
+      await completedReadsReleased;
     await route.fulfill({ response });
   });
   const completionResponse = page.waitForResponse(
@@ -462,14 +463,32 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     if (!response.ok()) return true;
     return (await response.json()).record?.state === "ReviewCompleted";
   });
-  await page
-    .getByRole("button", { name: "Complete customer review", exact: true })
-    .click();
-  const completion = await completionResponse;
-  expect(completion.ok()).toBe(true);
-  const completionReceipt = await completion.json();
-  expect(completionReceipt).toMatchObject({ record_id: id, state: "ReviewCompleted" });
-  const completed = await completedRead;
+  let completionReceipt!: { record_version?: number };
+  let completed!: Response;
+  try {
+    await page
+      .getByRole("button", { name: "Complete customer review", exact: true })
+      .click();
+    const completion = await completionResponse;
+    expect(completion.ok()).toBe(true);
+    completionReceipt = await completion.json();
+    expect(completionReceipt).toMatchObject({ record_id: id, state: "ReviewCompleted" });
+    receiptObservedAt = Date.now();
+    setTimeout(() => {
+      completedReadsReleasedAt = Date.now();
+      releaseCompletedReads();
+    }, 6000);
+    completed = await completedRead;
+  } finally {
+    // Bounded: a failure above never leaves a completed read held.
+    if (!completedReadsReleasedAt) {
+      completedReadsReleasedAt = Date.now();
+      releaseCompletedReads();
+    }
+  }
+  // The saved record reached the browser only after the receipt and the hold.
+  expect(receiptObservedAt).toBeGreaterThan(0);
+  expect(completedReadsReleasedAt - receiptObservedAt).toBeGreaterThanOrEqual(6000);
   expect(completed.ok()).toBe(true);
   expect((await completed.json()).record).toMatchObject({
     id,
