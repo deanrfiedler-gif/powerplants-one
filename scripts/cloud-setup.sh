@@ -81,7 +81,11 @@ export PATH="$node_dir/bin:\$PATH"
 export npm_config_cache="$cache"
 EOF
 [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || echo "export PPO_DOCUMENT_DIRECTORY=\"$PPO_DOCUMENT_DIRECTORY\"" >> "$tools/env.sh"
-[[ -z "${TMPDIR:-}" ]] || echo "export TMPDIR=\"$TMPDIR\"" >> "$tools/env.sh"
+# A fallback under /dev/shm may be gone in a later shell, so env.sh recreates it.
+[[ -z "${TMPDIR:-}" ]] || cat >> "$tools/env.sh" <<EOF
+export TMPDIR="$TMPDIR"
+mkdir -p -m 700 "\$TMPDIR" 2> /dev/null || true
+EOF
 
 # 2. Locked dependencies and the disposable local settings file.
 npm ci
