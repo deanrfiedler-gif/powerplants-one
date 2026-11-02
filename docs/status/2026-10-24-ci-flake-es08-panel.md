@@ -3,7 +3,7 @@ title: ES-08 Working activation during calculation refresh
 date: 2026-10-24
 ---
 
-Owner: Codex for Dean. Status: root cause reproduced; approved fix under validation in [draft PR 693](https://github.com/deanrfiedler-gif/powerplants-one/pull/693).
+Owner: Codex for Dean. Status: root cause reproduced; approved fix merged in [PR 693](https://github.com/deanrfiedler-gif/powerplants-one/pull/693) on 3 November 2026.
 
 The 10-24 October CI survey, including earlier attempts of rerun workflows, found the same phone working-panel timeout in 15 distinct runs across 11 branches, including four runs on main. It affects Application assurance, Compiled application browser assurance and Estimating E1 assurance. A separate earlier ES-08 layout failure on its implementation branch is excluded.
 
@@ -15,8 +15,10 @@ Dean approved temporarily disabling Working during that refresh on 24 October 20
 
 Validation at the local implementation checkpoint: fixed compiled build, lint, explicit 8 GB typecheck, studio, foundation, naming and status checks passed. The full unit suite ran sequentially: 1,080 passed, with the two documented Windows document-store failures and the documented recovery failure; no other failures, skips or cancellations. The original browser journey was attempted alone but exceeded the unchanged deadline while creating its browser context, before application assertions. A prior database reset hit the unchanged migration statement timeout; the reset succeeded with the task server stopped.
 
-The successful forced after-proof ran at 68–100% CPU with roughly 1.5–1.8 GiB free memory. Earlier local work reached approximately 0.1 GiB free memory. These local passes are causal proof, not quiet-machine repeat reliability. The quiet-machine 20-repeat window and final-head CI remain pending; their results are tracked in PR 693. Node 24.22.1 differs from the 24.21.0 pin; the task-owned install used engine-strict=false and left package-lock.json unchanged. Backend draft 690's 103-file list was checked before editing and has no overlap with these changes.
+The successful forced after-proof ran at 68–100% CPU with roughly 1.5–1.8 GiB free memory. Earlier local work reached approximately 0.1 GiB free memory. These local passes are causal proof, not quiet-machine repeat reliability. That local run used Node 24.22.1 against the 24.21.0 pin, with engine-strict=false and package-lock.json unchanged. Backend draft 690's 103-file list was checked before editing and has no overlap with these changes.
 
-On 1 November the branch integrated main `5c533e93541b297bb347b07ba1db79f85c252089`. Neither the ES-08 application source nor its original browser spec changed upstream during the interruption. The final guard uses aria-disabled plus an activation check so an edit inside the working panel can refresh the preview without losing Escape focus return. A second held-response regression checks that focus and blocked keyboard activation. The earlier component additions moved to the adopted dated binding format. Backend PR 690 has merged; its final 116-file list has no overlap. Current-head validation is in progress under sustained 100% CPU load, with approximately 1 GiB free RAM. Node is now 24.22.2 against the unchanged 24.21.0 pin.
+On 1 November the branch integrated main `5c533e93541b297bb347b07ba1db79f85c252089`. Neither the ES-08 application source nor its original browser spec changed upstream during the interruption. The final guard uses aria-disabled plus an activation check so an edit inside the working panel can refresh the preview without losing Escape focus return. A second held-response regression checks that focus and blocked keyboard activation. The earlier component additions moved to the adopted dated binding format. Backend PR 690 has merged; its final 116-file list has no overlap. Local validation at that point ran under sustained 100% CPU load, with approximately 1 GiB free RAM, on Node 24.22.2 against the unchanged 24.21.0 pin.
+
+On 2 November a repeated run of the selected test passed 20 of 20, as recorded in PR 693. GitHub CI passed on the final head `f3e80859f`, and the fix merged on 3 November 2026.
 
 No acceptance scenario, visual review or deployment is claimed. Existing scope ES-08, reference bytes and calculation rules remain authoritative.
