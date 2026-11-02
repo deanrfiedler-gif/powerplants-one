@@ -10,9 +10,13 @@ Record bounded product-level candidate relationships, unresolved interface crite
 
 ## Desktop
 
+Accepted design: the [Product compatibility design decision](../../../decisions/product-compatibility-figma-design.md) of 1 November 2026 covers the relationship register, compare, relationship record, review, replacement chain, needs reassessment and handover to EN-06, with twenty icon-free captures in [design r01](../../../reference/ui/products/product-compatibility-design-r01/README.md). Where it differs from the text below, it governs; the built page has not moved to it yet. It departs from readable cards and "no new modal/drawer": the register is a grid, and review and handover are side forms.
+
 At 1440 × 960 and 1024 × 768, retain the shell, labelled Products workspace links and exact identity header. Use the shared padded module surface with semantic navy/green tokens, Roboto/Verdana, white bordered panels and wrapping facts. Registers use readable cards; comparisons place Before and After side by side. Keep the selected revision and evidence before consequential actions. Avoid global overrides or a second shell.
 
 ## Mobile
+
+Accepted design: captures 09–12 in [design r01](../../../reference/ui/products/product-compatibility-design-r01/README.md): what replaces this product and the relationship summary at 390 and 320 (D13). A phone review form is not drawn.
 
 At 390 × 844 and 320 px, stack cards, forms and Before/After sections in source order. Fields retain readable 16 px text, touch targets and visible labels. Long UUIDs, provider keys and evidence wrap within the panel. Effective 200% reflow is checked at 720 CSS px from the 1440 desktop basis. No outer-page horizontal scrolling is permitted.
 

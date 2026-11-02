@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "gaps": [
+        {
+          "id": "application-shell-dk07-guide-panel",
+          "expected": "The accepted DK-07 design (PPO-DK07-HELP-CENTRE-FIGMA-DEC) gives the information icon a 600 px non-modal panel with status, last reviewed, owner, contents, search, current task, linked SOPs and Was this helpful?, an overlay at tablet, and a full-screen reader from the phone menu.",
+          "actual": "src/components/shell-page-guide.tsx renders the released panel, whose markup the guidance contract treats as accepted and a unit test pins. It has neither the new header nor the tools.",
+          "action": "When a build is requested, change the panel and its test deliberately, and update systems/guidance.md in the same pull request.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-dk07-no-guide-wording",
+          "expected": "D8: ordinary users see No guide for this page yet, with Report a gap, for anything not Published.",
+          "actual": "The guidance contract shows the being prepared fallback, and keeps twenty carried-over InReview guides visible through shown_before_review.",
+          "action": "Change the fallback wording with the build. Keep the carried-over exception until each guide is reviewed, unless Dean rules otherwise.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-dk07-edit-status-word",
+          "expected": "D13: an edit after review returns the guide to Draft.",
+          "actual": "The guidance contract displays Changes awaiting review after a content change and keeps the recorded review.",
+          "action": "Pick one word at build, in the contract and the panel together. Both mean the old review no longer counts.",
+          "priority": "Low",
+          "owner": "Dean Fiedler"
+        },
+        {
+          "id": "application-shell-dk07-help-entry",
+          "expected": "D15: More, Help, Help Centre, the panel footer and the phone menu reach /help, with no second Help button in the top bar.",
+          "actual": "No route or menu entry exists for /help.",
+          "action": "Add the entries with the build and register the sub-routes.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-dk07-coverage-grid",
+          "expected": "The accepted DK-07 coverage view and gaps worklist use a grid register grouped by module, with bands spanning the select and settings columns, from the Figma parts Coverage grid header and row.",
+          "actual": "No coverage page exists in the application.",
+          "action": "When a build is requested, adopt the shared register table for coverage and record any departure.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

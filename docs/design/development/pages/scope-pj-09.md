@@ -14,11 +14,15 @@ The native workflow exists at the root and six supporting routes. Refine and int
 
 ## Desktop
 
+Accepted Site assurance design: the [Site assurance design decision](../../../decisions/site-assurance-figma-design.md) of 1 November 2026 covers `scope:PJ-09/site-assurance`, traced to PRJ-06, at a proposed route `/projects/assurance`, with captures 01–10 in [Site assurance design r01](../../../reference/ui/projects/site-assurance-design-r01/README.md). It is not built, and the rail item stays unavailable. Its release is stage evidence for this page and never accepts for the customer.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted Site assurance design, site supervisor: captures 11–16 in [Site assurance design r01](../../../reference/ui/projects/site-assurance-design-r01/README.md): today's checks, a hold point and record witness attendance at 390 and 320.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Site assurance design: [Site assurance design r01 captures](../../../reference/ui/projects/site-assurance-design-r01/README.md) (twenty-three icon-free PNGs; not a UI baseline).
 
 - [Supplied desktop composition](../../../reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Desktop-UI-Mockup-r01.png), SHA-256 `9d3cf7edb1d6184d14bc9d1a4c42c97a4d3ba2ddc2c2d2004ca6e54febe3b242`.
 - [Written r02 build contract](../../../reference/project-acceptance/PPO-PJ-09-Staged-Acceptance-and-Closeout-Build-Plan-r02.md) and ADR-0033 adaptations govern beyond the raster composition. An exact accepted phone mockup is not supplied; prior implementation captures remain evidence, not a replacement design baseline.

@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-DESIGN-AUDIT-OPEN-DEC,Design audit: seven open page decisions,docs/decisions/design-audit-open-decisions.md,,"Dean adopted all seven recommendations on 1 November 2026; design direction only; no build or external action authorised beyond the record",Dean Fiedler,5e2e7039033411f1156732fae3b4d1d8a6fe794c,,,git,

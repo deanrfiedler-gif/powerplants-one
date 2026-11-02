@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CUSTOMER-TRAINING-SCOPE-DEC,Customer training scope (CX-04),docs/decisions/customer-training-scope.md,,"Dean decided the scope on 1 November 2026; page not drawn or built; no training offer, price or Finance rule set",Dean Fiedler,5e2e7039033411f1156732fae3b4d1d8a6fe794c,,,git,
