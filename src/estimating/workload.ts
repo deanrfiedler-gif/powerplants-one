@@ -79,6 +79,7 @@ export async function readEstimatingWorkload(
       legacy: 0,
     };
     const owner_counts = { all: 0, mine: 0 };
+    let source_review_required = 0;
     for (const candidate of candidates) {
       try {
         const opportunity = await visibleOpportunity(c, p, candidate.id);
@@ -272,6 +273,21 @@ export async function readEstimatingWorkload(
           estimates,
         });
       } catch (error) {
+        if (
+          error instanceof AppError &&
+          ((error.status === 422 &&
+            error.field_errors.some(
+              ({ field }) => field === "definition_hash",
+            )) ||
+            (error.status === 409 &&
+              error.code === "DiscoveryEvidenceMismatch"))
+        ) {
+          // Opportunity and relationship visibility precede Discovery validation.
+          // A source needing review is excluded from rows and readiness counts.
+          if (filters.owner === "mine" ? candidate.in_mine : candidate.in_all)
+            source_review_required += 1;
+          continue;
+        }
         // Never disclose hidden-source status, counts, identities or labels.
         if (!(error instanceof AppError) || ![403, 404].includes(error.status))
           throw error;
@@ -281,6 +297,7 @@ export async function readEstimatingWorkload(
       items,
       counts,
       owner_counts,
+      source_review_required,
       observed_at: new Date().toISOString(),
       filters,
       candidate_limit: 100,

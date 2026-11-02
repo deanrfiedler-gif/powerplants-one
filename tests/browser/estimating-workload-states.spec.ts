@@ -19,6 +19,7 @@ test("ES01 initial loading, no permitted workload and no matches are distinct", 
         items: [],
         counts: { unstarted: 0, clarification: 0, ready: 0, legacy: 0 },
         owner_counts: { all: 0, mine: 0 },
+        source_review_required: 0,
         candidate_limit: 100,
         observed_at: "2026-10-31T00:00:00.000Z",
         synthetic: true,
@@ -52,6 +53,49 @@ test("ES01 initial loading, no permitted workload and no matches are distinct", 
   await expect(page.getByText("No permitted estimating workload")).toHaveCount(
     0,
   );
+});
+
+test("ES01 shows the source review notice only for a current nonzero workload response", async ({
+  page,
+}) => {
+  await mountWorkloadPresentation(page);
+  const notice = page.getByText(
+    "1 opportunities need their discovery reviewed before they appear here.",
+    { exact: true },
+  );
+  await expect(notice).toHaveCount(0);
+  const endpoint = "**/api/v1/estimating/workload?**";
+  await page.route(endpoint, async (route) => {
+    await route.fulfill({
+      json: {
+        items: [],
+        counts: { unstarted: 0, clarification: 0, ready: 0, legacy: 0 },
+        owner_counts: { all: 0, mine: 0 },
+        source_review_required: 1,
+        candidate_limit: 100,
+        observed_at: "2026-11-02T00:00:00.000Z",
+        synthetic: true,
+        filters: { q: "", owner: "all", view: "all", sort: "updated" },
+      },
+    });
+  });
+  await page.reload();
+  await expect(notice).toBeVisible();
+  await page.goto("/estimating?tab=estimates");
+  await expect(notice).toHaveCount(0);
+  await page.goto("/estimating");
+  await expect(notice).toBeVisible();
+  await page.route(endpoint, (route) =>
+    route.fulfill({
+      status: 503,
+      json: { code: "Unavailable", message: "Synthetic workload read failed" },
+    }),
+  );
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(
+    page.getByRole("heading", { name: "Workload could not be loaded" }),
+  ).toBeVisible();
+  await expect(notice).toHaveCount(0);
 });
 
 test("ES01 Saved estimates withholds stale links and clears failed or denied results", async ({

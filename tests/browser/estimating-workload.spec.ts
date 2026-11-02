@@ -278,6 +278,7 @@ test("ES01 selection opens newest first, exports only fresh permitted rows and p
         items: [],
         counts: { unstarted: 0, ready: 0, legacy: 0, clarification: 0 },
         owner_counts: { all: 0, mine: 0 },
+        source_review_required: 0,
       },
     }),
   );

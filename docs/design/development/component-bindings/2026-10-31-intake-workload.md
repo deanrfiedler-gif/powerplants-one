@@ -24,6 +24,8 @@ Reuse api and ErrorNotice with a local estimating register read adapter; shared 
 
 Within a permitted workload row, absent and denied Sales briefs both use generic no-readable-brief copy and expose no brief identity or status. Start navigation is identical for both; native creation retains its source checks. See the route contract for this projection boundary.
 
+Permitted candidates with a stale Discovery definition or mismatched retained evidence are omitted from rows and state counts. A current positive `source_review_required` count shows the one-line review notice; zero, loading, failed and Saved responses do not show it. Database tests cover owner filtering and hidden sources; the browser state fixture covers notice visibility and failed-read clearing. CSV object URLs are released on the next timer task after starting the download.
+
 ## application-shell
 
 Reuse the existing module rail, secondary menu collapse, guide and compact phone header. The route joins existing styles through data-ppo-workspace=shared and adds one sorted module-workspace declaration to remove the obsolete section tabs. No shared shell CSS is changed. The adopted phone header replaces the original capture's duplicate toolbar. Physical-device, screen-reader and owner acceptance remain review items.

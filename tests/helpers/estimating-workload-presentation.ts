@@ -195,6 +195,7 @@ export async function mountWorkloadPresentation(page: Page) {
         items,
         counts,
         owner_counts: { all: basis.length, mine: mine.length },
+        source_review_required: 0,
         observed_at: "2026-10-11T00:42:00.000Z",
         candidate_limit: 100,
         synthetic: true,

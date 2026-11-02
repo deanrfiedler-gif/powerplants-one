@@ -39,6 +39,8 @@ Saved estimates remains `/estimating?tab=estimates`, with a separate search, new
 
 All workload and My estimating work have separately bounded windows sharing search and sort. My means the estimating workspace owner equals the current actor, never the Sales owner. Menu owner counts report permitted rows in each of those windows. Readiness counts use the selected owner window and are calculated before the readiness view; selecting a readiness state does not change those counts. Counts never claim a global total. Coverage copy states the window and advises narrowing search for older work. Underlying denied candidates can reduce the permitted result below 100; they do not become hidden counts.
 
+After opportunity and relationship visibility checks, a Discovery definition mismatch (422 with field `definition_hash`) or `DiscoveryEvidenceMismatch` (409) excludes that candidate from rows and owner/readiness counts without failing the register. `source_review_required` counts only such candidates in the selected owner window, before the readiness view. Hidden opportunities add nothing. A current nonzero count displays “{n} opportunities need their discovery reviewed before they appear here.” Shared Discovery validation and all other error handling remain unchanged.
+
 ## Mobile
 
 At 390 and 320 px use the adopted compact shell header: menu/view picker, conversations and filters, with no duplicate page toolbar. Filters expose search, owner, readiness, sort, refresh and selection. Flush rows are about 80 px: title/change date, reference/readiness, customer/estimating owner and chevron. Long titles remain available in the snapshot. Input text is 16 px on phones.

@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { beforeEach, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
+import { AppError } from "../../src/platform/errors";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { reset } from "../../scripts/database";
@@ -166,6 +171,155 @@ test("ES01 scope and capability revocation removes source rows and action text w
     (error: unknown) => (error as { status: number }).status === 403,
   );
 });
+
+for (const defect of ["definition_hash", "evidence"] as const) {
+  test(`ES01 isolates Discovery ${defect} review from valid rows, owner counts and hidden sources`, async () => {
+    const { p, opportunity } = await setup();
+    const prefix = opportunity.title;
+    const discover = async (opportunityId: string) => {
+      const discovery = discoveryInput();
+      const preview = await previewDiscoveryCreate(p, {
+        opportunity_id: opportunityId,
+        discovery,
+      });
+      const command = {
+        ...crmBase(),
+        id: randomUUID(),
+        option_id: randomUUID(),
+        revision_id: randomUUID(),
+        opportunity_id: opportunityId,
+        discovery,
+        expected_opportunity_version: preview.expected_opportunity_version,
+        context_hash: preview.context_hash,
+        confirmed_question_ids: preview.required_confirmation_ids,
+      };
+      await createDiscoveryWorkspace(p, command);
+      return command;
+    };
+    await discover(opportunity.id);
+    const baseline = await readEstimatingWorkload(p, { q: prefix });
+    assert.equal(baseline.source_review_required, 0);
+    assert.deepEqual(baseline.counts, {
+      unstarted: 0,
+      clarification: 0,
+      ready: 1,
+      legacy: 0,
+    });
+
+    const stale = { ...crmCreate(), title: `${prefix} stale` };
+    await createOpportunity(p, stale);
+    const source = await discover(stale.id);
+    // Retained historical/corrupt evidence cannot be produced by today's write
+    // commands. Alter only this disposable fixture, restoring its trigger in
+    // the same transaction (including rollback if an update fails).
+    await transaction(async (c) => {
+      await c.query(
+        "ALTER TABLE ppo.estimation_revisions DISABLE TRIGGER retain_revision",
+      );
+      if (defect === "definition_hash")
+        await c.query(
+          "UPDATE ppo.estimation_revisions SET input=jsonb_set(input,'{definition_hash}',to_jsonb($2::text)) WHERE id=$1",
+          [source.revision_id, "0".repeat(64)],
+        );
+      else
+        await c.query(
+          "UPDATE ppo.estimation_revisions SET context_hash=$2 WHERE id=$1",
+          [source.revision_id, "0".repeat(64)],
+        );
+      await c.query(
+        "ALTER TABLE ppo.estimation_revisions ENABLE TRIGGER retain_revision",
+      );
+    });
+
+    for (const owner of ["all", "mine"]) {
+      const result = await readEstimatingWorkload(p, { q: prefix, owner });
+      assert.deepEqual(result.items, baseline.items);
+      assert.deepEqual(result.counts, baseline.counts);
+      assert.deepEqual(result.owner_counts, baseline.owner_counts);
+      assert.equal(result.source_review_required, 1);
+      const filtered = await readEstimatingWorkload(p, {
+        q: prefix,
+        owner,
+        view: "unstarted",
+      });
+      assert.deepEqual(filtered.items, []);
+      assert.deepEqual(filtered.counts, baseline.counts);
+      assert.equal(filtered.source_review_required, 1);
+    }
+    const second = (await createSession("second-company")).principal;
+    const hidden = await readEstimatingWorkload(second, { q: prefix });
+    assert.deepEqual(hidden.items, []);
+    assert.deepEqual(hidden.counts, {
+      unstarted: 0,
+      clarification: 0,
+      ready: 0,
+      legacy: 0,
+    });
+    assert.equal(
+      hidden.source_review_required,
+      0,
+      "a hidden stale opportunity adds no review count",
+    );
+
+    const otherOwner = (await createSession("crm-receiver")).principal;
+    // Give this synthetic reader Estimating read access in the same company;
+    // both workspaces remain owned by their original creator.
+    await database().query(
+      `INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to)
+       SELECT workspace_id,$2,company_id,capability,scope_type,scope_id,site_id,valid_from,valid_to
+       FROM ppo.permission_grants WHERE user_id=$1 AND capability='estimating.read'`,
+      [p.actor_id, otherOwner.actor_id],
+    );
+    const mine = await readEstimatingWorkload(otherOwner, {
+      q: prefix,
+      owner: "mine",
+    });
+    assert.deepEqual(mine.items, []);
+    assert.deepEqual(mine.counts, {
+      unstarted: 0,
+      clarification: 0,
+      ready: 0,
+      legacy: 0,
+    });
+    assert.equal(
+      mine.source_review_required,
+      0,
+      "the other owner's stale candidate is not counted in My work",
+    );
+    assert.equal(
+      (await readEstimatingWorkload(otherOwner, { q: prefix }))
+        .source_review_required,
+      1,
+    );
+
+    // An unrelated validation failure must still fail the read.
+    await transaction(async (c) => {
+      await c.query(
+        "ALTER TABLE ppo.estimation_revisions DISABLE TRIGGER retain_revision",
+      );
+      await c.query(
+        "UPDATE ppo.estimation_revisions SET input=$2::jsonb WHERE id=$1",
+        [
+          source.revision_id,
+          JSON.stringify({
+            ...source.discovery,
+            effort: { ...source.discovery.effort, value: "Unsupported" },
+          }),
+        ],
+      );
+      await c.query(
+        "ALTER TABLE ppo.estimation_revisions ENABLE TRIGGER retain_revision",
+      );
+    });
+    await assert.rejects(
+      readEstimatingWorkload(p, { q: prefix }),
+      (error: unknown) =>
+        error instanceof AppError &&
+        error.status === 422 &&
+        error.field_errors.some(({ field }) => field === "effort.value"),
+    );
+  });
+}
 
 test("ES01 readiness counts cover the permitted search and owner window before the readiness view", async () => {
   const p = (await createSession("coordinator")).principal;

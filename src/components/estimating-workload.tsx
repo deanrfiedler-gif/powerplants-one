@@ -273,7 +273,7 @@ function Register({
       a.href = url;
       a.download = "ppo-estimating-workload.csv";
       a.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 0);
       setNotice(
         `Exported ${confirmed.length} permitted selected opportunities. No intake decision was made.`,
       );
@@ -623,6 +623,15 @@ function Register({
           </p>
         )}
         <ErrorNotice error={exportError} />
+        {!saved &&
+          !workload.loading &&
+          data &&
+          data.source_review_required > 0 && (
+            <p role="status" className="ew-basis">
+              {data.source_review_required} opportunities need their discovery
+              reviewed before they appear here.
+            </p>
+          )}
         {!!current.error ? (
           <section className="ew-notice" role="alert">
             <h2>
