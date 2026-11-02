@@ -383,3 +383,7 @@ One small pull request per hotspot, highest rank first, each cut from `main` aft
 - The migration ledgers, the migration registry and `demo-upgrade.ts`, the largest remaining source by file count (owned by [migration test expectations](migration-test-expectations.md)).
 - `src/app/layout.tsx` and `src/shell/navigation.ts`, which builds also edit but which have not conflicted in these replays.
 - Strict mode itself: with fewer conflicts, a merge still sends other pull requests back for a CI rerun when they fall behind. Only open decisions 1 and 5 (merged-tree check or merge queue) change that.
+
+## Amendment — 2 November 2026: workspace-only scripts count as documentation
+
+`scripts/cloud-setup.sh` prepares Codex Cloud and Claude Code workspaces. Nothing in the application, its tests or CI runs it, yet a change to it ran the full suites: #848, a fix to that script alone, waited about an hour and a half and then failed on two unrelated flaky browser tests. `scripts/ci_scope.py` now lists it in `WORKSPACE_ONLY`, which counts as documentation for the scope in section 4. The claim is checked rather than assumed: `--self-test` fails if any source, test, script, package file or workflow names a `WORKSPACE_ONLY` file, so the first CI step or test that runs it takes it out of the list in the same pull request. Deleting or renaming it still runs the full suites, and a pull request that changes it together with anything outside the documentation scope runs them as before. Claude recommended this and Dean asked for it on 2 November 2026 ("do both").
