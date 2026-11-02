@@ -26,7 +26,7 @@ On 2 November 2026 Dean set out the tools he uses (Claude, Claude Code, ChatGPT 
 ## The flow for a page
 
 1. **Scope.** Dean agrees the scope ID, the user need and the acceptance criteria.
-2. **Design.** Claude designs the page in Figma. Dean accepts it.
+2. **Design.** Claude designs the page in Figma. Dean accepts it. Both acceptances are Dean's alone; an agent decision under the standing order never stands in for either.
 3. **Lock-in.** Claude records the accepted design in the repository: the design register entry, the captures and the decision record. This is the build specification; a page without a lock-in is not ready to build.
 4. **Build.** Codex builds the page from the lock-in in the repository, not from Figma directly.
 5. **Review.** Claude reviews the build once (below).
@@ -35,11 +35,11 @@ On 2 November 2026 Dean set out the tools he uses (Claude, Claude Code, ChatGPT 
 
 ## One independent review
 
-A pull request gets one full independent review, of one head, covering defects only. The author fixes or answers each finding and posts the evidence. The reviewer then confirms only that those findings were addressed. A second full review is needed only when the fixes add new behaviour, a migration, a permission or grant, or a calculation or estimating rule. This replaces the rule that every new commit needs a new review, which turned reviews into loops.
+A pull request that needs an independent review (every Codex build, and the higher-risk changes CONTRIBUTING.md lists) gets one full review, of one head, covering defects only. The author fixes or answers each finding and posts the evidence. The reviewer then confirms only that those findings were addressed. A second full review is needed only when the fixes add new behaviour, a migration, a permission or grant, or a calculation or estimating rule. This replaces the rule that every new commit needs a new review, which turned reviews into loops.
 
 ## Merging
 
-Agents do not merge from 2 November 2026 until Dean says otherwise. This suspends the merge part of his [standing order of 30 October 2026](autonomous-agent-operation.md); the rest of it (agents decide, record and proceed) still applies. The merge gates in CONTRIBUTING.md remain the checklist for "completed and ready".
+Agents do not merge from 2 November 2026 until Dean says otherwise, including reverts. This suspends the merge part of his [standing order of 30 October 2026](autonomous-agent-operation.md); the rest of it (agents decide, record and proceed) still applies. The merge gates in CONTRIBUTING.md remain the checklist for "completed and ready".
 
 ## Why
 

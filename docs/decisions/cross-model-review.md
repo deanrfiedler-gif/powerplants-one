@@ -41,4 +41,4 @@ Dean's standing order of 30 October 2026 ([autonomous agent operation](autonomou
 
 ## Amendment — 2 November 2026: design, build and review roles
 
-The [design, build and review roles](design-build-review-roles.md) decision of 2 November 2026 supersedes the role table above. Claude designs pages in Figma, records the design lock-ins and reviews Codex's pull requests; Codex builds the pages; ChatGPT is a research and business-analysis partner and an optional second opinion, not a builder; Dean accepts designs and merges. Each pull request gets one full independent review, and the reviewer then confirms only that its findings were addressed.
+The [design, build and review roles](design-build-review-roles.md) decision of 2 November 2026 supersedes the role table above. Claude designs pages in Figma, records the design lock-ins and reviews Codex's pull requests; Codex builds the pages; ChatGPT is a research and business-analysis partner and an optional second opinion, not a builder; Dean accepts designs and merges. A pull request that needs an independent review gets one full review, and the reviewer then confirms only that its findings were addressed.
