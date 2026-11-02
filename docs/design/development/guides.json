@@ -64818,7 +64818,7 @@
     {
       "guide_key": "guide.route-estimating-intake",
       "entry_key": "route:/estimating/intake",
-      "title": "Estimating Intake",
+      "title": "Sales briefs",
       "status": "Draft",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
@@ -64832,7 +64832,7 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision."
+            "Receive the latest submitted Sales brief revision, review its exact context and continue to the native record for an independent receiving decision."
           ],
           "steps": [],
           "rows": [],
@@ -64842,7 +64842,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "The current deal owner needs opportunity edit access. The chosen receiver needs estimating.edit and source visibility. Prepare an open, owned and dated Activity linked to the Opportunity."
+            "Use an identity with Estimating receiving access and visibility of the Opportunity and submitted sources. All briefs can include work assigned to another receiver; only its receiving owner can decide it."
           ],
           "steps": [],
           "rows": [],
@@ -64853,9 +64853,10 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Confirm your Estimating identity and source visibility.",
-            "Choose a submitted brief and open its linked record.",
-            "Review frozen evidence and clarification, then record an explicit receiving decision."
+            "Choose All briefs, Awaiting my decision or Assigned to me.",
+            "Filter by customer or receiving owner; use More to search. Counts include all matching permitted submitted briefs before paging.",
+            "Open a row to inspect its frozen brief, clarification, evidence and history.",
+            "Use Open brief to continue with that exact revision, or Open opportunity for its source."
           ],
           "rows": [],
           "headers": []
@@ -64864,12 +64865,8 @@
           "section_id": "page-tour",
           "title": "Understand this page",
           "paragraphs": [
-            "This receiving queue shows only submitted briefs. Open the linked handover record to review its exact revision, source changes and outstanding clarification. Draft preparation is available from the Sales preparation link.",
-            "Sales preparation worklist: select a permitted deal and create its draft.",
-            "Brief: problem/outcome, included scope, exclusions, assumptions, unknowns, date, locations/equipment and exact evidence.",
-            "Review: Submit, Clarify, Answer, Resolve, Return and Accept remain separate.",
-            "History and comparison: source basis and immutable revisions. Estimating Intake shows submitted briefs.",
-            "Receiving Intake is a separate permitted Estimating destination from Intake & workload; receiving ownership and contextual Sales handovers remain distinct."
+            "Sales briefs is the receiving queue at /estimating/intake. Intake & workload at /estimating and the Sales preparation list at /sales/handoffs/estimating are separate destinations.",
+            "The desktop grid has fixed selection and action columns, optional columns, newest receiving updates first and page controls. A row opens a large snapshot over the grid. On phone, the compact header opens Choose view and Search and filter."
           ],
           "steps": [],
           "rows": [],
@@ -64879,7 +64876,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Save is not Submit. Submission freezes content. Accepted for estimating is not estimate or quotation approval. A later draft never replaces the previous submitted basis. Evidence identifies its native source and exact revision."
+            "Save is not Submit. The queue shows the latest submitted content, revision, receiver, requested date and receiving-state update. An unsubmitted successor does not replace those facts or become submitted work. Sales owner identifies the submitter."
           ],
           "steps": [],
           "rows": [],
@@ -64890,12 +64887,11 @@
           "title": "Complete the main task",
           "paragraphs": [],
           "steps": [
-            "Choose the Opportunity and create a handover draft.",
-            "Complete the brief, date basis, next Activity and receiving owner; Save.",
-            "Read readiness and Submit the exact revision.",
-            "The receiver opens Estimating Intake and asks for clarification when needed.",
-            "Sales answers; the reviewer resolves before Accept, or returns with a reason and owned follow-up.",
-            "After return or acceptance, deliberately create and submit a successor; earlier evidence remains."
+            "Use the state views to distinguish Submitted, Clarification requested, Clarification answered, Returned and Accepted.",
+            "Awaiting my decision includes your Submitted and Clarification answered briefs. Source-changed work still needs your attention.",
+            "Read the initial Clarification tab, then Evidence and History. Expand outcome, assumptions and unknowns when needed.",
+            "On Open brief, ask for clarification or review the answer. Resolve an answered clarification before accepting. Return with the native required reason and owned follow-up when appropriate.",
+            "A changed source needs return, corrected successor and renewed review. The register cannot accept or return several briefs together."
           ],
           "rows": [],
           "headers": []
@@ -64904,7 +64900,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Acceptance records receiving evidence only. It does not create or approve an Estimate. The latest submitted revision remains the Intake basis while a successor is a draft."
+            "Selecting rows changes no receiving state. Open in sequence reviews selected rows on this page, oldest update first; Export list rechecks current access and exact submitted versions before downloading CSV. Clear selection to return to the ordinary toolbar.",
+            "Acceptance records receiving evidence only. Linking to an existing or separately created estimating workspace requires LC-13 review. It creates no Discovery automatically."
           ],
           "steps": [],
           "rows": [],
@@ -64914,7 +64911,8 @@
           "section_id": "states",
           "title": "Statuses, warnings and save state",
           "paragraphs": [
-            "Loading is a pending read; a failed read is not an empty result. Complete/partial source projections retain their own observation times. Draft, Submitted, Clarification requested/answered, Returned and Accepted have distinct meanings. Aftercare Open, Review completed and Closed are separate. Unknown receiving results block resubmission and closure."
+            "Loading does not mean zero. An empty permitted queue differs from no filter matches. Partial reads show lower-bound counts; refresh to retry unavailable sources. Returned and Accepted are all-time views.",
+            "Source changed appears on open work and blocks native acceptance. A terminal snapshot can show later source movement while preserving the recorded outcome. A newer draft never changes that outcome."
           ],
           "steps": [],
           "rows": [],
@@ -64924,8 +64922,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case: a nursery controls review identifies a concern. Retain attributed feedback and an owned Activity, then submit a separate Service referral. A receiving case reference confirms acceptance, not resolution.",
-            "Synthetic exception: source evidence changes during receiver review. Preserve the earlier revision, return with a reason, prepare a successor and review its current source basis."
+            "Synthetic normal case: a dosing brief shows Clarification answered. The assigned receiver opens the snapshot, reads the answer, then uses Open brief to resolve it and decide the exact revision.",
+            "Synthetic exception: Sales has saved revision 2 as a draft after returning revision 1. The queue still shows revision 1, its submitted date and receiver. Open brief identifies that historical submission and offers a separate current-brief link."
           ],
           "steps": [],
           "rows": [],
@@ -64935,7 +64933,9 @@
           "section_id": "recovery",
           "title": "Troubleshooting",
           "paragraphs": [
-            "Validation identifies the field to correct without discarding the draft. On a version conflict, compare the saved version with your proposal before deliberately using its version. An uncertain operation stays in the durable local journal: Check original result or Retry exact original. Do not issue a replacement while the original outcome is unknown. Reload with the same authorised identity to reconcile. A denied source needs restored legitimate access."
+            "A failed or denied read clears earlier rows, counts, selections and snapshots. Retry after legitimate access or connectivity is restored. A changed paging basis returns to the first page; select current rows again.",
+            "If a snapshot or export reports a changed revision, refresh the queue. The failed export has not made a receiving decision. Do not use stale numbers as complete totals.",
+            "On the native brief, uncertain saves still use Check original result or Retry exact original. Keep the original operation until it is reconciled; do not replace it with a new receiving decision."
           ],
           "steps": [],
           "rows": [],
@@ -64945,8 +64945,9 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "Use Tab/Shift+Tab, Enter and Space with labelled native controls. Tabs remain reachable on narrow screens; form fields stack. Board moves retain menu/keyboard alternatives. Tables scroll within their own regions. Unsaved handover/review forms warn before leaving. These online Sales commands do not gain offline authority from the Offline workspace.",
-            "Use labelled global destinations and More > Workspace on the phone. Cancel leave review to retain dirty work and the existing workspace preference. Hosted offline recovery is unavailable; local originals use their existing recovery controls."
+            "On phone, tap a row for its full-screen snapshot. Previous/next and More stay reachable; at 320 px previous/next are in More. Back returns to the list. Open menu and permitted Conversations remain in More.",
+            "Press and hold to select, or use Select briefs in Search and filter, then labelled checkboxes. Review selection opens sequence/export. Pull down refreshes; Refresh is also in the filter panel.",
+            "Use Tab/Shift+Tab, Enter and Space. Escape closes overlays and returns focus; tabs retain keyboard navigation. This receiving queue requires online current-authority reads."
           ],
           "steps": [],
           "rows": [],
@@ -64956,7 +64957,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "The retained HTML supplies task/visual intent. ADR-0046 and the implementation handover explain native source reconciliation. Use Customer, Activity, Service and Estimating source pages for their own commands."
+            "Use the Sales briefs page contract, accepted design reference, native Sales completion handover and LC-13 continuity contract for boundaries and evidence."
           ],
           "steps": [],
           "rows": [],
@@ -64966,7 +64967,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Owner: Dean Fiedler. Draft article; owner and visual acceptance remain pending. Actual tests and captures are recorded separately in the implementation handover. A source commit or passing test is not operational approval."
+            "Owner: Dean Fiedler. Guide remains Draft. Functional evidence and inspected captures are separate from application visual acceptance, owner acceptance, merge and deployment."
           ],
           "steps": [],
           "rows": [],
@@ -64989,14 +64990,20 @@
           "rows": []
         }
       ],
-      "prepared_at": "2026-09-24",
-      "runtime_evidence": "See docs/delivery/sales-native-completion-handover.md for executed evidence; not owner acceptance. NAV checks and fixture gaps: docs/testing/evidence/navigation/README.md. This edited guide remains unreviewed.",
-      "change_summary": "Native Sales workflow, authority, source ownership, recovery and boundaries.",
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "docs/testing/evidence/sales-briefs-queue/README.md records actual checks and visual differences. Owner acceptance is pending.",
+      "change_summary": "Accepted receiving queue, shared submitted population, exact handovers, selection/export and read recovery.",
       "source_paths": [
         "src/components/sales-handover.tsx",
         "src/sales/handover-service.ts",
         "src/sales/handover-model.ts",
-        "docs/decisions/ADR-0046-sales-native-workflows.md"
+        "docs/decisions/ADR-0046-sales-native-workflows.md",
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "src/sales/receiving-queue.ts",
+        "src/sales/receiving-queue-model.ts"
       ]
     },
     {
