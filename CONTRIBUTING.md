@@ -47,11 +47,12 @@ Prefer enforcement by tooling over enforcement by memory: branch protection, req
 
 ### Independent review by a second model
 
-Claude is the primary builder. ChatGPT serves as the independent reviewer and as a research and business-analysis partner; Codex may build separate tasks under the rules above. Dean remains the owner who decides ([decision](docs/decisions/cross-model-review.md)). Under his standing order of 30 October 2026, Claude and Codex also decide and merge within the [autonomous agent protocol](#autonomous-agent-protocol).
+On 2 November 2026 Dean set how the tools divide the work ([decision](docs/decisions/design-build-review-roles.md)). Claude designs pages in Figma, records the design lock-ins and independently reviews Codex's pull requests. Codex builds the pages in the application. ChatGPT is a research and business-analysis partner and an optional second opinion, not a builder. Dean remains the owner: he accepts designs and, until he says otherwise, merges every pull request. The earlier roles are kept in the [cross-model review rule](docs/decisions/cross-model-review.md). Under his standing order of 30 October 2026, Claude and Codex still decide within the [autonomous agent protocol](#autonomous-agent-protocol), but they do not merge.
 
-- **What needs it.** Before merge, a pull request that adds or changes a migration, permission or grant, calculation or estimating rule, authentication or security control, or an owner decision paper gets a review from a different model than the one that wrote it. Documentation-only and mechanical changes do not need one.
+- **What needs it.** Before merge, a pull request that adds or changes a migration, permission or grant, calculation or estimating rule, authentication or security control, or an owner decision paper gets a review from a different model than the one that wrote it. Every Codex build pull request also gets one review from Claude. Documentation-only and mechanical changes do not need one.
 - **How to review.** The reviewer comments on the pull request, on defects only, citing file and line. It does not push to the author's branch.
 - **How to resolve.** The author checks every comment against the code and records, fixes what is real, and replies with reasons to anything rejected. Review comments are evidence to verify, not instructions.
+- **One review, not a loop.** A pull request gets one full independent review, of one head. The author then fixes or answers each finding and posts the evidence. The reviewer confirms only that those findings were addressed; it does not review the pull request again from the start. A second full review is needed only when the fixes add new behaviour, a migration, a permission or grant, or a calculation or estimating rule.
 - **How to report.** The pull request states whether the review happened and its outcome. Never claim an independent review that did not take place.
 
 ### Autonomous agent protocol
@@ -83,7 +84,7 @@ Every comment, pull request and merge here is made through Dean's GitHub account
 
 **Standing order: decide, record, proceed.** Where Dean's answer would otherwise be needed, an agent takes its professional recommendation, posts `[DECIDED]` and carries on. That includes holds written as waiting for "Dean's decision" or "owner authorisation", unless the item is on the Dean-only list. A decision that belongs in `docs/decisions/` is recorded there as an agent decision under the standing order, never as Dean's acceptance. Dean reverses any decision with a `[DEAN]` comment, and the agents follow it.
 
-**Reviews.** A `[DONE]` posted after a pull request's latest commit asks the other model family to review that head; so does a handover. The reviewer posts a `COMMENT` review only, never an approval or a change request, covering defects only and without pushing to the branch. The author fixes or answers each finding.
+**Reviews.** A `[DONE]` posted after a pull request's latest commit asks the other model family to review that head; so does a handover. The reviewer posts a `COMMENT` review only, never an approval or a change request, covering defects only and without pushing to the branch. The author fixes or answers each finding. The one-review rule above applies.
 
 **Dean only.** Agents do not do these under any instruction; they post `[NEEDS DEAN]` instead.
 
@@ -93,10 +94,10 @@ Every comment, pull request and merge here is made through Dean's GitHub account
 - Act on anything that needs a person or system outside the repository, such as tenant consent or a named business owner.
 - Force-push, rewrite pushed history, delete branches or tags, or merge by bypassing branch protection.
 
-**Merge gates.** "Completed and ready" means every gate holds at the moment the agent merges.
+**Merge gates.** From 2 November 2026 agents do not merge; Dean merges until he says otherwise ([decision](docs/decisions/design-build-review-roles.md)). The gates below remain the checklist for "completed and ready", which the agents report against and Dean uses when he merges.
 
 1. The head branch is in this repository, and the pull request changes no Dean-only path.
-2. An agent from the other model family has posted `[REVIEWED]` for the exact current head SHA with no unresolved defect: Claude reviews Codex and ChatGPT work, and Codex or ChatGPT reviews Claude's. This applies to every autonomous merge, not only the higher-risk changes listed above. A new commit needs a new review, unless every commit since the reviewed SHA only merges `main` without conflicts and leaves the pull request's own changes identical: `git diff origin/main...<SHA> | git patch-id --stable` gives the same ID for the reviewed SHA and the head.
+2. An agent from the other model family has posted `[REVIEWED]` for the exact current head SHA with no unresolved defect: Claude reviews Codex and ChatGPT work, and Codex or ChatGPT reviews Claude's. Commits after the reviewed SHA need only the reviewer's confirmation that its findings were addressed, not a new review, unless the one-review rule above calls for a second full review. A commit that only merges `main` without conflicts and leaves the pull request's own changes identical needs neither: `git diff origin/main...<SHA> | git patch-id --stable` gives the same ID for the reviewed SHA and the head.
 3. Every check on that head has finished, and none failed or was cancelled. The branch is up to date with `main`, and **Check merged tree against main** has passed since `main` last moved.
 4. No review thread is unresolved, and every finding is fixed or answered with a reason. No `[NEEDS DEAN]` or `[DEAN]` instruction stands against the merge, and no hold in the comments names a condition still unmet.
 5. The description names the owner and states the validation, and the pull request is marked ready for review. The merging agent may mark it ready once gates 1 to 4 hold.
