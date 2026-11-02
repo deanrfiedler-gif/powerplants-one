@@ -52,12 +52,36 @@ if [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] \
 fi
 [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || mkdir -p "$PPO_DOCUMENT_DIRECTORY"
 
+# tests/unit/recovery.test.ts needs a temp folder with no .git in any parent, because recovery
+# data must stay outside Git. In Codex Cloud, /tmp has one, so move TMPDIR when that happens.
+has_git_ancestor() {
+  local dir="$1"
+  while :; do
+    [[ -e "$dir/.git" ]] && return 0
+    [[ "$dir" == / || "$dir" == . || "$(dirname "$dir")" == "$dir" ]] && return 1
+    dir="$(dirname "$dir")"
+  done
+}
+if has_git_ancestor "${TMPDIR:-/tmp}"; then
+  moved=
+  for candidate in /var/tmp /dev/shm; do
+    if [[ -d "$candidate" && -w "$candidate" ]] && ! has_git_ancestor "$candidate" \
+      && mkdir -p -m 700 "$candidate/ppo-tmp-$(id -u)" 2> /dev/null; then
+      export TMPDIR="$candidate/ppo-tmp-$(id -u)"
+      moved=yes
+      break
+    fi
+  done
+  [[ -n "$moved" ]] || echo "No writable temp folder free of .git was found; tests/unit/recovery.test.ts will fail here." >&2
+fi
+
 cat > "$tools/env.sh" <<EOF
 # Source this in every new shell before running node or npm for Powerplants One.
 export PATH="$node_dir/bin:\$PATH"
 export npm_config_cache="$cache"
 EOF
 [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || echo "export PPO_DOCUMENT_DIRECTORY=\"$PPO_DOCUMENT_DIRECTORY\"" >> "$tools/env.sh"
+[[ -z "${TMPDIR:-}" ]] || echo "export TMPDIR=\"$TMPDIR\"" >> "$tools/env.sh"
 
 # 2. Locked dependencies and the disposable local settings file.
 npm ci
