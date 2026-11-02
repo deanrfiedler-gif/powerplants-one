@@ -29,6 +29,13 @@ workflows, package files). A prose file whose path appears literally in source,
 tests, database, public or non-Python script files is also not documentation only,
 because a test reads it (for example docs/decisions/es08-design-board.md).
 
+WORKSPACE_ONLY lists files outside docs/ that only cloud workspaces run, never the
+application, its tests or CI: scripts/cloud-setup.sh prepares a Codex Cloud or Claude
+Code workspace (docs/decisions/merge-conflict-reduction.md, amendment of
+2 November 2026). They count as documentation for this scope. --self-test fails if
+any source, test, script, package file or workflow names one, so the first CI step
+or test that runs one removes it from the scope in the same pull request.
+
 UNREAD is the one exception inside docs/design/: a folder that nothing reads. The
 claim is checked, not assumed. The classifier also looks for the folder name itself
 in the same files, and --self-test fails if any of them names an UNREAD folder, so
@@ -83,17 +90,19 @@ NEVER = ('docs/design/', 'docs/reference/', 'docs/testing/evidence/')
 UNREAD = (
     ('docs/design/research/', REGISTER),
 )
+# Files outside docs/ that only cloud workspaces run; neither CI nor the application reads them.
+WORKSPACE_ONLY = ('scripts/cloud-setup.sh',)
 # Where a test or the application could name a documentation file. Python scripts
 # are the documentation checkers themselves and run in their own job.
 CONSUMERS = (
-    'src', 'tests', 'db', 'public', 'scripts', ':(exclude)scripts/*.py',
+    'src', 'tests', 'db', 'public', 'scripts', ':(exclude)scripts/*.py', ':(exclude)scripts/cloud-setup.sh',
     'playwright*.ts', 'next.config.ts', 'eslint.config.mjs', 'tsconfig.json', 'package.json',
 )
 
 
 def is_prose(path):
     """True when the path alone makes it documentation (before the consumer check)."""
-    if path in ROOT_FILES:
+    if path in ROOT_FILES or path in WORKSPACE_ONLY:
         return True
     if any(path.startswith(folder) and path.endswith(ext) for folder, ext in UNREAD):
         return True
@@ -209,12 +218,27 @@ def run(argv):
 
 
 def unread_still_unread():
-    """The claim behind UNREAD, checked against the files on disk: return one problem per UNREAD folder a consumer now names."""
+    """The claims behind UNREAD and WORKSPACE_ONLY, checked against the files on disk: one problem per entry a consumer now names."""
     try:
         read = referenced({folder for folder, _ in UNREAD})
+        run_by_ci = workflow_names(set(WORKSPACE_ONLY)) | referenced(set(WORKSPACE_ONLY))
     except (RuntimeError, OSError) as error:
         return [f'could not search the consumer files: {str(error).strip()[:120]}']
-    return [f'{name} is now named by source, tests or scripts: remove it from UNREAD' for name in sorted(read)]
+    problems = [f'{name} is now named by source, tests or scripts: remove it from UNREAD' for name in sorted(read)]
+    problems += [f'{name} is now named by source, tests, scripts or a workflow: remove it from WORKSPACE_ONLY' for name in sorted(run_by_ci)]
+    return problems
+
+
+def workflow_names(paths, root=ROOT):
+    """The subset of paths that a GitHub Actions workflow names literally."""
+    if not paths:
+        return set()
+    done = subprocess.run(
+        ['git', 'grep', '-h', '-o', '-I', '-F', *[arg for path in sorted(paths) for arg in ('-e', path)], '--', '.github'],
+        cwd=root, capture_output=True, text=True, encoding='utf-8', errors='replace')
+    if done.returncode not in (0, 1):
+        raise RuntimeError(done.stderr.strip() or f'git grep exited {done.returncode}')
+    return {line.strip() for line in done.stdout.splitlines()} & set(paths)
 
 
 def self_test():
@@ -235,6 +259,12 @@ def self_test():
         (['db/migrations/0110-x.sql'], False),
         (['db/seed.sql'], False),
         (['scripts/ci_scope.py'], False),
+        # Workspace-only scripts count as documentation; their neighbours do not.
+        (['scripts/cloud-setup.sh'], True),
+        (['scripts/cloud-setup.sh', 'docs/status/2026-11-02-x.md'], True),
+        (['scripts/cloud-setup.sh', 'src/app/page.tsx'], False),
+        (['scripts/install-browser.sh'], False),
+        (['scripts/cloud-setup.sh.bak'], False),
         (['.github/workflows/application.yml'], False),
         (['package.json'], False),
         (['package-lock.json'], False),
@@ -290,6 +320,7 @@ def self_test():
         (['docs/decisions/old.md'], never, ['docs/decisions/old.md'], False, 'a deleted prose file'),
         ([note, 'docs/design/research/ux-benchmark/NEW.md'], never, [note], False, 'a renamed research file'),
         (['docs/decisions/new.md'], never, [], True, 'an added prose file'),
+        (['scripts/cloud-setup.sh'], never, ['scripts/cloud-setup.sh'], False, 'a deleted workspace-only script'),
     ]
     for paths, consumers, deleted, want, what in checks:
         if classify(paths, consumers, deleted)[0] != want:
