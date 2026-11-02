@@ -1494,7 +1494,7 @@
       "title": "Estimating intake and workload",
       "kind": "scope",
       "module": "ES",
-      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "Accepted Intake & workload composition: bounded permission-scoped owner/readiness views, overlapping exact-context snapshots, permitted selection/export, separate Saved estimates and compact phone controls. Native Discovery/LC-13 rules remain authoritative; allocation and priority remain unconfigured.",
       "path": "/estimating",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -1524,11 +1524,19 @@
         "src/sales/estimating-binding.ts",
         "docs/contracts/lead-to-delivery-continuity.md",
         "docs/design/development/lead-continuity-fixtures.json",
-        "docs/decisions/intake-workload-design.md"
+        "docs/decisions/intake-workload-design.md",
+        "src/components/estimating-workload.tsx",
+        "src/components/estimating-workload-model.ts",
+        "src/components/estimating-workload-snapshot.tsx",
+        "src/components/estimating-workload.css",
+        "docs/guides/pages/guide.page.estimating.md",
+        "src/estimating/reads.ts",
+        "docs/design/development/component-bindings/2026-10-31-intake-workload.json",
+        "docs/testing/evidence/intake-workload-accepted/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native workload implemented; verification recorded in the programme handover LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "Accepted composition implemented; current executed proof and limits are recorded in docs/testing/evidence/intake-workload-accepted/README.md. Owner/device acceptance, merge and deployment remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8887,7 +8895,7 @@
       "title": "Estimating intake and workload",
       "kind": "route",
       "module": "ES",
-      "summary": "Native permission-scoped opportunity workload, exact discovery readiness/ownership and saved-estimate links. Intake allocation, acceptance, returns and priority policy remain Not configured.",
+      "summary": "Accepted Intake & workload composition: bounded permission-scoped owner/readiness views, overlapping exact-context snapshots, permitted selection/export, separate Saved estimates and compact phone controls. Native Discovery/LC-13 rules remain authoritative; allocation and priority remain unconfigured.",
       "path": "/estimating",
       "source_paths": [
         "src/app/(business)/estimating/page.tsx"
@@ -8913,11 +8921,19 @@
         "src/estimating/workload.ts",
         "src/estimating/workload-query.ts",
         "docs/delivery/estimating-programme-handover.md",
-        "docs/decisions/intake-workload-design.md"
+        "docs/decisions/intake-workload-design.md",
+        "src/components/estimating-workload.tsx",
+        "src/components/estimating-workload-model.ts",
+        "src/components/estimating-workload-snapshot.tsx",
+        "src/components/estimating-workload.css",
+        "docs/guides/pages/guide.page.estimating.md",
+        "src/estimating/reads.ts",
+        "docs/design/development/component-bindings/2026-10-31-intake-workload.json",
+        "docs/testing/evidence/intake-workload-accepted/README.md"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Native workload implemented; verification recorded in the programme handover",
+      "functional_status": "Accepted composition implemented; current executed proof and limits are recorded in docs/testing/evidence/intake-workload-accepted/README.md. Owner/device acceptance, merge and deployment remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -13497,6 +13513,11 @@
         "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
+          "src/components/cost-source-register.tsx",
+          "src/components/cost-source-register.css",
+          "src/components/cost-source-snapshot.tsx",
+          "src/estimating/cost-source-register-model.ts",
+
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/guides/render.tsx",

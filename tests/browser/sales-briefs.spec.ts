@@ -398,7 +398,128 @@ test("CR-02 loading, empty, failed read, filters and failed export recover witho
   ).toBeVisible();
   await expect(host.locator(".sb-selection-toolbar")).toHaveCount(0);
   expect(state.exports).toHaveLength(0);
+  await expect(host.locator("tbody tr")).toHaveCount(8);
+  await host
+    .getByRole("checkbox", {
+      name: "Select SYN-PPO-OPP-000031 r1",
+      exact: true,
+    })
+    .check();
+  state.exportMode = "ok";
+  const download = page.waitForEvent("download");
+  await host.getByRole("button", { name: "Export list", exact: true }).click();
+  expect((await download).suggestedFilename()).toBe(
+    "sales-briefs-selected.csv",
+  );
+  await expect(
+    host.getByText(/The selected list could not be exported/),
+  ).toHaveCount(0);
+  expect(state.exports).toHaveLength(1);
 });
+
+for (const poll of ["timer", "focus"] as const) {
+  test(`CR-02 changed first-page basis on ${poll} poll explicitly clears an open sequence and selection`, async ({
+    page,
+  }, info) => {
+    test.skip(
+      !!info.project.use.isMobile,
+      "Shared queue lifecycle; desktop review context",
+    );
+    await page.clock.install();
+    const state = await open(page),
+      host = page.locator("#ppo-sales-briefs"),
+      dialog = page.getByRole("dialog", {
+        name: "Submitted Sales brief snapshot",
+      });
+    await host
+      .getByRole("button", { name: "Brief columns", exact: true })
+      .click();
+    await host
+      .getByRole("menuitemcheckbox", { name: "Customer", exact: true })
+      .click();
+    await page.keyboard.press("Escape");
+    await expect(
+      host.getByRole("columnheader", { name: "Customer", exact: true }),
+    ).toHaveCount(0);
+    for (const reference of ["000031", "000030"]) {
+      await host
+        .getByRole("checkbox", {
+          name: `Select SYN-PPO-OPP-${reference} r1`,
+          exact: true,
+        })
+        .check();
+    }
+    await host
+      .getByRole("button", { name: "Open in sequence", exact: true })
+      .first()
+      .click();
+    await expect(
+      dialog.getByRole("heading", { name: "Nutrient room dosing upgrade" }),
+    ).toBeVisible();
+    await dialog
+      .getByRole("button", { name: "Next brief", exact: true })
+      .click();
+    await expect(
+      dialog.getByRole("heading", { name: "Boiler house heat recovery study" }),
+    ).toBeVisible();
+    const triggerPoll = async () => {
+      const before = state.reads;
+      const response = page.waitForResponse((r) => {
+        const url = new URL(r.url());
+        return (
+          url.pathname === "/api/v1/sales/handovers/receiving" &&
+          !url.searchParams.has("selection")
+        );
+      });
+      if (poll === "timer") await page.clock.fastForward(16_000);
+      else await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+      await (await response).finished();
+      await expect.poll(() => state.reads).toBeGreaterThan(before);
+    };
+    // An unchanged poll preserves the review context.
+    await triggerPoll();
+    await expect(
+      dialog.getByRole("heading", { name: "Boiler house heat recovery study" }),
+    ).toBeVisible();
+    await expect(host.locator(".sb-selection-toolbar")).toContainText(
+      "2 selected on this page",
+    );
+    await expect(
+      host.locator("thead th").filter({ hasText: /^Customer$/ }),
+    ).toHaveCount(0);
+    state.data = { ...state.data, basis: "SYN changed population on poll" };
+    await triggerPoll();
+    await expect(
+      host.getByRole("heading", { name: "The queue changed" }),
+    ).toBeVisible();
+    await expect(
+      host.getByText(
+        /snapshots, sequences, selections and column choices have been cleared/,
+      ),
+    ).toBeVisible();
+    await expect(dialog).toHaveCount(0);
+    await expect(host.locator(".sb-selection-toolbar")).toHaveCount(0);
+    await expect(host.locator("tbody tr")).toHaveCount(0);
+    await expect(host.locator(".mw-badge")).toHaveCount(0);
+    await expect(host.locator(".sb-count")).toHaveText("—");
+    // Further successful polls cannot silently dismiss the stale message.
+    await triggerPoll();
+    await expect(
+      host.getByRole("heading", { name: "The queue changed" }),
+    ).toBeVisible();
+    await expect(host.locator("tbody tr")).toHaveCount(0);
+    await host.getByRole("button", { name: "Retry loading briefs" }).click();
+    await expect(host.locator("tbody tr")).toHaveCount(8);
+    await expect(
+      host.getByRole("heading", { name: "The queue changed" }),
+    ).toHaveCount(0);
+    await expect(host.locator(".sb-selection-toolbar")).toHaveCount(0);
+    await expect(
+      host.getByRole("columnheader", { name: "Customer", exact: true }),
+    ).toBeVisible();
+    await expect(page).not.toHaveURL(/offset=|basis=/);
+  });
+}
 test("CR-02 phone selection and compact header keep views, filters and sequence reachable at 320", async ({
   page,
 }, info) => {

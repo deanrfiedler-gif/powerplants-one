@@ -78,6 +78,8 @@ function Queue({ query }: { query: URLSearchParams }) {
   const [selectMode, setSelectMode] = useState(false),
     [readTick, setReadTick] = useState(0),
     [notice, setNotice] = useState("");
+  const [basis, setBasis] = useState<string | null>(null),
+    [stale, setStale] = useState(false);
   const request = new URLSearchParams(query);
   request.set("read", String(readTick));
   const resource = useCrmResource<ReceivingQueue>(
@@ -86,7 +88,14 @@ function Queue({ query }: { query: URLSearchParams }) {
     false,
     true,
   );
-  const data = resource.error ? null : resource.data;
+  // Polls at offset zero return a new population rather than a server 409.
+  // Latch the stale message before discarding the user's review context.
+  // Only an explicit refresh may establish a new basis.
+  if (resource.data && !stale) {
+    if (basis === null) setBasis(resource.data.basis);
+    else if (basis !== resource.data.basis) setStale(true);
+  }
+  const data = resource.error || stale ? null : resource.data;
   const view =
     receivingViews.find((v) => v.id === query.get("view")) ?? receivingViews[0];
   function href(values: Record<string, string>, paging = false) {
@@ -104,6 +113,9 @@ function Queue({ query }: { query: URLSearchParams }) {
   const change = (values: Record<string, string>, paging = false) =>
     router.push(href(values, paging), { scroll: false });
   const refresh = () => {
+    setNotice("");
+    setBasis(null);
+    setStale(false);
     if (query.has("offset") || query.has("basis"))
       change({ offset: "", basis: "" });
     else setReadTick((n) => n + 1);
@@ -148,7 +160,7 @@ function Queue({ query }: { query: URLSearchParams }) {
       message={
         resource.loading
           ? "Loading permitted Sales briefs"
-          : resource.error
+          : resource.error || stale
             ? "Sales briefs read unavailable"
             : count
       }
@@ -264,18 +276,21 @@ function Queue({ query }: { query: URLSearchParams }) {
             Loading permitted Sales briefs…
           </div>
         )}
-        {!!resource.error && (
+        {(!!resource.error || stale) && (
           <div className="sb-notice" role="alert">
             <h2>
               {denied(resource.error)
                 ? "Sales briefs are outside your access"
-                : (resource.error as { status: number }).status === 409
+                : stale ||
+                    (resource.error as { status?: number } | null)?.status ===
+                      409
                   ? "The queue changed"
                   : "Sales briefs could not be loaded"}
             </h2>
             <p>
-              Earlier rows, counts and selections have been cleared. Refresh to
-              review the current permitted queue.
+              Earlier rows, counts, snapshots, sequences, selections and column
+              choices have been cleared. Refresh to review the current permitted
+              queue.
             </p>
             <Button onClick={refresh}>Retry loading briefs</Button>
           </div>
@@ -297,9 +312,10 @@ function Queue({ query }: { query: URLSearchParams }) {
               )
             }
             refresh={refresh}
+            onExportStart={() => setNotice("")}
             onExportError={(message) => {
-              setNotice(message);
               refresh();
+              setNotice(message);
             }}
           />
         )}
@@ -375,6 +391,7 @@ function Rows({
   setSelectMode,
   onPage,
   refresh,
+  onExportStart,
   onExportError,
 }: {
   data: ReceivingQueue;
@@ -383,6 +400,7 @@ function Rows({
   setSelectMode: (value: boolean) => void;
   onPage: (offset: number) => void;
   refresh: () => void;
+  onExportStart: () => void;
   onExportError: (message: string) => void;
 }) {
   const [selected, setSelected] = useState<string[]>([]),
@@ -427,6 +445,7 @@ function Rows({
     setPhonePanel(false);
   };
   async function exportList() {
+    onExportStart();
     setExporting(true);
     try {
       const result = await api<{ csv: string; count: number }>(

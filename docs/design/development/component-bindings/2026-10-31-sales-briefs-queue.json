@@ -34,7 +34,7 @@
         {
           "id": "stale",
           "label": "Stale comparison",
-          "description": "Changed page/snapshot/export basis clears stale selection."
+          "description": "Changed first-page timer/focus or later-page basis explicitly clears review context until refresh; snapshot/export mismatches also clear stale evidence."
         },
         {
           "id": "denied",

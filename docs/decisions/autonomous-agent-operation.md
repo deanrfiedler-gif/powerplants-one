@@ -42,3 +42,7 @@ The protocol is maintained in [CONTRIBUTING.md — Autonomous agent protocol](..
 - An agent decision is recorded as an agent decision under this standing order, never as Dean's acceptance. This keeps the distinction `AGENTS.md` draws between a user decision and a proposed design.
 - It authorises nothing outside the repository: no settings, secrets or deployments, no hosted demo data, no real customer or MYOB data, no production integration and no message to anyone outside the repository. Those stay with Dean.
 - The pull request that adds this record changes `AGENTS.md` and `CONTRIBUTING.md`, so under its own rule Dean merges it.
+
+## Amendment — 2 November 2026: agents do not merge
+
+From 2 November 2026 agents do not merge; Dean merges until he says otherwise ([design, build and review roles](design-build-review-roles.md)). The rest of the standing order still applies: agents decide, record and proceed, and the merge gates remain the checklist for "completed and ready".
