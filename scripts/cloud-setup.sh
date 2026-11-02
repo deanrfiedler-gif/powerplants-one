@@ -44,11 +44,20 @@ if [[ "$(npm --version)" != "$npm_version" ]]; then
 fi
 [[ "$(npm --version)" == "$npm_version" ]] || { echo "npm is $(npm --version), expected $npm_version." >&2; exit 1; }
 
+# The synthetic document store defaults to ~/.ppo-synthetic-documents. Codex Cloud's home
+# folder is not writable, so keep the store beside the tools there.
+if [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] \
+  && ! { mkdir -p "$HOME/.ppo-synthetic-documents" 2> /dev/null && [[ -w "$HOME/.ppo-synthetic-documents" ]]; }; then
+  export PPO_DOCUMENT_DIRECTORY="$tools/synthetic-documents"
+fi
+[[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || mkdir -p "$PPO_DOCUMENT_DIRECTORY"
+
 cat > "$tools/env.sh" <<EOF
 # Source this in every new shell before running node or npm for Powerplants One.
 export PATH="$node_dir/bin:\$PATH"
 export npm_config_cache="$cache"
 EOF
+[[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || echo "export PPO_DOCUMENT_DIRECTORY=\"$PPO_DOCUMENT_DIRECTORY\"" >> "$tools/env.sh"
 
 # 2. Locked dependencies and the disposable local settings file.
 npm ci
