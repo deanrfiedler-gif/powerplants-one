@@ -60660,9 +60660,9 @@
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Sales Pulse to work towards this outcome: The pipeline assessment states its population, unknowns and next actions.",
+            "Use Sales Pulse to work towards this outcome: You know what needs attention today across your own leads and deals.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified. This route was added to the register from the 23 September source inventory.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "The counts use separate rules and are not added together. A count that could not be read is not zero."
           ],
           "steps": [],
           "rows": [],
@@ -60673,7 +60673,7 @@
           "title": "Before you start",
           "paragraphs": [
             "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Pipeline, view, filters, value basis, close dates and next actions.",
+            "Prepare: Your own lead and deal actions, and the deals you own.",
             "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
           ],
           "steps": [],
@@ -60688,7 +60688,7 @@
             "Choose the correct local or hosted environment and confirm your identity.",
             "Use Local app for your development server or Live app for the hosted sign-in environment.",
             "Check the current scope, required information and outstanding decisions.",
-            "Use Board or List to inspect the same permitted worklist",
+            "Review your lead and deal actions, starting with anything overdue",
             "Check the saved result or explicit pending/error state before leaving the workflow."
           ],
           "rows": [],
@@ -60730,7 +60730,7 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Pipeline, view, filters, value basis, close dates and next actions.",
+            "Your own lead and deal actions, and the deals you own.",
             "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
             "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
           ],
@@ -60745,9 +60745,9 @@
             "Task sequence for review against the applicable running release."
           ],
           "steps": [
-            "Use Board or List to inspect the same permitted worklist",
-            "Use Forecast to review timing and known values",
-            "Review Archive separately from active opportunities"
+            "Review your lead and deal actions, starting with anything overdue",
+            "Check Deals needing a next step and Deals with overdue follow-up",
+            "Complete or reschedule the original activity, or open the deal to plan its next step"
           ],
           "rows": [],
           "headers": []
@@ -60756,9 +60756,9 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The pipeline assessment states its population, unknowns and next actions.",
+            "You know what needs attention today across your own leads and deals.",
             "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Forecast values are not revenue. Missing values must not be treated as zero."
+            "The counts use separate rules and are not added together. A count that could not be read is not zero."
           ],
           "steps": [],
           "rows": [],
@@ -60804,8 +60804,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare pipeline, view, filters, value basis, close dates and next actions. Follow the task sequence and check that the pipeline assessment states its population, unknowns and next actions. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Sales Pulse has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Forecast values are not revenue. Missing values must not be treated as zero."
+            "Synthetic normal case — Northbank Nursery: prepare your own lead and deal actions, and the deals you own. Follow the task sequence and check that the pipeline assessment states its population, unknowns and next actions. Keep the actual record reference with the outcome.",
+            "Synthetic exception — the source basis for Sales Pulse has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. The counts use separate rules and are not added together. A count that could not be read is not zero."
           ],
           "steps": [],
           "rows": [],
@@ -60952,7 +60952,7 @@
             "Choose the correct local or hosted environment and confirm your identity.",
             "Use Local app for your development server or Live app for the hosted sign-in environment.",
             "Check the current scope, required information and outstanding decisions.",
-            "Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue",
+            "Review your active tasks linked to leads and deals",
             "Check the saved result or explicit pending/error state before leaving the workflow."
           ],
           "rows": [],
@@ -61009,8 +61009,8 @@
             "Task sequence for review against the applicable running release."
           ],
           "steps": [
-            "Choose Overview, My actions, Reviews & handovers, Blocked & waiting or Team queue",
-            "Narrow the list to the relevant owner and work",
+            "Review your active tasks linked to leads and deals",
+            "Work through Lead tasks and Deal tasks, starting with anything overdue",
             "Open the activity and record an outcome when completing it"
           ],
           "rows": [],

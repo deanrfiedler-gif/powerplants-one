@@ -32,6 +32,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+Accepted Figma design captures: [Supply and Finance trust design r01](../../../reference/ui/reporting/supply-finance-trust-design-r01/README.md). No HTML reference is linked. The renders below are the earlier proposal and are kept as history.
+
 - [26-rp05-exceptions-desktop.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/26-rp05-exceptions-desktop.png) · 1440 × 1084 · Proposed
 - [27-rp05-exceptions-phone.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/27-rp05-exceptions-phone.png) · 390 × 1007 · Proposed
 - [28-rp05-exceptions-320.png](../../../reference/ui/application-shell/navigation-architecture-board-r02/28-rp05-exceptions-320.png) · 320 × 1061 · Proposed
@@ -41,6 +43,8 @@ These are renders of the private claude.ai design canvas "PPO Navigation Archite
 - **Missing:** a 1024 px composition and any native capture; no route exists yet.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Supply and Finance trust design r01 captures](../../../reference/ui/reporting/supply-finance-trust-design-r01/README.md) (twenty-one icon-free PNGs of nineteen frames; design compositions, not application captures) and its [decision](../../../decisions/supply-finance-trust-figma-design.md). Tablet and 320 px states, hover and focus, the Filters popover and Save view dialog, About this measure panels for REP-10 and REP-11, keyboard order, 200% zoom and dark mode are not drawn. The route, the KPI-13 and KPI-14 definitions and any margin definition (D-017) are not built or published, so a build shows Definition pending or withholds the figure until they are.
 
 The draft User Guide `guide.rp.05` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

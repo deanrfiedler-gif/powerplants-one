@@ -61,8 +61,27 @@ test("ES03 native authoring recovers the original lost response and independentl
     ? phoneMenuOpener(page)
     : page.getByRole("button", { name: "Page guide", exact: true });
   await openPageGuide(page);
+  // The rewritten guide is InReview: users see preparation guidance until
+  // publication, while the local development preview can show the draft.
+  const guidePanel = page.getByRole("dialog", {
+    name: "Page guide",
+    exact: true,
+  });
   await expect(
-    page.getByRole("heading", {
+    guidePanel.getByText("The detailed Cost sources guide is being prepared.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    guidePanel.getByRole("heading", {
+      name: "Evidence, source review and saved costs",
+    }),
+  ).not.toBeVisible();
+  await guidePanel
+    .getByText("Development draft guide for this page", { exact: true })
+    .click();
+  await expect(
+    guidePanel.getByRole("heading", {
       name: "Evidence, source review and saved costs",
     }),
   ).toBeVisible();

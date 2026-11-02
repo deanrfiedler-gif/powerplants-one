@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-ad08-retention",
+          "expected": "The accepted AD-08 Retention design (PPO-AD08-RETENTION-FIGMA-DEC) uses grid registers grouped by status for policies, holds, requests and runs, a per-system outcome grid on the request record, and a record banner reading \"On hold: deletion suspended\". The outcome rows and the banner are page-only Figma parts built from Grid / Cell and frames.",
+          "actual": "/admin/retention is not built, and no component was added to the Figma Components page. Other pages that hold affected records don't show the banner.",
+          "action": "When a build is requested, adopt the shared register table for AD-08 and record any departure. Create a shared part for the banner only when a second page takes it.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
