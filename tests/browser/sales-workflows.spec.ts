@@ -430,11 +430,21 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
   // CompleteReview acknowledges the command before its separate saved-record
   // refresh. Exercise that ordering with the real response beyond the unchanged
   // render assertion window; no receipt or record content is substituted.
+  // Hold only the first completed read. Holding every poll left later handlers
+  // asleep past the unroute below, so they fulfilled routes already handled and
+  // delivered stale reads after the page had moved on.
+  let completedReadHeld = false;
   await page.route(completedPattern, async (route) => {
     if (route.request().method() !== "GET") return route.continue();
     const response = await route.fetch();
-    if (response.ok() && (await response.json()).record?.state === "ReviewCompleted")
+    if (
+      !completedReadHeld &&
+      response.ok() &&
+      (await response.json()).record?.state === "ReviewCompleted"
+    ) {
+      completedReadHeld = true;
       await new Promise((resolve) => setTimeout(resolve, 6000));
+    }
     await route.fulfill({ response });
   });
   const completionResponse = page.waitForResponse(
@@ -466,7 +476,9 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     state: "ReviewCompleted",
     version: completionReceipt.record_version,
   });
-  await page.unroute(completedPattern);
+  // The earlier held read was registered with { times: 1 }, so this removes only
+  // the completed-read route, after any handler still running has finished.
+  await page.unrouteAll({ behavior: "wait" });
   await expect(
     page.getByRole("button", { name: "Open correction", exact: true }),
   ).toBeVisible();
