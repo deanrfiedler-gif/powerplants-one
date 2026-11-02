@@ -38,6 +38,8 @@ Design board boards D and E are the owner-accepted phone composition. The built 
 
 Global Roboto/Verdana typography and the r22 semantic tokens through the shared secondary-menu scope. Shared `ppo-button` controls (restated inside the id-scoped workspace), segmented buttons, pills and notices from `src/components/specialist-ui.tsx`, the shared cross-section drawing (`cross-section`), and the drawing sheets. Primary/secondary/quiet/danger meanings, hover, visible focus, disabled and loading states are present.
 
+Parts Working buttons are temporarily disabled while the calculation preview is stale, including the refresh after saving. The existing re-check notice explains the state; once the current preview settles, the same buttons open the working panel. An unavailable opener remains focusable so Escape can return to it if editing in the panel starts another refresh; activation stays blocked until that preview settles. Dean approved this loading-state change on 24 October 2026 after a held-response trace showed the notice disappearing and moving an enabled button between pointer-down and pointer-up. Calculation rules and saved snapshots are unchanged; visual review remains separate.
+
 States built from board C: loading skeleton, missing or denied context, validation withheld (field names the rule; Geometry gate Withheld), drawing withheld (quantities valid), untested option, read-only reviewer and locked estimate, stale preview, outcome unknown with receipt recovery, saving, failed before commit, saved, missing rate (total unavailable, partial sums labelled), filtered empty, roll too narrow (DEC-R2), server version changed. Status always includes words.
 
 ## Visual references
