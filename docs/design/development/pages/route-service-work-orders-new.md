@@ -57,3 +57,7 @@ Exact new-state mockup/HTML images are missing. Retained module references above
 Typing into this form and then following the rail (phone bar), a header link, a header search result or browser Back asks before the entries are discarded. Cancel keeps the page and the typed values; OK leaves. A clean form leaves without asking, and a saved record opens without a prompt. The form registers the shared `useUnsavedChanges` guard through `useCreateDraft` (state `create-leave-guard` in [fields](../components/fields.md)). Fixture: `tests/browser/navigation-safety.spec.ts` (F42) at desktop and phone widths. Source: live-app UX audit finding F42, principle 11. No layout, control or copy change; owner review of the native prompt wording is pending.
 
 A Sales handover creation keeps its recoverable command once that command blocks the form.
+
+## Create forms pattern — 1 November 2026
+
+Dean accepted the [Create forms pattern](../../../decisions/create-forms-pattern-figma-design.md) (PPO-CREATE-FORMS-FIGMA-DEC) with the words "Accept recommendations". For this entry it draws **New work order**. The register's button opens this full form, so there is no quick add and no second duplicate check. The saved draft leads to the scope decision. [Captures](../../../reference/ui/create-forms-design-r01/README.md) are designs, not application captures. The native page isn't changed; a build needs its own request. Source presence, visual review, functional proof and deployment stay separate, and no review fingerprint is supplied.
