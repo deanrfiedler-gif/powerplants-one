@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-ad06-migration-parts",
+          "expected": "The accepted AD-06 design (PPO-AD06-MIGRATION-CUTOVER-FIGMA-DEC) uses a grouped exception register whose bands span the checkbox and settings columns, a rehearsal stage strip, a coexistence timeline and a cutover readiness matrix.",
+          "actual": "/admin/migration isn't built. The four parts are drawn on the AD-06 Figma page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for AD-06 and record any departure; move the four parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

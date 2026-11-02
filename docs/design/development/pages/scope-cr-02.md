@@ -32,6 +32,8 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
+- Accepted receiving queue: [Sales briefs design](../../../decisions/sales-briefs-design.md).
+- Accepted brief page: [Sales brief page design](../../../decisions/sales-brief-page-figma-design.md), with [design r01 captures](../../../reference/ui/estimating/sales-brief-page-design-r01/README.md).
 - [sales-estimating-intake-preview-r02.html](../../../reference/ui/estimating/sales-estimating-intake-preview-r02.html)
 
 ## Behaviour, handovers and verification

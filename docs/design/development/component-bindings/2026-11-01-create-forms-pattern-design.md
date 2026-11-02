@@ -1,0 +1,3 @@
+# Create forms pattern — consumer note
+
+The accepted [Create forms pattern](../../../decisions/create-forms-pattern-figma-design.md) binds the shared form controls to the lead, deal, work order, engineering and activity create forms and to Workshop New build. It uses Controls / Form field `2649:7479`, Choice option `2648:7409`, Button `3:41` and Tag `3:13`. The new parts Create / Notice `3036:35235`, Match card `3036:35236` and Review row `3036:35251` stay on page `3036:220` until a build needs them. Fixture and review evidence: the [retained captures](../../../reference/ui/create-forms-design-r01/README.md), which are designs, not application captures. No component rule changes, and nothing is built.
