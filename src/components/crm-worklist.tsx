@@ -328,18 +328,27 @@ export function SalesWorklist() {
     };
   }, [resultBasis]);
   const selectedIds = selection.basis === resultBasis ? selection.ids : [];
+  const [selectionNotice, setSelectionNotice] = useState("");
   const selectedItems = selectedDeals(data.data?.items ?? [], selectedIds);
   const setSelectedIds = (ids: string[]) => {
     setSelection({ basis: resultBasis, ids });
     setSequence(null);
+    setSelectionNotice("");
   };
   useEffect(() => {
     if (selection.basis === resultBasis || !selection.ids.length) return;
+    let live = true;
     queueMicrotask(() => {
+      if (!live) return;
       setSelection({ basis: "", ids: [] });
       setSequence(null);
-      setDialog(null);
+      setSelectionNotice(
+        "The result page changed. Your selection and sequence were cleared. Any open deal and unsaved entries are retained.",
+      );
     });
+    return () => {
+      live = false;
+    };
   }, [resultBasis, selection.basis, selection.ids.length]);
   // On acceptance drop the optimistic override and let the server be the truth.
   // The undo target is kept: it is what the actor reverses after a move lands.
@@ -359,6 +368,7 @@ export function SalesWorklist() {
       if (live) {
         clearLocation();
         setFeedback("");
+        setSelectionNotice("");
         setUndoMove(null);
         setMoved({});
         setDialog(null);
@@ -1190,6 +1200,15 @@ export function SalesWorklist() {
             <button
               className="secondary"
               onClick={() => {
+                setInsights(true);
+                setPhoneViews(false);
+              }}
+            >
+              Pipeline insights
+            </button>
+            <button
+              className="secondary"
+              onClick={() => {
                 setReview("changes");
                 setPhoneViews(false);
               }}
@@ -1343,7 +1362,7 @@ export function SalesWorklist() {
               Load current saved version for comparison
             </button>
           )}
-          {undoMove && !stageCommand.error && (
+          {undoMove && (
             <button
               className="secondary"
               disabled={stageCommand.busy || stageCommand.uncertain}
@@ -1367,6 +1386,11 @@ export function SalesWorklist() {
       {activity && !isDenied && (
         <ActivitySnapshot item={activity} onClose={() => setActivity(null)} />
       )}
+      {selectionNotice && !dialog && !isDenied && (
+        <p className="crm-change-feedback" role="status">
+          {selectionNotice}
+        </p>
+      )}
       {dialog && !isDenied && (
         <DealDialog
           key={dialog.id + dialog.mode}
@@ -1375,6 +1399,7 @@ export function SalesWorklist() {
           targetStage={dialog.stage}
           targetOutcome={dialog.outcome}
           undo={dialog.undo}
+          selectionNotice={selectionNotice}
           onClose={() => {
             setDialog(null);
             setSequence(null);

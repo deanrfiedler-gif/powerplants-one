@@ -2,6 +2,10 @@
 #ppo-deals.crm-accepted {
   --crm-border: var(--line-soft);
 }
+/* CR-04 retains the existing r22 native choice-menu border. */
+#ppo-deals .crm-r38-popover {
+  border-color: var(--r38-line);
+}
 #ppo-deals .crm-toolbar-accepted {
   height: 54px;
   min-height: 54px;
@@ -123,10 +127,10 @@
   padding: 12px 8px;
 }
 #ppo-deals .crm-card {
-  padding: 10px;
+  padding: 11px;
   height: 264px;
   min-height: 264px;
-  border-radius: 6px;
+  border-radius: 7px;
   box-shadow: none;
 }
 #ppo-deals .crm-card-title {
@@ -960,9 +964,12 @@
   width: calc(100% - 2px);
 }
 #ppo-deals .crm-stage .crm-card {
-  padding: 10px;
+  padding: 11px;
   background: var(--white);
-  border-radius: 6px;
+  border-radius: 7px;
+}
+#ppo-deals .crm-stage .crm-card:not(:hover) {
+  border-color: var(--r38-line);
 }
 #ppo-deals .crm-card .crm-card-title {
   padding-right: 0;
@@ -1081,6 +1088,12 @@
   color: var(--warning);
 }
 @media (min-width: 781px) {
+  /* D2: the full-bleed shell leaves 12px outside the five stage tracks.
+     Thin classic scrollbars consume 10px; overlay scrollbars consume none.
+     Cap against the shell width so both produce 228px lanes at 1440px. */
+  #ppo-deals .crm-board {
+    width: min(calc(100% - 2px), calc(100vw - var(--ppo-rail-width) - 12px));
+  }
   #ppo-deals {
     --card-height: 264px;
   }

@@ -34,8 +34,12 @@ export async function installDealsDesign(page: Page) {
     changed: false,
     followFailed: false,
     empty: false,
+    worklistReads: 0,
+    followReads: 0,
+    followVersion: 1,
   };
   await page.route("**/api/v1/crm/opportunities?*", async (route) => {
+    state.worklistReads++;
     if (state.denied)
       return route.fulfill({
         status: 403,
@@ -149,6 +153,7 @@ export async function installDealsDesign(page: Page) {
   await page.route(
     "**/api/v1/crm/opportunities/*/follow-through",
     async (route) => {
+      state.followReads++;
       if (state.followFailed)
         return route.fulfill({
           status: 503,
@@ -166,7 +171,7 @@ export async function installDealsDesign(page: Page) {
       await route.fulfill({
         json: {
           opportunity_id: route.request().url().split("/").at(-2),
-          opportunity_version: 1,
+          opportunity_version: state.followVersion,
           observed_at: dealsDesignAsOf,
           estimates: section,
           quotations: section,

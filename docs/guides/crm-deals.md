@@ -75,7 +75,7 @@ On desktop, drag an editable card to another stage or use **Change stage**. The 
 
 The default order is **Deal**, **Next activity**, **Due**, **Deal owner**, **Organisation**, **Value**, **Expected close**, **Stage** and **Pipeline**. The checkbox and settings columns stay fixed. Use the settings control to choose and order optional columns; Deal stays visible. Resize a divider with a pointer or the arrow keys.
 
-Tick rows on the current page to open the selection panel. **Open in sequence** visits their snapshots; the full-record link preserves return context. Selected CSV follows the displayed row order and chosen column order, includes exact known amounts and leaves unknown amounts blank. Its totals describe the selection, not all matches. Export rechecks current access and source versions; if they changed, refresh and select again. Changing filters, pages, access or saved rows clears selection. Leaving the workspace cancels an unfinished export.
+Tick rows on the current page to open the selection panel. **Open in sequence** visits their snapshots; the full-record link preserves return context. Selected CSV follows the displayed row order and chosen column order, includes exact known amounts and leaves unknown amounts blank. Its totals describe the selection, not all matches. Export rechecks current access and source versions; if they changed, refresh and select again. Changing filters, pages, access or saved rows clears selection. If a background refresh changes the page, a message explains that selection and sequence were cleared; an open deal and unsaved edits remain. Leaving the workspace cancels an unfinished export.
 
 ### The Forecast and Archive
 
@@ -83,7 +83,9 @@ Forecast groups expected-close months by saved stage, with a subtotal for each s
 
 ### Snapshot
 
-The snapshot shows customer, contact and site, next activity, work context and deal follow-through. Estimate, issued quotation and receiving-handover sections use their exact native sources and show independent permissions, versions and partial or unavailable states. A failed source read has its own retry. Advisory exit conditions are prompts to review evidence, not new rules for changing stage.
+On a phone, open **Choose view** and select **Pipeline insights** to inspect the existing read-only review.
+
+The snapshot shows customer, contact and site, next activity, work context and deal follow-through. Estimate, issued quotation and receiving-handover sections use their exact native sources and show independent permissions, versions and partial or unavailable states. Follow-through is read when the snapshot opens. Select **Reload follow-through** for a fresh source snapshot; it does not refresh automatically with the worklist. A failed source read has its own retry. Advisory exit conditions are prompts to review evidence, not new rules for changing stage.
 
 ### The full deal page
 

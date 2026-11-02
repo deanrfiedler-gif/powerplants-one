@@ -536,3 +536,113 @@ test("CR-04 read states preserve native empty stages, suppress unread facts and 
   expect(new URL(page.url()).searchParams.get("q")).toBeNull();
   expect(new URL(page.url()).searchParams.get("view")).toBe("Grid");
 });
+
+test("CR-04 a changed poll clears selection and sequence without discarding an open edit", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.clock.install();
+  const state = await installDealsDesign(page);
+  await page.goto(origin + "/sales/opportunities?view=Grid");
+  const rows = page.locator(
+    ".ppo-register-table tbody tr[data-opportunity-id]",
+  );
+  await expect(rows).toHaveCount(18);
+  await rows.nth(0).getByRole("checkbox").check();
+  await rows.nth(1).getByRole("checkbox").check();
+  await page
+    .getByRole("button", { name: "Open in sequence", exact: true })
+    .click();
+  const dialog = page.locator(".crm-deal-dialog");
+  await expect(dialog).toContainText("1 of 2");
+  // Enter editing from a snapshot: the parent still owns a snapshot dialog.
+  await dialog.getByRole("button", { name: /^Change stage ·/ }).click();
+  const stage = dialog.getByLabel("Deal stage", { exact: true });
+  await stage.selectOption("Negotiation");
+  const reads = state.worklistReads;
+  state.changed = true;
+  await page.clock.fastForward(15000);
+  await expect.poll(() => state.worklistReads).toBeGreaterThan(reads);
+  await expect(
+    dialog
+      .getByRole("status")
+      .filter({ hasText: "Your selection and sequence were cleared" }),
+  ).toBeVisible();
+  await expect(dialog).toBeVisible();
+  await expect(stage).toHaveValue("Negotiation");
+  await expect(page.locator(".crm-sequence")).toHaveCount(0);
+  await expect(page.locator(".crm-selection-panel")).toHaveCount(0);
+  await expect(rows.locator('input[type="checkbox"]:checked')).toHaveCount(0);
+  // The original dirty guard still applies after the background read.
+  page.once("dialog", (prompt) => prompt.dismiss());
+  await dialog.getByRole("button", { name: "Close deal dialog" }).click();
+  await expect(dialog).toBeVisible();
+  await expect(stage).toHaveValue("Negotiation");
+});
+
+test("CR-04 follow-through reads on open and explicit reload, not on poll or focus", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.clock.install();
+  const state = await installDealsDesign(page);
+  await page.goto(origin + "/sales/opportunities?view=Grid");
+  const open = page.getByRole("button", {
+    name: `Snapshot: ${dealsDesignRecords[0].title}`,
+    exact: true,
+  });
+  await open.click();
+  const snapshot = page.locator(".crm-deal-dialog");
+  const source = snapshot.getByText(
+    "No issued quotation available in this window.",
+    { exact: true },
+  );
+  await expect(source).toBeVisible();
+  expect(state.followReads).toBe(1);
+  const reads = state.worklistReads;
+  await page.clock.fastForward(45000);
+  await expect.poll(() => state.worklistReads).toBeGreaterThan(reads);
+  const afterPoll = state.worklistReads;
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect.poll(() => state.worklistReads).toBeGreaterThan(afterPoll);
+  expect(state.followReads).toBe(1);
+  state.followFailed = true;
+  await snapshot
+    .getByRole("button", { name: "Reload follow-through", exact: true })
+    .click();
+  await expect(
+    snapshot.getByText("Follow-through could not be read.", { exact: true }),
+  ).toBeVisible();
+  await expect(source).toHaveCount(0);
+  expect(state.followReads).toBe(2);
+  state.followFailed = false;
+  await snapshot
+    .getByRole("button", { name: "Retry follow-through", exact: true })
+    .click();
+  await expect(source).toBeVisible();
+  expect(state.followReads).toBe(3);
+  await snapshot.getByRole("button", { name: "Close deal dialog" }).click();
+  await open.click();
+  await expect(source).toBeVisible();
+  expect(state.followReads).toBe(4);
+  state.followVersion = 2;
+  await snapshot
+    .getByRole("button", { name: "Reload follow-through", exact: true })
+    .click();
+  const reloadBoth = snapshot.getByRole("button", {
+    name: "Reload deal and follow-through",
+    exact: true,
+  });
+  await expect(reloadBoth).toBeVisible();
+  state.followVersion = 1;
+  const dealRead = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname ===
+      `/api/v1/crm/opportunities/${dealsDesignRecords[0].id}`,
+  );
+  await reloadBoth.click();
+  expect((await dealRead).ok()).toBe(true);
+  await expect(source).toBeVisible();
+  await expect(reloadBoth).toHaveCount(0);
+  expect(state.followReads).toBe(6);
+});

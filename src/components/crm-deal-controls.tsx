@@ -83,7 +83,9 @@ export function DealDialog({
   onClose,
   onSaved,
   sequence,
+  selectionNotice,
 }: {
+  selectionNotice?: string;
   sequence?: {
     position: number;
     total: number;
@@ -186,6 +188,7 @@ export function DealDialog({
         </button>
       </header>
       <div className="crm-dialog-scroll">
+        {selectionNotice && <p role="status">{selectionNotice}</p>}
         <ErrorNotice error={resource.error} />
         {!!resource.error && o && !denied(resource.error) && (
           <p role="status">

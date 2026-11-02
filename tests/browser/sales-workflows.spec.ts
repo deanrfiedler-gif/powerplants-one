@@ -91,10 +91,16 @@ test("CR01/04 scoped insights drill through eight workspace views and preserve w
   await expect(
     page.getByRole("link", { name: o.title, exact: true }).first(),
   ).toBeVisible();
+  // CR-04 D13/Q1: phone actions live in the Choose view sheet.
+  const chooser = page.getByRole("button", { name: /^Choose view\. Current view:/ });
+  if (await chooser.isVisible()) await chooser.click();
+  await page.getByRole("button", { name: "Pipeline insights", exact: true })
+    .filter({ visible: true }).click();
   await page.locator(".crm-insights > summary").click();
   await expect(page.locator(".crm-insights")).toContainText("Unweighted");
   await captureSizes(page, info.outputPath.bind(info), "cr04");
   await page.setViewportSize({ width: 1440, height: 960 });
+  await page.getByRole("button", { name: "Close Pipeline insights", exact: true }).click();
   await page.getByRole("link", { name: o.title, exact: true }).first().click();
   for (const name of [
     "Overview",

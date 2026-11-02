@@ -32,11 +32,11 @@ The exact mobile composition has not been visually accepted for this entry. Reta
 
 Use `data-ppo-workspace="shared"` and the existing shell. Board remains the default. The toolbar is 54 px and the status row 44 px; five 228 px stages contain 212 × 264 px cards at 1440. The List uses shared RegisterTable, fixed 44 px selection/settings columns, activity-first columns, a visit-scoped chooser and existing pointer/keyboard resizing. Forecast splits each month by stage; Archive bands Won and Lost. No hidden or fabricated whole-result aggregate is used.
 
-Counts and known-value subtotals cover the returned page, or all matching results only when the server says Complete. Selected CSV covers selected permitted rows on that page in displayed order and chosen column order, with a fresh access/source read before download. Unknown money remains blank in CSV. Filters, access, paging or changed rows clear selection. Sequential opening uses snapshots and preserves the worklist URL when opening a full record.
+Counts and known-value subtotals cover the returned page, or all matching results only when the server says Complete. Selected CSV covers selected permitted rows on that page in displayed order and chosen column order, with a fresh access/source read before download. Unknown money remains blank in CSV. Filters, access, paging or changed rows clear selection. A changed background read clears the sequence controls and reports the cleared selection without closing an open snapshot or discarding a stage, information or outcome draft. Access denial still clears protected content. Sequential opening uses snapshots and preserves the worklist URL when opening a full record.
 
 The Add deal modal uses `add=deal` over the current register and the native creation form; Back/Forward, dirty guards and uncertain-command recovery remain active. Direct `/sales/opportunities/new` entry remains. Won prompts the explicit CR-03 receiving handover; stage refusal uses the native reason and saved-version recovery. Pipeline settings and rotting remain proposals; no bulk stage changes, probabilities, Deal record rebuild or Insights rebuild.
 
-Snapshot follow-through reads exact native estimate versions, issued quotation revisions and estimating/receiving handover versions through their existing authorities. Each section is bounded to 20 source candidates with explicit partial/unavailable states. Source hashes/IDs are retained by the API; absent permissions do not become zero counts. Advisory exit prompts never become transition gates or fabricated completed conditions.
+Snapshot follow-through reads exact native estimate versions, issued quotation revisions and estimating/receiving handover versions through their existing authorities. Each section is bounded to 20 source candidates with explicit partial/unavailable states. Source hashes/IDs are retained by the API; absent permissions do not become zero counts. Advisory exit prompts never become transition gates or fabricated completed conditions. Follow-through is read once when its snapshot opens and again only on Reload follow-through or Retry follow-through; ordinary worklist polling and focus do not repeat the workspace-locked read. The server read contract is unchanged.
 
 Undrawn adaptations use PPO controls: phone Board stage navigation, a Choose view sheet, phone selection sheet, tablet Forecast horizontal month scrolling, tablet Archive fixed-column scrolling, native menus and labelled drag targets with individual non-drag alternatives. Expected close filtering remains outstanding while design PR #790 is unmerged (checked 31 October 2026). Fixed design fixtures use 15 October 09:00 AEST; runtime attention and due wording use returned facts and observation time.
 
@@ -66,7 +66,7 @@ The [CR-04 application evidence](../../../testing/evidence/deals-cr04/README.md)
 Review stage history, next-action coverage and close-date movement over the same permitted result page as Deals.
 
 - Board, List, Forecast and Archive preserve their existing controls.
-- Pipeline insights opens the existing read-only review from the status row.
+- Pipeline insights opens the existing read-only review from the status row or the phone Choose view sheet.
 - Coverage distinguishes known/unknown values and next-action states.
 - Deal drill-through links retain the selected worklist URL.
 

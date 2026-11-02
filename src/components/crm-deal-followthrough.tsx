@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { readDealFollowThrough } from "../crm/worklist-followthrough";
-import { useCrmResource } from "./crm-state";
-import { ErrorNotice, Stamp } from "./business-ui";
+import { ErrorNotice, Stamp, useResource } from "./business-ui";
 export function DealFollowThrough({
   id,
   version,
@@ -12,13 +11,24 @@ export function DealFollowThrough({
   version: number;
   onReload: () => void;
 }) {
-  const resource = useCrmResource<
+  // This read takes the workspace lock to return a coherent source snapshot.
+  // Read on opening or explicit reload, never on worklist polling or focus.
+  const resource = useResource<
     Awaited<ReturnType<typeof readDealFollowThrough>>
-  >(`crm/opportunities/${id}/follow-through`, true);
-  const d = resource.data;
+  >(`crm/opportunities/${id}/follow-through`);
+  const d = resource.error || resource.loading ? null : resource.data;
   return (
     <section className="crm-snapshot-followthrough">
       <h3>Deal follow-through</h3>
+      {!resource.error && (
+        <button
+          className="secondary"
+          disabled={resource.loading}
+          onClick={resource.reload}
+        >
+          Reload follow-through
+        </button>
+      )}
       {resource.loading && (
         <p role="status">Loading permitted source records…</p>
       )}
@@ -32,10 +42,16 @@ export function DealFollowThrough({
         <>
           {d.opportunity_version !== version && (
             <p role="status">
-              The deal changed since this snapshot. Reload the deal before
-              relying on these checks.{" "}
-              <button className="secondary" onClick={onReload}>
-                Reload deal snapshot
+              The deal and follow-through were read at different versions.
+              Reload both before relying on these checks.{" "}
+              <button
+                className="secondary"
+                onClick={() => {
+                  onReload();
+                  resource.reload();
+                }}
+              >
+                Reload deal and follow-through
               </button>
             </p>
           )}
