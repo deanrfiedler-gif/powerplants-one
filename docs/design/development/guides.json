@@ -5995,7 +5995,7 @@
           "rows": [
             [
               "Register",
-              "URL search and source-state filter, latest 100 matching permitted sources."
+              "URL search, supplier, owner/review, state and validity filters; full permission-scoped matching counts and bounded current-result paging."
             ],
             [
               "Evidence",
@@ -63392,7 +63392,7 @@
           "rows": [
             [
               "Register",
-              "URL search and source-state filter, latest 100 matching permitted sources."
+              "URL search, supplier, owner/review, state and validity filters; full permission-scoped matching counts and bounded current-result paging."
             ],
             [
               "Evidence",
@@ -63627,7 +63627,7 @@
           "rows": [
             [
               "Register",
-              "URL search and source-state filter, latest 100 matching permitted sources."
+              "URL search, supplier, owner/review, state and validity filters; full permission-scoped matching counts and bounded current-result paging."
             ],
             [
               "Evidence",
@@ -63862,7 +63862,7 @@
           "rows": [
             [
               "Register",
-              "URL search and source-state filter, latest 100 matching permitted sources."
+              "URL search, supplier, owner/review, state and validity filters; full permission-scoped matching counts and bounded current-result paging."
             ],
             [
               "Evidence",
