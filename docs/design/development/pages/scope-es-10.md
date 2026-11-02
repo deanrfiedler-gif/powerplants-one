@@ -14,11 +14,15 @@ Implement reviewed reference cases, comparison eligibility, sample limitations a
 
 ## Desktop
 
+Accepted design: the [Reference cases and calibration design decision](../../../decisions/reference-calibration-figma-design.md) of 30 October 2026 covers the case register, case detail, comparison and withheld comparison, calibration proposal, preview scenario, independent review and the estimator panel amendment, with fifteen icon-free captures in [design r01](../../../reference/ui/estimating/reference-calibration-design-r01/README.md). Departures D1–D13 and answers Q1–Q5 are in the decision.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 11–14 in [design r01](../../../reference/ui/estimating/reference-calibration-design-r01/README.md): case detail and the reviewer screen at 390 and 320, with a compact record header, flush sections and a sticky 48 px primary action (D13).
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -26,15 +30,21 @@ The exact mobile composition has not been visually accepted for this entry. Reta
 
 ## Shared components and states
 
+Estimating rail: Reference cases sits after Cost sources with the folder-open icon, and Outcomes after Reviews & approvals with chart-column, under the [estimating navigation amendment](../../../decisions/estimating-navigation-amendment.md) and section 7 of the [design decision](../../../decisions/reference-calibration-figma-design.md). Rail captures: [design r02](../../../reference/ui/estimating/reference-calibration-design-r02/README.md).
+
 Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared Button component for new controls; preserve documented existing page-specific exceptions until deliberately migrated. Use consistent primary/secondary/quiet/danger meanings. Include hover, visible focus, disabled and loading states.
 
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
 
+- [Reference cases and calibration design r02 captures](../../../reference/ui/estimating/reference-calibration-design-r02/README.md) (accepted rail amendment, icon-free)
+- [Reference cases and calibration design r01 captures](../../../reference/ui/estimating/reference-calibration-design-r01/README.md) (accepted Figma design, icon-free)
 - [PPO-Reference-Cases-and-Calibration-Proposals-r01.html](../../../reference/ui/reference-calibration/PPO-Reference-Cases-and-Calibration-Proposals-r01.html)
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [design r01 captures](../../../reference/ui/estimating/reference-calibration-design-r01/README.md) (fifteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/reference-calibration-figma-design.md). The successor draft, Knowledge lesson links, 200% zoom and dark mode are not drawn. No threshold, review authority or adoption route is operative.
 
 The draft User Guide `guide.es.10` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

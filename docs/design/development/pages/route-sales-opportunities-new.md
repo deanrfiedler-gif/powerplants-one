@@ -62,3 +62,7 @@ Phone: stack fields and recovery controls, wrap names/references, retain readabl
 ## Leave protection (F42) — 16 October 2026
 
 This form already asked before rail, header-link, header search and Back navigation discarded its entries, through its CRM command guard. The F42 fixture in `tests/browser/navigation-safety.spec.ts` now covers it at desktop and phone widths, beside the newly guarded create forms. No change to this page.
+
+## Create forms pattern — 1 November 2026
+
+Dean accepted the [Create forms pattern](../../../decisions/create-forms-pattern-figma-design.md) (PPO-CREATE-FORMS-FIGMA-DEC) with the words "Accept recommendations". For this entry it draws **Create opportunity, the pattern and its states**. The deal form is the pattern's worked example. It is drawn direct, as quick add and from a lead, including the contact-unknown and follow-up-kept cases. [Captures](../../../reference/ui/create-forms-design-r01/README.md) are designs, not application captures. The native page isn't changed; a build needs its own request. Source presence, visual review, functional proof and deployment stay separate, and no review fingerprint is supplied.

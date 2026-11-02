@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "phone-header-selection",
+          "label": "Phone header, selection state",
+          "description": "Accepted design only, not built. On a phone register with bulk actions the compact header row becomes the count, Select all on this page and Done (PR4)."
+        }
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-phone-selection",
+          "expected": "The accepted Phone register patterns amendment (PPO-SHELL-PHONE-REGISTER-PATTERNS-DEC): More in the page-action slot, a selection state of the header, and a bottom action bar replacing the tab bar and Quick add.",
+          "actual": "The shared phone header has no More on list pages and no selection state. Work orders has its own long press and a selection aside; Leads shows only a count and Clear selection.",
+          "action": "When a build is requested, add the pattern to the shared shell once and adopt it in the order of Q4: Updates inbox, Work orders, Leads, then each page as it is next changed.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-phone-selection",
+          "expected": "Phone rows on a register with bulk actions take a leading 44 px checkbox, hold their height on entering selection, and report each record's outcome in a result row (PR5, PR9).",
+          "actual": "Phone rows have no shared selection state. notifications/state changes all or nothing, so per-notice results cannot happen until it reports per notice (Q8).",
+          "action": "Build the shared row selection with the first adopting register, and change notifications/state when Updates is built.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "gaps": [
+        {
+          "id": "dialog-phone-confirmation-sheet",
+          "expected": "A phone confirmation sheet lists exactly what changes and on how many, never grows past the screen less the header row, and keeps its buttons in view while its records scroll (PR8, PR14).",
+          "actual": "No shared phone sheet does this. It is drawn in Figma only, on page 3036:32928.",
+          "action": "Build it with the first adopting register; test on real phones, including 320 x 568.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
