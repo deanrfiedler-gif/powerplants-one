@@ -317,6 +317,8 @@ test("CR03 Won receiving returns, corrects and accepts an exact successor while 
 test("CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls", async ({
   page,
 }, info) => {
+  // A passing run takes about 90 seconds, too close to the default 120 under CI load.
+  test.setTimeout(180000);
   await call(page, "local-session", { profile: "coordinator" });
   const id = await aftercareRecordId(page);
   let saved = await call(page, `sales/aftercare/${id}`);

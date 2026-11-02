@@ -156,3 +156,7 @@ Seven suites ran with network access and disposable reset guards: `crm`, `crm-i2
 | CR-04 issued quotation read retains exact revision and issue identity without publishing internal estimating content | `ExactDraftUnavailable — The exact draft output is unavailable. Its saved revision is retained for recovery.` |
 | CR05 issued source -> chosen date -> prepared review -> attributed feedback -> completed review -> closure and correction | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
 | CR05 source changes, separate training evidence and exact CRM receiving obey command and options authority | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
+
+### Final main integration
+
+Dean merged #851 while this handover was running. After the full application check passed on `8f05161bc79cb89743915cb421dabf7b1e5b44bf`, current main `a56c8cf431a51f21bd1de48ded455187ffb993c5` was merged without conflicts. Its only additions since the first main merge are the CR05 browser test’s 180-second timeout and its status fragment (14 lines); it changes no application, unit-test or database code. The four Python checks, lint for the changed browser file, typecheck and documentation scope were checked after this final integration. Browser execution remains with CI. #851 was unmerged at the start; it is included in the final head.
