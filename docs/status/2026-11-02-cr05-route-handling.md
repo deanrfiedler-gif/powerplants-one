@@ -1,5 +1,5 @@
 ---
-title: CR05 browser test holds only the first completed read
+title: CR05 browser test releases completed reads at one barrier
 date: 2026-11-02
 ---
 
