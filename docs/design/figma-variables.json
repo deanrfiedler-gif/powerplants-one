@@ -1,0 +1,732 @@
+{
+  "source": {
+    "file": "PPO - Design",
+    "collections": [
+      "PPO colour",
+      "PPO layout"
+    ],
+    "read_on": "2026-11-01",
+    "read_by": "Figma connector, read-only"
+  },
+  "note": "Snapshot of Figma variables for scripts/check_design_tokens.py. See docs/standards/design-to-build-standard.md section 7. unmapped_baseline lists variables without a CSS name at the first reading; clear it in ADR-0067 stage 5 and never add to it.",
+  "unmapped_baseline": [
+    "shell/crumb-separator",
+    "shell/search-surface",
+    "shell/search-border",
+    "shell/action-hover",
+    "shell/panel-border",
+    "shell/current-link",
+    "shell/link-text",
+    "shell/section-label",
+    "shell/select-border",
+    "surface/row-selected",
+    "status/attention-dot",
+    "cpq/info-surface",
+    "cpq/info-border",
+    "planner/attention-selected",
+    "chart/1",
+    "chart/2",
+    "chart/3",
+    "chart/4",
+    "chart/5",
+    "chart/6",
+    "chart/neutral",
+    "chart/neutral-strong",
+    "space/4",
+    "space/8",
+    "space/12",
+    "space/14",
+    "space/16",
+    "space/24",
+    "shell/rail-width-expanded",
+    "shell/header-height",
+    "radius/rail-item",
+    "radius/panel"
+  ],
+  "variables": [
+    {
+      "name": "brand/navy",
+      "value": "#242a37",
+      "code": "var(--navy)",
+      "status": "mapped"
+    },
+    {
+      "name": "brand/green",
+      "value": "#62bb46",
+      "code": "var(--green)",
+      "status": "mapped"
+    },
+    {
+      "name": "text/ink",
+      "value": "#242a37",
+      "code": "var(--ink)",
+      "status": "mapped"
+    },
+    {
+      "name": "text/secondary",
+      "value": "#596779",
+      "code": "var(--text-secondary)",
+      "status": "mapped"
+    },
+    {
+      "name": "text/muted",
+      "value": "#667181",
+      "code": "var(--muted)",
+      "status": "mapped"
+    },
+    {
+      "name": "text/link",
+      "value": "#355b80",
+      "code": "var(--link)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/paper",
+      "value": "#f5f6f8",
+      "code": "var(--paper)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/white",
+      "value": "#ffffff",
+      "code": "var(--surface-white)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/subtle",
+      "value": "#f6f7f9",
+      "code": "var(--surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/2",
+      "value": "#f7f8fa",
+      "code": "var(--surface-2)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/3",
+      "value": "#fcfcfd",
+      "code": "var(--surface-3)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/hover",
+      "value": "#f0f2f5",
+      "code": "var(--surface-hover)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/line",
+      "value": "#e1e5eb",
+      "code": "var(--line)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/strong",
+      "value": "#dce2e9",
+      "code": "var(--line-strong)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/soft",
+      "value": "#e9ecf1",
+      "code": "var(--line-soft)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/hairline",
+      "value": "#cbd2dc",
+      "code": "var(--hairline)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/control",
+      "value": "#828e9f",
+      "code": "var(--control-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "border/focus",
+      "value": "#365d8b",
+      "code": "var(--focus)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/success/text",
+      "value": "#416d33",
+      "code": "var(--success)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/success/surface",
+      "value": "#edf5e9",
+      "code": "var(--success-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/success/border",
+      "value": "#d4e3cb",
+      "code": "var(--success-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/warning/text",
+      "value": "#80530e",
+      "code": "var(--warning)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/warning/surface",
+      "value": "#fff2d9",
+      "code": "var(--warning-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/warning/border",
+      "value": "#efdbb6",
+      "code": "var(--warning-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/warning/tint",
+      "value": "#fffaf1",
+      "code": "var(--warning-tint)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/danger/text",
+      "value": "#993b2a",
+      "code": "var(--danger)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/danger/surface",
+      "value": "#fff1ed",
+      "code": "var(--danger-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/danger/border",
+      "value": "#edc6bd",
+      "code": "var(--danger-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/neutral/text",
+      "value": "#526078",
+      "code": "var(--neutral)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/neutral/surface",
+      "value": "#edf0f5",
+      "code": "var(--neutral-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "avatar/surface",
+      "value": "#eaf1e5",
+      "code": "var(--avatar-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "avatar/text",
+      "value": "#45623b",
+      "code": "var(--avatar-text)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/rail-hover",
+      "value": "#343c4c",
+      "code": "var(--ppo-rail-hover)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/crumb-separator",
+      "value": "#9aa4b2",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/search-surface",
+      "value": "#f8f9fb",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/search-border",
+      "value": "#d8dee6",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/action-hover",
+      "value": "#f0f2f6",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/panel-border",
+      "value": "#dce1e8",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/current-link",
+      "value": "#e8ecf1",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/link-text",
+      "value": "#374152",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/section-label",
+      "value": "#7a8492",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/select-border",
+      "value": "#9bafaf",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/menu-selected",
+      "value": "#e3e8ee",
+      "code": "var(--ppo-shell-selected)",
+      "status": "mapped"
+    },
+    {
+      "name": "surface/row-selected",
+      "value": "#eff2f6",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/rail-text",
+      "value": "#e0e1e3",
+      "code": "var(--ppo-rail-text)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/rail-muted",
+      "value": "#acaeb3",
+      "code": "var(--ppo-rail-muted)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/rail-badge",
+      "value": "#474c57",
+      "code": "var(--ppo-rail-rule)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/blue-fill",
+      "value": "#e8f1fb",
+      "code": "var(--gantt-blue-fill)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/blue-progress",
+      "value": "#b7d1ef",
+      "code": "var(--gantt-blue-progress)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/blue-outline",
+      "value": "#4a7bb7",
+      "code": "var(--gantt-blue-outline)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/orange-progress",
+      "value": "#f6cd8b",
+      "code": "var(--gantt-orange-progress)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/green-progress",
+      "value": "#9fcd8e",
+      "code": "var(--gantt-green-progress)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/today",
+      "value": "#7c5cc4",
+      "code": "var(--gantt-today)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/today-surface",
+      "value": "#eee9fb",
+      "code": "var(--gantt-today-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/today-text",
+      "value": "#5b3fb0",
+      "code": "var(--gantt-today-text)",
+      "status": "mapped"
+    },
+    {
+      "name": "gantt/red-progress",
+      "value": "#f2b5a7",
+      "code": "var(--gantt-red-progress)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/attention-dot",
+      "value": "#c47f17",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "drawing/cloth",
+      "value": "#e8f3e2",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/cloth-edge",
+      "value": "#9cc98a",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/annotation",
+      "value": "#414b5a",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/selected",
+      "value": "#243f5a",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/roof",
+      "value": "#eef2f6",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/guide",
+      "value": "#8795a8",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/vent",
+      "value": "#b77a1b",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/band",
+      "value": "#f1f5f9",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "drawing/cloth-text",
+      "value": "#2f5224",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "cpq/info-surface",
+      "value": "#e9f1fa",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "cpq/info-border",
+      "value": "#c7d8ea",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "annotation/text",
+      "value": "#5f43b2",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "annotation/surface",
+      "value": "#f3effc",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "annotation/border",
+      "value": "#d8cdf4",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "planner/confirmed-surface",
+      "value": "#eef4fa",
+      "code": "var(--pl02-visit)",
+      "status": "mapped"
+    },
+    {
+      "name": "planner/confirmed-border",
+      "value": "#c8d6e5",
+      "code": "var(--pl02-visit-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "planner/attention-selected",
+      "value": "#fff5df",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "planner/confirmed-travel",
+      "value": "#e9eef4",
+      "code": "var(--pl02-travel)",
+      "status": "mapped"
+    },
+    {
+      "name": "planner/attention-travel",
+      "value": "#f6efe2",
+      "code": "var(--pl02-attention-travel)",
+      "status": "mapped"
+    },
+    {
+      "name": "planner/avatar-surface",
+      "value": "#ece7fb",
+      "code": "var(--pl02-avatar-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "planner/avatar-text",
+      "value": "#4f3a9c",
+      "code": "var(--pl02-avatar-text)",
+      "status": "mapped"
+    },
+    {
+      "name": "tint/white-80",
+      "value": "#ffffffcc",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-45",
+      "value": "#242a3773",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-42",
+      "value": "#242a376b",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-40",
+      "value": "#242a3766",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-32",
+      "value": "#242a3752",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-18",
+      "value": "#242a372e",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "tint/navy-16",
+      "value": "#242a3729",
+      "code": "",
+      "status": "design-only"
+    },
+    {
+      "name": "chart/1",
+      "value": "#2a78d6",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/2",
+      "value": "#eb6834",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/3",
+      "value": "#1baf7a",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/4",
+      "value": "#7c5cc4",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/5",
+      "value": "#eda100",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/6",
+      "value": "#e87ba4",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/neutral",
+      "value": "#9db4cc",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "chart/neutral-strong",
+      "value": "#8aa0b8",
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "status/info/text",
+      "value": "#346580",
+      "code": "var(--info)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/info/surface",
+      "value": "#e9f2f8",
+      "code": "var(--info-surface)",
+      "status": "mapped"
+    },
+    {
+      "name": "status/info/border",
+      "value": "#cfe0ec",
+      "code": "var(--info-border)",
+      "status": "mapped"
+    },
+    {
+      "name": "radius/control",
+      "value": 6,
+      "code": "var(--radius-control)",
+      "status": "mapped"
+    },
+    {
+      "name": "radius/card",
+      "value": 7,
+      "code": "var(--radius-card)",
+      "status": "mapped"
+    },
+    {
+      "name": "radius/dialog",
+      "value": 10,
+      "code": "var(--radius-dialog)",
+      "status": "mapped"
+    },
+    {
+      "name": "control/height",
+      "value": 44,
+      "code": "var(--ppo-control-height)",
+      "status": "mapped"
+    },
+    {
+      "name": "control/gap",
+      "value": 8,
+      "code": "var(--ppo-control-gap)",
+      "status": "mapped"
+    },
+    {
+      "name": "control/padding",
+      "value": 12,
+      "code": "var(--ppo-control-padding)",
+      "status": "mapped"
+    },
+    {
+      "name": "space/4",
+      "value": 4,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "space/8",
+      "value": 8,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "space/12",
+      "value": 12,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "space/14",
+      "value": 14,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "space/16",
+      "value": 16,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "space/24",
+      "value": 24,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/rail-width",
+      "value": 76,
+      "code": "var(--ppo-rail-width)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/rail-width-expanded",
+      "value": 232,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "shell/menu-width",
+      "value": 240,
+      "code": "var(--ppo-secondary-menu-width)",
+      "status": "mapped"
+    },
+    {
+      "name": "shell/header-height",
+      "value": 64,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "radius/rail-item",
+      "value": 10,
+      "code": "",
+      "status": "unmapped"
+    },
+    {
+      "name": "radius/panel",
+      "value": 14,
+      "code": "",
+      "status": "unmapped"
+    }
+  ]
+}
