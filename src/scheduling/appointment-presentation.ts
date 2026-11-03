@@ -1,9 +1,10 @@
 import type { Appointment } from "./components/client/planner-screens.client";
 import type { Pack } from "../documents/components/client/job-pack-types";
 import { readableValue } from "../documents/pack-view";
+import { formatDateTime } from "../shell/date-format";
 
 export type AppointmentMode =
-  "confirm" | "move" | "request" | "contact" | "cancel";
+  "confirm" | "move" | "request" | "contact" | "readiness" | "cancel";
 export type AppointmentCheck = {
   code: string;
   label: string;
@@ -15,13 +16,48 @@ export type AppointmentCheck = {
 export const appointmentClosed = (a: Pick<Appointment, "status">) =>
   ["Cancelled", "Completed", "CompletedPendingReview"].includes(a.status);
 
-// Presentation of existing server facts only. P4/P5 are deliberately absent from gate arithmetic.
+// Customer site readiness (gate P4) as the server derives it for the current schedule
+// version. Visits on a policy without P4 have no preparation and keep the gated wording.
+export function siteReadinessCheck(a: Appointment) {
+  const prep = a.preparation;
+  if (!prep)
+    return {
+      outcome: "Not available",
+      detail:
+        "This visit's readiness policy does not include customer site readiness. Date agreement does not confirm site readiness.",
+      gated: true,
+    };
+  const contact = a.contacts.find((c) => c.id === prep.contact_id);
+  const notReady = contact?.site_checks
+    ? Object.values(contact.site_checks).filter((c) => c.status === "NotReady")
+        .length
+    : 0;
+  // The server stores a confirmation made before the window opens but derives Unknown (P4).
+  const early =
+    !!contact &&
+    contact.outcome === "Confirmed" &&
+    Date.parse(contact.occurred_at) < Date.parse(prep.opens_at);
+  const detail =
+    prep.outcome === "Pass"
+      ? `Confirmed by ${contact?.recipient_name ?? "the site contact"}${prep.late ? ", late (after the window closed)" : ""}.`
+      : prep.outcome === "Blocked"
+        ? `The customer reported ${notReady || "a"} check${notReady === 1 ? "" : "s"} not ready. The service owner has a follow-up.`
+        : early
+          ? `Outside the confirmation window: the last confirmation was recorded before the window opened, so it does not count. Record a new confirmation with the site contact within the current window, ${formatDateTime(prep.opens_at, a.site_timezone)} to ${formatDateTime(prep.confirmation_due_at, a.site_timezone)}.`
+          : contact
+            ? "Not confirmed yet: the last contact was not a confirmation."
+            : "Not recorded for this schedule. Record what the site contact confirms before the crew leaves.";
+  return { outcome: prep.outcome, detail, gated: false };
+}
+
+// Presentation of existing server facts only. P5 is deliberately absent from gate arithmetic.
 export function appointmentChecks(a: Appointment): AppointmentCheck[] {
   const parts = a.readiness.find((c) => c.criterion_code === "PartsReadiness");
   const controls = a.readiness.find(
     (c) => c.criterion_code === "DispatchControls",
   );
   const cancelled = a.status === "Cancelled";
+  const site = siteReadinessCheck(a);
   const check = (
     code: string,
     label: string,
@@ -51,9 +87,9 @@ export function appointmentChecks(a: Appointment): AppointmentCheck[] {
       "CustomerSiteReadiness",
       "Customer site readiness confirmed",
       "Customer site readiness",
-      "Not available",
-      "Customer site-readiness recording is not available yet. Date agreement does not confirm site readiness.",
-      true,
+      site.outcome,
+      site.detail,
+      site.gated,
     ),
     check(
       "DispatchControls",
@@ -146,7 +182,9 @@ export function appointmentDispatch(
     title: held ? "Dispatch held" : "Ready to dispatch",
     detail: held
       ? "The crew can leave once the current dispatch checks pass and the complete crew has acknowledged the current job pack."
-      : "The current dispatch checks pass and the complete crew has acknowledged the current job pack. Customer site readiness is not included in the current gate yet.",
+      : a.preparation
+        ? "The current dispatch checks pass, including customer site readiness, and the complete crew has acknowledged the current job pack."
+        : "The current dispatch checks pass and the complete crew has acknowledged the current job pack. This visit's policy does not include customer site readiness.",
     tone: held ? ("attention" as const) : ("positive" as const),
     reasons: pack.readiness.reasons,
   };
@@ -156,6 +194,14 @@ export function appointmentActions(a: Appointment, current: boolean) {
   const closed = appointmentClosed(a);
   return {
     contact: current && !closed && a.actions.can_contact,
+    // The server accepts site readiness only for an unstarted Proposed or Confirmed visit on P4.
+    readiness:
+      current &&
+      !closed &&
+      a.actions.can_contact &&
+      !!a.preparation &&
+      !a.actual_start_at &&
+      ["Proposed", "Confirmed"].includes(a.status),
     manage:
       current &&
       !closed &&

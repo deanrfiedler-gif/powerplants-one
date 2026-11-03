@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SYSTEM-PAGES-FIGMA-DEC,System pages design (Figma) owner decision,docs/decisions/system-pages-figma-design.md,,Owner-accepted design; named Figma version saved; building the pages separate,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
+PPO-SYSTEM-PAGES-FIGMA-R01,System pages design retained captures,docs/reference/ui/application-shell/system-pages-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,retained-record,

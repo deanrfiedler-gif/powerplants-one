@@ -1,7 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 
-// Independent acceptance constraints: r38 interior plus the user's in-shell
-// composition. These deliberately reject the first deployment's extra frame.
+// Accepted CR-04 r02 workspace geometry. Historical r38 comparisons remain retained.
 export async function assertDealsHost(page: Page) {
   await expect(page.locator("#ppo-deals")).toHaveAttribute(
     "data-module-layout",
@@ -16,9 +15,11 @@ export async function assertDealsHost(page: Page) {
         .querySelector(".ppo-shell-header")!
         .getBoundingClientRect();
     const toolbar = root
-        .querySelector(".crm-toolbar-r38")!
+        .querySelector(".crm-toolbar-accepted")!
         .getBoundingClientRect(),
-      workbar = root.querySelector(".crm-workbar")!.getBoundingClientRect();
+      workbar = root
+        .querySelector(".crm-workspace-status")!
+        .getBoundingClientRect();
     return {
       margin: style.margin,
       border: style.borderWidth,
@@ -47,7 +48,7 @@ export async function assertDealsHost(page: Page) {
   });
   expect(facts.top).toBeCloseTo(facts.headerBottom, 0);
   if ((page.viewportSize()?.width ?? 0) >= 1280) {
-    expect(facts.toolbar).toBe(58);
+    expect(facts.toolbar).toBe(54);
     expect(facts.workbar).toBe(44);
   }
 }
