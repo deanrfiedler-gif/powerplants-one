@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-ESTIMATING-NAVIGATION-AMENDMENT-DEC,Estimating navigation amendment,docs/decisions/estimating-navigation-amendment.md,,Owner-decided navigation amendment; dependent links and Figma/application/acceptance follow-through pending,Dean Fiedler,d5c1fb2b2c1deef2893deee4f596bb3c2be304ea,,ES-10 Q5 adjacency and section 7 pending-choice wording only,git,

@@ -90,15 +90,22 @@ async function createNative(page: Page, opportunity: string) {
 test("LC-13 reviewed creation atomically links the exact accepted Sales brief and recovers the original outcome", async ({
   page,
 }, info) => {
+  // Full native creation, lost-response recovery, linked context and reload share one bounded journey.
+  test.setTimeout(180000);
   const f = await fixture(page);
   const acceptedSales = await call(page, `sales/handovers/${f.id}`);
   await page.goto(`/sales/handoffs/estimating/${f.id}`);
+  const creationReads = Promise.all(["form-options", "create-options"].map(name => page.waitForResponse(response => {
+    const url = new URL(response.url());
+    return url.pathname === `/api/v1/estimating/workspaces/${name}` && url.searchParams.get("opportunity_id") === f.o.id && response.request().method() === "GET";
+  })));
   await page
     .getByRole("link", {
       name: "Create native estimating workspace",
       exact: true,
     })
     .click();
+  for (const response of await creationReads) expect(response.ok(), await response.text()).toBe(true);
   await expect(page.getByRole("link", { name: f.o.title, exact: true })).toHaveAttribute("href", `/sales/opportunities/${f.o.id}`);
   await expect(page.getByRole("radio")).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Choose another opportunity", exact: true })).toHaveCount(0);
@@ -214,12 +221,15 @@ test("LC-13 reviewed creation atomically links the exact accepted Sales brief an
   await expect(
     page.getByRole("heading", { name: /Current accepted brief linked/ }),
   ).toBeVisible();
+  const linkedReads = () => Promise.all(["", "/sales-briefs"].map(suffix => page.waitForResponse(response => new URL(response.url()).pathname === `/api/v1/estimating/workspaces/${workspace}${suffix}` && response.request().method() === "GET")));
+  const openedReads = linkedReads();
   await page
     .getByRole("link", {
       name: "Open linked estimating workspace",
       exact: true,
     })
     .click();
+  for (const response of await openedReads) expect(response.ok(), await response.text()).toBe(true);
   await expect(
     page.getByRole("heading", { name: "Accepted Sales context", exact: true }),
   ).toBeVisible();
@@ -229,7 +239,9 @@ test("LC-13 reviewed creation atomically links the exact accepted Sales brief an
   const after = await call(page, `estimating/workspaces/${workspace}`);
   expect(after.workspace).toEqual(before.workspace);
   expect(after.options).toEqual(before.options);
+  const reloadedReads = linkedReads();
   await page.reload();
+  for (const response of await reloadedReads) expect(response.ok(), await response.text()).toBe(true);
   await expect(
     page.getByText(f.content.problem, { exact: true }),
   ).toBeVisible();
@@ -312,9 +324,13 @@ test("LC-13 stale reviewed link is refused and accepted lost-response link survi
       await route.abort("failed");
     },
   );
+  const lostResponse = page.waitForEvent("requestfailed", {
+    predicate: request => request.url().endsWith(`/sales/handovers/${f.id}/estimating`) && request.method() === "POST",
+  });
   await page
     .getByRole("button", { name: "Link accepted brief", exact: true })
     .click();
+  await lostResponse;
   await expect(
     page.getByRole("button", { name: "Check original link", exact: true }),
   ).toBeVisible();
@@ -322,7 +338,12 @@ test("LC-13 stale reviewed link is refused and accepted lost-response link survi
     path: info.outputPath("estimating-link-recovery.png"),
   });
   page.on("dialog", (dialog) => dialog.accept());
+  const restoredContext = page.waitForResponse(async response => {
+    if (new URL(response.url()).pathname !== `/api/v1/sales/handovers/${f.id}/estimating` || response.request().method() !== "GET") return false;
+    return !response.ok() || (await response.json()).links.some((link: { current?: boolean }) => link.current);
+  });
   await page.reload();
+  expect((await restoredContext).ok()).toBe(true);
   await expect(
     page.getByRole("heading", { name: /Current accepted brief linked/ }),
   ).toBeVisible();

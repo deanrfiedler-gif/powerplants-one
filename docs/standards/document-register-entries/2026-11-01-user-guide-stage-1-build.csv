@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-GUIDES-README,User guides authoring contract,docs/guides/README.md,,Working master; authoring contract for Markdown page guides from user guide stage 1; owner review pending,Dean Fiedler,2c8315578e77ec6089366852ce59cdd28c724a3d,,,git,

@@ -14,6 +14,8 @@ This page address exists in the inspected application source. Open it from a run
 
 ## Desktop
 
+Later amendment: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 adds one follow-up suggestion for the deal owner when a viewed quotation has no recorded response after 5 working days (capture 18 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md)), and an optional first-viewed notice in Updates (capture 27). Not built; it needs QV-S1.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
@@ -92,7 +94,7 @@ Built from the accepted canvas proposal ([decision](../../../decisions/ui-build-
   - the weather card is hidden until a weather provider is connected;
   - the five quick actions show their names under the icons;
   - the agenda header carries the year ("5–11 Oct 2026").
-- **Page guide (S9):** the information icon opens the My Work guide (`src/activities/work-guide.ts`). It stays a draft until Dean reviews it in the running app.
+- **Page guide (S9):** the information icon opens the My Work guide, now `docs/guides/pages/guide.page.work.md` (carried over unchanged from `src/activities/work-guide.ts` in user guide stage 1). It stays a draft until Dean reviews it in the running app.
 - **Review state:** the 9 October review is stale until Dean looks at the built page again.
 
 ## Figma application increment — 13 October 2026

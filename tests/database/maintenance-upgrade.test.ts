@@ -24,24 +24,28 @@ const read = (file: string) => readFile(new URL(`../../db/${file}`, import.meta.
 
 // Reconstruct the current-main gap from its original SQL, hashes and seed receipts.
 // Do not pretend that a 0051 ledger row means the schema already exists.
+// 0123 (maintenance M1) alters 0051's own tables, so a history without 0051 can never have
+// installed it: the reconstruction stops at 0122 and the runner applies 0051, then 0123 onward.
+const beforeMaintenanceDependants = 123;
 async function currentMainWithoutMaintenance() {
   await recoverSchema();
   await rows("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(50);
   await seed(50);
   await transaction(async (c) => {
-    for (const file of migrationFiles.filter((f) => Number(f.slice(0, 4)) > 51)) {
+    for (const file of migrationFiles.filter((f) => Number(f.slice(0, 4)) > 51 && Number(f.slice(0, 4)) < beforeMaintenanceDependants)) {
       const sql = await read(`migrations/${file}`);
       await c.query(sql);
       await c.query("INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)",
         [Number(file.slice(0, 4)), createHash("sha256").update(sql).digest("hex")]);
     }
-    for (const [version, file] of seedFiles.filter(([v]) => v > 51)) {
+    for (const [version, file] of seedFiles.filter(([v]) => v > 51 && v < beforeMaintenanceDependants)) {
       await c.query(await read(file));
       await c.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
     }
   });
-  assert.equal((await rows("SELECT max(version) AS version FROM public.ppo_migrations"))[0].version, latestMigrationVersion);
+  assert.equal((await rows("SELECT max(version) AS version FROM public.ppo_migrations"))[0].version, beforeMaintenanceDependants - 1);
+  assert.ok(latestMigrationVersion >= beforeMaintenanceDependants);
   assert.equal((await rows("SELECT to_regclass('ppo.service_agreements') AS table"))[0].table, null);
 }
 
@@ -69,8 +73,12 @@ test("late reserved Maintenance migration preserves the current schema, original
     (row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }),
   ) };
   assert.deepEqual(await snapshot(tables), expected);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>51 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"), seeds);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>51 AND version<$1 ORDER BY version", [beforeMaintenanceDependants]), ledger);
+  assert.deepEqual(
+    (await rows("SELECT version FROM public.ppo_migrations WHERE version=51 OR version>=$1 ORDER BY version", [beforeMaintenanceDependants])).map((r: { version: number }) => r.version),
+    [51, ...migrationFiles.map((f) => Number(f.slice(0, 4))).filter((v) => v >= beforeMaintenanceDependants)],
+  );
+  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 AND version<$1 ORDER BY version", [beforeMaintenanceDependants]), seeds);
   const everything = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
   // Seed 108 copies Opportunity and Project reads as conversation duties; everything else is this suite's subject.
   const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation."));
