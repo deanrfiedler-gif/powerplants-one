@@ -15,6 +15,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+Later amendment: the [Quotation page design decision](../../../decisions/quotation-page-customer-views-figma-design.md) of 30 October 2026 adds a Withdraw link confirmation (capture 16 in [design r01](../../../reference/ui/estimating/quotation-page-design-r01/README.md)) and refines the customer privacy line (its D6). The retained Quotation detail captures keep their bytes.
+
 Accepted design: the [Quotation detail design decision](../../../decisions/quotation-detail-figma-design.md) of 23 October 2026 makes this page the hub of one quotation across its life, with 22 icon-free captures in [design r01](../../../reference/ui/estimating/quotation-detail-design-r01/README.md). Departures D1–D16 and answers Q1–Q11 are recorded there: the shared record layout with an eight-step lifecycle bar (facts with dates, never a percentage), a primary action that follows state, a details column with the Customer views line and a linked-records chain, and seven tabs (Document with a Customer page preview, Revisions with compare, Distribution, Customer views, Response, Follow-up and History). Every decision stays on the release, response and conversion pages. The page opens in the Sales rail for deal owners and in the Estimating rail for estimators. Nothing new is built; today's page is unchanged.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.

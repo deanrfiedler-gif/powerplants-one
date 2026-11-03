@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-fn-exceptions-grid",
+          "expected": "The accepted Finance exceptions design (PPO-FN-EXCEPTIONS-FIGMA-DEC) uses a grid register grouped by type with \"Open in [source page]\" as the second column, drawn with the Figma parts Finance / Exception grid header and Finance / Exception grid row.",
+          "actual": "No /finance/exceptions page or route exists. The two parts are on Components · Finance parts in Figma, and no application component uses them.",
+          "action": "When a build is requested, adopt the shared register table for this worklist and record any departure.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

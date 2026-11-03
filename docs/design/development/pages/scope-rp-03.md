@@ -32,9 +32,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design captures: [Delivery performance design r01](../../../reference/ui/reporting/delivery-performance-design-r01/README.md). No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Delivery performance design r01 captures](../../../reference/ui/reporting/delivery-performance-design-r01/README.md) (nineteen icon-free PNGs of fifteen frames; design compositions, not application captures) and its [decision](../../../decisions/delivery-performance-figma-design.md). The filters popover, a Glasshouse 4 milestone drill, the tablet drill, the Save view dialog, month and custom periods, states at 320, keyboard order, 200% zoom and dark mode are not drawn. The route and definitions are not built or published, so a build shows Definition pending until they are.
 
 The draft User Guide `guide.rp.03` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

@@ -33,6 +33,11 @@ import {
 } from "../../appointment-presentation";
 import { showAppointmentDates } from "./booking-continuation.client";
 import { PolicyResolution } from "./policy-resolution.client";
+import {
+  siteCheckLabels,
+  siteCheckStatusWords,
+} from "./site-readiness-form.client";
+import { siteCheckKeys } from "../../site-readiness-model";
 import type { Appointment } from "./planner-screens.client";
 import "../../../app/styles/organisations.css";
 import "./appointment-record.css";
@@ -50,6 +55,7 @@ const labels: Record<AppointmentMode, string> = {
   confirm: "Confirm appointment",
   move: "Move or reassign",
   contact: "Record contact",
+  readiness: "Record customer site readiness",
   request: "Propose change",
   cancel: "Cancel appointment",
 };
@@ -66,6 +72,9 @@ const words = (value: string) =>
     InPerson: "In person",
     NoResponse: "No answer",
     Confirmed: "Agreed",
+    Pass: "Confirmed",
+    Blocked: "Not ready",
+    Unknown: "Not confirmed",
   })[value] ?? readableValue(value);
 const checkTone = (outcome: string) =>
   outcome === "Pass"
@@ -173,6 +182,14 @@ export function AppointmentRecord({
     current ? <Link href={href}>{children}</Link> : <span>{children}</span>;
   const visit = formatRange(a.start_at, a.end_at, a.site_timezone);
   const more = [
+    ...(actions.readiness
+      ? [
+          {
+            label: "Record customer site readiness",
+            onSelect: () => onAction("readiness"),
+          },
+        ]
+      : []),
     ...(actions.request
       ? [{ label: "Propose change", onSelect: () => onAction("request") }]
       : []),
@@ -308,7 +325,7 @@ export function AppointmentRecord({
               ? `${acknowledged} of ${recipients.length} acknowledged`
               : "See pack status"}
           </span>
-          <span>Site readiness · Not available yet</span>
+          <span>Site readiness · {words(checks[1].outcome)}</span>
           <span>Site and isolation controls · {words(checks[2].outcome)}</span>
           <span>Crew · {words(checks[3].outcome)}</span>
         </>
@@ -354,7 +371,12 @@ export function AppointmentRecord({
       }
     >
       <p className="sv04-note">
-        {link(returnTo, returnTo.startsWith("/schedule/changes") ? "Back to scheduling review" : "Back to planner")}
+        {link(
+          returnTo,
+          returnTo.startsWith("/schedule/changes")
+            ? "Back to scheduling review"
+            : "Back to planner",
+        )}
       </p>
       <div className="sv04-phone-status">
         {status}
@@ -463,6 +485,13 @@ export function AppointmentRecord({
                     </ul>
                     <small>Parts updates are managed in Supply Chain.</small>
                   </>
+                )}
+                {item.code === "CustomerSiteReadiness" && actions.readiness && (
+                  <Button onClick={() => onAction("readiness")}>
+                    {a.preparation?.contact_id
+                      ? "Record again"
+                      : "Record site readiness"}
+                  </Button>
                 )}
                 {item.code === "DispatchControls" &&
                   a.status !== "Cancelled" &&
@@ -619,15 +648,50 @@ export function AppointmentRecord({
           {a.contacts.map((c) => (
             <article className="sv04-contact" key={c.id}>
               <RegisterChip
-                tone={c.outcome === "Confirmed" ? "positive" : "neutral"}
+                tone={
+                  c.purpose === "SiteReadiness" &&
+                  c.site_checks &&
+                  Object.values(c.site_checks).some(
+                    (x) => x.status === "NotReady",
+                  )
+                    ? "attention"
+                    : c.outcome === "Confirmed"
+                      ? "positive"
+                      : "neutral"
+                }
               >
-                Dates · {words(c.outcome)}
+                {c.purpose === "SiteReadiness" ? "Site readiness" : "Dates"} ·{" "}
+                {c.purpose === "SiteReadiness" &&
+                c.outcome === "Confirmed" &&
+                c.site_checks &&
+                Object.values(c.site_checks).some(
+                  (x) => x.status === "NotReady",
+                )
+                  ? "Not ready"
+                  : c.purpose === "SiteReadiness" && c.outcome === "Confirmed"
+                    ? "Confirmed"
+                    : words(c.outcome)}
               </RegisterChip>
               <div>
                 <strong>
                   {c.recipient_name} · {words(c.channel)}
                 </strong>
-                <p>{c.notes}</p>
+                {c.notes && <p>{c.notes}</p>}
+                {c.purpose === "SiteReadiness" &&
+                  c.site_checks &&
+                  c.outcome !== "NoResponse" && (
+                    <ul className="sv04-site-checks">
+                      {siteCheckKeys.map((key) => (
+                        <li key={key}>
+                          {siteCheckLabels[key].label} ·{" "}
+                          {siteCheckStatusWords[c.site_checks![key].status]}
+                          {c.site_checks![key].note
+                            ? ` · ${c.site_checks![key].note}`
+                            : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </div>
               <small>
                 Recorded{" "}
@@ -742,13 +806,14 @@ export function AppointmentRecord({
                 {impact.reason} · {impact.owner_name}
               </p>
               <p>{impact.next_action}</p>
-              {(!closed || a.status === "Cancelled") && a.actions.can_resolve_policy && (
-                <PolicyResolution
-                  impactId={impact.impact_id}
-                  onSaved={onRefresh}
-                  current={current}
-                />
-              )}
+              {(!closed || a.status === "Cancelled") &&
+                a.actions.can_resolve_policy && (
+                  <PolicyResolution
+                    impactId={impact.impact_id}
+                    onSaved={onRefresh}
+                    current={current}
+                  />
+                )}
             </article>
           ))}
         </section>

@@ -1,0 +1,343 @@
+{
+  "recorded_at": "2026-11-01T11:53:42.631579+00:00",
+  "status": "Local implementation checks passed; independent review and owner acceptance pending",
+  "source_commit": "91cb4f0778dd649cda90482b2e81d871c50e4d7e",
+  "application_source_commit": "91cb4f0778dd649cda90482b2e81d871c50e4d7e",
+  "main_commit": "c69a0922c19e2d62b5859c57895204f5c44684c3",
+  "scope": [
+    "DK-01",
+    "DK-02"
+  ],
+  "runtime": {
+    "node": "24.22.2",
+    "playwright": "1.64.1",
+    "chrome": "156.0.8078.80",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "database_port": 55696,
+    "application_port": 3476
+  },
+  "checks": {
+    "library_database": {
+      "full_run_passed": 14,
+      "full_run_failed": 2,
+      "full_run_seconds": 3799.71,
+      "failures": {
+        "DK-B01": "Timezone seed statement timeout before library assertions",
+        "DK-UI04": "New test fixture omitted required site_id companion; corrected in 98edd480"
+      },
+      "corrected_branch_rerun": {
+        "passed": 2,
+        "failed": 0,
+        "seconds": 268.14
+      },
+      "unchanged_main_control": {
+        "commit": "26deea85d000878ca8df2c1b7a91e1ffdedd68f6",
+        "passed": 1,
+        "failed": 0,
+        "seconds": 189.82,
+        "note": "Initial timeout did not recur. Backend/scripts/db/package/test source unchanged through c69a0922."
+      },
+      "note": "Full run plus focused reruns, not a clean 16/16 run. Local runner deadline 600 seconds; application and migration/seed limits unchanged."
+    },
+    "focused_units": {
+      "passed": 11,
+      "failed": 0
+    },
+    "merged_register_units": {
+      "passed": 14,
+      "failed": 0
+    },
+    "hosted_shell_browser": {
+      "passed": 1,
+      "failed": 0
+    },
+    "studio": "passed: 379 entries, 52 component entries; visual review pending",
+    "status": "passed: 225 fragments",
+    "naming": "passed after panel correction",
+    "foundation": "passed before documentation-only main integration: 22 retained sources, 78 parent IDs, 15155 local links",
+    "collection": {
+      "default_tests": 1357,
+      "compiled_tests": 1357,
+      "files": 144,
+      "native_imports": 0,
+      "dedicated_native_tests": 3
+    },
+    "focused_lint": "passed, including final panel and test corrections",
+    "final_build": {
+      "result": "passed",
+      "source_commit": "91cb4f0778dd649cda90482b2e81d871c50e4d7e",
+      "compile_seconds": 50,
+      "typescript_seconds": 71,
+      "static_pages": 82
+    },
+    "fixture_browser": {
+      "passed": 14,
+      "failed": 0,
+      "minutes": 2.1
+    },
+    "native_browser": {
+      "passed": 3,
+      "failed": 0,
+      "minutes": 1.6
+    },
+    "compiled_http": {
+      "passed": 2,
+      "failed": 0,
+      "seconds": 24.298
+    }
+  },
+  "source_sha256_lf": {
+    "src/library/commands.ts": "d72c0a5e39fd56ef7645eca4d8fe52e6d710aa5a85a2132bc2e9c8e2c7f2e2b7",
+    "src/library/context.ts": "d8020d2bc5015076fdbf3db50eae7daa5d704f15fb80eb8c0c97751eb6351fc2",
+    "src/library/http.ts": "99026f96a6af153dd6ce50a3aad71bb33f1e830b1f4bf8745863a8c8bb74e644",
+    "src/library/model.ts": "1e2309745f716c70ab7b3c3ed67e61a873187e8adb6a4571690e9e7dc42c83d2",
+    "src/library/options.ts": "c0ecd88171b90609f6a2f8f83f3983848132677ee611244c55d365da1719cbdb",
+    "src/library/paging.ts": "da57943787134c7ce8a3efac381361c5c56380720bd5befe21625fbd8c60977b",
+    "src/library/reads.ts": "bcc84d5b123f797c414d170a8d56e6cb889540084ac17fda72932fd68a6b8cad",
+    "src/library/sources.ts": "c54b1d9ae533c4d299ccc932b09ad6fa4d5010718b423bb369e03ace62eb022d",
+    "src/library/types.ts": "a931597fc6b16af59a022c1013ceecaf8b3240f6a8eec32b9fbad958123ed47b",
+    "src/library/validation.ts": "989c431165006f6d95ecb50fd6ca7bbdda8f9d07e88c9911a03b4a090a97e247",
+    "src/components/library-choice.tsx": "827ea75390beb64bef9a6700df2ad28c2a6f38e94817a97602e56c1c90c93912",
+    "src/components/library-command.tsx": "8faaf66b696d9f3f62884082ea86c2dea5b92567c1321412a79d9d7a0af04cf2",
+    "src/components/library-record.tsx": "093e03de93dceb31b4eb136c4d92a8c225e49a024d969f3036cf960eb1c07b88",
+    "src/components/library-register.tsx": "9b22ed1bbb1bef6ff6c2a1d53e3073784882d69b7c2b7c8ca8b4ff730d4f3bf6",
+    "src/components/library.css": "1301fa317c17636da7ef1dd735330673544b0159f3402d10dcf23367ca727244",
+    "tests/database/document-library.test.ts": "a76b13b7547686c90a8c4af0f2d17b98e81b3d511965f53c5f8f170f0f66db1f",
+    "tests/http/document-library.test.ts": "428768462ddc7d40897e3841068dfc8edbd308a22335c2198031d7c32b37f86e",
+    "tests/browser/library-workspace.spec.ts": "eb48def3b311ed7e03c5725d24ce6248cff35f2e83b011b2800e411e9d99e58e",
+    "tests/library-browser/library-native.spec.ts": "53abff1c7ee010219a498273e62a71b4d7e450794d78d58267e0b9081606822c",
+    "playwright.library.config.ts": "5b5527eee9fe789024ebc649be4d75de1124111ff123a04b8a8021f9e775a37d"
+  },
+  "captures": {
+    "review-2026-11-01/desktop-chromium/history-1440.png": {
+      "sha256": "46b30b69572ef0469725c5850bca5f97c9b95df344f7b6558170b0c0f9038c85",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/links-1440.png": {
+      "sha256": "e6578f2556862ba4eb687e4c2250dfc08329297450d06e3236e0af02259e9985",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/record-1024.png": {
+      "sha256": "4f2609c3626215b3531a0380f18eda2fb519f4429c539da4c2560df71189d9d3",
+      "width": 1024,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/record-1440.png": {
+      "sha256": "3eeed18dc7b7f91f6b88e7ac1f848eb30f59da2e081ba9476e09479176aa6533",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/record-320.png": {
+      "sha256": "77bb0958d1052ddf15dd41bdc75ad524ef2cd65e7404501cbc8a2b566e897343",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/record-390.png": {
+      "sha256": "6d4a2da598d78e53c1a47138811f8c243114bf4f09cd5f2bc9b99a5fae9a611a",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/record-unavailable-320.png": {
+      "sha256": "691631e650e6b831df51dc3d6756ac9ce5a6b29dbbc8351d1e1fd258e21a53f5",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/register-1024.png": {
+      "sha256": "5499960d5d408b90c0ff40645c7bdd45983a6e97b9f26e595ed110043faaca5c",
+      "width": 1024,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/register-1440.png": {
+      "sha256": "f87262420dfef2a005ec3e5c03c9b8b7703112528b84f0ce9327a106ca8e7173",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/register-320.png": {
+      "sha256": "2f958420c91393e4510a96134934a5dbad8936e4961ae614877a6d7b4b151e12",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/register-390.png": {
+      "sha256": "4fe7869886ce62b9608117f7158b718cbba6e67de8da0722deaf99d789357900",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/registration-panel.png": {
+      "sha256": "3ed9d89ea8fcd7247aa33c0f5ff7f2bbc4692fa9d21c0bd9a602231e71ee1d33",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/review-panel.png": {
+      "sha256": "9e5771e0f83bc1617945d5febed576497a36a04c3c4efdbea335e4c152248d5b",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/revision-panel.png": {
+      "sha256": "c0ccaf14a92221346b9751490b8890d539e9967e88f25c9f95ff6579979f274a",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/revisions-1440.png": {
+      "sha256": "bcbcf2b6264d77bb10705b719976d54797ab84777ac6b948f6be29b4edd97e8e",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/revisions-320.png": {
+      "sha256": "28445600e0a3e14638c59288828e4ce1c6d25f7039123ee7b84bcee9a369161e",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/desktop-chromium/snapshot-1440.png": {
+      "sha256": "8c0bbb904707df781bc0ad853ff6c01c3e4c7d261246e097c78700711c3833cc",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/desktop-chromium/uncertain-review.png": {
+      "sha256": "78518ca2e5921345bfdcad3cf6570d219d4589d866c0e3e0a177d5479fc16ab3",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/mobile-chromium/record-1024.png": {
+      "sha256": "6f0b2ea8f9b3f6ffba62972658afe88fa48d3f0fbe852b99c1dc0074f55ba99b",
+      "width": 1024,
+      "height": 900
+    },
+    "review-2026-11-01/mobile-chromium/record-1440.png": {
+      "sha256": "f7328e896c9974c8204ff4f3d03107bcba7fd80b87ee034e63c67eb266972f46",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/mobile-chromium/record-320.png": {
+      "sha256": "77bb0958d1052ddf15dd41bdc75ad524ef2cd65e7404501cbc8a2b566e897343",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/record-390.png": {
+      "sha256": "6d4a2da598d78e53c1a47138811f8c243114bf4f09cd5f2bc9b99a5fae9a611a",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/record-unavailable-320.png": {
+      "sha256": "691631e650e6b831df51dc3d6756ac9ce5a6b29dbbc8351d1e1fd258e21a53f5",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/register-1024.png": {
+      "sha256": "28d372aba274d04a94730bc607658799673c608710e713b3ff761743f207f49e",
+      "width": 1024,
+      "height": 900
+    },
+    "review-2026-11-01/mobile-chromium/register-1440.png": {
+      "sha256": "20660540445d4e2d0e22f9f34dcab603f2b65b4a88539c1e7255eb13ddd2493a",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/mobile-chromium/register-320.png": {
+      "sha256": "630bfea810963289f3e45b75ee2bd77c5029141f0ebe989ef0668070b3450ab1",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/register-390.png": {
+      "sha256": "b4819e792416ff0d986fd71cf6bc905944694dcd5895799d68a96a5ac877aa77",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/registration-panel.png": {
+      "sha256": "b79df5862712d2c7a1f2b604d884a409926aaea50194f016d40917079004c7f3",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/review-panel.png": {
+      "sha256": "f2e195f36cefd696b1bac00dc26689fa67e40b551cf1cafb297f8f61ae858c7b",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/revision-panel.png": {
+      "sha256": "12f849e46cb2ba78cc77ad1952ec72ebc35bccf12d443a5c20035654fd12f964",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/mobile-chromium/uncertain-review.png": {
+      "sha256": "1a292eb4150ee2ff4b7b53de8e2cf370b863fab217707e56795acbfc6ea81e3a",
+      "width": 390,
+      "height": 844
+    },
+    "review-2026-11-01/native/native-historical-unavailable-320.png": {
+      "sha256": "18bf9beecd5c144161ece7dc6fee9907b494c52c1c7b253b28e6591d8a322832",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/native/native-record-320.png": {
+      "sha256": "546591f42e2729c56f59f0b8e7e549f5aa32b07b8907f3fb7720e8765dee33f7",
+      "width": 320,
+      "height": 844
+    },
+    "review-2026-11-01/native/native-record-zoom200.png": {
+      "sha256": "f9c13e25d4a9a01cc7576b8e64cd4a666a5699eb38e51bc12d316a019871a4d6",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/native/native-register-zoom200.png": {
+      "sha256": "bbce93e463557c8ef3d5aa6a097f59168c1d01fba2889fa61dedb52ed81ee477",
+      "width": 1440,
+      "height": 900
+    },
+    "review-2026-11-01/native/native-snapshot-320.png": {
+      "sha256": "c7e1b0c32ecf3419194677c8f4342b1ae3c9181cefad44f92aafd87c2d8e79a5",
+      "width": 320,
+      "height": 844
+    }
+  },
+  "review_items": [
+    "Current-head CI",
+    "Fresh exact-head cross-model review",
+    "Independent visual/composition review",
+    "Manual screen-reader review",
+    "Owner workflow acceptance"
+  ],
+  "merge_or_deployment": false,
+  "intermediate_runs": [
+    {
+      "source": "990ef69e",
+      "fixture_browser": "12/14; phone Filter accessible-name mismatch in the new test. Corrected in 82487228; full rerun 14/14 before panel correction."
+    },
+    {
+      "source": "82487228",
+      "native_browser": "2/3; new register-entry URL assertion ran before navigation settled. Added explicit navigation wait in 406d86c0."
+    },
+    {
+      "source": "406d86c0",
+      "native_browser": "1/3; two workflows stopped after DatabaseConnectTimeout. No timeout guard relaxed. Final serial run after local app restart passed 3/3."
+    }
+  ],
+  "fixture_configuration": {
+    "baseURL": "http://127.0.0.1:3476",
+    "workers": 1,
+    "timeout_ms": 180000,
+    "channel": "chrome",
+    "locale": "en-AU",
+    "desktop": [
+      1440,
+      900
+    ],
+    "mobile": [
+      390,
+      844
+    ],
+    "test_file": "tests/browser/library-workspace.spec.ts",
+    "note": "Targeted local configuration without all-route warm-up; checks also resize to 1024 and 320. Ordinary/compiled collection checked separately."
+  },
+  "developer_visual_comparison": {
+    "references": "Retained accepted document-library-figma-r01 register, snapshot, record tabs, panels and phone captures; live accepted frame inspection recorded in ledger",
+    "result": "Compared by implementing agent; no independent visual acceptance or pixel equivalence claimed",
+    "adaptations": [
+      "Shared phone-header amendment",
+      "Searchable choices and Type in Filters; bounded quick selects",
+      "Shared Field/choice controls and explicit command reasons use vertically scrolling forms",
+      "Exact permissions and synthetic evidence differ from Figma example records"
+    ]
+  }
+}
