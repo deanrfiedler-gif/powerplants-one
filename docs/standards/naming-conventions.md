@@ -593,6 +593,8 @@ Name reusable UI components by purpose, such as `StatusBadge`, `RecordReference`
 
 For new design tokens, use semantic names such as `--color-text-primary` and `--color-status-warning`. Avoid tying a business meaning directly to an arbitrary colour label such as `green-thing`. A badge's text/state contract remains authoritative; colour is supporting presentation.
 
+Name Figma files `PPO - <Surface>` and folders `PPO <Group>`, and Figma pages `[Page name] · [scope ID]`, using a real scope ID. Name Figma components `Area / Component`, matching the code name where one exists, without scope IDs or version numbers as prefixes. Name Figma variables by role, such as `status/warning/text`, and set the CSS name when each is created. The [design-to-build standard](design-to-build-standard.md) lists the files and rules. Existing names cited by a record do not change.
+
 ## 14. Database fields and schemas
 
 ### 14.1 General convention

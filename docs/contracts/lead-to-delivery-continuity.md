@@ -43,6 +43,12 @@ Bindings are immutable companions keyed to the exact acceptance event. A later a
 
 Migration 0074 adds only the companion and its constraints. Existing Sales and Estimating command shapes, frozen source-hash strings, migration receipts, seeds, grants and identities remain unchanged. No technology is introduced. Local proof covers stale/hidden/wrong-Deal refusal, historical recovery, independent discovery preservation, competing/duplicate linking, atomic rollback, populated upgrades and desktop/phone create-return/link recovery. [LC-13 execution evidence](../testing/evidence/estimating-brief-continuity/README.md) retains exact scope, failures and limits. Increment 2 has local functional proof; increments 3–6 remain open.
 
+### CR-02 receiving queue continuation
+
+Sales briefs at `/estimating/intake` reads one current permission-scoped population of latest submitted revisions for rows, facets, view counts and paging. An unsubmitted successor cannot replace the submitted content, receiver, state or update. Native source fingerprints and receiving decisions remain authoritative. Changed paging/snapshot/export tokens require renewed current review. Selection offers sequence and permitted list export only.
+
+Open brief includes `?revision=N`. When that submission has become historical, the native record displays its frozen content without receiving controls and offers a separate current-brief link. Open opportunity identifies the exact source record. The queue never accepts a brief, creates Discovery or links a workspace; the LC-13 review above stays explicit. See the [receiving page contract](../design/development/pages/route-estimating-intake.md) and [execution evidence](../testing/evidence/sales-briefs-queue/README.md).
+
 ## LC-14: exact native commercial facts in Deals
 
 All permitted estimates contribute exact quotation revisions to the Deal Commercial and Documents views, with their native estimate/option, render state and Draft/Release identity. The stable primary estimate and forecast remain unchanged. On explicit disclosure, the Deal uses the native ES-05, ES-06 and ES-07 read interfaces and their current permissions to expose independent approval/issue, staff-recorded response/correction, source/response holds and retained conversion facts. Each native read is independently current; these displays are not a new atomic authority for commands. A denied refresh clears earlier evidence, and restricted reads are never labelled absent facts.

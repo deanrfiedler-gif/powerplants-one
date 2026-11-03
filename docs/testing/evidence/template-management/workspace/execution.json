@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "owner": "Dean Fiedler",
+  "implementer": "Codex",
+  "scope": "DK-06",
+  "pr": 704,
+  "source_commit": "ff8b1f70a6e1451fb7b58d0c5330a85f4ea96714",
+  "base_commit": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "design": {
+    "file_name": "PPO - Design",
+    "page_id": "793:6155",
+    "named_version": "Template management — accepted",
+    "amendment": "Phone header amendment — accepted"
+  },
+  "runtime": {
+    "node": "24.22.2",
+    "next": "16.4.2",
+    "playwright": "1.64.1",
+    "chrome": "156.0.8078.80",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "database_port": 55474,
+    "app_port": 3474
+  },
+  "checks": [
+    {
+      "check": "build",
+      "command": "npm run build",
+      "result": "passed",
+      "log": "tmp/templates-final-build.txt"
+    },
+    {
+      "check": "typecheck",
+      "command": "npm run typecheck",
+      "result": "passed",
+      "log": "tmp/templates-delivery-typecheck.txt"
+    },
+    {
+      "check": "focused lint",
+      "result": "passed",
+      "scope": "changed Templates source, native projections, tests and playwright.templates.config.ts",
+      "log": "tmp/templates-last-lint.txt"
+    },
+    {
+      "check": "focused units",
+      "result": "passed",
+      "passed": 11,
+      "log": "tmp/templates-final-unit.txt"
+    },
+    {
+      "check": "native proposal/publication/use database",
+      "result": "passed",
+      "passed": 17,
+      "log": "tmp/templates-native-isolated.txt",
+      "source_note": "Before final publication-choice title and UI-only refinements; final affected reads verified by HTTP/native browser."
+    },
+    {
+      "check": "native catalogue/usage database",
+      "result": "passed",
+      "passed": 6,
+      "log": "tmp/templates-catalogue-native.txt"
+    },
+    {
+      "check": "compiled native HTTP",
+      "result": "passed",
+      "passed": 4,
+      "log": "tmp/templates-http-proof.txt"
+    },
+    {
+      "check": "compiled browser",
+      "command": "node --env-file=.env.local node_modules/@playwright/test/cli.js test --config playwright.templates.config.ts",
+      "result": "passed",
+      "passed": 13,
+      "native_database_journeys": 1,
+      "fixture_and_layout_cases": 12,
+      "log": "tmp/templates-delivery-browser.txt"
+    },
+    {
+      "check": "studio",
+      "command": "npm run studio:check",
+      "result": "passed",
+      "log": "tmp/templates-delivery-studio.txt"
+    },
+    {
+      "check": "foundation",
+      "command": "python3 scripts/check_foundation.py",
+      "result": "passed",
+      "log": "tmp/templates-delivery-foundation.txt",
+      "local_links_checked": 14077,
+      "files_scanned_for_markers": 7423
+    },
+    {
+      "check": "status",
+      "command": "python3 scripts/build_status.py --check",
+      "result": "passed",
+      "fragments": 184,
+      "log": "tmp/templates-delivery-status.txt"
+    }
+  ],
+  "captures": [
+    {
+      "path": "assign-successor-390.png",
+      "bytes": 43072,
+      "sha256": "ac1a0915173464b2a9a9e184f160b71447d8783e55b35eb7f3d19b47c6229654"
+    },
+    {
+      "path": "assignment-detail-390.png",
+      "bytes": 40347,
+      "sha256": "adf5286085f524b3e14bdbae2658664eed0ef59289802d53af7e6cbac4b93d50"
+    },
+    {
+      "path": "definition-1024.png",
+      "bytes": 93749,
+      "sha256": "cb1dada2eafe2fcced062af8f0231b9f0f930ec03a890565f6c86587c3c68a12"
+    },
+    {
+      "path": "definition-1440.png",
+      "bytes": 109401,
+      "sha256": "1c0698e65d5b88446c37601926f1e06fa6cdedda356a7c1678d68724d92d9ef6"
+    },
+    {
+      "path": "definition-320.png",
+      "bytes": 37564,
+      "sha256": "d99de67f0b0987e65bfea00ea6a4d31d4f13393a32a1920344276ca7df56f339"
+    },
+    {
+      "path": "definition-390.png",
+      "bytes": 38710,
+      "sha256": "b1b64a406bea0c95172a97a94b1ebf56b22b985b168c556eab7092665dff7d0b"
+    },
+    {
+      "path": "definition-zoom200.png",
+      "bytes": 54984,
+      "sha256": "d6a0393ee4894eae802e2026361a78755ef0838278dac39c93318b2e7f93596b"
+    },
+    {
+      "path": "definitions-1024.png",
+      "bytes": 67816,
+      "sha256": "e51cdde82fdc9e96dd95ae78b59f5ef366cc97d6ccc24c260d7e3ddec68f6ae6"
+    },
+    {
+      "path": "definitions-1440.png",
+      "bytes": 82527,
+      "sha256": "e6b7655dea586850722a0d1fcfb62f2f09ca0f2cacfae535082bd71a6ca0c9f5"
+    },
+    {
+      "path": "definitions-320.png",
+      "bytes": 30009,
+      "sha256": "a1a19c4d7842f36dd5d169248760b5b3e684c088a758710e279e0bf48a4773c3"
+    },
+    {
+      "path": "definitions-390.png",
+      "bytes": 29808,
+      "sha256": "ec82e3d60b38bd28c270dc0d9aa12c39f1ef5560fc2881be225718b4e3f8b6b3"
+    },
+    {
+      "path": "definitions-zoom200.png",
+      "bytes": 72207,
+      "sha256": "c2edc88dd9032b02b270eb7ae9e02ddadc2af6390674b363d050619965620722"
+    },
+    {
+      "path": "native-published-proposal-320.png",
+      "bytes": 43802,
+      "sha256": "e189a180853ac86a85a35fa40f9ddfaf76a308b265a63c96622fcbf31000b92b"
+    },
+    {
+      "path": "new-proposal-1440.png",
+      "bytes": 142713,
+      "sha256": "b4b44057e6794b222b9fc80d5b477083b15d885faab1eb831434a947ca601bde"
+    },
+    {
+      "path": "proposal-1024.png",
+      "bytes": 103868,
+      "sha256": "5c1477a39c4f91f2c304af7b375e58c03b65cf1f97b20b23648aea1f7c2ad3e7"
+    },
+    {
+      "path": "proposal-1440.png",
+      "bytes": 124848,
+      "sha256": "f7fb90dbc54952b21af62e5ba39a8324a4d29e4375c571d46605a2c7c6dcaf85"
+    },
+    {
+      "path": "proposal-320.png",
+      "bytes": 42486,
+      "sha256": "f81f921dcc349f89222dfd7c5e42fa20c845442fa2180585701ba0c63f1ac841"
+    },
+    {
+      "path": "proposal-390.png",
+      "bytes": 46466,
+      "sha256": "1eebd35af5d17f3626035663392353a9bfece3854433824dd28b3eac5b033b23"
+    },
+    {
+      "path": "proposal-zoom200.png",
+      "bytes": 58747,
+      "sha256": "c794b39dafd36739af1bbfa0c6597477f2faff2b28a65ed5e21e0ae1bc82bc24"
+    },
+    {
+      "path": "proposals-1024.png",
+      "bytes": 70563,
+      "sha256": "e2b4b3ade5b876bb837d424e38a7e050eda27959229cd0b650f79d6442b755b5"
+    },
+    {
+      "path": "proposals-1440.png",
+      "bytes": 85994,
+      "sha256": "1a68af337bf2871975886a93211520151a79f797b83b6aa6914703b04c2248d4"
+    },
+    {
+      "path": "proposals-320.png",
+      "bytes": 27580,
+      "sha256": "e0cdf02d8cf31687217f3ea888aabfe2693c484163389f7b98895cb1c845fcea"
+    },
+    {
+      "path": "proposals-390.png",
+      "bytes": 28576,
+      "sha256": "a68e7b6f9ae4f00c0ffea0616f5789663d09e2115df2bec97f1487baf2792f54"
+    },
+    {
+      "path": "proposals-zoom200.png",
+      "bytes": 67120,
+      "sha256": "508a199431a08d23d74687a900f342a6d146410b9873b5307a954eeac84f3dce"
+    },
+    {
+      "path": "publish-1440.png",
+      "bytes": 108784,
+      "sha256": "930e027074297ebfc04ad1ab99f117dc0d28e07b2119d73dfcf8b6fa75db44b9"
+    },
+    {
+      "path": "revise-stale-320.png",
+      "bytes": 42116,
+      "sha256": "1740efb7e453d3a050689b5f816a2a15fb3a9ece2b5a2e62f635c9454a09832a"
+    },
+    {
+      "path": "site-use-1024.png",
+      "bytes": 73363,
+      "sha256": "6228b198c4804af7557e4597004d867e3e516af4298d3208dc0c4d4fab413d1a"
+    },
+    {
+      "path": "site-use-1440.png",
+      "bytes": 98253,
+      "sha256": "66da9f5fa8e2449ce0b762863c8abfd16267c35c716620cde68030aea0ee1729"
+    },
+    {
+      "path": "site-use-320.png",
+      "bytes": 37853,
+      "sha256": "a6352b5199a532ee6ed35a70cdd5c08c6dac23d8bb42eb1d55b807a31535a3f3"
+    },
+    {
+      "path": "site-use-390.png",
+      "bytes": 38705,
+      "sha256": "bad6c5ee1676eefa1ed2af4d63dc5a0715d329841dc4317aaec45a6b91402fbb"
+    }
+  ],
+  "icon_policy": "Font Awesome network requests blocked; fallback glyphs only",
+  "reproduction": "playwright.templates.config.ts; see README.md",
+  "not_run": [
+    "Full repository unit and lint suites",
+    "Unrelated module suites",
+    "Migration-upgrade suites: no migration/seed/grant change",
+    "Exhaustive screenshots for each refusal permutation",
+    "Manual screen-reader review"
+  ],
+  "acceptance": {
+    "independent_visual_review": "pending",
+    "owner_workflow_acceptance": "pending",
+    "deployment": "not performed"
+  },
+  "earlier_failures": [
+    {
+      "kind": "interrupted database run",
+      "reason": "Shared port 55476 conflicted with newly claimed Library proof; stopped and isolated on 55474; excluded from acceptance."
+    },
+    {
+      "kind": "browser fixture expectations",
+      "reason": "Exact revision URL/applied-filter accessible name and flat native HTTP error contract corrected; final 13-case run passed."
+    },
+    {
+      "kind": "native HTTP defect",
+      "reason": "Publication metadata snapshot has no revision body; current-main insertion confirmed this. Exact published template name is now read after authorization; final four-case HTTP run passed."
+    }
+  ]
+}

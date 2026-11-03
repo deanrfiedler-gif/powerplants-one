@@ -33,7 +33,9 @@ import {
   linkedDocuments,
   documentHistory,
   downloadDocument,
+  documentRevisions,
 } from "../../src/library/reads";
+import { libraryOptions } from "../../src/library/options";
 import { readOperation } from "../../src/shared/receipts";
 import {
   librarySetup,
@@ -146,6 +148,9 @@ test("DK-B01 persisted identity, exact review, successor, retained links, histor
     ["Review", "Create"],
   );
   assert.ok(!JSON.stringify(page).includes("store_key"));
+  assert.ok(rest.items[0].summary.includes(decision.purpose));
+  assert.ok(rest.items[0].summary.includes(decision.rationale));
+  assert.ok(rest.items[0].summary.includes("Reviewed"));
   await withdrawDocument(p, input.id, action(next.revision_id, 4));
   assert.equal((await listDocuments(p)).items.length, 0);
   assert.equal(
@@ -487,6 +492,13 @@ test("DK-B06 scoped declared usage is filtered and cannot retarget itself to a s
   assert.equal(usage.coverage, "Partial");
   assert.deepEqual(usage.items, []);
   assert.ok(!JSON.stringify(usage).includes(project.id));
+  const filtered = await documentUsage(observer, input.id, {
+    state: "Active",
+    revision_id: input.revision_id,
+  });
+  assert.deepEqual(filtered.items, []);
+  assert.equal(filtered.coverage, "Partial");
+  assert.ok(!JSON.stringify(filtered).includes(project.id));
   assert.ok(
     !JSON.stringify(await documentHistory(observer, input.id)).includes(
       project.id,
@@ -640,7 +652,7 @@ for (const through of [88, 89])
         result.push(
           await rows(
             // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (107,108,110,120)" : t === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(t)::text`,
+            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (107,108,110,120, 121)" : t === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(t)::text`,
           ),
         );
       return result;
@@ -661,7 +673,17 @@ for (const through of [88, 89])
     );
     assert.deepEqual(
       after.filter((x) => x.version > through).map((x) => x.version),
-      through === 88 ? [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120] : [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120],
+      through === 88
+        ? [
+            89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+            105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+            118, 119, 120, 121, 122, 123,
+          ]
+        : [
+            90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
+            105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+            118, 119, 120, 121, 122, 123,
+          ],
     );
     assert.equal(
       (await rows("SELECT count(*) FROM ppo.library_documents"))[0].count,
@@ -697,7 +719,7 @@ test("DK-B10 current register paging and source-exception filters use only permi
     await createDocument(p, input);
     inputs.push(input);
   }
-  inputs.sort((a, b) => a.id.localeCompare(b.id));
+  // Default registration order follows immutable creation time, not random UUIDs.
   await reviewDocument(reviewer, inputs[0].id, {
     ...review(inputs[0].revision_id, 1),
     outcome: "Returned",
@@ -814,4 +836,271 @@ test("DK-B11 storage success followed by database rollback preserves the origina
     (await downloadDocument(p, input.id, input.revision_id)).bytes.toString(),
     input.source.text,
   );
+});
+
+test("DK-UI01 sorted continuations bind filters and actor; revisions retain exact history", async () => {
+  const { p, observer } = await librarySetup();
+  const inputs = [
+    libraryInput(p.actor_id),
+    libraryInput(p.actor_id),
+    libraryInput(p.actor_id),
+  ];
+  for (const [index, input] of inputs.entries()) {
+    input.title = `SYN Library ordering ${index}`;
+    await createDocument(p, input);
+  }
+  assert.deepEqual(
+    (await listDocuments(p)).items.map((x) => x.document.id),
+    inputs.map((x) => x.id),
+  );
+  const legacyFirst = await listDocuments(p, { limit: "1" });
+  const legacyNext = await listDocuments(p, {
+    limit: "1",
+    after: legacyFirst.next_after!,
+  });
+  assert.equal(legacyNext.items[0].document.id, inputs[1].id);
+  for (const sort of ["number", "updated", "registration"]) {
+    const first = await listDocuments(p, {
+      sort,
+      direction: "desc",
+      limit: "2",
+    });
+    assert.equal(first.items.length, 2);
+    assert.ok(first.next_cursor);
+    const last = await listDocuments(p, {
+      sort,
+      direction: "desc",
+      limit: "2",
+      cursor: first.next_cursor!,
+    });
+    assert.equal(last.items.length, 1);
+    assert.equal(
+      new Set([...first.items, ...last.items].map((x) => x.document.id)).size,
+      3,
+    );
+    assert.equal(last.next_cursor, null);
+    await assert.rejects(
+      listDocuments(observer, {
+        sort,
+        direction: "desc",
+        limit: "2",
+        cursor: first.next_cursor!,
+      }),
+      code("InvalidData"),
+    );
+    await assert.rejects(
+      listDocuments(p, {
+        sort,
+        direction: "desc",
+        limit: "2",
+        q: "changed",
+        cursor: first.next_cursor!,
+      }),
+      code("InvalidData"),
+    );
+  }
+  assert.equal((await listDocuments(p, { mine: "true" })).items.length, 3);
+  assert.equal(
+    (await listDocuments(observer, { mine: "true" })).items.length,
+    0,
+  );
+  const next = successor(inputs[0], 1);
+  await reviseDocument(p, inputs[0].id, next);
+  const revisions = await documentRevisions(p, inputs[0].id, { limit: "1" });
+  assert.equal(revisions.items[0].revision.id, next.revision_id);
+  const previous = await documentRevisions(p, inputs[0].id, {
+    before: String(revisions.next_before),
+  });
+  assert.equal(previous.items[0].revision.id, inputs[0].revision_id);
+  assert.equal(previous.items[0].library_current, false);
+  assert.equal(previous.items[0].can_register, true);
+});
+
+test("DK-UI02 permitted choice reads distinguish recorded owners from eligible duty holders", async () => {
+  const { p, observer } = await librarySetup();
+  const input = libraryInput(p.actor_id);
+  await createDocument(p, input);
+  const recorded = await libraryOptions(observer, { kind: "RecordedOwner" });
+  assert.ok(recorded.items.some((x) => x.id === p.actor_id));
+  assert.ok(!recorded.items.some((x) => x.id === observer.actor_id));
+  assert.deepEqual(
+    (
+      await libraryOptions(observer, {
+        kind: "Owner",
+        company_id: input.company_id,
+        site_id: input.site_id,
+      })
+    ).items,
+    [],
+  );
+  assert.deepEqual(
+    (
+      await libraryOptions(observer, {
+        kind: "Owner",
+        company_id: input.company_id,
+        selected_id: p.actor_id,
+      })
+    ).items,
+    [],
+  );
+  for (const kind of ["Company", "Organisation", "Site"]) {
+    assert.ok((await libraryOptions(observer, { kind })).items.length > 0);
+    assert.deepEqual(
+      (await libraryOptions(observer, { kind, purpose: "Register" })).items,
+      [],
+    );
+    assert.ok(
+      (await libraryOptions(p, { kind, purpose: "Register" })).items.length > 0,
+    );
+  }
+  const selected = await libraryOptions(observer, {
+    kind: "RecordedOwner",
+    selected_id: p.actor_id,
+  });
+  assert.equal(selected.items.length, 1);
+  assert.equal(selected.items[0].id, p.actor_id);
+  const owners = await libraryOptions(p, {
+    kind: "Owner",
+    company_id: input.company_id,
+    site_id: input.site_id,
+  });
+  assert.ok(owners.items.some((x) => x.id === p.actor_id));
+  assert.ok(!owners.items.some((x) => x.id === observer.actor_id));
+  assert.ok(
+    (
+      await libraryOptions(p, {
+        kind: "Organisation",
+        company_id: input.company_id,
+      })
+    ).items.some((x) => x.id === input.organisation_id),
+  );
+  assert.ok(
+    (
+      await libraryOptions(p, {
+        kind: "Site",
+        organisation_id: input.organisation_id,
+      })
+    ).items.some((x) => x.id === input.site_id),
+  );
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE user_id=$1 AND capability='document.read'",
+    [observer.actor_id],
+  );
+  await assert.rejects(libraryOptions(observer, { kind: "RecordedOwner" }));
+});
+
+test("DK-UI03 link status and exact revision filters scan beyond a page before paging", async () => {
+  const { p } = await librarySetup();
+  const input = libraryInput(p.actor_id);
+  await createDocument(p, input);
+  let version = 1;
+  const ids: string[] = [];
+  const targets: string[] = [];
+  for (let i = 1; i <= 30; i++) {
+    const link_id = `80000000-0000-4000-8000-${String(i).padStart(12, "0")}`;
+    ids.push(link_id);
+    const project = projectInput();
+    await createProject(p, project);
+    targets.push(project.id);
+    await linkDocument(p, input.id, {
+      ...action(input.revision_id, version++),
+      action: "Add",
+      link_id,
+      target_kind: "Project",
+      target_id: targets[i - 1],
+      purpose: `SYN reference ${i}`,
+    });
+  }
+  const next = successor(input, version++);
+  await reviseDocument(p, input.id, next);
+  for (const link_id of ids.slice(28))
+    await linkDocument(p, input.id, {
+      ...action(input.revision_id, version++),
+      action: "Retire",
+      link_id,
+    });
+  for (let i = 31; i <= 33; i++)
+    await linkDocument(p, input.id, {
+      ...action(next.revision_id, version++),
+      action: "Add",
+      link_id: `80000000-0000-4000-8000-${String(i).padStart(12, "0")}`,
+      target_kind: "Project",
+      target_id: targets[i - 31],
+      purpose: `SYN current reference ${i}`,
+    });
+  for (const [state, expected] of [
+    ["All", 33],
+    ["Active", 31],
+    ["NeedsAssessment", 28],
+    ["Retired", 2],
+  ] as const) {
+    const first = await documentUsage(p, input.id, { state });
+    const second = first.next_after
+      ? await documentUsage(p, input.id, { state, after: first.next_after })
+      : null;
+    const matches = [...first.items, ...(second?.items ?? [])];
+    assert.equal(matches.length, expected);
+    assert.equal(new Set(matches.map((x) => x.id)).size, expected);
+    assert.equal(second?.next_after ?? null, null);
+    assert.ok(
+      matches.every(
+        (x) => x.created_by_name && x.created_at && x.revision >= 1,
+      ),
+    );
+  }
+  const exact = await documentUsage(p, input.id, {
+    state: "Active",
+    revision_id: next.revision_id,
+  });
+  assert.equal(exact.items.length, 3);
+  assert.ok(
+    exact.items.every((x) => x.revision === 2 && !x.needs_revision_assessment),
+  );
+  const revisions = await documentRevisions(p, input.id);
+  assert.equal(revisions.items[1].superseded_by_revision, 2);
+  const history = await documentHistory(p, input.id, { limit: "50" });
+  const oldLink = history.items.find(
+    (x) => x.command === "Link:Add" && x.revision.id === input.revision_id,
+  )!;
+  assert.match(oldLink.summary, /r01 → Project:/);
+  assert.ok(!oldLink.summary.includes(targets[0]));
+  assert.match(
+    history.items.find((x) => x.command === "Revise")!.summary,
+    /Starts Unreviewed/,
+  );
+  await assert.rejects(documentUsage(p, input.id, { state: "Wrong" }));
+});
+
+test("DK-UI04 site-scoped registration choices explain the required site", async () => {
+  const { p } = await librarySetup();
+  await rows(
+    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='document.register'",
+    [p.workspace_id, p.actor_id],
+  );
+  await rows(
+    "INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,site_id) VALUES($1,$2,$3,'document.register','Site',$4,$4)",
+    [p.workspace_id, p.actor_id, CRM.company, CRM.site],
+  );
+  const scope = {
+    company_id: CRM.company,
+    organisation_id: CRM.org,
+    purpose: "Register",
+  };
+  const sites = await libraryOptions(p, { ...scope, kind: "Site" });
+  assert.equal(sites.can_register_without_site, false);
+  assert.equal(sites.choose_site_first, true);
+  assert.ok(sites.items.some((x) => x.id === CRM.site));
+  const before = await libraryOptions(p, { ...scope, kind: "Owner" });
+  assert.deepEqual(before.items, []);
+  assert.equal(before.choose_site_first, true);
+  const after = await libraryOptions(p, {
+    ...scope,
+    kind: "Owner",
+    site_id: CRM.site,
+  });
+  assert.equal(after.choose_site_first, false);
+  assert.ok(after.items.some((x) => x.id === p.actor_id));
+  await grantLibrary(p);
+  const company = await libraryOptions(p, { ...scope, kind: "Site" });
+  assert.equal(company.can_register_without_site, true);
 });

@@ -13,7 +13,7 @@
     "studio:sync": "node --import tsx scripts/check-development-register.ts --sync",
     "dev": "node --env-file=.env.local --import tsx scripts/local-server.ts",
     "serve:compiled": "node --env-file=.env.local --import tsx scripts/local-server.ts --compiled",
-    "build": "node --import tsx scripts/build-offline.ts && next build",
+    "build": "node --import tsx scripts/build-guides.ts && node --import tsx scripts/build-offline.ts && next build",
     "start": "node scripts/reject-production.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -35,6 +35,7 @@
     "@azure/storage-blob": "12.34.0",
     "fast-xml-parser": "5.11.2",
     "libphonenumber-js": "1.13.15",
+    "marked": "18.1.0",
     "next": "16.4.2",
     "openid-client": "6.8.8",
     "pg": "8.23.1",
@@ -42,6 +43,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "server-only": "0.0.1",
+    "yaml": "2.9.1",
     "yauzl": "3.4.0"
   },
   "devDependencies": {

@@ -97,7 +97,8 @@ test("CS04 Work and visits retains paginated site-owned follow-ups beyond the su
   const refreshing = page.waitForRequest(request => new URL(request.url()).pathname === "/api/v1/activities");
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await refreshing;
-  await expect(owned.getByRole("link", { name: "SYN retained OEM follow-up", exact: true })).toHaveCount(0);
+  // A routine re-read keeps the current rows until it answers (PPO-SITE-FOLLOW-UP-FOCUS-DEC).
+  await expect(owned.getByRole("link", { name: "SYN retained OEM follow-up", exact: true })).toBeVisible();
   restricted = true;
   generation++;
   const denied = page.waitForResponse(response => new URL(response.url()).pathname === `/api/v1/sites/${siteId}/overview`);

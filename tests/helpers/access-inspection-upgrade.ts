@@ -104,6 +104,15 @@ export function assertAccessInspectionSnapshot(
     if (Array.isArray(preserved)) preserved[ci] = oldContacts;
     else preserved.contact_outcomes = oldContacts;
   }
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  const wi = names?.indexOf("work_orders") ?? -1;
+  const oldOrders = Array.isArray(original) ? original[wi] : original.work_orders;
+  if (oldOrders?.length && !("project_id" in grant(oldOrders[0]))) {
+    const newOrders = Array.isArray(actual) ? actual[wi] : actual.work_orders;
+    assert.deepEqual(newOrders.map(grant), oldOrders.map(r => ({ ...grant(r), project_id: null })));
+    if (Array.isArray(preserved)) preserved[wi] = oldOrders;
+    else preserved.work_orders = oldOrders;
+  }
   assert.deepEqual(preserved, original);
 }
 
@@ -120,7 +129,7 @@ export function assertAccessInspectionSeedLedger(
   // Snapshots order rows by their JSON text, where 107 sorts before 78; compare the versions as numbers.
   assert.deepEqual(
     added.map((r) => Number(r.version)).sort((a, b) => a - b),
-    [78, 79, 80, 83, 84, 107, 108, 110, 120].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84, 107, 108, 110, 120, 121].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

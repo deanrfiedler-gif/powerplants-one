@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-D025-S3-PLAN,D-025 S3 synthetic dispatch and delay communications,docs/superpowers/plans/2026-10-24-customer-communications-s3.md,,Authorised implementation plan; validation and independent review pending,Dean Fiedler,60a7f7b469ab758e9ee99fd7d5d3910b27f2f2ad,,,git,

@@ -1,3 +1,4 @@
+import { customerDeliveryBindings } from "../helpers/customer-delivery-contract";
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 import { randomUUID } from "node:crypto";
@@ -76,7 +77,8 @@ test("0109 is empty, default-denied and Off for every class", async () => {
   assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability LIKE 'customer_message.%'"), []);
   assert.deepEqual(
     (await rows("SELECT message_class,array_agg(binding ORDER BY binding) AS b FROM ppo.customer_email_bindings GROUP BY 1 ORDER BY 1")).map((r) => [r.message_class, r.b]),
-    ["DelayNotice", "DispatchNotice", "ProjectUpdate", "VisitConfirmation"].map((c) => [c, ["customer.name", "recipient.name", "site.name", "source.reference"]]),
+    ["DelayNotice", "DispatchNotice", "ProjectUpdate", "VisitConfirmation"].map((c) => [c,
+      ["customer.name", "recipient.name", "site.name", "source.reference", ...customerDeliveryBindings.filter(b => b.message_class === c).map(b => b.binding)].sort(new Intl.Collator("en").compare)]),
   );
   const switches = await readMessageClassSwitches(coordinator, { company_id: CRM.company });
   assert.deepEqual(switches.classes.map((c) => [c.code, c.mode, c.version]), [["M1", "Off", 0], ["M2", "Off", 0], ["M3", "Off", 0], ["M4", "Off", 0]]);

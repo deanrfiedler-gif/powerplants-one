@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SH02-SALES-PULSE-TASKS-FIGMA-DEC,Sales Pulse and Tasks design (Figma) owner decision,docs/decisions/sales-pulse-tasks-figma-design.md,,Owner-accepted design; changing the built pages and UI baseline acceptance separate,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
+PPO-SH02-SALES-PULSE-TASKS-FIGMA-R01,Sales Pulse and Tasks design retained captures,docs/reference/ui/crm/sales-pulse-tasks-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,retained-record,

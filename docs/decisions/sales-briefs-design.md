@@ -101,6 +101,10 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
   - How should several rows be selected on the phone? The recommendation is the same as for Reviews & approvals: press and hold a row.
 - **Not drawn yet:** loading, empty ("No permitted handovers in this queue"), filtered no-results, failed read with Retry, denied or revoked access and stale states; the brief page and its decision forms; the Evidence tab's content; the accepted-brief link (LC-13); phone selection; the 1024 px and 320 px widths.
 
+### Implementation follow-through — 31 October 2026
+
+Dean's subsequent direct instruction authorizes the queue implementation and label in [PR #702](https://github.com/deanrfiedler-gif/powerplants-one/pull/702). The [page contract](../design/development/pages/route-estimating-intake.md) records the bounded resolutions: preserve other permitted receivers and all-time terminal views; show later terminal source movement in the snapshot; use press-and-hold with explicit phone selection controls; retain no rail badge. List-level LC-13 status and the native record redesign remain separate. The adopted shell and phone amendments govern current headers. This follow-through does not rewrite the 11 October design-only authorization or grant visual acceptance.
+
 ## 6. Consequences
 
 - No application code, read model, route, migration, permission or capability changes. No page, scope or parent requirement ID changes; all 78 parent IDs remain.

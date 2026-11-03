@@ -9,6 +9,37 @@ export async function technicianEvidence(page: Page) {
     await page.getByRole("tab", { name: "Details", exact: true }).click();
   await page.getByRole("link", { name: "Technician evidence and correction", exact: true }).filter({ visible: true }).click();
 }
+// The field tabs appear before the page settles: this actor's job and timer
+// reads are still arriving, and scrolling a tab into view compacts the timer
+// header, which moves the tabs. Playwright checks only the first pointer event
+// against its target, so a move between pointer down and up sends the click to
+// the panel beneath and History stays closed although the click completes.
+// Observe both reads and the compacted layout before clicking, then the tab.
+export async function technicianHistory(page: Page, appointmentId: string) {
+  const read = (path: string) =>
+    page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === path &&
+        response.request().method() === "GET" &&
+        response.status() === 200,
+    );
+  await Promise.all([
+    read(`/api/v1/my-jobs/${appointmentId}`),
+    read(`/api/v1/my-jobs/${appointmentId}/timer`),
+    technicianEvidence(page),
+  ]);
+  await expect(
+    page.getByText("Loading permitted records…", { exact: true }),
+  ).toHaveCount(0);
+  const history = page.getByRole("button", { name: "History", exact: true });
+  await history.scrollIntoViewIfNeeded();
+  await expect(page.locator("#ppo-work-timer .head")).toHaveAttribute(
+    "data-compact",
+    "1",
+  );
+  await history.click();
+  await expect(history).toHaveAttribute("aria-pressed", "true");
+}
 export async function completion(page: Page, quantities = true) {
   // A saved entry is followed by an authorised refresh. Use that new source
   // before assembling the next exact completion command.
