@@ -50,7 +50,7 @@ test("each adopted module retains sources, a host contract and compiled-app veri
       expect(existsSync(path), path).toBe(true);
   }
 });
-test("r38 geometry agrees with the full-shell application across the viewport matrix", async ({
+test("CR-04 retains r38 card geometry across the viewport matrix", async ({
   page,
   context,
 }, info) => {
@@ -79,19 +79,32 @@ test("r38 geometry agrees with the full-shell application across the viewport ma
     if (width >= 1024) {
       // The reference replaces its cards in a resize animation frame. Resolve
       // and measure the current node atomically instead of holding a stale one.
-      const expected = await reference.evaluate((props) => {
+      const historical = await reference.evaluate((props) => {
         const card = document.querySelector("#ppo-deals .card")!;
         return Object.fromEntries(
           props.map((key) => [key, getComputedStyle(card)[key]]),
         );
       }, keys);
+      // D2/D14 and r02's Tablet Board retain the 264px card master and
+      // 11px inset; r38 instead enlarged its 1024px cards to 280px/10px.
+      const expected =
+        width === 1024
+          ? {
+              height: "264px",
+              paddingTop: "11px",
+              paddingLeft: "11px",
+              borderRadius: "7px",
+            }
+          : historical;
       expect(actual, `Card geometry at ${width}px`).toEqual(expected);
     } else {
       // r38 switches to List below 1024px. The documented app adaptation keeps
       // the Board and, below 781px, its touch stage selector.
       await expect(reference.locator("#ppo-deals .list-scroll")).toBeVisible();
       await expect(page.locator(".crm-board-scroll")).toBeVisible();
-      await expect(page.locator(".crm-card:visible")).toHaveCount(width > 780 ? 18 : 4);
+      await expect(page.locator(".crm-card:visible")).toHaveCount(
+        width > 780 ? 18 : 4,
+      );
     }
     if (width >= 1280)
       for (const [app, source] of [
@@ -138,31 +151,33 @@ test("r22 menus and r38 inspection/forms retain their different behaviours", asy
       radius: getComputedStyle(n).borderRadius,
       padding: getComputedStyle(n).padding,
     }));
-  await page.getByRole("button", { name: "Sort", exact: true }).click();
+  // CR-04 keeps native menus; Sort now belongs to the accepted Filters form.
+  await page.getByRole("button", { name: "Views", exact: true }).click();
+  const views = page.getByRole("dialog", { name: "Views", exact: true });
   await assertChoiceGeometry(page);
   expect(
-    await page
-      .locator(".crm-r38-popover:popover-open")
-      .evaluate((n) => ({
-        radius: getComputedStyle(n).borderRadius,
-        padding: getComputedStyle(n).padding,
-      })),
+    await page.locator(".crm-r38-popover:popover-open").evaluate((n) => ({
+      radius: getComputedStyle(n).borderRadius,
+      padding: getComputedStyle(n).padding,
+    })),
   ).toEqual(expected);
+  await views.getByRole("button", { name: "All open", exact: true }).focus();
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("menuitemradio", { name: "Newest first" }),
+    views.getByRole("button", { name: "No next activity", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Home");
   await expect(
-    page.getByRole("menuitemradio", { name: "Default order" }),
+    views.getByRole("button", { name: "All open", exact: true }),
   ).toBeFocused();
-  await page.keyboard.press("t");
+  await page.keyboard.press("n");
   await expect(
-    page.getByRole("menuitemradio", { name: "Title A–Z" }),
+    views.getByRole("button", { name: "No next activity", exact: true }),
   ).toBeFocused();
+  await page.keyboard.press("Home");
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("button", { name: "Sort", exact: true }),
+    page.getByRole("button", { name: "Views", exact: true }),
   ).toBeFocused();
   await page.getByRole("button", { name: "Views", exact: true }).click();
   await assertChoiceGeometry(page);
@@ -199,7 +214,16 @@ test("r22 menus and r38 inspection/forms retain their different behaviours", asy
   expect(box.y).toBe(0);
   expect(box.height).toBe(page.viewportSize()!.height);
   expect(box.x + box.width / 2).toBe(page.viewportSize()!.width / 2);
+  await filter.getByLabel("Sort", { exact: true }).selectOption("Title");
+  await expect(filter.getByLabel("Sort", { exact: true })).toHaveValue("Title");
+  await expect(page).toHaveURL(
+    (url) => url.searchParams.get("sort") === "Title",
+  );
   await page.screenshot({ path: info.outputPath("centred-filter-form.png") });
+  // Escape belongs to the form once focus leaves the native select.
+  await filter
+    .getByRole("button", { name: "Close Filter deals", exact: true })
+    .focus();
   await page.keyboard.press("Escape");
   await expect(
     page.getByRole("button", { name: "Filters and sort", exact: true }),
