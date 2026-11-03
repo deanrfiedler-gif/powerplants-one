@@ -11,14 +11,22 @@ import {
   invalid,
   narrative,
 } from "../shared/validation";
-import { list } from "../service/work-scope-validation";
+import type { QueryClient } from "../platform/permissions";
+import { list, scopeFields } from "../service/work-scope-validation";
 import { receiveOwnedRequest } from "../service/intake";
 import { visibleTicket } from "../service/tickets";
+import {
+  authoriseCreateWorkOrder,
+  insertWorkOrder,
+  startDraftScope,
+  visibleWorkOrder,
+  type CreateWorkOrderCommand,
+} from "../service/work-orders";
 import { reportContext } from "../reports/context";
 import { currentAssessment } from "./assessments";
 import { planRevision } from "./plans";
 import { exactPlan } from "./warranty";
-import { agreementCurrentness } from "./model";
+import { agreementCurrentness, completionRequirementEntries } from "./model";
 import {
   agreementRevision,
   assetSnapshot,
@@ -29,6 +37,8 @@ import {
   insert,
   record,
   conflict,
+  type Assessment,
+  type AssetSnapshot,
   type Occurrence,
   type WarrantyCase,
   type WorkRequest,
@@ -76,6 +86,15 @@ export async function prepareWork(
         row.site_id,
         "service.ticket.edit",
       );
+      // M-R2: preparing maintenance work also creates its work order.
+      if (family === "due")
+        await companyContext(
+          c,
+          p,
+          row.company_id,
+          row.site_id,
+          "service.work_order.edit",
+        );
       return row;
     },
     async (c, row) => {
@@ -100,39 +119,17 @@ export async function prepareWork(
         source_revision_id: string,
         occurrence_id: string | null = null,
         resolution_plan_id: string | null = null;
+      let agreement: Awaited<ReturnType<typeof agreementRevision>> | null =
+        null;
       if (family === "due") {
         const o = row as Occurrence;
         if (!["Open", "Deferred"].includes(o.state))
           conflict(
             "This occurrence already has receiving work or a final disposition.",
           );
-        const plan = await planRevision(c, p, o.plan_revision_id),
-          agreement = await agreementRevision(c, p, plan.agreement_revision_id);
-        if (
-          assessment.event_date !== o.original_due ||
-          assessment.agreement_revision_id !== plan.agreement_revision_id
-        )
-          invalid(
-            "assessment_id",
-            "The assessment must name this obligation's original due date and exact agreement revision.",
-          );
-        if (
-          assessment.status !== "Covered" ||
-          agreement.row.current_revision_id !== plan.agreement_revision_id ||
-          agreementCurrentness(
-            agreement.row.state,
-            agreement.revision.content,
-            o.target_date,
-          ) !== "Current"
-        )
-          conflict(
-            "Ordinary maintenance requests need current covered terms. Unknown or Disputed remains in owned review.",
-          );
-        if (hash(asset) !== hash(o.asset_snapshot))
-          conflict(
-            "Equipment changed after generation. Review this original obligation without silently transferring it.",
-          );
-        tasks = plan.content.tasks;
+        const basis = await coveredDue(c, p, o, assessment, asset);
+        agreement = basis.agreement;
+        tasks = basis.plan.content.tasks;
         target_date = o.target_date;
         source_revision_id = o.plan_revision_id;
         occurrence_id = id;
@@ -193,23 +190,21 @@ export async function prepareWork(
         source_revision_id,
         asset,
       };
-      await receiveOwnedRequest(c, p, ticket_id, row.company_id, {
-        received_at: new Date().toISOString(),
-        channel: family === "due" ? "PlannedMaintenance" : "Manual",
-        requester_id: null,
-        requester_description: `Internal owned request from ${row.reference}`,
-        site_id: row.site_id,
-        site_identification_needed: false,
-        asset_id: row.asset_id,
-        summary: `${family === "due" ? "Maintenance" : "Warranty"} request · ${row.reference}`,
-        symptom: tasks.map((t) => t.description).join("\n"),
-        impact: null,
-        priority: "Normal",
-        priority_reason: "No urgency or response commitment inferred.",
-        triage_owner_id: cmd.owner_id,
-        next_action:
-          "Review the exact source request, then prepare and authorise Work Order scope through Service. Booking and billing remain separate.",
-      });
+      await ownedTicket(c, p, row, ticket_id, family, tasks, cmd.owner_id);
+      // M-R2: a maintenance occurrence's request also gets its Draft work order, in this operation.
+      const work_order_id = agreement
+        ? await preparedWorkOrder(
+            c,
+            p,
+            row as Occurrence,
+            ticket_id,
+            cmd.owner_id,
+            tasks,
+            assessment,
+            agreement,
+            "Planned maintenance",
+          )
+        : null;
       await insert(c, "maintenance_work_requests", {
         id: request_id,
         workspace_id: p.workspace_id,
@@ -221,6 +216,8 @@ export async function prepareWork(
         content,
         content_hash: hash(content),
         created_by: p.actor_id,
+        // Omitted for warranty remedies, which keep today's ticket-only request.
+        ...(work_order_id ? { work_order_id } : {}),
       });
       return bump(
         c,
@@ -233,6 +230,7 @@ export async function prepareWork(
           ticket_id,
           content_hash: hash(content),
           assessment_id: assessment.id,
+          ...(work_order_id ? { work_order_id } : {}),
         },
         cmd.reason,
         family === "due" ? { state: "WorkRequested" } : {},
@@ -240,6 +238,291 @@ export async function prepareWork(
     },
     family === "due" ? "MaintenanceOccurrence" : "WarrantyCase",
     family === "due" ? "MaintenanceChanged" : "WarrantyChanged",
+  );
+}
+// The checks every maintenance Service request shares (M-R2, M-R4): a current Covered assessment
+// for this obligation's original due date and exact agreement revision, current agreement terms
+// at the target date, and the equipment exactly as it was when the occurrence was generated.
+async function coveredDue(
+  c: QueryClient,
+  p: Principal,
+  o: Occurrence,
+  assessment: Assessment,
+  asset: AssetSnapshot,
+) {
+  const plan = await planRevision(c, p, o.plan_revision_id),
+    agreement = await agreementRevision(c, p, plan.agreement_revision_id);
+  if (
+    assessment.event_date !== o.original_due ||
+    assessment.agreement_revision_id !== plan.agreement_revision_id
+  )
+    invalid(
+      "assessment_id",
+      "The assessment must name this obligation's original due date and exact agreement revision.",
+    );
+  if (
+    assessment.status !== "Covered" ||
+    agreement.row.current_revision_id !== plan.agreement_revision_id ||
+    agreementCurrentness(
+      agreement.row.state,
+      agreement.revision.content,
+      o.target_date,
+    ) !== "Current"
+  )
+    conflict(
+      "Ordinary maintenance requests need current covered terms. Unknown or Disputed remains in owned review.",
+    );
+  if (hash(asset) !== hash(o.asset_snapshot))
+    conflict(
+      "Equipment changed after generation. Review this original obligation without silently transferring it.",
+    );
+  return { plan, agreement };
+}
+async function ownedTicket(
+  c: QueryClient,
+  p: Principal,
+  row: Occurrence | WarrantyCase,
+  ticket_id: string,
+  family: "due" | "cases",
+  tasks: WorkRequest["content"]["tasks"],
+  owner_id: string,
+  followOn = false,
+) {
+  await receiveOwnedRequest(c, p, ticket_id, row.company_id, {
+    received_at: new Date().toISOString(),
+    channel: family === "due" ? "PlannedMaintenance" : "Manual",
+    requester_id: null,
+    requester_description: `Internal owned request from ${row.reference}`,
+    site_id: row.site_id,
+    site_identification_needed: false,
+    asset_id: row.asset_id,
+    summary: `${family === "due" ? "Maintenance" : "Warranty"} ${followOn ? "follow-on request" : "request"} · ${row.reference}`,
+    symptom: tasks.map((t) => t.description).join("\n"),
+    impact: null,
+    priority: "Normal",
+    priority_reason: "No urgency or response commitment inferred.",
+    triage_owner_id: owner_id,
+    next_action:
+      "Review the exact source request, then prepare and authorise Work Order scope through Service. Booking and billing remain separate.",
+  });
+}
+// M-R2: a Draft work order receiving the request, with one scope item per task carrying the task's
+// exact description and kind, the occurrence's asset bound to each item, and coverage from the
+// Covered assessment. It goes through the work-order create and draft-scope rules; authority
+// evidence, exclusions, Finance route and shutdown conditions stay for a person to complete.
+async function preparedWorkOrder(
+  c: QueryClient,
+  p: Principal,
+  o: Occurrence,
+  ticket_id: string,
+  owner_id: string,
+  tasks: WorkRequest["content"]["tasks"],
+  assessment: Assessment,
+  agreement: Awaited<ReturnType<typeof agreementRevision>>,
+  label: string,
+) {
+  const id = randomUUID(),
+    terms = agreement.revision.content;
+  const create: CreateWorkOrderCommand = {
+    id,
+    company_id: o.company_id,
+    site_id: o.site_id!,
+    customer_id: o.customer_id,
+    service_owner_id: owner_id,
+    project_reference: null,
+    opportunity_reference: null,
+    tickets: [
+      {
+        ticket_id,
+        issue_disposition: `${label} for ${o.reference}, original due ${o.original_due}; tasks copied exactly from the plan.`,
+      },
+    ],
+  };
+  await authoriseCreateWorkOrder(c, p, create);
+  await insertWorkOrder(c, p, create);
+  const w = await visibleWorkOrder(c, p, id, "service.work_order.edit");
+  await startDraftScope(
+    c,
+    p,
+    w,
+    scopeFields({
+      summary: `${label} for ${o.reference}, original due ${o.original_due}, under agreement ${agreement.row.reference}.`,
+      exclusions: null,
+      diagnostic_limit: null,
+      pending_account_plan: null,
+      authority_evidence: null,
+      coverage: {
+        status: "Covered",
+        entitlement_assessment_id: assessment.id,
+        agreement_reference: agreement.row.reference,
+        source_version: terms.source.revision,
+        effective_from: terms.effective_from,
+        effective_to: terms.effective_to,
+        assessment: assessment.basis,
+        reason: `Covered by agreement ${agreement.row.reference} (assessment ${assessment.reference}, original due ${o.original_due}).`,
+        charging_route: "ContractReference",
+      },
+      items: tasks.map((t) => ({
+        task_kind: t.kind,
+        task_description: t.description,
+        expected_outcome: t.expected_outcome,
+        completion_requirements: completionRequirementEntries(t.completion_requirements),
+        required_skill_codes: [],
+        shutdown_condition: null,
+        access_condition: null,
+        assets: [
+          { asset_id: o.asset_id, configuration_id: null, identification_plan: null },
+        ],
+      })),
+    }),
+  );
+  return id;
+}
+// M-R4: an occurrence received as Partial offers one follow-on request at a time. It names the
+// tasks the latest result left outstanding and creates a request and Draft work order as M-R2 does.
+export async function prepareFollowOn(p: Principal, id: string, input: unknown) {
+  const r = object(input, [
+    ...commonKeys,
+    "expected_version",
+    "assessment_id",
+    "owner_id",
+  ]);
+  const cmd = {
+    ...common(r),
+    id: uuid(id, "id"),
+    expected_version: version(r.expected_version),
+    assessment_id: uuid(r.assessment_id, "assessment_id"),
+    owner_id: uuid(r.owner_id, "owner_id"),
+  };
+  return sharedOperation(
+    p,
+    cmd,
+    "Maintenance:PrepareFollowOn:due",
+    async (c) => {
+      const row = await record<Occurrence>(
+        c,
+        p,
+        "due",
+        id,
+        "maintenance.manage",
+      );
+      await companyContext(c, p, row.company_id, row.site_id, "service.ticket.edit");
+      await companyContext(c, p, row.company_id, row.site_id, "service.work_order.edit");
+      return row;
+    },
+    async (c, o) => {
+      expected(o.version, cmd.expected_version);
+      if (o.state !== "Partial")
+        conflict(
+          "Follow-on work is offered only for an occurrence received as Partial.",
+        );
+      const latest = (
+        await c.query<{
+          id: string;
+          request_id: string;
+          outcome: string;
+          task_mapping: { task_id: string; outcome: string }[];
+        }>(
+          "SELECT s.* FROM ppo.maintenance_service_results s JOIN ppo.maintenance_work_requests q ON (q.workspace_id,q.id)=(s.workspace_id,s.request_id) WHERE s.workspace_id=$1 AND q.occurrence_id=$2 ORDER BY s.created_at DESC,s.id DESC LIMIT 1",
+          [p.workspace_id, id],
+        )
+      ).rows[0];
+      if (latest?.outcome !== "Partial")
+        conflict("The latest received result for this occurrence is not Partial.");
+      const open = (
+        await c.query<{ id: string }>(
+          "SELECT q.id FROM ppo.maintenance_work_requests q WHERE q.workspace_id=$1 AND q.occurrence_id=$2 AND NOT EXISTS(SELECT 1 FROM ppo.maintenance_service_results s WHERE s.workspace_id=q.workspace_id AND s.request_id=q.id)",
+          [p.workspace_id, id],
+        )
+      ).rows[0];
+      if (open)
+        conflict(
+          "Follow-on work is already open for this occurrence. Receive its result before preparing another.",
+        );
+      const prior = (
+        await c.query<WorkRequest>(
+          "SELECT * FROM ppo.maintenance_work_requests WHERE workspace_id=$1 AND id=$2",
+          [p.workspace_id, latest.request_id],
+        )
+      ).rows[0];
+      await visibleTicket(c, p, prior.ticket_id);
+      const assessment = await currentAssessment(c, p, cmd.assessment_id),
+        asset = await assetSnapshot(c, p, o.asset_id);
+      if (
+        assessment.asset_id !== o.asset_id ||
+        assessment.site_id !== o.site_id ||
+        assessment.customer_id !== o.customer_id
+      )
+        invalid("assessment_id", "Use the exact asset, site and customer assessment.");
+      if (asset.site_id !== o.site_id || asset.lifecycle_status !== "Active")
+        conflict(
+          "Equipment has moved or been removed. Review future maintenance before requesting work.",
+        );
+      const { agreement } = await coveredDue(c, p, o, assessment, asset);
+      const done = new Set(
+        latest.task_mapping
+          .filter((m) => m.outcome === "Complete")
+          .map((m) => m.task_id),
+      );
+      const tasks = prior.content.tasks.filter((t) => !done.has(t.id));
+      if (!tasks.length)
+        conflict("The latest result leaves no outstanding task.");
+      const request_id = randomUUID(),
+        ticket_id = randomUUID();
+      const content = {
+        tasks,
+        target_date: o.target_date,
+        source_id: id,
+        source_revision_id: o.plan_revision_id,
+        asset,
+      };
+      await ownedTicket(c, p, o, ticket_id, "due", tasks, cmd.owner_id, true);
+      const work_order_id = await preparedWorkOrder(
+        c,
+        p,
+        o,
+        ticket_id,
+        cmd.owner_id,
+        tasks,
+        assessment,
+        agreement,
+        "Follow-on maintenance",
+      );
+      await insert(c, "maintenance_work_requests", {
+        id: request_id,
+        workspace_id: p.workspace_id,
+        company_id: o.company_id,
+        occurrence_id: id,
+        resolution_plan_id: null,
+        ticket_id,
+        assessment_id: assessment.id,
+        content,
+        content_hash: hash(content),
+        created_by: p.actor_id,
+        work_order_id,
+        follow_on_result_id: latest.id,
+      });
+      // The occurrence stays Partial while follow-on work is open.
+      return bump(
+        c,
+        p,
+        "due",
+        o,
+        "FollowOnRequested",
+        {
+          request_id,
+          ticket_id,
+          work_order_id,
+          follow_on_result_id: latest.id,
+          outstanding_task_ids: tasks.map((t) => t.id),
+          content_hash: hash(content),
+          assessment_id: assessment.id,
+        },
+        cmd.reason,
+      );
+    },
+    "MaintenanceOccurrence",
+    "MaintenanceChanged",
   );
 }
 export async function receiveResult(
@@ -336,6 +619,19 @@ export async function receiveResult(
     },
     async (c, { row, request, revision, ctx }) => {
       expected(row.version, cmd.expected_version);
+      // M-R4: once a follow-on carries a request's remaining work, results are received there.
+      if (
+        family === "due" &&
+        (
+          await c.query(
+            "SELECT 1 FROM ppo.maintenance_work_requests f JOIN ppo.maintenance_service_results s ON (s.workspace_id,s.id)=(f.workspace_id,f.follow_on_result_id) WHERE f.workspace_id=$1 AND s.request_id=$2",
+            [p.workspace_id, request.id],
+          )
+        ).rowCount
+      )
+        conflict(
+          "A follow-on request now carries this request's outstanding tasks. Receive the result on the follow-on request.",
+        );
       if (
         !["Reviewed", "Issued"].includes(ctx.report.status) ||
         ctx.report.current_revision_id !== revision.id ||

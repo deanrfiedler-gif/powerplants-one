@@ -20,6 +20,8 @@ At 390 and 320 use the shared compact header with Choose view and combined searc
 
 The record keeps its explicit Refresh message button below the phone header at 390 and 320 px. Only the duplicate desktop navigation links are hidden. Refresh retains the existing busy, pending-operation and loading guards; failed reads clear obsolete details. This correction is an implementation adaptation pending visual review.
 
+Accepted amendment (not yet drawn on the Customer messages page): a new request notice class. On a staff public reply, the contact's notice choice sends a short shared-mailbox email with a link, never the message text ([Support requests design decision](../../../decisions/support-requests-figma-design.md), D13). D-025's later stages must authorise any sending.
+
 ## Shared components and states
 
 Reuse SecondaryMenuFrame, shared phone header, Button/ButtonLink, RegisterTable/Chip/Footer/Empty, WorklistPanel and ErrorNotice/useResource. The dedicated [consumer binding](../component-bindings/2026-10-31-customer-messages.md) records fixtures, states and unresolved alignment. Loading or failed reads expose no stale actions/counts; denied sources are unavailable. Confirmation restates recipient, subject, exact content check, template and signed-in sender. M1–M3 note is optional; Reviewed approval note, withdrawal/reconciliation and switch reasons are required. Sending/approval notes remain separate from withdrawal/reconciliation reasons. Each withdrawal or reconciliation dialog starts blank; Cancel and dismissal discard that action reason. Native command checks remain authoritative.

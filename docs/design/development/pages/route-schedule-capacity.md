@@ -2,6 +2,10 @@
 
 Stable entry: `route:/schedule/capacity`. Owner: Dean Fiedler. Status: **Draft for visual review**.
 
+## Accepted design
+
+Accepted Figma design: the [Capacity review design decision](../../../decisions/capacity-review-figma-design.md) of 30 October 2026 and its [captures r01](../../../reference/ui/service/capacity-review-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures). They cover the capacity grid by week and by day, the cell detail popover, Demand list, Skill view, analysis-only exclusions, tablet, phone at 390 and 320, and seven states. The hours rules below it amend the earlier statements on this page; see the [PPO-SCHED-ADR amendment](../../../decisions/scheduling-resources-architecture.md). Building it is not decided, and the built page stays as described here until then.
+
 ## Native workflow
 
 Desktop and phone filter controls observe the current browser URL synchronously after each change. Sequential criteria preserve previous selections; Unknown effort remains checked after activation even when framework URL rendering is deferred. Reload restores meaningful criteria while analytical exclusions remain disposable. The [integration evidence](../../../testing/evidence/pr-integration/README.md) separates this correction from visual and owner acceptance.

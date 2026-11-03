@@ -4,6 +4,10 @@ Stable entry: `scope:PL-03`. Owner: Dean Fiedler. Status: **Draft for visual rev
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/schedule/capacity`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
+## Accepted design
+
+Accepted Figma design: the [Capacity review design decision](../../../decisions/capacity-review-figma-design.md) of 30 October 2026 and its [captures r01](../../../reference/ui/service/capacity-review-design-r01/README.md) (eighteen icon-free PNGs; design compositions, not application captures). They cover the capacity grid by week and by day, the cell detail popover, Demand list, Skill view, analysis-only exclusions, tablet, phone at 390 and 320, and seven states. The hours rules below it amend the earlier statements on this page; see the [PPO-SCHED-ADR amendment](../../../decisions/scheduling-resources-architecture.md). Building it is not decided, and the built page stays as described here until then.
+
 ## Native workflow
 
 Page type: **Review / comparison**. Canonical destination: `/schedule/capacity`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
@@ -35,7 +39,7 @@ Incoming: repeatable-read, independently scoped Service, Projects and Engineerin
 
 ## Visual references and verification
 
-No exact page-specific retained HTML or accepted mockup exists. The native composition is proposed for owner visual review.
+Accepted Figma design captures: [Capacity review design r01](../../../reference/ui/service/capacity-review-design-r01/README.md). No page-specific retained HTML exists. The built page's own composition remains under owner visual review.
 
 [Executed checks, inspected captures and remaining review](../../../testing/evidence/scheduling-resources/README.md) identify the exact evidence. Draft guides, source presence, functional proof, owner visual acceptance and deployment remain separate. No review fingerprint is adopted by this edit.
 

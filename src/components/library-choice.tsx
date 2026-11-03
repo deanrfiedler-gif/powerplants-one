@@ -1,0 +1,157 @@
+"use client";
+import { useId, useState } from "react";
+import { ReadState, useResource } from "./business-ui";
+import { Button } from "./ui/button";
+type Choices = {
+  items: { id: string; display_name: string }[];
+  next_after: string | null;
+  can_register_without_site?: boolean;
+  choose_site_first?: boolean;
+};
+type ChoiceProps = {
+  label: string;
+  kind: string;
+  value: string;
+  onChange: (value: string) => void;
+  scope?: Record<string, string>;
+  required?: boolean;
+  emptyLabel?: string;
+};
+export function LibraryChoice(props: ChoiceProps) {
+  return (
+    <LibraryChoiceControl
+      key={JSON.stringify([props.kind, props.scope ?? {}])}
+      {...props}
+    />
+  );
+}
+function LibraryChoiceControl({
+  label,
+  kind,
+  value,
+  onChange,
+  scope = {},
+  required = false,
+  emptyLabel,
+}: ChoiceProps) {
+  const controlId = useId();
+  const [search, setSearch] = useState(""),
+    [after, setAfter] = useState("");
+  const q = new URLSearchParams({
+    kind,
+    ...Object.fromEntries(Object.entries(scope).filter(([, v]) => v)),
+    ...(search ? { q: search } : {}),
+    ...(after ? { after } : {}),
+  });
+  const r = useResource<Choices>(`document-library/options?${q}`),
+    data = !r.loading && !r.error ? r.data : null;
+  const selectedQuery = new URLSearchParams({
+    kind,
+    ...Object.fromEntries(Object.entries(scope).filter(([, v]) => v)),
+    selected_id: value,
+  });
+  const selected = useResource<Choices>(
+    value && !data?.items.some((i) => i.id === value)
+      ? `document-library/options?${selectedQuery}`
+      : null,
+  );
+  const registration = scope.purpose === "Register";
+  const needsSite =
+    registration && kind === "Site" && !data?.can_register_without_site;
+  const chooseContext =
+    registration &&
+    ["Site", "Owner"].includes(kind) &&
+    (!scope.company_id || !scope.organisation_id);
+  const chooseSite = kind === "Owner" && data?.choose_site_first;
+  const hint = chooseContext
+    ? "Choose a company and customer first."
+    : chooseSite
+      ? "Choose a site before choosing an owner. Your registration access requires a site."
+      : needsSite && data
+        ? "Choose a site. Your registration access requires a site."
+        : "";
+  return (
+    <div className="library-choice">
+      <label>
+        {label}
+        <select
+          id={controlId}
+          data-validation-field={
+            kind === "Owner"
+              ? "owner_id"
+              : kind === "Company"
+                ? "company_id"
+                : kind === "Organisation"
+                  ? "organisation_id"
+                  : kind === "Site"
+                    ? "site_id"
+                    : kind.endsWith("Issue")
+                      ? "source.issue_id"
+                      : "target_id"
+          }
+          aria-label={label}
+          required={required || needsSite}
+          value={value}
+          disabled={!data || chooseContext || !!chooseSite}
+          aria-describedby={hint ? `${controlId}-hint` : undefined}
+          onChange={(e) => onChange(e.target.value)}
+        >
+          <option value="">
+            {required || needsSite
+              ? "Choose…"
+              : (emptyLabel ??
+                `${label}: ${kind === "RecordedOwner" ? "Anyone" : "All"}`)}
+          </option>
+          {value && !data?.items.some((i) => i.id === value) && (
+            <option value={value}>
+              {selected.error
+                ? "Selected record unavailable"
+                : (selected.data?.items.find((i) => i.id === value)
+                    ?.display_name ??
+                  (selected.loading
+                    ? "Checking selected record…"
+                    : "Selected record unavailable"))}
+            </option>
+          )}
+          {data?.items.map((i) => (
+            <option value={i.id} key={i.id}>
+              {i.display_name}
+            </option>
+          ))}
+        </select>
+      </label>
+      {hint && (
+        <p id={`${controlId}-hint`} className="library-choice-hint">
+          {hint}
+        </p>
+      )}
+      <details>
+        <summary>Find {label.toLowerCase()}</summary>
+        <input
+          aria-label={`Find ${label.toLowerCase()}`}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setAfter("");
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.preventDefault();
+          }}
+          maxLength={200}
+        />
+        {data?.next_after && (
+          <Button onClick={() => setAfter(data.next_after!)}>
+            More choices
+          </Button>
+        )}
+        {after && <Button onClick={() => setAfter("")}>First choices</Button>}
+      </details>
+      <ReadState
+        loading={r.loading}
+        error={r.error}
+        retry={r.reload}
+        focusOnError={false}
+      />
+    </div>
+  );
+}

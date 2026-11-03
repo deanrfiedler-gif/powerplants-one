@@ -1,0 +1,15 @@
+{
+  "id": "intake-workload-accepted",
+  "route": "/estimating",
+  "scope": "#ppo-estimating-workload",
+  "layout": "full-bleed",
+  "scroll_owner": ".ew-results",
+  "design": "docs/reference/ui/estimating/intake-workload-design-r01/PPO-Intake-Workload-01-Desktop-Register-r01.png",
+  "sha256": "7acdb2ac9792380c003414c4b0c697867eb85ee69720bb1b38e7ddee36126049",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/estimating-workload-presentation.spec.ts",
+  "application_proof": "tests/browser/estimating-workload.spec.ts",
+  "authority": "Accepted Figma Intake & workload named version and retained captures; hashes identify source inputs, not owner acceptance of this implementation.",
+  "adaptations": "docs/design/development/pages/route-estimating.md"
+}

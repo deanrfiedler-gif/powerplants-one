@@ -20,6 +20,7 @@ export type PhoneHeaderConfig = {
   filter?: { open: (opener: HTMLElement) => void; applied?: boolean; searchAndFilter?: (opener: HTMLElement) => void };
   // P3: a record page. Without it, a page whose breadcrumb ends in a loaded record shows back and its reference.
   record?: {
+    back?: PhoneHeaderAction;
     position?: string;
     previous?: PhoneHeaderAction & { disabled?: boolean };
     next?: PhoneHeaderAction & { disabled?: boolean };
@@ -63,6 +64,7 @@ export function createPhoneHeaderEntry(path: string, config: PhoneHeaderConfig):
     },
     record: config.record && {
       ...config.record,
+      back: action(config.record.back, () => current.record?.back),
       previous: action(config.record.previous, () => current.record?.previous),
       next: action(config.record.next, () => current.record?.next),
       more: config.record.more?.map((item, index) => action(item, () => current.record?.more?.[index])!),

@@ -2,7 +2,7 @@
 import { useContactView } from "./contact-workspace";
 import Link from "next/link";
 import { SalesDeliveryLink } from "./sales-delivery-link";
-import { SalesEstimatingLink } from "./sales-estimating-link";
+import { SalesBriefContent, SalesEstimatingLink } from "./sales-estimating-link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { listHandovers, readHandover } from "../sales/handover-service";
@@ -93,6 +93,8 @@ export function HandoverList({
   const list = useCrmResource<Awaited<ReturnType<typeof listHandovers>>>(
     `sales/handovers?kind=${kind}&receiving=${receiving}`,
     true,
+    false,
+    true,
   );
   const deals = useCrmResource<Awaited<ReturnType<typeof listOpportunities>>>(
     receiving
@@ -123,7 +125,7 @@ export function HandoverList({
         eyebrow="Sales handover"
         title={
           receiving
-            ? "Estimating Intake"
+            ? "Sales briefs"
             : kind === "Estimating"
               ? "Sales-to-Estimating handover"
               : "Won-deal receiving"
@@ -214,14 +216,26 @@ export function HandoverList({
       )}
       {kind === "Estimating" && (
         <Link href={receiving ? root(kind) : "/estimating/intake"}>
-          {receiving ? "Sales preparation" : "Open Estimating Intake"}
+          {receiving ? "Sales preparation" : "Open Sales briefs"}
         </Link>
       )}
     </>
   );
 }
 export function HandoverDetail({ id }: { id: string }) {
+  const params = useSearchParams();
+  const requested = params.get("revision");
   const r = useCrmResource<Detail>(`sales/handovers/${id}`, true);
+  if (requested && r.data && !r.error && r.data.record.kind === "Estimating" && (r.data.record.revision !== Number(requested) || r.data.record.state === "Draft")) {
+    const submission = r.data.history.find((e) => e.action === "Submit" && e.revision === Number(requested));
+    return <section className="crm-panel">
+      <h1>{submission ? `Submitted Sales brief · revision ${submission.revision}` : "Submitted revision unavailable"}</h1>
+      <p role="status">This link identifies an earlier submitted revision. The current preparation or receiving revision is separate. No receiving decision can be made from this historical view.</p>
+      {submission && <SalesBriefContent content={submission.content}/>}
+      <Link href={`/sales/handoffs/estimating/${id}`}>Review the current brief separately</Link>
+      <p><Link href="/estimating/intake">Back to Sales briefs</Link></p>
+    </section>;
+  }
   return (
     <>
       {r.loading && <p role="status">Loading handover…</p>}

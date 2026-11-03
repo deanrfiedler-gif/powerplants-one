@@ -153,3 +153,5 @@ Dean answered on 19 October 2026: "Proceed with your recommendations for Q1 to Q
 ## 8. What this record does not do
 
 Acceptance authorises no code, route, page, migration, seed, capability, grant, service, dependency, DNS change, privacy notice change or customer message. It does not change D-025 R4, ADR-0058, ADR-0059, A1 or the quotation release and response contracts. It does not make view data a sales rule, a pipeline probability or evidence of acceptance.
+
+**Later amendment, 30 October 2026.** Q6 is amended by Q2 of the [Sales performance RP-02 design](sales-performance-figma-design.md): a reader of that report sees the state word (Viewed, Viewed · may be automatic, Not viewed yet, Not tracked) on its open-quotations list, and nothing more. No counts, times, sections or names reach the report or its exports. Everything else in Q6 and section 4.4 stands.

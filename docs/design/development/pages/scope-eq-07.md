@@ -13,11 +13,15 @@ Selected r20 family: **Register / worklist; supporting Document & evidence works
 
 ## Desktop
 
+Accepted design: the [Bulletins and lifecycle design decision](../../../decisions/bulletins-lifecycle-figma-design.md) of 31 October 2026 covers the Lifecycle register grouped by support status, an asset's dated support evidence and the handover to Sales aftercare with its read-back, with captures in [design r01](../../../reference/ui/equipment/bulletins-lifecycle-design-r01/README.md). Decisions D1–D12 and answers Q1–Q6 are recorded there. The built page has not yet been changed to match it.
+
 Use the existing PPO application shell, shared navigation and global information icon. Content has one page scroll owner and a 1440 px maximum content width with 16 px padding. The Equipment navigation wraps. Register and identity/location regions use two equal columns at 768 px and above; record evidence follows the selected RecordTabs panel. Forms use two equal columns with visible field labels and a full-width impact/consequence notice. Long source references and identifiers wrap; dense historical details expand in place.
 
 Use existing Roboto/Verdana typography, semantic ink/surface/line/focus tokens, shared Button/ButtonLink variants and 44 px controls. Preserve words beside status colours. At 1440, 1280, 1024 and 768 px verify the full shell, long values, explicit Unknowns, source failures and action reachability.
 
 ## Mobile
+
+Accepted design: not drawn on a phone. The phone frames in [design r01](../../../reference/ui/equipment/bulletins-lifecycle-design-r01/README.md) cover bulletins only.
 
 At 430, 390 and 320 CSS px use one-column cards, stacked description lists and one-column forms. Inputs stay at 16 px, controls at least 44 px and tabs/navigation wrap. The physical location and served areas remain separate at every width. Keyboard order follows the document; shared tabs provide selected state and arrow navigation. Camera/manual alternatives and every decision remain reachable. Verify 200% zoom with no horizontal page overflow. Emulation is not physical-device or screen-reader acceptance.
 

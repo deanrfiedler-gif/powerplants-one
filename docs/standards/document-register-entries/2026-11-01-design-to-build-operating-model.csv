@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-ADR-0067,Design-to-build operating model,docs/decisions/ADR-0067-design-to-build-operating-model.md,,Agent decision under Dean's delegation of 1 November 2026; page acceptance separate,Dean Fiedler,5e2e7039033411f1156732fae3b4d1d8a6fe794c,,,git,
+PPO-DESIGN-TO-BUILD-STD,Design-to-build standard,docs/standards/design-to-build-standard.md,,Working standard under ADR-0067; page acceptance separate,Dean Fiedler,5e2e7039033411f1156732fae3b4d1d8a6fe794c,,,git,

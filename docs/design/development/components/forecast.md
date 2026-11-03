@@ -8,7 +8,7 @@ Real forecast month groups, overdue/undated groups and known versus unpriced amo
 
 ## Source and reference
 
-Design: [ppo-deal-pipeline_r38.html](../../../reference/ui/deals/ppo-deal-pipeline_r38.html). Retained design reference; paired acceptance not recorded.
+Design: [accepted CR-04 r02 captures](../../../reference/ui/crm/deals-design-r02/README.md), frame `2362:63797`; earlier r38 is historical where superseded. Application visual review remains pending.
 
 The application implementation and exact consumer bindings are maintained in `../components.json`. The live catalogue links the current checkout and computes dependency fingerprints.
 
@@ -22,11 +22,11 @@ The forecast card of the accepted Deals Forecast view (24 October 2026, [decisio
 
 ## Desktop
 
-Forecast groups use a fixed as-of date. Values remain unweighted estimates, not revenue.
+Forecast groups use the server read observation in Australia/Brisbane, then month and native stage. Each group states its current-page denominator and separates known AUD excl. GST from unknown values. Fixed 15 October dates belong only to design fixtures. Values remain unweighted estimates, not revenue.
 
 ## Mobile
 
-Month lanes scroll within their region and card actions stay reachable.
+Tablet and phone month lanes scroll within their labelled region without widening the page. The shared phone view sheet selects Forecast; title links retain Deals return context, and the snapshot remains available. Stage subtotals include every returned row exactly once.
 
 ## Keyboard and accessibility
 
