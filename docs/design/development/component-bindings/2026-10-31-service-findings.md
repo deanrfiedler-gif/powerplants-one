@@ -14,6 +14,8 @@ Bound by the [SV-07 page contract](../pages/scope-sv-07.md). Synthetic fixture s
 
 ## read-state
 
+Same-query refreshes retain the register, scroll container and selected snapshot tab while showing refresh status. Settled read errors still remove unconfirmed content. A successful next-action response replaces the editor's versioned data after the reload without remounting the snapshot. Additive review regressions in `tests/browser/service-findings.spec.ts` cover save, window-two Refresh and URL restoration; Owner/Site tests also cover direct owner changes, empty results and pending reads. Browser execution for this repair remains subject to the environment readiness recorded in the execution ledger.
+
 Bound by the [SV-07 page contract](../pages/scope-sv-07.md). Synthetic fixture states live in `tests/helpers/findings-fixture.ts`; the native page preserves source authority, window counts, read failure and uncertain-save recovery. Codex inspected four-width application captures against the retained design; differences and checks are in the [execution ledger](../../../testing/evidence/service-findings/README.md#sv-07-native-page--31-october-2026). Owner/device acceptance remains unrecorded.
 
 

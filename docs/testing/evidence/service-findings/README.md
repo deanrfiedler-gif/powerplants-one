@@ -107,3 +107,49 @@ The [existing Service reports browser suite](ui/reports-browser.txt) passed seve
 ### Separate delivery statuses
 
 Functional proof: the executed passes, final static checks and retained failure/retry history above. Visual review: Codex inspected comparison with declared differences; no visual acceptance. Owner acceptance: unrecorded. Deployment: not performed. Claude’s exact-head review and every CONTRIBUTING merge gate remain required.
+
+## Review repairs — 3 November 2026
+
+PR #801 takes over [the stale claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/801#issuecomment-6554922286) under [this claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/801#issuecomment-6598716885), from exact head `464f73dd088d8455959d6cd1ca79ae480455af0a`. Merge commit `9f50bb6f1` integrates main `95d7b9e91`.
+
+### Authorised conflict resolutions
+
+The only conflicts were `tests/unit/phone-header.test.ts`, `docs/design/development/guides.json` and `docs/design/development/register.json`. The phone assertion keeps main's multiline form with `back` between `combined` and `previous`; the auto-merged configuration and callback remain. `src/shell/phone-header.ts` declares `back?: PhoneHeaderAction` exactly once.
+
+The JSON files start from main. Only `guide.route-service-findings` and `route:/service/findings` are added, in their branch-relative positions; only `guide.sv.07` and `scope:SV-07` are replaced by the PR versions. Three-way entry comparison found no divergent change. Exact entry comparison confirms all other main entries are unchanged, including retention of main's removals. Both parse, with 356 unique guide keys and 380 unique register keys. Studio passes. There is no diff from main in migrations, `docs/contracts/service-api.md`, protected agent instructions, `.github/` or `infra/`; #810 is untouched.
+
+### Findings addressed
+
+[Claude's one independent review 5722367067](https://github.com/deanrfiedler-gif/powerplants-one/pull/801#pullrequestreview-5722367067) is retained. No second full review is requested.
+
+1. Owner and Site choices read the authorised window with only their own filter omitted. The selected label survives an empty result or pending query. Direct owner changes no longer require clearing the owner first.
+2. Same-query reloads keep the register and snapshot mounted. The snapshot tab stays selected after a successful next-action save. The editor receives the new source token/version when the response arrives; settled errors still remove unconfirmed content.
+3. The chosen view is written to the URL and read from it, including reload and Back. Refresh rereads the same offset and keeps the selected snapshot.
+
+Existing assertions are preserved. Three additive unit cases cover facets/labels and view links; four additive browser scenarios cover direct owner changes/empty/reload labels, window-two Refresh, view reload/Back, and saving while a non-default snapshot tab is selected. Browser cases were authored but **not run here; left to GitHub CI** (setup reports browser unavailable).
+
+### Executed checks and limitations
+
+Cloud setup succeeded with Node 24.21.0/npm 11.19.0, database ready, browser unavailable. Commands were first attempted normally; sandbox-blocked network commands were retried with network access. The focused unit command passed all 19 tests. Foundation, prototype, naming and status checks passed. Studio and targeted lint passed.
+
+The initial restricted `npm run check` passed studio, lint and typecheck, then failed in these ten unit files with `test failed`: `azure-demo`, `browser-fixture-transport`, `fertigation-request-limit`, `foundation`, `guide-library`, `login`, `proof-database`, `proof-request-scope`, `quality-asset-observer`, `quality-packet-network` (all under `tests/unit/*.test.ts`). All ten were rerun with the same command settings on clean main `95d7b9e91` in `/tmp/main-check` and failed with the same message: **pre-existing on main in this environment**. A direct diagnostic of `proof-request-scope` exposed `spawnSync ... EPERM`. The database's initial restricted commands exposed `connect EPERM 127.0.0.1:5432`; these were retried with network access.
+
+The final network-enabled `npm run check` passed studio, full lint, typecheck, all **1,356 unit tests**, and the production build (82 static pages). `tests/http/service-findings.test.ts` passed **2/2** against that compiled build on a freshly reset synthetic database, with no concurrent database suite. Its initial restricted run failed with `connect EPERM 127.0.0.1:3000`; the network-enabled retry passed. No test assertion or deadline was relaxed. Immediately before the final commit/push, fetching and merging main confirmed `95d7b9e9169eee261243af7112721d1021682ef0` was already integrated.
+
+Database files ran one at a time with no other database consumer. Results:
+
+| File | Test | Result |
+|---|---|---|
+| `tests/database/service-findings-recurrence.test.ts` | SV07 recurrence uses the original failed-check key at the exact 90-day boundary, excludes older observations and revoked actions | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-findings.test.ts` | SV07 scheduling findings use native source, stable paging and read-only closure projection | Passed |
+| `tests/database/service-findings.test.ts` | SV07 source permissions, working company and Activity revocation hide data and counts | Passed |
+| `tests/database/service-findings.test.ts` | SV07 failed inspection stays open after its Activity completes and follows native correction/review | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-findings.test.ts` | SV07 remaining work keeps the exact submitted revision and does not equate Activity completion with completion of scope | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-findings.test.ts` | SV07 customer reservations remain exact and correction supersedes rather than overwrites the original | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-findings.test.ts` | SV07 incident corrective action preserves source authority and excludes restricted facts | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-finding-next-action.test.ts` | SV07 R2 changes one scheduling Activity, retains history, retries and source bytes | Passed |
+| `tests/database/service-finding-next-action.test.ts` | SV07 R2 creates only a missing inspection task; technician cannot set it and closure remains native | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-finding-next-action.test.ts` | SV07 R2 completion and response reuse native tasks and preserve immutable observations | **environment-blocked: browser** — `RenderOrStorageFailure` |
+| `tests/database/service-finding-next-action.test.ts` | SV07 R2 incident action changes retain hold, accepted facts and source-authorised owner | **environment-blocked: browser** — `RenderOrStorageFailure` |
+
+No database failure above is reported as passed. The unavailable renderer prevents the synthetic pack setup needed by those cases. Browser suites, including `tests/browser/service-findings.spec.ts`, are **not run here; left to GitHub CI**. No visual acceptance, business acceptance, deployment or PR merge is claimed. Claude is asked only to confirm these three fixes and the three conflict resolutions; Dean merges.

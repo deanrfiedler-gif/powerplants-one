@@ -105,3 +105,42 @@ test("SV07 site week crosses UTC midnight and DST without changing strict overdu
  for(const state of ["Closed","Superseded"] as const)assert.equal(dueThisWeek({...row,state},now),false);
  assert.equal(inView({...row,due_this_week:true},"due_this_week"),true);
 });
+
+// Review 5722367067: filters retain their identity independently of row results.
+import {
+  findingFacetOptions,
+  findingFacetPath,
+  findingViewHref,
+} from "../../src/service/findings/presentation";
+
+test("SV07 owner and site facets omit only their own filter in the authorised window", () => {
+  const query = new URLSearchParams({ view: "open", q: "pump", offset: "25", limit: "25", owner_id: "owner-a", site_id: "site-a", source: "inspection" });
+  for (const facet of ["owner_id", "site_id"] as const) {
+    const params = new URL(findingFacetPath(query, facet), "https://synthetic.invalid/").searchParams;
+    assert.equal(params.has(facet), false);
+    for (const [key, value] of query) if (key !== facet) assert.equal(params.get(key), value);
+  }
+  assert.equal(query.get("owner_id"), "owner-a", "the register's filter must remain applied");
+  assert.equal(query.get("site_id"), "site-a");
+});
+
+test("SV07 changing owners directly retains other choices and labels through empty and reload states", () => {
+  const a = { id: "owner-a", label: "SYN Alex" }, b = { id: "owner-b", label: "SYN Blake" };
+  assert.deepEqual(findingFacetOptions([a, b], a), [a, b]);
+  assert.deepEqual(findingFacetOptions([a, b], b), [a, b]);
+  assert.deepEqual(findingFacetOptions([], b), [b], "empty or pending responses retain the applied label");
+  assert.deepEqual(findingFacetOptions([a], b), [a, b]);
+  assert.deepEqual(findingFacetOptions([], { id: "", label: "Anyone" }), []);
+  const site = { id: "site-a", label: "SYN North" };
+  assert.deepEqual(findingFacetOptions([], site), [site]);
+  assert.deepEqual(findingFacetOptions([{ ...site, label: "SYN renamed" }], site), [{ ...site, label: "SYN renamed" }]);
+});
+
+test("SV07 view links replace the entry view while preserving shell query parameters", () => {
+  const href = findingViewHref("department=service&view=overdue", "open");
+  const url = new URL(href, "https://synthetic.invalid");
+  assert.equal(url.pathname, "/service/findings");
+  assert.equal(url.searchParams.get("view"), "open");
+  assert.equal(url.searchParams.get("department"), "service");
+  assert.equal(url.searchParams.getAll("view").length, 1);
+});
