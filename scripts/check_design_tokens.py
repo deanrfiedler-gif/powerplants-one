@@ -44,11 +44,13 @@ def normalise(value):
     return value[:-2] if value.endswith('px') else value
 
 
-def masked(text):
-    """Blank comments and the inside of quoted strings, keeping every offset.
+def masked(text, strings=True):
+    """Blank comments, and with strings=True the inside of quoted strings, keeping every offset.
 
-    Declarations are then found only in real CSS, while their values are still
-    read from the original text, so a quoted value stays intact.
+    Declarations are found in the fully masked text, so only real CSS counts. Their
+    values are read from the text with only comments blanked, so a quoted value
+    stays intact and a trailing comment is not part of the value. Quoted strings are
+    always skipped, so "/*" inside one never starts a comment.
     """
     out, i, n = list(text), 0, len(text)
     while i < n:
@@ -62,7 +64,8 @@ def masked(text):
             while j < n and text[j] != quote and text[j] != '\n':
                 j += 2 if text[j] == '\\' else 1
             end = min(j, n)
-            out[i + 1:end] = 'x' * (end - i - 1)
+            if strings:
+                out[i + 1:end] = 'x' * (end - i - 1)
             i = end + 1
         else:
             i += 1
@@ -75,11 +78,11 @@ def read_css(root):
     hard_coded = {}
     for path in sorted((root / 'src').rglob('*.css')):
         text = path.read_text(encoding='utf-8', errors='ignore')
-        mask = masked(text)
+        mask, uncommented = masked(text), masked(text, strings=False)
         spans = []
         for match in PROPERTY.finditer(mask):
             spans.append(match.span())
-            definitions[match.group(1)].add(normalise(text[match.start(2):match.end(2)]))
+            definitions[match.group(1)].add(normalise(uncommented[match.start(2):match.end(2)]))
         outside = ''.join(mask[a:b] for a, b in zip([0] + [e for _, e in spans], [s for s, _ in spans] + [len(mask)]))
         count = len(HEX.findall(outside))
         if count:

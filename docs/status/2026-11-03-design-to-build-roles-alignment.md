@@ -13,7 +13,7 @@ ADR-0067 records the change in a new Roles section, and the standard's section 1
 
 Codex's cross-model review of the pull request found five defects, all now fixed:
 - `scripts/check_design_tokens.py` follows `var()` aliases to any depth.
-- It reads declarations only outside comments and quoted strings, and ignores a `!important` priority.
+- It reads declarations only outside comments and quoted strings, and ignores a `!important` priority. A follow-up keeps a trailing comment out of the value, a regression Codex found when confirming this fix.
 - It holds the original 32 unmapped names, so the baseline can only shrink.
 - After the freeze, nothing is removed from `PPO - Design` during recovery.
 - Two earlier, unrecorded audits are no longer described as independent reviews.

@@ -75,6 +75,14 @@ class DesignTokenCheckTest(unittest.TestCase):
         root = self.tree(':root{--font:"Roboto; Light", sans-serif}', [])
         self.assertEqual(dict(tokens.read_css(root)[0]), {'--font': {'"roboto; light", sans-serif'}})
 
+    def test_trailing_comment_is_not_part_of_the_value(self):
+        root = self.tree(':root{--ink:#242a37/* accepted token */;}', [self.variable()])
+        self.assertEqual(tokens.check(root), [])
+
+    def test_comment_marker_inside_a_quoted_value_is_kept(self):
+        root = self.tree(':root{--label:"a /* b */ c"}', [])
+        self.assertEqual(dict(tokens.read_css(root)[0]), {'--label': {'"a /* b */ c"'}})
+
     def test_important_priority_is_not_part_of_the_value(self):
         root = self.tree(':root{--ink:#242a37 !important}', [self.variable()])
         self.assertEqual(tokens.check(root), [])
