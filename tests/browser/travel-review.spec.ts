@@ -139,6 +139,102 @@ async function mock(page: Page, data = fixture()) {
     resourceId(1),
   );
 }
+test("Sydney daylight-saving visits and windows use Brisbane route times with labelled site-local values", async ({
+  page,
+}) => {
+  await identity(page);
+  const reviewDay = "2031-12-15";
+  const data = fixture();
+  const item = {
+    ...data.items[0],
+    site_timezone: "Australia/Sydney",
+    start_at: "2031-12-15T08:30:00+11:00",
+    end_at: "2031-12-15T10:00:00+11:00",
+    requested_window_start: "2031-12-15T08:00:00+11:00",
+    requested_window_end: "2031-12-15T10:30:00+11:00",
+  };
+  const block = {
+    id: "SYN-cross-zone-block",
+    kind: "OtherWork",
+    start_at: "2031-12-15T07:45:00+10:00",
+    end_at: "2031-12-15T08:00:00+10:00",
+  };
+  await page.route("**/api/v1/schedule?**", (route) =>
+    route.fulfill({
+      json: {
+        ...data,
+        items: [item],
+        resources: data.resources.map((r) => ({
+          ...r,
+          source_as_at: "2031-12-15T07:00:00+10:00",
+          blocks: r.id === resourceId(1) ? [block] : [],
+          busy: [],
+        })),
+        observed_at: "2031-12-15T07:00:00+10:00",
+        from: "2031-12-15T00:00:00+10:00",
+        to: "2031-12-16T00:00:00+10:00",
+      },
+    }),
+  );
+  await page.goto(
+    `/schedule/travel?day=${reviewDay}&timezone=Australia%2FBrisbane&resource_id=${resourceId(1)}`,
+  );
+  await readyShell(page);
+  await expect(page.getByText(/times in Australia\/Brisbane/)).toBeVisible();
+  await expect(
+    page.locator(".travel-stop").filter({ hasText: "Departure" }),
+  ).toContainText("07:00");
+  await expect(page.locator(".travel-visit-heading strong")).toHaveText(
+    "07:30–09:00",
+  );
+  await expect(
+    page.getByText("Customer window: 07:00–09:30", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Site-local visit (Australia/Sydney): 2031-12-15 08:30–2031-12-15 10:00",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Site-local customer window (Australia/Sydney): 2031-12-15 08:00–2031-12-15 10:30",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(page.locator(".travel-visit .travel-conflict")).toContainText(
+    "Availability block 07:45–08:00 (OtherWork) overlaps this visit",
+  );
+  await expect(page.locator(".travel-leg .travel-conflict")).toHaveCount(0);
+  await expect(
+    page.locator(".travel-stop").filter({ hasText: "Return" }),
+  ).toContainText("09:30");
+
+  // A next-day Sydney visit is still on the selected Brisbane day.
+  item.start_at = "2031-12-16T00:30:00+11:00";
+  item.end_at = "2031-12-16T01:00:00+11:00";
+  item.requested_window_start = item.start_at;
+  item.requested_window_end = item.end_at;
+  await page.getByRole("button", { name: "Refresh visits" }).click();
+  await expect(page.locator(".travel-visit-heading strong")).toHaveText(
+    "23:30–2031-12-16 00:00",
+  );
+  await expect(
+    page.getByText("Customer window: 23:30–2031-12-16 00:00", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Site-local visit (Australia/Sydney): 2031-12-16 00:30–2031-12-16 01:00",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Site-local customer window (Australia/Sydney): 2031-12-16 00:30–2031-12-16 01:00",
+      { exact: true },
+    ),
+  ).toBeVisible();
+});
 test("Travel route selects the conflict person, places named conflicts on the right leg and retains exact handover", async ({
   page,
 }) => {

@@ -4,7 +4,40 @@
 
 Owner: Dean Fiedler. Implementation and capture inspection: Codex, 31 October 2026. Branch: `codex/travel-review`; [PR #806](https://github.com/deanrfiedler-gif/powerplants-one/pull/806). Accepted source: [Travel review decision](../../../decisions/travel-review-figma-design.md), D1–D5/Q1/Q2 and [six retained r01 captures](../../../reference/ui/service/travel-review-design-r01/README.md). Existing scheduling parent IDs and interfaces remain unchanged.
 
-## Functional proof
+## 3 November 2026: timezone review fix and current-main integration
+
+[Claude review 5724059438](https://github.com/deanrfiedler-gif/powerplants-one/pull/806#pullrequestreview-5724059438) is the PR's one independent review. Its only finding is addressed by using the display-zone context for every primary route time. Different site zones get labelled secondary visit and customer-window values with full dates. This preserves the selected day as a display-zone date, including when Sydney has crossed midnight and Brisbane has not.
+
+Main `6a387e228` merged cleanly in `a3bf8a56b`. No migration or #808 implementation was added; the shared service API change stays inside the PL-05 paragraph. Both shared JSON files parse. Every original line of both Travel test files remains in order, and neither Scheduling regression spec is changed.
+
+The new synthetic fixture is Sydney 08:30–10:00 during daylight saving, Brisbane display 07:30–09:00, with a 30-minute allowance starting at 07:00 and a Brisbane 07:45 block attached to the visit. A second phase crosses midnight. The focused unit suite passed all eight tests with network access enabled; the restricted sandbox initially reported only the file wrapper rather than its individual tests, so that result is not used as assertion evidence.
+
+The complete network-enabled `npm run check` passed: studio, lint, typecheck, **1,351/1,351 unit tests**, and the production build (82 static pages). Foundation, prototype, naming and status checks also passed. An earlier network-enabled full unit run independently passed 1,351/1,351. The first restricted `npm run check` passed studio, lint and typecheck, then failed ten test-file processes. The same files on clean `origin/main` `6a387e228` in `/tmp/main-check` all failed with the same message, **`test failed`** (file position `1:1`):
+
+- `tests/unit/azure-demo.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/browser-fixture-transport.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/fertigation-request-limit.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/foundation.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/guide-library.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/login.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/proof-database.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/proof-request-scope.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/quality-asset-observer.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+- `tests/unit/quality-packet-network.test.ts` — pre-existing on main in this environment (restricted sandbox); message: `test failed`.
+
+These are not retained failures in the network-enabled full unit run. Main dependency installation initially hit `spawnSync .../esbuild EPERM`; the permitted network-enabled `npm ci` retry succeeded. The setup summary reports no unavailable database. No executed test failure is being attributed to the unavailable browser; browser suites were not run.
+
+Setup completed with Node 24.21.0, npm 11.19.0, PostgreSQL ready and browser unavailable. No database suite is required for this client-only change. Travel and Scheduling browser suites, including comparisons on clean main, are **not run here; left to GitHub CI**. The hold now rests on these three desktop assertions in GitHub CI on the new head:
+
+| Assertion | Current disposition |
+|---|---|
+| `tests/browser/scheduling-refinement.spec.ts:138` — Changes return heading | not run here; left to GitHub CI |
+| `tests/browser/scheduling-workspaces.spec.ts:54` — reflow read status | not run here; left to GitHub CI |
+| `tests/browser/scheduling-workspaces.spec.ts:106` — resource evidence heading | not run here; left to GitHub CI |
+
+These three are still unconfirmed, not labelled pre-existing. The 31 October browser/capture evidence below is historical and does not establish results for the updated head. Claude is asked only to confirm its existing finding is fixed. Dean merges; no deployment or new visual acceptance is claimed.
+
+## 31 October 2026 functional proof
 
 | Check | Result |
 |---|---|
@@ -76,6 +109,6 @@ The inspection found and corrected a wrapped tablet toolbar and oversized failed
 - **Empty and failed reads:** the empty card contains the planner link and no route/summary; the day remains in the toolbar instead of repeating it in the body. Failed reads withhold person choices and show compact date/filter controls, the source error in the shared focused alert and Retry loading. This differs from the frame's retained person selector and generic error copy. Loading, denied and unavailable-explicit-person states use the same existing read controls.
 - **Default fallback:** if no permitted conflict or linked signed-in technician exists, choose the first permitted person. An unavailable explicit selection stays unavailable. This completes the coordinator/no-conflict case without name matching or an all-resource comparison.
 
-## Separate statuses
+## Separate statuses (31 October 2026)
 
 Functional proof: 16 unit and 10 focused Travel browser cases passed; required repository checks passed. The unchanged Scheduling run is not green (17 passed, 7 failed), and exact unmatched failures remain open. Hold merge until those failures have a verified disposition and the full merge gates hold. Visual comparison: native captures inspected against retained accepted frames, with differences above; no visual acceptance. Owner acceptance: accepted design only, implementation not accepted. Physical-device, assistive-technology and native-browser 200% zoom review: not performed. Full database/upgrade/HTTP suites and a production build were not run for this client-only change. Deployment: not performed. Claude exact-head review and every merge gate remain required.

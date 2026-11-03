@@ -9,7 +9,7 @@ This is an editable working specification. Existing accepted page baselines take
 Page type: **Review / comparison**. Canonical destination: `/schedule/travel`. Source authority: [PPO-SCHED-ADR](../../../decisions/scheduling-resources-architecture.md).
 
 1. Choose a local day, timezone and permitted site. An explicit permitted person is retained; otherwise the first person with a reservation or availability conflict is selected, then the signed-in technician, then the first permitted person if no technician link exists.
-2. Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied.
+2. Read each travel allowance, its basis, source endpoints and named block or closure on the affected leg or visit. Missing depot details stay not supplied. All primary route times, including visits and customer windows, use the selected display timezone; date prefixes compare dates in that same zone. When a site uses another timezone, visit and customer-window times also appear as labelled site-local secondary values with full dates.
 3. Use Earlier or Later to compare another order. Booked times stay unchanged, gaps are not recalculated and a time reversal needs a controlled move.
 4. Reset comparison discards the analytical order. Review booking change opens PL-04 with the exact appointment, person, day, timezone and optional site.
 

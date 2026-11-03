@@ -18,7 +18,7 @@ Loading, failed/denied refresh and stale reads withhold the route and summary. R
 
 ## status
 
-Visit status uses the existing Status control. Warnings remain words, including exact block/closure kind and interval on affected booked segments; colour is supplemental. Fixture closure and zero-minute edge cases have separate unit proof.
+Visit status uses the existing Status control. Warnings remain words, including exact block/closure kind and interval on affected booked segments; colour is supplemental. Fixture closure and zero-minute edge cases have separate unit proof. All primary route times, including visits and customer windows, use the selected display timezone; date prefixes compare dates in that same zone. When a site uses another timezone, visit and customer-window times also appear as labelled site-local secondary values with full dates. The added Sydney daylight-saving fixture uses Brisbane display times and crosses midnight; browser execution remains pending in GitHub CI.
 
 ## planner
 

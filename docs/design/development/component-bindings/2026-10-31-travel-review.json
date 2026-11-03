@@ -6,7 +6,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [
@@ -34,7 +34,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [
@@ -62,7 +62,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [
@@ -90,7 +90,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [
@@ -118,7 +118,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [
@@ -146,7 +146,7 @@
         {
           "id": "pl05-travel-route",
           "label": "Travel route host",
-          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
+          "description": "tests/browser/travel-review.spec.ts: synthetic two-visit route, Sydney daylight-saving/Brisbane display times and midnight date prefixes, comparison/reset, leg-specific conflict, empty/failed/denied/stale reads, keyboard and 1440/1024/390/320 widths."
         }
       ],
       "dependencies": [

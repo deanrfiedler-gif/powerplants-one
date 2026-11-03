@@ -1,10 +1,21 @@
 import type { Resource, Schedule } from "./index";
-import { intervalsOverlap } from "./time";
+import { intervalsOverlap, localDateTime } from "./time";
 import {
   travelAvailabilityConflicts,
   travelSequences,
   type TravelVisit,
 } from "./workspace-model";
+
+// The review day and every primary route time use the same display zone.
+export function travelTime(
+  value: string,
+  context: { zone: string; day: string },
+) {
+  const local = localDateTime(value, context.zone);
+  return local.slice(0, 10) === context.day
+    ? local.slice(11)
+    : local.replace("T", " ");
+}
 
 // Choices come only from the permission-scoped response. Never match a person's name.
 export function startingTravelResource(

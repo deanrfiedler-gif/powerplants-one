@@ -14,20 +14,21 @@ import {
   moveTravelComparison,
   startingTravelResource,
   travelPartConflicts,
+  travelTime as time,
   type TravelPart,
 } from "../../travel-review-model";
 import "./travel-review.css";
 
 type Context = { day: string; zone: string; site: string; resource: string };
-function time(value: string, zone: string, day: string) {
-  const local = localDateTime(value, zone);
-  return local.slice(0, 10) === day ? local.slice(11) : local.replace("T", " ");
-}
 function interval(
   value: { start_at: string; end_at: string },
   context: Context,
 ) {
-  return `${time(value.start_at, context.zone, context.day)}–${time(value.end_at, context.zone, context.day)}`;
+  return `${time(value.start_at, context)}–${time(value.end_at, context)}`;
+}
+function siteInterval(start: string, end: string, zone: string) {
+  // Always include the site date: it can differ from the review's display day.
+  return `${localDateTime(start, zone).replace("T", " ")}–${localDateTime(end, zone).replace("T", " ")}`;
 }
 function Conflicts({
   visit,
@@ -153,15 +154,15 @@ export function TravelReview({
           <span>{visits.length} visits</span>
           <span className="travel-read-time" aria-hidden="true">
             {" "}
-            · Read at {time(data.observed_at, context.zone, context.day)}
+            · Read at {time(data.observed_at, context)}
           </span>
           <span className="travel-read-accessible">
             {" "}
-            · Read at {time(data.observed_at, context.zone, context.day)}
+            · Read at {time(data.observed_at, context)}
           </span>
         </p>
         <p className="travel-phone-read" aria-hidden="true">
-          Read {time(data.observed_at, context.zone, context.day)}
+          Read {time(data.observed_at, context)}
         </p>
         <Button
           className="travel-refresh"
@@ -251,14 +252,7 @@ export function TravelReview({
               <>
                 <p className="travel-stop">
                   {!comparing && (
-                    <time>
-                      {time(
-                        ordered[0].reserved_start,
-                        context.zone,
-                        context.day,
-                      )}{" "}
-                      ·{" "}
-                    </time>
+                    <time>{time(ordered[0].reserved_start, context)} · </time>
                   )}
                   Departure · depot not supplied
                 </p>
@@ -296,30 +290,44 @@ export function TravelReview({
                         />
                         <article className="travel-visit">
                           <div className="travel-visit-heading">
-                            <strong>
-                              {time(a.start_at, a.site_timezone, context.day)}–
-                              {time(a.end_at, a.site_timezone, context.day)}
-                            </strong>
+                            <strong>{interval(a, context)}</strong>
                             <span>{a.display_number}</span>
                             <Status value={a.status} />
                           </div>
+                          {a.site_timezone !== context.zone && (
+                            <p>
+                              Site-local visit ({a.site_timezone}):{" "}
+                              {siteInterval(
+                                a.start_at,
+                                a.end_at,
+                                a.site_timezone,
+                              )}
+                            </p>
+                          )}
                           <h3>{a.scope_summary}</h3>
                           <p>
                             {a.customer_name ?? "Customer unavailable"} ·{" "}
                             {a.site_name} · {a.work_order_display_number}
                           </p>
-                          <p>
-                            Crew: {crew}
-                            {a.site_timezone !== context.zone
-                              ? ` · ${a.site_timezone}`
-                              : ""}
-                          </p>
+                          <p>Crew: {crew}</p>
                           <p>
                             Customer window:{" "}
                             {a.requested_window_start && a.requested_window_end
-                              ? `${time(a.requested_window_start, a.site_timezone, context.day)}–${time(a.requested_window_end, a.site_timezone, context.day)}`
+                              ? `${time(a.requested_window_start, context)}–${time(a.requested_window_end, context)}`
                               : "Not supplied"}
                           </p>
+                          {a.site_timezone !== context.zone &&
+                            a.requested_window_start &&
+                            a.requested_window_end && (
+                              <p>
+                                Site-local customer window ({a.site_timezone}):{" "}
+                                {siteInterval(
+                                  a.requested_window_start,
+                                  a.requested_window_end,
+                                  a.site_timezone,
+                                )}
+                              </p>
+                            )}
                           {comparing && (
                             <p className="travel-position">
                               Original order {original} · now {index + 1}
@@ -398,11 +406,7 @@ export function TravelReview({
                 <p className="travel-stop">
                   {!comparing && (
                     <time>
-                      {time(
-                        ordered[ordered.length - 1].reserved_end,
-                        context.zone,
-                        context.day,
-                      )}{" "}
+                      {time(ordered[ordered.length - 1].reserved_end, context)}{" "}
                       ·{" "}
                     </time>
                   )}

@@ -7,6 +7,7 @@ import type {
 } from "../../src/scheduling";
 import { travelSequences } from "../../src/scheduling/workspace-model";
 import {
+  travelTime,
   startingTravelResource,
   travelPartConflicts,
   compareTravelOrder,
@@ -173,4 +174,61 @@ test("The original buffered order is not labelled a proposed booking-time revers
   assert.equal(visits[0].appointment.id, "b");
   assert.equal(compareTravelOrder(visits, []).comparing, false);
   assert.deepEqual(compareTravelOrder(visits, []).reversals, []);
+});
+
+test("Sydney daylight-saving visits share Brisbane route times with their allowances and conflicts", () => {
+  const context = { zone: "Australia/Brisbane", day: "2031-12-15" };
+  const a = {
+    ...appointment("cross-zone", "r1"),
+    site_timezone: "Australia/Sydney",
+    start_at: "2031-12-15T08:30:00+11:00",
+    end_at: "2031-12-15T10:00:00+11:00",
+    requested_window_start: "2031-12-15T08:00:00+11:00",
+    requested_window_end: "2031-12-15T10:30:00+11:00",
+  };
+  const visit = travelSequences([a])[0];
+  const availability = {
+    ...resource("r1"),
+    blocks: [
+      {
+        id: "SYN-cross-zone-block",
+        kind: "OtherWork",
+        start_at: "2031-12-15T07:45:00+10:00",
+        end_at: "2031-12-15T08:00:00+10:00",
+      },
+    ],
+  };
+  assert.equal(travelTime(visit.reserved_start, context), "07:00");
+  assert.equal(travelTime(a.start_at, context), "07:30");
+  assert.equal(travelTime(a.end_at, context), "09:00");
+  assert.equal(travelTime(visit.reserved_end, context), "09:30");
+  assert.equal(travelTime(a.requested_window_start, context), "07:00");
+  assert.equal(travelTime(a.requested_window_end, context), "09:30");
+  assert.equal(travelTime(availability.blocks[0].start_at, context), "07:45");
+  assert.deepEqual(
+    travelPartConflicts(visit, availability, "before").blocks,
+    [],
+  );
+  assert.deepEqual(
+    travelPartConflicts(visit, availability, "visit").blocks,
+    availability.blocks,
+  );
+  assert.deepEqual(
+    travelPartConflicts(visit, availability, "after").blocks,
+    [],
+  );
+});
+
+test("Travel date prefixes compare Brisbane dates even when Sydney has crossed midnight", () => {
+  const context = { zone: "Australia/Brisbane", day: "2031-12-15" };
+  assert.equal(
+    travelTime("2031-12-15T00:30:00+11:00", context),
+    "2031-12-14 23:30",
+  );
+  assert.equal(travelTime("2031-12-15T01:00:00+11:00", context), "00:00");
+  assert.equal(travelTime("2031-12-16T00:30:00+11:00", context), "23:30");
+  assert.equal(
+    travelTime("2031-12-16T01:00:00+11:00", context),
+    "2031-12-16 00:00",
+  );
 });
