@@ -45,12 +45,17 @@ fi
 [[ "$(npm --version)" == "$npm_version" ]] || { echo "npm is $(npm --version), expected $npm_version." >&2; exit 1; }
 
 # The synthetic document store defaults to ~/.ppo-synthetic-documents. Codex Cloud's home
-# folder is not writable, so keep the store beside the tools there.
-if [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] \
-  && ! { mkdir -p "$HOME/.ppo-synthetic-documents" 2> /dev/null && [[ -w "$HOME/.ppo-synthetic-documents" ]]; }; then
+# folder is not writable, so keep the store beside the tools there. src/documents/store.ts
+# refuses a store folder with any group or other permission bit, and mkdir under umask 022
+# gives 0755, so create the folder as 0700 and tighten one that already exists.
+private_store() { mkdir -p -m 700 "$1" 2> /dev/null && chmod 700 "$1" 2> /dev/null && [[ -w "$1" ]]; }
+if [[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] && ! private_store "$HOME/.ppo-synthetic-documents"; then
   export PPO_DOCUMENT_DIRECTORY="$tools/synthetic-documents"
 fi
-[[ -z "${PPO_DOCUMENT_DIRECTORY:-}" ]] || mkdir -p "$PPO_DOCUMENT_DIRECTORY"
+if [[ -n "${PPO_DOCUMENT_DIRECTORY:-}" ]] && ! private_store "$PPO_DOCUMENT_DIRECTORY"; then
+  echo "Cannot make $PPO_DOCUMENT_DIRECTORY a private (0700) writable folder for synthetic documents." >&2
+  exit 1
+fi
 
 # tests/unit/recovery.test.ts needs a temp folder with no .git in any parent, because recovery
 # data must stay outside Git. In Codex Cloud, /tmp has one, so move TMPDIR when that happens.
