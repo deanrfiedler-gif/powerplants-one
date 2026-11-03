@@ -153,3 +153,59 @@ Database files ran one at a time with no other database consumer. Results:
 | `tests/database/service-finding-next-action.test.ts` | SV07 R2 incident action changes retain hold, accepted facts and source-authorised owner | **environment-blocked: browser** — `RenderOrStorageFailure` |
 
 No database failure above is reported as passed. The unavailable renderer prevents the synthetic pack setup needed by those cases. Browser suites, including `tests/browser/service-findings.spec.ts`, are **not run here; left to GitHub CI**. No visual acceptance, business acceptance, deployment or PR merge is claimed. Claude is asked only to confirm these three fixes and the three conflict resolutions; Dean merges.
+
+## Browser CI repairs — 3 November 2026
+
+This follow-up starts at `3ee4ee8cffceff29b2056c40b4475230488e2806`, taking over the [released DONE](https://github.com/deanrfiedler-gif/powerplants-one/pull/801#issuecomment-6599004869) under [the new claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/801#issuecomment-6601042913). Commit `dbd7cfbe7` merges main `b7bc7a460219cf25ae04d3475ae4e5f2d708a871` cleanly. The earlier authorised conflict resolutions remain in `9f50bb6f1` and are documented above.
+
+### Every live failure on the starting head
+
+Only the newest run of each workflow was considered. The failed runs were Compiled application browser assurance [41604077512](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077512) and Application assurance [41604077626](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077626). All six failed job logs were read through the GitHub connector before editing.
+
+| Failed job | Live failures |
+| --- | --- |
+| [Compiled desktop-2, 125809578951](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077512/job/125809578951) | Findings Refresh: 45,000 ms timeout |
+| [Compiled mobile-2, 125809579337](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077512/job/125809579337) | Findings views, save/change, stale version and Refresh: 45,000 ms each; mobile CRM completion: 120,000 ms |
+| [Compiled summary, 125830972754](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077512/job/125830972754) | Child suite result was failure; no independent test failure |
+| [Application mobile, 125809584543](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077626/job/125809584543) | The same four Findings tests: 45,000 ms each |
+| [Application desktop, 125809584658](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077626/job/125809584658) | Findings Refresh: 45,000 ms |
+| [Application summary, 125855676219](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41604077626/job/125855676219) | Child suite result was failure; no independent test failure |
+
+The five distinct failed scenarios, using their starting-head locations, were:
+
+- `service-findings.spec.ts:523`: “SV07 Refresh preserves window two, snapshot tab and mounted content while pending”. The detailed call logs show Refresh visible, enabled and stable, with `.sv07-snapshot-nav` intercepting pointer events. It was covered by the open snapshot, not disabled by `f.hold()`.
+- `service-findings.spec.ts:181`: “SV07 all views and source types keep source-owned closure and bounded counts”. Mobile waited for the hidden desktop Needs an owner navigation link.
+- `service-findings.spec.ts:231`: “SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save”. Mobile waited for the desktop reference-only row button in `openRemaining`.
+- `service-findings.spec.ts:278`: “SV07 stale version compares without dropping entries, while technician stays view-only”. The same mobile helper failure.
+- `mobile-crm.spec.ts:9`: “mobile CRM completion, Brisbane follow-up and record links persist through reload”. Compiled mobile waited for the Activities tab after Return to opportunity at line 20.
+
+### Design evidence and repairs
+
+The accepted [Findings decision](../../../decisions/findings-figma-design.md), [scope contract](../../../design/development/pages/scope-sv-07.md) and retained captures were read. The captures inspected were `PPO-Findings-02-Desktop-Snapshot-r01.png`, `PPO-Findings-06-Phone-List-r01.png` and `PPO-Findings-07-Phone-Finding-r01.png` in [findings-design-r01](../../../reference/ui/service/findings-design-r01/README.md). They show the desktop snapshot covering the register, a phone view picker and whole-row selection, and a phone finding reached/backed out through its header with one scrolling content surface.
+
+The application follows those controls. The tests now detect the visible phone view control, choose through its menu, open the matching phone row and use Back to findings when that layout is shown. Desktop actions remain the desktop controls. The uncertain-save close guard assertion remains and now attempts the reachable phone Back control on mobile.
+
+Refresh is enabled for a same-query pending read. Its test now waits for window-two rows, starts Refresh while the toolbar is reachable, then opens a retained row and selects History while the response is held. It verifies the same offset, mounted snapshot marker and selected tab during that read and after release. This avoids clicking through the accepted snapshot overlay. The separate save regression still verifies an already-open snapshot surviving a reload initiated by a next-action save. No application behaviour or accepted design was changed in this follow-up.
+
+A TypeScript syntax-tree comparison against `3ee4ee8c` confirms all **72 existing assertion/timeout expressions** remain identical, ignoring whitespace. No assertion, skip or timeout was added, removed or weakened. `mobile-crm.spec.ts` is unchanged.
+
+### CRM limitation
+
+CRM remains unresolved locally, not classified as pre-existing or as not reproduced. The Application mobile job on this **same head** records that exact test passing in **3.4 seconds** at `2026-11-03T09:14:57.5870393Z`, while compiled mobile-2 failed it. Main and other-PR successes supplied in the task do not establish the cause of that compiled failure.
+
+The shared-file comparison against merged main shows only exact `/service/findings` route additions in `navigation.ts` and `module-workspaces.ts`; both phone-header files match main. Findings CSS scopes its tab rules to `#ppo-findings`. No demonstrated CRM regression justified an application change, and its spec was not modified. Artifact download attempts returned HTTP 403; the full job logs were available and read. Clean main was prepared at `b7bc7a460` in `/tmp/main-check`, but setup reported the browser unavailable, so the requested branch/main browser comparison is **not run here; left to GitHub CI**. The compiled CRM failure requires confirmation in a browser-ready environment.
+
+### Follow-up checks
+
+Cloud setup succeeded: database ready, browser unavailable. Foundation (including `check_design_tokens.py`), prototype, naming and status checks passed. Focused Findings/phone-header units passed **19/19**.
+
+The restricted full check passed studio, lint and typecheck, then ten unit files failed with `test failed`: `azure-demo`, `browser-fixture-transport`, `fertigation-request-limit`, `foundation`, `guide-library`, `login`, `proof-database`, `proof-request-scope`, `quality-asset-observer`, `quality-packet-network`. The identical command settings on clean main `b7bc7a460` reproduced all ten messages: **pre-existing on main in this environment**. The final network-enabled `npm run check` passed studio, lint, typecheck, all **1,356 unit tests** and the production build. No check is reported passed from an earlier head alone.
+
+Database files ran serially with the earlier synthetic HTTP server stopped. Findings recurrence, Findings and next-action produced exactly the **three passes and eight `RenderOrStorageFailure` failures** named in the preceding database table; all eight are again **environment-blocked: browser**, not passed. Initial restricted attempts failed; a direct diagnostic reported `connect EPERM 127.0.0.1:5432`, and network-enabled retries produced these results.
+
+| Browser file | Branch desktop | Branch mobile | Clean-main desktop | Clean-main mobile |
+| --- | --- | --- | --- | --- |
+| `tests/browser/service-findings.spec.ts` | not run here; left to GitHub CI | not run here; left to GitHub CI | not run here; left to GitHub CI | not run here; left to GitHub CI |
+| `tests/browser/mobile-crm.spec.ts` | not run here; left to GitHub CI | not run here; left to GitHub CI | not run here; left to GitHub CI | not run here; left to GitHub CI |
+
+Other browser suites, HTTP suites on this follow-up and broader database suites are **not run here; left to GitHub CI**. This evidence makes no new browser pass, visual acceptance, deployment or merge claim. Open: new-head CI, compiled mobile CRM attribution, and Claude's limited confirmation of the original three findings, earlier three conflict resolutions, and these design-consistent CI fixes with unchanged assertions/timeouts. No second full review is requested. Dean merges.

@@ -169,11 +169,25 @@ async function setup(
   });
   return { rows, posts };
 }
+async function phoneLayout(page: Page) {
+  await page.locator("#ppo-findings").waitFor();
+  return page.locator(".sv07-phone-view").isVisible();
+}
+async function openFinding(page: Page, reference: string) {
+  if (await phoneLayout(page))
+    await page.locator(".sv07-phone-row").filter({ hasText: reference }).click();
+  else
+    await page.getByRole("button", { name: reference, exact: true }).click();
+}
+async function closeFinding(page: Page) {
+  await page.getByRole("button", {
+    name: (await phoneLayout(page)) ? "Back to findings" : "Close",
+    exact: true,
+  }).click();
+}
 async function openRemaining(page: Page) {
   await page.goto("/service/findings?department=service");
-  await page
-    .getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true })
-    .click();
+  await openFinding(page, "SYN-PPO-RPT-000058");
   await expect(
     page.getByRole("region", { name: "Finding snapshot" }),
   ).toBeVisible();
@@ -201,7 +215,12 @@ test("SV07 all views and source types keep source-owned closure and bounded coun
     ["Closed findings", 1],
     ["All open", 7],
   ] as const) {
-    await menu.getByRole("link", { name: new RegExp(`^${label}`) }).click();
+    if (await phoneLayout(page)) {
+      await page.getByRole("button", { name: "Finding view", exact: true }).click();
+      await page.getByRole("menuitemradio", { name: label, exact: true }).click();
+    } else {
+      await menu.getByRole("link", { name: new RegExp(`^${label}`) }).click();
+    }
     await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(count);
   }
   for (const source of [
@@ -214,9 +233,7 @@ test("SV07 all views and source types keep source-owned closure and bounded coun
     await page.goto(`/service/findings?department=service`);
     await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
     const row = findingRows.find((r) => r.source === source)!;
-    await page
-      .getByRole("button", { name: row.source_record.reference, exact: true })
-      .click();
+    await openFinding(page, row.source_record.reference);
     await expect(
       page.getByRole("heading", { name: "What closes it" }),
     ).toBeVisible();
@@ -225,7 +242,7 @@ test("SV07 all views and source types keep source-owned closure and bounded coun
         name: /Close finding|Request remote diagnosis/,
       }),
     ).toHaveCount(0);
-    await page.getByRole("button", { name: "Close", exact: true }).click();
+    await closeFinding(page);
   }
 });
 test("SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save", async ({
@@ -249,7 +266,7 @@ test("SV07 save/change keeps the same activity, history and an unchanged retry a
     page.getByRole("button", { name: "Retry unchanged save" }),
   ).toBeVisible();
   await expect(page.getByLabel("Instruction", { exact: true })).toBeDisabled();
-  await page.getByRole("button", { name: "Close", exact: true }).click();
+  await closeFinding(page);
   await expect(
     page.getByRole("region", { name: "Finding snapshot" }),
   ).toBeVisible();
@@ -526,15 +543,18 @@ test("SV07 Refresh preserves window two, snapshot tab and mounted content while 
   await page.goto("/service/findings?department=service");
   await page.getByRole("button", { name: "Next window", exact: true }).click();
   await expect(page.getByText("Candidate window 2", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true }).click();
-  const snapshot = page.getByRole("region", { name: "Finding snapshot" });
-  await snapshot.getByRole("tab", { name: "History", exact: true }).click();
-  await snapshot.evaluate((element) => element.setAttribute("data-retained-proof", "yes"));
+  await page.getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true }).waitFor();
+  // The accepted desktop snapshot covers the register toolbar. Start its
+  // refresh while reachable, then open the retained row during that read.
   f.hold();
   const before = f.requests.length;
   await page.getByRole("button", { name: "Refresh", exact: true }).click();
   await expect.poll(() => f.requests.length).toBeGreaterThan(before);
   expect(f.requests.at(-1)!.searchParams.get("offset")).toBe("25");
+  await page.getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true }).click();
+  const snapshot = page.getByRole("region", { name: "Finding snapshot" });
+  await snapshot.getByRole("tab", { name: "History", exact: true }).click();
+  await snapshot.evaluate((element) => element.setAttribute("data-retained-proof", "yes"));
   await expect(snapshot).toHaveAttribute("data-retained-proof", "yes");
   await expect(snapshot.getByRole("tab", { name: "History", exact: true })).toHaveAttribute("aria-selected", "true");
   f.release();
