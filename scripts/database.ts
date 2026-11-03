@@ -17,6 +17,10 @@ const read = (name: string) =>
 export async function migrate(through = latestMigrationVersion) {
   validateMigrationRegistry(migrationFiles, seedFiles);
   await transaction(async (client) => {
+    // Pending migrations run in one transaction, and some single statements
+    // (DO blocks, backfills) exceed the pool's 10s limit on a loaded runner.
+    // Bound setup separately; SET LOCAL leaves normal application reads at 10s.
+    await client.query("SET LOCAL statement_timeout = '120s'");
     await client.query("SELECT pg_advisory_xact_lock(10001)");
     await client.query(
       "CREATE TABLE IF NOT EXISTS public.ppo_migrations(version integer PRIMARY KEY,sha256 text NOT NULL,applied_at timestamptz NOT NULL DEFAULT clock_timestamp())",
