@@ -22,8 +22,8 @@ Reused components: PageHeader, Field, Button/ButtonLink, Status, ReadState, Reco
 
 1. Open an occurrence and compare original due date, revised target, task revision and equipment snapshot.
 2. Defer retains original identity; Skip/Cancel requires an owner, reason and source evidence before work is requested.
-3. Prepare owned Service request using the exact Covered entitlement for the original due date. Open its canonical Ticket for Service triage and authority.
-4. Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open to receiving evidence.
+3. Prepare owned Service request using the exact Covered entitlement for the original due date. It also creates a Draft work order with the plan's tasks and the covered agreement; open the Ticket and work order in Service to triage, add authority evidence, exclusions and the Finance route, and authorise.
+4. Receive exact reviewed Service result by mapping every original task to a distinct reviewed scope item. Partial work remains open: Prepare follow-on Service request raises the outstanding tasks with a current Covered entitlement, one follow-on at a time, and its completed result completes the occurrence.
 
 Generation and owned requests create no booking. Requested work cannot be cancelled here. Service controls return visits and actual work.
 

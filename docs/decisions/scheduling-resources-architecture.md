@@ -44,3 +44,15 @@ Unchanged main reproduced seed timeout in PostgreSQL 16.15 on Windows while the 
 Inspection of main `0f10b7f` found the whole programme merged through #310. The follow-up uses the existing native History API convention to retain review criteria and selected appointment, extending the allowlisted Scheduling return URL. Date/site/timezone flow through Field Team and resource detail; the Field Team default remains today. Query values are presentation criteria, never command authority. Analytical sequences/exclusions are deliberately transient and reset on refresh or changed criteria.
 
 Calendar closures use half-open interval intersection for each displayed day and each buffered travel reservation. This corrects missing evidence without introducing a second booking validator. Open/InProgress Activities alone are outstanding follow-up; terminal Activities remain retained history. No new technology, data model, capability or operational policy is selected. [Verification](../testing/evidence/scheduling-refinement/README.md) remains separate from owner acceptance.
+
+## Amendment — 30 October 2026: known hours and over-capacity
+
+Dean accepted the [Capacity review design](capacity-review-figma-design.md) on 30 October 2026, including its answers to Q5 and Q6. For capacity contributions, these rules replace "All current source effort is Unknown":
+
+- Owner-supplied planned effort on a project task and planned step hours on a workshop build count as known hours, each with its source. Service reservations stay reservations, not measured labour. Everything else stays "Effort unknown".
+- Project task duration and Engineering due dates still never become effort.
+- Available hours are published standard hours less leave, training and availability blocks. Extended hours are stated and never counted as available.
+- A person is over capacity on a day only when known demand exceeds available hours on that day. Unknown effort is counted and shown, and never added to hours.
+- Capacity is shown in hours and words. No percentage or utilisation figure is adopted.
+
+Workshop becomes a capacity domain under the same read-scope and Unavailable rules. These are design rules for a later build. No source field, read model, route or capability changes here, and the built page keeps reporting effort as Unknown until that build.

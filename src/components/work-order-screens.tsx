@@ -15,8 +15,10 @@ import {
   type SalesCreation,
 } from "./sales-delivery-creation";
 import { DeliverySalesSources } from "./sales-delivery-link";
+import type { LinkedProject } from "../service/project-field-work-model";
 import { useIdentity } from "./business-session";
 import { useCreateDraft } from "./record-ui";
+import { plannedTaskWordingGaps } from "../service/planned-task-wording";
 import {
   EnumField,
   ErrorNotice,
@@ -132,6 +134,8 @@ export type Order = {
   version: number;
   display_number: string;
   status: string;
+  // B1: the linked project, present only when the reader may read it.
+  project?: LinkedProject | null;
   site_name: string;
   site_timezone: string;
   customer_name: string;
@@ -150,6 +154,8 @@ export type Order = {
   }[];
   blockers: { field: string; message: string; stage: string }[];
   actions: { can_edit: boolean; can_authorise: boolean; can_assess: boolean };
+  // M-R2: exact maintenance plan task descriptions this work order receives, if any.
+  planned_tasks?: string[];
 };
 const emptyEvidence = (): Evidence => ({
   title: "",
@@ -982,6 +988,48 @@ function ScopeForm({
           Saving changed scope requires fresh readiness review. Previous
           approvals remain preserved.
         </p>
+        {(() => {
+          // M-R2: receiving a maintenance result matches task text exactly, so warn before saving.
+          const planned = w.planned_tasks ?? [];
+          if (!planned.length) return null;
+          const { unmatched, missing } = plannedTaskWordingGaps(
+            planned,
+            value.items.map((item) => item.task_description),
+          );
+          if (!unmatched.length && !missing.length) return null;
+          return (
+            <div className="notice" role="status">
+              {unmatched.length > 0 && (
+                <p>
+                  {unmatched.length === 1 ? "Task" : "Tasks"}{" "}
+                  {unmatched.join(", ")} no longer{" "}
+                  {unmatched.length === 1 ? "matches" : "match"} the
+                  maintenance plan task wording exactly.
+                </p>
+              )}
+              {missing.length > 0 && (
+                <>
+                  <p>
+                    {missing.length === 1
+                      ? "This maintenance plan task has"
+                      : "These maintenance plan tasks have"}{" "}
+                    no scope task with its exact wording:
+                  </p>
+                  <ul>
+                    {missing.map((description, n) => (
+                      <li key={n}>{description}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <p>
+                Receiving the maintenance result needs one scope task with the
+                exact wording of each plan task. Restore the plan wording
+                unless the plan itself is being revised.
+              </p>
+            </div>
+          );
+        })()}
         <button disabled={cmd.busy}>
           {successor ? "Create successor draft" : "Save scope draft"}
         </button>
@@ -1431,6 +1479,15 @@ export function WorkOrderDetail({ id }: { id: string }) {
                 : "No scope revision"}
             </span>
             <span>Service owner: {w.owner_name}</span>
+            {w.project && (
+              <span>
+                Project:{" "}
+                <Link href={`/projects/${w.project.id}`}>
+                  {w.project.display_number} · {w.project.title}
+                </Link>
+                {w.project.lifecycle === "Closed" ? " (closed)" : ""}
+              </span>
+            )}
           </div>
           {w.authorised_scope_revision_id &&
             w.authorised_scope_revision_id !== w.scope_revision_id && (

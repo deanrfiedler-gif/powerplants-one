@@ -177,6 +177,10 @@ The audit is recorded on the notes card `2049:13083`.
 
 ## Native implementation direction — 31 October 2026
 
-Dean explicitly requested the accepted three-route AD-02 build and, when asked how to handle catalogue areas without a real destination or dedicated access rule on current main, chose "Hide unavailable areas (recommended)". The catalogue retains nine areas, but the hub and side menu expose only existing destinations the current person may open. This is a newer implementation instruction, not acceptance of application visuals.
+Codex built the accepted three-route AD-02 r01 design under the standing order and decided to hide catalogue areas without a real destination or dedicated access rule. The catalogue retains nine areas, but the hub and side menu expose only existing destinations the current person may open. The repository record is [DECIDED by Codex](https://github.com/deanrfiedler-gif/powerplants-one/pull/802#issuecomment-6540935470). That comment relays chat about hiding unavailable areas; the relayed chat is context, not repository evidence of Dean's instruction or acceptance. These are agent decisions, not Dean's acceptance of application visuals.
 
 Codex's implementation choices under the standing order are: reuse the shared responsive dialog on phones until the separate phone sheets are accepted; preserve the native required publication reason by supplying explicit confirmation wording when the optional note is blank; and show the most recently saved open proposal branch, with a count and link to all original records in PL-04 if concurrent branches exist. These are agent decisions, reversible in the AD-02 composition without changing the saved command contracts. No History or Affected work tab, new policy editor, migration, capability, grant or dependency is included. Functional proof, visual comparison, owner acceptance and deployment remain separate in the [implementation evidence](../testing/evidence/settings-hub/README.md).
+
+## Later amendment
+
+On 1 November 2026 Dean accepted the frames Q6 owed in the [Settings amendments design](settings-amendments-figma-design.md), drawn on a separate page. This record's frames are unchanged. Its "Not drawn" list is historical for the History and Affected work tabs, the field readiness record and the phone sheets.

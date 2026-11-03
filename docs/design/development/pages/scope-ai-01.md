@@ -36,9 +36,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Accepted Figma design captures: [Assistant design r01](../../../reference/ui/my-work/assistant-design-r01/README.md). No HTML reference is linked.
+Accepted Figma design captures: [Assistant design r01](../../../reference/ui/my-work/assistant-design-r01/README.md). No HTML reference is linked. D5 and D6 had a text-only story alignment on 31 October 2026; images 15 and 16 in [proposal review design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md) show the amended frames.
 
 ## Behaviour, handovers and verification
+
+Amended 31 October 2026 by the accepted [Answer evidence AI-03 design](../../../decisions/answer-evidence-figma-design.md), section 5: the Customer CRM summary's Next actions is one statement with two sources, and access changed withdraws only the affected statement. The AI-01 r01 captures stay as accepted; the amended frames are captures 17 and 18 of [Answer evidence design r01](../../../reference/ui/my-work/answer-evidence-design-r01/README.md).
 
 Accepted Figma design: [Assistant design r01 captures](../../../reference/ui/my-work/assistant-design-r01/README.md) (fifteen icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/assistant-figma-design.md). The AI-02 review fields, the AI-03 evidence page, the About Carl card, the microphone (AI2), exactly 1280 px, a search with more than 20 results, offline and hosted use are not drawn. Building it is not decided.
 

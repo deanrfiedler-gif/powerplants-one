@@ -29,11 +29,11 @@ The Deals register design is accepted (Deals · CR-04 549:2, 24 October 2026); i
 
 ## Desktop
 
-Keep record identity visible and distinguish unknown amounts from zero. Filtering and sorting here are local fixture adapters.
+Use the shared RegisterTable with fixed selection/settings columns, activity-first order, a column chooser and keyboard/pointer resizing. Keep record identity visible and distinguish unknown amounts from zero. The host owns server filtering, sorting and pagination.
 
 ## Mobile
 
-The application table uses a bounded horizontal scroller. Inspect identity and actions at 390 and 320 px.
+At 390 and 320 px the host renders compact 136 px rows; the title opens the full Deal record. Selection exposes labelled checkboxes and a bounded selection sheet. Tablet retains the fixed-column horizontal scroller.
 
 ## Keyboard and accessibility
 
@@ -48,7 +48,7 @@ Tab/Shift+Tab and visible focus throughout. Use labelled controls as alternative
 
 ## Differences and limits
 
-Row selection and pagination belong to host workflows; they are not implemented by Grid. A universal selectable table remains unspecified.
+The host binds selection to the current permitted page and clears it after criteria, source or access changes. Grid supplies selection controls; export and sequential opening remain host workflows. No bulk stage command is introduced.
 
 ## Verification and maintenance
 

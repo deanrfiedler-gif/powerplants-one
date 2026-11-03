@@ -179,8 +179,13 @@ def check_links_and_hygiene():
         if '.git' in path.parts:
             continue
         text = path.read_text(encoding='utf-8')
+        guide_source = path.relative_to(ROOT).parts[:2] == ('docs', 'guides')
         for target in re.findall(r'\]\(([^\s)]+)\)', text):
             if urlsplit(target).scheme:
+                continue
+            # User guides use single-slash paths such as /sales/leads as application route
+            # links; the guide compiler validates each against the registered routes.
+            if guide_source and target.startswith('/') and not target.startswith('//'):
                 continue
             parsed = urlsplit(target)
             candidate = (path.parent / unquote(parsed.path)).resolve() if parsed.path else path
@@ -268,11 +273,14 @@ def check_conflict_controls():
     docs/decisions/merge-conflict-reduction.md for why they exist.
     """
     import build_status
+    import check_design_tokens
     import check_migrations
     for message in build_status.check_status():
         problem(message)
     for message in check_migrations.check_tree():
         problem(message)
+    for message in check_design_tokens.check():
+        problem('Design tokens: ' + message)
     check_ui_index_frozen()
     # The UI build sequence is no longer committed; deriving it still proves every register entry places.
     derived = subprocess.run([sys.executable, str(ROOT / 'scripts/build-ui-sequence.py'), '--check'], cwd=ROOT, capture_output=True, text=True)
