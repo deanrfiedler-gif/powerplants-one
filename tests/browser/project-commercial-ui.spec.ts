@@ -1,20 +1,43 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
-import { closeDatabase } from "../../src/platform/database";
+import { database, closeDatabase } from "../../src/platform/database";
 import { commercialUIFixture } from "../helpers/project-commercial-ui";
 import { localConfig } from "../../src/platform/config";
 import { randomUUID } from "node:crypto";
 let fixture: Awaited<ReturnType<typeof commercialUIFixture>>;
+const grants: string[] = [];
 const captures = "docs/testing/evidence/project-commercial/captures";
 test.beforeAll(async () => {
   test.setTimeout(600000);
   if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
   if (localConfig().database_name !== "ppo_synthetic_test")
     throw Error("Only synthetic test DB");
-  fixture = await commercialUIFixture();
+  const existingGrants = await database().query<{ id: string }>(
+    "SELECT id FROM ppo.permission_grants",
+  );
+  try {
+    fixture = await commercialUIFixture();
+  } finally {
+    // Retain only this setup's additions, even if fixture preparation fails.
+    const addedGrants = await database().query<{ id: string }>(
+      "SELECT id FROM ppo.permission_grants WHERE NOT (id = ANY($1::uuid[]))",
+      [existingGrants.rows.map(({ id }) => id)],
+    );
+    grants.push(...addedGrants.rows.map(({ id }) => id));
+  }
   await mkdir(captures, { recursive: true });
 });
-test.afterAll(closeDatabase);
+test.afterAll(async () => {
+  try {
+    if (grants.length)
+      await database().query(
+        "DELETE FROM ppo.permission_grants WHERE id = ANY($1::uuid[])",
+        [grants],
+      );
+  } finally {
+    await closeDatabase();
+  }
+});
 test.beforeEach(async ({ page }) => {
   // Retain accepted geometry while keeping licensed icon artwork out of captures.
   await page.addInitScript(() => {
@@ -442,6 +465,8 @@ test("PJ05 restricted Finance, failed refresh, stale read and revoked access", a
       body: JSON.stringify({ message: "Unavailable" }),
     }),
   );
+  const moreActions = page.locator(".commercial-record-more:not([open]) > summary");
+  if (await moreActions.isVisible()) await moreActions.click();
   await page.getByRole("button", { name: "Refresh", exact: true }).click();
   await expect(page.locator(".commercial-basis-value")).toContainText(
     "Unavailable",

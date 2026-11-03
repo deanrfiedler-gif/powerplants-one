@@ -230,3 +230,50 @@ Each case below failed with the same `ExactDraftUnavailable` (503) message durin
 - PJ05-HTTP01 compiled exact basis, independent variation, Finance, concurrent submit and original recovery
 - PJ05-HTTP02 schema, exact precision, unknown input, source and cross-company refusals
 - PJ05-HTTP03 outdated document reviews and proposed owners cannot grant new authority
+
+## PR #803 browser CI fixes — 3 November 2026
+
+This follow-up starts from `7171630d38f023867391b9687c578d06f44f6093` and merges main `b7bc7a460` without conflicts. The previous review findings were confirmed by [Claude's confirmation](https://github.com/deanrfiedler-gif/powerplants-one/pull/803#issuecomment-6596871675); review 5723787578 remains the one full independent review.
+
+### Newest failed CI jobs inspected
+
+Read through the GitHub connector, using only the newest run of each workflow on the supplied head. The cancelled draft-stage runs and their 06:19–06:22 UTC summary failures were excluded.
+
+| Run / job | Observed failure |
+|---|---|
+| [Compiled desktop-2, 125766633578](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41588244240/job/125766633578) | `shared.spec.ts:28`: restricted Finance note count expected 0, received 1. |
+| [Compiled mobile-2, 125766633684](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41588244240/job/125766633684) | The same Finance note assertion; `project-commercial-ui.spec.ts:445` waited for hidden Refresh until the unchanged 600000 ms test timeout. |
+| [P01–P11 browser, 125763903536](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41588244223/job/125763903536) | The same restricted Finance note assertion. |
+| [P01–P11 browser-mobile, 125763903569](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41588244223/job/125763903569) | The same restricted Finance note assertion and hidden Refresh timeout. |
+| Compiled summary 125799986477; application summary 125819052234 | Each failed only because `PPO_SUITE_RESULT` was `failure`. |
+
+No additional live failure cause was found.
+
+### Scoped fixes and design evidence
+
+The browser spec snapshots existing permission-grant IDs before `commercialUIFixture()` and records only the added IDs immediately afterwards, including when preparation throws. Its teardown deletes exactly those IDs before closing the database. Pre-existing grants are retained. Browser files run serially against their shared synthetic database. Neither the fixture helpers nor the grants supplied to database and HTTP tests change.
+
+The Refresh interaction now opens the closed `More actions` menu when present. The accepted reference is [PPO-Project-Commercial-18-Phone-Variation-Record-r01.png](../../../reference/ui/projects/project-commercial-design-r01/PPO-Project-Commercial-18-Phone-Variation-Record-r01.png), SHA-256 `9375a8889e2aaa893bb0ebc1b6fcdfbaace22dc1e6231abfcb232f995bc5773b`, named by the PJ-05 register and [design decision](../../../decisions/project-commercial-figma-design.md). It shows the overflow action beside Open basis and Record decision, with no direct Refresh control. The icon-free capture does not show the overflow's contents. The existing [record-page consumer note](../../../design/development/pages/route-projects-id-commercial-entry.md) places navigation and other native commands inside More actions; the application already puts Refresh there. The test follows that composition. No application or accepted-reference bytes change, and this does not grant visual acceptance to the undrawn phone Basis adaptation.
+
+A source comparison against `7171630d` confirms all existing test bodies, assertions and timeouts are byte-identical after removing only the two inserted menu-opening lines. `tests/browser/shared.spec.ts` is unchanged.
+
+### CI-fix verification
+
+The prescribed cloud setup succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15: database ready, browser unavailable. The normal sandbox attempts were retried with network permission after the observed proxy/localhost failures.
+
+Passed: `python3 scripts/check_foundation.py` (including the design-token check), `check_prototype.py`, `check_naming.py`, `build_status.py --check`, all 44 documentation regression tests, migration numbering, whitespace and marker checks. The direct design-token check also passed: 63 mapped, 19 design-only, 32 unmapped baseline. Complete `npm run check` passed with network permission: Studio, lint, TypeScript, all 1,356 unit tests and the Next build. The first sandboxed run reached unit tests but could not open localhost listeners (`listen EPERM`); the complete retry resolved that failure.
+
+The actual `beforeAll` and `afterAll` callback bodies were extracted unchanged into a temporary hook runner, using the real `commercialUIFixture()` and PostgreSQL, after a fresh synthetic reset. The runner queried complete grant rows ordered by ID before setup, after its fixture attempt, and after teardown, and compared the complete rows, not only their counts:
+
+| Query | Before setup | After fixture attempt | After teardown |
+|---|---:|---:|---:|
+| Coordinator grants, joined through `ppo.users.subject_id = 'coordinator'` | 79 | 87 | 79 |
+| All `ppo.permission_grants` rows | 437 | 524 | 437 |
+
+Both complete-row equality assertions passed. All 87 added IDs were removed and every pre-existing row was preserved. The fixture installed its grants, then stopped at `ExactDraftUnavailable`; teardown still ran. This verifies cleanup after failed setup, not successful completion of the browser fixture or any browser assertion.
+
+The two database files ran serially with `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/project-commercial-ui.test.ts tests/database/project-commercial.test.ts`. All 14 cases listed under [Environment-blocked database cases](#environment-blocked-database-cases) were rerun and each failed with the same `ExactDraftUnavailable` (503): "The exact draft output is unavailable. Its saved revision is retained for recovery." Every stack reaches quotation preparation, which needs the unavailable browser. Each is **environment-blocked: browser**, not passed. No remaining failure is classified as pre-existing on main in this environment.
+
+The requested ordered run of `tests/browser/project-commercial-ui.spec.ts` followed by `tests/browser/shared.spec.ts`, with `workers=1`, is **not run here; left to GitHub CI** on both `desktop-chromium` and `mobile-chromium`, because setup reports the browser unavailable. HTTP suites, populated upgrades, process restarts, fresh visual captures and the broader database/browser matrix are also **not run here; left to GitHub CI**.
+
+Open: GitHub CI on the pushed head, the requested desktop/mobile ordered regression runs, and Claude's narrow confirmation that cleanup removes exactly the fixture's added grants, Refresh follows the accepted composition, and no assertion or timeout changed. No new full review is requested. The previously documented full-project scan cost remains. Dean merges; no deployment or owner acceptance is claimed.
