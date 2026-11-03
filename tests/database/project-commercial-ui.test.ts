@@ -26,6 +26,49 @@ process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 before(reset);
 after(closeDatabase);
+test("PJ05 paging reports result changed when an unseen record is revised between page reads", async () => {
+  const f = await commercialFixture();
+  await approvedBasis(f);
+  const older = variation(f, "12.00", "11.00");
+  const newer = variation(f, "20.00", "19.00");
+  await commandCommercial(f.owner, f.project.id, older);
+  await commandCommercial(f.owner, f.project.id, newer);
+  const first = await readCommercial(f.owner, f.project.id, {
+    kind: "Variation",
+    limit: "1",
+  });
+  assert.equal(first.items![0].id, newer.id);
+  assert.ok(first.next_cursor);
+  await commandCommercial(f.owner, f.project.id, {
+    ...commercialAction(older.id, 1, "Revise"),
+    kind: "Variation",
+    content: { ...older.content, title: "SYN revised between pages" },
+  });
+  await assert.rejects(
+    readCommercial(f.owner, f.project.id, {
+      kind: "Variation",
+      limit: "1",
+      cursor: first.next_cursor!,
+    }),
+    (error: unknown) =>
+      error instanceof AppError &&
+      error.status === 422 &&
+      error.field_errors.some(
+        (e) =>
+          e.field === "cursor" &&
+          e.message === "The result changed. Start a fresh read.",
+      ),
+  );
+  const fresh = await readCommercial(f.owner, f.project.id, {
+    kind: "Variation",
+  });
+  assert.equal(fresh.completeness, "Complete");
+  assert.deepEqual(
+    fresh.items!.map((r) => r.id),
+    [older.id, newer.id],
+  );
+  assert.equal(fresh.items![0].version, 2);
+});
 test("PJ05 UI reads: named users, retained reasons, complete counts, latest order, exact-source choices and independent review", async () => {
   const f = await commercialFixture();
   await approvedBasis(f);

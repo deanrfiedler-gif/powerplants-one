@@ -159,3 +159,74 @@ node --env-file=<external-proof.env> node_modules/@playwright/test/cli.js test -
 Functional proof: the focused cases passed. Builder visual comparison: completed with the differences above. Independent Claude review: required on the final head; see PR #803 for the request and outcome. Owner acceptance: pending. Deployment: not performed. No visual acceptance is claimed.
 
 The [UI source and capture manifest](ui-source-manifest.json) records LF-normalised source hashes and raw PNG hashes for this proof. Final lint/typecheck and documentation-assurance outcomes are recorded in PR #803.
+
+## PR #803 review findings — 3 November 2026
+
+Claude's [review 5723787578](https://github.com/deanrfiedler-gif/powerplants-one/pull/803#pullrequestreview-5723787578) is the one independent review. This follow-up merges main `6a387e228` and addresses its three findings; confirmation of those findings remains with Claude. Earlier capture hashes and test passes above describe their original heads, not this follow-up.
+
+1. Restored pending commands now use the latest retry outcome: definitive refusals clear the journal, display the refusal and allow closing. Network/unreadable responses, 5xx, timeout and throttling retain the original bytes and operation ID. A missing receipt alone still does not clear them. Six added browser cases start from a restored journal and cover VersionConflict, ClosedProject, Forbidden, network failure, 503 and 408, including unchanged retries, receipt lookup and closing behaviour.
+2. Latest-change ordering is preserved. Signed cursors also bind a digest of the complete authorised result; a changed version or visibility invalidates paging with the existing "result changed" state. The added database case revises an unseen variation between page reads, requires a cursor refusal, and verifies a fresh complete read contains both records in latest-change order. Existing pagination, permission, correction and count assertions remain.
+3. Known limit, answered rather than optimised: every page still scans the full project, rechecking source and Activity authority, and record pages reload the list. At 200 rows per page this is approximately n²/200 row checks, up to the client's 20-page loop. The 4,000-row display ceiling does not bound the server scan. This synthetic-volume limit is now explicit in the [PJ-05 contract](../../../contracts/project-commercial-controls.md#native-page-contract--pj-05); no authority check was removed and real-volume performance remains unproved.
+
+The JSON merge started from main and used stable entry keys. It adds only the two PR route entries and replaces PJ-05 in each file: 357 unique guides and 381 unique register entries. Every other main entry remains unchanged; removed guides were not restored. There were no differently changed entries on both sides and no other merge conflicts. No migration, permission, grant or accepted-design change is included.
+
+The cloud setup command succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15: database ready, browser unavailable. Network-dependent commands use the session's explicit network permission after the normal sandbox attempt fails. Browser suites, including the six new restored-journal cases: **not run here; left to GitHub CI**.
+
+### Follow-up verification
+
+| Check run on the merged contribution | Result |
+|---|---|
+| `python3 scripts/check_foundation.py` | Passed; 78 parent requirements retained. |
+| `python3 scripts/check_prototype.py` | Passed. |
+| `python3 scripts/check_naming.py` | Passed. |
+| `python3 scripts/build_status.py --check` | Passed; 302 source fragments. |
+| `npm run studio:check` | Passed; 381 entries, no errors. Separate source checks verify 357 guides and unique keys. |
+| `npm run check` with network permission | Passed in full: Studio, lint, TypeScript, 1,348 unit tests (including all eight commercial units), guide/offline generation and Next build (82 static pages). |
+| Commercial database files, one at a time | 3 UI and 11 native cases: environment-blocked: browser; exact names and message below. |
+| Commercial HTTP files, exclusive fresh database per file | 1 UI and 3 native cases: environment-blocked: browser; exact names and message below. |
+
+The initial sandboxed application check stopped at ten unit files; the focused transport diagnosis was `listen EPERM` on `127.0.0.1`. The focused retry passed 10/10 cases, and the complete `npm run check` retry with network permission passed. Initial database/HTTP/reset attempts likewise required the authorised network retry (`connect EPERM 127.0.0.1:5432`). These resolved permission attempts are not classified as regressions or as pre-existing failures. No remaining failure is classified as pre-existing on main in this environment; the remaining 18 failures all have the unavailable-renderer cause below.
+
+Browser suites (including the six new restored-journal regressions), visual captures, populated upgrades, actual restart proof and the broader database/HTTP matrix: **not run here; left to GitHub CI**. The new pagination case did not reach its assertions here because quotation fixture preparation needs Chrome. Earlier passing evidence is not substituted for this head. The task-owned server was stopped. Claude's confirmation of the three existing findings and GitHub CI remain open; Dean merges.
+
+### Environment-blocked database cases
+
+Each case below failed with `ExactDraftUnavailable` (503): "The exact draft output is unavailable. Its saved revision is retained for recovery." All fail in quotation fixture preparation, which needs the browser that setup reported unavailable. Classification: **environment-blocked: browser**; these are not passing regression proofs.
+
+
+`tests/database/project-commercial-ui.test.ts`:
+
+- PJ05 paging reports result changed when an unseen record is revised between page reads
+- PJ05 UI reads: named users, retained reasons, complete counts, latest order, exact-source choices and independent review
+- PJ05 screen fixture reconciles Finance definitions, blocked satisfaction, unchanged receipt retry and both Finance duties
+
+
+`tests/database/project-commercial.test.ts`:
+
+- PJ05-01 native issued acceptance and receiving to independently approved exact selected quotation basis
+- PJ05-02/03/08/09 exact requested/priced/disputed/approved deltas, unknowns, full-register totals and immutable adjustments
+- PJ05-04/06 independent decisions, current access, concurrent versions and atomic evidence rollback
+- PJ05-05 source drift holds new approvals and current totals; historical receipts retain exact authority
+- PJ05-07 owned obligations, independent waiver, recorded notices and retained correction chains
+- PJ05-02 wrong quote/source and root capability refusals cannot create partial evidence
+- PJ05-02 conditional and declined responses hold new use; only one competing original can be approved
+- PJ05-07 Finance requires the shared Finance disclosure duty
+- PJ05-REVIEW01 a closed finding added after review cannot renew current document eligibility
+- PJ05-REVIEW02 creation requires recorded ownership, never a client-selected self assignment
+- PJ05-REVIEW03 an assigned basis owner can create dependent records with current duties
+
+### Environment-blocked HTTP cases
+
+Each case below failed with the same `ExactDraftUnavailable` (503) message during quotation fixture preparation, before exercising its HTTP assertions: "The exact draft output is unavailable. Its saved revision is retained for recovery." Classification: **environment-blocked: browser**. Each file was run alone after the exclusive-suite database reset.
+
+
+`tests/http/project-commercial-ui.test.ts`:
+
+- PJ05 HTTP page context, named reasons, source pickers and denied duties
+
+
+`tests/http/project-commercial.test.ts`:
+
+- PJ05-HTTP01 compiled exact basis, independent variation, Finance, concurrent submit and original recovery
+- PJ05-HTTP02 schema, exact precision, unknown input, source and cross-company refusals
+- PJ05-HTTP03 outdated document reviews and proposed owners cannot grant new authority

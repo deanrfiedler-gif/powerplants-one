@@ -70,8 +70,7 @@ export function CommercialCommand({
     [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [journalReady, setJournalReady] = useState(false);
-  const uncertain = useRef(false),
-    inFlight = useRef(false);
+  const inFlight = useRef(false);
   // The journal retains an exact pending operation only, never an offline record cache.
   const storageKey = `ppo.commercial.pending:${context.workspace_id}:${context.actor_id}:${project}`;
   useEffect(() => {
@@ -84,7 +83,6 @@ export function CommercialCommand({
           const saved = JSON.parse(raw) as Pending;
           if (!saved.id || !saved.body?.operation_id) throw Error();
           setPending(saved);
-          uncertain.current = true;
         }
         setJournalReady(true);
       } catch {
@@ -169,7 +167,6 @@ export function CommercialCommand({
     // Clearing the journal is part of confirmation: failure keeps recovery available.
     sessionStorage.removeItem(storageKey);
     setPending(null);
-    uncertain.current = false;
     release();
     onSaved(saved.id);
   };
@@ -213,8 +210,14 @@ export function CommercialCommand({
       accepted(original);
     } catch (e) {
       const f = e as Failure;
-      if (uncertain.current || f.retryable || !f.status || f.status >= 500) {
-        uncertain.current = true;
+      // Judge this attempt, including a retry restored from the journal. A
+      // definitive refusal releases it; transport failures/timeouts do not.
+      if (
+        !f.status ||
+        f.status >= 500 ||
+        f.status === 408 ||
+        f.status === 429
+      ) {
         setError(e);
       } else {
         sessionStorage.removeItem(storageKey);

@@ -3,6 +3,7 @@ import { mkdir } from "node:fs/promises";
 import { closeDatabase } from "../../src/platform/database";
 import { commercialUIFixture } from "../helpers/project-commercial-ui";
 import { localConfig } from "../../src/platform/config";
+import { randomUUID } from "node:crypto";
 let fixture: Awaited<ReturnType<typeof commercialUIFixture>>;
 const captures = "docs/testing/evidence/project-commercial/captures";
 test.beforeAll(async () => {
@@ -64,6 +65,120 @@ async function captureViewport(page: Page, width: number) {
 const register = () => `/projects/commercial?project=${fixture.f.project.id}`;
 const record = (key: string) =>
   `/projects/${fixture.f.project.id}/commercial/${fixture.entries[key]}`;
+
+for (const outcome of [
+  "VersionConflict",
+  "ClosedProject",
+  "Forbidden",
+  "Network",
+  "Server",
+  "Timeout",
+] as const) {
+  test(`PJ05 restored journal retry handles ${outcome}`, async ({ page }) => {
+    await login(page);
+    await page.goto(record("basis"));
+    const storageKey = `ppo.commercial.pending:${fixture.f.owner.workspace_id}:${fixture.f.owner.actor_id}:${fixture.f.project.id}`;
+    const original = {
+      title: "SYN restored commercial command",
+      id: fixture.entries.basis,
+      body: {
+        id: fixture.entries.basis,
+        operation_id: randomUUID(),
+        schema_version: 1,
+        action: "Submit",
+        expected_version: 1,
+        reason: "SYN retained reason",
+      },
+    };
+    const journal = JSON.stringify(original);
+    await page.evaluate(
+      ({ storageKey, journal }) => sessionStorage.setItem(storageKey, journal),
+      { storageKey, journal },
+    );
+    await page.reload();
+    await page
+      .getByRole("button", { name: "Recover pending save", exact: true })
+      .click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toContainText(original.title);
+    let submissions = 0;
+    await page.route(
+      `**/api/v1/projects/${fixture.f.project.id}/commercial`,
+      async (route) => {
+        if (route.request().method() !== "POST") return route.continue();
+        submissions++;
+        expect(route.request().postDataJSON()).toEqual(original.body);
+        if (outcome === "Network") return route.abort("failed");
+        await route.fulfill({
+          status:
+            outcome === "Forbidden"
+              ? 403
+              : outcome === "Server"
+                ? 503
+                : outcome === "Timeout"
+                  ? 408
+                  : 409,
+          contentType: "application/json",
+          body: JSON.stringify({ code: outcome, message: `SYN ${outcome}` }),
+        });
+      },
+    );
+    await dialog
+      .getByRole("button", { name: "Retry unchanged", exact: true })
+      .click();
+    const uncertain = ["Network", "Server", "Timeout"].includes(outcome);
+    if (uncertain) {
+      await expect(
+        dialog.getByRole("button", { name: "Retry unchanged", exact: true }),
+      ).toBeEnabled();
+      await expect(dialog).toContainText(
+        outcome === "Network" ? "could not be confirmed" : `SYN ${outcome}`,
+      );
+      expect(
+        await page.evaluate((key) => sessionStorage.getItem(key), storageKey),
+      ).toBe(journal);
+      await page.route(
+        `**/api/v1/operations/${original.body.operation_id}`,
+        (route) =>
+          route.fulfill({
+            status: 404,
+            contentType: "application/json",
+            body: JSON.stringify({ message: "Unavailable" }),
+          }),
+      );
+      await dialog
+        .getByRole("button", { name: "Check saved result", exact: true })
+        .click();
+      await expect(dialog).toContainText(
+        "a missing receipt does not prove failure",
+      );
+      await dialog
+        .getByRole("button", { name: `Close ${original.title}`, exact: true })
+        .click();
+      await expect(dialog).toBeVisible();
+      expect(
+        await page.evaluate((key) => sessionStorage.getItem(key), storageKey),
+      ).toBe(journal);
+      await dialog
+        .getByRole("button", { name: "Retry unchanged", exact: true })
+        .click();
+      await expect.poll(() => submissions).toBe(2);
+    } else {
+      await expect(dialog).toContainText(`SYN ${outcome}`);
+      await expect(
+        dialog.getByRole("button", { name: "Retry unchanged", exact: true }),
+      ).toHaveCount(0);
+      expect(
+        await page.evaluate((key) => sessionStorage.getItem(key), storageKey),
+      ).toBeNull();
+      page.on("dialog", (confirmation) => confirmation.accept());
+      await dialog.getByRole("button", { name: /^Close / }).click();
+      await expect(dialog).toHaveCount(0);
+      expect(submissions).toBe(1);
+    }
+  });
+}
+
 test("PJ05 project picker, four record kinds and accepted viewport captures", async ({
   page,
 }) => {

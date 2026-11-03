@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { commercialNames, commercialPresentation } from "./presentation";
 import type { Principal } from "../../platform/identity";
@@ -245,16 +246,9 @@ export async function readCommercial(
     if (q.before_version !== undefined)
       throw new AppError(422, "InvalidData", "History requires a record id.");
     const kind = q.kind === undefined ? null : choice(q.kind, "kind", kinds);
-    const pg = page(
-      { limit: q.limit, cursor: q.cursor },
-      {
-        workspace: p.workspace_id,
-        actor: p.actor_id,
-        company: workingCompanyFor(p.actor_id),
-        project: pr.id,
-        kind,
-      },
-    );
+    // Reject an invalid page size before scanning. The cursor is checked against
+    // the complete authorised result below, so revisions cannot silently skip rows.
+    page({ limit: q.limit }, null);
     const items: (ReturnType<typeof projection> & {
       source_status: "Current" | "Changed";
       activity_counts: { open: number; closed: number };
@@ -319,6 +313,29 @@ export async function readCommercial(
       (a, b) =>
         b.recorded_at.localeCompare(a.recorded_at) || a.id.localeCompare(b.id),
     );
+    let pg: ReturnType<typeof page>;
+    try {
+      pg = page(
+        { limit: q.limit, cursor: q.cursor },
+        {
+          workspace: p.workspace_id,
+          actor: p.actor_id,
+          company: workingCompanyFor(p.actor_id),
+          project: pr.id,
+          kind,
+          result: createHash("sha256")
+            .update(JSON.stringify({ items, partial }))
+            .digest("hex"),
+        },
+      );
+    } catch (error) {
+      if (
+        error instanceof AppError &&
+        error.field_errors.some((e) => e.field === "cursor")
+      )
+        invalid("cursor", "The result changed. Start a fresh read.");
+      throw error;
+    }
     const anchor = pg.after ? items.findIndex((x) => x.id === pg.after) : -1;
     if (pg.after && anchor < 0)
       invalid("cursor", "The result changed. Start a fresh read.");
