@@ -18,12 +18,13 @@ test("read-only navigation does not imply creation or elevate an identity", () =
   assert.ok(permitted.includes("deals"));
   assert.ok(permitted.includes("contacts"));
   assert.ok(!permitted.includes("projects"));
-  assert.ok(!permitted.includes("settings"));
+  assert.ok(permitted.includes("settings"), "AD-02 exposes the hub; each area's read retains its own authority");
   assert.equal(canOpen(destination("projects"), permitted, true), false);
-  assert.equal(canOpen(destination("settings"), ["settings"], true), false);
+  assert.equal(canOpen(destination("settings"), ["settings"], true), true);
+  assert.equal(canOpen(destination("settings"), [], true), false);
   assert.equal(canOpen(destination("supply"), permitted, true), false);
   assert.equal(canOpen(destination("supply"), navigationForCapabilities(new Set(["supply.read"]),true), true), true);
-  assert.deepEqual(navigationForCapabilities(new Set(), true), ["home"]);
+  assert.deepEqual(navigationForCapabilities(new Set(), true), ["settings", "home"]);
 });
 test("nested pages resolve to their actual workspace instead of a remembered Sales selection", () => {
   assert.equal(

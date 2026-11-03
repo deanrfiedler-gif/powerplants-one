@@ -109,6 +109,7 @@ async function permitted<T>(read: () => Promise<T>): Promise<T | null> {
 export async function readSettings(p: Principal) {
   const allowed = new Set<string>();
   const attention: AttentionItem[] = [];
+  let attentionHasMore = false;
   const policies = await permitted(() => readBusinessPolicies(p));
   if (policies) {
     allowed.add("policies");
@@ -132,6 +133,7 @@ export async function readSettings(p: Principal) {
       const requests = await permitted(() =>
         accessRequests(p, { state: "Submitted" }),
       );
+      attentionHasMore ||= requests?.has_more ?? false;
       for (const row of requests?.items ?? [])
         attention.push({
           id: String(row.id),
@@ -153,7 +155,8 @@ export async function readSettings(p: Principal) {
   });
   if (recoveryAllowed) {
     allowed.add("health");
-    const recovery = await permitted(() => listRecovery(p));
+    const recovery = await permitted(() => listRecovery(p, true));
+    attentionHasMore ||= recovery?.has_more ?? false;
     for (const row of recovery?.items ?? [])
       attention.push({
         id: String(row.case_id),
@@ -186,9 +189,17 @@ export async function readSettings(p: Principal) {
   });
   return {
     foundation_available: !isHostedDemo(),
-    policy_summary: policies ? { count: policies.items.length } : null,
+    policy_summary: policies
+      ? {
+          count: policies.items.length,
+          waiting_to_publish: policies.items.filter(
+            (r) => r.state === "Waiting to publish",
+          ).length,
+        }
+      : null,
     areas: configurationAreas.filter((a) => a.href && allowed.has(a.id)),
     attention,
+    attention_has_more: attentionHasMore,
     read_at: new Date().toISOString(),
     viewer: p.display_name,
   };

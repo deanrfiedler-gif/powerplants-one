@@ -81,6 +81,18 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
   const denied = isDenied(command.error),
     frozen = command.busy || !!command.pending || !command.ready;
   const canPropose = !!chain && (data.can_review || data.can_publish);
+  const currentReview = !!(
+    review &&
+    proposal &&
+    chain &&
+    review.reviewer_id !== proposal.proposer_id &&
+    review.proposal.id === proposal.id &&
+    review.proposal.version === proposal.version &&
+    review.expected_head.version === chain.head.version &&
+    proposal.effective_from > data.read_at &&
+    !evidence?.successor_proposal_id &&
+    !evidence?.publication_id
+  );
   const canReview =
     !!proposal &&
     data.can_review &&
@@ -332,6 +344,16 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
             {chain && (
               <span>Publication head: version {chain.head.version}</span>
             )}
+            {shownReview && (
+              <span>
+                {affected.length} future{" "}
+                {affected.length === 1 ? "booking" : "bookings"} to review on
+                publication
+                {currentReview
+                  ? " · saved review"
+                  : " · out-of-date review, reference only"}
+              </span>
+            )}
             {item.until && (
               <span>
                 Runs to <Stamp value={item.until} timezone={zone} />
@@ -374,6 +396,15 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
             <p>{item.changes}</p>
             {chain && (
               <>
+                <h2>Who can change it</h2>
+                <dl>
+                  <dt>Proposes</dt>
+                  <dd>Review or publish duty</dd>
+                  <dt>Reviews</dt>
+                  <dd>Independent review duty</dd>
+                  <dt>Publishes</dt>
+                  <dd>Separate publish duty</dd>
+                </dl>
                 <p>
                   The proposer cannot review their own change. The publisher
                   must be different from the reviewer.
@@ -452,7 +483,8 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
         <ErrorNotice error={command.error} />
         {(item.proposal_count ?? 0) > 1 && (
           <p className="settings-note">
-            Latest of {item.proposal_count} open proposal branches.{" "}
+            {item.proposal_count} live proposal branches. Showing the latest
+            reviewed branch when available, otherwise the latest proposal.{" "}
             <Link href="/schedule/policy-impact">View all in PL-04</Link>.
           </p>
         )}
@@ -522,17 +554,18 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                   </p>
                   {review && review.reviewer_id !== proposal.proposer_id && (
                     <p>
-                      Reviewed by{" "}
+                      {currentReview
+                        ? "Reviewed by"
+                        : "Review out of date · reviewed by"}{" "}
                       {data.actors.find((a) => a.id === review.reviewer_id)
                         ?.display_name ?? "Policy reviewer"}{" "}
                       · <Stamp value={review.evaluated_at} timezone={zone} />
                       <br />
-                      {
-                        review.candidates.filter(
-                          (c) => c.evaluation.outcome === "ImpactRequired",
-                        ).length
-                      }{" "}
-                      bookings need review in the saved population.
+                      {affected.length}{" "}
+                      {affected.length === 1
+                        ? "booking needs"
+                        : "bookings need"}{" "}
+                      review in the saved population.
                     </p>
                   )}
                   <Button onClick={() => setTab("proposal")}>
@@ -633,7 +666,7 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                 {shownReview ? (
                   <section>
                     <h2>
-                      {review && review.reviewer_id !== proposal.proposer_id
+                      {currentReview
                         ? "Saved independent review"
                         : "Review out of date · reference only"}
                     </h2>
@@ -648,7 +681,11 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                       {shownReview.expected_head.version}.
                     </p>
                     <p>
-                      {shownReview.candidates.length} bookings checked ·{" "}
+                      {shownReview.candidates.length}{" "}
+                      {shownReview.candidates.length === 1
+                        ? "booking"
+                        : "bookings"}{" "}
+                      checked ·{" "}
                       {
                         shownReview.candidates.filter(
                           (c) => c.evaluation.outcome === "Compliant",
@@ -812,7 +849,9 @@ function PolicyBody({ data, reload }: { data: Detail; reload: () => void }) {
                       stay held until the impacts are resolved.
                     </p>
                     <p>
-                      {affected.length} bookings in the saved review need
+                      {affected.length}{" "}
+                      {affected.length === 1 ? "booking" : "bookings"} in the
+                      saved review {affected.length === 1 ? "needs" : "need"}{" "}
                       attention. No booking, pin or issued pack is rewritten.
                     </p>
                     <p>

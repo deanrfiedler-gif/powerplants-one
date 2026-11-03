@@ -28,7 +28,27 @@ export type BusinessPolicy = {
   reference_types?: PolicyTerm[];
   chain?: PolicyChain;
   proposal_count?: number;
+  last_change?: string | null;
 };
+export type ProposalSummary = {
+  id: string;
+  expected_head_version: number;
+  effective_from: Date | string;
+  reviewed: boolean;
+};
+/** Newest first; a reviewed live branch takes precedence over an unreviewed one. */
+export function livePolicyProposals(
+  proposals: ProposalSummary[],
+  headVersion: number,
+  now: string,
+) {
+  const live = proposals.filter(
+    (p) =>
+      p.expected_head_version === headVersion &&
+      new Date(p.effective_from).toISOString() > now,
+  );
+  return { live, selected: live.find((p) => p.reviewed) ?? live[0] };
+}
 export const schedulingTerms = (
   p: PolicyChain["members"][number]["policy"],
 ): PolicyTerm[] => [
@@ -84,12 +104,7 @@ export async function readBusinessPolicies(p: Principal) {
     const activeVersion = active ? chain.members.indexOf(active) + 1 : null;
     const head = chain.members.at(-1)!.policy;
     const proposals = (
-      await c.query<{
-        id: string;
-        expected_head_version: number;
-        effective_from: Date;
-        reviewed: boolean;
-      }>(
+      await c.query<ProposalSummary>(
         `
       SELECT p.id,p.expected_head_version,(p.content->>'effective_from')::timestamptz AS effective_from,
       EXISTS(SELECT 1 FROM ppo.scheduling_policy_reviews r WHERE r.workspace_id=p.workspace_id AND r.proposal_id=p.id AND r.reviewer_id<>p.proposer_id) AS reviewed
@@ -100,15 +115,27 @@ export async function readBusinessPolicies(p: Principal) {
         [p.workspace_id],
       )
     ).rows;
-    const proposal = proposals[0];
+    const { live, selected: proposal } = livePolicyProposals(
+      proposals,
+      chain.head.version,
+      now,
+    );
     const proposalState = proposal
-      ? proposal.expected_head_version !== chain.head.version ||
-        instant(proposal.effective_from) <= now
-        ? "Review out of date"
-        : proposal.reviewed
-          ? "Waiting to publish"
-          : "Waiting for review"
+      ? proposal.reviewed
+        ? "Waiting to publish"
+        : "Waiting for review"
       : "No proposal";
+    const lastChange = (
+      await c.query<{ at: Date | null }>(
+        `
+      SELECT max(at) AS at FROM (
+        SELECT proposed_at AS at FROM ppo.scheduling_policy_proposals WHERE workspace_id=$1
+        UNION ALL SELECT evaluated_at FROM ppo.scheduling_policy_reviews WHERE workspace_id=$1
+        UNION ALL SELECT created_at FROM ppo.scheduling_policy_publications WHERE workspace_id=$1
+      ) changes`,
+        [p.workspace_id],
+      )
+    ).rows[0].at;
     const items: BusinessPolicy[] = [
       {
         id: chain.root_policy_id,
@@ -125,7 +152,8 @@ export async function readBusinessPolicies(p: Principal) {
         changes: "Saved proposal, independent review and separate publisher",
         terms: active ? schedulingTerms(active.policy) : [],
         chain,
-        proposal_count: proposals.length,
+        proposal_count: live.length,
+        last_change: lastChange ? instant(lastChange) : null,
       },
     ];
     const readiness = (
@@ -306,7 +334,7 @@ export async function readBusinessPolicies(p: Principal) {
       ...permissions,
       read_at: now,
       viewer: p.display_name,
-      proposal_count: proposals.length,
+      proposal_count: live.length,
     };
   });
 }

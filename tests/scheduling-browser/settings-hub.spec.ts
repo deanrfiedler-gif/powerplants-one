@@ -53,6 +53,15 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
   for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({ width, height: width < 780 ? 844 : 900 });
     await navigate("/admin/settings");
+    await expect(page.locator('.settings-menu-link[href="/admin/settings"]')).toHaveAttribute("aria-current", "page");
+    await expect(page.locator('.settings-menu-link[href="/admin/policies"]')).toContainText(String(data.items.length));
+    if (width === 1440) {
+      await expect(page.locator('.settings-area-card[data-area="policies"] footer')).toHaveCSS("padding-left", "0px");
+      await expect(page.locator('.settings-area-card[data-area="policies"] footer')).toHaveCSS("font-size", "12px");
+      await page.getByRole("button", { name: "My account and preferences", exact: true }).click();
+      await expect(page.getByRole("dialog", { name: "Account", exact: true })).toBeVisible();
+      await page.keyboard.press("Escape");
+    }
     if (width >= 1024) {
       await expect(
         page.locator('.settings-area-card[data-area="policies"]'),
@@ -81,6 +90,11 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       fullPage: true,
     });
     await navigate("/admin/policies");
+    await expect(page.locator('.settings-menu-link[href="/admin/policies"]')).toHaveAttribute("aria-current", "page");
+    if (width >= 1024) {
+      await expect(page.getByRole("columnheader", { name: "Waiting on", exact: true })).toBeVisible();
+      await expect(page.getByRole("columnheader", { name: "Last change", exact: true })).toBeVisible();
+    }
     await expect(
       page.getByRole("link", { name: policy.name, exact: true }),
     ).toBeVisible();
@@ -105,6 +119,7 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
       ),
     ).toBe(true);
     if (width >= 1024) {
+      await expect(page.getByRole("heading", { name: "Who can change it", exact: true })).toBeVisible();
       const facts = await page.locator(".shared-record-facts").boundingBox();
       const workspace = await page
         .locator(".shared-record-workspace")
@@ -159,6 +174,8 @@ test("AD-02 real per-area reads, record families and four-width capture proof", 
     });
   }
   await navigate("/admin/policies?state=waiting-to-publish");
+  await expect(page.locator('.settings-menu-link[href="/admin/policies?state=waiting-to-publish"]')).toHaveAttribute("aria-current", "page");
+  await expect(page.locator('.settings-menu-link[href="/admin/policies?state=waiting-to-publish"]')).toContainText("0");
   await expect(
     page.getByText("No policies waiting to publish", { exact: true }),
   ).toBeVisible();
@@ -309,6 +326,18 @@ test("AD-02 dialogs save an independent proposal and refuse stale publication", 
   const current = await (
     await page.request.get(`/api/v1/admin/policies/${policy.id}`)
   ).json();
+  // A returned saved review whose start passed must be labelled stale in both views.
+  await page.route(`**/api/v1/admin/policies/${policy.id}`, (route) => route.fulfill({
+    status: 200, contentType: "application/json",
+    body: JSON.stringify({ ...current, read_at: "2031-12-01T00:00:00.000Z" }),
+  }));
+  await page.reload();
+  await expect(page.getByText(/Review out of date · reviewed by/)).toBeVisible();
+  await page.getByRole("tab", { name: /proposal/ }).click();
+  await expect(page.getByRole("heading", { name: "Review out of date · reference only", exact: true })).toBeVisible();
+  await page.unroute(`**/api/v1/admin/policies/${policy.id}`);
+  await page.reload();
+  await page.getByRole("tab", { name: /proposal/ }).click();
   const p = current.evidence.proposal;
   const replacement = await page.request.post(
     "/api/v1/schedule/policy-proposals",
@@ -428,6 +457,13 @@ test("AD-02 recovers a committed publication after its response is lost without 
   await expect(
     page.locator('a[href^="/service/appointments/"]'),
   ).not.toHaveCount(0);
+  await expect(page.getByText(/1 booking checked/)).toBeVisible();
+  await expect(page.getByText(/1 future booking to review on publication/)).toBeVisible();
+  const reviewedRecord = await (await page.request.get(`/api/v1/admin/policies/${policy.id}`)).json();
+  await page.goto(`/schedule/policy-impact?review=${reviewedRecord.evidence.review.id}`);
+  await page.getByRole("link", { name: "Open policy record", exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/admin/policies/${policy.id}$`));
+  await page.getByRole("tab", { name: /proposal/ }).click();
   for (const width of [1440, 1024, 390, 320]) {
     if (width === 390)
       await page.getByRole("tab", { name: "Terms", exact: true }).click();
@@ -462,6 +498,7 @@ test("AD-02 recovers a committed publication after its response is lost without 
     .first()
     .click();
   const dialog = page.getByRole("dialog", { name: /Publish version/ });
+  await expect(dialog.getByText(/1 booking in the saved review needs attention/)).toBeVisible();
   await dialog.getByRole("button", { name: /Publish version/ }).click();
   await expect(dialog.getByText(/outcome is unknown/i)).toBeVisible();
   await dialog.getByRole("button", { name: "Cancel", exact: true }).click();

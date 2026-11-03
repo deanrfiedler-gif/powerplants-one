@@ -572,6 +572,9 @@ function PolicyWorkspaceBody({
           <h3 ref={kind === "review" ? focusRecord : undefined} tabIndex={-1}>
             Complete saved review
           </h3>
+          {chain && (
+            <p><Link href={`/admin/policies/${chain.root_policy_id}`}>Open policy record</Link></p>
+          )}
           <RecordReference label="Review" value={evidence.review} />
           <p>
             Reviewed{" "}

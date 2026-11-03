@@ -25,3 +25,7 @@ AD-02 uses the existing read-state rules/runtime. Fixtures cover allowed/denied 
 ## shared-record
 
 Only `route:/admin/policies/[id]` directly consumes SharedRecord, with the shared organisations stylesheet providing its layout. Terms, current proposal, earlier review marked reference only, read-only seed families and readable reference formats are fixtures. Phone terms stack within the shared table; the native sticky primary action remains single. The shared phone More menu opens Propose change, switches Terms/proposal and refreshes. Browser proof verifies Escape and focus return to that menu opener at 390 and 320 px. No shared page-ID list or frozen component catalogue is changed. Visual evidence and owner acceptance remain separate.
+
+## Review corrections — 4 November 2026
+
+The existing menu links now expose `aria-current` and counts; the hub uses the shell’s existing Account utility event from a shared Button. Register fixtures include an older reviewed live branch beneath a newer unreviewed one, dead branches, truncated attention and disposed recovery cases. The register adds Waiting on and Last change columns. SharedRecord facts name Who can change it, while its Policy state slot labels saved-review counts and stale reference-only evidence. The card footer resets its own padding/font size without changing global footer rules. Existing bindings and component contracts are retained; browser execution of these corrections is left to CI because the setup reports the browser unavailable.

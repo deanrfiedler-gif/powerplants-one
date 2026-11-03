@@ -34,14 +34,20 @@
   margin: 0 0 4px;
 }
 #ppo-settings .settings-menu-link {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
   padding: 12px;
   color: var(--ink);
   text-decoration: none;
   border-radius: var(--radius-control);
 }
-#ppo-settings .settings-menu-link:hover {
+#ppo-settings .settings-menu-link:hover,
+#ppo-settings .settings-menu-link[aria-current="page"] {
   background: var(--ppo-shell-selected);
+}
+#ppo-settings .settings-menu-link[aria-current="page"] {
+  font-weight: 500;
 }
 #ppo-settings .mw-menu-heading {
   font-size: 11px;
@@ -112,7 +118,9 @@
 }
 #ppo-settings .settings-area-card footer {
   border-top: 1px solid var(--line);
-  padding-top: 10px;
+  padding: 10px 0 0;
+  font-size: 12px;
+  line-height: 18px;
 }
 #ppo-settings .settings-area-card:hover {
   border-color: var(--ppo-shell-link);

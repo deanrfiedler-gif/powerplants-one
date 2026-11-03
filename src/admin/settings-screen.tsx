@@ -1,6 +1,7 @@
 "use client";
 import "./settings.css";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import type { PhoneHeaderConfig } from "../shell/phone-header";
@@ -22,12 +23,17 @@ export function SettingsFrame({
   record = false,
   phoneHeader,
   settingsSource,
+  waitingOnly = false,
 }: {
   children: ReactNode;
   record?: boolean;
   phoneHeader?: Omit<PhoneHeaderConfig, "chooseView">;
   settingsSource?: ReturnType<typeof usePlatformResource<Settings>>;
+  waitingOnly?: boolean;
 }) {
+  const pathname = usePathname();
+  const current = (href: string) =>
+    pathname === href ? ("page" as const) : undefined;
   const [open, setOpen] = useState(!record);
   const menu = useSecondaryMenu(open, setOpen);
   const ownSource = usePlatformResource<Settings>(
@@ -51,24 +57,41 @@ export function SettingsFrame({
       menu={
         <>
           <h2 className="mw-menu-heading">Settings</h2>
-          <Link className="settings-menu-link" href="/admin/settings">
+          <Link
+            className="settings-menu-link"
+            href="/admin/settings"
+            aria-current={current("/admin/settings")}
+          >
             Overview
           </Link>
           {data?.areas.some((a) => a.id === "policies") && (
             <>
               <h3 className="mw-menu-heading">Business policies</h3>
-              <Link className="settings-menu-link" href="/admin/policies">
-                All policies
+              <Link
+                className="settings-menu-link"
+                href="/admin/policies"
+                aria-current={
+                  !waitingOnly &&
+                  pathname?.startsWith("/admin/policies") &&
+                  pathname !== "/admin/policies/record-references"
+                    ? "page"
+                    : undefined
+                }
+              >
+                All policies <span>{data.policy_summary?.count}</span>
               </Link>
               <Link
                 className="settings-menu-link"
                 href="/admin/policies?state=waiting-to-publish"
+                aria-current={waitingOnly ? "page" : undefined}
               >
-                Waiting to publish
+                Waiting to publish{" "}
+                <span>{data.policy_summary?.waiting_to_publish}</span>
               </Link>
               <Link
                 className="settings-menu-link"
                 href="/admin/policies/record-references"
+                aria-current={current("/admin/policies/record-references")}
               >
                 Record references
               </Link>
@@ -80,7 +103,12 @@ export function SettingsFrame({
           {data?.areas
             .filter((a) => a.id !== "policies" && a.id !== "health")
             .map((a) => (
-              <Link className="settings-menu-link" key={a.id} href={a.href!}>
+              <Link
+                className="settings-menu-link"
+                key={a.id}
+                href={a.href!}
+                aria-current={current(a.href!)}
+              >
                 {a.name}
               </Link>
             ))}
@@ -89,12 +117,20 @@ export function SettingsFrame({
             <>
               <h3 className="mw-menu-heading">Support</h3>
               {data.areas.some((a) => a.id === "health") && (
-                <Link className="settings-menu-link" href="/admin">
+                <Link
+                  className="settings-menu-link"
+                  href="/admin"
+                  aria-current={current("/admin")}
+                >
                   Exceptions and recovery
                 </Link>
               )}
               {data.foundation_available && (
-                <Link className="settings-menu-link" href="/foundation">
+                <Link
+                  className="settings-menu-link"
+                  href="/foundation"
+                  aria-current={current("/foundation")}
+                >
                   Foundation checks
                 </Link>
               )}
@@ -137,6 +173,7 @@ export function SettingsHub() {
                     <h2>Needs attention</h2>
                     <RegisterChip tone="attention">
                       {data.attention.length}
+                      {data.attention_has_more ? "+" : ""}
                     </RegisterChip>
                     <span>
                       Read{" "}
@@ -146,6 +183,12 @@ export function SettingsHub() {
                       />
                     </span>
                   </header>
+                  {data.attention_has_more && (
+                    <p className="settings-empty">
+                      More items may be available. Open Users and access or
+                      Exceptions and recovery to review the available records.
+                    </p>
+                  )}
                   {data.attention.length ? (
                     data.attention.map((a) => (
                       <div className="settings-attention-row" key={a.id}>
@@ -158,7 +201,9 @@ export function SettingsHub() {
                     ))
                   ) : (
                     <p className="settings-empty">
-                      No attention items are available for your current access.
+                      {data.attention_has_more
+                        ? "No attention items in this page. Check the source lists."
+                        : "No attention items are available for your current access."}
                     </p>
                   )}
                 </section>
@@ -207,6 +252,15 @@ export function SettingsHub() {
               </>
             )}
             <Button onClick={source.reload}>Refresh settings</Button>
+            <Button
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("ppo-shell-utility", { detail: "account" }),
+                )
+              }
+            >
+              My account and preferences
+            </Button>
           </>
         )}
       </div>
@@ -237,6 +291,7 @@ export function BusinessPoliciesRegister({
     [];
   return (
     <SettingsFrame
+      waitingOnly={waitingOnly}
       phoneHeader={{
         title: waitingOnly ? "Waiting to publish" : "All policies",
         count: data ? rows.length : undefined,
@@ -298,7 +353,9 @@ export function BusinessPoliciesRegister({
                   <th scope="col">Proposal state</th>
                   <th scope="col">Next version</th>
                   <th scope="col">Since</th>
+                  <th scope="col">Waiting on</th>
                   <th scope="col">How it changes</th>
+                  <th scope="col">Last change</th>
                 </tr>
               </thead>
               <tbody>
@@ -329,7 +386,24 @@ export function BusinessPoliciesRegister({
                         <Stamp value={r.since} timezone="Australia/Brisbane" />
                       )}
                     </td>
+                    <td>
+                      {r.state === "Waiting to publish"
+                        ? "Separate publisher"
+                        : r.state === "Waiting for review"
+                          ? "Independent reviewer"
+                          : "—"}
+                    </td>
                     <td>{r.changes}</td>
+                    <td>
+                      {r.last_change ? (
+                        <Stamp
+                          value={r.last_change}
+                          timezone="Australia/Brisbane"
+                        />
+                      ) : (
+                        "Not recorded"
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
