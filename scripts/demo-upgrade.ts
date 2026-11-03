@@ -402,6 +402,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   await transaction(async db => {
     console.log("Demo upgrade stage: validate-target");
     if (!apply) await db.query("SET TRANSACTION READ ONLY");
+    // Pending migrations and seeds run in this one transaction, and some single
+    // statements (DO blocks, backfills) can exceed the pool's 10s limit. Bound the
+    // operator upgrade separately, inside the job's 600s replica timeout; SET LOCAL
+    // leaves the web runtime's reads at 10s.
+    await db.query("SET LOCAL statement_timeout = '120s'");
     await db.query("SELECT pg_advisory_xact_lock(10001)");
     const role = `${databaseName}_app`;
     if ((await db.query("SELECT current_database() AS name")).rows[0].name !== databaseName ||
