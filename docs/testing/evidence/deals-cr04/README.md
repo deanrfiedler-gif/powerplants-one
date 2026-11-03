@@ -2,6 +2,47 @@
 
 This is application evidence for PR #699 and the [24 October accepted design](../../../decisions/deals-figma-design.md#acceptance--24-october-2026). The [r02 captures](../../../reference/ui/crm/deals-design-r02/README.md) are the comparison source; earlier r01/r37/r38 compositions remain historical. Private Figma links and licensed artwork are not included.
 
+## Remaining CI causes — 3 November 2026
+
+The GitHub connector confirmed the expected starting head `6230b4e6f21dde61dddc5aa32898a6b3d4968a3b` and the released [previous claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/699#issuecomment-6589647689). The [new claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/699#issuecomment-6594242244) covers only main integration and these three causes. Main `9d953fed440402e5c02ffac2e349da453f3a37ee` merged cleanly in `6c09c218d`; no migration or prohibited-path edit was needed.
+
+All seven failed job logs on the starting head were read through the connector before editing. No additional failed job appeared in that read:
+
+| Failed job | Observed cause |
+| --- | --- |
+| [P01–P11 database-1 proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533948969/job/125595933312) | Both `deals-cr04.test.ts` cases failed in `beforeEach(reset)` with “Reset requires PPO_ALLOW_RESET=dispose-synthetic and PPO_RESET_DATABASE matching the named database. Stop the application first.” |
+| [CRM desktop and mobile persistence and interaction proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533949429/job/125594965096) | The mobile owner-transfer case at `crm-refinements.spec.ts:56` resolved the phone title link but received `hidden` instead of `visible` within the unchanged 5,000 ms assertion timeout. |
+| [Compiled application browser-mobile-1 proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533949387/job/125596368653) | Same owner-transfer hidden-link failure. |
+| [P01–P11 browser-mobile proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533948969/job/125595933513) | Same owner-transfer hidden-link failure. |
+| [CRM header and board visual checks](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533949429/job/125594965079) | `deals-design-conformance.spec.ts:167` failed strict locator resolution: “No next activity” matched the Views choice and two board-card health buttons. |
+| [Desktop and mobile browser suite against the compiled application](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533949387/job/125625602771) | Summary only: `PPO_SUITE_RESULT: failure`. |
+| [P01–P11 and CRM I1–I2 local application and PostgreSQL proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41533948969/job/125652253766) | Summary only: `PPO_SUITE_RESULT: failure`. |
+
+Corrections and source evidence:
+
+- `tests/database/deals-cr04.test.ts:17–18` sets both reset variables after verifying `ppo_synthetic_test`, exactly as the existing mobile CRM suite does. Both tests and their assertions remain.
+- `tests/browser/crm-refinements.spec.ts:30` supplies a 2,000-character activity, then sets the mobile viewport to 320 px at line 43. `src/components/crm-worklist-grid.tsx:262–298` renders the title and full activity in one flex column. At the starting head, `src/app/styles/deals-workspace.css:811–829` fixes that column to 136 px and gives the shrinking title `overflow: hidden`; `src/app/globals.css:2064` wraps the long activity anywhere. The activity's content minimum crowds out the title, collapsing its height. The application fix changes the row to `min-height: 136px` so it grows with wrapped content. No assertion, timeout or expected value changes; the existing short-row 136 px geometry check also remains. This is a code/CSS diagnosis, not a claimed local browser reproduction or pass.
+- `tests/ui/deals-design-conformance.spec.ts` scopes All open and No next activity to the exact Views dialog. End, Home, typeahead, Enter, focus, geometry and focus-return assertions remain unchanged.
+
+Setup succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15 ready; the browser is unavailable. The environment file is sourced in subsequent shells. The focused CR-04 command explicitly unsets `PPO_ALLOW_RESET` and `PPO_RESET_DATABASE` before `node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/deals-cr04.test.ts`. With network access, both resets complete: the source-permission test passes; the issued-quotation test fails with `ExactDraftUnavailable — The exact draft output is unavailable. Its saved revision is retained for recovery.` This is **environment-blocked: browser/Chrome renderer**: `tests/helpers/quotation-release.ts:41` calls `retryQuote`, which renders via `launchDocumentBrowser` in `src/estimating/worker.ts:13–23`.
+
+`tests/browser/crm-refinements.spec.ts` and `tests/ui/deals-design-conformance.spec.ts`: **not run here; left to GitHub CI**. Other browser, upgrade and HTTP suites: **not run here; left to GitHub CI**. Claude's [confirmation](https://github.com/deanrfiedler-gif/powerplants-one/pull/699#issuecomment-6590091814) of the earlier full review remains. Only confirmation of these three causes and preserved assertions is requested. Dean merges; no merge or deployment by Codex.
+
+Validation for this correction: `npm run check` passed with network access, including register validation, lint, typecheck, **1,339 unit tests (zero skipped)** and the production build. Foundation, prototype, naming and status checks passed (297 fragments), as did migration numbering and 25 documentation-tool tests.
+
+The seven database suites `tests/database/{crm,crm-i2,crm-refinements,crm-five-stages,mobile-crm,sales-workflows,deals-cr04}.test.ts` completed with **103 passed, six environment-blocked: browser/Chrome renderer**, zero skipped. CR-04 ran separately with the reset flags unset; the other six ran serially with the same Node flags and network access (102 passed, five blocked). Each blocked case needs rendered quotation or pack/report bytes:
+
+| Test | Exact failure message |
+| --- | --- |
+| HV-21: E1 original owner, source and exact draft bytes survive CRM transfer; receiver gains no commercial authority | `ExactDraftUnavailable`: “The exact draft output is unavailable. Its saved revision is retained for recovery.” |
+| CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
+| CA-10 existing field and report follow-up projections obey every Opportunity target | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
+| CR-04 issued quotation read retains exact revision and issue identity without publishing internal estimating content | `ExactDraftUnavailable`: “The exact draft output is unavailable. Its saved revision is retained for recovery.” |
+| CR05 issued source -> chosen date -> prepared review -> attributed feedback -> completed review -> closure and correction | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
+| CR05 source changes, separate training evidence and exact CRM receiving obey command and options authority | `{"processed":true,"state":"Failed","error_code":"RenderOrStorageFailure"}` |
+
+The first restricted-shell aggregate stopped at ten unit workers, each reporting `test failed`: `tests/unit/{azure-demo,browser-fixture-transport,fertigation-request-limit,foundation,guide-library,login,proof-database,proof-request-scope,quality-asset-observer,quality-packet-network}.test.ts`. The same ten tests and messages reproduced on the clean detached `origin/main` checkout at `/tmp/main-check` (`9d953fed4`): **pre-existing on main in this environment**. All subsequently passed in the network-enabled full check. The six existing CRM database suite workers likewise reported `test failed` in the restricted shell, reproduced on that clean main; their actual database results are from the network-enabled run. The initial restricted CR-04 invocation failed at its worker too; it is absent from main, and its network-enabled result is the explicit one-pass/one-renderer-blocked outcome above.
+
 ## Scope and authority
 
 Board, List, Forecast, Archive, snapshots, filters, column settings, selection and CSV, sequential opening, Add deal, outcomes, explicit receiving handover and stage-refusal recovery are implemented at `/sales/opportunities`. Native commands, permissions and expected versions remain authoritative. The supplementary snapshot read uses exact native estimate versions, issued quotation revisions and handover versions, with independent source permissions and bounded partial/unavailable states. Exit guidance is advisory and never a transition gate.

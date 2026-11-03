@@ -14,6 +14,8 @@ import { estimateInput } from "../helpers/estimating";
 import { releaseFixture, prepared, issued } from "../helpers/quotation-release";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic test only");
+process.env.PPO_ALLOW_RESET = "dispose-synthetic";
+process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 beforeEach(reset);
 after(closeDatabase);
 const code = (expected: string) => (e: unknown) =>

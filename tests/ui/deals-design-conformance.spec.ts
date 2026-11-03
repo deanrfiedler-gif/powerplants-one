@@ -153,6 +153,7 @@ test("r22 menus and r38 inspection/forms retain their different behaviours", asy
     }));
   // CR-04 keeps native menus; Sort now belongs to the accepted Filters form.
   await page.getByRole("button", { name: "Views", exact: true }).click();
+  const views = page.getByRole("dialog", { name: "Views", exact: true });
   await assertChoiceGeometry(page);
   expect(
     await page.locator(".crm-r38-popover:popover-open").evaluate((n) => ({
@@ -160,18 +161,18 @@ test("r22 menus and r38 inspection/forms retain their different behaviours", asy
       padding: getComputedStyle(n).padding,
     })),
   ).toEqual(expected);
-  await page.getByRole("button", { name: "All open", exact: true }).focus();
+  await views.getByRole("button", { name: "All open", exact: true }).focus();
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("button", { name: "No next activity", exact: true }),
+    views.getByRole("button", { name: "No next activity", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Home");
   await expect(
-    page.getByRole("button", { name: "All open", exact: true }),
+    views.getByRole("button", { name: "All open", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("n");
   await expect(
-    page.getByRole("button", { name: "No next activity", exact: true }),
+    views.getByRole("button", { name: "No next activity", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Home");
   await page.keyboard.press("Enter");

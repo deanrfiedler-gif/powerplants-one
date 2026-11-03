@@ -809,7 +809,8 @@
     display: none;
   }
   #ppo-deals .crm-phone-deal {
-    height: 136px;
+    /* Wrapped activity text must not collapse the title's flex height. */
+    min-height: 136px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

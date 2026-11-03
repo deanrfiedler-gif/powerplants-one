@@ -28,6 +28,8 @@ At 390 × 844 and 320 CSS px, retain the same task and record context. Stack rel
 
 The exact mobile composition has not been visually accepted for this entry. Retain mobile-specific evidence here when reviewed; a desktop image is not mobile evidence.
 
+Phone List rows retain a 136 px minimum height and grow for wrapped native activity text. A long activity must not shrink the deal title link to zero height; the title remains the entry to the Deal record. The existing owner-transfer browser journey exercises a 2,000-character activity at 320 px without relaxing its title-visibility assertion.
+
 ## Implementation contract
 
 Use `data-ppo-workspace="shared"` and the existing shell. Board remains the default. The toolbar is 54 px and the status row 44 px; five 228 px stages contain 212 × 264 px cards at 1440. The List uses shared RegisterTable, fixed 44 px selection/settings columns, activity-first columns, a visit-scoped chooser and existing pointer/keyboard resizing. Forecast splits each month by stage; Archive bands Won and Lost. No hidden or fabricated whole-result aggregate is used.
