@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import type { GuideDocument } from "./model";
+import { GuideArticle } from "../guides/render";
+import { scopedGuide, type GuideDocument } from "./model";
 import { DocumentDetails } from "./document-details";
 
 // Mounted only for authorised design-workspace users; released help stays available.
@@ -47,8 +48,9 @@ export function DevelopmentPageGuide() {
             reviewedAt={guide.reviewed_at}
           />
           <p>
-            History covers the guide library file; it does not record a review
-            of this article.
+            {guide.markdown
+              ? "History covers this guide's own file; it does not record a review of this article."
+              : "History covers the guide library file; it does not record a review of this article."}
           </p>
           <p>
             Working design guidance. Validate the tasks against this release
@@ -62,6 +64,14 @@ export function DevelopmentPageGuide() {
           >
             Open full guide and design references
           </Link>
+          {/* A Markdown guide renders as the shell panel does; its anchors are scoped, because the released copy of the
+              same guide can sit below this one in the panel. */}
+          {guide.markdown && (
+            <GuideArticle
+              guide={scopedGuide(guide.markdown, "development-")}
+              eyebrow="Development guide"
+            />
+          )}
           {guide.sections.map((section) => (
             <section key={section.section_id}>
               <h3>{section.title}</h3>

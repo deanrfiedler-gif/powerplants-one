@@ -29,7 +29,12 @@ await withWriteDiagnostic(diagnostic, async () => {
 });
 const server = spawn(
   process.execPath,
-  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
+  [
+    "--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts",
+    // CI opts in after `npm run check` has built the application, so the
+    // unchanged five-second notice wait is not spent compiling routes.
+    ...(process.env.PPO_PROOF_COMPILED === "1" ? ["--compiled"] : []),
+  ],
   { stdio: ["ignore", "inherit", "inherit"] },
 );
 let context:

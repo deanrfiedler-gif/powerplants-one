@@ -653,3 +653,92 @@ test("ES08 Figma contents, findings filter, working focus and phone actions reta
   await expect(page.getByRole("button", { name: "Select field B05 group B", exact: true })).toBeFocused();
   await page.screenshot({ path: info.outputPath("es08-figma-phone-drawings.png") });
 });
+
+test("ES08 Working waits for the saved calculation preview before phone activation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await login(page);
+  await view(page, "Parts & working");
+  const opener = page.getByRole("button", { name: "Working for CE-LINE-223", exact: true });
+  await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  await expect(opener).toBeEnabled();
+  await view(page, "Configure");
+
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => { release = resolve; });
+  let reached!: () => void;
+  const held = new Promise<void>((resolve) => { reached = resolve; });
+  await page.route(`**${api}/preview`, async (route) => {
+    const response = await route.fetch();
+    reached();
+    await gate;
+    await route.fulfill({ response });
+  }, { times: 1 });
+
+  try {
+    await page.getByRole("button", { name: "Save draft", exact: true }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Saved to the server" })).toBeVisible();
+    await held;
+    await view(page, "Parts & working");
+    await expect(page.locator(".es08-stale-note")).toBeVisible();
+    // Removing the stale notice moves this button. It must not accept the
+    // start of a click while that calculation refresh can still move it.
+    await expect(opener).toBeDisabled();
+    release();
+    await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+    await expect(opener).toBeEnabled();
+    await opener.click();
+    const working = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
+    await expect(working).toBeVisible();
+    expect((await working.boundingBox())!.width).toBe(390);
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeFocused();
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: "wait" });
+  }
+});
+
+test("ES08 Working returns focus and blocks activation while an edited preview is held", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await login(page);
+  await view(page, "Parts & working");
+  await page.getByRole("combobox", { name: "Position state", exact: true }).selectOption("all");
+  const opener = page.getByRole("button", { name: "Working for CE-LINE-223", exact: true });
+  await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+  await opener.click();
+  const working = page.getByRole("dialog", { name: "Standard screen cloth", exact: true });
+  await expect(working).toBeVisible();
+
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => { release = resolve; });
+  let reached!: () => void;
+  const held = new Promise<void>((resolve) => { reached = resolve; });
+  await page.route(`**${api}/preview`, async (route) => {
+    const response = await route.fetch();
+    reached();
+    await gate;
+    await route.fulfill({ response });
+  }, { times: 1 });
+
+  try {
+    await working.getByRole("checkbox", { name: "Estimator exclusion (underlying quantity retained)", exact: true }).click();
+    await held;
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeDisabled();
+    await expect(opener).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(working).toBeHidden();
+    release();
+    await expect(page.locator(".es08-stale-note")).toHaveCount(0);
+    await expect(opener).toBeEnabled();
+    await opener.click();
+    await expect(working).toBeVisible();
+    await expect(working.getByRole("checkbox", { name: "Estimator exclusion (underlying quantity retained)", exact: true })).toBeChecked();
+    expect((await working.boundingBox())!.width).toBe(390);
+    await page.keyboard.press("Escape");
+    await expect(opener).toBeFocused();
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: "wait" });
+  }
+});

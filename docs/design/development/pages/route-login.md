@@ -10,7 +10,7 @@ Local sign-in presentation. Use the local prototype entry; Microsoft sign-in rem
 
 1. Confirm that you opened the intended PPO environment
 2. Use the sign-in method offered by that environment
-3. Return to the requested page after sign-in and check the current identity
+3. Continue to the fixed destination after sign-in and check the current identity; caller-supplied return addresses are ignored ([login decision](../../../decisions/login-r02-integration.md), [System pages Q9](../../../decisions/system-pages-figma-design.md))
 
 ## Desktop
 
@@ -32,7 +32,9 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+No exact HTML reference is linked: `Powerplants-One-Login-r02.html` is not in the repository, so `src/login/` is the maintained source.
+
+Accepted design: the [System pages design decision](../../../decisions/system-pages-figma-design.md) of 1 November 2026 redraws sign-in from `src/login/`, with [System pages design r01 captures](../../../reference/ui/application-shell/system-pages-design-r01/README.md): 01–06 desktop 1440, 10 tablet 1024, 12–14 phone, 21–25 other states, help, focus order and a 200% composition (icon-free PNGs; not a UI baseline). The application is not yet built to its departures D2, D3 and D12.
 
 ## Behaviour, handovers and verification
 

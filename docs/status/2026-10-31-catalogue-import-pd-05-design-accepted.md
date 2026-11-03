@@ -13,7 +13,7 @@ Dean accepted the Figma design for PD-05, catalogue import and exception review:
 
 Twenty-seven icon-free captures with hashes are retained in [catalogue-import-design-r01](../reference/ui/products/catalogue-import-design-r01/README.md), and the design register page for `scope:PD-05` cites them.
 
-The named Figma version "Catalogue import — accepted" is awaiting Dean's yes.
+Dean saved the named Figma version "Catalogue import — accepted" on 1 November 2026.
 
 Checked:
 - Layout, clipped text and off-page link scripts, and in-Figma screenshots.

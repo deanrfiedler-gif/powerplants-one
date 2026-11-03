@@ -179,8 +179,13 @@ def check_links_and_hygiene():
         if '.git' in path.parts:
             continue
         text = path.read_text(encoding='utf-8')
+        guide_source = path.relative_to(ROOT).parts[:2] == ('docs', 'guides')
         for target in re.findall(r'\]\(([^\s)]+)\)', text):
             if urlsplit(target).scheme:
+                continue
+            # User guides use single-slash paths such as /sales/leads as application route
+            # links; the guide compiler validates each against the registered routes.
+            if guide_source and target.startswith('/') and not target.startswith('//'):
                 continue
             parsed = urlsplit(target)
             candidate = (path.parent / unquote(parsed.path)).resolve() if parsed.path else path
