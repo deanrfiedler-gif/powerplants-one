@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-DESIGN-BUILD-REVIEW-ROLES-DEC,"Design, build and review roles",docs/decisions/design-build-review-roles.md,,Owner-adopted repository working rule 2 November 2026; Claude designs and reviews; Codex builds; one independent review; Dean merges; no application change,Dean Fiedler,4f26da5964205bd03c9930fc825fbae0b0683372,,,git,

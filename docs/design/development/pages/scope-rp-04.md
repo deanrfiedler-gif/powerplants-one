@@ -32,9 +32,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design captures: [Service performance design r01](../../../reference/ui/reporting/service-performance-design-r01/README.md). No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Service performance design r01 captures](../../../reference/ui/reporting/service-performance-design-r01/README.md) (twenty-two icon-free PNGs of eighteen frames; design compositions, not application captures) and its [decision](../../../decisions/service-performance-figma-design.md). The pack cutoff is the field readiness gate's rule, 12:00 site time on the last working day before the visit. The Save view dialog, the filter panel, drills for KPI-03, KPI-05, KPI-07 and capacity, the phone report after field readiness, keyboard order, 200% zoom and dark mode are not drawn. The route and definitions are not built or published, so a build shows Definition pending or Not built until they are.
 
 The draft User Guide `guide.rp.04` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

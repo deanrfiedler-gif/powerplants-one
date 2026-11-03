@@ -49,6 +49,17 @@ export type Breadcrumb = {
 };
 
 export function breadcrumb({ path, query, record, signedIn, permitted, hosted, preference }: BreadcrumbInput): Breadcrumb {
+  // PJ-05 G3: no invented record number. Use the permitted kind as the record label.
+  const commercialRecord = /^\/projects\/([^/]+)\/commercial\/[^/]+$/.exec(path);
+  if (path === "/projects/commercial" || commercialRecord) {
+    const kind = signedIn && record ? record.reference : "Commercial record";
+    const crumbs: Crumb[] = [
+      {key:"root",label:"Projects",href:signedIn?"/projects":undefined,kind:"root"},
+      {key:"page",label:"Variations & obligations",href:commercialRecord?`/projects/commercial?project=${commercialRecord[1]}`:undefined,kind:"page"},
+      ...(commercialRecord?[{key:"record",label:kind,kind:"record" as const}]:[]),
+    ];
+    return {label:"Variations & obligations",trail:crumbs,crumbs,title:documentTitle({page:commercialRecord?kind:"Variations & obligations",department:"Projects"}),hierarchy:false};
+  }
   const page = pageForPath(path);
   const reachable = (item: ShellDestination | undefined) => (item && canOpen(item, permitted, hosted) ? item.href : undefined);
   // An Engineering module with its own secondary menu: its name, the address of its register and the

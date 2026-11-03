@@ -10,7 +10,7 @@ import { createHash } from "node:crypto";
 import { prepareFieldAppointment } from "../helpers/field-http";
 import { base, startInput, png, draft } from "../helpers/field";
 import { operation } from "../helpers/offline";
-import { openAccountPanel, identityToggle } from "../helpers/phone-menu";
+import { openAccountPanel, identityToggle, phoneWidth } from "../helpers/phone-menu";
 import { moduleIntegration } from "../helpers/ui-baselines";
 test.use({ actionTimeout: 15000 });
 const hash = (v: string | Buffer) =>
@@ -989,6 +989,11 @@ test("FI07 native attendance acknowledgement, lost receipt, report reservation a
   await page.locator("#sync").click();
   expect((await call(page, "reports/" + id)).items[0].responses).toEqual(replayed.responses);
   await page.goto("/service/reports/" + id);
+  // A record's phone row swaps Menu for Back once the page's own read returns, which is after the session read that
+  // identity() waits for. A press that starts on Menu as it leaves sends no click, so wait for the record row: the
+  // identity is then changed from the control that stays (the tab bar's More).
+  if (phoneWidth(page))
+    await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "record");
   await identity(page, "coordinator");
   await reportTab(page, "Customer response");
   await expect(page.getByRole("heading", { name: "Response history", exact: true })).toBeVisible();

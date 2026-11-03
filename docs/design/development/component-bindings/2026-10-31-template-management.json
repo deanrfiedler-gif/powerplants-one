@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Commands are disabled while busy or uncertain. Confirm original action retains the original path, operation ID, body, exact revision and fingerprints. Site assignment binds the displayed policy and server-time interval."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Definitions/proposals use identity-order native pages. Load more re-reads the visible window, preserves rows while pending, focuses newly added evidence, and clears all rows after an unconfirmed read. Snapshot focus returns to its checkbox on Escape."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Proposal drawers preserve the exact base and immutable review scope on revision. Ordered fields use permitted native binding choices. Phone fields stack at 320 px; a stale decision retains typed values."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Record tab selection survives refresh. Publication readiness is publisher-only; retained publication evidence is available when its native read permits it. A seeded definition has no Publication tab."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "The existing secondary menu starts collapsed for exact records. Phone family and company/site filters open from the single compact header, replacing toolbar rows; no global totals or combined-family catalogue is implied."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Review, Publish and Assign use are separate centered WorklistPanel dialogs. Validation and stale refusals retain the input. Uncertain outcomes lock editing and closing until the original operation is reconciled."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "drawer": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "New and Revise proposals reuse the side drawer with exact base/body evidence. Snapshot is a non-modal complementary region with focus entry, Escape and return to its trigger."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "One SecondaryMenuFrame owns the phone header. Lists provide Filter and, when permitted, New proposal; pull-down re-reads current evidence. Phone records hide the shell tab bar and keep their main action at the bottom."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "dk06-workspace",
+          "label": "DK-06 native template workspace",
+          "description": "Loading, permitted empty, denied/unavailable, expired continuation and stale command states remain separate. Current-authority failures clear displayed evidence; no sample values are substituted."
+        }
+      ],
+      "dependencies": [
+        "src/documents/templates/common.tsx",
+        "src/documents/templates/register.tsx",
+        "src/documents/templates/definition.tsx",
+        "src/documents/templates/proposal.tsx",
+        "src/documents/templates/site-use.tsx"
+      ],
+      "used_on": [
+        "scope:DK-06",
+        "route:/documents/templates",
+        "route:/documents/templates/[family]/[id]",
+        "route:/documents/templates/proposals/[id]",
+        "route:/documents/templates/use"
+      ],
+      "gaps": []
+    }
+  }
+}

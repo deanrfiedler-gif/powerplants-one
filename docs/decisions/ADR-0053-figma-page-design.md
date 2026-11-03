@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** accepted by the owner, 11 October 2026. This record revisits [ADR-0051](ADR-0051-claude-design-page-design.md) and replaces its choice of drawing tool. ADR-0051's other rules continue, as set out under Decision. [ADR-0055](ADR-0055-figma-file-structure.md) adds the file structure and index, and one step to the lock-in in rule 3.
+Owner: Dean Fiedler. **Status:** accepted by the owner, 11 October 2026. This record revisits [ADR-0051](ADR-0051-claude-design-page-design.md) and replaces its choice of drawing tool. ADR-0051's other rules continue, as set out under Decision. [ADR-0055](ADR-0055-figma-file-structure.md) adds the file structure and index, and one step to the lock-in in rule 3. **[ADR-0067](ADR-0067-design-to-build-operating-model.md) amends rules 1, 3, 4, 5 and 8 from 1 November 2026: new tokens and components now start in Figma.** The text below stays as the record of the original decision; where they differ, ADR-0067 and the [design-to-build standard](../standards/design-to-build-standard.md) apply.
 
 Related: [ADR-0051](ADR-0051-claude-design-page-design.md) (Claude Design for page design); [ADR-0040](ADR-0040-development-workspace.md) (Git-backed design and development workspace); [ADR-0050](ADR-0050-font-awesome-light-icons.md) (Font Awesome Pro licence limits); the [UI build and review sequence](ui-build-sequence.md); the [navigation architecture](navigation-architecture-board.md); the [ES-04 review](estimating-review-native.md) and [ES-05 quotation approval](quotation-approval-issue-distribution-design.md) decisions that the comparison page follows; the [design and build workflow](../design/development/README.md).
 

@@ -34,3 +34,11 @@ A different model catches different mistakes, and independent review is what a s
 - Real customer or operational data stays out of both tools; fixtures remain synthetic.
 - To fit the 8,000-character limit, the ChatGPT instructions drop two details whose sources remain in the repository: an ES-07 retention clause, now covered by the general ES rule and `quotation-task-diamond.md`, and duplicate STATUS and scheduling evidence wording.
 - No application behaviour, requirement, migration, grant, workflow file or deployment changes, and all 78 parent requirement IDs remain.
+
+## Amendment — 30 October 2026: agents merge under Dean's standing order
+
+Dean's standing order of 30 October 2026 ([autonomous agent operation](autonomous-agent-operation.md)) supersedes the "merges" part of Dean's role in the table above. Claude and Codex may merge a pull request that meets the merge gates in [CONTRIBUTING.md — Autonomous agent protocol](../../CONTRIBUTING.md#autonomous-agent-protocol). Every such merge needs a review from the other model family, not only the higher-risk categories listed in this record. Dean remains the owner who decides, and the roles and review rules above are otherwise unchanged.
+
+## Amendment — 2 November 2026: design, build and review roles
+
+The [design, build and review roles](design-build-review-roles.md) decision of 2 November 2026 supersedes the role table above. Claude designs pages in Figma, records the design lock-ins and reviews Codex's pull requests; Codex builds the pages; ChatGPT is a research and business-analysis partner and an optional second opinion, not a builder; Dean accepts designs and merges. A pull request that needs an independent review gets one full review, and the reviewer then confirms only that its findings were addressed.
