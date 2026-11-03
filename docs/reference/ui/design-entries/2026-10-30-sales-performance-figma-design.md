@@ -1,0 +1,7 @@
+# Sales and quotation performance (RP-02)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Sales and quotation performance — `/reports/sales` (planned route) | [Design r01 captures](../reporting/sales-performance-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 30 October 2026 | [Decision](../../../decisions/sales-performance-figma-design.md). RP-02; not built. One report page with a section for each of REP-01 to REP-05, a chart and a table in each, a drill-down to source records, Definition pending, filters, export, tablet, phone summaries and seven states |
+
+**Sales performance design, 30 October 2026:** Dean accepted the Figma design for the management report RP-02, with its recommended answers. Pipeline insights stays the sales team's working view. The report shows no target, threshold or probability, withholds any value whose definition is unpublished, and shows Q2 beside Q3 without judging either. The acceptance publishes no measure definition and adopts no pricing policy. The [decision](../../../decisions/sales-performance-figma-design.md) records it, including the amendment to quote-view-tracking Q6, and the [retained captures](../reporting/sales-performance-design-r01/README.md) are twenty-one icon-free PNGs of seventeen frames, with hashes. Nothing is built. Listing it here does not repeat the dated inventory audit.

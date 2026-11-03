@@ -389,7 +389,13 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // guard, plus two outbox kinds. Existing work orders stay unlinked: nothing is inferred from
   // project_reference. No seed, user, grant, capability, identity or existing row changes; existing
   // table-level runtime privileges cover the new column.
-  if (latestMigrationVersion !== 122) throw Error("Review the existing-demo upgrade for this release.");
+  // 0123 (M1) adds two nullable columns to maintenance_work_requests (the prepared work order and
+  // the Partial result a follow-on follows), their foreign keys and indexes, narrows the
+  // one-original-request index to non-follow-on requests, and adds an insert guard. Existing
+  // requests keep their bytes with both columns null; nothing is backfilled or inferred. No seed,
+  // user, grant, capability, identity, outbox kind or existing row changes; existing all-table
+  // runtime privileges cover the new columns, and the guard function runs with PUBLIC execute.
+  if (latestMigrationVersion !== 123) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

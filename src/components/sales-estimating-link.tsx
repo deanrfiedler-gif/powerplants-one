@@ -271,7 +271,7 @@ export function WorkspaceSalesBriefs({ id }: { id: string }) {
       {!data.error && data.data && !data.data.items.length && (
         <p>
           No accepted Sales brief is linked.{" "}
-          <Link href="/estimating/intake">Review Estimating Intake</Link>.
+          <Link href="/estimating/intake">Review Sales briefs</Link>.
         </p>
       )}
     </section>

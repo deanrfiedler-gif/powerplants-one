@@ -22,7 +22,7 @@ Board card on the accepted Deals · CR-04 page (24 October 2026). The Default va
 
 ## Desktop
 
-Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag.
+The accepted CR-04 consumer fits 228 px stages and 212 × 264 px cards beside the labelled rail at 1440 px. Amounts are AUD excluding GST; unknown estimates remain explicit. Change stage is the keyboard and touch alternative to drag. Stage headers disclose the current-page or complete-matching basis.
 
 ## Mobile
 

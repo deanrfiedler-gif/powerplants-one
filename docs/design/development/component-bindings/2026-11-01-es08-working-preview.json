@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "screen-configurator-workbench": {
+      "states": [
+        {
+          "id": "working-preview-refresh",
+          "label": "Working waits for current calculation",
+          "description": "The held real saved-preview response keeps Working unavailable until the displayed calculation is current. Editing in the panel and closing it while the next preview is held returns focus to the unavailable opener without permitting activation. Dean approved the temporary disabled state on 24 October 2026; visual review remains separate."
+        }
+      ]
+    }
+  }
+}

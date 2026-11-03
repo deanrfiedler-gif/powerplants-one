@@ -16,13 +16,37 @@ export function acceptsBookingEntry(entry: JournalEntry) {
   const fields: Record<string, string[]> = {
     visits: ["id", "scope_revision_id", "scope_version", "start_at", "end_at", "requested_window_start", "requested_window_end", "customer_commitment", "preparation_status"],
     readiness: ["assessment"],
-    contacts: ["id", "recipient_id", "channel", "outcome", "occurred_at", "notes"],
+    contacts: ["id", "recipient_id", "channel", "outcome", "occurred_at", "notes", "purpose", "site_checks"],
     confirm: ["expected_work_order_version", "expected_assignment_version", "scope_revision_id", "scope_version", "policy_version_id", "scheduling_policy_id", "scheduling_policy_version", "scheduling_policy_hash", "publication_head_version", "selected_policy", "crew"],
   };
   if (!Object.keys(b).every(k => [...common, ...fields[action]].includes(k)) || !Number.isSafeInteger(b.expected_version) || Number(b.expected_version) < 1) return false;
   const targetId = entry.target.split("?")[0].split("/").pop();
   if (action === "visits") return b.id === entry.record_id && b.id === targetId;
-  if (action === "contacts") return b.id === entry.record_id && parent === targetId;
+  if (action === "contacts") return b.id === entry.record_id && parent === targetId && contactShape(b);
   if (action === "confirm") return parent === entry.record_id && parent === targetId;
   return parent === entry.record_id && (b.assessment as { appointment_id?: string })?.appointment_id === targetId;
+}
+
+// Gate P4 adds a typed purpose and four checks to the contact command. A restored
+// original must carry exactly that shape; anything else is refused before sending.
+const siteCheckNames = ["access", "power_water", "equipment", "isolation"];
+function contactShape(b: Record<string, unknown>) {
+  if (b.purpose === undefined) return b.site_checks === undefined;
+  if (b.purpose === "DateAgreement") return b.site_checks === undefined;
+  if (b.purpose !== "SiteReadiness") return false;
+  const checks = b.site_checks;
+  if (!checks || typeof checks !== "object" || Array.isArray(checks)) return false;
+  const entries = Object.entries(checks as Record<string, unknown>);
+  return (
+    entries.length === siteCheckNames.length &&
+    entries.every(([key, value]) => {
+      if (!siteCheckNames.includes(key) || !value || typeof value !== "object") return false;
+      const check = value as Record<string, unknown>;
+      return (
+        Object.keys(check).every((k) => ["status", "note"].includes(k)) &&
+        ["Confirmed", "NotReady", "NotApplicable"].includes(check.status as string) &&
+        (check.note === undefined || (typeof check.note === "string" && check.note.length <= 1000))
+      );
+    })
+  );
 }
