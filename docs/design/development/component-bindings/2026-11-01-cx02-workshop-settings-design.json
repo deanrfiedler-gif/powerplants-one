@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-cx02-settings-grid",
+          "expected": "The accepted Workshop settings design (PPO-CX02-WORKSHOP-SETTINGS-FIGMA-DEC) uses a grouped grid register for test definitions, with the Figma page parts Workshop settings card, Test definition grid header, Test definition grid row and Work instruction step row.",
+          "actual": "No route or page exists at /admin/settings/workshop. The four Figma parts stay on the Workshop settings page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for test definitions and record any departure; move the four parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

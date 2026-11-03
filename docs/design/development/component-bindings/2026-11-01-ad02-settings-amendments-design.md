@@ -1,0 +1,3 @@
+## register-table
+
+The accepted [Settings amendments design](../../../decisions/settings-amendments-figma-design.md) shows the History and Affected work tabs as grids inside the policy record, with fixed checkbox and settings columns, and bands on Affected work that span them. The grids reuse Grid / Header cell, Grid / Checkbox cell, Grid / Row actions cell and Grid / Group band. Their rows are the page parts Policy history row and Affected work row, whose cells hold two lines. Nothing is built; see the [retained captures](../../../reference/ui/settings/settings-amendments-design-r01/README.md).

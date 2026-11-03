@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-31",
+  "fixture": "tests/browser/travel-review.spec.ts",
+  "browser": "Chrome 156.0.8078.80 / Playwright 1.64.1",
+  "icons": "Local fallback icons; Font Awesome kit disabled before these captures",
+  "method": "Native viewport captures at route start, later visit and summary; fixed shell scroll is preserved, not stitched",
+  "captures": [
+    {
+      "file": "travel-failure-403.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "f02358605bdb5eef7f24da30faf9ffc5701ba5f2081254978e0bd57572ec3c4c"
+    },
+    {
+      "file": "travel-failure-503.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "8bdd085a52c78001b26cc6c88a879d8868b429088e86662d8afaf40de4069ffb"
+    },
+    {
+      "file": "travel-compare-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "3087aa98c5fe1f8c6a611ead59f16c7424abd87dfc6027ca32d23d4987aa0873"
+    },
+    {
+      "file": "travel-compare-end-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "beb673ce10e72c937f9b9d3c46ecaf311bb1b8492382e46c8e181a65bcad680b"
+    },
+    {
+      "file": "travel-route-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "47199d9b697efb852c45025a4deb2ebb033030760095534d887c9c2fb878037a"
+    },
+    {
+      "file": "travel-route-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "b60c0c7c3a9766dfed6cca3b6e244580e806d4de1aa4911571d75af1fbf362e9"
+    },
+    {
+      "file": "travel-route-320.png",
+      "width": 320,
+      "height": 900,
+      "sha256": "7de47cbeac04a803a4fcc16f4611bf5e78839abf793ef34a6eddaccc0e49d207"
+    },
+    {
+      "file": "travel-route-390.png",
+      "width": 390,
+      "height": 900,
+      "sha256": "6e1691d4098bd071493b4fe45c982941e15aca9922a8618247fb542987c1d620"
+    },
+    {
+      "file": "travel-route-end-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "c7dc2fc7ff95585f0f61441b8feb081d96df6568ff17328e848d5ab01cbb88fa"
+    },
+    {
+      "file": "travel-route-end-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "015f985522e55ac7dd7bb0d357010cf697158e1f3c641469f2f638ab9f1e39f6"
+    },
+    {
+      "file": "travel-route-end-320.png",
+      "width": 320,
+      "height": 900,
+      "sha256": "33ce819b70cfaba370e320f5b053fcfcb35ceb97eb954bbd3f2de0b4eebed5aa"
+    },
+    {
+      "file": "travel-route-end-390.png",
+      "width": 390,
+      "height": 900,
+      "sha256": "e75af75ea98b7f3d045c83c2524977cfa35563daf75913d090a0887fffdc5209"
+    },
+    {
+      "file": "travel-summary-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "c7dc2fc7ff95585f0f61441b8feb081d96df6568ff17328e848d5ab01cbb88fa"
+    },
+    {
+      "file": "travel-summary-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "015f985522e55ac7dd7bb0d357010cf697158e1f3c641469f2f638ab9f1e39f6"
+    },
+    {
+      "file": "travel-summary-320.png",
+      "width": 320,
+      "height": 900,
+      "sha256": "4ce7b16c33fd297a056b1416b172ac4024c86503a8950acc52fb0532e00c3b21"
+    },
+    {
+      "file": "travel-summary-390.png",
+      "width": 390,
+      "height": 900,
+      "sha256": "59640a6492bf1ffd95347c3865db724cbc674ef7a21075175c61cd5825293ed0"
+    },
+    {
+      "file": "travel-empty-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "3d62b401f828d756e761312a6d372d40aabe49921dbfcb4b884e8f6d7ea0e0fe"
+    }
+  ]
+}

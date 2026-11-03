@@ -889,7 +889,16 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
         start_at: a.start_at,
         end_at: a.end_at,
       });
-      // SiteReadiness advances the appointment once in its database guard.
+      // SiteReadiness advances the appointment once in its database guard, which only ever
+      // adds a hold. When this contact makes P4 the last passing prerequisite after the crew
+      // acknowledged, release the hold through the pack acknowledgement's own derivation.
+      // Imported here because the pack domain already imports this module.
+      const dispatch_hold_released =
+        purpose === "SiteReadiness"
+          ? await (
+              await import("../documents/packs")
+            ).releaseReadyDispatchHold(c, p, a.id)
+          : false;
       if (purpose === "DateAgreement" && a.status !== "Cancelled")
         await bumpAppointment(c, p, a, {
           customer_commitment:
@@ -911,6 +920,7 @@ export async function recordContact(p: Principal, id: string, input: unknown) {
           sending_performed: false,
           pack_acknowledgement: false,
           activity_id,
+          ...(purpose === "SiteReadiness" ? { dispatch_hold_released } : {}),
         },
       };
     },

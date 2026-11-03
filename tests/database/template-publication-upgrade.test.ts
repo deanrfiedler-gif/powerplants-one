@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
 import { queued } from "../helpers/packs";
@@ -8,11 +12,8 @@ import {
   createProposal,
   reviewProposal,
 } from "../../src/documents/drafts/commands";
-import {
-  setupDraft,
-  draftInput,
-  reviewCommand,
-} from "../helpers/template-drafts";
+import { setupDraft, draftInput, base } from "../helpers/template-drafts";
+import { proposalContext } from "../../src/documents/drafts/context";
 import { readOperation } from "../../src/shared/receipts";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -27,11 +28,25 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   const { p, reviewer } = await setupDraft(),
     input = await draftInput(p);
   await createProposal(p, input);
-  await reviewProposal(
-    reviewer,
-    input.id,
-    await reviewCommand(reviewer, input.id),
+  // Build the pre-0093 fixture using the native 0092 context. Current UI reads
+  // also project publication labels, whose table does not exist at this point.
+  const { d, r } = await transaction((c) =>
+    proposalContext(c, reviewer, input.id),
   );
+  await reviewProposal(reviewer, input.id, {
+    ...base(),
+    review_id: crypto.randomUUID(),
+    expected_version: d.version,
+    revision_id: r.id,
+    content_hash: r.content_hash,
+    outcome: "Reviewed",
+    checks: Object.fromEntries(
+      ["schema", "source_bindings", "audience"].map((key) => [
+        key,
+        { result: "Pass", note: "SYN exact pre-publication review fixture" },
+      ]),
+    ),
+  });
   const tables = [
     "template_proposals",
     "template_proposal_revisions",
@@ -75,7 +90,7 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   );
   assert.deepEqual(
     afterLedger.filter((r) => r.version > 92).map((r) => r.version),
-    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121],
+    [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123],
   );
   assert.deepEqual(await rows("SELECT * FROM ppo.template_publications"), []);
   assert.deepEqual(

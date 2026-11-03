@@ -1,12 +1,11 @@
 // Request-time adapters keep filesystem/Git reads local and immutable build data hosted.
 import {
   buildCatalog,
-  guideDocument,
-  readGuides,
+  readGuideDocument,
   readPageGuide,
   readReference,
 } from "./catalog";
-import { matchEntry } from "./model";
+import { entryGuide, matchEntry } from "./model";
 import {
   buildComponentLibrary,
   readComponentManifest,
@@ -38,17 +37,16 @@ export async function developmentComponents(
 export async function developmentGuide(key: string) {
   if (process.env.PPO_ENV === "azure-demo")
     return (await snapshot()).guides.find((g) => g.guide_key === key);
-  const guide = (await readGuides(process.cwd())).find(
-    (g) => g.guide_key === key,
-  );
-  return guide ? guideDocument(process.cwd(), guide) : undefined;
+  return readGuideDocument(process.cwd(), key);
 }
 export async function developmentPageGuide(pathname: string) {
   if (process.env.PPO_ENV !== "azure-demo")
     return readPageGuide(process.cwd(), pathname);
   const value = await snapshot();
-  const key = matchEntry(value.catalog.entries, pathname)?.guide_key;
-  return value.guides.find((g) => g.guide_key === key);
+  const entry = matchEntry(value.catalog.entries, pathname);
+  if (!entry) return undefined;
+  // Chosen as the catalogue and the released shell panel choose.
+  return entryGuide(value.guides, entry);
 }
 export async function developmentPreview() {
   if (process.env.PPO_ENV === "azure-demo") {

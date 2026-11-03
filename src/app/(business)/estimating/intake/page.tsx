@@ -1,2 +1,2 @@
-import { HandoverList } from "../../../../components/sales-handover";
-export default function Page(){return <HandoverList kind="Estimating" receiving/>;}
+import { SalesBriefsRegister } from "../../../../components/sales-briefs-register";
+export default function Page() { return <SalesBriefsRegister/>; }

@@ -50,7 +50,7 @@ This task authorises Figma design and design handover. It does not require appli
 
 ## 2. Create the Figma deliverable
 
-Use the installed Figma skills and supported tools, including their required prerequisites. Use the existing private “PPO - Design” file adopted in ADR-0053, unless I explicitly request a different destination. Locate it through authorised Figma access; do not invent its identifier. Create clearly named CCE pages without changing unrelated accepted designs or another session’s active page. Ask only if the authorised destination cannot be resolved. Do not create a competing shared library or a new file by default.
+Use the installed Figma skills and supported tools, including their required prerequisites. Use the existing private “PPO - Design” file adopted in ADR-0053, unless I explicitly request a different destination. Locate it through authorised Figma access; do not invent its identifier. Create clearly named CCE pages without changing unrelated accepted designs or another session’s active page. Ask only if the authorised destination cannot be resolved. Do not create a competing shared library or a new file by default. After the ADR-0067 cut-over, draw in `PPO - Estimating & Quotation` from `PPO - Library` instead, under the [design-to-build standard](../standards/design-to-build-standard.md).
 
 Create native, editable frames, text, components and instances. Use Auto Layout, reusable variants and variables/styles where supported. Do not substitute flattened screen images, a FigJam board, HTML output or a written specification for the requested UI.
 

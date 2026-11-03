@@ -14,11 +14,15 @@ Implement AI proposal review, changed-source comparison and saved outcomes throu
 
 ## Desktop
 
+Accepted design: the [proposal review design decision](../../../decisions/assistant-proposal-review-figma-design.md) of 31 October 2026 covers the review form inside the AI-01 panel with provenance on every field, Ready, the not-saveable value, the changed-since-prepared comparison, Saving, Saved, Outcome unknown, Expired and Your proposals, with the full-width surface at 1024 and twenty-one icon-free captures in [design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md). D1–D19, answers Q1–Q10, the accepted polish and additions F1–F3 (a possible duplicate check, why this value, and focus review) are recorded there. Nothing is built.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 12, 13 and 20 in [design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md): the review form full screen, Saved and Outcome unknown at 390 and 320, and not saveable, changed since prepared and Your proposals at 390, with 16 px inputs, 48 px controls and full-width bottom actions.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -32,9 +36,11 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-No exact image or HTML reference is linked. Keep this gap visible.
+Accepted Figma design captures: [Proposal review design r01](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md). No HTML reference is linked.
 
 ## Behaviour, handovers and verification
+
+Accepted Figma design: [Proposal review design r01 captures](../../../reference/ui/my-work/assistant-proposal-review-design-r01/README.md) (twenty-one icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/assistant-proposal-review-figma-design.md). A phone Ready frame, Your proposals at 1024, F1–F3 at 320 and 1024, keyboard focus order and 200% zoom are not drawn. Building it is not decided.
 
 The draft User Guide `guide.ai.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 

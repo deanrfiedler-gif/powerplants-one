@@ -10,7 +10,11 @@ export const hasVisibleText = (value: unknown): value is string =>
 // A guide reads as Reviewed only while its reviewed content hash still matches the text on disk. The status word
 // records an intention; the reviewer, date and matching hash are the evidence, so a missing or stale piece of
 // evidence never reads as reviewed. A value with no visible character, or that is not text, counts as missing.
-export function guideStateFor(front: GuideFrontMatter, contentHash: string): GuideState {
+// The design workspace also asks this of its JSON drafts, so only the status and review fields are needed.
+export function guideStateFor(
+  front: Pick<GuideFrontMatter, "status" | "reviewer" | "reviewed_at" | "reviewed_content_hash">,
+  contentHash: string,
+): GuideState {
   switch (front.status) {
     case "Draft":
       return "Draft";
