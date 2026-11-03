@@ -119,6 +119,8 @@ test("D-025 S2 over HTTP: templates, switch, prepared message, named sender, tim
   assert.equal(all.status, 200);
   assert.ok(all.body.items.some((i: { id: string }) => i.id === prepared.id));
   assert.match(all.body.coverage, /200 candidates/);
+  assert.equal(all.body.limit_reached, false);
+  assert.equal(queue.body.limit_reached, false);
   assert.ok(!(await call("coordinator", "customer-communications/queue")).body.items.some((i: { id: string }) => i.id === prepared.id));
   assert.equal((await call("coordinator", "customer-communications/queue?view=provider")).status, 422);
   assert.equal((await call("other-workspace", "customer-communications/queue?view=all")).body.items.length, 0);

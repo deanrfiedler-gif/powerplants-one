@@ -178,6 +178,6 @@ export async function customerCommunicationQueue(p: Principal, query: Record<str
         [p.workspace_id, awaitingAction, q.owner ? p.actor_id : null, q.view === "all"],
       )
     ).rows as Row[];
-    return { items: (await readable(c, p, rows)).map(summary), channel: "Synthetic", simulated: true, coverage: "Readable messages from a window of at most 200 candidates; counts and filters apply to this window.", observed_at: new Date().toISOString() };
+    return { items: (await readable(c, p, rows)).map(summary), channel: "Synthetic", simulated: true, limit_reached: rows.length === 200, coverage: "Readable messages from a window of at most 200 candidates; counts and filters apply to this window.", observed_at: new Date().toISOString() };
   });
 }

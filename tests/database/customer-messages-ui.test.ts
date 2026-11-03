@@ -14,7 +14,7 @@ import {
   setMessageClassSwitch,
   withdrawCustomerMessage,
 } from "../../src/communications";
-import { base, grant } from "../helpers/customer-communications";
+import { base, grant, prepare, testSource, demand } from "../helpers/customer-communications";
 import {
   delivery,
   moved,
@@ -201,4 +201,34 @@ test("EC-04 native M1/M2 projection, exact actions, held/unknown/failed states a
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("EC-04 oldest Held work survives more than 200 newer completed messages and full windows are explicit", async () => {
+  const { actor } = await setupNotices();
+  const held = await prepare(actor, testSource("DispatchNotice", demand, null, 1000));
+  assert.equal((await readCustomerCommunication(actor, held.id)).state, "Held");
+  for (let i = 0; i < 201; i++) {
+    const completed = await prepare(actor, testSource("DispatchNotice", demand, null, 1001 + i));
+    await withdrawCustomerMessage(actor, completed.id, { ...base(), expected_version: 1 });
+  }
+  const all = await customerCommunicationQueue(actor, { view: "all" });
+  assert.equal(all.items.length, 200);
+  assert.equal(all.limit_reached, true);
+  assert.ok(!all.items.some((m) => m.id === held.id));
+  assert.ok(all.items.every((m) => m.state === "Withdrawn"));
+  const actions = await customerCommunicationQueue(actor, {});
+  assert.ok(actions.items.some((m) => m.id === held.id && m.state === "Held"));
+  assert.equal(actions.limit_reached, false);
+  // Authorization still follows the candidate limit: an empty readable result is not a complete queue.
+  const otherCompany = await principal("second-company");
+  const hidden = await customerCommunicationQueue(otherCompany, { view: "all" });
+  assert.equal(hidden.items.length, 0);
+  assert.equal(hidden.limit_reached, true);
+  for (let i = 0; i < 200; i++) {
+    await prepare(actor, testSource("DispatchNotice", demand, null, 2000 + i));
+  }
+  const limited = await customerCommunicationQueue(actor, {});
+  assert.equal(limited.items.length, 200);
+  assert.equal(limited.limit_reached, true);
+  assert.ok(limited.items.some((m) => m.id === held.id));
 });

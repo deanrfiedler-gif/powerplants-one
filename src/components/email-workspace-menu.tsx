@@ -14,7 +14,7 @@ export function EmailWorkspaceFrame({
 }: {
   children: ReactNode;
   view?: MessageView;
-  counts?: Partial<Record<MessageView, number>>;
+  counts?: Partial<Record<MessageView, number | string>>;
   phoneHeader?: Omit<PhoneHeaderConfig, "chooseView">;
   inbox?: boolean;
 }) {
@@ -52,10 +52,22 @@ export function EmailWorkspaceFrame({
             >
               <span>{v.label}</span>
               {counts?.[v.id] !== undefined && (
-                <span className="cm-menu-count">{counts[v.id]}</span>
+                <span
+                  className="cm-menu-count"
+                  title={typeof counts[v.id] === "string"
+                    ? "At least this many; the message window limit was reached"
+                    : undefined}
+                >
+                  {counts[v.id]}
+                </span>
               )}
             </Link>
           ))}
+          {counts && Object.values(counts).some((count) => typeof count === "string") && (
+            <p className="cm-mailbox-status">
+              Message counts are lower bounds: the 200-candidate limit was reached.
+            </p>
+          )}
           {inbox && (
             <p className="cm-mailbox-status">
               Personal mailbox · synthetic only. Microsoft is not connected.

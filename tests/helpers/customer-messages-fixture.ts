@@ -109,6 +109,7 @@ export function ecMessage(n: number, state: State = "Prepared"): MessageDetail {
 export function ecQueue(items: MessageDetail[]): MessageQueue {
   return {
     items,
+    limit_reached: items.length >= 200,
     channel: "Synthetic",
     simulated: true,
     coverage:

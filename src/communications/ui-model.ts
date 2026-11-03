@@ -71,3 +71,44 @@ export const messageDate = (value: string) =>
     minute: "2-digit",
     hour12: false,
   }) + " AEST";
+
+// Counts are lower bounds when the candidate window filled before source authorization.
+export function messageCounts(queue: MessageQueue | null) {
+  if (!queue) return undefined;
+  return Object.fromEntries(
+    (["to-send", "follow-up"] as const).map((view) => {
+      const count = queue.items.filter((m) => inMessageView(m, view)).length;
+      return [view, queue.limit_reached ? `${count}+` : count];
+    }),
+  );
+}
+export const messageWindowWarning =
+  "The 200-candidate limit was reached. More messages may be outside this window; counts and empty views are incomplete.";
+export const messageRecipientName = (value: string | null) => value ?? "No named contact";
+export const messageRecipientAddress = (value: string | null) => value ?? "no address";
+export const messageSubject = (value: string | null) => value ?? "No exact content was prepared";
+export const messageFactLabels: Record<string, string> = {
+  "customer.name": "Customer",
+  "recipient.name": "Recipient",
+  "source.reference": "Source reference",
+  "site.name": "Site",
+  "dispatch.carrier": "Carrier",
+  "dispatch.tracking_number": "Consignment",
+  "dispatch.quantity": "This movement",
+  "dispatch.dispatched_quantity": "Dispatched",
+  "dispatch.outstanding_quantity": "Outstanding",
+  "dispatch.unit": "Unit",
+  "delivery.customer_eta": "Customer ETA",
+  "delay.previous_eta": "Previous customer ETA",
+  "delay.reason": "Delay reason",
+};
+export function messageFactLabel(key: string) {
+  const readable = key.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/[._-]+/g, " ");
+  return messageFactLabels[key] ?? readable.charAt(0).toUpperCase() + readable.slice(1);
+}
+export function messageFactValue(key: string, value: string | null) {
+  if (value === null) return "Not recorded";
+  return ["delivery.customer_eta", "delay.previous_eta"].includes(key)
+    ? messageDate(value)
+    : value;
+}

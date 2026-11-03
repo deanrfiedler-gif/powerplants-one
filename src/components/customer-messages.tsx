@@ -21,6 +21,13 @@ import {
 } from "../communications/model";
 import {
   inMessageView,
+  messageCounts,
+  messageWindowWarning,
+  messageRecipientName,
+  messageRecipientAddress,
+  messageSubject,
+  messageFactLabel,
+  messageFactValue,
   messageDate,
   messageState,
   messageTone,
@@ -75,9 +82,15 @@ export function CustomerMessages({ id }: { id?: string }) {
   const view = (messageViews.find((v) => v.id === params.get("view"))?.id ??
     (id ? "all" : "to-send")) as MessageView;
   const selected = id ?? params.get("message");
-  const queue = useResource<MessageQueue>(
-    "customer-communications/queue?view=all",
+  const actionQueue = useResource<MessageQueue>("customer-communications/queue");
+  const allQueue = useResource<MessageQueue>(
+    view === "all" ? "customer-communications/queue?view=all" : null,
   );
+  const queue = view === "all" ? allQueue : actionQueue;
+  const reloadQueues = () => {
+    actionQueue.reload();
+    allQueue.reload();
+  };
   const [search, setSearch] = useState(""),
     [cls, setClass] = useState(""),
     [customer, setCustomer] = useState(""),
@@ -85,16 +98,9 @@ export function CustomerMessages({ id }: { id?: string }) {
     [filter, setFilter] = useState(false);
   // A failed or outstanding read never leaves actionable stale rows or counts behind.
   const data = !queue.loading && !queue.error ? queue.data : null;
-  const counts = data
-    ? Object.fromEntries(
-        messageViews
-          .filter((v) => v.id !== "classes")
-          .map((v) => [
-            v.id,
-            data.items.filter((m) => inMessageView(m, v.id)).length,
-          ]),
-      )
-    : undefined;
+  const counts = messageCounts(
+    !actionQueue.loading && !actionQueue.error ? actionQueue.data : null,
+  );
   const items = (data?.items ?? []).filter(
     (m) =>
       inMessageView(m, view) &&
@@ -244,7 +250,7 @@ export function CustomerMessages({ id }: { id?: string }) {
           id={selected}
           full={!!id}
           onMore={setRecordMore}
-          onSaved={() => queue.reload()}
+          onSaved={reloadQueues}
           back={`${root}?view=${view}`}
         />
       ) : view === "classes" ? (
@@ -258,7 +264,10 @@ export function CustomerMessages({ id }: { id?: string }) {
                 ? `${items.length} messages in window`
                 : "Messages unavailable"}
             </span>
-            <Button onClick={() => queue.reload()} disabled={queue.loading}>
+            <Button
+              onClick={reloadQueues}
+              disabled={queue.loading || actionQueue.loading}
+            >
               Refresh
             </Button>
           </div>
@@ -287,6 +296,9 @@ export function CustomerMessages({ id }: { id?: string }) {
               Loading messages…
             </p>
           )}
+          {data?.limit_reached && (
+            <p className="cm-warning" role="status">{messageWindowWarning}</p>
+          )}
           {data && (
             <>
               <div className="cm-desktop-grid">
@@ -297,13 +309,16 @@ export function CustomerMessages({ id }: { id?: string }) {
                     !items.length && (
                       <RegisterEmpty
                         title={
-                          view === "to-send"
-                            ? "Nothing to send"
-                            : "No matching messages"
+                          data.limit_reached
+                            ? "No matching messages in this limited window"
+                            : view === "to-send"
+                              ? "Nothing to send"
+                              : "No matching messages"
                         }
                       >
                         <p>
-                          No permitted messages match this view and its filters.
+                          No permitted messages in the returned window match this view
+                          and its filters.
                         </p>
                       </RegisterEmpty>
                     )
@@ -345,7 +360,7 @@ export function CustomerMessages({ id }: { id?: string }) {
                           <State m={m} />
                         </td>
                         <td>{m.customer_name ?? "Not bound"}</td>
-                        <td>{m.recipient.name ?? "No named contact"}</td>
+                        <td>{messageRecipientName(m.recipient.name)}</td>
                         <td>{m.source.reference}</td>
                         <td>
                           <time dateTime={m.prepared_at}>
@@ -368,7 +383,7 @@ export function CustomerMessages({ id }: { id?: string }) {
                     <strong>{m.subject ?? m.label}</strong>
                     <span>
                       {m.customer_name ?? "Customer not bound"} ·{" "}
-                      {m.recipient.name ?? "No named contact"}
+                      {messageRecipientName(m.recipient.name)}
                     </span>
                     <State m={m} />
                     <small>
@@ -380,9 +395,11 @@ export function CustomerMessages({ id }: { id?: string }) {
                 {!items.length && (
                   <RegisterEmpty
                     title={
-                      view === "to-send"
-                        ? "Nothing to send"
-                        : "No matching messages"
+                      data.limit_reached
+                        ? "No matching messages in this limited window"
+                        : view === "to-send"
+                          ? "Nothing to send"
+                          : "No matching messages"
                     }
                   />
                 )}
@@ -532,7 +549,7 @@ function CustomerMessageRecord({
             <div className="cm-recipient-context">
               <h3>Sends to · fixed when prepared</h3>
               <p>
-                <strong>{m.recipient.name ?? "No named contact"}</strong>
+                <strong>{messageRecipientName(m.recipient.name)}</strong>
                 <br />
                 {m.recipient.address ?? "No address recorded"}
                 <br />
@@ -582,10 +599,10 @@ function CustomerMessageRecord({
                   ["delay.reason", "Delay reason"],
                 ]
                   .filter(([key]) => m.facts[key] != null)
-                  .map(([key, label]) => (
+                  .map(([key]) => (
                     <div key={key}>
-                      <dt>{label}</dt>
-                      <dd>{m.facts[key]}</dd>
+                      <dt>{messageFactLabel(key)}</dt>
+                      <dd>{messageFactValue(key, m.facts[key])}</dd>
                     </div>
                   ))}
               </dl>
@@ -636,8 +653,8 @@ function CustomerMessageRecord({
                   <dl>
                     <dt>To</dt>
                     <dd>
-                      {m.recipient.name ?? "No named contact"} &lt;
-                      {m.recipient.address ?? "no address"}&gt;
+                      {messageRecipientName(m.recipient.name)} &lt;
+                      {messageRecipientAddress(m.recipient.address)}&gt;
                     </dd>
                     <dt>From</dt>
                     <dd>
@@ -646,7 +663,7 @@ function CustomerMessageRecord({
                     </dd>
                     <dt>Subject</dt>
                     <dd>
-                      <strong>{m.subject ?? "Content not prepared"}</strong>
+                      <strong>{messageSubject(m.subject)}</strong>
                     </dd>
                   </dl>
                   <div className="cm-body">
@@ -757,8 +774,8 @@ function CustomerMessageRecord({
                 <dl>
                   {Object.entries(m.facts).map(([k, v]) => (
                     <div key={k}>
-                      <dt>{k}</dt>
-                      <dd>{v ?? "Not recorded"}</dd>
+                      <dt>{messageFactLabel(k)}</dt>
+                      <dd>{messageFactValue(k, v)}</dd>
                     </div>
                   ))}
                 </dl>
@@ -818,12 +835,13 @@ function CustomerMessageRecord({
             }}
           >
             <p>
-              <strong>{m.recipient.name}</strong> &lt;{m.recipient.address}&gt;
+              <strong>{messageRecipientName(m.recipient.name)}</strong> &lt;
+              {messageRecipientAddress(m.recipient.address)}&gt;
             </p>
             <p>
               <strong>Subject</strong>
               <br />
-              {m.subject}
+              {messageSubject(m.subject)}
             </p>
             <p>
               Content check <code>{m.content_hash ?? "Not prepared"}</code>

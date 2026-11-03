@@ -143,10 +143,13 @@ async function setup(
       }
       return r.fulfill({ json: { state: "Confirmed", record_version: 2 } });
     }
-    if (path.endsWith("queue"))
+    if (path.endsWith("queue")) {
+      const all = new URL(r.request().url()).searchParams.get("view") === "all";
+      const candidates = all ? [...state.items].reverse() : state.items.filter((m) => ["Prepared", "Held", "Failed", "OutcomeUnknown"].includes(m.state));
       return state.failQueue
         ? r.fulfill({ status: 503, json: { message: "Queue unavailable" } })
-        : r.fulfill({ json: ecQueue(state.items) });
+        : r.fulfill({ json: ecQueue(candidates.slice(0, 200)) });
+    }
     if (path.endsWith("switches"))
       return r.fulfill({
         json: {
@@ -650,4 +653,64 @@ test("EC04-B10 dismissed reconciliation reasons are not reused", async ({
   expect(state.posts).toHaveLength(1);
   expect(state.posts[0].path).toMatch(/reconcile$/);
   expect(state.posts[0].body.reason).toBe("SYN current reconciliation reason");
+});
+
+test("EC04-B14 older Held work survives the all-message window and incomplete empty views say so", async ({ page }) => {
+  const held = ecMessage(1, "Held");
+  const newer = Array.from({ length: 201 }, (_, i) => ecMessage(i + 2, "Sent"));
+  await setup(page, [held, ...newer]);
+  await page.goto(root + "?view=follow-up");
+  await expect(page.locator(".cm-message-link")).toHaveCount(1);
+  await expect(page.locator(".cm-phone-message")).toHaveCount(1);
+  await expect(page.getByText("Nothing to send", { exact: true })).toHaveCount(0);
+  await page.goto(root + "?view=all");
+  await expect(page.getByRole("status").filter({ hasText: "200-candidate limit" })).toBeVisible();
+  await page.route("**/api/v1/customer-communications/queue", (r) => r.fulfill({ json: { ...ecQueue([]), limit_reached: true } }));
+  await page.goto(root + "?view=to-send");
+  await expect(page.getByText("Nothing to send", { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("status").filter({ hasText: "empty views are incomplete" })).toBeVisible();
+});
+test("EC04-B15 Held dialog fallbacks and plain facts retain exact content", async ({ page }) => {
+  const held = ecMessage(1, "Held");
+  held.recipient.name = null;
+  held.recipient.address = null;
+  held.subject = null;
+  held.facts["future.delivery_window"] = "SYN afternoon";
+  await setup(page, [held]);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`${root}/${held.id}`);
+  await page.getByRole("button", { name: "Withdraw", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Withdraw message" });
+  await expect(dialog).toContainText("No named contact");
+  await expect(dialog).toContainText("<no address>");
+  await expect(dialog).toContainText("No exact content was prepared");
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Facts", exact: true }).click();
+  const facts = page.locator(".cm-fact-list");
+  await expect(facts).toContainText("Consignment");
+  await expect(facts).toContainText("Customer ETA");
+  await expect(facts).toContainText("3 Nov 2026");
+  await expect(facts).toContainText("Future delivery window");
+  await expect(facts).not.toContainText("dispatch.tracking_number");
+  await expect(page.locator(".cm-source-facts")).toContainText("3 Nov 2026");
+});
+test("EC04-B16 Inbox keeps its mailbox and action counts at desktop and phone widths", async ({ page }) => {
+  const state = await setup(page);
+  await page.route("**/api/v1/email?*", (r) => r.fulfill({ json: { items: [{ id: ecMessage(1).id, subject: "SYN Inbox handover", sender_name: "SYN sender", received_at: "2026-11-03T00:00:00Z", opportunity_id: null, followup_id: null }], truncated: false } }));
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: width < 781 ? 844 : 900 });
+    await page.goto("/email");
+    await expect(page.getByRole("heading", { name: "Sales Inbox", exact: true })).toBeVisible();
+    await expect(page.getByText("SYN Inbox handover", { exact: true })).toBeVisible();
+    if (width < 781) await page.getByRole("button", { name: /Choose view/ }).click();
+    const menu = page.getByRole("navigation", { name: "Email views" });
+    await expect(menu.getByRole("link", { name: "To send 2", exact: true })).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Needs follow-up 3", exact: true })).toBeVisible();
+    await expect(menu).toContainText("Personal mailbox · synthetic only");
+    await page.screenshot({ path: `${captures}/inbox-${width}.png` });
+  }
+  state.failQueue = true;
+  await page.reload();
+  await expect(page.locator(".cm-menu-count")).toHaveCount(0);
+  await expect(page.getByText("SYN Inbox handover", { exact: true })).toBeVisible();
 });

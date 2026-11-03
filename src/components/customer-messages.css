@@ -509,6 +509,9 @@
 #ppo-customer-messages .cm-desktop-grid th:nth-child(8) {
   width: 120px;
 }
+#ppo-customer-messages .cm-desktop-grid th {
+  padding: 0 12px;
+}
 #ppo-customer-messages .cm-desktop-grid td {
   height: 40px;
   padding: 8px 12px;
@@ -520,9 +523,8 @@
 #ppo-customer-messages .cm-desktop-grid .cm-message-link {
   display: block;
   max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .cm-source-facts {
   display: grid;
