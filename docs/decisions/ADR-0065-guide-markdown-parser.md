@@ -5,6 +5,12 @@
 Status: accepted by the owner on 23 October 2026: "Proceed: I accept ADR-0065 as written. Record my decision and start the stage 1 build using the plan, subagent-driven." The stage 1 build follows the [build plan](../superpowers/plans/2026-10-23-user-guide-stage-1.md). The user guide direction ([PPO-USER-GUIDE-PROP](user-guide-direction.md), Q2 and section 4.2) required this ADR before stage 1 built anything. Dean asked for it on 23 October 2026: "Proceed with stage 1: write the ADR for the Markdown parser and sanitiser, then the build plan."
 Date: 23 October 2026. Owner: Dean Fiedler. Builder: Claude.
 
+Implementation status, 1 November 2026: **implemented in draft PR #817, not yet merged.** Tasks 1 to 4 of the build plan were merged earlier through PR #718 and the discovery fixes that followed it (#735, #745, #749 and #755, through #740). Draft PR #817 holds Tasks 5 to 9: commits a3889dc4, b95d3359, c235cb18, 1437e035, 5a5ab991, e7f55906 and 2c831557, a merge of main (69887772), and the Task 9 commit that adds this note. Dependency gates on that branch, on Node 24.21.0 and npm 11.19.0:
+- `npm audit --omit=dev --audit-level=high`: "found 0 vulnerabilities".
+- `node scripts/check-npm-audit.mjs`: "No unexcepted high or critical advisories (0 excepted, 0 exceptions recorded)."
+
+Implementation is not review, acceptance or merge. No guide has been reviewed or published: the twenty carried-over guides are InReview and shown before review, and the rewritten CRM Deals guide is InReview and hidden. The owner's acceptance above, of the decision, is unchanged.
+
 Related:
 - [User guide direction](user-guide-direction.md) (PPO-USER-GUIDE-PROP), sections 4 and 8
 - [Contextual help design](../blueprints/contextual-help-design.md) (PPO-HELP-DES), section 5.1, which asks for "the final renderer/sanitisation choice and dependency rationale" before implementation

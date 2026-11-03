@@ -6,7 +6,7 @@ Stable entry: `route:/maintenance/plans/[id]`. Scope: **MA-03**. Owner: Dean Fie
 
 ## Purpose and page type
 
-Maintain reviewed task revisions and sourced monthly or quarterly obligations. Destination: `/maintenance/plans/[id]`. r20 page type: record/evidence workspace. Retain the complete native Service Operations shell; do not adopt historical `/service/agreements` links as route authority.
+Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations. Destination: `/maintenance/plans/[id]`. r20 page type: record/evidence workspace. Retain the complete native Service Operations shell; do not adopt historical `/service/agreements` links as route authority.
 
 ## Desktop
 

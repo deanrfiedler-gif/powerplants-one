@@ -1,4 +1,5 @@
 import { build } from "esbuild";
+import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile, cp } from "node:fs/promises";
 import { resolve } from "node:path";
 // A development-only rendering of actual components with explicit synthetic API
@@ -8,6 +9,12 @@ import { resolve } from "node:path";
 const out = resolve(process.argv[2] ?? "verification-evidence/crm-ui");
 const entry = process.argv[3] ?? "tests/ui/crm-board-fixture.tsx";
 await mkdir(out, { recursive: true });
+// The shell's page guides are the released Markdown guides. Compile them as `npm run build` does, then hand the
+// release file to the fixture as PPO_RELEASED_GUIDES, which it passes to GuideLibraryProvider as the root layout does.
+// A define rather than an import of .ppo-guides/released.json: the type check covers tests/ui and runs in jobs that
+// never build, where that file does not exist.
+execFileSync(process.execPath, ["--import", "tsx", "scripts/build-guides.ts"], { stdio: "inherit" });
+const releasedGuides = await readFile(".ppo-guides/released.json", "utf8");
 await build({
   entryPoints: [entry],
   outfile: out + "/review.js",
@@ -15,7 +22,7 @@ await build({
   platform: "browser",
   format: "iife",
   jsx: "automatic",
-  define: { "process.env.NODE_ENV": '"development"' },
+  define: { "process.env.NODE_ENV": '"development"', PPO_RELEASED_GUIDES: releasedGuides },
   plugins: [
     {
       name: "framework-fixture",

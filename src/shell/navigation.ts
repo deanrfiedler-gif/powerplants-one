@@ -83,7 +83,7 @@ export const destinations: ShellDestination[] = [
   {"id": "customers", "label": "Organisations", "icon": "nav-organisations", "readiness": "ready", "href": "/customers", "requires": ["shared.read"]},
   {"id": "products", "label": "Products", "icon": "nav-products", "readiness": "ready", "href": "/products", "requires": ["products.read"]},
   {"id": "insights", "label": "Insights", "icon": "nav-insights", "readiness": "unavailable", "workspace": "sales"},
-  {"id": "intake", "label": "Intake", "icon": "nav-inbox", "readiness": "ready", "workspace": "estimate", "href":"/estimating/intake", "requiresAll":["crm.opportunity.read","estimating.edit"]},
+  {"id": "intake", "label": "Sales briefs", "icon": "nav-inbox", "readiness": "ready", "workspace": "estimate", "href":"/estimating/intake", "requiresAll":["crm.opportunity.read","estimating.edit"]},
   {"id": "wizard", "label": "Estimation wizard", "icon": "nav-wizard", "readiness": "ready", "href": "/estimating/discovery", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "estimates", "label": "Intake & workload", "icon": "nav-estimates", "readiness": "ready", "href": "/estimating", "workspace": "estimate", "requires": ["estimating.read"]},
   {"id": "configurations", "label": "Specialist configurations", "icon": "nav-configurations", "readiness": "ready", "href": "/estimating/configurations", "workspace": "estimate", "requires": ["estimating.read"]},
@@ -137,7 +137,7 @@ export const destinations: ShellDestination[] = [
   {"id": "facilities", "label": "Facilities & growing areas", "icon": "nav-facilities", "readiness": "ready", "href": "/facilities", "requires": ["shared.read"]},
   {"id": "surveys", "label": "Site surveys", "icon": "nav-sites", "readiness": "ready", "href": "/surveys", "requires": ["shared.read"]},
   {"id": "equipment", "label": "Equipment", "icon": "nav-equipment", "readiness": "ready", "href": "/equipment", "requires": ["shared.read"]},
-  {"id": "documents", "label": "Documents", "icon": "nav-documents", "readiness": "unavailable"},
+  {id:"documents",label:"Documents",icon:"nav-documents",readiness:"ready",href:"/documents",requires:["document.read"]},
   {id:"outputs",label:"Outputs",icon:"nav-documents",readiness:"ready",href:"/documents/issues",requiresAny:["pack.prepare","pack.check","pack.issue","service.work_order.edit","report.issue"]},
   {"id": "approvals", "label": "Reviews & handovers", "icon": "nav-approval", "readiness": "ready", "href": "/work/reviews", "requires": ["activity.read"]},
   {"id": "recovery", "label": "Integrations & recovery", "icon": "nav-recovery", "readiness": "ready", "href": "/admin", "requires": ["shared.read", "finance.read", "service.work_order.read", "field.read.own"]},
@@ -280,7 +280,7 @@ export function pageForPath(path: string) {
     .toSorted((a, b) => b.href!.length - a.href!.length)[0];
   if (path.startsWith("/service/appointments/")) return destination("planner");
   if (path === "/documents/issues" || path.startsWith("/documents/issues/")) return destination("outputs");
-  if (path.startsWith("/documents/")) return destination("documents");
+  if (path === "/documents" || path.startsWith("/documents/")) return destination("documents");
   return item;
 }
 export function navigationForCapabilities(

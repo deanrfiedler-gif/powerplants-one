@@ -71,3 +71,30 @@ test("planner return validates destination and every supported criterion", () =>
   assert.equal(safeBookingTarget(`/service/appointments/${id(5)}?returnTo=${encodeURIComponent(valid)}`), appointmentHref(id(5), valid));
   assert.equal(safeBookingTarget(`/service/appointments/${id(5)}/../../auth/logout`), null);
 });
+// Gate P4: a site-readiness contact restores only its typed purpose and exactly four checks.
+test("journal accepts a typed site-readiness contact and refuses malformed checks", () => {
+  const confirmed = { status: "Confirmed", note: "" };
+  const contact = (body: Record<string, unknown>): JournalEntry => ({
+    ...entry(),
+    path: `appointments/${id(5)}/contacts`,
+    record_id: id(6),
+    body: {
+      operation_id: id(4), schema_version: 1, id: id(6), expected_version: 3, reason: "Record customer site readiness",
+      recipient_id: id(7), channel: "ManualPhone", outcome: "Confirmed", occurred_at: "2026-10-12T01:02:00Z", notes: "", ...body,
+    },
+  });
+  const checks = { access: confirmed, power_water: confirmed, equipment: { status: "NotReady", note: "SYN bench" }, isolation: { status: "NotApplicable", note: "" } };
+  assert.equal(acceptsBookingEntry(contact({})), true);
+  assert.equal(acceptsBookingEntry(contact({ purpose: "SiteReadiness", site_checks: checks })), true);
+  for (const bad of [
+    { purpose: "SiteReadiness" },
+    { purpose: "DateAgreement", site_checks: checks },
+    { purpose: "Marketing", site_checks: checks },
+    { purpose: "SiteReadiness", site_checks: { ...checks, extra: confirmed } },
+    { purpose: "SiteReadiness", site_checks: { access: confirmed, power_water: confirmed, equipment: confirmed } },
+    { purpose: "SiteReadiness", site_checks: { ...checks, access: { status: "Ready", note: "" } } },
+    { purpose: "SiteReadiness", site_checks: { ...checks, access: { status: "Confirmed", note: "x".repeat(1001) } } },
+    { purpose: "SiteReadiness", site_checks: { ...checks, access: { ...confirmed, token: "not-a-real-secret" } } },
+  ])
+    assert.equal(acceptsBookingEntry(contact(bad)), false, JSON.stringify(bad).slice(0, 80));
+});

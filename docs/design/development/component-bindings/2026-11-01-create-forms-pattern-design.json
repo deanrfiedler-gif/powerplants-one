@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "fields": {
+      "used_on": [
+        "route:/sales/leads",
+        "route:/sales/opportunities/new",
+        "route:/service/work-orders/new",
+        "route:/work/new",
+        "route:/engineering",
+        "scope:CX-02"
+      ],
+      "gaps": [
+        {
+          "id": "fields-create-forms-pattern",
+          "expected": "The accepted Create forms pattern (PPO-CREATE-FORMS-FIGMA-DEC) uses Check before creating, Review before save, explicit Not known yet, a saved notice with a next step and recovery of the original request, with the Figma page parts Create / Notice, Create / Match card and Create / Review row.",
+          "actual": "The native forms keep their current layouts. Only organisations have a duplicate check; no New build form exists. The three Figma parts stay on the Create forms page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the pattern form by form, each with its own new reads and tests, and move the three parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
