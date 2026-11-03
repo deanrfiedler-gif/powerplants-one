@@ -5507,7 +5507,7 @@
       "title": "Document register and linked library",
       "kind": "scope",
       "module": "DK",
-      "summary": "Implement a document register and linked library with contextual filters, applicability and stable source identities. Synthetic persisted backend covers exact revisions, declared references, findings and independent review; native page integration remains separate.",
+      "summary": "Native library register and exact-revision workspace; current-use evidence, commands and source authority remain separate. Verification in progress.",
       "path": "/documents",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -5515,7 +5515,11 @@
         "src/library/reads.ts",
         "src/library/context.ts",
         "src/library/sources.ts",
-        "docs/decisions/document-library-backend.md"
+        "docs/decisions/document-library-backend.md",
+        "src/app/(business)/documents/page.tsx",
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
       ],
       "guide_key": "guide.dk.01",
       "design_path": "docs/design/development/pages/scope-dk-01.md",
@@ -5533,9 +5537,9 @@
         "src/documents/store.ts",
         "docs/decisions/document-library-figma-design.md"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Backend verification recorded separately in docs/testing/evidence/document-library/README.md. Native workspace, visual review and owner acceptance remain open.",
+      "functional_status": "Draft native implementation; test execution and paired visual review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -5552,7 +5556,7 @@
       "title": "Document viewer, revision and review workspace",
       "kind": "scope",
       "module": "DK",
-      "summary": "Extend the current exact issued-pack viewer to a general document/revision/review workspace. Synthetic persisted backend covers exact revisions, declared references, findings and independent review; native page integration remains separate.",
+      "summary": "Native library register and exact-revision workspace; current-use evidence, commands and source authority remain separate. Verification in progress.",
       "path": "/documents",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
@@ -5560,7 +5564,11 @@
         "src/library/reads.ts",
         "src/library/context.ts",
         "src/library/sources.ts",
-        "docs/decisions/document-library-backend.md"
+        "docs/decisions/document-library-backend.md",
+        "src/app/(business)/documents/library/[id]/page.tsx",
+        "src/components/library-register.tsx",
+        "src/components/library-record.tsx",
+        "src/components/library-command.tsx"
       ],
       "guide_key": "guide.dk.02",
       "design_path": "docs/design/development/pages/scope-dk-02.md",
@@ -5587,7 +5595,7 @@
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "Backend verification recorded separately in docs/testing/evidence/document-library/README.md. Native workspace, visual review and owner acceptance remain open.",
+      "functional_status": "Draft native implementation; test execution and paired visual review pending.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -14238,10 +14246,10 @@
     },
     {
       "key": "route:/estimating/intake",
-      "title": "Estimating Intake",
+      "title": "Sales briefs",
       "kind": "route",
       "module": "ES",
-      "summary": "Save a Sales brief, submit an exact frozen revision and record an independent Estimating receiving decision. LC-13 connects the exact accepted Sales brief to a separately created or existing native estimating workspace; discovery and cost history remain independently authored.",
+      "summary": "CR-02 receiving queue: latest submitted revisions, permission-scoped filters/counts/paging, exact snapshots, sequence and permitted selected export. Native receiving and explicit LC-13 linking remain on the brief.",
       "path": "/estimating/intake",
       "source_paths": [
         "src/app/(business)/estimating/intake/page.tsx"
@@ -14266,11 +14274,21 @@
         "docs/design/development/lead-continuity-fixtures.json",
         "docs/design/development/navigation-fixtures.json",
         "docs/decisions/navigation-consolidation.md",
-        "docs/decisions/sales-briefs-design.md"
+        "docs/decisions/sales-briefs-design.md",
+        "src/components/sales-briefs-register.tsx",
+        "src/components/sales-briefs-snapshot.tsx",
+        "src/components/sales-briefs-ui.tsx",
+        "src/components/sales-briefs.css",
+        "src/sales/receiving-queue.ts",
+        "src/sales/receiving-queue-model.ts",
+        "docs/design/development/sales-briefs-fixtures.json",
+        "docs/decisions/phone-header-amendment.md",
+        "docs/testing/evidence/sales-briefs-queue/README.md",
+        "docs/design/development/component-bindings/2026-10-31-sales-briefs-queue.json"
       ],
       "scope_status": "Native implementation; acceptance pending",
       "visual_status": "Needs review",
-      "functional_status": "See sales-native-completion-handover for executed assurance LC-13: 10 database, 11 selected upgrade and 8 compiled desktop/phone checks pass; docs/testing/evidence/estimating-brief-continuity/README.md retains bounded proof and earlier failures. Paired visual/owner acceptance and final-head CI remain separate.",
+      "functional_status": "See docs/testing/evidence/sales-briefs-queue/README.md for executed unit/database/HTTP/browser and repository checks; exact-head CI, visual/owner acceptance and deployment remain separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -17821,6 +17839,93 @@
         "scope:DK-03",
         "route:/documents/issues/job-packs/[id]",
         "route:/documents/issues"
+      ]
+    },
+    {
+      "key": "route:/documents/library/[id]",
+      "title": "Exact document revision",
+      "kind": "route",
+      "module": "DK",
+      "summary": "Native exact-revision library workspace; implementation and verification in progress.",
+      "path": "/documents/library/[id]",
+      "source_paths": [
+        "src/app/(business)/documents/library/[id]/page.tsx"
+      ],
+      "guide_key": "guide.route-documents-library-id",
+      "design_path": "docs/design/development/pages/route-documents-library-id.md",
+      "html_path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
+      "image_paths": [
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-03-Desktop-Record-Overview-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-04-Desktop-Record-Revisions-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-05-Desktop-Record-Links-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-06-Desktop-Record-History-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-09-Flow-2a-Add-Revision-Panel-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-10-Flow-2b-r04-Unreviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-11-Flow-3a-Findings-r04-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-12-Flow-3b-Review-Dialog-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-13-Flow-3c-r04-Reviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-14-Tablet-Record-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-16-Phone-Record-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-17-Phone-320-Content-Unavailable-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-18-States-r01.png"
+      ],
+      "dependencies": [
+        "src/library/reads.ts",
+        "src/library/model.ts",
+        "src/components/library-command.tsx",
+        "src/components/library.css"
+      ],
+      "scope_status": "refine",
+      "visual_status": "Needs review",
+      "functional_status": "Draft native implementation; test execution and paired visual review pending.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 21,
+      "related_keys": [
+        "scope:DK-02"
+      ]
+    },
+    {
+      "key": "route:/documents",
+      "title": "Document library",
+      "kind": "route",
+      "module": "DK",
+      "summary": "Native exact-revision library workspace; implementation and verification in progress.",
+      "path": "/documents",
+      "source_paths": [
+        "src/app/(business)/documents/page.tsx"
+      ],
+      "guide_key": "guide.route-documents",
+      "design_path": "docs/design/development/pages/route-documents.md",
+      "html_path": "docs/reference/ui/document-library/PPO-Document-Register-and-Linked-Library-r01.html",
+      "image_paths": [
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-01-Desktop-Register-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-02-Desktop-Register-Snapshot-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-07-Flow-1a-Register-Panel-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-08-Flow-1b-Registered-Unreviewed-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-15-Phone-Register-r01.png",
+        "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-18-States-r01.png"
+      ],
+      "dependencies": [
+        "src/library/reads.ts",
+        "src/library/model.ts",
+        "src/components/library-command.tsx",
+        "src/components/library.css"
+      ],
+      "scope_status": "refine",
+      "visual_status": "Needs review",
+      "functional_status": "Draft native implementation; test execution and paired visual review pending.",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": 20,
+      "related_keys": [
+        "scope:DK-01"
       ]
     }
   ]
