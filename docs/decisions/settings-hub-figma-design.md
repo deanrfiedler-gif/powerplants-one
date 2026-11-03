@@ -173,3 +173,7 @@ The audit is recorded on the notes card `2049:13083`.
 - The named Figma version "Settings — accepted" was saved in the Figma desktop app on 23 October 2026 at Dean's yes and confirmed at the top of version history. The page header and notes card were then updated with the lock-in details.
 - Claude did not play the flows in Present mode.
 - Nothing is built, so there is no application or device evidence. No owner device, accessibility or operational review is recorded. The captures are design compositions, not application captures, and set no UI baseline.
+
+## Later amendment
+
+On 1 November 2026 Dean accepted the frames Q6 owed in the [Settings amendments design](settings-amendments-figma-design.md), drawn on a separate page. This record's frames are unchanged. Its "Not drawn" list is historical for the History and Affected work tabs, the field readiness record and the phone sheets.

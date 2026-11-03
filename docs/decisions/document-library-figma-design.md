@@ -93,3 +93,12 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 - The eighteen captures are copies of the accepted frames with every Font Awesome icon instance swapped for `Icon/placeholder`. A scan after the swap found no Font Awesome instance left, and a second scan of 2,077 texts found no stored-colour mismatch and no text matching its background. They were exported at scale 1 with the Figma connector and inspected. The hashes are in the [captures README](../reference/ui/document-library/document-library-figma-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs`, `npm run studio:check` and `python3 scripts/build-ui-sequence.py --check` were run on this change; results are in its pull request.
 - Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+
+
+## Native implementation clarification — 1 November 2026
+
+The earlier sections describe the accepted design-time scope, not the current implementation status. PR #706 implements signed server sorting/paging and permitted revision/choice reads, resolving the bounded read gaps above. The live Revisions, Links and History frames were inspected again on 1 November. Revisions uses the accepted selectable table and exact-evidence panel; Links uses the accepted table and status filters. Filter counts are omitted because a page does not establish a complete permitted total. History uses readable immutable event summaries.
+
+The compact toolbar retains quick customer/site/owner selects; searchable choice pagination and Type are available in Filters, with an applied indicator at desktop/tablet widths. Refresh remains a labelled button. This is a bounded implementation adaptation to fit the existing shell width and keep all supported filters available. It requires visual review and does not amend the accepted Figma version or claim owner acceptance.
+
+The unavailable-content comparison also moves the exact-original warning ahead of Overview link/review details and exposes the existing authorised recovery command there. This retains the accepted unavailable-state priority at 320 px; source and review evidence remain separate.

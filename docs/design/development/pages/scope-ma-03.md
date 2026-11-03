@@ -6,7 +6,7 @@ Stable entry: `scope:MA-03`. Scope: **MA-03**. Owner: Dean Fiedler. Visual/busin
 
 ## Purpose and page type
 
-Maintain reviewed task revisions and sourced monthly or quarterly obligations. Destination: `/maintenance/plans`. r20 page type: register/worklist with record/evidence detail. Retain the complete native Service Operations shell; do not adopt historical `/service/agreements` links as route authority.
+Maintain reviewed task revisions and sourced monthly, quarterly, six-monthly or yearly obligations. Destination: `/maintenance/plans`. r20 page type: register/worklist with record/evidence detail. Retain the complete native Service Operations shell; do not adopt historical `/service/agreements` links as route authority.
 
 ## Desktop
 

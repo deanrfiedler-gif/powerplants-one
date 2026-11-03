@@ -1,0 +1,7 @@
+# Quotation page and customer views (ES-05)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Customer quotation page — indicative `/quote/[token]` (no application shell), with the staff Customer views display | [Design r01 captures](../estimating/quotation-page-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 30 October 2026 | [Decision](../../../decisions/quotation-page-customer-views-figma-design.md). `scope:ES-05`, with amendment frames for Quotation detail, the Deal record and My Work; not built. The exact issued document in a plain Powerplants frame with no Accept or Sign, link notices with no prices, the Send quotation composer, the Customer views line, Withdraw link, the follow-up suggestion and the privacy gate; every send outcome and view shown is synthetic |
+
+**Quotation page design, 30 October 2026:** Dean accepted the Figma design for the customer quotation page and the staff Customer views display, with departures D1–D15 and the recommended answers to Q1–Q8. The [decision](../../../decisions/quotation-page-customer-views-figma-design.md) records it, and the [retained captures](../estimating/quotation-page-design-r01/README.md) are 29 icon-free PNGs with hashes. The named Figma version "Quotation page & customer views — accepted" was saved on 31 October 2026 on Dean's yes. Nothing is built. Listing it here does not repeat the dated inventory audit.
