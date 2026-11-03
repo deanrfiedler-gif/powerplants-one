@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** decided by Claude on 1 November 2026 under the delegation quoted below. It is an agent decision under delegated authority, not an owner acceptance of any page. Dean can overrule any part of it. It amends [ADR-0053](ADR-0053-figma-page-design.md) and [ADR-0055](ADR-0055-figma-file-structure.md). The working rules are in the [design-to-build standard](../standards/design-to-build-standard.md).
+Owner: Dean Fiedler. **Status:** decided by Claude on 1 November 2026 under the delegation quoted below. It is an agent decision under delegated authority, not an owner acceptance of any page. Dean can overrule any part of it. It amends [ADR-0053](ADR-0053-figma-page-design.md) and [ADR-0055](ADR-0055-figma-file-structure.md). The working rules are in the [design-to-build standard](../standards/design-to-build-standard.md). Aligned on 3 November 2026 with the later [roles decision](design-build-review-roles.md); see [Roles](#roles).
 
 ## Owner direction — 1 November 2026
 
@@ -28,7 +28,7 @@ He first approved task tests with Powerplants staff, then replaced them the same
 
 > "Actually, as I am designing and developing this app myself, and have access to all internal departments, I will be the only person testing and review the UI page designs and builds."
 
-Dean is therefore the only human tester and reviewer. This withdraws staff testing for the flagships, including the approval in principle given for task tests in the [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md). Nobody was contacted. A separate AI session still checks the gates, which is not human testing.
+Dean is therefore the only human tester and reviewer. This withdraws staff testing for the flagships, including the approval in principle given for task tests in the [UX benchmark decisions](ux-benchmark-decisions-2026-10-16.md). Nobody was contacted. The gates are still checked by AI (a separate Claude session for Design ready, and Claude's review for each build), which is not human testing.
 
 ## Context
 
@@ -84,7 +84,7 @@ Option D for tokens and option C for files.
 8. **Start fresh; copy, redraw or leave each old page.** A new page is drawn in its domain file. An accepted page that doesn't change stays in the frozen file. A small amendment or a proposal is copied when next worked on. A page being reworked, or built from many detached parts, is redrawn from the library using the old page as the reference. Nothing moves in bulk. This follows ADR-0055's "start with new designs" and protects accepted designs from silent change.
 9. **Every page has one live home**, recorded by its decision record and design entry. The hand-kept File index stops at the freeze.
 10. **Named lifecycle for components:** Proposed, Accepted, Built, Deprecated, held in the description; these are PPO's own labels. Publishing follows a checklist with a release note graded Low, Medium or High. Medium and High need Dean's acceptance, and High is tried on a duplicate first, because Figma doesn't flag library updates as design changes. One session edits the library at a time.
-11. **Quality gates, checked by a second session.** A design must pass Design ready before acceptance, and a page must pass Build done before merge. A session other than the author checks them, and a graded comparison decides what must be fixed. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
+11. **Quality gates within the agreed roles.** A design must pass Design ready before Dean's acceptance; a Claude session other than the one that drew it checks it. A build must pass Build done, which Codex checks before asking for review. Claude's one independent review of the build includes a graded comparison with the accepted capture, which decides what must be fixed. The comparison is part of that review, not a second gate, so the one-review rule applies to its findings. These add the states and WCAG 2.2 AA checks (the proposed NFR-08 target) that the process did not require.
 12. **Captures are temporary in Figma and selective in Git.** Copies are made on a temporary page, exported with hashes, and the page is deleted. Only frames a builder needs are retained. Existing captures stay unchanged.
 13. **Unchanged:** Dean accepts every page design. Named versions remain the acceptance marker. The file link and Pro artwork stay out of the repository. A private Figma team, one page per app page and real scope IDs all continue.
 14. **Raise the design language first, then redesign in waves.** Pipedrive's grammar stays the base, with Dean's recorded preferences. Improvements go first into the library's tokens, type, density, shell, grid, record, form and state patterns, then into five flagship journeys benchmarked against the named products. Other pages follow in tiers, module by module. "More professional" is judged by a scorecard and Dean's own timed task runs. "Better than the market" is recorded as the owner's judgement, not independent evidence. Standard section 14 holds the detail. This narrows decision 8: a page in a redesign wave is redrawn, not copied.
@@ -117,11 +117,21 @@ Option D for tokens and option C for files.
 
 **Cost of decision 14.** Redrawing reopens accepted designs, adds to a review backlog of 293 entries, and means rebuilding built pages. At about 40 connector calls a page, the daily limit allows roughly five pages a day. This is why it runs in tiers, and why a page's visual-only build work waits while its redesign is due, while functional work continues.
 
-**Single human reviewer.** Dean knows every design and every department, which helps with correctness and hides what a first-time user would find confusing. His task times are a best case. Other people's confusion stays untested until they use the app, so the plan relies more on the scorecard, the second AI session and automated checks.
+**Single human reviewer.** Dean knows every design and every department, which helps with correctness and hides what a first-time user would find confusing. His task times are a best case. Other people's confusion stays untested until they use the app, so the plan relies more on the scorecard, the separate Claude design check, Claude's review of each build and automated checks.
 
 **Follow-ups, each needing its own change.** Automated accessibility tests, which add a dependency and need their own record. With one human reviewer, these come first. A trial of Code Connect after the pilot. Marking accepted frames Ready for dev is manual, because no Plugin API for it appears in the typings, and Professional can't clear the Changed state.
 
 **Stop rule.** If no linking method passes stage 3, the library file already holds every page except Captures and Archive, so it becomes the single working file with a published library, and this record is revisited. Until stage 2 starts, pages are still drawn in "PPO - Design", and drawing pauses during stages 2 and 3. Only decisions 1 to 4, 11 and the capture rule take effect immediately.
+
+## Roles
+
+This record was written on 1 November 2026. On 2 November Dean adopted the [roles decision](design-build-review-roles.md), which governs where the two differ. On 3 November this record and the standard were aligned with it:
+
+- Claude designs pages in Figma and records the lock-in, and Codex builds from that lock-in. Drawing and building are no longer shared as "Claude or Codex".
+- Build review comes from the other model family, once: Claude reviews Codex's builds. "A session other than the author" no longer meets that requirement for a build.
+- The Build done comparison is part of that one review, so its findings are fixed or answered and then confirmed, not reviewed again.
+
+Design ready stays a check by a separate Claude session, because it happens in Figma before Dean's acceptance and is not a pull request review. Nothing else in this record changed.
 
 ## Consequences
 

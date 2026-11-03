@@ -14,7 +14,7 @@ How Powerplants One UI pages are designed in Figma and built in the app. The rea
 
 ## 1. Who decides what, and what is true
 
-Dean accepts every page design and decides business matters. Claude and Codex draw, build and maintain the process. Section 12 lists who does each step.
+Dean accepts every page design, decides business matters and merges every pull request. Claude designs pages in Figma, records each accepted design in the repository and reviews each build once. Codex builds the pages from that record. These roles come from the [roles decision](../decisions/design-build-review-roles.md) of 2 November 2026, which governs where this standard differs. Section 12 lists who does each step.
 
 | Question | Source of truth |
 |---|---|
@@ -30,12 +30,12 @@ A proposal is never a source of truth. A Figma design never becomes a production
 ## 2. The lifecycle of a page
 
 1. **Propose.** Draw it from the library, with synthetic data, on a page named `[Page name] · [scope ID]`.
-2. **Design ready.** Pass the checklist below. A separate AI session checks it and records what it looked at. Anything left open is recorded as a question.
+2. **Design ready.** Pass the checklist below. A Claude session other than the one that drew the page checks it and records what it looked at. Anything left open is recorded as a question. This is a design check before acceptance, not a pull request review.
 3. **Accept.** Dean accepts it in words, and those words go in the decision record.
-4. **Lock in.** Save the named version, mark the accepted frames Ready for dev, retain the captures, and add the decision record, register rows and status fragment.
-5. **Build.** Build it from shared components and tokens, adding any new token to the app in the same pull request.
-6. **Build done.** Pass the checklist below.
-7. **Review.** Dean's visual review, functional proof and deployment stay separate claims. Review follows the [UI build sequence](../decisions/ui-build-sequence.md), module by module.
+4. **Lock in.** Claude saves the named version, marks the accepted frames Ready for dev, retains the captures, and adds the decision record, register rows and status fragment. This record is the build specification; a page without it is not ready to build.
+5. **Build.** Codex builds it from the lock-in in the repository, not from Figma directly, using shared components and tokens and adding any new token to the app in the same pull request.
+6. **Build done.** Codex passes the checklist below and reports it when asking for review.
+7. **Review.** Claude reviews the build once, including the comparison below, under the one-review rule in the [roles decision](../decisions/design-build-review-roles.md). GitHub CI then proves it and Dean merges. Dean's visual review, functional proof and deployment stay separate claims. Review follows the [UI build sequence](../decisions/ui-build-sequence.md), module by module.
 
 ### Design ready
 
@@ -62,7 +62,7 @@ A proposal is never a source of truth. A Figma design never becomes a production
 
 ### Comparing a build with its design
 
-Compare the running page with the accepted capture side by side, at the capture's viewport, using the same synthetic data where possible. A session other than the builder does this, in the local app. Captures hold icon placeholders, so icons are checked against the Font Awesome mapping instead. Run `node scripts/design-baseline-check.mjs --app <base-url>` where the page has a registered baseline. This compares tokens, not appearance.
+Compare the running page with the accepted capture side by side, at the capture's viewport, using the same synthetic data where possible. Claude does this as part of its one review of the build, in the local app. Where no browser is available, it compares the build's committed captures instead and says so. Each graded difference is a review finding: Codex fixes or answers it, and Claude confirms only those findings. The comparison is part of that review, not a second gate. Captures hold icon placeholders, so icons are checked against the Font Awesome mapping instead. Run `node scripts/design-baseline-check.mjs --app <base-url>` where the page has a registered baseline. This compares tokens, not appearance.
 
 | Grade | Meaning | Who can waive it |
 |---|---|---|
@@ -244,15 +244,18 @@ No check proves acceptance. That remains Dean's decision, recorded in Git.
 
 ## 12. Who does what
 
-| Step | Dean | Claude or Codex |
-|---|---|---|
-| Accept a design, or waive a Major difference | Decides | Prepares the question and a recommendation |
-| Save a named version | Does it, or tells a session to | With his yes, in the desktop app |
-| Draw and check a page | Reviews in Figma | Draws, then verifies by screenshot and layer checks |
-| Design ready and build comparison | | A session other than the author |
-| Move files, enable the library, accept library updates | Does it, or lets a session with desktop access | These have no connector or plugin route |
-| Publish the library | Sees the release note | Prepares and publishes under section 5 |
-| Merge changes to `AGENTS.md`, `CONTRIBUTING.md`, `.github/` or `infra/` | Only Dean | Writes them |
+| Step | Dean | Claude | Codex |
+|---|---|---|---|
+| Accept a design, or waive a Major difference | Decides | Prepares the question and a recommendation | |
+| Save a named version | Does it, or tells a session to | With his yes, in the desktop app | |
+| Draw and check a page | Reviews in Figma | Draws, then verifies by screenshot and layer checks | |
+| Design ready | | A session other than the one that drew the page | |
+| Lock in an accepted design | | Records it in the repository | |
+| Build a page and pass Build done | | | Builds from the lock-in, one page per pull request |
+| Review a build, including the comparison | | Once, under the one-review rule | Fixes or answers each finding |
+| Move files, enable the library, accept library updates | Does it, or lets a session with desktop access | These have no connector or plugin route | |
+| Publish the library | Sees the release note | Prepares and publishes under section 5 | |
+| Merge a pull request | Only Dean, until he says otherwise. Changes to `AGENTS.md`, `CONTRIBUTING.md`, `.github/` or `infra/` stay his alone even then | Does not merge | Does not merge |
 
 **Rules for AI sessions.**
 
@@ -284,7 +287,7 @@ The goal is for Powerplants One to be more professional and easier to use than P
 1. **Benchmark.** Compare each flagship journey with its product, using public material and any account Dean provides. Record what is better, what is worse and what to do about it.
 2. **Improve the library.** Raise tokens, type, spacing, density, shell, grid, record, form and state patterns, so most pages improve at once.
 3. **Redraw the flagships.** Show each beside its accepted design, for Dean's acceptance.
-4. **Test.** Dean runs scripted tasks on the prototypes, and a separate AI session reviews them.
+4. **Test.** Dean runs scripted tasks on the prototypes, and a separate Claude session reviews them.
 5. **Roll out.** Work through the tiers, finishing modules whole and announcing what moved.
 
 | Flagship journey | Benchmark | Pages |
@@ -318,7 +321,7 @@ While a page's redesign is due, its visual-only build work waits. Functional wor
 **Testing.** Dean is the only human tester and reviewer, using his access to every department. No staff, customer or grower takes part.
 
 - **Task runs.** A session writes the flagship tasks in advance, in the words of each department's real work, with synthetic data. Dean runs them and records completion, errors and time, against the same task in the tool used today where he can, including Pipedrive. Field tasks run on a real phone, where the work happens.
-- **AI review.** A session other than the author scores the design against the scorecard and walks each task as a first-time user would, recording every point where a label, state or next step is unclear.
+- **AI review.** A Claude session other than the one that drew the design scores it against the scorecard and walks each task as a first-time user would, recording every point where a label, state or next step is unclear.
 - **Automated checks.** Accessibility and visual checks cover what one person can miss, once their tooling is decided.
 
 **What this can and can't show.** It shows that a task works, and how Dean finds it. He already knows the designs, so his times are a best case, and it can't show how quickly someone new learns a page. Record a claim that a page is better than a market product as the owner's judgement.
