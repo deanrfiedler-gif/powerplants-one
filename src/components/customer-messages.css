@@ -577,7 +577,8 @@
   margin: 0;
 }
 @media (max-width: 780px) {
-  .cm-record-tools {
+  /* Phone navigation lives in the header; keep the record refresh reachable. */
+  .cm-record-tools > a {
     display: none;
   }
   .cm-built-from {
