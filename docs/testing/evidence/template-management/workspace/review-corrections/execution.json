@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-01",
+  "scope": "DK-06",
+  "pr": 704,
+  "application_source_commit": "dbff42b3b8b66a3c018a9f4365818996af13c9ad",
+  "base_commit": "26deea85d000878ca8df2c1b7a91e1ffdedd68f6",
+  "note": "Subsequent review-pass changes are test fixtures, documentation and evidence only. Prior native proof remains bound to the separate 31 October execution manifest.",
+  "checks": [
+    {
+      "log": "tmp/templates-nov01-build-3g.txt",
+      "check": "Production build and TypeScript",
+      "command": "npm run build (NODE_OPTIONS=--max-old-space-size=3072)",
+      "result": "passed"
+    },
+    {
+      "log": "tmp/templates-nov01-units.txt",
+      "check": "Focused units",
+      "command": "node --max-old-space-size=1536 --import tsx --test --test-concurrency=1 tests/unit/template-renderer-contract.test.ts tests/unit/template-publication.test.ts tests/unit/template-publication-render.test.ts tests/unit/template-drafts.test.ts tests/unit/template-catalogue.test.ts",
+      "result": "11 passed"
+    },
+    {
+      "log": "tmp/templates-nov01-browser.txt",
+      "check": "Compiled fixture browser",
+      "command": "node node_modules/@playwright/test/cli.js test --config playwright.templates.config.ts tests/browser/templates-workspace.spec.ts",
+      "result": "13 passed"
+    },
+    {
+      "log": "tmp/templates-nov01-shell-hosted.txt",
+      "check": "Shared hosted shell",
+      "command": "node node_modules/@playwright/test/cli.js test --config playwright.crm-ui.config.ts tests/ui/desktop-shell.spec.ts --project desktop --grep \"Figma shell\" --timeout=180000",
+      "result": "1 passed"
+    },
+    {
+      "log": "tmp/templates-nov01-studio-final.txt",
+      "check": "Studio",
+      "command": "npm run studio:check",
+      "result": "passed"
+    },
+    {
+      "log": "tmp/templates-nov01-scopes-native-final.txt",
+      "check": "Native scope regression",
+      "command": "node --max-old-space-size=1536 --env-file=.env.local --import tsx --test --test-isolation=none --test-reporter=tap --test-timeout=900000 tests/database/template-workspace.test.ts",
+      "result": "failed in reset seed hook, PostgreSQL 57014; no assertions reached"
+    }
+  ],
+  "captures": [
+    {
+      "sha256": "e6b7655dea586850722a0d1fcfb62f2f09ca0f2cacfae535082bd71a6ca0c9f5",
+      "file": "definitions-1440.png"
+    },
+    {
+      "sha256": "9bb23b40a7db163dd4436d9807e8effa92341be2dc12827c1934276dacacbed6",
+      "file": "proposal-paging-320.png"
+    },
+    {
+      "sha256": "a6352b5199a532ee6ed35a70cdd5c08c6dac23d8bb42eb1d55b807a31535a3f3",
+      "file": "site-use-320.png"
+    }
+  ],
+  "independent_visual_acceptance": false,
+  "owner_acceptance": false,
+  "deployed": false
+}

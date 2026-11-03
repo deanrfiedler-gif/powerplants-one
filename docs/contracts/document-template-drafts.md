@@ -18,6 +18,7 @@ All paths below start with `/api/v1`. The existing session, origin/JSON protecti
 
 | Method/path | Contract |
 |---|---|
+| GET /document-template-drafts/scopes | Required family; optional purpose Read or Propose, limit 1–50 and cursor. Current permitted site choices; Propose applies the native proposal duty before paging. |
 | GET /document-template-drafts/bindings | Required family, company_id, site_id. Returns only currently permitted binding metadata and schema_version 1. |
 | GET /document-template-drafts | Required family; optional limit 1–50 and cursor. Current permitted proposal summaries only; no global total. |
 | POST /document-template-drafts | Create a Draft and exact first revision. |
@@ -27,7 +28,7 @@ All paths below start with `/api/v1`. The existing session, origin/JSON protecti
 | GET /document-template-drafts/:id/history | Required kind Revision or Review; optional limit and cursor. Current-permission-filtered immutable history. |
 | GET /operations/:operation_id | Existing actor-private original receipt recovery under current write duty and original/current revision source permissions. |
 
-All reads explicitly return synthetic:true, publication_eligible:false and supported_runtime_version:null. Complete means no more currently permitted rows in this query, not complete workspace knowledge. Signed cursors bind actor, workspace, working company, family/proposal, kind and page size; hidden candidate IDs and totals are never returned.
+Proposal, binding and history reads explicitly return synthetic:true, publication_eligible:false and supported_runtime_version:null. Scope choices return synthetic:true with scoped duty hints, without publication eligibility or a supported runtime version. Complete means no more currently permitted rows in this query, not complete workspace knowledge. Signed cursors bind actor, workspace, working company, family/proposal, kind and page size; hidden candidate IDs and totals are never returned.
 
 ## Commands and schema
 
@@ -48,3 +49,13 @@ Four tables hold proposals, immutable revisions, immutable reviews and immutable
 Forbidden/missing scope or source access returns RecordUnavailable, including on original retries and history. InvalidData identifies invalid schemas; StaleTemplate requires reloading the retained base. IndependentReviewRequired rejects contributor review. After a lost response, retry the identical original or read its operation receipt. Do not generate another operation ID to reconcile uncertainty. A source permission loss can withhold an old receipt without deleting it.
 
 R2 creates ordinary SharedRecordUpdated evidence only. It never emits PolicyOrTemplatePublished, changes a template/policy, queues a render, updates a saved output, sends a message or downloads/regenerates an issued file. R3 publication, R4 assignment, arbitrary schemas/forms and native authoring controls are separate work.
+
+## Native workspace read projections (implementation in progress)
+
+`GET /api/v1/document-template-drafts/scopes?family=OUT-09|OUT-10|OUT-14&limit=1..50&cursor=...` supplies only currently authorised template sites, their stored company/site names and timezone, and `can_propose` / `can_assign` hints. It requires `template.read`; each returned scope rechecks native company/site/family duties. Assignment hints additionally require OUT-09, `template.assign` and `pack.check`. Signed cursors bind actor, workspace, working company, family and query. Optional `purpose=Propose` filters by the native proposal duty before applying the page size; omitted purpose or `purpose=Read` retains readable-site choices. Cursors bind the purpose as well as family, so a read-only continuation cannot be used for authoring choices. Both the register and definition record show authoring actions only after a confirmed proposable scope, and the proposal form uses Load more for additional proposable sites. Hints never authorise a command.
+
+Proposal reads add stored scope/author labels, exact-revision publication identity and contributor/duty hints after native authority. The revision number stays separate from command version. Revision history uses immutable revision order and reviews use command-version order, with timestamp/identity tie-breakers; cursor context distinguishes this chronology from older UUID-order tokens. No source values are read for field bindings.
+
+The [native-read decision](../decisions/template-workspace-native-reads.md) restores main's proposal-list behavior: unauthorised callers receive an empty permitted list. Every returned row still passes proposalContext and its template.read, company/site/family and source-binding checks, then is rechecked before return. Per-record and command authority remain mandatory; no duty or grant is removed.
+
+The exact proposal read includes `latest_review.actor_name` for the already authorized revision review. It resolves the workspace user display name and rechecks proposal/revision authority before return; history and latest-review labels therefore agree without a client directory join.

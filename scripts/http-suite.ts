@@ -35,6 +35,7 @@ const exclusive = new Set([
   "template-publication.test.ts",
   "template-publication-base.test.ts",
   "template-use.test.ts",
+  "templates-workspace.test.ts",
   // D-025 S2 resets and grants default-denied customer message duties.
   "customer-communications.test.ts",
   // R8 temporarily revokes a participant's source access to prove a private acknowledgement.

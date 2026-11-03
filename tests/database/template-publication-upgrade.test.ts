@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { migrate, seed } from "../../scripts/database";
 import { queued } from "../helpers/packs";
@@ -8,11 +12,8 @@ import {
   createProposal,
   reviewProposal,
 } from "../../src/documents/drafts/commands";
-import {
-  setupDraft,
-  draftInput,
-  reviewCommand,
-} from "../helpers/template-drafts";
+import { setupDraft, draftInput, base } from "../helpers/template-drafts";
+import { proposalContext } from "../../src/documents/drafts/context";
 import { readOperation } from "../../src/shared/receipts";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -27,11 +28,25 @@ test("R3 populated 0092 upgrade preserves exact output reservations, authority a
   const { p, reviewer } = await setupDraft(),
     input = await draftInput(p);
   await createProposal(p, input);
-  await reviewProposal(
-    reviewer,
-    input.id,
-    await reviewCommand(reviewer, input.id),
+  // Build the pre-0093 fixture using the native 0092 context. Current UI reads
+  // also project publication labels, whose table does not exist at this point.
+  const { d, r } = await transaction((c) =>
+    proposalContext(c, reviewer, input.id),
   );
+  await reviewProposal(reviewer, input.id, {
+    ...base(),
+    review_id: crypto.randomUUID(),
+    expected_version: d.version,
+    revision_id: r.id,
+    content_hash: r.content_hash,
+    outcome: "Reviewed",
+    checks: Object.fromEntries(
+      ["schema", "source_bindings", "audience"].map((key) => [
+        key,
+        { result: "Pass", note: "SYN exact pre-publication review fixture" },
+      ]),
+    ),
+  });
   const tables = [
     "template_proposals",
     "template_proposal_revisions",
