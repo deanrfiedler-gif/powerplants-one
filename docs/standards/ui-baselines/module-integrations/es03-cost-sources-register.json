@@ -1,0 +1,14 @@
+{
+  "id": "es03-cost-sources-register",
+  "route": "/estimating/cost-sources",
+  "scope": "#ppo-cost-sources",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-01-Desktop-Register-r01.png",
+  "sha256": "6380473f3ed24ad004a11fe632cdc5cbab53d7c19db034f69682874fec2d1da6",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/cost-source-register.spec.ts",
+  "application_proof": "tests/browser/cost-source-register.spec.ts",
+  "authority": "Accepted design input only; application review and owner acceptance remain pending.",
+  "adaptations": "docs/design/development/pages/route-estimating-cost-sources.md"
+}

@@ -26,7 +26,7 @@ Match `1191:50` at 1440 px and `1193:264207` at 1024 px using the layout contrac
 
 ## Mobile
 
-Match the 390/320 source families above with the adopted compact phone header, stacked contact rows, accessible disclosures, readable inputs and persistent editable-visit actions. Site-readiness dialogs remain gated. Every fact hidden from the desktop aside remains in Visit or its Crew and visit details disclosure.
+Match the 390/320 source families above with the adopted compact phone header, stacked contact rows, accessible disclosures, readable inputs and persistent editable-visit actions. Site-readiness recording is built inline (see the 30 October 2026 section below); its four checks stack on phone. Every fact hidden from the desktop aside remains in Visit or its Crew and visit details disclosure.
 
 ### Reuse, data and handovers
 
@@ -38,7 +38,7 @@ The appointment projection adds customer identity, visible contact name, service
 
 ### Gated scope and explicit differences
 
-1. P4 customer site readiness and P5 issue lead time are explicitly excluded by this implementation request. Their locations say **Not available yet**; overdue/not-ready P4 states and the drawn dialog/sheet are not executable. Date agreement is never substituted. A current **Ready to dispatch** result explicitly says P4 is not in the implemented gate.
+1. P4 customer site readiness and P5 issue lead time are explicitly excluded by this implementation request. (P4 is superseded by the 30 October 2026 section below; P5 remains excluded.) Their locations say **Not available yet**; overdue/not-ready P4 states and the drawn dialog/sheet are not executable. Date agreement is never substituted. A current **Ready to dispatch** result explicitly says P4 is not in the implemented gate.
 2. The undrawn Link a demand, Parts statement and permitted-exception dialogs are not built. Q2 enables navigation to an already linked demand for supply readers; creating a link still needs a separately drawn control. Existing server exceptions display their actual outcome.
 3. R2 current Parts/hold changes refresh without moving the booking. Existing R2 tasks have no structured appointment link or cause projection in this read model. The page does not infer that association from summary text, claim a previous promise or label a hold “held again” without evidence. Owner/cause/task details for that frame remain an open data-contract question.
 4. Crew confirmation is labelled **Checked at confirmation**, because no live independent CrewCompetency criterion is returned. No current Pass is invented. Older readiness policies without Parts say unavailable. The existing gate remains authoritative.
@@ -51,6 +51,27 @@ See [execution evidence](../../../testing/evidence/appointment-detail-native/REA
 
 Open for Dean: review the native visual differences; settle the undrawn demand/statement/exception controls before implementation; decide the later P4/P5 increments; provide a structured R2 cause/task association if the detailed rehold narrative is required. Owner visual, physical-device, screen-reader and business review remain pending. No deployment is claimed.
 
+
+## P4 customer site-readiness recording — 30 October 2026
+
+**Owner visual review: pending.** Dean asked for the gaps that stop end-to-end scenario TS-01 to be built; P4 recording was the first. The server already derived and stored P4 (migration 0120, PR #690); this change adds only the screen and its display. No migration, seed, grant, capability, route or dependency changes.
+
+- **Display.** The Customer site readiness check, the readiness strip and Ready to dispatch read the server's `preparation` projection for the current schedule version: Confirmed (marked late after the window), Not ready (with the count of checks the customer reported), or Not confirmed. A visit on a policy without P4 says its policy does not include site readiness. Nothing is ticked by hand.
+- **Recording.** Record site readiness on that check, or Record customer site readiness in the actions menu, opens an inline editor: the primary site contact, channel, the four checks (each Confirmed, Not ready or Not applicable, with a note), the confirmation window and an optional note. Record confirmation needs every check chosen. Record no answer saves outcome NoResponse. It is offered only for an unstarted Proposed or Confirmed visit on a P4 policy, to people with `schedule.contact`, matching the server rule.
+- **Contact rows.** Site-readiness contacts show "Site readiness · Confirmed / Not ready / No answer" and each check with its note; date-agreement rows keep "Dates · …".
+- **Recovery.** The command uses the existing immutable-original booking recovery. The recovery journal now accepts the typed `purpose` and exactly four well-formed `site_checks`, and still refuses anything else before sending.
+- **Ready to dispatch after the last confirmation (review fix, 31 October 2026).** When the crew has already acknowledged and site readiness is the last unmet check, recording the confirmation releases the server's dispatch hold in the same save, so the page moves to **Ready to dispatch** after its refresh. The server releases it only when every current dispatch check passes; any other hold (Parts, incident, scheduling policy, pack or crew) keeps **Dispatch held** with its reason. A later Not ready contact holds dispatch again, and a new confirmation releases it again.
+- **Draft kept across a stale refusal (review fix, 31 October 2026).** The editor holds the unsaved choices and notes apart from the appointment version it read, so refreshing never clears them. A stale refusal shows "Your entries are kept" with a **Refresh saved appointment** button in the editor. After a refresh to a newer version the editor shows **Review your entries against the saved appointment**; nothing is resent until the user chooses Record confirmation or Record no answer, which then saves a new contact against the current version. If the visit moved, the editor instead shows **The visit moved after these entries were made** with the earlier and current times, and Record confirmation needs the box "I have confirmed these answers again with the site contact for the new visit time" ticked. The tick belongs to the schedule version and times shown when it was given: if the visit moves again before anything is recorded, the box clears and must be ticked again for the new time. An uncertain original stays in the existing recovery panel unchanged and blocks new saves until resolved.
+- **Early confirmation wording (review fix, 31 October 2026).** A Confirmed contact recorded before the window opened says "Outside the confirmation window", that it does not count and that a new confirmation within the current window (shown) is needed. A no-answer or other unconfirmed contact keeps "Not confirmed yet: the last contact was not a confirmation."
+
+Departures from the accepted dialog `1195:266625` and sheet `1195:266814`, decided under Dean's standing order of 30 October 2026:
+
+- **S1 Inline editor, not a modal.** Every other SV-04 command on the built page is an inline editor, and the build record already says no new dialog layout is invented. The editor keeps the dialog's content and order.
+- **S2 Three choices per check instead of a tick.** The drawn tick cannot record Not ready or Not applicable, which P4 requires (field readiness gate, P4 table). Each check is a labelled select with an optional note.
+- **S3 No answer records each check as Not applicable with the reason "Not asked: no answer."** The server requires four checks on every site-readiness contact. Not ready would wrongly show the customer reporting a problem; with outcome NoResponse the criterion stays Not confirmed either way. Contact rows hide the checks of a no-answer contact.
+- **S4 Record contact still opens the date-agreement form.** Site readiness has its own action on the check row and in the menu, so date agreement is not lost from this page.
+
+Verification: [execution evidence](../../../testing/evidence/appointment-detail-native/README.md#p4-site-readiness-recording--30-october-2026).
 
 ## Scheduling Step 4 integration
 

@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { expectFlowingShellHeader } from "../helpers/shell-header-geometry";
+import { menuGroups } from "../../src/shell/navigation";
 const fixture = pathToFileURL(resolve("verification-evidence/crm-ui/index.html")).href;
 test.beforeEach(async ({ page }, info) => {
   test.skip(info.project.name !== "desktop", "Desktop integration; existing CRM phone tests retain mobile coverage.");
@@ -239,9 +240,11 @@ test("Figma shell keeps inherited r17 utility controls and its explicit header a
       await expect(actualPanel.locator(".ppo-menu-group").first().locator(".ppo-more-link")).toHaveText(["Sales", "Estimating & quotation", "Engineering", "Projects", "Service operations", "Supply chain", "Finance"]);
       // Native Outputs, Products, CS-08, AD-01 and all three Sales handover/aftercare destinations are included. Help and
       // installation actions are separate controls. Retained r17 bytes stay unchanged.
-      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(30);
+      // This hosted fixture permits every available, non-local destination with a route; new native destinations compose across PRs.
+      const expectedMenuLinks = menuGroups("", "sales").flatMap(group => group.items).filter(item => item.href && !item.localOnly && item.readiness !== "unavailable").length;
+      await expect(actualPanel.locator(".ppo-menu-group .ppo-more-link")).toHaveCount(expectedMenuLinks);
       await expect(actualPanel.locator(".ppo-help-link")).toBeVisible();
-      for (const [name, href] of [["Outputs", "/documents/issues?department=sales"], ["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
+      for (const [name, href] of [["Documents", "/documents?department=sales"], ["Outputs", "/documents/issues?department=sales"], ["Products", "/products?department=sales"], ["Sales-to-Estimating handovers", "/sales/handoffs/estimating"], ["Won-deal receiving", "/sales/handoffs/won"], ["Aftercare & renewal", "/sales/aftercare"]]) {
         await expect(actualPanel.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
       }
       await expect(actualPanel.getByRole("link", { name: "Users and access", exact: true })).toHaveAttribute("href", "/admin/access?department=sales");
