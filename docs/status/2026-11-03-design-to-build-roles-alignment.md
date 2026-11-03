@@ -9,4 +9,13 @@ date: 2026-11-03
 - The Build done comparison is part of Claude's one review of a build, not a second gate.
 - Design ready stays a check by a separate Claude session before Dean's acceptance.
 
-ADR-0067 records the change in a new Roles section, and the standard's section 12 now names who does each step. No other rule changed, and no page design is accepted. ADR-0067 still awaits the cross-model review its pull request requires. All 78 parent IDs remain.
+ADR-0067 records the change in a new Roles section, and the standard's section 12 now names who does each step. No page design is accepted.
+
+Codex's cross-model review of the pull request found five defects, all now fixed:
+- `scripts/check_design_tokens.py` follows `var()` aliases to any depth.
+- It reads declarations only outside comments and quoted strings, and ignores a `!important` priority.
+- It holds the original 32 unmapped names, so the baseline can only shrink.
+- After the freeze, nothing is removed from `PPO - Design` during recovery.
+- Two earlier, unrecorded audits are no longer described as independent reviews.
+
+Seven new regression tests cover the script changes. The check's results on the repository are unchanged: 63 mapped, 19 design-only, 32 unmapped. All 78 parent IDs remain.

@@ -2,8 +2,11 @@
 """Compare the committed Figma variable snapshot with the application's CSS.
 
 Enforced: each mapped variable's CSS property holds the Figma value somewhere in
-src/, and every variable without a CSS name is listed as design-only or in the
-dated unmapped baseline. A pass does not prove every page uses that value.
+src/, following var() aliases to any depth, and every variable without a CSS
+name is listed as design-only or in the dated unmapped baseline. That baseline
+can only shrink: it must stay within ORIGINAL_UNMAPPED_BASELINE. Declarations
+are read outside comments and quoted strings, and a !important priority is not
+part of the value. A pass does not prove every page uses that value.
 Report-only until ADR-0067 stage 5: properties holding more than one value, and
 hard-coded hex colours.
 """
@@ -18,14 +21,52 @@ SNAPSHOT = 'docs/design/figma-variables.json'
 PROPERTY = re.compile(r'(?<![\w-])(--[a-z0-9-]+)\s*:\s*([^;{}]+)[;}]', re.I)
 HEX = re.compile(r'#[0-9a-f]{3,8}\b', re.I)
 ALIAS = re.compile(r'var\((--[a-z0-9-]+)\)')
+PRIORITY = re.compile(r'\s*!\s*important\s*$', re.I)
 STATUSES = {'mapped', 'design-only', 'unmapped'}
+# Variables without a CSS name at the first reading, 1 November 2026. The snapshot's
+# own list may lose names at reconciliation but never gain one, so a refresh cannot
+# grandfather a new omission. Change this set only to remove names.
+ORIGINAL_UNMAPPED_BASELINE = frozenset({
+    'shell/crumb-separator', 'shell/search-surface', 'shell/search-border', 'shell/action-hover',
+    'shell/panel-border', 'shell/current-link', 'shell/link-text', 'shell/section-label',
+    'shell/select-border', 'surface/row-selected', 'status/attention-dot', 'cpq/info-surface',
+    'cpq/info-border', 'planner/attention-selected', 'chart/1', 'chart/2', 'chart/3', 'chart/4',
+    'chart/5', 'chart/6', 'chart/neutral', 'chart/neutral-strong', 'space/4', 'space/8',
+    'space/12', 'space/14', 'space/16', 'space/24', 'shell/rail-width-expanded',
+    'shell/header-height', 'radius/rail-item', 'radius/panel',
+})
 
 
 def normalise(value):
-    value = str(value).strip().lower()
+    value = PRIORITY.sub('', str(value)).strip().lower()
     if re.fullmatch(r'#[0-9a-f]{3}', value):
         value = '#' + ''.join(c * 2 for c in value[1:])
     return value[:-2] if value.endswith('px') else value
+
+
+def masked(text):
+    """Blank comments and the inside of quoted strings, keeping every offset.
+
+    Declarations are then found only in real CSS, while their values are still
+    read from the original text, so a quoted value stays intact.
+    """
+    out, i, n = list(text), 0, len(text)
+    while i < n:
+        if text.startswith('/*', i):
+            end = text.find('*/', i + 2)
+            end = n if end < 0 else end + 2
+            out[i:end] = ' ' * (end - i)
+            i = end
+        elif text[i] in '"\'':
+            quote, j = text[i], i + 1
+            while j < n and text[j] != quote and text[j] != '\n':
+                j += 2 if text[j] == '\\' else 1
+            end = min(j, n)
+            out[i + 1:end] = 'x' * (end - i - 1)
+            i = end + 1
+        else:
+            i += 1
+    return ''.join(out)
 
 
 def read_css(root):
@@ -33,20 +74,29 @@ def read_css(root):
     definitions = defaultdict(set)
     hard_coded = {}
     for path in sorted((root / 'src').rglob('*.css')):
-        text = re.sub(r'/\*.*?\*/', '', path.read_text(encoding='utf-8', errors='ignore'), flags=re.S)
-        for name, value in PROPERTY.findall(text):
-            definitions[name].add(normalise(value))
-        count = len(HEX.findall(PROPERTY.sub('', text)))
+        text = path.read_text(encoding='utf-8', errors='ignore')
+        mask = masked(text)
+        spans = []
+        for match in PROPERTY.finditer(mask):
+            spans.append(match.span())
+            definitions[match.group(1)].add(normalise(text[match.start(2):match.end(2)]))
+        outside = ''.join(mask[a:b] for a, b in zip([0] + [e for _, e in spans], [s for s, _ in spans] + [len(mask)]))
+        count = len(HEX.findall(outside))
         if count:
             hard_coded[path.relative_to(root).as_posix()] = count
     return definitions, hard_coded
 
 
-def resolved(prop, definitions):
+def resolved(prop, definitions, seen=frozenset()):
+    """Return the literal values a property can take, following var() aliases to any depth."""
+    seen = seen | {prop}
     values = set()
     for value in definitions.get(prop, ()):
         alias = ALIAS.fullmatch(value)
-        values |= definitions.get(alias.group(1), set()) if alias else {value}
+        if not alias:
+            values.add(value)
+        elif alias.group(1) not in seen:
+            values |= resolved(alias.group(1), definitions, seen)
     return values
 
 
@@ -76,6 +126,8 @@ def check(root=ROOT):
         elif code:
             failures.append(f'{name}: has a code name, so its status must be mapped')
     baseline = set(data.get('unmapped_baseline', []))
+    for name in sorted(baseline - ORIGINAL_UNMAPPED_BASELINE):
+        failures.append(f'{name}: the unmapped baseline can only shrink; give it a CSS name, or design-only with a reason')
     for variable in data['variables']:
         if variable.get('status') == 'unmapped' and variable['name'] not in baseline:
             failures.append(f"{variable['name']}: new variables need a CSS name, or design-only with a reason")

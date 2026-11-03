@@ -196,7 +196,7 @@ The pilot also checks whether connector sessions can read Figma's native annotat
 
 **Code goes first only** for an urgent fix or something found during the build, such as a contrast failure. Update Figma and the snapshot in the same pull request.
 
-**Variables with no CSS name** are marked `design-only` in the snapshot for drawing, annotation and overlay colours the app does not use. Those in `unmapped` are a dated baseline to clear at reconciliation, and no new ones may be added.
+**Variables with no CSS name** are marked `design-only` in the snapshot for drawing, annotation and overlay colours the app does not use. Those in `unmapped` are a dated baseline to clear at reconciliation, and no new ones may be added. The check holds the original 32 names, so editing the snapshot's list can only remove names.
 
 **What the check proves.** A mapped variable passes if its value appears on that CSS property somewhere in `src/`. Where a property holds several values, this does not prove that every page uses the Figma one; `--report` lists those properties for reconciliation.
 
@@ -234,7 +234,7 @@ Cite the file name, node ID and named version: `PPO - Sales & Products`, `123:45
 
 | Check | Proves |
 |---|---|
-| `python3 scripts/check_design_tokens.py` | Mapped tokens have their Figma value in the CSS, and no new unmapped variable exists |
+| `python3 scripts/check_design_tokens.py` | Mapped tokens have their Figma value in the CSS, following aliases and ignoring comments, quoted text and `!important`; and no new unmapped variable exists, because the baseline can only lose names from the 32 held in the script |
 | `python3 scripts/check_design_tokens.py --report` | Also lists mapped properties with several values, and hard-coded colours (report-only until stage 5) |
 | `node scripts/design-baseline-check.mjs` | Registered design baselines are intact; `--app` compares their tokens with the running app |
 | `npm run studio:check` | Design register integrity |
@@ -270,7 +270,8 @@ No check proves acceptance. That remains Dean's decision, recorded in Git.
 | Problem | What to do |
 |---|---|
 | The memory alert appears | Reload the file. If it persists, follow section 10 |
-| The file locks at 100% | Reload. If that fails, enter recovery mode, which loads every page, and remove content until usage is below 90%. Never do this in `PPO - Design` without saving a named version first, and keep its evidence unchanged |
+| A file locks at 100% | Reload. If that fails, enter recovery mode, which loads every page, and remove content until usage is below 90%. This applies to `PPO - Library`, the domain files and copies only |
+| `PPO - Design` locks at 100% | Before the freeze: save a named version first, then remove only scratch work and hidden layers, never an accepted page, a capture or a cited node. After the freeze: remove nothing from it, because its node citations must stay valid. View it through `PPO - Reference`, the retained captures in Git or the private `.fig` backup instead, and prune only a duplicate |
 | The file shows a white screen | Add `?thumbnails-only=1` to its URL, or restore a version from the file browser |
 | A library publish goes wrong | Publish a correcting version. A move between files can't be undone by restoring a version |
 | A page was changed by mistake | Compare it with its named version, and copy the correct frames back, or restore from the file's history |

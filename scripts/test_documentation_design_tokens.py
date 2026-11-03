@@ -45,9 +45,38 @@ class DesignTokenCheckTest(unittest.TestCase):
 
     def test_baseline_and_design_only_pass(self):
         root = self.tree('', [
-            self.variable(code='', status='unmapped'),
+            self.variable(code='', status='unmapped', name='chart/1'),
             self.variable(code='', status='design-only', name='drawing/roof'),
-        ], baseline=['text/ink'])
+        ], baseline=['chart/1'])
+        self.assertEqual(tokens.check(root), [])
+
+    def test_baseline_cannot_gain_a_name(self):
+        # Adding a new name to both the variables and the snapshot's baseline must still fail.
+        root = self.tree('', [self.variable(code='', status='unmapped', name='text/new')], baseline=['text/new'])
+        self.assertIn('can only shrink', tokens.check(root)[0])
+
+    def test_baseline_can_shrink(self):
+        root = self.tree('', [self.variable(code='', status='unmapped', name='chart/1')], baseline=['chart/1'])
+        self.assertEqual(tokens.check(root), [])
+
+    def test_two_hop_alias_passes(self):
+        root = self.tree(':root{--base:#242a37;--semantic:var(--base);--ink:var(--semantic)}', [self.variable()])
+        self.assertEqual(tokens.check(root), [])
+
+    def test_alias_cycle_does_not_loop(self):
+        root = self.tree(':root{--a:var(--ink);--ink:var(--a)}', [self.variable()])
+        self.assertIn('no value matching', tokens.check(root)[0])
+
+    def test_quoted_text_is_not_a_declaration(self):
+        root = self.tree('a::before{content:"--ink:#242a37;"}', [self.variable()])
+        self.assertIn('not defined', tokens.check(root)[0])
+
+    def test_quoted_value_stays_intact(self):
+        root = self.tree(':root{--font:"Roboto; Light", sans-serif}', [])
+        self.assertEqual(dict(tokens.read_css(root)[0]), {'--font': {'"roboto; light", sans-serif'}})
+
+    def test_important_priority_is_not_part_of_the_value(self):
+        root = self.tree(':root{--ink:#242a37 !important}', [self.variable()])
         self.assertEqual(tokens.check(root), [])
 
     def test_figma_link_fails(self):

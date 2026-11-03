@@ -142,7 +142,7 @@ Design ready stays a check by a separate Claude session, because it happens in F
 
 ## Limits
 
-Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 3 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. Two independent reviews, of the recommendation and then of the reference built from it, are reflected here. Primitive colour tokens were considered and deferred to stage 5, because they change nothing for one light theme. This record has not had the cross-model review its pull request requires.
+Cross-file behaviour is untested: whether duplicates keep node IDs, and whether pasting keeps instance links, bindings and prototype flows. Stage 3 exists to settle these. Comparing mapped tokens checks values, not appearance. The published practice comes from the sources below, and GitLab and Atlassian details come from their documentation as summarised by search, not from full reads. Two earlier audits, of the recommendation and then of the reference built from it, informed this record while it was drafted. Neither is recorded in the repository, so neither is evidence of independent review. Primitive colour tokens were considered and deferred to stage 5, because they change nothing for one light theme. The cross-model review its pull request requires is Codex's review of [pull request #818](https://github.com/deanrfiedler-gif/powerplants-one/pull/818) on 3 November 2026; its findings are answered there.
 
 ## Reversing this
 
