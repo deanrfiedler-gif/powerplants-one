@@ -4,6 +4,10 @@
 
 Each future case needs requirement links, fixture/version, actor, preconditions, action, expected observable result, failure/recovery path, environment, actual result, evidence, defect links and reviewer disposition. Financial and calculation fixtures need independently accepted expected values rather than expectations copied from the implementation.
 
+## End-to-end business scenarios
+
+The [scenario register](end-to-end-scenarios.md) lists the TS and TX scenarios that walk one synthetic customer across every department. [TS-01](TS-01-berry-farm-fertigation-project.md) is the first and the template for the rest. A scenario run marks no AT or PT case passed.
+
 ## Repository checks
 
 `python3 scripts/check_foundation.py` validates source hashes, the derived register IDs/wording, initial backlog references, local Markdown links and selected hygiene. It makes no network calls and does not open or modify business accounts.
