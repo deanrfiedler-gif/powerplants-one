@@ -1,6 +1,7 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page, type Route } from "@playwright/test";
 import { navigationForCapabilities } from "../../src/shell/navigation";
 import { expectAppointmentRecord } from "../helpers/appointment-record";
+import { openAccountPanel, openPhoneMenu, phoneMenuOpener } from "../helpers/phone-menu";
 import {
   appointmentFixture,
   appointmentPackFixture,
@@ -122,6 +123,74 @@ test.beforeEach(async ({ page }) => {
     }),
   );
 });
+test("P05 phone account navigation waits for the appointment header handover", async ({ page }) => {
+  await fixture(page);
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    let release!: () => void;
+    const held = new Promise<void>((resolve) => { release = resolve; });
+    const pattern = `**/api/v1/appointments/${sv04Id(1)}`;
+    // Hold only the appointment read; session and shell reads settle normally.
+    const hold = async (route: Route) => {
+      await held;
+      await route.fallback();
+    };
+    await page.route(pattern, hold);
+    try {
+      await page.goto(path);
+      await expect(
+        page.getByRole("region", { name: "Local demonstration identity", exact: true }),
+      ).toHaveAttribute("aria-busy", "false");
+      await expect(page.locator("#shell-header")).toHaveAttribute("data-phone-header", "list");
+      await expect(page.locator("#ppo-appointment")).toHaveCount(0);
+
+      // Prove the temporary Menu is already interactive before testing its removal.
+      await openPhoneMenu(page);
+      await page.getByRole("button", { name: "Close menu", exact: true }).click();
+      await expect(phoneMenuOpener(page)).toBeFocused();
+
+      let recordReady = false;
+      // This is the existing readiness condition used by the P05/P06 journeys.
+      const navigationReady = expect(page.locator("#shell-header"))
+        .toHaveAttribute("data-phone-header", "record")
+        .then(
+          () => { recordReady = true; return null; },
+          (error: unknown) => error,
+        );
+
+      // Negative control: deliver the record between mouse down and up. Replacing
+      // Menu with Back cancels this gesture; no sleep or repeated click arranges it.
+      const transient = page.locator("#shell-phone-menu");
+      const box = await transient.boundingBox();
+      expect(box).not.toBeNull();
+      await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+      await page.mouse.down();
+      expect(recordReady, "identity/menu readiness is not record-header readiness").toBe(false);
+      release();
+      expect(await navigationReady).toBeNull();
+      await expect(page.locator("#ppo-appointment")).toBeVisible();
+      await expect(transient).toHaveCount(0);
+      await page.mouse.up();
+      await expect(page.getByRole("dialog", { name: "More", exact: true })).toBeHidden();
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
+
+      // After the handover, one activation opens Account from the stable More
+      // control. Both mouse and keyboard dismissal restore focus to that control.
+      await openAccountPanel(page);
+      await expect(page.getByLabel("Identity", { exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Close account", exact: true }).click();
+      await expect(page.locator("#navigation-toggle")).toBeFocused();
+      await openPhoneMenu(page, true);
+      await page.keyboard.press("Escape");
+      await expect(page.locator("#navigation-toggle")).toBeFocused();
+    } finally {
+      release();
+      await page.mouse.up();
+      await page.unroute(pattern, hold);
+    }
+  }
+});
+
 test("SV04 retains the FI06 exact incident handover on desktop and both phones", async ({
   page,
 }) => {
