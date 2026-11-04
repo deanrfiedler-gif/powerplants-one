@@ -368,6 +368,7 @@ Existing operational folders should retain their source identity until an approv
 | Screen/component/rule/validation | SC-01, CMP-01, SR-01, VAL-01 | Existing PP-01-local identifiers |
 | Prototype acceptance | PT-01–PT-30 | Package-local, distinct from historical source identifiers that may use similar prefixes |
 | Master acceptance | AT-01–AT-38 | Preserve source acceptance catalogue |
+| End-to-end business scenarios | TS-01 onward; cross-cutting TX-01 onward; steps TS01-05.03; branches TS01-X01 | Declared 30 October 2026 (Dean accepted Claude's recommendation). Scenarios cut across packages and cite AT/PT cases without replacing them; files are `TS-<nn>-<description>.md` in `docs/testing/` with document ID `PPO-TS-<nn>`, listed in the [scenario register](../testing/end-to-end-scenarios.md) |
 | API commands/reads | API-C01, API-R01 | Preserve existing contract IDs |
 | Event catalogue | EVT-01 onward | Identifies catalogue rows; actual event types are separate names |
 
@@ -592,6 +593,8 @@ Use positive feature-flag names such as `enable_offline_capture`, with owner, pu
 Name reusable UI components by purpose, such as `StatusBadge`, `RecordReference` and `AppointmentPlanner`. Name ordinary repository design assets `powerplants-one-wordmark.svg` or `service-empty-state.svg` where those assets are actually created. Preserve approved existing brand assets and licences.
 
 For new design tokens, use semantic names such as `--color-text-primary` and `--color-status-warning`. Avoid tying a business meaning directly to an arbitrary colour label such as `green-thing`. A badge's text/state contract remains authoritative; colour is supporting presentation.
+
+Name Figma files `PPO - <Surface>` and folders `PPO <Group>`, and Figma pages `[Page name] · [scope ID]`, using a real scope ID. Name Figma components `Area / Component`, matching the code name where one exists, without scope IDs or version numbers as prefixes. Name Figma variables by role, such as `status/warning/text`, and set the CSS name when each is created. The [design-to-build standard](design-to-build-standard.md) lists the files and rules. Existing names cited by a record do not change.
 
 ## 14. Database fields and schemas
 

@@ -125,6 +125,7 @@ export const migrationFiles = [
   "0120-site-readiness.sql",
   "0121-customer-delivery-notices.sql",
   "0122-work-order-project-link.sql",
+  "0123-maintenance-prepared-work.sql",
   "0124-service-escalation-cases.sql",
 ] as const;
 export const seedFiles = [

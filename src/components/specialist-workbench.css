@@ -147,6 +147,11 @@
 }
 #ppo-specialist .es08-icon-button:hover,
 .es08-dialog .es08-icon-button:hover { background: var(--surface-hover); }
+#ppo-specialist .es08-icon-button[aria-disabled="true"] {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  cursor: not-allowed;
+}
 #ppo-specialist .es08-link {
   color: var(--link);
   text-decoration: underline;

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-site-assurance-grids",
+          "expected": "The accepted Site assurance design (PPO-PJ09-SITE-ASSURANCE-FIGMA-DEC) uses a grid register grouped by release state and two-line ITP and defect grids, with the Figma page parts Site assurance / Cell and Tag cell.",
+          "actual": "No application page exists at /projects/assurance. The two parts and Rail · Projects with Site assurance stay on the Figma page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the shared register table and record any departure; move the parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

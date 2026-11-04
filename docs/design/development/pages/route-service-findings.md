@@ -8,7 +8,7 @@ Scope: `scope:SV-07`. Route: `/service/findings`. Page type: register with large
 
 ## Desktop
 
-Use the shared register and Service review menu at 1440 and 1024 px. The [SV-07 scope contract](scope-sv-07.md) owns all columns, view definitions, snapshot layout, accepted capture references and build differences. Horizontal scrolling retains all ten columns. Counts name the authorised candidate window and read time.
+Use the shared register and Service review menu at 1440 and 1024 px. The [SV-07 scope contract](scope-sv-07.md) owns all columns, view definitions, snapshot layout, accepted capture references and build differences. Horizontal scrolling retains all ten columns. Counts name the authorised candidate window and read time. Each facet omits its own filter when reading authorised choices and retains the applied label for an empty or pending result. View changes update the URL. Refresh preserves the current window and snapshot tab, retaining same-query content until the read settles.
 
 ## Mobile
 

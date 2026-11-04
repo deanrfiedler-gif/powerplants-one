@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   api,
@@ -685,6 +685,7 @@ function SourceComparison({ detail: d }: { detail: Detail }) {
   );
 }
 export function CostSourceDetail({ id }: { id: string }) {
+  const router = useRouter();
   const params = useSearchParams(),
     revision = params.get("revision_id"),
     data = useCrmResource<Detail>(
@@ -692,6 +693,25 @@ export function CostSourceDetail({ id }: { id: string }) {
       true,
     ),
     [edit, setEdit] = useState(false);
+  const reviewStep = useRef<HTMLElement>(null);
+  const reviewNavigation = useRef<string | null>(null);
+  useEffect(() => {
+    const reveal = () => {
+      if (!data.data || window.location.hash !== "#source-review") return;
+      const key = `${id}:${revision ?? "current"}`;
+      if (reviewNavigation.current === key) return;
+      reviewNavigation.current = key;
+      reviewStep.current?.scrollIntoView({ block: "start" });
+      reviewStep.current?.focus({ preventScroll: true });
+    };
+    reveal();
+    const changed = () => {
+      reviewNavigation.current = null;
+      reveal();
+    };
+    window.addEventListener("hashchange", changed);
+    return () => window.removeEventListener("hashchange", changed);
+  }, [data.data, id, revision]);
   return (
     <div className="est-screen source-screen">
       <Link href="/estimating/cost-sources">Cost sources</Link>
@@ -710,7 +730,17 @@ export function CostSourceDetail({ id }: { id: string }) {
           <SourceComparison detail={data.data} />
           <nav className="source-actions" aria-label="Source actions">
             {data.data.can_revise && !edit && (
-              <Button onClick={() => setEdit(true)}>
+              <Button
+                onClick={() => {
+                  // Starting an edit deliberately returns to the current native read,
+                  // so a later successor preserves the existing stale-input recovery.
+                  if (revision)
+                    router.replace(`/estimating/cost-sources/${id}`, {
+                      scroll: false,
+                    });
+                  setEdit(true);
+                }}
+              >
                 Prepare source successor
               </Button>
             )}
@@ -719,7 +749,15 @@ export function CostSourceDetail({ id }: { id: string }) {
             </Link>
           </nav>
           {edit && data.data.can_revise && <SourceForm initial={data.data} />}
-          <SourceDecision detail={data.data} />
+          <section
+            id="source-review"
+            aria-label="Source review"
+            ref={reviewStep}
+            tabIndex={-1}
+            style={{ scrollMarginTop: 80 }}
+          >
+            <SourceDecision detail={data.data} />
+          </section>
           <section className="est-panel">
             <h2>Revision and review history</h2>
             {data.data.revisions.map((r) => (
@@ -1104,8 +1142,8 @@ function RefreshForm({
                     required
                   />
                   <span>
-                    I reviewed every changed line, the unchanged sell prices
-                    and any Unknown validity.
+                    I reviewed every changed line, the unchanged sell prices and
+                    any Unknown validity.
                   </span>
                 </label>
                 <Field

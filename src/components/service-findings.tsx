@@ -2,7 +2,7 @@
 import { FindingTime as Stamp } from "./service-findings-time";
 import Link from "next/link";
 import { useRef, useState, useEffect, type RefObject } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../shell/secondary-menu";
 import { usePublishPageDescription } from "../shell/page-description";
 import { RecordIdentity } from "../shell/record-identity";
@@ -26,6 +26,12 @@ import type { Finding, FindingSource } from "../service/findings/model";
 import type { readFindings, readFinding } from "../service/findings/reads";
 import type { readNextAction } from "../service/findings/next-action";
 import type { ActivityHistoryEvent } from "../activities/activities";
+import {
+  findingFacetPath,
+  findingFacetOptions,
+  findingViewHref,
+  type FindingOption,
+} from "../service/findings/presentation";
 import "./service-findings.css";
 
 export const findingSourceLabels: Record<FindingSource, string> = {
@@ -81,14 +87,12 @@ type Action = Awaited<ReturnType<typeof readNextAction>>;
 
 export function FindingsScreen() {
   const search = useSearchParams(),
-    initial = search.get("view");
-  const [view, setView] = useState<FindingView>(
-      findingViews.find((v) => v.id === initial)?.id ?? "open",
-    ),
-    [q, setQ] = useState(""),
-    [owner, setOwner] = useState(""),
+    router = useRouter(),
+    view = findingViews.find((v) => v.id === search.get("view"))?.id ?? "open";
+  const [q, setQ] = useState(""),
+    [owner, setOwner] = useState<FindingOption>({ id: "", label: "Anyone" }),
     [source, setSource] = useState(""),
-    [site, setSite] = useState(""),
+    [site, setSite] = useState<FindingOption>({ id: "", label: "All" }),
     [offset, setOffset] = useState(0),
     [selected, setSelected] = useState<string | null>(search.get("finding")),
     [menuOpen, setMenuOpen] = useState(true);
@@ -101,11 +105,33 @@ export function FindingsScreen() {
     offset: String(offset),
     limit: "25",
   });
-  if (owner) params.set("owner_id", owner);
+  if (owner.id) params.set("owner_id", owner.id);
   if (source) params.set("source", source);
-  if (site) params.set("site_id", site);
+  if (site.id) params.set("site_id", site.id);
   const r = useResource<Register>(`service/findings?${params}`),
-    available = !r.loading && !r.error && !!r.data;
+    available = !r.error && !!r.data;
+  // Each facet uses the same authorised candidate read without its own filter.
+  const ownerFacet = useResource<Register>(
+      owner.id ? findingFacetPath(params, "owner_id") : null,
+    ),
+    siteFacet = useResource<Register>(
+      site.id ? findingFacetPath(params, "site_id") : null,
+    );
+  const ownerRead = owner.id ? ownerFacet : r,
+    siteRead = site.id ? siteFacet : r;
+  const owners = findingFacetOptions(
+      ownerRead.error ? [] : (ownerRead.data?.options.owners ?? []),
+      owner,
+    ),
+    sites = findingFacetOptions(
+      siteRead.error ? [] : (siteRead.data?.options.sites ?? []),
+      site,
+    );
+  const reload = () => {
+    r.reload();
+    ownerFacet.reload();
+    siteFacet.reload();
+  };
   const data = available ? r.data : null,
     rows = data?.items ?? [];
   const change = (fn: () => void) => {
@@ -116,7 +142,7 @@ export function FindingsScreen() {
   };
   const choose = (v: FindingView) =>
     change(() => {
-      setView(v);
+      router.push(findingViewHref(search.toString(), v), { scroll: false });
       menu.closeOverlay();
     });
   const inspect = (id: string) => {
@@ -215,12 +241,18 @@ export function FindingsScreen() {
           <WorklistChoice
             label="Owner"
             prefix="Owner: "
-            value={owner}
-            options={[
-              { id: "", label: "Anyone" },
-              ...(data?.options.owners ?? []),
-            ]}
-            onChange={(v) => change(() => setOwner(v))}
+            value={owner.id}
+            options={[{ id: "", label: "Anyone" }, ...owners]}
+            onChange={(v) =>
+              change(() =>
+                setOwner(
+                  owners.find((option) => option.id === v) ?? {
+                    id: "",
+                    label: "Anyone",
+                  },
+                ),
+              )
+            }
           />
           <WorklistChoice
             label="Source"
@@ -238,11 +270,25 @@ export function FindingsScreen() {
           <WorklistChoice
             label="Site"
             prefix="Site: "
-            value={site}
-            options={[{ id: "", label: "All" }, ...(data?.options.sites ?? [])]}
-            onChange={(v) => change(() => setSite(v))}
+            value={site.id}
+            options={[{ id: "", label: "All" }, ...sites]}
+            onChange={(v) =>
+              change(() =>
+                setSite(
+                  sites.find((option) => option.id === v) ?? {
+                    id: "",
+                    label: "All",
+                  },
+                ),
+              )
+            }
           />
-          <Button variant="quiet" onClick={() => change(() => r.reload())}>
+          <Button
+            variant="quiet"
+            onClick={() => {
+              if (guardRef.current()) reload();
+            }}
+          >
             Refresh
           </Button>
         </div>
@@ -269,7 +315,12 @@ export function FindingsScreen() {
             history.
           </p>
         )}
-        <ReadState loading={r.loading} error={r.error} retry={r.reload} />
+        <ReadState
+          loading={r.loading && !data}
+          error={r.error}
+          retry={reload}
+        />
+        {r.loading && data && <p role="status">Refreshing findings…</p>}
         {available && (
           <>
             <div className="sv07-desktop">
@@ -413,7 +464,7 @@ export function FindingsScreen() {
             onSelect={inspect}
             onClose={close}
             guardRef={guardRef}
-            onSaved={r.reload}
+            onSaved={reload}
           />
         )}
       </div>
@@ -439,7 +490,7 @@ function FindingSnapshot({
     panel = useRef<HTMLDivElement>(null);
   const r = useResource<Detail>(`service/findings/${id}`),
     action = useResource<Action>(`service/findings/${id}/next-action`);
-  const available = !r.loading && !r.error && !action.loading && !action.error;
+  const available = !r.error && !!r.data && !action.error && !!action.data;
   const row = available ? action.data?.item : null;
   const history = useResource<
     Envelope<ActivityHistoryEvent> & { owners: Record<string, string> }
@@ -492,7 +543,7 @@ function FindingSnapshot({
         </small>
       </div>
       <ReadState
-        loading={r.loading || action.loading}
+        loading={(r.loading || action.loading) && !row}
         error={r.error || action.error}
         retry={() => {
           r.reload();
@@ -553,7 +604,7 @@ function FindingSnapshot({
             />
             <RecordPanel id="finding-tabs" tab="action" value={tab}>
               <FindingActionEditor
-                key={id}
+                key={`${id}:${action.data.expected_version}:${action.data.source_token}`}
                 data={action.data}
                 guardRef={guardRef}
                 onSaved={saved}
@@ -650,11 +701,11 @@ function FindingHistory({
       <h3>Next-action history</h3>
       <p>Newest first. Source history remains in the owning record.</p>
       <ReadState
-        loading={history.loading}
+        loading={history.loading && !history.data}
         error={history.error}
         retry={history.reload}
       />
-      {!history.loading && !history.error && (
+      {!history.error && (!history.loading || !!history.data) && (
         <ol>
           {history.data?.items.map((event) => (
             <li key={event.id}>
