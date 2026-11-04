@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-CRM-STAGES-DEC,Deal stage definitions (proposed),docs/decisions/crm-deal-stage-definitions.md,,Proposed; awaiting owner acceptance; team practice only,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,

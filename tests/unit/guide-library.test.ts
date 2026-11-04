@@ -760,6 +760,37 @@ test("released library logs a damaged release file once", async (t) => {
   assert.deepEqual(second.result, { guides: [], routes: [], shell: null });
 });
 
+test("released library shares one read between requests that arrive together", async (t) => {
+  const root = await makeRoot(t, { [releasedFile]: "{ not json" });
+  const file = join(root, releasedFile);
+  const { result, logged } = await capturingErrors(() => Promise.all([readReleasedLibrary(file), readReleasedLibrary(file), readReleasedLibrary(file)]));
+  assert.equal(logged.length, 1, "the failure is logged once, not once per waiting request");
+  assert.equal(result[0], result[1]);
+  assert.equal(result[1], result[2]);
+  assert.deepEqual(result[0], { guides: [], routes: [], shell: null });
+});
+
+test("released library reads again after a read failure that may not recur", async (t) => {
+  // A directory at the release path makes the read fail with EISDIR: the file system refused it, it did not say the file
+  // is missing or damaged. That result is not kept, so the guides return once the file can be read.
+  const leads = compiled(shown({ guide_key: "guide.page.sales.leads", entry_key: "route:/sales/leads" }));
+  const released = releasedGuides(library(leads), entries);
+  const root = await makeRoot(t);
+  const file = join(root, releasedFile);
+  await mkdir(file, { recursive: true });
+
+  const first = await capturingErrors(() => readReleasedLibrary(file));
+  assert.deepEqual(first.result, { guides: [], routes: [], shell: null });
+  assert.equal(first.logged.length, 1);
+  assert.match(String(first.logged[0][0]), /could not be read/);
+
+  await rm(file, { recursive: true });
+  await writeFile(file, JSON.stringify(released));
+  const second = await capturingErrors(() => readReleasedLibrary(file));
+  assert.deepEqual(second.logged, []);
+  assert.equal(guideForPath(second.result, "/sales/leads")?.front.guide_key, "guide.page.sales.leads");
+});
+
 test("released library refuses an unreadable or misshapen release file without leaking it", async (t) => {
   const secret = "SYN-SECRET-CONTENT";
   const files: Record<string, string> = {

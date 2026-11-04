@@ -29,22 +29,25 @@ export async function releasedGuideLibrary(root?: string): Promise<ReleasedLibra
   return readReleasedLibrary(join(process.cwd(), ".ppo-guides", "released.json"));
 }
 
-// One result per release file for the life of the process, an empty one included, so a missing or damaged file is
-// logged once rather than on every request.
-const remembered = new Map<string, ReleasedLibrary>();
+// A read that may succeed if tried again: the file exists but the file system refused it this time.
+class RetryableReadFailure extends Error {}
 
-export async function readReleasedLibrary(file: string): Promise<ReleasedLibrary> {
+// One read per release file for the life of the process. Requests that arrive while it runs share it, so a failure is
+// logged once. The build writes the file before the server starts, so a successful read, a missing file and a damaged
+// one are kept; a retryable read failure is forgotten, so the next request reads again rather than hiding the guides
+// until the server restarts.
+const remembered = new Map<string, Promise<ReleasedLibrary>>();
+
+export function readReleasedLibrary(file: string): Promise<ReleasedLibrary> {
   const kept = remembered.get(file);
   if (kept) return kept;
-  let released: ReleasedLibrary;
-  try {
-    released = await readReleaseFile(file);
-  } catch (error) {
+  const reading: Promise<ReleasedLibrary> = readReleaseFile(file).catch((error: unknown) => {
     console.error(`User guides are unavailable: ${describeFailure(error)}.`);
-    released = empty();
-  }
-  remembered.set(file, released);
-  return released;
+    if (error instanceof RetryableReadFailure && remembered.get(file) === reading) remembered.delete(file);
+    return empty();
+  });
+  remembered.set(file, reading);
+  return reading;
 }
 
 async function readReleaseFile(file: string): Promise<ReleasedLibrary> {
@@ -52,7 +55,8 @@ async function readReleaseFile(file: string): Promise<ReleasedLibrary> {
   try {
     text = await readFile(file, "utf8");
   } catch (error) {
-    throw new Error(errorCode(error) === "ENOENT" ? `${releasedFile} is missing: the build writes it` : `${releasedFile} could not be read`);
+    if (errorCode(error) === "ENOENT") throw new Error(`${releasedFile} is missing: the build writes it`);
+    throw new RetryableReadFailure(`${releasedFile} could not be read`);
   }
   let data: unknown;
   try {
