@@ -47,7 +47,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q6 Next frames | Resolved as recommended | The History and Affected work tabs, the field readiness record and the phone propose and publish sheets are drawn after this page as AD-02 amendments. The Integrations area and My account and preferences (WS-D7) are separate designs |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
 | Named Figma version | Saved, 23 October 2026 | "Settings — accepted", at Dean's yes quoted above. Section 7 |
-| Building the page | Requested by Dean, 31 October 2026 | Native implementation direction below; application acceptance remains separate |
+| Building the page | Implemented by Codex in PR #802 as an agent decision under the standing order | Native implementation direction below; application acceptance remains separate |
 
 ## 2. Design reference
 
