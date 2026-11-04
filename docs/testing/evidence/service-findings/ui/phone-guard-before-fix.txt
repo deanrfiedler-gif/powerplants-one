@@ -1,0 +1,42 @@
+
+Running 1 test using 1 worker
+
+(node:21604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\browser\service-findings.spec.ts:227:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save (1.5m)
+
+
+  1) tests\browser\service-findings.spec.ts:227:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Back to findings', exact: true })
+
+
+      251 |   ).toBeVisible();
+      252 |   await page.setViewportSize({ width: 390, height: 844 });
+    > 253 |   await page.getByRole("button", { name: "Back to findings", exact: true }).click();
+          |                                                                             ^
+      254 |   await expect(page.getByRole("region", { name: "Finding snapshot" })).toBeVisible();
+      255 |   await expect(page.getByRole("button", { name: "Retry unchanged save" })).toBeVisible();
+      256 |   await page.setViewportSize({ width: 1440, height: 900 });
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:253:77
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\browser\service-findings.spec.ts:227:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save 
