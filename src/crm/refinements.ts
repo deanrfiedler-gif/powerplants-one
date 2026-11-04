@@ -125,10 +125,12 @@ export async function editDealInformation(
             "CRM_IDENTIFICATION_REQUIRED",
             "A qualified deal needs a contact or an owned active contact-identification action.",
           );
+        // Keeping a deal contact-less keeps the historical owner rule; clearing an existing contact is a contact change,
+        // which the database checks against the current owner (0024 five_stage_evidence), so the service does too.
         await linkedActiveAction(
           c,
           p,
-          await identificationOwner(c, p, old),
+          old.primary_person_id ? old : await identificationOwner(c, p, old),
           old.identification_activity_id,
           true,
         );

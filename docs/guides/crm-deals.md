@@ -128,7 +128,7 @@ Times are entered and shown in Brisbane time. If the contact is unknown, the ini
 
 | Information | Where | Rules |
 |---|---|---|
-| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** A deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the person who owned the deal when it was created, the same rule as for a stage change. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
+| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** A deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the person who owned the deal when it was created, the same rule as for a stage change. Clearing a contact the deal already has is a contact change, so that activity must be owned by the deal's current owner. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
 | **Customer need and objective** | **Edit requirements and scope** | Required. Up to 2,000 characters. |
 | **Inclusions**, **Exclusions**, **Assumptions**, **Constraints**, **Acceptance requirements**, **Required timing**, **Delivery arrangements** | **Edit requirements and scope** | Optional. Up to 5,000 characters each. Unrecorded items show **Not recorded**. |
 | **Action choice**, **Activity kind**, **Activity owner**, **Action purpose**, **Due date and time** | **Plan next action** | Choose **New** to create an activity, or **Existing** to pick an active activity already linked to this deal. |
@@ -150,7 +150,7 @@ Every new deal starts in **Discovery**, whether you add it with **Add deal** or 
 | **Closing** | Terms are agreed in principle. | An order or acceptance is received (record **Won**), or the deal is lost (record **Lost**). |
 
 > [!NOTE]
-> These are team practice. The application does not check them: beyond the direction of the move and the contact rule below, a stage carries no requirement. Moving to **Quoting** does not create or issue a quotation; estimates and quotations are done and recorded in their own places. Move a deal back when an earlier condition no longer holds, for example when the customer changes the scope after a quotation.
+> These meanings are proposed and await acceptance; until then they describe intended team practice only. The application does not check them: beyond the direction of the move and the contact rule below, a stage carries no requirement. Moving to **Quoting** does not create or issue a quotation; estimates and quotations are done and recorded in their own places. Move a deal back when an earlier condition no longer holds, for example when the customer changes the scope after a quotation.
 
 - **Moving forward:** one stage at a time. Moving from **Discovery** straight to **Quoting** is refused.
 - **Moving back:** to any earlier stage. Earlier history is kept.
