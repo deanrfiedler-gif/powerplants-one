@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { findingRows, findingsClock } from "../helpers/findings-fixture";
 import { destinations } from "../../src/shell/navigation";
 import { dueThisWeek, isOverdue, inView, views } from "../../src/service/findings/model";
+import { openSecondaryMenu, phoneWidth } from "../helpers/phone-menu";
 async function setup(
   page: Page,
   { viewOnly = false, uncertain = false, stale = false, canEscalate = false } = {},
@@ -630,6 +631,7 @@ test("SV08 Findings handover is capability-gated and retains the native finding 
   expect(url.searchParams.get("finding")).toBe(
     findingRows.find(r => r.source_record.reference === "SYN-PPO-RPT-000058")!.id,
   );
+  if (phoneWidth(page)) await openSecondaryMenu(page);
   const menu = page.getByRole("navigation", { name: "Service review views" });
   for (const name of ["Open cases", "Diagnosing", "Waiting on manufacturer", "Reply to act on", "Closed cases"])
     await expect(menu.getByRole("link", { name, exact: true })).toBeVisible();

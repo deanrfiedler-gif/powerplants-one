@@ -6,6 +6,7 @@ import {
   escalationId,
 } from "../helpers/escalations-fixture";
 import { destinations } from "../../src/shell/navigation";
+import { phoneWidth } from "../helpers/phone-menu";
 async function setup(
   page: Page,
   {
@@ -225,7 +226,7 @@ test("SV08 a new sending keeps earlier replies and attachments in History", asyn
   await expect(
     page.getByRole("button", { name: "Record reply", exact: true }),
   ).toBeVisible();
-  await page.getByRole("tab", { name: "Correspondence" }).click();
+  await page.getByRole("tab", { name: phoneWidth(page) ? "Reply" : "Correspondence", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Manufacturer reply", exact: true }),
   ).toHaveCount(0);
