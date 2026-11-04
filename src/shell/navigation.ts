@@ -70,7 +70,7 @@ export const destinations: ShellDestination[] = [
   {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
   {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
   {id:"access",label:"Users and access",icon:"settings",readiness:"ready",href:"/admin/access",requires:["admin.access.read"]},
-  {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "ready", "href": "/admin/settings"},
+  {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "ready", "href": "/admin/settings", "requiresAny": ["schedule.policy.review", "schedule.policy.publish", "admin.access.read", "shared.read", "finance.read", "service.work_order.read", "field.read.own"]},
   {"id": "home", "label": "Home", "icon": "home", "readiness": "ready", "href": "/"},
   {"id": "work", "label": "My Work", "icon": "nav-work", "readiness": "ready", "href": "/work", "requires": ["activity.read"]},
   {"id": "mail", "label": "Sales Inbox", "icon": "nav-mail", "readiness": "ready", "href": "/email", "requires": ["email.read"]},
