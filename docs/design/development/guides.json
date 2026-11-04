@@ -13471,25 +13471,23 @@
     {
       "guide_key": "guide.sv.07",
       "entry_key": "scope:SV-07",
-      "title": "Unresolved findings and follow-up worklist",
+      "title": "Findings and follow-up",
       "status": "Draft",
       "locale": "en-AU",
       "content_mode": "Existing foundation + proposed completion",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Focused verification in progress; see SV-07 PR evidence",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Unresolved findings and follow-up worklist to work towards this outcome: Remaining work is visible across visits.",
-            "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Findings and follow-up shows permitted inspection defects, incident actions, remaining report work, customer responses and scheduling follow-up. Each row keeps its source identity; the page never creates a finding number or closes a source."
           ],
           "steps": [],
           "rows": [],
@@ -13499,9 +13497,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Unresolved finding, affected asset/area, owner and linked work.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Read access follows every native source and its activity, company, site and equipment. Coordinators need scoped service work-order and activity edit authority to change the next action. Technicians see their own permitted findings view-only."
           ],
           "steps": [],
           "rows": [],
@@ -13510,56 +13506,28 @@
         {
           "section_id": "quick-start",
           "title": "Quick start",
-          "paragraphs": [],
-          "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Identify what remains unresolved and its evidence",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+          "paragraphs": [
+            "Open Findings from the Service review side menu. Start with All open; search or choose Owner, Source and Site. Open a row to inspect what remains and what closes it."
           ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
           "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Unresolved findings and follow-up worklist · Page"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "paragraphs": [
+            "The desktop register has Source record, What remains, State, Owner, Due, Next action, Closes when, Source, Equipment and Site. The snapshot has Next action, Recurrence and History. A phone shows a list and one scrolling finding."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Unresolved finding, affected asset/area, owner and linked work.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Counts and filter options describe the authorised candidate window, never global totals. Read the As at time. Next window may remain available even when this view has no rows. Due is shown in site time; Due this week uses the site Monday-to-Sunday week."
           ],
           "steps": [],
           "rows": [],
@@ -13569,13 +13537,9 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Task sequence for review against the applicable running release."
+            "Choose Set the next action or Change next action. Enter owner, due date/time, instruction, optional evidence needed and a reason. Save once. Check the returned result and the same activity in My Work. Owner eligibility is checked again by the server."
           ],
-          "steps": [
-            "Identify what remains unresolved and its evidence",
-            "Assign a next action and accountable owner",
-            "Close only when the required outcome is evidenced"
-          ],
+          "steps": [],
           "rows": [],
           "headers": []
         },
@@ -13583,9 +13547,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "Remaining work is visible across visits.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Saving changes one owned activity and retains its history. It changes no source record. Open the report, inspection, incident or visit to satisfy its native closure rules. Ready to close means follow-up completed, not verified closure readiness."
           ],
           "steps": [],
           "rows": [],
@@ -13594,45 +13556,18 @@
         {
           "section_id": "states",
           "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "paragraphs": [
+            "All open excludes Closed and Superseded. Needs an owner includes a missing or cancelled action. Waiting on review reflects native correction/evidence. Recurring uses permitted earlier failed inspection checks on the same equipment within 90 days. Other sources without a stable fault key are explicitly not assessed. Closed findings has no date cutoff, within its candidate window."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare unresolved finding, affected asset/area, owner and linked work. Follow the task sequence and check that remaining work is visible across visits. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Unresolved findings and follow-up worklist has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. Repeated symptoms should be linked without erasing previous unsuccessful fixes."
+            "Synthetic example: a Partial report has a corroded cable gland. Assign the replacement and required photo to its permitted owner. Completing the activity does not prove the report scope complete. A successor report revision remains a superseding observation, not a false closure."
           ],
           "steps": [],
           "rows": [],
@@ -13641,45 +13576,18 @@
         {
           "section_id": "recovery",
           "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "paragraphs": [
+            "A failed or pending read hides rows and counts until confirmed. Retry the read. A stale save preserves entries: compare the current next action, then explicitly use its version before saving again. An uncertain save locks editing and retries exactly the original operation; do not invent a second action. Revoked access removes the editor."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "At 390 and 320 px use the finding list, then scroll through What remains, Next action, What closes it, Recurrence and next-action history. Keyboard buttons open rows; Escape closes a snapshot with unsaved-change protection. Native local date/time entry converts through the site timezone. This page requires online reads and writes."
           ],
           "steps": [],
           "rows": [],
@@ -13689,8 +13597,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "Use the source link for source evidence/history and Open in My Work for the owned activity. Remote diagnosis and the Escalations group remain outstanding until SV-08 exists; this page shows no inactive control."
           ],
           "steps": [],
           "rows": [],
@@ -13700,9 +13607,7 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the synthetic implementation. Functional execution, visual comparison, owner acceptance and deployment are separate. No visual acceptance or deployment is recorded."
           ],
           "steps": [],
           "rows": [],
@@ -24825,25 +24730,23 @@
     {
       "guide_key": "guide.ec.04",
       "entry_key": "scope:EC-04",
-      "title": "Communication draft, approval and delivery review",
+      "title": "Customer messages",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Implemented synthetic workflow; review pending",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-10-31",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "docs/testing/evidence/customer-messages/README.md",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Communication draft, approval and delivery review to work towards this outcome: The communication has a reviewable exact basis.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "A saved draft is not sent. Never imply delivery without transport evidence."
+            "Review fixed customer-safe messages and recorded simulated outcomes. Nothing reaches a provider, mailbox or customer."
           ],
           "steps": [],
           "rows": [],
@@ -24853,9 +24756,7 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact recipients, message revision, attachments and approval.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use current source-read permission. Confirm/withdraw/reconcile also require customer_message.send and the class working duty; switches require customer_message.switch. No new duty is granted."
           ],
           "steps": [],
           "rows": [],
@@ -24866,54 +24767,29 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Prepare the message and verify recipient scope",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Choose To send, Needs follow-up, All messages or Message classes in Email.",
+            "Open a message; inspect the recipient, source facts, template and exact body.",
+            "Use Confirm and send to review the named dialog, then confirm the exact content.",
+            "Read the saved state; Sent remains simulated and delivery unconfirmed."
           ],
           "rows": [],
           "headers": []
         },
         {
           "section_id": "page-tour",
-          "title": "Understand this page",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Page context",
-              "Communication draft, approval and delivery review · Page or record tabs"
-            ],
-            [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
-            ],
-            [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
-            ]
+          "title": "Page tour",
+          "paragraphs": [
+            "Recipient/source facts occupy the left; Message, Facts and History occupy the right. The record route uses the same composition. Search and filter narrows the current readable window."
           ],
-          "headers": [
-            "Area",
-            "How to use it"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "information",
-          "title": "Information you need",
+          "title": "Information shown",
           "paragraphs": [
-            "Exact recipients, message revision, attachments and approval.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Only bound facts are shown. The from address is a synthetic placeholder. M1/M2 source links open Supply Demand; no work-order or line-count inference is made. M3/M4 appear only from real readable records."
           ],
           "steps": [],
           "rows": [],
@@ -24921,14 +24797,14 @@
         },
         {
           "section_id": "tasks",
-          "title": "Complete the main task",
-          "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
-          ],
+          "title": "Tasks",
+          "paragraphs": [],
           "steps": [
-            "Prepare the message and verify recipient scope",
-            "Review exact attachment revisions and any required approval",
-            "Track actual sending and delivery outcomes separately"
+            "Optionally add a sending note for M1–M3; Reviewed messages require an approval note and a different sender.",
+            "Withdraw Prepared/Held content with a reason before hand-over.",
+            "For Outcome unknown choose Check Sent Items and give a reason; never start a fresh send.",
+            "For Held/Failed open the owned follow-up; content is retained, dimmed, without resend.",
+            "In Message classes choose a company, operate a switch and supply a reason in the dialog."
           ],
           "rows": [],
           "headers": []
@@ -24937,9 +24813,7 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The communication has a reviewable exact basis.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "A saved draft is not sent. Never imply delivery without transport evidence."
+            "Check the receipt and fresh state. Queued is not sent; Sent (simulated) is not delivery. Positive simulated delivery evidence is separate. Follow-up stays owned."
           ],
           "steps": [],
           "rows": [],
@@ -24947,46 +24821,19 @@
         },
         {
           "section_id": "states",
-          "title": "Statuses, warnings and save state",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
-            ],
-            [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
-            ],
-            [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
-            ],
-            [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
-            ],
-            [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
-            ],
-            [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
-            ]
+          "title": "States",
+          "paragraphs": [
+            "To send means Prepared. Held · do not notify respects the preference. Failed · bounced requires a matched non-delivery report; other failures do not claim a bounce. Empty, denied, loading and failed reads remain distinct."
           ],
-          "headers": [
-            "State or situation",
-            "Meaning and response"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "examples",
-          "title": "Worked examples",
+          "title": "Synthetic examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact recipients, message revision, attachments and approval. Follow the task sequence and check that the communication has a reviewable exact basis. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Communication draft, approval and delivery review has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. A saved draft is not sent. Never imply delivery without transport evidence."
+            "A native Moved dispatch prepares M1. A later explicit customer ETA compared with an actually sent baseline can prepare M2. Supplier promises and internal notes do not become customer facts."
           ],
           "steps": [],
           "rows": [],
@@ -24994,46 +24841,19 @@
         },
         {
           "section_id": "recovery",
-          "title": "Troubleshooting",
-          "paragraphs": [],
-          "steps": [],
-          "rows": [
-            [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
-            ],
-            [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
-            ],
-            [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
-            ],
-            [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
-            ]
+          "title": "Recovery",
+          "paragraphs": [
+            "An uncertain save retains its exact original command in this browser tab. Check original result replays that operation and obtains the original receipt; do not clear storage or start another action. If storage is unavailable nothing is submitted. Failed/stale reads hide obsolete actions; refresh and review current facts. Reconcile resolves communication OutcomeUnknown separately."
           ],
-          "headers": [
-            "Symptom",
-            "Check and recovery"
-          ]
+          "steps": [],
+          "rows": [],
+          "headers": []
         },
         {
           "section_id": "mobile",
-          "title": "Mobile, keyboard and offline use",
+          "title": "Mobile, keyboard and offline",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "Use the compact header for views/search/filter; sheets keep confirmation reachable at 320 px. Record sections stack and the main action is at least 48 px. Tab reaches controls; Escape returns focus from dialogs when no unresolved save is retained. This workflow is online only."
           ],
           "steps": [],
           "rows": [],
@@ -25041,10 +24861,9 @@
         },
         {
           "section_id": "resources",
-          "title": "Related guidance and procedures",
+          "title": "Related guidance",
           "paragraphs": [
-            "Related page and scope guides are listed below. Follow an application link only after checking its environment and availability.",
-            "No approved operational SOP is attached by this register. Use authoritative procedures through their normal access controls; a guide does not approve or replace them."
+            "The customer communications contract and accepted EC-04 design govern this page. Template editing remains in Template management, which is not yet a page on the integrated base; the stored version/hash is still inspectable here."
           ],
           "steps": [],
           "rows": [],
@@ -25052,11 +24871,9 @@
         },
         {
           "section_id": "review",
-          "title": "Guide review and feedback",
+          "title": "Review status",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment are separate in the EC-04 evidence. No application visual acceptance is claimed."
           ],
           "steps": [],
           "rows": [],
@@ -25064,16 +24881,20 @@
         }
       ],
       "related_entry_keys": [
-        "scope:EC-01",
-        "scope:EC-03",
-        "scope:SH-06",
-        "scope:DK-03"
+        "route:/email/customer-messages",
+        "route:/email/customer-messages/[id]"
       ],
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-01-master-blueprint.md"
+        "docs/decisions/customer-messages-figma-design.md",
+        "docs/contracts/customer-communications.md",
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "src/components/customer-messages.css",
+        "src/communications/reads.ts",
+        "src/communications/ui-model.ts"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "EC-04 native synthetic queue, exact-message review, confirmation, follow-up, reconciliation and switches.",
       "document_id": "PPO-GUIDE-EC-04",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -37107,7 +36928,8 @@
           "paragraphs": [
             "Use Email inbox to work towards this outcome: Communication context is retained with accountable follow-up.",
             "This draft explains the registered workflow and its current source context. Verify exact controls against the running release. Wider scope and planned extensions remain separately identified.",
-            "The existing journey is synthetic. Reading or linking a message does not send a reply or connect a provider."
+            "The existing journey is synthetic. Reading or linking a message does not send a reply or connect a provider.",
+            "The Email side menu now links Customer messages: To send, Needs follow-up, All messages and Message classes. These synthetic customer notices are separate from personal correspondence. Personal mailbox status appears only on Inbox."
           ],
           "steps": [],
           "rows": [],
@@ -75209,6 +75031,389 @@
         "src/admin/policy-screen.tsx",
         "docs/decisions/settings-hub-figma-design.md"
       ]
+    },
+    {
+      "guide_key": "guide.route-email-customer-messages-id",
+      "entry_key": "route:/email/customer-messages/[id]",
+      "title": "Customer messages",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:EC-04",
+        "route:/email/customer-messages"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Review fixed customer-safe messages and recorded simulated outcomes. Nothing reaches a provider, mailbox or customer."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use current source-read permission. Confirm/withdraw/reconcile also require customer_message.send and the class working duty; switches require customer_message.switch. No new duty is granted."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose To send, Needs follow-up, All messages or Message classes in Email.",
+            "Open a message; inspect the recipient, source facts, template and exact body.",
+            "Use Confirm and send to review the named dialog, then confirm the exact content.",
+            "Read the saved state; Sent remains simulated and delivery unconfirmed."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Recipient/source facts occupy the left; Message, Facts and History occupy the right. The record route uses the same composition. Search and filter narrows the current readable window."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information shown",
+          "paragraphs": [
+            "Only bound facts are shown. The from address is a synthetic placeholder. M1/M2 source links open Supply Demand; no work-order or line-count inference is made. M3/M4 appear only from real readable records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [],
+          "steps": [
+            "Optionally add a sending note for M1–M3; Reviewed messages require an approval note and a different sender.",
+            "Withdraw Prepared/Held content with a reason before hand-over.",
+            "For Outcome unknown choose Check Sent Items and give a reason; never start a fresh send.",
+            "For Held/Failed open the owned follow-up; content is retained, dimmed, without resend.",
+            "In Message classes choose a company, operate a switch and supply a reason in the dialog."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Check the receipt and fresh state. Queued is not sent; Sent (simulated) is not delivery. Positive simulated delivery evidence is separate. Follow-up stays owned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "To send means Prepared. Held · do not notify respects the preference. Failed · bounced requires a matched non-delivery report; other failures do not claim a bounce. Empty, denied, loading and failed reads remain distinct."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "A native Moved dispatch prepares M1. A later explicit customer ETA compared with an actually sent baseline can prepare M2. Supplier promises and internal notes do not become customer facts."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "An uncertain save retains its exact original command in this browser tab. Check original result replays that operation and obtains the original receipt; do not clear storage or start another action. If storage is unavailable nothing is submitted. Failed/stale reads hide obsolete actions; refresh and review current facts. Reconcile resolves communication OutcomeUnknown separately."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use the compact header for views/search/filter; sheets keep confirmation reachable at 320 px. Record sections stack and the main action is at least 48 px. Tab reaches controls; Escape returns focus from dialogs when no unresolved save is retained. This workflow is online only."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance",
+          "paragraphs": [
+            "The customer communications contract and accepted EC-04 design govern this page. Template editing remains in Template management, which is not yet a page on the integrated base; the stored version/hash is still inspectable here."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment are separate in the EC-04 evidence. No application visual acceptance is claimed."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "docs/testing/evidence/customer-messages/README.md",
+      "source_paths": [
+        "docs/decisions/customer-messages-figma-design.md",
+        "docs/contracts/customer-communications.md",
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "src/components/customer-messages.css",
+        "src/communications/reads.ts",
+        "src/communications/ui-model.ts"
+      ],
+      "change_summary": "EC-04 native synthetic queue, exact-message review, confirmation, follow-up, reconciliation and switches."
+    },
+    {
+      "guide_key": "guide.route-email-customer-messages",
+      "entry_key": "route:/email/customer-messages",
+      "title": "Customer messages",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "Implemented synthetic workflow; review pending",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [
+        "scope:EC-04",
+        "route:/email/customer-messages/[id]"
+      ],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and outcome",
+          "paragraphs": [
+            "Review fixed customer-safe messages and recorded simulated outcomes. Nothing reaches a provider, mailbox or customer."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "before",
+          "title": "Before you start",
+          "paragraphs": [
+            "Use current source-read permission. Confirm/withdraw/reconcile also require customer_message.send and the class working duty; switches require customer_message.switch. No new duty is granted."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Quick start",
+          "paragraphs": [],
+          "steps": [
+            "Choose To send, Needs follow-up, All messages or Message classes in Email.",
+            "Open a message; inspect the recipient, source facts, template and exact body.",
+            "Use Confirm and send to review the named dialog, then confirm the exact content.",
+            "Read the saved state; Sent remains simulated and delivery unconfirmed."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "page-tour",
+          "title": "Page tour",
+          "paragraphs": [
+            "Recipient/source facts occupy the left; Message, Facts and History occupy the right. The record route uses the same composition. Search and filter narrows the current readable window."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "information",
+          "title": "Information shown",
+          "paragraphs": [
+            "Only bound facts are shown. The from address is a synthetic placeholder. M1/M2 source links open Supply Demand; no work-order or line-count inference is made. M3/M4 appear only from real readable records."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "tasks",
+          "title": "Tasks",
+          "paragraphs": [],
+          "steps": [
+            "Optionally add a sending note for M1–M3; Reviewed messages require an approval note and a different sender.",
+            "Withdraw Prepared/Held content with a reason before hand-over.",
+            "For Outcome unknown choose Check Sent Items and give a reason; never start a fresh send.",
+            "For Held/Failed open the owned follow-up; content is retained, dimmed, without resend.",
+            "In Message classes choose a company, operate a switch and supply a reason in the dialog."
+          ],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "completion",
+          "title": "Completion and handover",
+          "paragraphs": [
+            "Check the receipt and fresh state. Queued is not sent; Sent (simulated) is not delivery. Positive simulated delivery evidence is separate. Follow-up stays owned."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "states",
+          "title": "States",
+          "paragraphs": [
+            "To send means Prepared. Held · do not notify respects the preference. Failed · bounced requires a matched non-delivery report; other failures do not claim a bounce. Empty, denied, loading and failed reads remain distinct."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "examples",
+          "title": "Synthetic examples",
+          "paragraphs": [
+            "A native Moved dispatch prepares M1. A later explicit customer ETA compared with an actually sent baseline can prepare M2. Supplier promises and internal notes do not become customer facts."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "Recovery",
+          "paragraphs": [
+            "An uncertain save retains its exact original command in this browser tab. Check original result replays that operation and obtains the original receipt; do not clear storage or start another action. If storage is unavailable nothing is submitted. Failed/stale reads hide obsolete actions; refresh and review current facts. Reconcile resolves communication OutcomeUnknown separately."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "mobile",
+          "title": "Mobile, keyboard and offline",
+          "paragraphs": [
+            "Use the compact header for views/search/filter; sheets keep confirmation reachable at 320 px. Record sections stack and the main action is at least 48 px. Tab reaches controls; Escape returns focus from dialogs when no unresolved save is retained. This workflow is online only."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "resources",
+          "title": "Related guidance",
+          "paragraphs": [
+            "The customer communications contract and accepted EC-04 design govern this page. Template editing remains in Template management, which is not yet a page on the integrated base; the stored version/hash is still inspectable here."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        },
+        {
+          "section_id": "review",
+          "title": "Review status",
+          "paragraphs": [
+            "Draft guide. Functional proof, visual comparison, owner acceptance and deployment are separate in the EC-04 evidence. No application visual acceptance is claimed."
+          ],
+          "steps": [],
+          "rows": [],
+          "headers": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "docs/testing/evidence/customer-messages/README.md",
+      "source_paths": [
+        "docs/decisions/customer-messages-figma-design.md",
+        "docs/contracts/customer-communications.md",
+        "src/components/customer-messages.tsx",
+        "src/components/customer-message-command.tsx",
+        "src/components/email-workspace-menu.tsx",
+        "src/components/customer-messages.css",
+        "src/communications/reads.ts",
+        "src/communications/ui-model.ts"
+      ],
+      "change_summary": "EC-04 native synthetic queue, exact-message review, confirmation, follow-up, reconciliation and switches."
+    },
+    {
+      "guide_key": "guide.route-service-findings",
+      "entry_key": "route:/service/findings",
+      "title": "Findings and follow-up",
+      "status": "Draft",
+      "owner_role": "Prototype content owner: Dean Fiedler",
+      "reviewer": null,
+      "reviewed_at": null,
+      "reviewed_content_hash": null,
+      "content_mode": "New source; review needed",
+      "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
+      "related_entry_keys": [],
+      "sections": [
+        {
+          "section_id": "purpose",
+          "title": "Purpose and applicability",
+          "paragraphs": [
+            "Findings and follow-up shows permitted inspection defects, incident actions, remaining report work, customer responses and scheduling follow-up. Each row keeps its source identity; the page never creates a finding number or closes a source."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "quick-start",
+          "title": "Using this page",
+          "paragraphs": [
+            "Open Findings from the Service review side menu. Start with All open; search or choose Owner, Source and Site. Open a row to inspect what remains and what closes it."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        },
+        {
+          "section_id": "recovery",
+          "title": "If something is unavailable",
+          "paragraphs": [
+            "A failed or pending read hides rows and counts until confirmed. Retry the read. A stale save preserves entries: compare the current next action, then explicitly use its version before saving again. An uncertain save locks editing and retries exactly the original operation; do not invent a second action. Revoked access removes the editor."
+          ],
+          "steps": [],
+          "headers": [],
+          "rows": []
+        }
+      ],
+      "prepared_at": "2026-10-31",
+      "runtime_evidence": "Focused verification in progress; see SV-07 PR evidence"
     },
     {
       "guide_key": "guide.route-projects-id-commercial-entry",

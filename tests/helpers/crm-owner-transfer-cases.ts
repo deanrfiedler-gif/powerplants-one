@@ -587,6 +587,90 @@ export function ownerTransferCases() {
       "Qualified",
     );
   });
+  test("HV-10/22: after a transfer the receiver can edit a deal that still has no contact, as it can change its stage", async () => {
+    // The contact-identification action keeps its original owner across a transfer, and a stage change checks it against
+    // the deal's original owner (above). Edit deal must apply the same rule, or the receiver can move the deal but not edit it.
+    const p = await principal(),
+      input = crmDiscovery();
+    input.primary_person_id = null;
+    input.contact_unknown_reason = "SYN introduction pending";
+    await createOpportunity(p, input);
+    await transferOpportunityOwner(p, input.id, await intent(p, input.id));
+    const q = await principal("crm-receiver");
+    const edited = await editDealInformation(q, input.id, {
+      ...crmBase(),
+      expected_version: 2,
+      title: "SYN Receiver edit without a contact",
+      primary_person_id: null,
+      contact_unknown_reason: "SYN introduction still pending",
+      value_amount: null,
+      expected_close_date: null,
+    });
+    const saved = await readOpportunity(q, input.id);
+    assert.equal(edited.replayed, false);
+    assert.equal(saved.title, "SYN Receiver edit without a contact");
+    assert.equal(saved.identification_activity_id, input.initial_action.id);
+    // The rule still bites: once that action is complete, neither path accepts a deal with no contact.
+    await activityCommand(p, input.initial_action.id, { ...crmBase(), expected_version: 1, outcome: "SYN identification closed" }, "complete");
+    await assert.rejects(
+      editDealInformation(q, input.id, {
+        ...crmBase(),
+        expected_version: 3,
+        title: "SYN Refused edit",
+        primary_person_id: null,
+        contact_unknown_reason: "SYN introduction still pending",
+        value_amount: null,
+        expected_close_date: null,
+      }),
+      code("CRM_ACTION_TERMINAL"),
+    );
+  });
+  test("HV-10/22: after a transfer, clearing an existing contact checks the identification action against the current owner", async () => {
+    // Clearing a contact is a contact change, so the database checks the current owner, not the original one. Edit deal
+    // must refuse it while the action is still the original owner's, and accept it once the action is the receiver's.
+    const p = await principal(),
+      input = crmDiscovery(),
+      person = input.primary_person_id;
+    input.primary_person_id = null;
+    input.contact_unknown_reason = "SYN introduction pending";
+    await createOpportunity(p, input);
+    const clear = (q: typeof p, expected_version: number) =>
+      editDealInformation(q, input.id, {
+        ...crmBase(),
+        expected_version,
+        title: input.title,
+        primary_person_id: null,
+        contact_unknown_reason: "SYN contact left the customer",
+        value_amount: null,
+        expected_close_date: null,
+      });
+    await editDealInformation(p, input.id, {
+      ...crmBase(),
+      expected_version: 1,
+      title: input.title,
+      primary_person_id: person,
+      contact_unknown_reason: null,
+      value_amount: null,
+      expected_close_date: null,
+    });
+    await transferOpportunityOwner(p, input.id, await intent(p, input.id));
+    const q = await principal("crm-receiver");
+    // The action is still the original owner's: the service refuses with its own reason, before the database guard.
+    await assert.rejects(clear(q, 3), code("CRM_IDENTIFICATION_REQUIRED"));
+    assert.equal((await readOpportunity(q, input.id)).primary_person_id, person);
+    await activityCommand(
+      p,
+      input.initial_action.id,
+      { ...crmBase(), expected_version: 1, owner_id: receiver, summary: input.initial_action.summary, due_at: null, due_needed: true },
+      "update",
+    );
+    const cleared = await clear(q, 3);
+    assert.equal(cleared.replayed, false);
+    const saved = await readOpportunity(q, input.id);
+    assert.equal(saved.primary_person_id, null);
+    assert.equal(saved.version, 4);
+    assert.equal(saved.identification_activity_id, input.initial_action.id);
+  });
   test("HV-11/12/22: several handovers preserve original actor receipts despite later recipient revocation", async () => {
     const { p, input, created } = await fixture(),
       q = await principal("crm-receiver"),

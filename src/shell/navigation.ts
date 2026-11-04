@@ -248,6 +248,7 @@ export const destination = (id: string) =>
 export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
+  if (matchesPath(path, "/email/customer-messages")) return { ...destination("mail"), label: "Customer messages", href: "/email/customer-messages" };
   if (path === "/admin/policies") return { ...destination("settings"), label: "Business policies" };
   if (/^\/admin\/policies\/[^/]+$/.test(path)) return { ...destination("settings"), label: "Business policy" };
   if (/^\/projects\/[^/]+\/commercial\/[^/]+$/.test(path)) return destination("variations");
@@ -262,6 +263,7 @@ export function pageForPath(path: string) {
   if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
   if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };
   if (path === "/products/import") return { ...destination("products"), label: "Product import" };
+  if (path === "/service/findings") return { ...destination("reports"), label: "Findings" };
   const scheduleViews: Record<string,string> = { changes: "Changes & follow-up", "policy-impact": "Policy impact", travel: "Travel review", capacity: "Capacity review" };
   const scheduleView = /^\/schedule\/([^/]+)$/.exec(path)?.[1];
   if (scheduleView && scheduleViews[scheduleView]) return { ...destination("planner"), label: scheduleViews[scheduleView] };
