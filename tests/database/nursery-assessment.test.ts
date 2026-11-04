@@ -155,8 +155,10 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   });
   const rows = async (table: string) =>
     (await database().query("SELECT * FROM " + table + " ORDER BY 1")).rows;
+  const grantRows = async () =>
+    (await database().query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
   const nursery = await rows("ppo.nursery_discovery_revisions"),
-    grants = await rows("ppo.permission_grants"),
+    grants = await grantRows(),
     seeds = await rows("ppo.seed_receipts"),
     ledger = await rows("public.ppo_migrations");
   await assert.rejects(
@@ -166,7 +168,7 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   await migrate();
   await seed();
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
-  const caseGrants=await rows("ppo.permission_grants");
+  const caseGrants=await grantRows();
   assert.deepEqual(caseGrants.filter(g=>g.capability!=="service_escalation.record"), grants);
   assert.deepEqual(caseGrants.filter(g=>g.capability==="service_escalation.record"),escalationSeedGrants(grants).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   const upgradedSeeds = await rows("ppo.seed_receipts");
@@ -183,6 +185,7 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   await seed();
   assert.deepEqual(await rows("public.ppo_migrations"), after);
   assert.deepEqual(await rows("ppo.seed_receipts"), upgradedSeeds);
+  assert.deepEqual(await grantRows(), caseGrants);
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
 });
 

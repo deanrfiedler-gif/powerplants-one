@@ -2,7 +2,7 @@
 document_id: PPO-SV08-NATIVE-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Agent implementation decisions; independent review pending; no owner visual acceptance
+status: Agent implementation decisions; Claude finding confirmation pending; no owner visual acceptance
 versioning: git
 ---
 
@@ -25,3 +25,11 @@ Configuration is captured from the equipment record as an immutable read-only sn
 ## Owned work and limits
 
 A reply-expected instant creates owned chase work in My Work with a currently authorised return link to the case. The case owns its owner/date, so the generic Activity editor cannot change them. The Activity owner retains native start/complete/cancel duties. A case recorder may resolve an outstanding chase when recording the reply or withdrawal; this source-driven cancellation is audited in the same operation. Receiving a reply resolves that reminder without completing the finding's technical work. Grower approval remains a prerequisite outside PPO for settings changes; the case cannot write controller settings. Withdrawing and closing retain all evidence and require a reason/outcome. No synthetic state constitutes a production escalation process, owner acceptance or deployment.
+
+## Review fixes — agent decisions under the standing order, 4 November 2026
+
+Keep the original case/chase owner immutable. If that owner loses access, a currently authorised coordinator with case, native-source, Equipment-read, Activity-edit and Service-work-order-edit duties in the case scope may record the reply or withdraw. Only the outstanding chase is cancelled; its original owner and the actor's linked audit remain. This bounded source resolution does not reassign work or bypass native next-action authority.
+
+Refuse Relocate and CorrectLocation across sites while the equipment has a nonterminal escalation case. The stated remedy is to close or withdraw the case first; moving it would break its original finding/site evidence. Same-site changes remain available.
+
+Maintaining a manufacturer support route also requires Equipment edit (`shared.edit`) because it advances the Asset version. Recording a native next action requires Findings' Service-work-order-edit and Activity-edit duties before replay. Sending time must be at or after the retained pack's creation time; reject earlier facts rather than rewrite the entered time.

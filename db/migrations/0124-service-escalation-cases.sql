@@ -57,7 +57,7 @@ CREATE TABLE ppo.service_escalation_cases (
  FOREIGN KEY(workspace_id,next_action_id) REFERENCES ppo.activities(workspace_id,id)
 );
 CREATE TRIGGER register_identity BEFORE INSERT OR UPDATE ON ppo.service_escalation_cases FOR EACH ROW EXECUTE FUNCTION ppo.register_identity('EscalationCase','ESC');
-CREATE INDEX service_escalations_register ON ppo.service_escalation_cases(workspace_id,state,updated_at DESC,id);
+CREATE INDEX service_escalations_register ON ppo.service_escalation_cases(workspace_id,updated_at DESC,id);
 CREATE INDEX service_escalations_finding ON ppo.service_escalation_cases(workspace_id,finding_key);
 CREATE TABLE ppo.service_escalation_events (
  id uuid PRIMARY KEY, workspace_id uuid NOT NULL, case_id uuid NOT NULL,

@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../../platform/identity";
 import { AppError, unavailable } from "../../platform/errors";
+import { companyContext } from "../../shared/authority";
 import {
   sharedOperation,
   type OperationResult,
@@ -111,10 +112,24 @@ async function finishChase(
   if (!ctx.row.chase_activity_id) return;
   const a = await visibleActivity(c, p, ctx.row.chase_activity_id);
   if (!["Open", "InProgress"].includes(a.status)) return;
-  await authoriseActivityInput(c, p, {
-    ...a,
-    links: await activityLinks(c, p, a.id),
-  });
+  try {
+    await authoriseActivityInput(c, p, {
+      ...a,
+      links: await activityLinks(c, p, a.id),
+    });
+  } catch (e) {
+    if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
+    // Source-owned cancellation may be completed by a current coordinator even
+    // when the original owner can no longer own work. Retain that owner/history.
+    await companyContext(
+      c,
+      p,
+      a.company_id,
+      a.site_id,
+      "service.work_order.edit",
+    );
+    await companyContext(c, p, a.company_id, a.site_id, "activity.edit");
+  }
   // Source resolution cancels the reminder, not the finding or technician's next action.
   const result = await mutateActivity(
     c,
@@ -172,8 +187,9 @@ async function exactPack(
       pdf_sha256: string;
       html: string;
       pdf: Buffer;
+      created_at: Date;
     }>(
-      "SELECT id,content_version,evidence_sha256,html_sha256,pdf_sha256,html,pdf FROM ppo.service_escalation_packs WHERE workspace_id=$1 AND case_id=$2 AND id=$3",
+      "SELECT id,content_version,evidence_sha256,html_sha256,pdf_sha256,html,pdf,created_at FROM ppo.service_escalation_packs WHERE workspace_id=$1 AND case_id=$2 AND id=$3",
       [p.workspace_id, ctx.row.id, id],
     )
   ).rows[0];
@@ -293,7 +309,17 @@ export async function recordSupportRoute(
     p,
     cmd,
     `${caseCommandPrefix}SupportRoute`,
-    (c) => assetContext(c, p, id),
+    async (c) => {
+      const asset = await assetContext(c, p, id);
+      await companyContext(
+        c,
+        p,
+        asset.company_id,
+        asset.site_id,
+        "shared.edit",
+      );
+      return asset;
+    },
     async (c, asset) => {
       if (asset.version !== cmd.expected_version) throw mismatch();
       if (!asset.manufacturer)
@@ -330,7 +356,26 @@ export async function commandCase(p: Principal, id: string, input: unknown) {
     p,
     cmd,
     `${caseCommandPrefix}${cmd.action}`,
-    (c) => caseContext(c, p, id),
+    async (c) => {
+      const ctx = await caseContext(c, p, id);
+      if (cmd.action === "next_action") {
+        await companyContext(
+          c,
+          p,
+          ctx.row.company_id,
+          ctx.row.site_id,
+          "service.work_order.edit",
+        );
+        await companyContext(
+          c,
+          p,
+          ctx.row.company_id,
+          ctx.row.site_id,
+          "activity.edit",
+        );
+      }
+      return ctx;
+    },
     async (c, ctx) => {
       const row = ctx.row;
       if (row.version !== cmd.expected_version) throw mismatch();
@@ -493,6 +538,11 @@ export async function commandCase(p: Principal, id: string, input: unknown) {
               "reply_expected_at",
             ),
             sent_by = uuid(cmd.sent_by, "sent_by");
+          if (Date.parse(sent_at) < pack.created_at.getTime())
+            invalid(
+              "sent_at",
+              "Sending cannot predate the reviewed evidence pack.",
+            );
           if (
             Date.parse(sent_at) < row.created_at.getTime() ||
             Date.parse(reply_expected_at) <= Date.parse(sent_at)

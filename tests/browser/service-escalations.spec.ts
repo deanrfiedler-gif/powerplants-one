@@ -246,3 +246,51 @@ test("SV08 a new sending keeps earlier replies and attachments in History", asyn
     page.getByRole("link", { name: "Retained sent PDF", exact: true }),
   ).toBeVisible();
 });
+
+test("SV08 regression 8: History uses the command's plain-English action label", async ({
+  page,
+}) => {
+  await setup(page);
+  await page.goto(`/service/escalations?case=${escalationId}`);
+  await page.getByRole("tab", { name: "History", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Record reply", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("record_reply", { exact: true })).toHaveCount(0);
+});
+
+test("SV08 regression 9: refreshing keeps register rows mounted with a busy state", async ({
+  page,
+}) => {
+  await setup(page);
+  await page.goto("/service/escalations");
+  const row = page.getByRole("button", {
+    name: /Boiler controller BC-2 shows fault E-17/,
+  });
+  await expect(row).toBeVisible();
+  await row.evaluate((el) => el.setAttribute("data-retained-row", "yes"));
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/v1/service/escalations?**", async (route) => {
+    await pending;
+    await route.fulfill({ json: escalationRegister() });
+  });
+  try {
+    await page.getByRole("button", { name: "Refresh", exact: true }).click();
+    await expect(page.locator(".sv08-register")).toHaveAttribute(
+      "aria-busy",
+      "true",
+    );
+    await expect(row).toBeVisible();
+    await expect(row).toHaveAttribute("data-retained-row", "yes");
+  } finally {
+    release();
+  }
+  await expect(page.locator(".sv08-register")).toHaveAttribute(
+    "aria-busy",
+    "false",
+  );
+  await expect(row).toHaveAttribute("data-retained-row", "yes");
+});

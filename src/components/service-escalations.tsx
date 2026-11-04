@@ -24,6 +24,7 @@ import {
 import { OpenCaseForm } from "./service-escalations-create";
 import {
   CaseCommandEditor,
+  actionLabels,
   type EscalationRecord,
   type EditorAction,
   type Wire,
@@ -64,7 +65,7 @@ export function EscalationsScreen() {
   const r = useResource<Wire<CaseRegister>>(
       !selected && !creating ? `service/escalations?${params}` : null,
     ),
-    available = !!r.data && !r.loading && !r.error,
+    available = !!r.data && !r.error,
     data = available ? r.data : null,
     rows = data?.items ?? [];
   const navigate = (
@@ -170,7 +171,7 @@ export function EscalationsScreen() {
           phone={!!menu.phone}
         />
       ) : (
-        <div className="sv08-register">
+        <div className="sv08-register" aria-busy={r.loading}>
           <h1 className="sr-only">Remote diagnosis and escalation</h1>
           <div className="sv08-toolbar">
             <div className="sv08-phone">
@@ -224,7 +225,7 @@ export function EscalationsScreen() {
           <ReadState loading={false} error={r.error} retry={r.reload} />
           {available && (
             <>
-              <div className="sv08-desktop sv08-table">
+              <div className="sv08-desktop sv08-table" aria-busy={r.loading}>
                 <RegisterTable
                   caption="Permitted escalation cases. Open a fault to inspect its diagnosis, evidence and correspondence."
                   empty={
@@ -1081,9 +1082,16 @@ function CaseDetail({
                 {data.history.map((h) => (
                   <article className="sv08-diagnostic" key={h.id}>
                     <h3>
-                      {String(h.command)
-                        .replace("ServiceEscalation:", "")
-                        .replaceAll("_", " ")}
+                      {h.command === "ServiceEscalation:Open"
+                        ? "Open case"
+                        : h.command === "ServiceEscalation:SupportRoute"
+                          ? actionLabels.support_route
+                          : actionLabels[
+                              String(h.command).replace(
+                                "ServiceEscalation:",
+                                "",
+                              ) as EditorAction
+                            ] ?? "Case updated"}
                     </h3>
                     <p>{String(h.reason)}</p>
                     <small>

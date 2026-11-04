@@ -1206,7 +1206,7 @@ test(`SV-01 migration 112 preserves the ${through} history and legacy triage rec
   const snapshot = async () => ({
     tickets: await rows("SELECT * FROM ppo.tickets ORDER BY id"),
     receipts: await rows("SELECT * FROM ppo.operation_receipts ORDER BY id"),
-    grants: await rows("SELECT * FROM ppo.permission_grants g WHERE capability<>'conversation.agent.ask' ORDER BY to_jsonb(g)::text"),
+    grants: await rows("SELECT * FROM ppo.permission_grants g WHERE capability<>'conversation.agent.ask' AND capability NOT LIKE 'service_escalation.%' ORDER BY to_jsonb(g)::text"),
     seeds: await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"),
   });
   const before = await snapshot(),

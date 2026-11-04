@@ -2,6 +2,10 @@
 
 Codex review, 1 November 2026. Synthetic application only. Functional proof, visual review, owner acceptance and deployment are separate. No owner visual acceptance or deployment is recorded.
 
+## Review repairs — 4 November 2026
+
+The [review repair and main-integration evidence](review-fixes.md) records the ten findings, exact upgrade proofs, per-file merge accounting and current check results. It adds no new visual acceptance; the 1 November comparison below remains its own historical record.
+
 ## Visual comparison
 
 References: the nine [accepted, icon-free captures](../../../reference/ui/service/escalations-design-r01/README.md). Browser: local reviewed Chrome 156.0.8078.80. The [browser fixture](../../../../tests/browser/service-escalations.spec.ts) captures register, reply and next-action form at 1440, 1024, 390 and 320 CSS px, plus diagnosing and Record as sent at 1440. Desktop/tablet height is 900; phone height is 844. The tablet primary rail is explicitly collapsed. The fixture deliberately uses one permitted synthetic case; it does not invent a manufacturer directory or production records.

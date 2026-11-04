@@ -9,7 +9,6 @@ import {
 import { choice, invalid, object, uuid } from "../../shared/validation";
 import {
   caseContext,
-  caseOwner,
   caseCapability,
   findingEquipment,
   supportRoute,
@@ -17,6 +16,9 @@ import {
 import { sourceContext } from "../findings/next-action";
 import { caseActions, allowedAction, hashBytes } from "./model";
 import { currentConfiguration } from "../../equipment/changes";
+import { activityVisibility } from "../../activities/activities";
+import { visibility } from "../../shared/reads";
+import { orderVisibility } from "../work-orders";
 const denied = (e: unknown) =>
   e instanceof AppError && [403, 404].includes(e.status);
 // Keep the case DTO independent of Equipment's private notes and commercial fields.
@@ -47,22 +49,51 @@ export async function owners(
   key: string,
   assetId: string,
 ) {
-  const users = (
-      await c.query<{ id: string; display_name: string }>(
-        "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND active ORDER BY display_name,id",
-        [p.workspace_id],
-      )
-    ).rows,
-    items = [];
-  for (const u of users) {
-    try {
-      await caseOwner(c, p, u.id, key, assetId);
-      items.push(u);
-    } catch (e) {
-      if (!denied(e)) throw e;
-    }
-  }
-  return items;
+  const { finding } = await findingEquipment(c, p, key, assetId);
+  // Evaluate every candidate in one query, using the native visibility predicates.
+  // The mutation still calls caseOwner; this list does not grant authority.
+  const forOwner = (sql: string) => sql.replaceAll("$2", "candidate.id");
+  const duty = (cap: Parameters<typeof scopeSql>[2]) =>
+    forOwner(scopeSql("a.company_id", "a.site_id", cap));
+  const service = duty("service.work_order.edit");
+  const field = `(${duty("field.read.own")} AND EXISTS(
+    SELECT 1 FROM ppo.assignments x JOIN ppo.resources r ON (r.workspace_id,r.id)=(x.workspace_id,x.resource_id)
+    WHERE x.workspace_id=a.workspace_id AND x.appointment_id=a.id AND x.active
+      AND x.assignment_version=a.assignment_version AND r.user_id=candidate.id AND r.active)
+    AND EXISTS(SELECT 1 FROM ppo.scope_revisions sr WHERE sr.workspace_id=a.workspace_id AND sr.id=a.scope_revision_id AND sr.work_order_id=w.id))`;
+  return (
+    await c.query<{ id: string; display_name: string }>(
+      `
+    SELECT candidate.id,candidate.display_name FROM ppo.users candidate
+    JOIN ppo.appointments a ON a.workspace_id=candidate.workspace_id AND a.id=$2
+    JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(a.workspace_id,a.work_order_id)
+    LEFT JOIN ppo.activities task ON task.workspace_id=a.workspace_id AND task.id=$3
+    LEFT JOIN ppo.incidents incident ON incident.workspace_id=a.workspace_id AND incident.id=$4
+    LEFT JOIN ppo.service_reports report ON report.workspace_id=a.workspace_id AND report.id=$4
+    WHERE candidate.workspace_id=$1 AND candidate.active
+      AND ${duty(caseCapability)} AND ${duty("activity.edit")} AND ${duty("activity.read")}
+      AND ${duty("shared.read")} AND ${duty("schedule.read")}
+      AND ${forOwner(orderVisibility("w"))}
+      AND NOT EXISTS(SELECT 1 FROM ppo.scope_revisions sr JOIN ppo.scope_assets sa ON (sa.workspace_id,sa.scope_revision_id)=(sr.workspace_id,sr.id)
+        WHERE sr.workspace_id=w.workspace_id AND sr.work_order_id=w.id AND NOT EXISTS(
+          SELECT 1 FROM ppo.assets historic WHERE historic.workspace_id=sa.workspace_id AND historic.id=sa.asset_id AND ${forOwner(visibility("Asset", "historic"))}))
+      AND ($3::uuid IS NULL OR ${forOwner(activityVisibility("task", true, true, true))})
+      AND CASE $5::text
+        WHEN 'inspection' THEN (${duty("report.read")} AND ${service} AND w.service_owner_id=candidate.id) OR ${field}
+        WHEN 'incident' THEN ${duty("incident.read")} AND (incident.state<>'Draft' OR incident.reporter_id=candidate.id) AND (${service} OR ${field})
+        WHEN 'schedule' THEN true
+        ELSE ${duty("report.read")} AND ${forOwner(scopeSql("report.company_id", "report.site_id", "report.read"))}
+          AND (${forOwner(scopeSql("report.company_id", "report.site_id", "service.work_order.edit"))} OR ${field}) END
+    ORDER BY candidate.display_name,candidate.id`,
+      [
+        p.workspace_id,
+        finding.authority.ctx.a.id,
+        finding.source.activity_id,
+        finding.source.parent_id,
+        finding.source.source,
+      ],
+    )
+  ).rows;
 }
 export async function caseOptions(p: Principal, input: unknown = {}) {
   const q = object(input, ["finding_key"]);
@@ -86,6 +117,7 @@ export async function caseOptions(p: Principal, input: unknown = {}) {
       )
     ).rows;
     const equipment = [];
+    let eligibleOwners: Awaited<ReturnType<typeof owners>> | undefined;
     for (const r of rows.slice(0, 200)) {
       try {
         const { asset } = await findingEquipment(
@@ -94,10 +126,11 @@ export async function caseOptions(p: Principal, input: unknown = {}) {
           q.finding_key as string,
           r.id,
         );
+        eligibleOwners ??= await owners(c, p, q.finding_key as string, r.id);
         equipment.push({
           ...equipmentView(asset),
           support_route: await supportRoute(c, p, asset),
-          owners: await owners(c, p, q.finding_key as string, r.id),
+          owners: eligibleOwners,
         });
       } catch (e) {
         if (!denied(e)) throw e;
