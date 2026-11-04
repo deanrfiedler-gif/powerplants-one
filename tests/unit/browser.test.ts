@@ -18,8 +18,12 @@ test("rendering refuses the affected Chromium build and unreviewed browser major
     "156.0.8077.999",
     "156.0.8078.0",
     "156.0.8078.46",
-    // A major beyond the reviewed set stays refused until it is reviewed.
     "157.0.0.0",
+    "157.0.8102.999",
+    "157.0.8103.0",
+    "157.0.8103.37",
+    // A major beyond the reviewed set stays refused until it is reviewed.
+    "158.0.0.0",
     "153.0.8010",
     "Chrome/153.0.8010.36",
     "153.0.8010.36\n",
@@ -44,6 +48,10 @@ test("rendering refuses the affected Chromium build and unreviewed browser major
     "156.0.8078.48",
     "156.0.8079.0",
     "156.1.0.0",
+    "157.0.8103.38",
+    "157.0.8103.39",
+    "157.0.8104.0",
+    "157.1.0.0",
   ]) {
     assert.doesNotThrow(() => assertSupportedBrowser(version));
   }
@@ -51,7 +59,7 @@ test("rendering refuses the affected Chromium build and unreviewed browser major
 
 test("unsupported browser diagnostics identify the actual installed version", () => {
   assert.throws(
-    () => assertSupportedBrowser("157.0.0.0"),
-    /Received "157\.0\.0\.0"/,
+    () => assertSupportedBrowser("158.0.0.0"),
+    /Received "158\.0\.0\.0"/,
   );
 });
