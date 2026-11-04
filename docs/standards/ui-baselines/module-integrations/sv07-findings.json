@@ -1,0 +1,15 @@
+{
+  "id": "sv07-findings",
+  "route": "/service/findings",
+  "scope": "#ppo-findings",
+  "layout": "full-bleed",
+  "scroll_owner": "#findings-content",
+  "design": "docs/reference/ui/service/findings-design-r01/PPO-Findings-01-Desktop-Register-r01.png",
+  "sha256": "52b5073ccd37b8d6a6ed10437b57fbf3d081ca965b86d4644d99bd2c481c3f16",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+  "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+  "component_proof": "tests/browser/service-findings.spec.ts",
+  "application_proof": "tests/browser/service-findings.spec.ts",
+  "authority": "User-authorised SV-07 synthetic native page; owner acceptance and visual review are separate.",
+  "adaptations": "docs/design/development/pages/scope-sv-07.md"
+}

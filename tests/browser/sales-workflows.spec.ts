@@ -526,8 +526,15 @@ test("CR05 issued source review saves attributed feedback, commercial preparatio
     completionReceipt = await completion.json();
     expect(completionReceipt).toMatchObject({ record_id: id, state: "ReviewCompleted" });
     receiptObservedAt = Date.now();
-    setTimeout(() => {
-      completedReadsReleasedAt = Date.now();
+    setTimeout(function releaseAfterHold() {
+      if (completedReadsReleasedAt) return;
+      const now = Date.now();
+      const remaining = 6000 - (now - receiptObservedAt);
+      if (remaining > 0) {
+        setTimeout(releaseAfterHold, remaining);
+        return;
+      }
+      completedReadsReleasedAt = now;
       releaseCompletedReads();
     }, 6000);
     completed = await completedRead;
