@@ -2,7 +2,7 @@
 document_id: PPO-CRM-STAGES-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Proposed by Claude on Dean's instruction of 1 November 2026; awaiting Dean's acceptance or amendment; team practice only, changes no application behaviour
+status: Proposed by Claude under the standing order, 1 November 2026; awaiting Dean's acceptance or amendment; team practice only, changes no application behaviour
 source_commit: 1fc002978ee2a6871121d9252609a49c6dc31b9a
 versioning: git
 ---
@@ -20,7 +20,7 @@ The synthetic five-stage pipeline orders deals as **Discovery**, **Scoping**, **
 
 Nothing in the code says what a stage means. The [CRM Deals guide](../guides/crm-deals.md) therefore could say only where a stage sits in the order, and a business reviewer has to supply its meaning before the guide can be published.
 
-On 1 November 2026 Claude recommended that each stage be defined by the evidence needed to enter and to leave it, rather than by a description, so that a salesperson has a test to apply. Dean replied: "go ahead with the stage definitions".
+On 1 November 2026 Claude recommended that each stage be defined by the evidence needed to enter and to leave it, rather than by a description, so that a salesperson has a test to apply. Claude then drafted these definitions under the standing order.
 
 ## Proposal
 

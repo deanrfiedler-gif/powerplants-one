@@ -3,7 +3,7 @@ title: Deal stage definitions proposed, and Edit deal uses the stage-change owne
 date: 2026-11-01
 ---
 
-On 1 November 2026 Dean asked Claude to "go ahead with the stage definitions and owner-check fix", the two points the CRM Deals guide needs settled before a business review.
+On 1 November 2026, under the standing order, Claude proposed the stage definitions and made the owner-check fix, the two points the CRM Deals guide needs settled before a business review.
 
 **Proposed** (not accepted): [What each deal stage means](../decisions/crm-deal-stage-definitions.md) (PPO-CRM-STAGES-DEC) defines Discovery, Scoping, Quoting, Negotiation and Closing by the evidence needed to enter and leave each stage. The definitions are team practice; the application does not check them. Dean accepts or amends them.
 
