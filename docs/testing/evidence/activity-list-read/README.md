@@ -40,7 +40,7 @@ Database time drops 99.4%, and executed statements 95.2%. Summed database time c
 
 ## Validation
 
-The mandated cloud setup succeeded: PostgreSQL ready, browser unavailable. Foundation, prototype, naming, status, migrations and 44 documentation unit checks passed. `npm run studio:check` and `npm run check` passed, including lint, typecheck, all 1,405 unit tests and the compiled application build.
+The mandated cloud setup succeeded: PostgreSQL ready, browser unavailable. Foundation, prototype, naming, status, migrations and 44 documentation unit checks passed. `npm run studio:check` and `npm run check` passed, including lint, typecheck, all 1,405 unit tests and the compiled application build. After main advanced to `3368ab66295a9e7fed7d0f3708b4150315110d9f`, a conflict-free merge-only commit retained this PR's exact stable patch ID. The merged-tree foundation, prototype, naming, status and documentation-scope checks passed; `npm run check` passed again with all 1,410 unit tests and the compiled build. Sandbox `EPERM` failures were rerun successfully with network access as instructed.
 
 The selected database run passed 81 of 92 tests; all 11 failures reproduced on clean main with identical missing-Chrome or `RenderOrStorageFailure` messages. [Each test and classification](database-results.json) is retained. The final two-test equivalence rerun, including the one-client assertion, passed.
 
