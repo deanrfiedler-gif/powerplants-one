@@ -4,6 +4,10 @@ Stable entry: `system:shell`. Owner: Dean Fiedler. Status: Draft for review.
 
 Navigation, global search, context, page guide and the authorised design-workspace entry.
 
+## Separate shell concept trial — 5 November 2026
+
+The [shell concept trial](../../../decisions/shell-concept-prototype.md) records Dean's request to retain the navy rail, grouped flyout, command palette and snapshot while resolving four audit findings. The private Figma file now contains a clickable Sales journey and a Service scope-readiness/authorisation/Schedule handover, with desktop, laptop, tablet and 390/320 px phone compositions. Preview and checkbox selection are separate; snapshot content scrolls inside its bounds; pinned navigation is restored on close; draft save/recovery and explicit issue/send states are drawn. The [consumer binding](../component-bindings/2026-11-05-shell-concept-prototype.md) retains fixtures and adoption gaps. This is a proposed alternative, with no replacement application shell, accepted baseline, runtime or review-fingerprint change. The 200% equivalent frame is a composition study, not a browser-zoom test.
+
 ## Desktop
 
 Use the actual shared application source `src/components/product-navigation.tsx`. The shell owns branding, navigation, global search, identity and viewport allocation. Development pages occupy the workspace interior. Shared changes must be checked against every affected consumer, using the complete root stylesheet order.

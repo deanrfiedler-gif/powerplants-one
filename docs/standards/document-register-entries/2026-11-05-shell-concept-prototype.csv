@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-SHELL-CONCEPT-PROTOTYPE-DEC,Shell concept clickable trial,docs/decisions/shell-concept-prototype.md,,User-authorised concept refinement; prototype delivered; owner review and application adoption pending,Dean Fiedler,aeaaad5a8e13f5c9549b9763a8150413b1769ab9,,,git,

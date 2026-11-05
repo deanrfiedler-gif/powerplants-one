@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [{"id":"shell-concept-sales-service-trial","label":"Shell concept Sales and Service trial","description":"Reference-only private Figma prototype: navy rail, grouped flyout, fixed-query command palette, independent snapshot scrolling, pinned-menu restoration and desktop/phone journeys. No runtime renderer or acceptance claim."}],
+      "used_on": ["system:shell"],
+      "gaps": [{"id":"shell-concept-adoption-review","expected":"A shared shell preserves context, panels, reachable controls and accepted phone rules across Sales and Service.","actual":"The separate concept now has a connected 50-screen trial. Its 72 px rail, 768 px compact breakpoint and simplified phone controls are proposed departures; application code is unchanged.","action":"Review the linked journeys in PPO-SHELL-CONCEPT-PROTOTYPE-DEC, reconcile accepted phone rules and verify focus, zoom and physical devices before adoption.","priority":"High","owner":"Dean Fiedler"}]
+    },
+    "register-table": {
+      "states": [{"id":"shell-concept-preview-versus-selection","label":"Concept preview and checked row","description":"Reference only: deal-name click opens preview with an empty checkbox; checkbox creates the separate checked-row/count state; clearing selection leaves preview open."}],
+      "used_on": ["system:shell"]
+    },
+    "read-state": {
+      "states": [{"id":"shell-concept-save-recovery","label":"Concept save and recovery journey","description":"Reference only: predefined draft edit, saving, saved, Undo, failed retry, offline and newer-version resolution. Explicit issue/send confirmation ends at queued, not delivered."}],
+      "used_on": ["system:shell"]
+    }
+  }
+}
