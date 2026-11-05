@@ -3686,6 +3686,29 @@
         "classification": "environment-blocked: browser",
         "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
       },
+      "verification": "Passed the unchanged P11 diagnostic replay on head 96c7ae7b485ec0c5f37a0114158f245d4b61a322, job 127057907388; final-head CI is recorded in the PR completion handoff."
+    },
+    {
+      "head": "96c7ae7b485ec0c5f37a0114158f245d4b61a322",
+      "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41970251632/job/127057143125",
+      "test_file": "tests/scheduling-browser/publication.spec.ts",
+      "test": "native independent proposal/review and publisher exact lost-response recovery, reload, typed owned handovers and narrow authority",
+      "projects": [
+        "desktop-chromium",
+        "mobile-chromium"
+      ],
+      "message": "Test timeout of 120000ms exceeded while clicking Scheduling workspace > Policy impact at publication.spec.ts:109; navigation is inside the collapsed PL-01 menu.",
+      "classification": "PR integration defect: retained journey omitted the accepted D1 menu-opening interaction",
+      "implementation_response": "Use the existing openSecondaryMenu helper before navigating. Apply the same explicit open/close interaction to retained scheduling-workspaces and shell-loading navigation checks. All existing assertions, expected values, timeouts, viewport matrices and test selection remain unchanged; accepted collapsed-menu composition is preserved.",
+      "related_test_files": [
+        "tests/browser/scheduling-workspaces.spec.ts",
+        "tests/browser/shell-loading.spec.ts"
+      ],
+      "design_record": "docs/decisions/service-planner-figma-design.md",
+      "clean_main_attempt": {
+        "classification": "environment-blocked: browser",
+        "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
+      },
       "verification": "Final-head CI is recorded in the PR completion handoff."
     }
   ]
