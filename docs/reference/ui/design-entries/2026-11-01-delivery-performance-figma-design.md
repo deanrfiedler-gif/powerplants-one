@@ -1,0 +1,7 @@
+# Engineering and project delivery performance (RP-03)
+
+| Page or workspace | Repository HTML reference | Recorded design status | Application scope and evidence |
+|---|---|---|---|
+| Engineering and project delivery performance — `/reports/delivery` (planned route) | [Design r01 captures](../reporting/delivery-performance-design-r01/README.md) (Figma, icon-free PNGs) | Owner-accepted design, 1 November 2026 | [Decision](../../../decisions/delivery-performance-figma-design.md). RP-03; not built. One report page with a section for each of REP-06, REP-07, REP-08, KPI-09 and KPI-11, a chart and a table in each, drills to source records, Definition pending, export, tablet, phone summaries and seven states |
+
+**Delivery performance design, 1 November 2026:** Dean accepted the Figma design for the management report RP-03, with its recommended answers. Engineering workload, Programme and Acceptance & closeout stay the working views. The report shows no target or threshold, withholds any value whose definition is unpublished, keeps partial acceptance, disputed value and approved value apart, and never sums alternatives as revenue. The acceptance publishes no measure definition. The [decision](../../../decisions/delivery-performance-figma-design.md) records it, and the [retained captures](../reporting/delivery-performance-design-r01/README.md) are nineteen icon-free PNGs of fifteen frames, with hashes. Nothing is built. Listing it here does not repeat the dated inventory audit.

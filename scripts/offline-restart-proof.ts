@@ -1,4 +1,4 @@
-import { withWriteDiagnostic, writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
+import { diagnoseWriteDownload, withWriteDiagnostic, writeDiagnostics, writeDiagnosticPath } from "../tests/helpers/p12-write-diagnostics";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -29,7 +29,12 @@ await withWriteDiagnostic(diagnostic, async () => {
 });
 const server = spawn(
   process.execPath,
-  ["--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts"],
+  [
+    "--env-file=.env.local", "--import", "tsx", "scripts/local-server.ts",
+    // CI opts in after `npm run check` has built the application, so the
+    // unchanged five-second notice wait is not spent compiling routes.
+    ...(process.env.PPO_PROOF_COMPILED === "1" ? ["--compiled"] : []),
+  ],
   { stdio: ["ignore", "inherit", "inherit"] },
 );
 let context:
@@ -142,12 +147,14 @@ try {
     await page
       .getByLabel("Assigned job to download")
       .selectOption(setup.appointment_id);
-    diagnostic.phase("download");
-    await page
-      .getByRole("button", { name: "Download selected job", exact: true })
-      .click();
-    await expect(page.locator("#notice")).toContainText(
-      "Job context and exact pack saved",
+    await diagnoseWriteDownload(
+      diagnostic,
+      () => page
+        .getByRole("button", { name: "Download selected job", exact: true })
+        .click(),
+      () => expect(page.locator("#notice")).toContainText(
+        "Job context and exact pack saved",
+      ),
     );
     diagnostic.phase("offline-reload");
     await context.setOffline(true);

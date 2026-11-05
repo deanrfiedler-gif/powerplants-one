@@ -1,0 +1,14 @@
+{
+  "id": "sales-briefs-accepted",
+  "route": "/estimating/intake",
+  "scope": "#ppo-sales-briefs",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/estimating/sales-briefs-design-r01/PPO-Sales-Briefs-01-Desktop-Register-r01.png",
+  "sha256": "492dd87d58db96a211525dcb5d0233b9499a6d6ae0ad5585437846d77ed7a2a2",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/sales-briefs.spec.ts",
+  "application_proof": "tests/browser/sales-briefs.spec.ts",
+  "authority": "Accepted design source identity only; functional proof, inspected captures, owner acceptance and deployment are separate.",
+  "adaptations": "docs/design/development/pages/route-estimating-intake.md"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "register-table": {
+      "gaps": [
+        {
+          "id": "register-table-sc04-receipt-grid",
+          "expected": "The accepted SC-04 Receiving design (PPO-SC04-RECEIVING-FIGMA-DEC) uses a grid register grouped by disposition, with the Figma page parts Receiving / Receipt grid header and row.",
+          "actual": "The native /supply/receipts page keeps its worklist and detail grid; it isn't built to this design. The two Figma parts stay on the SC-04 page and aren't on the Components page.",
+          "action": "When a build is requested, adopt the shared register table for SC-04 and record any departure; move the two parts to Components only then.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

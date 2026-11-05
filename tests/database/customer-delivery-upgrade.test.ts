@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { readFile } from "node:fs/promises";
@@ -95,6 +96,9 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
   await migrate();
   await seed();
   const afterRows = await captureOriginalRows(oldTables);
+  const grantShape=(xs: Record<string,unknown>[])=>xs.map(x=>JSON.stringify(x,Object.keys(x).sort())).sort();
+  assert.deepEqual(grantShape(afterRows.permission_grants.filter(g=>g.row.capability==='service_escalation.record').map(g=>g.row)),grantShape(escalationSeedGrants(before.permission_grants.map(g=>g.row))));
+  afterRows.permission_grants=afterRows.permission_grants.filter(g=>g.row.capability!=='service_escalation.record');
   const bindings = afterRows.customer_email_bindings.map((r) => r.row);
   const old = new Set(
     before.customer_email_bindings.map(
@@ -117,15 +121,15 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
   );
   assert.deepEqual(
     afterRows.seed_receipts.filter(
-      (r) => ![120, 121].includes(Number(r.row.version)),
+      (r) => ![120, 121, 124].includes(Number(r.row.version)),
     ),
     before.seed_receipts,
   );
   assert.deepEqual(
     afterRows.seed_receipts
-      .filter((r) => [120, 121].includes(Number(r.row.version)))
+      .filter((r) => [120, 121, 124].includes(Number(r.row.version)))
       .map((r) => r.row.version),
-    [120, 121],
+    [120, 121, 124],
   );
   const readinessV3 = "94000000-0000-4000-8000-000000000003";
   assert.equal(
@@ -144,9 +148,15 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
       row: { ...row, purpose: "DateAgreement", site_checks: null },
     })),
   );
+  // 0122 gives every existing work order an unset typed project link and changes nothing else.
+  assert.deepEqual(
+    afterRows.work_orders,
+    before.work_orders.map(({ row }) => ({ row: { ...row, project_id: null } })),
+  );
   assert.deepEqual(
     {
       ...afterRows,
+      work_orders: before.work_orders,
       policy_versions: afterRows.policy_versions.filter(
         (r) => r.row.id !== readinessV3,
       ),
@@ -163,14 +173,14 @@ test("0121 retains populated 0118 native movements, sent bytes, template hashes,
     "SELECT * FROM public.ppo_migrations ORDER BY version",
   );
   assert.deepEqual(
-    upgradedLedger.filter((r) => ![119, 120, 121].includes(Number(r.version))),
+    upgradedLedger.filter((r) => ![119, 120, 121, 122, 123, 124].includes(Number(r.version))),
     ledger,
   );
   assert.deepEqual(
     upgradedLedger
-      .filter((r) => [119, 120, 121].includes(Number(r.version)))
+      .filter((r) => [119, 120, 121, 122, 123, 124].includes(Number(r.version)))
       .map((r) => r.version),
-    [119, 120, 121],
+    [119, 120, 121, 122, 123, 124],
   );
   for (const name of [
     "supply_customer_delivery_events",

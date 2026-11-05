@@ -63,7 +63,7 @@ for (const through of [25, 92])
     );
     const expected =
       through === 92
-        ? [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
+        ? [93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124]
         : migrationFiles
             .map((f) => Number(f.slice(0, 4)))
             .filter((v) => v > through);
@@ -74,7 +74,7 @@ for (const through of [25, 92])
     for (const t of ["excel_imports", "excel_import_lines", "excel_reimports"])
       assert.deepEqual(await rows(`SELECT * FROM ppo.${t}`), []);
     assert.deepEqual(
-      await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
+      await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' AND capability NOT LIKE 'service_escalation.%' ORDER BY id"),
       grants,
     );
     assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);

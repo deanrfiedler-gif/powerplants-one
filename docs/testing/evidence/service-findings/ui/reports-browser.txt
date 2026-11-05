@@ -1,0 +1,57 @@
+
+Running 8 tests using 1 worker
+
+(node:33740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\browser\service-reports-design.spec.ts:44:1 › SV-06 register: bounded filters, selection, snapshot focus and responsive rows (32.4s)
+  ok 2 tests\browser\service-reports-design.spec.ts:137:1 › SV-06 exact review draft survives tabs and newer reads; view-only hides commands (42.7s)
+  ok 3 tests\browser\service-reports-design.spec.ts:224:1 › SV-06 no-matches queue clears without confusing an empty window (5.9s)
+  x  4 tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer (21.4s)
+(node:5112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 tests\browser\service-reports-design.spec.ts:315:1 › SV-06 prepared and issued output keep exact response binding on refusal (13.2s)
+  ok 6 tests\browser\service-reports-design.spec.ts:440:1 › SV-06 clears failed reads and provides loading, empty and retry states (24.7s)
+  ok 7 tests\browser\service-reports-design.spec.ts:490:1 › SV-06 repeated exact presentations save independent responses (29.5s)
+  ok 8 tests\browser\service-reports-design.spec.ts:664:1 › SV-06 restores one original response receipt across record tabs (19.3s)
+
+
+  1) tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/my-jobs\/11000000-0000-4000-8000-000000000035$/
+    Received string:  "http://127.0.0.1:3147/service/reports/16000000-0000-4000-8000-000000000001?department=service"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="en-AU">…</html>
+           - unexpected value "http://127.0.0.1:3147/service/reports/16000000-0000-4000-8000-000000000001?department=service"
+
+
+      306 |       });
+      307 |       await handover.click();
+    > 308 |       await expect(page).toHaveURL(
+          |                          ^
+      309 |         new RegExp(`/my-jobs/${reportFixture.appointment.id}$`),
+      310 |       );
+      311 |     }
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-reports-design.spec.ts:308:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-reports-design-SV--7094a-action-and-view-only-footer\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-reports-design-SV--7094a-action-and-view-only-footer\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-reports-design-SV--7094a-action-and-view-only-footer\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-reports-design-SV--7094a-action-and-view-only-footer\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\browser\service-reports-design.spec.ts:267:1 › SV-06 phone Details handover stays above the action and view-only footer 
+  7 passed (4.1m)

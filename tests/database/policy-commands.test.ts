@@ -187,7 +187,7 @@ test("C26 immutable proposal edits and frozen review bindings; complete empty po
     },
     max_visit_minutes: 120,
   };
-  const changed = await proposeSchedulingPolicy(f.reviewer, edit);
+  const changed = await proposeSchedulingPolicy(f.publisher, edit);
   assert.equal(changed.receipt.record_version, 2);
   assert.deepEqual(
     (

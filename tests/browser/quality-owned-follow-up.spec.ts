@@ -7,12 +7,13 @@ import {
 } from "../helpers/sites-native";
 import { revealOwnedFollowUp } from "../helpers/owned-follow-up";
 
-// The P11 journey pages Site follow-ups that earlier suites add. CS-04 remounts
-// that list on every Overview observation, which stopped the journey in CI two
-// ways: a refresh during a Tab walk wrapped focus to the top of the page and
-// exhausted the 200-step budget, and a refresh as a page arrived hid the list
-// from an instant check, so the page holding the target was skipped. Force
-// both refreshes against the helper.
+// The P11 journey pages Site follow-ups that earlier suites add. CS-04 used to
+// remount that list on every Overview observation, which stopped the journey in
+// CI two ways: a refresh during a Tab walk wrapped focus to the top of the page
+// and exhausted the 200-step budget, and a refresh as a page arrived hid the list
+// from an instant check, so the page holding the target was skipped. The list now
+// survives a refresh (PPO-SITE-FOLLOW-UP-FOCUS-DEC). Force both refreshes against
+// the helper so neither failure can return unnoticed.
 const cursors = [null, "synthetic-page-2", "synthetic-page-3"];
 const activity = (page: number, n: number) => `a${page}${String(n).padStart(6, "0")}-0000-4000-8000-000000000000`;
 const target = activity(2, 30);
@@ -31,8 +32,8 @@ test("P11 owned follow-up paging survives CS-04 Site refreshes during a keyboard
   await page.route("**/api/v1/notifications**", route => route.fulfill({ json: { items: [], unread: 0 } }));
   await page.route("**/api/v1/sites/register?**", route => route.fulfill({ json: sitesFixture }));
   await page.route(`**/api/v1/equipment?site_id=${siteId}`, route => route.fulfill({ json: { items: equipmentFixture, total: 14 } }));
-  // Only an advanced generation is fresh evidence, so the remounts below are
-  // exactly the two forced refreshes, not the 15 s interval.
+  // The two forced refreshes below advance the observation; the 15 s interval
+  // may also re-read during the walk.
   let generation = 0;
   await page.route(`**/api/v1/sites/${siteId}/overview`, route => route.fulfill({ json: {
     site: siteFixture,
@@ -64,9 +65,8 @@ test("P11 owned follow-up paging survives CS-04 Site refreshes during a keyboard
     const index = cursors.indexOf(cursor);
     expect(index).toBeGreaterThanOrEqual(0);
     reads.push(cursor);
-    // A refreshed read of fifty retained activities is slow in CI. While it
-    // loads, the next Tab wraps to the top of the document and any instant
-    // visibility check sees no list.
+    // A refreshed read of fifty retained activities is slow in CI. The walk and
+    // any instant visibility check have to keep working while it is outstanding.
     if ((index === 0 && walkRefresh >= 0) || (index === 1 && loadRefresh >= 0))
       await new Promise(resolve => setTimeout(resolve, 1500));
     await route.fulfill({

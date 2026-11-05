@@ -3,6 +3,7 @@ import type { Capability } from "../platform/permissions";
 // Display copy, never an authorisation rule. Exhaustive against the server contract.
 // Initial descriptions follow the retained AD-01 design; proposed capabilities are excluded.
 export const capabilityLabels = {
+  "service_escalation.record": "Open and record permitted synthetic escalation cases",
   "template.read": "Read scoped template proposals and review evidence",
   "template.propose": "Create and revise structured template proposals",
   "template.publish": "Publish exact supported template definitions",
