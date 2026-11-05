@@ -1,3 +1,4 @@
+import { caseContext as escalationCaseContext, assetContext as escalationAssetContext } from "../service/escalations/context";
 import { conversationReceiptAuthority } from "../conversations/access";
 import { callEventReceiptAuthority } from "../calls/events";
 import { conversationObjectTypes } from "../conversations/model";
@@ -92,12 +93,19 @@ export async function readOperation(
   const result = await client.query(
     `SELECT r.result,r.record_id,i.object_type,a.details->>'command' AS command,a.details->>'configuration_id' AS specialist_id,a.details->>'project_id' AS project_id FROM ppo.operation_receipts r JOIN ppo.business_identities i ON (i.workspace_id,i.id)=(r.workspace_id,r.record_id)
     JOIN ppo.audit_events a ON (a.workspace_id,a.actor_id,a.operation_id)=(r.workspace_id,r.actor_id,r.operation_id)
-    WHERE r.workspace_id=$1 AND r.actor_id=$2 AND r.operation_id=$3`,
+    WHERE r.workspace_id=$1 AND r.actor_id=$2 AND r.operation_id=$3 AND (i.object_type<>'EscalationCase' OR a.object_id=r.record_id)`,
     [p.workspace_id, p.actor_id, uuid(operation_id, "operation_id")],
   );
   const r = result.rows[0];
   if (!r) throw unavailable();
-  if ((conversationObjectTypes as readonly string[]).includes(r.object_type)) {
+  if (r.object_type === "EscalationCase" || (r.object_type === "Asset" && r.command === "ServiceEscalation:SupportRoute")) {
+    return transaction(async c => {
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
+      if (r.object_type === "EscalationCase") await escalationCaseContext(c,p,r.record_id);
+      else await escalationAssetContext(c,p,r.record_id);
+      return r.result as OperationReceipt;
+    });
+  } else if ((conversationObjectTypes as readonly string[]).includes(r.object_type)) {
     // Conversations: a receipt is disclosed only to a person who can still read the thread (T1-1).
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);

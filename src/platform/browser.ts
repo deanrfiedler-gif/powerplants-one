@@ -2,8 +2,8 @@ import { chromium } from "playwright";
 
 // ADR-0022 and browser-runtime-maintenance: accept only tested Chrome majors,
 // with no fallback to Playwright's older bundled Chromium. Each reviewed major
-// carries its earliest accepted patch. CI stable installation supplied 156 on
-// 20 October 2026; earlier reviewed majors remain compatible. A newer major
+// carries its earliest accepted patch. CI stable installation supplied 157 on
+// 4 November 2026; earlier reviewed majors remain compatible. A newer major
 // requires its own tested maintenance change.
 export const browserChannel = "chrome" as const;
 export const reviewedBrowserVersions = [
@@ -11,6 +11,7 @@ export const reviewedBrowserVersions = [
   "154.0.8037.57",
   "155.0.8059.39",
   "156.0.8078.47",
+  "157.0.8103.38",
 ] as const;
 export const minimumBrowserVersion = reviewedBrowserVersions[0];
 const supported = reviewedBrowserVersions.join(" or ");

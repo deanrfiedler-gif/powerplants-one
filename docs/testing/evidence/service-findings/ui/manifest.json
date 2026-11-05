@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "source_commit": "a1256f73f21c054ce44b22c54c0c752c791f0405",
+  "main_control": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "data": "Synthetic fixture only; remote Font Awesome calls aborted; no licensed artwork retained.",
+  "capture_command": "node node_modules/@playwright/test/cli.js test --config tmp/sv07/playwright.config.ts service-findings.spec.ts",
+  "visual_review": "Inspected by Codex against retained accepted frames; differences in scope-sv-07.md. Not visual acceptance.",
+  "owner_acceptance": "Unrecorded",
+  "deployment": "Not performed",
+  "captures": [
+    {
+      "file": "assignment-1440.png",
+      "sha256": "8f0a52b65c08bbc06012d3180503bb4cc8b9ae4229c6052c023aa3fb11fbcfc7",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-03-Desktop-Assign-Next-Action-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "recurrence-1440.png",
+      "sha256": "751fd23d0f56498446eae512a24e9f90081d18cad4cd2c7d378b8bfa2e107cd1",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-04-Desktop-Recurrence-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "register-1024.png",
+      "sha256": "bb3ed5a9edbeb54c56259925a33fc4966f73a95aabc5ab25e156988c265f06d5",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-05-Tablet-Register-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "register-1440.png",
+      "sha256": "d53a8e30d136e43605c1093d9d8ea9943ad94111a33148f5ade2a524fa71b6b5",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-01-Desktop-Register-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "register-320.png",
+      "sha256": "3bb802a088d53c76eb590e1da51f254dac3813b6353b4e0529fdef1382e66cc3",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-06-Phone-List-r01.png",
+      "note": "320 list extrapolates the accepted phone list."
+    },
+    {
+      "file": "register-390.png",
+      "sha256": "26049c2d30ed75580d3a7272ee80af13260b8b53adee35a402eaf19d88e69f63",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-06-Phone-List-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-1024.png",
+      "sha256": "632b52200a019cafeda3859b351d843430bb985391c2ceeb517d1dca4503447b",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-02-Desktop-Snapshot-r01.png",
+      "note": "Responsive extrapolation; no separate accepted snapshot at 1024."
+    },
+    {
+      "file": "snapshot-1440.png",
+      "sha256": "c8fad7b5dcc5fc23000e0ad64a071ddd44005b2ac5f6d2b19b369194ab58e591",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-02-Desktop-Snapshot-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-320-bottom.png",
+      "sha256": "b7509cc6b34072f4a05cd52e7d10184c09ce2345b0160b11e72ccfd4227dafaa",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-08-Phone-320-Finding-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-320-middle.png",
+      "sha256": "230b64122f5741733e273e7ad5e7efea7107309d3ccef2b55936473699521741",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-08-Phone-320-Finding-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-320.png",
+      "sha256": "5762b858f89919587f6026bb8c53248cf1f6b7ca7c27edc26bd24dc6c7d7e952",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-08-Phone-320-Finding-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-390-bottom.png",
+      "sha256": "aafb83dd026a132fcda1478ef5dd161ec2b98d6cda8cf3669e3b805e5fbf47a2",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-07-Phone-Finding-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-390-middle.png",
+      "sha256": "9d830b0056ef9b59b340a346f2bc397ea5f2a3bf3954c699ec2a54295d7cc22d",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-07-Phone-Finding-r01.png",
+      "note": "Inspected comparison."
+    },
+    {
+      "file": "snapshot-390.png",
+      "sha256": "3a8990994abdaa299528ab7a7c3cf51a4c88504f8e9d39eb18ebaa82cef40f80",
+      "reference": "docs/reference/ui/service/findings-design-r01/PPO-Findings-07-Phone-Finding-r01.png",
+      "note": "Inspected comparison."
+    }
+  ],
+  "application_source_commit": "5d42e7e00aedc1a4891c201d5630e9c801ded81c"
+}

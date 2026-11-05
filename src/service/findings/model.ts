@@ -19,6 +19,8 @@ export const views = [
   "open",
   "all",
   "needs_owner",
+  "due_this_week",
+  "recurring",
   "overdue",
   "waiting_review",
   "follow_up_completed",
@@ -65,6 +67,19 @@ export type Finding = {
     href: string;
   } | null;
   overdue: boolean;
+  due_this_week?: boolean;
+  recurrence?: {
+    basis: "FailedCheck" | "NoStableFaultKey";
+    partial: boolean;
+    earlier: {
+      id: string;
+      reference: string;
+      href: string;
+      occurred_at: string;
+      state: FindingState;
+      correction: string | null;
+    }[];
+  };
   closes_when: string;
   closure_authority:
     | "InspectionReview"
@@ -125,6 +140,10 @@ export function inView(row: Finding, view: (typeof views)[number]) {
       return active;
     case "needs_owner":
       return row.state === "NeedsOwner";
+    case "due_this_week":
+      return active && !!row.due_this_week;
+    case "recurring":
+      return active && !!row.recurrence?.earlier.length;
     case "overdue":
       return active && row.overdue;
     case "waiting_review":
@@ -153,4 +172,38 @@ export function isOverdue(row: Pick<Finding, "state" | "action">, now: Date) {
     ["Open", "InProgress"].includes(row.action.status) &&
     Date.parse(row.action.due_at) < now.getTime()
   );
+}
+
+// Monday to Sunday in the source site's civil calendar; never the browser zone.
+export function dueThisWeek(
+  row: Pick<Finding, "state" | "action" | "site">,
+  now: Date,
+) {
+  if (
+    ["Closed", "Superseded"].includes(row.state) ||
+    !row.action?.due_at ||
+    !["Open", "InProgress"].includes(row.action.status)
+  )
+    return false;
+  const day = (value: Date) => {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: row.site.timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(value);
+    const get = (key: string) =>
+      Number(parts.find((p) => p.type === key)!.value);
+    return Date.UTC(get("year"), get("month") - 1, get("day"));
+  };
+  const today = day(now),
+    weekday = new Date(today).getUTCDay();
+  const monday = today - ((weekday + 6) % 7) * 86400000;
+  const due = day(new Date(row.action.due_at));
+  return due >= monday && due < monday + 7 * 86400000;
+}
+
+export function withinRecurrenceWindow(earlier: string, current: string) {
+  const elapsed = Date.parse(current) - Date.parse(earlier);
+  return elapsed > 0 && elapsed <= 90 * 86400000;
 }

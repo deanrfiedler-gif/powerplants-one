@@ -35,3 +35,7 @@ Definition pages use `scope=FamilyDefinitions`; usage pages use `scope=CurrentPe
 ## Acceptance proof
 
 Verify all three exact current/historical families; policy/support distinctions; unsupported and changed bytes; family/actor/company-bound paging; role/company/workspace denial and grant revocation; crew draft protection; native pack/report/Finance reservations and issues; immutable original consumer bindings; strict compiled routes; and no business-row mutation on repeated reads. Existing runtime templates, original files, native commands, seeds and permissions must remain unchanged. Evidence is in the [execution ledger](../testing/evidence/template-catalogue/README.md).
+
+## Native workspace labels (implementation in progress)
+
+The read projection exposes the stored Job pack definition name. Families without a stored name use Version N; the page does not invent titles or render output values. Definition, publication, proposal and site-use identities stay separate. Native workspace contracts and component bindings are maintained under DK-06; visual acceptance remains pending.

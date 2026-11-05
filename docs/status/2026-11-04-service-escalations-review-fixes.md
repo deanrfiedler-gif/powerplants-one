@@ -1,0 +1,16 @@
+---
+title: Escalation review fixes and current-main integration
+date: 2026-11-04
+---
+
+PR #810 merges main `750175f788b5bf82658ec256586a18e5fe6348ed`, including #801, into the requested `0f988ade` head. Merge-only commit `90ae51afeca45e7f34b036c85ae0af1915a9b9fb` retains main's Findings implementation. The authorised contribution accounting replaces patch identity: version/ledger/count changes, migration ordering/demo gate, the Findings browser additions and entry-level register/guide merges are recorded per file in the review evidence. Register: main's 386 + 1; guides: main's 362 + 0.
+
+Codex addresses the five Medium and five Low findings from Claude's completed review. Case next actions require Findings' edit duties before replay. A current authorised coordinator can finish the original owner's chase after access loss while retaining that owner and actor audit. Open cases refuse cross-site Equipment moves. Support-route maintenance also requires Equipment edit. Sending cannot predate its pack. Owner choices use one candidate query; History uses command labels; refresh retains rows with a busy state; the register index matches its ordering. These are recorded agent decisions under the standing order.
+
+The migration/capability checklist retains exact earlier grants and users and asserts seed 124 separately. Nursery assessment compares the grant snapshot by unique ID and proves repeat-seed equality, fixing an ordering failure exposed by the new rows. The Access 0078 boundary remains historical; a separate 0077-to-0124 test proves new case duties. The late Maintenance proof explicitly starts with 0124 installed and proves no new case grants or repeated-migration/seed changes. AD-01 retains all 163 labelled capabilities and LF source hashes; migration 0124 is unique, registered and unreserved.
+
+`npm run check` passed ESLint, TypeScript, all 1,385 unit tests and the production build; subsequent test-only repairs passed targeted lint and TypeScript. Foundation, prototype, naming, status, migration and Studio checks passed. The 77-file database/demo queue ran 795 cases: 397 passed, 379 were browser-blocked and 19 reproduced with identical messages on clean main. All eight Access suites passed (112 cases), all 54 Products histories passed, all 23 Planner cases passed and the demo upgrade passed 7/7. Three additional Estimating proofs gave one pass and two renderer-blocked results. HTTP authentication/validation passed; its lifecycle is browser-blocked at pack rendering. The [complete evidence](../testing/evidence/service-escalations/review-fixes.md) names every failure and control, and retains the resolved Field hook timeout. The two browser specs were discovered (41 tests including setup) but not executed.
+
+Browser suites `tests/browser/service-escalations.spec.ts` and `tests/browser/service-findings.spec.ts` are **environment-blocked: browser** — **not run here; left to GitHub CI**. Their fixtures were discovered successfully. Real rendered-output tests remain intact; command regressions use explicitly synthetic stored bytes without claiming renderer proof. No new visual acceptance is recorded.
+
+Claude's one review is complete. Only confirmation of the ten repaired findings and the main merge is requested. Ready-head CI and that confirmation remain open. Dean merges; no PR merge or deployment occurred.

@@ -389,7 +389,20 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // guard, plus two outbox kinds. Existing work orders stay unlinked: nothing is inferred from
   // project_reference. No seed, user, grant, capability, identity or existing row changes; existing
   // table-level runtime privileges cover the new column.
-  if (latestMigrationVersion !== 122) throw Error("Review the existing-demo upgrade for this release.");
+  // 0123 (M1) adds two nullable columns to maintenance_work_requests (the prepared work order and
+  // the Partial result a follow-on follows), their foreign keys and indexes, narrows the
+  // one-original-request index to non-follow-on requests, and adds an insert guard. Existing
+  // requests keep their bytes with both columns null; nothing is backfilled or inferred. No seed,
+  // user, grant, capability, identity, outbox kind or existing row changes; existing all-table
+  // runtime privileges cover the new columns, and the guard function runs with PUBLIC execute.
+  // 0124 adds synthetic escalation identities, retained evidence/correspondence and equipment
+  // support routes. Deferred 0026 identity events are flushed before widening the registry.
+  // Seed 124 adds only service_escalation.record to the existing local coordinator and assigned
+  // technician, copying their live Activity scopes without reinstating expired/revoked grants.
+  // No new users or invited-tester duties; no sender, integration, existing reference or evidence
+  // changes. Generic runtime table grants cover the new records. Hosted users remain denied
+  // unless a separate authority decision grants this duty; no capability is added to additions.
+  if (latestMigrationVersion !== 124) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
@@ -402,6 +415,11 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   await transaction(async db => {
     console.log("Demo upgrade stage: validate-target");
     if (!apply) await db.query("SET TRANSACTION READ ONLY");
+    // Pending migrations and seeds run in this one transaction, and some single
+    // statements (DO blocks, backfills) can exceed the pool's 10s limit. Bound the
+    // operator upgrade separately, inside the job's 600s replica timeout; SET LOCAL
+    // leaves the web runtime's reads at 10s.
+    await db.query("SET LOCAL statement_timeout = '120s'");
     await db.query("SELECT pg_advisory_xact_lock(10001)");
     const role = `${databaseName}_app`;
     if ((await db.query("SELECT current_database() AS name")).rows[0].name !== databaseName ||

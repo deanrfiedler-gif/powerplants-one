@@ -29,6 +29,13 @@ workflows, package files). A prose file whose path appears literally in source,
 tests, database, public or non-Python script files is also not documentation only,
 because a test reads it (for example docs/decisions/es08-design-board.md).
 
+WORKSPACE_ONLY lists files outside docs/ that only cloud workspaces run, never the
+application, its tests or CI: scripts/cloud-setup.sh prepares a Codex Cloud or Claude
+Code workspace (docs/decisions/merge-conflict-reduction.md, amendment of
+2 November 2026). They count as documentation for this scope. --self-test fails if
+any source, test, script, package file or workflow names one, so the first CI step
+or test that runs one removes it from the scope in the same pull request.
+
 UNREAD is the one exception inside docs/design/: a folder that nothing reads. The
 claim is checked, not assumed. The classifier also looks for the folder name itself
 in the same files, and --self-test fails if any of them names an UNREAD folder, so
@@ -83,6 +90,15 @@ NEVER = ('docs/design/', 'docs/reference/', 'docs/testing/evidence/')
 UNREAD = (
     ('docs/design/research/', REGISTER),
 )
+# Files outside docs/ that only cloud workspaces run; neither CI nor the application reads them.
+WORKSPACE_ONLY = ('scripts/cloud-setup.sh',)
+# Where something could run a WORKSPACE_ONLY file: every consumer above, Python scripts
+# included, and the workflows. Only the files that name it to describe it are left out.
+WORKSPACE_CONSUMERS = (
+    'src', 'tests', 'db', 'public', 'scripts', '.github',
+    ':(exclude)scripts/ci_scope.py', *(f':(exclude){path}' for path in WORKSPACE_ONLY),
+    'playwright*.ts', 'next.config.ts', 'eslint.config.mjs', 'tsconfig.json', 'package.json',
+)
 # Where a test or the application could name a documentation file. Python scripts
 # are the documentation checkers themselves and run in their own job.
 CONSUMERS = (
@@ -93,7 +109,7 @@ CONSUMERS = (
 
 def is_prose(path):
     """True when the path alone makes it documentation (before the consumer check)."""
-    if path in ROOT_FILES:
+    if path in ROOT_FILES or path in WORKSPACE_ONLY:
         return True
     if any(path.startswith(folder) and path.endswith(ext) for folder, ext in UNREAD):
         return True
@@ -104,7 +120,7 @@ def is_prose(path):
     return any(path.startswith(prefix) and path.endswith(ext) for prefix, ext in PROSE)
 
 
-def referenced(paths, root=ROOT):
+def referenced(paths, root=ROOT, pathspec=CONSUMERS):
     """The subset of paths that a consumer file names literally."""
     if not paths:
         return set()
@@ -113,7 +129,7 @@ def referenced(paths, root=ROOT):
         patterns = handle.name
     try:
         done = subprocess.run(
-            ['git', 'grep', '-h', '-o', '-I', '-F', '-f', patterns, '--', *CONSUMERS],
+            ['git', 'grep', '-h', '-o', '-I', '-F', '-f', patterns, '--', *pathspec],
             cwd=root, capture_output=True, text=True, encoding='utf-8', errors='replace')
     finally:
         os.unlink(patterns)
@@ -129,8 +145,13 @@ def lookups(changed):
     return names
 
 
-def classify(changed, consumers=referenced, deleted=()):
-    """Return (docs_only, reason). `consumers` maps names to those a consumer file names; `deleted` lists removed or renamed paths."""
+def workspace_runners(paths, root=ROOT):
+    """The subset of WORKSPACE_ONLY paths that a source, test, script (Python included), package file or workflow names."""
+    return referenced(set(paths) & set(WORKSPACE_ONLY), root, WORKSPACE_CONSUMERS)
+
+
+def classify(changed, consumers=referenced, deleted=(), runners=workspace_runners):
+    """Return (docs_only, reason). `consumers` maps names to those a consumer file names; `runners` maps WORKSPACE_ONLY paths to those something runs; `deleted` lists removed or renamed paths."""
     if not changed:
         return False, 'no changed files found'
     code = sorted(path for path in changed if not is_prose(path))
@@ -142,7 +163,7 @@ def classify(changed, consumers=referenced, deleted=()):
         more = f' and {len(gone) - 1} more' if len(gone) > 1 else ''
         return False, f'deletes or renames {gone[0]}{more}: a development register may still name it'
     # Root files have bare names that appear in comments; only a folder path is a real reference.
-    named = sorted(consumers(lookups(changed)))
+    named = sorted(consumers(lookups(changed) - set(WORKSPACE_ONLY)) | runners(set(changed) & set(WORKSPACE_ONLY)))
     if named:
         more = f' and {len(named) - 1} more' if len(named) > 1 else ''
         return False, f'read by source or tests: {named[0]}{more}'
@@ -209,12 +230,15 @@ def run(argv):
 
 
 def unread_still_unread():
-    """The claim behind UNREAD, checked against the files on disk: return one problem per UNREAD folder a consumer now names."""
+    """The claims behind UNREAD and WORKSPACE_ONLY, checked against the files on disk: one problem per entry a consumer now names."""
     try:
         read = referenced({folder for folder, _ in UNREAD})
+        run_by_ci = workspace_runners(set(WORKSPACE_ONLY))
     except (RuntimeError, OSError) as error:
         return [f'could not search the consumer files: {str(error).strip()[:120]}']
-    return [f'{name} is now named by source, tests or scripts: remove it from UNREAD' for name in sorted(read)]
+    problems = [f'{name} is now named by source, tests or scripts: remove it from UNREAD' for name in sorted(read)]
+    problems += [f'{name} is now named by source, tests, scripts or a workflow: remove it from WORKSPACE_ONLY' for name in sorted(run_by_ci)]
+    return problems
 
 
 def self_test():
@@ -235,6 +259,12 @@ def self_test():
         (['db/migrations/0110-x.sql'], False),
         (['db/seed.sql'], False),
         (['scripts/ci_scope.py'], False),
+        # Workspace-only scripts count as documentation; their neighbours do not.
+        (['scripts/cloud-setup.sh'], True),
+        (['scripts/cloud-setup.sh', 'docs/status/2026-11-02-x.md'], True),
+        (['scripts/cloud-setup.sh', 'src/app/page.tsx'], False),
+        (['scripts/install-browser.sh'], False),
+        (['scripts/cloud-setup.sh.bak'], False),
         (['.github/workflows/application.yml'], False),
         (['package.json'], False),
         (['package-lock.json'], False),
@@ -280,7 +310,7 @@ def self_test():
         (['docs/reference/ui/service/service-requests-design-r01/PPO-Service-Requests-01-Desktop-Register-r01.png'], False),
         (['docs/testing/evidence/x/README.md'], False),
     ]
-    failures = [(paths, want) for paths, want in cases if classify(paths, never)[0] != want]
+    failures = [(paths, want) for paths, want in cases if classify(paths, never, (), never)[0] != want]
     # (paths, consumers, deleted, wanted answer, what it proves)
     checks = [
         (['docs/decisions/es08-design-board.md'], everything, (), False, 'a prose file a test names'),
@@ -290,9 +320,18 @@ def self_test():
         (['docs/decisions/old.md'], never, ['docs/decisions/old.md'], False, 'a deleted prose file'),
         ([note, 'docs/design/research/ux-benchmark/NEW.md'], never, [note], False, 'a renamed research file'),
         (['docs/decisions/new.md'], never, [], True, 'an added prose file'),
+        (['scripts/cloud-setup.sh'], never, ['scripts/cloud-setup.sh'], False, 'a deleted workspace-only script'),
     ]
     for paths, consumers, deleted, want, what in checks:
-        if classify(paths, consumers, deleted)[0] != want:
+        if classify(paths, consumers, deleted, never)[0] != want:
+            failures.append(([what], want))
+    # A WORKSPACE_ONLY file that something runs (a Python wrapper, a workflow, a test) is not documentation.
+    runner_cases = [
+        (['scripts/cloud-setup.sh'], everything, False, 'a workspace-only script something runs'),
+        (['scripts/cloud-setup.sh'], never, True, 'a workspace-only script nothing runs'),
+    ]
+    for paths, runners, want, what in runner_cases:
+        if classify(paths, never, (), runners)[0] != want:
             failures.append(([what], want))
     # (event file content or None for no file, wanted draft answer, what it proves)
     drafts = [
@@ -320,7 +359,7 @@ def self_test():
     problems = unread_still_unread()
     for problem in problems:
         print(f'FAIL: {problem}')
-    total = len(cases) + len(checks) + len(drafts) + 2
+    total = len(cases) + len(checks) + len(runner_cases) + len(drafts) + 2
     failed = len(failures) + len(problems)
     print(f'{total - failed} of {total} classifier cases passed')
     return 1 if failed else 0

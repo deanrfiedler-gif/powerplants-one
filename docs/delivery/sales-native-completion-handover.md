@@ -55,6 +55,14 @@ Latest completed Sales CI at `69c7427`: 388/388 units, 62/62 CRM/Sales database 
 
 The separate broad application browser attempt passed 373, skipped 61 and failed one generic error-selector assertion during actual CRM permission revocation. Commit `5c0493b` targets the authoritative CRM refusal while retaining every private-content removal, late-response and unchanged-Activity assertion. The focused compiled desktop/phone replay passed 2/2. Full head checks remain the merge gate; earlier attempts are not relabelled as successful.
 
+## Sales briefs receiving queue — 31 October 2026
+
+[PR #702](https://github.com/deanrfiedler-gif/powerplants-one/pull/702) applies the accepted Sales briefs design to `/estimating/intake`, keeping navigation ID `intake`. It adds the full-width register, compact phone list, views/filters, complete submitted-population counts/paging, exact snapshots, sequence and permitted selected CSV. Latest submitted revision metadata stays consistent through successor drafts. Source-change and native clarification/receiving rules remain unchanged.
+
+The new receiving read uses existing native authorization and immutable events; no migration, capability, seed/grant or dependency is introduced. Sales preparation and Won lists retain their behavior. The native brief receives only a bounded exact-revision handover guard; its separate record-page design/build claim remains separate. `/estimating` and LC-13's explicit workspace review are unchanged.
+
+The [page contract](../design/development/pages/route-estimating-intake.md), guide `guide.route-estimating-intake`, component bindings and [execution evidence](../testing/evidence/sales-briefs-queue/README.md) record current behavior, recovery, checks and visual differences. No application visual acceptance, owner acceptance or deployment is implied.
+
 ## Implementation and delivery inventory
 
 - Seven new page routes: `/sales/handoffs/estimating`, `/sales/handoffs/estimating/[id]`, `/estimating/intake`, `/sales/handoffs/won`, `/sales/handoffs/won/[id]`, `/sales/aftercare`, `/sales/aftercare/[id]`. Existing Deal detail and worklist routes are refined in place.

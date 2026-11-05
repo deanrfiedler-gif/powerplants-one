@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PR-FLOW-LIMITS-DEC,Pull request flow limits,docs/decisions/pull-request-flow-limits.md,,Owner-adopted repository working rule 2 November 2026; limits ready page builds; batches design lock-ins; sets the direction for historical Discovery reads; no application change,Dean Fiedler,7c23b54c794bc96bde0ca780deaceb03ab4d0514,,,git,

@@ -16,7 +16,7 @@ test("successor editing focuses the mounted form after a delayed publication-hea
   page,
 }, info) => {
   const fixture = await proposed();
-  await login(page.request, "scheduling-policy-reviewer");
+  await login(page.request, "scheduling-policy-publisher");
   let releaseHead!: () => void, headRequested!: () => void;
   const heldHead = new Promise<void>((resolve) => {
     releaseHead = resolve;

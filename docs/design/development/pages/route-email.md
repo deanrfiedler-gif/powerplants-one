@@ -14,6 +14,8 @@ An app page exists here. Its wider workspace scope or newer design still needs r
 
 ## Desktop
 
+The EC-04 implementation adds the shared Email side menu with Inbox and Customer messages (To send, Needs follow-up, All messages, Message classes). Personal mailbox status appears only on Inbox. The existing Inbox controls remain; the wider accepted EC-01 design is not implemented by this change. See [EC-04](scope-ec-04.md).
+
 Accepted design: the [Emails design decision](../../../decisions/emails-figma-design.md) of 19 October 2026. The mailbox is captures 01, 02, 05, 06 and 16–19 in [design r01](../../../reference/ui/email-calendar/emails-design-r01/README.md): side menu with Mailbox, Views and Linked to, the thread list with day groups and quick filters, Sent items, and the reconnect, no-match, not-business and first-import states. Nothing new is built. Amendment A1 adds tracking to Sent items (A1-01, A1-03 and A1-05 in [Amendment A1 captures (r02)](../../../reference/ui/email-calendar/emails-design-r02/README.md)).
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.

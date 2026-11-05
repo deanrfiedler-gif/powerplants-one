@@ -3,6 +3,7 @@ import { test } from "node:test";
 import {
   canOpen,
   destination,
+  homeHref,
   menuGroups,
   navigationForCapabilities,
   pageForPath,
@@ -18,12 +19,29 @@ test("read-only navigation does not imply creation or elevate an identity", () =
   assert.ok(permitted.includes("deals"));
   assert.ok(permitted.includes("contacts"));
   assert.ok(!permitted.includes("projects"));
-  assert.ok(!permitted.includes("settings"));
+  assert.ok(permitted.includes("settings"), "AD-02 exposes the hub; each area's read retains its own authority");
   assert.equal(canOpen(destination("projects"), permitted, true), false);
-  assert.equal(canOpen(destination("settings"), ["settings"], true), false);
+  assert.equal(canOpen(destination("settings"), ["settings"], true), true);
+  assert.equal(canOpen(destination("settings"), [], true), false);
   assert.equal(canOpen(destination("supply"), permitted, true), false);
   assert.equal(canOpen(destination("supply"), navigationForCapabilities(new Set(["supply.read"]),true), true), true);
   assert.deepEqual(navigationForCapabilities(new Set(), true), ["home"]);
+});
+test("Settings discovery requires a necessary area capability and preserves the grant-less Home empty state", () => {
+  for (const hosted of [false, true]) {
+    const permitted = navigationForCapabilities(new Set(), hosted);
+    assert.ok(!permitted.includes("settings"));
+    assert.equal(homeHref(permitted, hosted), null);
+    for (const capability of [
+      "schedule.policy.review", "schedule.policy.publish", "admin.access.read",
+      "shared.read", "finance.read", "service.work_order.read", "field.read.own",
+    ]) {
+      assert.ok(
+        navigationForCapabilities(new Set([capability]), hosted).includes("settings"),
+        `${capability} retains Settings discovery; server checks decide area admission`,
+      );
+    }
+  }
 });
 test("nested pages resolve to their actual workspace instead of a remembered Sales selection", () => {
   assert.equal(
@@ -58,7 +76,7 @@ test("seven workspace preferences validate schema and retain r15 identifiers", (
 test("More finds workspace names and existing page names, including former rail destinations", () => {
   assert.deepEqual(
     menuGroups("sales").flatMap((g) => g.items.map((d) => d.id)),
-    ["deals", "pulse", "leads", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "insights"],
+    ["deals", "pulse", "leads", "tasks", "mail", "sales-estimating", "sales-won", "sales-aftercare", "insights", "intake"],
   );
   assert.deepEqual(
     menuGroups("Contact").flatMap((g) => g.items.map((d) => d.id)),
@@ -69,6 +87,10 @@ test("More finds workspace names and existing page names, including former rail 
       .flatMap((g) => g.items)
       .some((d) => d.id === "packs"),
   );
+  const briefs = menuGroups("Sales briefs").flatMap((g) => g.items);
+  assert.deepEqual(briefs.map((d) => d.id), ["intake"]);
+  assert.equal(briefs[0].workspace, "estimate");
+  assert.equal(briefs[0].href, "/estimating/intake");
   assert.deepEqual(menuGroups("no such page"), []);
 });
 test("AU-08 the Service rail is grouped without reordering, and other rails stay flat", async () => {

@@ -236,6 +236,14 @@ Dean accepted one shared pattern for multi-select, bulk actions and list actions
 
 Dean adopted one compact phone header row for every phone page ([decision](../../../decisions/phone-header-amendment.md), rules P1–P9). It replaces S2's phone title rule and the global phone header on phone widths: the menu button and a view chooser on every list page, at most three icons (page action, Conversations, Filter), and back, position, previous/next and More on records. The page guide, notifications and global search move into the menu at every phone width, which widens the T1c-2 rule that moved only the page guide at 360 px and narrower. Desktop and tablet are unchanged. The application now draws it (draft PR #609, 19 October 2026); the Figma component is proposed until the named version is saved. See the [application shell master](../components/application-shell.md#phone-header-amendment--19-october-2026).
 
+### Appointment-loading regression — 4 November 2026
+
+The P05/P06 identity-switch journeys already wait for `#shell-header[data-phone-header="record"]`, as delivered by [PR #736](https://github.com/deanrfiedler-gif/powerplants-one/pull/736) and described in the [phone identity readiness record](../../../status/2026-10-28-phone-menu-identity.md). Session readiness alone can precede the appointment read: the arriving record replaces the interim Menu button with Back, so a pointer gesture spanning that replacement can lose its click.
+
+The controlled regression in `tests/browser/appointment-detail.spec.ts` holds the appointment read while session and shell reads settle. It proves the interim Menu is interactive, releases the appointment between mouse down and up, and checks the lost activation separately from successful Account opening after the existing record-header readiness condition. It also checks keyboard opening and focus return at 390 and 320 px. The fixture proves UI sequencing, not authentication or database authority.
+
+PR #733 retains that distinct regression after reconciliation with #736; it adds no second readiness helper or planner wait. The shared phone-menu helper still performs one activation at its existing deadline. See the [investigation close-out](../../../status/2026-11-04-p05-phone-menu-regression.md) for evidence and limits. No runtime, layout, permission, timeout, owner/device acceptance or review fingerprint changes are implied.
+
 ## System pages design — 1 November 2026
 
 The [System pages design decision](../../../decisions/system-pages-figma-design.md) accepts the whole-page messages and shared patterns that sit in the shell, with [System pages design r01 captures](../../../reference/ui/application-shell/system-pages-design-r01/README.md) (not a UI baseline). `src/app/not-found.tsx` and `src/app/error.tsx` have no route, so this contract records them. Not built.

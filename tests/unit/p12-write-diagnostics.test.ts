@@ -4,10 +4,62 @@ import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  safeWriteDiagnostic, withWriteDiagnostic, writeDiagnosticPath, writeDiagnostics,
+  diagnoseWriteDownload, safeWriteDiagnostic, withWriteDiagnostic, writeDiagnosticPath, writeDiagnostics,
 } from "../helpers/p12-write-diagnostics";
 
 const secret = "PRIVATE-canary-token-profile-path-output";
+
+for (const failedOperation of ["click", "confirmation"] as const) {
+  test(`P12 download ${failedOperation} rejection retains its exact phase and original error`, async () => {
+    let output = "";
+    const calls: string[] = [];
+    const d = writeDiagnostics("unused", (value) => { output = value; }, () => 0);
+    const error = new Error(secret);
+    await assert.rejects(withWriteDiagnostic(d, () => diagnoseWriteDownload(
+      d,
+      async () => {
+        calls.push("click");
+        assert.equal(JSON.parse(output).phase, "download");
+        if (failedOperation === "click") throw error;
+      },
+      async () => {
+        calls.push("confirmation");
+        assert.equal(JSON.parse(output).phase, "download-confirmation");
+        throw error;
+      },
+    )), (caught) => caught === error);
+    assert.deepEqual(calls, failedOperation === "click" ? ["click"] : ["click", "confirmation"]);
+    const phase = failedOperation === "click" ? "download" : "download-confirmation";
+    assert.deepEqual(JSON.parse(output), { phase, elapsed_ms: 0, category: "error" });
+    assert.equal(safeWriteDiagnostic(output), ` [write phase=${phase}; elapsed_ms=0; category=error]`);
+    assert.equal(output.includes(secret), false);
+    const failure = output;
+    d.phase("cleanup");
+    assert.equal(output, failure);
+  });
+}
+
+test("P12 download confirmation waits for click completion and each operation runs once", async () => {
+  let release!: () => void, output = "";
+  const clickPending = new Promise<void>((resolve) => { release = resolve; });
+  const calls: string[] = [];
+  const d = writeDiagnostics("unused", (value) => { output = value; }, () => 0);
+  const result = diagnoseWriteDownload(d, async () => {
+    calls.push("click");
+    await clickPending;
+    calls.push("clicked");
+  }, async () => {
+    calls.push("confirmation");
+  });
+  assert.deepEqual(calls, ["click"]);
+  assert.equal(JSON.parse(output).phase, "download");
+  release();
+  await result;
+  assert.deepEqual(calls, ["click", "clicked", "confirmation"]);
+  assert.deepEqual(JSON.parse(output), { phase: "download-confirmation", elapsed_ms: 0, category: "running" });
+  d.phase("offline-reload");
+  assert.equal(JSON.parse(output).phase, "offline-reload");
+});
 
 test("P12 diagnostic publishes only fixed phases, bounded time and error categories", () => {
   const records: string[] = [];

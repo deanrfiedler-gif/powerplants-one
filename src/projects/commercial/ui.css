@@ -1,0 +1,961 @@
+/* PJ-05 composes the shared workspace, register and record controls. */
+#ppo-commercial {
+  color: var(--ink);
+  background: var(--white);
+}
+#ppo-commercial .mw-content {
+  overflow: auto;
+  min-width: 0;
+}
+
+.commercial-toolbar {
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.commercial-toolbar > span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.commercial-picker {
+  flex: 1 1 280px;
+  max-width: 440px;
+  min-width: 0;
+}
+.commercial-picker .field {
+  margin: 0;
+}
+.commercial-picker label {
+  font-size: 12px;
+}
+.commercial-picker input {
+  width: 100%;
+}
+.commercial-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 12px;
+}
+#ppo-commercial .commercial-menu-item {
+  display: flex;
+  width: calc(100% - 16px);
+  margin: 4px 8px;
+  padding: 12px;
+  align-items: center;
+  text-align: left;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+#ppo-commercial .commercial-menu-item[aria-current="page"] {
+  background: var(--surface-2);
+  color: var(--link);
+  font-weight: 600;
+}
+.commercial-menu-heading {
+  padding: 20px 20px 8px;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.commercial-values,
+.commercial-values-unavailable {
+  padding: 12px 16px;
+}
+.commercial-measures {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+.commercial-measures > div {
+  min-width: 0;
+  padding-right: 12px;
+  border-right: 1px solid var(--line-soft);
+}
+.commercial-measures > div:last-child {
+  border: 0;
+}
+.commercial-measures small,
+.commercial-amount-card small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.commercial-measures strong {
+  display: block;
+  font-size: 16px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.commercial-measures span,
+.commercial-values > p {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.commercial-values > p {
+  margin: 10px 0 0;
+}
+#ppo-commercial .commercial-group th {
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+#ppo-commercial td small {
+  display: block;
+  color: var(--warning);
+}
+.commercial-banner {
+  padding: 14px 16px;
+  margin: 12px 16px;
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.commercial-phone-view,
+.commercial-phone-list {
+  display: none;
+}
+.commercial-record-root {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  background: var(--white);
+}
+#ppo-commercial-record {
+  min-width: 0;
+}
+#ppo-commercial-record .shared-record-header {
+  padding: 22px 24px;
+}
+#ppo-commercial-record .shared-record-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#ppo-commercial-record .shared-record-title h1 {
+  font-size: 24px;
+}
+#ppo-commercial-record .shared-record-meta {
+  font-size: 13px;
+}
+#ppo-commercial-record .shared-record-sources {
+  padding: 12px 24px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-block: 1px solid var(--line-soft);
+  font-size: 12px;
+}
+#ppo-commercial-record .shared-record-body {
+  display: grid;
+  grid-template-columns: minmax(260px, 32%) minmax(0, 1fr);
+}
+#ppo-commercial-record .shared-record-facts {
+  padding: 16px 24px;
+  border-right: 1px solid var(--line-soft);
+}
+#ppo-commercial-record .shared-record-workspace {
+  background: var(--paper);
+  min-width: 0;
+}
+#ppo-commercial-record .shared-record-content {
+  padding: 24px;
+}
+#ppo-commercial-record .record-tablist {
+  background: var(--white);
+}
+#ppo-commercial-record dl {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px 16px;
+  margin: 14px 0 24px;
+}
+#ppo-commercial-record dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-commercial-record dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+#ppo-commercial-record h2 {
+  font-size: 16px;
+  margin: 24px 0 8px;
+}
+#ppo-commercial-record .shared-record-facts h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.commercial-proposal,
+.commercial-amount-card {
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--white);
+}
+.commercial-amount-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.commercial-amount-card strong {
+  display: block;
+  margin-top: 6px;
+}
+.commercial-history {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 12px 0;
+}
+.commercial-history h3 {
+  font-size: 14px;
+}
+.commercial-history p {
+  white-space: pre-wrap;
+}
+.commercial-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.commercial-command fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  margin: 12px 0;
+}
+.commercial-command fieldset fieldset {
+  border: 1px solid var(--line-soft);
+  padding: 12px;
+}
+.commercial-command .field {
+  margin: 16px 0;
+}
+.commercial-command .field input,
+.commercial-command .field select,
+.commercial-command .field textarea {
+  width: 100%;
+}
+.commercial-command .commercial-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.commercial-check {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+}
+.commercial-check input {
+  width: auto;
+}
+@media (max-width: 1100px) {
+  .commercial-toolbar-actions {
+    margin-left: 0;
+  }
+}
+@media (max-width: 780px) {
+  .commercial-toolbar {
+    padding: 12px 16px;
+  }
+  .commercial-picker {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .commercial-toolbar > span {
+    display: none;
+  }
+  .commercial-toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .commercial-values {
+    margin: 0 16px 12px;
+    padding: 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+  }
+  .commercial-measures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .commercial-measures > div {
+    border: 0;
+    padding: 0;
+  }
+  .commercial-measures > div:nth-child(3) {
+    grid-column: 1/-1;
+    grid-row: 1;
+  }
+  .commercial-measures strong {
+    font-size: 14px;
+  }
+  .commercial-desktop-table {
+    display: none;
+  }
+  .commercial-phone-view {
+    display: block;
+    padding: 0 16px 12px;
+  }
+  .commercial-phone-view label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .commercial-phone-view select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  .commercial-phone-list {
+    display: block;
+  }
+  .commercial-phone-list h2 {
+    background: var(--surface-2);
+    padding: 8px 16px;
+    margin: 0;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .commercial-phone-list article {
+    position: relative;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .commercial-phone-list article > a {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .commercial-phone-list p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 6px 0;
+    overflow-wrap: anywhere;
+  }
+  #ppo-commercial-record .shared-record-body {
+    display: block;
+  }
+  #ppo-commercial-record .shared-record-facts {
+    display: none;
+  }
+  #ppo-commercial-record .shared-record-header {
+    padding: 16px;
+  }
+  #ppo-commercial-record .shared-record-title h1 {
+    font-size: 20px;
+  }
+  #ppo-commercial-record .shared-record-content {
+    padding: 16px;
+  }
+  #ppo-commercial-record .shared-record-sources {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  #ppo-commercial-record .shared-record-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #ppo-commercial-record .shared-record-actions button {
+    min-height: 44px;
+  }
+  #ppo-commercial-record dl {
+    grid-template-columns: 85px minmax(0, 1fr);
+    gap: 10px;
+  }
+  .commercial-amount-card {
+    grid-template-columns: 1fr;
+  }
+  .commercial-command .commercial-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .commercial-command input,
+  .commercial-command select,
+  .commercial-command textarea {
+    font-size: 16px;
+  }
+  .commercial-command button {
+    min-height: 48px;
+  }
+}
+@media (max-width: 780px) {
+  .crm-r38-panel:has(.commercial-command) {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92dvh;
+    margin: auto 0 0;
+    border-radius: 12px 12px 0 0;
+  }
+  .crm-r38-panel:has(.commercial-command) .crm-r38-panel-body {
+    overflow: auto;
+  }
+}
+
+.commercial-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--surface-2);
+}
+#ppo-commercial .commercial-desktop-table :is(td, th):last-child {
+  position: sticky;
+  right: 0;
+  background: var(--white);
+  z-index: 1;
+}
+#ppo-commercial .commercial-desktop-table .commercial-group th {
+  position: static;
+  background: var(--surface-2);
+}
+
+.commercial-toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.commercial-toggle input {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+}
+
+.commercial-compact-values {
+  display: none;
+}
+@media (max-width: 780px) {
+  .commercial-values .commercial-measures {
+    display: none;
+  }
+  .commercial-compact-values {
+    display: block;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .commercial-compact-values small {
+    display: block;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .commercial-compact-values strong {
+    display: block;
+    margin: 4px 0;
+    font-size: 17px;
+  }
+  .commercial-compact-values p {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+}
+
+#ppo-commercial-record-workspace {
+  display: block;
+  overflow: auto;
+  height: 100%;
+  background: var(--white);
+}
+#ppo-commercial .commercial-group[data-state-group="Waiting for decision"] th,
+#ppo-commercial
+  .commercial-phone-list
+  [data-state-group="Waiting for decision"]
+  h2 {
+  background: var(--warning-tint);
+  color: var(--warning);
+}
+#ppo-commercial .commercial-group[data-state-group="Disputed"] th,
+#ppo-commercial .commercial-phone-list [data-state-group="Disputed"] h2 {
+  background: var(--danger-surface);
+  color: var(--danger);
+}
+.commercial-create-icon {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-commercial .commercial-create {
+    position: fixed;
+    right: 16px;
+    bottom: 80px;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 16px;
+    z-index: 10;
+  }
+  .commercial-create-text {
+    display: none;
+  }
+  .commercial-create-icon {
+    display: inline;
+    font-size: 26px;
+  }
+  .commercial-compact-values {
+    padding: 0;
+    border: 0;
+  }
+}
+
+#ppo-commercial .commercial-group[data-state-group="Overdue"] th,
+#ppo-commercial .commercial-phone-list [data-state-group="Overdue"] h2 {
+  background: var(--danger-surface);
+  color: var(--danger);
+}
+#ppo-commercial
+  .commercial-group[data-state-group="Waiting for a waiver decision"]
+  th,
+#ppo-commercial
+  .commercial-phone-list
+  [data-state-group="Waiting for a waiver decision"]
+  h2 {
+  background: var(--warning-tint);
+  color: var(--warning);
+}
+
+/* Keep the shared lookup accessible without a second toolbar label row. */
+#ppo-commercial .commercial-picker .field {
+  margin: 0;
+}
+#ppo-commercial .commercial-picker :is(label, small[id$="-hint"]),
+.commercial-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ppo-commercial .commercial-picker input {
+  min-height: 40px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+}
+#ppo-commercial .commercial-row-preview {
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0 6px;
+  font-size: 20px;
+}
+
+#ppo-commercial-record .shared-record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+#ppo-commercial-record .shared-record-header > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-commercial-record .shared-record-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 48%;
+}
+#ppo-commercial-record .record-tablist {
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-commercial-record .record-tablist button {
+  flex: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 0;
+}
+#ppo-commercial-record .record-tablist [aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--navy);
+  font-weight: 600;
+}
+@media (max-width: 780px) {
+  #ppo-commercial .commercial-toolbar {
+    gap: 0;
+  }
+  #ppo-commercial .commercial-desktop-utility {
+    display: none;
+  }
+  #ppo-commercial .commercial-phone-view {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+  #ppo-commercial .commercial-phone-view label {
+    flex: 1;
+    gap: 6px;
+    min-width: 0;
+  }
+  #ppo-commercial .commercial-phone-view select {
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    font-size: 14px;
+  }
+  .commercial-value-desktop-note {
+    display: none !important;
+  }
+
+  #ppo-commercial .commercial-picker input {
+    font-size: 16px;
+  }
+  #ppo-commercial .commercial-phone-list article {
+    padding-right: 48px;
+  }
+  #ppo-commercial .commercial-phone-list article > a {
+    text-decoration: none;
+  }
+  #ppo-commercial .commercial-phone-list .commercial-row-preview {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    min-height: 44px;
+  }
+  #ppo-commercial-record .shared-record-header {
+    display: block;
+  }
+  #ppo-commercial-record .shared-record-actions {
+    max-width: none;
+    justify-content: flex-start;
+    margin-top: 12px;
+  }
+  #ppo-commercial-record .record-tablist {
+    padding: 0;
+  }
+  #ppo-commercial-record .record-tablist button {
+    padding: 10px 12px;
+  }
+}
+
+/* WorklistPanel host composition; shared dialog focus and dismissal stay native. */
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  width: min(560px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  color: var(--ink);
+  background: var(--white);
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace)
+  .crm-r38-panel::backdrop {
+  background: color-mix(in srgb, var(--ink) 35%, transparent);
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 24px;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace)
+  .crm-r38-panel
+  > header
+  h2 {
+  font-size: 20px;
+  margin: 0;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace)
+  .crm-r38-panel
+  > header
+  button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  min-height: 40px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel-body {
+  padding: 0 24px 20px;
+  overflow: auto;
+  min-height: 0;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel > footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  border-top: 1px solid var(--line);
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace)
+  .crm-r38-panel:has(.commercial-command)
+  > footer {
+  display: none;
+}
+:is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-drawer {
+  margin: 0 0 0 auto;
+  width: min(560px, 100vw);
+  height: 100dvh;
+  max-height: 100dvh;
+  border-radius: 0;
+}
+.commercial-command .field textarea {
+  min-height: 80px;
+  height: 80px;
+}
+.commercial-command .commercial-decision-choices {
+  border: 0;
+  padding: 0;
+}
+.commercial-decision-choices legend {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.commercial-decision-choices label {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  margin: 8px 0;
+}
+.commercial-decision-choices label:has(:checked) {
+  border-color: var(--link);
+  box-shadow: inset 0 0 0 1px var(--link);
+}
+.commercial-decision-choices input {
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  flex: none;
+  margin-top: 3px;
+}
+.commercial-decision-choices small {
+  display: block;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-size: 12px;
+}
+@media (max-width: 780px) {
+  :is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel {
+    margin: auto 0 0;
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 12px 12px 0 0;
+  }
+  :is(#ppo-commercial, #ppo-commercial-record-workspace)
+    .crm-r38-panel
+    > header {
+    padding: 16px;
+  }
+  :is(#ppo-commercial, #ppo-commercial-record-workspace) .crm-r38-panel-body {
+    padding: 0 16px 16px;
+  }
+  .commercial-command .commercial-actions > button {
+    flex: 1;
+  }
+}
+
+#ppo-commercial .commercial-menu-item {
+  justify-content: flex-start;
+}
+.commercial-reconciliation {
+  padding: 16px;
+  font-size: 13px;
+}
+.commercial-reconciliation h2 {
+  font-size: 16px;
+}
+.commercial-reconciliation > p {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.commercial-reconciliation dl {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 20px 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+.commercial-reconciliation dt {
+  color: var(--text-secondary);
+}
+.commercial-reconciliation dd {
+  margin: 0;
+}
+@media (max-width: 780px) {
+  #ppo-commercial-record .shared-record-meta {
+    display: none;
+  }
+  #ppo-commercial-record .shared-record-title h1 {
+    font-size: 18px;
+    margin: 0;
+  }
+  #ppo-commercial-record .shared-record-title {
+    gap: 6px;
+  }
+  #ppo-commercial-record .shared-record-content {
+    padding-bottom: 100px;
+  }
+  #ppo-commercial-record .commercial-banner {
+    margin: 0 0 16px;
+    padding: 12px;
+  }
+  #ppo-commercial-record .shared-record-sticky {
+    position: fixed;
+    bottom: 64px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+  }
+  #ppo-commercial-record .shared-record-sticky > :is(button, a) {
+    flex: 1;
+    min-height: 44px;
+    justify-content: center;
+    padding: 8px;
+  }
+  .commercial-record-more {
+    position: relative;
+    font-size: 12px;
+  }
+  .commercial-record-more summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    cursor: pointer;
+  }
+  .commercial-record-more > div {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 180px;
+    padding: 8px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  .commercial-amount-card {
+    gap: 12px;
+  }
+  .commercial-amount-card > div {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    align-items: center;
+  }
+  .commercial-amount-card strong {
+    margin: 0;
+  }
+  .commercial-reconciliation dl {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .commercial-reconciliation dd {
+    margin-bottom: 12px;
+  }
+}
+
+.commercial-history-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.commercial-history-filters button {
+  border-radius: 20px;
+  min-height: 32px;
+  padding: 4px 12px;
+}
+.commercial-history-filters button[aria-pressed="true"] {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+#ppo-commercial-record .commercial-history {
+  padding: 0 16px 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+.commercial-history-date {
+  padding: 8px 16px;
+  margin: 0 -16px 12px;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+@media (min-width: 781px) and (max-width: 1100px) {
+  #ppo-commercial-record .shared-record-body {
+    display: block;
+  }
+  #ppo-commercial-record .shared-record-facts {
+    display: none;
+  }
+  .commercial-record-more {
+    position: relative;
+    font-size: 12px;
+  }
+  .commercial-record-more summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    cursor: pointer;
+  }
+  .commercial-record-more > div {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 180px;
+    padding: 8px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+}

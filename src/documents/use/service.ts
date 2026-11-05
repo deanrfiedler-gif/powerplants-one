@@ -1,5 +1,6 @@
 import type { Principal } from "../../platform/identity";
-import type { QueryClient } from "../../platform/permissions";
+import { hasPermission, type QueryClient } from "../../platform/permissions";
+import { scopePresentation } from "../workspace-reads";
 import { transaction } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
 import { canonical, sharedOperation } from "../../platform/operations";
@@ -115,7 +116,7 @@ export async function assignmentContext(
   ).rows[0];
   if (!a) throw unavailable();
   await scopeAuthority(c, p, a, write);
-  await source(c, p, a, a.publication_id);
+  const publication = await source(c, p, a, a.publication_id);
   if (a.predecessor_id) {
     const prev = (
       await c.query<Assignment>(
@@ -125,7 +126,8 @@ export async function assignmentContext(
     ).rows[0];
     await source(c, p, a, prev.publication_id);
   }
-  return a;
+  const actor = (await c.query("SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2", [p.workspace_id,a.actor_id])).rows[0];
+  return {...a, template_version:publication.runtime_version as number, actor_name:actor?.display_name ?? null};
 }
 export async function receiptAuthority(
   c: QueryClient,
@@ -371,6 +373,8 @@ export async function readUsePolicy(p: Principal, q: Record<string, string>) {
       synthetic: true,
       family: "OUT-09",
       ...s,
+      ...await scopePresentation(c,p,s),
+      can_assign: await hasPermission(c,p,"template.assign",s.company_id,s.site_id) && await hasPermission(c,p,"pack.check",s.company_id,s.site_id),
       version: h?.version ?? 0,
       ...(h
         ? {

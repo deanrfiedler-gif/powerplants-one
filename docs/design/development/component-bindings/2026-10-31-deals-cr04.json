@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "sales-board": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "sales-board-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "sales-table": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "sales-table-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "forecast": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "forecast-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "drawer": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "drawer-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "menu-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "deals-cr04-accepted",
+          "label": "Accepted Deals workspace",
+          "description": "CR-04 returned-page totals, native recovery and responsive workspace; application acceptance pending."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/deals-workspace.css",
+        "src/components/crm-worklist.tsx"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-deals-cr04-review",
+          "expected": "Application review against accepted r02 frames and owner acceptance.",
+          "actual": "PR #699 implementation and validation; no visual acceptance claimed.",
+          "action": "Review matching captures and functional proof independently.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

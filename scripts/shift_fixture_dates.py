@@ -53,6 +53,7 @@ GLOBS = (
     "tests/database/**/*.ts",
     "tests/http/**/*.ts",
     "tests/browser/**/*.ts",
+    "tests/library-browser/**/*.ts",
     "tests/integration/**/*.ts",
     "tests/demo/**/*.ts",
     "tests/helpers/**/*.ts",

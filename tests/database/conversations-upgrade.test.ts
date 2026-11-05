@@ -10,7 +10,7 @@ import { notificationInbox } from "../../src/notifications/service";
 import { createActivity } from "../../src/activities/activities";
 import { randomUUID } from "node:crypto";
 import { CRM, crmBase } from "../helpers/crm";
-import { conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { conversationSeedGrants, agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { newDeal, newProject, person, principal, profiles, threadInput } from "../helpers/conversations";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Only disposable ppo_synthetic_test");
@@ -49,8 +49,8 @@ test("populated 0107 upgrade keeps every earlier row, adds exactly seed 108's gr
       tables.map(async (t) =>
         (
           await c.query(
-            `SELECT to_jsonb(x)${t === "notification_events" ? " - 'reason'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (108,110,120, 121)" : ""}${
-              t === "permission_grants" ? ` WHERE x.capability NOT LIKE 'conversation.%'` : ""
+            `SELECT to_jsonb(x)${t === "notification_events" ? " - 'reason'" : ""} row FROM ppo.${t} x${t === "seed_receipts" ? " WHERE x.version NOT IN (108,110,120,121,124)" : ""}${
+              t === "permission_grants" ? ` WHERE x.capability NOT LIKE 'conversation.%' AND x.capability NOT LIKE 'service_escalation.%'` : ""
             } ORDER BY to_jsonb(x)::text`,
           )
         ).rows,
@@ -63,8 +63,8 @@ test("populated 0107 upgrade keeps every earlier row, adds exactly seed 108's gr
   await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual((await c.query("SELECT * FROM public.ppo_migrations WHERE version<=107 ORDER BY version")).rows, ledger);
-  assert.deepEqual((await c.query("SELECT version FROM public.ppo_migrations WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }]);
-  assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 110 }, { version: 120 }, { version: 121 }]);
+  assert.deepEqual((await c.query("SELECT version FROM public.ppo_migrations WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 109 }, { version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }, { version: 124 }]);
+  assert.deepEqual((await c.query("SELECT version FROM ppo.seed_receipts WHERE version>107 ORDER BY version")).rows, [{ version: 108 }, { version: 110 }, { version: 120 }, { version: 121 }, { version: 124 }]);
   // Exactly the live Opportunity and Project readers of active local profiles gain the two duties, in their own scopes.
   const added = (await c.query("SELECT * FROM ppo.permission_grants WHERE capability IN ('conversation.read','conversation.post') ORDER BY id")).rows;
   const expected = conversationSeedGrants(oldGrants.filter((g) => g.user_id !== inactive));
@@ -74,6 +74,8 @@ test("populated 0107 upgrade keeps every earlier row, adds exactly seed 108's gr
   assert.ok(added.every((g) => g.user_id !== inactive));
   const askGrants = (await c.query("SELECT * FROM ppo.permission_grants WHERE capability='conversation.agent.ask' ORDER BY id")).rows;
   assert.deepEqual(askGrants.map(key).sort(), agentAskSeedGrants([...oldGrants, ...expected]).map(key).sort());
+  const escalationGrants=(await c.query("SELECT * FROM ppo.permission_grants WHERE capability='service_escalation.record' ORDER BY id")).rows;
+  assert.deepEqual(escalationGrants.map(key).sort(), escalationSeedGrants([...oldGrants,...expected]).map(key).sort());
   // The new notice column is null on every existing row, which are all Activity notices.
   assert.deepEqual((await c.query("SELECT DISTINCT source_type,category,reason FROM ppo.notification_events")).rows, [{ source_type: "Activity", category: "OwnedWork", reason: null }]);
   // New tables start empty.

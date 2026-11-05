@@ -1,4 +1,4 @@
-import { toggleWorklistFilters, fillOpportunitySearch, keyOpportunitySearch } from "../helpers/crm-worklist-ui";
+import { chooseDealsView, toggleWorklistFilters, fillOpportunitySearch, keyOpportunitySearch } from "../helpers/crm-worklist-ui";
 import { captureTransferComparison } from "../helpers/crm-transfer-capture";
 import { browserFixtureCall } from "../helpers/browser-fixture-call";
 import { keyActivate, keySelect, keyType } from "../helpers/quality-keyboard";
@@ -53,7 +53,7 @@ test("owner transfer compares separate activities and persists original/current 
   await expect(page.getByRole("button",{name:"Edit deal information",exact:true})).toBeVisible();
   await page.goto("/sales/opportunities");await fillOpportunitySearch(page, input.title);
   await expect(page.locator(`[data-opportunity-id="${input.id}"]`)).toBeVisible();
-  await page.getByRole("button",{name:"List",exact:true}).click();await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
+  await chooseDealsView(page, "List");await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
 });
 test("lost accepted transfer response recovers the original actor receipt and stale activity comparison requires review",async({page},info)=>{
   await call(page,"local-session",{profile:"coordinator"});
@@ -147,7 +147,7 @@ test("owned Won handover and structured Lost survive reload on desktop and phone
     if(info.project.use.isMobile) await page.getByRole("group",{name:"Choose Board stage"}).getByRole("button",{name:outcome === "Won" ? /^Closing / : /^Discovery /}).click();
     const card=page.locator(`[data-opportunity-id="${input.id}"]`);
     await expect(card).toBeVisible(); await expect(card).toHaveAttribute("draggable","false");
-    await page.getByRole("button",{name:"List",exact:true}).click();
+    await chooseDealsView(page, "List");
     await expect(page.getByRole("link",{name:input.title,exact:true})).toBeVisible();
   }
 });

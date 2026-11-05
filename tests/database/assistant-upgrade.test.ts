@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { database, closeDatabase } from "../../src/platform/database";
@@ -59,15 +60,16 @@ test(`populated ${through} history installs 0110 with every original row and led
   assert.deepEqual(await snapshot(), original);
   const migrated = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
   assert.deepEqual(migrated.filter(r => versions.has(r.version)), ledger);
-  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122] : through === 113 ? [110, 114, 115, 116, 117, 118, 119, 120, 121, 122] : through === 114 ? [110, 115, 116, 117, 118, 119, 120, 121, 122] : through === 115 ? [110, 116, 117, 118, 119, 120, 121, 122] : through === 116 ? [110, 117, 118, 119, 120, 121, 122] : through === 117 ? [110, 118, 119, 120, 121, 122] : through === 118 ? [110, 119, 120, 121, 122] : through === 119 ? [110, 120, 121, 122] : [110, 121, 122]);
+  assert.deepEqual(migrated.filter(r => !versions.has(r.version)).map(r => r.version), through === 109 ? [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124] : through === 113 ? [110, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124] : through === 114 ? [110, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124] : through === 115 ? [110, 116, 117, 118, 119, 120, 121, 122, 123, 124] : through === 116 ? [110, 117, 118, 119, 120, 121, 122, 123, 124] : through === 117 ? [110, 118, 119, 120, 121, 122, 123, 124] : through === 118 ? [110, 119, 120, 121, 122, 123, 124] : through === 119 ? [110, 120, 121, 122, 123, 124] : [110, 121, 122, 123, 124]);
   if (newerGuard) assert.deepEqual(
     await rows("SELECT pg_get_functiondef('ppo.check_sales_estimating_binding()'::regprocedure) AS definition"), newerGuard);
   if (newerAllocator) assert.deepEqual(
     await rows("SELECT pg_get_functiondef('ppo.register_identity()'::regprocedure) AS definition"), newerAllocator);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>110 AND version<=$1 ORDER BY version", [through]), receipts);
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version=110 OR version>$1 ORDER BY version", [through]), through < 120 ? [{ version: 110 }, { version: 120 }, { version: 121 }] : [{ version: 110 }, { version: 121 }]);
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }]);
-  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability<>'conversation.agent.ask' ORDER BY id"), grants);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version=110 OR version>$1 ORDER BY version", [through]), through < 120 ? [{ version: 110 }, { version: 120 }, { version: 121 }, { version: 124 }] : [{ version: 110 }, { version: 121 }, { version: 124 }]);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }, { version: 124 }]);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability<>'conversation.agent.ask' AND capability<>'service_escalation.record' ORDER BY id"), grants);
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants WHERE capability='service_escalation.record' ORDER BY id"), escalationSeedGrants(grants).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   assert.deepEqual(await rows("SELECT DISTINCT author_kind FROM ppo.conversation_messages"), [{ author_kind: "Person" }]);
   const added = await rows(`SELECT g.id,source.id AS source_id,
     md5('ppo-conversations-t2b:'||source.id::text||':conversation.agent.ask')::uuid expected

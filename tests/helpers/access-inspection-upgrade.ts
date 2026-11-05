@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {
   accessInspectionSeedGrants,
   accessRequestSeedGrants,
-  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants,
+  accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants, escalationSeedGrants,
 } from "./engineering-materials-grants";
 
 type Row = Record<string, unknown>;
@@ -48,13 +48,15 @@ export function assertAccessInspectionSnapshot(
   const byId = (a: Row, b: Row) => String(a.id).localeCompare(String(b.id));
   assert.deepEqual(
     newRows
-      .filter((r) => !ids.has(grant(r).id) && grant(r).capability !== "conversation.agent.ask")
+      .filter((r) => !ids.has(grant(r).id) && grant(r).capability !== "conversation.agent.ask" && grant(r).capability !== "service_escalation.record")
       .map(grant)
       .sort(byId),
     expected.sort(byId),
   );
   assert.deepEqual(newRows.map(grant).filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask").sort(byId),
     agentAskSeedGrants([...oldGrants, ...expected]).sort(byId));
+  assert.deepEqual(newRows.map(grant).filter(g => !ids.has(g.id) && g.capability === "service_escalation.record").sort(byId),
+    escalationSeedGrants([...oldGrants, ...expected]).sort(byId));
   const preserved: Row[][] | Record<string, Row[]> = Array.isArray(actual)
     ? actual.map((rows, i) => (i === index ? oldRows : rows))
     : { ...actual, permission_grants: oldRows };
@@ -129,7 +131,7 @@ export function assertAccessInspectionSeedLedger(
   // Snapshots order rows by their JSON text, where 107 sorts before 78; compare the versions as numbers.
   assert.deepEqual(
     added.map((r) => Number(r.version)).sort((a, b) => a - b),
-    [78, 79, 80, 83, 84, 107, 108, 110, 120, 121].filter((v) => !versions.has(v)),
+    [78, 79, 80, 83, 84, 107, 108, 110, 120, 121, 124].filter((v) => !versions.has(v)),
   );
   for (const row of added) {
     assert.deepEqual(Object.keys(row).sort(), ["applied_at", "version"]);

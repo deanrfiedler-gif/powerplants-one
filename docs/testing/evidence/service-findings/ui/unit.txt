@@ -1,0 +1,38 @@
+✔ the route table has one line per route, sorted by route (16.2061ms)
+✔ an exact route wins, then a record pattern, then the module rules (4.504ms)
+✔ unchanged header labels dispatch to the latest page state, including an already-open record menu (4.7626ms)
+✔ P2 a page without views shows its name as a plain title, not a button (14.3756ms)
+✔ P2 P8 a page with views shows a chooser that announces the current view, with its count (6.4871ms)
+✔ P4 the Menu button leads the row and says when notifications are unread (4.528ms)
+✔ P3 a record page leads with Back to its list and shows its reference, which never gets the truncating title text (15.5051ms)
+✔ P2 P5 a record page with views keeps its Choose view sheet: the reference becomes the chooser (2.3826ms)
+✔ P3 P4 a record row always has More actions: Open menu, then Conversations with its unread count, then the page's own actions (18.3817ms)
+✔ P2 P5 a list page may add one page action before Conversations and Filter after it, with a dot when a filter is applied (2.1762ms)
+✔ P7 a search page action and Filter combine into Search and filter at 320 px (2.5581ms)
+✔ P3 P7 a record page steps to the previous and next record and keeps the rest in More actions (2.7424ms)
+✔ SV07 next-action accepts an exact source, explicit evidence and UTC due instant (5.0209ms)
+✔ SV07 next-action refuses arbitrary Activity targeting and unbound or incomplete edits (2.408ms)
+✔ Findings query accepts only bounded filters and exact source identities (7.8974ms)
+✔ Follow-up completion and cancellation do not assert source closure (1.5203ms)
+✔ Overdue compares the retained deadline instant and never active-looking closed work (0.8407ms)
+✔ SV07 recurring means strictly earlier within an inclusive 90 elapsed days, not a similar title (4.0081ms)
+✔ SV07 site week crosses UTC midnight and DST without changing strict overdue or closing a source (165.0211ms)
+✔ read-only navigation does not imply creation or elevate an identity (6.6825ms)
+✔ nested pages resolve to their actual workspace instead of a remembered Sales selection (4.1911ms)
+✔ seven workspace preferences validate schema and retain r15 identifiers (13.6462ms)
+✔ More finds workspace names and existing page names, including former rail destinations (5.409ms)
+✔ AU-08 the Service rail is grouped without reordering, and other rails stay flat (4.5953ms)
+✔ NR-18 a working company narrows scoped checks for its own actor only, and only inside a request (40.749ms)
+✔ NR-18 a choice entered while resolving the identity reaches the rest of that request only (33.4554ms)
+✔ ui-baselines.json keeps its module integrations frozen; new ones are files (27.2056ms)
+✔ each module integration file is named by its id and complete; ids are unique (14.0988ms)
+✔ src/app/styles/figma-shell.css: the shared workspace lists take the opt-in attribute, not new ids (45.4459ms)
+✔ src/app/styles/my-work.css: the shared workspace lists take the opt-in attribute, not new ids (42.7862ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12565.631

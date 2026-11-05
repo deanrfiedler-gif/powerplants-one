@@ -16,6 +16,7 @@ test("N04/N05 permitted landing uses operational ownership without adding grants
   const personal = navigationForCapabilities(new Set(["activity.read"]),true);
   assert.deepEqual(availableWorkspaces(personal,true),[]); assert.equal(homeHref(personal,true),"/work");
   assert.equal(homeHref(navigationForCapabilities(new Set(),true),true),null);
+  assert.equal(homeHref([],true),null);
 });
 test("N06 inspection discovery requires both capabilities; record scope remains separate", () => {
   for (const caps of [[],["report.read"],["service.work_order.edit"]]) assert.ok(!navigationForCapabilities(new Set(caps),true).includes("inspection-review"));
