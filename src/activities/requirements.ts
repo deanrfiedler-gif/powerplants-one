@@ -41,6 +41,7 @@ export async function legacyFindingActivityAuthority(
   p: Principal,
   a: ActivityContext,
   ownerId?: string,
+  pageAuthorised = false,
 ) {
   if (!(await available(c))) return;
   const sources = (
@@ -69,7 +70,7 @@ export async function legacyFindingActivityAuthority(
     : null;
   // A shared Activity does not let one source's rights override another's.
   for (const source of sources) {
-    await authorise(c, p, source);
+    await authorise(c, p, source, pageAuthorised ? a : undefined);
     if (owner) await authorise(c, owner, source);
   }
 }
@@ -77,10 +78,11 @@ export async function canEditFindingActivity(
   c: QueryClient,
   p: Principal,
   a: ActivityContext,
+  pageAuthorised = false,
 ) {
   if (await isManagedFindingActivity(c, p, a.id)) return false;
   try {
-    await legacyFindingActivityAuthority(c, p, a);
+    await legacyFindingActivityAuthority(c, p, a, undefined, pageAuthorised);
     return true;
   } catch (e) {
     if (e instanceof AppError && [403, 404].includes(e.status)) return false;

@@ -22,6 +22,7 @@ const missing: Record<string, string> = {
     "No controlled drawing register or authorised general drawing list.",
   "technical-reviews":
     "Engineering review workspace is a placeholder, not a technical-review queue.",
+  workshop: "Receiving SC-04 rail position reserved; no native Workshop route exists.",
   readiness: "Delivery-readiness design only; no native assessment landing.",
   risks: "No native project risk/issue register.",
   variations: "No native variation/obligation register.",

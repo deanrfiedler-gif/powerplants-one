@@ -1,0 +1,758 @@
+/* SC-05 opts into the shared workspace; no shared page-ID list changes. */
+#ppo-inventory .mw-content {
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  background: var(--surface-white);
+}
+#ppo-inventory .iv-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ppo-inventory .iv-menu-heading {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 20px 14px 8px;
+  margin: 0;
+}
+#ppo-inventory .mw-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#ppo-inventory .mw-menu li button {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  width: 100%;
+  min-height: 40px;
+  color: var(--ink);
+  font: inherit;
+  border-radius: var(--radius-control);
+}
+#ppo-inventory .mw-menu li button[aria-current="page"] {
+  background: var(--surface-selected, #e4e9ef);
+  color: var(--link);
+  font-weight: 600;
+}
+#ppo-inventory .iv-menu-note {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 24px 14px;
+}
+#ppo-inventory .iv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+#ppo-inventory .iv-toolbar label {
+  min-width: 0;
+}
+#ppo-inventory .iv-toolbar :is(input, select) {
+  height: 40px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  padding: 8px 10px;
+  background: var(--surface-white);
+  color: var(--ink);
+  font: inherit;
+  max-width: 100%;
+}
+#ppo-inventory .iv-search {
+  flex: 1 1 180px;
+}
+#ppo-inventory .iv-search input {
+  width: 100%;
+}
+#ppo-inventory .iv-count {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+#ppo-inventory .iv-filter-status {
+  padding: 0 16px 8px;
+}
+#ppo-inventory .iv-register-layout {
+  display: flex;
+  min-width: 0;
+}
+#ppo-inventory .iv-results {
+  flex: 1;
+  min-width: 0;
+}
+#ppo-inventory .ppo-register {
+  --ppo-register-header: var(--surface-white);
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table th {
+  font-size: 12px;
+  text-transform: none;
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table td {
+  height: 40px;
+  border-right: 1px solid var(--line);
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table a {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+#ppo-inventory .iv-number {
+  text-align: right;
+}
+#ppo-inventory .iv-unknown,
+#ppo-inventory .iv-muted {
+  color: var(--text-secondary);
+}
+#ppo-inventory .iv-footnote,
+#ppo-inventory .iv-message {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  line-height: 1.5;
+}
+#ppo-inventory .iv-snapshot {
+  width: 340px;
+  flex: none;
+  border-left: 1px solid var(--line);
+  padding: 16px;
+  overflow-wrap: anywhere;
+}
+#ppo-inventory .iv-snapshot h2 {
+  font-size: 20px;
+}
+#ppo-inventory .iv-snapshot dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-inventory dd {
+  margin: 0;
+}
+#ppo-inventory .iv-phone-list {
+  display: none;
+}
+#ppo-inventory .iv-record-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 24px 0;
+}
+#ppo-inventory .iv-record-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-inventory .iv-record-header h1 {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0 0 8px;
+}
+#ppo-inventory .iv-record-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+#ppo-inventory .iv-record-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-shrink: 0;
+}
+#ppo-inventory .iv-product-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 24px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+#ppo-inventory .iv-record-body {
+  display: grid;
+  grid-template-columns: 32% minmax(0, 1fr);
+}
+#ppo-inventory .iv-context {
+  padding: 0 24px 24px;
+  border-right: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+#ppo-inventory .iv-context h2 {
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-size: 11px;
+  margin: 24px 0 16px;
+}
+#ppo-inventory .iv-context dl > div {
+  display: grid;
+  grid-template-columns: 105px minmax(0, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+#ppo-inventory .iv-context dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+#ppo-inventory .iv-context dd {
+  font-size: 14px;
+}
+#ppo-inventory .iv-record-main {
+  min-width: 0;
+  background: var(--surface-2);
+}
+#ppo-inventory .iv-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-white);
+  padding: 0 10px;
+}
+#ppo-inventory .iv-tabs .ppo-button {
+  min-height: 44px;
+  flex: none;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+}
+#ppo-inventory .iv-tabs .ppo-button[aria-pressed="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  font-weight: 600;
+}
+#ppo-inventory .iv-tab-content {
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+#ppo-inventory .iv-tab-content h2 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+#ppo-inventory .iv-tab-content .iv-muted {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 22px;
+}
+#ppo-inventory .iv-tab-content .ppo-register-table td {
+  height: 44px;
+}
+#ppo-inventory :is(.iv-locations, .iv-demand) {
+  margin-top: 28px;
+}
+#ppo-inventory .iv-warning {
+  padding: 16px;
+  background: var(--warning-surface);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+#ppo-inventory .iv-activity {
+  list-style: none;
+  padding: 0 0 0 20px;
+  border-left: 1px solid var(--line);
+}
+#ppo-inventory .iv-activity li {
+  position: relative;
+  padding: 0 0 22px;
+}
+#ppo-inventory .iv-activity li::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--text-secondary);
+  border-radius: 50%;
+  background: var(--surface-white);
+}
+#ppo-inventory .iv-activity h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+#ppo-inventory .iv-activity p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 4px 0;
+}
+#ppo-inventory .iv-source {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-inventory .iv-source h3 {
+  font-size: 14px;
+}
+#ppo-inventory[data-record="true"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+#ppo-inventory[data-record="true"] .mw-menu-strip {
+  display: none;
+}
+@media (max-width: 1100px) {
+  #ppo-inventory .iv-record-header {
+    flex-wrap: wrap;
+  }
+  #ppo-inventory .iv-context {
+    padding: 0 16px;
+  }
+  #ppo-inventory .iv-context dl > div {
+    display: block;
+  }
+  #ppo-inventory .iv-context dt {
+    margin-bottom: 6px;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-inventory .mw-content {
+    overflow: auto;
+  }
+  #ppo-inventory .iv-desktop-grid {
+    display: none;
+  }
+  #ppo-inventory .iv-phone-list {
+    display: block;
+  }
+  #ppo-inventory .iv-phone-list article {
+    position: relative;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-inventory .iv-phone-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    padding-bottom: 10px;
+  }
+  #ppo-inventory .iv-phone-list span,
+  #ppo-inventory .iv-phone-list small {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  #ppo-inventory .iv-phone-list small {
+    display: block;
+    margin-top: 8px;
+  }
+  #ppo-inventory .iv-toolbar {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+  #ppo-inventory .iv-toolbar .iv-search {
+    flex-basis: 100%;
+  }
+  #ppo-inventory .iv-toolbar :is(input, select) {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  #ppo-inventory .iv-toolbar label:not(.iv-search) {
+    flex: 1 1 30%;
+    max-width: 100%;
+  }
+  #ppo-inventory .iv-toolbar select {
+    width: 100%;
+  }
+  #ppo-inventory .iv-toolbar .iv-count {
+    margin: 0;
+    flex-basis: 100%;
+  }
+  #ppo-inventory .iv-register-layout {
+    display: block;
+  }
+  #ppo-inventory .iv-snapshot {
+    width: auto;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  #ppo-inventory .iv-record-top {
+    padding: 8px 16px;
+  }
+  #ppo-inventory .iv-record-header {
+    padding: 12px 16px;
+  }
+  #ppo-inventory .iv-record-header h1 {
+    font-size: 20px;
+    line-height: 28px;
+    overflow-wrap: anywhere;
+  }
+  #ppo-inventory .iv-record-header h1 .ppo-register-chip {
+    display: table;
+    margin: 8px 0;
+  }
+  #ppo-inventory .iv-record-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #ppo-inventory .iv-product-strip {
+    padding: 16px;
+    gap: 8px 16px;
+  }
+  #ppo-inventory .iv-record-body {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-inventory .iv-context {
+    display: none;
+  }
+  #ppo-inventory .iv-record-main {
+    background: var(--surface-white);
+  }
+  #ppo-inventory .iv-tab-content {
+    padding: 20px 16px;
+  }
+  #ppo-inventory .iv-tabs {
+    padding: 0 8px;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table {
+    min-width: 0;
+    width: 100%;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table :is(th, td) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 10px 8px;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table thead {
+    display: none;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table td {
+    height: auto;
+    min-width: 0;
+    border: 0;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table td:nth-child(n + 3) {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  #ppo-inventory .ppo-button {
+    min-height: 44px;
+  }
+}
+
+#ppo-inventory
+  :is(
+    .iv-phone-toolbar,
+    .iv-phone-quantities,
+    .iv-mobile-product,
+    .iv-phone-observation
+  ) {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-inventory .iv-phone-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  #ppo-inventory .iv-phone-toolbar span {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  #ppo-inventory .iv-phone-toolbar .ppo-button {
+    font-size: 12px;
+    padding: 8px;
+  }
+  #ppo-inventory .iv-toolbar:not([data-phone-open]) {
+    display: none;
+  }
+  #ppo-inventory .iv-phone-list article {
+    padding: 10px 16px;
+  }
+  #ppo-inventory .iv-phone-list a {
+    gap: 4px;
+    padding-bottom: 4px;
+  }
+  #ppo-inventory .iv-phone-list small {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    max-width: 45%;
+    font-size: 11px;
+  }
+  #ppo-inventory .iv-record-header h1,
+  #ppo-inventory .iv-product-strip,
+  #ppo-inventory .iv-quantity-table {
+    display: none;
+  }
+  #ppo-inventory .iv-record-header {
+    padding: 0 16px 8px;
+    border: 0;
+  }
+  #ppo-inventory .iv-record-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background: var(--surface-white);
+  }
+  #ppo-inventory .iv-phone-observation {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  #ppo-inventory .iv-phone-quantities {
+    display: block;
+  }
+  #ppo-inventory .iv-phone-quantities > div {
+    padding: 10px 0;
+  }
+  #ppo-inventory .iv-phone-quantities strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  #ppo-inventory .iv-phone-quantities small {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+  #ppo-inventory .iv-mobile-product {
+    display: block;
+    margin-top: 24px;
+  }
+  #ppo-inventory .iv-record-main {
+    display: flex;
+    flex-direction: column;
+  }
+  #ppo-inventory .iv-tabs {
+    order: 2;
+  }
+  #ppo-inventory .iv-tab-content {
+    order: 1;
+  }
+}
+
+#ppo-inventory .iv-position {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-inventory .iv-position a {
+  min-width: 28px;
+  text-align: center;
+}
+#ppo-inventory .iv-selection-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+  padding: 10px 16px;
+}
+#ppo-inventory .iv-selection-toolbar span {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-inventory .iv-selection-hidden {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-inventory .iv-position {
+    display: none;
+  }
+  #ppo-inventory .iv-phone-list a span {
+    overflow-wrap: anywhere;
+  }
+}
+
+#ppo-inventory .mw-menu h2.iv-menu-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+#ppo-inventory .iv-toolbar :is(input, select) {
+  margin: 0;
+  min-height: 40px;
+}
+#ppo-inventory .iv-toolbar select[aria-label="Location"] {
+  width: 110px;
+}
+#ppo-inventory .iv-toolbar select[aria-label="Unit"] {
+  width: 72px;
+}
+#ppo-inventory .iv-toolbar select[aria-label="Completeness"] {
+  width: 142px;
+}
+#ppo-inventory .iv-search {
+  flex-basis: 140px;
+}
+#ppo-inventory .iv-desktop-grid input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  margin: 0;
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table :is(th, td) {
+  padding: 8px 12px;
+  height: 40px;
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table th {
+  font-size: 14px;
+  font-weight: 500;
+}
+#ppo-inventory .iv-record-header h1 {
+  letter-spacing: normal;
+}
+#ppo-inventory .iv-record-header h1:focus:not(:focus-visible) {
+  outline: none;
+}
+@media (max-width: 780px) {
+  #ppo-inventory .iv-toolbar select {
+    width: 100% !important;
+  }
+  #ppo-inventory .iv-record-header h1 {
+    display: block;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  #ppo-inventory .iv-record-header h1 .ppo-register-chip {
+    display: none;
+  }
+  #ppo-inventory[data-record="true"] .mw-content {
+    padding-bottom: 116px;
+  }
+  #ppo-inventory .iv-record-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(64px + env(safe-area-inset-bottom));
+    padding: 8px 16px;
+    border-top: 1px solid var(--line);
+    justify-content: center;
+  }
+  #ppo-inventory .iv-record-actions > :is(a, button) {
+    flex: 1;
+  }
+  #ppo-inventory .iv-tabs {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(125px + env(safe-area-inset-bottom));
+    z-index: 2;
+  }
+  #ppo-inventory .iv-phone-quantities > div {
+    padding: 8px 0;
+  }
+  #ppo-inventory .iv-phone-list small {
+    max-width: 47%;
+  }
+}
+
+#ppo-inventory .mw-menu li button {
+  padding: 10px 16px;
+}
+#ppo-inventory .iv-desktop-grid .ppo-register-table :is(th, td) {
+  padding: 6px 8px;
+}
+#ppo-inventory .iv-tab-content .ppo-register-table {
+  min-width: 0;
+  table-layout: fixed;
+}
+#ppo-inventory .iv-tab-content .ppo-register-table :is(th, td) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding: 10px 12px;
+}
+#ppo-inventory .iv-quantity-table th:nth-child(1) {
+  width: 25%;
+}
+#ppo-inventory .iv-quantity-table th:nth-child(2) {
+  width: 16%;
+}
+#ppo-inventory .iv-quantity-table th:nth-child(3) {
+  width: 22%;
+}
+#ppo-inventory .iv-quantity-table th:nth-child(4) {
+  width: 37%;
+}
+#ppo-inventory .iv-filter-status .ppo-button {
+  min-height: 28px;
+  font-size: 12px;
+  padding: 4px 12px;
+}
+@media (max-width: 780px) {
+  #ppo-inventory .iv-company,
+  #ppo-inventory .iv-quantity-date {
+    display: none;
+  }
+  #ppo-inventory .iv-record-top {
+    height: 0;
+    padding: 0;
+  }
+  #ppo-inventory .iv-record-top > button:first-child {
+    display: none;
+  }
+  #ppo-inventory .iv-record-top > button:last-child {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    width: 44px;
+    z-index: 1;
+    font-size: 0;
+  }
+  #ppo-inventory .iv-record-top > button:last-child::after {
+    content: "↻";
+    font-size: 20px;
+  }
+  #ppo-inventory .iv-record-header {
+    padding: 12px 68px 0 16px;
+  }
+  #ppo-inventory .iv-tab-content .ppo-register-table :is(th, td) {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 780px) {
+  #ppo-inventory .iv-record-actions > :is(a, button) {
+    height: 44px;
+    min-width: 0;
+    padding: 4px 8px;
+    line-height: 16px;
+    font-size: 13px;
+  }
+  #ppo-inventory .iv-filter-status .ppo-button,
+  #ppo-inventory .mw-menu li button {
+    min-height: 44px;
+  }
+}
+
+#ppo-inventory .iv-tabs .ppo-button:is(:hover, :focus-visible) {
+  background: var(--surface-2);
+  color: var(--ink);
+}

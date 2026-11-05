@@ -2,7 +2,7 @@
 
 Derived from the current destination catalogue and ordered rails against the supplied [prompt r01](../reference/ui/application-shell/PPO-Department-Navigation-Icons-VS-Code-Implementation-Prompt-r01.md) and [register r02](../reference/ui/application-shell/PPO-Department-Navigation-Icon-Register-r02.md). This supplements the [handover](department-navigation-icons.md); readiness is separate from permission and owner acceptance.
 
-70 department-rail positions; 60 wired positions (My Work repeats across six departments); 10 withheld. All positions have outline/active artwork. Refresh with scripts/build-navigation-coverage.ts.
+71 department-rail positions; 60 wired positions (My Work repeats across six departments); 11 withheld. All positions have outline/active artwork. Refresh with scripts/build-navigation-coverage.ts.
 
 | Department (short name) | Order | Destination | Route | Semantic glyph | Existing access source | Readiness | Active parent ID | Evidence / missing dependency |
 |---|---:|---|---|---|---|---|---|---|
@@ -65,9 +65,10 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Supply chain | 3 | Purchasing | /supply/purchasing | nav-purchasing | supply.read | Source route present | purchasing | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Supply chain | 4 | Inbound shipments | /supply/shipments | nav-inbound | supply.read | Source route present | inbound | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Supply chain | 5 | Receiving | /supply/receipts | nav-receiving | supply.read | Source route present | receiving | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Supply chain | 6 | Stock & reservations | /supply/stock | nav-stock | supply.read | Source route present | stock | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Supply chain | 7 | Dispatch & delivery | /supply/dispatch | nav-dispatch | supply.read | Source route present | deliveries | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
-| Supply chain | 8 | Returns & claims | /supply/returns | nav-returns | supply.read | Source route present | returns | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Supply chain | 6 | Inventory | /supply/stock | nav-stock | supply.read | Source route present | stock | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Supply chain | 7 | Workshop | Withheld | nav-maintenance | supply.read | Unavailable | None | Receiving SC-04 rail position reserved; no native Workshop route exists. |
+| Supply chain | 8 | Dispatch & delivery | /supply/dispatch | nav-dispatch | supply.read | Source route present | deliveries | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
+| Supply chain | 9 | Returns & claims | /supply/returns | nav-returns | supply.read | Source route present | returns | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Finance | 1 | My Work | /work | nav-work | activity.read | Source route present | work | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Finance | 2 | Finance handoffs | /finance/handoffs | nav-inbox | finance.read | Source route present | finance | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
 | Finance | 3 | Customer accounts | /finance/accounts | nav-accounts | finance.account.read AND shared.finance.read AND finance.read | Source route present | accounts | Source presence only; runtime and owner evidence remain in the navigation implementation ledger |
@@ -77,7 +78,7 @@ Derived from the current destination catalogue and ordered rails against the sup
 | Finance | 7 | Reconciliation | Withheld | nav-reconciliation | No capability invented | Unavailable | None | Handoff reconciliation is a record action; no distinct reconciliation register. |
 | Finance | 8 | Exceptions | Withheld | nav-exceptions | No capability invented | Unavailable | None | Shared /admin recovery does not provide a finance-scoped exception list. |
 
-78 distinct catalogue destinations; 66 ready in source; 12 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
+80 distinct catalogue destinations; 67 ready in source; 13 unavailable. Rail positions repeat shared destinations and exclude some shared/personal entries. See [navigation implementation evidence](../testing/evidence/navigation/README.md) for the bounded runtime matrix; source presence is not acceptance.
 
 Specific child routes take precedence. Fertigation selects Specialist configurations; Engineering materials, changes and commissioning retain their own destination. Programme view is consumed by the project schedule and supplies a return to its chooser. Sales task drawers keep Tasks selected; People/Organisation details select Contacts in Sales.
 

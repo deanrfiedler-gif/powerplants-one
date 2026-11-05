@@ -1,4 +1,5 @@
 "use client";
+import { InventoryPage } from "./inventory";
 import { SupplyFollowupQueue } from "../../components/quotation-supply-followup";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -26,7 +27,10 @@ type Panel =
   | { type: "fact"; kind: FactKind; previous?: Fact };
 export function SupplyWorkspacePage({ slug }: { slug: string }) {
   const { context } = useShell();
-  return <Workspace key={`${context?.preference_scope}:${slug}`} slug={slug} />;
+  const params = useSearchParams();
+  return slug === "stock" && params.get("native") !== "1"
+    ? <InventoryPage key={`${context?.preference_scope}:${slug}`} />
+    : <Workspace key={`${context?.preference_scope}:${slug}`} slug={slug} />;
 }
 function Workspace({ slug }: { slug: string }) {
   const page = supplyPages.find((p) => p.slug === slug)!;
@@ -36,7 +40,7 @@ function Workspace({ slug }: { slug: string }) {
     search = params.get("q") ?? "",
     filter = params.get("completeness") ?? "",
     view = params.get("view") ?? "register";
-  const [panel, setPanel] = useState<Panel | null>(null),
+  const [panel, setPanel] = useState<Panel | null>(() => slug === "stock" && params.get("observation") === "1" ? { type: selected ? "edit" : "create" } : null),
     [history, setHistory] = useState(false);
   const focusAfterClose = useRef<string | null>(null);
   const detailRegion = useRef<HTMLElement | null>(null);
@@ -49,6 +53,14 @@ function Workspace({ slug }: { slug: string }) {
   function openPanel(value: Panel, focusKey: string) {
     focusAfterClose.current = focusKey;
     setPanel(value);
+  }
+  function closePanel() {
+    setPanel(null);
+    if (slug === "stock" && params.get("observation") === "1") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("observation");
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
   }
   const list = usePlatformResource<Awaited<ReturnType<typeof register>>>(
     `supply/records?kind=${page.kind}&q=${encodeURIComponent(search)}&completeness=${encodeURIComponent(filter)}`,
@@ -121,12 +133,14 @@ function Workspace({ slug }: { slug: string }) {
     );
   }
   const canCreate = opts.data?.can_create?.[page.kind] ?? false;
+  const observationAllowed = panel?.type === "create" ? canCreate : panel?.type !== "edit" || (!!r && !!detail.data?.capabilities.edit);
   return (
     <section
       id="ppo-supply"
       className="supply-workspace"
       aria-label={page.title}
     >
+      {slug === "stock" && <Link href={`/supply/stock${selected && r?.data.supply_kind === "Stock" ? `?record=${selected}` : ""}`}>Back to inventory</Link>}
       {slug === "changes" && <SupplyFollowupQueue />}
       <header className="supply-header">
         <div>
@@ -559,7 +573,7 @@ function Workspace({ slug }: { slug: string }) {
           )}
         </section>
       </div>
-      {panel && (opts.data || panel.type === "fact") && (
+      {panel && (slug !== "stock" || params.get("observation") !== "1" || observationAllowed) && (opts.data || panel.type === "fact") && (
         <WorklistPanel
           title={
             panel.type === "fact"
@@ -577,7 +591,7 @@ function Workspace({ slug }: { slug: string }) {
                 "Close this form? Unsaved entries will be discarded; any original pending save remains recoverable.",
               )
             )
-              setPanel(null);
+              closePanel();
           }}
         >
           <Recovery command={command} />
@@ -588,7 +602,7 @@ function Workspace({ slug }: { slug: string }) {
               record={panel.type === "edit" ? r : undefined}
               options={opts.data!}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : r && panel.type === "allocate" ? (
             <AllocationForm
@@ -596,7 +610,7 @@ function Workspace({ slug }: { slug: string }) {
               allocations={detail.data?.allocations ?? []}
               options={opts.data!}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : r && panel.type === "fact" ? (
             <FactForm
@@ -607,7 +621,7 @@ function Workspace({ slug }: { slug: string }) {
               facts={detail.data?.current_facts ?? []}
               fieldCaptures={detail.data?.field_captures ?? []}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : null}
         </WorklistPanel>
@@ -637,7 +651,7 @@ function AssessmentEvidence({ value }: { value: string }) {
       <p>Demand version {basis.demand_version}</p>
       {basis.sources.map((source) => (
         <p key={source.id}>
-          <Link href={`/supply/stock?record=${source.id}`}>
+          <Link href={`/supply/stock?native=1&record=${source.id}`}>
             Source version {source.version}
           </Link>{" "}
           · {source.completeness} · usable {source.usable ?? "Unknown"} ·{" "}

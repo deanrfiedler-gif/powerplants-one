@@ -1,42 +1,36 @@
-# Stock & reservations — native design contract
+# Inventory — SC-05 design contract
 
-Stable entry: `route:/supply/stock`. Scope: **SC-05**. Route: `/supply/stock`. Owner: Dean Fiedler. Review: Draft; no accepted visual fingerprint.
+Stable entry: `route:/supply/stock`. Route `/supply/stock`; parent SCM-02, SCM-03 and SCM-08 retained. Owner: Dean Fiedler. Visual status: Needs review; no accepted application fingerprint.
 
 ## Purpose and task
 
-Dated source observations, explicit units and completeness. Live reservations are not configured.
+Read permitted dated source observations in a bounded register, inspect a snapshot, then open an item record. MYOB remains the intended ERP authority. PPO posts no stock movement. Unknown never means zero. Product mapping persistence is outstanding; show No link recorded and no inferred Product handover.
 
-1. **Read the observation basis:** Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.
-2. **Review competing demand:** Open line allocations and their native demand handovers. Incoming coordination allocation is not a source reservation; usable allocation needs complete evidence.
-3. **Respect the source boundary:** Live reservation policy is Not configured. Reservation observations can be recorded from fulfilment, but no external command is sent and no unit conversion is inferred.
+Shipment Activity hands over to Receiving (SC-04) for receipt and inspection evidence; Stock Activity retains its native observation view. Search matches every permitted observation title and waits for a 200 ms typing pause before reading. Closing or saving the observation form consumes its URL launch parameter without adding history. The item detail uses explicit refresh rather than window-focus refresh.
+
+The flagship hold was lifted on 5 November 2026; Inventory remains a tier 1 flagship due for the stage 3b redraw under ADR-0067, after which its visual layer will be rebuilt. The guide remains InReview. See the [dated status](../../../status/2026-11-05-inventory-review-fixes.md) for the recorded decision and separate acceptance boundaries.
 
 ## Desktop
 
-**Accepted design, 15 October 2026:** the [Inventory design decision](../../../decisions/inventory-figma-design.md), captures 01 to 05 in [Inventory design r01](../../../reference/ui/supply-chain/inventory-figma-r01/README.md). It replaces the two-column worklist and bordered panels described below with the accepted register and record patterns, and proposes the rail label Inventory. The quantity rules below are unchanged.
-
-Use the existing PPO shell, r20 Register / worklist with selected Detail workspace, and Review / comparison for retained history. At 1440 × 960 and 1024 × 768, the module uses a two-column worklist/detail grid (one third / two thirds), 20px padding, 16px gaps, white bordered panels, 26px title and compact wrapped evidence rows. The shell's normal main region owns page scrolling. No second rail or viewport-height allocation is introduced. Page-specific actions appear only for permitted native capabilities.
+The accepted r20 Register / worklist uses the shared SecondaryMenuFrame, a flat shared RegisterTable and a docked snapshot. At 1440 px use a 240 px secondary menu, compact 40 px controls and rows, source-completeness chips and observed time. At 1024 px the menu overlays. Item detail separates header and Product strip from a context column and Quantities, Locations, Demand, Activity and Source evidence views. Locations remain flat source rows; activity is native-record evidence history.
 
 ## Mobile
 
-**Accepted design, 15 October 2026:** captures 06 to 08 in [Inventory design r01](../../../reference/ui/supply-chain/inventory-figma-r01/README.md): flush rows showing the item, reference and unit with a completeness tag, then on hand, available and reserved and the observed time; an item view with Quantities rows (Unknown stays Unknown), the rule note, Product and locations, and Open product and Record observation at the bottom; and a Supply chain tab bar with Inventory current.
-
-At 390 × 844 and 320 CSS px the worklist/detail grid and capture fields become a single column. Module padding is 12px; the title is 22px. Every field remains available with a visible label, 16px input text and 44px target. Receipt, pick/stage/dispatch, POD and custody capture use focused stacked forms. Dense evidence uses labelled definition lists rather than an inaccessible table-only view. Content and long identifiers wrap within the viewport. Selecting a record on mobile opens its detail in place of the worklist, with an explicit Back to worklist control; browser Back also restores the list. Mobile browser/keyboard evidence is separate from physical-device acceptance.
+At 390 and 320 px use full-width item rows, 44 px controls and 16 px form text. Item details reflow; quantity meanings and their bases remain readable without page overflow. The shared phone header and secondary-menu focus/escape contract apply. Retry preserves URL selection and filters. Native observation capture uses its existing responsive form and uncertain-save recovery. Physical-device and screen-reader review remain outstanding.
 
 ## Components, states and handovers
 
-Reuse `Button`, `WorklistPanel` (native modal and focus return), `ErrorNotice`, `Stamp`, `usePlatformResource`, the shell information icon and shared semantic tokens. The domain-specific `Input` renders closed, labelled business fields; it is not a new shared component. New Supply Chain CSS is scoped to the module and forms. The seven-item rail groups ten routes as stated in BP-08.
+Reuse shared tokens, Button/ButtonLink, RegisterTable/RegisterChip/RegisterEmpty, SecondaryMenuFrame and usePlatformResource. The root opts into `data-ppo-workspace="shared"`; no shared CSS ID list changes. Component consumer details live in [the binding note](../component-bindings/2026-10-31-inventory.md).
 
-Loading, empty, filtered-empty, read-only, denied/missing context, field validation, stale revision, saving, saved, uncertain result, conflict and recovery are explicit. Status is textual. Search/completeness/record/view selection stays in the URL. Identity changes remount the workspace and remove its old read projection. Unknown saves retain original operation/content under the current browser identity; server authority precedes recovery.
+Loading, failed/denied reads, empty/filtered-empty results, bounded lists, Unknown, Partial, Unavailable, zero, held quantities, no Product link and overlapping locations are explicit. A fresh request removes stale protected data. Incoming is a permitted source record; outgoing is the native observation form, exact source record, permitted Material demand or Service stock. Existing commands, permissions, expected versions and uncertain-save recovery remain authoritative.
 
-Incoming: canonical Customer/Site/Facility/Equipment, Project or Work Order demand and exact manual/synthetic evidence. Outgoing: other SC pages, Engineering and owning Project/Service/Scheduling workspaces, one shared Material Action, document evidence and permission-restricted Finance observations. No external transaction or downstream approval is implied.
+## Reference and review evidence
 
-## References and review evidence
+Accepted source: [Inventory design decision](../../../decisions/inventory-figma-design.md), named version "Excel import, Products and Inventory — accepted". Exact icon-free captures: [retained Inventory r01](../../../reference/ui/supply-chain/inventory-figma-r01/README.md), frames 698:3419, 701:4388, 702:3419, 702:165468, 702:165896, 702:166327, 702:166347, 702:166814 and 705:2577. Source presence is separate from implementation proof.
 
-- Accepted Figma design: [Inventory design r01 captures](../../../reference/ui/supply-chain/inventory-figma-r01/README.md) (icon-free PNGs; not application captures)
+Current comparison, departures and executed checks: [Inventory evidence](../../../testing/evidence/inventory/README.md). Source evidence is an adaptation because that tab was not drawn. Product linking is deliberately unavailable under Q1. The native form is retained under R3. No visual acceptance or deployment is claimed.
 
-Exact retained HTML: `docs/reference/ui/supply-chain/PPO-Order-Fulfilment-and-Customer-Delivery-Workspace-r01.html`. Historical bytes are unchanged.
-
-No exact historical mobile image is recorded. New application captures belong under `docs/testing/evidence/supply-chain-native/`; source presence, executed functional tests, visual inspection, owner acceptance and deployment are separate. See [handover](../../../delivery/supply-chain-native-handover.md) and [BP-08](../../../blueprints/BP-08-supply-chain.md). Current paired visual acceptance is not claimed.
+## Historical native implementation evidence
 
 ## Native application captures — 25 September 2026
 
