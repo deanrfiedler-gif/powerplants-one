@@ -1,14 +1,18 @@
 # Shell concept trial consumer note
 
-Owner: Dean Fiedler. Review: proposed concept, owner review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
+Owner: Dean Fiedler. Review: desktop logo alignment and rail-footer arrangement adopted; wider concept review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
 
 ## application-shell
 
 The trial reuses the concept's top bar, compact/expanded rails, grouped Sales flyout, pinned menu and snapshot. Service uses the same frame around scope readiness and explicit authorisation. Phone views at 390 x 844 and 320 x 568 distinguish workspace Menu from record More, use separate record-actions sheets, and retain a fixed primary action. State-specific Service lists and Schedule returns preserve the local journey; shared workspace re-entry still resets the fixed example. This is a reference-only consumer, with no new application route or renderer. The concept's rail width, compact breakpoint, outline icons and reduced phone utilities must be reconciled with accepted shell rules before adoption. Graph connectivity and visual review do not establish keyboard, screen-reader, physical-device or production acceptance.
 
+The adopted desktop arrangement uses derived local top-bar and rail components. The logo, workspace icons and footer arrow share x=36 in both widths. Settings and the display control remain below the independently scrolling workspace list, with 44 px target height and 8 px bottom inset. Thirty-one fixture pairs retain page/state on toggle and onward desktop links retain rail width. These are Figma transitions, not persistence or accessible implementation proof. The 32 phone layouts remain unchanged; tooltip wording is specified but hover behaviour is not demonstrated.
+
 ## register-table
 
 Sales browse, preview and checked-row fixtures distinguish record inspection from bulk action. Clear selection retains the preview. The Service register opens the blocked synthetic work order; readiness evidence remains attached to the exact scope. Compact laptop/tablet and phone rows are trial compositions, not a replacement for the accepted register control set. Arbitrary sorting, filters, bulk execution and the complete permission matrix are outside this prototype.
+
+The expanded preview and pinned-menu examples use a derived Deals component with 140 px local search, compact gaps and wrapped filters. This keeps the primary action visible within the reduced workspace. Expanded Service headers, summaries and cards use available width rather than their earlier fixed compact-rail dimensions.
 
 The compact deal-row component retains customer, scope, amount/stage and next activity in six row instances. The final pass uses 15/20 customer names, 13/18 supporting text, 12 px padding and 8 px corners inside 16 px content gutters. The 390 view shows all six; the short 320 view scrolls. Only the named Sunline phone record journey is connected. Overdue status includes the word as well as colour.
 

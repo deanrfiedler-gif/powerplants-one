@@ -3,7 +3,7 @@ document_id: PPO-SHELL-CONCEPT-PROTOTYPE-DEC
 title: Shell concept clickable trial
 date: 2026-11-05
 owner: Dean Fiedler
-status: User-authorised concept refinement; prototype delivered; owner review and application adoption pending
+status: Desktop logo and rail-footer direction adopted; wider prototype review and application implementation pending
 source_commit: aeaaad5a8e13f5c9549b9763a8150413b1769ab9
 versioning: git
 ---
@@ -12,7 +12,7 @@ versioning: git
 
 Dean approved the recommendation to retain the navy rail, grouped flyout, command palette and snapshot, resolve the four high-priority audit findings, and build a clickable Sales plus demanding Service or Engineering workflow. His instruction was: "Proceed with your recommendation below." Service was selected because its scope-specific readiness, explicit authorisation and scheduling handover exercise more than ordinary record navigation.
 
-This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). It does not adopt a replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
+This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). Dean subsequently adopted the specific desktop logo and rail-footer direction recorded below; this does not accept every trial screen, adopt a complete replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
 
 Dean subsequently requested: "Refine the phone navigation, information density and dialogs in Figma, then walk through the Sales and Service workflows and report any remaining issues." The second pass below records that work and its observed limits.
 
@@ -92,6 +92,26 @@ The structural check found no horizontal text overflow in phone vertical contain
 
 The earlier player walkthrough remains the interaction evidence; this final pass changed typography, spacing, colours and footer grouping, then rechecked the graph. It does not claim a new full player or real-device test. Visual consistency is ready for owner sign-off on the represented examples. The following functional, coverage and adoption matters still prevent complete shared-shell sign-off.
 
+## Adopted desktop logo and rail-footer direction
+
+Dean adopted the recommendation to remove the top-left rail display control, align the Powerplants symbol with the navigation icons, and place expand/collapse in the rail itself. His instruction was: "My preference is to adopt your proposal for the desktop shell." The MYOB screenshots informed this decision; they are reference material, not a requirement to reproduce that product's navigation or visual styling.
+
+The clickable trial now uses these specific desktop rules:
+
+- The existing 32 px Powerplants symbol has its centre at x=36, aligned with the main navigation icons and footer arrow in both rail widths. The wordmark follows it in the header; the top-left toggle is removed.
+- Settings and the rail display control occupy a fixed footer below an independently scrolling workspace list. A subdued divider separates the display control from Settings. The control remains 8 px above the screen bottom, including the 720 px and 768 px high studies.
+- A right chevron expands the compact rail; a left chevron and **Collapse navigation** label collapse the expanded rail. Targets are 64 x 44 and 224 x 44 px respectively. Tooltip copy is **Expand navigation** / **Collapse navigation**; reference text is supplied, but interactive hover rendering and accessible semantics require application proof.
+- The prototype contains 31 matching compact/expanded desktop pairs. Toggling retains the current screen and fixed record state; onward desktop links retain the chosen width. This is navigation between authored fixtures, not a persisted application preference. The 32 phone layouts and their Menu controls are unchanged.
+- Expanded Service content fits the narrower workspace. Expanded Sales preview and pinned-menu layouts use a 140 px local search, compact action spacing and wrapped filter controls to keep the primary action reachable. The original concept masters remain available for comparison.
+
+The trial reuses and derives local components from the original assets: aligned top bar `126:24992`, compact rail `126:25061`, expanded rail `126:25155`, and compact-toolbar Deals content `141:40800`. Representative pairs are Sales browse `64:8004` / `64:14455`, Sales preview `64:8876` / `128:25168`, authorised Service `66:19514` / `128:33226`, laptop register `80:24568` / `128:44771`, and tablet register `80:24951` / `128:45079`. Rule card `77:24568` records the decision and application limits.
+
+Source inspection found 96 reachable screens, 759 destination actions and no dangling targets. All 62 desktop states passed the x=36 logo/icon/arrow alignment, 44 px target-height, fixed-bottom and reciprocal-toggle checks. The 32 phone geometry/text signatures were unchanged. Screenshot review caught and corrected fixed-width Service content and compact Sales toolbar clipping. Player evidence for this refinement is recorded separately from these source checks.
+
+In the player, Sales browse expanded through the footer, opened the Sunline preview while retaining the expanded rail, then collapsed with that preview still open. The authorised Service record expanded without losing r02 authorisation, opened Schedule with the rail still expanded, then collapsed while retaining the unassigned-demand handover. These are representative fixture transitions, not arbitrary application-state tests. The compact pinned-menu study omits the redundant Board/Grid switch; its grid, primary action and filters remain visible. Expanded Service register headings and action columns share the same widths.
+
+This is adoption of the specific desktop arrangement. Rail dimensions, breakpoints, the rest of the trial, implementation, device/accessibility proof and whole-shell acceptance remain separate. No runtime shell, deployment, accepted reference bytes or review fingerprint changed.
+
 ## Remaining issues
 
 1. **Prototype state continuity:** re-entering Service from the shared workspace menu starts the blocked example again. Local record/list/Schedule returns preserve the relevant fixture, but cross-workspace persistence is not implemented. The shared issue-confirmation background and issued result use the saved 8 December example even when opened from the original 1 December quote or the separate 15 December recovery fixture. Cancellation returns correctly, but arbitrary state combinations are not a valid end-to-end proof. Use stateful fixtures before broader usability testing.
@@ -100,11 +120,11 @@ The earlier player walkthrough remains the interaction evidence; this final pass
 
 ## Evidence and limits
 
-- Final structural inspection: all 66 named trial screens reachable from Start; 461 destination actions; zero dangling targets. No connected phone action instance measured below 44 x 44 px; all text uses Roboto. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens remain editable native Figma nodes; image fills are only the reused 32 x 32 logo instances. The initial pass contained 50 screens and 427 destination actions.
+- The pre-rail visual pass contained 66 reachable screens and 461 destination actions; the adopted desktop arrangement extends this to 96 screens and 759 actions with no dangling target. No connected phone action instance measured below 44 x 44 px; all text uses Roboto. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens remain editable native Figma nodes; image fills are only reused 32 x 32 logos. The initial pass contained 50 screens and 427 destination actions.
 - Visual inspection covered the guide, preview, bulk selection, Service register/readiness/review/confirmation, quote edit and recovery, issue confirmation, issued state, laptop/tablet and phone compositions. Text-container overlap and Service icon fills found in the first pass were corrected and recaptured.
 - The Figma player was used for representative clicks, separately from graph inspection. This is prototype navigation proof only. Keyboard reactions are authored for command search, Escape, result selection and confirmation cancellation; keyboard focus order, trapping and screen-reader semantics are not proven by the Figma graph.
 - Forms use predefined example values; fields are not arbitrary live inputs. Search uses a fixed Riverbend query. Some inherited toolbar, filter, tab and utility controls are contextual drawings, outside the linked trial. The Start guide identifies the supported journeys.
 - The 720 x 450 frame is a layout study, not an executed browser-zoom accessibility test. Physical phones, touch keyboard occlusion, all real permissions, persistence, concurrent edits, delivery receipts and operational rules remain to be tested in an application implementation.
 - No retained PNG package or named accepted Figma version is issued in this contribution. Private visual evidence remains in the source file and review session. No new review fingerprint, baseline acceptance or deployment is claimed.
 
-The final visual-consistency pass is complete and the represented layouts are ready for owner approval. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before shared-shell adoption. Owner acceptance and production readiness remain unclaimed.
+The desktop logo alignment and rail-footer arrangement are adopted. The wider trial's represented layouts remain subject to owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before complete shared-shell adoption. Whole-shell acceptance and production readiness remain unclaimed.

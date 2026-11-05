@@ -14,6 +14,8 @@ The final visual pass aligns dialog typography and footers, phone gutters/card s
 
 ## Desktop
 
+Dean adopted the concept's desktop logo alignment and rail-footer control on 5 November. The private Figma trial removes the header toggle, aligns the symbol and rail arrows with the icon column, and keeps Settings plus a 44 px expand/collapse action below independently scrolling navigation. Its 31 compact/expanded pairs preserve the current prototype screen; phone Menu is unchanged. The [decision and exact source nodes](../../../decisions/shell-concept-prototype.md#adopted-desktop-logo-and-rail-footer-direction) distinguish this adopted arrangement from proposed geometry, remaining trial gaps and application implementation. The runtime source below has not been changed by this design record.
+
 Use the actual shared application source `src/components/product-navigation.tsx`. The shell owns branding, navigation, global search, identity and viewport allocation. Development pages occupy the workspace interior. Shared changes must be checked against every affected consumer, using the complete root stylesheet order.
 
 ## Mobile
