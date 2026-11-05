@@ -8,7 +8,7 @@ The trial reuses the concept's top bar, compact/expanded rails, grouped Sales fl
 
 The adopted desktop arrangement uses derived local top-bar and rail components. The logo, workspace icons and footer arrow share x=36 in both widths. Settings and the display control remain below the independently scrolling workspace list, with 44 px target height and 8 px bottom inset. Thirty-one fixture pairs retain page/state on toggle and onward desktop links retain rail width. These are Figma transitions, not persistence or accessible implementation proof. The 32 phone layouts remain unchanged; tooltip wording is specified but hover behaviour is not demonstrated.
 
-The current workspace uses a square slate band, white icon/Medium label and an inside 3 px green left edge at both widths. The indented current page retains its quieter marker. Reference `156:41012` separates hover, active, focus and combined active/focus; keyboard and pointer behaviour remain implementation proof. The sampled contrast figures and source checks are in the [active-workspace decision](../../../decisions/shell-concept-prototype.md#adopted-desktop-active-workspace).
+The current workspace uses a full-width slate band with square corners and a white icon and Medium label. Its 3 px green stripe touches the left edge and the slate fill reaches the right edge in both the 72 px and 240 px trial rails. The indented current page retains its quieter marker. Reference `156:41012` separates hover, active, focus and combined active/focus; keyboard and pointer behaviour remain implementation proof. The sampled contrast figures and source checks are in the [active-workspace decision](../../../decisions/shell-concept-prototype.md#adopted-desktop-active-workspace).
 
 ## register-table
 
