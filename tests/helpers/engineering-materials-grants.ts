@@ -110,9 +110,11 @@ export function assertOnlyEngineeringSeedGrantsAdded(original: Grant[], upgraded
   assert.equal(materials.length, 31);
   assert.equal(changes.length, 21); // twelve reads for three profiles and nine duty grants
   assert.equal(commissioning.length, 18); // four reads for one profile, six duty grants and eight My Work action grants
-  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability !== "conversation.agent.ask")), sorted(expected));
+  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability !== "conversation.agent.ask" && g.capability !== "service_escalation.record")), sorted(expected));
   assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask")),
     sorted(agentAskSeedGrants([...original, ...expected], at)));
+  assert.deepEqual(sorted(upgraded.filter(g => !ids.has(g.id) && g.capability === "service_escalation.record")),
+    sorted(escalationSeedGrants([...original, ...expected], at)));
 }
 
 // Seed 49 copies exact duties from existing synthetic scopes and adds no user.
@@ -246,4 +248,17 @@ export function agentAskSeedGrants(original: Grant[], at = new Date()): Grant[] 
     .sort((a, b) => String(a.id) < String(b.id) ? -1 : 1)
     .map(g => ({ ...g, id: agentAskGrantId(String(g.id)), capability: "conversation.agent.ask" }))
     .filter(g => !seen.has(key(g)) && !!seen.add(key(g)));
+}
+
+// Seed 124 copies the existing local coordinator/senior technician Activity scopes only.
+// Existing grants, including revoked case duties, suppress an addition on repeated seeding.
+export function escalationSeedGrants(original: Grant[], at = new Date()): Grant[] {
+  const time=(v:unknown)=>new Date(v as string | Date).getTime();
+  const key=(g:Grant)=>[g.workspace_id,g.user_id,g.capability,g.scope_type,g.scope_id].join(":");
+  const seen=new Set(original.map(key));
+  return original.filter(g=>[coordinator,"30000000-0000-4000-8000-000000000010"].includes(String(g.user_id)) && g.capability==="activity.edit" && time(g.valid_from)<=at.getTime() && (g.valid_to===null || time(g.valid_to)>at.getTime()))
+    .map(g=>{
+      const h=createHash("md5").update(`sv08:${g.id}`).digest("hex");
+      return {...g,...("id" in g?{id:`${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`} : {}),capability:"service_escalation.record"};
+    }).filter(g=>!seen.has(key(g)) && !!seen.add(key(g)));
 }

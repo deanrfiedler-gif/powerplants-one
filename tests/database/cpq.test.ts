@@ -773,7 +773,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   await migrate();
   await seed();
   assert.deepEqual(
-    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' ORDER BY id"),
+    await rows("SELECT * FROM ppo.permission_grants WHERE capability NOT LIKE 'conversation.%' AND capability NOT LIKE 'service_escalation.%' ORDER BY id"),
     grants,
   );
   assert.deepEqual(await readDiscoveryWorkspace(p, g.id), before);
@@ -786,7 +786,7 @@ test("0086 preserves populated history and grants; migrate and seed are repeatab
   );
   assert.deepEqual(
     after.filter((r) => r.version > 85).map((r) => r.version),
-    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122],
+    [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124],
   );
   await migrate();
   await seed();
@@ -881,7 +881,7 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   for (let i = 0; i < tables.length; i++) {
     const original = tables[i] === "cpq_revisions" ? "to_jsonb(t)-'package_manifest'" : "to_jsonb(t)";
     // Seed 108 adds conversation duties beside the earlier grants; everything else must be unchanged.
-    const scope = tables[i] === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : "";
+    const scope = tables[i] === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%' AND t.capability NOT LIKE 'service_escalation.%'" : "";
     assert.deepEqual(
       await rows(
         `SELECT ${original} AS row FROM ppo.${tables[i]} t${scope} ORDER BY (${original})::text`,
@@ -898,7 +898,7 @@ test("0091 preserves populated 0086 CPQ releases, runs, adoption and identity hi
   );
   assert.deepEqual(
     current.filter((r) => r.version > 86).map((r) => r.version),
-    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122],
+    [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124],
   );
   await migrate();
   await seed();

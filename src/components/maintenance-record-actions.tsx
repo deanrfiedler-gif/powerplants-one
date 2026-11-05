@@ -144,7 +144,24 @@ export function MaintenanceActions({
     (family === "cases" && tab === "resolution")
   ) {
     const cap = family === "due" ? "maintenance.manage" : "warranty.manage";
-    if (d.actions["service.ticket.edit"])
+    // M-R2/M-R4: maintenance preparation also creates the Draft work order.
+    const service =
+      !!d.actions["service.ticket.edit"] &&
+      (family !== "due" || !!d.actions["service.work_order.edit"]);
+    if (family === "due" && service && row.state === "Partial")
+      forms.push({
+        title: "Prepare follow-on Service request",
+        path: `${path}/prepare-follow-on`,
+        fields: [
+          f("assessment_id", "Current covered assessment for the original due date", "select", {
+            bucket: "assessments",
+          }),
+          ownerField,
+        ],
+        cap,
+        build: (v) => pick(v, [f("assessment_id", ""), ownerField]),
+      });
+    if (service && (family !== "due" || ["Open", "Deferred"].includes(String(row.state))))
       forms.push({
         title: "Prepare owned Service request",
         path: `${path}/prepare-work`,
@@ -164,13 +181,17 @@ export function MaintenanceActions({
     const requests = (d.sources.requests ?? []) as {
       id: string;
       ticket_id: string;
+      follow_on_result_id?: string | null;
     }[];
     forms.push({
       title: "Receive exact reviewed Service result",
       path: `${path}/receive-result`,
       fields: [
         f("request_id", "Original work request", "select", {
-          options: requests.map((x) => ({ id: x.id, label: x.id })),
+          options: requests.map((x) => ({
+            id: x.id,
+            label: x.follow_on_result_id ? `Follow-on request · ${x.id}` : x.id,
+          })),
         }),
         f("report_revision_id", "Exact reviewed Service report revision"),
         f("task_mapping", "Task outcomes", "mapping"),

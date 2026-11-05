@@ -1,0 +1,57 @@
+{
+  "owner_acceptance": false,
+  "application_build_source": "dbff42b3b8b66a3c018a9f4365818996af13c9ad",
+  "schema_version": 1,
+  "capture": {
+    "file": "native-published-proposal-320.png",
+    "sha256": "9a3ec51140a3d4ae3c9f8b46c99666a855c8c7e00843313240477ce66301ca15"
+  },
+  "checks": [
+    {
+      "name": "Native scope paging",
+      "cases": 1,
+      "file": "scope.tap",
+      "sha256": "338d410aee7626bc4b47aa019ae043a54fb5ab72153c503446d5519fca0a3f85",
+      "result": "passed"
+    },
+    {
+      "name": "Populated proposal upgrade",
+      "cases": 1,
+      "file": "drafts-upgrade.tap",
+      "sha256": "be870fa561bb57564b123b6a1f432c375ae66d8994745b83a22a4585f4bc08dd",
+      "result": "passed"
+    },
+    {
+      "name": "Populated publication upgrade",
+      "cases": 1,
+      "file": "publication-upgrade.tap",
+      "sha256": "d9b1027effb93ca8b76cf5f88bf73dbef55731093725fa0db2c44f7a9e644b0f",
+      "result": "passed"
+    },
+    {
+      "name": "Populated site-use upgrade",
+      "cases": 1,
+      "file": "use-upgrade.tap",
+      "sha256": "dd31e2a09d83f8d9d03cc230447e2fc08b052f6bffa5362e5aa35e885f5ac610",
+      "result": "passed"
+    },
+    {
+      "name": "Compiled native HTTP",
+      "cases": 1,
+      "file": "http.tap",
+      "sha256": "e917987254b729a26386d7f26c9483706a62f47a58fbd7cc2c60ef15ccffb165",
+      "result": "passed"
+    },
+    {
+      "name": "Compiled native browser",
+      "cases": 1,
+      "file": "browser.txt",
+      "sha256": "13ce1f965472a15fcd787459df9540f7ae9a78995311f0c2ac9bf776574ef8d7",
+      "result": "passed"
+    }
+  ],
+  "source_commit": "e9b8e613ab400df19f3e0305e042166376c5f63f",
+  "date": "2026-11-01",
+  "deployed": false,
+  "independent_visual_acceptance": false
+}

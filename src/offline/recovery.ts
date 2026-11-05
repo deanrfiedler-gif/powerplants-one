@@ -445,22 +445,27 @@ async function ownerCase(c: QueryClient, p: Principal, id: string) {
     throw unavailable();
   return row;
 }
-export async function listRecovery(p: Principal) {
+export async function listRecovery(p: Principal, needsReview = false) {
   await requireCapability(database(), p, "service.work_order.edit");
   const candidates = (
       await database().query(
-        "SELECT r.id FROM ppo.offline_recovery_cases r JOIN ppo.offline_recovery_grants g ON g.id=r.grant_id WHERE r.workspace_id=$1 AND g.owner_id=$2 ORDER BY r.received_at DESC LIMIT 100",
-        [p.workspace_id, p.actor_id],
+        `SELECT r.id FROM ppo.offline_recovery_cases r JOIN ppo.offline_recovery_grants g ON g.id=r.grant_id
+        WHERE r.workspace_id=$1 AND g.owner_id=$2
+        AND (NOT $3::boolean OR NOT EXISTS (
+          SELECT 1 FROM ppo.offline_recovery_dispositions d WHERE d.workspace_id=r.workspace_id AND d.case_id=r.id
+        )) ORDER BY r.received_at DESC,r.id DESC LIMIT 101`,
+        [p.workspace_id, p.actor_id, needsReview],
       )
     ).rows,
     items = [];
-  for (const candidate of candidates)
+  for (const candidate of candidates.slice(0, 100))
     try {
-      items.push(await reviewRecovery(p, candidate.id));
+      const item = await reviewRecovery(p, candidate.id);
+      if (!needsReview || !item.dispositions.length) items.push(item);
     } catch (e) {
       if (!(e instanceof AppError) || ![403, 404].includes(e.status)) throw e;
     }
-  return { items };
+  return { items, has_more: candidates.length > 100 };
 }
 export async function reviewRecovery(p: Principal, id: string) {
   const r = await ownerCase(database(), p, id);

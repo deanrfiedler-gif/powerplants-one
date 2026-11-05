@@ -1,0 +1,524 @@
+#ppo-escalations {
+  color: var(--ink);
+  font:
+    400 14px/20px Roboto,
+    sans-serif;
+  min-width: 0;
+  background: var(--white);
+  height: 100%;
+}
+#ppo-escalations .mw-content {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+#ppo-escalations .sv08-register {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#ppo-escalations .sv08-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--hairline);
+  flex-wrap: wrap;
+}
+#ppo-escalations .sv08-toolbar-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+#ppo-escalations .sv08-count {
+  padding: 6px 16px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-escalations .sv08-table {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+#ppo-escalations .sv08-table .ppo-register {
+  min-height: 100%;
+}
+#ppo-escalations .sv08-table td,
+#ppo-escalations .sv08-table th {
+  min-width: 145px;
+}
+#ppo-escalations .sv08-table td:nth-child(2) {
+  min-width: 260px;
+}
+#ppo-escalations .sv08-table small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+}
+#ppo-escalations .sv08-row-link {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font:
+    500 14px/20px Roboto,
+    sans-serif;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#ppo-escalations .sv08-phone {
+  display: none;
+}
+#ppo-escalations .sv08-read {
+  padding: 20px;
+}
+#ppo-escalations .sv08-case {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ppo-shell-surface);
+  overflow: hidden;
+}
+#ppo-escalations .sv08-case-heading {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--white);
+  border-bottom: 1px solid var(--hairline);
+}
+#ppo-escalations .sv08-case-heading h1 {
+  font-size: 22px;
+  line-height: 28px;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+#ppo-escalations .sv08-case-heading p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+#ppo-escalations .sv08-case-heading .sv08-actions {
+  align-content: center;
+  justify-content: flex-end;
+  max-width: 320px;
+}
+#ppo-escalations .sv08-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+#ppo-escalations .sv08-readiness {
+  display: flex;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--white);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 12px;
+}
+#ppo-escalations .sv08-readiness > strong {
+  font-size: 14px;
+}
+#ppo-escalations .sv08-readiness > span {
+  color: var(--muted);
+}
+#ppo-escalations .sv08-readiness > span[data-done="true"] {
+  color: var(--ink);
+}
+#ppo-escalations .sv08-case-columns {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+#ppo-escalations .sv08-case-summary {
+  padding: 0 20px 20px;
+  background: var(--white);
+  border-right: 1px solid var(--hairline);
+  overflow: auto;
+}
+#ppo-escalations .sv08-case-summary > section {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+#ppo-escalations .sv08-case-summary h2 {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0 0 12px;
+}
+#ppo-escalations .sv08-case-summary p {
+  font-size: 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+#ppo-escalations dl {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.7fr) minmax(0, 1fr);
+  gap: 8px 12px;
+  margin: 12px 0;
+}
+#ppo-escalations dt {
+  color: var(--muted);
+}
+#ppo-escalations dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#ppo-escalations .sv08-case-main {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+#ppo-escalations .record-tablist {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  flex-shrink: 0;
+  background: var(--white);
+  margin: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+#ppo-escalations .record-tablist > button {
+  white-space: nowrap;
+  min-height: 48px;
+  flex-shrink: 0;
+}
+#ppo-escalations .sv08-case-panels {
+  padding: 16px;
+  overflow: auto;
+  min-height: 0;
+  flex: 1;
+}
+#ppo-escalations .record-panel {
+  padding: 0;
+  margin: 0;
+}
+#ppo-escalations .sv08-card {
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius, 6px);
+  margin-bottom: 16px;
+  min-width: 0;
+}
+#ppo-escalations .sv08-card h2 {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+#ppo-escalations .sv08-card h3 {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 6px;
+}
+#ppo-escalations .sv08-card p {
+  overflow-wrap: anywhere;
+}
+#ppo-escalations .sv08-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#ppo-escalations .sv08-diagnostic {
+  padding: 14px 0;
+  border-top: 1px solid var(--hairline);
+}
+#ppo-escalations .sv08-diagnostic small {
+  color: var(--muted);
+}
+#ppo-escalations .sv08-prose {
+  white-space: pre-wrap;
+}
+#ppo-escalations .sv08-hash {
+  display: block;
+  font-size: 11px;
+  line-height: 16px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  margin: 8px 0;
+  color: var(--muted);
+}
+#ppo-escalations .sv08-evidence-list {
+  padding-left: 20px;
+}
+#ppo-escalations .sv08-evidence-list li {
+  margin: 8px 0;
+}
+#ppo-escalations .sv08-notice {
+  background: var(--ppo-shell-surface);
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius, 6px);
+}
+#ppo-escalations .sv08-editor fieldset,
+#ppo-escalations .sv08-create fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+#ppo-escalations .sv08-editor .field,
+#ppo-escalations .sv08-create .field {
+  min-width: 0;
+  margin: 0;
+}
+#ppo-escalations .sv08-editor input,
+#ppo-escalations .sv08-editor textarea,
+#ppo-escalations .sv08-editor select,
+#ppo-escalations .sv08-create input,
+#ppo-escalations .sv08-create textarea,
+#ppo-escalations .sv08-create select {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#ppo-escalations .sv08-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 22px;
+}
+#ppo-escalations .sv08-check input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+#ppo-escalations .sv08-create {
+  margin: 20px;
+  max-width: 760px;
+  max-height: calc(100% - 40px);
+  overflow: auto;
+}
+#ppo-escalations .sv08-create h1 {
+  font-size: 24px;
+  line-height: 30px;
+  margin-top: 0;
+}
+#ppo-escalations a {
+  overflow-wrap: anywhere;
+}
+@media (min-width: 1200px) {
+  #ppo-escalations[data-record="true"] {
+    grid-template-columns: 0 minmax(0, 1fr);
+  }
+  #ppo-escalations[data-record="true"] > .mw-menu-strip {
+    display: none;
+  }
+}
+@media (max-width: 1100px) and (min-width: 781px) {
+  #ppo-escalations .sv08-case-columns {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+  #ppo-escalations .sv08-case-heading {
+    padding: 12px 16px;
+  }
+  #ppo-escalations .sv08-card {
+    padding: 16px;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-escalations .sv08-desktop {
+    display: none;
+  }
+  #ppo-escalations .sv08-phone {
+    display: block;
+  }
+  #ppo-escalations .sv08-toolbar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  #ppo-escalations .sv08-toolbar-actions {
+    margin-left: 0;
+  }
+  #ppo-escalations .sv08-toolbar .ppo-button {
+    min-height: 40px;
+  }
+  #ppo-escalations .sv08-count {
+    padding: 8px 12px;
+  }
+  #ppo-escalations .sv08-phone-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+  #ppo-escalations .sv08-phone-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    width: 100%;
+    padding: 16px 12px;
+    border: 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--white);
+    color: var(--ink);
+    font:
+      400 14px/20px Roboto,
+      sans-serif;
+  }
+  #ppo-escalations .sv08-phone-row > strong {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+  }
+  #ppo-escalations .sv08-phone-row > span {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  #ppo-escalations .sv08-phone-row small {
+    color: var(--muted);
+  }
+  #ppo-escalations .sv08-case-heading {
+    display: block;
+    padding: 12px;
+  }
+  #ppo-escalations .sv08-case-heading h1 {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  #ppo-escalations .sv08-case-heading > div:first-child > .ppo-button {
+    display: none;
+  }
+  #ppo-escalations .sv08-case-heading .sv08-actions {
+    max-width: none;
+    justify-content: flex-start;
+    margin: 8px 0 0;
+  }
+  #ppo-escalations .sv08-readiness {
+    display: none;
+  }
+  #ppo-escalations .sv08-case-columns {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  #ppo-escalations .sv08-case-summary {
+    order: 2;
+    overflow: visible;
+    padding: 0 12px 20px;
+    border-right: 0;
+  }
+  #ppo-escalations .sv08-case-main {
+    order: 1;
+    overflow: visible;
+    flex: none;
+    min-height: auto;
+  }
+  #ppo-escalations .record-tablist {
+    padding: 0 8px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  #ppo-escalations .record-tablist > button {
+    padding: 12px 10px;
+    min-height: 44px;
+    font-size: 13px;
+  }
+  #ppo-escalations .sv08-case-panels {
+    padding: 12px;
+    overflow: visible;
+    flex: none;
+  }
+  #ppo-escalations .sv08-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  #ppo-escalations .sv08-card h2 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  #ppo-escalations .sv08-editor form > .sv08-actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    padding: 12px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--hairline);
+    z-index: 1;
+  }
+  #ppo-escalations .sv08-editor form > .sv08-actions > .ppo-button {
+    flex: 1;
+    min-height: 44px;
+  }
+  #ppo-escalations .sv08-create {
+    margin: 12px;
+    max-height: calc(100% - 24px);
+    padding: 16px;
+  }
+  #ppo-escalations .ppo-register-foot {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  #ppo-escalations .ppo-register-foot > span {
+    flex-basis: 100%;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 780px) {
+  #ppo-escalations .sv08-case-heading > div:first-child > p:nth-of-type(2) {
+    display: none;
+  }
+  #ppo-escalations .sv08-case-heading a[href^="/equipment/"] {
+    display: none;
+  }
+  #ppo-escalations .sv08-editor form > .sv08-actions > .ppo-button:last-child {
+    flex: none;
+  }
+  #ppo-escalations .sv08-editor form > .sv08-actions > .ppo-button:first-child {
+    white-space: nowrap;
+  }
+}
+
+#ppo-escalations .sv08-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#ppo-escalations .sv08-editor form > .sv08-actions {
+  position: sticky;
+  bottom: 0;
+  background: var(--white);
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline);
+  z-index: 1;
+}
+#ppo-escalations .sv08-send-notice {
+  flex: 1 1 260px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+@media (max-width: 780px) {
+  #ppo-escalations .sv08-field-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #ppo-escalations .sv08-send-notice {
+    flex-basis: 100%;
+  }
+}
+
+#ppo-escalations .sv08-phone-list button.sv08-phone-row {
+  align-items: flex-start;
+  border-radius: 0;
+  text-align: left;
+}

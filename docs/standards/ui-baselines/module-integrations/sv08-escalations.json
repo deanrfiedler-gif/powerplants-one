@@ -1,0 +1,15 @@
+{
+  "id": "sv08-escalations",
+  "route": "/service/escalations",
+  "scope": "#ppo-escalations",
+  "layout": "full-bleed",
+  "scroll_owner": "#escalations-content",
+  "design": "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-01-Desktop-Register-r01.png",
+  "sha256": "35e28b3b42094851523be6b8dd07030c0bddf168f1e0857af889e9b8a76925e0",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html",
+  "shared_sha256": "c68a499e857b1705d47bd6598d4b2e89526bf0861a0d234394c3da023f19b617",
+  "component_proof": "tests/browser/service-escalations.spec.ts",
+  "application_proof": "tests/browser/service-escalations.spec.ts",
+  "authority": "User-authorised SV-08 synthetic native page; functional proof, visual review and owner acceptance are separate.",
+  "adaptations": "docs/design/development/pages/scope-sv-08.md"
+}

@@ -508,6 +508,18 @@ async function applyChange(c: PoolClient, p: Principal, row: EquipmentChange) {
     return;
   }
   if (["Relocate", "CorrectLocation"].includes(row.kind)) {
+    if (
+      proposal.site_id !== a.site_id &&
+      (await c.query(
+        "SELECT 1 FROM ppo.service_escalation_cases WHERE workspace_id=$1 AND asset_id=$2 AND state NOT IN ('Closed','Withdrawn') LIMIT 1",
+        [p.workspace_id, a.id],
+      )).rowCount
+    )
+      throw new AppError(
+        422,
+        "OpenEscalationCases",
+        "Close or withdraw the equipment's open escalation cases before moving it to another site.",
+      );
     const last = (
       await c.query<{ effective_at: Date }>(
         "SELECT effective_at FROM ppo.asset_location_events WHERE workspace_id=$1 AND asset_id=$2 ORDER BY effective_at DESC LIMIT 1",

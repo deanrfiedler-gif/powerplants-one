@@ -20,7 +20,7 @@ Claude drew the page from these sources:
 Dean asked for two audit and polish passes, a simpler phone top, three phone header fixes and a play-through of the prototype in the Figma desktop app (section 6). He then accepted the design on 22 October 2026: "Yes, I accept EC-04, including D8, with the recommended answers." That adopts departures D1–D8 and the recommended answers to Q1–Q4.
 
 Scope:
-- `scope:EC-04` "Communication draft, approval and delivery review". The design proposes the routes `/email/customer-messages` and `/email/customer-messages/[id]` (D1); the register still names `/email/drafts` as the destination (section 5).
+- `scope:EC-04` "Communication draft, approval and delivery review". The accepted routes `/email/customer-messages` and `/email/customer-messages/[id]` (D1) are implemented in PR #804; section 5 separates the build from acceptance.
 - Parent requirements CRM-03, DOC-05, OUT-17, TR-03, PRJ-07, SCM-07, SCM-08, SVC-05 and NFR-11; acceptance AT-25 and AT-36. No parent requirement ID is added or renamed.
 
 This is a design decision. It authorises no application code, route, read model, migration, permission, capability, mailbox, provider consent, sending or customer message. D-025 stages S3–S6 each still need their own authorisation.
@@ -42,7 +42,7 @@ This is a design decision. It authorises no application code, route, read model,
 | Q4 Outlook fallback | Resolved as recommended | No "Send from Outlook" in the app. The owned follow-up tells the owner to reach the customer another way, and Check Sent Items stays the only recovery for an unknown outcome (ADR-0058 option E stays outside PPO) |
 | Accept the design | User decision, 22 October 2026 | Quoted above |
 | Named Figma version | User decision, 22 October 2026 | Saved as "Customer messages — accepted" at Dean's request: "Yes, save the named Figma version "Customer messages — accepted"." Section 7 |
-| Building the page | Not decided | Section 5 |
+| Building the page | Implemented by Codex in PR #804; application acceptance separate | Section 5 and the linked build evidence |
 
 ## 2. Design reference
 
@@ -112,10 +112,10 @@ Content changed while open (nothing sent; show the current message); independent
 | D7 | Held and failed messages keep their prepared content visible, dimmed, with the follow-up as the main action. There is no resend button | Not drawn |
 | D8 | Phone views use one compact header row, flush record sections, full-width 48 px main actions in a sticky bar, and sheets for choosing a view, filtering and confirming. Adopted for every phone page by the [phone header amendment](phone-header-amendment.md) | The global phone header with toolbar rows |
 
-## 5. Not decided and not drawn
+## 5. Build status, agent decisions and remaining scope
 
-- **Building the page.** Nothing is built. The register's destination `/email/drafts` becomes `/email/customer-messages` (D1) when the page is built; this lock-in leaves the register path unchanged.
-- **Prerequisites for a build:** the S2 API (merged); D-025 stage S3 for M1 and M2 sources, S5 for M3 and S6 for M4; the read model behind the register and the snapshot; the Email side-menu group as a shell change; and, for live sending, S4 (the shared mailbox and its scoped app registration).
+- **Building the page.** Codex built EC-04 in [PR #804](https://github.com/deanrfiedler-gif/powerplants-one/pull/804): register, snapshot/full record, confirmation, withdrawal, reconciliation and class controls on the existing synthetic backend. The register now uses `/email/customer-messages` and `/email/customer-messages/[id]`. [Execution and comparison evidence](../testing/evidence/customer-messages/README.md) separates implementation, independent review, visual acceptance and deployment. No application acceptance is claimed.
+- **Backend boundaries:** the S2 API and S3 M1/M2 sources are integrated; the read model and shared Email side menu are built. S5 for M3 and S6 for M4 remain separate; and, for live sending, S4 (the shared mailbox and its scoped app registration).
 - **Personal correspondence.** [ADR-0059](ADR-0059-email-sending-from-ppo.md), accepted on 26 October 2026, settles that correspondence is sent from a person's own mailbox. The Emails EC-01 reply composer stays an EC-04 proposal until its own design is accepted, and building it needs its own authorisation. This design covers customer notices from the shared mailbox only.
 - **Not drawn:** SMS (no delivery record yet); M3 Visit confirmation (waits for appointments, S5); a correction message; template proposal and publishing (DK-06); My Work follow-up cards; reply handling in the shared mailbox (Outlook); phone records for M4, held, outcome unknown and failed messages; phone versions of the states; 200% zoom.
 - **Open items:**
@@ -123,6 +123,15 @@ Content changed while open (nothing sent; show the current message); independent
   - The accepted Projects register does not list `SYN-PPO-PRJ-000014` or `-000019`, which this design, Emails and Stakeholder updates use (Stakeholder updates Q4).
   - The shared top bar's breadcrumb separator "/" has a contrast of 2.52:1. It is decorative and the same on every accepted page; any change belongs to the shell.
 - **Data in the frames:** the people, addresses (`*.example`), organisations and records are synthetic, and the shared mailbox address is a placeholder (Q2).
+
+### Implementation decisions under the standing order
+
+These are Codex agent decisions under the [standing order](autonomous-agent-operation.md), not statements of Dean's design acceptance.
+
+- **Sales Inbox label.** [Codex D1, 31 October](https://github.com/deanrfiedler-gif/powerplants-one/pull/804#issuecomment-6541815583) chose to retain the existing rail label and add the accepted Customer messages group to the Email menu. The alternatives were renaming the rail or rebuilding EC-01; neither was needed for this scope. The Inbox uses the shared full-width Email frame and action counts; that integration has explicit desktop/phone browser scenarios. Reverse the label choice through a later accepted shell change. “As requested” was not supported by a Dean quotation and is corrected in the evidence report.
+- **Bounded reads.** The same D1 chose an explicit bounded `view=all` read instead of claiming complete history or introducing pagination. In response to [review finding 1](https://github.com/deanrfiedler-gif/powerplants-one/pull/804#pullrequestreview-5722636703), Codex now uses the existing oldest-first action queue for To send, Needs follow-up and their counts. Only All messages uses newest-first `view=all`. Both report when the 200-candidate limit was reached, including when source authorization leaves an empty result. This preserves the read boundary without allowing newer completed messages to displace waiting work. A later scoped pagination change can replace the window; no permission changes are made.
+- **Template handover.** [Codex's 31 October decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/804#issuecomment-6542476028) chose an explicitly unavailable handover while preserving the exact template version/hash, over inventing a route or importing an unrelated build. Template management has since landed on main; connecting and verifying that handover is outside the six findings being corrected here. The page still declares it unavailable. Enable the real destination in a scoped handover change with proof; this is not a claim that Template management remains absent from main.
+
 
 ## 6. Audit and polish
 

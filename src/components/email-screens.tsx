@@ -5,6 +5,8 @@ import { ErrorNotice, isDenied, useCommand, useResource } from "./business-ui";
 import { useIdentity } from "./business-session";
 import { ProductIcon } from "./product-icons";
 import "./email-calendar.css";
+import { messageCounts, type MessageQueue } from "../communications/ui-model";
+import { EmailWorkspaceFrame } from "./email-workspace-menu";
 type Summary = {
   id: string;
   subject: string;
@@ -49,12 +51,16 @@ function Tabs({ calendar = false }: { calendar?: boolean }) {
   );
 }
 export function EmailInbox() {
+  const messages = useResource<MessageQueue>("customer-communications/queue");
+  const counts = messageCounts(
+    !messages.loading && !messages.error ? messages.data : null,
+  );
   const [search, setSearch] = useState("");
   const r = useResource<{ items: Summary[]; truncated: boolean }>(
     `email?search=${encodeURIComponent(search)}`,
   );
   return (
-    <section className="ec-page">
+    <EmailWorkspaceFrame inbox counts={counts}><section className="ec-page">
       <Tabs />
       <div className="ec-heading">
         <div>
@@ -104,7 +110,7 @@ export function EmailInbox() {
       <p className="ec-note">
         Fictional correspondence. Microsoft is not connected.
       </p>
-    </section>
+    </section></EmailWorkspaceFrame>
   );
 }
 export function EmailDetail({ id }: { id: string }) {
