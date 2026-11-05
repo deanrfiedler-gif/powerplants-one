@@ -11,6 +11,7 @@ import { readInvitedSession } from "../../src/platform/identity";
 import { reconcileTesters } from "../../scripts/demo-database";
 import { crmCreate } from "../helpers/crm";
 import { expectAppointmentRecord } from "../helpers/appointment-record";
+import { openPlannerTray } from "../helpers/pl01";
 
 // UI/permission integration on the disposable loopback server. This deliberately
 // does not assert that Microsoft login, public HTTPS or a real phone was tested.
@@ -62,8 +63,11 @@ test("invited actor: schedule lanes, demand and appointment links load with book
   await expect(page.getByRole("region", { name: "Week resource planner", exact: true })).toBeVisible();
   await expect(page.getByText("Loading permitted records…", { exact: true })).toHaveCount(0);
   await expect(page.locator('.business-error[role="alert"]')).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: "Unassigned demand", exact: true })).toBeVisible();
+  await openPlannerTray(page);
+  await expect(page.getByRole("heading", { name: "To plan", exact: true })).toBeVisible();
   await expect(page.getByText(/Unassigned demand is unknown/)).toHaveCount(0);
+  const backToPlanner = page.getByRole("button", { name: /Back to planner/ });
+  if (await backToPlanner.isVisible()) await backToPlanner.click();
   // The Week board (desktop) and the phone list both open a visit's details, which carry Move or reassign.
   await page.locator('[data-appointment][data-status="Confirmed"]').first().click();
   await expect(page.getByRole("complementary", { name: /^Visit details: / })).toBeVisible();

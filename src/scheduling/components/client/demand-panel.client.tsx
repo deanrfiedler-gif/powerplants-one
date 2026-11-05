@@ -18,7 +18,7 @@ export function DemandPanel({ id, returnTo, onClose, onSaved }: { id: string; re
     return () => { panel?.close(); if (opener?.isConnected) opener.focus(); else document.getElementById("unassigned-demand-heading")?.focus(); };
   }, []);
   return <dialog ref={dialog} className="pl01-panel" aria-labelledby="plan-visit-heading" onCancel={event => { event.preventDefault(); onClose(); }}>
-    <header><div><p className="eyebrow">Unassigned demand</p><h2 id="plan-visit-heading">Plan visit</h2></div><button className="secondary" autoFocus onClick={onClose}>Close plan visit</button></header>
+    <header><div><p className="eyebrow">From tray</p><h2 id="plan-visit-heading">Plan visit</h2></div><button className="secondary" autoFocus onClick={onClose}>Close plan visit</button></header>
     <div className="pl01-panel-body">
       <ReadState {...detail} retained={!!w} retry={detail.reload} />
       {!w && !detail.loading && <p>Current work context is unavailable. Saving is disabled. <Link href={`/service/work-orders/${id}`}>Open owning work order</Link>.</p>}

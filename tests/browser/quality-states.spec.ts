@@ -457,10 +457,25 @@ test("P11 PT-29 all fifteen screen families show actual loading, failure, recove
             exact: true,
           }),
         ).toHaveCount(0);
-        if (s.id === "SC-07")
-          await expect(page.locator(".planner-stat-row strong")).toHaveText(
-            Array(4).fill("—"),
-          );
+        if (s.id === "SC-07") {
+          // Accepted D2 removes count tiles; loading frame 1214:275141 keeps
+          // the replacement tray and Needs attention counts unknown, never zero.
+          await expect(page.locator(".planner-stat-row")).toHaveCount(0);
+          if (phoneWidth(page)) {
+            const launch = page.getByRole("button", { name: "Needs attention and tray · To plan Unknown · On hold Unknown", exact: true });
+            await expect(launch).toBeVisible();
+            await launch.click();
+          }
+          const tray = page.getByRole("complementary", { name: "Planner tray", exact: true });
+          await expect(tray).toBeVisible();
+          await expect(tray.getByText("Planner tray counts are unknown while the planner loads.", { exact: true })).toBeVisible();
+          await expect(tray.locator(".pl01-tray-content")).not.toBeVisible();
+          const attention = page.getByRole("region", { name: "Needs attention", exact: true });
+          await expect(attention).toHaveAttribute("aria-busy", "true");
+          await expect(attention.getByRole("heading", { name: "Needs attention · Unknown", exact: true })).toBeVisible();
+          await expect(attention).not.toContainText(/\d/);
+          if (phoneWidth(page)) await page.getByRole("button", { name: "← Back to planner · To plan Unknown · On hold Unknown", exact: true }).click();
+        }
         await capture(page, info, `${s.id}-loading`);
       } finally {
         release();

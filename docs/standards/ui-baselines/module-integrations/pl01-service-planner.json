@@ -1,0 +1,15 @@
+{
+  "id": "pl01-service-planner",
+  "route": "/schedule",
+  "scope": "#ppo-service-planner",
+  "layout": "full-bleed",
+  "scroll_owner": "workspace",
+  "design": "docs/reference/ui/service/service-planner-design-r01/PPO-Service-Planner-01-Desktop-Day-r01.png",
+  "sha256": "ddd56d2955f723aff8057472805c96346911172333606b3ad535a994551d3f82",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/unit/planner-attention.test.ts",
+  "application_proof": "tests/browser/service-planner.spec.ts",
+  "authority": "docs/decisions/service-planner-figma-design.md",
+  "adaptations": "docs/testing/evidence/service-planner-build/README.md"
+}
