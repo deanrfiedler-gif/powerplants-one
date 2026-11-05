@@ -1,6 +1,26 @@
 import { test, expect, type Page } from "@playwright/test";
 import { createDemand, openDemandPanel, fillProposal } from "../helpers/pl01";
 
+async function withSiteReadiness(page: Page) {
+  // Seeded Confirmed visits retain policy v1, without SITE_READINESS. Supply
+  // the applicable-policy read projection for these presentation-only cases;
+  // no policy, booking, permission or other shared fixture is changed.
+  for (const path of ["**/api/v1/schedule?**", "**/api/v1/appointments/*"])
+    await page.route(path, async route => {
+      const response = await route.fetch();
+      const data = await response.json();
+      for (const appointment of data.items ?? []) appointment.preparation = {
+        policy: { id: "12000000-0000-4000-8000-000000000001", reference: "SYN-POL-000001", version: 1, synthetic: true },
+        schedule_version: appointment.schedule_version,
+        outcome: "Unknown", contact_id: null,
+        opens_at: new Date(Date.parse(appointment.start_at) - 120 * 3600000).toISOString(),
+        confirmation_due_at: new Date(Date.parse(appointment.start_at) - 24 * 3600000).toISOString(),
+        late: false, issue_due_at: null, calendar_status: "PublishedLeadCalendar", issue_deadline_blocks_dispatch: false,
+      };
+      await route.fulfill({ response, json: data });
+    });
+}
+
 async function enter(page: Page) {
   const session = await page.request.post("/api/v1/local-session", {
     headers: { Origin: `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}` }, data: { profile: "coordinator" },
@@ -18,6 +38,7 @@ async function enter(page: Page) {
 for (const width of [1440, 1024, 390, 320]) test(`PL-01 band, tray, selection and phone sheets at ${width}px`, async ({ page }, info) => {
   test.skip(info.project.name.includes("mobile"), "The desktop project executes the full explicit width matrix.");
     await page.setViewportSize({ width, height: width > 780 ? 960 : 844 });
+    await withSiteReadiness(page);
     await enter(page);
     // The tablet reference uses the existing collapsed primary rail.
     if (width === 1024) await page.getByRole("button", { name: "Collapse primary navigation", exact: true }).click();
@@ -121,6 +142,7 @@ test("PL-01 a move without SITE_READINESS shows no confirmation warning", async 
 test("PL-01 a timeline drag opens Move this visit without sending a booking command", async ({ page }, info) => {
   if (!info.project.name.includes("mobile")) await page.setViewportSize({ width: 1440, height: 960 });
   test.skip(info.project.name.includes("mobile"), "Phone movement uses the keyboard and button alternative.");
+  await withSiteReadiness(page);
   await enter(page);
   const visit = page.locator('.tl-card[data-status="Confirmed"]').first();
   const lane = visit.locator("xpath=../..");

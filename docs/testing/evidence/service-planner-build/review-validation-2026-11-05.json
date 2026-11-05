@@ -185,5 +185,22 @@
     "Per-visit dispatch gate reads remain a measured cost",
     "Tier 1 ADR-0067 stage 3b redraw, visual and owner/device acceptance remain separate",
     "Claude confirms these findings only; no PR merge"
-  ]
+  ],
+  "ci_followup": {
+    "first_fix_head": "83daf1dfe5a0e1280f325ca55447bff37dd50123",
+    "failed_job": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42022249306/job/127232444325",
+    "failures": [
+      "PL-01 band, tray, selection and phone sheets at 1440px",
+      "PL-01 band, tray, selection and phone sheets at 1024px",
+      "PL-01 band, tray, selection and phone sheets at 390px",
+      "PL-01 band, tray, selection and phone sheets at 320px",
+      "PL-01 a timeline drag opens Move this visit without sending a booking command"
+    ],
+    "message": "Expected new customer site readiness confirmation to be visible; element(s) not found",
+    "cause": "The seeded Confirmed visit retains readiness policy v1 without SITE_READINESS and therefore correctly returns preparation=null.",
+    "fix": "Explicit synthetic applicable-policy preparation read projection in positive browser cases; original assertions, all four widths, deadlines and server authority unchanged. Browser routes add no persistent state or grants.",
+    "main_comparison": "Attempted the same test path on clean origin/main: compiled runner first refused because that comparison checkout has no completed production build. Follow-up discovery returned No tests found; git cat-file confirmed this PR-added spec is absent on main. This CI failure is treated as caused by the PR fixture, not as pre-existing or environment-blocked.",
+    "browser": "not run here; left to GitHub CI",
+    "final_ci": "Reported on the exact final head in the PR completion comment."
+  }
 }
