@@ -3,7 +3,7 @@ document_id: PPO-SHELL-CONCEPT-PROTOTYPE-DEC
 title: Shell concept clickable trial
 date: 2026-11-05
 owner: Dean Fiedler
-status: Desktop logo and rail-footer direction adopted; wider prototype review and application implementation pending
+status: Desktop rail arrangement and active styling adopted; wider prototype review and application implementation pending
 source_commit: aeaaad5a8e13f5c9549b9763a8150413b1769ab9
 versioning: git
 ---
@@ -12,7 +12,7 @@ versioning: git
 
 Dean approved the recommendation to retain the navy rail, grouped flyout, command palette and snapshot, resolve the four high-priority audit findings, and build a clickable Sales plus demanding Service or Engineering workflow. His instruction was: "Proceed with your recommendation below." Service was selected because its scope-specific readiness, explicit authorisation and scheduling handover exercise more than ordinary record navigation.
 
-This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). Dean subsequently adopted the specific desktop logo and rail-footer direction recorded below; this does not accept every trial screen, adopt a complete replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
+This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). Dean subsequently adopted the specific desktop logo alignment, rail-footer control and active-workspace styling recorded below; this does not accept every trial screen, adopt a complete replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
 
 Dean subsequently requested: "Refine the phone navigation, information density and dialogs in Figma, then walk through the Sales and Service workflows and report any remaining issues." The second pass below records that work and its observed limits.
 
@@ -112,6 +112,16 @@ In the player, Sales browse expanded through the footer, opened the Sunline prev
 
 This is adoption of the specific desktop arrangement. Rail dimensions, breakpoints, the rest of the trial, implementation, device/accessibility proof and whole-shell acceptance remain separate. No runtime shell, deployment, accepted reference bytes or review fingerprint changed.
 
+## Adopted desktop active workspace
+
+Dean requested the phone navigation's lighter selection surface and green accent on the desktop rail, with the accent on the left. He directed the recommended treatment to proceed. The reference phone style is independently traceable: `src/app/styles/figma-shell.css` uses the slate rail hover value and an inset 3 px green top edge for the phone current page. The desktop concept uses the same slate (`#343C4C`) and brand green (`#62BB46`) on its navy rail (`#242A37`).
+
+Both trial rail components (`126:25061`, `126:25155`) and all 62 desktop states use a square selection band, a 3 px inside left edge, and a white icon and Medium label. The compact band is 64 x 56 px; the expanded band spans the 224 x 40 px row. The inside edge leaves the icon centre at x=36. It identifies the current **workspace**; the nested current page retains its smaller indented marker. The new local surface variable is `surface/rail-active`. This changes the desktop **concept** from the earlier white tile; issued references and the runtime desktop CSS remain intact.
+
+The editable state reference `156:41012` shows Default, Hover, Active, Focus and Active + focus at both widths. Hover has a quieter slate surface with no green edge. The separate 2 px white focus outline can coexist with the active marker. These are visual states; the reference does not demonstrate live hover, focus order or keyboard operation.
+
+Verification found exactly one active workspace in each of 62 desktop states, with the original workspace identity, 3 px edge, square corners, white Medium label and aligned icon. All desktop prototype reaction signatures and the 32 phone geometry/text/fill signatures were unchanged. Actual-size renders covered the compact rail, expanded Sales screen and state reference; the expanded Service screen was also inspected. Measured token contrast is 11.07:1 for white on active slate, 4.60:1 for green on active slate, and 5.96:1 for green on surrounding navy. These are sampled pairs, not full accessibility acceptance.
+
 ## Remaining issues
 
 1. **Prototype state continuity:** re-entering Service from the shared workspace menu starts the blocked example again. Local record/list/Schedule returns preserve the relevant fixture, but cross-workspace persistence is not implemented. The shared issue-confirmation background and issued result use the saved 8 December example even when opened from the original 1 December quote or the separate 15 December recovery fixture. Cancellation returns correctly, but arbitrary state combinations are not a valid end-to-end proof. Use stateful fixtures before broader usability testing.
@@ -127,4 +137,4 @@ This is adoption of the specific desktop arrangement. Rail dimensions, breakpoin
 - The 720 x 450 frame is a layout study, not an executed browser-zoom accessibility test. Physical phones, touch keyboard occlusion, all real permissions, persistence, concurrent edits, delivery receipts and operational rules remain to be tested in an application implementation.
 - No retained PNG package or named accepted Figma version is issued in this contribution. Private visual evidence remains in the source file and review session. No new review fingerprint, baseline acceptance or deployment is claimed.
 
-The desktop logo alignment and rail-footer arrangement are adopted. The wider trial's represented layouts remain subject to owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before complete shared-shell adoption. Whole-shell acceptance and production readiness remain unclaimed.
+The desktop logo alignment, rail-footer arrangement and active-workspace treatment are adopted. The wider trial's represented layouts remain subject to owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before complete shared-shell adoption. Whole-shell acceptance and production readiness remain unclaimed.

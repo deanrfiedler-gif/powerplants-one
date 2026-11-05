@@ -1,12 +1,14 @@
 # Shell concept trial consumer note
 
-Owner: Dean Fiedler. Review: desktop logo alignment and rail-footer arrangement adopted; wider concept review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
+Owner: Dean Fiedler. Review: desktop logo alignment, rail-footer arrangement and active-workspace styling adopted; wider concept review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
 
 ## application-shell
 
 The trial reuses the concept's top bar, compact/expanded rails, grouped Sales flyout, pinned menu and snapshot. Service uses the same frame around scope readiness and explicit authorisation. Phone views at 390 x 844 and 320 x 568 distinguish workspace Menu from record More, use separate record-actions sheets, and retain a fixed primary action. State-specific Service lists and Schedule returns preserve the local journey; shared workspace re-entry still resets the fixed example. This is a reference-only consumer, with no new application route or renderer. The concept's rail width, compact breakpoint, outline icons and reduced phone utilities must be reconciled with accepted shell rules before adoption. Graph connectivity and visual review do not establish keyboard, screen-reader, physical-device or production acceptance.
 
 The adopted desktop arrangement uses derived local top-bar and rail components. The logo, workspace icons and footer arrow share x=36 in both widths. Settings and the display control remain below the independently scrolling workspace list, with 44 px target height and 8 px bottom inset. Thirty-one fixture pairs retain page/state on toggle and onward desktop links retain rail width. These are Figma transitions, not persistence or accessible implementation proof. The 32 phone layouts remain unchanged; tooltip wording is specified but hover behaviour is not demonstrated.
+
+The current workspace uses a square slate band, white icon/Medium label and an inside 3 px green left edge at both widths. The indented current page retains its quieter marker. Reference `156:41012` separates hover, active, focus and combined active/focus; keyboard and pointer behaviour remain implementation proof. The sampled contrast figures and source checks are in the [active-workspace decision](../../../decisions/shell-concept-prototype.md#adopted-desktop-active-workspace).
 
 ## register-table
 
