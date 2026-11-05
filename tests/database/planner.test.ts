@@ -1163,8 +1163,10 @@ test("PL-01 schedule hold evidence equals the current native dispatch gate and r
   assert.deepEqual(row.dispatch_readiness, { dispatch_hold: gate.dispatch_hold, reasons: gate.reasons });
   assert.ok(row.dispatch_readiness.reasons.length);
   assert.deepEqual(Object.keys(row.dispatch_readiness).sort(), ["dispatch_hold", "reasons"]);
+  assert.deepEqual((await readAppointment(principal, row.id)).items[0].dispatch_readiness, row.dispatch_readiness);
   await rows("DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='pack.read'", [principal.workspace_id, principal.actor_id]);
   const restricted = await readSchedule(principal, query);
   assert.ok(restricted.items.length);
   assert.ok(restricted.items.every(a => a.dispatch_readiness === null), "schedule access alone cannot expose pack narratives");
+  assert.equal((await readAppointment(principal, row.id)).items[0].dispatch_readiness, null, "detail access alone cannot expose pack narratives");
 });

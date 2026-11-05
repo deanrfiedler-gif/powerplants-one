@@ -3,7 +3,7 @@ title: Service planner accepted design implementation in draft
 date: 2026-10-31
 ---
 
-Codex owns the PL-01 implementation at `/schedule` on `codex/service-planner`, in its dedicated worktree cut from `origin/main` at `1402c87b`. Dean explicitly authorised 20 concurrent page builds in this chat on 31 October 2026; seven open Codex PRs had pushed source changes at the preflight check. No other open PR claimed PL-01.
+Codex owns the PL-01 implementation at `/schedule` on `codex/service-planner`, in its dedicated worktree cut from `origin/main` at `1402c87b`. Codex decided under the standing order to proceed with the PL-01 build on 31 October 2026; the relayed chat about 20 concurrent page builds was context only, not repository evidence of owner approval. Seven open Codex PRs had pushed source changes at the preflight check. The current [pull request flow limits](../decisions/pull-request-flow-limits.md) apply to completion and readiness. No other open PR claimed PL-01.
 
 Scope follows the [accepted design](../decisions/service-planner-figma-design.md): collapsed Scheduling menu, toolbar, Needs attention, To plan / On hold tray, visit details and controlled move comparison. Existing booking authority, standard-hours capacity and extended-hours warnings remain. Suggestions and Map are excluded. No migration, capability, grant or dependency is planned. Related open PRs #750 and #733 retain ownership of their appointment/readiness and test corrections; shared edits must be narrowly coordinated.
 
