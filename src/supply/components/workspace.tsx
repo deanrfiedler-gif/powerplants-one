@@ -54,6 +54,14 @@ function Workspace({ slug }: { slug: string }) {
     focusAfterClose.current = focusKey;
     setPanel(value);
   }
+  function closePanel() {
+    setPanel(null);
+    if (slug === "stock" && params.get("observation") === "1") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("observation");
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+  }
   const list = usePlatformResource<Awaited<ReturnType<typeof register>>>(
     `supply/records?kind=${page.kind}&q=${encodeURIComponent(search)}&completeness=${encodeURIComponent(filter)}`,
   );
@@ -583,7 +591,7 @@ function Workspace({ slug }: { slug: string }) {
                 "Close this form? Unsaved entries will be discarded; any original pending save remains recoverable.",
               )
             )
-              setPanel(null);
+              closePanel();
           }}
         >
           <Recovery command={command} />
@@ -594,7 +602,7 @@ function Workspace({ slug }: { slug: string }) {
               record={panel.type === "edit" ? r : undefined}
               options={opts.data!}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : r && panel.type === "allocate" ? (
             <AllocationForm
@@ -602,7 +610,7 @@ function Workspace({ slug }: { slug: string }) {
               allocations={detail.data?.allocations ?? []}
               options={opts.data!}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : r && panel.type === "fact" ? (
             <FactForm
@@ -613,7 +621,7 @@ function Workspace({ slug }: { slug: string }) {
               facts={detail.data?.current_facts ?? []}
               fieldCaptures={detail.data?.field_captures ?? []}
               command={command}
-              onDone={() => setPanel(null)}
+              onDone={closePanel}
             />
           ) : null}
         </WorklistPanel>

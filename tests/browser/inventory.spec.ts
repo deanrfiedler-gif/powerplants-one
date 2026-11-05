@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { mkdir } from "node:fs/promises";
-import { supplyInput, supplyBase } from "../helpers/supply";
+import { supplyInput, supplyBase, supplyFact } from "../helpers/supply";
 test.describe.configure({ timeout: 180000 });
 async function login(page: Page, origin: string, profile = "coordinator") {
   const r = await page.request.post(origin + "/api/v1/local-session", {
@@ -126,6 +126,79 @@ async function seed(page: Page, origin: string) {
   return { prefix, ids };
 }
 test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
+test("Inventory Activity opens Shipment receipt and inspection evidence in Receiving", async ({
+  page,
+  baseURL,
+}) => {
+  const stock = supplyInput("Supply", { item: `SYN-HANDOVER-${randomUUID()}` });
+  const shipment = supplyInput("Supply", {
+    item: stock.item,
+    title: "SYN Incoming receipt handover",
+    data: { ...stock.data, supply_kind: "Shipment", shipment_id: randomUUID() },
+  });
+  for (const input of [stock, shipment]) {
+    const response = await page.request.post(`${baseURL}/api/v1/supply/records`, {
+      headers: { origin: baseURL! }, data: input,
+    });
+    expect(response.status(), await response.text()).toBe(201);
+  }
+  const receipt = supplyFact("Receipt", 1, {
+    received: "8", inspected: "8", damaged: "2", quarantined: "3",
+    usable: "5", short: "0", identity: "SYN exact shipment item", identity_status: "Verified",
+    inspection: "SYN Inventory handover inspection finding",
+  });
+  receipt.evidence = "SYN Inventory handover retained receipt";
+  const response = await page.request.post(`${baseURL}/api/v1/supply/records/${shipment.id}/facts`, {
+    headers: { origin: baseURL! }, data: receipt,
+  });
+  expect(response.status(), await response.text()).toBe(201);
+  await page.goto(`/supply/stock?record=${stock.id}&tab=activity`);
+  const activity = page.locator(".iv-activity");
+  await expect(activity.getByRole("link", { name: stock.title, exact: true }))
+    .toHaveAttribute("href", `/supply/stock?native=1&record=${stock.id}`);
+  await activity.getByRole("link", { name: shipment.title, exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/supply/receipts\\?record=${shipment.id}$`));
+  await expect(page.getByRole("heading", { name: "Receiving & inspection", exact: true })).toBeVisible();
+  await expect(page.locator(".supply-fact").getByText(receipt.evidence, { exact: true })).toBeVisible();
+  await expect(page.locator(".supply-fact").getByText(receipt.data.inspection!, { exact: true })).toBeVisible();
+});
+test("Inventory observation save and close clear the launch parameter without adding history", async ({
+  page,
+  baseURL,
+}) => {
+  const stock = supplyInput("Supply", { item: `SYN-OBSERVATION-${randomUUID()}` });
+  const response = await page.request.post(`${baseURL}/api/v1/supply/records`, {
+    headers: { origin: baseURL! }, data: stock,
+  });
+  expect(response.status(), await response.text()).toBe(201);
+  const launch = `/supply/stock?native=1&observation=1&record=${stock.id}`;
+  await page.goto(launch);
+  const dialog = page.getByRole("dialog", { name: "Revise coordination record" });
+  await expect(dialog).toBeVisible();
+  const beforeSave = await page.evaluate(() => history.length);
+  await dialog.getByLabel("Reason for this record").fill("SYN observation URL regression");
+  await dialog.getByRole("button", { name: "Save supply", exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page).toHaveURL(new RegExp(`/supply/stock\\?native=1&record=${stock.id}$`));
+  expect(await page.evaluate(() => history.length)).toBe(beforeSave);
+  const saved = await page.request.get(`${baseURL}/api/v1/supply/records/${stock.id}`);
+  expect(saved.status()).toBe(200);
+  expect((await saved.json()).record.last_reason).toBe("SYN observation URL regression");
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Revise record", exact: true })).toBeEnabled();
+  await expect(dialog).toHaveCount(0);
+  await page.goto(launch);
+  await expect(dialog).toBeVisible();
+  const beforeClose = await page.evaluate(() => history.length);
+  page.once("dialog", (confirmation) => confirmation.accept());
+  await dialog.getByRole("button", { name: "Close Revise coordination record", exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page).toHaveURL(new RegExp(`/supply/stock\\?native=1&record=${stock.id}$`));
+  expect(await page.evaluate(() => history.length)).toBe(beforeClose);
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Revise record", exact: true })).toBeEnabled();
+  await expect(dialog).toHaveCount(0);
+});
 test("Inventory register, snapshot, keyboard, native observation handover and 320px", async ({
   page,
   baseURL,

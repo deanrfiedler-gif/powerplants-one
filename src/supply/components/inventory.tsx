@@ -72,12 +72,20 @@ function nativeHref(record?: string) {
 }
 function activityHref(r: SupplyRecord) {
   return r.kind === "Supply"
-    ? `/supply/stock?native=1&record=${r.id}`
+    ? r.data.supply_kind === "Shipment"
+      ? `/supply/receipts?record=${r.id}`
+      : `/supply/stock?native=1&record=${r.id}`
     : `/supply/${r.kind === "Demand" ? "material-readiness" : r.kind === "Custody" ? "service-stock" : "returns"}?record=${r.id}`;
 }
 
 export function InventoryPage() {
   const params = useSearchParams();
+  const search = params.get("q") ?? "";
+  const [settledSearch, setSettledSearch] = useState(search);
+  useEffect(() => {
+    const timer = setTimeout(() => setSettledSearch(search), 200);
+    return () => clearTimeout(timer);
+  }, [search]);
   const selected = params.get("record"),
     snapshot = params.get("snapshot") === "1",
     tab = params.get("tab") ?? "quantities";
@@ -94,12 +102,13 @@ export function InventoryPage() {
     if (params.get(k)) listQuery.set(k, params.get(k)!);
   listQuery.set("inventory_view", params.get("view") ?? "all");
   const list = usePlatformResource<InventoryRead>(
-    `supply/records?${listQuery}`,
+    search === settledSearch ? `supply/records?${listQuery}` : null,
   );
   const detail = usePlatformResource<InventoryRead>(
     selected
       ? `supply/records?view=inventory&record=${encodeURIComponent(selected)}`
       : null,
+    false,
   );
   const item = detail.data?.selected;
   const isSelected = (candidate: InventoryItem) =>

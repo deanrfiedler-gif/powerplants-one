@@ -93,3 +93,18 @@ test("Filters operate over real permitted item projections; linked view invents 
   assert.equal(filterInventory(items, { q: "no such item" }).length, 0);
   assert.equal(filterInventory(items, { unit: "m" }).length, 0);
 });
+test("Inventory search matches older observation titles in the exact item group", () => {
+  const older = observation({
+    title: "SYN OLDTITLE zebra",
+    observed_at: "2026-10-12T00:00:00.000Z",
+  });
+  const latest = observation({
+    title: "SYN current pump title",
+    observed_at: "2026-10-13T00:00:00.000Z",
+  });
+  const items = inventoryItems([older, latest]);
+  assert.equal(items[0].title, latest.title);
+  assert.deepEqual(filterInventory(items, { q: " OLDTITLE zebra " }), items);
+  assert.deepEqual(filterInventory(items, { q: "current pump" }), items);
+  assert.deepEqual(filterInventory(items, { q: "missing title" }), []);
+});

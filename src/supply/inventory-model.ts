@@ -133,7 +133,7 @@ export function filterInventory(
   return items.filter(
     (r) =>
       (!search ||
-        [r.item, r.title, r.company_name].some((v) =>
+        [r.item, r.company_name, ...r.observations.map((o) => o.title)].some((v) =>
           v.toLowerCase().includes(search),
         )) &&
       (!query.completeness || r.completeness === query.completeness) &&
