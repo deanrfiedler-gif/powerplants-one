@@ -10,7 +10,7 @@ The trial reuses the concept's top bar, compact/expanded rails, grouped Sales fl
 
 Sales browse, preview and checked-row fixtures distinguish record inspection from bulk action. Clear selection retains the preview. The Service register opens the blocked synthetic work order; readiness evidence remains attached to the exact scope. Compact laptop/tablet and phone rows are trial compositions, not a replacement for the accepted register control set. Arbitrary sorting, filters, bulk execution and the complete permission matrix are outside this prototype.
 
-The compact deal-row component retains customer, scope, amount/stage and next activity in six row instances. The 390 view shows all six; the short 320 view scrolls. Only the named Sunline phone record journey is connected. Overdue status includes the word as well as colour.
+The compact deal-row component retains customer, scope, amount/stage and next activity in six row instances. The final pass uses 15/20 customer names, 13/18 supporting text, 12 px padding and 8 px corners inside 16 px content gutters. The 390 view shows all six; the short 320 view scrolls. Only the named Sunline phone record journey is connected. Overdue status includes the word as well as colour.
 
 ## read-state
 
@@ -18,6 +18,12 @@ Quotation fixtures make saving, saved, failed, offline and conflict states visib
 
 ## dialog
 
-Four desktop dialogs fit their content and cover the whole shell with a scrim. Delivery actions align in one row; conflict resolution keeps the two value choices distinct. Phone authorisation uses a fitted bottom sheet with record identity, reason, consequence and visible Cancel/Confirm actions at both widths. The player walkthrough verified cancellation, Escape and the intended saved-quote and Service confirmation paths.
+Four desktop dialogs fit their content and cover the whole shell with a scrim. The final pass gives them 24 px padding, 24/32 titles, 14/20 body text and a divided footer with right-aligned 44 px actions and a rightmost primary action. Conflict resolution keeps its two value choices distinct beside Keep reviewing in one contained footer. Phone authorisation uses a fitted bottom sheet with record identity, reason, consequence and visible Cancel/Confirm actions at both widths. The earlier player walkthrough verified cancellation, Escape and the intended saved-quote and Service confirmation paths; the final pass verifies screenshots and graph continuity separately.
 
 The issue dialog and issued result still use the 8 December saved fixture when invoked from other quote states. This is an observed prototype consistency gap, not accepted behaviour. Arbitrary input, context-dependent result rendering, keyboard focus trapping/return and assistive technology require an implementation proof.
+
+## buttons
+
+Existing local trial button components share Roboto Medium 14/20 labels and 6 px corners. Phone instances retain a fixed 44 px height after text reflow; desktop dialog footers use the same height and hierarchy. The trial's other compact desktop controls keep their existing height. This is a private Figma reference binding, not a change to the application Button component.
+
+Final source review found no undersized phone action instance, horizontal phone-text overflow or broken destination. The first colour-render and footer-overflow defects were corrected and recaptured. Blocked, ready and authorised Service status text uses warning, information and success tokens consistently across desktop and phone. Owner approval, complete phone-shell conformance and application accessibility remain pending.

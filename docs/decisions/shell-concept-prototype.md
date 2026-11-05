@@ -60,7 +60,7 @@ New section `64:8003`: **Shell refinement · clickable Sales + Service · 5 Nov 
 - A list has one Menu entry. A record retains Back, its reference and More; More opens a separate record-actions sheet with workspace navigation, return to the owning list and Close actions. The duplicated bottom More controls were removed. Unsupported workspace buttons were removed from this bounded trial menu.
 - Six compact deal rows retain customer, scope, amount/stage and next activity, including a text-labelled overdue activity. All six fit in the 390 x 844 view; the short 320 x 568 view scrolls. Scrollable record content sits above the fixed primary action. Authored phone action instances are at least 44 x 44 px.
 - Service Back returns to a blocked, ready or authorised owning-list fixture matching the record. The authorised primary action opens Schedule unassigned work; returning from Schedule retains the authorised list fixture. No appointment is created.
-- Four desktop dialogs fit their content: Service confirmation 600 x 342, delivery edit 640 x 290, conflict resolution 640 x 398 and issue/send 640 x 358. Their scrims cover the whole shell. Cancel and Escape use the invoking history. The delivery action row is horizontal and its instruction now explicitly describes Apply. Phone authorisation uses a fitted bottom sheet with visible consequences, Cancel and Confirm r02 at both sizes.
+- Four desktop dialogs fit their content. After the final visual pass, Service confirmation is 600 x 359, delivery edit 640 x 307, conflict resolution 640 x 359 and issue/send 640 x 379. Their scrims cover the whole shell. Cancel and Escape use the invoking history. The delivery action row is horizontal and its instruction explicitly describes Apply. Phone authorisation uses a fitted bottom sheet with visible consequences, Cancel and Confirm r02 at both sizes.
 
 ## Second-pass walkthrough
 
@@ -73,6 +73,24 @@ The following was exercised in the Figma player on 5 November 2026, separately f
 | Desktop Sales draft | Delivery dialog to Saving to Saved; the displayed week became 8 December. Undo restored 1 December. The final smaller dialog and aligned action row were checked in the player. |
 | Desktop Sales issue | Escape from issue confirmation returned to its invoking quotation. The saved 8 December path proceeded through confirmation to Issued / queued, with no delivery claim. |
 | Visual inspection | Revised 390 and 320 deal lists, short work-order view, phone confirmation, desktop Service confirmation, delivery, conflict and issue dialogs were inspected. The conflict dialog comparison choices remain distinct. |
+
+## Final visual-consistency pass
+
+Dean requested a final pass on dialogs, phone typography and spacing, and consistency across Sales and Service. The following rules were applied to the existing editable trial on 5 November 2026; its source nodes, 66-screen scope and 461 destination actions are retained.
+
+| Concern | Final trial treatment |
+|---|---|
+| Desktop dialogs | 24 px outer padding, 24/32 Roboto Medium titles, 13/20 reference text and 14/20 body/action text. A soft top rule separates the footer; actions align right, the primary is rightmost and Cancel precedes it. All controls are 44 px high. Conflict resolution places Keep reviewing, Use saved value and Keep draft in one contained footer. |
+| Shared trial buttons | Existing primary/secondary/quiet components `65:14921`, `65:14924`, `65:14927` use 14/20 labels and 6 px corners. Phone instances retain 44 px height; inherited compact desktop controls retain their existing density. |
+| Phone typography | 20/28 page and sheet titles; 16/24 section/status headings; 14/20 body and action labels; 13/18 supporting metadata. Record references use 14/20 in the compact header. Compact deal rows use 15/20 customer names and 13/18 supporting lines, replacing the prior 12 px details. |
+| Phone spacing | 16 px content gutters, 12 px card padding and 8 px card corners. Record sections use a 12 px gap; compact deal rows retain an 8 px inter-row gap and 4 px line gap. Fixed bottom actions align to the content gutter. Sheet tops use 12 px corners and square bottom edges. |
+| Status semantics | Blocked uses the existing warning tokens; ready to authorise uses information tokens; authorised uses success tokens. Sales qualification uses neutral tokens. Text labels remain explicit. Desktop and phone Service summaries share the same distinction. |
+
+Final screenshot review covered all four desktop dialogs; 390 and 320 Sales lists; short-phone Sales and Service records; blocked/authorised Service states; the phone confirmation, record-actions sheet and Service list. The first render exposed unresolved cached token colours in some status panels and a two-pixel conflict-footer overflow. Both were corrected and the affected screens recaptured. The final inspected compositions have no material remaining visual inconsistency or clipped action.
+
+The structural check found no horizontal text overflow in phone vertical containers and no phone action instance below 44 x 44 px. All text remains Roboto. The six sampled text/background token pairs measure 5.33:1 to 14.37:1, including warning, information, success and neutral status text. This is a bounded colour check, not a complete accessibility audit. The trial remains editable, with 4,252 text nodes and 2,138 instances across the 66 screens; the only image fills are 32 reused 32 x 32 logos.
+
+The earlier player walkthrough remains the interaction evidence; this final pass changed typography, spacing, colours and footer grouping, then rechecked the graph. It does not claim a new full player or real-device test. Visual consistency is ready for owner sign-off on the represented examples. The following functional, coverage and adoption matters still prevent complete shared-shell sign-off.
 
 ## Remaining issues
 
@@ -89,4 +107,4 @@ The following was exercised in the Figma player on 5 November 2026, separately f
 - The 720 x 450 frame is a layout study, not an executed browser-zoom accessibility test. Physical phones, touch keyboard occlusion, all real permissions, persistence, concurrent edits, delivery receipts and operational rules remain to be tested in an application implementation.
 - No retained PNG package or named accepted Figma version is issued in this contribution. Private visual evidence remains in the source file and review session. No new review fingerprint, baseline acceptance or deployment is claimed.
 
-The revised layouts are ready for owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before shared-shell adoption. This is not a claim of complete satisfaction or production readiness.
+The final visual-consistency pass is complete and the represented layouts are ready for owner approval. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before shared-shell adoption. Owner acceptance and production readiness remain unclaimed.

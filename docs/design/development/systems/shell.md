@@ -10,6 +10,8 @@ The [shell concept trial](../../../decisions/shell-concept-prototype.md) records
 
 The second pass refines 390 x 844 and short 320 x 568 phone layouts, compact deal density, distinct record actions and content-sized dialogs. The 66-screen trial includes phone Service owning lists and a Schedule handover. Player walkthroughs verify the named Sales save/Undo/issue and phone Service paths; cross-workspace state reset, shared quote-fixture continuity, incomplete phone controls and device/accessibility proof remain open in the decision record.
 
+The final visual pass aligns dialog typography and footers, phone gutters/card spacing, action labels and status semantics across Sales and Service. Screenshot review and the bounded source checks are recorded in the same decision: no material remaining visual inconsistency in the represented examples, no horizontal phone-text overflow or undersized phone action. The sampled token contrast check is not full accessibility acceptance. Visual consistency is ready for owner review; the functional and adoption gaps above remain open.
+
 ## Desktop
 
 Use the actual shared application source `src/components/product-navigation.tsx`. The shell owns branding, navigation, global search, identity and viewport allocation. Development pages occupy the workspace interior. Shared changes must be checked against every affected consumer, using the complete root stylesheet order.

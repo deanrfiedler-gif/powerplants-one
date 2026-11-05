@@ -7,7 +7,7 @@
       "gaps": [{"id":"shell-concept-adoption-review","expected":"A shared shell preserves context, panels, reachable controls and accepted phone rules across Sales and Service.","actual":"The separate concept now has 66 connected screens, compact 390 x 844 and 320 x 568 phone lists, distinct record actions, state-specific Service lists and a phone Schedule handover. Cross-workspace re-entry resets the fixed Service example. The 72 px rail, 768 px breakpoint and reduced phone controls remain proposed departures; application code is unchanged.","action":"Review the player walkthrough in PPO-SHELL-CONCEPT-PROTOTYPE-DEC, resolve state continuity and phone coverage, reconcile accepted phone rules, then verify focus, zoom and physical devices before adoption.","priority":"High","owner":"Dean Fiedler"}]
     },
     "register-table": {
-      "states": [{"id":"shell-concept-preview-versus-selection","label":"Concept preview and checked row","description":"Reference only: deal-name click opens preview with an empty checkbox; checkbox creates the separate checked-row/count state; clearing selection leaves preview open."}],
+      "states": [{"id":"shell-concept-preview-versus-selection","label":"Concept preview and checked row","description":"Reference only: deal-name click opens preview with an empty checkbox; checkbox creates the separate checked-row/count state; clearing selection leaves preview open. Final phone rows use 15/20 customer text, 13/18 supporting text, 12 px padding and 8 px corners."}],
       "used_on": ["system:shell"]
     },
     "read-state": {
@@ -15,9 +15,13 @@
       "used_on": ["system:shell"]
     },
     "dialog": {
-      "states": [{"id":"shell-concept-fitted-dialogs","label":"Concept fitted dialogs and phone confirmation","description":"Reference only: content-sized Service authorisation, delivery edit, conflict resolution and issue/send dialogs with full-shell scrims; 390 and 320 phone confirmation sheets retain consequences and 44 px actions. Cancel/Escape return to invoking context."}],
+      "states": [{"id":"shell-concept-fitted-dialogs","label":"Concept fitted dialogs and phone confirmation","description":"Reference only: content-sized Service authorisation, delivery edit, conflict resolution and issue/send dialogs with full-shell scrims, 24 px padding, 24/32 titles and divided right-aligned footers. The primary action is rightmost; all dialog controls are 44 px high. Phone sheets at 390 and 320 retain consequences and visible actions. Cancel/Escape return to invoking context."}],
       "used_on": ["system:shell"],
       "gaps": [{"id":"shell-concept-dialog-context","expected":"A confirmation preserves the exact invoking record values and supports accessible modal interaction.","actual":"The issue/send fixture uses the saved 8 December quote background and result across invoking quote states. Cancellation returns correctly. Focus trapping, focus return and screen-reader semantics remain unproven.","action":"Make issue confirmation/result fixtures stateful and verify modal behaviour in the application before adoption.","priority":"High","owner":"Dean Fiedler"}]
+    },
+    "buttons": {
+      "states": [{"id":"shell-concept-action-consistency","label":"Concept action typography and phone targets","description":"Reference only: existing local primary, secondary and quiet trial buttons share Roboto Medium 14/20 labels and 6 px corners. Phone action instances are fixed at 44 px high; desktop dialog actions share placement and height. Existing compact desktop action density is retained."}],
+      "used_on": ["system:shell"]
     }
   }
 }
