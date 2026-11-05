@@ -2,6 +2,11 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { plannerHeld, plannerHoldReasons } from "../../src/scheduling/planner-attention";
 const held = { id: "synthetic", status: "Confirmed", dispatch_hold: true };
+test("a Proposed visit stays proposed even with a stored dispatch hold and gate reasons", () => {
+  const proposed = { ...held, status: "Proposed", dispatch_readiness: { dispatch_hold: true, reasons: ["A current applicable issued pack is required."] }, policy_impacts: [{ held: true }] };
+  assert.equal(plannerHeld(proposed), false);
+  assert.deepEqual(plannerHoldReasons(proposed), []);
+});
 test("a bare dispatch hold never invents a cause or release date", () => {
   assert.equal(plannerHeld(held), true);
   assert.deepEqual(plannerHoldReasons(held), ["On hold — a reason is not available in this read."]);

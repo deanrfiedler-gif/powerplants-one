@@ -51,6 +51,11 @@ for (const width of [1440, 1024, 390, 320]) test(`PL-01 band, tray, selection an
     await details.getByRole("button", { name: "Move or reassign", exact: true }).click();
     const move = page.getByRole("dialog", { name: "Move or reassign", exact: true });
     await expect(move.getByRole("region", { name: "Current and proposed visit" })).toBeVisible();
+    await expect(move.getByText(/new customer site readiness confirmation/)).toHaveCount(0);
+    const finish = move.getByLabel("Finish (site time)", { exact: true });
+    const later = new Date((await finish.inputValue()) + "Z");
+    later.setUTCMinutes(later.getUTCMinutes() + 30);
+    await finish.fill(later.toISOString().slice(0, 16));
     await expect(move.getByText(/new customer site readiness confirmation/)).toBeVisible();
     await page.getByRole("button", { name: "Close move", exact: true }).click();
     await details.getByRole("button", { name: "Close visit details", exact: true }).click();
@@ -90,6 +95,27 @@ test("PL-01 tray opens the native proposal without reserving or saving a visit",
   await page.screenshot({ path: info.outputPath("PL01-plan-visit.png"), fullPage: false });
   await panel.getByRole("button", { name: "Close plan visit" }).click();
   expect(writes).toEqual([]);
+});
+
+test("PL-01 a move without SITE_READINESS shows no confirmation warning", async ({ page }) => {
+  for (const path of ["**/api/v1/schedule?**", "**/api/v1/appointments/*"])
+    await page.route(path, async route => {
+      const response = await route.fetch();
+      const data = await response.json();
+      for (const appointment of data.items ?? []) appointment.preparation = null;
+      await route.fulfill({ response, json: data });
+    });
+  await enter(page);
+  await page.locator('[data-appointment][data-status="Confirmed"]').first().click();
+  const details = page.getByRole("complementary", { name: /^Visit details:/ });
+  await details.getByRole("button", { name: "Move or reassign", exact: true }).click();
+  const move = page.getByRole("dialog", { name: "Move or reassign", exact: true });
+  const finish = move.getByLabel("Finish (site time)", { exact: true });
+  const later = new Date((await finish.inputValue()) + "Z");
+  later.setUTCMinutes(later.getUTCMinutes() + 30);
+  await finish.fill(later.toISOString().slice(0, 16));
+  await expect(move.getByText(/new customer site readiness confirmation/)).toHaveCount(0);
+  await expect(move.getByRole("region", { name: "Current and proposed visit" })).toBeVisible();
 });
 
 test("PL-01 a timeline drag opens Move this visit without sending a booking command", async ({ page }, info) => {

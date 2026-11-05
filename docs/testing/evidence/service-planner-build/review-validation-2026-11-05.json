@@ -1,0 +1,189 @@
+{
+  "date": "2026-11-05",
+  "pr": 808,
+  "reviewed_head": "7c0e5f195343decbc5af56551cd26258e52f7689",
+  "merge_commit": "9b1ae0fcb8625db131e3e5403f43d4063e6c3921",
+  "main_comparison_sha": "9c956b1b93c2cfed9e3aa1237927b537f8dc3d88",
+  "environment": {
+    "database": "ready",
+    "browser": "unavailable",
+    "node": "24.21.0",
+    "npm": "11.19.0"
+  },
+  "passed": [
+    "python3 scripts/check_foundation.py",
+    "python3 scripts/check_prototype.py",
+    "python3 scripts/check_naming.py",
+    "python3 scripts/build_status.py --check",
+    "python3 scripts/check_documentation_scope.py --base origin/main --head HEAD",
+    "44 documentation unit tests",
+    "python3 scripts/check_migrations.py",
+    "npm run check (Studio, lint, TypeScript, 1417 unit tests, production build)"
+  ],
+  "database": [
+    {
+      "file": "tests/database/planner.test.ts",
+      "tests": 24,
+      "pass": 24,
+      "fail": 0
+    },
+    {
+      "file": "tests/database/quality-planner.test.ts",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    }
+  ],
+  "http": [
+    {
+      "file": "tests/http/planner.test.ts",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0
+    },
+    {
+      "file": "tests/http/service-findings.test.ts",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "file": "tests/http/service-finding-next-action.test.ts",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0
+    },
+    {
+      "file": "tests/http/site-readiness.test.ts",
+      "tests": 2,
+      "pass": 1,
+      "fail": 1
+    }
+  ],
+  "environment_blocked": [
+    {
+      "file": "tests/http/site-readiness.test.ts",
+      "test": "P4 HTTP confirmation after the whole crew acknowledged releases dispatch; negative then positive repeats it",
+      "classification": "environment-blocked: browser",
+      "branch_message": "AssertionError [ERR_ASSERTION]: [{\"id\":\"725bc115-45b6-4f3e-ade4-48bba85fadd0\",\"revision_id\":\"a01821c9-fe31-40d7-bb84-2a2f057767d1\",\"state\":\"Failed\",\"attempts\":1,\"error_code\":\"RenderOrStorageFailure\",\"requested_at\":\"2026-11-05T11:45:27.585Z\",\"recovery_owner_id\":\"30000000-0000-4000-8000-000000000001\",\"issue_id\":null,\"actor_name\":\"SYN Coordinator\",\"recovery_owner_name\":\"SYN Coordinator\"}]",
+      "main_message": "AssertionError [ERR_ASSERTION]: [{\"id\":\"34a670f2-b99e-4cfd-bff0-14eddff69961\",\"revision_id\":\"59aa43ea-e27b-4569-9e3e-bf8becd6619f\",\"state\":\"Failed\",\"attempts\":1,\"error_code\":\"RenderOrStorageFailure\",\"requested_at\":\"2026-11-05T11:48:30.629Z\",\"recovery_owner_id\":\"30000000-0000-4000-8000-000000000001\",\"issue_id\":null,\"actor_name\":\"SYN Coordinator\",\"recovery_owner_name\":\"SYN Coordinator\"}]",
+      "comparison": "PR compiled server on port 3000; clean-main development server on port 3001; fresh synthetic reset before each. Both fail at the same pack-render assertion, line 62.",
+      "code": "RenderOrStorageFailure"
+    }
+  ],
+  "sandbox_comparisons": [
+    {
+      "file": "tests/unit/azure-demo.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/browser-fixture-transport.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/fertigation-request-limit.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/foundation.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/guide-library.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/login.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/proof-database.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/proof-request-scope.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/quality-asset-observer.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/unit/quality-packet-network.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/database/planner.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/database/quality-planner.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    },
+    {
+      "file": "tests/http/planner.test.ts",
+      "message": "test failed",
+      "main_message": "test failed",
+      "classification": "pre-existing on main in this environment",
+      "resolution": "Network-enabled rerun passed."
+    }
+  ],
+  "discovery": {
+    "planner_and_shell": "31 tests discovered including warm-up; no browser execution",
+    "demo": "6 desktop/phone tests discovered with .env.local; no browser execution",
+    "initial_demo_error": "Synthetic identity requires an explicitly local, unshared, non-production environment.",
+    "main_same_error": true,
+    "resolution": "Loaded .env.local using node --env-file; discovery passed."
+  },
+  "comparison_harness": {
+    "initial_main_http": "500 !== 200 at session; dev server could not compile dependencies symlinked outside its root.",
+    "resolution": "Stopped that server and copied the same locked node_modules into the main comparison worktree. Retried the same failing P4 case and reproduced RenderOrStorageFailure. The first 500 is not used as regression evidence."
+  },
+  "not_run_here_left_to_github_ci": [
+    "Browser suites (compiled application, P01\u2013P11, Scheduling, Service planner and demo UI): browser unavailable",
+    "Database and HTTP suites outside the named relevant selection",
+    "New application captures: browser unavailable"
+  ],
+  "reviewed_head_demo_ci": "Did not run: no reviewed-head changed path matched azure-demo-check.yml. Editing tests/demo/ui.spec.ts matches the new-head filter. Actual new-head CI results are recorded in the completion comment.",
+  "open_limits": [
+    "Per-visit dispatch gate reads remain a measured cost",
+    "Tier 1 ADR-0067 stage 3b redraw, visual and owner/device acceptance remain separate",
+    "Claude confirms these findings only; no PR merge"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-05",
+  "pr": 808,
+  "period": {
+    "from": "2031-09-21T14:00:00Z",
+    "to": "2031-09-28T14:00:00Z",
+    "timezone": "Australia/Brisbane"
+  },
+  "profile": "coordinator",
+  "fixture": "reset synthetic seed",
+  "measurement": "Complete scheduleSnapshot read including transaction acquisition/commit; SQL count excludes BEGIN, SET TRANSACTION and COMMIT. First run is warm-up. No concurrent database suite.",
+  "samples": [
+    {
+      "run": 1,
+      "warmup": true,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 779.43
+    },
+    {
+      "run": 2,
+      "warmup": false,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 595.25
+    },
+    {
+      "run": 3,
+      "warmup": false,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 586.14
+    },
+    {
+      "run": 4,
+      "warmup": false,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 496.83
+    },
+    {
+      "run": 5,
+      "warmup": false,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 468.93
+    },
+    {
+      "run": 6,
+      "warmup": false,
+      "visits_per_week": 10,
+      "eligible_visits": 10,
+      "gate_evidence_visits": 10,
+      "sql_reads": 669,
+      "elapsed_ms": 531.48
+    }
+  ]
+}

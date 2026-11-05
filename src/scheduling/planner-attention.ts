@@ -8,7 +8,7 @@ export type PlannerHoldSource = {
   policy_impacts?: { held: boolean }[];
 };
 export function plannerHeld(a: PlannerHoldSource) {
-  if (!["Proposed", "Confirmed"].includes(a.status) || a.actual_start_at) return false;
+  if (a.status !== "Confirmed" || a.actual_start_at) return false;
   return (a.dispatch_readiness?.dispatch_hold ?? a.dispatch_hold) || !!a.policy_impacts?.some(x => x.held);
 }
 export function plannerHoldReasons(a: PlannerHoldSource): string[] {

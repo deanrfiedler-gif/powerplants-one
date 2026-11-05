@@ -3680,7 +3680,7 @@
       "test": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
       "scenario": "SC-07: /schedule?day=2031-11-06&view=day",
       "message": "Expected .planner-stat-row strong text [\u2014, \u2014, \u2014, \u2014]; received [] after 5000ms.",
-      "classification": "Superseded-design loading assertion; bounded replacement explicitly authorised by the user",
+      "classification": "Superseded-design loading assertion; bounded replacement authorised by Claude under rule 5 in [DECIDED] comment 6649906346 (https://github.com/deanrfiedler-gif/powerplants-one/pull/808#issuecomment-6649906346), an agent decision under the standing order",
       "implementation_response": "Remove the interim count row under accepted D2/loading frame 1214:275141. Replace only SC-07 loading assertion with unknown tray counts, hidden known demand content and busy/unknown Needs attention evidence. Suppress displayed To plan counts during the pending planner read. Other screen families, deadlines and viewport coverage are unchanged.",
       "clean_main_attempt": {
         "classification": "environment-blocked: browser",

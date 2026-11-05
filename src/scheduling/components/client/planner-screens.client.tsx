@@ -9,6 +9,7 @@ import { DemandPanel } from "./demand-panel.client";
 import { SecondaryMenuFrame, useSecondaryMenu } from "../../../shell/secondary-menu";
 import { PlannerAttention } from "./planner-attention.client";
 import { plannerHeld, plannerHoldReasons } from "../../planner-attention";
+import { moveNeedsSiteReadiness } from "../../planner-move";
 import { formatRange } from "../../../shell/date-format";
 import "./service-planner.css";
 import {
@@ -464,7 +465,7 @@ function BookingForm({
         <p>Proposed: {start.replace("T", " ")} → {end.replace("T", " ")} · {basis.site_timezone}</p>
         <p>Current crew: {basis.assignments.filter(x => x.active).map(x => x.name).join(", ") || "None"}</p>
         <p>Proposed crew: {crew.map(x => resources.data?.items.find(r => r.id === x.resource_id)?.name ?? "Choose a person").join(", ")}</p>
-        <p className="planner-warning">Moving a confirmed visit needs a new customer site readiness confirmation for the changed schedule. Dispatch stays held until the current gate passes.</p>
+        {moveNeedsSiteReadiness(basis, start, end) && <p className="planner-warning">Moving a confirmed visit needs a new customer site readiness confirmation for the changed schedule. Dispatch stays held until the current gate passes.</p>}
         <p>Nothing changes until the server accepts the move.</p>
       </section>}
       <ReadState {...resources} retry={resources.reload} />

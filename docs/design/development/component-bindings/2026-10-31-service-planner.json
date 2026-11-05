@@ -18,6 +18,7 @@
         "src/scheduling/components/client/demand-panel.client.tsx",
         "src/scheduling/components/client/service-planner.css",
         "src/scheduling/planner-attention.ts",
+        "src/scheduling/planner-move.ts",
         "src/scheduling/planner.ts"
       ],
       "used_on": [
