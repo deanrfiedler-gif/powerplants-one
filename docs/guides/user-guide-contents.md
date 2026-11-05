@@ -229,7 +229,7 @@ One chapter per module, in the order of the application's workspaces. Each row i
 | Purchasing and supplier commitments | SC-02 | Built |
 | Inbound shipments | SC-03 | Built |
 | Receiving and inspection | SC-04 | Built |
-| Stock and reservations | SC-05 | Built |
+| Inventory | SC-05 | Built |
 | Picking and dispatch | SC-06 | Built |
 | Customer deliveries | SC-07 | Built |
 | Returns and claims | SC-08 | Built |

@@ -1,0 +1,43 @@
+{
+  "baseline_commit": "3faff7aef476904a30e878be8bdc9e95792fb4fb",
+  "database": "PostgreSQL 16.15, disposable ppo_synthetic_test",
+  "measurement": "Compiled GET /api/v1/customers/:id/workspace. Each application server and PostgreSQL pinned to CPU 0. Sum PostgreSQL parse/bind/execute/simple-statement duration logs within each GET interval; count execute + simple statements, excluding parse/bind. Sessions established before the interval. Serial calls on unchanged data after an exact reset and synthetic seed.",
+  "fixture": "Main seed plus exactly 100 RestrictedService CustomerContact activities owned by coordinator, each linked to the same Organisation and Site. No data changes between reads except synthetic sessions created outside each measurement interval.",
+  "before": {
+    "start": "2026-11-05T09:33:59.892Z",
+    "end": "2026-11-05T09:34:02.875Z",
+    "elapsed_ms": 2982.3135549999997,
+    "status": 200,
+    "origin": "http://127.0.0.1:3001",
+    "activity_count": 100,
+    "database_ms": 36927.062,
+    "duration_lines": 6445,
+    "phases": {
+      "parse <unnamed>": 1814,
+      "bind <unnamed>": 1814,
+      "execute <unnamed>": 1814,
+      "statement": 1003
+    },
+    "executed_statements": 2817
+  },
+  "after": {
+    "start": "2026-11-05T09:34:03.058Z",
+    "end": "2026-11-05T09:34:03.409Z",
+    "elapsed_ms": 350.44116599999995,
+    "status": 200,
+    "origin": "http://127.0.0.1:3000",
+    "activity_count": 100,
+    "database_ms": 217.498,
+    "duration_lines": 382,
+    "phases": {
+      "parse <unnamed>": 124,
+      "bind <unnamed>": 124,
+      "execute <unnamed>": 124,
+      "statement": 10
+    },
+    "executed_statements": 134
+  },
+  "workspace_dto_comparison": "Deep-equal after removing only observed_at fields.",
+  "normalized_workspace_sha256": "aef47570aba13de03e028542c9c96017f6a7c7e1a245cd060903a567c3fee4db",
+  "limits": "One measured sample per implementation after route warm-up. Local synthetic data with SQL logging enabled; not hosted, ten-user or whole-application acceptance."
+}

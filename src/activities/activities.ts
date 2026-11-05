@@ -1,3 +1,4 @@
+import { activityPageReads } from "./page-reads";
 import { activityRequirements, isManagedFindingActivity, legacyFindingActivityAuthority, canEditFindingActivity } from "./requirements";
 import { activityIncidentSource } from "../incidents/context";
 import { activityReportSource } from "../reports/context";
@@ -596,6 +597,32 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
       [p.workspace_id, a.owner_id],
     )
   ).rows[0];
+  return activityDetail(a, owner.display_name, links, {
+    required_evidence: await activityRequirements(c, p, id),
+    incident_source: await activityIncidentSource(c, p, id),
+    report_source: await activityReportSource(c, p, id),
+    escalation_source: await escalationSource(c, p, id),
+    can_edit: ["Open", "InProgress"].includes(a.status) &&
+      (await canEditFindingActivity(c, p, a)) &&
+      !(await isEscalationChase(c, p, a.id)) &&
+      (await hasPermission(c, p, "activity.edit", a.company_id, a.site_id ?? undefined)),
+    can_complete: ["Open", "InProgress"].includes(a.status) && a.owner_id === p.actor_id &&
+      (await hasPermission(c, p, "activity.edit", a.company_id, a.site_id ?? undefined)),
+  });
+}
+type ActivityExtras = {
+  required_evidence: string | null;
+  incident_source: Awaited<ReturnType<typeof activityIncidentSource>>;
+  report_source: Awaited<ReturnType<typeof activityReportSource>>;
+  escalation_source: Awaited<ReturnType<typeof escalationSource>>;
+  can_edit: boolean;
+  can_complete: boolean;
+};
+type DetailLink = ActivityLink & { label: string; display_number: string };
+function activityDetail(
+  a: Awaited<ReturnType<typeof visibleActivity>>, ownerName: string,
+  links: DetailLink[], extras: ActivityExtras,
+) {
   return {
     id: a.id,
     company_id: a.company_id,
@@ -603,9 +630,9 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     version: a.version,
     kind: a.kind,
     owner_id: a.owner_id,
-    owner_name: owner.display_name,
+    owner_name: ownerName,
     summary: a.summary,
-    required_evidence: await activityRequirements(c, p, id),
+    required_evidence: extras.required_evidence,
     status: a.status,
     due_at: a.due_at?.toISOString() ?? null,
     due_needed: a.due_needed,
@@ -619,30 +646,11 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     updated_at: a.updated_at.toISOString(),
     synthetic: true,
     links,
-    incident_source: await activityIncidentSource(c,p,id),
-    report_source: await activityReportSource(c,p,id),
-    escalation_source: await escalationSource(c,p,id),
-    can_edit:
-      ["Open", "InProgress"].includes(a.status) &&
-      (await canEditFindingActivity(c,p,a)) &&
-      !(await isEscalationChase(c,p,a.id)) &&
-      (await hasPermission(
-        c,
-        p,
-        "activity.edit",
-        a.company_id,
-        a.site_id ?? undefined,
-      )),
-    can_complete:
-      ["Open", "InProgress"].includes(a.status) &&
-      a.owner_id === p.actor_id &&
-      (await hasPermission(
-        c,
-        p,
-        "activity.edit",
-        a.company_id,
-        a.site_id ?? undefined,
-      )),
+    incident_source: extras.incident_source,
+    report_source: extras.report_source,
+    escalation_source: extras.escalation_source,
+    can_edit: extras.can_edit,
+    can_complete: extras.can_complete,
   };
 }
 // The change history of one activity the reader can currently see. Events are the immutable
@@ -717,7 +725,14 @@ export async function activityHistory(p: Principal, id: string) {
   };
 }
 export async function listActivities(p: Principal, input: unknown = {}) {
-  const c = database();
+  const c = await database().connect();
+  try {
+    return await listActivitiesWithClient(c, p, input);
+  } finally {
+    c.release();
+  }
+}
+async function listActivitiesWithClient(c: QueryClient, p: Principal, input: unknown) {
   await requireCapability(c, p, "activity.read");
   const r = object(input, [
     "limit",
@@ -774,9 +789,13 @@ export async function listActivities(p: Principal, input: unknown = {}) {
       ...filters,
     },
   );
+  const available = {
+    opportunity: await crmAvailable(c), lead: await leadsAvailable(c), project: await projectsAvailable(c),
+  };
   const rows = (
     await c.query(
-      `SELECT a.id FROM ppo.activities a WHERE a.workspace_id=$1 AND ${activityVisibility("a", await crmAvailable(c), await leadsAvailable(c), await projectsAvailable(c))}
+      `SELECT a.*,u.display_name AS owner_name FROM ppo.activities a
+      JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id) WHERE a.workspace_id=$1 AND ${activityVisibility("a", available.opportunity, available.lead, available.project)}
     AND ($3::uuid IS NULL OR a.company_id=$3) AND ($4::uuid IS NULL OR a.site_id=$4) AND ($5::uuid IS NULL OR a.id>$5)
     AND position(lower($6) in lower(a.summary))>0 AND ($7::uuid IS NULL OR a.owner_id=$7)
     AND ($8::text IS NULL OR a.status=$8 OR ($8='Active' AND a.status IN ('Open','InProgress')))
@@ -801,9 +820,62 @@ export async function listActivities(p: Principal, input: unknown = {}) {
     )
   ).rows;
   return envelope(
-    await Promise.all(
-      rows.slice(0, pg.limit).map((a) => readActivity(p, a.id)),
-    ),
+    await activityPageDetails(c, p, rows.slice(0, pg.limit), available),
     rows.length > pg.limit ? pg.cursor(rows[pg.limit - 1].id) : null,
   );
+}
+
+async function activityPageDetails(
+  c: QueryClient, p: Principal, rows: Awaited<ReturnType<typeof visibleActivity>>[],
+  available: { opportunity: boolean; lead: boolean; project: boolean },
+) {
+  if (!rows.length) return [];
+  // The list predicate authorises the page. Link labels still use the same
+  // target predicates as the direct reader, in one page-keyed statement.
+  const targets = [
+    ["Organisation", "organisations", visibility("Organisation", "r")],
+    ["Site", "sites", visibility("Site", "r")],
+    ["Asset", "assets", visibility("Asset", "r")],
+    ["Ticket", "tickets", ticketVisibility("r")],
+    ...(available.opportunity ? [["Opportunity", "opportunities", opportunityVisibility("r")]] : []),
+    ...(available.lead ? [["Lead", "lead_candidates", leadVisibility("r")]] : []),
+    ...(available.project ? [["Project", "projects", projectVisibility("r")]] : []),
+  ];
+  const links = (await c.query<DetailLink & { activity_id: string; target_id: string | null }>(
+    `SELECT l.activity_id,l.object_type,l.object_id,target.id AS target_id,
+      target.label,target.display_number FROM ppo.activity_links l
+    LEFT JOIN LATERAL (${targets.map(([kind, table, predicate]) => `
+      SELECT r.id,COALESCE(to_jsonb(r)->>'display_name',to_jsonb(r)->>'description',
+        to_jsonb(r)->>'summary',to_jsonb(r)->>'title') AS label,r.display_number
+      FROM ppo.${table} r WHERE l.object_type='${kind}' AND r.workspace_id=l.workspace_id
+        AND r.id=l.object_id AND ${predicate}`).join(" UNION ALL ")}) target ON true
+    WHERE l.workspace_id=$1 AND l.activity_id=ANY($3::uuid[])
+    ORDER BY l.activity_id,l.object_type,l.object_id`,
+    [p.workspace_id, p.actor_id, rows.map(a => a.id)],
+  )).rows;
+  const byActivity = new Map<string, DetailLink[]>();
+  for (const { activity_id, target_id, ...link } of links) {
+    if (!target_id) throw unavailable();
+    const group = byActivity.get(activity_id) ?? [];
+    group.push(link);
+    byActivity.set(activity_id, group);
+  }
+  const batch = activityPageReads(c);
+  const details = await Promise.allSettled(rows.map(async a => activityDetail(a, a.owner_name, byActivity.get(a.id) ?? [], {
+    required_evidence: await activityRequirements(batch, p, a.id),
+    incident_source: await activityIncidentSource(batch, p, a.id),
+    report_source: await activityReportSource(batch, p, a.id),
+    escalation_source: await escalationSource(batch, p, a.id),
+    can_edit: ["Open", "InProgress"].includes(a.status) &&
+      (await canEditFindingActivity(batch, p, a, true)) &&
+      !(await isEscalationChase(batch, p, a.id)) &&
+      (await hasPermission(batch, p, "activity.edit", a.company_id, a.site_id ?? undefined)),
+    can_complete: ["Open", "InProgress"].includes(a.status) && a.owner_id === p.actor_id &&
+      (await hasPermission(batch, p, "activity.edit", a.company_id, a.site_id ?? undefined)),
+  })));
+  // Drain every native read before releasing the shared page client on failure.
+  return details.map(result => {
+    if (result.status === "rejected") throw result.reason;
+    return result.value;
+  });
 }
