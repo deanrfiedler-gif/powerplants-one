@@ -3,7 +3,7 @@ document_id: PPO-SHELL-CONCEPT-PROTOTYPE-DEC
 title: Shell concept clickable trial
 date: 2026-11-05
 owner: Dean Fiedler
-status: Desktop rail arrangement and active styling adopted; wider prototype review and application implementation pending
+status: Desktop rail and header branding adopted. Wider prototype review and application implementation pending
 source_commit: aeaaad5a8e13f5c9549b9763a8150413b1769ab9
 versioning: git
 ---
@@ -12,7 +12,7 @@ versioning: git
 
 Dean approved the recommendation to retain the navy rail, grouped flyout, command palette and snapshot, resolve the four high-priority audit findings, and build a clickable Sales plus demanding Service or Engineering workflow. His instruction was: "Proceed with your recommendation below." Service was selected because its scope-specific readiness, explicit authorisation and scheduling handover exercise more than ordinary record navigation.
 
-This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). Dean subsequently adopted the specific desktop logo alignment, rail-footer control and active-workspace styling recorded below; this does not accept every trial screen, adopt a complete replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
+This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). Dean subsequently adopted the desktop logo and wordmark treatment, right divider, rail-footer control and active-workspace styling recorded below; this does not accept every trial screen, adopt a complete replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
 
 Dean subsequently requested: "Refine the phone navigation, information density and dialogs in Figma, then walk through the Sales and Service workflows and report any remaining issues." The second pass below records that work and its observed limits.
 
@@ -98,7 +98,7 @@ Dean adopted the recommendation to remove the top-left rail display control, ali
 
 The clickable trial now uses these specific desktop rules:
 
-- The existing 32 px Powerplants symbol has its centre at x=36, aligned with the main navigation icons and footer arrow in both rail widths. The wordmark follows it in the header; the top-left toggle is removed.
+- The 36 px Powerplants symbol has its centre at x=36, aligned with the main navigation icons and footer arrow in both rail widths. The wordmark follows it in the header; the top-left toggle is removed.
 - Settings and the rail display control occupy a fixed footer below an independently scrolling workspace list. A subdued divider separates the display control from Settings. The control remains 8 px above the screen bottom, including the 720 px and 768 px high studies.
 - A right chevron expands the compact rail; a left chevron and **Collapse navigation** label collapse the expanded rail. Targets are 64 x 44 and 224 x 44 px respectively. Tooltip copy is **Expand navigation** / **Collapse navigation**; reference text is supplied, but interactive hover rendering and accessible semantics require application proof.
 - The prototype contains 31 matching compact/expanded desktop pairs. Toggling retains the current screen and fixed record state; onward desktop links retain the chosen width. This is navigation between authored fixtures, not a persisted application preference. The 32 phone layouts and their Menu controls are unchanged.
@@ -126,7 +126,7 @@ All 31 compact and 31 expanded desktop states have exactly one active workspace.
 
 Dean requested that global search start inside the workspace to the right of the expanded rail. The shared trial header (`126:24992`) reserves a 240 px brand area in both rail states. At 1440 px, search starts at x=264, aligned with the Sales breadcrumb and Deals heading. The 1280 and 1024 px examples use their 16 px page margin and start at x=256. The field fills available space up to 480 px. In the 1024 px headers it measures 383 px, leaves a 16 px gap before the utilities and shows the product name beside the symbol. The 48 px header height and x=36 symbol centre apply in all three sizes.
 
-The editable comparison (`170:41052`) shows the current 32 px symbol and 14 px wordmark beside a proposed 36 px symbol and 18 px Medium wordmark on a 24 px line. A 1 px right border in white at 20% opacity meets the expanded rail edge. The larger branding and border await Dean's decision. Checks across 62 desktop frames verified alignment, visible shortcut and utility clearance, and matched the previous prototype link targets.
+Dean approved the 36 px symbol, 18 px Roboto Medium wordmark on a 24 px line, and a divider on the right edge only. The 1 px white divider at 20% opacity meets the expanded rail edge. The editable comparison (`170:41052`) preserves the previous 32 px symbol and 14 px wordmark beside the adopted header. All 62 desktop frames passed checks for brand dimensions, divider placement, search and utility clearance, and existing prototype links.
 
 ## Remaining issues
 
@@ -136,11 +136,11 @@ The editable comparison (`170:41052`) shows the current 32 px symbol and 14 px w
 
 ## Evidence and limits
 
-- The pre-rail visual pass contained 66 reachable screens and 461 destination actions; the adopted desktop arrangement extends this to 96 screens and 759 actions with no dangling target. No connected phone action instance measured below 44 x 44 px; all text uses Roboto. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens remain editable native Figma nodes; image fills are only reused 32 x 32 logos. The initial pass contained 50 screens and 427 destination actions.
+- The pre-rail visual pass contained 66 reachable screens and 461 destination actions; the adopted desktop arrangement extends this to 96 screens and 759 actions with no dangling target. No connected phone action instance measured below 44 x 44 px; all text uses Roboto. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens use editable native Figma nodes and reuse the Powerplants logo artwork. The initial pass contained 50 screens and 427 destination actions.
 - Visual inspection covered the guide, preview, bulk selection, Service register/readiness/review/confirmation, quote edit and recovery, issue confirmation, issued state, laptop/tablet and phone compositions. Text-container overlap and Service icon fills found in the first pass were corrected and recaptured.
 - The Figma player was used for representative clicks, separately from graph inspection. This is prototype navigation proof only. Keyboard reactions are authored for command search, Escape, result selection and confirmation cancellation; keyboard focus order, trapping and screen-reader semantics are not proven by the Figma graph.
 - Forms use predefined example values; fields are not arbitrary live inputs. Search uses a fixed Riverbend query. Some inherited toolbar, filter, tab and utility controls are contextual drawings, outside the linked trial. The Start guide identifies the supported journeys.
 - The 720 x 450 frame is a layout study, not an executed browser-zoom accessibility test. Physical phones, touch keyboard occlusion, all real permissions, persistence, concurrent edits, delivery receipts and operational rules remain to be tested in an application implementation.
 - No retained PNG package or named accepted Figma version is issued in this contribution. Private visual evidence remains in the source file and review session. No new review fingerprint, baseline acceptance or deployment is claimed.
 
-The desktop logo alignment, rail-footer arrangement and active-workspace treatment are adopted. The wider trial's represented layouts remain subject to owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before complete shared-shell adoption. Whole-shell acceptance and production readiness remain unclaimed.
+Dean adopted the desktop header branding and right divider, rail-footer arrangement and active-workspace treatment. The wider trial's represented layouts remain subject to owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before complete shared-shell adoption. Whole-shell acceptance and production readiness remain unclaimed.

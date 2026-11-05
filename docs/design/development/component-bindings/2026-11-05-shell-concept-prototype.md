@@ -1,6 +1,6 @@
 # Shell concept trial consumer note
 
-Owner: Dean Fiedler. Review: desktop logo alignment, rail-footer arrangement and active-workspace styling adopted; wider concept review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
+Owner: Dean Fiedler. Review: desktop header branding, right divider, rail-footer arrangement and active-workspace styling adopted; wider concept review pending. Source and exact private Figma nodes: [shell concept trial](../../../decisions/shell-concept-prototype.md). No artwork or file link is published here.
 
 ## application-shell
 
@@ -10,7 +10,7 @@ The adopted desktop arrangement uses derived local top-bar and rail components. 
 
 The current workspace uses a full-width slate band with square corners and a white icon and Medium label. Its 3 px green stripe touches the left edge and the slate fill reaches the right edge in both the 72 px and 240 px trial rails. The indented current page retains its quieter marker. Reference `156:41012` separates hover, active, focus and combined active/focus; keyboard and pointer behaviour remain implementation proof. The sampled contrast figures and source checks are in the [active-workspace decision](../../../decisions/shell-concept-prototype.md#adopted-desktop-active-workspace).
 
-The desktop header uses a 240 px brand area. Global search starts at x=264 in the 1440 px fixture and x=256 in the narrower fixtures. At 1024 px the field shrinks to 383 px and the full wordmark fits. The separate brand study (`170:41052`) proposes a 36 px symbol, 18 px wordmark and 1 px divider.
+The desktop header uses a 240 px brand area. Global search starts at x=264 in the 1440 px fixture and x=256 in the narrower fixtures. At 1024 px the field shrinks to 383 px and the full wordmark fits. The shared desktop header uses the adopted 36 px symbol, 18 px Medium wordmark and 1 px right-edge-only divider. Reference `170:41052` compares the previous and adopted header.
 
 ## register-table
 
