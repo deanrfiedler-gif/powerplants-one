@@ -6,6 +6,10 @@ Stable entry: `route:/supply/stock`. Route `/supply/stock`; parent SCM-02, SCM-0
 
 Read permitted dated source observations in a bounded register, inspect a snapshot, then open an item record. MYOB remains the intended ERP authority. PPO posts no stock movement. Unknown never means zero. Product mapping persistence is outstanding; show No link recorded and no inferred Product handover.
 
+Shipment Activity hands over to Receiving (SC-04) for receipt and inspection evidence; Stock Activity retains its native observation view. Search matches every permitted observation title and waits for a 200 ms typing pause before reading. Closing or saving the observation form consumes its URL launch parameter without adding history. The item detail uses explicit refresh rather than window-focus refresh.
+
+The flagship hold was lifted on 5 November 2026; Inventory remains a tier 1 flagship due for the stage 3b redraw under ADR-0067, after which its visual layer will be rebuilt. The guide remains InReview. See the [dated status](../../../status/2026-11-05-inventory-review-fixes.md) for the recorded decision and separate acceptance boundaries.
+
 ## Desktop
 
 The accepted r20 Register / worklist uses the shared SecondaryMenuFrame, a flat shared RegisterTable and a docked snapshot. At 1440 px use a 240 px secondary menu, compact 40 px controls and rows, source-completeness chips and observed time. At 1024 px the menu overlays. Item detail separates header and Product strip from a context column and Quantities, Locations, Demand, Activity and Source evidence views. Locations remain flat source rows; activity is native-record evidence history.

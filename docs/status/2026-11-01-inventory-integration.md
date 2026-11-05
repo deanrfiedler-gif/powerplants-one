@@ -3,7 +3,7 @@ title: Inventory SC-05 integration with Receiving and Markdown guides
 date: 2026-11-01
 ---
 
-[PR #805](https://github.com/deanrfiedler-gif/powerplants-one/pull/805) resumes the authorised Inventory build, retaining Dean's 20-page concurrency authorisation. Fourteen other open Codex PRs held pushed implementation slots at this check. Current main is merged, including Receiving design #787 and the Markdown guide runtime.
+[PR #805](https://github.com/deanrfiedler-gif/powerplants-one/pull/805) resumes the Inventory build as an agent decision under the standing order. Relayed chat supplied context only; it did not establish owner authorisation or a changed concurrency limit. The current [pull-request flow limits](../decisions/pull-request-flow-limits.md) govern concurrency. Fourteen other open Codex PRs held pushed implementation slots at this check. Current main is merged, including Receiving design #787 and the Markdown guide runtime.
 
 Workshop is reserved after Inventory in the Supply navigation contract and withheld from the rendered rail by the existing unavailable state, no invented route and no new capability. The current Inventory Markdown guide replaces the retired TypeScript guide and remains InReview; the historical carry-over exception and its parity-fixture line are removed. Ordinary-user guide publication remains pending genuine review under the current guide contract.
 

@@ -6,7 +6,7 @@ title: Inventory
 status: InReview
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: a7d50d2e
+source_commit: bc1c622faacddd3256fe11e6474ca6825ad1c430
 contents: { overview: "Overview", how: "How to use", journey: "Journey map" }
 list_styles: { journey: journey }
 ---
@@ -38,7 +38,7 @@ No Product link is recorded. Product mapping persistence remains outstanding; a 
 3. **Record an observation**\
    Record observation opens the existing native Supply form. For an existing item, review its current source version and give a reason. Saved appears only after the server receipt; expected versions and original-operation recovery remain active.
 4. **Complete the handover**\
-   Follow the native source record, permitted Material demand or Service stock link. Technical, commercial, scheduling and Finance decisions remain with their owners. Open product stays unavailable while no link is recorded.
+   In Activity, a Shipment record opens Receiving with its receipt and inspection evidence; a Stock record opens its native observation. Follow the permitted Material demand or Service stock links for their separate handovers. Technical, commercial, scheduling and Finance decisions remain with their owners. Open product stays unavailable while no link is recorded.
 
 ## Your journey {#journey}
 

@@ -95,10 +95,61 @@ The earlier pushed head `36cab747` also failed [Engineering CI](https://github.c
 
 The application build is `eaaaca3fdcf6197ec1422751e1752e451086dede`, including main `c69a0922c19e2d62b5859c57895204f5c44684c3`. Its later file changes are test/evidence corrections, not application changes. Ninety focused unit, guide and design-workspace cases passed, including the latest main's scope registrations. The native Supply run completed with 29 of 32 cases passing. Desktop SC-01 did not render its native workspace; desktop picking/POD remained in its loading state after save; phone receipt capture timed out waiting for its action. The owned server recorded database connection timeouts during the run. These are observations, not an established common cause or an unrelated-failure classification.
 
-All six desktop/phone cases in the subsequent focused rerun passed (1.5 minutes), with unchanged application code, connection boundaries and assertions. Both assessed Shipment handover cases passed in the full run. Thus every one of the 32 cases has passing final-source execution evidence; the complete 32-case invocation itself was not all green. The earlier isolated 30-case native suite was all green. One intermediate rerun was stopped after code inspection caught the new test assuming source version 1: allocation advances the source version, and the corrected test reads the actual version before asserting its exact native link. A command attempt was not executed when automatic approval review temporarily hit its usage limit; the user's continue instruction was followed by a successful retry.
+All six desktop/phone cases in the subsequent focused rerun passed (1.5 minutes), with unchanged application code, connection boundaries and assertions. Both assessed Shipment handover cases passed in the full run. Thus every one of the 32 cases has passing final-source execution evidence; the complete 32-case invocation itself was not all green. The earlier isolated 30-case native suite was all green. One intermediate rerun was stopped after code inspection caught the new test assuming source version 1: allocation advances the source version, and the corrected test reads the actual version before asserting its exact native link. A command attempt was not executed when automatic approval review temporarily hit its usage limit; Codex decided under the standing order to retry, and the retry succeeded. The relayed continue chat was context only, not repository evidence of owner authorisation; the [pull-request flow limits](../../../decisions/pull-request-flow-limits.md) govern concurrency.
 
 The final-source HTTP rerun passed its scoped native endpoint case (13.9 seconds). The complete Inventory browser run passed seven cases with one intentional duplicate capture-matrix skip (2.0 minutes). All 14 new application captures were inspected against the unchanged accepted frames and states board at 1440, 1024, 390 and 320 px. The manifest now identifies the final compiled application source and actual file/image hashes; it grants no visual acceptance.
 
 Final standalone typecheck passed with `NODE_OPTIONS=--max-old-space-size=8192 npx tsc --noEmit`; full `npm run lint` passed. Studio passed with 377 entries, 52 components and zero errors (351 unreviewed, 26 stale). Foundation passed with all 78 requirements retained, 15,167 local links, 7,585 marker-scanned files and 220 status fragments. These are assurance results, not application acceptance.
 
 Final naming validation passed (848 document records, 65 entry files, zero errors), and `python3 scripts/build_status.py --check` passed all 220 fragments. Full repository suites, physical-device and screen-reader checks, business acceptance and deployment were not performed locally. The owned application and private PostgreSQL server were stopped after proof.
+
+## Review findings and main integration — 5 November 2026
+
+This is Codex's response to [the one completed review](https://github.com/deanrfiedler-gif/powerplants-one/pull/805#issuecomment-6647751248), under the standing order. The [takeover claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/805#issuecomment-6652094313) follows the explicitly released build claim. Only confirmation of the six findings and the main merge is requested.
+
+### Merge preservation
+
+Merge-only commit `fc7f4db3bc4d8184be10b14d1c722e284943228b` has parents `e3cfe95be7c3c1735f5a139dd3fad26cf483a166` and main `3faff7aef476904a30e878be8bdc9e95792fb4fb`; merge base is `c69a0922c19e2d62b5859c57895204f5c44684c3`. The merge was clean. Both `git diff origin/main...<head> | git patch-id --stable` results are `e824a58120c33db280e2a055d4fe85b716f61a52` for the old and merge-only heads.
+
+Guides: **main's 367 + 0 = 367**. Register: **main's 393 + 0 = 393**. Both parse and have unique keys. Only `guide.sc.05`, `scope:SC-05` and `route:/supply/stock` differ in parsed value from the merge base. Their entry-by-entry merge matches the required result; every other main entry retains main's bytes. There were no whitespace-only entry changes to carry or discard. Main's existing trailing whitespace in unrelated Service evidence was left unchanged. The pre-commit marker scan found none.
+
+### Findings addressed
+
+1. The two historical status fragments and this evidence's retry account now record agent decisions under the standing order, with relayed chat as context only. The PR description was corrected through the GitHub connector and points to the governing flow limits. No concurrency exception is asserted.
+2. Shipment-basis Activity links open `/supply/receipts?record=…`; Stock links retain `/supply/stock?native=1&record=…`. The accepted design's outgoing-handover row explicitly names Receiving (SC-04) for usable evidence: `docs/decisions/inventory-figma-design.md:53`. The new Inventory browser case creates a synthetic receipt, follows Activity and checks both the receipt reference and inspection finding in Receiving. It also asserts the Stock destination.
+3. `filterInventory` searches all permitted observation titles in each group. The added unit case uses an older title and a differently titled latest observation, and checks older-title, latest-title and absent-title searches.
+4. Closing or successfully saving the observation form removes `observation=1` with `history.replaceState`, retaining the other parameters and fragment. A new browser case checks the saved reason, reload, explicit close and unchanged history length.
+5. Search waits for a 200 ms pause; unsettled input cancels the old read and clears its projection. This follows the existing application's settled-search pattern. The native Supply workspace's `false` refresh-on-focus option is applied to Inventory item details. Per-candidate authority and allocation checks remain unchanged. Batching is not attempted; the measured cost below stays open.
+6. The guide retains InReview. Its source reference is updated to a full implementation SHA in this review-fix series. Publication is deferred until after the stage 3b redraw.
+
+The [dated status fragment](../../../status/2026-11-05-inventory-review-fixes.md) records that the [flagship hold was lifted on 5 November](https://github.com/deanrfiedler-gif/powerplants-one/pull/805#issuecomment-6647521506). Inventory SC-05 remains a tier 1 flagship journey due for the stage 3b redraw under ADR-0067; its visual layer will be rebuilt after that redraw. Functional proof, visual acceptance, owner acceptance and deployment remain separate. The retained capture manifest describes the earlier captured source, not these fixes; its historical hashes and images are unchanged.
+
+### Open read cost
+
+These are the reviewer's measurements from the linked review, not measurements repeated in this session. Debouncing reduces reads while typing; it does not establish a faster individual read. The serial authority and label queries remain an open optimisation item, with unchanged permission rules required for any later batching.
+
+| Records | Read | Measured time |
+|---|---|---|
+| 600 | Unfiltered | 1.3 s |
+| 2,100 | Unfiltered | 4.5 s |
+| 2,100 | Search | 6.8 s |
+
+The previous three Supply loading failures remain evidence to investigate if they recur on the ready head; a passing rerun does not erase a failure.
+
+### Local environment and validation
+
+The required setup command was run normally, then repeated with network permission after the sandbox refused the proxy connection. It installed the pinned dependencies and migrated, but failed during seeding: `new row for relation "permission_grants" violates check constraint "ck_grants_capability"`. Under this task's environment rule, database and browser are unavailable, and the setup environment file was not sourced. Checks use the installed pinned Node 24.21.0 and npm 11.19.0 binaries directly.
+
+Inventory database, Inventory HTTP, Inventory browser and native Supply browser suites: **not run here; left to GitHub CI**. No database or browser pass is inferred from earlier sessions. The Inventory HTTP test does not call reset, and the Inventory browser fixtures add no permission grants. Both new browser regressions run in each configured viewport project, without new skips or changed deadlines. No existing test expectation is changed.
+
+All 113 paths in the changed guide/register entries and all 30 manifest/integration paths were checked and exist. Integration `component_proof`, `application_proof` and `adaptations` point to existing files. No test was moved. Final local results, the ready-page count and ready-head CI are recorded below and in the completion comment.
+
+The initial sandboxed `npm run check` passed Studio, ESLint and TypeScript, then reported eleven unit files as `test failed`: `azure-demo`, `browser-fixture-transport`, `fertigation-request-limit`, `foundation`, `guide-library`, `login`, `proof-database`, `proof-request-scope`, `quality-asset-observer`, `quality-packet-network` and `recovery` (each under `tests/unit/` with suffix `.test.ts`). All eleven reproduced with that same file-level message on clean main `3faff7aef` in `/tmp/main-check`: **pre-existing on main in this environment**. With network permission, the full unit run executed 1,406 individual tests: 1,405 passed, one failed, none skipped or cancelled. The Inventory and Supply focused run passed 13/13.
+
+The remaining individual failure is **pre-existing on main in this environment**: `tests/unit/recovery.test.ts`, “P12 separates checkpoint/source/destination and refuses Git paths, symlinks, hardlinks and non-private roots”. Both PR and clean-main runs fail at line 101 because `/owner-only/` does not match `Error: Recovery data must stay outside Git.` The main file runs 1 passed / 1 failed. This assertion and its expected value are unchanged.
+
+Foundation, prototype, naming, status, Studio, documentation scope and migration-number checks passed. Foundation checked 17,531 local links and retained all 78 requirements; status checked 339 fragments. Browser discovery found both new regressions in both desktop and mobile projects; discovery is not browser execution.
+
+The initial sandboxed production build compiled successfully, then failed with `Could not parse output from TypeScript's --showConfig.` The same build failure reproduced on clean main after copying the installed dependencies into its checkout: **pre-existing on main in this environment**. The first main-build attempt used a dependency symlink that Turbopack refused because it crossed its workspace root; that comparison setup was corrected without changing tracked source. The permitted PR build is recorded separately.
+
+The final permitted `npm run check` again passed Studio, full ESLint and TypeScript, then passed 1,405/1,406 unit cases with only the same pre-existing recovery assertion. Because that command stops at the unit failure, `npm run build` was run separately with network permission and passed compilation, TypeScript and all 86 static pages. No required local check has an unexplained PR-only failure. The implementation is `bc1c622faacddd3256fe11e6474ca6825ad1c430`, which is the guide's full source reference.
