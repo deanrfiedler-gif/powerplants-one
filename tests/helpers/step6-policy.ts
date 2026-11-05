@@ -49,7 +49,8 @@ export async function publishReturnPolicy(
   source: ReturnSource,
   saved: PreparedReturn,
 ) {
-  await call(page, "local-session", { profile: "scheduling-policy-reviewer" });
+  // The publisher proposes; review() uses the separate dedicated reviewer.
+  await call(page, "local-session", { profile: "scheduling-policy-publisher" });
   await page.goto(root);
   await page
     .getByLabel("Maximum visit duration (minutes)", { exact: true })
