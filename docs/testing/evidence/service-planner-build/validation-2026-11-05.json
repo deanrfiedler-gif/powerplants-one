@@ -1,0 +1,3717 @@
+{
+  "date": "2026-11-05",
+  "pr": 808,
+  "scope": "Synthetic local build validation; no visual acceptance, owner acceptance or deployment",
+  "original_head": "7029a5075c35239919d07bebbf8bc174541e5f48",
+  "merge_commit": "5ac509cb58c78fa3ef995db251fb4f7e9082515d",
+  "main_comparison_sha": "2f2e399c27956b7cdfd411baeedae59d51a1d218",
+  "environment": {
+    "database": "ready",
+    "browser": "unavailable",
+    "node": "24.21.0",
+    "npm": "11.19.0"
+  },
+  "database_selection": "git grep -l -iE 'planner|schedul' tests/database",
+  "database_command": "node --env-file=.env.local --import tsx --test --test-reporter=tap --test-concurrency=1 --test-timeout=120000 <file>",
+  "database_suites_completed": 62,
+  "database_suites_selected": 62,
+  "database_totals": {
+    "tests": 747,
+    "pass": 396,
+    "fail": 351,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "database": [
+    {
+      "file": "tests/database/access-application.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 15,
+          "pass": 15,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-identity-register.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 6,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-inspection.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 29,
+          "pass": 29,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-local-teams.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 17,
+          "pass": 17,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-readiness.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 4,
+          "pass": 4,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-requests.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 14,
+          "pass": 14,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-review-attestations.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 18,
+          "pass": 18,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/access-withdrawal.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 9,
+          "pass": 9,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/crm.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 29,
+          "pass": 27,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "CA-10 existing field and report follow-up projections obey every Opportunity target",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 29,
+        "pass": 27,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/demand.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 8,
+          "pass": 7,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "PL01 a completed attendance keeps its work order out of unassigned demand",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 8,
+        "pass": 7,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/engineering-control.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 6,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/field-closed-visit.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 4,
+          "pass": 0,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "CV-01/02 actor-specific closed state retains facts and refuses a new crew start before and after acceptance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "CV-04/05 existing proposal, concurrent original recovery and controlled replacement retain history without invented lineage",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "CV-06 scoped navigation and read-only arrival do not grant receiving commands or disclose unavailable visits",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "CV-09 delayed cached arrival is retained on the old closed visit and accepted originals still recover exactly",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 4,
+        "pass": 0,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/field-incidents.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 0,
+          "fail": 6,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FI06 complete persisted incident, independent passing inspection hold, Activity separation, exact outcome and reopening",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI06 current authority, two reporters, separate repeated records, stale saves, unknown assessment and restricted receipt recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI06 upload failure, inaccessible exact evidence, action reassignment and changed source fail closed",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI06 factual reporting before Start and delayed existing offline Start/capture revalidate a newer hold",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI06 linked defect requires original correction and fresh independent retest, then closure leaves unrelated blockers",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI06 two reviewers, concurrent decisions, authority loss, missing scope authority and immutable original history",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 6,
+        "pass": 0,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/field-readiness.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/field-timer-boundaries.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 3,
+          "pass": 0,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/field.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 42,
+          "pass": 0,
+          "fail": 42,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P07 upgrade from P06 and repeat seed retain exact original issue, source, receipts and revoked grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PT-06 complete procedure: queued renderer is not Issued, first crew response refuses actual start, second permits one real start",
+            "message": "\"Cannot read properties of undefined (reading 'assignment_id')\"",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 concurrent identical starts replay once; changed operation conflicts; another crew member records only their own start",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 distinct simultaneous personal starts admit one and reject the stale competitor",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 actual start races ordinary cancellation without losing either original evidence or the started-work boundary",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start racing move preserves original source and returns a controlled outcome",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start racing reassign preserves original source and returns a controlled outcome",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start racing scope preserves original source and returns a controlled outcome",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start racing withdraw preserves original source and returns a controlled outcome",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 future-effective crew can be booked and acknowledge but cannot confer current actual-start authority",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged expected_version cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged schedule_version cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged assignment_version cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged scope_version cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged issue_hash cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged issue_id cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged assignment_id cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 stale or forged scope_revision_id cannot start attendance",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 current capability, assignment, same-404 and receipt/file boundaries survive revoked permission",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 typed evidence preserves attribution, failed fixes and exact decimals; duplicate capture and changed reuse are controlled",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 actor-wide time conflict prevents concurrent overlapping labour but allows adjacent intervals",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 correction creates an immutable successor, requires own current source version and retains all original authority",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 exact correction moves the active time projection and retains the original interval",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 rejects unknown fields, forged actor, wrong task/asset, invalid time/material/reading/checklist and missing traceability",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 withdrawal after start holds further work, permits original-context evidence requiring review and preserves P05 move/cancel refusal",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 durable photo initiation is not availability; unchanged upload/finalise retry retain original identity, bytes and hash",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 storage success/database failure recovers the original upload without duplicate bytes or a false Available reference",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 wrong hash/interrupted bytes remain Pending; unsupported exact bytes are Rejected; missing uploaded bytes become Quarantined",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 Partial draft saves exact evidence and owned remaining work without order/report/Finance closure",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 UnableToProceed draft saves exact evidence and owned remaining work without order/report/Finance closure",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 Complete draft requires every task/check and Available attachment; saved draft is not attendance/report approval",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 completion references are exact; corrections mark prior draft stale and required unavailable attachments block Complete",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start late audit_events failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start late operation_receipts failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 start late outbox_jobs failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 capture late audit_events failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 capture late operation_receipts failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 capture late outbox_jobs failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 draft late audit_events failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 draft late operation_receipts failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 draft late outbox_jobs failure rolls back every database effect",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P07 PT-14 component preserves two task/asset outcomes and uncertain identity with owned remaining work",
+            "message": "\"Cannot read properties of undefined (reading 'assignment_id')\"",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 42,
+        "pass": 0,
+        "fail": 42,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/leads-projects-integration.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 4,
+          "pass": 4,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/my-work.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 7,
+          "pass": 7,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/offline.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 22,
+          "pass": 0,
+          "fail": 22,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P08 additive P07 upgrade preserves attendance, receipt, bytes and revoked grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 provisional start resolves an immutable causal reference and isolates a failed sibling",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 100 original captures replay exact receipts once and changed reuse conflicts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 exact PNG causal chain and interrupted finalisation recover one immutable file and completion draft",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 unknown fields, wrong actor/workspace/site/appointment and unsupported payload isolate failures",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 missing and cyclic dependencies preserve siblings without accepting children",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 normal acceptance and restricted recovery are exclusive under competing original-operation locks",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 revoked permission blocks accepted normal receipt recovery and preserves local-only identity",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 revoked ordinary access requires the exact prior recovery capability and an owned immutable disposition",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 recovery retains exact private PNG and denies inactive identity or other owner byte access",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 cancelled-before-start intent never creates attendance; stale factual evidence has restricted recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 withdrawn pack preserves started factual capture as review-required authority, without reopening work",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 actor-wide time overlap and immutable successor evidence remain enforced through sync",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 late audit_events failure rolls back capture and all accepted facts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 late operation_receipts failure rolls back capture and all accepted facts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 late outbox_jobs failure rolls back capture and all accepted facts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 late sync_acceptances failure rolls back capture and all accepted facts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 queued reassign refuses stale start and preserves exact original evidence in owned recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 queued amend refuses stale start and preserves exact original evidence in owned recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 queued scope refuses stale start and preserves exact original evidence in owned recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 restricted PNG storage-success/database-failure keeps original hash and recovers one case and Activity",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P08 expired prior recovery capability cannot preserve or disclose original evidence",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 22,
+        "pass": 0,
+        "fail": 22,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/output-actions.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 12,
+          "pass": 0,
+          "fail": 12,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "DK03-C10 native InProgress applicability permits exact distribution and original recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C11 a Confirmed preparation survives native start without changing its exact issue",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C12 native schedule and crew changes refuse new distribution without changing original attempts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C01 shared issue delegates exact native operations; pack recovery retains original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(original)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C02 report issue uses exact review/template and resumes original finalisation",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C03 per-recipient original replay, concurrent claims, unknown outcome and additive reconciliation",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C04 current permissions, exact recipient binding and withdrawn historical reconciliation",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C05 report recipient exactness, storage refusal and original operation recovery",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C06 database guards and receipt failure roll back all distribution effects",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C07 populated 0090 upgrade retains all originals and adds only empty distribution storage",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C08 stale source cannot issue through shared recovery",
+            "message": "|-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'Failed'\n    - 'StaleSource'",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-C09 loss of recipient access during storage refuses distribution; withdrawn preparations cannot simulate sending",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 12,
+        "pass": 0,
+        "fail": 12,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/output-register.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 1,
+          "fail": 5,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "DK03-B01 native pack/report journey, literal scoped paging, distinct recipient facts and zero writes",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-B02 current source scope, working company, assignment, family coverage and exact parent binding",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-B03 failed/durable preparation has no issue; native original recovery creates one retained issue",
+            "message": "|-\n    Expected values to be strictly equal:\n    \n    false !== true",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-B04 superseded and withdrawn issues retain exact bytes without inheriting successor applicability",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DK03-B05 missing/corrupt exact bytes preserve identity; grants are rechecked after storage",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 6,
+        "pass": 1,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/packs.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 34,
+          "pass": 8,
+          "fail": 26,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "SC-06 issue and acknowledgement advance the appointment record without reporting a source change",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 exact immutable output and two independent acknowledgements control component readiness",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 competing workers and competing issue requests cannot duplicate file/issue/tasks",
+            "message": "|-\n    Expected values to be strictly equal:\n    \n    0 !== 1",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 same recipient concurrency is one response and cannot acknowledge for another crew member",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 return retains comments; amendment freezes predecessor; old issue cannot satisfy successor",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 withdrawal preserves exact original issue and individual response history",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 source changed during render prevents issue and retains prior generated bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(await documentStore().locate({ ...q.p, operation_id: job.id }))",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 template changed during render prevents issue and retains prior generated bytes",
+            "message": "|-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'Failed'\n    - 'StaleSource'",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 assignment changed during render prevents issue and retains prior generated bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(await documentStore().locate({ ...q.p, operation_id: job.id }))",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 permission changed during render prevents issue and retains prior generated bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(await documentStore().locate({ ...q.p, operation_id: job.id }))",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 afterStore failure recovers exact original output without rendering or duplicate effects",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(first)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 beforeFinalise failure recovers exact original output without rendering or duplicate effects",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(first)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 render failure remains owned and recoverable with no file or issued claim",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(\"issue_id\" in (await processRenderJob(job.id)))",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 missing historical source is never replaced by latest; existing issue remains retrievable",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 P05 cancellation atomically withdraws real issue and keeps original output/history",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 P05 confirmed move invalidates real pack/assignment applicability and preserves issued bytes",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late pack_issues database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late pack_recipients database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late pack_distribution_events database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late audit_events database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late operation_receipts database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 late outbox_jobs database failure rolls back issue and recovers original stored bytes",
+            "message": "|-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(stored)",
+            "code": "'ERR_ASSERTION'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 acknowledgement audit failure rolls back response/hold and unchanged retry succeeds",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 current recipient access is non-waivable and published competency remains immutable",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 amendment contact activity failure rolls back withdrawal and exact retry creates one owned task",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P06 successor scope Draft atomically invalidates real pack without altering authorised scope or original files",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 34,
+        "pass": 8,
+        "fail": 26,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/planner.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 24,
+          "pass": 24,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/policy-commands.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 10,
+          "pass": 10,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/policy-concurrency.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 13,
+          "pass": 12,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "C26 actual start shares the graph lock; issued files/pins survive and actual attendance becomes an explicit exclusion",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 13,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/policy-dispositions.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 4,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "C26 controlled pin-retaining move resolves only after complete applicable evaluation; changed-contact owned plan remains held",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 5,
+        "pass": 4,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/policy-enforcement.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 3,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "Step 4 publication winning real graph lock refuses actual and delayed offline Start; originals and exact issue bytes survive retry/restart",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Step 4 accepted offline Start recovers exactly after publication; altered retries refuse and started work remains historical",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Step 4 controlled amendment, independent crew acknowledgements and fresh resolution permit start and current capture",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 6,
+        "pass": 3,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/policy-impact.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 7,
+          "pass": 7,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/policy-persistence.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 11,
+          "pass": 11,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/policy-records.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 3,
+          "pass": 3,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/products-upgrade.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 54,
+          "pass": 54,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/project-acceptance.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 10,
+          "pass": 0,
+          "fail": 10,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "PJ09-09/10/15/47: exact submitted snapshots, technical duty, return/successor and no waiver",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-44/47: original operations replay exactly and altered payload conflicts; grants checked before receipt",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Service, customer qualification and commercial separation",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-13/48/52: source versions, decisions, issued bytes and receipts persist across pool restart and repeat seed",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-17/31/42/44/45/53: one connected blocked/return/successor journey, durable issue recovery and competing writes",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-34/44/46/47/48: server-held original, payload conflict, current authority and restricted Finance projection",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-11/13/36/38: authorised scope disposition retains the ledger and cannot hide a shared hold or stage",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-35/43: missing exact original blocks closeout, retains its reference and creates one owned recovery",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-11/12/48/49: shared mandatory source survives a location exclusion and mixed-target Activity needs every target",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ09-47: project.edit grants no acceptance operation; current membership is required for reads and originals",
+            "message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-yzjaMC'\"",
+            "code": "'EROFS'",
+            "classification": "pre-existing on main in this environment",
+            "main_message": "\"EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-wVn7yH'\"",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 10,
+        "pass": 0,
+        "fail": 10,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/project-baselines.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 5,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/project-commercial.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 11,
+          "pass": 0,
+          "fail": 11,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "PJ05-01 native issued acceptance and receiving to independently approved exact selected quotation basis",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-02/03/08/09 exact requested/priced/disputed/approved deltas, unknowns, full-register totals and immutable adjustments",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-04/06 independent decisions, current access, concurrent versions and atomic evidence rollback",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-05 source drift holds new approvals and current totals; historical receipts retain exact authority",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-07 owned obligations, independent waiver, recorded notices and retained correction chains",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-02 wrong quote/source and root capability refusals cannot create partial evidence",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-02 conditional and declined responses hold new use; only one competing original can be approved",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-07 Finance requires the shared Finance disclosure duty",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-REVIEW01 a closed finding added after review cannot renew current document eligibility",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-REVIEW02 creation requires recorded ownership, never a client-selected self assignment",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ05-REVIEW03 an assigned basis owner can create dependent records with current duties",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 11,
+        "pass": 0,
+        "fail": 11,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/project-overview.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 5,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/project-programme.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 8,
+          "pass": 8,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/project-raid.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 7,
+          "pass": 7,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/project-specialist-work.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 12,
+          "pass": 0,
+          "fail": 12,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "PJ06-R3-01 exact accepted handover/document, independent scoped acceptance and unchanged downstream units/history",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-02 source drift blocks acceptance but preserves Return, terminal correction and original recovery",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-03 review permission, independence, company isolation and revoked document privacy",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-04 races and late receipt failure roll back every effect",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-05 withdrawn evidence and withdrawn native demand cannot receive positive acceptance",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-06 missing exact bytes, evidence authorship and forged SQL snapshots are refused atomically",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-07 direct orphan records cannot commit without their original submission",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-08 direct decisions cannot commit without matching receipt, audit and outbox",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-09 direct positive decisions refuse a withdrawn native demand before operation evidence",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-10 direct positive decisions refuse an accepted successor brief and retain historical return",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-11 direct positive decisions refuse a withdrawn issued release",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "PJ06-R3-12 direct positive decisions refuse a changed release drawing",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 12,
+        "pass": 0,
+        "fail": 12,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/projects-gantt.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 5,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/projects-register.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/quality-planner.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      },
+      "main_counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quality-upgrade.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 3,
+          "pass": 0,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-material-resolution.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 12,
+          "pass": 2,
+          "fail": 10,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "ES07 material: four separate acceptances apply exact Project forecast withdrawal and retain unmet Demand, Activities and original bytes",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: corrected Returned/Held receiving invalidates frozen review and preserves predecessor decisions",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: late refusal rolls back both native effects, histories and receipts; absent lookup permits only unchanged original retry",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: unrelated Supply preserves applicability; a new native task dependency holds exact unexecuted work",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: Activity completion and review notes cannot clear operational Impact or restore readiness",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: quotation retention leaves owned work actionable and returned native evidence requires fresh explicit disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: explicit referral return enables reassignment and new receiving while original decisions remain recoverable",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: a task owner receives without Supply write authority; revoked or changed source authority holds execution and disclosure",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: another accepted allocation target cannot compete for the same Project task",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 material: populated 0066 upgrade preserves every prior table, grant, receipt and issued byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 12,
+        "pass": 2,
+        "fail": 10,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-branch.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 31,
+          "pass": 0,
+          "fail": 31,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FS/FS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late SecondTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late ThirdTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0069 upgrade preserves isolated-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0069 upgrade preserves two-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0069 upgrade preserves linear-chain originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Three-task branch accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "two-task receiving never authorises a branch",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "linear-chain receiving never authorises a branch",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "new consequential Project Engineering after review holds the complete branch without partial task effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 branch: Activity completion and review notes cannot clear operational Impact or restore readiness",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at branch task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at branch task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at branch task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at branch task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at branch task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at branch task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses B to C introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses C to B introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses merge introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses reversed A-B introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses missing A-B introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch review refuses missing A-C introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 31,
+        "pass": 0,
+        "fail": 31,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-chain.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 16,
+          "pass": 0,
+          "fail": 16,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FS/FS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late ThirdTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "quotation retention remains resolved through chain review; native result requires fresh explicit ES07 disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0068 upgrade preserves isolated-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0068 upgrade preserves two-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Three-task chain accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "two-task receiving never authorises newly selected third-task consequences",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "new consequential Project Engineering after review holds the complete chain without partial task effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 chain: Activity completion and review notes cannot clear operational Impact or restore readiness",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 16,
+        "pass": 0,
+        "fail": 16,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-dependency.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 7,
+          "pass": 0,
+          "fail": 7,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FS pair requires five exact decisions and atomically preserves dependency with two native task saves and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late refusal rolls back both task saves, dependency rows, histories and Impact; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "successor owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "quotation retention remains resolved through paired review; native result requires fresh explicit ES07 disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "paired successor cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0067 upgrade preserves isolated resolution, receiving, allocations, grants, original receipts and issued bytes",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS pair accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 7,
+        "pass": 0,
+        "fail": 7,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-diamond-boundaries.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 26,
+          "pass": 0,
+          "fail": 26,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "late FirstTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late SecondTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late ThirdTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late FourthTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at diamond task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at diamond task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at diamond task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at diamond task D holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at diamond task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at diamond task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at diamond task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at diamond task D holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses B-C introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses C-B introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses A-D introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses missing A-B introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses missing A-C introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses missing B-D introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses missing C-D introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses reversed A-B introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses reversed A-C introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses reversed B-D introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "diamond refuses reversed C-D introduced by native task saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "cross-Project selected task and relationship are refused without affecting a frozen diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 26,
+        "pass": 0,
+        "fail": 26,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 21,
+          "pass": 0,
+          "fail": 21,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "quotation retention remains resolved through diamond review; native result requires fresh explicit ES07 disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "new consequential Project Engineering after review holds the complete diamond without partial task effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 diamond: Activity completion and review notes cannot clear operational Impact or restore readiness",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Demand requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Project requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Task requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "MaterialAction requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DiamondB requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DiamondC requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "DiamondD requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "independent diamond B owner sees its worklist and receives without edit authority; revocation holds disclosure",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "independent diamond C owner sees its worklist and receives without edit authority; revocation holds disclosure",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "independent diamond D owner sees its worklist and receives without edit authority; revocation holds disclosure",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "change on path B invalidates the whole diamond; unrelated Project remains irrelevant",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "change on path C invalidates the whole diamond; unrelated Project remains irrelevant",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "earlier isolated-task acceptance and reserved operations do not authorise the explicit diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "earlier two-task acceptance and reserved operations do not authorise the explicit diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "earlier linear-chain acceptance and reserved operations do not authorise the explicit diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "earlier branch acceptance and reserved operations do not authorise the explicit diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "earlier merge acceptance and reserved operations do not authorise the explicit diamond",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 21,
+        "pass": 0,
+        "fail": 21,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-diamond.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 22,
+          "pass": 0,
+          "fail": 22,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FS/FS/FS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS/FS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS/FS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS/FS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/FS/SS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS/SS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS/SS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS/SS/FS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/FS/FS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS/FS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS/FS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS/FS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/FS/SS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS/SS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS/SS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS/SS/SS diamond: seven decisions, four task saves, D once, four retained edges and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0071 upgrade preserves isolated-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0071 upgrade preserves two-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0071 upgrade preserves linear-chain originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0071 upgrade preserves branch originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0071 upgrade preserves merge originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "restricted runtime prepared diamond reads expose all four tasks only with current authority and no ledger privilege",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 22,
+        "pass": 0,
+        "fail": 22,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/quotation-task-merge.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 38,
+          "pass": 0,
+          "fail": 38,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "FS/FS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "FS/SS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/FS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SS/SS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late FirstTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late SecondTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "quotation retention remains resolved through merge review; native result requires fresh explicit ES07 disposition",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "Three-task merge accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "new consequential Project Engineering after review holds the complete merge without partial task effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "ES07 merge: Activity completion and review notes cannot clear operational Impact or restore readiness",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at merge task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at merge task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new incoming edge at merge task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at merge task A holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at merge task B holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "a new outgoing edge at merge task C holds frozen review and is explicitly identified by fresh graph inspection",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses A to B introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses B to A introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses branch introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses reversed A-C introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses missing A-C introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "merge review refuses missing B-C introduced by native dependency saves",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0070 upgrade preserves isolated-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0070 upgrade preserves two-task originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0070 upgrade preserves linear-chain originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "populated 0070 upgrade preserves branch originals, every old row and output byte",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "B's native position invalidates review even though the action never edits B; unrelated Project changes do not",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "isolated consent cannot authorise merge receiving or native effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "pair consent cannot authorise merge receiving or native effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "chain consent cannot authorise merge receiving or native effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "branch consent cannot authorise merge receiving or native effects",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "retained B owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "B validity comes from native dates and warnings, never its label or receiving note",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "restricted runtime prepared merge reads expose current retained B only with current authority and no ledger privilege",
+            "message": "'The exact draft output is unavailable. Its saved revision is retained for recovery.'",
+            "code": "'ExactDraftUnavailable'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 38,
+        "pass": 0,
+        "fail": 38,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/readiness-gate.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 1,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P2 technician Return holds dispatch, tasks the preparer and service owner, and waits for an answer before acknowledgement",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P2 a recipient who acknowledged cannot return, and a successor revision completes the return tasks (R6)",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P1 a v2 visit holds dispatch until parts are ready, excepted or recorded as not needed",
+            "message": "\"Cannot read properties of undefined (reading 'assignment_id')\"",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P1 Supply readiness of linked demands decides Parts; a later supply change holds dispatch again (R2, Q7)",
+            "message": "\"Cannot read properties of undefined (reading 'assignment_id')\"",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "pre-existing on main in this environment",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 5,
+        "pass": 1,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/sales-delivery-binding.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 8,
+          "pass": 8,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/scheduling-workspaces.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 6,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/service-finding-next-action-upgrade.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 9,
+          "pass": 9,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/service-finding-next-action.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 4,
+          "pass": 1,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "SV07 R2 creates only a missing inspection task; technician cannot set it and closure remains native",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SV07 R2 completion and response reuse native tasks and preserve immutable observations",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SV07 R2 incident action changes retain hold, accepted facts and source-authorised owner",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 4,
+        "pass": 1,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/service-findings.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 6,
+          "pass": 2,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "SV07 failed inspection stays open after its Activity completes and follows native correction/review",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SV07 remaining work keeps the exact submitted revision and does not equate Activity completion with completion of scope",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SV07 customer reservations remain exact and correction supersedes rather than overwrites the original",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "SV07 incident corrective action preserves source authority and excludes restricted facts",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 6,
+        "pass": 2,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/settings-hub.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 5,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/site-readiness-upgrade.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 3,
+          "pass": 0,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "0120 from 117 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "0120 from 118 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "0120 from 119 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_TEST_FAILURE'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/site-readiness.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 5,
+          "pass": 3,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P4 gates attendance after issue and acknowledgement; P5 overdue follow-ups preserve dispatch and exact bytes",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_ASSERTION'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          },
+          {
+            "test": "P4 confirmation after acknowledgement leaves an unrelated Parts hold in place",
+            "message": "'{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}'",
+            "code": "'ERR_ASSERTION'",
+            "classification": "environment-blocked: browser",
+            "reproduced_on_main": true
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 5,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "tests/database/sites-register.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 4,
+          "pass": 4,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/work-order-project-link.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 12,
+          "pass": 12,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/database/work-order-register.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 8,
+          "pass": 8,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    }
+  ],
+  "http_command": "node --env-file=.env.local --import tsx --test --test-reporter=tap <file>; fresh synthetic reset before each suite; compiled application",
+  "http_totals": {
+    "tests": 8,
+    "pass": 7,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "http": [
+    {
+      "file": "tests/http/planner.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 3,
+          "pass": 3,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/http/service-finding-next-action.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/http/service-findings.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "file": "tests/http/site-readiness.test.ts",
+      "branch": {
+        "counts": {
+          "tests": 2,
+          "pass": 1,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "test": "P4 HTTP confirmation after the whole crew acknowledged releases dispatch; negative then positive repeats it",
+            "message": "'[{\"id\":\"a901c11f-ce27-415e-bda5-ee106c0dcf12\",\"revision_id\":\"3f4b28e6-edcd-4ef5-a05f-7e6d50e3005e\",\"state\":\"Failed\",\"attempts\":1,\"error_code\":\"RenderOrStorageFailure\",\"requested_at\":\"2026-11-05T04:32:33.617Z\",\"recovery_owner_id\":\"30000000-0000-4000-8000-000000000001\",\"issue_id\":null,\"actor_name\":\"SYN Coordinator\",\"recovery_owner_name\":\"SYN Coordinator\"}]'",
+            "code": "'ERR_ASSERTION'",
+            "reproduced_on_main": true,
+            "main_message": "'[{\"id\":\"2318d397-38d0-41ae-8185-81852c74da96\",\"revision_id\":\"be3bffd4-44a6-4852-bb4c-ae58c6fdcc60\",\"state\":\"Failed\",\"attempts\":1,\"error_code\":\"RenderOrStorageFailure\",\"requested_at\":\"2026-11-05T04:32:40.118Z\",\"recovery_owner_id\":\"30000000-0000-4000-8000-000000000001\",\"issue_id\":null,\"actor_name\":\"SYN Coordinator\",\"recovery_owner_name\":\"SYN Coordinator\"}]'",
+            "comparison_note": "Only generated render-job id, revision_id and requested_at differ; the same test reports the same RenderOrStorageFailure on both builds.",
+            "classification": "environment-blocked: browser"
+          }
+        ]
+      },
+      "main_counts": {
+        "tests": 2,
+        "pass": 1,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "passed_checks": [
+    "python3 scripts/check_foundation.py",
+    "python3 scripts/check_prototype.py",
+    "python3 scripts/check_naming.py",
+    "python3 scripts/build_status.py --check",
+    "python3 -m unittest discover -s scripts -p test_documentation*.py (44 tests)",
+    "python3 scripts/check_migrations.py",
+    "npm run studio:check",
+    "npm run check (1405 unit tests, lint, TypeScript, production build)"
+  ],
+  "not_run_here_left_to_github_ci": [
+    "Browser suites: browser unavailable",
+    "Four-width inspected application captures: browser unavailable"
+  ],
+  "limits": [
+    "No timeout or existing test expectation changed. No test skipped, quarantined or weakened.",
+    "Initial sandbox failures and successful network-enabled retries are described in README.md.",
+    "Every database failure was compared with the same suite on clean main."
+  ],
+  "resolved_regressions": [
+    {
+      "file": "tests/database/quality-planner.test.ts",
+      "original_failure": [
+        {
+          "test": "P11 planner summaries retain exact permitted card and booking facts without detail narratives",
+          "message": "|-\n    coordinator:a8000000-0000-4000-8000-000000000001:dispatch_readiness\n    + actual - expected\n    \n    + {\n    +   dispatch_hold: true,\n    +   reasons: [\n    +     'Every crew member requires a current individual recipient identity and assignment.',\n    +     'A current applicable issued pack is required.'\n    +   ]\n    + }\n    - undefined",
+          "code": "'ERR_ASSERTION'"
+        }
+      ],
+      "main_before_fix": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "branch_after_fix": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "fix": "Share the permission-checked dispatch evidence projection between schedule summary and appointment detail; retain existing assertions and add detail parity/revocation assertions."
+    }
+  ],
+  "second_merge_commit": "ee5edd48da86e98fb3e3ed8dc1bd220322a840de",
+  "second_main_sha": "3faff7aef476904a30e878be8bdc9e95792fb4fb",
+  "database_execution_note": "The second merge changed no selected database suite or scheduling source. Earlier results used the original lockfile; quality-planner, the final planner rerun and remaining suites use the updated lockfile from main.",
+  "ci_findings": [
+    {
+      "head": "13e830a6868ba7155ba8f22d9777d131e7edd2e6",
+      "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41968800300/job/127051978715",
+      "test_file": "tests/browser/quality-states.spec.ts",
+      "test": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+      "scenario": "SC-07: /schedule?day=2031-11-06&view=day",
+      "message": "Expected .planner-stat-row strong text [\u2014, \u2014, \u2014, \u2014]; received [] after 5000ms.",
+      "classification": "Superseded-design loading assertion; bounded replacement authorised by Claude under rule 5 in [DECIDED] comment 6649906346 (https://github.com/deanrfiedler-gif/powerplants-one/pull/808#issuecomment-6649906346), an agent decision under the standing order",
+      "implementation_response": "Remove the interim count row under accepted D2/loading frame 1214:275141. Replace only SC-07 loading assertion with unknown tray counts, hidden known demand content and busy/unknown Needs attention evidence. Suppress displayed To plan counts during the pending planner read. Other screen families, deadlines and viewport coverage are unchanged.",
+      "clean_main_attempt": {
+        "classification": "environment-blocked: browser",
+        "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
+      },
+      "verification": "Interim replay passed; all CI passed on 2f4236f45406e94ace58655971ea1e852540246f. Authorised replacement final-head CI is recorded in the PR handoff.",
+      "authorisation_comment": "https://github.com/deanrfiedler-gif/powerplants-one/pull/808#issuecomment-6649906346",
+      "interim_response": "Restore the four unknown-count placeholders while the current read is unavailable; preserve settled PL-01 layout and existing test expectations."
+    },
+    {
+      "head": "96c7ae7b485ec0c5f37a0114158f245d4b61a322",
+      "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41970251632/job/127057143125",
+      "test_file": "tests/scheduling-browser/publication.spec.ts",
+      "test": "native independent proposal/review and publisher exact lost-response recovery, reload, typed owned handovers and narrow authority",
+      "projects": [
+        "desktop-chromium",
+        "mobile-chromium"
+      ],
+      "message": "Test timeout of 120000ms exceeded while clicking Scheduling workspace > Policy impact at publication.spec.ts:109; navigation is inside the collapsed PL-01 menu.",
+      "classification": "PR integration defect: retained journey omitted the accepted D1 menu-opening interaction",
+      "implementation_response": "Use the existing openSecondaryMenu helper before navigating. Apply the same explicit open/close interaction to retained scheduling-workspaces and shell-loading navigation checks. All existing assertions, expected values, timeouts, viewport matrices and test selection remain unchanged; accepted collapsed-menu composition is preserved.",
+      "related_test_files": [
+        "tests/browser/scheduling-workspaces.spec.ts",
+        "tests/browser/shell-loading.spec.ts"
+      ],
+      "design_record": "docs/decisions/service-planner-figma-design.md",
+      "clean_main_attempt": {
+        "classification": "environment-blocked: browser",
+        "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
+      },
+      "verification": "All five compiled jobs, including retained Scheduling Steps 4\u20135, and P01\u2013P11 browser jobs passed on 2f4236f45406e94ace58655971ea1e852540246f. Final-head CI is recorded in the PR completion handoff."
+    }
+  ]
+}

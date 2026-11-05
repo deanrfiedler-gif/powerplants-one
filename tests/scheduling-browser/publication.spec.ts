@@ -14,7 +14,7 @@ import {
 } from "../helpers/policy-commands";
 import { confirmed } from "../helpers/packs";
 import { publishSchedulingPolicy } from "../../src/scheduling/policy-commands";
-import { openAccountPanel } from "../helpers/phone-menu";
+import { openAccountPanel, openSecondaryMenu } from "../helpers/phone-menu";
 
 const root = "/schedule/policy-impact";
 const origin = `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
@@ -103,6 +103,8 @@ test("native independent proposal/review and publisher exact lost-response recov
 }, info) => {
   await login(page.request, "scheduling-policy-publisher");
   await page.goto("/schedule");
+  // PL-01's accepted D1 menu starts collapsed; use the same control as a publisher.
+  await openSecondaryMenu(page);
   await page
     .getByRole("navigation", { name: "Scheduling workspace" })
     .getByRole("link", { name: "Policy impact", exact: true })

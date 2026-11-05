@@ -27,7 +27,7 @@ import { extendedHours } from "../../working-hours";
 import type { Resource, Schedule, ScheduleAppointment } from "./planner-screens.client";
 
 // One identity colour per person, used for avatars only, never for status.
-const identity = ["#e3ecf6", "#ece4f7", "#dff1ec", "#f6e8dc", "#e9eef3", "#f3e3ea"];
+const identity = ["var(--planner-avatar-surface, #ece7fb)"];
 const hours = Array.from(
   { length: (AXIS_END_MINUTE - AXIS_START_MINUTE) / 60 + 1 },
   (_, i) => AXIS_START_MINUTE + i * 60,
@@ -152,7 +152,7 @@ export function PlannerTimeline({
                   <span className="tl-name">
                     <Link href={`/service/technicians/${r.id}`}>{r.name}</Link>
                   </span>
-                  {!last && r.resource_type && <small className="tl-role">{r.resource_type}</small>}
+                  {r.resource_type && <small className="tl-role">{r.resource_type}</small>}
                   <small className="tl-total">{off || (lane.capacityMinutes ? total : "Not working")}</small>
                   {!off && lane.free && <span className="sr-only">{lane.free}</span>}
                 </div>
@@ -285,8 +285,7 @@ function Visit({
     >
       {tb > 0 && s - tb < AXIS_END_MINUTE && (
         <div className={`tl-travel l${cls}${selected ? " sel" : ""}`} style={inner(s - tb, s)} title={`Travel ${tb} min`}>
-          <Glyph icon="car-side" path={carPath} />
-          <span>{tb}m</span>
+          {tb >= 30 && <Glyph icon="car-side" path={carPath} />}
         </div>
       )}
       <div
@@ -309,23 +308,13 @@ function Visit({
           }
         }}
       >
-        <span className="t">{a.scope_summary}</span>
-        <span className="m when">{time}</span>
+        <span className="t">{state.kind === "attention" && <span aria-hidden="true">⚠ </span>}{a.scope_summary}</span>
+        <span className="m when">{time}{crew.length > 1 ? ` · ${crew.map(x => initials(x.name)).join(", ")}` : ""}{extended && <span title="Extended hours"> ◷</span>}</span>
         <span className="m">{a.site_name}</span>
-        {crew.length > 1 && (
-          <span className="tl-crew" aria-hidden="true">
-            {crew.map((x) => (
-              <span key={x.resource_id} title={x.name}>
-                {initials(x.name)}
-              </span>
-            ))}
-          </span>
-        )}
       </div>
       {ta > 0 && f + ta > AXIS_START_MINUTE && (
         <div className={`tl-travel r${cls}${selected ? " sel" : ""}`} style={inner(f, f + ta)} title={`Travel ${ta} min`}>
-          <Glyph icon="car-side" path={carPath} />
-          <span>{ta}m</span>
+          {ta >= 30 && <Glyph icon="car-side" path={carPath} />}
         </div>
       )}
     </div>
@@ -398,7 +387,7 @@ export function PlannerWeek({
       isWeekend(d) &&
       rows.every(({ cells }) => !cells[i]!.visits.length && !cells[i]!.lane.unavailable.length && !cells[i]!.lane.closed.length && !cells[i]!.lane.reserved.length),
   );
-  const columns = `210px ${slim.map((s) => (s ? "24px" : "minmax(150px, 1fr)")).join(" ")}`;
+  const columns = `190px ${slim.map((s) => (s ? "24px" : "minmax(90px, 1fr)")).join(" ")}`;
   const sum = (i: number, key: "bookedMinutes" | "capacityMinutes") =>
     rows.filter((x) => x.r.active).reduce((a, x) => a + x.cells[i]!.lane[key], 0);
   const last = days[days.length - 1]!;
@@ -463,7 +452,7 @@ export function PlannerWeek({
                 <span className="tl-name">
                   <Link href={`/service/technicians/${r.id}`}>{r.name}</Link>
                 </span>
-                {!off && r.resource_type && <small className="tl-role">{r.resource_type}</small>}
+                {r.resource_type && <small className="tl-role">{r.resource_type}</small>}
                 <small className="tl-total">
                   {!r.active ? "Inactive · cannot book" : off ? away : `${hoursText(booked)} of ${hoursText(capacity)} h booked`}
                 </small>
@@ -518,7 +507,6 @@ export function PlannerWeek({
                           ext = confirmed
                             ? extendedHours(a.start_at, a.end_at, { timezone: r.calendar.timezone, travel_before_minutes: me.travel_before_minutes, travel_after_minutes: me.travel_after_minutes })
                             : null,
-                          crew = a.assignments.filter((x) => x.active),
                           drag = usable && a.actions.can_manage && confirmed,
                           isSelected = selected === a.id;
                         const tile = [
@@ -561,23 +549,14 @@ export function PlannerWeek({
                             }}
                           >
                             <span className="r1">
-                              <b>{time}</b>
+                              <b>{state.kind === "attention" && <span aria-hidden="true">⚠ </span>}{time}</b>
                               {ext && (
                                 <span className="wk-ext" title="Runs into extended hours (outside 08:00–17:00)">
                                   <Glyph icon="clock" path={clockGlyph} />
                                 </span>
                               )}
-                              {crew.length > 1 && (
-                                <span className="tl-crew" aria-hidden="true">
-                                  {crew.map((x) => (
-                                    <span key={x.resource_id} title={x.name}>
-                                      {initials(x.name)}
-                                    </span>
-                                  ))}
-                                </span>
-                              )}
                             </span>
-                            <span className="t">{a.scope_summary}</span>
+                            {visits.length === 1 && <span className="t">{a.scope_summary}</span>}
                           </div>
                         );
                       })}
@@ -696,7 +675,7 @@ export function AppointmentSnapshot({
             </>
           )}
           <dt>Dispatch</dt>
-          <dd>{a.dispatch_hold ? "Held until the crew starts" : "Not held"}</dd>
+          <dd>{(a.dispatch_readiness?.dispatch_hold ?? a.dispatch_hold) ? "On hold" : "Not held"}</dd>
         </dl>
       </section>
       <footer>

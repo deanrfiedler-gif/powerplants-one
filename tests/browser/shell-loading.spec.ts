@@ -1,7 +1,7 @@
 import { test, expect, type Request } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { keyActivate } from "../helpers/quality-keyboard";
-import { identityToggle } from "../helpers/phone-menu";
+import { identityToggle, openSecondaryMenu } from "../helpers/phone-menu";
 
 test("desktop and phone preserve exact shell navigation and Back with the baseline prefetch policy", async ({ page, isMobile }, info) => {
   const origin = new URL(info.project.use.baseURL!).origin;
@@ -124,7 +124,6 @@ test("F13 Planner controls stay put when the shell context arrives after the pag
   await expect(page.getByRole("region", { name: "Planner controls", exact: true })).toBeVisible();
   await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
   release();
-  await expect(page.getByRole("navigation", { name: "Scheduling workspace", exact: true }).getByRole("link", { name: "Planner", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Collapse primary navigation", exact: true })).toBeEnabled();
   await page.waitForLoadState("networkidle");
   await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
@@ -133,4 +132,7 @@ test("F13 Planner controls stay put when the shell context arrives after the pag
   expect.soft(probe.tops, "Planner controls top edge from first paint").toHaveLength(1);
   expect.soft(probe.more, "rail More top edge from first paint").toHaveLength(1);
   expect(probe.shift, "cumulative layout shift").toBeLessThan(0.1);
+  await openSecondaryMenu(page);
+  await expect(page.getByRole("navigation", { name: "Scheduling workspace", exact: true }).getByRole("link", { name: "Planner", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Hide menu", exact: true }).click();
 });
