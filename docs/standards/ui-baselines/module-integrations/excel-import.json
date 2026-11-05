@@ -1,0 +1,15 @@
+{
+  "id": "excel-import",
+  "route": "/estimating/import",
+  "scope": "#ppo-excel-import",
+  "layout": "full-bleed",
+  "scroll_owner": ".es02-scroll; independent Import summary",
+  "design": "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-04-Desktop-Confirm-and-Save-r01.png",
+  "sha256": "f5138679b8d617523075275c22b726f962b7439975bb703e0bd8b0d9b56408f1",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/excel-import.spec.ts",
+  "application_proof": "tests/browser/excel-import.spec.ts",
+  "authority": "The hashes identify the retained Excel import design capture and shared theme reference. Functional proof, application visual review, owner acceptance and deployment remain separate.",
+  "adaptations": "docs/testing/evidence/excel-import-ui/README.md"
+}

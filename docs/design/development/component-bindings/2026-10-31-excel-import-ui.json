@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "buttons": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "fields-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "validation": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "validation-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "status": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "status-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "application-shell": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "estimation-journey": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "estimation-journey-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "excel-import-native",
+          "label": "Excel import workflow host",
+          "description": "Synthetic blocked/ready/confirmed/saved, comparison, pricing, Draft, stale/refused and uncertain-save states."
+        }
+      ],
+      "dependencies": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "used_on": [
+        "scope:excel-import",
+        "route:/estimating/import"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-excel-import-review",
+          "expected": "Accepted Excel import device frames with separately reviewed undrawn controls.",
+          "actual": "Native UI implemented; functional execution and paired visual review reported separately in evidence.",
+          "action": "Inspect exact application captures; retain owner acceptance as open.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

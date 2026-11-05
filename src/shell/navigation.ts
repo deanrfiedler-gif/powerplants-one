@@ -252,6 +252,7 @@ export function pageForPath(path: string) {
   if (path === "/admin/policies") return { ...destination("settings"), label: "Business policies" };
   if (/^\/admin\/policies\/[^/]+$/.test(path)) return { ...destination("settings"), label: "Business policy" };
   if (/^\/projects\/[^/]+\/commercial\/[^/]+$/.test(path)) return destination("variations");
+  if (path === "/estimating/import") return { ...destination("wizard"), label: "Excel import" };
   if (path === "/admin/access/requests") return { ...destination("access"), label: "Access-change requests" };
   if (/^\/admin\/access\/requests\/[^/]+$/.test(path)) return { ...destination("access"), label: "Access request" };
   if (path === "/admin/access/roles") return { ...destination("access"), label: "Proposed role bundles" };
