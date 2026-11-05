@@ -22,7 +22,7 @@ Accepted design: the [Findings and follow-up design decision](../../../decisions
 - **Snapshot:** a row opens the large snapshot with What remains, What closes it and actions that open the owning record. Findings never close here; each closes in its own record (D4).
 - **Next action (new feature, D5):** owner, due time, instruction and evidence needed, saved as one owned My Work activity; changing it updates the same activity and keeps the history. Coordinators and reviewers with service work-order edit access set it (Q2). Overdue means the due time has passed in site time, with no automatic escalation or customer message (Q4).
 - **Recurrence (new feature, D6):** the same equipment and the same failed check or category within 90 days is flagged with the earlier occurrences and their correction (Q3). It never reopens or closes anything.
-- **Remote diagnosis (D7):** outstanding for the SV-08 build. No dead control or Escalations link appears before the receiving route exists.
+- **Remote diagnosis (D7):** Request remote diagnosis opens the native SV-08 form with this finding selected when the active finding and scoped case duty permit it. The case requires matching Equipment and an eligible owner; opening never changes the source finding.
 - **Shell:** the proposed Conversations action sits left of the information icon.
 - The native page is built under Dean’s 31 October instruction; functional proof, visual comparison, owner acceptance and deployment are separate.
 
@@ -78,7 +78,7 @@ At 390 and 320 px show labelled finding rows with the site-local due date beside
 
 ### Differences and open work
 
-- D7 and the Escalations/Closed cases groups require SV-08 and are omitted. Bulk-assignment checkboxes, unsupported settings/sort controls and the proposed Conversations control are not added.
+- SV-08 now supplies D7 and the Escalations/Closed cases groups, with its own case capability and lifecycle. Bulk-assignment checkboxes, unsupported settings/sort controls and the proposed Conversations control are not added.
 - Closed findings has no 30-day cutoff. Ready to close means the native follow-up is completed and still requires source review; it is not a new closure-prerequisite verdict. These choices are recorded in the design decision.
 - Recurrence uses permitted failed observations with the same equipment and original procedure/check identity. Repeated attempts on the same open defect count. No stable fault-category key exists on the other source types; they say recurrence cannot be assessed. The panel lists observed facts and current source correction notes, without inferring a diagnosis or asserting that a prior correction failed.
 - The current backend has no combined source-event timeline or per-prerequisite closure checklist. The snapshot shows the native remaining-work text, state/context and closure narrative, native activity history, and source links; illustrated source events and criterion rows are not fabricated.

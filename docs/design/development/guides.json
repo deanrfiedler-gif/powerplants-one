@@ -13597,7 +13597,7 @@
           "section_id": "resources",
           "title": "Related guidance and procedures",
           "paragraphs": [
-            "Use the source link for source evidence/history and Open in My Work for the owned activity. Remote diagnosis and the Escalations group remain outstanding until SV-08 exists; this page shows no inactive control."
+            "Use the source link for source evidence/history and Open in My Work for the owned activity. With the case duty, Request remote diagnosis opens an escalation linked to this active finding. Choose its matching Equipment and eligible owner. The shared menu includes Escalations and separate Closed findings/Closed cases; closing a case does not close its finding."
           ],
           "steps": [],
           "rows": [],
@@ -13642,25 +13642,24 @@
     {
       "guide_key": "guide.sv.08",
       "entry_key": "scope:SV-08",
-      "title": "Remote diagnosis and OEM escalation",
+      "title": "Remote diagnosis and escalation",
       "status": "Draft",
       "locale": "en-AU",
-      "content_mode": "Planned workflow",
+      "content_mode": "Implemented synthetic workflow",
       "owner_role": "Prototype content owner: Dean Fiedler",
       "reviewer": null,
       "reviewed_at": null,
-      "prepared_at": "2026-09-23",
+      "prepared_at": "2026-11-01",
       "source_commit": "ccc2251bbba9df266cac9027ddaa9418ab9abc1d",
       "scope_baseline_commit": "98aa2b47a1f13e3d9fdd10984b088b7b00801548",
-      "runtime_evidence": "Not run for this guide",
+      "runtime_evidence": "Implementation validation in progress; no owner walkthrough or deployment verification.",
       "sections": [
         {
           "section_id": "purpose",
           "title": "Purpose and outcome",
           "paragraphs": [
-            "Use Remote diagnosis and OEM escalation to work towards this outcome: The next diagnosis builds on the retained evidence.",
-            "This is a proposed task guide for the registered scope. Steps describe intended operation, not proof of available controls. Any linked source page supplies only its implemented subset.",
-            "An OEM suggestion is not proof of root cause or authority to carry out additional work."
+            "Retain synthetic technical diagnosis and manufacturer correspondence against an existing finding and equipment. A case never changes controller settings or closes its source finding.",
+            "A manufacturer suggestion is not proof of root cause or authority for extra work."
           ],
           "steps": [],
           "rows": [],
@@ -13670,9 +13669,8 @@
           "section_id": "before",
           "title": "Before you start",
           "paragraphs": [
-            "Confirm the customer, site, equipment or other business context relevant to this task before changing a record.",
-            "Prepare: Exact configuration, symptoms, attempted diagnostics, OEM case and response.",
-            "Use your permitted role. Where an approval or receiving role is not established, keep the decision open and identify the owner rather than assuming authority."
+            "Use the case duty granted to Service coordinators and senior technicians, with permission to the native finding and same-site equipment.",
+            "Have the equipment manufacturer, current configuration, diagnostics, owner and source evidence available. Missing facts remain missing until maintained in their source."
           ],
           "steps": [],
           "rows": [],
@@ -13683,11 +13681,12 @@
           "title": "Quick start",
           "paragraphs": [],
           "steps": [
-            "Choose the correct local or hosted environment and confirm your identity.",
-            "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable.",
-            "Check the current scope, required information and outstanding decisions.",
-            "Record diagnostics already attempted and their results",
-            "Check the saved result or explicit pending/error state before leaving the workflow."
+            "Open Service review → Escalations, or Request remote diagnosis from a permitted active finding.",
+            "Choose the existing finding and equipment, describe the fault and name its owner.",
+            "Record attempted diagnostics and results; capture configuration read-only.",
+            "Prepare HTML/PDF, inspect both files and photos for exclusions, then review their hashes.",
+            "A named person sends outside PPO; Record as sent records that fact and creates a reply-date chase in My Work.",
+            "Record the received reply and the existing finding’s owned next action; settings changes require grower approval."
           ],
           "rows": [],
           "headers": []
@@ -13699,24 +13698,16 @@
           "steps": [],
           "rows": [
             [
-              "Page context",
-              "Remote diagnosis and OEM escalation · Page + evidence timeline"
+              "Register",
+              "Open cases, Diagnosing, Waiting on manufacturer, Reply to act on, and separate Closed cases history; filters and read time describe permitted rows."
             ],
             [
-              "Application links",
-              "Use Local app for your development server or Live app for the hosted sign-in environment. The displayed address is a proposed future destination and may currently be unavailable."
+              "Case",
+              "Diagnosis, Configuration, Evidence pack, Correspondence and History; details include equipment warranty end."
             ],
             [
-              "Source record or list",
-              "Use the displayed reference and context to choose the correct record. Filters and page counts represent the permitted selection, not necessarily the full business population."
-            ],
-            [
-              "Actions and outcomes",
-              "Navigation opens a workspace. Save, submit, review, issue and acknowledge are separate business actions where present. Read the resulting state."
-            ],
-            [
-              "Guide and design",
-              "User guide explains the task. UI mockup shows a retained visual reference; an image is not evidence of current deployment."
+              "Recovery",
+              "Uncertain actions retry unchanged; conflicts preserve entries while you compare the current version."
             ]
           ],
           "headers": [
@@ -13728,9 +13719,8 @@
           "section_id": "information",
           "title": "Information you need",
           "paragraphs": [
-            "Exact configuration, symptoms, attempted diagnostics, OEM case and response.",
-            "Use the field labels and validation in the actual form. These preparation topics do not invent mandatory fields, default amounts or approval thresholds. Record the source, time and units for measurements and financial information.",
-            "If information is missing, use a supported unknown state or retain an owned question. Do not substitute zero, a guessed date or an unrelated record merely to proceed."
+            "Use actual synthetic sender/time, manufacturer support route/reference and reply-expected date. Do not invent missing manufacturer addresses.",
+            "The evidence pack excludes structured contact and price fields. Inspect free text and photos before confirming exclusions; automatic pattern matching cannot certify arbitrary content."
           ],
           "steps": [],
           "rows": [],
@@ -13740,12 +13730,12 @@
           "section_id": "tasks",
           "title": "Complete the main task",
           "paragraphs": [
-            "Proposed workflow: confirm the implemented subset before using these steps."
+            "Follow the quick-start sequence and check each retained result."
           ],
           "steps": [
-            "Record diagnostics already attempted and their results",
-            "Prepare the relevant configuration/evidence for escalation",
-            "Review the response and own the next authorised action"
+            "Review retained evidence before recording an actual sending.",
+            "Record a received reply, then an owned next action tied to the current native finding version.",
+            "Keep the source finding’s closure authority separate from the case outcome."
           ],
           "rows": [],
           "headers": []
@@ -13754,9 +13744,8 @@
           "section_id": "completion",
           "title": "Completion and handover",
           "paragraphs": [
-            "The next diagnosis builds on the retained evidence.",
-            "Check the resulting record, receipt or exact document rather than relying on a button click. Record the next owner/action and unresolved information before handing work on.",
-            "An OEM suggestion is not proof of root cause or authority to carry out additional work."
+            "Close with an outcome after the current reply has an owned next action. Closing the case leaves the native finding and its work open under their own rules.",
+            "Record a follow-up question to return to Diagnosing, or withdraw with an outcome. All retained evidence and correspondence remain available."
           ],
           "steps": [],
           "rows": [],
@@ -13769,28 +13758,28 @@
           "steps": [],
           "rows": [
             [
-              "Draft / prepared",
-              "Review the information; it does not imply submission, approval or issue."
+              "Diagnosing",
+              "Record attempts and prepare/review evidence."
             ],
             [
-              "Saved / submitted",
-              "Read the exact confirmation and check what was retained or sent to review."
+              "Waiting on manufacturer",
+              "An actual sending was recorded; My Work carries the reply-date chase."
             ],
             [
-              "Pending / outcome unknown",
-              "Retain the original operation context. Inspect its outcome before attempting a duplicate action."
+              "Reply to act on",
+              "Record advice as owned work against the existing finding."
             ],
             [
-              "Validation / stale revision",
-              "Correct the identified information or compare the newer source before retrying through the supported workflow."
+              "Closed / Withdrawn",
+              "Retained history; the finding is unchanged."
             ],
             [
-              "Read-only / access refused",
-              "Use the authorised review or support route; do not try another identity to bypass the boundary."
+              "Denied / read failure",
+              "Rows and counts are unconfirmed and hidden."
             ],
             [
-              "Planned / not available",
-              "The register contains a future reference. Review the design and dependencies; do not interpret the link as a working feature."
+              "Unconfirmed / conflict",
+              "Retry the original operation, or compare the current version without losing entries."
             ]
           ],
           "headers": [
@@ -13802,8 +13791,8 @@
           "section_id": "examples",
           "title": "Worked examples",
           "paragraphs": [
-            "Synthetic normal case — Northbank Nursery: prepare exact configuration, symptoms, attempted diagnostics, oem case and response. Follow the task sequence and check that the next diagnosis builds on the retained evidence. Keep the actual record reference with the outcome.",
-            "Synthetic exception — the source basis for Remote diagnosis and OEM escalation has changed while work is underway. Preserve your draft and compare the new information. Reconfirm the affected assumptions, owner and scope before a successor action. An OEM suggestion is not proof of root cause or authority to carry out additional work."
+            "Synthetic example: a controller reading is intermittently unavailable. Record observations, capture the existing configuration, review the technical pack, record the named person’s sending and assign the returned advice as owned work.",
+            "If evidence changes after review, capture the current basis and prepare/review another pack before recording it as sent."
           ],
           "steps": [],
           "rows": [],
@@ -13816,28 +13805,20 @@
           "steps": [],
           "rows": [
             [
-              "Local page will not open",
-              "Check the local app is running and that App links points to its correct origin. A planned path may not exist yet."
+              "Missing configuration or manufacturer",
+              "Maintain the Equipment source; never substitute a guess."
             ],
             [
-              "Live sign-in or denied page",
-              "Use the normal authorised sign-in. Deployment and permissions differ from local development; the register does not grant access."
+              "Unconfirmed save",
+              "Retry unchanged to recover the original operation receipt."
             ],
             [
-              "Record not found",
-              "Choose the record from the target environment register. Do not assume a local UUID exists in the hosted database."
+              "Version conflict",
+              "Compare the current case and explicitly retain/retry your entries against its version."
             ],
             [
-              "Save result is unclear",
-              "Keep the original draft/operation context and inspect its receipt or supported recovery view before repeating the action."
-            ],
-            [
-              "Mockup is missing",
-              "Use the linked HTML design when available. Record the missing image in the working design reference."
-            ],
-            [
-              "Guide differs from the page",
-              "Check the guide/source revision and running release. Stop relying on the mismatched instruction and record the discrepancy."
+              "Denied source",
+              "Use the authorised support route; an old link cannot bypass current permissions."
             ]
           ],
           "headers": [
@@ -13849,8 +13830,8 @@
           "section_id": "mobile",
           "title": "Mobile, keyboard and offline use",
           "paragraphs": [
-            "In this register, use Tab and Shift+Tab to reach the entry actions. Enter or Space opens a button; Escape closes the top reading window. Contents links move to the relevant heading.",
-            "On a phone, the guide uses the full screen. Close it to return to the same register selection. Only the documented Offline workspace supports its verified offline business operations; opening a portable guide offline does not make every application page offline-capable."
+            "The phone list opens the same case. Reply, Diagnosis, Pack and History retain the tasks; configuration is read-only within Diagnosis. The full fault title wraps in the body.",
+            "Tabs and guidance preserve draft entries. This page requires an online connection; it adds no offline commands."
           ],
           "steps": [],
           "rows": [],
@@ -13871,9 +13852,8 @@
           "section_id": "review",
           "title": "Guide review and feedback",
           "paragraphs": [
-            "Guide revision r01 · Draft for review · Prepared 23 September 2026. Business reviewer: not yet nominated. Running-workflow walkthrough: not performed for this article.",
-            "Record a correction against this stable entry in the Git working guide or design reference, then submit the change for review. A browser export is an unapplied proposal; this workspace does not save or publish edits.",
-            "Opening this guide is not training completion, SOP acknowledgement or acceptance of the underlying application."
+            "Draft guide for the native implementation. Functional proof, visual comparison, owner acceptance and deployment are separate.",
+            "An edit or a passing test does not grant owner review, production authority or training completion."
           ],
           "steps": [],
           "rows": [],
@@ -13888,9 +13868,11 @@
       ],
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/blueprints/BP-07-service-operations.md",
+        "src/components/service-escalations.tsx",
+        "docs/contracts/service-escalations.md"
       ],
-      "change_summary": "First detailed article for this entry; generated from authored scope profile and the retained/current route context.",
+      "change_summary": "Native finding-linked cases, retained evidence and recorded correspondence; recording sends nothing.",
       "document_id": "PPO-GUIDE-SV-08",
       "audience": "Public synthetic prototype reference; runtime permissions must be applied by the application adapter",
       "review_due_at": null,
@@ -13898,8 +13880,9 @@
       "supersedes": null,
       "section_aliases": {},
       "workflow_basis": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
-        "docs/blueprints/BP-07-service-operations.md"
+        "docs/decisions/escalations-figma-design.md",
+        "docs/contracts/service-escalations.md",
+        "docs/decisions/service-escalations-native.md"
       ],
       "applicable_app_release": null,
       "reviewed_content_hash": null

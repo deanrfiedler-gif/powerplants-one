@@ -2,9 +2,10 @@ import { test, expect, type Page } from "@playwright/test";
 import { findingRows, findingsClock } from "../helpers/findings-fixture";
 import { destinations } from "../../src/shell/navigation";
 import { dueThisWeek, isOverdue, inView, views } from "../../src/service/findings/model";
+import { openSecondaryMenu, phoneWidth } from "../helpers/phone-menu";
 async function setup(
   page: Page,
-  { viewOnly = false, uncertain = false, stale = false } = {},
+  { viewOnly = false, uncertain = false, stale = false, canEscalate = false } = {},
 ) {
   const rows = structuredClone(findingRows),
     posts: Record<string, unknown>[] = [],
@@ -131,7 +132,7 @@ async function setup(
         return;
       }
       await route.fulfill({
-        json: { item, as_of: findingsClock, synthetic: true },
+        json: { item, as_of: findingsClock, synthetic: true, can_request_remote_diagnosis: canEscalate },
       });
       return;
     }
@@ -613,4 +614,25 @@ test("SV07 saving a next action keeps the snapshot mounted on its selected tab",
   expect(f.posts).toHaveLength(1);
   await snapshot.getByRole("tab", { name: "Next action", exact: true }).click();
   await expect(snapshot.locator(".sv07-next-action")).toContainText("SYN retained snapshot instruction");
+});
+
+test("SV08 Findings handover is capability-gated and retains the native finding key", async ({ page }) => {
+  await setup(page);
+  await openRemaining(page);
+  await expect(page.getByRole("link", { name: "Request remote diagnosis", exact: true })).toHaveCount(0);
+  await page.unrouteAll({ behavior: "wait" });
+  await setup(page, { canEscalate: true });
+  await openRemaining(page);
+  const link = page.getByRole("link", { name: "Request remote diagnosis", exact: true });
+  await expect(link).toBeVisible();
+  const href = await link.getAttribute("href"), url = new URL(href!, "http://localhost");
+  expect(url.pathname).toBe("/service/escalations");
+  expect(url.searchParams.get("new")).toBe("1");
+  expect(url.searchParams.get("finding")).toBe(
+    findingRows.find(r => r.source_record.reference === "SYN-PPO-RPT-000058")!.id,
+  );
+  if (phoneWidth(page)) await openSecondaryMenu(page);
+  const menu = page.getByRole("navigation", { name: "Service review views" });
+  for (const name of ["Open cases", "Diagnosing", "Waiting on manufacturer", "Reply to act on", "Closed cases"])
+    await expect(menu.getByRole("link", { name, exact: true })).toBeVisible();
 });

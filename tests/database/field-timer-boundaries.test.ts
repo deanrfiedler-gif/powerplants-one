@@ -1,5 +1,5 @@
 import { accessInspectionSeedGrants, accessRequestSeedGrants, accessApplicationSeedGrants, accessTeamSeedGrants, accessReviewSeedGrants } from "../helpers/engineering-materials-grants";
-import { productsSeedGrants, conversationSeedGrants, agentAskSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
+import { productsSeedGrants, conversationSeedGrants, agentAskSeedGrants, escalationSeedGrants, maintenanceSeedGrants, estimateReviewSeedGrants, quotationReleaseSeedGrants } from "../helpers/engineering-materials-grants";
 import { incidentSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { canonical } from "../../src/platform/operations";
@@ -241,7 +241,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
   );
   assert.deepEqual(
     migrationsAfter.slice(migrationsBefore.length).map((row) => row.version),
-    [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123],
+    [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124],
   );
   await seed();
   await migrate();
@@ -263,7 +263,7 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
       .filter((x) => !ids.has(x.row.id))
       .map((x) => x.row);
     const conversation = additions.filter((g) => ["conversation.read", "conversation.post"].includes(String(g.capability)));
-    const earlier = additions.filter((g) => !String(g.capability).startsWith("conversation."));
+    const earlier = additions.filter((g) => !String(g.capability).startsWith("conversation.") && g.capability !== "service_escalation.record");
     assert.equal(earlier.length, 90);
     const shape = (grants: Record<string, unknown>[]) =>
       grants
@@ -280,6 +280,8 @@ test("FI01 additive 0049 upgrade retains existing time, arrivals, receipts and r
     assert.deepEqual(shape(conversation), shape(conversationSeedGrants([...before[i].map((x) => x.row), ...earlier])));
     assert.deepEqual(shape(additions.filter(g => g.capability === "conversation.agent.ask")),
       shape(agentAskSeedGrants([...before[i].map(x => x.row), ...earlier, ...conversation])));
+  assert.deepEqual(shape(additions.filter(g => g.capability === "service_escalation.record")),
+      shape(escalationSeedGrants([...before[i].map(x => x.row), ...earlier, ...conversation])));
   }
   assert.equal(
     (await database().query("SELECT count(*)::int n FROM ppo.field_timers"))

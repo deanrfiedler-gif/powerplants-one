@@ -18,7 +18,7 @@ import {
   accessReviews,
   accessReview,
 } from "../../src/access/reviews";
-import { accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessReviewSeedGrants, conversationSeedGrants, agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -123,7 +123,7 @@ test(
       grants,
     );
     assert.deepEqual(
-      next.filter((g) => !ids.has(g.id) && g.capability !== "conversation.agent.ask"),
+      next.filter((g) => !ids.has(g.id) && g.capability !== "conversation.agent.ask" && g.capability !== "service_escalation.record"),
       [...conversationSeedGrants(grants), ...accessReviewSeedGrants(grants).map((g) => ({
         ...g,
         id: "ad010084-0000-4000-8000-000000000001",
@@ -131,6 +131,8 @@ test(
     );
     assert.deepEqual(next.filter(g => !ids.has(g.id) && g.capability === "conversation.agent.ask"),
       agentAskSeedGrants([...grants, ...conversationSeedGrants(grants)]).sort((a,b) => String(a.id).localeCompare(String(b.id))));
+  assert.deepEqual(next.filter(g => !ids.has(g.id) && g.capability === "service_escalation.record"),
+      escalationSeedGrants([...grants, ...conversationSeedGrants(grants)]).sort((a,b) => String(a.id).localeCompare(String(b.id))));
     const nextLedger = await rows(
         "SELECT * FROM public.ppo_migrations ORDER BY version",
       ),
@@ -143,7 +145,7 @@ test(
     );
     assert.deepEqual(
       nextLedger.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123],
+      [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124],
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version <= 83),
@@ -151,7 +153,7 @@ test(
     );
     assert.deepEqual(
       nextSeeds.filter((r) => r.version > 83).map((r) => r.version),
-      [84, 107, 108, 110, 120, 121],
+      [84, 107, 108, 110, 120, 121, 124],
     );
     await migrate();
     await seed();

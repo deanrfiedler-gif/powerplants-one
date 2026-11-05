@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { CRM } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import assert from "node:assert/strict";
@@ -154,8 +155,10 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   });
   const rows = async (table: string) =>
     (await database().query("SELECT * FROM " + table + " ORDER BY 1")).rows;
+  const grantRows = async () =>
+    (await database().query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
   const nursery = await rows("ppo.nursery_discovery_revisions"),
-    grants = await rows("ppo.permission_grants"),
+    grants = await grantRows(),
     seeds = await rows("ppo.seed_receipts"),
     ledger = await rows("public.ppo_migrations");
   await assert.rejects(
@@ -165,21 +168,24 @@ test("0117 preserves populated 0116 Nursery evidence, all grants/seeds and origi
   await migrate();
   await seed();
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
-  assert.deepEqual(await rows("ppo.permission_grants"), grants);
+  const caseGrants=await grantRows();
+  assert.deepEqual(caseGrants.filter(g=>g.capability!=="service_escalation.record"), grants);
+  assert.deepEqual(caseGrants.filter(g=>g.capability==="service_escalation.record"),escalationSeedGrants(grants).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   const upgradedSeeds = await rows("ppo.seed_receipts");
-  assert.deepEqual(upgradedSeeds.filter(r => ![120, 121].includes(r.version)), seeds);
-  assert.deepEqual(upgradedSeeds.filter(r => [120, 121].includes(r.version)).map(r => r.version), [120, 121]);
+  assert.deepEqual(upgradedSeeds.filter(r => ![120, 121, 124].includes(r.version)), seeds);
+  assert.deepEqual(upgradedSeeds.filter(r => [120, 121, 124].includes(r.version)).map(r => r.version), [120, 121, 124]);
   const after = await rows("public.ppo_migrations");
   assert.deepEqual(after.slice(0, ledger.length), ledger);
   assert.deepEqual(
     after.slice(ledger.length).map((r) => r.version),
-    [117, 118, 119, 120, 121, 122, 123],
+    [117, 118, 119, 120, 121, 122, 123, 124],
   );
   assert.equal((await readAssessment(f.p, f.id)).selected, null);
   await migrate();
   await seed();
   assert.deepEqual(await rows("public.ppo_migrations"), after);
   assert.deepEqual(await rows("ppo.seed_receipts"), upgradedSeeds);
+  assert.deepEqual(await grantRows(), caseGrants);
   assert.deepEqual(await rows("ppo.nursery_discovery_revisions"), nursery);
 });
 

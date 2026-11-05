@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { emptyConfiguration } from "../../src/estimating/configuration-definition";
 import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
@@ -225,11 +226,12 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
         async (table) =>
           (
             await database().query(
-              `SELECT to_jsonb(t) AS row FROM ${table} t${table === "ppo.seed_receipts" ? " WHERE t.version NOT IN (120,121)" : ""} ORDER BY to_jsonb(t)::text`,
+              `SELECT to_jsonb(t) AS row FROM ${table} t${table === "ppo.permission_grants" ? " WHERE t.capability<>'service_escalation.record'" : table === "ppo.seed_receipts" ? " WHERE t.version NOT IN (120,121,124)" : ""} ORDER BY to_jsonb(t)::text`,
             )
           ).rows,
       ),
     );
+  const caseGrantBase=(await database().query("SELECT * FROM ppo.permission_grants ORDER BY id")).rows;
   const before = await snapshot(),
     ledger = (
       await database().query(
@@ -239,6 +241,7 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
+  assert.deepEqual((await database().query("SELECT * FROM ppo.permission_grants WHERE capability='service_escalation.record' ORDER BY id")).rows,escalationSeedGrants(caseGrantBase).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=120")).rows, [{version:120}]);
   assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=121")).rows, [{ version: 121 }]);
   const afterLedger = (
@@ -249,11 +252,12 @@ test("0116 upgrades populated 0115 without altering saved Discovery, grants, see
   assert.deepEqual(afterLedger.slice(0, ledger.length), ledger);
   assert.deepEqual(
     afterLedger.slice(ledger.length).map((r) => r.version),
-    [116, 117, 118, 119, 120, 121, 122, 123],
+    [116, 117, 118, 119, 120, 121, 122, 123, 124],
   );
   assert.equal((await readNursery(p, id)).selected, null);
   await migrate();
   await seed();
   assert.deepEqual(await snapshot(), before);
+  assert.deepEqual((await database().query("SELECT * FROM ppo.permission_grants WHERE capability='service_escalation.record' ORDER BY id")).rows,escalationSeedGrants(caseGrantBase).sort((a,b)=>String(a.id).localeCompare(String(b.id),'en')));
   assert.deepEqual((await database().query("SELECT version FROM ppo.seed_receipts WHERE version=120")).rows, [{version:120}]);
 });

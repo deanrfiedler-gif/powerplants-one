@@ -263,6 +263,7 @@ export function pageForPath(path: string) {
   if (/^\/estimating\/estimates\/[^/]+\/review$/.test(path)) return { ...destination("estimates"), label: "Estimate review" };
   if (/^\/estimating\/estimates\/[^/]+$/.test(path)) return { ...destination("estimates"), label: "Saved estimate" };
   if (path === "/products/import") return { ...destination("products"), label: "Product import" };
+  if (path === "/service/escalations") return { ...destination("reports"), label: "Escalations", requires: ["service_escalation.record"] as Capability[] };
   if (path === "/service/findings") return { ...destination("reports"), label: "Findings" };
   const scheduleViews: Record<string,string> = { changes: "Changes & follow-up", "policy-impact": "Policy impact", travel: "Travel review", capacity: "Capacity review" };
   const scheduleView = /^\/schedule\/([^/]+)$/.exec(path)?.[1];
