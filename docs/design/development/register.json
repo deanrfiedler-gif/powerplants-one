@@ -8026,10 +8026,18 @@
       "title": "Excel estimate import and review",
       "kind": "scope",
       "module": "ES",
-      "summary": "Implement the existing upload → validate/review → save estimate → quotation design. Workbook and HTML prototypes exist; application integration remains outstanding. This is an additional design brief, not a new adopted scope ID.",
+      "summary": "Contextual synthetic workbook review, exact import, controlled re-import, reviewed-source pricing and customer-safe Draft quotation. Native authority and exact operation recovery remain server-owned.",
       "path": "/estimating/import",
       "source_paths": [
-        "docs/delivery/excel-estimate-import-handover.md"
+        "docs/delivery/excel-estimate-import-handover.md",
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css"
       ],
       "guide_key": "guide.excel.import",
       "design_path": "docs/design/development/pages/scope-excel-import.md",
@@ -8050,11 +8058,18 @@
         "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-13-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/excel-import-figma-design.md"
+        "docs/decisions/excel-import-figma-design.md",
+        "docs/contracts/excel-estimate-import.md",
+        "src/components/estimation-wizard-ui.tsx",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/components/estimation-wizard.css",
+        "src/components/estimation-wizard-figma.css",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/testing/evidence/excel-import-ui/README.md"
       ],
-      "scope_status": "unbuilt",
+      "scope_status": "Implemented in PR; acceptance separate",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Synthetic native journey executed; final checks and limits in Excel import UI evidence",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8067,7 +8082,8 @@
         "scope:ES-04",
         "scope:PD-01",
         "scope:AD-03",
-        "scope:AD-05"
+        "scope:AD-05",
+        "route:/estimating/import"
       ],
       "reviewer": null
     },
@@ -18736,6 +18752,66 @@
       "related_keys": [
         "scope:SV-08",
         "scope:SV-07"
+      ]
+    },
+    {
+      "key": "route:/estimating/import",
+      "title": "Excel estimate import and review",
+      "kind": "route",
+      "module": "ES",
+      "summary": "Contextual synthetic workbook review, exact import, controlled re-import, reviewed-source pricing and customer-safe Draft quotation. Native authority and exact operation recovery remain server-owned.",
+      "path": "/estimating/import",
+      "source_paths": [
+        "src/app/(business)/estimating/import/page.tsx",
+        "src/components/excel-import.tsx",
+        "src/components/excel-import-review.tsx",
+        "src/components/excel-import-continuation.tsx",
+        "src/components/excel-import-command.tsx",
+        "src/components/excel-import-types.ts",
+        "src/estimating/import/projection.ts",
+        "src/components/excel-import.css"
+      ],
+      "guide_key": "guide.route-estimating-import",
+      "design_path": "docs/design/development/pages/route-estimating-import.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-01-Desktop-Choose-Workbook-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-02-Desktop-Review-Blocked-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-03-Desktop-Review-Ready-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-04-Desktop-Confirm-and-Save-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-05-Desktop-Saved-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-06-Desktop-Compare-Revised-Workbook-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-07-Desktop-Price-from-Reviewed-Sources-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-08-Desktop-Prepare-Draft-Quotation-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-09-Tablet-Review-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-10-Phone-Review-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-11-Phone-Saved-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-12-Phone-320-Blocked-r01.png",
+        "docs/reference/ui/estimating/excel-import-figma-r01/PPO-Excel-Import-13-States-r01.png"
+      ],
+      "dependencies": [
+        "docs/decisions/excel-import-figma-design.md",
+        "docs/contracts/excel-estimate-import.md",
+        "src/components/estimation-wizard-ui.tsx",
+        "src/components/estimation-wizard-dialog.tsx",
+        "src/components/estimation-wizard.css",
+        "src/components/estimation-wizard-figma.css",
+        "src/shared/ui/use-recoverable-command.ts",
+        "docs/testing/evidence/excel-import-ui/README.md"
+      ],
+      "scope_status": "Implemented in PR; acceptance separate",
+      "visual_status": "Needs review",
+      "functional_status": "Synthetic native journey executed; final checks and limits in Excel import UI evidence",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:excel-import",
+        "scope:ES-02",
+        "scope:ES-03"
       ]
     }
   ]

@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-01",
+  "implementation_commit": "95821a73",
+  "main_baseline": "5c533e93541b297bb347b07ba1db79f85c252089",
+  "passed": [
+    "83 focused tests",
+    "typecheck and refined typecheck",
+    "full lint and refined focused lint",
+    "studio sync/check",
+    "foundation",
+    "naming",
+    "status",
+    "documentation scope"
+  ],
+  "combined_browser": {
+    "failed": 4,
+    "not_run": 4
+  },
+  "main_baseline_browser": {
+    "failed": 1,
+    "not_run": 4,
+    "reproduced": "ppo.site_timezone pg_timezone_names statement timeout"
+  },
+  "refined_excel_browser": {
+    "failed": 2,
+    "not_run": 1,
+    "reached": [
+      "native commit",
+      "lost-response recovery",
+      "stale native 409"
+    ],
+    "open": "saved-result loading and subsequent fixture timeout; continuations not reached"
+  },
+  "local_log_sha256": {
+    "final-unit.log": "e20b64d12dc76d463ec80a5f72a600d16eaa86dcad942ac12e2f488c1351b0ca",
+    "final-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-lint.log": "144b8ef738aebf80f098340cd52aae1ca2b3b236fc5859b5d6806e5ec9ac9f64",
+    "final-studio.log": "b781d3ecbe8c7d64bd2fe96af59f7c87137064954c48dc9675ce1a0ebf5c40cf",
+    "final-foundation.log": "07362b426d18fb8768398ba54385359529fc73dc4700560b37b05d79a1bdbc2c",
+    "final-naming.log": "9f294534e11df3286d061953d404adef99d935ac9244e1d8d6afcec25d5e3045",
+    "final-status.log": "9b87cb0ff3ba2a8d6e4c8891530e07ad4ee39242a93fbc315de27ab434378e8f",
+    "refined-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "refined-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-browser.log": "a73ad5db76261b10cae8b8a42b2a9e416e1fd107e1206bdcaedd526dcd84fc66",
+    "baseline-browser.log": "cdb2e2eaac45b12a2bfa436270892accb41227013bd2cfc5e8cc76f8b1dc4325",
+    "refined-browser.log": "e0ff41b6e8dbc696145d2e15ae9a270de91294abc063bb7b8a7cae42bbe51655",
+    "scope.log": "b6e0bac81a06a202c15e1fc05902a5a84d2e37928a6e62bc37c2d37082cd453f"
+  }
+}

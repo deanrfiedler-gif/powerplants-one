@@ -3109,6 +3109,9 @@ function Wizard({ data: d, reload }: { data: Detail; reload: () => void }) {
                                   Review scope for manual costing
                                 </button>
                               )}
+                              {costing && d.workspace.state === "Draft" && summary.data?.status === "NoEstimate" && (
+                                <Link className="es02-button" href={`/estimating/import?${new URLSearchParams({workspace:id,option:current.option.id,revision:r.id})}`}>Import Excel estimate</Link>
+                              )}
                               {summary.data?.status === "Available" && (
                                 <Link
                                   href={`/estimating/estimates/${summary.data.estimate_id}`}
