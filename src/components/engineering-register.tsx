@@ -100,7 +100,7 @@ export function EngineeringRegister() {
     const measure = () =>
       node.parentElement?.style.setProperty(
         "--er-toolbar-height",
-        node.offsetHeight + "px",
+        node.getBoundingClientRect().height + "px",
       );
     measure();
     const observer = new ResizeObserver(measure);

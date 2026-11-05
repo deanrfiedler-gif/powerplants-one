@@ -147,3 +147,8 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 ## Backend continuation — 13 October 2026
 
 Dean separately authorised the EN-01 [register backend](engineering-workload-backend.md) under BC-01. It adds scoped sorting, complete permitted-match view/status counts and recorded-engineer filter choices. These choices identify actual owners of matching packages, including explicitly inactive owners; new assignment still uses the existing context-specific eligibility read. Source-bound page tokens refuse changed sources. This continuation does not implement or visually accept the Figma page or shell. All original captures and design review evidence remain unchanged.
+
+
+## Guide visibility correction — 5 November 2026
+
+Agent decision by Codex under the standing order: publish the reviewed Engineering guide content so retiring its carried-over fixture does not remove existing page help. The first ready-head Estimating browser run failed the unchanged shell assertion for the Engineering guide. The alternatives were to restore the obsolete carried-over content and fixture, or leave users with no guide; neither completes the requested rewrite and fixture retirement. Publication uses a fresh content review recorded by Codex, not an owner acceptance or another independent pull request review. The [execution ledger](../testing/evidence/engineering-workload/README.md) records the exact content checks, runtime evidence and hash. Reversal is a normal guide status change to InReview, which hides it again; no authority, schema or data changes.

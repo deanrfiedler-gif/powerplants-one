@@ -366,6 +366,17 @@ test("the CRM Deals guide compiles in the real library and stays hidden while it
   assert.equal(guideForPath(released, "/sales/opportunities/SYN-1"), null);
 });
 
+test("Engineering retains its published page guide after retiring carried-over markup", async () => {
+  const { entries: real } = await readMaster(process.cwd());
+  const library = await readGuideLibrary(process.cwd(), real);
+  assert.deepEqual(library.errors, []);
+  const guide = guideForPath(releasedGuides(library, real), "/engineering");
+  assert.ok(guide, "Engineering must retain visible page guidance");
+  assert.equal(guide.front.title, "Engineering workload & deliverables");
+  assert.equal(guide.front.carried_over_from, null);
+  assert.equal(guide.front.reviewed_content_hash, guide.contentHash);
+});
+
 test("the authoring contract docs/guides/README.md is not a guide, and the real library reports nothing for it", async () => {
   const path = "docs/guides/README.md";
   const text = await readFile(join(process.cwd(), path), "utf8");

@@ -214,12 +214,12 @@ test("EN01 focus preserves selection through temporary failure and clears both e
   });
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(page.locator(".er-refresh-notice")).toContainText("could not be rechecked");
-  await expect(page.getByRole("alert")).toContainText("SYN focus read failed");
+  await expect(page.getByRole("region", { name: "Engineering workload", exact: true }).getByRole("alert")).toContainText("SYN focus read failed");
   await expect(boxes.first()).toBeChecked();
   await page.unroute("**/api/v1/engineering/register?*");
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(page.locator(".er-refresh-notice")).toHaveCount(0);
-  await expect(page.getByRole("alert")).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Engineering workload", exact: true }).getByRole("alert")).toHaveCount(0);
   await expect(boxes.first()).toBeChecked();
 });
 
@@ -292,7 +292,7 @@ test("EN01 inactive owner stays visible and blocks save until active reassignmen
   await form.getByLabel("Reason for update").fill("SYN choose an active engineer");
   await expect(form.getByRole("button", { name: "Save coordination" })).toBeDisabled();
   await form.getByLabel("Assigned engineer").fill("SYN");
-  await form.getByRole("option").first().click();
+  await form.getByRole("listbox", { name: "Assigned engineer matches", exact: true }).getByRole("option").first().click();
   await expect(form.getByRole("button", { name: "Save coordination" })).toBeEnabled();
   await expect(form.getByLabel("Next action", { exact: true })).toHaveValue("SYN preserve on reassignment");
   await expect(form.getByLabel("Reason for update")).toHaveValue("SYN choose an active engineer");

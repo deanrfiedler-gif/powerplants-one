@@ -54,7 +54,7 @@ Technical tabs retain the mounted coordination form without a discard prompt. Cl
 
 ## Guide, evidence and review
 
-The [Engineering guide](../../../guides/pages/guide.page.engineering.md) describes this register and the retained full package page. A rewritten guide remains InReview and is not treated as published.
+The [Engineering guide](../../../guides/pages/guide.page.engineering.md) describes this register and the retained full package page. Its 5 November content review and publication are an agent decision under the standing order, recorded in the [execution ledger](../../../testing/evidence/engineering-workload/README.md). They do not record content-owner acceptance or a visual review.
 
 The [execution ledger](../../../testing/evidence/engineering-workload/README.md) keeps functional proof, application/reference comparison, independent review, owner acceptance and deployment separate. Capture and inspect 1440 × 900, 1024 × 768, 390 × 844 and 320 × 844. Missing-date sorting, all native queues, counts beyond a page, stale continuation, inactive owners, source restrictions and exact-package handovers are required functional proof. Passing checks or captured images never grant visual acceptance.
 
