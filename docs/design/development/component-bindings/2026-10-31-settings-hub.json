@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "ad02-application-shell",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "ad02-buttons",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "ad02-register-table",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "ad02-dialog",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "dialog-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "ad02-read-state",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/settings",
+        "route:/admin/policies",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "shared-record": {
+      "states": [
+        {
+          "id": "ad02-shared-record",
+          "label": "AD-02 Settings and policy hosts",
+          "description": "Permitted hub/register; read-only seed record; exact proposal, independent review, refusal and original recovery."
+        }
+      ],
+      "dependencies": [
+        "src/admin/settings-screen.tsx",
+        "src/admin/policy-screen.tsx",
+        "src/admin/settings.css",
+        "src/app/styles/organisations.css"
+      ],
+      "used_on": [
+        "scope:AD-02",
+        "route:/admin/policies/[id]"
+      ],
+      "gaps": [
+        {
+          "id": "shared-record-ad02-review",
+          "expected": "Compare AD-02 at 1440, 1024, 390 and 320 px.",
+          "actual": "Native host; paired review and owner acceptance separate.",
+          "action": "Record captures, differences and functional verification.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

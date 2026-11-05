@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-AD08-RETENTION-FIGMA-DEC,Retention and information lifecycle design (Figma) owner decision,docs/decisions/retention-lifecycle-figma-design.md,,"Owner-accepted design; application changes, operating rules and legal requirements separate",Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,git,
+PPO-AD08-RETENTION-FIGMA-R01,Retention and information lifecycle design retained captures,docs/reference/ui/retention-lifecycle-design-r01/README.md,r01,Retained owner-accepted design reference; icon-free; not an application capture or UI baseline,Dean Fiedler,1fc002978ee2a6871121d9252609a49c6dc31b9a,,,retained-record,

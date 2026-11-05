@@ -93,7 +93,7 @@ test("PL04 reopened evidence retains originals, related successors and a new suc
   assert.equal(original.latest_review_id, f.review.id);
   const published = await publishSchedulingPolicy(f.publisher, f.publish);
   const next = await proposed(90, "2031-09-23T00:00:00.000Z");
-  const result = await proposeSchedulingPolicy(f.reviewer, {
+  const result = await proposeSchedulingPolicy(f.publisher, {
     ...next.command,
     ...base(),
     id: randomUUID(),
@@ -116,7 +116,7 @@ test("PL04 reopened evidence retains originals, related successors and a new suc
   assert.deepEqual(successor.proposal.predecessor_proposal, f.publish.proposal);
   assert.equal(successor.proposal.expected_head.version, 2);
   await assert.rejects(
-    proposeSchedulingPolicy(f.reviewer, {
+    proposeSchedulingPolicy(f.publisher, {
       ...next.command,
       ...base(),
       id: randomUUID(),

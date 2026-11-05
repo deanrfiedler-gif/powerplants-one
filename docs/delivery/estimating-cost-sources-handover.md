@@ -25,6 +25,10 @@ The source migration was authored as 0045 against main's then-current 0044. The 
 - Foundation, prototype, naming and development-register checks passed, preserving 78 parent IDs and 7,991 maintained-instruction characters. The integrated parent adds the existing Job Pack component; 277 entries, 25 components and 19 runnable examples remain unaccepted rather than silently baselined.
 - [CI on `ce05194`](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/35937386501) passed the fresh-reset/current-schema and E1/E2 upgrade step before the shared-actor HTTP failure. Final-head CI remains required for the corrected test and added source restart helper. [Retained native/reference inspection, hashes, proof logs and restart metadata](../testing/evidence/estimating-native-cost-sources/README.md) distinguish each executed batch and its limits.
 
+## Accepted register implementation
+
+The ES-03 register now uses the permission-scoped register API, shared full-width table and menu, responsive phone rows, exact source snapshot, selected-page export and sequence actions. Detail eligibility excludes both owner and revision author. Estimate usage retains source-revision and estimate-version IDs with an explicit 100-candidate source-wide bound. See [application proof and visual differences](../testing/evidence/cost-source-register/workspace/README.md). Native command and pricing lineage remain unchanged. Functional evidence does not grant visual acceptance.
+
 ## Presentation and review
 
 Stable scope ES-03 retains the supplier-pricing r01 HTML and original desktop comparison image. Native register, source evidence/form and estimate comparison adapt those tasks to the current PPO shell. Shared Button/ButtonLink, Field/SelectField, ValidationFields/ErrorNotice, semantic tokens, guide and original-operation recovery are reused. The first bounded implementation has no connected catalogue, FX/landed pricing or approval thresholds; these departures remain visible before baseline adoption. Owner paired review, physical-device/assistive-technology acceptance and deployment are separate.

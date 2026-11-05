@@ -9,6 +9,8 @@ versioning: git
 
 # Figma Components page as the single component source
 
+[ADR-0067](ADR-0067-design-to-build-operating-model.md) keeps this decision for the frozen "PPO - Design" file. At cut-over, `PPO - Library` becomes the component source under the [design-to-build standard](../standards/design-to-build-standard.md).
+
 ## Context
 
 On 17 October 2026 Dean asked whether the Components page of the private "PPO - Design" Figma file (`1:4`) needed updating after the UX benchmark exemplars. A read-only inventory of all 52 pages found the page held 176 icons and seven early parts, while the main components the accepted designs use were spread over about 25 design pages. Some accepted pages depended on components held on proposal or archive pages: Shell v2 (proposal) `73:4`, the historical Shell page `31:214` and Deals (proposal) `549:2`. The early Rail item and Menu item duplicated v2 / Rail item and v2 / Menu item, and the Deals page carried a second icon set.

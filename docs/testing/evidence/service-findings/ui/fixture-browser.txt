@@ -1,0 +1,100 @@
+
+Running 5 tests using 1 worker
+
+(node:6040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts (1.8m)
+(node:15388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\browser\service-findings.spec.ts:231:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save (53.0s)
+  ok 3 tests\browser\service-findings.spec.ts:278:1 › SV07 stale version compares without dropping entries, while technician stays view-only (48.9s)
+  x  4 tests\browser\service-findings.spec.ts:324:1 › SV07 read failures remove earlier content and counts, and empty windows can continue (31.9s)
+(node:724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 tests\browser\service-findings.spec.ts:357:1 › SV07 comparison captures at 1440, 1024, 390 and 320 (36.2s)
+
+
+  1) tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.sv07-desktop tbody tr')
+    Expected: 7
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('.sv07-desktop tbody tr') with timeout 5000ms
+      - waiting for locator('.sv07-desktop tbody tr')
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      213 |   ]) {
+      214 |     await page.goto(`/service/findings?department=service`);
+    > 215 |     await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
+          |                                                          ^
+      216 |     const row = findingRows.find((r) => r.source === source)!;
+      217 |     await page
+      218 |       .getByRole("button", { name: row.source_record.reference, exact: true })
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:215:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\browser\service-findings.spec.ts:324:1 › SV07 read failures remove earlier content and counts, and empty windows can continue 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.sv07-desktop tbody tr')
+    Expected: 7
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('.sv07-desktop tbody tr') with timeout 5000ms
+      - waiting for locator('.sv07-desktop tbody tr')
+        5 × locator resolved to 0 elements
+          - unexpected value "0"
+
+
+      327 |   await setup(page);
+      328 |   await page.goto("/service/findings?department=service");
+    > 329 |   await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
+          |                                                        ^
+      330 |   await page.route("**/api/v1/service/findings?*", (route) =>
+      331 |     route.fulfill({ status: 403, json: { message: "Access revoked" } }),
+      332 |   );
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:329:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-read-a1c35--empty-windows-can-continue\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-read-a1c35--empty-windows-can-continue\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-read-a1c35--empty-windows-can-continue\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-read-a1c35--empty-windows-can-continue\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts 
+    tests\browser\service-findings.spec.ts:324:1 › SV07 read failures remove earlier content and counts, and empty windows can continue 
+  3 passed (9.1m)

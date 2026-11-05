@@ -1,0 +1,12 @@
+---
+title: Templates DK-06 preserved implementation and continuation
+date: 2026-10-31
+---
+
+Codex for Dean continued PR #704 on `codex/template-management`. Twenty files of unfinished October work were inspected and preserved in e1531042 before merging main in 3ed398c9. No original work was reset, cleaned or overwritten. The accepted source is PPO - Design, page 793:6155, named version “Template management — accepted”; current live frames and retained icon-free captures were inspected.
+
+The four routes are registered with page-specific contracts and guides. UI corrections consolidate phone-header ownership, retain view/filter state, revalidate the displayed window on continuation, clear failed reads, use ShellIcon and show exact publication definition evidence. This remains an incomplete draft. Final build/typecheck, focused lint, 11 existing template units, studio, foundation and status checks passed. Three focused native database cases passed, including new scoped-choice, empty-list and chronological-history assertions. The unchanged-main control passed the three original cases. Page browser/screenshots, broader template database/HTTP workflows, keyboard and 200% zoom proof remain to be completed.
+
+A preserved draft guard had changed proposal-list denial from main's empty permitted list to a blanket capability error. Main's per-record template, company/site/family and source checks were inspected and remain present. Automatic approval review rejected restoring main's list behavior twice as an access-control change requiring explicit approval. Dean then explicitly approved restoring main's behavior in this chat. The added list-only guard was removed; per-record template, scope/source checks and all command checks remain intact. The prior NEEDS DEAN comment is superseded by that approval and the follow-up record. No capability, grant, migration or new technology was added. Visual review, owner acceptance and deployment remain pending.
+
+Native validation first exposed a repository-local synthetic document-store configuration; unmodified main reproduced the refusal and the fixture store was moved outside the checkout without changing the guard. The next run exposed the preserved `companies.name` query. Inspection of the live synthetic schema confirmed `display_name`; the corrected projection passed the final three cases and was included in the final build. No clean full template suite or browser acceptance is claimed.

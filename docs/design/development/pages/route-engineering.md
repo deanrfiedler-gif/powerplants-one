@@ -63,3 +63,7 @@ Browser Back changes the open package without discarding the current page; a rea
 A confirmed native write changes the source: the UI announces the successful save, restarts the register at page one and requires a fresh selection. It does not silently bind an old selection to new results, even after the user's own save. This deliberately preserves the source-bound continuation contract.
 
 The rail badge is the unfiltered permitted Author actions count from the same native register endpoint (limit one); the secondary menu counts continue to describe the active filtered register. Neither count is assignment eligibility or release authority.
+
+## Create forms pattern — 1 November 2026
+
+Dean accepted the [Create forms pattern](../../../decisions/create-forms-pattern-figma-design.md) (PPO-CREATE-FORMS-FIGMA-DEC) with the words "Accept recommendations". For this entry it draws **New engineering request**. The New request dialog is the only form. Its wording stays "What needs engineering?", and recovery says Retry original request. [Captures](../../../reference/ui/create-forms-design-r01/README.md) are designs, not application captures. The native page isn't changed; a build needs its own request. Source presence, visual review, functional proof and deployment stay separate, and no review fingerprint is supplied.

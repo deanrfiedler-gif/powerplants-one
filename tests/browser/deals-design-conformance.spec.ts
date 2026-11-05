@@ -18,9 +18,46 @@ test("Sales routes preserve CRM bookmarks and the compiled shell has one board f
   await page.reload();
   await expect(page.locator(".crm-board-scroll")).toBeVisible();
   await assertDealsHost(page);
-  await page.getByRole("button", { name: "Views", exact: true }).click();
-  await assertChoiceGeometry(page);
-  await page.keyboard.press("Escape");
+  const chooser = page.getByRole("button", {
+    name: /^Choose view\. Current view:/,
+  });
+  if (await chooser.isVisible()) {
+    // D13 removes the phone toolbar; Q1's view choice uses the native sheet.
+    await chooser.click();
+    const sheet = page.getByRole("dialog", {
+      name: "Choose Deals view",
+      exact: true,
+    });
+    await expect(sheet).toBeVisible();
+    for (const name of ["Board", "List", "Forecast", "Archive"])
+      await expect(
+        sheet.getByRole("button", { name, exact: true }),
+      ).toBeEnabled();
+    await expect(
+      sheet.getByRole("button", { name: "Board", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      await sheet.evaluate((node) => {
+        const box = node.getBoundingClientRect();
+        return {
+          modal: node.matches(":modal"),
+          radius: getComputedStyle(node).borderRadius,
+          fits:
+            box.left >= 0 &&
+            box.right <= innerWidth &&
+            box.top >= 0 &&
+            box.bottom <= innerHeight,
+        };
+      }),
+    ).toEqual({ modal: true, radius: "10px", fits: true });
+    await page.keyboard.press("Escape");
+    await expect(sheet).toHaveCount(0);
+    await expect(chooser).toBeFocused();
+  } else {
+    await page.getByRole("button", { name: "Views", exact: true }).click();
+    await assertChoiceGeometry(page);
+    await page.keyboard.press("Escape");
+  }
   await page.screenshot({ path: info.outputPath("compiled-sales-board.png") });
   for (const [from, to] of [
     ["/crm/opportunities/new", "/sales/opportunities/new"],

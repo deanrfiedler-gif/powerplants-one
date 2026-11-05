@@ -1,0 +1,14 @@
+{
+  "id": "dk01-accepted-library",
+  "route": "/documents",
+  "scope": "#ppo-library",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/document-library/document-library-figma-r01/PPO-Document-Library-01-Desktop-Register-r01.png",
+  "sha256": "a562b4346057952776678370df275fd08e8150d10d62b447da160f6134ab5a73",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/library-workspace.spec.ts",
+  "application_proof": "tests/browser/library-workspace.spec.ts",
+  "authority": "Design hashes identify retained inputs only. Application proof and paired review remain pending; no acceptance granted.",
+  "adaptations": "docs/testing/evidence/document-library/README.md"
+}

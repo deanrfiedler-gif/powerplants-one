@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "sv08-escalations",
+          "label": "SV-08 escalation case host",
+          "description": "Register, diagnosis, reviewed pack, recorded sending, reply, closed/withdrawn, denied access, conflict and uncertain-result fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations-create.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "used_on": [
+        "scope:SV-08",
+        "route:/service/escalations"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-sv08-review",
+          "expected": "Paired review of accepted frames at all four widths.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "sv08-escalations",
+          "label": "SV-08 escalation case host",
+          "description": "Register, diagnosis, reviewed pack, recorded sending, reply, closed/withdrawn, denied access, conflict and uncertain-result fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations-create.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "used_on": [
+        "scope:SV-08",
+        "route:/service/escalations"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-sv08-review",
+          "expected": "Paired review of accepted frames at all four widths.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "sv08-escalations",
+          "label": "SV-08 escalation case host",
+          "description": "Register, diagnosis, reviewed pack, recorded sending, reply, closed/withdrawn, denied access, conflict and uncertain-result fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations-create.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "used_on": [
+        "scope:SV-08",
+        "route:/service/escalations"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-sv08-review",
+          "expected": "Paired review of accepted frames at all four widths.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "sv08-escalations",
+          "label": "SV-08 escalation case host",
+          "description": "Register, diagnosis, reviewed pack, recorded sending, reply, closed/withdrawn, denied access, conflict and uncertain-result fixtures."
+        }
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations-create.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "used_on": [
+        "scope:SV-08",
+        "route:/service/escalations"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-sv08-review",
+          "expected": "Paired review of accepted frames at all four widths.",
+          "actual": "Codex inspected all four widths; documented differences await owner acceptance.",
+          "action": "Review the comparison ledger and implementation differences; do not infer owner acceptance from passing tests.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

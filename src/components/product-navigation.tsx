@@ -380,12 +380,14 @@ function ProductNavigationView({
           {groupedRail(workspaceId, rail).map(section => {
             const links = section.items.map(item => <Link key={item.id} href={departmentHref(item.href!, workspaceId, new URLSearchParams(locationQuery).get("day"))}
               className="ppo-rail-item" aria-label={item.label} aria-current={activeId === item.id ? "page" : undefined}
+              aria-describedby={item.id === "pricing" ? "header-cost-source-count" : undefined}
               onMouseEnter={e => tip(e.currentTarget, item.label)} onMouseLeave={() => setTooltip(null)}
               onFocus={e => { reveal(e.currentTarget); tip(e.currentTarget, item.label); }} onBlur={() => setTooltip(null)}>
               <ProductIcon name={item.icon} active={activeId === item.id} />
               <span className="ppo-rail-label">{item.railLabel ?? item.label}</span>
               {item.id === "projects" && <span id="header-project-count" />}
               {item.id === "orders" && <span id="header-work-order-count" />}
+              {item.id === "pricing" && <span id="header-cost-source-count" />}
               {item.id === "engineering" && <span id="header-engineering-count" />}
             </Link>);
             // AU-08: a labelled group is announced by name; the visible heading shows in the expanded rail.

@@ -20,8 +20,9 @@ import {
   compareAccessRole,
 } from "../../src/access/service";
 import { capabilityLabels } from "../../src/access/capabilities";
-import { accessInspectionSeedGrants, agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { accessInspectionSeedGrants, agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import { recoverSchema } from "../helpers/recover-schema";
+import { assertAccessInspectionSnapshot } from "../helpers/access-inspection-upgrade";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable test database required");
@@ -71,6 +72,8 @@ test("AD01-01 populated 0077 upgrade preserves identities and grants; reseed add
   );
   // This historical proof stops at 0078: no conversation.post source or seed 110 is present.
   assert.deepEqual(shape(upgraded.filter(g => g.capability === "conversation.agent.ask")), shape(agentAskSeedGrants(grants)));
+  // Seed 124 is not installed in this deliberately bounded 0078 proof.
+  assert.deepEqual(upgraded.filter(g => g.capability === "service_escalation.record"), []);
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"), users);
   const next = await rows(
     "SELECT * FROM public.ppo_migrations ORDER BY version",
@@ -999,4 +1002,19 @@ test("AD01-05 proposed teams distinguish retained examples from current local id
       await assert.rejects(accessRoles(other), code("Forbidden"));
     },
   );
+});
+
+test("SV08 Access inspection upgrade from 0077 to 0124 preserves every earlier grant and adds exact case duties", async () => {
+  await recoverSchema();
+  await database().query("DROP TABLE IF EXISTS public.ppo_migrations");
+  await migrate(77); await seed(77);
+  const before = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(before.map(g=>g.id));
+  await migrate(); await seed();
+  const after = await rows("SELECT * FROM ppo.permission_grants ORDER BY id");
+  assertAccessInspectionSnapshot({permission_grants:after},{permission_grants:before});
+  const earlier = after.filter(g=>!ids.has(g.id) && g.capability !== "service_escalation.record");
+  assert.deepEqual(shape(after.filter(g=>!ids.has(g.id) && g.capability === "service_escalation.record")),
+    shape(escalationSeedGrants([...before,...earlier])));
+  await migrate(); await seed();
+  assert.deepEqual(await rows("SELECT * FROM ppo.permission_grants ORDER BY id"),after);
 });

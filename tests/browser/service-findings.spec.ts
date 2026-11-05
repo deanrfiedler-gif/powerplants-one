@@ -1,0 +1,638 @@
+import { test, expect, type Page } from "@playwright/test";
+import { findingRows, findingsClock } from "../helpers/findings-fixture";
+import { destinations } from "../../src/shell/navigation";
+import { dueThisWeek, isOverdue, inView, views } from "../../src/service/findings/model";
+import { openSecondaryMenu, phoneWidth } from "../helpers/phone-menu";
+async function setup(
+  page: Page,
+  { viewOnly = false, uncertain = false, stale = false, canEscalate = false } = {},
+) {
+  const rows = structuredClone(findingRows),
+    posts: Record<string, unknown>[] = [],
+    events: Record<string, unknown>[] = [];
+  let failed = false;
+  await page.route(/^https:\/\/[^/]+\.fontawesome\.com\//, (route) =>
+    route.abort(),
+  );
+  await page.route("**/api/v1/**", (route) =>
+    route.fulfill({
+      json: { items: [], observed_at: findingsClock, completeness: "Complete" },
+    }),
+  );
+  await page.route("**/api/v1/local-session", (route) =>
+    route.fulfill({
+      json: {
+        actor_id: rows[0].action!.owner_id,
+        workspace_id: "10000000-0000-4000-8000-000000000001",
+        display_name: "SYN coordinator",
+      },
+    }),
+  );
+  await page.route("**/api/v1/shell/context", (route) =>
+    route.fulfill({
+      json: {
+        display_name: "SYN coordinator",
+        preference_scope: "sv07-fixture",
+        actions: [],
+        navigation: destinations.map((d) => d.id),
+        can_preview: true,
+      },
+    }),
+  );
+  await page.route("**/api/v1/selectors/owners?*", (route) =>
+    route.fulfill({
+      json: {
+        items: [
+          { id: rows[0].action!.owner_id, display_name: "SYN Morgan Lee" },
+        ],
+      },
+    }),
+  );
+  await page.route("**/api/v1/activities/*/history", (route) =>
+    route.fulfill({
+      json: {
+        items: events,
+        owners: { [rows[0].action!.owner_id]: "SYN Morgan Lee" },
+        observed_at: findingsClock,
+        completeness: "Complete",
+      },
+    }),
+  );
+  await page.route("**/api/v1/service/findings**", async (route) => {
+    const url = new URL(route.request().url()),
+      key = decodeURIComponent(
+        url.pathname.split("/findings/")[1]?.split("/")[0] ?? "",
+      );
+    if (key) {
+      const item = rows.find((r) => r.id === key)!;
+      if (url.pathname.endsWith("/next-action")) {
+        if (route.request().method() === "POST") {
+          const body = route.request().postDataJSON();
+          posts.push(body);
+          if (stale && !failed) {
+            failed = true;
+            item.action!.version = 2;
+            await route.fulfill({
+              status: 409,
+              json: {
+                code: "VersionConflict",
+                message: "This activity changed. Compare its current version.",
+              },
+            });
+            return;
+          }
+          if (posts.length === 1 || stale) {
+            const before = structuredClone(item.action);
+            item.action = {
+              ...rows[0].action!,
+              ...item.action,
+              version: (item.action?.version ?? 0) + 1,
+              summary: body.instruction,
+              owner_id: body.owner_id,
+              due_at: body.due_at,
+              required_evidence: body.required_evidence,
+            };
+            item.state = "Open";
+            events.unshift({
+              id: "event-1",
+              command: "ServiceFinding:SetNextAction",
+              occurred_at: findingsClock,
+              actor_name: "SYN coordinator",
+              reason: body.reason,
+              before,
+              after: {
+                summary: body.instruction,
+                required_evidence: body.required_evidence,
+                owner_id: body.owner_id,
+                due_at: body.due_at,
+              },
+            });
+          }
+          if (uncertain && !failed) {
+            failed = true;
+            await route.abort();
+            return;
+          }
+          await route.fulfill({
+            json: { record_version: item.action!.version },
+          });
+          return;
+        }
+        await route.fulfill({
+          json: {
+            item,
+            source_token: "a".repeat(64),
+            expected_version: item.action?.version ?? 0,
+            can_edit:
+              !viewOnly &&
+              !["Closed", "FollowUpCompleted"].includes(item.state),
+            blocked_reason: viewOnly ? "ViewOnly" : null,
+          },
+        });
+        return;
+      }
+      await route.fulfill({
+        json: { item, as_of: findingsClock, synthetic: true, can_request_remote_diagnosis: canEscalate },
+      });
+      return;
+    }
+    const view = (url.searchParams.get("view") ??
+        "open") as (typeof views)[number],
+      source = url.searchParams.get("source"),
+      q = url.searchParams.get("q") ?? "";
+    const filtered = rows.filter(
+      (r) =>
+        (!source || r.source === source) &&
+        r.what_remains.toLowerCase().includes(q.toLowerCase()),
+    );
+    const selected = filtered.filter((r) => inView(r, view));
+    await route.fulfill({
+      json: {
+        items: selected,
+        total: selected.length,
+        counts: Object.fromEntries(
+          views.map((v) => [v, filtered.filter((r) => inView(r, v)).length]),
+        ),
+        options: {
+          owners: [{ id: rows[0].action!.owner_id, label: "SYN Morgan Lee" }],
+          sites: [{ id: rows[0].site.id, label: rows[0].site.name }],
+        },
+        view,
+        offset: 0,
+        limit: 25,
+        next_offset: null,
+        count_scope: "AuthorisedCandidateWindow",
+        as_of: findingsClock,
+        completeness: "Complete",
+        synthetic: true,
+      },
+    });
+  });
+  return { rows, posts };
+}
+async function phoneLayout(page: Page) {
+  await page.locator("#ppo-findings").waitFor();
+  return page.locator(".sv07-phone-view").isVisible();
+}
+async function openFinding(page: Page, reference: string) {
+  if (await phoneLayout(page))
+    await page.locator(".sv07-phone-row").filter({ hasText: reference }).click();
+  else
+    await page.getByRole("button", { name: reference, exact: true }).click();
+}
+async function closeFinding(page: Page) {
+  await page.getByRole("button", {
+    name: (await phoneLayout(page)) ? "Back to findings" : "Close",
+    exact: true,
+  }).click();
+}
+async function openRemaining(page: Page) {
+  await page.goto("/service/findings?department=service");
+  await openFinding(page, "SYN-PPO-RPT-000058");
+  await expect(
+    page.getByRole("region", { name: "Finding snapshot" }),
+  ).toBeVisible();
+}
+test("SV07 all views and source types keep source-owned closure and bounded counts", async ({
+  page,
+}) => {
+  for (const row of findingRows) {
+    expect(row.overdue).toBe(isOverdue(row, new Date(findingsClock)));
+    expect(row.due_this_week).toBe(dueThisWeek(row, new Date(findingsClock)));
+  }
+  await setup(page);
+  await page.goto("/service/findings?department=service");
+  const menu = page.getByRole("navigation", { name: "Service review views" });
+  await expect(
+    page.getByText("7 in this authorised candidate window", { exact: false }),
+  ).toBeVisible();
+  for (const [label, count] of [
+    ["Needs an owner", 1],
+    ["Due this week", 3],
+    ["Overdue", 1],
+    ["Waiting on review", 1],
+    ["Ready to close", 1],
+    ["Recurring", 1],
+    ["Closed findings", 1],
+    ["All open", 7],
+  ] as const) {
+    if (await phoneLayout(page)) {
+      await page.getByRole("button", { name: "Finding view", exact: true }).click();
+      await page.getByRole("menuitemradio", { name: label, exact: true }).click();
+    } else {
+      await menu.getByRole("link", { name: new RegExp(`^${label}`) }).click();
+    }
+    await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(count);
+  }
+  for (const source of [
+    "inspection",
+    "incident",
+    "completion",
+    "response",
+    "schedule",
+  ]) {
+    await page.goto(`/service/findings?department=service`);
+    await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
+    const row = findingRows.find((r) => r.source === source)!;
+    await openFinding(page, row.source_record.reference);
+    await expect(
+      page.getByRole("heading", { name: "What closes it" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", {
+        name: /Close finding|Request remote diagnosis/,
+      }),
+    ).toHaveCount(0);
+    await closeFinding(page);
+  }
+});
+test("SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save", async ({
+  page,
+}) => {
+  const f = await setup(page, { uncertain: true });
+  await openRemaining(page);
+  await page
+    .getByRole("button", { name: "Change next action", exact: true })
+    .click();
+  await page
+    .getByLabel("Instruction", { exact: true })
+    .fill("SYN replace gland and verify the full-scale reading");
+  await page
+    .getByLabel("Reason for change", { exact: true })
+    .fill("SYN clarify required follow-up");
+  await page
+    .getByRole("button", { name: "Save next action", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Retry unchanged save" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Instruction", { exact: true })).toBeDisabled();
+  await closeFinding(page);
+  await expect(
+    page.getByRole("region", { name: "Finding snapshot" }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page
+    .getByRole("button", { name: "Back to findings", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Finding snapshot" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Retry unchanged save" }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.getByRole("button", { name: "Retry unchanged save" }).click();
+  await expect(
+    page.getByRole("button", { name: "Change next action", exact: true }),
+  ).toBeVisible();
+  expect(f.posts).toHaveLength(2);
+  expect(f.posts[0]).toEqual(f.posts[1]);
+  expect(f.rows[2].action!.id).toBe(findingRows[2].action!.id);
+  await expect(page.locator(".sv07-history-below")).toContainText(
+    "SYN clarify required follow-up",
+  );
+});
+test("SV07 stale version compares without dropping entries, while technician stays view-only", async ({
+  page,
+}) => {
+  const f = await setup(page, { stale: true });
+  await openRemaining(page);
+  await page
+    .getByRole("button", { name: "Change next action", exact: true })
+    .click();
+  await page
+    .getByLabel("Instruction", { exact: true })
+    .fill("SYN preserved draft");
+  await page
+    .getByLabel("Reason for change", { exact: true })
+    .fill("SYN version comparison");
+  await page
+    .getByRole("button", { name: "Save next action", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Compare current next action" })
+    .click();
+  await page
+    .getByRole("button", { name: "Use current version with my entries" })
+    .click();
+  await expect(page.getByLabel("Instruction", { exact: true })).toHaveValue(
+    "SYN preserved draft",
+  );
+  await page
+    .getByRole("button", { name: "Save next action", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Change next action", exact: true }),
+  ).toBeVisible();
+  expect(f.posts[1].expected_version).toBe(2);
+  await page.unrouteAll({ behavior: "wait" });
+  await setup(page, { viewOnly: true });
+  await openRemaining(page);
+  await expect(
+    page.getByText(
+      "You can read this finding but not change its next action.",
+      { exact: false },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Change next action" }),
+  ).toHaveCount(0);
+});
+test("SV07 read failures remove earlier content and counts, and empty windows can continue", async ({
+  page,
+}) => {
+  await setup(page);
+  await page.goto("/service/findings?department=service");
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
+  await page.route("**/api/v1/service/findings?*", (route) =>
+    route.fulfill({ status: 403, json: { message: "Access revoked" } }),
+  );
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect(page.locator("#ppo-findings").getByRole("alert")).toContainText(
+    "Access revoked",
+  );
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(0);
+  await expect(page.getByText("Current results unconfirmed")).toBeVisible();
+  await page.route("**/api/v1/service/findings?*", (route) =>
+    route.fulfill({
+      json: {
+        items: [],
+        total: 0,
+        counts: {},
+        options: { owners: [], sites: [] },
+        offset: 0,
+        limit: 25,
+        next_offset: 25,
+        as_of: findingsClock,
+        completeness: "Complete",
+      },
+    }),
+  );
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Next window" })).toBeEnabled();
+});
+test("SV07 comparison captures at 1440, 1024, 390 and 320", async ({
+  page,
+}, info) => {
+  test.setTimeout(180000);
+  await setup(page);
+  for (const width of [1440, 1024, 390, 320]) {
+    await page.setViewportSize({ width, height: width >= 1024 ? 900 : 844 });
+    await page.goto("/service/findings?department=service");
+    await expect(
+      page.getByText("7 in this authorised candidate window", { exact: false }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    if (width === 1024) {
+      const collapse = page.getByRole("button", {
+        name: "Collapse primary navigation",
+        exact: true,
+      });
+      if (await collapse.isVisible()) await collapse.click();
+    }
+    await page.screenshot({ path: info.outputPath(`register-${width}.png`) });
+    if (width >= 1024)
+      await page
+        .getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true })
+        .click();
+    else
+      await page
+        .locator(".sv07-phone-row")
+        .filter({ hasText: "Corroded cable gland" })
+        .click();
+    await expect(
+      page.getByRole("heading", { name: "What closes it" }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({ path: info.outputPath(`snapshot-${width}.png`) });
+    if (width < 1024) {
+      await page.locator(".sv07-snapshot").evaluate((el) => {
+        el.scrollTop = el.scrollHeight / 2;
+      });
+      await page.screenshot({
+        path: info.outputPath(`snapshot-${width}-middle.png`),
+      });
+      await page.locator(".sv07-snapshot").evaluate((el) => {
+        el.scrollTop = el.scrollHeight;
+      });
+      await page.screenshot({
+        path: info.outputPath(`snapshot-${width}-bottom.png`),
+      });
+      await expect(
+        page.getByRole("link", { name: "Open report", exact: true }),
+      ).toBeVisible();
+      await page
+        .getByRole("button", { name: "Back to findings", exact: true })
+        .click();
+      await expect(page.locator(".sv07-snapshot")).toHaveCount(0);
+      await expect(page).toHaveURL(/\/service\/findings/);
+      await expect(page.locator(".sv07-phone-row")).toHaveCount(7);
+    }
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/service/findings?department=service");
+  const expand = page.getByRole("button", {
+    name: "Expand primary navigation",
+    exact: true,
+  });
+  if (await expand.isVisible()) await expand.click();
+  await page.getByRole("link", { name: /^Needs an owner/ }).click();
+  await page
+    .locator(".sv07-desktop tbody tr")
+    .filter({ hasText: "Firmware check" })
+    .locator(".sv07-open")
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Set the next action" }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("assignment-1440.png") });
+  await page.getByRole("button", { name: "Close", exact: true }).click();
+  await page.getByRole("link", { name: /^Recurring/ }).click();
+  await page
+    .locator(".sv07-desktop tbody tr")
+    .filter({ hasText: "VA-12 travel fault" })
+    .locator(".sv07-open")
+    .click();
+  await page.getByRole("tab", { name: /Recurrence/ }).click();
+  await expect(
+    page.getByText("Same equipment and failed check within 90 days.", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await page.screenshot({ path: info.outputPath("recurrence-1440.png") });
+});
+
+// Review regressions use the server's filtered/windowed facet behaviour.
+async function filteredRegister(page: Page) {
+  const fixture = await setup(page);
+  const other = structuredClone(fixture.rows[2]);
+  other.id = "completion:90000000-0000-4000-8000-000000000099";
+  other.source_record.reference = "SYN-PPO-RPT-OTHER";
+  other.action!.owner_id = "90000000-0000-4000-8000-000000000098";
+  other.action!.owner_name = "SYN Blake";
+  fixture.rows.push(other);
+  let gate: ReturnType<typeof Promise.withResolvers<void>> | null = null;
+  const requests: URL[] = [];
+  await page.route("**/api/v1/service/findings?*", async (route) => {
+    const url = new URL(route.request().url());
+    requests.push(url);
+    if (gate) await gate.promise;
+    const p = url.searchParams;
+    const permitted = fixture.rows.filter((row) =>
+      (!p.get("owner_id") || row.action?.owner_id === p.get("owner_id")) &&
+      (!p.get("site_id") || row.site.id === p.get("site_id")) &&
+      (!p.get("source") || row.source === p.get("source")) &&
+      row.what_remains.toLowerCase().includes((p.get("q") ?? "").toLowerCase()),
+    );
+    const view = (p.get("view") ?? "open") as (typeof views)[number];
+    const selected = permitted.filter((row) => inView(row, view));
+    await route.fulfill({ json: {
+      items: selected, total: selected.length, counts: {},
+      options: {
+        owners: Array.from(new Map(permitted.flatMap((row) => row.action ? [[row.action.owner_id, { id: row.action.owner_id, label: row.action.owner_name }] as const] : [])).values()),
+        sites: Array.from(new Map(permitted.map((row) => [row.site.id, { id: row.site.id, label: row.site.name }])).values()),
+      },
+      view, offset: Number(p.get("offset")), limit: 25,
+      next_offset: Number(p.get("offset")) === 0 ? 25 : null,
+      count_scope: "AuthorisedCandidateWindow", as_of: findingsClock,
+      completeness: "Complete", synthetic: true,
+    } });
+  });
+  return { ...fixture, requests, hold() { gate = Promise.withResolvers<void>(); }, release() { gate?.resolve(); gate = null; } };
+}
+
+test("SV07 owner choices remain reachable and selected owner/site labels survive empty results and reload", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const f = await filteredRegister(page);
+  await page.goto("/service/findings?department=service");
+  const owner = page.getByRole("button", { name: "Owner", exact: true });
+  const site = page.getByRole("button", { name: "Site", exact: true });
+  await owner.click();
+  await page.getByRole("menuitemradio", { name: "SYN Morgan Lee", exact: true }).click();
+  await expect(owner).toContainText("SYN Morgan Lee");
+  await owner.click();
+  await page.getByRole("menuitemradio", { name: "SYN Blake", exact: true }).click();
+  await expect(owner).toContainText("SYN Blake");
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(1);
+  await site.click();
+  await page.getByRole("menuitemradio", { name: f.rows[2].site.name, exact: true }).click();
+  await expect(site).toContainText(f.rows[2].site.name);
+  f.hold();
+  const before = f.requests.length;
+  await page.getByRole("searchbox", { name: "Search findings" }).fill("SYN no matching finding");
+  await expect.poll(() => f.requests.length).toBeGreaterThan(before);
+  await expect(owner).toContainText("SYN Blake");
+  await expect(site).toContainText(f.rows[2].site.name);
+  f.release();
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(0);
+  await expect(owner).toContainText("SYN Blake");
+  await expect(site).toContainText(f.rows[2].site.name);
+});
+
+test("SV07 Refresh preserves window two, snapshot tab and mounted content while pending", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const f = await filteredRegister(page);
+  await page.goto("/service/findings?department=service");
+  await page.getByRole("button", { name: "Next window", exact: true }).click();
+  await expect(page.getByText("Candidate window 2", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true }).waitFor();
+  // The accepted desktop snapshot covers the register toolbar. Start its
+  // refresh while reachable, then open the retained row during that read.
+  f.hold();
+  const before = f.requests.length;
+  await page.getByRole("button", { name: "Refresh", exact: true }).click();
+  await expect.poll(() => f.requests.length).toBeGreaterThan(before);
+  expect(f.requests.at(-1)!.searchParams.get("offset")).toBe("25");
+  await page.getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true }).click();
+  const snapshot = page.getByRole("region", { name: "Finding snapshot" });
+  await snapshot.getByRole("tab", { name: "History", exact: true }).click();
+  await snapshot.evaluate((element) => element.setAttribute("data-retained-proof", "yes"));
+  await expect(snapshot).toHaveAttribute("data-retained-proof", "yes");
+  await expect(snapshot.getByRole("tab", { name: "History", exact: true })).toHaveAttribute("aria-selected", "true");
+  f.release();
+  await expect(page.getByText("Refreshing findings…", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Candidate window 2", { exact: true })).toBeVisible();
+  await expect(snapshot).toHaveAttribute("data-retained-proof", "yes");
+  await expect(snapshot.getByRole("tab", { name: "History", exact: true })).toHaveAttribute("aria-selected", "true");
+});
+
+test("SV07 chosen view survives reload and browser Back restores the previous view", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await setup(page);
+  await page.goto("/service/findings?department=service&view=overdue");
+  await page.getByRole("navigation", { name: "Service review views" }).getByRole("link", { name: /All open/ }).click();
+  await expect(page).toHaveURL(/view=open/);
+  await expect(page).toHaveURL(/department=service/);
+  await page.reload();
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(7);
+  await page.goBack();
+  await expect(page).toHaveURL(/view=overdue/);
+  await expect(page.locator(".sv07-desktop tbody tr")).toHaveCount(1);
+});
+
+test("SV07 saving a next action keeps the snapshot mounted on its selected tab", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const f = await setup(page);
+  await openRemaining(page);
+  const snapshot = page.getByRole("region", { name: "Finding snapshot" });
+  await snapshot.getByRole("button", { name: "Change next action", exact: true }).click();
+  await page.getByLabel("Instruction", { exact: true }).fill("SYN retained snapshot instruction");
+  await page.getByLabel("Reason for change", { exact: true }).fill("SYN retention proof");
+  const saved = Promise.withResolvers<void>(), reads = Promise.withResolvers<void>();
+  let posted = false, pendingReads = 0;
+  await page.route("**/api/v1/service/findings**", async (route) => {
+    if (route.request().method() === "POST") {
+      posted = true;
+      await saved.promise;
+    } else {
+      pendingReads++;
+      await reads.promise;
+    }
+    await route.fallback();
+  });
+  await page.getByRole("button", { name: "Save next action", exact: true }).click();
+  await expect.poll(() => posted).toBe(true);
+  await snapshot.getByRole("tab", { name: "History", exact: true }).click();
+  await snapshot.evaluate((element) => element.setAttribute("data-retained-proof", "yes"));
+  saved.resolve();
+  await expect.poll(() => pendingReads).toBeGreaterThanOrEqual(3);
+  await expect(snapshot).toHaveAttribute("data-retained-proof", "yes");
+  await expect(snapshot.getByRole("tab", { name: "History", exact: true })).toHaveAttribute("aria-selected", "true");
+  reads.resolve();
+  await expect(page.getByText("Refreshing findings…", { exact: true })).toHaveCount(0);
+  await expect(snapshot).toHaveAttribute("data-retained-proof", "yes");
+  await expect(snapshot.getByRole("tab", { name: "History", exact: true })).toHaveAttribute("aria-selected", "true");
+  expect(f.posts).toHaveLength(1);
+  await snapshot.getByRole("tab", { name: "Next action", exact: true }).click();
+  await expect(snapshot.locator(".sv07-next-action")).toContainText("SYN retained snapshot instruction");
+});
+
+test("SV08 Findings handover is capability-gated and retains the native finding key", async ({ page }) => {
+  await setup(page);
+  await openRemaining(page);
+  await expect(page.getByRole("link", { name: "Request remote diagnosis", exact: true })).toHaveCount(0);
+  await page.unrouteAll({ behavior: "wait" });
+  await setup(page, { canEscalate: true });
+  await openRemaining(page);
+  const link = page.getByRole("link", { name: "Request remote diagnosis", exact: true });
+  await expect(link).toBeVisible();
+  const href = await link.getAttribute("href"), url = new URL(href!, "http://localhost");
+  expect(url.pathname).toBe("/service/escalations");
+  expect(url.searchParams.get("new")).toBe("1");
+  expect(url.searchParams.get("finding")).toBe(
+    findingRows.find(r => r.source_record.reference === "SYN-PPO-RPT-000058")!.id,
+  );
+  if (phoneWidth(page)) await openSecondaryMenu(page);
+  const menu = page.getByRole("navigation", { name: "Service review views" });
+  for (const name of ["Open cases", "Diagnosing", "Waiting on manufacturer", "Reply to act on", "Closed cases"])
+    await expect(menu.getByRole("link", { name, exact: true })).toBeVisible();
+});

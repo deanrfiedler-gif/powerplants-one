@@ -220,9 +220,17 @@ export async function readPublication(
       )
         throw e;
     }
+    const publisher = await c.query(
+      "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+      [p.workspace_id, pub.publisher_id],
+    );
+    await publicationContext(c, p, id);
     return {
       synthetic: true,
-      publication: pub,
+      publication: {
+        ...pub,
+        publisher_name: publisher.rows[0]?.display_name ?? null,
+      },
       runtime_support,
       use_assignment: "SeparatePolicyDecision",
     };
