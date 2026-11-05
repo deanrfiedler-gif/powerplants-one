@@ -43,7 +43,10 @@ export const candidateSql = `SELECT n.source,n.id,n.parent_id,COALESCE(n.activit
  ON b.workspace_id=$1 AND b.source=n.source AND b.source_id=n.id
  WHERE b.activity_id IS NULL OR (b.parent_id=n.parent_id AND (n.activity_id IS NULL OR n.activity_id=b.activity_id))`;
 
-export async function authorise(c: QueryClient, p: Principal, row: Candidate) {
+export async function authorise(
+  c: QueryClient, p: Principal, row: Candidate,
+  pageActivity?: { id: string; company_id: string; site_id: string | null },
+) {
   let ctx: Awaited<ReturnType<typeof visibleAppointment>>;
   let assetId: string | null = null;
   let inspectionMode: "review" | "capture" = "review";
@@ -75,7 +78,7 @@ export async function authorise(c: QueryClient, p: Principal, row: Candidate) {
   }
   const equipment = assetId ? await visible(c, p, "Asset", assetId) : null;
   const activity = row.activity_id
-    ? await visibleActivity(c, p, row.activity_id)
+    ? pageActivity?.id === row.activity_id ? pageActivity : await visibleActivity(c, p, row.activity_id)
     : null;
   // The native source link is not a grant to an Activity from another context.
   if (
