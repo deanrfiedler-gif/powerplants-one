@@ -6,7 +6,7 @@ This is an editable working specification. Existing accepted page baselines take
 
 ## Purpose and task
 
-Implement the existing upload → validate/review → save estimate → quotation design. Workbook and HTML prototypes exist; application integration remains outstanding. This is an additional design brief, not a new adopted scope ID.
+The contextual native route now implements upload → validate/review → save estimate → quotation against the merged backend. The [route contract](route-estimating-import.md) and [execution evidence](../../../testing/evidence/excel-import-ui/README.md) distinguish implementation, functional proof, visual comparison and acceptance. The stable scope ID and parent acceptance remain unchanged.
 
 1. Upload or stage the intended workbook in the planned flow
 2. Review validation, mapping and every rejected line
@@ -16,7 +16,7 @@ Implement the existing upload → validate/review → save estimate → quotatio
 
 Accepted design: the [Excel import design decision](../../../decisions/excel-import-figma-design.md) of 15 October 2026, with captures 01 to 09 and 13 in [Excel import design r01](../../../reference/ui/estimating/excel-import-figma-r01/README.md). It reuses the accepted [Estimation Wizard](../../../decisions/es02-wizard-figma-design.md) shell and parts.
 
-- **Launch:** "Import Excel estimate" is a secondary action in the Wizard's Review Actions when discovery is Complete and no estimate exists. Re-import, pricing and the Draft quotation start from the imported estimate. No rail item; the breadcrumb is "Estimation wizard / Excel import" (shell top bar amendment, 16 October 2026).
+- **Launch:** "Import Excel estimate" is a secondary action in the Wizard's Review Actions when discovery is Complete and no estimate exists. Re-import, pricing and the Draft quotation start from the imported estimate. No rail item. The build retains the full breadcrumb "Estimating & quotation / Estimation wizard / Excel import" as a [Codex decision under the standing order](../../../decisions/excel-import-figma-design.md#implementation-recommendations--31-october-2026), with the relayed chat as context only; Estimation wizard remains selected.
 - **Layout at 1440:** the Estimating rail with Estimation wizard selected, the Wizard context header, four step cards (Workbook, Review, Confirm & save, Saved), a scrolling main column of 772 px content, a 380 px Import summary panel and a sticky action bar with Previous and the primary action.
 - **Review:** a banner, three tiles (Validation, Reconciliation, Scope or Sources), findings by effect (Prevents saving, Confirm before saving, Informational) naming the sheet, table and row, then the line grid with filter chips, section totals and control totals compared to the cent. Unknown totals show Unknown.
 - **Confirm and save:** four confirmation rows (Source calculation, Scope, Reconciliation, Source warnings), a reason, and a list of what will and will not be saved.
@@ -50,4 +50,4 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 The draft User Guide `guide.excel.import` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Native synthetic execution and application captures are recorded in [the evidence chapter](../../../testing/evidence/excel-import-ui/README.md). Owner acceptance remains open. Builder inspection, keyboard/focus checks and overflow checks are distinct from full assistive-technology, physical-device and 200% zoom acceptance. Do not replace a comparison image simply to make a test pass.

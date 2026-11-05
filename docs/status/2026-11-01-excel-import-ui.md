@@ -1,0 +1,10 @@
+---
+title: Excel import UI resumed with bounded proof
+date: 2026-11-01
+---
+
+[PR #800](https://github.com/deanrfiedler-gif/powerplants-one/pull/800) resumes the existing dedicated Excel import worktree as an [agent decision under the standing order](../decisions/excel-import-figma-design.md#implementation-recommendations--31-october-2026), with the relayed chat as context only and concurrency governed by the [pull request flow limits](../decisions/pull-request-flow-limits.md). It implements contextual workbook review, exact confirmations, immutable save/recovery, revised-workbook decisions, reviewed-source pricing and customer-safe Draft preparation, with Wizard Review and imported-estimate entry actions. Current main is merged; no dependency, migration, capability or grant is introduced.
+
+The route contract, scope guide, component consumers and design register remain in the same change. The new route guide follows the Markdown guide contract and remains Draft. Undrawn pricing steps 1–2, full line list and Import evidence follow the recorded Codex recommendation, not owner-accepted composition. No departmental workbook compatibility is claimed.
+
+[Evidence and design differences](../testing/evidence/excel-import-ui/README.md) separate statuses. Functional proof has 83 focused tests plus typecheck, lint and studio passing before the latest small refinements; current browser completion remains open after four failures/four not run. The Wizard fixture's timezone statement timeout also fails on unmodified main; the other timeouts are not labelled unrelated. Refined typecheck/lint and foundation, naming and status checks passed. The subsequent Excel-only rerun ended with two failures/one not run after native lost-response recovery and stale rejection; saved-result reads and the next fixture timed out. Current continuation proof remains open. Visual review covers all four widths, with final continuation captures outstanding. Visual acceptance, parent EST-02–EST-05/07/08 and DOC-01/02 acceptance, all XI-01–XI-08 acceptance, exact-head Claude review and deployment remain open.

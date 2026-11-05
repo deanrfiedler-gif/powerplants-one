@@ -33,6 +33,7 @@ export const moduleWorkspaces = [
   { route: "/estimating/discovery/[id]", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-r01" },
   { route: "/estimating/discovery/[id]/costing", scope: "ppo-estimate-wizard", layout: "full-bleed", navigation: "workspace", baseline: "es02-costing-figma" },
   { route: "/estimating/fertigation", scope: "ppo-fertigation", layout: "full-bleed", navigation: "workspace", baseline: "fertigation-native-r01" },
+  { route: "/estimating/import", moduleId: "excel-import", scope: "ppo-excel-import", layout: "full-bleed", navigation: "workspace", baseline: "excel-import" },
   { route: "/estimating/intake", moduleId: "CR-02", scope: "ppo-sales-briefs", layout: "full-bleed", navigation: "workspace", baseline: "sales-briefs-accepted" },
   { route: "/estimating/reviews", moduleId: "ES-04", scope: "ppo-estimate-reviews", layout: "full-bleed", navigation: "workspace", baseline: "estimate-reviews-figma-register" },
   {route:"/estimating/rules",moduleId:"ES-03",scope:"ppo-cpq",layout:"full-bleed",navigation:"workspace",baseline:"cpq-rules-implementation"},
