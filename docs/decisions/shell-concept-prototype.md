@@ -14,6 +14,8 @@ Dean approved the recommendation to retain the navy rail, grouped flyout, comman
 
 This records a trial in the private Figma file **PPO - Shell concept**, page **Shell concept Acumatica trial** (`0:1`). It does not adopt a replacement application shell or supersede accepted module designs. All records, evidence, people and outcomes used for the trial are synthetic. File links and artwork are excluded from this public repository.
 
+Dean subsequently requested: "Refine the phone navigation, information density and dialogs in Figma, then walk through the Sales and Service workflows and report any remaining issues." The second pass below records that work and its observed limits.
+
 ## Four findings resolved in the trial
 
 | Finding | Drawn and connected behaviour |
@@ -35,7 +37,7 @@ New section `64:8003`: **Shell refinement · clickable Sales + Service · 5 Nov 
 | Sales | Existing Deals and Quotation destinations. r20 Register / list and Record / detail compositions. Register to preview to full record; command palette to Riverbend record to quotation. Issue/distribution authority remains with ES-05; the prototype performs no real issue or send. |
 | Service | Existing `SV-03`, requirement SVC-02, `route:/service/work-orders` and `route:/service/work-orders/[id]`. r20 Register / list, Record / detail and short confirmation compositions. Follows the scope/readiness distinction in the [work order record decision](work-order-record-page-design.md). |
 | Service incoming/outgoing | Synthetic request SYN-PPO-TKT-000103 and equipment SYN-PPO-EQ-000017 inform WO-000041 scope r02. Review evidence SYN-EVID-000041, record the criterion outcome, explicitly authorise r02, then hand off unassigned demand to Schedule. Authorisation is not an appointment, dispatch or permission grant. |
-| Reuse | Existing concept Top bar `6:575`, collapsed rail `6:669`, expanded rail `6:786`, Sales flyout `8:370`, collapsed panel `8:396`, Deals content `8:1041`, Quotation content `9:1037`, docked menu `10:736`; existing colour variables and Roboto. Local trial buttons `65:14921`, `65:14924`, `65:14927` are instances throughout new content. |
+| Reuse | Existing concept Top bar `6:575`, collapsed rail `6:669`, expanded rail `6:786`, Sales flyout `8:370`, collapsed panel `8:396`, Deals content `8:1041`, Quotation content `9:1037`, docked menu `10:736`; existing colour variables and Roboto. Local trial buttons `65:14921`, `65:14924`, `65:14927` are instances throughout new content. Compact deal-row component `88:24907` has customer, scope, value/stage and next-activity text properties. |
 | Departures | The concept's existing outline icons are retained as trial artwork. They are not the production Font Awesome mapping. Simplified Service cards, phone controls and compact register rows are proposed compositions. No component baseline or accepted reference bytes change. |
 
 ## Frame locator
@@ -48,15 +50,43 @@ New section `64:8003`: **Shell refinement · clickable Sales + Service · 5 Nov 
 | Issue and send | Confirmation `67:20239`; queued `67:20937`; issued record, delivery pending `75:23903` |
 | Service | Register `66:14918`; blocked `66:15834`; evidence review `66:16754`; ready `66:17674`; confirmation `66:18594`; authorised `66:19514`; Schedule handover `66:20434` |
 | Responsive desktop | 1280 x 720 preview `70:22386`, list `80:24568`; 1024 x 768 preview `70:23474`, list `80:24951`; 720 x 450 composition `70:24563` represents the space available at 200% on a 1440 x 900 viewport |
-| Phone starts | 390 x 844 Sales `68:22469`, work order `68:22501`; 320 x 844 Sales `68:22569`, work order `68:22601`. Each connects through review, ready, confirmation and authorised states. |
+| Phone starts | 390 x 844 Sales `68:22469`, work order `68:22501`; short 320 x 568 Sales `68:22569`, work order `68:22601`. Each connects through review, ready, confirmation and authorised states. |
+| Phone owning lists | At 390: blocked `89:24936`, ready `89:24953`, authorised `89:24970`; at 320: blocked `89:25176`, ready `89:25193`, authorised `89:25210`. |
+| Phone record actions | At 390: blocked `89:25009`, ready `89:25042`, authorised `89:25075`, deal `89:25108`; at 320: blocked `89:25249`, ready `89:25282`, authorised `89:25315`, deal `89:25348`. |
+| Phone confirmation / Schedule | Confirmation: 390 `73:25360`, 320 `73:25429`. Schedule unassigned work: 390 `89:24987`, 320 `89:25227`. |
+
+## Phone and dialog refinement
+
+- A list has one Menu entry. A record retains Back, its reference and More; More opens a separate record-actions sheet with workspace navigation, return to the owning list and Close actions. The duplicated bottom More controls were removed. Unsupported workspace buttons were removed from this bounded trial menu.
+- Six compact deal rows retain customer, scope, amount/stage and next activity, including a text-labelled overdue activity. All six fit in the 390 x 844 view; the short 320 x 568 view scrolls. Scrollable record content sits above the fixed primary action. Authored phone action instances are at least 44 x 44 px.
+- Service Back returns to a blocked, ready or authorised owning-list fixture matching the record. The authorised primary action opens Schedule unassigned work; returning from Schedule retains the authorised list fixture. No appointment is created.
+- Four desktop dialogs fit their content: Service confirmation 600 x 342, delivery edit 640 x 290, conflict resolution 640 x 398 and issue/send 640 x 358. Their scrims cover the whole shell. Cancel and Escape use the invoking history. The delivery action row is horizontal and its instruction now explicitly describes Apply. Phone authorisation uses a fitted bottom sheet with visible consequences, Cancel and Confirm r02 at both sizes.
+
+## Second-pass walkthrough
+
+The following was exercised in the Figma player on 5 November 2026, separately from structural inspection. These observations prove fixed prototype transitions, not application behaviour.
+
+| Journey | Observed result |
+|---|---|
+| Phone Sales at 320 x 568 | Deals to Sunline record, More to record actions, Open menu, Back to actions, Escape to the same record, then Back to the deal list. The menu return and dismissal retained context. |
+| Phone Service at 320 x 568 | Menu to work-order list, blocked record, exact-scope evidence review, Record Pass, ready, authorisation confirmation, Cancel back to ready, confirmation again, authorised, Schedule unassigned work, then authorised work-order list. No cropped primary action or confirmation content was observed. |
+| Desktop Sales draft | Delivery dialog to Saving to Saved; the displayed week became 8 December. Undo restored 1 December. The final smaller dialog and aligned action row were checked in the player. |
+| Desktop Sales issue | Escape from issue confirmation returned to its invoking quotation. The saved 8 December path proceeded through confirmation to Issued / queued, with no delivery claim. |
+| Visual inspection | Revised 390 and 320 deal lists, short work-order view, phone confirmation, desktop Service confirmation, delivery, conflict and issue dialogs were inspected. The conflict dialog comparison choices remain distinct. |
+
+## Remaining issues
+
+1. **Prototype state continuity:** re-entering Service from the shared workspace menu starts the blocked example again. Local record/list/Schedule returns preserve the relevant fixture, but cross-workspace persistence is not implemented. The shared issue-confirmation background and issued result use the saved 8 December example even when opened from the original 1 December quote or the separate 15 December recovery fixture. Cancellation returns correctly, but arbitrary state combinations are not a valid end-to-end proof. Use stateful fixtures before broader usability testing.
+2. **Phone coverage and accepted shell rules:** phone Sales currently ends at deal inspection. Phone quotation authoring, filtering, the complete search/notification/account controls, other workspaces and visit booking are not represented. Only the named journey controls are connected; other deal rows are context examples. Reconcile the proposed menu/header and compact-list compositions with the accepted phone amendments before adoption.
+3. **Implementation and accessibility proof:** real touch devices, software-keyboard occlusion, long or translated content, focus order/trapping/return, screen-reader semantics and actual browser zoom remain untested. The 320 x 568 frame strengthens the short-viewport study but does not replace these checks.
 
 ## Evidence and limits
 
-- Structural inspection: all 50 named trial screens reachable from Start; 427 destination actions; zero dangling targets. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens remain editable native Figma nodes; image fills are only the reused 32 x 32 logo instances.
+- Final structural inspection: all 66 named trial screens reachable from Start; 461 destination actions; zero dangling targets. No connected phone action instance measured below 44 x 44 px; all text uses Roboto. Five named flow starts cover the guide, Sales, Service and both phone widths. The screens remain editable native Figma nodes; image fills are only the reused 32 x 32 logo instances. The initial pass contained 50 screens and 427 destination actions.
 - Visual inspection covered the guide, preview, bulk selection, Service register/readiness/review/confirmation, quote edit and recovery, issue confirmation, issued state, laptop/tablet and phone compositions. Text-container overlap and Service icon fills found in the first pass were corrected and recaptured.
 - The Figma player was used for representative clicks, separately from graph inspection. This is prototype navigation proof only. Keyboard reactions are authored for command search, Escape, result selection and confirmation cancellation; keyboard focus order, trapping and screen-reader semantics are not proven by the Figma graph.
 - Forms use predefined example values; fields are not arbitrary live inputs. Search uses a fixed Riverbend query. Some inherited toolbar, filter, tab and utility controls are contextual drawings, outside the linked trial. The Start guide identifies the supported journeys.
 - The 720 x 450 frame is a layout study, not an executed browser-zoom accessibility test. Physical phones, touch keyboard occlusion, all real permissions, persistence, concurrent edits, delivery receipts and operational rules remain to be tested in an application implementation.
 - No retained PNG package or named accepted Figma version is issued in this contribution. Private visual evidence remains in the source file and review session. No new review fingerprint, baseline acceptance or deployment is claimed.
 
-Next review: follow the Sales selection/preview path and the full Service authorisation path, then judge the compact layouts and recovery wording. Adopt or revise the trial before requesting a shared-shell implementation.
+The revised layouts are ready for owner review. Resolve state continuity and phone coverage before treating this as a complete usability prototype; reconcile accepted shell rules and verify the implementation before shared-shell adoption. This is not a claim of complete satisfaction or production readiness.
