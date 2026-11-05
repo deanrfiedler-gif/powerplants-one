@@ -3671,5 +3671,22 @@
   ],
   "second_merge_commit": "ee5edd48da86e98fb3e3ed8dc1bd220322a840de",
   "second_main_sha": "3faff7aef476904a30e878be8bdc9e95792fb4fb",
-  "database_execution_note": "The second merge changed no selected database suite or scheduling source. Earlier results used the original lockfile; quality-planner, the final planner rerun and remaining suites use the updated lockfile from main."
+  "database_execution_note": "The second merge changed no selected database suite or scheduling source. Earlier results used the original lockfile; quality-planner, the final planner rerun and remaining suites use the updated lockfile from main.",
+  "ci_findings": [
+    {
+      "head": "13e830a6868ba7155ba8f22d9777d131e7edd2e6",
+      "job_url": "https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/41968800300/job/127051978715",
+      "test_file": "tests/browser/quality-states.spec.ts",
+      "test": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
+      "scenario": "SC-07: /schedule?day=2031-11-06&view=day",
+      "message": "Expected .planner-stat-row strong text [\u2014, \u2014, \u2014, \u2014]; received [] after 5000ms.",
+      "classification": "PR regression",
+      "implementation_response": "Restore the four unknown-count placeholders while the current read is unavailable; preserve settled PL-01 layout and existing test expectations.",
+      "clean_main_attempt": {
+        "classification": "environment-blocked: browser",
+        "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
+      },
+      "verification": "Final-head CI is recorded in the PR completion handoff."
+    }
+  ]
 }

@@ -1667,6 +1667,16 @@ export function PlannerScreen() {
       )}
       </section>
       <ReadState {...result} retained={!!data} retry={result.reload} />
+      {!usable && (
+        <div className="planner-stat-row" aria-label="Current planner counts unavailable">
+          {[
+            "Confirmed visits",
+            "Proposed · no reservation",
+            "Visits with pending requests",
+            "Permitted resource lanes",
+          ].map(label => <div key={label}><strong>—</strong><span>{label}</span></div>)}
+        </div>
+      )}
       {!!sites.error && (
         <p className="planner-warning">Site choices could not be refreshed.</p>
       )}
