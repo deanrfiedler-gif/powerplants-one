@@ -1533,7 +1533,7 @@ export function PlannerScreen() {
   const held = data?.items.filter(plannerHeld) ?? [];
   const trayCollapsed = !!selected || (trayChoice ?? !menu.docked);
   const trayUsable = !!demand.data && !demand.loading && !demand.error;
-  const trayCount = trayUsable ? `${demand.data!.completeness === "Partial" ? "≥ " : ""}${demand.data!.items.length}` : "Unknown";
+  const trayCount = !result.loading && trayUsable ? `${demand.data!.completeness === "Partial" ? "≥ " : ""}${demand.data!.items.length}` : "Unknown";
   return (
     <SecondaryMenuFrame state={menu} id="ppo-service-planner" name="Scheduling" menuId="planner-menu" contentId="planner-content"
       attributes={{ "data-ppo-workspace": "shared" }} menu={<><h2 className="pl01-menu-heading">Scheduling</h2><SchedulingNavigation side /></>} message="">
@@ -1667,16 +1667,6 @@ export function PlannerScreen() {
       )}
       </section>
       <ReadState {...result} retained={!!data} retry={result.reload} />
-      {!usable && (
-        <div className="planner-stat-row" aria-label="Current planner counts unavailable">
-          {[
-            "Confirmed visits",
-            "Proposed · no reservation",
-            "Visits with pending requests",
-            "Permitted resource lanes",
-          ].map(label => <div key={label}><strong>—</strong><span>{label}</span></div>)}
-        </div>
-      )}
       {!!sites.error && (
         <p className="planner-warning">Site choices could not be refreshed.</p>
       )}
@@ -1693,11 +1683,12 @@ export function PlannerScreen() {
       <div className={`pl01-workspace${trayCollapsed ? " tray-collapsed" : ""}${phoneTray ? " phone-tray-open" : ""}`}>
         <aside className="pl01-tray" aria-label="Planner tray" hidden={!wide && !phoneTray}>
           {wide && <button className="pl01-tray-toggle secondary" onClick={() => { setSelectedId(null); setTrayChoice(!trayCollapsed); }} aria-expanded={!trayCollapsed}>
-            {trayCollapsed ? <><span className="sr-only">Expand tray</span><span className="pl01-tray-expand" aria-hidden="true">›</span><span className="pl01-tray-count"><strong className={!trayUsable ? "unknown" : ""}>{trayCount}</strong><small>To plan</small></span><span className="pl01-tray-count"><strong className={!usable ? "unknown" : ""}>{usable ? held.length : "Unknown"}</strong><small>On hold</small></span></> : <span>‹ Collapse tray</span>}
+            {trayCollapsed ? <><span className="sr-only">Expand tray</span><span className="pl01-tray-expand" aria-hidden="true">›</span><span className="pl01-tray-count"><strong className={result.loading || !trayUsable ? "unknown" : ""}>{trayCount}</strong><small>To plan</small></span><span className="pl01-tray-count"><strong className={!usable ? "unknown" : ""}>{usable ? held.length : "Unknown"}</strong><small>On hold</small></span></> : <span>‹ Collapse tray</span>}
           </button>}
           {(!wide || !trayCollapsed) && <>
             {!wide && <PlannerAttention items={data?.items ?? []} usable={usable} returnTo={returnTo} />}
-      <section className="pl01-tray-content" hidden={!scheduleSettled}>
+      {result.loading && <p role="status">Planner tray counts are unknown while the planner loads.</p>}
+      <section className="pl01-tray-content" hidden={!scheduleSettled || result.loading}>
         <h2 id="unassigned-demand-heading" tabIndex={-1}>
           To plan
         </h2>

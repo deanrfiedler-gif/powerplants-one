@@ -3680,13 +3680,15 @@
       "test": "P11 PT-29 all fifteen screen families show actual loading, failure, recovery and current denial",
       "scenario": "SC-07: /schedule?day=2031-11-06&view=day",
       "message": "Expected .planner-stat-row strong text [\u2014, \u2014, \u2014, \u2014]; received [] after 5000ms.",
-      "classification": "PR regression",
-      "implementation_response": "Restore the four unknown-count placeholders while the current read is unavailable; preserve settled PL-01 layout and existing test expectations.",
+      "classification": "Superseded-design loading assertion; bounded replacement explicitly authorised by the user",
+      "implementation_response": "Remove the interim count row under accepted D2/loading frame 1214:275141. Replace only SC-07 loading assertion with unknown tray counts, hidden known demand content and busy/unknown Needs attention evidence. Suppress displayed To plan counts during the pending planner read. Other screen families, deadlines and viewport coverage are unchanged.",
       "clean_main_attempt": {
         "classification": "environment-blocked: browser",
         "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
       },
-      "verification": "Passed the unchanged P11 diagnostic replay on head 96c7ae7b485ec0c5f37a0114158f245d4b61a322, job 127057907388; final-head CI is recorded in the PR completion handoff."
+      "verification": "Interim replay passed; all CI passed on 2f4236f45406e94ace58655971ea1e852540246f. Authorised replacement final-head CI is recorded in the PR handoff.",
+      "authorisation_comment": "https://github.com/deanrfiedler-gif/powerplants-one/pull/808#issuecomment-6649906346",
+      "interim_response": "Restore the four unknown-count placeholders while the current read is unavailable; preserve settled PL-01 layout and existing test expectations."
     },
     {
       "head": "96c7ae7b485ec0c5f37a0114158f245d4b61a322",
@@ -3709,7 +3711,7 @@
         "classification": "environment-blocked: browser",
         "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome"
       },
-      "verification": "Final-head CI is recorded in the PR completion handoff."
+      "verification": "All five compiled jobs, including retained Scheduling Steps 4\u20135, and P01\u2013P11 browser jobs passed on 2f4236f45406e94ace58655971ea1e852540246f. Final-head CI is recorded in the PR completion handoff."
     }
   ]
 }
