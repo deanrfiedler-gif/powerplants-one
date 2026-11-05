@@ -3,13 +3,10 @@ guide_key: guide.page.engineering
 entry_key: route:/engineering
 also_applies_to: ["route:/engineering/[id]", "scope:EN-01"]
 title: Engineering workload & deliverables
-status: Published
+status: InReview
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
 source_commit: 331c83deb73c51ee3db81c848941e74abe7f2590
-reviewer: "Codex — agent content review under the standing order"
-reviewed_at: "2026-11-05"
-reviewed_content_hash: 919c36ff97285673b2d432220394cdb7fe35e1f209d946fd1b47283f23205e5f
 contents: { overview: "Overview", how: "How to use", journey: "Journey map", recovery: "Recovery" }
 list_styles: { journey: journey }
 workflow_basis: "EN-01 native package coordination, BC-01 permitted register reads and EN-02–EN-08 technical authority."

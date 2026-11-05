@@ -160,7 +160,7 @@ test("Workspace selection preserves permissions, contextual navigation and page 
     await expect(phoneMenuOpener(page)).toBeFocused();
   }
   await openPageGuide(page);
-  await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("heading", { name: "Engineering workload & deliverables", exact: true })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Page guide", exact: true }).getByRole("paragraph").filter({ hasText: /^The detailed Engineering workload guide is being prepared\.$/ })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(phoneWidth(page) ? phoneMenuOpener(page) : page.getByRole("button", { name: "Page guide", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "More", exact: true }).click();
