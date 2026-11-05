@@ -71,6 +71,14 @@ Read APIs: `GET /api/v1/customers/[id]/workspace`, `/stakeholders`, `GET /api/v1
 
 CS API: `GET/POST /api/v1/cs/[kind]`, `GET /options?context_id=[uuid]`, `GET /[id]`, `POST /[id]/save`, `POST /[id]/actions`; kind is the closed set `Readiness`, `Survey`, `AccountPlan`. Commands use schema 1, original operation UUID, reason and expected version. Photo capture/caption commands sit under `Survey/[id]/photos`; exact private PNG reads are permission-checked and no-store. Changed operation reuse is refused and original receipts can be recovered through the established operation endpoint. Source changes invalidate current preparation/submission checks while preserving retained history.
 
+## Customer 360 read batching — 5 November 2026
+
+The workspace uses the existing Activity page adapter for bounded native SELECT waves. Estimate, exact quotation, Project, work-order and account readers retain their authority and denial semantics. Candidate windows are still taken before native filtering, quotation revisions remain ordered within each estimate, and all results retain their original section and item order. Customer/Site projections and account reads accept the page's query client; ordinary callers keep their existing client path.
+
+Only the exact `hasPermission` check is reused within this one workspace call, keyed by workspace, actor, capability, company and Site. Record predicates, current relationships, source bindings and quotation recipients remain native checks. The working company still narrows both scoped checks and SQL predicates. The final root read bypasses the page memoizer. No permission result survives the request. Batches are capped at 100 distinct parameter sets and give duplicate consumers independent row objects, including historical estimate-basis annotations.
+
+The frozen main per-row implementation is compared with the complete new DTO and its JSON bytes using a fixed observation clock. [The execution and measurement record](../testing/evidence/customer-360-read/README.md) distinguishes local synthetic proof, CI and review. The diagnostics-only change retains sanitised Customer 360 events after the ordinary event cap; other late events remain capped. No API shape, migration, capability, grant, dependency, timeout or existing test expectation changes.
+
 ## Bounded decisions and unresolved definitions
 
 - MYOB sales orders and a general SharePoint library have no connected verified source service: Customer 360 says Not configured. It never substitutes an empty count or fabricated ERP response. Source lists declare their bounded windows and own permissions; no cross-currency or alternative-estimate total is invented.

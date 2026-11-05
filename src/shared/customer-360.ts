@@ -3,6 +3,7 @@ import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import {
   hasPermission,
+  pagePermissionReads,
   scopeSql,
   type Capability,
 } from "../platform/permissions";
@@ -11,6 +12,7 @@ import { estimateContext, quoteContext } from "../estimating/context";
 import { projectRow } from "../projects/service";
 import { visibleWorkOrder } from "../service/work-orders";
 import { ticketVisibility } from "../service/tickets";
+import { activityPageReads } from "../activities/page-reads";
 import { listActivities } from "../activities/activities";
 import { readAccount } from "../finance/accounts";
 import { customerContext, visible } from "./reads";
@@ -103,12 +105,14 @@ export async function customer360(
   p: Principal,
   id: string,
 ): Promise<Customer360> {
-  const c = database(),
-    org = await visible(c, p, "Organisation", id),
+  const raw = database(),
+    c = pagePermissionReads(activityPageReads(raw)),
+    org = await visible(raw, p, "Organisation", id),
     observed_at = new Date().toISOString();
   const context = (await customerContext(
     p,
     id,
+    c,
   )) as unknown as Customer360["context"];
   context.company_name = (
     await c.query(
@@ -179,14 +183,20 @@ export async function customer360(
     candidates: { id: string }[],
     read: (id: string) => Promise<T>,
   ) {
+    // Drain every native reader before propagating an unexpected source error.
+    // allSettled retains candidate order, regardless of lookup completion order.
+    const settled = await Promise.allSettled(
+      candidates.slice(0, 100).map((candidate) => read(candidate.id)),
+    );
     const rows: T[] = [];
-    for (const candidate of candidates.slice(0, 100))
-      try {
-        rows.push(await read(candidate.id));
-      } catch (error) {
-        if (!(error instanceof AppError) || ![403, 404].includes(error.status))
-          throw error;
-      }
+    for (const outcome of settled) {
+      if (outcome.status === "fulfilled") rows.push(outcome.value);
+      else if (
+        !(outcome.reason instanceof AppError) ||
+        ![403, 404].includes(outcome.reason.status)
+      )
+        throw outcome.reason;
+    }
     return rows;
   }
   const deals = await source(
@@ -243,25 +253,30 @@ export async function customer360(
         detail:
           "Saved estimate; Estimating owns its selected basis and changes.",
       }));
-      for (const e of estimates) {
-        const candidates = (
-          await c.query(
-            "SELECT id FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY created_at DESC,id LIMIT 101",
-            [p.workspace_id, e.id],
-          )
-        ).rows;
-        const quotes = await permitted(candidates, (x) =>
-          quoteContext(c, p, x),
-        );
-        for (const { q } of quotes)
-          items.push({
+      const revisions = await Promise.allSettled(
+        estimates.map(async (e) => {
+          const candidates = (
+            await c.query(
+              "SELECT id FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY created_at DESC,id LIMIT 101",
+              [p.workspace_id, e.id],
+            )
+          ).rows;
+          const quotes = await permitted(candidates, (x) =>
+            quoteContext(c, p, x),
+          );
+          return quotes.map(({ q }) => ({
             id: q.id,
             label: `Draft quotation · ${e.display_number}`,
             href: `/estimating/quotes/${q.id}`,
             state: "Draft",
-            record_kind: "Quotation",
+            record_kind: "Quotation" as const,
             detail: "Exact saved revision; not an issued or accepted order.",
-          });
+          }));
+        }),
+      );
+      for (const revision of revisions) {
+        if (revision.status === "rejected") throw revision.reason;
+        items.push(...revision.value);
       }
       return { items, partial: true }; // Bounded revision lists, never a complete commercial population.
     },
@@ -355,7 +370,7 @@ export async function customer360(
         )
       ).rows;
       const rows = await permitted(candidates, (x) =>
-        readAccount(p, id, { account_id: x }),
+        readAccount(p, id, { account_id: x }, c),
       );
       return {
         items: rows.map((r) => ({
@@ -415,7 +430,7 @@ export async function customer360(
     "A general customer-linked document library is not connected. Exact native Draft quotations remain under Deals & quotations; Service owns its issued reports. No document is issued from Customer 360.",
   );
   // Recheck the root after reading cross-domain data, including identity changes.
-  await visible(c, p, "Organisation", id);
+  await visible(raw, p, "Organisation", id);
   return {
     context,
     sections: {

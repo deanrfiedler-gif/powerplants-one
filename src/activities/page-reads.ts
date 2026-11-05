@@ -19,36 +19,44 @@ export function activityPageReads(client: QueryClient): QueryClient {
       const wave = pending;
       pending = new Map();
       for (const [sql, requests] of wave) {
-        const entries = [...requests.values()];
-        try {
-          if (entries.length === 1) {
-            entries[0].resolve(await client.query(sql, entries[0].values));
-            continue;
-          }
-          const values: unknown[] = [];
-          const parts = entries.map((request, index) => {
-            const offset = values.length;
-            values.push(...request.values);
-            const query = sql.replace(
-              /\$(\d+)/g,
-              (_, n: string) => `$${Number(n) + offset}`,
+        const all = [...requests.values()];
+        // Customer 360 can include 100 revisions for each of 100 estimates.
+        // Bound statement size while retaining every native lookup.
+        for (let offset = 0; offset < all.length; offset += 100) {
+          const entries = all.slice(offset, offset + 100);
+          try {
+            if (entries.length === 1) {
+              entries[0].resolve(await client.query(sql, entries[0].values));
+              continue;
+            }
+            const values: unknown[] = [];
+            const parts = entries.map((request, index) => {
+              const offset = values.length;
+              values.push(...request.values);
+              const query = sql.replace(
+                /\$(\d+)/g,
+                (_, n: string) => `$${Number(n) + offset}`,
+              );
+              return `SELECT ${index} AS __activity_page_slot, detail.* FROM (${query}) detail`;
+            });
+            const result = await client.query(
+              parts.join(" UNION ALL "),
+              values,
             );
-            return `SELECT ${index} AS __activity_page_slot, detail.* FROM (${query}) detail`;
-          });
-          const result = await client.query(parts.join(" UNION ALL "), values);
-          const rows: QueryResultRow[][] = entries.map(() => []);
-          for (const { __activity_page_slot: slot, ...row } of result.rows)
-            rows[slot].push(row);
-          entries.forEach((request, index) =>
-            request.resolve({
-              ...result,
-              fields: result.fields.slice(1),
-              rows: rows[index],
-              rowCount: rows[index].length,
-            }),
-          );
-        } catch (error) {
-          entries.forEach((request) => request.reject(error));
+            const rows: QueryResultRow[][] = entries.map(() => []);
+            for (const { __activity_page_slot: slot, ...row } of result.rows)
+              rows[slot].push(row);
+            entries.forEach((request, index) =>
+              request.resolve({
+                ...result,
+                fields: result.fields.slice(1),
+                rows: rows[index],
+                rowCount: rows[index].length,
+              }),
+            );
+          } catch (error) {
+            entries.forEach((request) => request.reject(error));
+          }
         }
       }
     }
@@ -65,7 +73,11 @@ export function activityPageReads(client: QueryClient): QueryClient {
     if (!requests) pending.set(sql, (requests = new Map()));
     const key = JSON.stringify(values);
     const existing = requests.get(key);
-    if (existing) return existing.promise;
+    if (existing)
+      return existing.promise.then((result) => ({
+        ...result,
+        rows: result.rows.map((row) => ({ ...row })),
+      }));
     let resolve!: Pending["resolve"], reject!: Pending["reject"];
     const promise = new Promise<QueryResult>((yes, no) => {
       resolve = yes;
@@ -78,7 +90,10 @@ export function activityPageReads(client: QueryClient): QueryClient {
         void flush();
       });
     }
-    return promise;
+    return promise.then((result) => ({
+      ...result,
+      rows: result.rows.map((row) => ({ ...row })),
+    }));
   };
   return { query: query as QueryClient["query"] };
 }
