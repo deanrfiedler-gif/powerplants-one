@@ -1,0 +1,85 @@
+{
+  "tests": 92,
+  "passed": 81,
+  "failed": 11,
+  "failures": [
+    {
+      "test": "CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/crm.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "CA-10 existing field and report follow-up projections obey every Opportunity target",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/crm.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV08 retained HTML/PDF hashes, explicit exclusions and changed evidence invalidate review",
+      "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-escalations.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV08 sent fact creates one owned chase, reply retires it, and advice becomes native owned work without closing source",
+      "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-escalations.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 R2 creates only a missing inspection task; technician cannot set it and closure remains native",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-finding-next-action.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 R2 completion and response reuse native tasks and preserve immutable observations",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-finding-next-action.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 R2 incident action changes retain hold, accepted facts and source-authorised owner",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-finding-next-action.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 failed inspection stays open after its Activity completes and follows native correction/review",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-findings.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 remaining work keeps the exact submitted revision and does not equate Activity completion with completion of scope",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-findings.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 customer reservations remain exact and correction supersedes rather than overwrites the original",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-findings.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    },
+    {
+      "test": "SV07 incident corrective action preserves source authority and excludes restricted facts",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser",
+      "file": "tests/database/service-findings.test.ts",
+      "main_comparison": "same test and error on clean main 3faff7aef476904a30e878be8bdc9e95792fb4fb"
+    }
+  ],
+  "main_failed_comparison_count": 11
+}

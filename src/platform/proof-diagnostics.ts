@@ -23,7 +23,7 @@ const diagnosticGlobal = globalThis as typeof globalThis & {
 const scope = diagnosticGlobal[scopeKey] ??= new AsyncLocalStorage<ProofRequest>();
 let routeId = 0;
 export const proofDiagnosticsEnabled = () => enabled;
-const measuredRead = (path: string) => /^\/api\/v1\/(?:reports\/:id|my-jobs\/:id|local-session|shell\/context|crm\/directory(?:\/views)?)$/.test(path);
+const measuredRead = (path: string) => /^\/api\/v1\/(?:reports\/:id|my-jobs\/:id|customers\/:id\/workspace|local-session|shell\/context|crm\/directory(?:\/views)?)$/.test(path);
 // Capture only the existing numeric/sanitised context, never the request itself.
 export function captureDatabaseProof() {
   const current = scope.getStore();
@@ -66,7 +66,7 @@ export function proofPath(raw: string) {
   if (/^\/(api\/v1\/|customers|sites|schedule|my-jobs|service|documents|finance|crm|work|people|equipment)/.test(path) &&
       /^\/[a-zA-Z0-9_/-]+$/.test(path))
     return path.split("/").map(part => {
-      if (!part || ["api", "v1", "customers", "sites", "local-session", "render-jobs", "report-render-jobs", "retry", "packs", "reports", "my-jobs", "schedule", "service", "work-orders", "appointments", "documents", "finance", "crm", "opportunities", "work", "people", "equipment", "activities"].includes(part)) return part;
+      if (!part || ["api", "v1", "customers", "sites", "local-session", "render-jobs", "report-render-jobs", "retry", "packs", "reports", "my-jobs", "schedule", "service", "work-orders", "appointments", "documents", "finance", "crm", "opportunities", "work", "people", "equipment", "activities", "workspace"].includes(part)) return part;
       return /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(part) ? ":id" : ":other";
     }).join("/").slice(0, 160);
   return path === "/" ? "/" : "/other";
