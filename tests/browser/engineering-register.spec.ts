@@ -160,6 +160,208 @@ test("EN01 full counts and native queues survive paging; a changed continuation 
   ).toBeVisible();
 });
 
+async function selectFirst(page: Page) {
+  const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  if (phone)
+    await page.getByRole("button", { name: "Select packages", exact: true }).click();
+  const boxes = page.locator(phone ? ".er-phone-row input[type=checkbox]" : ".er-grid tbody input[type=checkbox]");
+  await boxes.first().check();
+  return boxes;
+}
+
+test("EN01 focus applies a changed source and resets a selected second page", async ({ page }) => {
+  const s = await setup(page, 51);
+  await page.goto(registerPath(s.marker));
+  await expect(page.locator(".er-register")).toContainText("Page 1");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.locator(".er-register")).toContainText("Page 2");
+  const boxes = await selectFirst(page);
+  await call(page, "engineering/" + s.packages[0].id + "/coordination", engineeringUpdate());
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.locator(".er-refresh-notice")).toContainText("The workload changed");
+  await expect(page.locator(".er-register")).toContainText("Page 1");
+  await expect(boxes).toHaveCount(50);
+  await expect(boxes.first()).not.toBeChecked();
+});
+
+test("EN01 focus reflects denied access and clears incompatible selection", async ({ page }) => {
+  const s = await setup(page, 2);
+  await page.goto(registerPath(s.marker));
+  const boxes = await selectFirst(page);
+  await page.route("**/api/v1/engineering/register?*", route => route.fulfill({
+    status: 403, contentType: "application/json",
+    body: JSON.stringify({ code: "Forbidden", message: "SYN read revoked" }),
+  }));
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.getByRole("heading", { name: "Engineering access unavailable" })).toBeVisible();
+  await expect(boxes).toHaveCount(0);
+  await page.unroute("**/api/v1/engineering/register?*");
+  await page.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await expect(boxes).toHaveCount(2);
+  await expect(boxes.first()).not.toBeChecked();
+});
+
+test("EN01 focus preserves selection through temporary failure and clears both errors after success", async ({ page }) => {
+  const s = await setup(page, 2);
+  await page.goto(registerPath(s.marker));
+  const boxes = await selectFirst(page);
+  await page.route("**/api/v1/engineering/register?*", route => {
+    if (new URL(route.request().url()).searchParams.get("q") !== s.marker)
+      return route.continue();
+    return route.fulfill({ status: 503, contentType: "application/json",
+      body: JSON.stringify({ code: "DependencyUnavailable", message: "SYN focus read failed", retryable: true }),
+    });
+  });
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.locator(".er-refresh-notice")).toContainText("could not be rechecked");
+  await expect(page.getByRole("alert")).toContainText("SYN focus read failed");
+  await expect(boxes.first()).toBeChecked();
+  await page.unroute("**/api/v1/engineering/register?*");
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(page.locator(".er-refresh-notice")).toHaveCount(0);
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  await expect(boxes.first()).toBeChecked();
+});
+
+test("EN01 technical Retry retains an uncertain coordination operation and its navigation block", async ({ page }) => {
+  const s = await setup(page, 2), id = s.packages[0].id;
+  await page.route("**/api/v1/engineering/" + id + "/control", route => route.fulfill({
+    status: 503, contentType: "application/json",
+    body: JSON.stringify({ code: "DependencyUnavailable", message: "SYN technical read failed" }),
+  }));
+  const sent: Record<string, unknown>[] = [];
+  await page.route("**/api/v1/engineering/" + id + "/coordination", async route => {
+    sent.push(route.request().postDataJSON());
+    if (sent.length === 1) {
+      expect((await route.fetch()).ok()).toBe(true);
+      await route.abort("failed");
+    }
+    else await route.continue();
+  });
+  await page.goto(registerPath(s.marker));
+  await openFirst(page);
+  const snapshot = page.getByRole("dialog"), form = snapshot.locator(".eng-coordination");
+  await snapshot.getByRole("button", { name: "Update coordination", exact: true }).click();
+  await form.getByLabel("Next action", { exact: true }).fill("SYN retained action");
+  await form.getByLabel("Reason for update").fill("SYN retry proof");
+  page.once("dialog", dialog => dialog.dismiss());
+  await snapshot.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await expect(form.getByLabel("Next action", { exact: true })).toHaveValue("SYN retained action");
+  await form.getByRole("button", { name: "Save coordination", exact: true }).click();
+  await expect(form.getByRole("button", { name: "Retry original update" })).toBeEnabled();
+  await snapshot.getByRole("button", { name: "Retry loading", exact: true }).click();
+  await expect(form.getByLabel("Next action", { exact: true })).toHaveValue("SYN retained action");
+  await expect(form.getByLabel("Next action", { exact: true })).toBeDisabled();
+  await expect(snapshot.getByRole("button", { name: "Close package", exact: true })).toBeDisabled();
+  await expect(snapshot.getByRole("button", { name: "Next package", exact: true }).filter({ visible: true })).toBeDisabled();
+  await form.getByRole("button", { name: "Retry original update" }).click();
+  await expect(form).toHaveCount(0);
+  expect(sent).toHaveLength(2);
+  expect(sent[0].operation_id).toBeTruthy();
+  expect(sent[1]).toEqual(sent[0]);
+  const saved = await call(page, "engineering/" + id);
+  expect(saved.package.next_action).toBe("SYN retained action");
+  expect(saved.package.version).toBe(2);
+  expect(saved.events).toHaveLength(2);
+});
+
+test("EN01 inactive owner stays visible and blocks save until active reassignment without losing fields", async ({ page }) => {
+  const s = await setup(page, 1), id = s.packages[0].id;
+  const detail = await call(page, "engineering/" + id);
+  // Read-state presentation fixture; the database suite proves actual inactive-owner reads and save refusal.
+  await page.route("**/api/v1/engineering/" + id, async route => {
+    const response = await route.fetch();
+    const body = await response.json();
+    body.package.owner_active = false;
+    await route.fulfill({ response, json: body });
+  });
+  await page.route("**/api/v1/engineering/options?*", async route => {
+    const response = await route.fetch(), body = await response.json();
+    body.items = body.items.filter((item: { id: string }) => item.id !== detail.package.owner_id);
+    await route.fulfill({ response, json: body });
+  });
+  await page.goto(registerPath(s.marker));
+  await openFirst(page);
+  const snapshot = page.getByRole("dialog"), form = snapshot.locator(".eng-coordination");
+  await expect(snapshot.locator("dd").filter({ hasText: detail.package.owner_name })).toHaveText(detail.package.owner_name + " (inactive)");
+  await expect(snapshot.locator(".er-muted").filter({ hasText: detail.package.owner_name })).toContainText("(inactive)");
+  await snapshot.getByRole("button", { name: "Update coordination", exact: true }).click();
+  await expect(form.getByLabel("Assigned engineer")).toHaveValue(detail.package.owner_name + " (inactive)");
+  await expect(form.getByRole("status").filter({ hasText: "is no longer active" })).toHaveText(detail.package.owner_name + " is no longer active. Choose an active engineer to save.");
+  await form.getByLabel("Next action", { exact: true }).fill("SYN preserve on reassignment");
+  await form.getByLabel("Reason for update").fill("SYN choose an active engineer");
+  await expect(form.getByRole("button", { name: "Save coordination" })).toBeDisabled();
+  await form.getByLabel("Assigned engineer").fill("SYN");
+  await form.getByRole("option").first().click();
+  await expect(form.getByRole("button", { name: "Save coordination" })).toBeEnabled();
+  await expect(form.getByLabel("Next action", { exact: true })).toHaveValue("SYN preserve on reassignment");
+  await expect(form.getByLabel("Reason for update")).toHaveValue("SYN choose an active engineer");
+});
+
+test("EN01 dirty tabs retain coordination and cancelled close or sequence navigation prompts once", async ({ page }) => {
+  const s = await setup(page, 2);
+  await page.goto(registerPath(s.marker));
+  await openFirst(page);
+  const snapshot = page.getByRole("dialog"), form = snapshot.locator(".eng-coordination");
+  await snapshot.getByRole("button", { name: "Package actions", exact: true }).click();
+  await snapshot.getByRole("button", { name: "Add note", exact: true }).click();
+  await snapshot.getByLabel("Add a review note").fill("SYN retained note alongside coordination");
+  await snapshot.getByRole("button", { name: "Update coordination", exact: true }).click();
+  await form.getByLabel("Reason for update").fill("SYN retained draft");
+  let prompts = 0, expectedPrompts = 0, accept = false;
+  page.on("dialog", async dialog => { prompts++; if (accept) await dialog.accept(); else await dialog.dismiss(); });
+  await snapshot.getByRole("tab", { name: /^Queries/ }).click();
+  await expect(snapshot.getByRole("tab", { name: /^Queries/ })).toHaveAttribute("aria-selected", "true");
+  expect(prompts).toBe(0);
+  await expect(form.getByLabel("Reason for update")).toHaveValue("SYN retained draft");
+  if ((page.viewportSize()?.width ?? 1440) <= 780) {
+    await page.evaluate(() => window.addEventListener("ppo-shell-phone-menu", () => {
+      document.documentElement.setAttribute("data-test-shell-menu", "requested");
+    }));
+    await snapshot.getByRole("button", { name: "More package actions", exact: true }).click();
+    await snapshot.getByRole("button", { name: "Open menu", exact: true }).click();
+    await expect.poll(() => prompts).toBe(++expectedPrompts);
+    await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+    await expect(page.locator("html")).not.toHaveAttribute("data-test-shell-menu", "requested");
+    await expect(snapshot).toContainText("1 of 2 on this page");
+  }
+  await snapshot.getByRole("button", { name: "Close package", exact: true }).click();
+  await expect.poll(() => prompts).toBe(++expectedPrompts);
+  await expect(snapshot).toContainText("1 of 2 on this page");
+  await snapshot.getByRole("button", { name: "Next package", exact: true }).filter({ visible: true }).click();
+  await expect.poll(() => prompts).toBe(++expectedPrompts);
+  await expect(snapshot.locator(".er-record-title")).toHaveText(s.packages[0].title);
+  await expect(snapshot).toContainText("1 of 2 on this page");
+  accept = true;
+  await snapshot.getByRole("button", { name: "Next package", exact: true }).filter({ visible: true }).click();
+  await expect(snapshot.locator(".er-record-title")).toHaveText(s.packages[1].title);
+  expect(prompts).toBe(++expectedPrompts);
+  await snapshot.getByRole("button", { name: "Previous package", exact: true }).filter({ visible: true }).click();
+  await expect(snapshot.getByLabel("Add a review note")).toHaveValue("SYN retained note alongside coordination");
+  expect(prompts).toBe(expectedPrompts);
+});
+
+test("EN01 Back after Clear filters restores the submitted search past its debounce", async ({ page }) => {
+  const s = await setup(page, 1);
+  const phone = (page.viewportSize()?.width ?? 1440) <= 780;
+  await page.goto(registerPath(s.marker + " missing"));
+  if (phone) await page.getByRole("button", { name: /^Filter/ }).click();
+  await page.getByRole("searchbox", { name: "Search engineering packages" }).filter({ visible: true }).fill(s.marker);
+  await expect(page).toHaveURL(url => url.searchParams.get("q") === s.marker);
+  if (phone) await page.getByRole("button", { name: "Close Filter engineering packages", exact: true }).click();
+  await openFirst(page);
+  await page.getByRole("button", { name: "Close package", exact: true }).click();
+  if (phone) await page.getByRole("button", { name: /^Filter/ }).click();
+  await page.getByRole("button", { name: "Clear filters", exact: true }).filter({ visible: true }).first().click();
+  if (phone) await page.getByRole("button", { name: "Close Filter engineering packages", exact: true }).click();
+  await page.clock.install();
+  await page.goBack();
+  await expect(page).toHaveURL(url => url.searchParams.get("q") === s.marker);
+  await expect(page.locator(".er-search input").first()).toHaveValue(s.marker);
+  await page.clock.runFor(300);
+  expect(new URL(page.url()).searchParams.get("q")).toBe(s.marker);
+});
+
 test("EN01 selected CSV and sequence retain exact packages and refuse a changed source", async ({
   page,
 }, info) => {

@@ -1,0 +1,1849 @@
+{
+  "scope": "PR #707 synthetic database validation, 5 November 2026",
+  "main_sha": "2f2e399c27956b7cdfd411baeedae59d51a1d218",
+  "merge_commit": "6cf77c15f5de5cb7adf767cf81ad7f31f15261d3",
+  "branch_selection": "git grep -l engineering tests/database",
+  "comparison_selection": [
+    "tests/database/document-library.test.ts",
+    "tests/database/estimating-workspaces.test.ts",
+    "tests/database/estimating.test.ts",
+    "tests/database/fertigation-artifacts.test.ts",
+    "tests/database/field-customer-response.test.ts",
+    "tests/database/field-incidents.test.ts",
+    "tests/database/field-timer-boundaries.test.ts",
+    "tests/database/inspection-attribution-upgrade.test.ts",
+    "tests/database/maintenance-upgrade.test.ts",
+    "tests/database/project-acceptance.test.ts",
+    "tests/database/project-specialist-handover-upgrade.test.ts",
+    "tests/database/project-specialist-handover.test.ts",
+    "tests/database/project-specialist-work-upgrade.test.ts",
+    "tests/database/project-specialist-work.test.ts",
+    "tests/database/project-specialist.test.ts",
+    "tests/database/quality-upgrade.test.ts",
+    "tests/database/quotation-release.test.ts",
+    "tests/database/quotation-task-branch.test.ts",
+    "tests/database/quotation-task-chain.test.ts",
+    "tests/database/quotation-task-diamond-receiving.test.ts",
+    "tests/database/quotation-task-merge.test.ts",
+    "tests/database/sh-platform.test.ts",
+    "tests/database/site-readiness-upgrade.test.ts"
+  ],
+  "comparison_note": "Helper-defined cases are included by estimating.test.ts and quotation-release.test.ts. All selected files ran in full, serially, with the same 120000 ms test deadline. No test was skipped or weakened.",
+  "branch_counts": {
+    "tests": 528,
+    "suites": 0,
+    "pass": 329,
+    "fail": 199,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "main_comparison_counts": {
+    "tests": 260,
+    "suites": 0,
+    "pass": 61,
+    "fail": 199,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "engineering_direct_cases": {
+    "pass": 29,
+    "fail": 0
+  },
+  "failures": [
+    {
+      "test_file": "tests/database/document-library.test.ts",
+      "test_name": "DK-B07 existing Job Pack issue bytes and native authority are reused; no library grant bypasses source scope",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/document-library.test.ts",
+      "test_name": "DK-B08 existing Service Report issue exact PDF is linked without rendering a replacement",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/estimating-workspaces.test.ts",
+      "test_name": "E2 migration formalises exact E1 identities and preserves every accepted cost, quote, receipt and stored original",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/estimating.test.ts",
+      "test_name": "E1-DB04 loss of linked person relationship hides aggregates, original receipts and exact quote files",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/estimating.test.ts",
+      "test_name": "E1-DB08 crash after durable storage recovers byte-identical HTML/PDF without regeneration",
+      "message": "AssertionError [ERR_ASSERTION]: The error is expected to be an instance of \"QuoteWorkerInterrupted\". Received \"AppError\"",
+      "code": "ERR_ASSERTION",
+      "main_message": "AssertionError [ERR_ASSERTION]: The error is expected to be an instance of \"QuoteWorkerInterrupted\". Received \"AppError\"",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser",
+      "cause": "Actual error: The exact draft output is unavailable. Its saved revision is retained for recovery."
+    },
+    {
+      "test_file": "tests/database/estimating.test.ts",
+      "test_name": "E1-DB09 failed rendering retains original revision and recovers same intent; Ready output cannot be overwritten",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/estimating.test.ts",
+      "test_name": "DR01-DB03 migration 24 originals survive upgrade, deliberate concurrent adoption and exact quotation recovery",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/estimating-cost-basis-cases.ts",
+      "test_name": "E2 version Site controls saved context, exact quote output and historical receipt authority after current scope changes",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/estimating-cost-basis-cases.ts",
+      "test_name": "E2 retained contact visibility protects history and exact recovery after the current CRM contact changes",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/estimating-cost-basis-cases.ts",
+      "test_name": "E2 migration 27 and repeated seed retain legacy DTOs, ledgers, receipts and exact stored quotations",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/fertigation-artifacts.test.ts",
+      "test_name": "FN-T45/T46/T47 retained customer and long internal PDFs use exact authorised scope and replay bytes",
+      "message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome",
+      "code": null,
+      "main_message": "browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-01 every attendance acknowledgement remains distinct from report response, internal acceptance and Finance",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-02 two responders, one explicit successor, reused owned work and independent similar responses",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-03 changed recipient, source, service owner and permissions refuse fresh capture and retain originals",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-04 newly arriving incident hold permits factual response but preserves hold and redaction",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-05 failed inspection stays outstanding after internal review and customer acceptance",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-06 old queue hash, new subject replay, immutable corrections and rejected reassociation",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-08 missing original evidence, revoked evidence access and wrong presentation bytes never save a response",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-09 queued attendance acknowledgements revalidate audience and current authority without rewriting originals",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-customer-response.test.ts",
+      "test_name": "FI07-07 populated 0056 upgrade preserves original response hashes, output bytes, grants and exact ledgers",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 complete persisted incident, independent passing inspection hold, Activity separation, exact outcome and reopening",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 current authority, two reporters, separate repeated records, stale saves, unknown assessment and restricted receipt recovery",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 upload failure, inaccessible exact evidence, action reassignment and changed source fail closed",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 factual reporting before Start and delayed existing offline Start/capture revalidate a newer hold",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 linked defect requires original correction and fresh independent retest, then closure leaves unrelated blockers",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-incidents.test.ts",
+      "test_name": "FI06 two reviewers, concurrent decisions, authority loss, missing scope authority and immutable original history",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-timer-boundaries.test.ts",
+      "test_name": "FI01 one personal timer spans appointments, preserves denied originals and checks receipt authority",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-timer-boundaries.test.ts",
+      "test_name": "FI01 zero-second transitions, real Undo expiry and report freeze keep distinct authority",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/field-timer-boundaries.test.ts",
+      "test_name": "FI01 additive 0049 upgrade retains existing time, arrivals, receipts and revoked grants",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/inspection-attribution-upgrade.test.ts",
+      "test_name": "0115 preserves populated legacy attempts, instrument snapshots, hashes and ledger without inferred attribution",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/maintenance-upgrade.test.ts",
+      "test_name": "late reserved Maintenance migration preserves the current schema, originals, outputs and exact grants",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-09/10/15/47: exact submitted snapshots, technical duty, return/successor and no waiver",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-44/47: original operations replay exactly and altered payload conflicts; grants checked before receipt",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-26/29/30/33/35/37/38/39/40/41: exact issued files, independent Service, customer qualification and commercial separation",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-13/48/52: source versions, decisions, issued bytes and receipts persist across pool restart and repeat seed",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-17/31/42/44/45/53: one connected blocked/return/successor journey, durable issue recovery and competing writes",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-34/44/46/47/48: server-held original, payload conflict, current authority and restricted Finance projection",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-11/13/36/38: authorised scope disposition retains the ledger and cannot hide a shared hold or stage",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-35/43: missing exact original blocks closeout, retains its reference and creates one owned recovery",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-11/12/48/49: shared mandatory source survives a location exclusion and mixed-target Activity needs every target",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-acceptance.test.ts",
+      "test_name": "PJ09-47: project.edit grants no acceptance operation; current membership is required for reads and originals",
+      "message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-xTE6kF'",
+      "code": "EROFS",
+      "main_message": "Error: EROFS: read-only file system, mkdtemp '/home/agent/.ppo-pj09-db-RWV87V'",
+      "result": "pre-existing on main in this environment",
+      "cause": "The unchanged fixture creates its document directory under the read-only home directory."
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover-upgrade.test.ts",
+      "test_name": "PJ06-R2 upgrade from populated 103 preserves every legacy payload, template publication, hash, grant, receipt and ledger exactly; repeat run adds nothing",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover-upgrade.test.ts",
+      "test_name": "PJ06-R2 upgrade from populated 104 preserves every legacy payload, template publication, hash, grant, receipt and ledger exactly; repeat run adds nothing",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-07 late receipt failure rolls back all effects; returned successors and competing decisions retain exact lineage",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-01 exact accepted brief travels with native release, original units, independent outcome and original receipts",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-02 inaccessible specialist sources withhold native lists, history, footer and recovery without leaking counts",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-03 unaccepted and stale sources block new use; native return and original recovery preserve evidence",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-04 accepted native outcome cannot follow withdrawn release; return and its original receipt remain available",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-05 native database rejects forged exact briefs, quantities, hashes and reference replacement; transaction rollback is exact",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-06 changed brief sources block acceptance while historical payload and explicit return survive",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-handover.test.ts",
+      "test_name": "PJ06-R2-08 an accepted successor brief blocks earlier receiving without changing the retained payload or original receipt",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work-upgrade.test.ts",
+      "test_name": "PJ06-R3 populated 0105 upgrade preserves exact R1/R2 evidence, grants, sources, identities and receipts; repeat adds nothing",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-01 exact accepted handover/document, independent scoped acceptance and unchanged downstream units/history",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-02 source drift blocks acceptance but preserves Return, terminal correction and original recovery",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-03 review permission, independence, company isolation and revoked document privacy",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-04 races and late receipt failure roll back every effect",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-05 withdrawn evidence and withdrawn native demand cannot receive positive acceptance",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-06 missing exact bytes, evidence authorship and forged SQL snapshots are refused atomically",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-07 direct orphan records cannot commit without their original submission",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-08 direct decisions cannot commit without matching receipt, audit and outbox",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-09 direct positive decisions refuse a withdrawn native demand before operation evidence",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-10 direct positive decisions refuse an accepted successor brief and retain historical return",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-11 direct positive decisions refuse a withdrawn issued release",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist-work.test.ts",
+      "test_name": "PJ06-R3-12 direct positive decisions refuse a changed release drawing",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-01 native commercial/Engineering/Supply sources, independent receiving, exact units, history and original recovery",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-02 source drift holds acceptance; return/revise and exact historical recovery survive",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-03 access and company isolation cover detail, history, list cursors, command and receipt",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-04 optimistic concurrency, altered retries and atomic evidence rollback",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-05 explicit missing context, owner boundary, independent receiver, pagination and strict inputs",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/project-specialist.test.ts",
+      "test_name": "PJ06-06 exact Supply demand revision drift retains original quantity and allows withdrawal recovery",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quality-upgrade.test.ts",
+      "test_name": "P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quality-upgrade.test.ts",
+      "test_name": "P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quality-upgrade.test.ts",
+      "test_name": "P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 exact preparation, independent approval, exact issue and simulated distribution preserve original Draft bytes",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 stale observed recipient refuses preparation; changed saved estimate holds approved issue without editing evidence",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 unknown simulation holds a new attempt and retains attributable exact-attempt resolution",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 independent duties and current permission refusal cover commands and original receipt recovery",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 concurrent independent approvals and late issue failure leave exactly one complete operation",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 broad duty grants cannot permit owner approval or approver issue",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 interrupted release rendering recovers the retained bundle without regenerating output",
+      "message": "AssertionError [ERR_ASSERTION]: The error is expected to be an instance of \"QuoteWorkerInterrupted\". Received \"AppError\"",
+      "code": "ERR_ASSERTION",
+      "main_message": "AssertionError [ERR_ASSERTION]: The error is expected to be an instance of \"QuoteWorkerInterrupted\". Received \"AppError\"",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser",
+      "cause": "Actual error: The exact draft output is unavailable. Its saved revision is retained for recovery."
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 explicit issue successor does not inherit approval and preserves both exact issued originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 captured recipient authority is required even after a permitted contact replaces the opportunity contact",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-release.test.ts",
+      "test_name": "ES05 populated migration 58 upgrade preserves reviewed estimates, receipts, output and exact prior grants",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/quotation-register-cases.ts",
+      "test_name": "quotation register follows native draft, return, approval, issue and distribution with one current row",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/quotation-register-cases.ts",
+      "test_name": "quotation register retains native response holds and issued history when source or current revision changes",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/quotation-register-cases.ts",
+      "test_name": "quotation register separates exact conversion from newer drafts and redacts inaccessible conversion evidence",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/quotation-register-cases.ts",
+      "test_name": "quotation register uses bounded stable windows, literal search, scoped counts and exact quotation identities",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/helpers/quotation-register-cases.ts",
+      "test_name": "quotation register finds an older quotation beyond the first hundred estimate rows and flags stale unissued basis",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "FS/FS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "FS/SS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "SS/FS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "SS/SS branch requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "late SecondTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "late ThirdTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "quotation retention remains resolved through branch review; native result requires fresh explicit ES07 disposition",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "populated 0069 upgrade preserves isolated-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "populated 0069 upgrade preserves two-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "populated 0069 upgrade preserves linear-chain originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "Three-task branch accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "two-task receiving never authorises a branch",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "linear-chain receiving never authorises a branch",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "new consequential Project Engineering after review holds the complete branch without partial task effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "ES07 branch: Activity completion and review notes cannot clear operational Impact or restore readiness",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new incoming edge at branch task A holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new incoming edge at branch task B holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new incoming edge at branch task C holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new outgoing edge at branch task A holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new outgoing edge at branch task B holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "a new outgoing edge at branch task C holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses B to C introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses C to B introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses merge introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses reversed A-B introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses missing A-B introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-branch.test.ts",
+      "test_name": "branch review refuses missing A-C introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "FS/FS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "FS/SS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "SS/FS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "SS/SS chain requires six exact decisions and atomically preserves both dependencies with three native task saves and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "late ThirdTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "quotation retention remains resolved through chain review; native result requires fresh explicit ES07 disposition",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "populated 0068 upgrade preserves isolated-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "populated 0068 upgrade preserves two-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "Three-task chain accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "two-task receiving never authorises newly selected third-task consequences",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "new consequential Project Engineering after review holds the complete chain without partial task effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-chain.test.ts",
+      "test_name": "ES07 chain: Activity completion and review notes cannot clear operational Impact or restore readiness",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "quotation retention remains resolved through diamond review; native result requires fresh explicit ES07 disposition",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "new consequential Project Engineering after review holds the complete diamond without partial task effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "ES07 diamond: Activity completion and review notes cannot clear operational Impact or restore readiness",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "Demand requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "Project requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "Task requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "MaterialAction requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "DiamondB requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "DiamondC requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "DiamondD requires a distinct current decision; Held, Returned and corrected acceptance invalidate frozen review",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "independent diamond B owner sees its worklist and receives without edit authority; revocation holds disclosure",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "independent diamond C owner sees its worklist and receives without edit authority; revocation holds disclosure",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "independent diamond D owner sees its worklist and receives without edit authority; revocation holds disclosure",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "change on path B invalidates the whole diamond; unrelated Project remains irrelevant",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "change on path C invalidates the whole diamond; unrelated Project remains irrelevant",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "earlier isolated-task acceptance and reserved operations do not authorise the explicit diamond",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "earlier two-task acceptance and reserved operations do not authorise the explicit diamond",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "earlier linear-chain acceptance and reserved operations do not authorise the explicit diamond",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "earlier branch acceptance and reserved operations do not authorise the explicit diamond",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-diamond-receiving.test.ts",
+      "test_name": "earlier merge acceptance and reserved operations do not authorise the explicit diamond",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "FS/FS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "FS/SS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "SS/FS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "SS/SS merge requires six exact decisions and atomically preserves both dependencies with two native task saves and retained B and one Impact successor",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "late FirstTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "late SecondTask refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "late Impact refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "late Outcome refusal rolls back all task effects; missing original is inconclusive and exact retry succeeds",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "third task owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "quotation retention remains resolved through merge review; native result requires fresh explicit ES07 disposition",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "third task cannot be claimed by another accepted target; returned referral permits explicit reassignment without losing originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "Three-task merge accepts the native direction; reversed and newly added dependencies hold unexecuted receiving",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "new consequential Project Engineering after review holds the complete merge without partial task effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "ES07 merge: Activity completion and review notes cannot clear operational Impact or restore readiness",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new incoming edge at merge task A holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new incoming edge at merge task B holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new incoming edge at merge task C holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new outgoing edge at merge task A holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new outgoing edge at merge task B holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "a new outgoing edge at merge task C holds frozen review and is explicitly identified by fresh graph inspection",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses A to B introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses B to A introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses branch introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses reversed A-C introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses missing A-C introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "merge review refuses missing B-C introduced by native dependency saves",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "populated 0070 upgrade preserves isolated-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "populated 0070 upgrade preserves two-task originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "populated 0070 upgrade preserves linear-chain originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "populated 0070 upgrade preserves branch originals, every old row and output byte",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "B's native position invalidates review even though the action never edits B; unrelated Project changes do not",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "isolated consent cannot authorise merge receiving or native effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "pair consent cannot authorise merge receiving or native effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "chain consent cannot authorise merge receiving or native effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "branch consent cannot authorise merge receiving or native effects",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "retained B owner receives independently; corrected Held and Returned decisions invalidate review and revoked authority hides originals",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "B validity comes from native dates and warnings, never its label or receiving note",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/quotation-task-merge.test.ts",
+      "test_name": "restricted runtime prepared merge reads expose current retained B only with current authority and no ledger privilege",
+      "message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/sh-platform.test.ts",
+      "test_name": "SH06 real Service submission and return reflect the exact source decision and author",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/sh-platform.test.ts",
+      "test_name": "SH06 real Finance handoff appears for the eligible reviewer and sending owner",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/site-readiness-upgrade.test.ts",
+      "test_name": "0120 from 117 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/site-readiness-upgrade.test.ts",
+      "test_name": "0120 from 118 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    },
+    {
+      "test_file": "tests/database/site-readiness-upgrade.test.ts",
+      "test_name": "0120 from 119 preserves populated contacts, original operations, policy pins and issued bytes; seed replay is inert",
+      "message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": null,
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "result": "pre-existing on main in this environment",
+      "environment": "environment-blocked: browser"
+    }
+  ]
+}

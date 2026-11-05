@@ -64,6 +64,9 @@ test("accepted container creates a real request; an uncertain note retries once 
     has: page.getByRole("button", { name: "Close package", exact: true }),
   });
   await expect(packageDialog.locator(".er-record-title")).toHaveText(title);
+  await expect(page.locator(".er-refresh-notice")).toContainText(
+    "Request created. The workload source changed; continue from the fresh first page and select packages again.",
+  );
   await expect(packageDialog).toBeInViewport();
   const list = await call(page, `engineering?q=${encodeURIComponent(title)}`);
   expect(list.items).toHaveLength(1);

@@ -38,6 +38,8 @@ Loading or a failed refresh removes unconfirmed rows, counts and owner choices. 
 
 Package detail and native technical control are separate permitted reads. A failed or mismatched technical read leaves the permitted package summary available but withholds technical counts/records and offers refresh. Restricted sources are excluded. Technical registers fail explicitly beyond their native bound; coordination history identifies its latest-100 limit. No absent technical record is presented as a complete global zero.
 
+The detail read also supplies the recorded owner's active state. Both snapshot owner labels identify an inactive owner. Update coordination keeps that owner visible and explains that an active engineer must be chosen before saving, preserving every other field. The existing server eligibility rule remains authoritative; this read grants no assignment authority.
+
 My work follows package ownership. Author actions follows the native authored-work predicate. Assigned reviews require a submitted review assigned to this reader. Released requires a current exact formal issue. Needs attention uses overdue package/action dates, recorded blockers or missing deliverable prerequisite evidence. The three coordination states do not replace any technical rule.
 
 Incoming handovers preserve permitted Project/Opportunity/customer/site context. Outgoing links carry the exact package into EN-02–EN-08 and the existing full package page. Destination reads independently enforce their authority. CSV contains only revalidated selected package facts, quotes text safely and does not claim to export technical evidence or a complete filtered result.
@@ -47,6 +49,8 @@ Incoming handovers preserve permitted Project/Opportunity/customer/site context.
 Reuse shared shell/secondary menu, semantic tokens, Button/ButtonLink, register table/chips/footer/empty state, worklist choices/menus/sheets, record tabs/panels, native intake/coordination forms, read/error feedback and unsaved-change navigation. The [consumer binding](../component-bindings/2026-11-01-engineering-workload.md) records page-specific states and remaining alignment work.
 
 Tab and Shift+Tab reach labelled controls. Enter/Space activates row links and checkboxes. Left/Right resizes a focused column handle and Home restores its default width. Escape closes a supported window and returns focus to the opener. Pending or uncertain writes prevent closing/navigation until the original operation is recovered. Notes survive tab changes; dirty coordination requires an explicit discard decision.
+
+Technical tabs retain the mounted coordination form without a discard prompt. Close and sequence navigation use one shared leave decision, and cancelling preserves the current record and sequence. Every user-triggered snapshot reload, including technical Retry and note-conflict recovery, respects uncertain-save and dirty-coordination guards; a confirmed save alone may refresh its completed form directly.
 
 ## Guide, evidence and review
 

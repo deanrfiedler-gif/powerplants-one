@@ -1290,12 +1290,14 @@ export function CoordinationForm({
   onSaved,
   onBlocked,
   onDirty,
+  retainedQuery = [],
 }: {
   p: EngineeringPackage;
   onCancel: () => void;
   onSaved: () => void;
   onBlocked: (v: boolean) => void;
   onDirty: (v: boolean) => void;
+  retainedQuery?: readonly string[];
 }) {
   const command = useCommand(),
     [form, setForm] = useState({
@@ -1324,12 +1326,16 @@ export function CoordinationForm({
     onDirty(dirty);
     return () => onDirty(false);
   }, [dirty, onDirty]);
-  useUnsavedChanges(dirty, blocked);
+  // Retained technical tabs must not lower this form below the register's
+  // retained-note guard: leaving the package still discards coordination.
+  useUnsavedChanges(dirty, blocked, retainedQuery, 10);
+  const inactiveOwner = form.owner_id === p.owner_id && !p.owner_active;
   return (
     <form
       className="eng-coordination eng-fields"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (!form.owner_id || inactiveOwner) return;
         const result = await command.send(
           "engineering/" + p.id + "/coordination",
           {
@@ -1350,18 +1356,23 @@ export function CoordinationForm({
             name="owner_id"
             label="Assigned engineer"
             value={form.owner_id}
+            current={{
+              id: p.owner_id,
+              display_name: p.owner_name + (p.owner_active ? "" : " (inactive)"),
+            }}
             onChange={(v) => setForm((f) => ({ ...f, owner_id: v }))}
             search={ownerSearch}
             onSearch={setOwnerSearch}
-            options={
-              owners.data?.items ?? [
-                { id: p.owner_id, display_name: p.owner_name },
-              ]
-            }
+            options={owners.data?.items ?? []}
             loading={owners.loading}
             more={owners.data?.has_more}
             error={!!owners.error}
           />
+          {!p.owner_active && (!form.owner_id || inactiveOwner) && (
+            <p role="status">
+              {p.owner_name} is no longer active. Choose an active engineer to save.
+            </p>
+          )}
           <ReadState
             loading={false}
             error={owners.error}
@@ -1429,7 +1440,7 @@ export function CoordinationForm({
       <button
         className="eng-primary"
         type="submit"
-        disabled={command.busy || owners.loading || !!owners.error}
+        disabled={command.busy || owners.loading || !!owners.error || !form.owner_id || inactiveOwner}
       >
         {command.busy
           ? "Saving…"

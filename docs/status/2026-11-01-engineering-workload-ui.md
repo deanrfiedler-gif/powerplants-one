@@ -3,7 +3,7 @@ title: Engineering workload EN-01 implementation and validation
 date: 2026-11-01
 ---
 
-PR #707 resumes the 24 October claim from preservation commit `02355d3b` and merges current main. Dean explicitly authorised an exception to the three-build limit for this PR on 1 November; all other repository and merge gates remain.
+PR #707 resumes the 24 October claim from preservation commit `02355d3b` and merges current main. Continuing this existing build is an agent decision by Codex under the standing order, recorded in the [implementation follow-through record](../decisions/engineering-workload-design.md#1-decisions-and-evidence). The relayed chat about a 1 November three-build-limit exception is context only, without a supporting [DEAN] comment on #707. No exception to the [pull request flow limits](../decisions/pull-request-flow-limits.md) is claimed; repository and merge gates remain.
 
 The accepted register replaces the tab/card/drawer composition at `/engineering` with the Engineering menu, compact toolbar, grid, snapshots, selected-package panel and phone list. Rows, full matching counts and recorded-owner choices use the native register read. Reference ordering is added to the server sort. Source changes invalidate incompatible continuation and selection; CSV and sequence handovers recheck the permitted source. Inactive recorded owners remain filterable without becoming assignable. Native package commands and technical review/release authority remain unchanged.
 

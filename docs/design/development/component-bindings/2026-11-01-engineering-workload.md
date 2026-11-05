@@ -22,6 +22,8 @@ Existing request and coordination fields retain validation, reason, expected ver
 
 Recorded inactive owners remain filter choices; context-bound native owner lookups alone supply assignment choices.
 
+`LookupField.current` supplies the permitted recorded label independently of selectable matches. Coordination uses it to retain an inactive owner's name while its explicit message and disabled Save require an active replacement. Other form values remain mounted.
+
 ## validation
 
 Native validation, stale version and original-operation retry preserve the user's authored draft.
@@ -29,6 +31,8 @@ Native validation, stale version and original-operation retry preserve the user'
 ## tabs
 
 Deliverables, Queries and Reviews & issues preserve URL section and draft notes; unavailable technical reads withhold counts.
+
+The coordination form declares `section` as a retained query key in its own navigation guard. Snapshot Retry uses the same pending/dirty state before reloading either read, preserving the original operation during uncertain saves.
 
 ## menu
 

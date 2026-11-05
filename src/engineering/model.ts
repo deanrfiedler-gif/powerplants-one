@@ -36,6 +36,7 @@ export type EngineeringPackage = {
   customer_name: string;
   owner_id: string;
   owner_name: string;
+  owner_active: boolean;
   discipline: string;
   state: EngineeringState;
   required_date: string | null;

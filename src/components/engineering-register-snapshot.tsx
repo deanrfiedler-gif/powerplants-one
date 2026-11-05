@@ -40,7 +40,7 @@ export function EngineeringSnapshot({
   id: string;
   draft: string;
   onDraft: (value: string) => void;
-  onClose: () => void;
+  onClose: (afterClose?: () => void) => void;
   onSaved: () => void;
   previous?: () => void;
   next?: () => void;
@@ -78,11 +78,16 @@ export function EngineeringSnapshot({
     !!(command.error as Failure | null)?.retryable ||
     editBlocked;
   useUnsavedChanges(editDirty, blocked, ["section"]);
-  const reload = () => {
+  const reloadReads = () => {
     detail.reload();
     technical.reload();
   };
   const leave = (action: () => void) => {
+    if (blocked) return;
+    // URL navigation is reviewed once by the mounted form's shared guard.
+    action();
+  };
+  const reviewReload = (action: () => void) => {
     if (blocked) return;
     if (
       editDirty &&
@@ -93,6 +98,7 @@ export function EngineeringSnapshot({
       return;
     action();
   };
+  const reload = () => reviewReload(reloadReads);
   const technicalChanged = !!(
     p &&
     technical.data &&
@@ -110,18 +116,11 @@ export function EngineeringSnapshot({
     : technical;
   const native =
     technicalRead.error || technicalRead.loading ? null : technicalRead.data;
-  const cancelUpdate = () => {
-    if (
-      editDirty &&
-      !window.confirm(
-        "Discard the unsaved coordination update and reload the latest package?",
-      )
-    )
-      return;
+  const cancelUpdate = () => reviewReload(() => {
     setEdit(false);
     setEditDirty(false);
-    reload();
-  };
+    reloadReads();
+  });
   const tabs = [
     {
       id: "documents",
@@ -192,10 +191,11 @@ export function EngineeringSnapshot({
                 data-menu-close
                 onClick={() =>
                   leave(() => {
-                    onClose();
-                    requestAnimationFrame(() =>
-                      window.dispatchEvent(new CustomEvent(phoneMenuEvent)),
-                    );
+                    onClose(() => {
+                      requestAnimationFrame(() =>
+                        window.dispatchEvent(new CustomEvent(phoneMenuEvent)),
+                      );
+                    });
                   })
                 }
               >
@@ -312,7 +312,7 @@ export function EngineeringSnapshot({
                   <div>
                     <Icon name="user" />
                     <dt>Engineer</dt>
-                    <dd>{p.owner_name}</dd>
+                    <dd>{p.owner_name}{!p.owner_active && " (inactive)"}</dd>
                   </div>
                   <div>
                     <Icon name="badge-check" />
@@ -339,7 +339,7 @@ export function EngineeringSnapshot({
                 <h3>Next action</h3>
                 <p>{p.next_action}</p>
                 <p className="er-muted">
-                  {p.owner_name} ·{" "}
+                  {p.owner_name}{!p.owner_active && " (inactive)"} ·{" "}
                   {p.action_due
                     ? engineeringDate(p.action_due)
                     : "Action date needed"}
@@ -399,6 +399,7 @@ export function EngineeringSnapshot({
                 <CoordinationForm
                   key={p.id}
                   p={p}
+                  retainedQuery={["section"]}
                   onBlocked={setEditBlocked}
                   onDirty={setEditDirty}
                   onCancel={cancelUpdate}
@@ -406,7 +407,7 @@ export function EngineeringSnapshot({
                     setEdit(false);
                     setEditBlocked(false);
                     setEditDirty(false);
-                    reload();
+                    reloadReads();
                     onSaved();
                   }}
                 />
@@ -524,7 +525,7 @@ export function EngineeringSnapshot({
                       noteVersion.current = null;
                       command.clear();
                       setNotice("Note saved.");
-                      reload();
+                      reloadReads();
                       onSaved();
                     }
                   }}
@@ -560,11 +561,11 @@ export function EngineeringSnapshot({
                   {(command.error as Failure | null)?.code ===
                     "VersionConflict" && (
                     <Button
-                      onClick={() => {
+                      onClick={() => reviewReload(() => {
                         noteVersion.current = null;
                         command.clear();
-                        reload();
-                      }}
+                        reloadReads();
+                      })}
                     >
                       Reload latest package and keep note
                     </Button>

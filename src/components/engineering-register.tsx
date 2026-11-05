@@ -116,6 +116,7 @@ export function EngineeringRegister() {
   if (seenSearch !== filters.q) {
     setSeenSearch(filters.q);
     if (filters.q !== submittedSearch) setSearchText(filters.q);
+    setSubmittedSearch(null);
   }
   const [readNotice, setReadNotice] = useState("");
   const [sequenceSource, setSequenceSource] = useState<{
@@ -199,16 +200,7 @@ export function EngineeringRegister() {
     "package_id",
     "section",
   ]);
-  const open = (id: string | null) => {
-    if (id && !inspect && data)
-      setSequenceSource({
-        basis: data.source_version,
-        query: queryString,
-        ids: (selectedRows.some((r) => r.id === id) ? selectedRows : rows).map(
-          (r) => r.id,
-        ),
-      });
-    if (!id) setSequenceSource(null);
+  const open = (id: string | null, afterNavigation?: () => void) => {
     const next = new URLSearchParams(params);
     next.delete("create");
     if (id) next.set("package_id", id);
@@ -217,7 +209,19 @@ export function EngineeringRegister() {
       next.delete("section");
     }
     const href = "/engineering" + (next.size ? "?" + next : "");
-    navigateWithReview(() => router.push(href, { scroll: false }), { href });
+    navigateWithReview(() => {
+      if (id && !inspect && data)
+        setSequenceSource({
+          basis: data.source_version,
+          query: queryString,
+          ids: (selectedRows.some((r) => r.id === id) ? selectedRows : rows).map(
+            (r) => r.id,
+          ),
+        });
+      if (!id) setSequenceSource(null);
+      router.push(href, { scroll: false });
+      afterNavigation?.();
+    }, { href });
   };
   useEffect(() => {
     if (request || !created.current) return;
@@ -274,6 +278,7 @@ export function EngineeringRegister() {
       // query/unmount cancels this recovery before it can replace that read.
       queueMicrotask(() => {
         if (!active) return;
+        reloadRail();
         setReadNotice(
           "The workload changed. Continue from the refreshed first page; the previous selection and sequence are no longer valid.",
         );
@@ -285,7 +290,7 @@ export function EngineeringRegister() {
         active = false;
       };
     }
-  }, [resource.error, cursors.length]);
+  }, [resource.error, cursors.length, reloadRail]);
   const currentSelection = useRef("");
   useEffect(() => {
     currentSelection.current = JSON.stringify([
@@ -352,8 +357,11 @@ export function EngineeringRegister() {
         const current = await api<EngineeringRegisterData>(
           "engineering/register?" + queryString,
         );
-        if (active && current.source_version !== data.source_version) {
-          changedSource({ code: "ReadConflict" });
+        if (active) {
+          setExportError(null);
+          setReadNotice("");
+          if (current.source_version !== data.source_version)
+            changedSource({ code: "ReadConflict" });
         }
       } catch (error) {
         if (active) changedSource(error);
@@ -711,9 +719,6 @@ export function EngineeringRegister() {
           <WorklistMenu label="Engineering register actions" icon="more">
             <Button data-menu-close onClick={() => setFilterOpen(true)}>
               Search and filter
-            </Button>
-            <Button data-menu-close onClick={() => setPhoneSelect((v) => !v)}>
-              {phoneSelect ? "Finish selecting" : "Select packages"}
             </Button>
             <WorklistChoice
               label="Sort packages"
@@ -1117,7 +1122,7 @@ export function EngineeringRegister() {
             onDraft={(value) =>
               setNotes((old) => ({ ...old, [inspect]: value }))
             }
-            onClose={() => open(null)}
+            onClose={(afterClose) => open(null, afterClose)}
             onSaved={() => {
               refresh();
               setSequenceSource(null);
@@ -1196,6 +1201,10 @@ export function EngineeringRegister() {
             created.current = id;
             setRequest(false);
             refresh();
+            setSequenceSource(null);
+            setReadNotice(
+              "Request created. The workload source changed; continue from the fresh first page and select packages again.",
+            );
           }}
         />
         {filterOpen && (

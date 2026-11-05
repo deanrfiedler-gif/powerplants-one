@@ -117,7 +117,7 @@ const joins = `FROM ppo.engineering_packages p JOIN ppo.organisations org ON (or
  LEFT JOIN ppo.projects ctx_project ON (ctx_project.workspace_id,ctx_project.id)=(p.workspace_id,p.project_id)
  LEFT JOIN ppo.opportunities ctx_op ON (ctx_op.workspace_id,ctx_op.id)=(p.workspace_id,p.opportunity_id)
  LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(p.workspace_id,p.site_id)`;
-const projectionSql = `SELECT p.*,p.required_date::text,p.action_due::text,u.display_name AS owner_name,org.display_name AS customer_name,
+const projectionSql = `SELECT p.*,p.required_date::text,p.action_due::text,u.display_name AS owner_name,u.active AS owner_active,org.display_name AS customer_name,
  CASE WHEN p.project_id IS NOT NULL THEN 'Project' ELSE 'Opportunity' END AS context_kind,
  coalesce(p.project_id,p.opportunity_id) AS context_id,coalesce(ctx_project.title,ctx_op.title) AS context_title,
  coalesce(ctx_project.display_number,ctx_op.display_number) AS context_reference ${joins}`;
@@ -142,6 +142,7 @@ function project(r: Row, can_edit = false): EngineeringPackage {
     customer_name,
     owner_id,
     owner_name,
+    owner_active,
     discipline,
     state,
     required_date,
@@ -165,6 +166,7 @@ function project(r: Row, can_edit = false): EngineeringPackage {
     customer_name,
     owner_id,
     owner_name,
+    owner_active,
     discipline,
     state,
     required_date,

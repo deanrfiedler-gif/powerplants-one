@@ -43,7 +43,7 @@ function sourceSql() {
   return `WITH source AS MATERIALIZED (
     ${engineeringProjectionSql.replace(
       "SELECT p.*,",
-      `SELECT ${controlCountsSql} AS technical,u.active AS owner_active,
+      `SELECT ${controlCountsSql} AS technical,
       p.id,p.workspace_id,p.display_number,p.version,p.title,p.brief,p.company_id,p.organisation_id,p.site_id,
       p.project_id,p.opportunity_id,p.owner_id,p.discipline,p.state,p.next_action,p.blocker,p.updated_at,`,
     )}

@@ -248,6 +248,14 @@ test("EN01 filter choices retain recorded inactive owners without granting assig
     const inactive = await engineeringRegister(s.p, { q: b.id });
     assert.equal(inactive.items[0].owner_active, false);
     assert.equal(inactive.engineers.items[0].active, false);
+    assert.equal((await readEngineering(s.p, b.id)).package.owner_active, false);
+    await assert.rejects(
+      coordinateEngineering(s.p, b.id, {
+        ...engineeringUpdate(),
+        owner_id: MATERIALS.author.id,
+      }),
+      (error: unknown) => error instanceof AppError && error.status === 404,
+    );
     const assignment = await engineeringOptions(s.p, {
       kind: "owner",
       context_kind: "Project",
