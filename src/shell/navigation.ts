@@ -70,7 +70,7 @@ export const destinations: ShellDestination[] = [
   {id:"sales-won",label:"Won-deal receiving",icon:"nav-approval",readiness:"ready",workspace:"sales",href:"/sales/handoffs/won",requires:["crm.opportunity.read"]},
   {id:"sales-aftercare",label:"Aftercare & renewal",icon:"nav-activities",readiness:"ready",workspace:"sales",href:"/sales/aftercare",requiresAll:["shared.internal.read","report.read"]},
   {id:"access",label:"Users and access",icon:"settings",readiness:"ready",href:"/admin/access",requires:["admin.access.read"]},
-  {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "unavailable"},
+  {"id": "settings", "label": "Settings", "icon": "settings", "readiness": "ready", "href": "/admin/settings", "requiresAny": ["schedule.policy.review", "schedule.policy.publish", "admin.access.read", "shared.read", "finance.read", "service.work_order.read", "field.read.own"]},
   {"id": "home", "label": "Home", "icon": "home", "readiness": "ready", "href": "/"},
   {"id": "work", "label": "My Work", "icon": "nav-work", "readiness": "ready", "href": "/work", "requires": ["activity.read"]},
   {"id": "mail", "label": "Sales Inbox", "icon": "nav-mail", "readiness": "ready", "href": "/email", "requires": ["email.read"]},
@@ -249,6 +249,8 @@ export const matchesPath = (path: string, href: string) =>
   path === href || (href !== "/" && path.startsWith(href + "/"));
 export function pageForPath(path: string) {
   if (matchesPath(path, "/email/customer-messages")) return { ...destination("mail"), label: "Customer messages", href: "/email/customer-messages" };
+  if (path === "/admin/policies") return { ...destination("settings"), label: "Business policies" };
+  if (/^\/admin\/policies\/[^/]+$/.test(path)) return { ...destination("settings"), label: "Business policy" };
   if (/^\/projects\/[^/]+\/commercial\/[^/]+$/.test(path)) return destination("variations");
   if (path === "/admin/access/requests") return { ...destination("access"), label: "Access-change requests" };
   if (/^\/admin\/access\/requests\/[^/]+$/.test(path)) return { ...destination("access"), label: "Access request" };

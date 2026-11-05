@@ -4,6 +4,9 @@
 // every other new page (PPO-MERGE-CONFLICT-DEC, 27 October 2026 amendment).
 export const moduleWorkspaces = [
   { route: "/admin/access", moduleId: "AD-01", scope: "ppo-access-register", layout: "full-bleed", navigation: "workspace", baseline: "ad01-identity-register" },
+  { route: "/admin/policies", moduleId: "AD-02", scope: "ppo-settings", layout: "full-bleed", navigation: "workspace", baseline: "ad02-policies-register" },
+  { route: "/admin/policies/[id]", moduleId: "AD-02", scope: "ppo-settings", layout: "full-bleed", navigation: "workspace", baseline: "ad02-policy-record" },
+  { route: "/admin/settings", moduleId: "AD-02", scope: "ppo-settings", layout: "full-bleed", navigation: "workspace", baseline: "ad02-settings-hub" },
   { route: "/customers", moduleId: "CS-01", scope: "ppo-organisations", layout: "full-bleed", navigation: "workspace", baseline: "cs01-organisations-register" },
   { route: "/customers/[id]", moduleId: "CS-01", scope: "ppo-customer-360", layout: "full-bleed", navigation: "workspace", baseline: "cs01-native-r01" },
   { route: "/customers/[id]/development", moduleId: "CS-07", scope: "ppo-account-development", layout: "padded", navigation: "workspace", baseline: "cs07-native-r01" },

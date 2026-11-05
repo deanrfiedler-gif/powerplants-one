@@ -20,6 +20,8 @@ import {
   ownerEvidence,
   policyAuthority,
   policyReadAuthority,
+  policyProposalAuthority,
+  requireIndependentPolicyReviewer,
   type PolicyDuty,
 } from "./policy-authority";
 import type { PolicyCandidate } from "./policy-dependencies";
@@ -157,7 +159,11 @@ export async function proposeSchedulingPolicy(p: Principal, input: unknown) {
     p,
     cmd,
     "ProposeSchedulingPolicy",
-    (c) => authority(c, p, "schedule.policy.review", cmd.operation_id),
+    async (c) => {
+      const current = await policyProposalAuthority(c, p);
+      await originalPolicyActor(c, p, cmd.operation_id);
+      return current;
+    },
     async (c) => {
       const chain = await loadPolicyChain(c, p.workspace_id);
       equal(
@@ -220,6 +226,7 @@ export async function reviewSchedulingPolicy(p: Principal, input: unknown) {
     async (c, reviewerAuthority) => {
       const chain = await loadPolicyChain(c, p.workspace_id),
         proposal = await currentProposal(c, p, cmd.proposal, chain);
+      requireIndependentPolicyReviewer(proposal.proposer_id, p.actor_id);
       const loaded = await loadPolicyPopulation(c, p, chain, proposal);
       const review = createPolicyReview(
         {
@@ -411,6 +418,7 @@ export async function publishSchedulingPolicy(p: Principal, input: unknown) {
         cmd.review,
         "review",
       );
+      requireIndependentPolicyReviewer(proposal.proposer_id, review.reviewer_id);
       if (review.reviewer_id === p.actor_id)
         throw new AppError(
           403,

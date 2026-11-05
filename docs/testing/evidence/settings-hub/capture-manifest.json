@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "base_main": "1402c87b9069def4dcd4d82f291cd991cff40ca5",
+  "runtime": {
+    "node": "24.22.2",
+    "npm": "11.19.0",
+    "chrome": "156.0.8078.80",
+    "playwright": "1.64.1",
+    "postgresql": "16",
+    "port": 3182,
+    "data": "synthetic only",
+    "icons": "repository fallback; no Font Awesome kit"
+  },
+  "statuses": {
+    "functional": "focused proof passed; full regression/CI limits in README",
+    "visual": "Codex comparison complete; differences recorded",
+    "owner_acceptance": "not claimed",
+    "deployment": "not performed"
+  },
+  "source_sha256": {
+    "src/admin/policies.ts": "7fc40414857e674e436fc543aaed2e46ebd1b9b348d259c0256cb03134be7495",
+    "src/admin/policy-screen.tsx": "01f8d703a6c28017ca800308e97e93ee09fa102d9f9e68249ed903fdeb2ed8f3",
+    "src/admin/settings-screen.tsx": "f0bfb088d9b049744f8076827c3cc7ad85a21dfceb98034317131397769ccae2",
+    "src/admin/settings.css": "109d5848e68b6fe3d59ad191545e1780e1d07c624f2cfea0db2da9ca753149d5",
+    "src/admin/settings.ts": "fe9c28d336d1b5d2d1a9ba3f5c0e13a5f57f3ef5fac2c6a6b4fb31c86a1e5652",
+    "src/scheduling/policy-authority.ts": "038cd73dc8a93e5a05dc143d54e83964eb89bcace4db2ca9e59617ca0f52d254",
+    "src/scheduling/policy-commands.ts": "27d382f2a6cc791fee97ce8b14fed50f762f93fb93620943c39ddaa33494e95c",
+    "src/scheduling/components/client/policy-publication.client.tsx": "2f465f2597ad0fbb0c5e73f2c01538f940d1ed13ad2e1dd2b5024a6dc112c981",
+    "tests/browser/settings-hub.spec.ts": "c2109b63929eda96ed80034693120b157fe1e8cb1f3a61cc528c5c8ecb8d118c"
+  },
+  "images": [
+    {
+      "file": "captures/hub-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "5e9676bfbc87e408508ed4309022931857a68041bbebf89256dea4ddbf1ef5d2",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-09-Tablet-Overview-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/hub-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "6da9f816157ca7504bb501963a33eab80955c4991287ab93fffbdba30860365d",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-01-Desktop-Overview-Full-Length-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/hub-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "024394645471cf1310e983491560bb4c89e416abaa715a863a107de248b68d28",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-10-Phone-Overview-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/hub-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "de4615b67b20d32a72ea1b183e60fe477cc045b8c50d9c3bdd5b069f6ab4852c",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-10-Phone-Overview-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/propose-phone-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "bffcc80d8fdfdab53715db11aa92460ef6634e71ec6dbe4bce5a897ddf866289",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/propose-phone-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "b2c3f9db0fe3f85ff7d5ad6cfd70a34a0c85bb378898cfcb206d6cd422cc68fc",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/references-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "3acf661e898214c29d4572521fbddf02afbc37faedadfaa080b27a4de668a612",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-08-Desktop-Record-References-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/register-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "52f079568ece2b2cd5c00cd06c957692500b4f53a1d3cd620dad94bb660a4c46",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/register-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "f9e494108bb3be91fb9ecea55d886a408345f3f0b823a7477b604cfc0e3b6447",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/register-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "503e5a55406e17df8d1cf432731136fa56ad6c0008cdf6affca2dac23f05c354",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/register-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "c1872a266fabb4e7837818bbef3256fe25d42cde9a1a2083be17ecdcf62789f2",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-02-Desktop-Business-Policies-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/terms-1024.png",
+      "width": 1024,
+      "height": 900,
+      "sha256": "ff83ff1583f506147c486a1e0dbe85105737fd03e97d3f2726fdd4c0f30205c9",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/terms-1440.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "fd73e02a126fbcd08a5461f3a3807aec19af4bdc91a9b85ffddb852a3a9c28ab",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-03-Desktop-Policy-Terms-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/terms-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "50132d9bfd6bea81a93512509cbc1d0d13a297ca855740f82d66a41ad139a57a",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-12-Phone-320-Policy-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/terms-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "13c122b7f6242d4f0ae5b258731639914aa521ebb753a8c65880272ed437f566",
+      "test_case": "settings-hub-AD-02-real-pe-e0fd6-nd-four-width-capture-proof",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-11-Phone-Policy-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-denied-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "bbbe3c88ae8e6e2e0d8ff87a7d5a04614838bea784acdcabc0d8cf24b794a687",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-failed-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "84a5445a044cbc7741405c5df533bc5d2ecd28f96102d755ab71277b31d01589",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-filter-empty-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "4c31617a8223a4458ac6a4252ff7428d2ebc020306e2919773819bc00d590f5c",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-loading-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "7aed2902b1baa694d3318f40c8fa2ef10e726e3b815adb069c473004250a62ef",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-no-areas-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "e13b84e7e9d94d47ecf548320d5b439c34865293986e0c075c30d44463d063bd",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/state-stale-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "368c1fba7acce8ce3725fd53835aa21a5552edbc536e92aaa1bdcba0636b24ba",
+      "test_case": "settings-hub-AD-02-phone-r-7cf7e-ed-empty-and-failed-sources",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-13-Phone-States-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/propose-dialog.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "d0af9394c126b4d0834220f8f0c0b0a5f5a40fbdd34341f3b994114d68812e5e",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-05-Desktop-Propose-Change-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/publish-dialog.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "277cd75529e21c30a3b461ea3c44a9ff904a3d8abfe060c288b331d039ce81e5",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-06-Desktop-Publish-Version-2-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/publish-refused.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "ae1e0c57b195bcbf50cad8e6bf08617f85982b29821779ae19890a08dcdc5196",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/reviewed-proposal.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "1b30af202d06a639b7bbc893d7911fdb824d98c12552577c372336a2d616d997",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/revision-refused-1024.png",
+      "width": 1024,
+      "height": 1000,
+      "sha256": "e9288f9935b68584f9f0983670d5b1bc506115331e86947fdedd8b800239fb8c",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/revision-refused-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "0c1d044caca8b39c0801642f88bf26fe118e7b1cf18424ba4eb12c503bab81c8",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/revision-refused-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "bfb73b76b7ddb682864ef187c36524334da06ec98799e27a87ade23ba9674e34",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/revision-refused-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "689119de4e637057481b5934dfdb4939c17dbc8a566bf9dabae433690e59c58b",
+      "test_case": "settings-hub-AD-02-dialogs-8dbae-nd-refuse-stale-publication",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-07-Desktop-Publish-Refused-Review-Out-Of-Date-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/recovered-publication.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "dac86ab7ceb026d8d7b91fe2eb67a44eb3d2c1f58da8452de02c959048bf8ee2",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": null,
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/uncertain-publication.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "5136fe2d4815d34463ed9c993c5a219a77bf7bc4dff1b154db9fe1a74b0475ee",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": null,
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/waiting-publish-1024.png",
+      "width": 1024,
+      "height": 1000,
+      "sha256": "203f729bf14480c0ac3b0101dbf90fde15fea35201a64b8e355f77fe1cef4577",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/waiting-publish-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "11fb1fc6384a6bb73cc907466ace11439af0324ca8b9c4d2f445300bdd100266",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-04-Desktop-Version-2-Proposal-Full-Length-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/waiting-publish-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "5c1aedd7ca5a025dae091020e72674a3bb108df6f8c376cbf5ed735f7e8b41e6",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-12-Phone-320-Policy-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    },
+    {
+      "file": "captures/waiting-publish-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "03687758b6bb8908c7ae5c457881c6367d99a961a5ab371f59b1080ba778b26f",
+      "test_case": "settings-hub-AD-02-recover-7bf45-st-without-publishing-twice",
+      "reference": "docs/reference/ui/settings/settings-hub-design-r01/PPO-Settings-Hub-11-Phone-Policy-r01.png",
+      "comparison": "Inspected by Codex; differences in README; no owner visual acceptance"
+    }
+  ],
+  "test_registration": {
+    "path": "tests/scheduling-browser/settings-hub.spec.ts",
+    "note": "After captures, moved unchanged journey bodies from general browser folder into the existing isolated scheduling suite; added per-project reset and serial execution."
+  }
+}

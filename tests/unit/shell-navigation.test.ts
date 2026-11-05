@@ -3,6 +3,7 @@ import { test } from "node:test";
 import {
   canOpen,
   destination,
+  homeHref,
   menuGroups,
   navigationForCapabilities,
   pageForPath,
@@ -18,12 +19,29 @@ test("read-only navigation does not imply creation or elevate an identity", () =
   assert.ok(permitted.includes("deals"));
   assert.ok(permitted.includes("contacts"));
   assert.ok(!permitted.includes("projects"));
-  assert.ok(!permitted.includes("settings"));
+  assert.ok(permitted.includes("settings"), "AD-02 exposes the hub; each area's read retains its own authority");
   assert.equal(canOpen(destination("projects"), permitted, true), false);
-  assert.equal(canOpen(destination("settings"), ["settings"], true), false);
+  assert.equal(canOpen(destination("settings"), ["settings"], true), true);
+  assert.equal(canOpen(destination("settings"), [], true), false);
   assert.equal(canOpen(destination("supply"), permitted, true), false);
   assert.equal(canOpen(destination("supply"), navigationForCapabilities(new Set(["supply.read"]),true), true), true);
   assert.deepEqual(navigationForCapabilities(new Set(), true), ["home"]);
+});
+test("Settings discovery requires a necessary area capability and preserves the grant-less Home empty state", () => {
+  for (const hosted of [false, true]) {
+    const permitted = navigationForCapabilities(new Set(), hosted);
+    assert.ok(!permitted.includes("settings"));
+    assert.equal(homeHref(permitted, hosted), null);
+    for (const capability of [
+      "schedule.policy.review", "schedule.policy.publish", "admin.access.read",
+      "shared.read", "finance.read", "service.work_order.read", "field.read.own",
+    ]) {
+      assert.ok(
+        navigationForCapabilities(new Set([capability]), hosted).includes("settings"),
+        `${capability} retains Settings discovery; server checks decide area admission`,
+      );
+    }
+  }
 });
 test("nested pages resolve to their actual workspace instead of a remembered Sales selection", () => {
   assert.equal(
