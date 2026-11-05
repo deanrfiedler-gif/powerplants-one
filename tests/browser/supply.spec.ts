@@ -98,7 +98,7 @@ for (const spec of supplyPages)
         supplyFact("Custody", 1, { held: "10", state: "Open" }),
       );
     }
-    await page.goto(`/supply/${spec.slug}`);
+    await page.goto(`/supply/${spec.slug}${spec.slug === "stock" ? "?native=1" : ""}`);
     const surface = page.locator("#ppo-supply");
     await expect(surface).toBeVisible();
     await expect(
@@ -159,11 +159,12 @@ for (const spec of supplyPages)
       await surface.getByRole("button", { name: "Returns register", exact: true }).click();
     }
     await openPageGuide(page);
-    await expect(
-      page.getByText(`${spec.scope} — purpose and prerequisites`, {
-        exact: true,
-      }),
-    ).toBeVisible();
+    const purpose = page.getByText(`${spec.scope} — purpose and prerequisites`, { exact: true });
+    if (spec.scope === "SC-05") {
+      // The rewritten guide awaits owner publication; carried-over guides remain visible.
+      await expect(page.getByText("The detailed Inventory guide is being prepared.", { exact: true })).toBeVisible();
+      await expect(purpose).toBeHidden();
+    } else await expect(purpose).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(guide).toBeFocused();
     const overflow = await page.evaluate(
@@ -462,4 +463,36 @@ test("denied identity and Partial evidence do not become authorised or zero avai
   await expect(
     page.getByRole("button", { name: "Revise record", exact: true }),
   ).not.toBeVisible();
+});
+
+
+test("assessed Shipment evidence retains its native source handover", async ({ page, baseURL }) => {
+  const origin = baseURL!;
+  const demand = supplyInput();
+  const source = supplyInput("Supply", {
+    title: "SYN assessed shipment source",
+    data: { ...supplyInput("Supply").data, supply_kind: "Shipment", shipment_id: randomUUID() },
+  });
+  await post(page, origin, "supply/records", demand);
+  await post(page, origin, "supply/records", source);
+  await post(page, origin, "supply/allocations", {
+    ...supplyBase(), id: randomUUID(), expected_version: null,
+    demand_id: demand.id, supply_id: source.id, demand_version: 1,
+    supply_version: 1, quantity: "2", unit: "EA", basis: "Incoming",
+  });
+  const current = await (await page.request.get(origin + `/api/v1/supply/records/${demand.id}`)).json();
+  await post(page, origin, `supply/records/${demand.id}/facts`,
+    supplyFact("Assessment", current.record.version, { scope: "SYN exact shipment evidence only" }));
+  await page.goto(`/supply/material-readiness?record=${demand.id}`);
+  await page.getByText("Exact assessed source versions", { exact: true }).click();
+  const sourceRead = await (await page.request.get(origin + `/api/v1/supply/records/${source.id}`)).json();
+  const link = page.getByRole("link", { name: `Source version ${sourceRead.record.version}`, exact: true });
+  await expect(link).toHaveAttribute("href", `/supply/stock?native=1&record=${source.id}`);
+  await link.click();
+  await expect(page.locator("#ppo-supply")).toBeVisible();
+  await expect(page.locator("#ppo-supply").getByRole("heading", { name: source.title, exact: true })).toBeVisible();
+  const back = page.getByRole("link", { name: "Back to inventory", exact: true });
+  await expect(back).toHaveAttribute("href", "/supply/stock");
+  await back.click();
+  await expect(page.locator("#ppo-inventory")).toBeVisible();
 });

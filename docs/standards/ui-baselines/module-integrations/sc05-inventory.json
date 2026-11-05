@@ -1,0 +1,14 @@
+{
+  "id": "sc05-inventory",
+  "route": "/supply/stock",
+  "scope": "#ppo-inventory",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/supply-chain/inventory-figma-r01/PPO-Inventory-01-Desktop-Register-r01.png",
+  "sha256": "b4e911706a23d52f5ebef49b71460b98d3264e9b98f8a1afe67d5a6422e22cec",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/inventory.spec.ts",
+  "application_proof": "tests/browser/inventory.spec.ts",
+  "authority": "Retained owner-accepted design input only; application visual acceptance and deployment remain separate.",
+  "adaptations": "docs/testing/evidence/inventory/README.md"
+}

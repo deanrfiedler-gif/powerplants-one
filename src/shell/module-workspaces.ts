@@ -78,6 +78,7 @@ export const moduleWorkspaces = [
   { route: "/service/tickets/new", moduleId: "SV-01", scope: "ppo-service-create", layout: "full-bleed", navigation: "workspace", baseline: "sv01-create-native-r01" },
   { route: "/sites/[id]", moduleId: "CS-04", scope: "ppo-site", layout: "padded", navigation: "workspace", baseline: "cs04-native-r01" },
   { route: "/sites/[id]/readiness", moduleId: "CS-06", scope: "ppo-readiness", layout: "padded", navigation: "workspace", baseline: "cs06-native-r01" },
+  { route: "/supply/stock", moduleId: "SC-05", scope: "ppo-inventory", layout: "full-bleed", navigation: "workspace", baseline: "sc05-inventory" },
   { route: "/surveys", moduleId: "CS-08", scope: "ppo-survey", layout: "padded", navigation: "workspace", baseline: "cs08-native-r01" },
   {route:"/warranty/cases",moduleId:"MA-06",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma06-native-r01"},
   {route:"/warranty/cases/[id]",moduleId:"MA-06",scope:"ppo-warranty",layout:"padded",navigation:"workspace",baseline:"ma06-record-native-r01"},

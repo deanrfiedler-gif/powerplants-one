@@ -2,72 +2,73 @@
 guide_key: guide.route-supply-stock
 entry_key: route:/supply/stock
 also_applies_to: []
-carried_over_from: src/supply/guide.ts
-title: Stock & reservations
+title: Inventory
 status: InReview
-shown_before_review: true
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: b95d335987ee3b8f2c9f19509e7832c5200db67d
+source_commit: bc1c622faacddd3256fe11e6474ca6825ad1c430
 contents: { overview: "Overview", how: "How to use", journey: "Journey map" }
 list_styles: { journey: journey }
 ---
 
-Dated source observations, explicit units and completeness. Live reservations are not configured.
+Read dated source observations in the Inventory register, snapshot and item record. MYOB remains the intended ERP authority. PPO posts no stock movement.
 
 ## SC-05 — purpose and prerequisites {#overview}
 
-Use your permitted synthetic profile and the exact company, Site and existing source identities. Keep the source time, completeness, units, owner and next action explicit. These pages coordinate evidence; MYOB remains the intended inventory and Finance authority.
+You need read access to the exact company and Site. Recording an observation requires the existing Supply coordination permission. Keep the source time, completeness, unit and owner explicit.
 
 ### Read the observation basis
 
-Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.
+On hand, source available, source reserved, held and evidenced usable are distinct. Unknown never means zero. Totals combine distinct permitted location observations for the same company, item and unit. Overlapping or missing location evidence leaves the total Unknown. Each observation retains its time and version.
 
 ### Review competing demand
 
-Open line allocations and their native demand handovers. Incoming coordination allocation is not a source reservation; usable allocation needs complete evidence.
+Open the item's Demand view and follow a permitted allocation to Material demand. Incoming shipment allocation is coordination evidence, not a source reservation or stock quantity. Readiness remains a separate review.
 
 ### Respect the source boundary
 
-Live reservation policy is Not configured. Reservation observations can be recorded from fulfilment, but no external command is sent and no unit conversion is inferred.
+No Product link is recorded. Product mapping persistence remains outstanding; a matching name, SKU or family does not create a link. Live reservation policy is Not configured. Activity is evidence history over native records mentioning the item, not a stock ledger.
 
 ## How to use it {#how}
 
-1. **Find the record**\
-   Search and completeness filters remain in the URL. Select a record; Back and reload restore the selected line under your current permissions.
-2. **Read the evidence**\
-   Review source time, completeness, current quantities and retained revisions. Missing evidence remains unknown; there is no assumed observation-age threshold.
-3. **Save deliberately**\
-   Use the relevant workflow action and enter evidence, observation time, completeness and a reason. Saved is shown only after a server receipt. Review / correct capture retains its original.
+1. **Find an item**\
+   Search Inventory and filter by location, unit or completeness. The toolbar reports the actual bounded result as N shown · limit 100. The secondary menu has no counts. Locations are flat rows.
+2. **Read its evidence**\
+   Select a snapshot or open the item record. Quantities, Locations, Demand, Activity and Source evidence retain exact source references. Within Inventory, filters and selection remain in the URL. The native observation form retains the source record; its Back action returns without Inventory filters.
+3. **Record an observation**\
+   Record observation opens the existing native Supply form. For an existing item, review its current source version and give a reason. Saved appears only after the server receipt; expected versions and original-operation recovery remain active.
 4. **Complete the handover**\
-   Follow canonical context links and the one owned Activity. Keep technical, commercial, scheduling, document and Finance decisions with their owners.
+   In Activity, a Shipment record opens Receiving with its receipt and inspection evidence; a Stock record opens its native observation. Follow the permitted Material demand or Service stock links for their separate handovers. Technical, commercial, scheduling and Finance decisions remain with their owners. Open product stays unavailable while no link is recorded.
 
 ## Your journey {#journey}
 
-Evidence enters once and is followed through the appropriate native workspace.
+Evidence enters once and remains attributable to its source.
 
-1. **Read the observation basis**\
-   Review company, warehouse, bin, item, unit, source time and completeness. On hand, source available, source reserved, held and evidenced usable are distinct. Unknown values remain unknown, never zero.
-2. **Review competing demand**\
-   Open line allocations and their native demand handovers. Incoming coordination allocation is not a source reservation; usable allocation needs complete evidence.
-3. **Respect the source boundary**\
-   Live reservation policy is Not configured. Reservation observations can be recorded from fulfilment, but no external command is sent and no unit conversion is inferred.
+1. **Review the bounded register**\
+   N shown is the number returned by this read, not a complete-stock count. Unknown and known zero are different states.
+2. **Compare the observations**\
+   Read quantities, flat locations, completeness and each source time. A partial source scan cannot establish totals. No freshness threshold or source precedence is invented.
+3. **Follow the native action**\
+   Use Record observation for the existing form, or follow the permitted owning record. A read, allocation or link never posts a stock movement.
 
 ## On your phone {#mobile}
 
-At 390 and 320 CSS pixels the worklist and detail stack, capture fields use 16px text and controls retain 44px targets. Receipt, picking/dispatch and delivery have focused mobile forms. This workflow is online; no offline queue is implied.
+Use full-width item links and Search and filter. Quantity meanings remain separate at 390 and 320 px. The item tabs and actions sit above the shared bottom navigation. Swipe the tab bar to reach all five views. Record observation keeps the native responsive form and uncertain-save recovery. This workflow is online; no offline posting is offered.
 
 ## Keyboard shortcuts {#shortcuts}
 
 | Key | Action |
 |---|---|
 | `Tab / Shift Tab` | Move between labelled controls. |
-| `Enter / Space` | Open the focused record or action. |
-| `Escape` | Close the form or page guide; a form asks before discarding entered values. |
+| `Enter` | Open the focused item or action. |
+| `Space` | Select a snapshot checkbox or activate a button. |
+| `Escape` | Close the shared secondary menu and restore focus; native forms retain their existing discard checks. |
 
 ## If something is unavailable {#recovery}
 
-For validation errors, correct the named fields. For a stale revision, refresh and compare the retained proposal against current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Unknown external outcomes require evidence against the original reference; absence is not proof of failure.
+A failed or denied read removes the previous projection. Retry read preserves your selected item and filters. Unavailable source evidence and missing quantities remain Unknown; they are never replaced with zero.
+
+For validation errors in the native form, correct the named fields. For a stale revision, refresh and compare the retained proposal with current evidence. An uncertain save retains its original operation and content in this browser session: check the original receipt or retry that exact PPO save. Restored access is checked before any receipt is disclosed. Absence of a receipt is not proof that an external effect failed.
 
 > [!NOTE]
-> Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Visual review, owner acceptance and deployment are separate.
+> Synthetic/manual coordination only. No live purchase, reservation, ERP receipt/shipment/return/credit, customer message, automatic reschedule or stock/Finance ledger is provided. Guide review, application visual acceptance and deployment are separate.

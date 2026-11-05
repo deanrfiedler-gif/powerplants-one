@@ -1,0 +1,36 @@
+{
+  "captured_at": "2026-11-01T21:27:29.652993+10:00",
+  "base_commit": "c69a0922c19e2d62b5859c57895204f5c44684c3",
+  "provenance": "Local synthetic working tree for PR #805; exact file hashes below. Not an accepted application fingerprint.",
+  "visual_comparison": "Codex inspected all 14 refreshed captures on 1 November 2026; differences in README.md; owner acceptance pending.",
+  "sources": {
+    "src/supply/inventory.ts": "331fa6611bcdded31944486d587ce590ba95f42bcc8ff2d753fc92e75864bb2d",
+    "src/supply/inventory-model.ts": "439a71a77204f915ac7baf8b9a314b3009c86ea299b0f10ce7d5e0db025f4e65",
+    "src/supply/components/inventory.tsx": "f3fca196d2f447b163dff40dc6c21d459e67b11ef04df8ed30347c4a0a6f0645",
+    "src/supply/components/inventory.css": "13d967fc22db615f922daff6283e816a234fc6d712d33054a2d98f1880fb4cbf",
+    "src/supply/components/workspace.tsx": "107690fc2da0398703da686eefa831b656bcbf3cc362c2538466cb0893001c69",
+    "src/supply/navigation.ts": "79b1e6b174a1bcf0c2fede9e766c409969514f0c675a743cd73e3bf55104df6c",
+    "src/shell/navigation.ts": "81006b581ab6014a06b5f1928e40cb2735f032325337c6ca6f0393f5184bcd97",
+    "src/shell/module-workspaces.ts": "34824a2b8143b0b15cbbb05d2b5eca1eaff256739ce36fc2c32ffd311eaa39c9",
+    "src/app/api/v1/supply/records/route.ts": "0df835e5f580a77fcaa9995f33709ff5150b1b029f02623684a14d76f08f85c6",
+    "tests/browser/inventory.spec.ts": "9e4659b2de566f90fd4371f3780ddf1351de148629c29e07caf4c688262276f7",
+    "playwright.inventory.config.ts": "5655277b3eaa38ac477f1b213f8bc22c16ce859ebf2934e8e6c55121abfcc6d8"
+  },
+  "captures": {
+    "activity-1024.png": "f7c41ec3d1cb9a237a6a5f6eefc10774dc81bb1c8a92ef3a327a8584a0c62ce4",
+    "activity-1440.png": "dfcd4b3f96636f2a9bec069544a1913ad050393d06f591c36825d37b85c6d93d",
+    "activity-320.png": "897c634a78eb74d2ac9e535276a86d72a80aa48a11d9c672b4ad02ad41a9b405",
+    "activity-390.png": "4cc0dcc841b74c50e693df99ebd3d432532d3c647ab9cb559e0f9b7bab2f96a6",
+    "quantities-1024.png": "3458d5ba57359f2a2944f16872c92bae927528c8b095e7bb3694381d4afec83a",
+    "quantities-1440.png": "4dbec491472c9072e582e3b0ca86e3bc680c948d74702e623e2e455d6e6b4f2f",
+    "quantities-320.png": "99fbf876ada391f96fd98d211f1a8511b08fd1aff8fa52f99e66bfd12a1b2b7a",
+    "quantities-390.png": "c89857517c45a7d3af60a124cf7055fdc781061c87ac5f35ac725b8a8f74869c",
+    "register-1024.png": "988ddb616e1fadf8e7e657e48278f591db947b17e4c446a232ea27ebeac31662",
+    "register-1440.png": "8ad43dac6ed579cc3b48befec3d93efee13b42e67022f6d1c09526c86d30ae18",
+    "register-320.png": "8801bb6b0e10aace90328b41aad967b8cbccbf869052a1e5ec259690b8addf1c",
+    "register-390.png": "27ba02c3d67da4004f69d189be58a2d98298519ec6ac639a0ee8df92554f725c",
+    "snapshot-1440.png": "3546e8157eaba9f7082eb1d6c1330ab6451175c228aa2ce00270330fcb20436c",
+    "unknown-320.png": "9e6c8d40fa9bdf7206a4988f2698c1ec87cb55790697d4816da7249b242125a7"
+  },
+  "source_commit": "eaaaca3fdcf6197ec1422751e1752e451086dede"
+}

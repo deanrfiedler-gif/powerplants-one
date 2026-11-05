@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "entries": [],
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "sc05-inventory",
+          "label": "Inventory SC-05",
+          "description": "Bounded register, snapshot, per-item quantities, Unknown versus zero, failed read, native observation handover and 320 px."
+        }
+      ],
+      "dependencies": [
+        "src/supply/components/inventory.tsx",
+        "docs/testing/evidence/inventory/README.md"
+      ],
+      "used_on": [
+        "scope:SC-05",
+        "route:/supply/stock"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-sc05-review",
+          "expected": "Accepted Inventory composition with accessible mobile states.",
+          "actual": "Implemented and 14 captures inspected by builder; differences recorded in Inventory evidence. No application visual acceptance. Product mapping persistence outstanding.",
+          "action": "Independent exact-head review and owner visual review remain separate; assess recorded differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "sc05-inventory",
+          "label": "Inventory SC-05",
+          "description": "Bounded register, snapshot, per-item quantities, Unknown versus zero, failed read, native observation handover and 320 px."
+        }
+      ],
+      "dependencies": [
+        "src/supply/components/inventory.tsx",
+        "docs/testing/evidence/inventory/README.md"
+      ],
+      "used_on": [
+        "scope:SC-05",
+        "route:/supply/stock"
+      ],
+      "gaps": [
+        {
+          "id": "buttons-sc05-review",
+          "expected": "Accepted Inventory composition with accessible mobile states.",
+          "actual": "Implemented and 14 captures inspected by builder; differences recorded in Inventory evidence. No application visual acceptance. Product mapping persistence outstanding.",
+          "action": "Independent exact-head review and owner visual review remain separate; assess recorded differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "sc05-inventory",
+          "label": "Inventory SC-05",
+          "description": "Bounded register, snapshot, per-item quantities, Unknown versus zero, failed read, native observation handover and 320 px."
+        }
+      ],
+      "dependencies": [
+        "src/supply/components/inventory.tsx",
+        "docs/testing/evidence/inventory/README.md"
+      ],
+      "used_on": [
+        "scope:SC-05",
+        "route:/supply/stock"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-sc05-review",
+          "expected": "Accepted Inventory composition with accessible mobile states.",
+          "actual": "Implemented and 14 captures inspected by builder; differences recorded in Inventory evidence. No application visual acceptance. Product mapping persistence outstanding.",
+          "action": "Independent exact-head review and owner visual review remain separate; assess recorded differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "sc05-inventory",
+          "label": "Inventory SC-05",
+          "description": "Bounded register, snapshot, per-item quantities, Unknown versus zero, failed read, native observation handover and 320 px."
+        }
+      ],
+      "dependencies": [
+        "src/supply/components/inventory.tsx",
+        "docs/testing/evidence/inventory/README.md"
+      ],
+      "used_on": [
+        "scope:SC-05",
+        "route:/supply/stock"
+      ],
+      "gaps": [
+        {
+          "id": "read-state-sc05-review",
+          "expected": "Accepted Inventory composition with accessible mobile states.",
+          "actual": "Implemented and 14 captures inspected by builder; differences recorded in Inventory evidence. No application visual acceptance. Product mapping persistence outstanding.",
+          "action": "Independent exact-head review and owner visual review remain separate; assess recorded differences.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}
