@@ -94,7 +94,7 @@ export function FindingsScreen() {
     [source, setSource] = useState(""),
     [site, setSite] = useState<FindingOption>({ id: "", label: "All" }),
     [offset, setOffset] = useState(0),
-    [selected, setSelected] = useState<string | null>(null),
+    [selected, setSelected] = useState<string | null>(search.get("finding")),
     [menuOpen, setMenuOpen] = useState(true);
   const menu = useSecondaryMenu(menuOpen, setMenuOpen),
     opener = useRef<HTMLElement | null>(null),
@@ -567,6 +567,7 @@ function FindingSnapshot({
               {row.action?.owner_name ?? "Unassigned"} · <Due row={row} />
             </span>
           </header>
+          {r.data?.can_request_remote_diagnosis && <div className="sv07-handover"><ButtonLink href={`/service/escalations?${new URLSearchParams({new:"1",finding:row.id})}`}>Request remote diagnosis</ButtonLink></div>}
           <section className="sv07-remains">
             <h3>What remains</h3>
             <p>{row.what_remains}</p>

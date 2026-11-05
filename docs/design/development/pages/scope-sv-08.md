@@ -14,18 +14,18 @@ Implement remote diagnosis and OEM escalation with exact configuration, attempte
 
 ## Desktop
 
-Accepted design: the [Remote diagnosis and escalation design decision](../../../decisions/escalations-figma-design.md) of 18 October 2026, with captures 01–04 (desktop 1440 × 900) and 05 (tablet 1024) in [design r01](../../../reference/ui/service/escalations-design-r01/README.md). No route, read model or service exists yet; this design defines the build.
+Accepted design: the [Remote diagnosis and escalation design decision](../../../decisions/escalations-figma-design.md) of 18 October 2026, with captures 01–04 (desktop 1440 × 900) and 05 (tablet 1024) in [design r01](../../../reference/ui/service/escalations-design-r01/README.md). The synthetic native implementation is under review at `/service/escalations`; its [record contract](../../../contracts/service-escalations.md) and [agent decisions](../../../decisions/service-escalations-native.md) define behaviour.
 
 - **Place:** Escalations sits beside Findings in the Service review workspace. The side menu gains an Escalations group (Open cases, Diagnosing, Waiting on manufacturer, Reply to act on), and History splits into Closed findings and Closed cases (D2).
 - **Register:** one row per case with Case, Fault, State, Owner and Next step; Owner and Manufacturer filters; the count with its read time. States are always in words: Diagnosing, Waiting on manufacturer, Reply to act on, Closed, or withdrawn (D1).
-- **Case record:** its own number, SYN-PPO-ESC-…, linked to its finding and equipment (D3). A readiness bar ("Before sending", then "Before closing"), a details column with the equipment's warranty end (Q4), and tabs Diagnosis, Configuration, Evidence pack, Correspondence and History.
+- **Case record:** its own number, SYN-ESC-000nnn, linked to its finding and equipment (D3). A readiness bar ("Before sending", then "Before closing"), a details column with the equipment's warranty end (Q4), and tabs Diagnosis, Configuration, Evidence pack, Correspondence and History.
 - **Diagnosis and configuration:** each diagnostic tried with who, when and the result. Controller settings are captured read-only, because they belong to the grower (D4).
 - **Evidence pack:** HTML and PDF with hashes, reviewed before it can be recorded as sent. Customer contact details and prices are always left out (D5).
 - **Record as sent:** PPO sends nothing. A named person sends the pack from their own mailbox or the manufacturer's portal, then records who, how, when, the manufacturer's reference and when a reply is expected ([D-025](../../../decisions/customer-communications-d025.md), [ADR-0058](../../../decisions/ADR-0058-outbound-customer-email.md); D6). The reply-expected date drives a chase reminder in My Work, with no automatic message (Q2).
-- **Reply to act on:** the reply is recorded as received, with its attachments. Create finding and next action turns the advice into owned work in My Work; settings changes still need the grower's approval. Closing the case does not close the finding (D7).
+- **Reply to act on:** the reply is recorded as received, with its attachments. Record next action turns the advice into owned work against the required existing finding in My Work; settings changes still need the grower's approval. Closing the case does not close the finding (D7).
 - **Who:** Service coordinators and senior technicians open and record cases; the sender is always a named person (Q1). Manufacturers and their support routes come from a maintained list taken from equipment records (Q3).
 - **Shell:** the proposed Conversations action sits left of the information icon.
-- Nothing is built.
+- Source implementation exists; functional proof and visual comparison are in progress, and owner acceptance and deployment remain unverified.
 
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
@@ -49,10 +49,16 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 Accepted Figma design: [Remote diagnosis and escalation design r01 captures](../../../reference/ui/service/escalations-design-r01/README.md) (nine icon-free PNGs; design compositions, not application captures) and its [decision](../../../decisions/escalations-figma-design.md). The page sits beside SV-07 Findings, recorded in the [Findings design decision](../../../decisions/findings-figma-design.md) and the [SV-07 page notes](scope-sv-07.md). No HTML reference exists. Images of the Configuration, Evidence pack and History tabs in full, withdrawing a case, a closed case, the pack preview, the phone Diagnosis tab, denied access and 200% zoom are still missing.
 
-No exact image or HTML reference is linked. Keep this gap visible.
+The nine exact image references above are retained unchanged. No standalone HTML design reference exists.
+
+## Agent implementation choices and design differences
+
+D3 requires a finding when opening, despite frame 04 showing an unlinked case. The action is Record next action against that existing native finding; no standalone finding source is invented. New numbers use the adopted SYN-ESC series. Missing manufacturer support routes require explicit maintenance against Equipment rather than invented addresses. Configuration is the existing Equipment narrative/revision captured read-only; richer structured controller exports are not available. Phone Diagnosis includes configuration so every required decision remains reachable, and the full fault title wraps in the record body. Shared controls and wording expose missing/denied/stale/uncertain states omitted by the captures. The proposed Conversations shortcut is not added without a defined case conversation contract.
+
+The existing Service review menu gains Escalations and separate Closed findings/Closed cases. The page root uses SecondaryMenuFrame attributes with data-ppo-workspace="shared". RegisterTable, shared Buttons, ReadState, RecordTabs, fields and local date/time controls are reused through a consumer binding. Component specifications and shared CSS ID lists are unchanged. The [application comparison ledger](../../../testing/evidence/service-escalations/README.md) records inspected widths and geometry differences without owner acceptance.
 
 ## Behaviour, handovers and verification
 
 The draft User Guide `guide.sv.08` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
-Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+Application captures at 1440, 1024, 390 and 320 px have been inspected against the original references; the comparison ledger records differences and functional proof separately. Owner acceptance remains pending. Keyboard/focus acceptance, 200% zoom and owner-device review remain outstanding. Do not replace a comparison image simply to make a test pass.

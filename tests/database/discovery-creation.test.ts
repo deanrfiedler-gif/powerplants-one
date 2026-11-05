@@ -15,7 +15,7 @@ import { readOperation } from "../../src/shared/receipts";
 import { crmBase, crmDiscovery, CRM } from "../helpers/crm";
 import { discoveryInput } from "../helpers/estimating-discovery";
 import { recoverSchema } from "../helpers/recover-schema";
-import { agentAskSeedGrants } from "../helpers/engineering-materials-grants";
+import { agentAskSeedGrants, escalationSeedGrants } from "../helpers/engineering-materials-grants";
 
 if (localConfig().database_name !== "ppo_synthetic_test") throw Error("Disposable synthetic test database only");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -161,13 +161,15 @@ test("0113 preserves populated original links, receipts, grants and migration le
   await migrate(); await seed();
   assert.deepEqual(await snapshot(), before);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<=109 ORDER BY version"), ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }]);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 111 }, { version: 112 }, { version: 113 }, { version: 114 }, { version: 115 }, { version: 116 }, { version: 117 }, { version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }, { version: 124 }]);
   const afterGrants = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map(g => g.id));
   assert.deepEqual(afterGrants.filter(g => ids.has(g.id)), grants);
-  assert.deepEqual(afterGrants.filter(g => !ids.has(g.id)),
+  assert.deepEqual(afterGrants.filter(g => !ids.has(g.id) && g.capability !== "service_escalation.record"),
     agentAskSeedGrants(grants).sort((a, b) => String(a.id) < String(b.id) ? -1 : 1));
+  assert.deepEqual(afterGrants.filter(g => !ids.has(g.id) && g.capability === "service_escalation.record"),
+    escalationSeedGrants(grants).sort((a, b) => String(a.id) < String(b.id) ? -1 : 1));
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<=109 ORDER BY version"), receipts);
-  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }]);
+  assert.deepEqual(await rows("SELECT version FROM ppo.seed_receipts WHERE version>109 ORDER BY version"), [{ version: 110 }, { version: 120 }, { version: 121 }, { version: 124 }]);
   const complete = () => Promise.all([snapshot(), rows("SELECT * FROM ppo.permission_grants ORDER BY id"),
     rows("SELECT * FROM ppo.seed_receipts ORDER BY version"), rows("SELECT * FROM public.ppo_migrations ORDER BY version")]);
   const upgraded = await complete();

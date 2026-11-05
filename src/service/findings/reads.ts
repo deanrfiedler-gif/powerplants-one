@@ -2,7 +2,7 @@ import type { Principal } from "../../platform/identity";
 import { transaction } from "../../platform/database";
 import { AppError, unavailable } from "../../platform/errors";
 import {
-  requireCapability,
+  requireCapability, hasPermission,
   type QueryClient,
 } from "../../platform/permissions";
 import { object } from "../../shared/validation";
@@ -144,6 +144,6 @@ export async function readFinding(
       .rows[0].now;
     item.overdue = isOverdue(item, now);
     item.due_this_week = dueThisWeek(item, now);
-    return { item, as_of: now.toISOString(), synthetic: true };
+    return { item, as_of: now.toISOString(), synthetic: true, can_request_remote_diagnosis: !["Closed", "Superseded"].includes(item.state) && await hasPermission(c,p,"service_escalation.record",item.company_id,item.site.id) };
   });
 }

@@ -395,7 +395,14 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // requests keep their bytes with both columns null; nothing is backfilled or inferred. No seed,
   // user, grant, capability, identity, outbox kind or existing row changes; existing all-table
   // runtime privileges cover the new columns, and the guard function runs with PUBLIC execute.
-  if (latestMigrationVersion !== 123) throw Error("Review the existing-demo upgrade for this release.");
+  // 0124 adds synthetic escalation identities, retained evidence/correspondence and equipment
+  // support routes. Deferred 0026 identity events are flushed before widening the registry.
+  // Seed 124 adds only service_escalation.record to the existing local coordinator and assigned
+  // technician, copying their live Activity scopes without reinstating expired/revoked grants.
+  // No new users or invited-tester duties; no sender, integration, existing reference or evidence
+  // changes. Generic runtime table grants cover the new records. Hosted users remain denied
+  // unless a separate authority decision grants this duty; no capability is added to additions.
+  if (latestMigrationVersion !== 124) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

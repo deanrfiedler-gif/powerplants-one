@@ -652,7 +652,7 @@ for (const through of [88, 89])
         result.push(
           await rows(
             // Later seeds 107 (readiness), 108 (Conversations) and 110 (agent ask) are proved in readiness-gate.test.ts, conversations-upgrade.test.ts and assistant-upgrade.test.ts.
-            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (107,108,110,120, 121)" : t === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%'" : ""} ORDER BY to_jsonb(t)::text`,
+            `SELECT to_jsonb(t) AS value FROM ppo.${t} t${t === "seed_receipts" ? " WHERE t.version NOT IN (107,108,110,120,121,124)" : t === "permission_grants" ? " WHERE t.capability NOT LIKE 'conversation.%' AND t.capability NOT LIKE 'service_escalation.%'" : ""} ORDER BY to_jsonb(t)::text`,
           ),
         );
       return result;
@@ -677,12 +677,12 @@ for (const through of [88, 89])
         ? [
             89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
             105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
-            118, 119, 120, 121, 122, 123,
+            118, 119, 120, 121, 122, 123, 124,
           ]
         : [
             90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
             105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
-            118, 119, 120, 121, 122, 123,
+            118, 119, 120, 121, 122, 123, 124,
           ],
     );
     assert.equal(

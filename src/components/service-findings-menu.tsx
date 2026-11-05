@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { EscalationsMenu, EscalationMenuLink, type EscalationView } from "./service-escalations-menu";
 import "./service-review-menu.css";
 import { Fragment } from "react";
 import { ProductIcon } from "./product-icons";
@@ -18,8 +19,12 @@ export function FindingsMenu({
   view,
   counts,
   onSelect,
+  escalationView,
+  onEscalationSelect,
 }: {
   view?: FindingView;
+  escalationView?: EscalationView;
+  onEscalationSelect?: (view: EscalationView) => void;
   counts?: Record<string, number>;
   onSelect?: (view: FindingView) => void;
 }) {
@@ -27,6 +32,7 @@ export function FindingsMenu({
     <>
       {[findingViews.slice(0, 7), findingViews.slice(7)].map((group, index) => (
         <Fragment key={index}>
+          {index === 1 && <EscalationsMenu view={escalationView} onSelect={onEscalationSelect} />}
           <h2>{index === 0 ? "Findings" : "History"}</h2>
           <ul className="sv07-review-links">
             {group.map((v) => (
@@ -52,6 +58,7 @@ export function FindingsMenu({
                 )}
               </li>
             ))}
+            {index === 1 && <EscalationMenuLink id="closed" label="Closed cases" view={escalationView} onSelect={onEscalationSelect} />}
           </ul>
         </Fragment>
       ))}

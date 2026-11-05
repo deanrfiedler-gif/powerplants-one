@@ -191,6 +191,7 @@ function ActivityEditor({
         </dl>
       </section>
       {a.incident_source && <IncidentActivityHandover href={a.incident_source.href} />}
+      {a.escalation_source && <p><Link href={a.escalation_source.href}>Return to escalation case {a.escalation_source.reference}</Link>. The case owns the reply-expected date. Completing this chase sends nothing and does not close the finding.</p>}
       {a.report_source && <p><Link href={a.report_source.href}>Return to original service report and response</Link>. Completing this Activity does not change a customer response, internal attendance acceptance, incident or inspection defect.</p>}
       <SalesFollowupPanel id={a.id} onLinked={reload} />
       {a.kind === "CustomerContact" && (

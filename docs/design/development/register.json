@@ -1723,36 +1723,36 @@
       "design_path": "docs/design/development/pages/scope-es-05.md",
       "html_path": "docs/reference/ui/quoting/PPO-Quotation-Approval-Issue-and-Distribution-r02.html",
       "image_paths": [
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-01-Desktop-Issued-R2-Full-Length-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-02-Desktop-Section-Markers-Annotated-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-03-Desktop-Validity-Ended-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-04-Desktop-Older-R1-No-Section-Markers-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-05-Phone-First-Screen-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-06-Phone-Full-Length-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-07-Phone-320-First-Screen-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-08-Phone-320-Full-Length-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-09-Notice-Withdrawn-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-10-Notice-Replaced-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-11-Notice-Closed-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-12-Phone-Notice-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-13-Release-Send-Composer-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-14-Release-Send-PDF-Attached-Warning-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-15-Release-Send-Tracking-Off-Privacy-Gate-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-16-Quotation-Withdraw-Link-Dialog-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-17-Deal-Estimates-Quotations-Customer-Views-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-18-My-Work-Follow-Up-Suggestion-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-19-Phone-Deal-Quotes-Customer-Views-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-20-Phone-Customer-Views-Sheet-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-21-State-Not-Viewed-Yet-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-22-State-Viewed-May-Be-Automatic-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-23-State-Send-Failed-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-24-State-Send-Outcome-Unknown-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-25-State-Tracking-Off-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-26-State-Colleague-Reading-Deal-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-27-State-First-Viewed-Notice-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-28-State-Older-Quotation-r01.png",
-      "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-29-State-Link-Withdrawn-r01.png"
-    ],
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-01-Desktop-Issued-R2-Full-Length-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-02-Desktop-Section-Markers-Annotated-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-03-Desktop-Validity-Ended-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-04-Desktop-Older-R1-No-Section-Markers-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-05-Phone-First-Screen-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-06-Phone-Full-Length-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-07-Phone-320-First-Screen-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-08-Phone-320-Full-Length-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-09-Notice-Withdrawn-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-10-Notice-Replaced-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-11-Notice-Closed-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-12-Phone-Notice-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-13-Release-Send-Composer-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-14-Release-Send-PDF-Attached-Warning-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-15-Release-Send-Tracking-Off-Privacy-Gate-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-16-Quotation-Withdraw-Link-Dialog-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-17-Deal-Estimates-Quotations-Customer-Views-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-18-My-Work-Follow-Up-Suggestion-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-19-Phone-Deal-Quotes-Customer-Views-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-20-Phone-Customer-Views-Sheet-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-21-State-Not-Viewed-Yet-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-22-State-Viewed-May-Be-Automatic-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-23-State-Send-Failed-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-24-State-Send-Outcome-Unknown-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-25-State-Tracking-Off-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-26-State-Colleague-Reading-Deal-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-27-State-First-Viewed-Notice-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-28-State-Older-Quotation-r01.png",
+        "docs/reference/ui/estimating/quotation-page-design-r01/PPO-QuotePage-29-State-Link-Withdrawn-r01.png"
+      ],
       "dependencies": [
         "src/components/quotation-release.tsx",
         "src/components/quotation-release.css",
@@ -3315,13 +3315,14 @@
     },
     {
       "key": "scope:SV-08",
-      "title": "Remote diagnosis and OEM escalation",
+      "title": "Remote diagnosis and escalation",
       "kind": "scope",
       "module": "SV",
-      "summary": "Implement remote diagnosis and OEM escalation with exact configuration, attempted troubleshooting, response evidence and owned next actions.",
+      "summary": "Synthetic finding-linked cases, technical evidence, recorded manufacturer correspondence and owned next actions.",
       "path": "/service/escalations",
       "source_paths": [
-        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
+        "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html",
+        "src/app/(business)/service/escalations/page.tsx"
       ],
       "guide_key": "guide.sv.08",
       "design_path": "docs/design/development/pages/scope-sv-08.md",
@@ -3338,11 +3339,14 @@
         "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-09-Phone-States-r01.png"
       ],
       "dependencies": [
-        "docs/decisions/escalations-figma-design.md"
+        "docs/decisions/escalations-figma-design.md",
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations.css"
       ],
       "scope_status": "unbuilt",
       "visual_status": "Needs review",
-      "functional_status": "Not recorded here",
+      "functional_status": "Implementation under validation",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -3352,7 +3356,8 @@
         "scope:SV-02",
         "scope:EQ-01",
         "scope:EQ-03",
-        "scope:SV-07"
+        "scope:SV-07",
+        "route:/service/escalations"
       ],
       "reviewer": null
     },
@@ -13604,11 +13609,10 @@
         "docs/reference/ui/estimating/cost-sources-design-r01/PPO-Cost-Sources-05-Phone-Record-View-r01.png"
       ],
       "dependencies": [
-          "src/components/cost-source-register.tsx",
-          "src/components/cost-source-register.css",
-          "src/components/cost-source-snapshot.tsx",
-          "src/estimating/cost-source-register-model.ts",
-
+        "src/components/cost-source-register.tsx",
+        "src/components/cost-source-register.css",
+        "src/components/cost-source-snapshot.tsx",
+        "src/estimating/cost-source-register-model.ts",
         "src/components/cost-sources.tsx",
         "src/components/cost-sources.css",
         "src/guides/render.tsx",
@@ -18689,6 +18693,49 @@
       "build_rank": 20,
       "related_keys": [
         "scope:DK-01"
+      ]
+    },
+    {
+      "key": "route:/service/escalations",
+      "title": "Remote diagnosis and escalation",
+      "kind": "route",
+      "module": "SV",
+      "summary": "Synthetic finding-linked cases, technical evidence, recorded manufacturer correspondence and owned next actions.",
+      "path": "/service/escalations",
+      "source_paths": [
+        "src/app/(business)/service/escalations/page.tsx"
+      ],
+      "guide_key": "guide.route-service-escalations",
+      "design_path": "docs/design/development/pages/route-service-escalations.md",
+      "html_path": null,
+      "image_paths": [
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-01-Desktop-Register-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-02-Desktop-Diagnosis-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-03-Desktop-Record-As-Sent-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-04-Desktop-Reply-To-Act-On-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-05-Tablet-Register-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-06-Phone-List-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-07-Phone-Reply-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-08-Phone-320-Reply-r01.png",
+        "docs/reference/ui/service/escalations-design-r01/PPO-Escalations-09-Phone-States-r01.png"
+      ],
+      "dependencies": [
+        "src/components/service-escalations.tsx",
+        "src/components/service-escalations-command.tsx",
+        "src/components/service-escalations.css"
+      ],
+      "scope_status": "New source; editorial review pending",
+      "visual_status": "Needs review",
+      "functional_status": "Implementation under validation",
+      "deployment_status": "Not verified",
+      "review_fingerprint": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "owner": "Dean Fiedler",
+      "build_rank": null,
+      "related_keys": [
+        "scope:SV-08",
+        "scope:SV-07"
       ]
     }
   ]

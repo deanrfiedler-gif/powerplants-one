@@ -1,3 +1,4 @@
+import { escalationSeedGrants } from "../helpers/engineering-materials-grants";
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { migrate, seed } from "../../scripts/database";
@@ -74,6 +75,11 @@ for (const through of [117, 118, 119])
       let current = await rows(
         `SELECT to_jsonb(x) AS row FROM ppo.${table} x ORDER BY to_jsonb(x)::text`,
       );
+      if(table === "permission_grants") {
+        const shape=(rs: Record<string,unknown>[])=>rs.map(r=>JSON.stringify(r,Object.keys(r).sort())).sort();
+        assert.deepEqual(shape(current.filter(r=>r.row.capability==='service_escalation.record').map(r=>r.row)),shape(escalationSeedGrants(before.get(table)!.map(r=>r.row as Record<string,unknown>))));
+        current=current.filter(r=>r.row.capability!=='service_escalation.record');
+      }
       if (table === "policy_versions")
         current = current.filter(
           (r) => r.row.id !== "94000000-0000-4000-8000-000000000003",
@@ -104,10 +110,10 @@ for (const through of [117, 118, 119])
         `SELECT version FROM public.ppo_migrations WHERE version>${through} ORDER BY version`,
       ),
       through === 117
-        ? [{ version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }]
+        ? [{ version: 118 }, { version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }, { version: 124 }]
         : through === 118
-          ? [{ version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }]
-          : [{ version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }],
+          ? [{ version: 119 }, { version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }, { version: 124 }]
+          : [{ version: 120 }, { version: 121 }, { version: 122 }, { version: 123 }, { version: 124 }],
     );
     assert.deepEqual(
       await rows(
@@ -119,7 +125,7 @@ for (const through of [117, 118, 119])
       await rows(
         "SELECT version FROM ppo.seed_receipts WHERE version>117 ORDER BY version",
       ),
-      [{ version: 120 }, { version: 121 }],
+      [{ version: 120 }, { version: 121 }, { version: 124 }],
     );
     assert.equal(
       await appointmentPreparation(database(), f.p.workspace_id, a.id),
