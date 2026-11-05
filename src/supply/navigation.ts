@@ -51,7 +51,7 @@ export const supplyPages: SupplyPage[] = [
   {
     scope: "SC-05",
     slug: "stock",
-    title: "Stock & reservations",
+    title: "Inventory",
     kind: "Supply",
     intro:
       "Dated source observations, explicit units and completeness. Live reservations are not configured.",
