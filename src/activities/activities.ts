@@ -544,6 +544,8 @@ export async function activityCommand(
       // Recover an accepted original before this new-operation guard. Native
       // owner start/complete/cancel remain available; adopted tasks use R2.
       if (action === "update") {
+        if (await isEscalationChase(c,p,a.id))
+          throw new AppError(422,"SourceWorkflowRequired","The case owns this reminder’s owner and reply-expected date.");
         if (await isManagedFindingActivity(c,p,a.id))
           throw new AppError(422,"SourceWorkflowRequired","Change this next action through its source finding.");
         await legacyFindingActivityAuthority(c,p,a,"owner_id" in changes ? changes.owner_id : undefined);
@@ -553,6 +555,20 @@ export async function activityCommand(
     "Activity",
     names[action][1],
   );
+}
+async function isEscalationChase(c: QueryClient,p: Principal,id:string) {
+  if(!(await c.query("SELECT to_regclass('ppo.service_escalation_cases') AS table_name")).rows[0].table_name) return false;
+  return !!(await c.query("SELECT 1 FROM ppo.service_escalation_cases WHERE workspace_id=$1 AND chase_activity_id=$2",[p.workspace_id,id])).rowCount;
+}
+async function escalationSource(c:QueryClient,p:Principal,id:string) {
+  if(!(await c.query("SELECT to_regclass('ppo.service_escalation_cases') AS table_name")).rows[0].table_name) return null;
+  const row=(await c.query<{id:string}>("SELECT id FROM ppo.service_escalation_cases WHERE workspace_id=$1 AND chase_activity_id=$2",[p.workspace_id,id])).rows[0];
+  if(!row) return null;
+  try {
+    const {caseContext}=await import("../service/escalations/context");
+    const ctx=await caseContext(c,p,row.id);
+    return {id:row.id,reference:ctx.row.display_number,href:`/service/escalations?case=${row.id}`};
+  } catch(e) {if(e instanceof AppError && [403,404].includes(e.status))return null;throw e;}
 }
 export async function readActivity(p: Principal, id: string) {
   return readActivityWithClient(database(), p, id);
@@ -605,9 +621,11 @@ export async function readActivityWithClient(c: QueryClient, p: Principal, id: s
     links,
     incident_source: await activityIncidentSource(c,p,id),
     report_source: await activityReportSource(c,p,id),
+    escalation_source: await escalationSource(c,p,id),
     can_edit:
       ["Open", "InProgress"].includes(a.status) &&
       (await canEditFindingActivity(c,p,a)) &&
+      !(await isEscalationChase(c,p,a.id)) &&
       (await hasPermission(
         c,
         p,

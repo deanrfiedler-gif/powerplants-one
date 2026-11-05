@@ -1,16 +1,35 @@
 "use client";
 import { useContactView } from "./contact-workspace";
-import { SalesActivityCreation, type ActivitySalesCreation } from "./sales-followup";
+import {
+  SalesActivityCreation,
+  type ActivitySalesCreation,
+} from "./sales-followup";
 import Link from "next/link";
 import { OpportunityWorkflows } from "./opportunity-workflows";
 import { OpportunityCorrespondence } from "./opportunity-correspondence";
 import { useEffect, useState } from "react";
-import { LookupField, LocalDateTimeField, RecordTabs, RecordPanel } from "./record-ui";
-import { DealDialog, DealInformation, DealScope, dealAmount, dealClose, type DealMode } from "./crm-deal-controls";
+import {
+  LookupField,
+  LocalDateTimeField,
+  RecordTabs,
+  RecordPanel,
+} from "./record-ui";
+import {
+  DealDialog,
+  DealInformation,
+  DealScope,
+  dealAmount,
+  dealClose,
+  type DealMode,
+} from "./crm-deal-controls";
 import { OutcomeSourceHistory } from "./opportunity-outcome-source";
 import { ProductIcon } from "./product-icons";
-import { OpportunityCommercial, OpportunityFiles } from "./opportunity-commercial";
+import {
+  OpportunityCommercial,
+  OpportunityFiles,
+} from "./opportunity-commercial";
 import { useRouter, useSearchParams } from "next/navigation";
+import type { OperationReceipt } from "../platform/operations";
 import type { readOpportunity } from "../crm/reads";
 import { useIdentity } from "./business-session";
 import {
@@ -27,7 +46,7 @@ import {
 } from "./business-ui";
 import { denied, useCrmCommand, useCrmResource } from "./crm-state";
 type Opportunity = Awaited<ReturnType<typeof readOpportunity>>;
-type Options = Envelope<Option & {requires_site?:boolean}> & {
+type Options = Envelope<Option & { requires_site?: boolean }> & {
   pipeline_definition_id: string;
   pipeline_label: string;
 };
@@ -98,8 +117,12 @@ function CrmPicker({
   context?: Record<string, string>;
   enabled?: boolean;
 }) {
-  const [search, setSearch] = useState(""), [settled, setSettled] = useState("");
-  useEffect(() => { const timer = setTimeout(() => setSettled(search), 200); return () => clearTimeout(timer); }, [search]);
+  const [search, setSearch] = useState(""),
+    [settled, setSettled] = useState("");
+  useEffect(() => {
+    const timer = setTimeout(() => setSettled(search), 200);
+    return () => clearTimeout(timer);
+  }, [search]);
   const ready =
     kind === "Company" ||
     (!!context.company_id &&
@@ -112,9 +135,18 @@ function CrmPicker({
   if (denied(result.error)) return <ErrorNotice error={result.error} />;
   return (
     <div className="crm-picker">
-      <LookupField name={name} label={label} value={value} onChange={onChange}
-        search={search} onSearch={setSearch} options={result.data?.items ?? []}
-        loading={result.loading || settled !== search} more={!!result.data?.next_cursor} error={!!result.error} />
+      <LookupField
+        name={name}
+        label={label}
+        value={value}
+        onChange={onChange}
+        search={search}
+        onSearch={setSearch}
+        options={result.data?.items ?? []}
+        loading={result.loading || settled !== search}
+        more={!!result.data?.next_cursor}
+        error={!!result.error}
+      />
       <ErrorNotice error={result.error} />
       {result.data?.next_cursor && (
         <small>More matches exist. Refine the search.</small>
@@ -143,12 +175,12 @@ function ActionFields({
   value,
   set,
   context,
-  enabled=true,
+  enabled = true,
 }: {
   value: ActionDraft;
   set: (v: ActionDraft) => void;
   context: Record<string, string>;
-  enabled?:boolean;
+  enabled?: boolean;
 }) {
   return (
     <>
@@ -188,22 +220,43 @@ function ActionFields({
         Due date needed
       </label>
       {!value.due_needed && (
-        <LocalDateTimeField name="due_at" value={value.due_at}
-          onChange={(due_at) => set({ ...value, due_at })} />
+        <LocalDateTimeField
+          name="due_at"
+          value={value.due_at}
+          onChange={(due_at) => set({ ...value, due_at })}
+        />
       )}
     </>
   );
 }
 export function NewOpportunity() {
-  return <SalesActivityCreation kind="Opportunity">{sales => <NewOpportunityForm sales={sales}/>}</SalesActivityCreation>;
+  return (
+    <SalesActivityCreation kind="Opportunity">
+      {(sales) => <NewOpportunityForm sales={sales} />}
+    </SalesActivityCreation>
+  );
 }
-function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
+export function NewOpportunityForm({
+  sales,
+  embedded = false,
+  onSaved,
+  onState,
+}: {
+  sales?: ActivitySalesCreation;
+  embedded?: boolean;
+  onSaved?: (receipt: OperationReceipt) => void;
+  onState?: (state: { dirty: boolean; blocked: boolean }) => void;
+}) {
   const initial = useSearchParams();
   const p = useIdentity(),
     router = useRouter(),
     [id] = useState(() => crypto.randomUUID()),
-    [company, setCompany] = useState(sales?.source.activity.company_id ?? initial.get("company_id") ?? ""),
-    [org, setOrg] = useState(sales?.source.customer_id ?? initial.get("organisation_id") ?? ""),
+    [company, setCompany] = useState(
+      sales?.source.activity.company_id ?? initial.get("company_id") ?? "",
+    ),
+    [org, setOrg] = useState(
+      sales?.source.customer_id ?? initial.get("organisation_id") ?? "",
+    ),
     [site, setSite] = useState(sales?.source.activity.site_id ?? ""),
     [person, setPerson] = useState(""),
     [owner, setOwner] = useState(p.actor_id),
@@ -213,13 +266,24 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
     [siteReason, setSiteReason] = useState(""),
     [contactReason, setContactReason] = useState(""),
     [channel, setChannel] = useState("Phone"),
-    [source, setSource] = useState(sales ? `Reviewed Activity ${sales.source.activity.id}, version ${sales.source.activity.version}` : ""),
+    [source, setSource] = useState(
+      sales
+        ? `Reviewed Activity ${sales.source.activity.id}, version ${sales.source.activity.version}`
+        : "",
+    ),
     [action, setAction] = useState(() => emptyAction(p.actor_id));
   const available = useCrmResource<Options>("crm/options?kind=Company");
-  const siteRequired=available.data?.items.find(x=>x.id===company)?.requires_site ?? false;
+  const siteRequired =
+    available.data?.items.find((x) => x.id === company)?.requires_site ?? false;
   const command = useCrmCommand((r) =>
-    router.push(`/sales/opportunities/${r.record_id}`),
+    onSaved ? onSaved(r) : router.push(`/sales/opportunities/${r.record_id}`),
   );
+  useEffect(() => {
+    onState?.({
+      dirty: command.hasUnsavedChanges,
+      blocked: command.busy || command.uncertain,
+    });
+  }, [onState, command.hasUnsavedChanges, command.busy, command.uncertain]);
   const context = {
     company_id: company,
     organisation_id: org,
@@ -230,12 +294,18 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
     return <ErrorNotice error={command.error ?? available.error} />;
   return (
     <>
-      <PageHeader
-        eyebrow="CRM · Synthetic · Online"
-        title="Add deal"
-        description="Select existing customer context. Creating saves one Open deal and its initial owned Activity together."
-      />
-      <Link className="ppo-back-link" href="/sales/opportunities">Back to sales worklist</Link>
+      {!embedded && (
+        <>
+          <PageHeader
+            eyebrow="CRM · Synthetic · Online"
+            title="Add deal"
+            description="Select existing customer context. Creating saves one Open deal and its initial owned Activity together."
+          />
+          <Link className="ppo-back-link" href="/sales/opportunities">
+            Back to sales worklist
+          </Link>
+        </>
+      )}
       <ResourceState {...available} />
       {available.data && (
         <>
@@ -246,6 +316,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
           <SaveState command={command} />
           <ValidationFields error={command.error}>
             <form
+              id="crm-add-deal-form"
               className="crm-form"
               onChange={command.dirty}
               noValidate
@@ -274,13 +345,35 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                   reason:
                     "Create synthetic owned opportunity and initial action",
                 };
-                if(sales) void sales.send(fields); else void command.send("crm/opportunities",fields);
+                if (sales) void sales.send(fields);
+                else void command.send("crm/opportunities", fields);
               }}
             >
-              <fieldset disabled={command.busy || command.uncertain || sales?.blocked}>
+              <fieldset
+                disabled={command.busy || command.uncertain || sales?.blocked}
+              >
                 <legend>Deal and customer context</legend>
-                <Field name="qualification_note" label="Qualification outcome" value={qualification} onChange={setQualification} multiline required maxLength={2000}/>
-                <p>Discovery starts with a qualified customer need. If the contact is unknown, the initial Activity must identify that contact and belong to the deal owner.</p>
+                <Field
+                  name="title"
+                  label="Deal title"
+                  value={title}
+                  onChange={setTitle}
+                  required
+                />
+                <Field
+                  name="qualification_note"
+                  label="Qualification outcome"
+                  value={qualification}
+                  onChange={setQualification}
+                  multiline
+                  required
+                  maxLength={2000}
+                />
+                <p>
+                  Discovery starts with a qualified customer need. If the
+                  contact is unknown, the initial Activity must identify that
+                  contact and belong to the deal owner.
+                </p>
                 <SelectField
                   name="company_id"
                   label="Visibility company"
@@ -319,7 +412,12 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                       onChange={setSite}
                       context={context}
                     />
-                    {siteRequired && !site && <p role="status">Choose a permitted site. Your creation authority is limited to that site.</p>}
+                    {siteRequired && !site && (
+                      <p role="status">
+                        Choose a permitted site. Your creation authority is
+                        limited to that site.
+                      </p>
+                    )}
                     {!site && !siteRequired && (
                       <Field
                         name="site_unknown_reason"
@@ -360,13 +458,7 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                     />
                   </>
                 )}
-                <Field
-                  name="title"
-                  label="Deal title"
-                  value={title}
-                  onChange={setTitle}
-                  required
-                />
+
                 <Field
                   name="need_summary"
                   label="Customer need"
@@ -400,11 +492,18 @@ function NewOpportunityForm({sales}:{sales?:ActivitySalesCreation}) {
                 <h2>Initial next action</h2>
                 <ActionFields
                   value={action}
-                  set={(value) => { setAction(value); command.dirty(); }}
+                  set={(value) => {
+                    setAction(value);
+                    command.dirty();
+                  }}
                   context={context}
                   enabled={!siteRequired || !!site}
                 />
-                <button type="submit" disabled={siteRequired && !site}>Add deal and action</button>
+                {!embedded && (
+                  <button type="submit" disabled={siteRequired && !site}>
+                    Add deal and action
+                  </button>
+                )}
               </fieldset>
             </form>
           </ValidationFields>
@@ -421,7 +520,9 @@ export function OpportunityDetail({ id }: { id: string }) {
     <>
       <ResourceState {...resource} />
       {!!resource.error && !!resource.data && (
-        <p role="status">Previously loaded record. Its current state could not be refreshed.</p>
+        <p role="status">
+          Previously loaded record. Its current state could not be refreshed.
+        </p>
       )}
       {resource.data?.items[0] && (
         <OpportunityContent
@@ -440,11 +541,28 @@ function OpportunityContent({
   opportunity: Opportunity;
   reload: () => void;
 }) {
-  const [dialog, setDialog] = useState<DealMode | null>(null), [targetStage,setTargetStage] = useState<string | undefined>();
+  const [dialog, setDialog] = useState<DealMode | null>(null),
+    [targetStage, setTargetStage] = useState<string | undefined>();
   const search = useSearchParams();
-  const [tab, setTab] = useContactView(["overview", "timeline", "details", "commercial", "files", "tasks", "correspondence", "history"], "overview", "section");
+  const [tab, setTab] = useContactView(
+    [
+      "overview",
+      "timeline",
+      "details",
+      "commercial",
+      "files",
+      "tasks",
+      "correspondence",
+      "history",
+    ],
+    "overview",
+    "section",
+  );
   const returnTo = search.get("return_to");
-  const back = returnTo && /^\/sales\/opportunities(?:\?|$)/.test(returnTo) ? returnTo : "/sales/opportunities";
+  const back =
+    returnTo && /^\/sales\/opportunities(?:\?|$)/.test(returnTo)
+      ? returnTo
+      : "/sales/opportunities";
   const [version, setVersion] = useState(o.version),
     [need, setNeed] = useState(o.need_summary),
     [note, setNote] = useState(""),
@@ -473,31 +591,138 @@ function OpportunityContent({
   return (
     <>
       <div className="crm-deal-page-heading">
-        <Link className="crm-back-link ppo-back-link" href={back}>← Back to sales worklist</Link>
-        <PageHeader eyebrow={`${o.display_number} · ${o.close_outcome}`} title={o.title}
+        <Link className="crm-back-link ppo-back-link" href={back}>
+          ← Back to sales worklist
+        </Link>
+        <PageHeader
+          eyebrow={`${o.display_number} · ${o.close_outcome}`}
+          title={o.title}
           description={`${o.organisation_name} · ${o.site_name ?? "Site to be confirmed"}`}
-          action={o.can_edit ? <button className="secondary crm-main-edit" aria-label="Edit deal information" onClick={() => setDialog("information")}><ProductIcon name="edit"/><span>Edit deal</span></button> : undefined} />
-        <div className="crm-deal-key-facts"><span aria-label="Saved sales outcome"><strong>Outcome: {o.close_outcome}</strong></span><strong>{dealAmount(o.value_amount)}</strong><span>AUD, excl. GST</span><span>Expected close: {dealClose(o.expected_close_date)}</span><span>Customer contact: {o.contact_name ?? "Not yet identified"}</span><span>Deal owner: {o.owner_name}</span></div>
+          action={
+            o.can_edit ? (
+              <button
+                className="secondary crm-main-edit"
+                aria-label="Edit deal information"
+                onClick={() => setDialog("information")}
+              >
+                <ProductIcon name="edit" />
+                <span>Edit deal</span>
+              </button>
+            ) : undefined
+          }
+        />
+        <div className="crm-deal-key-facts">
+          <span aria-label="Saved sales outcome">
+            <strong>Outcome: {o.close_outcome}</strong>
+          </span>
+          <strong>{dealAmount(o.value_amount)}</strong>
+          <span>AUD, excl. GST</span>
+          <span>Expected close: {dealClose(o.expected_close_date)}</span>
+          <span>
+            Customer contact: {o.contact_name ?? "Not yet identified"}
+          </span>
+          <span>Deal owner: {o.owner_name}</span>
+        </div>
         <div className="crm-stage-track" aria-label="Deal stage">
-          {o.stages.map(({ stage_id: stage }) => <button key={stage} className={o.stage_id === stage ? "current" : ""} aria-current={o.stage_id === stage ? "step" : undefined} disabled={!o.can_edit || o.close_outcome !== "Open" || command.busy || command.uncertain} onClick={() => {setTargetStage(stage);setDialog("stage");}}>{stage}{o.stage_id === stage && <span>Current stage</span>}</button>)}
+          {o.stages.map(({ stage_id: stage }) => (
+            <button
+              key={stage}
+              className={o.stage_id === stage ? "current" : ""}
+              aria-current={o.stage_id === stage ? "step" : undefined}
+              disabled={
+                !o.can_edit ||
+                o.close_outcome !== "Open" ||
+                command.busy ||
+                command.uncertain
+              }
+              onClick={() => {
+                setTargetStage(stage);
+                setDialog("stage");
+              }}
+            >
+              {stage}
+              {o.stage_id === stage && <span>Current stage</span>}
+            </button>
+          ))}
         </div>
       </div>
-      {o.original_owner && <p className="source-stamp">Original deal owner: {o.original_owner.owner_name} · Current owner: {o.owner_name}</p>}
-      {(o.can_transfer || o.can_record_outcome) && <div className="crm-actions">
-        {o.can_transfer && <button className="secondary" disabled={command.busy||command.uncertain} onClick={()=>setDialog("transfer")}>Transfer deal owner</button>}
-        {o.can_record_outcome && <button className="secondary" disabled={command.busy || command.uncertain} onClick={()=>setDialog("outcome")}>Record sales outcome</button>}
-      </div>}
-      {o.handover_due && <section className="crm-panel" aria-label="Handover due"><h2>Handover due</h2><p>Accountable owner: {o.handover_due.owner_name}. This owner was accountable when Won was recorded. Current receiving progress appears in the linked workflows below.</p><p>Won at deal version {o.handover_due.opportunity_version}. Existing activities retain their owners.</p></section>}
-      {dialog && <DealDialog id={o.id} mode={dialog} targetStage={targetStage} onClose={() => {setDialog(null);setTargetStage(undefined);}} onSaved={(receipt, _old, stage) => {
-        setDialog(null);setTargetStage(undefined);
-        // Our accepted stage command can advance a clean sibling form. Existing
-        // edits retain their original version and the deliberate comparison.
-        if((stage || dialog === "transfer" || receipt.state === "Won" || receipt.state === "Lost") && !command.hasUnsavedChanges && !command.busy && !command.uncertain)
-          setVersion(receipt.record_version);
-        reload();
-      }}/>}
+      {o.original_owner && (
+        <p className="source-stamp">
+          Original deal owner: {o.original_owner.owner_name} · Current owner:{" "}
+          {o.owner_name}
+        </p>
+      )}
+      {(o.can_transfer || o.can_record_outcome) && (
+        <div className="crm-actions">
+          {o.can_transfer && (
+            <button
+              className="secondary"
+              disabled={command.busy || command.uncertain}
+              onClick={() => setDialog("transfer")}
+            >
+              Transfer deal owner
+            </button>
+          )}
+          {o.can_record_outcome && (
+            <button
+              className="secondary"
+              disabled={command.busy || command.uncertain}
+              onClick={() => setDialog("outcome")}
+            >
+              Record sales outcome
+            </button>
+          )}
+        </div>
+      )}
+      {o.handover_due && (
+        <section className="crm-panel" aria-label="Handover due">
+          <h2>Handover due</h2>
+          <p>
+            Accountable owner: {o.handover_due.owner_name}. This owner was
+            accountable when Won was recorded. Current receiving progress
+            appears in the linked workflows below.
+          </p>
+          <p>
+            Won at deal version {o.handover_due.opportunity_version}. Existing
+            activities retain their owners.
+          </p>
+        </section>
+      )}
+      {dialog && (
+        <DealDialog
+          id={o.id}
+          mode={dialog}
+          targetStage={targetStage}
+          onClose={() => {
+            setDialog(null);
+            setTargetStage(undefined);
+          }}
+          onSaved={(receipt, _old, stage) => {
+            setDialog(null);
+            setTargetStage(undefined);
+            // Our accepted stage command can advance a clean sibling form. Existing
+            // edits retain their original version and the deliberate comparison.
+            if (
+              (stage ||
+                dialog === "transfer" ||
+                receipt.state === "Won" ||
+                receipt.state === "Lost") &&
+              !command.hasUnsavedChanges &&
+              !command.busy &&
+              !command.uncertain
+            )
+              setVersion(receipt.record_version);
+            reload();
+          }}
+        />
+      )}
 
-      {!o.can_edit && <p className="scope-note">Read only under current ownership, permissions or relationship eligibility.</p>}
+      {!o.can_edit && (
+        <p className="scope-note">
+          Read only under current ownership, permissions or relationship
+          eligibility.
+        </p>
+      )}
       <SaveState command={command} />
       {version !== o.version && (
         <section className="crm-conflict" role="status">
@@ -524,32 +749,126 @@ function OpportunityContent({
           Load current saved version for comparison
         </button>
       )}
-      <RecordTabs id="opportunity" label="Deal sections" value={tab} onChange={setTab}
-        tabs={[{id:"overview",label:"Overview"},{id:"details",label:"Scope & sites"},{id:"timeline",label:"Activities"},{id:"tasks",label:"Tasks"},{id:"commercial",label:"Estimates & quotations"},{id:"correspondence",label:"Correspondence"},{id:"files",label:"Documents"},{id:"history",label:"History"}]} />
+      <RecordTabs
+        id="opportunity"
+        label="Deal sections"
+        value={tab}
+        onChange={setTab}
+        tabs={[
+          { id: "overview", label: "Overview" },
+          { id: "details", label: "Scope & sites" },
+          { id: "timeline", label: "Activities" },
+          { id: "tasks", label: "Tasks" },
+          { id: "commercial", label: "Estimates & quotations" },
+          { id: "correspondence", label: "Correspondence" },
+          { id: "files", label: "Documents" },
+          { id: "history", label: "History" },
+        ]}
+      />
       <RecordPanel id="opportunity" tab="overview" value={tab}>
         <div className="crm-detail-grid">
-          <section className="crm-panel"><h2>Next customer action</h2><p>{NEXT_LABELS[o.next_action_state]}</p>{o.next_activity && <><p><Link href={`/work/${o.next_activity.id}`}>{o.next_activity.summary}</Link></p><p>Activity owner: {o.next_activity.owner_name} · {o.next_activity.due_needed ? "Due date needed" : <Stamp value={o.next_activity.due_at}/>}</p></>}<p>Deal ownership changes do not transfer Activities, tasks or receiving responsibility.</p></section>
-          <section className="crm-panel"><h2>Customer objective</h2><p className="crm-narrative">{o.need_summary}</p><Link href={`/customers/${o.organisation_id}`}>View customer and site context</Link></section>
+          <section className="crm-panel">
+            <h2>Next customer action</h2>
+            <p>{NEXT_LABELS[o.next_action_state]}</p>
+            {o.next_activity && (
+              <>
+                <p>
+                  <Link href={`/work/${o.next_activity.id}`}>
+                    {o.next_activity.summary}
+                  </Link>
+                </p>
+                <p>
+                  Activity owner: {o.next_activity.owner_name} ·{" "}
+                  {o.next_activity.due_needed ? (
+                    "Due date needed"
+                  ) : (
+                    <Stamp value={o.next_activity.due_at} />
+                  )}
+                </p>
+              </>
+            )}
+            <p>
+              Deal ownership changes do not transfer Activities, tasks or
+              receiving responsibility.
+            </p>
+          </section>
+          <section className="crm-panel">
+            <h2>Customer objective</h2>
+            <p className="crm-narrative">{o.need_summary}</p>
+            <Link href={`/customers/${o.organisation_id}`}>
+              View customer and site context
+            </Link>
+          </section>
         </div>
-        <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
-        <OpportunityWorkflows id={o.id} won={o.close_outcome === "Won"}/>
+        <DealInformation
+          o={o}
+          onEdit={() => setDialog("information")}
+          onStage={() => setDialog("stage")}
+        />
+        <OpportunityWorkflows id={o.id} won={o.close_outcome === "Won"} />
       </RecordPanel>
       <RecordPanel id="opportunity" tab="tasks" value={tab}>
-        <section className="crm-panel"><h2>Owned work</h2><p>Open shared Activities linked to this opportunity. The Sales Tasks worklist and My Work use these same records.</p><Link href="/sales/tasks">Open Sales Tasks</Link><ul>{active.map(a => <li key={a.id}><Link href={`/work/${a.id}`}>{a.summary}</Link> · {a.owner_name} · {a.due_needed ? "Due date needed" : <Stamp value={a.due_at}/>} · <Status value={a.status}/></li>)}</ul>{!active.length && <p>No permitted open work.</p>}</section>
+        <section className="crm-panel">
+          <h2>Owned work</h2>
+          <p>
+            Open shared Activities linked to this opportunity. The Sales Tasks
+            worklist and My Work use these same records.
+          </p>
+          <Link href="/sales/tasks">Open Sales Tasks</Link>
+          <ul>
+            {active.map((a) => (
+              <li key={a.id}>
+                <Link href={`/work/${a.id}`}>{a.summary}</Link> · {a.owner_name}{" "}
+                ·{" "}
+                {a.due_needed ? "Due date needed" : <Stamp value={a.due_at} />}{" "}
+                · <Status value={a.status} />
+              </li>
+            ))}
+          </ul>
+          {!active.length && <p>No permitted open work.</p>}
+        </section>
       </RecordPanel>
-      <RecordPanel id="opportunity" tab="correspondence" value={tab}>{tab === "correspondence" && <OpportunityCorrespondence id={o.id}/>}</RecordPanel>
+      <RecordPanel id="opportunity" tab="correspondence" value={tab}>
+        {tab === "correspondence" && <OpportunityCorrespondence id={o.id} />}
+      </RecordPanel>
       <RecordPanel id="opportunity" tab="details" value={tab}>
-
-      <p className="source-stamp">
-        Saved version {o.version} · Source updated{" "}
-        <Stamp value={o.updated_at} /> · Stage entered{" "}
-        <Stamp value={o.stage_entered_at} /> · As at{" "}
-        <Stamp value={o.observed_at} />
-      </p>
-      <DealInformation o={o} onEdit={() => setDialog("information")} onStage={() => setDialog("stage")} />
-      <section className="crm-panel"><h2>Site and source</h2><dl className="crm-facts"><dt>Site</dt><dd>{o.site_id ? <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link> : o.site_unknown_reason}</dd><dt>Organisation sites and facilities</dt><dd><Link href={`/customers/${o.organisation_id}`}>View organisation context</Link></dd><dt>Source</dt><dd>{o.source_channel} · {o.source_basis}</dd></dl></section>
-      <DealScope o={o} onEdit={() => setDialog("scope")} />
-              {o.can_edit && <ValidationFields error={command.error}>
+        <p className="source-stamp">
+          Saved version {o.version} · Source updated{" "}
+          <Stamp value={o.updated_at} /> · Stage entered{" "}
+          <Stamp value={o.stage_entered_at} /> · As at{" "}
+          <Stamp value={o.observed_at} />
+        </p>
+        <DealInformation
+          o={o}
+          onEdit={() => setDialog("information")}
+          onStage={() => setDialog("stage")}
+        />
+        <section className="crm-panel">
+          <h2>Site and source</h2>
+          <dl className="crm-facts">
+            <dt>Site</dt>
+            <dd>
+              {o.site_id ? (
+                <Link href={`/sites/${o.site_id}`}>{o.site_name}</Link>
+              ) : (
+                o.site_unknown_reason
+              )}
+            </dd>
+            <dt>Organisation sites and facilities</dt>
+            <dd>
+              <Link href={`/customers/${o.organisation_id}`}>
+                View organisation context
+              </Link>
+            </dd>
+            <dt>Source</dt>
+            <dd>
+              {o.source_channel} · {o.source_basis}
+            </dd>
+          </dl>
+        </section>
+        <DealScope o={o} onEdit={() => setDialog("scope")} />
+        {o.can_edit && (
+          <ValidationFields error={command.error}>
             {o.can_qualify && (
               <form
                 className="crm-panel"
@@ -610,18 +929,58 @@ function OpportunityContent({
                 </fieldset>
               </form>
             )}
-        </ValidationFields>}
+          </ValidationFields>
+        )}
       </RecordPanel>
       <RecordPanel id="opportunity" tab="timeline" value={tab}>
-      {o.source_lead && <section><h3>Source lead</h3><Link href={`/sales/leads/${o.source_lead.id}`}>{o.source_lead.display_number}</Link>{o.source_lead.events.filter(e=>e.note).map(e=><article key={e.id}><p style={{whiteSpace:"pre-wrap"}}>{e.note}</p><small>{e.actor_name} · {new Date(e.created_at).toLocaleString("en-AU")}</small></article>)}
-        {o.source_lead.conversion_review?.state === "Restricted" && <p>Source follow-up review unavailable under your current access.</p>}
-        {o.source_lead.conversion_review?.state === "Available" && <>
-          <h4>Retained lead follow-up</h4>
-          <Link href={`/work/${o.source_lead.conversion_review.review_activity.id}`}>{o.source_lead.conversion_review.review_activity.summary}</Link>
-          <p>{o.source_lead.conversion_review.review_activity.owner_name} · {o.source_lead.conversion_review.review_activity.status}</p>
-          {o.source_lead.conversion_review.retained.map(a => <article key={a.id}><Link href={`/work/${a.id}`}>{a.summary}</Link><p>{a.reason}</p><small>{a.current_owner} · {a.current_status} · retained at version {a.version}</small></article>)}
-        </>}
-      </section>}
+        {o.source_lead && (
+          <section>
+            <h3>Source lead</h3>
+            <Link href={`/sales/leads/${o.source_lead.id}`}>
+              {o.source_lead.display_number}
+            </Link>
+            {o.source_lead.events
+              .filter((e) => e.note)
+              .map((e) => (
+                <article key={e.id}>
+                  <p style={{ whiteSpace: "pre-wrap" }}>{e.note}</p>
+                  <small>
+                    {e.actor_name} ·{" "}
+                    {new Date(e.created_at).toLocaleString("en-AU")}
+                  </small>
+                </article>
+              ))}
+            {o.source_lead.conversion_review?.state === "Restricted" && (
+              <p>
+                Source follow-up review unavailable under your current access.
+              </p>
+            )}
+            {o.source_lead.conversion_review?.state === "Available" && (
+              <>
+                <h4>Retained lead follow-up</h4>
+                <Link
+                  href={`/work/${o.source_lead.conversion_review.review_activity.id}`}
+                >
+                  {o.source_lead.conversion_review.review_activity.summary}
+                </Link>
+                <p>
+                  {o.source_lead.conversion_review.review_activity.owner_name} ·{" "}
+                  {o.source_lead.conversion_review.review_activity.status}
+                </p>
+                {o.source_lead.conversion_review.retained.map((a) => (
+                  <article key={a.id}>
+                    <Link href={`/work/${a.id}`}>{a.summary}</Link>
+                    <p>{a.reason}</p>
+                    <small>
+                      {a.current_owner} · {a.current_status} · retained at
+                      version {a.version}
+                    </small>
+                  </article>
+                ))}
+              </>
+            )}
+          </section>
+        )}
 
         <section className="crm-panel">
           <h2>{NEXT_LABELS[o.next_action_state]}</h2>
@@ -658,7 +1017,8 @@ function OpportunityContent({
             decision.
           </p>
         </section>
-              {o.can_edit && <ValidationFields error={command.error}>
+        {o.can_edit && (
+          <ValidationFields error={command.error}>
             <form
               className="crm-panel"
               onChange={command.dirty}
@@ -681,7 +1041,10 @@ function OpportunityContent({
             >
               <fieldset disabled={command.busy || command.uncertain}>
                 <legend>Plan next action</legend>
-                <p>Add a separate follow-up or designate an existing activity. Existing activities retain their status.</p>
+                <p>
+                  Add a separate follow-up or designate an existing activity.
+                  Existing activities retain their status.
+                </p>
                 <SelectField
                   name="action-mode"
                   label="Action choice"
@@ -692,7 +1055,10 @@ function OpportunityContent({
                 {mode === "New" ? (
                   <ActionFields
                     value={action}
-                    set={(value) => { setAction(value); command.dirty(); }}
+                    set={(value) => {
+                      setAction(value);
+                      command.dirty();
+                    }}
                     context={context}
                   />
                 ) : (
@@ -712,73 +1078,97 @@ function OpportunityContent({
                 </button>
               </fieldset>
             </form>
-        </ValidationFields>}
-      <section className="crm-panel">
-        <h2>Activity history</h2>
-        {o.actions.length ? (
-          <ul className="crm-history">
-            {o.actions.map((a) => (
-              <li key={a.id}>
-                <Link href={`/work/${a.id}`}>{a.summary}</Link>
+          </ValidationFields>
+        )}
+        <section className="crm-panel">
+          <h2>Activity history</h2>
+          {o.actions.length ? (
+            <ul className="crm-history">
+              {o.actions.map((a) => (
+                <li key={a.id}>
+                  <Link href={`/work/${a.id}`}>{a.summary}</Link>
+                  <p>
+                    {a.owner_name} · <Status value={a.status} />
+                  </p>
+                  {a.outcome && (
+                    <p className="crm-narrative">Outcome: {a.outcome}</p>
+                  )}
+                  {a.cancellation_reason && (
+                    <p>Cancellation: {a.cancellation_reason}</p>
+                  )}
+                  <small>
+                    Updated <Stamp value={a.updated_at} />
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No permitted activities are available.</p>
+          )}
+        </section>
+      </RecordPanel>
+      <RecordPanel id="opportunity" tab="history" value={tab}>
+        <section className="crm-panel">
+          <h2>Deal history</h2>
+          <ol className="crm-history">
+            {o.events.map((e) => (
+              <li key={e.id}>
+                <strong>
+                  {e.event_type === "OpportunityCreated"
+                    ? "Deal created"
+                    : e.event_type === "OpportunityQualified"
+                      ? "Qualification recorded"
+                      : e.event_type === "OpportunityInformationEdited"
+                        ? "Deal information updated"
+                        : e.event_type === "OpportunityScopeEdited"
+                          ? "Requirements and scope updated"
+                          : e.event_type === "OpportunityStageChanged"
+                            ? "Deal stage changed"
+                            : e.event_type === "OpportunityOutcomeRecorded"
+                              ? `Sales outcome recorded: ${e.close_outcome}`
+                              : e.event_type === "OpportunityOwnerTransferred"
+                                ? "Deal owner transferred"
+                                : "Next action planned"}{" "}
+                  · Version {e.opportunity_version}
+                </strong>
                 <p>
-                  {a.owner_name} · <Status value={a.status} />
+                  {e.from_stage ? `${e.from_stage} → ` : ""}
+                  {e.to_stage} · {e.reason}
                 </p>
-                {a.outcome && (
-                  <p className="crm-narrative">Outcome: {a.outcome}</p>
+                {o.owner_transfers
+                  .filter((t) => t.event_id === e.id)
+                  .map((t) => (
+                    <p key={t.event_id}>
+                      {t.from_owner_name} → {t.to_owner_name}. Activities
+                      retained their owners.
+                    </p>
+                  ))}
+                {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
+                {e.acceptance_evidence && (
+                  <p className="crm-narrative">
+                    Acceptance evidence: {e.acceptance_evidence}
+                  </p>
                 )}
-                {a.cancellation_reason && (
-                  <p>Cancellation: {a.cancellation_reason}</p>
+                {e.event_type === "OpportunityOutcomeRecorded" && (
+                  <OutcomeSourceHistory
+                    source={o.outcome_sources.find((s) => s.event_id === e.id)}
+                  />
                 )}
+                <details>
+                  <summary>Recorded need and qualification</summary>
+                  <p className="crm-narrative">{e.need_summary}</p>
+                  {e.qualification_note && (
+                    <p className="crm-narrative">{e.qualification_note}</p>
+                  )}
+                </details>
                 <small>
-                  Updated <Stamp value={a.updated_at} />
+                  Recorded by {e.actor_name} ·{" "}
+                  <Stamp value={String(e.created_at)} />
                 </small>
               </li>
             ))}
-          </ul>
-        ) : (
-          <p>No permitted activities are available.</p>
-        )}
-      </section>
-      </RecordPanel>
-      <RecordPanel id="opportunity" tab="history" value={tab}>
-      <section className="crm-panel">
-        <h2>Deal history</h2>
-        <ol className="crm-history">
-          {o.events.map((e) => (
-            <li key={e.id}>
-              <strong>
-                {e.event_type === "OpportunityCreated"
-                  ? "Deal created"
-                  : e.event_type === "OpportunityQualified"
-                    ? "Qualification recorded"
-                    : e.event_type === "OpportunityInformationEdited" ? "Deal information updated"
-                    : e.event_type === "OpportunityScopeEdited" ? "Requirements and scope updated"
-                    : e.event_type === "OpportunityStageChanged" ? "Deal stage changed"
-                    : e.event_type === "OpportunityOutcomeRecorded" ? `Sales outcome recorded: ${e.close_outcome}`
-                    : e.event_type === "OpportunityOwnerTransferred" ? "Deal owner transferred"
-                    : "Next action planned"}{" "}
-                · Version {e.opportunity_version}
-              </strong>
-              <p>
-                {e.from_stage ? `${e.from_stage} → ` : ""}
-                {e.to_stage} · {e.reason}
-              </p>
-              {o.owner_transfers.filter(t=>t.event_id===e.id).map(t=><p key={t.event_id}>{t.from_owner_name} → {t.to_owner_name}. Activities retained their owners.</p>)}
-              {e.lost_reason && <p>Lost reason: {e.lost_reason}</p>}
-              {e.acceptance_evidence && <p className="crm-narrative">Acceptance evidence: {e.acceptance_evidence}</p>}
-              {e.event_type === "OpportunityOutcomeRecorded" && <OutcomeSourceHistory source={o.outcome_sources.find(s => s.event_id === e.id)} />}
-              <details>
-                <summary>Recorded need and qualification</summary>
-                <p className="crm-narrative">{e.need_summary}</p>
-                {e.qualification_note && <p className="crm-narrative">{e.qualification_note}</p>}
-              </details>
-              <small>
-                Recorded by {e.actor_name} · <Stamp value={String(e.created_at)} />
-              </small>
-            </li>
-          ))}
-        </ol>
-      </section>
+          </ol>
+        </section>
       </RecordPanel>
       <RecordPanel id="opportunity" tab="commercial" value={tab}>
         {tab === "commercial" && <OpportunityCommercial id={o.id} />}

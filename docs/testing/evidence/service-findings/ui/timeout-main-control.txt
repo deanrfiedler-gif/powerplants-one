@@ -1,0 +1,15 @@
+✖ SV07 failed inspection stays open after its Activity completes and follows native correction/review (120014.1808ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 187728.3821
+
+✖ failing tests:
+
+test at tests\database\service-findings.test.ts:5:2826
+✖ SV07 failed inspection stays open after its Activity completes and follows native correction/review (120014.1808ms)
+  'test timed out after 120000ms'

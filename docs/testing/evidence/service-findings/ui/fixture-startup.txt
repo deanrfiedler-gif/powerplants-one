@@ -1,0 +1,115 @@
+
+Running 5 tests using 1 worker
+
+(node:41048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts (4.4s)
+(node:41716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\browser\service-findings.spec.ts:231:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save (7.8s)
+(node:30940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\browser\service-findings.spec.ts:278:1 › SV07 stale version compares without dropping entries, while technician stays view-only (15.2s)
+(node:31492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 tests\browser\service-findings.spec.ts:324:1 › SV07 read failures remove earlier content and counts, and empty windows can continue (31.5s)
+  ok 5 tests\browser\service-findings.spec.ts:357:1 › SV07 comparison captures at 1440, 1024, 390 and 320 (57.5s)
+
+
+  1) tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3147/service/findings?department=service
+    Call log:
+      - navigating to "http://127.0.0.1:3147/service/findings?department=service", waiting until "load"
+
+
+      187 |   }
+      188 |   await setup(page);
+    > 189 |   await page.goto("/service/findings?department=service");
+          |              ^
+      190 |   const menu = page.getByRole("navigation", { name: "Service review views" });
+      191 |   await expect(
+      192 |     page.getByText("7 in this authorised candidate window", { exact: false }),
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:189:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-all--732fa--closure-and-bounded-counts\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\browser\service-findings.spec.ts:231:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3147/service/findings?department=service
+    Call log:
+      - navigating to "http://127.0.0.1:3147/service/findings?department=service", waiting until "load"
+
+
+      171 | }
+      172 | async function openRemaining(page: Page) {
+    > 173 |   await page.goto("/service/findings?department=service");
+          |              ^
+      174 |   await page
+      175 |     .getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true })
+      176 |     .click();
+        at openRemaining (C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:173:14)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:235:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-save-29a38-try-after-an-uncertain-save\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\browser\service-findings.spec.ts:278:1 › SV07 stale version compares without dropping entries, while technician stays view-only 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3147/service/findings?department=service
+    Call log:
+      - navigating to "http://127.0.0.1:3147/service/findings?department=service", waiting until "load"
+
+
+      171 | }
+      172 | async function openRemaining(page: Page) {
+    > 173 |   await page.goto("/service/findings?department=service");
+          |              ^
+      174 |   await page
+      175 |     .getByRole("button", { name: "SYN-PPO-RPT-000058", exact: true })
+      176 |     .click();
+        at openRemaining (C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:173:14)
+        at C:\Users\Dean.Fiedler\.codex\worktrees\service-findings-ui\powerplants-one\tests\browser\service-findings.spec.ts:282:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-stal-3dcdf--technician-stays-view-only\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: tmp\sv07\browser-results\service-findings-SV07-stal-3dcdf--technician-stays-view-only\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    tmp\sv07\browser-results\service-findings-SV07-stal-3dcdf--technician-stays-view-only\trace.zip
+    Usage:
+
+        npx playwright show-trace tmp\sv07\browser-results\service-findings-SV07-stal-3dcdf--technician-stays-view-only\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\browser\service-findings.spec.ts:181:1 › SV07 all views and source types keep source-owned closure and bounded counts 
+    tests\browser\service-findings.spec.ts:231:1 › SV07 save/change keeps the same activity, history and an unchanged retry after an uncertain save 
+    tests\browser\service-findings.spec.ts:278:1 › SV07 stale version compares without dropping entries, while technician stays view-only 
+  2 passed (3.9m)

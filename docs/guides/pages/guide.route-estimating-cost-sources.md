@@ -2,13 +2,11 @@
 guide_key: guide.route-estimating-cost-sources
 entry_key: route:/estimating/cost-sources
 also_applies_to: ["route:/estimating/cost-sources/[id]", "route:/estimating/cost-sources/new", "route:/estimating/estimates/[id]/sources"]
-carried_over_from: src/components/cost-sources-guide.ts
 title: Cost sources and reviewed estimate refresh
 status: InReview
-shown_before_review: true
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: b95d335987ee3b8f2c9f19509e7832c5200db67d
+source_commit: e899894190ad02f4b354a2e144ba066df8ae4c54
 contents: { overview: "Overview", how: "How to use", journey: "Journey map" }
 list_styles: { journey: journey }
 ---
@@ -21,7 +19,7 @@ This online workflow separates source evidence, its review, and the estimate ver
 
 ### Source register
 
-Search reference, supplier, item or title and filter the current header state. The result is bounded to 100 matching permitted sources; no result is not a statement that the whole catalogue is empty.
+Search reference, supplier, item or title and filter the current header state. Menu counts cover every permitted search and supplier match; the selected view has its own count and paged results. The rail badge repeats Awaiting my review for that same search and supplier basis; it is not a visible-page total. A missing badge means no current confirmed count, while a confirmed zero is shown as zero. My sources means owner, while Awaiting my review requires independence from both owner and revision author. Select rows on the current page to open exact evidence in sequence or export their list.
 
 ### Exact evidence
 
@@ -38,7 +36,7 @@ Select exact reviewed source revisions for specific saved lines and provide a pr
 ## How to use it {#how}
 
 1. **Read the source**\
-   Open a source from the register. Check its supplier/entity key, item, unit, evidence, dates and tiers. The current source state and the selected historical revision's reviewed event are distinct.
+   Open a source from the register. Review evidence opens the exact native revision at its review step after the read completes. Check its supplier/entity key, item, unit, evidence, dates and tiers. The current source state and the selected historical revision's reviewed event are distinct.
 2. **Prepare and submit**\
    Use New synthetic source for a new identity, or Prepare source successor for a correction. Enter a reason and save. Open the saved record, then submit the exact draft. Submitted evidence is frozen until reviewed.
 3. **Review independently**\
@@ -65,7 +63,7 @@ Each saved boundary has its own identity, hash or receipt. A reviewed source may
 
 ## On your phone {#mobile}
 
-Evidence and forms stack vertically; long references wrap. Review each tier and each changed line before saving. Controls remain reachable by touch and keyboard. This is an online synthetic workflow; it is not an offline queue.
+The register uses a phone list. Choose Select sources from Cost source actions, or press and hold a row. Small movement within 10 CSS pixels keeps the hold; scrolling cancels it. Row toggles keep the list visible. Show panel opens selection details; Hide panel inside that panel keeps your selection and returns focus to Show panel. Open exact source evidence from the snapshot. Evidence and forms stack vertically; long references wrap. Review each tier and each changed line before saving. Controls remain reachable by touch and keyboard. This is an online synthetic workflow; it is not an offline queue.
 
 ## Keyboard shortcuts {#shortcuts}
 
@@ -82,4 +80,4 @@ Evidence and forms stack vertically; long references wrap. Review each tier and 
 Failed reads clear sensitive content and offer Try loading again. Unsaved edits are kept in memory and navigation warns before discarding them. An in-flight synthetic command is retained in this tab's existing actor-bound recovery journal; after reload it checks the original receipt. Check original outcome or Retry exact original reuses its operation ID. An unavailable receipt does not prove the save failed. Accepted recovery retains only a minimal pointer. A conflict requires a fresh comparison; it never overwrites the saved version.
 
 > [!NOTE]
-> No live supplier catalogue, MYOB operation, customer message or business approval. FX, unit conversion, landed-cost allocation and operational thresholds remain Not configured. A previously reviewed historical source revision is an explicit choice, not an assertion that it is the latest supplier price. Source presence, automated proof, visual review, owner acceptance and deployment remain separate.
+> No live supplier catalogue, MYOB operation, customer message or business approval. Retained FX facts are shown on their exact revision and do not establish independent review. This register does not configure exchange rates, unit conversion, landed-cost allocation or operational thresholds. A previously reviewed historical source revision is an explicit choice, not an assertion that it is the latest supplier price. Source presence, automated proof, visual review, owner acceptance and deployment remain separate.

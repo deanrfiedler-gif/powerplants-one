@@ -1,0 +1,404 @@
+/* Excel import composes the existing Wizard interior and the shared shell opt-in. */
+#ppo-excel-import .mw-content {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+}
+#ppo-excel-import #ppo-estimate-wizard {
+  width: 100%;
+}
+#ppo-excel-import .mw-menu-strip {
+  display: none;
+}
+#ppo-excel-import .xi-menu {
+  padding: 24px;
+}
+#ppo-excel-import .xi-workflow {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+#ppo-excel-import .es02-steps {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+#ppo-excel-import .es02-step[aria-current="step"] {
+  background: var(--ink);
+  color: var(--surface-white);
+}
+#ppo-excel-import .es02-card {
+  margin-bottom: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-white);
+}
+#ppo-excel-import h2,
+#ppo-excel-import h3 {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+#ppo-excel-import p {
+  margin: 8px 0 12px;
+}
+#ppo-excel-import small {
+  display: block;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+#ppo-excel-import .xi-banner {
+  padding: 16px;
+  border-radius: 6px;
+  margin: 0 0 16px;
+  background: var(--neutral-surface);
+}
+#ppo-excel-import .xi-blocked {
+  border-left: 4px solid var(--danger);
+}
+#ppo-excel-import .xi-ready {
+  border-left: 4px solid var(--success);
+}
+#ppo-excel-import .xi-review-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+#ppo-excel-import .xi-confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+#ppo-excel-import .xi-confirmation input[type="checkbox"] {
+  flex: none;
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+}
+#ppo-excel-import .xi-confirmation span {
+  flex: 1;
+}
+#ppo-excel-import .xi-confirmation strong {
+  display: block;
+}
+#ppo-excel-import .xi-confirmation small {
+  margin-top: 4px;
+}
+#ppo-excel-import .xi-confirmation label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#ppo-excel-import .xi-confirmation > p {
+  flex-basis: 100%;
+}
+#ppo-excel-import .xi-findings article {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+#ppo-excel-import .xi-actions {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+#ppo-excel-import .xi-next {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 12px;
+}
+#ppo-excel-import .xi-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+}
+#ppo-excel-import input:not([type="checkbox"]),
+#ppo-excel-import select,
+#ppo-excel-import textarea {
+  max-width: 100%;
+  min-height: 44px;
+  font: inherit;
+}
+#ppo-excel-import .xi-totals {
+  padding: 16px 0;
+}
+#ppo-excel-import .xi-hash {
+  overflow-wrap: anywhere;
+}
+#ppo-excel-import table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+#ppo-excel-import th,
+#ppo-excel-import td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+#ppo-excel-import th {
+  background: var(--neutral-surface);
+}
+#ppo-excel-import .xi-values {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+#ppo-excel-import .xi-values > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr);
+  gap: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ppo-excel-import .xi-values dt {
+  color: var(--text-secondary);
+}
+#ppo-excel-import .xi-values dd {
+  margin: 0;
+}
+#ppo-excel-import details {
+  margin: 12px 0;
+}
+#ppo-excel-import summary {
+  cursor: pointer;
+  min-height: 40px;
+  padding: 8px 0;
+}
+#ppo-excel-import .xi-charge {
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+}
+#ppo-excel-import .xi-charge > label {
+  display: block;
+  margin: 10px 0;
+}
+#ppo-excel-import .xi-mobile-step,
+#ppo-excel-import .xi-phone-totals,
+#ppo-excel-import .xi-show-lines {
+  display: none;
+}
+#ppo-excel-import .es02-bottom {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ppo-excel-import .es02-bottom .es02-bottom-state {
+  margin-right: auto;
+}
+#ppo-excel-import .xi-summary-button {
+  display: none;
+}
+@media (max-width: 1199px) {
+  #ppo-excel-import .xi-summary {
+    display: none;
+  }
+  #ppo-excel-import .xi-summary-button {
+    display: inline-flex;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-excel-import .es02-steps,
+  #ppo-excel-import .xi-review-tiles,
+  #ppo-excel-import .es02-context-controls,
+  #ppo-excel-import .es02-bottom-state {
+    display: none;
+  }
+  #ppo-excel-import .xi-mobile-step,
+  #ppo-excel-import .xi-phone-totals,
+  #ppo-excel-import .xi-show-lines {
+    display: block;
+    margin: 12px 0;
+  }
+  #ppo-excel-import .xi-line-list:not([data-expanded="true"]) {
+    display: none;
+  }
+  #ppo-excel-import .es02-card {
+    padding: 14px;
+  }
+  #ppo-excel-import .es02-context {
+    min-height: unset;
+    padding: 12px 16px;
+  }
+  #ppo-excel-import .es02-context h1 {
+    font-size: 17px;
+  }
+  #ppo-excel-import .es02-context-meta {
+    font-size: 12px;
+  }
+  #ppo-excel-import .xi-confirmation {
+    padding: 12px;
+  }
+  #ppo-excel-import input:not([type="checkbox"]),
+  #ppo-excel-import select,
+  #ppo-excel-import textarea {
+    font-size: 16px;
+  }
+  #ppo-excel-import .xi-next {
+    align-items: stretch;
+  }
+  #ppo-excel-import .es02-bottom {
+    padding: 10px 16px;
+  }
+  #ppo-excel-import .es02-bottom .ppo-button--primary {
+    flex: 1;
+  }
+  #ppo-excel-import .xi-values > div {
+    display: block;
+  }
+}
+
+#ppo-excel-import .xi-targets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+#ppo-excel-import .xi-targets .es02-card {
+  padding: 16px;
+}
+#ppo-excel-import .xi-targets strong {
+  display: block;
+  margin-top: 8px;
+}
+#ppo-excel-import .xi-targets p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#ppo-excel-import .es02-step[aria-current="step"] small {
+  color: inherit;
+}
+#ppo-excel-import #xi-footer-actions:empty {
+  display: none;
+}
+@media (max-width: 780px) {
+  #ppo-excel-import .xi-targets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ppo-excel-import #xi-footer-actions {
+    flex: 1;
+  }
+}
+
+/* Restore shared Button tokens above the inherited Wizard workspace reset. */
+#ppo-excel-import #ppo-estimate-wizard .ppo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ppo-control-gap);
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px var(--ppo-control-padding);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--navy);
+  font:
+    500 14px/1.35 Roboto,
+    Verdana,
+    sans-serif;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+}
+#ppo-excel-import #ppo-estimate-wizard .ppo-button--primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+#ppo-excel-import #ppo-estimate-wizard .ppo-button:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--navy);
+}
+#ppo-excel-import
+  #ppo-estimate-wizard
+  .ppo-button--primary:hover:not(:disabled) {
+  background: var(--navy);
+  color: var(--white);
+}
+#ppo-excel-import #ppo-estimate-wizard .ppo-button:disabled {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  cursor: not-allowed;
+}
+#ppo-excel-import #ppo-estimate-wizard .ppo-button:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+}
+#ppo-excel-import[data-ppo-workspace] button.mw-menu-strip {
+  display: none;
+}
+#ppo-excel-import .xi-upload {
+  background: var(--surface-2);
+  min-height: 190px;
+  justify-content: center;
+}
+#ppo-excel-import .xi-banner {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#ppo-excel-import #ppo-estimate-wizard .xi-summary-button {
+  display: none;
+}
+@media (max-width: 1199px) {
+  #ppo-excel-import #ppo-estimate-wizard .xi-summary-button {
+    display: inline-flex;
+  }
+}
+@media (max-width: 780px) {
+  #ppo-excel-import:has(.xi-blocked)
+    #ppo-estimate-wizard
+    .es02-bottom
+    .ppo-button:not(.ppo-button--primary) {
+    display: none;
+  }
+  #ppo-excel-import .xi-phone-totals {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    padding: 12px;
+  }
+}
+
+#ppo-excel-import .xi-next {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+#ppo-excel-import .xi-next article {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#ppo-excel-import .xi-next article p {
+  flex: 1;
+  font-size: 12px;
+}
+#ppo-excel-import .xi-next article h3 {
+  font-size: 14px;
+}
+@media (max-width: 780px) {
+  #ppo-excel-import .xi-next {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #ppo-excel-import .xi-next article {
+    padding: 0;
+    border: 0;
+  }
+  #ppo-excel-import .xi-next article h3,
+  #ppo-excel-import .xi-next article p {
+    display: none;
+  }
+}

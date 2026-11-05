@@ -47,6 +47,8 @@ Model, native browser, documentation and visual checks were run in the session t
 
 ## Status and next step
 
+On 30 October 2026 Dean accepted a Figma design for this page, which keeps these rules: see the [Sales aftercare design decision](sales-aftercare-figma-design.md). The text below stands as issued.
+
 Proposed design, prepared against main `0769a16d` and rebased onto `d0a660d2` after PR #210 merged, preserving both contributions' entries in the three shared documentation files. Owner visual acceptance, business acceptance and application integration remain separate from this design creation and its contribution. The design index, coverage-register entry note, document register and status row identify this proposal without changing an accepted UI baseline or any deployment status.
 
 The next bounded increment, if accepted, is to decide the follow-up-interval question and the account-owner-of-record question, then implement a **read-only** CR-05 worklist over existing customer, case and agreement reads with server-enforced customer scope and no write commands. Review capture, referrals, training and the CRM handover each cross a module boundary that currently has no interface, so each needs its own receiving agreement and its own increment.

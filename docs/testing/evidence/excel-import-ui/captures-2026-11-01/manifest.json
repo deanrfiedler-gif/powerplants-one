@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-01",
+  "implementation_commit": "95821a73",
+  "status": "Builder-inspected synthetic captures from the refined browser run; not visual acceptance",
+  "captures": [
+    {
+      "file": "workbook-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "e66d3ad4934b4d5a56594461a37f5f003df4397c2353193fa7b2fcf95b5f833e"
+    },
+    {
+      "file": "blocked-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "3695f12aaeb08be4d3dd0567389e8211c54d56306b590a1b694c80d7b037581c"
+    },
+    {
+      "file": "review-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "749597dfd9f24418d32fcb43eb0c7c49ebcc7dcbd4d7d973174e493b1dd23ab9"
+    },
+    {
+      "file": "review-1024.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "781408a9784797fe3df7019f0c0c3cc6972bcc4dd71c88ad055e58cd8664c2f7"
+    },
+    {
+      "file": "review-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "53ce6ee35852b1e8197543a06bc0436e874b3479fdf00e23ee63b20ec55d7008"
+    },
+    {
+      "file": "review-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "c154ba2bf4992d17a9f1e98760abc023551672b98559272659de665e5d3f6196"
+    },
+    {
+      "file": "confirm-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "5d1f58eaaba12d97f01a9bb92276ca76dff2c4292ca954fe513feeea4505294a"
+    }
+  ]
+}

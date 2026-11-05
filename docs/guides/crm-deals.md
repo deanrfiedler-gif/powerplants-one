@@ -9,11 +9,11 @@ shown_before_review: false
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
 audience: Internal prototype users; synthetic examples only
-source_commit: 95ce53f30e884c1f165bb031f5ac826a72a6f5c2
+source_commit: f3f9582ee0460eb3d1aeb501cb8d4bae7b9049d8
 workflow_basis: Five-stage synthetic deal workflow (Discovery, Scoping, Quoting, Negotiation, Closing)
-runtime_evidence: Not run. Written from the application source at source_commit; no application walkthrough or user test has been performed.
+runtime_evidence: PR 699 focused workspace proof and 41 inspected captures in docs/testing/evidence/deals-cr04/README.md; wider native CRM limitations remain documented. The full Deal record guide has not had a new walkthrough or owner review.
 resource_ids: []
-change_summary: Rewritten for the five-stage Deals workflow, replacing the two-stage Enquiry and Qualified guide.
+change_summary: Retains the five-stage Deal record guidance and incorporates the accepted CR-04 workspace, selection, export, snapshot and recovery instructions. Stage meanings are added as team practice from the proposed stage definitions, and Edit deal now applies the same contact-owner rule as a stage change.
 ---
 
 This guide covers the Deals worklist and the full deal page in the synthetic five-stage pipeline: **Discovery**, **Scoping**, **Quoting**, **Negotiation** and **Closing**. The records are synthetic. A deal in the earlier pipeline, which uses **Enquiry** and **Qualified**, is described under Troubleshooting.
@@ -33,17 +33,17 @@ Moving a deal between stages does not create, issue or accept an estimate or quo
 - The **Deal** button appears on the worklist only when your identity may create deals.
 - Find the existing organisation, site and contact first. A new deal selects existing records; it does not create customers.
 - Know the customer's need, how the enquiry arrived and who will own the follow-up. Where something is not known, the form asks you to say so rather than guess.
-- Deals needs a live connection. The Add deal page is marked **Online**. Nothing is queued for later, so an unsaved change is not saved.
+- Deals needs a live connection. The native Add deal form is marked **Online**. Nothing is queued for later, so an unsaved change is not saved.
 
 ## Quick start {#quick-start}
 
 1. Open **Deals**. The **Board** shows one column for each stage, with its total value and number of deals.
-2. Find a deal. Choose **Filters** and use **Search deals**, or use a ready-made choice in **Views**.
+2. Find a deal with **Search deals**, **Filters** or a ready-made choice in **Views**. On a phone, use **Search and filter**.
 3. Open the deal by selecting its title. The eye icon opens a snapshot first, and **Open full deal** in the snapshot opens the full page.
 4. Check the customer, contact, site, deal owner, value, expected close date and next activity.
 5. If you are the deal owner, change what is out of date: **Edit deal**, **Edit requirements and scope**, **Plan next action** or **Change stage**.
 6. Wait for **Saved to the server**, then check the refreshed record. A card that has moved on the board is not proof of saving.
-7. To start a new deal, select **Deal** on the worklist, complete **Add deal** and select **Add deal and action**.
+7. To start a new deal, select **Deal** on the worklist to open the native form over the register, complete **Add deal** and select **Add deal and action**. The direct Add deal page remains available.
 
 ## Understand the page {#page-tour}
 
@@ -52,41 +52,40 @@ Moving a deal between stages does not create, issue or accept an estimate or quo
 | Control or area | What it does |
 |---|---|
 | **Board**, **List**, **Forecast** | Three presentations of the same permitted deals, filters and sort. |
-| **Archive** | Saved **Won** and **Lost** deals. Choose **All closed**, **Won** or **Lost**. Manual archiving and restoring are not available. |
-| **Deal** | Opens **Add deal**. It appears only if you may create deals. |
-| **Pipeline totals** | Shows **Total value**, **Deals**, **Not estimated** and **Weighted value**, which reads **Not configured**. It states whether the figures cover **All matching results** or the **Current result page only**. |
-| **Pipeline** | Chooses which pipeline the worklist reads. The default is **Fictional sales pipeline**, the five-stage pipeline. |
-| **Help** | Opens **Deal board guide**, a short summary of the worklist. |
-| **Filters** | Opens **Filter deals**. See the filters below. |
-| **Add condition** and the condition chips | Open the same filters. Each active condition shows as a chip; select a chip to remove that condition. |
-| **Views** | **All open**, **Owned by me**, **Overdue activities** and **No next activity**, plus any view you save with **Save as new view**. Saved views last for this visit only; the address bar keeps your current filters if you reload. |
-| **Triage** | Lists open deals whose activity is overdue, missing or has no date. |
-| **What changed** | Lists the most recently updated deals on this page. An update time alone does not show that the stage moved. Open the deal for its history. |
-| **Sort by** | **Default order**, **Title A–Z** or **Newest first**. |
-| **Pipeline insights** | An expandable summary above the results: known value, next-action coverage, age in the current stage and recorded close-date changes. |
-| **Deal data options** | **Export current page as CSV** works. Import, clean-up and restore are shown as unavailable. |
-| **Refresh from start**, **Next page** | Restart the list, or read the next page of results. |
+| **Archive** | Groups saved **Won** and **Lost** deals. Choose **All closed**, **Won** or **Lost**. Manual archiving and restoring are not available. |
+| **Deal** | Opens **Add deal** over the register when you may create deals. Closing retains the prior view and guards unsaved or uncertain work. |
+| **Pipeline totals** | Identifies whether counts and known values describe all matching results or only the current page. Values are unweighted AUD excluding GST; **Not estimated** is distinct from zero. No probabilities apply. |
+| **Pipeline** | Chooses which pipeline the worklist reads. The default is the five-stage **Fictional sales pipeline**. |
+| **Help** | Opens the existing short board guide. |
+| **Filters** and condition chips | Search by title, reference or organisation and select company, site, owner, outcome, next action or stage. Remove a chip to clear that condition. |
+| **Views** | **All open**, **Owned by me**, **Overdue activities** and **No next activity**, plus views saved for this visit. The address bar keeps the current view and filters. |
+| **Triage** and **What changed** | Review attention states and recently updated deals on this page. Open a deal for its recorded history. |
+| **Pipeline insights** | Opens the existing separate read-only review without replacing this workspace. |
+| **Refresh from start**, **Next page** | Restart the results or read the next page. A new filter starts from the first page. |
 
-The filters in **Filter deals** are **Search deals** (deal title, reference or organisation), **Company**, **Site**, **Deal owner**, **Sales outcome** (**Open**, **Won**, **Lost** or **All**), **Next action**, **Stage**, **Sort**, **Page size** (10, 25 or 50 records) and **Owned by me**. Use **Find company filter**, **Find site filter** and **Find owner filter** to search a long list. Changing **Company** clears **Site**. **Clear filters** returns the search and filters to their defaults, but keeps the **Pipeline** you chose. Select **Done** to close the panel.
+The filter panel retains **Search deals**, **Company**, **Site**, **Deal owner**, **Sales outcome**, **Next action**, **Stage**, **Sort**, **Page size** and **Owned by me**. Search long option lists with **Find company filter**, **Find site filter** and **Find owner filter**. Changing Company clears Site. **Clear filters** keeps the chosen Pipeline. A failed option read offers retry. Expected close filtering is a later accepted design amendment and is not available in this implementation.
 
 ### Board cards
 
-Each card shows the deal title, organisation, primary contact (or **No primary contact**), expected close date (or **Close date not set**) and value (or **Not estimated**). Below that:
+Cards show the title, organisation, expected close and known value or **Not estimated**, plus the next activity and its due or missing state. Deal and activity owners remain separate. Open the title for the full deal or **Snapshot** for a quick read. Activity, document and permitted individual edit/stage shortcuts remain available.
 
-- The activity strip shows the next activity and when it is due, or **Nothing scheduled** and **Schedule a follow-up**.
-- The health chip reads **No next activity**, **Activity date needed**, **Overdue activity**, **Next activity planned** or **Activity unavailable**. A warning icon marks a deal that needs attention.
-- Two circles show the deal owner and the activity owner.
-- The footer icons are **Snapshot**, **Activities**, **Documents**, **Next activity**, and, for the deal owner of an open deal, **Change stage** and **Edit deal**.
+On desktop, drag an editable card to another stage or use **Change stage**. The outcome drop targets open the native form for review; they do not save an outcome by themselves. **Won** is available only from **Closing**. No bulk stage change or deletion is provided. Refused moves show the native reason and, when stale, let you load and compare the saved version before a deliberate retry.
 
-On a desktop screen you can drag an editable card to another stage column. While you drag, **Delete**, **Lost**, **Won** and **Move** appear. Deletion is not available. **Won** is available only for a deal in **Closing**. Dropping on **Move**, **Lost** or **Won** opens the matching form for review; it does not save by itself.
+### The List and selection
 
-### The List
+The default order is **Deal**, **Next activity**, **Due**, **Deal owner**, **Organisation**, **Value**, **Expected close**, **Stage** and **Pipeline**. The checkbox and settings columns stay fixed. Use the settings control to choose and order optional columns; Deal stays visible. Resize a divider with a pointer or the arrow keys.
 
-The **List** shows these columns: **Deal**, **Organisation**, **Primary contact**, **Value**, **Expected close**, **Stage / outcome**, **Owner** and **Next activity**. Drag a column divider to resize it, or focus it and use the arrow keys.
+Tick rows on the current page to open the selection panel. **Open in sequence** visits their snapshots; the full-record link preserves return context. Selected CSV follows the displayed row order and chosen column order, includes exact known amounts and leaves unknown amounts blank. Its totals describe the selection, not all matches. Export rechecks current access and source versions; if they changed, refresh and select again. Changing filters, pages, access or saved rows clears selection. If a background refresh changes the page, a message explains that selection and sequence were cleared; an open deal and unsaved edits remain. Leaving the workspace cancels an unfinished export.
 
-### The Forecast
+### The Forecast and Archive
 
-The **Forecast** groups open deals by expected close date: **Overdue**, each of the coming months (**Show** 3, 6 or 12 months), **Later** and **No close date**. Amounts are unweighted. They are not committed revenue.
+Forecast groups expected-close months by saved stage, with a subtotal for each stage. Period controls retain the supported horizon. Groups include overdue, later and undated deals. Read the count basis and unknown-value count with each subtotal: this is unweighted pipeline value, not committed revenue. Archive groups the returned closed deals into Won and Lost bands and retains their record links.
+
+### Snapshot
+
+On a phone, open **Choose view** and select **Pipeline insights** to inspect the existing read-only review.
+
+The snapshot shows customer, contact and site, next activity, work context and deal follow-through. Estimate, issued quotation and receiving-handover sections use their exact native sources and show independent permissions, versions and partial or unavailable states. Follow-through is read when the snapshot opens. Select **Reload follow-through** for a fresh source snapshot; it does not refresh automatically with the worklist. A failed source read has its own retry. Advisory exit conditions are prompts to review evidence, not new rules for changing stage.
 
 ### The full deal page
 
@@ -129,7 +128,7 @@ Times are entered and shown in Brisbane time. If the contact is unknown, the ini
 
 | Information | Where | Rules |
 |---|---|---|
-| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** Outside **Enquiry**, a deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the current deal owner. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
+| **Deal title**, **Customer contact**, **Deal value · AUD, excl. GST**, **Expected close date** | **Edit deal** | Leave the value blank when it is not estimated. Enter a non-negative amount with up to two decimal places; commas are accepted and the amount must be below 1 billion. If no contact is chosen, answer **Why is the contact unknown?** A deal saves without a contact only while it holds an open contact-identification activity of kind **Customer Contact** or **Relationship Review** owned by the person who owned the deal when it was created, the same rule as for a stage change. Clearing a contact the deal already has is a contact change, so that activity must be owned by the deal's current owner. A deal added with a contact holds no such activity, so its contact cannot be cleared. |
 | **Customer need and objective** | **Edit requirements and scope** | Required. Up to 2,000 characters. |
 | **Inclusions**, **Exclusions**, **Assumptions**, **Constraints**, **Acceptance requirements**, **Required timing**, **Delivery arrangements** | **Edit requirements and scope** | Optional. Up to 5,000 characters each. Unrecorded items show **Not recorded**. |
 | **Action choice**, **Activity kind**, **Activity owner**, **Action purpose**, **Due date and time** | **Plan next action** | Choose **New** to create an activity, or **Existing** to pick an active activity already linked to this deal. |
@@ -142,15 +141,16 @@ Times are entered and shown in Brisbane time. If the contact is unknown, the ini
 
 Every new deal starts in **Discovery**, whether you add it with **Add deal** or convert it from a lead. It then moves through the stages in this order.
 
-| Stage | Position | What the application does |
+| Stage | Move the deal here when | Move it on when |
 |---|---|---|
-| **Discovery** | 1 | Where every new deal starts. The deal is saved with its qualification outcome and its first activity. |
-| **Scoping** | 2 | A stage you move the deal to. The only extra rule is the contact rule below. |
-| **Quoting** | 3 | A stage you move the deal to. It does not create or issue a quotation. |
-| **Negotiation** | 4 | A stage you move the deal to. The only extra rule is the contact rule below. |
-| **Closing** | 5 | The final stage, and the only stage from which **Won** can be recorded. |
+| **Discovery** | A new enquiry is worth pursuing. Every new deal starts here, saved with its qualification outcome and its first activity. | The customer contact and the need are recorded, and the decision to pursue is made. |
+| **Scoping** | The need is understood. | The scope is defined well enough to price. |
+| **Quoting** | The scope is ready to price. | A quotation has been issued to the customer. |
+| **Negotiation** | The quotation has been issued. | Commercial terms are agreed in principle. |
+| **Closing** | Terms are agreed in principle. | An order or acceptance is received (record **Won**), or the deal is lost (record **Lost**). |
 
-The stage records where the deal has reached. Beyond the direction of the move and the contact rule below, the application attaches no stage-specific requirement. Estimates and quotations are done and recorded in their own places.
+> [!NOTE]
+> These meanings are proposed and await acceptance; until then they describe intended team practice only. The application does not check them: beyond the direction of the move and the contact rule below, a stage carries no requirement. Moving to **Quoting** does not create or issue a quotation; estimates and quotations are done and recorded in their own places. Move a deal back when an earlier condition no longer holds, for example when the customer changes the scope after a quotation.
 
 - **Moving forward:** one stage at a time. Moving from **Discovery** straight to **Quoting** is refused.
 - **Moving back:** to any earlier stage. Earlier history is kept.
@@ -234,7 +234,7 @@ The transfer is immediate once saved. Activities, tasks, estimates, quotations a
 
 The deal owner is accountable for the deal record, its stage and its outcome. The activity owner is accountable for one activity. Stage changes, activity completion and scope edits do not transfer the deal, and they do not show that another team has accepted anything.
 
-When you record **Won**, a **Handover due** panel appears. It names the accountable owner, who was the deal owner when **Won** was recorded, and the deal version at which it was recorded. Existing activities keep their owners. Receiving progress appears under **Linked handovers & aftercare** on the **Overview** tab, with a link to open the **Estimating** or **Won receiving** workflow and the aftercare worklist. Those workflows have their own states and pages, for example [Won handovers](/sales/handoffs/won). Receiving acceptance does not authorise delivery.
+When you record **Won** in the workspace, the confirmation offers **Prepare receiving handover** and **Open Archive**. Prepare receiving handover opens the explicit receiving workflow; it does not create or authorise Project, Service or ERP work. On the full Deal record, a **Handover due** panel appears. It names the accountable owner, who was the deal owner when **Won** was recorded, and the deal version at which it was recorded. Existing activities keep their owners. Receiving progress appears under **Linked handovers & aftercare** on the **Overview** tab, with a link to open the **Estimating** or **Won receiving** workflow and the aftercare worklist. Those workflows have their own states and pages, for example [Won handovers](/sales/handoffs/won). Receiving acceptance does not authorise delivery.
 
 Quotations and estimates have their own pages. See [Estimating](/estimating). A saved deal, a linked record or a deal value is not authority to order equipment, promise delivery or invoice.
 
@@ -293,10 +293,10 @@ Quotations and estimates have their own pages. See [Estimating](/estimating). A 
 |---|---|
 | I cannot find a deal. | Check **Filters** and the condition chips, **Sales outcome** (a closed deal is under **Archive**), the **Pipeline** choice and **Page size**. Select **Clear filters**. A missing result is not proof that a deal was deleted, because access can hide it. |
 | A stage change or **Edit deal** is refused with "Choose an active action. The completed or cancelled outcome remains in history." | The deal has no **Customer contact**, and its contact-identification activity has been completed or cancelled. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. Once the deal has a contact, neither checks the activity. See the contact rule under The five stages. |
-| A stage change or **Edit deal** is refused with "Contact identification needs an active Customer contact or Relationship review action owned by the opportunity owner." | The deal has no **Customer contact**, and its contact-identification activity is not a **Customer Contact** or **Relationship Review** activity with the owner the check expects. A stage change expects the person who owned the deal when it was created. **Edit deal** expects the current deal owner, so after **Transfer deal owner** the new owner cannot save the deal without a contact. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. |
+| A stage change or **Edit deal** is refused with "Contact identification needs an active Customer contact or Relationship review action owned by the opportunity owner." | The deal has no **Customer contact**, and its contact-identification activity is not a **Customer Contact** or **Relationship Review** activity owned by the person who owned the deal when it was created. A transfer of the deal does not change this: the activity keeps its owner. Choose a **Customer contact** with **Edit deal** and select **Save deal**, then change the stage again if you need to. |
 | **Edit deal** is refused with "A qualified deal needs a contact or an owned active contact-identification action." | You cleared the **Customer contact** on a deal that holds no contact-identification activity, usually because it was added with a contact. That deal must keep a contact: choose one in **Customer contact** and select **Save deal** again. |
 | A stage change is refused with "Select an owned active contact-identification action before qualification." | The deal has no **Customer contact** and no contact-identification activity is recorded. Choose a **Customer contact** with **Edit deal**, then change the stage again. |
-| The deal is in **Enquiry** or **Qualified**. | It belongs to the earlier pipeline, **Fictional sales enquiry — I1**. Choose that pipeline in **Pipeline**. On the deal page an **Enquiry** deal shows **Record qualification** and **Progress to Qualified**. That pipeline has no **Won** or **Lost** outcome. |
+| The deal is in **Enquiry** or **Qualified**. | It belongs to the earlier pipeline, **Fictional sales enquiry — I1**. Choose that pipeline in **Pipeline** to see it. That pipeline follows earlier rules that this guide does not describe; ask the prototype owner before changing such a deal. |
 | I cannot edit the deal. | Check whether you are the deal owner. A read-only deal is intentional. Ask the deal owner, or ask for the deal to be transferred. |
 | **Change stage** is missing or disabled. | The deal is already **Won** or **Lost**, you are not the deal owner, or a save is in progress or uncertain. |
 | **Won** is not offered. | The deal is not in **Closing**. Move it there one stage at a time. |
@@ -310,7 +310,8 @@ Quotations and estimates have their own pages. See [Estimating](/estimating). A 
 ## Mobile, keyboard and offline use {#mobile}
 
 - **Screen width.** At 781 pixels wide or more you can drag board cards and collapse a stage column from its menu. Narrower than that, the board shows one stage at a time. Use the **Choose Board stage** buttons, which show each stage and its count. Dragging is not available.
-- **Search.** On a desktop screen **Search deals** is inside **Filters**. On a phone it sits in the page header.
+- **Phone workspace.** The title opens the view chooser. List uses compact rows opening the full Deal record; **Select deals in List** exposes selection checkboxes. **Search and filter** opens the shared form, and the floating **Add deal** action opens creation. Forecast scrolls month groups; Archive keeps outcome bands.
+- **Search.** Desktop search and the filter panel retain the current view context in the address bar.
 - **Without dragging.** **Change stage** on a card, or the stage buttons on the deal page, do everything dragging does. Use them on a phone, with a keyboard or with assistive technology.
 - **Keyboard.** The board and the list are focusable regions that scroll with the arrow keys. In the menus, the arrow keys, Home, End and typing a letter move between choices, and Escape closes the menu and returns focus to its button. Dialogs close with Escape, and ask before discarding unsaved changes.
 - **Offline.** Deals needs a connection. Nothing is queued, and a change is only saved when you see **Saved to the server**.
@@ -323,4 +324,4 @@ Other pages you may need while working a deal: [Leads](/sales/leads), [Sales Tas
 
 ## Guide review and feedback {#review}
 
-The prototype content owner is Dean Fiedler. The business reviewer has not yet been nominated, and this guide has not been reviewed. It is checked against the application source, not against a running copy. No in-app feedback queue exists yet: report an unclear or wrong instruction to the prototype owner, with the section name. Reading this guide is not training completion or SOP acknowledgement.
+The prototype content owner is Dean Fiedler. The business reviewer has not yet been nominated, and this guide has not been reviewed. Workspace instructions incorporate the focused application proof and developer capture inspection in PR 699; the full record instructions remain source-based. Neither is owner acceptance. No in-app feedback queue exists yet: report an unclear or wrong instruction to the prototype owner, with the section name. Reading this guide is not training completion or SOP acknowledgement.

@@ -8,7 +8,7 @@ export function denied(error: unknown) {
 }
 // Online memory only. A denied/current-identity refresh unmounts sensitive forms.
 // clearUnanswered drops retained data when a re-read outlasts the next interval.
-export function useCrmResource<T>(path: string | null, clearOnError = false, clearUnanswered = false) {
+export function useCrmResource<T>(path: string | null, clearOnError = false, clearUnanswered = false, serializeReads = false) {
   const [revision, setRevision] = useState(0),
     [state, setState] = useState<{
       path: string | null;
@@ -19,17 +19,21 @@ export function useCrmResource<T>(path: string | null, clearOnError = false, cle
     let live = true;
     let latestRequest = 0;
     let overdue = false;
+    let inFlight = false;
     const load = () => {
-      if (path) {
+      if (path && (!serializeReads || !inFlight)) {
+        inFlight = true;
         const request = ++latestRequest;
         void api<T>(path).then(
           (data) => {
+            inFlight = false;
             if (live && request === latestRequest) {
               overdue = false;
               setState({ path, data, error: null });
             }
           },
           (error) => {
+            inFlight = false;
             if (live && request === latestRequest) {
               overdue = false;
               setState((old) => ({
@@ -61,7 +65,7 @@ export function useCrmResource<T>(path: string | null, clearOnError = false, cle
       clearInterval(timer);
       window.removeEventListener("focus", load);
     };
-  }, [path, revision, clearOnError, clearUnanswered]);
+  }, [path, revision, clearOnError, clearUnanswered, serializeReads]);
   return {
     data: state.path === path ? state.data : null,
     error: state.path === path ? state.error : null,

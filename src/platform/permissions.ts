@@ -153,6 +153,7 @@ export type Capability =
   | "schedule.contact"
   | "customer_message.send"
   | "customer_message.switch"
+  | "service_escalation.record"
   | "service.work_order.read"
   | "service.work_order.edit"
   | "service.scope.authorise"

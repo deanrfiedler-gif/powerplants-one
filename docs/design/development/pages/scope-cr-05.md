@@ -14,11 +14,15 @@ Implement sales aftercare, post-installation reviews, training follow-up, renewa
 
 ## Desktop
 
+Accepted design: the [Sales aftercare design decision](../../../decisions/sales-aftercare-figma-design.md) of 30 October 2026 covers the worklist grouped by source event, the customer review record with its eleven-line outcome ledger, the Complete review dialog that sets exactly one outcome, the Service referral, the training record, the renewal handover to Deals and the history, with eleven icon-free captures in [design r01](../../../reference/ui/sales-aftercare/sales-aftercare-design-r01/README.md). Decisions D1–D10 and answers Q1–Q6 are recorded there. The built pages have not yet been changed to match it.
+
 Use the application shell for navigation, search, identity and the existing information icon. Keep the page title, selected record/scope and primary action visible. Use a register/worklist for multiple records and a record/evidence workspace for an individual record. Match the linked page-specific reference where one exists; retain its accepted geometry.
 
 At 1440 × 960 and 1024 × 768, inspect the complete shell and stylesheet order. Let long titles and unknown values wrap. Keep one owner for content scrolling. Record the actual dimensions and any approved adaptation here after paired source/application review.
 
 ## Mobile
+
+Accepted design: captures 09 and 10 in [design r01](../../../reference/ui/sales-aftercare/sales-aftercare-design-r01/README.md): the review record and the Record a statement form at 390 and 320, with a compact record header, flush sections, 16 px inputs and 48 px actions.
 
 At 390 × 844 and 320 CSS px, retain the same task and record context. Stack related fields and use labelled cards for dense worklists. Keep primary actions, validation and the close control reachable. Inputs use readable 16 px text; touch controls use the shared minimum target. Do not hide a required decision or critical state solely to fit the screen.
 
@@ -31,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Accepted Figma design captures: [Sales aftercare design r01](../../../reference/ui/sales-aftercare/sales-aftercare-design-r01/README.md) (eleven icon-free PNGs; design compositions, not application captures).
 
 - [PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html](../../../reference/ui/sales-aftercare/PPO-Sales-Aftercare-and-Renewal-Worklist-r01.html)
 

@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "captured_on": "2026-10-31",
+  "implementation_commit": "4444eddf",
+  "fixture": "tests/helpers/sales-briefs.ts",
+  "browser": "Chrome 156.0.8078.80 via Playwright 1.64.1",
+  "review": "Codex visual inspection; owner acceptance pending",
+  "images": [
+    {
+      "file": "desktop-1024-register.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "9c8abacb7a1b2b7864057a4ad472f63096f913cf4451c1a2e8f7c411d3973071"
+    },
+    {
+      "file": "desktop-1024-snapshot.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "9039d9cb4df42e6ac62693583790f31bde834d9778a38721aaaa1f1b1d068cb0"
+    },
+    {
+      "file": "desktop-register.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "cbb6a4c57819012dba4f1ccad45860344d8d9d2fc94340bfc79deb2666283255"
+    },
+    {
+      "file": "desktop-selection.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "402b4a10d259dcc670d390aeade7cd0eeb6116c332721f8f38ff3f249568a81b"
+    },
+    {
+      "file": "desktop-snapshot.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "a65feace83515cdf04ced7a826c3a8e6e15a0b4c340dd2cd9ecbeeb91ea7db8c"
+    },
+    {
+      "file": "phone-320-list.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "d8efca9802dccb52b74ef134a99bb6b3ef610325aff0d8fef4e2fd4331c51024"
+    },
+    {
+      "file": "phone-320-snapshot.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "f772c488b88494a86287df3e92d66fa30e4e9ce827a2e7092bf4af08f338240e"
+    },
+    {
+      "file": "phone-list.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "f0b8ea85f74e984a1d5721193011964f30067c6d480db93db33c72396a595d6b"
+    },
+    {
+      "file": "phone-snapshot.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "8c13321b2163ef3ae1a4c02d0baea637ef422160bbb009d213d560ff50438312"
+    }
+  ]
+}

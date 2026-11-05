@@ -2,81 +2,87 @@
 guide_key: guide.page.estimating
 entry_key: route:/estimating
 also_applies_to: []
-carried_over_from: src/components/estimating-workload-guide.ts
 title: Estimating intake & workload
 status: InReview
-shown_before_review: true
 versioning: git
 owner_role: "Prototype content owner: Dean Fiedler"
-source_commit: b95d335987ee3b8f2c9f19509e7832c5200db67d
-contents: { overview: "Overview", how: "How to use", journey: "Journey map" }
+source_commit: 3f2e9234c80c0c68cf4a264a56f56196b94e3c49
+contents: { overview: "Overview", how: "Quick start", journey: "Handover" }
 list_styles: { journey: journey }
 ---
 
-Find the current opportunity brief, scope readiness and estimating owner, then continue with the exact discovery or saved estimate.
+## Purpose and outcome {#overview}
 
-## Workload, source context and authority {#overview}
+Find permitted opportunity briefs, inspect scope readiness and continue in the exact Discovery alternative or saved estimate. Appearing here does not mean Sales intake was accepted. Discovery completeness, price approval and quotation issue remain separate.
 
-This online view joins records you can currently read. Appearing here does not mean an intake has been accepted. Discovery completeness, saved prices, estimate approval and quotation issue are separate facts.
+## Before you start {#before}
 
-### Canonical brief
+Use your permitted identity and an online connection. Reading requires current estimating and source access. Starting Discovery also requires estimating edit permission and the native receiving and linking checks. This page stores no offline business draft.
 
-The linked Sales reference and source version identify the customer, site and need summary. Sales ownership stays separate from the estimating workspace owner.
+## Quick start {#how}
 
-### Readiness
+1. Choose **All workload**, **My estimating work**, a **Scope readiness** view or **Saved estimates** from the secondary menu.
+2. Search for the customer, reference, title or brief. Choose **Sort workload**, or open **Search and filters** for owner and readiness controls.
+3. Open an opportunity title to inspect its overlapping snapshot. Close it with **Close snapshot** or Escape to return to the register.
+4. Follow **Open discovery**, **Start discovery** or an exact saved estimate link to continue in the owning workflow.
 
-Discovery not started has no workspace or estimating allocation. Scope clarification (amber) means the selected discovery is incomplete. Discovery complete (green) means the scope can be reviewed for manual costing; it does not approve a price or issue a quotation. Legacy manual basis has no recorded E2 questionnaire. Each state is named in words as well as colour.
+## Understand the page {#page}
 
-### Exact saved basis
+The toolbar shows the last successful read time in AEST. Workload has separate Sales and estimating owners. My estimating work means the estimating workspace owner is you; it does not mean you own the Sales opportunity.
 
-Saved-estimate links show the cost version and the discovery revision it costed. A later discovery save never silently reprices that estimate. Competing alternatives remain separate.
+Search, owner and sort define a window of up to 100 opportunities. Readiness counts apply within that window, before filtering by readiness. All workload and My estimating work each count their own owner window. Narrow the search for older work. Closed Sales opportunities appear only with estimating workspaces.
 
-### Dates and policy
+## Information you need {#information}
 
-Required response is Unknown. A displayed Sales action date is not a quotation deadline. Intake acceptance, allocation, returns and priority policy are Not configured. A Sales handover-due obligation is not receiving acceptance.
+Check the customer, site, need summary, Sales source version, readiness reasons and both owners. A readiness follow-up marked **Saved owner** has a recorded owner whose name is not projected here; open Discovery for its owned detail. Required response is **Unknown**. A Sales action date or handover-due obligation is not a quotation deadline or receiving acceptance.
 
-## How to use it {#how}
+## Complete the main tasks {#tasks}
 
-1. **Find permitted work**\
-   Search by customer, reference, title or brief, choose an estimating owner and sort, then Apply filters. Choose a readiness state from Scope readiness; each shows how many permitted opportunities it holds. My estimating work selects workspaces you own, not every Sales opportunity you own. On a phone, readiness, owner and sort sit under one button that names the current selections.
-2. **Read the result boundary**\
-   The view examines up to 100 permitted opportunities matching the search and owner, in the chosen sort order. Readiness filters and counts apply within that window. Narrow search for older work. Counts describe permitted rows only. Closed opportunities appear only with existing estimating workspaces.
-3. **Review the brief**\
-   Select an opportunity's title to show its detail: in the panel beside the register on a wide screen, or in a drawer on a narrower one. Escape or Done closes the drawer and returns you to the row. On a phone each card shows the detail. Open the Sales reference to review source details and its independently owned next action. No Sales stage or handover state changes here.
-4. **Continue discovery**\
-   Start discovery requires estimating edit permission. The existing wizard checks current authority and establishes its own owner. Open discovery retains the workspace and selected alternative; resolve owned questions there.
-5. **Open saved work**\
-   Saved estimates lists the manual workbooks with their saved sell total in AUD, excluding tax. An estimate without cost lines reads Not estimated, never zero. Saved estimate links open exact history and Draft quotation preparation. The Estimation wizard and Specialist configurations are in the module navigation and use their existing guarded workflows.
+Select opportunity checkboxes to replace the toolbar with selection controls. **Hide panel** keeps the selection; **Show panel** restores its overlapping panel. **Clear selection** or **Cancel** ends it. **Open in sequence** visits selected opportunities most recently changed first, regardless of Customer sort. Closing the snapshot ends sequence navigation. A normal row opens the full current register sequence.
 
-## Your journey {#journey}
+**Export list** checks current access and selected facts again before downloading the permitted list. Changed or inaccessible rows require a fresh selection. No selection action accepts or allocates work.
 
-Each destination owns its saved records and recovery. Navigation and filtering make no business changes.
-
-1. **Opportunity brief**\
-   Review the customer need and known source context.
-2. **Discovery and alternatives**\
-   Capture areas, systems, evidence, responsibilities and exact immutable revisions in the five-step wizard.
-3. **Deliberate costing**\
-   Review the saved discovery before creating a manual estimate or successor. Review specialist runs before adopting their contributions.
-4. **Exact Draft quotation**\
-   Prepare a customer-safe Draft from an exact saved estimate version. Draft generation is not approval, issue, sending, delivery or acceptance.
+**Saved estimates** uses its own search and newest-saved order. Each link opens an exact saved revision. Sell is in AUD excluding tax; **Not estimated** means no cost lines, not zero. A newer Discovery revision never silently reprices a saved estimate.
 
 ## On your phone {#mobile}
 
-Search stays visible; open Readiness, owner and sort when needed. Its label names the current selections while it is closed. Each card shows the full owner, readiness, unknown-date and next-step detail. This page is online only; no business draft is stored on the device.
+Use the compact header's view picker and **Filter** control. Filters include search, estimating owner, readiness, sort, refresh and selection. Flush rows show the title, reference, readiness, customer and estimating owner. The full-screen snapshot keeps its primary handovers at the bottom; on a narrow phone its previous/next controls are in **Snapshot actions**.
 
 ## Keyboard shortcuts {#shortcuts}
 
 | Key | Action |
 |---|---|
-| `Tab / Shift+Tab` | Move through filters, readiness choices, rows and record links. |
-| `Enter / Space` | Apply the filter form, choose a readiness state or select a row. |
-| `Esc` | Close the detail drawer or this guide and return to its opener. |
-| `Back / Forward` | Restore the workload filters recorded in the URL. |
+| Tab / Shift+Tab | Move between controls, rows and links. |
+| Enter / Space | Activate a row, button or checkbox. |
+| Escape | Close the current snapshot, filter or guide and return to its opener. |
+| Arrow keys / Home / End | Move between snapshot tabs or menu choices. |
+| Browser Back / Forward | Restore URL filters, Saved estimates and the open record. |
 
-## If something is unavailable {#recovery}
+## Statuses and warnings {#states}
 
-Loading and failed reads are not an empty queue. Failed refresh clears the rows and offers Try loading again. Current estimating, CRM and underlying source permissions are rechecked; revoked records and actions disappear. If a downstream save is uncertain, reconcile its original operation in that workspace before making another attempt. Stale versions require comparison there.
+**Discovery not started** has no workspace or estimating allocation. **Scope clarification** means the selected Discovery is incomplete. **Discovery complete** records scope evidence only. **Legacy manual basis** has no recorded E2 questionnaire. Intake acceptance, allocation, returns and priority rules remain **Not configured**.
 
-> [!NOTE]
-> No allocation, commercial approval, customer message, work authority or ERP effect is granted here. Excel estimate import and supplier refresh remain separate programme work. This guide describes the synthetic implementation; business and device acceptance remain separate.
+## Responsibilities and handover {#journey}
+
+1. Sales owns the opportunity and explicit Sales brief context. Reading this page changes no stage, source or handover state.
+2. Discovery owns scope evidence, follow-ups, alternatives and immutable revisions. Starting it does not accept a Sales brief. The native flow rechecks current authority and any receiving or linking requirement.
+3. Estimating owns deliberate costing and exact saved cost revisions. Review later scope changes before creating a successor.
+4. Quotation preparation owns the exact Draft output. A Draft is not approval, issue, sending, delivery or customer acceptance.
+
+## Worked examples {#examples}
+
+**SYN Greenhouse Demonstration:** Jordan owns Sales and Alex owns the estimating workspace. Alex sees it in My estimating work. Jordan's Sales ownership alone does not put it there. If Option B revision 4 is selected, Open discovery keeps that alternative; a saved estimate linked to an earlier revision still opens its exact saved cost basis.
+
+## Troubleshooting {#recovery}
+
+Loading is not an empty queue. Background checks keep the last confirmed rows usable. **Refresh** marks earlier results unconfirmed and withholds their actions until successful. A failed or denied read clears rows, counts, selection and snapshot; they stay cleared while **Try loading again** waits. Retry does not restore old data. No matches is distinct from no permitted workload or no saved estimates.
+
+Query changes preserve the search and sorting controls and clear transient selection. Downstream uncertain saves must be reconciled in their owning workflow before another attempt. An absent or unreadable Sales brief uses the same generic context here; native Discovery creation still rechecks source authority.
+
+## Related SOPs and resources {#resources}
+
+No approved SOP linked yet. Continue through the page's native Sales, Discovery and saved-estimate links. No customer communication or ERP action is performed here.
+
+## Guide review and feedback {#feedback}
+
+This rewrite is InReview and awaits content-owner review and publication. It describes the synthetic prototype; owner visual review, business acceptance and device acceptance remain separate. Report the page, affected control and expected outcome without including operational or customer data.

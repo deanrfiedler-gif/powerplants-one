@@ -54,3 +54,7 @@ Accepted Figma design: [design r01](../../../reference/ui/supply-chain/workshop-
 The draft User Guide `guide.cx.02` carries prerequisites, tasks, outcomes and recovery. Review that article against the running release before publication. Keep source presence, visual review, functional testing, owner acceptance and deployment separate.
 
 Acceptance evidence is pending. Capture matching original-reference and application views, then verify keyboard order, focus return, 200% zoom, wrapping, scroll ownership, phone states and the relevant business journey. Do not replace a comparison image simply to make a test pass.
+
+## Create forms pattern — 1 November 2026
+
+Dean accepted the [Create forms pattern](../../../decisions/create-forms-pattern-figma-design.md) (PPO-CREATE-FORMS-FIGMA-DEC) with the words "Accept recommendations". For this entry it draws **New build**. The panel shows only the accepted register columns. No model, route or capability exists, so nothing here is a claim about the application. [Captures](../../../reference/ui/create-forms-design-r01/README.md) are designs, not application captures. The native page isn't changed; a build needs its own request. Source presence, visual review, functional proof and deployment stay separate, and no review fingerprint is supplied.

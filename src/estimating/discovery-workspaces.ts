@@ -726,7 +726,7 @@ export async function readDiscoveryWorkspace(p: Principal, id: string) {
       },
       manual_costing: { status: "Implemented", action: "Review scope for manual costing" },
       delivery_routing: { status: "NotConfigured" },
-      costing_import: { status: "NotImplemented" },
+      costing_import: { status: "Implemented" },
     };
   });
 }
