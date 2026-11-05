@@ -12,7 +12,7 @@ The current workspace uses a full-width slate band with square corners and a whi
 
 The desktop header uses a 240 px brand area. Global search starts at x=264 in the 1440 px fixture and x=256 in the narrower fixtures. At 1024 px the field shrinks to 383 px and the full wordmark fits. The shared desktop header uses the adopted 36 px symbol, 18 px Medium wordmark and 1 px right-edge-only divider. Reference `170:41052` compares the previous and adopted header.
 
-The right-panel examples reuse the collapsed side panel and four existing icons. The editable tab bars cover Snapshot, Activity, Files and Conversations for a synthetic Sunline deal and a Riverbend work order. Source `184:42764` contains two collapsed and eight expanded desktop states. See the [right-rail study and validation](../../../decisions/shell-concept-prototype.md#expanded-right-rail-examples).
+The right-panel examples reuse the collapsed side panel and four existing icons. The editable tab bars cover Snapshot, Activity, Files and Conversations for a synthetic Sunline deal and a Riverbend work order. Source `184:42764` contains 15 reachable desktop states, including five paired examples with Riverbend checked and Sunline in preview. The Service Activity view connects the four history events and emphasises the latest authorisation receipt. See the [right-rail study and validation](../../../decisions/shell-concept-prototype.md#expanded-right-rail-examples).
 
 ## register-table
 
@@ -20,7 +20,7 @@ Sales browse, preview and checked-row fixtures distinguish record inspection fro
 
 The expanded preview and pinned-menu examples use a derived Deals component with 140 px local search, compact gaps and wrapped filters. This keeps the primary action visible within the reduced workspace. Expanded Service headers, summaries and cards use available width rather than their earlier fixed compact-rail dimensions.
 
-The compact deal-row component retains customer, scope, amount/stage and next activity in six row instances. The final pass uses 15/20 customer names, 13/18 supporting text, 12 px padding and 8 px corners inside 16 px content gutters. The 390 view shows all six; the short 320 view scrolls. Only the named Sunline phone record journey is connected. Overdue status includes the word as well as colour.
+The grouped register shows stage once per band and uses the available width for next activity. A blue left edge marks the previewed deal, a checkbox marks each bulk selection, and the focus reference uses an outline. The compact phone component retains customer, scope, amount, stage and next activity in six divided rows. It aligns the 15/20 amount to the right of the customer name, places the stage opposite the project, and uses 12 px outer gutters. The 390 view shows all six; the short 320 view scrolls. Only the named Sunline phone record journey is connected. Overdue status includes the word as well as colour.
 
 ## read-state
 

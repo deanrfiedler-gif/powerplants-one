@@ -3,7 +3,7 @@ document_id: PPO-SHELL-CONCEPT-PROTOTYPE-DEC
 title: Shell concept clickable trial
 date: 2026-11-05
 owner: Dean Fiedler
-status: Desktop rail and header branding adopted. Wider prototype review and application implementation pending
+status: Desktop branding and rail plus reviewed register and timeline refinements adopted. Wider prototype review and application implementation pending
 source_commit: aeaaad5a8e13f5c9549b9763a8150413b1769ab9
 versioning: git
 ---
@@ -143,7 +143,18 @@ The original 40 px rail offers Snapshot, Activity, Files and Conversations. In t
 
 Sales starts collapsed at `184:42765` and opens Snapshot at `184:43703`. Service starts collapsed at `184:47355` and opens Snapshot at `184:47597`. The chevrons open Snapshot. Each shortcut opens its category directly. Tabs switch within the same record. Collapse and Escape restore the corresponding collapsed example. The left rail links the two example workspaces. On Service, the scope and authorisation cards stack when docked so the receipt can be reached by scrolling the record body.
 
-Source validation found all ten screens reachable and all 73 expected destinations saved. Checks covered record identity, panel bounds, tab text containment, selected state and return targets. Rendered examples covered both records. The file listings, history entries and thread excerpts illustrate possible contents. Reading documents, sending messages, permission handling and narrow-screen behaviour require separate work.
+Before the independent-selection refinement, source validation found all ten original screens reachable and all 73 expected destinations saved. Checks covered record identity, panel bounds, tab text containment, selected state and return targets. Rendered examples covered both records. The file listings, history entries and thread excerpts illustrate possible contents. Reading documents, sending messages, permission handling and narrow-screen behaviour require separate work.
+
+## Adopted register and timeline refinements
+
+Dean approved three visual changes after reviewing a separate before-and-after example. The changes apply to the Figma concept.
+
+- **Grouped Sales register.** Each stage appears in its group band. Removing the repeated stage column gives the docked 800 px register a 244 px next-activity column, up from 132 px. The previewed deal has a pale blue fill and a 3 px blue left edge. Checkboxes identify deals marked for bulk action. The editable row-state reference (`212:51752`) shows a different keyboard-focused row with an outline and underlined deal name.
+- **Independent selection example.** In the Sales panel, mark Riverbend while Sunline stays in preview. The count shows one checked deal. The mark persists through all four tabs and collapse. Clear selection returns to the same tab with Sunline still in preview. Snapshot with Riverbend checked is `210:47747`. These five paired fixtures demonstrate the named example. Live keyboard operation and arbitrary multiselection require application testing.
+- **Service Activity.** In the work-order Activity example (`184:47814`) and overview, four scope events share a connected timeline. A check and a Latest label identify the newest authorisation. Its receipt `SYN-AUTH-000041` sits below the decision. The supporting-files link follows the history.
+- **Phone Deals.** The 390 px (`68:22469`) and 320 px (`68:22569`) examples each retain all six records. One rounded list contains divided rows inside 12 px outer gutters. Customer and amount share the first line. Project and stage share the next. Each amount aligns to the same right edge. The next activity keeps its label and a purpose-specific icon. The short list scrolls within the phone viewport.
+
+Source validation measured all 288 next-activity labels across 24 grouped-register frames. The displayed texts fit, the next-activity headings align with their columns, and all 12 phone rows retained their fixture contents. Both authorisation timelines have a continuous line and the expected receipt. The right-rail study now has 15 reachable screens and 123 destination actions, including its 73 original actions. Visual checks covered the docked register, the separately checked deal, the row-state reference, Service Activity and both phone widths.
 
 ## Remaining issues
 
