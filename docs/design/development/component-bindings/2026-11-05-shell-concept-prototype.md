@@ -12,6 +12,8 @@ The current workspace uses a full-width slate band with square corners and a whi
 
 The desktop header uses a 240 px brand area. Global search starts at x=264 in the 1440 px fixture and x=256 in the narrower fixtures. At 1024 px the field shrinks to 383 px and the full wordmark fits. The shared desktop header uses the adopted 36 px symbol, 18 px Medium wordmark and 1 px right-edge-only divider. Reference `170:41052` compares the previous and adopted header.
 
+The right-panel examples reuse the collapsed side panel and four existing icons. The editable tab bars cover Snapshot, Activity, Files and Conversations for a synthetic Sunline deal and a Riverbend work order. Source `184:42764` contains two collapsed and eight expanded desktop states. See the [right-rail study and validation](../../../decisions/shell-concept-prototype.md#expanded-right-rail-examples).
+
 ## register-table
 
 Sales browse, preview and checked-row fixtures distinguish record inspection from bulk action. Clear selection retains the preview. The Service register opens the blocked synthetic work order; readiness evidence remains attached to the exact scope. Compact laptop/tablet and phone rows are trial compositions, not a replacement for the accepted register control set. Arbitrary sorting, filters, bulk execution and the complete permission matrix are outside this prototype.

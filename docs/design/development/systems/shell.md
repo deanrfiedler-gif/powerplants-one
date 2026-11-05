@@ -20,6 +20,8 @@ The [adopted active-workspace treatment](../../../decisions/shell-concept-protot
 
 In the Figma trial, global search begins at the workspace margin measured from the 240 px expanded rail edge. Both rail states use a 24 px margin at 1440 px and a 16 px margin in the 1280 and 1024 px examples. The adopted header pairs a 36 px symbol with an 18 px wordmark and a single 1 px divider on the right edge of the brand area. See the [header measurements and comparison](../../../decisions/shell-concept-prototype.md#desktop-search-alignment-and-branding-study).
 
+The [expanded right-rail examples](../../../decisions/shell-concept-prototype.md#expanded-right-rail-examples) propose a 400 px desktop panel for the focused record. Snapshot, Activity, Files and Conversations share four visible tabs across Sales and Service. The separate examples preserve record identity through tab switches and return to the same collapsed screen.
+
 Use the actual shared application source `src/components/product-navigation.tsx`. The shell owns branding, navigation, global search, identity and viewport allocation. Development pages occupy the workspace interior. Shared changes must be checked against every affected consumer, using the complete root stylesheet order.
 
 ## Mobile

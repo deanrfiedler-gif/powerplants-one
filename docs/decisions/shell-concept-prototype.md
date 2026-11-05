@@ -128,6 +128,23 @@ Dean requested that global search start inside the workspace to the right of the
 
 Dean approved the 36 px symbol, 18 px Roboto Medium wordmark on a 24 px line, and a divider on the right edge only. The 1 px white divider at 20% opacity meets the expanded rail edge. The editable comparison (`170:41052`) preserves the previous 32 px symbol and 14 px wordmark beside the adopted header. All 62 desktop frames passed checks for brand dimensions, divider placement, search and utility clearance, and existing prototype links.
 
+## Expanded right rail examples
+
+Dean requested examples of the right-side rail and the information it could contain. The private **Right rail · Sales and Service examples** section (`184:42764`) contains two desktop prototype flows and an overview (`190:47941`). This is a design proposal for two synthetic records, separate from the earlier 96-screen trial.
+
+The original 40 px rail offers Snapshot, Activity, Files and Conversations. In the earlier 400 px deal panel, Conversations extends beyond the tab viewport. The examples place the same four icons above equal-width labels across the panel. The active tab has a tinted background, stronger label and 3 px green top edge. The record ID, name and status stay above the tabs. The panel body has its own scroll area. At 1440 px, the expanded 240 px left rail and 400 px right panel leave 800 px for the record workspace.
+
+| Panel | Sales · Sunline deal SYN-OPP-000309 | Service · Riverbend work order SYN-PPO-WO-000041 |
+| --- | --- | --- |
+| Snapshot | A$92,750 deal value, qualification stage, owner, contact and next site visit | Authorised scope r02, request, equipment, receipt and pending visit |
+| Activity | Upcoming visit, emailed proposal, budget call and deal creation | Scope authorisation, saved revision, equipment verification and triage |
+| Files | Proposal, site brief and access sketch with SharePoint metadata | Scope PDF, equipment photo and evidence required at handback |
+| Conversations | Two example threads on access and FY27 budget | Two example threads on scheduling and completion evidence |
+
+Sales starts collapsed at `184:42765` and opens Snapshot at `184:43703`. Service starts collapsed at `184:47355` and opens Snapshot at `184:47597`. The chevrons open Snapshot. Each shortcut opens its category directly. Tabs switch within the same record. Collapse and Escape restore the corresponding collapsed example. The left rail links the two example workspaces. On Service, the scope and authorisation cards stack when docked so the receipt can be reached by scrolling the record body.
+
+Source validation found all ten screens reachable and all 73 expected destinations saved. Checks covered record identity, panel bounds, tab text containment, selected state and return targets. Rendered examples covered both records. The file listings, history entries and thread excerpts illustrate possible contents. Reading documents, sending messages, permission handling and narrow-screen behaviour require separate work.
+
 ## Remaining issues
 
 1. **Prototype state continuity:** re-entering Service from the shared workspace menu starts the blocked example again. Local record/list/Schedule returns preserve the relevant fixture, but cross-workspace persistence is not implemented. The shared issue-confirmation background and issued result use the saved 8 December example even when opened from the original 1 December quote or the separate 15 December recovery fixture. Cancellation returns correctly, but arbitrary state combinations are not a valid end-to-end proof. Use stateful fixtures before broader usability testing.
