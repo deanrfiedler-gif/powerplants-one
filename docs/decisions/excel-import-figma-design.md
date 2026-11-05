@@ -84,13 +84,13 @@ The synthetic amounts reconcile across versions: v1 import (cost AUD 61,240.50, 
 
 ## 5. Boundaries at design acceptance
 
-- **Building the pages.** These were not authorised by the 15 October design acceptance itself. Dean requested the route, the Wizard's Review action (Q1) and the estimate-record actions on 31 October; PR #800 implements them against the merged APIs. The Wizard action adds to the accepted Wizard design; it is recorded here, not drawn on the Wizard page.
+- **Building the pages.** These were not authorised by the 15 October design acceptance itself. Codex decided under the standing order to build the route, the Wizard's Review action (Q1) and the estimate-record actions on 31 October, using the relayed chat as context only; PR #800 implements them against the merged APIs. The Wizard action adds to the accepted Wizard design; it is recorded here, not drawn on the Wizard page.
 - **Still open:** native FX authoring and review controls for Cost Sources are not implemented (reviewed FX contract); operational workbook compatibility has not been assessed, because no redacted departmental workbook has been supplied.
 - **Not drawn yet:** pricing steps 1 and 2 (the line and source picker and the charge entry form), the full line list, the estimate record page with its Import evidence section (Q3), and prototype links.
 
 ## Implementation recommendations — 31 October 2026
 
-Codex recommendation under Dean's standing order, recorded on [PR #800](https://github.com/deanrfiedler-gif/powerplants-one/pull/800). Dean explicitly requested this build and raised the concurrent-page limit to ten in the task. This is not another acceptance of undrawn design.
+Codex decision under the standing order, recorded on [PR #800](https://github.com/deanrfiedler-gif/powerplants-one/pull/800), with the relayed chat as context only. The build retains the full breadcrumb "Estimating & quotation / Estimation wizard / Excel import". The [pull request flow limits](pull-request-flow-limits.md) govern page-build concurrency. This is not another acceptance of undrawn design.
 
 - Pricing steps 1 and 2 use existing Field, SelectField and Button controls for exact line/source revisions, pricing date and optional authored AUD landed charges. Native source/version/evidence validation remains authoritative; native FX authoring/review is outside scope.
 - The full line list uses the Wizard TableScroll and a filterable table, with every populated row and its original cells/formula caches reachable. Phone users explicitly open the list.

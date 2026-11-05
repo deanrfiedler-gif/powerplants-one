@@ -10,6 +10,6 @@
   "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
   "component_proof": "tests/browser/excel-import.spec.ts",
   "application_proof": "tests/browser/excel-import.spec.ts",
-  "authority": "Dean requested implementation of the accepted Excel import design. Application visual acceptance remains open.",
+  "authority": "The hashes identify the retained Excel import design capture and shared theme reference. Functional proof, application visual review, owner acceptance and deployment remain separate.",
   "adaptations": "docs/testing/evidence/excel-import-ui/README.md"
 }

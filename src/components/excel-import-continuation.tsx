@@ -824,7 +824,7 @@ export function ExcelQuotation({
         onReview({
           label: "Draft reconciliation",
           values: Object.entries(r.reconciliation).map(([key, value]) => [
-            key.replaceAll("_", " "),
+            reconciliationLabel(key),
             value,
           ]),
         });
@@ -943,69 +943,7 @@ export function ExcelQuotation({
           </Button>
           {review && (
             <>
-              <section className="es02-card">
-                <h3>Reconcile Draft total</h3>
-                <dl>
-                  {Object.entries(review.reconciliation).map(([k, v]) => (
-                    <Row key={k} label={k.replaceAll("_", " ")}>
-                      {money(v)}
-                    </Row>
-                  ))}
-                </dl>
-                <p>
-                  {review.choice_changes.length} workbook choices changed.{" "}
-                  {review.unresolved_line_ids.length} lines unresolved.
-                </p>
-                {!review.can_prepare && (
-                  <p role="alert">
-                    Choose at least one included line and resolve every retained
-                    line.
-                  </p>
-                )}
-              </section>
-              {review.customer_content && (
-                <article
-                  className="es02-card xi-customer"
-                  aria-label="Customer-safe Draft preview"
-                >
-                  <h3>{review.customer_content.title}</h3>
-                  <p>
-                    {review.customer_content.customer} ·{" "}
-                    {review.customer_content.site}
-                  </p>
-                  <h4>Included scope</h4>
-                  <p>{review.customer_content.scope.included}</p>
-                  <TableScroll label="Customer Draft lines">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Description</th>
-                          <th>Quantity</th>
-                          <th>AUD</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {review.customer_content.items.map((line, i) => (
-                          <tr key={i}>
-                            <td>{line.description}</td>
-                            <td>
-                              {line.quantity ?? "Included"} {line.unit}
-                            </td>
-                            <td>{line.amount}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </TableScroll>
-                  <strong>
-                    Draft total {money(review.customer_content.total)}
-                  </strong>
-                  <h4>Excluded scope</h4>
-                  <p>{review.customer_content.scope.excluded}</p>
-                  <h4>Assumptions</h4>
-                  <p>{review.customer_content.scope.assumptions}</p>
-                </article>
-              )}
+              <ExcelDraftReviewSummary review={review} />
               <section className="es02-card">
                 <h3>Confirm Draft preparation</h3>
                 {[
@@ -1080,6 +1018,99 @@ export function ExcelQuotation({
             </>
           )}
         </fieldset>
+      )}
+    </>
+  );
+}
+
+// Use the accepted Draft frame's names for included sell and kept-line choices
+// (docs/reference/ui/estimating/excel-import-figma-r01/README.md, capture 08).
+const reconciliationLabels: Record<string, string> = {
+  estimate_sell: "Estimate sell",
+  workbook_included_sell: "Workbook included sell",
+  reviewed_workbook_sell: "Reviewed workbook sell",
+  retained_lines_sell: "Your choices",
+  quote_total: "Draft total",
+};
+const reconciliationLabel = (key: string) =>
+  reconciliationLabels[key] ??
+  key
+    .replaceAll("_", " ")
+    .toLowerCase()
+    .replace(/^./, (letter) => letter.toUpperCase());
+
+export function ExcelDraftReviewSummary({
+  review,
+}: {
+  review: Pick<
+    QuoteReview,
+    | "reconciliation"
+    | "choice_changes"
+    | "unresolved_line_ids"
+    | "can_prepare"
+    | "customer_content"
+  >;
+}) {
+  return (
+    <>
+      <section className="es02-card">
+        <h3>Reconcile Draft total</h3>
+        <dl>
+          {Object.entries(review.reconciliation).map(([k, v]) => (
+            <Row key={k} label={reconciliationLabel(k)}>
+              {money(v)}
+            </Row>
+          ))}
+        </dl>
+        <p>
+          {review.choice_changes.length} workbook choices changed.{" "}
+          {review.unresolved_line_ids.length} lines unresolved.
+        </p>
+        {!review.can_prepare && (
+          <p role="alert">
+            Choose at least one included line and resolve every retained line.
+          </p>
+        )}
+      </section>
+      {review.customer_content && (
+        <article
+          className="es02-card xi-customer"
+          aria-label="Customer-safe Draft preview"
+        >
+          <h3>{review.customer_content.title}</h3>
+          <p>
+            {review.customer_content.customer} · {review.customer_content.site}
+          </p>
+          <h4>Included scope</h4>
+          <p>{review.customer_content.scope.included}</p>
+          <TableScroll label="Customer Draft lines">
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {review.customer_content.items.map((line, i) => (
+                  <tr key={i}>
+                    <td>{line.description}</td>
+                    <td>
+                      {line.quantity ?? "Included"} {line.unit}
+                    </td>
+                    <td>{money(line.amount)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
+          <strong>Draft total {money(review.customer_content.total)}</strong>
+          <h4>Excluded scope</h4>
+          <p>{review.customer_content.scope.excluded}</p>
+          <h4>Assumptions</h4>
+          <p>{review.customer_content.scope.assumptions}</p>
+        </article>
       )}
     </>
   );
