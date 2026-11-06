@@ -1,0 +1,25 @@
+{
+  "oracle_base": "9c956b1b93c2cfed9e3aa1237927b537f8dc3d88",
+  "oracle_original_source_sha256": "e9ac703e9d161255adc6433c9ac4ac63d9f7aefb277e9e4921ea0d70cdc9d108",
+  "oracle_body_only_changes": [
+    "relative import paths",
+    "exported function name"
+  ],
+  "oracle_body_exact_match": true,
+  "main_customer_reader_unchanged": true,
+  "merge_commit": "b2548eb91f949f231b284988b8d5fd5a51bac554",
+  "merged_main": "b6ee136c353bc66b5012d39908a61a95cece29de",
+  "stable_patch_id_before": "82e4e1de69ad35f0012bdcdd7c4ab5dddc4c54dc",
+  "stable_patch_id_after": "82e4e1de69ad35f0012bdcdd7c4ab5dddc4c54dc",
+  "guides": "main's count + 0 (367); identical bytes",
+  "register": "main's count + 0 (393); identical bytes",
+  "initial_implementation_commit": "c6ebe1ef865deb5ab7f1ead7d2dad3665fd3987b",
+  "final_source_sha256": {
+    "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
+    "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
+    "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+    "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+    "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+    "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+  }
+}

@@ -1,0 +1,575 @@
+{
+  "recorded_at": "2026-11-05T23:40:37.788090+00:00",
+  "branch_source_head": "b2548eb91f949f231b284988b8d5fd5a51bac554",
+  "main_head": "b6ee136c353bc66b5012d39908a61a95cece29de",
+  "setup": {
+    "database": "ready",
+    "browser": "unavailable"
+  },
+  "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/activity-list.test.ts tests/database/customer-location.test.ts tests/database/organisation-register.test.ts tests/database/crm*.test.ts tests/database/mobile-crm.test.ts tests/database/intake.test.ts tests/database/my-work.test.ts tests/database/shared.test.ts tests/database/finance.test.ts tests/database/finance-same-name-mapping.test.ts tests/database/finance-boundaries.test.ts",
+  "initial_run": {
+    "tests": 205,
+    "pass": 159,
+    "fail": 46,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 4820892.888063
+  },
+  "main_comparison": "Each failed test was run by its exact name against unchanged source in the clean detached main checkout, serially with the same synthetic database and 120000ms deadline. All 46 failed; every message matches the branch, using the isolated policy rerun for its render error.",
+  "resolved_classifications": {
+    "environment-blocked: browser": 45,
+    "pre-existing on main in this environment": 1
+  },
+  "failures": [
+    {
+      "file": "tests/database/crm-refinements.test.ts",
+      "test": "HV-21: E1 original owner, source and exact draft bytes survive CRM transfer; receiver gains no commercial authority",
+      "initial_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "main_message": "Error: The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/crm.test.ts",
+      "test": "CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/crm.test.ts",
+      "test": "CA-10 existing field and report follow-up projections obey every Opportunity target",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 simultaneous competing handoffs reserve one complete source quantity only",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 factual material successor retains captured original and invalidates downstream exact review",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 accepted Partial attendance with time_declaration Incomplete is a Finance blocker, never zero",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 accepted Partial attendance with material_declaration Incomplete is a Finance blocker, never zero",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 captured Travel is never silently reclassified as Labour",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 captured Break is never silently reclassified as Labour",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 captured Waiting is never silently reclassified as Labour",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 captured Other is never silently reclassified as Labour",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 fractional-minute capture stays exact and refuses unapproved payroll rounding",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 exact source/review/issue IDs and mixed target grains refuse substitution atomically",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 unresolved warranty/goodwill remains unknown billable quantity and cannot approve",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 Approved return preserves its exact approval and correction event before any effect",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 current exact account mapping changes block mutation and mark account balance unavailable",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 no-posting review consumes complete source dispositions without inventing a target",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 revoked processing capability denies dispatch and original claim receipt without effects",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 source successor after unknown acceptance permits original lookup but refuses stale reconciliation",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 late audit_events failure rolls back allocation, state, event and original receipt together",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 late operation_receipts failure rolls back allocation, state, event and original receipt together",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 late outbox_jobs failure rolls back allocation, state, event and original receipt together",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 database failure after possible effect retains one target and fences a changed original ID",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 missing-result lookup durably fences late dispatch and retains NotProcessed evidence",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 original missing Finance bytes fail closed without regeneration",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 original wrong-hash Finance bytes fail closed without regeneration",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 revoked output owner after durable storage cannot release, retry or recover its receipt",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 source changes after rendering preserve reserved bytes and refuse release",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 revoked Finance read scope denies released bytes and original issue receipt",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 changed exact policy after rendering cannot issue stale bytes",
+      "initial_message": "test timed out after 120000ms",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser",
+      "isolated_branch_rerun_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "isolated_branch_rerun_duration_ms": 10288.975863,
+      "note": "The full serial run timed out. The unchanged test, rerun alone on the branch and main, reaches the same missing-renderer fixture failure. No timeout or expectation was changed."
+    },
+    {
+      "file": "tests/database/finance-boundaries.test.ts",
+      "test": "P10 changed exact renderer after rendering cannot issue stale bytes",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance-same-name-mapping.test.ts",
+      "test": "PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target",
+      "initial_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+      "main_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 F-06 preserves Draft field originals and separately conserves 90 MIN and 2 EA",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 source creation and every direct read/receipt obey current Finance grants",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 exact duplicate original recovers receipt; changed reuse and malformed fields fail",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 return retains original holds, explicit revision releases and transfers them",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 over, under and duplicate allocations cannot release source quantities",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 F-07 records Unknown then reconciles the same one target by original lookup",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 simultaneous claims and original outcome requests have only one effect",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 accepted target survives local failure and cannot be blindly replayed",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 verified NotProcessed releases processor and preserves original target identity on new attempt",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 pre-effect report successor invalidates readiness and retains submitted allocations",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 source correction after possible processing preserves original target and requires a linked correction",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 partial target cannot reconcile; target/history remain immutable",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 stale definition and changed exact account mapping block submit",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/finance.test.ts",
+      "test": "P10 OUT-14 storage-success/database-failure recovers original exact bytes and release identity",
+      "initial_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_tests": 1,
+      "main_pass": 0,
+      "main_fail": 1,
+      "classification": "environment-blocked: browser"
+    }
+  ],
+  "final_source_sha256": {
+    "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
+    "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
+    "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+    "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+    "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+    "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+  },
+  "final_affected_checks": {
+    "customer_location_and_organisation_register": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "full_customer360_equivalence": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "activity_equivalence": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    "sales_workflows": {
+      "tests": 8,
+      "pass": 6,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "sales_failures_main_comparison": {
+      "tests": 2,
+      "pass": 0,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "additional_failures": [
+    {
+      "file": "tests/database/sales-workflows.test.ts",
+      "test": "CR05 issued source -> chosen date -> prepared review -> attributed feedback -> completed review -> closure and correction",
+      "branch_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "file": "tests/database/sales-workflows.test.ts",
+      "test": "CR05 source changes, separate training evidence and exact CRM receiving obey command and options authority",
+      "branch_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "main_message": "Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser"
+    }
+  ],
+  "resolved_verification_harness_failure": {
+    "test": "Customer 360 preserves 100-candidate windows, per-estimate revision limits and the activity continuation",
+    "initial_message": "test timed out after 120000ms",
+    "conditions": "npm run check was running concurrently; Docker had retained the measurement CPU-0 restriction because an empty cpuset update did not restore the effective affinity.",
+    "correction": "Restore effective CPUs 0-4 explicitly and run the database proof serially. No assertion or 120000ms deadline changed.",
+    "branch_isolated_single_cpu": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "unchanged_main_with_identical_new_test_and_fixtures": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "final_branch_complete_proof": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "validation_scope": "The 205-case run covers the changed native adapter/client plumbing and permission reuse. After independent sections were grouped in customer-360.ts, both existing Customer 360 database files, the complete equivalence proof and its aftercare caller were rerun; the other changed source files retain their checked bytes. Full npm run check was also rerun."
+}

@@ -199,7 +199,7 @@ export async function customer360(
     }
     return rows;
   }
-  const deals = await source(
+  const dealsRead = source(
     "CRM Sales",
     "Current permitted opportunities. Forecast values are not orders, invoices or payments; no totals are calculated.",
     ["crm.opportunity.read", "shared.internal.read"],
@@ -230,7 +230,7 @@ export async function customer360(
       };
     },
   );
-  const quotations = await source(
+  const quotationsRead = source(
     "Estimating & quotation",
     "Saved estimates and exact Draft quotations. Alternative estimates and successive quotation revisions are not added together.",
     ["estimating.read"],
@@ -281,7 +281,7 @@ export async function customer360(
       return { items, partial: true }; // Bounded revision lists, never a complete commercial population.
     },
   );
-  const cases = await source(
+  const casesRead = source(
     "Service cases",
     "Permitted cases at Sites with a current customer relationship. This is location context, not a claim that the customer is the bill payer.",
     ["service.ticket.read"],
@@ -308,7 +308,7 @@ export async function customer360(
       };
     },
   );
-  const work_orders = await source(
+  const workOrdersRead = source(
     "Service work orders",
     "Work orders with this exact customer ID. Attendance, remaining work, resolution and commercial settlement remain separate.",
     ["service.work_order.read"],
@@ -333,7 +333,7 @@ export async function customer360(
       };
     },
   );
-  const projects = await source(
+  const projectsRead = source(
     "Projects",
     "Exact customer-related Projects. Technical completion, customer acceptance and commercial closeout are separate decisions.",
     ["project.read", "shared.internal.read"],
@@ -358,7 +358,7 @@ export async function customer360(
       };
     },
   );
-  const accounts = await source(
+  const accountsRead = source(
     "Finance",
     "Exact company-specific synthetic account observations. Each currency and account stands alone; source balances and unapplied cash are separate. No ageing or credit rule is inferred.",
     ["finance.account.read", "shared.finance.read"],
@@ -390,7 +390,7 @@ export async function customer360(
       };
     },
   );
-  const activities = await source(
+  const activitiesRead = source(
     "My Work / Activity",
     "Direct Organisation-linked Activities, with current source permissions. Broader interaction history is not inferred.",
     ["activity.read"],
@@ -429,6 +429,17 @@ export async function customer360(
     "SharePoint (intended business-document authority)",
     "A general customer-linked document library is not connected. Exact native Draft quotations remain under Deals & quotations; Service owns its issued reports. No document is issued from Customer 360.",
   );
+  // Independent sections share lookup waves. Drain all native readers, then
+  // preserve the original section/error order before the final root recheck.
+  const sectionReads = await Promise.allSettled([
+    dealsRead, quotationsRead, casesRead, workOrdersRead, projectsRead,
+    accountsRead, activitiesRead,
+  ]);
+  const [deals, quotations, cases, work_orders, projects, accounts, activities] =
+    sectionReads.map((read) => {
+      if (read.status === "rejected") throw read.reason;
+      return read.value;
+    });
   // Recheck the root after reading cross-domain data, including identity changes.
   await visible(raw, p, "Organisation", id);
   return {

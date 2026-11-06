@@ -1,0 +1,293 @@
+{
+  "recorded_at": "2026-11-06T00:19:01.008151+00:00",
+  "pr": 863,
+  "main_head": "b6ee136c353bc66b5012d39908a61a95cece29de",
+  "source_sha256": {
+    "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
+    "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
+    "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+    "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+    "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+    "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+  },
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "compiled_servers": "main on 3001; branch on 3000",
+    "measurement_affinity": "Both servers and PostgreSQL CPU 0",
+    "restored_affinity": "0-4"
+  },
+  "duration_basis": "Sum PostgreSQL parse, bind, execute and simple-statement elapsed durations inside the GET, excluding measurement-control SQL. Execute plus simple statements count once; parse/bind lines are not extra statements. This is summed elapsed database time, not CPU time; concurrent queries can overlap.",
+  "limits": "One warmed, single-CPU compiled HTTP sample per implementation and fixture, with SQL logging enabled. Not a hosted, ten-user or whole-application target.",
+  "representative": {
+    "baseline": "b6ee136c353bc66b5012d39908a61a95cece29de",
+    "fixture": "customer360Fixture(40), one draft quotation per estimate; unchanged synthetic business data",
+    "method": "Compiled GET, app servers and PostgreSQL pinned to CPU 0; PostgreSQL log_min_duration_statement=0; sum parse/bind/execute/simple statement durations inside GET; count execute + simple statements. Serial same-data calls after warm-up; sessions established outside the measured interval.",
+    "samples": [
+      {
+        "name": "before",
+        "start": "2026-11-06T00:13:29.962Z",
+        "end": "2026-11-06T00:13:32.070Z",
+        "wall_ms": 2108.193,
+        "database_ms": 881.969,
+        "counts": {
+          "parse": 1497,
+          "bind": 1497,
+          "execute": 1497,
+          "statement": 130
+        },
+        "executed_statements": 1627,
+        "status": 200,
+        "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+        "sections": {
+          "deals": {
+            "state": "Complete",
+            "count": 40,
+            "next_cursor": false
+          },
+          "quotations": {
+            "state": "Partial",
+            "count": 80,
+            "next_cursor": false
+          },
+          "orders": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          },
+          "cases": {
+            "state": "Complete",
+            "count": 4,
+            "next_cursor": false
+          },
+          "work_orders": {
+            "state": "Partial",
+            "count": 12,
+            "next_cursor": false
+          },
+          "projects": {
+            "state": "Partial",
+            "count": 40,
+            "next_cursor": false
+          },
+          "accounts": {
+            "state": "Restricted",
+            "count": 0,
+            "next_cursor": false
+          },
+          "activities": {
+            "state": "Complete",
+            "count": 80,
+            "next_cursor": false
+          },
+          "documents": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          }
+        }
+      },
+      {
+        "name": "after",
+        "start": "2026-11-06T00:13:33.863Z",
+        "end": "2026-11-06T00:13:34.843Z",
+        "wall_ms": 979.687,
+        "database_ms": 1052.922,
+        "counts": {
+          "parse": 72,
+          "bind": 71,
+          "execute": 72,
+          "statement": 13
+        },
+        "executed_statements": 85,
+        "status": 200,
+        "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+        "sections": {
+          "deals": {
+            "state": "Complete",
+            "count": 40,
+            "next_cursor": false
+          },
+          "quotations": {
+            "state": "Partial",
+            "count": 80,
+            "next_cursor": false
+          },
+          "orders": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          },
+          "cases": {
+            "state": "Complete",
+            "count": 4,
+            "next_cursor": false
+          },
+          "work_orders": {
+            "state": "Partial",
+            "count": 12,
+            "next_cursor": false
+          },
+          "projects": {
+            "state": "Partial",
+            "count": 40,
+            "next_cursor": false
+          },
+          "accounts": {
+            "state": "Restricted",
+            "count": 0,
+            "next_cursor": false
+          },
+          "activities": {
+            "state": "Complete",
+            "count": 80,
+            "next_cursor": false
+          },
+          "documents": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          }
+        }
+      }
+    ],
+    "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process."
+  },
+  "candidate_and_revision_limits": {
+    "baseline": "b6ee136c353bc66b5012d39908a61a95cece29de",
+    "fixture": "customer360Fixture(101), plus 100 additional revisions of the first estimate; unchanged synthetic business data",
+    "method": "Compiled GET, app servers and PostgreSQL pinned to CPU 0; PostgreSQL log_min_duration_statement=0; sum parse/bind/execute/simple statement durations inside GET; count execute + simple statements. Serial same-data calls after warm-up; sessions established outside the measured interval.",
+    "samples": [
+      {
+        "name": "before",
+        "start": "2026-11-06T00:06:25.355Z",
+        "end": "2026-11-06T00:06:35.560Z",
+        "wall_ms": 10204.571,
+        "database_ms": 4685.485,
+        "counts": {
+          "parse": 5121,
+          "bind": 5121,
+          "execute": 5121,
+          "statement": 409
+        },
+        "executed_statements": 5530,
+        "status": 200,
+        "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+        "sections": {
+          "deals": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": false
+          },
+          "quotations": {
+            "state": "Partial",
+            "count": 299,
+            "next_cursor": false
+          },
+          "orders": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          },
+          "cases": {
+            "state": "Complete",
+            "count": 4,
+            "next_cursor": false
+          },
+          "work_orders": {
+            "state": "Partial",
+            "count": 12,
+            "next_cursor": false
+          },
+          "projects": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": false
+          },
+          "accounts": {
+            "state": "Restricted",
+            "count": 0,
+            "next_cursor": false
+          },
+          "activities": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": true
+          },
+          "documents": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          }
+        }
+      },
+      {
+        "name": "after",
+        "start": "2026-11-06T00:06:37.065Z",
+        "end": "2026-11-06T00:06:41.657Z",
+        "wall_ms": 4591.567,
+        "database_ms": 6240.492,
+        "counts": {
+          "parse": 82,
+          "bind": 82,
+          "execute": 82,
+          "statement": 14
+        },
+        "executed_statements": 96,
+        "status": 200,
+        "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+        "sections": {
+          "deals": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": false
+          },
+          "quotations": {
+            "state": "Partial",
+            "count": 299,
+            "next_cursor": false
+          },
+          "orders": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          },
+          "cases": {
+            "state": "Complete",
+            "count": 4,
+            "next_cursor": false
+          },
+          "work_orders": {
+            "state": "Partial",
+            "count": 12,
+            "next_cursor": false
+          },
+          "projects": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": false
+          },
+          "accounts": {
+            "state": "Restricted",
+            "count": 0,
+            "next_cursor": false
+          },
+          "activities": {
+            "state": "Partial",
+            "count": 100,
+            "next_cursor": true
+          },
+          "documents": {
+            "state": "Not configured",
+            "count": 0,
+            "next_cursor": false
+          }
+        }
+      }
+    ],
+    "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process.",
+    "log_filter": "PostgreSQL event timestamps inside each GET; measurement-control statements excluded. Last request SQL was logged before the captured end in both samples."
+  }
+}

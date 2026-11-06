@@ -27,7 +27,7 @@ export async function customer360Fixture(count = 8) {
     quotes: string[] = [],
     projects: string[] = [],
     activities: string[] = [];
-  for (let i = 0; i < count; i++) {
+  async function createRecords(i: number) {
     const site = i % 2 ? otherSite : CRM.site;
     const deal = {
       ...crmCreate(),
@@ -61,11 +61,22 @@ export async function customer360Fixture(count = 8) {
       ],
     };
     await createActivity(broad, activity);
-    deals.push(deal.id);
-    estimates.push(estimate.id);
-    quotes.push(quote.id);
-    projects.push(project.id);
-    activities.push(activity.id);
+    deals[i] = deal.id;
+    estimates[i] = estimate.id;
+    quotes[i] = quote.id;
+    projects[i] = project.id;
+    activities[i] = activity.id;
+  }
+  // Independent native command chains, bounded below the pool limit. Keep
+  // every record and assertion while avoiding serial setup of the 101-row proof.
+  for (let offset = 0; offset < count; offset += 4) {
+    const results = await Promise.allSettled(
+      Array.from({ length: Math.min(4, count - offset) }, (_, i) =>
+        createRecords(offset + i),
+      ),
+    );
+    for (const result of results)
+      if (result.status === "rejected") throw result.reason;
   }
   for (const site of [CRM.site, otherSite]) {
     const ticket_id = randomUUID();
