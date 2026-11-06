@@ -23,6 +23,13 @@ on:
       - 'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html'
       - 'docs/design/my-work/fonts.css'
       - 'docs/design/access-review/fonts.css'
+      - 'src/platform/permissions.ts'
+      - 'docs/decisions/ADR-0014-p09-service-reports.md'
+      - 'db/migrations/*.sql'
+      - 'docs/design/customer-360/model.js'
+      - 'docs/contracts/service-data-dictionary.md'
+      - 'docs/design/access-review/workspace.css'
+      - 'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html'
       - '.github/workflows/contacts-design.yml'
   workflow_dispatch:
 # A replacement PR commit supersedes only this workflow on that same PR.
