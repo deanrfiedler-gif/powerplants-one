@@ -1,11 +1,120 @@
 import { test, expect, type Page } from "@playwright/test";
-import { randomUUID } from "node:crypto";
+import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { projectInput } from "../helpers/projects";
-import { engineeringInput, engineeringUpdate } from "../helpers/engineering";
+import { engineeringInput, engineeringUpdate as sharedEngineeringUpdate } from "../helpers/engineering";
 import { command, saveFields } from "../helpers/engineering-control";
+import { closeDatabase, database, transaction } from "../../src/platform/database";
+import { localConfig } from "../../src/platform/config";
+import { engineeringProjectionSql, engineeringVisibilitySql } from "../../src/engineering/service";
+import type { Principal } from "../../src/platform/identity";
 
 test.describe.configure({ timeout: 240000 });
+// Each case owns its entire scope, including its people. Even a shared fixture
+// principal with a Workspace grant cannot see these packages or their reviews.
+let scope: {
+  workspace: string; company: string; connection: string; organisation: string; site: string;
+  coordinator: string; author: string;
+};
+const grants: string[] = [];
+let sharedPrincipals: (Principal & { subject_id: string })[] = [];
+let sharedBefore: Record<string, number> = {};
+async function sharedCounts() {
+  const counts: Record<string, number> = {};
+  for (const principal of sharedPrincipals)
+    counts[principal.subject_id] = (await database().query<{ count: number }>(
+      `SELECT count(*)::int AS count FROM (${engineeringProjectionSql} WHERE p.workspace_id=$1 AND ${engineeringVisibilitySql()}) visible`,
+      [principal.workspace_id, principal.actor_id],
+    )).rows[0].count;
+  return counts;
+}
+test.beforeAll(async () => {
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw Error("Disposable synthetic database only");
+  // Scheduling uses coordinator; navigation uses coordinator and observer.
+  sharedPrincipals = (await database().query<Principal & { subject_id: string }>(
+    "SELECT id AS actor_id,workspace_id,display_name,subject_id FROM ppo.users WHERE issuer='PPO-LocalSynthetic' AND subject_id IN ('coordinator','observer')",
+  )).rows;
+  expect(sharedPrincipals).toHaveLength(2);
+  sharedBefore = await sharedCounts();
+});
+async function signIn(page: Page, actor: "coordinator" | "author") {
+  // Local-session only accepts the shared seed profiles. Install an ordinary
+  // opaque session for our own synthetic user without changing those profiles.
+  const token = randomBytes(32).toString("hex");
+  await database().query(
+    "INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",
+    [createHash("sha256").update(token).digest("hex"), scope.workspace, scope[actor]],
+  );
+  await page.context().addCookies([{ name: "ppo_local_session", value: token, url: origin() }]);
+}
+test.beforeEach(async ({ page }) => {
+  if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw Error("Disposable synthetic database only");
+  scope = {
+    workspace: randomUUID(), company: randomUUID(), connection: randomUUID(), organisation: randomUUID(),
+    site: randomUUID(), coordinator: randomUUID(), author: randomUUID(),
+  };
+  await transaction(async client => {
+    await client.query("INSERT INTO ppo.workspaces(id,display_name) VALUES($1,'SYN EN01 browser isolation')", [scope.workspace]);
+    await client.query(
+      "INSERT INTO ppo.erp_connections(id,workspace_id,provider,external_connection_key) VALUES($1::uuid,$2,'Synthetic',$1::text)",
+      [scope.connection, scope.workspace],
+    );
+    await client.query(
+      "INSERT INTO ppo.companies(id,workspace_id,provider,legacy_erp_connection_key,erp_connection_id,erp_company_id,display_name) VALUES($1::uuid,$2,'Synthetic',$3::text,$3::uuid,$1::text,'SYN EN01 isolated company')",
+      [scope.company, scope.workspace, scope.connection],
+    );
+    for (const actor of ["coordinator", "author"] as const) {
+      await client.query(
+        "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,$3)",
+        [scope[actor], scope.workspace, "SYN EN01 " + actor],
+      );
+      const capabilities = ["shared.read", "shared.internal.read", "project.read", "engineering.read", "engineering.edit",
+        ...(actor === "coordinator" ? ["shared.create", "shared.edit", "project.create", "project.edit", "engineering.create", "engineering.material.source"] : [])];
+      for (const capability of capabilities) {
+        const id = randomUUID();
+        await client.query(
+          "INSERT INTO ppo.permission_grants(id,workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,$4,$5,'Company',$4)",
+          [id, scope.workspace, scope[actor], scope.company, capability],
+        );
+        grants.push(id);
+      }
+    }
+  });
+  await signIn(page, "coordinator");
+  await call(page, "customers", {
+    ...command({}), id: scope.organisation, company_id: scope.company,
+    display_name: "SYN EN01 isolated customer", relationship_status: "Active",
+    owner_id: scope.coordinator, access_class: "Internal",
+  });
+  await call(page, "sites", {
+    ...command({}), id: scope.site, company_id: scope.company,
+    display_name: "SYN EN01 isolated site", location_description: "SYN browser fixture only",
+    timezone: "Australia/Brisbane", owner_id: scope.coordinator,
+    parties: [{ organisation_id: scope.organisation, role: "Operator", valid_from: "2026-01-01T00:00:00.000Z" }],
+  });
+});
+test.afterEach(async () => {
+  // Business records and their evidence remain under native retention rules;
+  // remove all temporary grants, including when a test or setup fails.
+  if (grants.length) {
+    await database().query("DELETE FROM ppo.permission_grants WHERE id=ANY($1::uuid[])", [grants]);
+    grants.length = 0;
+  }
+});
+test.afterAll(async () => {
+  try {
+    const after = await sharedCounts();
+    console.log("EN01 shared Engineering visibility", JSON.stringify({ before: sharedBefore, after }));
+    expect(after).toEqual(sharedBefore);
+  } finally {
+    await closeDatabase();
+  }
+});
+const engineeringUpdate = (version = 1) => ({ ...sharedEngineeringUpdate(version), owner_id: scope.coordinator });
 const origin = () =>
   new URL(test.info().project.use.baseURL ?? "http://127.0.0.1:3000").origin;
 async function call(page: Page, path: string, body?: unknown) {
@@ -18,14 +127,15 @@ async function call(page: Page, path: string, body?: unknown) {
   return response.json();
 }
 async function setup(page: Page, count: number, titles?: string[]) {
-  await call(page, "local-session", { profile: "coordinator" });
   const marker = "SYN EN01 browser " + randomUUID();
-  const project = { ...projectInput(), title: marker };
+  const project = { ...projectInput(), title: marker, company_id: scope.company,
+    organisation_id: scope.organisation, site_id: scope.site, coordinator_id: scope.coordinator };
   await call(page, "projects", project);
   const packages = [];
   for (let i = 0; i < count; i++) {
     const input = {
       ...engineeringInput(project.id),
+      owner_id: scope.coordinator,
       title: titles?.[i] ?? marker + " " + String(i).padStart(3, "0"),
       required_date: "2099-01-01",
       action_due: "2099-01-01",
@@ -654,7 +764,7 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
         "SYNTHETIC retained input; no actual calculation or certified design.",
     }),
   );
-  await call(page, "local-session", { profile: "materials-author" });
+  await signIn(page, "author");
   await call(
     page,
     "engineering/" + s.packages[2].id + "/control",
@@ -674,11 +784,11 @@ test("EN01 accepted desktop and phone composition keeps keyboard and exact-packa
           authorised_hours: null,
           authorisation_reference: null,
         },
-        { title: "SYN Reticulation layout", due_date: date(12) },
+        { title: "SYN Reticulation layout", due_date: date(12), owner_id: scope.author },
       ),
     ),
   );
-  await call(page, "local-session", { profile: "coordinator" });
+  await signIn(page, "coordinator");
   for (const [width, height] of [
     [1440, 900],
     [1024, 768],
