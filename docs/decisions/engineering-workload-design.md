@@ -23,7 +23,7 @@ Scope: the existing Engineering destination `engineering` ("Engineering workload
 | Reuse the accepted pattern | Prior user decisions | The [Reviews & approvals decision](estimate-reviews-design.md), section 1. It covers the labelled rail, the flush secondary menu, and a full-width grid "that extended all the way to the edges of the container, with individual cells". Record windows "overlap them instead" of condensing the table. The checkbox and gear columns are fixed, and the phone has list rows and an icons-only tab bar. Also the record window's maximum width, which Dean set while Intake & workload was being drawn: "make the maximum width of the record container working on a scenario when both the primary and secondary menus are open" |
 | Accept the design with Claude's recommendations | User decision, 11 October 2026 | "Proceed with your recommendations." This adopts the recommendations on the notes card and the recommended answer to each question Claude had left open (section 4) |
 | Menus and icons change by department | Prior user direction | The Engineering rail, menu, More panel and phone tabs follow `departmentRails.engineering` in `src/shell/navigation.ts` and the icon mapping in `src/components/font-awesome-icons.ts` |
-| Building the page, the server sort and count read, or the shell | Not decided | Section 5 |
+| Implementation follow-through | Agent decision by Codex under the standing order | BC-01 supplies the native register read; PR #707 continues the existing accepted-page build. Relayed chat about continuation and a 1 November build-limit exception is context only, without a supporting [DEAN] comment on #707. It grants no exception to the [pull request flow limits](pull-request-flow-limits.md); the existing build is being finished, not a new build started. Review and merge gates remain. Section 5 records implementation adaptations, not new visual acceptance |
 
 ## 2. Design reference
 
@@ -84,7 +84,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | Menu counts | Shown for every view, from a new count read over the same permitted, searched set. Today's tabs have no counts |
 | Needs attention | The server rule above. Today's footer count ignores missing prerequisite evidence and can disagree with the filter; the count follows the server rule |
 | In design colour | The neutral tag. Only Awaiting information keeps a colour (amber, as today). The shared Tag has no teal, and colour is kept for what needs attention |
-| Engineer filter | Lists every eligible engineer; "Assigned to me" becomes the My work view. The list read already accepts an owner |
+| Engineer filter | The accepted label is Engineer and My work replaces Assigned to me. The later [BC-01 read contract](engineering-workload-backend.md) resolves the choice basis: permitted recorded owners, explicitly including inactive owners. New assignment continues to use separate native eligibility options |
 | Rail badge on this page | The count beside Engineering workload is your Author actions, neutral, like the Reviews & approvals badge. Section 5 keeps the shell-wide rule open |
 | Phone tabs | My Work, Engineering workload and Drawings (today's three), Technical reviews as the fifth, then More |
 | Update coordination | Stays in the record window, as in today's drawer, because it is the page's own command. It needs `engineering.edit` and is hidden for read-only users. Add note is in the "…" menu |
@@ -105,19 +105,15 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 | E8 | The small panel for a selection offers Open in sequence and Export list only. Its rule note says coordination is updated one package at a time | No selection |
 | E9 | Phone: flush list rows (title and required date; reference and status; customer and engineer). The five-tab bar is in section 4 | Cards at 820 px and below; the labelled three-and-More bar |
 
-## 5. Not decided
+## 5. Implementation follow-through and open review
 
-- **Building the page.** The read needs several additions:
-  - a server-side sort;
-  - a count per view;
-  - a list of eligible engineers for the filter;
-  - single-line columns for the grid.
+- **Building the page.** The implementation continued by Codex under the standing order is tracked in PR #707 and the [page contract](../design/development/pages/route-engineering.md). It uses BC-01 server sorting (including Reference), full matching counts and recorded-owner choices with the accepted single-line grid. Implementation, functional proof, visual review, owner acceptance and deployment remain separate.
 - **What the grid keeps from today.** Column resizing, column choice under the gear, and paging beyond the first 50 rows (today Previous and Next) are not drawn. They belong to the shared register table (PR #400) rather than to this page. Reading keeps `engineering.read` and the context checks. No new capability is proposed.
 - **Rolling out the shell.** As for Reviews & approvals, the adopted Shell page and the app stay as built until a shell implementation is planned and recorded.
 - **Department rails.** In the build, each department's rail comes from `navigation.ts`. The Figma file draws this page's rail as a page component; whether every department rail becomes a variant of v2 / Rail is a library choice for the shell rollout.
 - **Open questions:**
   - What does a rail count mean across the whole shell? Here it is your Author actions. The recommendation is to decide this once for the shell rather than page by page.
-  - How should several rows be selected on the phone? The recommendation is the same as for Reviews & approvals: press and hold a row.
+  - Phone selection was originally open, with press-and-hold recommended. For PR #707, Codex chose the visible **Select packages** header action and shared selection sheet under the autonomous standing order on 1 November 2026. It exposes the same bounded current-page selection to touch and keyboard users without an undiscoverable gesture. The alternative is press-and-hold plus an equivalent accessible control; the choice is reversible in the page interaction, requires no data change and is not Dean’s visual acceptance.
 - **Not drawn yet:** loading and failed-read states. Empty states: "No engineering packages yet", "No packages match these filters", and the Reviews and Released empty states. Also:
   - the stale state ("The package changed…");
   - read-only access;
@@ -129,8 +125,8 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 
 ## 6. Consequences
 
-- No application code, read model, route, migration, permission or capability changes. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
-- The [Engineering workspace register entry](../design/development/pages/route-engineering.md) now links this design and its captures. Its visual status stays "Needs review", because the app does not yet match the design.
+- The original design-only adoption changed no application code, read model, route, migration, permission or capability. The subsequent implementation is separately tracked in section 5. No page, scope or parent requirement ID changes; all 78 parent IDs remain.
+- The [Engineering workspace register entry](../design/development/pages/route-engineering.md) now links this design and its captures. Its visual status stays "Needs review", pending application comparison and owner review of the subsequent implementation.
 - The Engineering r02 HTML and audit stay unchanged as the issued source of the earlier accepted design.
 - When the page is built, compare it with these captures and the Figma frames at the same viewports, following ADR-0053 rule 7.
 - A later change to this design receives a new named version and a new capture revision folder; these bytes stay unchanged.
@@ -146,8 +142,13 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 - Cloning the Reviews frames had carried prototype links to the Reviews page. A scan found the remaining two, on the header checkbox, and removed them. A final scan found no instance of a Reviews page component on this page.
 - The five captures are copies of the accepted frames, with every Font Awesome icon swapped for `Icon/placeholder`. A check after the swap found no Font Awesome instance left in any copy. They were exported at scale 1 with the Figma connector, and each image was inspected. The hashes are in the [captures README](../reference/ui/engineering/engineering-workload-design-r01/README.md).
 - `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `node scripts/design-baseline-check.mjs` and `npm run studio:check` were run on this change.
-- Nothing is built, so there is no application or device evidence. This record implies no visual review of the application and no UI baseline.
+- At the original design-only adoption nothing was built, so that verification supplies no application or device evidence. Subsequent implementation evidence is linked from section 5 and does not grant owner visual acceptance or a UI baseline.
 
 ## Backend continuation — 13 October 2026
 
 Dean separately authorised the EN-01 [register backend](engineering-workload-backend.md) under BC-01. It adds scoped sorting, complete permitted-match view/status counts and recorded-engineer filter choices. These choices identify actual owners of matching packages, including explicitly inactive owners; new assignment still uses the existing context-specific eligibility read. Source-bound page tokens refuse changed sources. This continuation does not implement or visually accept the Figma page or shell. All original captures and design review evidence remain unchanged.
+
+
+## Guide visibility correction — 5 November 2026
+
+Decision (Dean, given in chat in Claude's session and relayed in [Claude's confirmation](https://github.com/deanrfiedler-gif/powerplants-one/pull/707#issuecomment-6656895705); there is no [DEAN] comment): the rewritten Engineering guide stays InReview and hidden with the existing “being prepared” fallback until Dean reviews and publishes it. This supersedes Codex's self-publication decision: an agent content edit does not grant review or publication under the [guide authoring contract](../guides/README.md). Remove reviewer, reviewed_at and reviewed_content_hash; keep carried_over_from and shown_before_review removed after the rewrite. The shell assertion and the PR-added guide-library test now prove this hidden state. The [execution ledger](../testing/evidence/engineering-workload/README.md) retains the prior content checks as implementation evidence only.

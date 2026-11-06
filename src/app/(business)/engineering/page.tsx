@@ -1,4 +1,2 @@
-import { EngineeringWorkspace } from "../../../components/engineering-workspace";
-export default function Page() {
-  return <EngineeringWorkspace />;
-}
+import { EngineeringRegister } from "../../../components/engineering-register";
+export default function Page() { return <EngineeringRegister />; }

@@ -1,0 +1,14 @@
+{
+  "id": "engineering-workload-figma-register",
+  "route": "/engineering",
+  "scope": "#ppo-engineering",
+  "layout": "full-bleed",
+  "design": "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-01-Desktop-Register-r01.png",
+  "sha256": "199c633e3f074fba743c24123f481424e2e494675abfceea77634587d6926e7e",
+  "shared_design": "docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html",
+  "shared_sha256": "a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0",
+  "component_proof": "tests/browser/engineering-register.spec.ts",
+  "application_proof": "tests/browser/engineering.spec.ts",
+  "authority": "Owner-accepted Engineering design with later shell/phone amendments. Hashes identify retained design sources only; application visual review, owner acceptance and deployment remain separate.",
+  "adaptations": "docs/design/development/pages/route-engineering.md"
+}

@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Engineering rail author-action count, shared secondary menu/phone header and five-icon Engineering phone bar. The bar applies to the Engineering department; other pages retain their own content."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md",
+        "src/components/header-content.tsx",
+        "src/components/product-navigation.tsx"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01",
+        "system:shell"
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Accepted 40 px single-line grid with server sorting/paging, fixed end columns, keyboard resizing and exact-source selection; flush phone rows replace the grid."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ],
+      "gaps": [
+        {
+          "id": "register-table-en01-review",
+          "expected": "Accepted desktop/phone composition with reviewed responsive and keyboard evidence.",
+          "actual": "Implemented for comparison; owner visual acceptance is not recorded.",
+          "action": "Compare retained references with the four-width application captures, including phone selection adaptation.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "buttons": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Native request/coordination actions and read-only selection handovers; busy/denied/uncertain states retain native authority."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "fields": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Existing request and coordination fields retain validation, reason, expected version and uncertain-operation recovery."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "lookup": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Recorded inactive owners remain filter choices; context-bound native owner lookups alone supply assignment choices."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "validation": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Native validation, stale version and original-operation retry preserve the user's authored draft."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "tabs": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Deliverables, Queries and Reviews & issues preserve URL section and draft notes; unavailable technical reads withhold counts."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "menu": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Shared register actions, recorded-owner/discipline choices, column settings, package actions and phone sheets."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "dialog": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Overlapping package snapshot, native intake dialog and accessible phone selection sheet with Escape/focus-return and blocked-save handling."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md",
+        "src/components/engineering-workspace.tsx"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "read-state": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Loading/empty/denied/error/stale/refresh states withhold unconfirmed facts; independent technical read failure remains explicit."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    },
+    "status": {
+      "states": [
+        {
+          "id": "en01-workload",
+          "label": "Engineering workload",
+          "description": "Only native Queued, In design and Awaiting information chips; technical release and attention retain their native predicates."
+        }
+      ],
+      "dependencies": [
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register.css",
+        "docs/testing/evidence/engineering-workload/2026-11-01-ui-execution.md"
+      ],
+      "used_on": [
+        "route:/engineering",
+        "scope:EN-01"
+      ]
+    }
+  }
+}

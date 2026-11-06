@@ -58,10 +58,11 @@ export function RecordPanel({ id, tab, value, children }: {
 
 // Selection always requires an explicit result. Editing its text clears the ID immediately.
 // The caller supplies only the current permission-filtered server result, never a directory cache.
-export function LookupField({ name, label, value, onChange, search, onSearch, options, loading, more, error }: {
+export function LookupField({ name, label, value, onChange, search, onSearch, options, loading, more, error, current }: {
   name: string; label: string; value: string; onChange: (id: string) => void;
   search: string; onSearch: (q: string) => void; options: Option[];
   loading: boolean; more?: boolean; error?: boolean;
+  current?: Option;
 }) {
   const [open, setOpen] = useState(false), [active, setActive] = useState(-1);
   const [selected, setSelected] = useState<Option | null>(null);
@@ -70,7 +71,7 @@ export function LookupField({ name, label, value, onChange, search, onSearch, op
   const fieldError = useFieldError(name);
   useEffect(() => { if(open && active >= 0) document.getElementById(`${list}-${active}`)?.scrollIntoView({block:"nearest"}); }, [open,active,list]);
   const found = options.find(o => o.id === value);
-  const chosen = found ?? (selected?.id === value ? selected : null);
+  const chosen = found ?? (selected?.id === value ? selected : current?.id === value ? current : null);
   const optionLabel = (o: Option) => `${o.display_name ?? o.description ?? "Record"}${o.display_number ? ` · ${o.display_number}` : ""}`;
   const choose = (o: Option) => { setSelected(o); onChange(o.id); onSearch(""); setOpen(false); setActive(-1); input.current?.focus(); };
   return <div className="field lookup-field" onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false); }}>
@@ -117,7 +118,7 @@ export function LocalDateTimeField({ name, validationField, label = "Due date an
 
 // Native unload warning, in-app links and the installed app's Reload action share the
 // same dirty state. Tabs retain mounted drafts.
-export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery: readonly string[] = []) {
+export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery: readonly string[] = [], priority?: number) {
   usePendingWork(dirty || pending);
   const guard = useRef<(() => void) | null>(null);
   const retainedKeys = retainedQuery.join(",");
@@ -127,10 +128,10 @@ export function useUnsavedChanges(dirty: boolean, pending = false, retainedQuery
     // while its outcome is pending. Every other query/path/unload stays guarded.
     const release = guardBrowserNavigation(run => {
       if (!pending && window.confirm("Leave this page and discard unsaved changes?")) run();
-    }, pending ? 200 : retainedKeys ? 5 : 10, retainedKeys.split(",").filter(Boolean));
+    }, pending ? 200 : priority ?? (retainedKeys ? 5 : 10), retainedKeys.split(",").filter(Boolean));
     guard.current = release;
     return () => { release(); if (guard.current === release) guard.current = null; };
-  }, [dirty, pending, retainedKeys]);
+  }, [dirty, pending, retainedKeys, priority]);
   // A confirmed receipt can navigate before React commits the cleared dirty/
   // pending state. Release only this form's guard; other owners still review.
   // Never call this for an uncertain or failed command.

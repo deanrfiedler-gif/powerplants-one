@@ -93,10 +93,15 @@ function tabKeys(
     document.getElementById(prefix + items[next][0])?.focus();
   }
 }
-function Modal({
+export function EngineeringModal({
   open,
   title,
   drawer = false,
+  maxWidth = 750,
+  navigation,
+  closeIcon = "×",
+  hideFooter = false,
+  className = "",
   onClose,
   children,
   footer,
@@ -105,6 +110,11 @@ function Modal({
   open: boolean;
   title: string;
   drawer?: boolean;
+  maxWidth?: number;
+  navigation?: ReactNode;
+  closeIcon?: ReactNode;
+  hideFooter?: boolean;
+  className?: string;
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
@@ -127,7 +137,7 @@ function Modal({
         d.style.setProperty("--eng-drawer-top", top + "px");
         d.style.setProperty("--eng-drawer-right", right + "px");
         d.style.setProperty("--eng-drawer-height", height + "px");
-        d.style.width = Math.min(750, root.width) + "px";
+        d.style.width = Math.min(maxWidth, root.width) + "px";
       } else {
         d.style.position = "fixed";
         d.style.inset = `${top}px ${right}px ${Math.max(0, innerHeight - root.bottom)}px ${Math.max(0, root.left)}px`;
@@ -149,11 +159,11 @@ function Modal({
       if (d.open) d.close();
       if (open && prior?.isConnected) prior.focus();
     };
-  }, [open, drawer]);
+  }, [open, drawer, maxWidth]);
   return (
     <dialog
       ref={ref}
-      className={drawer ? "eng-drawer" : ""}
+      className={(drawer ? "eng-drawer " : "") + className}
       aria-label={title}
       onCancel={(e) => {
         e.preventDefault();
@@ -168,19 +178,20 @@ function Modal({
           aria-label={`Close ${drawer ? "package" : "request"}`}
           onClick={onClose}
         >
-          ×
+          {closeIcon}
         </button>
         <h2 ref={titleRef} tabIndex={-1}>
           {title}
         </h2>
+        {navigation}
       </header>
       {children}
-      <footer className="eng-dialog-foot">
+      {!hideFooter && <footer className="eng-dialog-foot">
         {footer}
         <button type="button" disabled={blocked} onClick={onClose}>
           Close
         </button>
-      </footer>
+      </footer>}
     </dialog>
   );
 }
@@ -735,7 +746,7 @@ export function EngineeringWorkspace({ initialId }: { initialId?: string }) {
     </section>
   );
 }
-function RequestDialog({
+export function RequestDialog({
   open,
   onClose,
   onCreated,
@@ -779,7 +790,7 @@ function RequestDialog({
     open && blocked,
   );
   return (
-    <Modal
+    <EngineeringModal
       open={open}
       title="What needs engineering?"
       onClose={onClose}
@@ -952,7 +963,7 @@ function RequestDialog({
           </ValidationFields>
         </div>
       </form>
-    </Modal>
+    </EngineeringModal>
   );
 }
 function PackageDrawer({
@@ -1005,7 +1016,7 @@ function PackageDrawer({
     resource.reload();
   };
   return (
-    <Modal
+    <EngineeringModal
       open
       title={p?.title ?? "Engineering package"}
       drawer
@@ -1270,21 +1281,23 @@ function PackageDrawer({
           </div>
         </>
       )}
-    </Modal>
+    </EngineeringModal>
   );
 }
-function CoordinationForm({
+export function CoordinationForm({
   p,
   onCancel,
   onSaved,
   onBlocked,
   onDirty,
+  retainedQuery = [],
 }: {
   p: EngineeringPackage;
   onCancel: () => void;
   onSaved: () => void;
   onBlocked: (v: boolean) => void;
   onDirty: (v: boolean) => void;
+  retainedQuery?: readonly string[];
 }) {
   const command = useCommand(),
     [form, setForm] = useState({
@@ -1313,12 +1326,16 @@ function CoordinationForm({
     onDirty(dirty);
     return () => onDirty(false);
   }, [dirty, onDirty]);
-  useUnsavedChanges(dirty, blocked);
+  // Retained technical tabs must not lower this form below the register's
+  // retained-note guard: leaving the package still discards coordination.
+  useUnsavedChanges(dirty, blocked, retainedQuery, 10);
+  const inactiveOwner = form.owner_id === p.owner_id && !p.owner_active;
   return (
     <form
       className="eng-coordination eng-fields"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (!form.owner_id || inactiveOwner) return;
         const result = await command.send(
           "engineering/" + p.id + "/coordination",
           {
@@ -1339,18 +1356,23 @@ function CoordinationForm({
             name="owner_id"
             label="Assigned engineer"
             value={form.owner_id}
+            current={{
+              id: p.owner_id,
+              display_name: p.owner_name + (p.owner_active ? "" : " (inactive)"),
+            }}
             onChange={(v) => setForm((f) => ({ ...f, owner_id: v }))}
             search={ownerSearch}
             onSearch={setOwnerSearch}
-            options={
-              owners.data?.items ?? [
-                { id: p.owner_id, display_name: p.owner_name },
-              ]
-            }
+            options={owners.data?.items ?? []}
             loading={owners.loading}
             more={owners.data?.has_more}
             error={!!owners.error}
           />
+          {!p.owner_active && (!form.owner_id || inactiveOwner) && (
+            <p role="status">
+              {p.owner_name} is no longer active. Choose an active engineer to save.
+            </p>
+          )}
           <ReadState
             loading={false}
             error={owners.error}
@@ -1418,7 +1440,7 @@ function CoordinationForm({
       <button
         className="eng-primary"
         type="submit"
-        disabled={command.busy || owners.loading || !!owners.error}
+        disabled={command.busy || owners.loading || !!owners.error || !form.owner_id || inactiveOwner}
       >
         {command.busy
           ? "Saving…"

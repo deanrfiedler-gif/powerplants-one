@@ -19,6 +19,7 @@ export const moduleWorkspaces = [
   { route: "/email", moduleId: "EC-01", scope: "ppo-email-inbox", layout: "full-bleed", navigation: "workspace", baseline: "email-customer-messages-menu" },
   { route: "/email/customer-messages", moduleId: "EC-04", scope: "ppo-customer-messages", layout: "full-bleed", navigation: "workspace", baseline: "customer-messages" },
   { route: "/email/customer-messages/[id]", moduleId: "EC-04", scope: "ppo-customer-messages", layout: "full-bleed", navigation: "workspace", baseline: "customer-message-record" },
+  { route: "/engineering", moduleId: "EN-01", scope: "ppo-engineering", layout: "full-bleed", navigation: "workspace", baseline: "engineering-workload-figma-register" },
   { route: "/equipment", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-register-native-r01" },
   { route: "/equipment/[id]", moduleId: "EQ-01", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq01-record-native-r01" },
   { route: "/equipment/backups", moduleId: "EQ-08", scope: "ppo-equipment", layout: "padded", navigation: "workspace", baseline: "eq08-native-r01" },

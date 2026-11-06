@@ -44,3 +44,64 @@ test("EN01 register refuses unsupported scope, ordering, malformed identity and 
       (e: unknown) => e instanceof AppError && e.status === 422,
     );
 });
+
+test("EN01 Reference ordering is server-defined in both directions with stable ties", () => {
+  for (const direction of ["asc", "desc"]) {
+    assert.equal(
+      workloadOrder(workloadQuery({ sort: "Reference", direction })),
+      'lower(r.display_number) COLLATE "C" ' +
+        direction.toUpperCase() +
+        " NULLS LAST,r.id ASC",
+    );
+  }
+});
+
+import {
+  engineeringCsv,
+  continuationExpired,
+} from "../../src/engineering/register-presentation";
+
+test("EN01 selected CSV exports recorded facts and quotes formula-like, multiline and empty cells", () => {
+  const csv = engineeringCsv([
+    {
+      display_number: "SYN-EN-001",
+      title: '=HYPERLINK("synthetic"), test',
+      customer_name: "SYN Customer",
+      state: "Queued",
+      owner_name: "SYN Recorded owner",
+      required_date: null,
+      next_action: "SYN first line\nsecond line",
+      action_due: null,
+      discipline: "Hydraulics",
+      context_reference: "SYN-PJ-001",
+      version: 3,
+    },
+  ]);
+  assert(csv.includes('"\'=HYPERLINK(""synthetic""), test"'));
+  assert(csv.includes('"SYN first line\nsecond line"'));
+  assert(csv.includes('"SYN Recorded owner","","SYN first line'));
+  assert(csv.endsWith('"SYN-PJ-001","3"\r\n'));
+  assert.equal(engineeringCsv([]).split("\r\n").length, 2);
+  assert(!csv.includes("Effort"));
+  assert(!csv.includes("Utilisation"));
+});
+
+test("EN01 only source conflicts or rejected continuations restart the first page", () => {
+  assert.equal(continuationExpired({ code: "ReadConflict" }), true);
+  assert.equal(
+    continuationExpired({
+      code: "InvalidData",
+      field_errors: [{ field: "cursor" }],
+    }),
+    true,
+  );
+  assert.equal(continuationExpired({ code: "Forbidden" }), false);
+  assert.equal(
+    continuationExpired({
+      code: "InvalidData",
+      field_errors: [{ field: "q" }],
+    }),
+    false,
+  );
+  assert.equal(continuationExpired(null), false);
+});

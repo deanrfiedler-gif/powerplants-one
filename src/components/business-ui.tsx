@@ -141,11 +141,12 @@ export function useResource<T>(path: string | null) {
     };
   }, [path, revision]);
   const current = state.path === path && state.revision === revision;
+  const reload = useCallback(() => setRevision((x) => x + 1), []);
   return {
     data: state.path === path ? state.data : null,
     error: current ? state.error : null,
     loading: !!path && (!current || (!state.data && !state.error)),
-    reload: () => setRevision((x) => x + 1),
+    reload,
   };
 }
 export function useCommand() {

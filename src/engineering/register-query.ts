@@ -10,6 +10,7 @@ export const workloadViews = [
 ] as const;
 export const workloadSorts = [
   "RequiredDate",
+  "Reference",
   "ActionDate",
   "Name",
   "Updated",
@@ -61,6 +62,7 @@ export type WorkloadQuery = ReturnType<typeof workloadQuery>;
 export function workloadOrder(q: WorkloadQuery) {
   const field = {
     RequiredDate: "r.required_date",
+    Reference: 'lower(r.display_number) COLLATE "C"',
     ActionDate: "r.action_due",
     Name: 'lower(r.title) COLLATE "C"',
     Updated: "r.updated_at",

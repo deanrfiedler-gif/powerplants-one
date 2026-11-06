@@ -2118,7 +2118,7 @@
       "title": "Engineering workload and deliverables",
       "kind": "scope",
       "module": "EN",
-      "summary": "Native Engineering coordination with accountable deliverables, separate author/reviewer queues and exact technical basis/query/review/issue summaries.",
+      "summary": "Accepted Engineering workload composition using full permitted counts, recorded-owner choices, server ordering/paging, source-bound selection and exact native package handovers.",
       "path": "/engineering",
       "source_paths": [
         "docs/reference/ui/module-page-register/PPO-HTML-Page-Coverage-Register-r06.html"
@@ -2126,7 +2126,11 @@
       "guide_key": "guide.en.01",
       "design_path": "docs/design/development/pages/scope-en-01.md",
       "html_path": "docs/reference/ui/engineering/PPO-Engineering-Container-r02.html",
-      "image_paths": [],
+      "image_paths": [
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-01-Desktop-Register-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-03-Desktop-Selection-Small-Panel-r01.png",
+        "docs/reference/ui/engineering/engineering-workload-design-r01/PPO-Engineering-Workload-04-Phone-Package-List-r01.png"
+      ],
       "dependencies": [
         "src/engineering/control/components/summary.tsx",
         "src/engineering/control/workload.ts",
@@ -2135,11 +2139,19 @@
         "src/engineering/register.ts",
         "src/engineering/register-query.ts",
         "src/app/api/v1/engineering/register/route.ts",
-        "docs/decisions/engineering-workload-backend.md"
+        "docs/decisions/engineering-workload-backend.md",
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register-icon.tsx",
+        "src/components/engineering-register.css",
+        "src/engineering/register-presentation.ts",
+        "docs/design/development/component-bindings/2026-11-01-engineering-workload.json",
+        "docs/design/development/component-bindings/2026-11-01-engineering-workload.md",
+        "docs/standards/ui-baselines/module-integrations/engineering-workload-figma-register.json"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
+      "functional_status": "Implementation under validation in PR #707; see Engineering workload UI execution ledger. Owner acceptance and deployment separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
@@ -8568,7 +8580,7 @@
       "title": "Engineering workspace",
       "kind": "route",
       "module": "EN",
-      "summary": "Native Engineering coordination with accountable deliverables, separate author/reviewer queues and exact technical basis/query/review/issue summaries.",
+      "summary": "Accepted Engineering workload composition using full permitted counts, recorded-owner choices, server ordering/paging, source-bound selection and exact native package handovers.",
       "path": "/engineering",
       "source_paths": [
         "src/app/(business)/engineering/page.tsx"
@@ -8596,11 +8608,19 @@
         "src/engineering/register-query.ts",
         "src/app/api/v1/engineering/register/route.ts",
         "docs/decisions/engineering-workload-backend.md",
-        "docs/decisions/create-forms-pattern-figma-design.md"
+        "docs/decisions/create-forms-pattern-figma-design.md",
+        "src/components/engineering-register.tsx",
+        "src/components/engineering-register-snapshot.tsx",
+        "src/components/engineering-register-icon.tsx",
+        "src/components/engineering-register.css",
+        "src/engineering/register-presentation.ts",
+        "docs/design/development/component-bindings/2026-11-01-engineering-workload.json",
+        "docs/design/development/component-bindings/2026-11-01-engineering-workload.md",
+        "docs/standards/ui-baselines/module-integrations/engineering-workload-figma-register.json"
       ],
       "scope_status": "refine",
       "visual_status": "Needs review",
-      "functional_status": "EN-01 register backend: 17 database and 2 compiled HTTP cases pass; accepted page/shell implementation and owner acceptance separate",
+      "functional_status": "Implementation under validation in PR #707; see Engineering workload UI execution ledger. Owner acceptance and deployment separate.",
       "deployment_status": "Not verified",
       "review_fingerprint": null,
       "reviewed_at": null,
