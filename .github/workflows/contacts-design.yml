@@ -10,6 +10,26 @@ on:
       - 'src/crm/directory.ts'
       - 'src/projects/service.ts'
       - 'db/migrations/0002-shared-foundation.sql'
+      - 'db/migrations/0003-customer-intake.sql'
+      - 'db/migrations/0010-crm-opportunities.sql'
+      - 'db/migrations/0017-crm-ui-refinements.sql'
+      - 'db/migrations/0018-crm-leads.sql'
+      - 'db/migrations/0019-projects-gantt.sql'
+      - 'src/shared/context.ts'
+      - 'src/finance/context.ts'
+      - 'src/scheduling/planner.ts'
+      - 'src/reports/service.ts'
+      - 'db/seed.sql'
+      - 'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r22.html'
+      - 'docs/design/my-work/fonts.css'
+      - 'docs/design/access-review/fonts.css'
+      - 'src/platform/permissions.ts'
+      - 'docs/decisions/ADR-0014-p09-service-reports.md'
+      - 'db/migrations/*.sql'
+      - 'docs/design/customer-360/model.js'
+      - 'docs/contracts/service-data-dictionary.md'
+      - 'docs/design/access-review/workspace.css'
+      - 'docs/reference/ui/theme-style-board/powerplants-one-theme-style-board-r20.html'
       - '.github/workflows/contacts-design.yml'
   workflow_dispatch:
 # A replacement PR commit supersedes only this workflow on that same PR.
@@ -38,7 +58,7 @@ jobs:
           npm ci
           npm run browser:install
       # The builder refuses to run if a pinned contract source has changed, so a change
-      # to reads.ts, commands.ts or directory.ts fails here rather than silently leaving
+      # to any pinned contract source fails here rather than silently leaving
       # the design describing a rule that no longer exists. It also proves the rebuild is
       # byte for byte identical to the committed HTML.
       - name: Verify the deterministic build and the committed page
