@@ -64,8 +64,9 @@ jobs:
     # Each lane owns its disposable database; all original phases remain serial
     # within their lane. HTTP/restart proofs start at their original clean-reset
     # boundary; all eight native database shards keep serial file execution.
-    # Browser projects use isolated databases; focused CRM/restart phases remain
-    # in the original browser lane. Retain every test and deadline (see isolation ADR).
+    # Browser projects each use two native shards with isolated databases and their
+    # warm-up dependency; files stay serial. The four focused phases run exactly
+    # once in browser (desktop shard 1). Keep every test and deadline (isolation ADR).
     # The stable p01 gate requires every lane to pass within the same deadline.
     timeout-minutes: 90
     strategy:
@@ -75,8 +76,20 @@ jobs:
         include:
           - suite: browser
             browser_project: desktop-chromium
+            shard: 1/2
+            artifact_name: P11-retained-browser-evidence
+          - suite: browser-2
+            browser_project: desktop-chromium
+            shard: 2/2
+            artifact_name: P11-retained-browser-2-evidence
           - suite: browser-mobile
             browser_project: mobile-chromium
+            shard: 1/2
+            artifact_name: P11-retained-browser-mobile-evidence
+          - suite: browser-mobile-2
+            browser_project: mobile-chromium
+            shard: 2/2
+            artifact_name: P11-retained-browser-mobile-2-evidence
           - suite: database-1
             database_shard: 1/8
           - suite: database-2
@@ -172,10 +185,32 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'browser') && !cancelled() && steps.database_setup.outcome == 'success' }}
         env:
           PPO_BROWSER_PROJECT: ${{ matrix.browser_project }}
+          PPO_BROWSER_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: verification-evidence/p11-full-browser/results.json
         run: |
           npm run browser:install
-          npm run test:browser -- --config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json
+          ppo_browser_args=(--config=playwright.compiled.config.ts --project="$PPO_BROWSER_PROJECT" --reporter=list,json)
+          if [ -n "$PPO_BROWSER_SHARD" ]; then
+            ppo_browser_args+=(--shard="$PPO_BROWSER_SHARD")
+          fi
+          npm run test:browser -- "${ppo_browser_args[@]}"
+          # Publish the retained JSON reporter counts in the job log as well as the artifact.
+          python3 - <<'PYCOUNTS'
+          import collections, json
+          from pathlib import Path
+          report = json.loads(Path('verification-evidence/p11-full-browser/results.json').read_text())
+          counts = collections.defaultdict(collections.Counter)
+          def visit(suite):
+              for spec in suite.get('specs', []):
+                  for test in spec['tests']:
+                      counts[test['projectName']][test['status']] += 1
+                      counts[test['projectName']]['total'] += 1
+              for child in suite.get('suites', []):
+                  visit(child)
+          visit(report)
+          print('Retained Playwright JSON counts: ' + json.dumps(dict(counts), sort_keys=True))
+          print('Retained Playwright JSON stats: ' + json.dumps(report['stats'], sort_keys=True))
+          PYCOUNTS
       - name: Prepare retained browser review diagnostics immediately
         if: ${{ startsWith(matrix.suite, 'browser') && always() && steps.database_setup.outcome == 'success' }}
         id: browser_review
@@ -184,7 +219,7 @@ jobs:
         if: ${{ startsWith(matrix.suite, 'browser') && always() && steps.browser_review.outcome == 'success' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: P11-retained-${{ matrix.suite }}-evidence
+          name: ${{ matrix.artifact_name }}
           path: |
             test-results/
             verification-evidence/
