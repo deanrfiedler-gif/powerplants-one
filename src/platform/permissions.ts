@@ -1,4 +1,4 @@
-import type { PoolClient } from "pg";
+import type { PoolClient, QueryResult } from "pg";
 import type { Principal } from "./identity";
 import { AppError } from "./errors";
 import { workingCompanyCondition, workingCompanyFor } from "./working-company";
@@ -171,6 +171,30 @@ export type Capability =
   | "shared.internal.read"
   | "shared.finance.read"
   | "shared.history.record";
+// Keep the exact native scoped-check SQL shared with the page-only memoizer.
+const permissionQuery = `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
+    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.capability=$3 AND u.active
+    AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())
+    AND ($4::uuid IS NULL OR g.scope_type='Workspace' OR (g.company_id=$4 AND (g.scope_type='Company' OR (g.scope_type='Site' AND g.site_id=$5::uuid))))`;
+
+// Only hasPermission's exact (workspace, actor, capability, company, site) check
+// is memoized. Native record/relationship reads still execute in every wave.
+// Callers create this per page and perform final root rechecks on the raw client.
+export function pagePermissionReads(client: QueryClient): QueryClient {
+  const checks = new Map<string, Promise<QueryResult>>();
+  const query = (sql: string, values: unknown[] = []) => {
+    if (sql !== permissionQuery) return client.query(sql, values);
+    const key = JSON.stringify(values);
+    let check = checks.get(key);
+    if (!check) {
+      check = client.query(sql, values);
+      checks.set(key, check);
+    }
+    return check;
+  };
+  return { query: query as QueryClient["query"] };
+}
+
 export async function hasPermission(
   client: QueryClient,
   p: Principal,
@@ -182,10 +206,7 @@ export async function hasPermission(
   const working = workingCompanyFor(p.actor_id);
   if (working && company_id && company_id !== working) return false;
   const result = await client.query(
-    `SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)
-    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.capability=$3 AND u.active
-    AND g.valid_from<=clock_timestamp() AND (g.valid_to IS NULL OR g.valid_to>clock_timestamp())
-    AND ($4::uuid IS NULL OR g.scope_type='Workspace' OR (g.company_id=$4 AND (g.scope_type='Company' OR (g.scope_type='Site' AND g.site_id=$5::uuid))))`,
+    permissionQuery,
     [
       p.workspace_id,
       p.actor_id,

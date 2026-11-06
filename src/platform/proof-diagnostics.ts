@@ -13,6 +13,10 @@ export const proofDiagnosticsAllowed = (env: Record<string, string | undefined>)
 const enabled = proofDiagnosticsAllowed(Reflect.get(process, "env"));
 let count = 0;
 const limit = 60000;
+let capReported = false;
+let retainedWorkspaceCount = 0;
+const retainedWorkspaceLimit = limit * 2;
+const workspaceRead = "/api/v1/customers/:id/workspace";
 type ProofRequest = { request_id: number; path: string; route_id?: number };
 // Next's development bundler can load another copy of this module. Share only
 // numeric diagnostic context within this process; never request data or grants.
@@ -46,16 +50,30 @@ export function proofReadPhase(phase: string) {
     proofEvent("read-phase", { phase });
 }
 export function proofEvent(event: string, fields: Record<string, string | number | boolean | null> = {}) {
-  if (!enabled || count > limit) return;
+  // Keep the late Customer 360 reads in a full compiled shard, even after
+  // unrelated diagnostics exhaust the ordinary cap, with a separate ceiling.
+  // Still opt-in/sanitised and never part of a business outcome.
+  const retainWorkspace = scope.getStore()?.path === workspaceRead || fields.path === workspaceRead;
+  if (!enabled || (capReported && (!retainWorkspace || retainedWorkspaceCount >= retainedWorkspaceLimit))) return;
   try {
     const root = join(process.cwd(), "verification-evidence", "transport-diagnostics");
     if (count === 0) mkdirSync(root, { recursive: true });
-    appendFileSync(join(root, `process-${process.pid}.jsonl`), JSON.stringify({
-      at_ms: Date.now(), pid: process.pid, sequence: count,
-      ...(scope.getStore() ?? {}),
-      ...(count === limit ? { event: "diagnostic-cap-reached" } : { event, ...fields }),
-    }) + "\n");
-    count++;
+    const write = (details: Record<string, string | number | boolean | null>) => {
+      appendFileSync(join(root, `process-${process.pid}.jsonl`), JSON.stringify({
+        at_ms: Date.now(), pid: process.pid, sequence: count,
+        ...(scope.getStore() ?? {}), ...details,
+      }) + "\n");
+      count++;
+    };
+    if (count >= limit) {
+      if (!capReported) {
+        write({ event: "diagnostic-cap-reached" });
+        capReported = true;
+      }
+      if (!retainWorkspace || retainedWorkspaceCount >= retainedWorkspaceLimit) return;
+      write({ event, ...fields });
+      retainedWorkspaceCount++;
+    } else write({ event, ...fields });
   } catch { /* Diagnostic availability must never change a business outcome. */ }
 }
 
