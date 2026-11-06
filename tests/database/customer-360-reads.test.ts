@@ -8,8 +8,9 @@ import { customer360 } from "../../src/shared/customer-360";
 import { withWorkingCompany } from "../../src/platform/working-company";
 import type { Principal } from "../../src/platform/identity";
 import { customer360PerRow } from "../helpers/customer-360-per-row";
-import { customer360Fixture } from "../helpers/customer-360-fixture";
+import { customer360Fixture, customer360FinanceFixture } from "../helpers/customer-360-fixture";
 import { CRM } from "../helpers/crm";
+import { readAccount } from "../../src/finance/accounts";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable ppo_synthetic_test only");
@@ -92,6 +93,36 @@ test("Customer 360 full DTO and JSON preserve per-row authority across principal
       "utf8",
     ).includes("for (const candidate of candidates.slice(0, 100))"),
   );
+});
+
+test("Customer 360 Finance DTO and JSON preserve current and stale mappings with retained account runs", async (t) => {
+  await reset();
+  const f = await customer360FinanceFixture();
+  t.mock.timers.enable({ apis: ["Date"], now: new Date() });
+  const expected = await customer360PerRow(f.principal, CRM.org),
+    actual = await customer360(f.principal, CRM.org);
+  assert.deepEqual(actual, expected);
+  assert.equal(JSON.stringify(actual), JSON.stringify(expected));
+  const accounts = actual.sections.accounts;
+  assert.notEqual(accounts.state, "Restricted");
+  assert.notEqual(accounts.state, "Unavailable");
+  for (const id of [f.currentAccount, f.staleAccount])
+    assert.ok(accounts.items.some(account => account.id === id));
+  const current = accounts.items.find(account => account.id === f.currentAccount)!,
+    stale = accounts.items.find(account => account.id === f.staleAccount)!;
+  assert.equal(current.amount, "1000.00");
+  assert.equal(current.state, "Fixture source reconciled");
+  assert.equal(stale.amount, null);
+  assert.equal(stale.state, "Current account verification unavailable; original observations retained");
+  for (const id of [f.currentAccount, f.staleAccount]) {
+    const account = await readAccount(f.principal, CRM.org, { account_id: id });
+    assert.deepEqual(account.history.map(run => run.fixture), ["F-03", "F-01"]);
+    assert.equal(account.current?.id, account.history[0].id);
+    assert.equal(account.last_good?.id, account.history[0].id);
+    if (id === f.staleAccount)
+      assert.equal(account.context_error, "The exact synthetic account verification no longer matches its source mapping.");
+    else assert.equal(account.context_error, null);
+  }
 });
 
 test("Customer 360 preserves 100-candidate windows, per-estimate revision limits and the activity continuation", async (t) => {

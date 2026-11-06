@@ -57,3 +57,22 @@ test("batched duplicate native rows can carry different estimate bases without s
   assert.equal(a.rows[0].discovery_basis.site, "first");
   assert.equal(b.rows[0].discovery_basis.site, "second");
 });
+
+test("Customer 360 limits a failed statement to its 50 lookup slots and drains later chunks", async () => {
+  const sizes: number[] = [], failure = new Error("synthetic statement timeout");
+  const page = activityPageReads({
+    query: async (_sql: string, values: unknown[]) => {
+      sizes.push(values.length);
+      if (sizes.length === 1) throw failure;
+      return { fields: [], rowCount: values.length, rows: values.map((id, slot) => ({ __activity_page_slot: slot, id })) };
+    },
+  } as unknown as QueryClient, 50);
+  const results = await Promise.allSettled(Array.from({ length: 100 }, (_, id) => page.query("SELECT $1 AS id", [id])));
+  assert.deepEqual(sizes, [50, 50]);
+  for (const result of results.slice(0, 50))
+    assert.deepEqual(result, { status: "rejected", reason: failure });
+  for (const [index, result] of results.slice(50).entries()) {
+    assert.equal(result.status, "fulfilled");
+    if (result.status === "fulfilled") assert.deepEqual(result.value.rows, [{ id: index + 50 }]);
+  }
+});

@@ -15,11 +15,27 @@
   "register": "main's count + 0 (393); identical bytes",
   "initial_implementation_commit": "c6ebe1ef865deb5ab7f1ead7d2dad3665fd3987b",
   "final_source_sha256": {
+    "src/shared/customer-360.ts": "9dbde123a64d34cf64650a7caf166d91bb7d07b1dacd924c3db3237c9024597d",
+    "src/activities/page-reads.ts": "27c331c88868358b4135925c4178c0c1234c84c6fc394136deec11fc485ab691",
+    "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+    "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+    "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+    "src/platform/proof-diagnostics.ts": "e68214b807733f9e3742ce84f244cbfc5862ff2e396b47628ea1dab84cd7a674"
+  },
+  "reviewed_head_source_sha256": {
     "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
     "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
     "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
     "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
     "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
     "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+  },
+  "review_followup": {
+    "reviewed_head": "2e176d100a354bc72a7eede806874061d2ee510f",
+    "main_unchanged": "b6ee136c353bc66b5012d39908a61a95cece29de",
+    "merge_needed": false,
+    "original_fixture_function_unchanged": true,
+    "original_test_bodies_unchanged": true,
+    "activity_page_reads_unit_file_unchanged": true
   }
 }

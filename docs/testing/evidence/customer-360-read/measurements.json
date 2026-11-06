@@ -1,14 +1,14 @@
 {
-  "recorded_at": "2026-11-06T00:19:01.008151+00:00",
+  "recorded_at": "2026-11-06T06:26:11.734630+00:00",
   "pr": 863,
   "main_head": "b6ee136c353bc66b5012d39908a61a95cece29de",
   "source_sha256": {
-    "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
-    "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
+    "src/shared/customer-360.ts": "9dbde123a64d34cf64650a7caf166d91bb7d07b1dacd924c3db3237c9024597d",
+    "src/activities/page-reads.ts": "27c331c88868358b4135925c4178c0c1234c84c6fc394136deec11fc485ab691",
     "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
     "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
     "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
-    "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+    "src/platform/proof-diagnostics.ts": "e68214b807733f9e3742ce84f244cbfc5862ff2e396b47628ea1dab84cd7a674"
   },
   "environment": {
     "node": "24.21.0",
@@ -28,10 +28,12 @@
     "samples": [
       {
         "name": "before",
-        "start": "2026-11-06T00:13:29.962Z",
-        "end": "2026-11-06T00:13:32.070Z",
-        "wall_ms": 2108.193,
-        "database_ms": 881.969,
+        "start": "2026-11-06T06:22:22.020Z",
+        "end": "2026-11-06T06:22:24.985Z",
+        "wall_ms": 2965.422,
+        "database_ms": 1543.049,
+        "max_phase_ms": 321.604,
+        "max_statement_ms": 408.755,
         "counts": {
           "parse": 1497,
           "bind": 1497,
@@ -40,7 +42,7 @@
         },
         "executed_statements": 1627,
         "status": 200,
-        "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+        "normalised_dto_sha256": "f92938e8deb8d4a87b2fd65d8befd65f0364744234a7a9f76c085fa8de76d945",
         "sections": {
           "deals": {
             "state": "Complete",
@@ -91,19 +93,21 @@
       },
       {
         "name": "after",
-        "start": "2026-11-06T00:13:33.863Z",
-        "end": "2026-11-06T00:13:34.843Z",
-        "wall_ms": 979.687,
-        "database_ms": 1052.922,
+        "start": "2026-11-06T06:22:26.947Z",
+        "end": "2026-11-06T06:22:28.649Z",
+        "wall_ms": 1702.101,
+        "database_ms": 2567.298,
+        "max_phase_ms": 673.231,
+        "max_statement_ms": 726.117,
         "counts": {
-          "parse": 72,
-          "bind": 71,
+          "parse": 71,
+          "bind": 72,
           "execute": 72,
           "statement": 13
         },
         "executed_statements": 85,
         "status": 200,
-        "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+        "normalised_dto_sha256": "f92938e8deb8d4a87b2fd65d8befd65f0364744234a7a9f76c085fa8de76d945",
         "sections": {
           "deals": {
             "state": "Complete",
@@ -162,10 +166,12 @@
     "samples": [
       {
         "name": "before",
-        "start": "2026-11-06T00:06:25.355Z",
-        "end": "2026-11-06T00:06:35.560Z",
-        "wall_ms": 10204.571,
-        "database_ms": 4685.485,
+        "start": "2026-11-06T06:24:01.225Z",
+        "end": "2026-11-06T06:24:10.242Z",
+        "wall_ms": 9017.608,
+        "database_ms": 3957.575,
+        "max_phase_ms": 321.497,
+        "max_statement_ms": 386.296,
         "counts": {
           "parse": 5121,
           "bind": 5121,
@@ -174,7 +180,7 @@
         },
         "executed_statements": 5530,
         "status": 200,
-        "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+        "normalised_dto_sha256": "a47d0e3d9411e6d2dfd6a02ba284e34125b2683eda3ba89b60f601c1dd196042",
         "sections": {
           "deals": {
             "state": "Partial",
@@ -225,19 +231,21 @@
       },
       {
         "name": "after",
-        "start": "2026-11-06T00:06:37.065Z",
-        "end": "2026-11-06T00:06:41.657Z",
-        "wall_ms": 4591.567,
-        "database_ms": 6240.492,
+        "start": "2026-11-06T06:24:12.805Z",
+        "end": "2026-11-06T06:24:16.343Z",
+        "wall_ms": 3537.297,
+        "database_ms": 3811.026,
+        "max_phase_ms": 686.848,
+        "max_statement_ms": 689.889,
         "counts": {
-          "parse": 82,
-          "bind": 82,
-          "execute": 82,
-          "statement": 14
+          "parse": 97,
+          "bind": 95,
+          "execute": 97,
+          "statement": 15
         },
-        "executed_statements": 96,
+        "executed_statements": 112,
         "status": 200,
-        "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+        "normalised_dto_sha256": "a47d0e3d9411e6d2dfd6a02ba284e34125b2683eda3ba89b60f601c1dd196042",
         "sections": {
           "deals": {
             "state": "Partial",
@@ -287,7 +295,306 @@
         }
       }
     ],
-    "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process.",
-    "log_filter": "PostgreSQL event timestamps inside each GET; measurement-control statements excluded. Last request SQL was logged before the captured end in both samples."
+    "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process."
+  },
+  "maximum_duration_basis": "Longest individual SQL statement elapsed duration: correlate consecutive parse, bind and execute phases by PostgreSQL backend PID and sum them; simple statement durations stand alone. Same GET timestamp windows and control-query exclusions as database_ms. Also retain the largest single logged phase. Original reviewed-head logs reproduce every original phase count and summed duration exactly.",
+  "reviewed_head_measurements": {
+    "head": "2e176d100a354bc72a7eede806874061d2ee510f",
+    "recorded_at": "2026-11-06T00:19:01.008151+00:00",
+    "source_sha256": {
+      "src/shared/customer-360.ts": "bfa2689e0bc57f3cbec524ad75aa39b63b4aa679f98d18661a6b66ab6a9a44a3",
+      "src/activities/page-reads.ts": "a4652ab412a5446ba4d053a87f475489c96a88115039d955e3665ed0bb6de262",
+      "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+      "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+      "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+      "src/platform/proof-diagnostics.ts": "8dc1e55d8dc69b88c8e219bc1a774e5938bc6bf0908da22f9714498c5cf0747c"
+    },
+    "representative": {
+      "baseline": "b6ee136c353bc66b5012d39908a61a95cece29de",
+      "fixture": "customer360Fixture(40), one draft quotation per estimate; unchanged synthetic business data",
+      "method": "Compiled GET, app servers and PostgreSQL pinned to CPU 0; PostgreSQL log_min_duration_statement=0; sum parse/bind/execute/simple statement durations inside GET; count execute + simple statements. Serial same-data calls after warm-up; sessions established outside the measured interval.",
+      "samples": [
+        {
+          "name": "before",
+          "start": "2026-11-06T00:13:29.962Z",
+          "end": "2026-11-06T00:13:32.070Z",
+          "wall_ms": 2108.193,
+          "database_ms": 881.969,
+          "counts": {
+            "parse": 1497,
+            "bind": 1497,
+            "execute": 1497,
+            "statement": 130
+          },
+          "executed_statements": 1627,
+          "status": 200,
+          "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+          "sections": {
+            "deals": {
+              "state": "Complete",
+              "count": 40,
+              "next_cursor": false
+            },
+            "quotations": {
+              "state": "Partial",
+              "count": 80,
+              "next_cursor": false
+            },
+            "orders": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            },
+            "cases": {
+              "state": "Complete",
+              "count": 4,
+              "next_cursor": false
+            },
+            "work_orders": {
+              "state": "Partial",
+              "count": 12,
+              "next_cursor": false
+            },
+            "projects": {
+              "state": "Partial",
+              "count": 40,
+              "next_cursor": false
+            },
+            "accounts": {
+              "state": "Restricted",
+              "count": 0,
+              "next_cursor": false
+            },
+            "activities": {
+              "state": "Complete",
+              "count": 80,
+              "next_cursor": false
+            },
+            "documents": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            }
+          },
+          "max_statement_ms": 98.208,
+          "max_phase_ms": 56.911
+        },
+        {
+          "name": "after",
+          "start": "2026-11-06T00:13:33.863Z",
+          "end": "2026-11-06T00:13:34.843Z",
+          "wall_ms": 979.687,
+          "database_ms": 1052.922,
+          "counts": {
+            "parse": 72,
+            "bind": 71,
+            "execute": 72,
+            "statement": 13
+          },
+          "executed_statements": 85,
+          "status": 200,
+          "normalised_dto_sha256": "60104d8becfd078a78d1296d52f6f0cdbde9b227a1b9f7cb68d9b764123f99a7",
+          "sections": {
+            "deals": {
+              "state": "Complete",
+              "count": 40,
+              "next_cursor": false
+            },
+            "quotations": {
+              "state": "Partial",
+              "count": 80,
+              "next_cursor": false
+            },
+            "orders": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            },
+            "cases": {
+              "state": "Complete",
+              "count": 4,
+              "next_cursor": false
+            },
+            "work_orders": {
+              "state": "Partial",
+              "count": 12,
+              "next_cursor": false
+            },
+            "projects": {
+              "state": "Partial",
+              "count": 40,
+              "next_cursor": false
+            },
+            "accounts": {
+              "state": "Restricted",
+              "count": 0,
+              "next_cursor": false
+            },
+            "activities": {
+              "state": "Complete",
+              "count": 80,
+              "next_cursor": false
+            },
+            "documents": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            }
+          },
+          "max_statement_ms": 259.349,
+          "max_phase_ms": 220.938
+        }
+      ],
+      "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process."
+    },
+    "candidate_and_revision_limits": {
+      "baseline": "b6ee136c353bc66b5012d39908a61a95cece29de",
+      "fixture": "customer360Fixture(101), plus 100 additional revisions of the first estimate; unchanged synthetic business data",
+      "method": "Compiled GET, app servers and PostgreSQL pinned to CPU 0; PostgreSQL log_min_duration_statement=0; sum parse/bind/execute/simple statement durations inside GET; count execute + simple statements. Serial same-data calls after warm-up; sessions established outside the measured interval.",
+      "samples": [
+        {
+          "name": "before",
+          "start": "2026-11-06T00:06:25.355Z",
+          "end": "2026-11-06T00:06:35.560Z",
+          "wall_ms": 10204.571,
+          "database_ms": 4685.485,
+          "counts": {
+            "parse": 5121,
+            "bind": 5121,
+            "execute": 5121,
+            "statement": 409
+          },
+          "executed_statements": 5530,
+          "status": 200,
+          "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+          "sections": {
+            "deals": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": false
+            },
+            "quotations": {
+              "state": "Partial",
+              "count": 299,
+              "next_cursor": false
+            },
+            "orders": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            },
+            "cases": {
+              "state": "Complete",
+              "count": 4,
+              "next_cursor": false
+            },
+            "work_orders": {
+              "state": "Partial",
+              "count": 12,
+              "next_cursor": false
+            },
+            "projects": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": false
+            },
+            "accounts": {
+              "state": "Restricted",
+              "count": 0,
+              "next_cursor": false
+            },
+            "activities": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": true
+            },
+            "documents": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            }
+          },
+          "max_statement_ms": 393.742,
+          "max_phase_ms": 321.295
+        },
+        {
+          "name": "after",
+          "start": "2026-11-06T00:06:37.065Z",
+          "end": "2026-11-06T00:06:41.657Z",
+          "wall_ms": 4591.567,
+          "database_ms": 6240.492,
+          "counts": {
+            "parse": 82,
+            "bind": 82,
+            "execute": 82,
+            "statement": 14
+          },
+          "executed_statements": 96,
+          "status": 200,
+          "normalised_dto_sha256": "b6e243e32ae1b236123483c6b2ebddb625d96b72cba4718b9d925333fefee836",
+          "sections": {
+            "deals": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": false
+            },
+            "quotations": {
+              "state": "Partial",
+              "count": 299,
+              "next_cursor": false
+            },
+            "orders": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            },
+            "cases": {
+              "state": "Complete",
+              "count": 4,
+              "next_cursor": false
+            },
+            "work_orders": {
+              "state": "Partial",
+              "count": 12,
+              "next_cursor": false
+            },
+            "projects": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": false
+            },
+            "accounts": {
+              "state": "Restricted",
+              "count": 0,
+              "next_cursor": false
+            },
+            "activities": {
+              "state": "Partial",
+              "count": 100,
+              "next_cursor": true
+            },
+            "documents": {
+              "state": "Not configured",
+              "count": 0,
+              "next_cursor": false
+            }
+          },
+          "max_statement_ms": 1462.378,
+          "max_phase_ms": 1335.956
+        }
+      ],
+      "compiled_dto_comparison": "Remove observation timestamps; compare decoded continuation bodies because each compiled process has its own random cursor signing key. The database equivalence proof compares the original complete DTO and JSON, including the exact signed cursor, in one process.",
+      "log_filter": "PostgreSQL event timestamps inside each GET; measurement-control statements excluded. Last request SQL was logged before the captured end in both samples."
+    },
+    "maximum_duration_basis": "Longest individual SQL statement elapsed duration: correlate consecutive parse, bind and execute phases by PostgreSQL backend PID and sum them; simple statement durations stand alone. Same original GET timestamp windows and control-query exclusions as database_ms. Also retain the largest single logged phase. Recovered logs reproduce every original phase count and summed duration exactly."
+  },
+  "review_followup": {
+    "review": "https://github.com/deanrfiedler-gif/powerplants-one/pull/863#issuecomment-6677109414",
+    "original_customer_batch_size": 100,
+    "customer_batch_size": 50,
+    "activities_default_batch_size": 100,
+    "reason": "The original large fixture included a 1462.378 ms Project lookup statement, above the 1000 ms threshold. Reduced only Customer 360 chunks and remeasured both fixtures; final maxima 726.117 ms and 689.889 ms are below the threshold.",
+    "fixture_function_unchanged": true,
+    "database_time_restored": "log_min_duration_statement restored; PostgreSQL and both application servers restored to CPUs 0-4"
   }
 }

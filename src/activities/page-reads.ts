@@ -5,7 +5,7 @@ import type { QueryClient } from "../platform/permissions";
 // authority checks), but send their independent SELECT lookups in batches on
 // the page's one client. Deduplicate only requests waiting in this wave: no
 // permission result is cached across awaits, pages or principals.
-export function activityPageReads(client: QueryClient): QueryClient {
+export function activityPageReads(client: QueryClient, batchSize: 50 | 100 = 100): QueryClient {
   type Pending = {
     values: unknown[];
     resolve: (result: QueryResult) => void;
@@ -22,8 +22,8 @@ export function activityPageReads(client: QueryClient): QueryClient {
         const all = [...requests.values()];
         // Customer 360 can include 100 revisions for each of 100 estimates.
         // Bound statement size while retaining every native lookup.
-        for (let offset = 0; offset < all.length; offset += 100) {
-          const entries = all.slice(offset, offset + 100);
+        for (let offset = 0; offset < all.length; offset += batchSize) {
+          const entries = all.slice(offset, offset + batchSize);
           try {
             if (entries.length === 1) {
               entries[0].resolve(await client.query(sql, entries[0].values));

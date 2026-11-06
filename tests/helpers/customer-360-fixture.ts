@@ -11,6 +11,8 @@ import { createActivity } from "../../src/activities/activities";
 import { CRM, crmCreate, crmBase } from "./crm";
 import { estimateInput, quoteCommand } from "./estimating";
 import { projectInput } from "./projects";
+import { insert } from "../../src/documents/packs";
+import { observeAccount } from "../../src/finance/accounts";
 
 export async function customer360Fixture(count = 8) {
   const c = database(),
@@ -161,4 +163,52 @@ export async function customer360Fixture(count = 8) {
     projects,
     activities,
   };
+}
+
+// Kept separate so the existing authority and performance fixtures are unchanged.
+export async function customer360FinanceFixture() {
+  const c = database(),
+    actor_id = randomUUID(),
+    principal = { workspace_id: CRM.workspace, actor_id } as Principal;
+  await c.query(
+    "INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,'SYN Customer 360 Finance reader')",
+    [actor_id, CRM.workspace],
+  );
+  for (const capability of ["shared.read", "finance.account.read", "shared.finance.read"])
+    await c.query(
+      `INSERT INTO ppo.permission_grants(workspace_id,user_id,company_id,capability,scope_type,scope_id,valid_from)
+       VALUES($1,$2,$3,$4,'Company',$3,'2026-01-01')`,
+      [CRM.workspace, actor_id, CRM.company, capability],
+    );
+  const company = (await c.query(
+    "SELECT erp_connection_id,erp_company_id FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+    [CRM.workspace, CRM.company],
+  )).rows[0];
+  const accounts: string[] = [], mappings: string[] = [];
+  for (const label of ["current", "stale"]) {
+    const mapping = await insert(c, "erp_account_mappings", {
+      id: randomUUID(), workspace_id: CRM.workspace, company_id: CRM.company,
+      organisation_id: CRM.org, ...company, entity_type: "Customer",
+      customer_id: `SYN-C360-${label}-${randomUUID()}`, mapping_status: "Proposed",
+      valid_from: "2026-01-01", created_by: actor_id, updated_by: actor_id,
+    });
+    const account = await insert(c, "finance_accounts", {
+      id: randomUUID(), workspace_id: CRM.workspace, company_id: CRM.company,
+      organisation_id: CRM.org, mapping_id: mapping.id, mapping_version: mapping.version,
+      mapping_snapshot: mapping, verification_basis: "SYN Customer 360 equality proof only",
+      currency: "AUD", fixture_key: `SYN-C360-${label}-${randomUUID()}`,
+      created_by: actor_id, updated_by: actor_id,
+    });
+    // Distinct retained observations exercise current, last-good and history reads.
+    await observeAccount(principal, account.id, { ...crmBase(), expected_version: 1, fixture: "F-01" });
+    await observeAccount(principal, account.id, { ...crmBase(), expected_version: 2, fixture: "F-03" });
+    accounts.push(account.id);
+    mappings.push(mapping.id);
+  }
+  // Keep the version equal: the stale case must fail the exact snapshot hash.
+  await c.query(
+    "UPDATE ppo.erp_account_mappings SET customer_id=customer_id||'-STALE' WHERE workspace_id=$1 AND id=$2",
+    [CRM.workspace, mappings[1]],
+  );
+  return { principal, currentAccount: accounts[0], staleAccount: accounts[1] };
 }

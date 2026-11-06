@@ -106,7 +106,7 @@ export async function customer360(
   id: string,
 ): Promise<Customer360> {
   const raw = database(),
-    c = pagePermissionReads(activityPageReads(raw)),
+    c = pagePermissionReads(activityPageReads(raw, 50)),
     org = await visible(raw, p, "Organisation", id),
     observed_at = new Date().toISOString();
   const context = (await customerContext(
