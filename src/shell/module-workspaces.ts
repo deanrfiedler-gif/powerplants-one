@@ -63,6 +63,7 @@ export const moduleWorkspaces = [
   { route: "/projects/acceptance", moduleId: "PJ-09", scope: "ppo-acceptance", layout: "full-bleed", navigation: "workspace", baseline: "pj09-r01" },
   { route: "/projects/commercial", moduleId: "PJ-05", scope: "ppo-commercial", layout: "full-bleed", navigation: "workspace", baseline: "project-commercial" },
   { route: "/sales/opportunities", scope: "ppo-deals", layout: "full-bleed", navigation: "workspace", baseline: "deals-r38" },
+  { route: "/schedule", moduleId: "PL-01", scope: "ppo-service-planner", layout: "full-bleed", navigation: "workspace", baseline: "pl01-service-planner" },
   { route: "/service/escalations", moduleId: "SV-08", scope: "ppo-escalations", layout: "full-bleed", navigation: "workspace", baseline: "sv08-escalations" },
   { route: "/service/findings", moduleId: "SV-07", scope: "ppo-findings", layout: "full-bleed", navigation: "workspace", baseline: "sv07-findings" },
   { route: "/service/incidents", moduleId: "FI-06", scope: "ppo-incidents", layout: "full-bleed", navigation: "workspace", baseline: "fi06-incidents-register" },

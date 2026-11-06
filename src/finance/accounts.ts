@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { database } from "../platform/database";
+import type { QueryClient } from "../platform/permissions";
 import { sharedOperation } from "../platform/operations";
 import { insert } from "../documents/packs";
 import {
@@ -171,9 +172,9 @@ export async function readAccount(
   p: Principal,
   customerID: string,
   input: unknown,
+  c: QueryClient = database(),
 ) {
   const q = object(input, ["account_id"]),
-    c = database(),
     a = await financeAccount(c, p, uuid(q.account_id, "account_id"));
   if (a.organisation_id !== uuid(customerID, "customer_id"))
     throw unavailable();

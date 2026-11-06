@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { openSecondaryMenu } from "../helpers/phone-menu";
 const id = (t: string, n = 1) =>
   `${t}000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const origin = () => `http://127.0.0.1:${process.env.PPO_PORT ?? "3000"}`;
@@ -41,10 +42,15 @@ test("native scheduling pages retain context and reflow at coordination, phone a
     for (const [path, name] of screenshots) {
       await page.setViewportSize({ width, height });
       await page.goto(path);
+      if (name === "planner") await openSecondaryMenu(page);
       if (name !== "resource" && name !== "changes")
         await expect(
           page.getByRole("navigation", { name: "Scheduling workspace" }),
         ).toBeVisible();
+      if (name === "planner") {
+        if (width >= 1200) await page.getByRole("button", { name: "Hide menu", exact: true }).click();
+        else await page.getByRole("dialog", { name: "Scheduling menu", exact: true }).getByRole("button", { name: "Close menu", exact: true }).click();
+      }
       if (name === "resource")
         await expect(page.locator(".pl02-review-meta")).toContainText(
           "Complete.",
