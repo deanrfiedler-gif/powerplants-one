@@ -1,0 +1,525 @@
+{
+  "base_sha": "78fe5732b88a93bb16f1e5ce820fe2828112bbb4",
+  "source_sha256": {
+    "src/reviews/service.ts": "5d62cc8e9401278783b22ab87caab55650dffd3fab1db35e0bff2ac21daee1ca",
+    "src/engineering/changes/review-pages.ts": "b8ce13e2f27416a96999be388ca0d05cc6341d677869ec17db98abb1e2cc62f2",
+    "tests/helpers/review-sources-per-row.ts": "d10c1b651d75a7b546b86c4e99a75274237682ce64801ed634487b215e40fd09",
+    "tests/helpers/work-reviews-per-row.ts": "98f5c59c84755f14cb3d5063ec34b95f814b7a459a0f9831959792643fdba538",
+    "tests/helpers/review-sources-fixture.ts": "ed247cfca78c55a61b1cc24f118fbf57d31b571ddb326fedcd5a5ae581bbf3f4",
+    "tests/database/review-sources-reads.test.ts": "7f3cbebb5d6f8451ab6ac7ecddf9330fa7ede10a6d1b7174a09da0fae17b4a18"
+  },
+  "recorded_at": "2026-11-06",
+  "environment": {
+    "node": "v24.21.0",
+    "fixtureCounts": {
+      "engineering_packages": 205,
+      "service_reports": 2,
+      "finance_handoffs": 4
+    },
+    "visible_engineering_packages": 204,
+    "primary_principal": "coordinator",
+    "finance_principal": "finance",
+    "postgres_original_cpuset": "0-4",
+    "sample_count": 1,
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "application_server_cpu_affinity": [
+      0
+    ],
+    "sampler_cpu_affinity": [
+      0
+    ],
+    "postgres_sample_cpu_affinity": [
+      0
+    ],
+    "restored_postgres_effective_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "method": "One final warmed sample per implementation and operation on unchanged synthetic business data. Direct source calls use the frozen oracle/new function; real HTTP calls use separately built main/branch compiled servers. PostgreSQL log_min_duration_statement=0; sum parse, bind, execute and simple-statement durations inside each timestamped interval, excluding measurement-control SQL. Count execute plus simple statements once. Longest statement sums its parse/bind/execute phases per backend. Durations are elapsed database time, not CPU time.",
+  "fixture": {
+    "engineering_packages": 205,
+    "coordinator_visible_packages": 204,
+    "engineering_window": 200,
+    "page_size": 50,
+    "service_draft_reports": 2,
+    "finance_handoffs": [
+      "Draft",
+      "ReadyForReview",
+      "Returned",
+      "Cancelled"
+    ],
+    "result_items": 13,
+    "engineering_items": 11,
+    "engineering_open_review": 3,
+    "engineering_returned_review": 2,
+    "engineering_handovers": 5,
+    "engineering_actionable": 3
+  },
+  "common_review_sources_json_sha256": "1ae26c95a842812d57ee4bd7f1efa5182a9b8c5adcfb391f46af0bfe50c57023",
+  "postgres_log_sha256": "4f1d0da35f4d57e10529f6effe31c855f7ede0baf908084bdef91b9c907d0427",
+  "postgres_log_bytes": 82128776,
+  "samples": [
+    {
+      "label": "reviewSources-before",
+      "start": "2026-11-06T15:29:54.770Z",
+      "end": "2026-11-06T15:29:59.225Z",
+      "wall_ms": 4455.5877599999985,
+      "result_hash": "1ae26c95a842812d57ee4bd7f1efa5182a9b8c5adcfb391f46af0bfe50c57023",
+      "executed_statements": 4517,
+      "postgres_phase_counts": {
+        "statement": 10,
+        "parse": 4507,
+        "bind": 4507,
+        "execute": 4507
+      },
+      "summed_database_ms": 2528.482,
+      "longest_single_statement_ms": 48.583,
+      "items": 13,
+      "sources": [
+        {
+          "module": "Service",
+          "state": "available",
+          "bounded": false
+        },
+        {
+          "module": "Finance",
+          "state": "denied",
+          "bounded": false
+        },
+        {
+          "module": "Engineering",
+          "state": "available",
+          "bounded": true
+        },
+        {
+          "module": "Customers & sites",
+          "state": "available",
+          "bounded": false
+        },
+        {
+          "module": "Equipment",
+          "state": "available",
+          "bounded": false
+        }
+      ]
+    },
+    {
+      "label": "reviewSources-after",
+      "start": "2026-11-06T15:29:59.226Z",
+      "end": "2026-11-06T15:30:00.887Z",
+      "wall_ms": 1661.2100849999988,
+      "result_hash": "1ae26c95a842812d57ee4bd7f1efa5182a9b8c5adcfb391f46af0bfe50c57023",
+      "executed_statements": 149,
+      "postgres_phase_counts": {
+        "statement": 10,
+        "parse": 139,
+        "bind": 139,
+        "execute": 139
+      },
+      "summed_database_ms": 1456.27,
+      "longest_single_statement_ms": 348.621,
+      "items": 13,
+      "sources": [
+        {
+          "module": "Service",
+          "state": "available",
+          "bounded": false
+        },
+        {
+          "module": "Finance",
+          "state": "denied",
+          "bounded": false
+        },
+        {
+          "module": "Engineering",
+          "state": "available",
+          "bounded": true
+        },
+        {
+          "module": "Customers & sites",
+          "state": "available",
+          "bounded": false
+        },
+        {
+          "module": "Equipment",
+          "state": "available",
+          "bounded": false
+        }
+      ]
+    },
+    {
+      "label": "Service-unchanged",
+      "start": "2026-11-06T15:30:00.888Z",
+      "end": "2026-11-06T15:30:00.954Z",
+      "wall_ms": 65.96902699999919,
+      "item_count": 2,
+      "result_hash": "45a12295e9c82aee201c4470f39425ba8ee42ad245653701a3b8145329720c7c",
+      "executed_statements": 93,
+      "postgres_phase_counts": {
+        "statement": 9,
+        "parse": 84,
+        "bind": 84,
+        "execute": 84
+      },
+      "summed_database_ms": 36.08,
+      "longest_single_statement_ms": 5.847
+    },
+    {
+      "label": "Finance-unchanged",
+      "start": "2026-11-06T15:30:00.955Z",
+      "end": "2026-11-06T15:30:01.018Z",
+      "wall_ms": 62.77186200000142,
+      "item_count": 4,
+      "result_hash": "1993a6f90b5c88394a2ae74ad621695936c4d3f7c071e81d590474390c2fc03e",
+      "executed_statements": 114,
+      "postgres_phase_counts": {
+        "parse": 106,
+        "bind": 106,
+        "execute": 106,
+        "statement": 8
+      },
+      "summed_database_ms": 28.987,
+      "longest_single_statement_ms": 2.583
+    },
+    {
+      "label": "reviews-before",
+      "start": "2026-11-06T15:30:01.018Z",
+      "end": "2026-11-06T15:30:04.978Z",
+      "wall_ms": 3959.2779410000003,
+      "result_hash": "06401b2c5c6993693436bc7e77017f6092672a48e29772c0ff6a69442b2009c5",
+      "executed_statements": 4519,
+      "postgres_phase_counts": {
+        "parse": 4509,
+        "bind": 4509,
+        "execute": 4509,
+        "statement": 10
+      },
+      "summed_database_ms": 2338.52,
+      "longest_single_statement_ms": 26.167
+    },
+    {
+      "label": "work-overview-before",
+      "start": "2026-11-06T15:30:04.979Z",
+      "end": "2026-11-06T15:30:09.070Z",
+      "wall_ms": 4090.2858730000007,
+      "result_hash": "b060bb7600b47e4e634213cca42249a1812d790218700eed17cfb78df63c9f3e",
+      "executed_statements": 4551,
+      "postgres_phase_counts": {
+        "parse": 4529,
+        "bind": 4529,
+        "execute": 4529,
+        "statement": 22
+      },
+      "summed_database_ms": 2908.821,
+      "longest_single_statement_ms": 87.193
+    },
+    {
+      "label": "work-navigation-before",
+      "start": "2026-11-06T15:30:09.071Z",
+      "end": "2026-11-06T15:30:12.799Z",
+      "wall_ms": 3728.0378249999994,
+      "result_hash": "a5124cb8cbc0c317c2444e89b028e91808af23730978868be053efda6880bf9e",
+      "executed_statements": 4523,
+      "postgres_phase_counts": {
+        "parse": 4513,
+        "bind": 4513,
+        "execute": 4513,
+        "statement": 10
+      },
+      "summed_database_ms": 2254.653,
+      "longest_single_statement_ms": 25.727
+    },
+    {
+      "label": "reviews-after",
+      "start": "2026-11-06T15:30:12.800Z",
+      "end": "2026-11-06T15:30:14.263Z",
+      "wall_ms": 1463.2142460000032,
+      "result_hash": "b3a829bbd723dbd09275ea8359a6bd392b71a858acdb118bc97904c92e08afe8",
+      "executed_statements": 151,
+      "postgres_phase_counts": {
+        "parse": 141,
+        "bind": 141,
+        "execute": 141,
+        "statement": 10
+      },
+      "summed_database_ms": 1273.334,
+      "longest_single_statement_ms": 323.799
+    },
+    {
+      "label": "work-overview-after",
+      "start": "2026-11-06T15:30:14.264Z",
+      "end": "2026-11-06T15:30:15.958Z",
+      "wall_ms": 1693.8224850000042,
+      "result_hash": "cbcf3105debd7358e1f4a696b05d511f8b6d0fa76270b62d0d46cb744fd728fa",
+      "executed_statements": 183,
+      "postgres_phase_counts": {
+        "parse": 161,
+        "bind": 161,
+        "execute": 161,
+        "statement": 22
+      },
+      "summed_database_ms": 1837.232,
+      "longest_single_statement_ms": 290.521
+    },
+    {
+      "label": "work-navigation-after",
+      "start": "2026-11-06T15:30:15.959Z",
+      "end": "2026-11-06T15:30:17.594Z",
+      "wall_ms": 1634.5782299999992,
+      "result_hash": "7698f339c29383e817381026a5d73e22b6d0f61d6aca6f5f9bc9778436e33bd8",
+      "executed_statements": 155,
+      "postgres_phase_counts": {
+        "parse": 145,
+        "bind": 145,
+        "execute": 145,
+        "statement": 10
+      },
+      "summed_database_ms": 1441.595,
+      "longest_single_statement_ms": 347.533
+    }
+  ],
+  "capture_notes": [
+    "An initial collector exceeded its 64 MiB buffer before saving timing records; no figures from that capture are claimed. Log collection was changed to stream to disk.",
+    "The next sample exposed random UUID ordering placing the rich Engineering package beyond the 200-package bound. That earlier low-task-density sample is retained below, but is not the final fixture. Fixture-only ID ranges and new bounded non-vacuity assertions now keep rich review tasks inside the measured window."
+  ],
+  "preliminary_low_task_density_sample": {
+    "environment": {
+      "node": "v24.21.0",
+      "fixtureCounts": {
+        "engineering_packages": 205,
+        "service_reports": 2,
+        "finance_handoffs": 4
+      },
+      "visible_engineering_packages": 204,
+      "primary_principal": "coordinator",
+      "finance_principal": "finance",
+      "postgres_original_cpuset": "0",
+      "sample_count": 1
+    },
+    "samples": [
+      {
+        "label": "reviewSources-before",
+        "start": "2026-11-06T15:19:49.324Z",
+        "end": "2026-11-06T15:19:53.563Z",
+        "wall_ms": 4239.472988000001,
+        "result_hash": "d002de770d82d3bccc01545e45564bb45acc44be77f2373ca82f550634c3b43a",
+        "executed_statements": 4515,
+        "postgres_phase_counts": {
+          "statement": 10,
+          "parse": 4505,
+          "bind": 4505,
+          "execute": 4505
+        },
+        "summed_database_ms": 2483.256,
+        "longest_single_statement_ms": 29.517,
+        "items": 3,
+        "sources": [
+          {
+            "module": "Service",
+            "state": "available",
+            "bounded": false
+          },
+          {
+            "module": "Finance",
+            "state": "denied",
+            "bounded": false
+          },
+          {
+            "module": "Engineering",
+            "state": "available",
+            "bounded": true
+          },
+          {
+            "module": "Customers & sites",
+            "state": "available",
+            "bounded": false
+          },
+          {
+            "module": "Equipment",
+            "state": "available",
+            "bounded": false
+          }
+        ]
+      },
+      {
+        "label": "reviewSources-after",
+        "start": "2026-11-06T15:19:53.564Z",
+        "end": "2026-11-06T15:19:55.419Z",
+        "wall_ms": 1854.5173340000001,
+        "result_hash": "d002de770d82d3bccc01545e45564bb45acc44be77f2373ca82f550634c3b43a",
+        "executed_statements": 155,
+        "postgres_phase_counts": {
+          "statement": 10,
+          "parse": 145,
+          "bind": 145,
+          "execute": 145
+        },
+        "summed_database_ms": 1628.836,
+        "longest_single_statement_ms": 392.235,
+        "items": 3,
+        "sources": [
+          {
+            "module": "Service",
+            "state": "available",
+            "bounded": false
+          },
+          {
+            "module": "Finance",
+            "state": "denied",
+            "bounded": false
+          },
+          {
+            "module": "Engineering",
+            "state": "available",
+            "bounded": true
+          },
+          {
+            "module": "Customers & sites",
+            "state": "available",
+            "bounded": false
+          },
+          {
+            "module": "Equipment",
+            "state": "available",
+            "bounded": false
+          }
+        ]
+      },
+      {
+        "label": "Service-unchanged",
+        "start": "2026-11-06T15:19:55.420Z",
+        "end": "2026-11-06T15:19:55.487Z",
+        "wall_ms": 67.26190499999939,
+        "item_count": 2,
+        "result_hash": "0af425511d4e7898a73333da0c96e1b0601021b5dd46009415e8c114035cf6c4",
+        "executed_statements": 93,
+        "postgres_phase_counts": {
+          "statement": 9,
+          "parse": 84,
+          "bind": 84,
+          "execute": 84
+        },
+        "summed_database_ms": 38.487,
+        "longest_single_statement_ms": 7.0
+      },
+      {
+        "label": "Finance-unchanged",
+        "start": "2026-11-06T15:19:55.488Z",
+        "end": "2026-11-06T15:19:55.547Z",
+        "wall_ms": 59.392320999999356,
+        "item_count": 4,
+        "result_hash": "a6bfb3ea450eb50becc742388e1e8e5a28930822b927104e2c49b4aa802000a9",
+        "executed_statements": 114,
+        "postgres_phase_counts": {
+          "parse": 106,
+          "bind": 106,
+          "execute": 106,
+          "statement": 8
+        },
+        "summed_database_ms": 28.986,
+        "longest_single_statement_ms": 2.954
+      },
+      {
+        "label": "reviews-before",
+        "start": "2026-11-06T15:19:55.548Z",
+        "end": "2026-11-06T15:19:59.449Z",
+        "wall_ms": 3901.190150999999,
+        "result_hash": "c5cc24a437db9661871347552dc2ef33350cf7ef7ff011ad4bb1c80d854e4879",
+        "executed_statements": 4517,
+        "postgres_phase_counts": {
+          "parse": 4507,
+          "bind": 4507,
+          "execute": 4507,
+          "statement": 10
+        },
+        "summed_database_ms": 2341.57,
+        "longest_single_statement_ms": 31.617
+      },
+      {
+        "label": "work-overview-before",
+        "start": "2026-11-06T15:19:59.451Z",
+        "end": "2026-11-06T15:20:03.622Z",
+        "wall_ms": 4171.480028000005,
+        "result_hash": "ede1a2a923ed294bdf51354ba73b19e9a17d3452ed5cccf80575cdd11bf2bb33",
+        "executed_statements": 4549,
+        "postgres_phase_counts": {
+          "parse": 4527,
+          "bind": 4527,
+          "execute": 4527,
+          "statement": 22
+        },
+        "summed_database_ms": 2869.444,
+        "longest_single_statement_ms": 68.565
+      },
+      {
+        "label": "work-navigation-before",
+        "start": "2026-11-06T15:20:03.623Z",
+        "end": "2026-11-06T15:20:07.361Z",
+        "wall_ms": 3737.7282510000005,
+        "result_hash": "26f84513d10b77427e7af6dff5bcb975dba49fa999cc9e411fd0ab3bde9baba0",
+        "executed_statements": 4521,
+        "postgres_phase_counts": {
+          "parse": 4511,
+          "bind": 4511,
+          "execute": 4511,
+          "statement": 10
+        },
+        "summed_database_ms": 2245.322,
+        "longest_single_statement_ms": 25.972
+      },
+      {
+        "label": "reviews-after",
+        "start": "2026-11-06T15:20:07.362Z",
+        "end": "2026-11-06T15:20:08.899Z",
+        "wall_ms": 1537.014933999999,
+        "result_hash": "5a93fe8e091952468de1d2f7ef4ad801f7282f2128d86bb3905a8c67320b8c2f",
+        "executed_statements": 157,
+        "postgres_phase_counts": {
+          "parse": 147,
+          "bind": 147,
+          "execute": 147,
+          "statement": 10
+        },
+        "summed_database_ms": 1333.854,
+        "longest_single_statement_ms": 316.086
+      },
+      {
+        "label": "work-overview-after",
+        "start": "2026-11-06T15:20:08.900Z",
+        "end": "2026-11-06T15:20:10.661Z",
+        "wall_ms": 1761.1570629999987,
+        "result_hash": "827c74d22cb64a87dded462b94a2ab266267c45be32f13a43cea41d73b421f7b",
+        "executed_statements": 189,
+        "postgres_phase_counts": {
+          "parse": 167,
+          "bind": 167,
+          "execute": 167,
+          "statement": 22
+        },
+        "summed_database_ms": 1941.966,
+        "longest_single_statement_ms": 320.27
+      },
+      {
+        "label": "work-navigation-after",
+        "start": "2026-11-06T15:20:10.663Z",
+        "end": "2026-11-06T15:20:12.187Z",
+        "wall_ms": 1524.6680139999953,
+        "result_hash": "691fcd02768028d92b42846d25b10edf9107bae88913adcb63f37c8b1665e1e0",
+        "executed_statements": 161,
+        "postgres_phase_counts": {
+          "parse": 151,
+          "bind": 151,
+          "execute": 151,
+          "statement": 10
+        },
+        "summed_database_ms": 1346.197,
+        "longest_single_statement_ms": 345.674
+      }
+    ]
+  }
+}
