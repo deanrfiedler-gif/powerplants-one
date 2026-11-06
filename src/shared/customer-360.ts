@@ -3,6 +3,7 @@ import { AppError } from "../platform/errors";
 import type { Principal } from "../platform/identity";
 import {
   hasPermission,
+  pagePermissionReads,
   scopeSql,
   type Capability,
 } from "../platform/permissions";
@@ -11,6 +12,7 @@ import { estimateContext, quoteContext } from "../estimating/context";
 import { projectRow } from "../projects/service";
 import { visibleWorkOrder } from "../service/work-orders";
 import { ticketVisibility } from "../service/tickets";
+import { activityPageReads } from "../activities/page-reads";
 import { listActivities } from "../activities/activities";
 import { readAccount } from "../finance/accounts";
 import { customerContext, visible } from "./reads";
@@ -103,12 +105,14 @@ export async function customer360(
   p: Principal,
   id: string,
 ): Promise<Customer360> {
-  const c = database(),
-    org = await visible(c, p, "Organisation", id),
+  const raw = database(),
+    c = pagePermissionReads(activityPageReads(raw, 50)),
+    org = await visible(raw, p, "Organisation", id),
     observed_at = new Date().toISOString();
   const context = (await customerContext(
     p,
     id,
+    c,
   )) as unknown as Customer360["context"];
   context.company_name = (
     await c.query(
@@ -179,17 +183,23 @@ export async function customer360(
     candidates: { id: string }[],
     read: (id: string) => Promise<T>,
   ) {
+    // Drain every native reader before propagating an unexpected source error.
+    // allSettled retains candidate order, regardless of lookup completion order.
+    const settled = await Promise.allSettled(
+      candidates.slice(0, 100).map((candidate) => read(candidate.id)),
+    );
     const rows: T[] = [];
-    for (const candidate of candidates.slice(0, 100))
-      try {
-        rows.push(await read(candidate.id));
-      } catch (error) {
-        if (!(error instanceof AppError) || ![403, 404].includes(error.status))
-          throw error;
-      }
+    for (const outcome of settled) {
+      if (outcome.status === "fulfilled") rows.push(outcome.value);
+      else if (
+        !(outcome.reason instanceof AppError) ||
+        ![403, 404].includes(outcome.reason.status)
+      )
+        throw outcome.reason;
+    }
     return rows;
   }
-  const deals = await source(
+  const dealsRead = source(
     "CRM Sales",
     "Current permitted opportunities. Forecast values are not orders, invoices or payments; no totals are calculated.",
     ["crm.opportunity.read", "shared.internal.read"],
@@ -220,7 +230,7 @@ export async function customer360(
       };
     },
   );
-  const quotations = await source(
+  const quotationsRead = source(
     "Estimating & quotation",
     "Saved estimates and exact Draft quotations. Alternative estimates and successive quotation revisions are not added together.",
     ["estimating.read"],
@@ -243,30 +253,35 @@ export async function customer360(
         detail:
           "Saved estimate; Estimating owns its selected basis and changes.",
       }));
-      for (const e of estimates) {
-        const candidates = (
-          await c.query(
-            "SELECT id FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY created_at DESC,id LIMIT 101",
-            [p.workspace_id, e.id],
-          )
-        ).rows;
-        const quotes = await permitted(candidates, (x) =>
-          quoteContext(c, p, x),
-        );
-        for (const { q } of quotes)
-          items.push({
+      const revisions = await Promise.allSettled(
+        estimates.map(async (e) => {
+          const candidates = (
+            await c.query(
+              "SELECT id FROM ppo.draft_quote_revisions WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY created_at DESC,id LIMIT 101",
+              [p.workspace_id, e.id],
+            )
+          ).rows;
+          const quotes = await permitted(candidates, (x) =>
+            quoteContext(c, p, x),
+          );
+          return quotes.map(({ q }) => ({
             id: q.id,
             label: `Draft quotation · ${e.display_number}`,
             href: `/estimating/quotes/${q.id}`,
             state: "Draft",
-            record_kind: "Quotation",
+            record_kind: "Quotation" as const,
             detail: "Exact saved revision; not an issued or accepted order.",
-          });
+          }));
+        }),
+      );
+      for (const revision of revisions) {
+        if (revision.status === "rejected") throw revision.reason;
+        items.push(...revision.value);
       }
       return { items, partial: true }; // Bounded revision lists, never a complete commercial population.
     },
   );
-  const cases = await source(
+  const casesRead = source(
     "Service cases",
     "Permitted cases at Sites with a current customer relationship. This is location context, not a claim that the customer is the bill payer.",
     ["service.ticket.read"],
@@ -293,7 +308,7 @@ export async function customer360(
       };
     },
   );
-  const work_orders = await source(
+  const workOrdersRead = source(
     "Service work orders",
     "Work orders with this exact customer ID. Attendance, remaining work, resolution and commercial settlement remain separate.",
     ["service.work_order.read"],
@@ -318,7 +333,7 @@ export async function customer360(
       };
     },
   );
-  const projects = await source(
+  const projectsRead = source(
     "Projects",
     "Exact customer-related Projects. Technical completion, customer acceptance and commercial closeout are separate decisions.",
     ["project.read", "shared.internal.read"],
@@ -343,7 +358,7 @@ export async function customer360(
       };
     },
   );
-  const accounts = await source(
+  const accountsRead = source(
     "Finance",
     "Exact company-specific synthetic account observations. Each currency and account stands alone; source balances and unapplied cash are separate. No ageing or credit rule is inferred.",
     ["finance.account.read", "shared.finance.read"],
@@ -355,7 +370,7 @@ export async function customer360(
         )
       ).rows;
       const rows = await permitted(candidates, (x) =>
-        readAccount(p, id, { account_id: x }),
+        readAccount(p, id, { account_id: x }, c),
       );
       return {
         items: rows.map((r) => ({
@@ -375,7 +390,7 @@ export async function customer360(
       };
     },
   );
-  const activities = await source(
+  const activitiesRead = source(
     "My Work / Activity",
     "Direct Organisation-linked Activities, with current source permissions. Broader interaction history is not inferred.",
     ["activity.read"],
@@ -414,8 +429,19 @@ export async function customer360(
     "SharePoint (intended business-document authority)",
     "A general customer-linked document library is not connected. Exact native Draft quotations remain under Deals & quotations; Service owns its issued reports. No document is issued from Customer 360.",
   );
+  // Independent sections share lookup waves. Drain all native readers, then
+  // preserve the original section/error order before the final root recheck.
+  const sectionReads = await Promise.allSettled([
+    dealsRead, quotationsRead, casesRead, workOrdersRead, projectsRead,
+    accountsRead, activitiesRead,
+  ]);
+  const [deals, quotations, cases, work_orders, projects, accounts, activities] =
+    sectionReads.map((read) => {
+      if (read.status === "rejected") throw read.reason;
+      return read.value;
+    });
   // Recheck the root after reading cross-domain data, including identity changes.
-  await visible(c, p, "Organisation", id);
+  await visible(raw, p, "Organisation", id);
   return {
     context,
     sections: {

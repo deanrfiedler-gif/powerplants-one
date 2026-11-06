@@ -66,3 +66,51 @@ test("unwritable diagnostics preserve the business result and original rejection
     assert.equal(await readFile(join(dir, "verification-evidence"), "utf8"), "occupied");
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+test("late customer workspace diagnostics survive the ordinary shard cap without retaining other late events", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "ppo-proof-customer-cap-"));
+  try {
+    execFileSync(process.execPath, ["--import",import.meta.resolve("tsx"),"--input-type=module","--eval",`
+      import {proofEvent,proofReadRequest,proofReadPhase} from ${JSON.stringify(moduleUrl)};
+      for(let i=0;i<60002;i++) proofEvent('ordinary');
+      proofEvent('other-late');
+      proofEvent('http-received',{path:'/api/v1/customers/:id/workspace'});
+      proofReadRequest('/api/v1/customers/50000000-0000-4000-8000-000000000001/workspace',()=>proofReadPhase('late-workspace'));
+      proofEvent('http-finished',{path:'/api/v1/customers/:id/workspace',status:200});
+    `], {cwd:dir,env:environment,encoding:'utf8'});
+    const logs=join(dir,'verification-evidence','transport-diagnostics');
+    const text=await readFile(join(logs,(await readdir(logs))[0]),'utf8');
+    const events=text.trim().split('\n').map(line=>JSON.parse(line));
+    assert.equal(events.filter(e=>e.event==='diagnostic-cap-reached').length,1);
+    assert.deepEqual(events.slice(-3).map(e=>e.event),['http-received','read-phase','http-finished']);
+    assert.equal(events.at(-2).phase,'late-workspace');
+    assert.ok(!text.includes('other-late'));
+    assert.ok(!text.includes('50000000-0000-4000-8000-000000000001'));
+  } finally {await rm(dir,{recursive:true,force:true});}
+});
+
+test("a workspace event exactly at the cap reports it once and retained workspace events have a ceiling", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "ppo-proof-workspace-cap-"));
+  try {
+    execFileSync(process.execPath, ["--import", import.meta.resolve("tsx"), "--input-type=module", "--eval", `
+      import {proofEvent,proofReadRequest,proofReadPhase} from ${JSON.stringify(moduleUrl)};
+      for(let i=0;i<60000;i++) proofEvent('ordinary');
+      proofReadRequest('/api/v1/customers/50000000-0000-4000-8000-000000000001/workspace',()=>proofReadPhase('exact-cap'));
+      proofEvent('other-late');
+      for(let i=1;i<120000;i++) proofEvent('retained',{path:'/api/v1/customers/:id/workspace'});
+      proofEvent('workspace-over-ceiling',{path:'/api/v1/customers/:id/workspace'});
+      proofReadRequest('/api/v1/customers/50000000-0000-4000-8000-000000000001/workspace',()=>proofReadPhase('scoped-over-ceiling'));
+    `], { cwd: dir, env: environment, encoding: "utf8" });
+    const logs = join(dir, "verification-evidence", "transport-diagnostics");
+    const text = await readFile(join(logs, (await readdir(logs))[0]), "utf8");
+    const events = text.trim().split("\n").map(line => JSON.parse(line));
+    assert.equal(events.length, 180001);
+    assert.equal(events.filter(e => e.event === "diagnostic-cap-reached").length, 1);
+    assert.equal(events[60000].event, "diagnostic-cap-reached");
+    assert.equal(events[60001].phase, "exact-cap");
+    assert.equal(events.filter(e => e.event === "retained").length, 119999);
+    assert.ok(!text.includes("other-late"));
+    assert.ok(!text.includes("over-ceiling"));
+    assert.ok(!text.includes("50000000-0000-4000-8000-000000000001"));
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

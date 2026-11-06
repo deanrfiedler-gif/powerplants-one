@@ -303,9 +303,8 @@ export async function listShared(
     more ? pg.cursor(selected.at(-1)!.id) : null,
   );
 }
-export async function customerContext(p: Principal, id: string) {
-  const client = database(),
-    org = await visible(client, p, "Organisation", id);
+export async function customerContext(p: Principal, id: string, client: QueryClient = database()) {
+  const org = await visible(client, p, "Organisation", id);
   const companyRead = await hasPermission(
     client,
     p,
@@ -331,7 +330,7 @@ export async function customerContext(p: Principal, id: string) {
       WHERE f.workspace_id=$1 AND f.site_id=ANY($3::uuid[]) AND ${visibility("Facility","f")} ORDER BY f.name,f.id`,
     [p.workspace_id,p.actor_id,sites.map(s=>s.id)],
   )).rows;
-  const mappings = companyRead ? await mappingViews(p, id) : [];
+  const mappings = companyRead ? await mappingViews(p, id, client) : [];
   return {
     ...(await project(client, p, "Organisation", org)),
     contacts,
@@ -350,9 +349,8 @@ export async function customerContext(p: Principal, id: string) {
     })),
   };
 }
-export async function mappingViews(p: Principal, organisation_id: string) {
-  const client = database(),
-    org = await visible(client, p, "Organisation", organisation_id);
+export async function mappingViews(p: Principal, organisation_id: string, client: QueryClient = database()) {
+  const org = await visible(client, p, "Organisation", organisation_id);
   if (!(await hasPermission(client, p, "shared.read", org.company_id)))
     return [];
   const keys =

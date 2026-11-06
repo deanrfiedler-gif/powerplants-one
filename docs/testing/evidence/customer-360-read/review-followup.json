@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "reviewed_head": "2e176d100a354bc72a7eede806874061d2ee510f",
+  "review": "https://github.com/deanrfiedler-gif/powerplants-one/pull/863#issuecomment-6677109414",
+  "main_head": "b6ee136c353bc66b5012d39908a61a95cece29de",
+  "setup": {
+    "database": "ready",
+    "browser": "unavailable"
+  },
+  "source_sha256": {
+    "src/shared/customer-360.ts": "9dbde123a64d34cf64650a7caf166d91bb7d07b1dacd924c3db3237c9024597d",
+    "src/activities/page-reads.ts": "27c331c88868358b4135925c4178c0c1234c84c6fc394136deec11fc485ab691",
+    "src/platform/permissions.ts": "5ef18f6ffc6dca829b3928d123b16c10a96b7a715ed3c1db4b05016783178f23",
+    "src/shared/reads.ts": "ff2cdc797e2370c9d07a29f87edb8263350cff6af14bf8c059bfa1afa84117de",
+    "src/finance/accounts.ts": "5bf146e8945a1d4b1960b2618f1af09f99ee84745defd50f33ad650f45493c4f",
+    "src/platform/proof-diagnostics.ts": "e68214b807733f9e3742ce84f244cbfc5862ff2e396b47628ea1dab84cd7a674"
+  },
+  "findings": [
+    {
+      "number": 1,
+      "resolution": "Added a separate synthetic Finance principal, two accounts/mappings and two native observations per account. Stale mapping preserves its version and changes its snapshot hash. Full DTO and JSON equality plus explicit balances, both account IDs, history and context_error assertions prevent a vacuous comparison.",
+      "paths": [
+        "tests/helpers/customer-360-fixture.ts",
+        "tests/database/customer-360-reads.test.ts"
+      ]
+    },
+    {
+      "number": 2,
+      "resolution": "Disclosed that Activities detail reads share this PR adapter. Activities still uses its default 100-entry chunk, at most 100 distinct page values, and shallow copies with identical values. Existing activity-page-reads unit file is unchanged and passed.",
+      "paths": [
+        "docs/testing/evidence/customer-360-read/README.md",
+        "tests/unit/activity-page-reads.test.ts"
+      ]
+    },
+    {
+      "number": 3,
+      "resolution": "One capReported marker independent of the triggering path, and a 120000-event post-cap workspace ceiling. New exact-cap case verifies the marker, retained event, ceiling and sanitisation; existing assertions unchanged.",
+      "paths": [
+        "src/platform/proof-diagnostics.ts",
+        "tests/unit/proof-request-scope.test.ts"
+      ]
+    },
+    {
+      "number": 4,
+      "resolution": "Recovered original PostgreSQL logs exactly reproduce original counts and totals. Original maximum 1462.378 ms exceeded 1 s; Customer 360 now requests 50-entry batches. Both fixtures remeasured with identical DTOs and final maxima 726.117 ms and 689.889 ms. Activities retains 100.",
+      "paths": [
+        "src/activities/page-reads.ts",
+        "src/shared/customer-360.ts",
+        "tests/unit/customer-page-permissions.test.ts",
+        "docs/testing/evidence/customer-360-read/measurements.json"
+      ]
+    }
+  ],
+  "checks": {
+    "npm_run_check": {
+      "result": "passed",
+      "unit_tests": 1422,
+      "fail": 0,
+      "production_build": "passed"
+    },
+    "focused_unit": {
+      "result": "passed",
+      "tests": 12
+    },
+    "focused_finance_database": {
+      "result": "passed",
+      "tests": 1
+    },
+    "foundation": "passed",
+    "prototype": "passed",
+    "naming": "passed",
+    "build_status_check": "passed",
+    "studio_check": "passed",
+    "repository_path_audit": {
+      "checked": 10229,
+      "missing": 0
+    },
+    "existing_test_bodies": "unchanged",
+    "documentation_unit": {
+      "tests": 44,
+      "result": "passed"
+    }
+  },
+  "database": {
+    "tests": 153,
+    "pass": 150,
+    "fail": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 2665745.282229,
+    "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/activity-list.test.ts tests/database/customer-360-reads.test.ts tests/database/customer-location.test.ts tests/database/organisation-register.test.ts tests/database/crm-five-stages.test.ts tests/database/crm-i2.test.ts tests/database/crm-refinements.test.ts tests/database/crm.test.ts tests/database/mobile-crm.test.ts tests/database/intake.test.ts tests/database/my-work.test.ts",
+    "customer360_proof": [
+      "\u2714 Customer 360 full DTO and JSON preserve per-row authority across principals, expiry, revocation and working company (16843.774706ms)",
+      "\u2714 Customer 360 Finance DTO and JSON preserve current and stale mappings with retained account runs (8533.228251ms)",
+      "\u2714 Customer 360 preserves 100-candidate windows, per-estimate revision limits and the activity continuation (60478.414548ms)"
+    ],
+    "result": "150 passed; three environment-blocked: browser failures reproduced on clean main",
+    "main_comparison": "Each exact failing test rerun serially on unchanged b6ee136c in this environment; matching ExactDraftUnavailable/RenderOrStorageFailure errors.",
+    "failures": [
+      {
+        "name": "HV-21: E1 original owner, source and exact draft bytes survive CRM transfer; receiver gains no commercial authority",
+        "file": "tests/database/crm-refinements.test.ts",
+        "main_exit_code": 1,
+        "branch_failure": "test at tests/helpers/crm-owner-transfer-cases.ts:1:37301\n\u2716 HV-21: E1 original owner, source and exact draft bytes survive CRM transfer; receiver gains no commercial authority (31470.769868ms)\n  Error: The exact draft output is unavailable. Its saved revision is retained for recovery.\n      at missing (src/estimating/worker.ts:12:19)\n      at runQuoteJob (src/estimating/worker.ts:93:11)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async TestContext.<anonymous> (tests/helpers/crm-owner-transfer-cases.ts:1153:5)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    status: 503,\n    code: 'ExactDraftUnavailable',\n    field_errors: []\n  }",
+        "classification": "environment-blocked: browser",
+        "error_code": "ExactDraftUnavailable",
+        "main_failure": "test at tests/helpers/crm-owner-transfer-cases.ts:1:37301\n\u2716 HV-21: E1 original owner, source and exact draft bytes survive CRM transfer; receiver gains no commercial authority (7685.178907ms)\n  Error: The exact draft output is unavailable. Its saved revision is retained for recovery.\n      at missing (src/estimating/worker.ts:12:19)\n      at runQuoteJob (src/estimating/worker.ts:93:11)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async TestContext.<anonymous> (tests/helpers/crm-owner-transfer-cases.ts:1153:5)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    status: 503,\n    code: 'ExactDraftUnavailable',\n    field_errors: []\n  }"
+      },
+      {
+        "name": "CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits",
+        "file": "tests/database/crm.test.ts",
+        "main_exit_code": 1,
+        "branch_failure": "test at tests/database/crm.test.ts:1:16628\n\u2716 CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (12588.105205ms)\n  Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}\n      at issued (tests/helpers/packs.ts:92:38)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async acknowledged (tests/helpers/field.ts:52:13)\n      at async started (tests/helpers/field.ts:86:13)\n      at async submitted (tests/helpers/reports.ts:30:13)\n      at async reviewed (tests/helpers/reports.ts:106:13)\n      at async reportIssued (tests/helpers/reports.ts:111:13)\n      at async TestContext.<anonymous> (tests/database/crm.test.ts:579:18)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)",
+        "classification": "environment-blocked: browser",
+        "error_code": "RenderOrStorageFailure",
+        "main_failure": "test at tests/database/crm.test.ts:1:16628\n\u2716 CA-03/10 accepted-main upgrade preserves old commands, histories, IDs and hashes; repeat seed never repairs revocations or edits (11487.06681ms)\n  Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}\n      at issued (tests/helpers/packs.ts:92:38)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async acknowledged (tests/helpers/field.ts:52:13)\n      at async started (tests/helpers/field.ts:86:13)\n      at async submitted (tests/helpers/reports.ts:30:13)\n      at async reviewed (tests/helpers/reports.ts:106:13)\n      at async reportIssued (tests/helpers/reports.ts:111:13)\n      at async TestContext.<anonymous> (tests/database/crm.test.ts:579:18)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)"
+      },
+      {
+        "name": "CA-10 existing field and report follow-up projections obey every Opportunity target",
+        "file": "tests/database/crm.test.ts",
+        "main_exit_code": 1,
+        "branch_failure": "test at tests/database/crm.test.ts:2:3881\n\u2716 CA-10 existing field and report follow-up projections obey every Opportunity target (9374.500134ms)\n  Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}\n      at issued (tests/helpers/packs.ts:92:38)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async acknowledged (tests/helpers/field.ts:52:13)\n      at async started (tests/helpers/field.ts:86:13)\n      at async submitted (tests/helpers/reports.ts:30:13)\n      at async reviewed (tests/helpers/reports.ts:106:13)\n      at async TestContext.<anonymous> (tests/database/crm.test.ts:811:13)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)",
+        "classification": "environment-blocked: browser",
+        "error_code": "RenderOrStorageFailure",
+        "main_failure": "test at tests/database/crm.test.ts:2:3881\n\u2716 CA-10 existing field and report follow-up projections obey every Opportunity target (6772.135698ms)\n  Error: {\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}\n      at issued (tests/helpers/packs.ts:92:38)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async acknowledged (tests/helpers/field.ts:52:13)\n      at async started (tests/helpers/field.ts:86:13)\n      at async submitted (tests/helpers/reports.ts:30:13)\n      at async reviewed (tests/helpers/reports.ts:106:13)\n      at async TestContext.<anonymous> (tests/database/crm.test.ts:811:13)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)"
+      }
+    ]
+  },
+  "http": {
+    "result": "All 23 failures reproduced on clean main with matching messages after correlation-ID normalisation.",
+    "branch": {
+      "tests": 115,
+      "pass": 92,
+      "fail": 23,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 116979.505622
+    },
+    "main": {
+      "tests": 115,
+      "pass": 92,
+      "fail": 23,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 110679.321514
+    },
+    "branch_command": "PPO_TEST_ORIGIN=http://127.0.0.1:3000 PPO_PORT=3000 npm run test:http",
+    "main_command": "PPO_TEST_ORIGIN=http://127.0.0.1:3001 PPO_PORT=3001 npm run test:http",
+    "conditions": "Both compiled servers use the same synthetic database, reset before each complete shared-group run. Server and database affinity restored to CPUs 0-4. Production source in the main checkout is unchanged.",
+    "failures": [
+      {
+        "test": "E1-HTTP01 complete saved journey, discarded response, successor conflict and exact draft bytes",
+        "file": "tests/http/estimating.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  503 !== 200",
+        "main_message": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  503 !== 200",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "P07 real HTTP visit executes start, exact photo transfer, typed evidence, correction and a Partial completion draft",
+        "file": "tests/http/field.test.ts",
+        "branch_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "main_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "P07 persisted start, capture, correction, attachment and draft survive PostgreSQL restart through actual HTTP reads",
+        "file": "tests/http/field.test.ts",
+        "branch_message": "Error: ENOENT: no such file or directory, open '/tmp/ppo-p07-restart.json'",
+        "main_message": "Error: ENOENT: no such file or directory, open '/tmp/ppo-p07-restart.json'",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "P07 HTTP independent work orders retain checked packs while another fixture is prepared",
+        "file": "tests/http/field.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n  \n    assert.ok(fixture.pack.current_issue_id)",
+        "main_message": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n  \n    assert.ok(fixture.pack.current_issue_id)",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "P08 real HTTP bounded sync, original receipts, malformed siblings and actor/file isolation",
+        "file": "tests/http/offline.test.ts",
+        "branch_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "main_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "P06 real issued preview/download/manifest/job/receipt traversal uses current file and record scope",
+        "file": "tests/http/packs.test.ts",
+        "branch_message": "Error: ENOENT: no such file or directory, open '/tmp/ppo-p06-restart.json'",
+        "main_message": "Error: ENOENT: no such file or directory, open '/tmp/ppo-p06-restart.json'",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "PJ09-26/27/29/30/31/35/36/38/40/44/47/48/53: connected HTTP journey, strict envelopes and independent closeout",
+        "file": "tests/http/project-acceptance.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: prepare: {\"code\":\"RenderOrStorageFailure\",\"message\":\"The output could not be prepared (browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome\\nRun \\\"npx playwright install chrome\\\"). Nothing was issued and the release is unchanged. Retry with the same output identity to recover.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}\n  \n  503 !== 201",
+        "main_message": "AssertionError [ERR_ASSERTION]: prepare: {\"code\":\"RenderOrStorageFailure\",\"message\":\"The output could not be prepared (browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome\\nRun \\\"npx playwright install chrome\\\"). Nothing was issued and the release is unchanged. Retry with the same output identity to recover.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}\n  \n  503 !== 201",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 shortfall HTTP separates Receipt and allocation consent, applies once and returns exact native effects under current authority",
+        "file": "tests/http/quotation-allocation-shortfall.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 compiled HTTP exact receiving resolution plan and real native target with current scope and recovery",
+        "file": "tests/http/quotation-conversion.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 compiled HTTP disposition enforces exact review, native mutation, current permissions, replay and unsupported-action refusal",
+        "file": "tests/http/quotation-disposition.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 material HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-material-resolution.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 Receipt HTTP receives every affected Demand, preserves native evidence and recovers original operations",
+        "file": "tests/http/quotation-receipt-correction.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES05 compiled HTTP exact approval, issue, distribution, original recovery and permission boundaries",
+        "file": "tests/http/quotation-release.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES06 compiled HTTP exact report/correction/preparation and current-scope receipt recovery",
+        "file": "tests/http/quotation-response.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 reservation HTTP executes only exact native evidence, preserves holds and current receipt authority",
+        "file": "tests/http/quotation-supply-followup.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 Supply HTTP exact receiving, real native allocation, scoped worklist and original recovery",
+        "file": "tests/http/quotation-supply-followup.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 three-task branch HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-task-branch.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 three-task chain HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-task-chain.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 dependency HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-task-dependency.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 four-task diamond HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-task-diamond.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "ES07 three-task merge HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+        "file": "tests/http/quotation-task-merge.test.ts",
+        "branch_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "main_message": "AssertionError [ERR_ASSERTION]: {\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"<request-specific>\",\"retryable\":true}",
+        "classification": "environment-blocked: browser"
+      },
+      {
+        "test": "P09 real HTTP exact submit/review/issue/response enforces strict request and customer/file scope",
+        "file": "tests/http/reports.test.ts",
+        "branch_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "main_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "classification": "pre-existing on main in this environment"
+      },
+      {
+        "test": "native Sales HTTP commands preserve exact receipts and scoped detail/list/options boundaries",
+        "file": "tests/http/sales-workflows.test.ts",
+        "branch_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "main_message": "TypeError: Cannot read properties of undefined (reading 'assignment_id')",
+        "classification": "pre-existing on main in this environment"
+      }
+    ],
+    "not_run": {
+      "status": "not run here; left to GitHub CI",
+      "reason": "The unchanged HTTP runner exits after the failing shared group, before its exclusive groups. Local browser is unavailable.",
+      "http_files": [
+        "tests/http/site-readiness.test.ts",
+        "tests/http/service-finding-next-action.test.ts",
+        "tests/http/service-escalations.test.ts",
+        "tests/http/crm-owner-transfer.test.ts",
+        "tests/http/estimating-e2-verification.test.ts",
+        "tests/http/project-commercial.test.ts",
+        "tests/http/project-commercial-ui.test.ts",
+        "tests/http/project-specialist.test.ts",
+        "tests/http/project-specialist-handover.test.ts",
+        "tests/http/project-specialist-work.test.ts",
+        "tests/http/cpq-costs.test.ts",
+        "tests/http/cpq-packages.test.ts",
+        "tests/http/cpq-rebase.test.ts",
+        "tests/http/cpq-quality.test.ts",
+        "tests/http/cpq-products.test.ts",
+        "tests/http/excel-import-review.test.ts",
+        "tests/http/excel-import-persistence.test.ts",
+        "tests/http/excel-reimport.test.ts",
+        "tests/http/excel-quotation.test.ts",
+        "tests/http/excel-capacity.test.ts",
+        "tests/http/excel-source-pricing.test.ts",
+        "tests/http/excel-fx.test.ts",
+        "tests/http/excel-landed.test.ts",
+        "tests/http/output-register.test.ts",
+        "tests/http/output-actions.test.ts",
+        "tests/http/template-catalogue.test.ts",
+        "tests/http/template-drafts.test.ts",
+        "tests/http/template-publication.test.ts",
+        "tests/http/template-publication-base.test.ts",
+        "tests/http/template-use.test.ts",
+        "tests/http/templates-workspace.test.ts",
+        "tests/http/customer-communications.test.ts",
+        "tests/http/conversations-agent.test.ts"
+      ],
+      "browser_suites": "all local browser suites"
+    }
+  },
+  "not_run": [
+    "Local browser suites: not run here; left to GitHub CI (setup reports browser unavailable).",
+    "33 exclusive HTTP files: not run here; left to GitHub CI (unchanged runner exits after failing shared group)."
+  ],
+  "review_confirmation": "Only findings 1\u20134 require confirmation; no second full review requested. Final-head CI results belong in the PR evidence comment."
+}
