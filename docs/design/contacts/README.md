@@ -32,6 +32,8 @@ Edit sources and rebuild; never edit the generated HTML by hand.
 
 `source-pins.json` records the content hash of every file the design describes: migrations 0002, 0003, 0010, 0017, 0018 and 0019, `src/shared/commands.ts`, `src/shared/reads.ts`, `src/crm/directory.ts`, `src/shared/context.ts`, `src/projects/service.ts`, `src/finance/context.ts`, `src/scheduling/planner.ts`, `src/reports/service.ts` and `db/seed.sql`. The builder refuses to run if any of them has changed. That refusal is a prompt to re-read the source and decide whether the design is still accurate — never a reason to edit the pin without reading.
 
+Source review — 6 November 2026, PR #863: comparison of `src/shared/reads.ts` at main `b6ee136c` with `49e44bfa` confirms that only optional internal query-client plumbing changed in `customerContext` and `mappingViews`. Person/contact fields, relationship authority, `listShared` refusals and the two `visibility("Person")` clauses reproduced by `model.js` are unchanged. The Customer 360 full-DTO/JSON database proof also retains the contact projection. Only this working source pin is refreshed after that review. The separate Scheduling pin already fails on clean main and remains recorded as pre-existing in the [execution evidence](../../testing/evidence/customer-360-read/README.md); issued HTML, historical manifests and acceptance records remain unchanged.
+
 ## The theme edition
 
 The module builds on the r20 shared token core and adopts theme **r22**'s selection family. `source-pins.json` pins the r22 board by content — SHA-256 `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0` — and the builder refuses to run if it changes.
