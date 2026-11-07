@@ -13,7 +13,7 @@ FFmpeg assets remain available for video capture. The
 official Chrome stable installation and version/PDF guard remain; removing
 `--with-deps` alone would still leave Chrome's apt calls.
 
-All 1,435 unit tests pass, including eight PATH-shim regression cases and a
+The original 1,435 unit tests passed, including eight PATH-shim regression cases and a
 pinned Playwright lock-recovery case. These cover a real process-group timeout that releases a descendant's synthetic lock
 and succeeds on retry, and Playwright's own stale-lock reclamation. A first
 TERM/grace candidate failed that test and was corrected to kill the complete
@@ -26,7 +26,20 @@ validation and whitespace checks pass. Cloud setup completed with Node
 24.21.0/npm 11.19.0 and PostgreSQL 16.15 ready; the setup reports browser
 unavailable, and `browser:check` confirms Chrome is absent at
 `/opt/google/chrome/chrome`. Real browser suites and real package
-installation/recovery are not claimed locally. Claude's one review, ready-head
-full-suite results and install timing comparison remain pending under the
+installation/recovery are not claimed locally. Claude's
+[one review of head 4402d3adc](https://github.com/deanrfiedler-gif/powerplants-one/pull/868#pullrequestreview-5811095877)
+identified F1: local installs must retain interactive privilege prompts and work
+without GNU timeout. The fix retains the bounded path when timeout and the
+required noninteractive privileges are available; otherwise it warns and uses
+the original unbounded attempt loop. Two added PATH-shim cases cover missing
+timeout and password-required sudo, including retry success, exhausted install
+failures and guard refusal. Confirmation of F1, ready-head full-suite results
+and install timing comparison remain pending under the
 [agreed order](https://github.com/deanrfiedler-gif/powerplants-one/pull/868#issuecomment-6690362807).
+After F1, all 1,437 unit tests pass, including all eleven installer/lock cases;
+typecheck, focused lint, shell syntax and documentation checks pass. The full
+unit run uses `TMPDIR=/var/tmp`: the first run's unrelated recovery test rejected
+the default temporary path as inside Git (1,436 passed, one failed). That test
+passed in isolation on unmodified main, and the complete suite passed with the
+explicit temporary directory. No application code or assertion was changed.
 No workflow, application, dependency, migration or hosted-demo change is included.

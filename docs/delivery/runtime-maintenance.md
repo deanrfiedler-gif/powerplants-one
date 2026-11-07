@@ -43,7 +43,8 @@ The installation follows Google's current stable patch. It is not a fixed browse
 
 [PR #868](https://github.com/deanrfiedler-gif/powerplants-one/pull/868) bounds
 `scripts/install-browser.sh` without changing the workflows, browser channel,
-version guard, dependencies or lockfile. Each of the existing three attempts has
+version guard, dependencies or lockfile. On the bounded path, each of the existing
+three attempts has
 120 seconds for package recovery and the official `playwright install --with-deps
 chrome`, then 30 seconds for the
 existing `browser:check`. The two existing ten-second retry pauses and final exit
@@ -52,12 +53,19 @@ process-start/scheduling overhead. Normal installs finish as soon as their work
 finishes. This is an installer bound, not a guarantee that an entire ten-minute
 job will finish its tests after repeated mirror failures.
 
-GNU `timeout` is required (available on the Linux CI runners and Debian image).
-On non-root Linux, the installation watchdog runs through noninteractive
+GNU `timeout` enables the bounded path (available on the Linux CI runners and
+Debian image). On non-root Linux, a successful `sudo -n true` probe is also
+required; the installation watchdog then runs through noninteractive
 `sudo -n -E`, with the caller's PATH supplied explicitly. It must have permission
 to signal the root package-manager descendants. The browser/PDF guard still runs
-as the original user. Missing timeout or insufficient installation privileges
-fails closed; this does not introduce an unbounded fallback. The download
+as the original user. If timeout is missing (for example, on macOS without GNU
+coreutils), or noninteractive sudo is unavailable on non-root Linux, the script
+warns that attempts are unbounded and runs the original three-attempt loop:
+Playwright installs as the caller and can request operating-system rights
+interactively, then `npm run browser:check` runs directly. The same retry pauses
+and final failure remain; this fallback has no watchdog or wrapper dpkg repair,
+and the 470-second bound does not apply. This restores the supported local
+installation path identified in Claude's F1 review. The download
 connection timeout remains 120000 ms by default, preserving caller overrides.
 
 At a deadline the watchdog sends KILL to its process group. TERM followed by a
@@ -100,8 +108,12 @@ download-timeout override, untouched shared locks and retained cached assets.
 A ninth case exercises the pinned Playwright registry itself: it kills a lock
 owner, verifies a fresh lock is not stolen, ages only that dead owner's lock past
 the ten-second lease, then proves Playwright reclaims/releases it without losing
-an unrelated cached asset. They install no real packages. Other operating
-systems skip this Linux process proof; these tests do not establish a real apt
+an unrelated cached asset. Two further PATH-shim cases cover missing timeout
+(simulated Darwin with an isolated PATH) and password-required sudo (non-root
+Linux). Each proves retry success, three-install failure and guard refusal, with
+the original attempt/sleep counts, warning, no watchdog or wrapper dpkg repair,
+and preserved interactive sudo availability. They install no real packages.
+Other operating systems skip this Linux process proof; these tests do not establish a real apt
 recovery or browser-suite pass.
 
 **Historical evidence, independently re-read.** On source

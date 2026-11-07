@@ -5,14 +5,21 @@ set -euo pipefail
 # cover a stalled package mirror. GNU timeout is supplied by Linux CI/images.
 export PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT="${PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT:-120000}"
 
-command -v timeout >/dev/null || { echo "Browser installation requires GNU timeout." >&2; exit 1; }
-
 # Run the installation watchdog at the installer's privilege level: an unprivileged
 # timeout cannot SIGKILL root apt children after sudo has created another session.
 # Keep the browser/PDF guard under the original user, as in the test suite.
 installer=()
-if [[ "$(uname -s)" == Linux && "$(id -u)" != 0 ]]; then
-  installer=(sudo -n -E)
+bounded=true
+if ! command -v timeout >/dev/null; then
+  echo "Warning: timeout is unavailable; browser installation attempts are unbounded." >&2
+  bounded=false
+elif [[ "$(uname -s)" == Linux && "$(id -u)" != 0 ]]; then
+  if sudo -n true 2>/dev/null; then
+    installer=(sudo -n -E)
+  else
+    echo "Warning: noninteractive sudo is unavailable; browser installation attempts are unbounded and may prompt for installation rights." >&2
+    bounded=false
+  fi
 fi
 
 # Preserve the calling user's Linux cache even if sudo resets HOME. Chrome also
@@ -23,6 +30,11 @@ if [[ "$(uname -s)" == Linux ]]; then
 fi
 
 install_attempt() {
+  if [[ "$bounded" == false ]]; then
+    # Preserve Playwright's interactive privilege prompt on local installations.
+    npx --no-install playwright install --with-deps chrome
+    return $?
+  fi
   local status=0
   # TERM plus --kill-after is insufficient: if npx exits on TERM, timeout exits
   # too, even when an apt descendant ignores TERM. Kill the entire group at the
@@ -44,8 +56,16 @@ install_attempt() {
   return "$status"
 }
 
+check_browser() {
+  if [[ "$bounded" == true ]]; then
+    timeout --signal=KILL 30s npm run browser:check
+  else
+    npm run browser:check
+  fi
+}
+
 for attempt in 1 2 3; do
-  if install_attempt "$attempt" && timeout --signal=KILL 30s npm run browser:check; then
+  if install_attempt "$attempt" && check_browser; then
     exit 0
   fi
 

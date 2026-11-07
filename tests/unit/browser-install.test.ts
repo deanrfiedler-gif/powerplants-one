@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync, utimesSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync, utimesSync, symlinkSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -12,19 +12,30 @@ const linux = process.platform === "linux";
 
 // PATH shims never run apt, sudo or a real package/browser install. Only the
 // watchdog is real, shortened here so the process-tree regression takes <1s.
-function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: string } = {}) {
+function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: string; noTimeout?: boolean; sudoPassword?: boolean } = {}) {
   const root = mkdtempSync(join(tmpdir(), "ppo browser install "));
   const bin = join(root, "bin");
   const sharedRegistry = join(root, "shared-registry");
   mkdirSync(bin);
+  // An isolated PATH proves timeout is absent, even on the Linux test host.
+  for (const command of ["bash", "cat", "env", "flock", "true"]) symlinkSync(`/usr/bin/${command}`, join(bin, command));
   mkdirSync(join(sharedRegistry, "__dirlock"), { recursive: true });
   function shim(name: string, body: string) {
     writeFileSync(join(bin, name), `#!/usr/bin/env bash\nset -eu\n${body}\n`, { mode: 0o755 });
   }
   shim("id", `echo '${options.nonRoot ? 1001 : 0}'`);
-  shim("sudo", `echo "sudo:$*" >> "$STATE/events"; [[ "$1 $2" == '-n -E' ]]; shift 2; exec "$@"`);
+  shim("uname", `echo '${options.noTimeout ? "Darwin" : "Linux"}'`);
+  shim("sudo", `
+    echo "sudo:$*" >> "$STATE/events"
+    if [[ "$*" == '-n true' ]]; then exit ${options.sudoPassword ? 1 : 0}; fi
+    if [[ "$*" == true ]]; then
+      echo 'interactive-install-rights' >> "$STATE/events"
+      exit 0
+    fi
+    [[ "$1 $2" == '-n -E' ]]; shift 2; exec "$@"
+  `);
   shim("sleep", `echo "sleep:$*" >> "$STATE/events"`);
-  shim("timeout", `
+  if (!options.noTimeout) shim("timeout", `
     echo "timeout:$*" >> "$STATE/events"
     signal="$1"; duration="$2"; shift 2
     case "$duration" in
@@ -47,6 +58,7 @@ function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: s
     echo "$PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT" >> "$STATE/download-timeouts"
     echo "$PLAYWRIGHT_BROWSERS_PATH" >> "$STATE/registries"
     [[ "$*" == '--no-install playwright install --with-deps chrome' ]]
+    ${options.sudoPassword ? "sudo true" : ""}
     echo synthetic-ffmpeg > "$PLAYWRIGHT_BROWSERS_PATH/ffmpeg-fixture"
     case "$SCENARIO:$count" in
       fail:*|recovery-fails:*|fail-once:1) exit 1 ;;
@@ -67,7 +79,7 @@ function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: s
       guard-hangs) trap '' TERM; for _ in {1..50}; do /bin/sleep 0.1; done ;;
     esac
   `);
-  const env: NodeJS.ProcessEnv = { ...process.env, PATH: `${bin}:${process.env.PATH}`, STATE: root,
+  const env: NodeJS.ProcessEnv = { ...process.env, PATH: bin, STATE: root,
     SCENARIO: scenario, PLAYWRIGHT_BROWSERS_PATH: sharedRegistry };
   delete env.PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT;
   if (options.downloadTimeout !== undefined) env.PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT = options.downloadTimeout;
@@ -94,11 +106,32 @@ test("browser installer succeeds once and checks the original user's browser/PDF
   assert.equal(result.events.filter(x => x.startsWith("install:")).length, 1);
   assert.equal(result.events.filter(x => x.startsWith("guard:")).length, 1);
   assert.deepEqual(result.downloadTimeouts, ["120000"]);
+  assert.equal(result.events.filter(x => x === "sudo:-n true").length, 1);
   assert.ok(result.events.some(x => x.startsWith("sudo:-n -E timeout --signal=KILL 120s env")));
   assert.ok(result.events.some(x => x === "timeout:--signal=KILL 30s npm run browser:check"));
   assert.ok(!result.events.some(x => x.startsWith("sleep:") || x.startsWith("dpkg:")));
   assert.ok(!result.events.some(x => x.startsWith("sudo:") && x.includes("browser:check")));
 });
+
+for (const fallback of ["missing timeout", "password-required sudo"]) {
+  test(`browser installer preserves the original attempt loop with ${fallback}`, { skip: !linux }, () => {
+    const options = fallback === "missing timeout" ? { noTimeout: true, nonRoot: true } : { sudoPassword: true, nonRoot: true };
+    for (const scenario of ["fail-once", "fail", "guard-fails"]) {
+      const result = run(scenario, options);
+      const attempts = scenario === "fail-once" ? 2 : 3;
+      assert.equal(result.status, scenario === "fail-once" ? 0 : 1, result.stderr);
+      assert.equal(result.events.filter(x => x.startsWith("install:")).length, attempts);
+      assert.equal(result.events.filter(x => x === "sleep:10").length, attempts - 1);
+      assert.equal(result.events.filter(x => x.startsWith("guard:")).length, scenario === "fail" ? 0 : scenario === "fail-once" ? 1 : 3);
+      assert.ok(!result.events.some(x => /^(timeout:|dpkg:|sudo:-n -E)/.test(x)));
+      assert.match(result.stderr, /Warning: .*installation attempts are unbounded/);
+      assert.match(result.stderr, /failed on attempt 1; retrying in 10 seconds/);
+      if (scenario !== "fail-once") assert.match(result.stderr, /failed after 3 attempts/);
+      assert.equal(result.events.filter(x => x === "sudo:-n true").length, options.sudoPassword ? 1 : 0);
+      assert.equal(result.events.filter(x => x === "interactive-install-rights").length, options.sudoPassword ? attempts : 0);
+    }
+  });
+}
 
 test("ordinary install failure repairs before retry and preserves caller download timeout", { skip: !linux }, () => {
   const result = run("fail-once", { downloadTimeout: "7000" });
