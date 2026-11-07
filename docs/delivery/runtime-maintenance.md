@@ -39,6 +39,116 @@ Every CI browser installation now runs `npm run browser:install`, which installs
 
 The installation follows Google's current stable patch. It is not a fixed browser archive; a new major intentionally fails the compatibility guard until tested and reviewed. Existing Playwright launch defaults and content/network restrictions are retained. Arbitrary untrusted HTML is outside the supported rendering contract.
 
+### Bounded browser installation — 7 November 2026
+
+[PR #868](https://github.com/deanrfiedler-gif/powerplants-one/pull/868) bounds
+`scripts/install-browser.sh` without changing the workflows, browser channel,
+version guard, dependencies or lockfile. Each of the existing three attempts has
+120 seconds for package recovery and the official `playwright install --with-deps
+chrome`, then 30 seconds for the
+existing `browser:check`. The two existing ten-second retry pauses and final exit
+1 remain. The configured worst-case budget is 470 seconds (7m50s), excluding
+process-start/scheduling overhead. Normal installs finish as soon as their work
+finishes. This is an installer bound, not a guarantee that an entire ten-minute
+job will finish its tests after repeated mirror failures.
+
+GNU `timeout` is required (available on the Linux CI runners and Debian image).
+On non-root Linux, the installation watchdog runs through noninteractive
+`sudo -n -E`, with the caller's PATH supplied explicitly. It must have permission
+to signal the root package-manager descendants. The browser/PDF guard still runs
+as the original user. Missing timeout or insufficient installation privileges
+fails closed; this does not introduce an unbounded fallback. The download
+connection timeout remains 120000 ms by default, preserving caller overrides.
+
+At a deadline the watchdog sends KILL to its process group. TERM followed by a
+kill grace was rejected by the regression experiment: the intermediate shell
+exited on TERM, causing the watchdog to exit before killing a descendant that
+ignored TERM and retained a lock. A later attempt runs `dpkg --configure -a`
+inside its own 120-second budget before installing. A failed or blocked repair
+does not proceed to the install. Kernel apt/dpkg locks release with their owning
+processes; no package-manager lock file is unlinked and no unrelated process is
+killed. Chrome installation still requires exclusive use of the machine's
+package manager.
+
+The normal Playwright cache is retained, including the caller's explicit
+`PLAYWRIGHT_BROWSERS_PATH`. On Linux its default is resolved before sudo can
+change HOME. The official dry-run confirms that installing Chrome also installs
+FFmpeg in this cache for later video capture; a disposable registry would lose
+that dependency. Pinned Playwright 1.64.1 already reclaims `__dirlock` after ten
+seconds without its owner's heartbeat. The existing ten-second retry pause lets
+that lease expire; Playwright handles a just-fresh lock through its own bounded
+retry inside our next attempt. The wrapper never unlinks Playwright locks or
+cached assets. The guard and later suites keep their original environment.
+
+**Apt-avoidance evaluation.** Removing `--with-deps` would skip Playwright's
+dependency pass, but its pinned `reinstall_chrome_stable_linux.sh` still performs
+`apt-get update` and installs the official Google package with apt. It therefore
+does not eliminate the stalled-mirror path. Skipping installation merely because
+an existing browser passes the compatibility guard would also stop following
+Google's current stable patch: the guard accepts a range of maintained versions,
+not just the latest patch. Both shortcuts were rejected. The official installer,
+dependency pass and actual browser/PDF guard are retained. No package mirror,
+browser metadata, apt configuration or workflow is changed.
+
+**Regression proof.** `node --import tsx --test tests/unit/browser-install.test.ts`
+uses PATH shims for npm/npx, sudo, dpkg and retry sleep, and real GNU timeout with
+shortened deadlines. Eight Linux cases cover first-attempt success, ordinary
+failure/retry, all-three failure, failed recovery, killed lock-holding
+descendants followed by successful recovery, all-three stalls, guard refusal and
+guard stalls. They check command arguments, privilege ordering, retry count,
+download-timeout override, untouched shared locks and retained cached assets.
+A ninth case exercises the pinned Playwright registry itself: it kills a lock
+owner, verifies a fresh lock is not stolen, ages only that dead owner's lock past
+the ten-second lease, then proves Playwright reclaims/releases it without losing
+an unrelated cached asset. They install no real packages. Other operating
+systems skip this Linux process proof; these tests do not establish a real apt
+recovery or browser-suite pass.
+
+**Historical evidence, independently re-read.** On source
+`3f07b702c570f747edc8b73dc1b25a2e493a9237`, attempt 1 of Application assurance
+[42192142961](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42192142961)
+has a successful renderer install from 09:19:43 to 09:32:43 UTC (780 seconds) in
+[P11 performance job 127806496166](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42192142961/job/127806496166).
+Its logs show `Ign:5` for `fonts-unifont` at 09:27:25 and `Ign:6` for
+`fonts-wqy-zenhei` at 09:30:27 from `azure.archive.ubuntu.com`, before Chrome's
+own `apt-get update` at 09:32:28. The install eventually passed; the job's later
+cancelled conclusion is not an install failure. The same head's
+[P01–P11 mobile install](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42192142961/job/127806496369)
+took 593 seconds, and its
+[compiled desktop-2 install](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42192142922/job/127806494974)
+took 601 seconds; both install steps succeeded.
+
+On #865 head `fe3447779042873b5ff579e44023e0f491599c8d`,
+[Supply branch-runtime job 127986172963](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42245371478/job/127986172963)
+was cancelled in its combined runtime/renderer setup step after 1466 seconds
+(15:42:25–16:06:51 UTC). Its logs contain repeated Ubuntu archive `Ign` lines
+from 15:44:04–15:44:06, then "The operation was canceled" at 16:06:51 and cleanup
+of `npm exec playwright install --with-deps chrome`. This duration includes
+runtime setup; it is not an isolated browser-install timing. Tests were skipped,
+so it is incomplete setup evidence, not a failed test or a passing proof.
+
+The comparison baseline rechecked on current main
+`5a1c09fd313c5308556563aa45b827ae6bc13e02` is below. These are successful
+installation-step durations from attempt 1, not full-suite conclusions.
+
+| Lane | Run / job | Install seconds |
+|---|---|---:|
+| CRM persistence | [42352752560 / 128344203125](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752560/job/128344203125) | 34 |
+| Compiled desktop-1 | [42352752620 / 128344203087](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752620/job/128344203087) | 25 |
+| Compiled desktop-2 | [42352752620 / 128344203248](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752620/job/128344203248) | 27 |
+| Compiled mobile-1 | [42352752620 / 128344203066](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752620/job/128344203066) | 32 |
+| Compiled mobile-2 | [42352752620 / 128344202959](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752620/job/128344202959) | 27 |
+| P01–P11 browser | [42352752829 / 128344203854](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752829/job/128344203854) | 28 |
+| P01–P11 browser-2 | [42352752829 / 128344203892](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752829/job/128344203892) | 29 |
+| P01–P11 mobile | [42352752829 / 128344203834](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752829/job/128344203834) | 28 |
+| P01–P11 mobile-2 | [42352752829 / 128344203688](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42352752829/job/128344203688) | 28 |
+
+Under [Claude's sequence decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/868#issuecomment-6690362807),
+the draft head gets the one independent review first. Ready-head full suites and
+their install-step comparison follow that review and belong in the completion
+comment, requesting confirmation only. These baseline observations and local
+regression tests do not claim that pending evidence or a speed improvement.
+
 ## Local update after merge
 
 Preserve local edits, then pull the merged branch through GitHub Desktop. Install Node 24.21.0 using your existing Node installation method. In the repository directory:
