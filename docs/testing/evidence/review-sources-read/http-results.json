@@ -1,0 +1,232 @@
+{
+  "passed": 92,
+  "failed": 23,
+  "failures": [
+    {
+      "test": "E1-HTTP01 complete saved journey, discarded response, successor conflict and exact draft bytes",
+      "location": "tests/http/estimating.test.ts:1:1165",
+      "message": "Expected values to be strictly equal:\n\n503 !== 200\n",
+      "code": "ERR_ASSERTION",
+      "main_message": "Expected values to be strictly equal:\n\n503 !== 200\n",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "P07 real HTTP visit executes start, exact photo transfer, typed evidence, correction and a Partial completion draft",
+      "location": "tests/http/field.test.ts:1:1246",
+      "message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "code": "ERR_TEST_FAILURE",
+      "main_message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "P07 persisted start, capture, correction, attachment and draft survive PostgreSQL restart through actual HTTP reads",
+      "location": "tests/http/field.test.ts:1:4604",
+      "message": "ENOENT: no such file or directory, open '/tmp/ppo-p07-restart.json'",
+      "code": "ENOENT",
+      "main_message": "ENOENT: no such file or directory, open '/tmp/ppo-p07-restart.json'",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "P07 HTTP independent work orders retain checked packs while another fixture is prepared",
+      "location": "tests/http/field.test.ts:1:5474",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(fixture.pack.current_issue_id)\n",
+      "code": "ERR_ASSERTION",
+      "main_message": "The expression evaluated to a falsy value:\n\n  assert.ok(fixture.pack.current_issue_id)\n",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "P08 real HTTP bounded sync, original receipts, malformed siblings and actor/file isolation",
+      "location": "tests/http/offline.test.ts:1:1207",
+      "message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "code": "ERR_TEST_FAILURE",
+      "main_message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "P06 real issued preview/download/manifest/job/receipt traversal uses current file and record scope",
+      "location": "tests/http/packs.test.ts:1:2484",
+      "message": "ENOENT: no such file or directory, open '/tmp/ppo-p06-restart.json'",
+      "code": "ENOENT",
+      "main_message": "ENOENT: no such file or directory, open '/tmp/ppo-p06-restart.json'",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "PJ09-26/27/29/30/31/35/36/38/40/44/47/48/53: connected HTTP journey, strict envelopes and independent closeout",
+      "location": "tests/http/project-acceptance.test.ts:1:552",
+      "message": "prepare: {\"code\":\"RenderOrStorageFailure\",\"message\":\"The output could not be prepared (browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome\\nRun \\\"npx playwright install chrome\\\"). Nothing was issued and the release is unchanged. Retry with the same output identity to recover.\",\"field_errors\":[],\"correlation_id\":\"51313396-dffa-4e81-a002-c583c49f4b6b\",\"retryable\":true}\n\n503 !== 201\n",
+      "code": "ERR_ASSERTION",
+      "main_message": "prepare: {\"code\":\"RenderOrStorageFailure\",\"message\":\"The output could not be prepared (browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome\\nRun \\\"npx playwright install chrome\\\"). Nothing was issued and the release is unchanged. Retry with the same output identity to recover.\",\"field_errors\":[],\"correlation_id\":\"a5bdb5b0-a4d4-49f5-b522-f95331fa7711\",\"retryable\":true}\n\n503 !== 201\n",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 shortfall HTTP separates Receipt and allocation consent, applies once and returns exact native effects under current authority",
+      "location": "tests/http/quotation-allocation-shortfall.test.ts:1:252",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"b32ca9ab-1b0f-41e0-b5be-f354e2e74853\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"da4c63f4-1bb9-4a00-a7fb-a94035770056\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 compiled HTTP exact receiving resolution plan and real native target with current scope and recovery",
+      "location": "tests/http/quotation-conversion.test.ts:1:230",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"6de1e669-62ca-4be2-b552-bd10cdfacd8a\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"d7982d63-3d6a-432c-b9dd-1fdba9b48a70\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 compiled HTTP disposition enforces exact review, native mutation, current permissions, replay and unsupported-action refusal",
+      "location": "tests/http/quotation-disposition.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"78d18cbf-c04c-4ccc-a052-d543deb1e918\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"806e1962-6718-4771-9af3-ca0e1f31f33d\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 material HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-material-resolution.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"172d21dc-0c73-42fd-ae52-b3a7be2d52ba\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"640aaf79-1001-499d-b3a0-56cbad686755\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 Receipt HTTP receives every affected Demand, preserves native evidence and recovers original operations",
+      "location": "tests/http/quotation-receipt-correction.test.ts:1:433",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"54d87a6f-e295-4636-95ef-9e57044697ce\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"e17bb41f-3c8b-4d77-8a45-b67f4b33d4d7\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES05 compiled HTTP exact approval, issue, distribution, original recovery and permission boundaries",
+      "location": "tests/http/quotation-release.test.ts:1:2060",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"e1341398-77c3-40f2-9434-080695efffe5\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"1d0f78b5-99d1-4878-925f-075455ab6f33\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES06 compiled HTTP exact report/correction/preparation and current-scope receipt recovery",
+      "location": "tests/http/quotation-response.test.ts:1:210",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"f35ad284-f4e2-4c80-b828-fedaa7bbfd99\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"7c32624f-821e-4647-9fac-9706d2a670e0\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 reservation HTTP executes only exact native evidence, preserves holds and current receipt authority",
+      "location": "tests/http/quotation-supply-followup.test.ts:1:359",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"6e7a679b-f261-457b-a574-09d5a5a841d4\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"5b17254f-5d27-41ce-aaa2-c45e9ebd7ff6\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 Supply HTTP exact receiving, real native allocation, scoped worklist and original recovery",
+      "location": "tests/http/quotation-supply-followup.test.ts:1:2089",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"46f090d7-6e52-4775-b70a-a93cc5631afe\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"f7cdb8e8-4bce-40e3-93f6-8a38975c93bc\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 three-task branch HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-task-branch.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"b4c329be-6110-4bb1-b0b4-3542ed8cc137\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"2ce1c4c9-dfa9-4e41-a8fd-442b6a6cd551\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 three-task chain HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-task-chain.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"63cd007c-68bc-41eb-9c76-6a6dbea88ac9\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"1cd7a756-050c-4ea6-afa0-36b5c1ef0b82\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 dependency HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-task-dependency.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"39eb5ccb-c84a-4be5-a445-005065fd2428\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"2f173344-2fb9-4c0b-8829-5d5070f87c80\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 four-task diamond HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-task-diamond.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"e29846c6-c75e-4cea-8af6-6bee97d65019\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"67a99a5e-72bd-4048-b8fe-29865a0b6999\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "ES07 three-task merge HTTP requires independent downstream authority and returns exact native receipts and honest unmet Demand",
+      "location": "tests/http/quotation-task-merge.test.ts:1:249",
+      "message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"6d919a94-cca3-48f3-a956-016576d115c5\",\"retryable\":true}",
+      "code": "ERR_ASSERTION",
+      "main_message": "{\"code\":\"ExactDraftUnavailable\",\"message\":\"The exact draft output is unavailable. Its saved revision is retained for recovery.\",\"field_errors\":[],\"correlation_id\":\"62f3665d-4167-4c00-817b-6fef18a50145\",\"retryable\":true}",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 real HTTP exact submit/review/issue/response enforces strict request and customer/file scope",
+      "location": "tests/http/reports.test.ts:1:1287",
+      "message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "code": "ERR_TEST_FAILURE",
+      "main_message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "classification": "pre-existing on main in this environment"
+    },
+    {
+      "test": "native Sales HTTP commands preserve exact receipts and scoped detail/list/options boundaries",
+      "location": "tests/http/sales-workflows.test.ts:1:3531",
+      "message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "code": "ERR_TEST_FAILURE",
+      "main_message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "classification": "pre-existing on main in this environment"
+    }
+  ],
+  "command": "PPO_PORT=3102 npm run test:http -- --test-reporter=tap",
+  "main_command": "PPO_PORT=3101 npm run test:http -- --test-reporter=tap",
+  "main_sha": "78fe5732b88a93bb16f1e5ce820fe2828112bbb4",
+  "main_passed": 92,
+  "main_failed": 23,
+  "comparison": "Same test names and messages; comparison normalises only local checkout paths and synthetic UUIDs (including correlation IDs). Both original messages are retained.",
+  "not_run_here_left_to_github_ci": [
+    "tests/http/site-readiness.test.ts",
+    "tests/http/service-finding-next-action.test.ts",
+    "tests/http/service-escalations.test.ts",
+    "tests/http/crm-owner-transfer.test.ts",
+    "tests/http/estimating-e2-verification.test.ts",
+    "tests/http/project-commercial.test.ts",
+    "tests/http/project-commercial-ui.test.ts",
+    "tests/http/project-specialist.test.ts",
+    "tests/http/project-specialist-handover.test.ts",
+    "tests/http/project-specialist-work.test.ts",
+    "tests/http/cpq-costs.test.ts",
+    "tests/http/cpq-packages.test.ts",
+    "tests/http/cpq-rebase.test.ts",
+    "tests/http/cpq-quality.test.ts",
+    "tests/http/cpq-products.test.ts",
+    "tests/http/excel-import-review.test.ts",
+    "tests/http/excel-import-persistence.test.ts",
+    "tests/http/excel-reimport.test.ts",
+    "tests/http/excel-quotation.test.ts",
+    "tests/http/excel-capacity.test.ts",
+    "tests/http/excel-source-pricing.test.ts",
+    "tests/http/excel-fx.test.ts",
+    "tests/http/excel-landed.test.ts",
+    "tests/http/output-register.test.ts",
+    "tests/http/output-actions.test.ts",
+    "tests/http/template-catalogue.test.ts",
+    "tests/http/template-drafts.test.ts",
+    "tests/http/template-publication.test.ts",
+    "tests/http/template-publication-base.test.ts",
+    "tests/http/template-use.test.ts",
+    "tests/http/templates-workspace.test.ts",
+    "tests/http/customer-communications.test.ts",
+    "tests/http/conversations-agent.test.ts"
+  ],
+  "reason": "The unchanged runner exits after the shared group fails; exclusive files are not reached."
+}
