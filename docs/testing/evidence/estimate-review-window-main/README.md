@@ -1,5 +1,7 @@
 # Estimating review window investigation — 6 November 2026
 
+Current continuation: [criterion 2 version 3 writer inventory](writer-inventory-v3.md), [read/request audit](read-path-audit.md) and [shared-lock results](shared-lock-results.md). Claude’s version 3 decision supersedes the earlier unconditional key-share stop; historical measurements and diagnostic bytes below remain retained.
+
 7 November continuation: [corrected writer audit stop](writer-audit-stop.md) records an executed implicit-key-share counterexample after merging main `5a1c09fd3`. The historical reproduction below is unchanged; no runtime fix has been made.
 
 This is a reproduction and handover for [draft PR #866](https://github.com/deanrfiedler-gif/powerplants-one/pull/866), not a delivered fix. The [resumed claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6688592056) follows [Claude's evidence correction](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6688560871). The [Codex decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6688889425) records the stop boundary and rejected alternatives.

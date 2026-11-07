@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-07T23:51:30.313Z",
+  "read_tables": [
+    "workspaces",
+    "users",
+    "permission_grants",
+    "companies",
+    "estimates",
+    "estimate_versions",
+    "estimate_review_events",
+    "draft_quotes",
+    "draft_quote_revisions",
+    "quote_release_bases",
+    "quote_release_events",
+    "estimate_quote_jobs",
+    "opportunities",
+    "organisations",
+    "people",
+    "sites",
+    "site_parties",
+    "relationships",
+    "person_company_contexts",
+    "crm_pipeline_definitions",
+    "crm_stage_definitions",
+    "estimate_discovery_roots",
+    "estimate_discovery_bases",
+    "estimating_options",
+    "estimation_revisions",
+    "estimating_workspaces",
+    "estimate_cost_source_bindings",
+    "cost_source_revisions",
+    "cost_sources",
+    "estimate_specialist_lineage",
+    "specialist_configurations",
+    "specialist_definitions",
+    "specialist_runs",
+    "specialist_drafts",
+    "facilities",
+    "assets",
+    "activities",
+    "activity_links",
+    "projects",
+    "lead_candidates",
+    "tickets"
+  ],
+  "workspace_foreign_keys": [
+    {
+      "table_name": "ppo.assets",
+      "conname": "assets_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.companies",
+      "conname": "companies_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.crm_pipeline_definitions",
+      "conname": "crm_pipeline_definitions_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.facilities",
+      "conname": "facilities_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.organisations",
+      "conname": "organisations_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.people",
+      "conname": "people_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.relationships",
+      "conname": "relationships_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.site_parties",
+      "conname": "site_parties_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.sites",
+      "conname": "sites_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    },
+    {
+      "table_name": "ppo.users",
+      "conname": "users_workspace_id_fkey",
+      "definition": "FOREIGN KEY (workspace_id) REFERENCES ppo.workspaces(id)",
+      "convalidated": true
+    }
+  ],
+  "read_set_function_writers": [
+    {
+      "proname": "materialise_legacy_estimate",
+      "definition": "CREATE OR REPLACE FUNCTION ppo.materialise_legacy_estimate(e ppo.estimates)\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nDECLARE group_id uuid:=gen_random_uuid();\nBEGIN\n INSERT INTO ppo.estimating_workspaces(id,workspace_id,company_id,opportunity_id,owner_id,selected_option_id,legacy_estimate_id,created_by,updated_by)\n  VALUES(group_id,e.workspace_id,e.company_id,e.opportunity_id,e.owner_id,e.option_id,e.id,e.created_by,e.created_by);\n INSERT INTO ppo.estimating_options(id,workspace_id,company_id,estimating_workspace_id,ordinal,label,current_revision_id,workspace_version,created_by,updated_by)\n  VALUES(e.option_id,e.workspace_id,e.company_id,group_id,1,'A',e.estimation_revision_id,1,e.created_by,e.created_by);\n INSERT INTO ppo.estimation_revisions(id,workspace_id,company_id,estimating_workspace_id,option_id,version,kind,legacy_estimate_id,legacy_source_created_at,site_id,scope_readiness,reason,created_by)\n  VALUES(e.estimation_revision_id,e.workspace_id,e.company_id,group_id,e.option_id,1,'LegacyManual',e.id,e.created_at,e.site_id,'NotRecorded','E1 identity formalisation only; no E2 questionnaire recorded',e.created_by);\nEND $function$\n",
+      "triggers": []
+    },
+    {
+      "proname": "acceptance_commissioning_changed",
+      "definition": "CREATE OR REPLACE FUNCTION ppo.acceptance_commissioning_changed()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE s record; activity uuid; changed_cause text;\nBEGIN\n FOR s IN SELECT DISTINCT st.* FROM ppo.acceptance_stages st JOIN ppo.acceptance_stage_units l ON l.workspace_id=st.workspace_id AND l.stage_id=st.id AND l.revision=st.revision AND l.disposition='Included'\n JOIN ppo.acceptance_requirements r ON r.workspace_id=l.workspace_id AND r.unit_id=l.unit_id JOIN ppo.acceptance_sources src ON src.workspace_id=r.workspace_id AND src.id=r.source_id\n WHERE src.workspace_id=NEW.workspace_id AND src.commissioning_id=NEW.id AND EXISTS(SELECT 1 FROM ppo.acceptance_decisions d WHERE d.workspace_id=st.workspace_id AND d.stage_id=st.id AND d.kind='Technical') LOOP\n  UPDATE ppo.acceptance_stages SET reassessment=true,version=version+1,updated_at=clock_timestamp(),updated_by=NEW.updated_by WHERE id=s.id;\n  changed_cause:='en08:'||NEW.id||':'||NEW.version;\n  IF NOT EXISTS(SELECT 1 FROM ppo.acceptance_followups WHERE workspace_id=s.workspace_id AND stage_id=s.id AND acceptance_followups.cause=changed_cause) THEN\n   activity:=gen_random_uuid();\n   INSERT INTO ppo.activities(id,workspace_id,company_id,site_id,kind,owner_id,summary,due_at,due_needed,access_class,created_by,updated_by)\n   SELECT activity,s.workspace_id,s.company_id,p.site_id,'TechnicalFollowUp',s.owner_id,'Reassess changed technical evidence for acceptance stage',NULL,true,'Internal',NEW.updated_by,NEW.updated_by FROM ppo.projects p WHERE p.workspace_id=s.workspace_id AND p.id=s.project_id;\n   INSERT INTO ppo.activity_links(workspace_id,company_id,activity_id,object_type,object_id) VALUES(s.workspace_id,s.company_id,activity,'Project',s.project_id);\n   INSERT INTO ppo.acceptance_followups VALUES(s.workspace_id,s.project_id,s.id,changed_cause,activity);\n  END IF;\n END LOOP;\n RETURN NEW;\nEND $function$\n",
+      "triggers": [
+        {
+          "table_name": "ppo.commissioning_packages",
+          "tgname": "acceptance_commissioning_changed",
+          "definition": "CREATE TRIGGER acceptance_commissioning_changed AFTER UPDATE ON ppo.commissioning_packages FOR EACH ROW EXECUTE FUNCTION ppo.acceptance_commissioning_changed()"
+        }
+      ]
+    },
+    {
+      "proname": "pack_owned_follow_up",
+      "definition": "CREATE OR REPLACE FUNCTION ppo.pack_owned_follow_up()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE p record; task uuid;\nBEGIN\n IF NEW.kind NOT IN ('ReviewRequired','Withdrawn','Returned') THEN RETURN NEW; END IF;\n SELECT pk.*,w.service_owner_id,a.display_number AS appointment_number,a.start_at,a.site_timezone INTO p FROM ppo.pack_issues i JOIN ppo.packs pk ON pk.id=i.pack_id JOIN ppo.appointments a ON a.id=pk.appointment_id JOIN ppo.work_orders w ON w.id=a.work_order_id WHERE i.id=NEW.issue_id;\n task:=gen_random_uuid();\n IF NEW.kind='Returned' THEN\n  INSERT INTO ppo.activities(id,workspace_id,company_id,site_id,created_by,updated_by,kind,owner_id,summary,due_at,due_needed,access_class)\n  VALUES(task,NEW.workspace_id,p.company_id,p.site_id,NEW.actor_id,NEW.actor_id,'CustomerContact',p.service_owner_id,p.display_number||' · returned by the crew: appointment '||p.appointment_number||' is at risk. Dispatch stays held until the whole crew acknowledges a revised issue, or the preparer answers the return. The booking is unchanged and no message has been sent.',\n   least(((p.start_at AT TIME ZONE p.site_timezone)::date+time '09:00') AT TIME ZONE p.site_timezone,p.start_at-interval '2 hours'),false,'RestrictedService');\n ELSE\n  INSERT INTO ppo.activities(id,workspace_id,company_id,site_id,created_by,updated_by,kind,owner_id,summary,due_at,due_needed,access_class)\n  VALUES(task,NEW.workspace_id,p.company_id,p.site_id,NEW.actor_id,NEW.actor_id,'CustomerContact',p.service_owner_id,p.display_number||' · '||NEW.kind||': urgently review crew/customer contact and record the outcome; no message has been sent.',NULL,true,'RestrictedService');\n END IF;\n INSERT INTO ppo.activity_links(workspace_id,company_id,activity_id,object_type,object_id) VALUES(NEW.workspace_id,p.company_id,task,'Site',p.site_id);\n INSERT INTO ppo.pack_follow_ups VALUES(NEW.workspace_id,NEW.id,task);\n RETURN NEW;\nEND $function$\n",
+      "triggers": [
+        {
+          "table_name": "ppo.pack_issue_events",
+          "tgname": "owned_follow_up",
+          "definition": "CREATE TRIGGER owned_follow_up AFTER INSERT ON ppo.pack_issue_events FOR EACH ROW EXECUTE FUNCTION ppo.pack_owned_follow_up()"
+        }
+      ]
+    }
+  ]
+}
