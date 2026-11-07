@@ -1,0 +1,125 @@
+import assert from 'node:assert/strict';
+import { randomUUID, createHash } from 'node:crypto';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import { readFile, writeFile } from 'node:fs/promises';
+import pg from 'pg';
+import { database, closeDatabase, transaction } from '../../src/platform/database';
+import { createOrganisation, createSite } from '../../src/shared/commands';
+import { localConfig } from '../../src/platform/config';
+import { createSession } from '../../src/platform/identity';
+import { createOpportunity } from '../../src/crm/opportunities';
+import { createEstimate } from '../../src/estimating/service';
+import { readEstimateReview } from '../../src/estimating/review/reads';
+import { submitEstimateReview } from '../../src/estimating/review/service';
+import { readEstimatingReviewQueue } from '../../src/estimating/review/queue';
+import { crmBase, crmCreate } from '../../tests/helpers/crm';
+import { estimateInput } from '../../tests/helpers/estimating';
+
+assert.equal(localConfig().database_name, 'ppo_synthetic_test');
+const p = (await createSession('coordinator')).principal;
+const accumulated=process.argv.includes('--accumulated');
+const reuse=process.argv.includes('--engineering')||accumulated;
+const title = reuse?JSON.parse(await readFile('tmp/prompt-s/baseline.json','utf8')).title:`SYN Prompt S ${randomUUID()}`;
+async function fixture(fixtureTitle:string) {
+  const o=crmCreate(); await createOpportunity(p,o);
+  const e={...estimateInput(o.id),title:fixtureTitle}; await createEstimate(p,e);
+  const d=await readEstimateReview(p,e.id);
+  await submitEstimateReview(p,e.id,{...crmBase(),estimate_version_id:d.saved.id,basis_hash:d.basis_hash,expected_version:d.estimate.version,expected_review_version:d.sequence,responses:[]});
+}
+for (let n=0;n<(reuse?0:26);n++) await fixture(title);
+console.log(reuse?'Reusing the same 26 matching submissions':'Created 26 matching submissions');
+type Sample = {label:string,pid?:number,statements:{sql:string,ms:number}[],wall_ms?:number,items?:number,next_offset?:number|null,lockAcquired?:()=>void};
+const context=new AsyncLocalStorage<Sample>();
+let timezone='UTC';
+const query=pg.Client.prototype.query;
+pg.Client.prototype.query=function(...args:any[]) {
+  const sample=context.getStore();
+  if(!sample) return query.apply(this,args as any);
+  sample.pid=(this as any).processID;
+  const sql=typeof args[0]==='string'?args[0]:args[0].text;
+  const began=performance.now();
+  const execute=()=>query.apply(this,args as any) as any;
+  const result=sql==='BEGIN'?query.call(this,"SELECT set_config('TimeZone',$1,false)",[timezone]).then(execute):execute();
+  return result.then((result:any)=>{
+    sample.statements.push({sql,ms:performance.now()-began});
+    if(sql==='SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE') sample.lockAcquired?.();
+    return result;
+  });
+} as any;
+const observer=new pg.Client({connectionString:localConfig().database_url,application_name:'prompt-s-observer'});
+await observer.connect();
+const samples:Sample[]=[];
+const waits:any[]=[];
+let sampling=true;
+const monitor=(async()=>{while(sampling){
+  const r=await observer.query(`SELECT a.pid,a.state,a.wait_event_type,a.wait_event,pg_blocking_pids(a.pid) blockers,
+    left(a.query,160) query,(SELECT json_agg(json_build_object('locktype',l.locktype,'mode',l.mode,'granted',l.granted,'relation',l.relation::regclass::text)) FROM pg_locks l WHERE l.pid=a.pid AND (NOT l.granted OR l.relation='ppo.workspaces'::regclass)) locks
+    FROM pg_stat_activity a WHERE a.datname=current_database() AND a.application_name='PPO-P01' AND a.state<>'idle'`);
+  waits.push({at:performance.now(),activity:r.rows});
+  await new Promise(r=>setTimeout(r,20));
+}})();
+async function read(label:string,offset:number,view='all',lockAcquired?:()=>void){
+  const sample:Sample={label,statements:[],lockAcquired};samples.push(sample);
+  const start=performance.now();
+  const result=await context.run(sample,()=>readEstimatingReviewQueue(p,{q:title,offset:String(offset),view}));
+  sample.wall_ms=performance.now()-start;sample.items=result.items.length;sample.next_offset=result.next_offset;
+  assert.equal(result.items.length,view==='awaiting_me'?0:offset===0?75:3);
+  assert.equal(result.next_offset,offset===0?25:null);
+  assert.equal(result.completeness,'CompleteWindow');
+  if(view==='all') {assert.deepEqual([...new Set(result.items.map(x=>x.kind))].sort(),['Completeness','SourcePrice','Technical']);assert.ok(result.items.every(x=>x.state==='Pending'&&x.own_work&&!x.can_decide));}
+  console.log(JSON.stringify({label,ms:sample.wall_ms,statements:sample.statements.length,items:sample.items,workspace_lock_ms:sample.statements.find(x=>x.sql==='SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE')?.ms}));
+}
+async function phase(name:string){
+  for(let n=0;n<3;n++){await read(`${name}-sequential-${n}-0`,0);await read(`${name}-sequential-${n}-25`,25);}
+  let acquired!:()=>void;const locked=new Promise<void>(r=>acquired=r);
+  const first=read(`${name}-overlap-0`,0,'all',acquired);await locked;
+  await Promise.all([first,read(`${name}-overlap-25`,25)]);
+  await read(`${name}-awaiting-0`,0,'awaiting_me');await read(`${name}-awaiting-25`,25,'awaiting_me');
+}
+await phase(accumulated?'before-accumulated':reuse?'before-engineering':'baseline');
+if(reuse&&!accumulated){
+  const before=(await observer.query('SELECT count(*)::int n FROM ppo.workspaces')).rows[0].n;
+  for(let n=0;n<11;n++){
+    const scope={workspace:randomUUID(),company:randomUUID(),connection:randomUUID(),organisation:randomUUID(),site:randomUUID(),coordinator:randomUUID(),author:randomUUID()};
+    const grants:string[]=[];
+    await transaction(async c=>{
+      await c.query("INSERT INTO ppo.workspaces(id,display_name) VALUES($1,'SYN EN01 browser isolation')",[scope.workspace]);
+      await c.query("INSERT INTO ppo.erp_connections(id,workspace_id,provider,external_connection_key) VALUES($1::uuid,$2,'Synthetic',$1::text)",[scope.connection,scope.workspace]);
+      await c.query("INSERT INTO ppo.companies(id,workspace_id,provider,legacy_erp_connection_key,erp_connection_id,erp_company_id,display_name) VALUES($1::uuid,$2,'Synthetic',$3::text,$3::uuid,$1::text,'SYN EN01 isolated company')",[scope.company,scope.workspace,scope.connection]);
+      for(const actor of ['coordinator','author'] as const){
+        await c.query("INSERT INTO ppo.users(id,workspace_id,issuer,subject_id,display_name) VALUES($1::uuid,$2,'PPO-LocalSynthetic',$1::text,$3)",[scope[actor],scope.workspace,'SYN EN01 '+actor]);
+        const caps=['shared.read','shared.internal.read','project.read','engineering.read','engineering.edit',...(actor==='coordinator'?['shared.create','shared.edit','project.create','project.edit','engineering.create','engineering.material.source']:[])];
+        for(const cap of caps){const id=randomUUID();grants.push(id);await c.query("INSERT INTO ppo.permission_grants(id,workspace_id,user_id,company_id,capability,scope_type,scope_id) VALUES($1,$2,$3,$4,$5,'Company',$4)",[id,scope.workspace,scope[actor],scope.company,cap]);}
+        await c.query("INSERT INTO ppo.sessions(token_hash,workspace_id,actor_id,expires_at) VALUES($1,$2,$3,clock_timestamp()+interval '1 hour')",[createHash('sha256').update(randomUUID()).digest('hex'),scope.workspace,scope[actor]]);
+      }
+    });
+    const principal={workspace_id:scope.workspace,actor_id:scope.coordinator,display_name:'SYN EN01 coordinator'};
+    await createOrganisation(principal,{...crmBase(),id:scope.organisation,company_id:scope.company,display_name:'SYN EN01 isolated customer',relationship_status:'Active',owner_id:scope.coordinator,access_class:'Internal'});
+    await createSite(principal,{...crmBase(),id:scope.site,company_id:scope.company,display_name:'SYN EN01 isolated site',location_description:'SYN browser fixture only',timezone:'Australia/Brisbane',owner_id:scope.coordinator,parties:[{organisation_id:scope.organisation,role:'Operator',valid_from:'2026-01-01T00:00:00.000Z'}]});
+    await database().query('DELETE FROM ppo.permission_grants WHERE id=ANY($1::uuid[])',[grants]);
+  }
+  assert.equal((await observer.query('SELECT count(*)::int n FROM ppo.workspaces')).rows[0].n,before+11);
+  console.log('Added 11 isolated Engineering fixture workspaces; temporary grants removed');
+  await phase('after-engineering');
+  timezone='Australia/Sydney';
+  await phase('sydney-next-day');
+}
+if(accumulated){
+  for(let n=0;n<100;n++)await fixture(`SYN earlier unrelated ${randomUUID()}`);
+  console.log('Added 100 unrelated submissions in the same workspace');
+  await phase('after-accumulated');
+  let acquired!:()=>void;const locked=new Promise<void>(r=>acquired=r);
+  const first=read('duplicate-first-0',0,'all',acquired);await locked;
+  const duplicate=read('duplicate-second-0',0);
+  // Observe the duplicate actually waiting before starting the continuation.
+  let found=false;
+  for(let attempt=0;attempt<200&&!found;attempt++){
+    found=(await observer.query("SELECT 1 FROM pg_stat_activity WHERE application_name='PPO-P01' AND wait_event_type='Lock' AND query='SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE'")).rowCount!==0;
+    if(!found)await new Promise(r=>setTimeout(r,10));
+  }
+  assert.ok(found,'duplicate queue read must be observed blocked');
+  await Promise.all([first,duplicate,read('duplicate-continuation-25',25)]);
+}
+sampling=false;await monitor;
+await writeFile(`tmp/prompt-s/${accumulated?'accumulated':reuse?'engineering':'baseline'}.json`,JSON.stringify({title,at:new Date().toISOString(),samples,waits},null,2));
+await observer.end();await closeDatabase();
