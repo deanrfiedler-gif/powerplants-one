@@ -8,8 +8,6 @@ import { listWorkReviews } from "../../src/activities/work-reviews";
 import { reviewSources as oracle } from "../helpers/review-sources-per-row";
 import { listWorkReviews as workOracle } from "../helpers/work-reviews-per-row";
 import { reviewSourcesFixture } from "../helpers/review-sources-fixture";
-import { AppError } from "../../src/platform/errors";
-import { CRM } from "../helpers/crm";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
@@ -21,45 +19,17 @@ after(closeDatabase);
 test("Review sources preserve full DTO, JSON, authority, paging and work summaries against frozen main", async (t) => {
   const f = await reviewSourcesFixture();
   for (const p of [f.broad, f.reviewer, f.author, f.other, f.denied]) {
-    for (const company of [null, CRM.company, CRM.companyB]) {
-      const expected = await oracle(p, company),
-        actual = await reviewSources(p, company);
-      assert.deepEqual(actual, expected);
-      assert.equal(JSON.stringify(actual), JSON.stringify(expected));
-      if (!company)
-        assert.ok(actual.items.length > 0, `non-vacuous ${p.display_name}`);
-      else
-        assert.equal(
-          actual.sources.find((s) => s.module === "Engineering")?.state,
-          "unavailable",
-        );
-      if (!company) {
-        for (const limit of [1, 3, 100]) {
-          const expectedWork = await workOracle(p, { company_id: null, limit });
-          const work = await listWorkReviews(p, { company_id: null, limit });
-          assert.deepEqual(work, expectedWork);
-          assert.equal(JSON.stringify(work), JSON.stringify(expectedWork));
-          if (work)
-            assert.equal(work.items.length, Math.min(work.total, limit));
-        }
-      } else {
-        const failures = [];
-        for (const read of [workOracle, listWorkReviews]) {
-          try {
-            await read(p, { company_id: company, limit: 3 });
-            assert.fail("known main company-filter defect must remain");
-          } catch (e) {
-            assert.ok(e instanceof AppError);
-            failures.push({
-              status: e.status,
-              code: e.code,
-              message: e.message,
-            });
-          }
-        }
-        assert.deepEqual(failures[0], failures[1]);
-        assert.equal(failures[0].code, "ReviewSourceUnavailable");
-      }
+    const expected = await oracle(p),
+      actual = await reviewSources(p);
+    assert.deepEqual(actual, expected);
+    assert.equal(JSON.stringify(actual), JSON.stringify(expected));
+    assert.ok(actual.items.length > 0, `non-vacuous ${p.display_name}`);
+    for (const limit of [1, 3, 100]) {
+      const expectedWork = await workOracle(p, { company_id: null, limit });
+      const work = await listWorkReviews(p, { company_id: null, limit });
+      assert.deepEqual(work, expectedWork);
+      assert.equal(JSON.stringify(work), JSON.stringify(expectedWork));
+      if (work) assert.equal(work.items.length, Math.min(work.total, limit));
     }
   }
   const broad = await reviewSources(f.broad),

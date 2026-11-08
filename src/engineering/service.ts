@@ -265,6 +265,28 @@ export async function listEngineering(p: Principal, value: unknown) {
     completeness: "Page",
   };
 }
+// Internal review-source pager: retain listEngineering's default row set and
+// authority, but count only this company's packages towards the review bound.
+export async function companyEngineeringReviewPage(
+  p: Principal,
+  company: string,
+  cursor: string | null,
+) {
+  const c = database();
+  await requireCapability(c, p, "engineering.read");
+  const rows = (
+    await c.query<{ id: string }>(
+      `SELECT p.id ${joins} WHERE p.workspace_id=$1 AND ${permitted()}
+       AND ($3::uuid IS NULL OR p.id>$3) AND p.company_id=$4
+       ORDER BY p.id LIMIT 51`,
+      [p.workspace_id, p.actor_id, cursor, company],
+    )
+  ).rows;
+  return {
+    items: rows.slice(0, 50),
+    next_cursor: rows.length > 50 ? rows[49].id : null,
+  };
+}
 export async function readEngineering(
   p: Principal,
   id: string,
