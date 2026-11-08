@@ -2,7 +2,7 @@
 document_id: PPO-SHELL-REFINED-FIGMA-DEC
 date: 2026-11-08
 owner: Dean Fiedler
-status: Owner-directed shell design; open questions decided 8 November 2026; named version, captures and application build separate
+status: Owner-accepted design (named version saved 8 November 2026); captures and application build separate
 source_commit: 1672c062981402037355fb9d813dbedabd87cfbb
 versioning: git
 ---
@@ -32,7 +32,7 @@ Dean directed the design sheet by sheet through the day, each audit ending in hi
 
 On 8 November 2026 Dean accepted the recommended answers to all twenty-two open questions by choosing "Accept as recommended". Section 3 lists them. Q8 had been resolved earlier the same day.
 
-Not yet done: Dean has not saved a named Figma version, and no icon-free, logo-free captures are retained in this repository. The page header and notes card say "proposal" until he does. Dean's own acceptance wording at that point will be added to this record.
+Later on 8 November 2026 Dean saved the named Figma version. Claude recommended the title "Shell refined concept — accepted", following the other accepted designs; Dean's words were "It has been saved." Claude did not open version history, so the title rests on his word. The page header, notes card and section names were then updated to say the design is accepted; no frame changed after the save. No icon-free, logo-free captures are retained in this repository yet.
 
 ## 2. Scope and limits
 
@@ -142,7 +142,6 @@ These are departures from the accepted top bar amendment and rail alignment of O
 ## 7. Open items
 
 - Q9: a mark-only logo asset from Dean.
-- Dean's named Figma version and his acceptance wording, to be recorded here.
 - Retained captures: the file carries the logo artwork and Lucide stand-ins, so capture copies need the same logo-free, icon-free treatment as earlier designs before PNGs are retained under `docs/reference/ui/application-shell/`.
 - Q16: an audit of the application's existing keyboard handling before shortcut letters are fixed.
 - Q17: alignment of the call card and on-call pill with Calling stage 1a when telephony is decided.
@@ -154,4 +153,4 @@ These are departures from the accepted top bar amendment and rail alignment of O
 - Contrast was computed for every text pairing (4.5:1 or better), for brand green on light surfaces (2.2–2.4:1, failing, which is why brand/green-deep exists at 3.6:1 on white), for the person pairs (5.0–6.5:1) and the accent pairs (3.1–12.3:1).
 - The workspace menus were built from the navigation definitions in `src/shell/navigation.ts`, `src/supply/navigation.ts` and `src/engineering/control/navigation.ts` and from `register.json`, so every page link names a defined destination or a registered scope.
 - Nothing is built: there is no application, keyboard, screen-reader, zoom or device evidence, and the sheets set no UI baseline.
-- No named Figma version has been saved yet; the file history holds every change.
+- Dean saved the named Figma version on 8 November 2026 ("It has been saved."); the file history holds every earlier change.
