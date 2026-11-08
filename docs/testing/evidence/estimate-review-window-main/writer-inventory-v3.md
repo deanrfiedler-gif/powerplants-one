@@ -199,3 +199,9 @@ Migrations/reset are schema maintenance, not a promise of online schema-version 
 ## Result and pre-existing gaps
 
 No additional **response-affecting** share/key-share writer was found in the current runtime and maintained operator/fixture paths. Existing gaps remain: quote-worker failure state, legacy ticket-draft updates, existing-user active/name updates in demo reconciliation, fixture alias UPDATEs, expiry-injection UPDATEs, and direct lock-free setup/definition/grant paths. This is not a serializable-snapshot claim: grant expiry, wall clock and those existing lock-free updates retain their previous semantics. The three user-protected files are unchanged. Runtime lock implementation and its tests are recorded separately after these prerequisites.
+
+## Follow-up — 8 November 2026: quote-worker failure lock
+
+Prompt X in [draft PR #872](https://github.com/deanrfiedler-gif/powerplants-one/pull/872), based on main `1672c062981402037355fb9d813dbedabd87cfbb`, closes only the quote-worker failure gap recorded above. The failure transaction now takes `SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE` with the claimed job's workspace ID before its existing Failed compare-and-set and attempt insert. It adds no authority check: revoked preparation authority must still allow failure to be recorded. Claim, success, interruption, lease and attempt semantics are unchanged.
+
+The [dated status and validation](../../../status/2026-11-08-quote-worker-failure-lock.md) and [database proofs](../../../../tests/database/quote-worker-failure-lock.test.ts) record the follow-up separately. The inventory above remains #866's historical evidence, including its original gap and unchanged-file statements; the other gaps are not closed by this change. No response defect is claimed: release detail reads job state once and the queue maps both Running and Failed to Output pending. Claude's one review and ready-head CI remain pending.
