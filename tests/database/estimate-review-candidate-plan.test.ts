@@ -104,9 +104,9 @@ test("candidate branch fences bound every plan node on never-analysed small tabl
     before: { ...before, rows: undefined },
     after: { ...after, rows: undefined },
   };
-  mkdirSync("work/candidate-branch-fences", { recursive: true });
+  mkdirSync("tmp/candidate-branch-fences", { recursive: true });
   writeFileSync(
-    "work/candidate-branch-fences/small.json",
+    "tmp/candidate-branch-fences/small.json",
     JSON.stringify(summary, null, 2),
   );
   console.log(
