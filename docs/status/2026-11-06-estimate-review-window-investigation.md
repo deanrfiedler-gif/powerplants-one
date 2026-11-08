@@ -1,0 +1,10 @@
+---
+title: Estimating review continuation reproduction and handover
+date: 2026-11-06
+---
+
+[Draft PR #866](https://github.com/deanrfiedler-gif/powerplants-one/pull/866) records [server reproduction evidence](../testing/evidence/estimate-review-window-main/README.md) on unchanged main `78fe5732`. A 25-candidate queue read issues 8,708 statements; a one-candidate continuation issues 356. Two controlled full-window reads ahead of the continuation make it take 6,905.969 ms, including 6,700.027 ms waiting for the workspace lock. Sequential continuation remains below 240 ms in the measured cases. Eleven retained Engineering fixture workspaces and 100 unrelated same-workspace submissions did not reproduce the slowdown; UTC/Sydney date comparisons preserved complete DTOs except observation time.
+
+The original CI root cause remains unresolved: server-injected overlap does not prove that the failing browser issued duplicate reads. H1 is demonstrated in controlled reproduction; actual CI H2 remains open, and H3/H4 exclusions apply only to the tested fixtures. The [Codex decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6688889425) stops at Prompt S's per-candidate-cost boundary and hands over the missing causal evidence. **No fix is delivered.** Application code, browser assertions, timeouts and workflows are unchanged.
+
+Cloud setup reports PostgreSQL ready and browser unavailable. The native server procedures, PostgreSQL wait observations and date assertions ran on `ppo_synthetic_test`. Browser reproduction and a fresh trace were not run; browser suites are left to GitHub CI. The connector returned historical job logs and an artifact ZIP reference, but the artifact byte download returned HTTP 403, so its screenshot/error-context contents were not inspected locally. Full regression suites and ready-head browser acceptance were not run because no runtime change was made and the investigation remains incomplete. The draft handover records documentation checks and the evidence head; no merge, business approval or deployment is claimed.

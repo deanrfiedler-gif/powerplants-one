@@ -1,0 +1,427 @@
+{
+  "at": "2026-11-07T23:53:57.714Z",
+  "database": "ppo_synthetic_test",
+  "engine": "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "fixture": {
+    "matching": 26,
+    "unrelated": 100,
+    "priorRows": "Retained ES-04 suite rows on the same disposable database; identical for both modes"
+  },
+  "method": "Same queue read and fixture; UPDATE control replaces only the queue lock SQL. No injected delay. 20ms independent wait observer. SHARE continuation starts after both full readers acquire locks; UPDATE after observed second-reader blocking.",
+  "background_build": false,
+  "original_retained_baseline": {
+    "head": "78fe5732",
+    "continuation_wall_ms": 6905.969,
+    "workspace_lock_ms": 6700.027
+  },
+  "samples": [
+    {
+      "label": "UPDATE-sequential-0-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 988.004785,
+      "pid": 144,
+      "lock_ms": 1.1194309999999632,
+      "ended": 4159.854423,
+      "wall_ms": 3171.8496379999997,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "UPDATE-sequential-0-25",
+      "mode": "UPDATE",
+      "statements": 356,
+      "began": 4161.74556,
+      "pid": 144,
+      "lock_ms": 1.982625999999982,
+      "ended": 4339.415313,
+      "wall_ms": 177.66975300000013,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "UPDATE-sequential-1-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 4339.610358,
+      "pid": 144,
+      "lock_ms": 0.22101299999940238,
+      "ended": 7289.235006,
+      "wall_ms": 2949.624648,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "UPDATE-sequential-1-25",
+      "mode": "UPDATE",
+      "statements": 356,
+      "began": 7289.667319,
+      "pid": 144,
+      "lock_ms": 0.1759650000003603,
+      "ended": 7455.63145,
+      "wall_ms": 165.96413099999972,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "UPDATE-sequential-2-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 7455.871262,
+      "pid": 144,
+      "lock_ms": 0.16311700000005658,
+      "ended": 10199.420838,
+      "wall_ms": 2743.5495760000003,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "UPDATE-sequential-2-25",
+      "mode": "UPDATE",
+      "statements": 356,
+      "began": 10199.76658,
+      "pid": 144,
+      "lock_ms": 0.17313199999989592,
+      "ended": 10360.607621,
+      "wall_ms": 160.84104099999968,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "UPDATE-duplicate-first-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 10360.901404,
+      "pid": 144,
+      "lock_ms": 0.16339700000025914,
+      "ended": 13041.787841,
+      "wall_ms": 2680.886436999999,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "UPDATE-duplicate-second-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 10361.696836,
+      "pid": 146,
+      "lock_ms": 2663.1142740000014,
+      "ended": 15692.681592,
+      "wall_ms": 5330.984756000002,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "UPDATE-duplicate-continuation-25",
+      "mode": "UPDATE",
+      "statements": 356,
+      "began": 10384.13549,
+      "pid": 147,
+      "lock_ms": 5302.005279000001,
+      "ended": 15855.388676,
+      "wall_ms": 5471.253186,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "UPDATE-awaiting-0",
+      "mode": "UPDATE",
+      "statements": 8708,
+      "began": 15855.672154,
+      "pid": 147,
+      "lock_ms": 0.15898999999990338,
+      "ended": 18504.373787,
+      "wall_ms": 2648.7016330000006,
+      "items": 0,
+      "next_offset": 25,
+      "digest": "1db503fcfe2c575ddaec47eb4d43295dba66d391a7de0e4e08bb65f396a6f342"
+    },
+    {
+      "label": "UPDATE-awaiting-25",
+      "mode": "UPDATE",
+      "statements": 356,
+      "began": 18504.533518,
+      "pid": 147,
+      "lock_ms": 0.16842499999984284,
+      "ended": 18671.571306,
+      "wall_ms": 167.03778800000146,
+      "items": 0,
+      "next_offset": null,
+      "digest": "b994d4474ca3589869c6bcc9d7585f9dcf3e424da71b0348e28957dbd8491b1a"
+    },
+    {
+      "label": "SHARE-sequential-0-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 18671.683825,
+      "pid": 147,
+      "lock_ms": 0.2120199999990291,
+      "ended": 21446.962108,
+      "wall_ms": 2775.2782829999996,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "SHARE-sequential-0-25",
+      "mode": "SHARE",
+      "statements": 356,
+      "began": 21447.494673,
+      "pid": 147,
+      "lock_ms": 0.2558160000007774,
+      "ended": 21618.199206,
+      "wall_ms": 170.70453300000008,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "SHARE-sequential-1-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 21618.326198,
+      "pid": 147,
+      "lock_ms": 0.2163269999982731,
+      "ended": 24303.91774,
+      "wall_ms": 2685.591542000002,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "SHARE-sequential-1-25",
+      "mode": "SHARE",
+      "statements": 356,
+      "began": 24304.413549,
+      "pid": 147,
+      "lock_ms": 0.19649699999717996,
+      "ended": 24483.313325,
+      "wall_ms": 178.89977599999838,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "SHARE-sequential-2-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 24483.643995,
+      "pid": 147,
+      "lock_ms": 0.25894200000038836,
+      "ended": 27383.599264,
+      "wall_ms": 2899.955269000002,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "SHARE-sequential-2-25",
+      "mode": "SHARE",
+      "statements": 356,
+      "began": 27384.181714,
+      "pid": 147,
+      "lock_ms": 0.24753399999826797,
+      "ended": 27567.584123,
+      "wall_ms": 183.40240900000208,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "SHARE-duplicate-first-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 27567.730905,
+      "pid": 147,
+      "lock_ms": 0.14132400000016787,
+      "ended": 30375.640637,
+      "wall_ms": 2807.909732,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "SHARE-duplicate-second-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 27568.4095,
+      "pid": 149,
+      "lock_ms": 0.4763700000003155,
+      "ended": 30396.592731,
+      "wall_ms": 2828.183230999999,
+      "items": 75,
+      "next_offset": 25,
+      "digest": "f33147b5105c97f17264d5dcb9b62644bb8e6ce5032c4d5b0d63f47247f780cd"
+    },
+    {
+      "label": "SHARE-duplicate-continuation-25",
+      "mode": "SHARE",
+      "statements": 356,
+      "began": 27585.843873,
+      "pid": 150,
+      "lock_ms": 0.4194740000020829,
+      "ended": 27810.880562,
+      "wall_ms": 225.03668899999684,
+      "items": 3,
+      "next_offset": null,
+      "digest": "ffeb2c04f9ff3c30d98871d5c59e0e1c0e4bbf65f1ddba771473c0fb47ca9315"
+    },
+    {
+      "label": "SHARE-awaiting-0",
+      "mode": "SHARE",
+      "statements": 8708,
+      "began": 30396.950412,
+      "pid": 149,
+      "lock_ms": 0.1572679999990214,
+      "ended": 33120.719906,
+      "wall_ms": 2723.769494,
+      "items": 0,
+      "next_offset": 25,
+      "digest": "1db503fcfe2c575ddaec47eb4d43295dba66d391a7de0e4e08bb65f396a6f342"
+    },
+    {
+      "label": "SHARE-awaiting-25",
+      "mode": "SHARE",
+      "statements": 356,
+      "began": 33120.826157,
+      "pid": 149,
+      "lock_ms": 0.2735130000000936,
+      "ended": 33283.915409,
+      "wall_ms": 163.08925199999794,
+      "items": 0,
+      "next_offset": null,
+      "digest": "b994d4474ca3589869c6bcc9d7585f9dcf3e424da71b0348e28957dbd8491b1a"
+    }
+  ],
+  "control_observed_blockers": [
+    {
+      "pid": 146,
+      "blockers": [
+        144
+      ]
+    }
+  ],
+  "waits": [
+    {
+      "label": "UPDATE-sequential-0-0",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-sequential-0-25",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-sequential-1-0",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-sequential-1-25",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-sequential-2-0",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-sequential-2-25",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-duplicate-first-0",
+      "pid": 144,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-duplicate-second-0",
+      "pid": 146,
+      "lock_observations": 131
+    },
+    {
+      "label": "UPDATE-duplicate-continuation-25",
+      "pid": 147,
+      "lock_observations": 262
+    },
+    {
+      "label": "UPDATE-awaiting-0",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "UPDATE-awaiting-25",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-0-0",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-0-25",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-1-0",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-1-25",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-2-0",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-sequential-2-25",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-duplicate-first-0",
+      "pid": 147,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-duplicate-second-0",
+      "pid": 149,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-duplicate-continuation-25",
+      "pid": 150,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-awaiting-0",
+      "pid": 149,
+      "lock_observations": 0
+    },
+    {
+      "label": "SHARE-awaiting-25",
+      "pid": 149,
+      "lock_observations": 0
+    }
+  ],
+  "dto_equality_except_as_of": true,
+  "observations_sha256": "a845d8a21e5873e3b0fcffcb76c36df1c1ef13339a678c48cf3eda5f5aff4ece"
+}

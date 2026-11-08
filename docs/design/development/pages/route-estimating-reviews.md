@@ -14,6 +14,8 @@ Reuse Application shell, SecondaryMenuFrame, Button/ButtonLink, RegisterTable/Re
 
 All reviews, Awaiting my review, Quotation approvals, Returned for changes, Reviewed and Submitted by me are overlapping views. Reviewed includes the separate Approved/Issued quotation outcomes without renaming them. Review type/site filter the current candidate window; search is sent to the native candidate query. Every count is a readable review-row count for that window. One estimate can contribute three rows. The footer states the 25-candidate limit; no candidate total or global backlog is inferred. Next window remains available after a filtered-empty window. Offset reads are live and may move as new work arrives.
 
+Concurrent window reads share the backend workspace lock; native mutations still wait for the reader. The [continuation evidence](../../../testing/evidence/estimate-review-window-main/shared-lock-results.md) records the controlled proof and remaining browser verification. Polling, pagination controls, assertions, timeouts and accepted visual states are unchanged; this backend correction records no new visual or owner acceptance.
+
 The 360 px selection panel opens exact snapshots oldest first or exports selected rows after rechecking current visibility and evidence. Selection does not span windows and changed source/permission/sequence keys invalidate it. No bulk approval exists. Snapshots overlay the grid, align to the secondary menu edge, and retain close/previous/next. Obscured controls are inert; Escape returns focus. The left column shows selected saved facts, source changes and native handovers. Findings/Files and attributable native history occupy the right column. Missing file collections and limited history sources are explicit.
 
 ## Mobile

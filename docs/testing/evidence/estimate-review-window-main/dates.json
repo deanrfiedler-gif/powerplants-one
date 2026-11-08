@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2026-11-06",
+    "timezone": "UTC",
+    "offset": "0",
+    "view": "all",
+    "items": 75,
+    "ms": 3931.3735580000002,
+    "dto_sha256": "ce0a8430d8856264d7ea2a1c8b15d02ca5bf360d3ab91b064031141b471d9ce8"
+  },
+  {
+    "date": "2026-11-06",
+    "timezone": "UTC",
+    "offset": "0",
+    "view": "awaiting_me",
+    "items": 0,
+    "ms": 3798.9660859999994,
+    "dto_sha256": "1db503fcfe2c575ddaec47eb4d43295dba66d391a7de0e4e08bb65f396a6f342"
+  },
+  {
+    "date": "2026-11-06",
+    "timezone": "UTC",
+    "offset": "25",
+    "view": "all",
+    "items": 3,
+    "ms": 181.01343300000008,
+    "dto_sha256": "cd3f18d50b292a647f2acd442bef0e2d514bddb14acffe78d7fe76ce09689d77"
+  },
+  {
+    "date": "2026-11-06",
+    "timezone": "UTC",
+    "offset": "25",
+    "view": "awaiting_me",
+    "items": 0,
+    "ms": 196.32483599999978,
+    "dto_sha256": "b994d4474ca3589869c6bcc9d7585f9dcf3e424da71b0348e28957dbd8491b1a"
+  },
+  {
+    "date": "2026-11-07",
+    "timezone": "Australia/Sydney",
+    "offset": "0",
+    "view": "all",
+    "items": 75,
+    "ms": 3898.5197339999995,
+    "dto_sha256": "ce0a8430d8856264d7ea2a1c8b15d02ca5bf360d3ab91b064031141b471d9ce8"
+  },
+  {
+    "date": "2026-11-07",
+    "timezone": "Australia/Sydney",
+    "offset": "0",
+    "view": "awaiting_me",
+    "items": 0,
+    "ms": 3690.416098999998,
+    "dto_sha256": "1db503fcfe2c575ddaec47eb4d43295dba66d391a7de0e4e08bb65f396a6f342"
+  },
+  {
+    "date": "2026-11-07",
+    "timezone": "Australia/Sydney",
+    "offset": "25",
+    "view": "all",
+    "items": 3,
+    "ms": 200.0984759999992,
+    "dto_sha256": "cd3f18d50b292a647f2acd442bef0e2d514bddb14acffe78d7fe76ce09689d77"
+  },
+  {
+    "date": "2026-11-07",
+    "timezone": "Australia/Sydney",
+    "offset": "25",
+    "view": "awaiting_me",
+    "items": 0,
+    "ms": 184.8808089999984,
+    "dto_sha256": "b994d4474ca3589869c6bcc9d7585f9dcf3e424da71b0348e28957dbd8491b1a"
+  }
+]
