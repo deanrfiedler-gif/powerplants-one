@@ -52,14 +52,18 @@ export async function readEstimatingReviewQueue(
     // rows are absent. Keep that compilation out of the request deadline; SET
     // LOCAL is restored on commit/rollback before the pooled client is released.
     await c.query("SET LOCAL jit = off");
+    // Fence the cheap branch joins before visibility: without statistics, an
+    // inline branch can repeat visibility checks for intermediate join rows.
+    // Carry the source estimate so visibility depends only on materialized rows.
     const candidates = (
       await c.query<Candidate>(
         `
       WITH candidates AS (
+        WITH estimate_rows AS MATERIALIZED (
         SELECT e.id,'EstimateReview'::text AS source,e.id AS estimate_id,
           s.created_at AS submitted_at,e.owner_id,u.display_name AS owner,
           v.created_by AS author_id,e.display_number AS reference,org.display_name AS customer,
-          v.title
+          v.title,e AS estimate
         FROM ppo.estimates e
         JOIN LATERAL (SELECT * FROM ppo.estimate_review_events s
           WHERE s.workspace_id=e.workspace_id AND s.estimate_id=e.id AND s.kind='Submission'
@@ -68,10 +72,11 @@ export async function readEstimatingReviewQueue(
         JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(e.workspace_id,e.opportunity_id)
         JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
         JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.owner_id)
-        WHERE e.workspace_id=$1 AND $3 IN ('all','estimates') AND ${estimateVisibility("e", "estimating.read", true)}
-        UNION ALL
-        SELECT b.revision_id,'QuotationApproval'::text,e.id,b.created_at,e.owner_id,u.display_name,
-          r.created_by,q.display_number,org.display_name,v.title
+        WHERE e.workspace_id=$1 AND $3 IN ('all','estimates')
+        ), quotation_rows AS MATERIALIZED (
+        SELECT b.revision_id AS id,'QuotationApproval'::text AS source,e.id AS estimate_id,
+          b.created_at AS submitted_at,e.owner_id,u.display_name AS owner,
+          r.created_by AS author_id,q.display_number AS reference,org.display_name AS customer,v.title,e AS estimate
         FROM ppo.draft_quotes q
         JOIN LATERAL (SELECT b.* FROM ppo.quote_release_bases b
           JOIN ppo.draft_quote_revisions r ON (r.workspace_id,r.id)=(b.workspace_id,b.revision_id)
@@ -84,8 +89,17 @@ export async function readEstimatingReviewQueue(
         JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
         JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.owner_id)
         WHERE q.workspace_id=$1 AND $3 IN ('all','quotations') AND $4::boolean
-          AND ${estimateVisibility("e", "estimating.read", true)}
-          AND ${estimateVisibility("e", "estimating.quote.read", true)}
+        )
+        SELECT candidate.id,candidate.source,candidate.estimate_id,candidate.submitted_at,
+          candidate.owner_id,candidate.owner,candidate.author_id,candidate.reference,candidate.customer,candidate.title
+        FROM estimate_rows candidate
+        WHERE ${estimateVisibility("(candidate.estimate)", "estimating.read", true)}
+        UNION ALL
+        SELECT candidate.id,candidate.source,candidate.estimate_id,candidate.submitted_at,
+          candidate.owner_id,candidate.owner,candidate.author_id,candidate.reference,candidate.customer,candidate.title
+        FROM quotation_rows candidate
+        WHERE ${estimateVisibility("(candidate.estimate)", "estimating.read", true)}
+          AND ${estimateVisibility("(candidate.estimate)", "estimating.quote.read", true)}
       )
       SELECT * FROM candidates WHERE $5='' OR strpos(lower(title || ' ' || reference || ' ' || customer),lower($5))>0
       ORDER BY submitted_at DESC,source,id LIMIT $6 OFFSET $7`,

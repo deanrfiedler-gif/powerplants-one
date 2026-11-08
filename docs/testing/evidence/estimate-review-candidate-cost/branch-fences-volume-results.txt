@@ -1,0 +1,41 @@
+Native estimates created: 100
+Native estimates created: 200
+Native estimates created: 300
+Native estimates created: 400
+Native estimates created: 500
+Native estimates created: 600
+Native estimates created: 700
+Native estimates created: 800
+Native estimates created: 900
+Native estimates created: 1000
+Native estimates created: 1100
+Native estimates created: 1200
+Native estimates created: 1300
+Native estimates created: 1400
+Native estimates created: 1500
+Native estimates created: 1600
+Native estimates created: 1700
+Native estimates created: 1800
+Native estimates created: 1900
+Native estimates created: 2000
+Native estimates created: 2100
+Native estimates created: 2200
+Native estimates created: 2300
+Native estimates created: 2400
+Native estimates created: 2500
+Native estimates created: 2600
+Native estimates created: 2700
+Native estimates created: 2800
+Native estimates created: 2900
+Native estimates created: 3000
+PPO_CANDIDATE_VOLUME {"search":true,"estimates":3000,"candidates":3003,"before":{"candidate_ms":164.13496699999087,"execution_ms":137.698,"max_loops":3091,"shared_hit_blocks":165690,"has_jit":false},"after":{"candidate_ms":169.89334399998188,"execution_ms":141.503,"max_loops":3091,"shared_hit_blocks":165690,"has_jit":false}}
+PPO_CANDIDATE_VOLUME {"search":false,"estimates":3000,"candidates":3003,"before":{"candidate_ms":162.97172700008377,"execution_ms":136.214,"max_loops":3091,"shared_hit_blocks":165690,"has_jit":false},"after":{"candidate_ms":166.6253629999701,"execution_ms":148.362,"max_loops":3091,"shared_hit_blocks":165690,"has_jit":false}}
+✔ branch fence measurements at 3000 naturally analysed native estimates (737110.436364ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 738308.163275

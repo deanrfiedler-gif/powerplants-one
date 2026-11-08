@@ -1,0 +1,32 @@
+✔ frozen main equivalence: owner, all, search=true (94250.139854ms)
+✔ frozen main equivalence: owner, all, search=false (47630.018247ms)
+✔ frozen main equivalence: owner, estimates, search=true (12223.358184ms)
+✔ frozen main equivalence: owner, estimates, search=false (12451.831762ms)
+✔ frozen main equivalence: owner, quotations, search=true (37286.963584ms)
+✔ frozen main equivalence: owner, quotations, search=false (33294.522044ms)
+✔ frozen main equivalence: partial, all, search=true (25709.226225ms)
+✔ frozen main equivalence: partial, all, search=false (24034.225314ms)
+✔ frozen main equivalence: partial, estimates, search=true (7724.502414ms)
+✔ frozen main equivalence: partial, estimates, search=false (8264.50388ms)
+✔ frozen main equivalence: partial, quotations, search=true (17103.873077ms)
+✔ frozen main equivalence: partial, quotations, search=false (17235.42749ms)
+✔ frozen main equivalence: issuer, all, search=true (23949.510119ms)
+✔ frozen main equivalence: issuer, all, search=false (23754.8326ms)
+✔ frozen main equivalence: issuer, estimates, search=true (8066.124199ms)
+✔ frozen main equivalence: issuer, estimates, search=false (8185.350954ms)
+✔ frozen main equivalence: issuer, quotations, search=true (18811.475476ms)
+✔ frozen main equivalence: issuer, quotations, search=false (18967.013892ms)
+✔ queue disables JIT exactly once and restores the same pooled client on commit (721.885394ms)
+✔ queue disables JIT exactly once and restores the same pooled client on rollback (3.755365ms)
+✔ queue callback rejects non-SELECT SQL across source, specialist/discovery and quotation history reads (20764.457907ms)
+✔ two queue readers acquire the same workspace concurrently without a lock wait (921.508908ms)
+✔ one-candidate continuation completes while two full-window queue readers hold their locks (12033.569662ms)
+✔ native estimating mutation waits for the queue reader and commits only after it ends (961.719101ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 477958.899552

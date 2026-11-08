@@ -1,0 +1,28 @@
+PPO_CANDIDATE_PLAN {"counts":{"estimates":35,"submissions":35,"quotations":3,"organisations":29,"opportunities":126},"loop_bound":380,"before":{"candidate_ms":293.57762899999943,"execution_ms":224.481,"max_loops":2016,"shared_hit_blocks":209567,"has_jit":false},"after":{"candidate_ms":58.60352399999829,"execution_ms":11.6,"max_loops":126,"shared_hit_blocks":6886,"has_jit":false}}
+✖ candidate branch fences bound every plan node on never-analysed small tables (24522.926014ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26203.083624
+
+✖ failing tests:
+
+test at tests/database/estimate-review-candidate-plan.test.ts:1:1130
+✖ candidate branch fences bound every plan node on never-analysed small tables (24522.926014ms)
+  AssertionError [ERR_ASSERTION]: Nested Loop: 2016 loops exceeds 380 for 38 candidates
+      at assertBoundedLoops (/workspace/work/pr870/tests/helpers/estimate-review-candidate-plan.ts:69:12)
+      at TestContext.<anonymous> (/workspace/work/pr870/tests/database/estimate-review-candidate-plan.test.ts:122:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

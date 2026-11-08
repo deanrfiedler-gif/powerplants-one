@@ -1,8 +1,55 @@
-# Estimating review queue: transaction-local JIT control
+# Estimating review queue: bounded candidate visibility
 
 Date: 8 November 2026. Owner: Codex. Scope: Prompt Y, ES-04/05 and EST-03/07/08. [PR #870](https://github.com/deanrfiedler-gif/powerplants-one/pull/870) follows [the original diagnostic decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6716124027) and [Claude’s subsequent JIT-off decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6716621588). This is synthetic performance and equivalence evidence, not business acceptance or proof of the original CI database census.
 
-## Final implementation
+## Materialized branch fences — current follow-up
+
+Dean's decision, given in chat in Codex's session; no [DEAN] comment: implement [Claude's decision 6719555199](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6719555199) exactly, retain the frozen-main oracle and diagnostic, record the discriminating plan proof and measurements, push and request confirmation. #870 was converted back to draft before implementation; it must not be marked ready before Claude confirms this fix. [Claude already confirmed the guard exemption and diagnostic on 43d5553f](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#pullrequestreview-5817389428).
+
+Each branch now computes its cheap joins and existing non-visibility predicates in a `MATERIALIZED` CTE. Each row carries its source estimate as a PostgreSQL composite value. The unchanged `estimateVisibility` helper evaluates that materialized estimate, once per qualifying branch row, including both predicates for quotations. Carrying the estimate avoids a key re-join that can itself let the planner repeat visibility before matching candidates. The outer candidate projection retains exactly the original columns and order; search, ordering, limit and offset remain after visibility as on main. The two per-candidate passes and transaction-local `SET LOCAL jit = off` remain intact.
+
+The [database plan test](../../../../tests/database/estimate-review-candidate-plan.test.ts) resets only `ppo_synthetic_test` and uses native commands to create 35 submitted estimates and three quotation release bases. It includes 29 organisations and 126 opportunities to represent the cheap-join fanout in the diagnostic. Before and after both plans, it asserts `last_analyze` and `last_autoanalyze` are null and both analysis counters are zero for estimates, estimate versions, review events, quotes, quote revisions and release bases. It verifies both materialized branch plans contain exactly 38 candidate rows in total, compares returned candidate rows, and bounds **every** plan node's `Actual Loops` by 10 × 38 = 380. The exact same bound must reject the frozen main plan. `PPO_PLAN_FROZEN_MAIN=1` applies the live assertion to frozen main and must exit nonzero; no frozen source or oracle assertion is modified.
+
+The [explicit volume proof](../../../../tests/database/estimate-review-candidate-plan.proof.ts), outside the normal test glob, extends that same fixture through native commands to exactly 3,000 submitted estimates and three release bases. It waits for and asserts ordinary automatic analysis of the three estimate tables, without issuing `ANALYZE` or changing any setting. The comparison uses identical data with search on and off at offset 25, one warm-up per side and one retained paired sample. Both sides use JIT off, isolating the branch fences from the earlier JIT fix. Candidate client time and separate EXPLAIN execution time, maximum loops and shared-buffer hits are reported separately. No timing assertion is added.
+
+Reproduce after successful cloud setup:
+
+```sh
+source ../.ppo-tools/env.sh
+# Expected failure against frozen main:
+PPO_PLAN_FROZEN_MAIN=1 node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/database/estimate-review-candidate-plan.test.ts
+# Passing test leaves the small fixture for the volume proof:
+node --env-file=.env.local --import tsx --test --test-timeout=120000 tests/database/estimate-review-candidate-plan.test.ts
+node --env-file=.env.local --import tsx --test tests/database/estimate-review-candidate-plan.proof.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/estimate-review-candidate-cost.test.ts tests/database/estimating-review-locks.test.ts
+```
+
+This follow-up changes no timeout, planner setting, analysis setup, migration, grant, capability or workflow. `PPO_REVIEW_QUEUE_DIAGNOSTIC`, its browser hook, the SELECT-only guard and all concurrency cases remain byte-identical to 43d5553f. The frozen-main helper and its complete 20-case suite also remain byte-identical. The earlier JIT-only measurements below are retained as historical evidence, not measurements of the fenced query.
+
+### Retained branch-fence measurements and validation
+
+Both sides have JIT off and no JIT section. Times are milliseconds; buffer hits are the root plan's shared-hit count, not a sum of overlapping subtree counts. These are single samples, not a latency distribution or a CI request-time claim. Small-table candidate time is the first direct query execution; EXPLAIN is a separate subsequent execution. The large fixture has one warm-up per side before its retained pair.
+
+| Fixture / offset 25 | Candidate ms before → after | Separate EXPLAIN ms before → after | Maximum loops before → after | Shared hits before → after |
+| --- | ---: | ---: | ---: | ---: |
+| 35 estimates / 3 bases, never analysed, search | 164.382 → 54.568 | 125.838 → 11.699 | 1,036 → 126 | 112,404 → 7,205 |
+| 3,000 estimates / 3 bases, automatic statistics, search | 164.135 → 169.893 | 137.698 → 141.503 | 3,091 → 3,091 | 165,690 → 165,690 |
+| 3,000 estimates / 3 bases, automatic statistics, no search | 162.972 → 166.625 | 136.214 → 148.362 | 3,091 → 3,091 | 165,690 → 165,690 |
+
+The large-fixture pair shows no speedup: both plans have the same loop/buffer totals and the fenced query is slightly slower. This fix bounds the pathological small-table plan; it does not eliminate normal work proportional to candidate volume. This follow-up's 3,000-estimate fixture shares the native CRM customer/site and retains three quotations, unlike the earlier JIT study's distinct-organisation distribution and 30 quotations. Those historical measurements are not substituted for this paired run.
+
+The large fixture's three estimate tables each report ten automatic analyses and zero manual analyses; `n_mod_since_analyze` is 128–129 at the snapshot. The three quote tables remain never analysed. Statistics counters are approximate; the explicit `count(*)` assertion establishes exactly 3,000 estimates. Normal automatic maintenance stays active, so these are observations with existing statistics, not a claim that all statistics describe the exact final row count.
+
+- [Passing plan test](branch-fences-plan-results.txt): 38 materialized candidates, bound 380, seven returned searched continuation candidates; both CTEs run once. [Numeric plans, measurements and statistics](branch-fences-small.json).
+- [Explicit frozen-query failure](branch-fences-frozen-failure.txt): same test with `PPO_PLAN_FROZEN_MAIN=1` exits 1 on `Nested Loop: 2016 loops exceeds 380 for 38 candidates`. [That fresh fixture's plans and statistics](branch-fences-negative.json). The normal test also requires the frozen plan to violate the same bound (1,036 loops in its separate fixture).
+- [All 24 unchanged oracle/guard cases pass](branch-fences-oracle-results.txt): 18 equivalence cases / 54 paired windows, both JIT restoration cases, SELECT-only guard and all three concurrency cases; 477.959 seconds, no skips. With the new plan test, 25 targeted database tests pass.
+- [Large-fixture proof passes](branch-fences-volume-results.txt), including both paired row comparisons. [Numeric plans, statistics and measurements](branch-fences-volume.json); [source hashes](branch-fences-source-hashes.json) bind all changed code/proofs and the unchanged oracle, guard and diagnostic. Retained plan trees omit SQL expressions and bind/record values, preserving every node's type, rows, loops and buffer counts.
+- `npm run check` passes: Studio, lint, typecheck, all 1,437 unit tests and production build. Final proof-file lint and typecheck also pass. Foundation, prototype, naming, status sources, migration numbering, all 44 documentation tests, documentation scope and whitespace pass.
+- The outer search/window/binds and both per-candidate passes are byte-identical to 43d5553f. The frozen oracle/suite, guard/concurrency file and browser diagnostic/helper are unchanged from that head.
+
+Browser execution remains unavailable locally: successful cloud setup reports it unavailable and `npm run browser:check` fails because `/opt/google/chrome/chrome` is absent. Draft application workflows skip their suites; Claude's confirmation precedes readiness, and both required browser lanes must subsequently pass with bounded diagnostic plans. No merge, deployment or business acceptance is claimed.
+
+## JIT-off-only implementation (historical)
 
 The reader adds exactly `SET LOCAL jit = off` before its candidate query, with the existing explanatory comment from `src/shared/organisation-register.ts:85–89`. `src/shared/sites.ts:86` uses the same transaction-local setting. The candidate SQL, authority before LIMIT/OFFSET, both per-candidate passes, partial-window behaviour and returned fields remain byte-identical to main `e67c9ea8dd64055e5d7859eeb3bacc59d575d5c1`. This adds one statement per successful read. PostgreSQL restores the setting on commit or rollback before the connection returns to the pool; it changes no persistent database configuration.
 
@@ -97,7 +144,7 @@ Single warmed samples, milliseconds. Every after result matched frozen main exce
 | [No search, before](jit-off-plan-before-3000-all-25.json) | 30.383 | 2,882.812 | 2,758.937 | 146,808 |
 | [No search, after](jit-off-plan-after-3000-all-25.json) | 28.910 | 130.666 | 0.000 | 146,808 |
 
-## Final validation
+## JIT-off-only validation (historical)
 
 - [All 20 database cases passed](jit-off-equivalence-results.txt): 18 authority/equivalence cases (54 paired windows) plus exact-once/same-client JIT restoration on commit and injected rollback.
 - [The final volume diagnostic passed](jit-off-volume-results.txt) all 24 samples and 12 paired response comparisons, including search and no search; every JIT-off EXPLAIN lacks a JIT section.
