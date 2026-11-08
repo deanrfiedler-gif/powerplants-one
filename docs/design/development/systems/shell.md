@@ -256,7 +256,7 @@ The [System pages design decision](../../../decisions/system-pages-figma-design.
 
 ## Refined concept S1
 
-S1 adds an opt-in desktop header and the 66 PPO colour variables from the private “PPO - Shell refined concept” file. The existing shell remains the default until S8. Enable Refined desktop shell in the account profile (then Account → Preferences in the refined version), or use `PPO_SHELL_REFINED=1`; `0` forces legacy. The preference belongs to the identity/browser and has a visit-memory fallback. The [build adaptations](../../../decisions/shell-refined-s1-build.md) record Dean's existing-company and unavailable-sign-in decisions. No permissions, routes, grants or stores change.
+S1 adds an opt-in desktop header and the 66 PPO colour variables from the private “PPO - Shell refined concept” file. The existing shell remains the default until S8. Enable Refined desktop shell in the account profile (then Account → Preferences in the refined version), or use `PPO_SHELL_REFINED=1`; `0` forces legacy. The preference belongs to the identity/browser and has a visit-memory fallback. The [build adaptations](../../../decisions/shell-refined-s1-build.md) record Dean's existing-company and unavailable-sign-in decisions. No permissions, routes, grants or database stores change.
 
 Measurements read before implementation from sheets A/G/I/N/T, the detached reference bars and all 66 colour variables:
 
@@ -276,4 +276,4 @@ The New menu groups server actions by the current registry workspace, then share
 
 S1 moves the existing rail below the header; S2 owns its replacement. Below 768 px the accepted phone header is retained. At 768–780 only the opted-in desktop composition bridges the older shell breakpoint. The inherited secondary menus, remaining layers/page states and full-shell focus-order refinements remain in their assigned later stages.
 
-Bindings and host fixtures: [S1 consumer note](../component-bindings/2026-11-08-shell-refined-s1.md). Browser captures are unavailable in this workspace: cloud setup reported Chrome unavailable and the browser guard confirmed the missing Chrome executable. Geometry, keyboard and tenant-persistence suites are authored but unexecuted here. Review records remain unchanged; stale evidence is reported by studio:check, never relabelled as accepted.
+Bindings and host fixtures: [S1 consumer note](../component-bindings/2026-11-08-shell-refined-s1.md). Browser captures are unavailable in this workspace: cloud setup reported Chrome unavailable and the browser guard confirmed the missing Chrome executable. Geometry, keyboard and tenant-persistence suites are authored but unexecuted here, including the 768/780 px boundary checks. Review records remain unchanged; stale evidence is reported by studio:check, never relabelled as accepted.

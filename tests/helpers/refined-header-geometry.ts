@@ -1,6 +1,11 @@
 import { expect, type Page } from "@playwright/test";
 
 export async function expectRefinedHeader(page: Page, width: number) {
+  await expect(
+    page.locator(
+      "#header-account .identity-toggle, #header-account .ppo-account-toggle",
+    ),
+  ).toBeVisible();
   const boxes = await page.locator("#shell-header").evaluate((header) => {
     const rect = (selector: string) => {
       const r = header.querySelector(selector)!.getBoundingClientRect();
