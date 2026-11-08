@@ -3,7 +3,10 @@ import { AppError, unavailable } from "../platform/errors";
 import { object, choice, invalid, optionalId } from "../shared/validation";
 import { listReports, reportReviewTask } from "../reports/service";
 import { listFinance, readFinance } from "../finance/reads";
-import { listEngineering } from "../engineering/service";
+import {
+  companyEngineeringReviewPage,
+  listEngineering,
+} from "../engineering/service";
 import { engineeringReviewPages } from "../engineering/changes/review-pages";
 import { inReviewView, reviewViews, type ReviewTask } from "./model";
 import { equipmentReviewTasks } from "../equipment/reviews";
@@ -94,11 +97,13 @@ export async function reviewSources(
         let cursor: string | null = null,
           count = 0;
         do {
-          const page = await listEngineering(p, {
-            limit: "50",
-            ...(cursor ? { cursor } : {}),
-            ...(company ? { company_id: company } : {}),
-          });
+          const page: { items: { id: string }[]; next_cursor: string | null } =
+            company
+              ? await companyEngineeringReviewPage(p, company, cursor)
+              : await listEngineering(p, {
+                  limit: "50",
+                  ...(cursor ? { cursor } : {}),
+                });
           selected.push(...(await readPage(page.items.map(row => row.id))));
           cursor = page.next_cursor;
           count += page.items.length;
