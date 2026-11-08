@@ -632,6 +632,14 @@ test("DK-UI review fixes preserve filters, selected labels and link assessment",
     name: "Customer",
     exact: true,
   });
+  // The options reload disables the select (library-choice.tsx:95), so focus must follow it.
+  await expect(customerSelect).toBeEnabled();
+  await expect(
+    customerSelect.getByRole("option", {
+      name: "SYN customer beyond first page",
+      exact: true,
+    }),
+  ).toHaveCount(1);
   await customerSelect.focus();
   await customerSelect.selectOption(customer);
   await expect(customerSelect).toBeFocused();
