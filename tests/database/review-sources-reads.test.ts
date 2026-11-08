@@ -8,6 +8,7 @@ import { listWorkReviews } from "../../src/activities/work-reviews";
 import { reviewSources as oracle } from "../helpers/review-sources-per-row";
 import { listWorkReviews as workOracle } from "../helpers/work-reviews-per-row";
 import { reviewSourcesFixture } from "../helpers/review-sources-fixture";
+import { CRM } from "../helpers/crm";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable synthetic database only");
@@ -18,6 +19,8 @@ after(closeDatabase);
 
 test("Review sources preserve full DTO, JSON, authority, paging and work summaries against frozen main", async (t) => {
   const f = await reviewSourcesFixture();
+  let filteredComparisons = 0,
+    nonEmptyFilteredComparisons = 0;
   for (const p of [f.broad, f.reviewer, f.author, f.other, f.denied]) {
     const expected = await oracle(p),
       actual = await reviewSources(p);
@@ -31,7 +34,39 @@ test("Review sources preserve full DTO, JSON, authority, paging and work summari
       assert.equal(JSON.stringify(work), JSON.stringify(expectedWork));
       if (work) assert.equal(work.items.length, Math.min(work.total, limit));
     }
+    for (const company of [CRM.company, CRM.companyB]) {
+      // Engineering's corrected company filter is proved separately; the other
+      // sources must still match the frozen oracle, including their states.
+      const expectedFiltered = await oracle(p, company),
+        actualFiltered = await reviewSources(p, company);
+      const expectedOther = {
+        items: expectedFiltered.items.filter((i) => i.module !== "Engineering"),
+        sources: expectedFiltered.sources.filter(
+          (s) => s.module !== "Engineering",
+        ),
+      };
+      const actualOther = {
+        items: actualFiltered.items.filter((i) => i.module !== "Engineering"),
+        sources: actualFiltered.sources.filter(
+          (s) => s.module !== "Engineering",
+        ),
+      };
+      assert.deepEqual(actualOther, expectedOther);
+      assert.equal(JSON.stringify(actualOther), JSON.stringify(expectedOther));
+      filteredComparisons++;
+      if (actualOther.items.length > 0) nonEmptyFilteredComparisons++;
+    }
   }
+  assert.equal(
+    filteredComparisons,
+    10,
+    "five principals across both companies",
+  );
+  assert.equal(
+    nonEmptyFilteredComparisons,
+    2,
+    "exactly two company-filtered comparisons contain non-Engineering items",
+  );
   const broad = await reviewSources(f.broad),
     engineering = broad.items.filter((i) => i.module === "Engineering");
   assert.ok(
