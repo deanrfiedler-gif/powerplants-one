@@ -1,0 +1,38 @@
+✔ ES04 concurrent submission, original recovery and immutable events preserve exact estimate and Draft input (7468.8554ms)
+✔ ES04 returned findings require attributable responses and independent review of a corrected successor (1389.185607ms)
+✔ ES04 price-only successor retains technical and completeness evidence but refuses stale price review (1004.681446ms)
+✔ ES04 scope and duty revocation protect commands, exact originals and history; source duty alone cannot review (620.758615ms)
+✔ ES04 two reviewers racing, and late evidence failure, cannot duplicate or partly record a decision (726.406117ms)
+✔ ES04 later source revisions invalidate only source-price review and preserve earlier reviewed bindings (1592.864515ms)
+✔ review snapshots preserve exact returns, successor responses and native independent authority (1282.574117ms)
+✔ review queue continues beyond 25 candidates without claiming review-row totals (12077.718353ms)
+✔ review queue preserves submitted identity, current eligibility, own-work and read-only counts (847.836787ms)
+✔ review queue retains returned findings, requires successor review and carries only applicable Reviewed decisions (1737.132144ms)
+✔ review queue paginates candidate windows independently of views and excludes other company data (821.691185ms)
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1481.699731ms)
+✔ review queue rechecks duties and exact relationship access without exposing restricted counts (688.640882ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34285.767992
+
+✖ failing tests:
+
+test at tests/helpers/estimating-review-queue-cases.ts:1:9480
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1481.699731ms)
+  Error: The exact draft output is unavailable. Its saved revision is retained for recovery.
+      at missing (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:12:19)
+      at runQuoteJob (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:93:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async retryQuote (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:99:3)
+      at async TestContext.<anonymous> (/workspace/estimate-review-candidate-cost/tests/helpers/estimating-review-queue-cases.ts:352:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDraftUnavailable',
+    field_errors: []
+  }

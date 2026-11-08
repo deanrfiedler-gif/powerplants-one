@@ -3,7 +3,11 @@ import { test, after } from "node:test";
 import { randomUUID } from "node:crypto";
 import { mkdirSync, writeFileSync } from "node:fs";
 import pg from "pg";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
 import { createOrganisation } from "../../src/shared/commands";
@@ -25,7 +29,7 @@ import { estimateInput } from "../helpers/estimating";
 assert.equal(localConfig().database_name, "ppo_synthetic_test");
 after(closeDatabase);
 const compare = process.env.PPO_COST_COMPARE === "1";
-const output = compare ? "work/candidate-cost-paired" : "work/candidate-cost";
+const output = compare ? "work/candidate-cost-jit-off" : "work/candidate-cost";
 mkdirSync(output, { recursive: true });
 type Sample = { sql: string; values: unknown[]; ms: number };
 let samples: Sample[] | undefined;
@@ -114,68 +118,96 @@ test("Prompt Y native volume measurement", async () => {
         [p.workspace_id],
       )
     ).rows[0];
-    for (const offset of [25, 0]) {
-      let expected: unknown;
-      const readers: [string, typeof readEstimatingReviewQueue][] = compare
-        ? [
-            ["before", mainQueue],
-            ["after", readEstimatingReviewQueue],
-          ]
-        : [["before", readEstimatingReviewQueue]];
-      for (const [label, reader] of readers) {
-        const input = { q: title, offset: String(offset) };
-        await reader(p, input);
-        samples = [];
-        const start = performance.now();
-        const result = await reader(p, input);
-        const wall = performance.now() - start;
-        const { as_of, ...stable } = result;
-        assert.ok(as_of);
-        if (label === "before") expected = stable;
-        else {
-          assert.deepEqual(stable, expected);
-          assert.equal(JSON.stringify(stable), JSON.stringify(expected));
+    for (const search of [true, false]) {
+      for (const offset of [25, 0]) {
+        let expected: unknown;
+        let expectedStatements = 0;
+        const readers: [string, typeof readEstimatingReviewQueue][] = compare
+          ? [
+              ["before", mainQueue],
+              ["after", readEstimatingReviewQueue],
+            ]
+          : [["before", mainQueue]];
+        for (const [label, reader] of readers) {
+          const input = { q: search ? title : "", offset: String(offset) };
+          await reader(p, input);
+          samples = [];
+          const start = performance.now();
+          const result = await reader(p, input);
+          const wall = performance.now() - start;
+          const { as_of, ...stable } = result;
+          assert.ok(as_of);
+          if (label === "before") expected = stable;
+          else {
+            assert.deepEqual(stable, expected);
+            assert.equal(JSON.stringify(stable), JSON.stringify(expected));
+          }
+          const measured = samples;
+          samples = undefined;
+          if (search) {
+            assert.equal(result.items.length, offset === 25 ? 3 : 75);
+            assert.equal(result.next_offset, offset === 25 ? null : 25);
+          } else {
+            assert.ok(result.items.length > 0);
+            assert.equal(result.next_offset, offset + 25);
+          }
+          if (label === "before") expectedStatements = measured.length;
+          else assert.equal(measured.length, expectedStatements + 1);
+          assert.equal(
+            measured.filter((s) => s.sql === "SET LOCAL jit = off").length,
+            label === "after" ? 1 : 0,
+          );
+          assert.equal(result.completeness, "CompleteWindow");
+          const candidate = measured.find((s) =>
+            s.sql.includes("WITH candidates AS"),
+          )!;
+          assert.ok(candidate);
+          const longest = measured.reduce((a, b) => (a.ms > b.ms ? a : b));
+          const { plan, jit } = await transaction(async (c) => {
+            if (label === "after") await c.query("SET LOCAL jit = off");
+            const jit = (await c.query("SHOW jit")).rows[0].jit;
+            const plan = await c.query(
+              `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) ${candidate.sql}`,
+              candidate.values,
+            );
+            return { plan, jit };
+          });
+          const explained = plan.rows[0]["QUERY PLAN"][0];
+          if (label === "after") {
+            assert.equal(jit, "off");
+            assert.equal("JIT" in explained, false);
+          }
+          const row = {
+            label,
+            search,
+            jit_setting: jit,
+            explain_has_jit: "JIT" in explained,
+            explain_execution_ms: explained["Execution Time"],
+            volume,
+            offset,
+            counts,
+            statements: measured.length,
+            database_ms: measured.reduce((n, s) => n + s.ms, 0),
+            longest_ms: longest.ms,
+            longest_sql: longest.sql,
+            candidate_ms: candidate.ms,
+            wall_ms: wall,
+          };
+          rows.push(row);
+          console.log(JSON.stringify({ ...row, longest_sql: undefined }));
+          writeFileSync(
+            `${output}/measurements.json`,
+            JSON.stringify({ title, rows }, null, 2),
+          );
+          writeFileSync(
+            `${output}/statements-${label}-${volume}-${search ? "search" : "all"}-${offset}.json`,
+            JSON.stringify(measured, null, 2),
+          );
+          writeFileSync(
+            `${output}/plan-${label}-${volume}-${search ? "search" : "all"}-${offset}.json`,
+            JSON.stringify(plan.rows, null, 2),
+          );
         }
-        const measured = samples;
-        samples = undefined;
-        assert.equal(result.items.length, offset === 25 ? 3 : 75);
-        assert.equal(result.next_offset, offset === 25 ? null : 25);
-        assert.equal(result.completeness, "CompleteWindow");
-        const candidate = measured.find((s) =>
-          s.sql.includes("WITH candidates AS"),
-        )!;
-        assert.ok(candidate);
-        const longest = measured.reduce((a, b) => (a.ms > b.ms ? a : b));
-        const row = {
-          label,
-          volume,
-          offset,
-          counts,
-          statements: measured.length,
-          database_ms: measured.reduce((n, s) => n + s.ms, 0),
-          longest_ms: longest.ms,
-          longest_sql: longest.sql,
-          candidate_ms: candidate.ms,
-          wall_ms: wall,
-        };
-        rows.push(row);
-        console.log(JSON.stringify(row));
-        writeFileSync(
-          `${output}/measurements.json`,
-          JSON.stringify({ title, rows }, null, 2),
-        );
-        writeFileSync(
-          `${output}/statements-${label}-${volume}-${offset}.json`,
-          JSON.stringify(measured, null, 2),
-        );
-        const plan = await database().query(
-          `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) ${candidate.sql}`,
-          candidate.values,
-        );
-        writeFileSync(
-          `${output}/plan-${label}-${volume}-${offset}.json`,
-          JSON.stringify(plan.rows, null, 2),
-        );
       }
     }
   }

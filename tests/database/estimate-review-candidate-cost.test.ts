@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID } from "node:crypto";
+import pg from "pg";
 import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { createSession } from "../../src/platform/identity";
@@ -190,4 +191,81 @@ for (const profile of ["owner", "partial", "issuer"] as const) {
       });
     }
   }
+}
+
+for (const outcome of ["commit", "rollback"] as const) {
+  test(`queue disables JIT exactly once and restores the same pooled client on ${outcome}`, async (t) => {
+    const original = pg.Client.prototype.query;
+    const before: string[] = [],
+      during: string[] = [],
+      after: string[] = [];
+    const clients = new Set<pg.Client>();
+    let settings = 0;
+    const failure = new Error(
+      "SYN candidate failure to prove rollback restoration",
+    );
+    t.mock.method(pg.Client.prototype, "query", function (
+      this: pg.Client,
+      ...args: unknown[]
+    ) {
+      const sql = args[0];
+      if (sql === "SET LOCAL jit = off") {
+        settings++;
+        clients.add(this);
+        return Reflect.apply(original, this, ["SHOW jit"]).then(
+          (r: { rows: { jit: string }[] }) => {
+            before.push(r.rows[0].jit);
+            return Reflect.apply(original, this, args);
+          },
+        );
+      }
+      if (
+        clients.has(this) &&
+        typeof sql === "string" &&
+        sql.includes("WITH candidates AS")
+      ) {
+        return Reflect.apply(original, this, ["SHOW jit"]).then(
+          (r: { rows: { jit: string }[] }) => {
+            during.push(r.rows[0].jit);
+            if (outcome === "rollback") throw failure;
+            return Reflect.apply(original, this, args);
+          },
+        );
+      }
+      const result = Reflect.apply(original, this, args);
+      if (clients.has(this) && sql === outcome.toUpperCase()) {
+        // Observe this exact connection before transaction() releases it to the
+        // pool; a SHOW on some other pooled connection would be a weak proof.
+        return result.then((value: unknown) =>
+          Reflect.apply(original, this, ["SHOW jit"]).then(
+            (r: { rows: { jit: string }[] }) => {
+              after.push(r.rows[0].jit);
+              return value;
+            },
+          ),
+        );
+      }
+      return result;
+    } as typeof original);
+    const read = () =>
+      readEstimatingReviewQueue(f.owner, {
+        q: f.title,
+        source: "estimates",
+        offset: "25",
+      });
+    if (outcome === "rollback")
+      await assert.rejects(read, (e) => e === failure);
+    else {
+      const result = await read();
+      assert.equal(result.items.length, 12);
+      assert.equal(result.next_offset, null);
+      assert.equal(result.completeness, "CompleteWindow");
+    }
+    assert.equal(settings, 1);
+    assert.equal(clients.size, 1);
+    assert.deepEqual(before, ["on"]);
+    assert.deepEqual(during, ["off"]);
+    assert.equal(after.length, 1);
+    assert.deepEqual(after, before);
+  });
 }
