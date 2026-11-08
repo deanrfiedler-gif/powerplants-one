@@ -8,7 +8,6 @@ import { listWorkReviews } from "../../src/activities/work-reviews";
 import { reviewSources as oracle } from "../helpers/review-sources-per-row";
 import { listWorkReviews as workOracle } from "../helpers/work-reviews-per-row";
 import { reviewSourcesFixture } from "../helpers/review-sources-fixture";
-import { AppError } from "../../src/platform/errors";
 import { CRM } from "../helpers/crm";
 
 if (localConfig().database_name !== "ppo_synthetic_test")
@@ -20,48 +19,54 @@ after(closeDatabase);
 
 test("Review sources preserve full DTO, JSON, authority, paging and work summaries against frozen main", async (t) => {
   const f = await reviewSourcesFixture();
+  let filteredComparisons = 0,
+    nonEmptyFilteredComparisons = 0;
   for (const p of [f.broad, f.reviewer, f.author, f.other, f.denied]) {
-    for (const company of [null, CRM.company, CRM.companyB]) {
-      const expected = await oracle(p, company),
-        actual = await reviewSources(p, company);
-      assert.deepEqual(actual, expected);
-      assert.equal(JSON.stringify(actual), JSON.stringify(expected));
-      if (!company)
-        assert.ok(actual.items.length > 0, `non-vacuous ${p.display_name}`);
-      else
-        assert.equal(
-          actual.sources.find((s) => s.module === "Engineering")?.state,
-          "unavailable",
-        );
-      if (!company) {
-        for (const limit of [1, 3, 100]) {
-          const expectedWork = await workOracle(p, { company_id: null, limit });
-          const work = await listWorkReviews(p, { company_id: null, limit });
-          assert.deepEqual(work, expectedWork);
-          assert.equal(JSON.stringify(work), JSON.stringify(expectedWork));
-          if (work)
-            assert.equal(work.items.length, Math.min(work.total, limit));
-        }
-      } else {
-        const failures = [];
-        for (const read of [workOracle, listWorkReviews]) {
-          try {
-            await read(p, { company_id: company, limit: 3 });
-            assert.fail("known main company-filter defect must remain");
-          } catch (e) {
-            assert.ok(e instanceof AppError);
-            failures.push({
-              status: e.status,
-              code: e.code,
-              message: e.message,
-            });
-          }
-        }
-        assert.deepEqual(failures[0], failures[1]);
-        assert.equal(failures[0].code, "ReviewSourceUnavailable");
-      }
+    const expected = await oracle(p),
+      actual = await reviewSources(p);
+    assert.deepEqual(actual, expected);
+    assert.equal(JSON.stringify(actual), JSON.stringify(expected));
+    assert.ok(actual.items.length > 0, `non-vacuous ${p.display_name}`);
+    for (const limit of [1, 3, 100]) {
+      const expectedWork = await workOracle(p, { company_id: null, limit });
+      const work = await listWorkReviews(p, { company_id: null, limit });
+      assert.deepEqual(work, expectedWork);
+      assert.equal(JSON.stringify(work), JSON.stringify(expectedWork));
+      if (work) assert.equal(work.items.length, Math.min(work.total, limit));
+    }
+    for (const company of [CRM.company, CRM.companyB]) {
+      // Engineering's corrected company filter is proved separately; the other
+      // sources must still match the frozen oracle, including their states.
+      const expectedFiltered = await oracle(p, company),
+        actualFiltered = await reviewSources(p, company);
+      const expectedOther = {
+        items: expectedFiltered.items.filter((i) => i.module !== "Engineering"),
+        sources: expectedFiltered.sources.filter(
+          (s) => s.module !== "Engineering",
+        ),
+      };
+      const actualOther = {
+        items: actualFiltered.items.filter((i) => i.module !== "Engineering"),
+        sources: actualFiltered.sources.filter(
+          (s) => s.module !== "Engineering",
+        ),
+      };
+      assert.deepEqual(actualOther, expectedOther);
+      assert.equal(JSON.stringify(actualOther), JSON.stringify(expectedOther));
+      filteredComparisons++;
+      if (actualOther.items.length > 0) nonEmptyFilteredComparisons++;
     }
   }
+  assert.equal(
+    filteredComparisons,
+    10,
+    "five principals across both companies",
+  );
+  assert.equal(
+    nonEmptyFilteredComparisons,
+    2,
+    "exactly two company-filtered comparisons contain non-Engineering items",
+  );
   const broad = await reviewSources(f.broad),
     engineering = broad.items.filter((i) => i.module === "Engineering");
   assert.ok(

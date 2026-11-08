@@ -1,0 +1,15 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {database,closeDatabase} from '../../src/platform/database';
+import {createSession} from '../../src/platform/identity';
+import {localConfig} from '../../src/platform/config';
+import assert from 'node:assert/strict';
+assert.equal(localConfig().database_name,'ppo_synthetic_test');
+const j=JSON.parse(await readFile('tmp/prompt-s/baseline.json','utf8'));
+const p=(await createSession('coordinator')).principal;
+const sql=j.samples[0].statements.find((q:any)=>q.sql.includes('WITH candidates')).sql;
+const result=await database().query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) '+sql,[p.workspace_id,p.actor_id,'all',true,j.title,26,25]);
+await writeFile('tmp/prompt-s/candidate-plan.json',JSON.stringify(result.rows,null,2));
+const plan=result.rows[0]['QUERY PLAN'][0];
+console.log(JSON.stringify({planning_ms:plan['Planning Time'],execution_ms:plan['Execution Time'],jit:plan.JIT,cost:plan.Plan['Total Cost'],actual_rows:plan.Plan['Actual Rows']}));
+console.log((await database().query('SELECT current_date::text,current_setting(\'TimeZone\') timezone,(SELECT count(*)::int FROM ppo.estimates) estimates,(SELECT count(*)::int FROM ppo.workspaces) workspaces')).rows);
+await closeDatabase();

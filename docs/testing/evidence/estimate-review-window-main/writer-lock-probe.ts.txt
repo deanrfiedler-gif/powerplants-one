@@ -1,0 +1,80 @@
+import assert from "node:assert/strict";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { randomUUID } from "node:crypto";
+import { writeFile } from "node:fs/promises";
+import pg from "pg";
+import { database, closeDatabase } from "../../src/platform/database";
+import { localConfig } from "../../src/platform/config";
+import { migrateDemo, reconcileTesters, demoWorkspace } from "../../scripts/demo-database";
+
+assert.equal(localConfig().database_name, "ppo_synthetic_test");
+assert.equal(process.env.PPO_ENV, "local-synthetic");
+const trace = new AsyncLocalStorage<boolean>();
+const original = pg.Client.prototype.query;
+const statements: string[] = [];
+const rollback = new Error("SYN probe complete: roll back native writer");
+const evidence: Record<string, unknown> = {
+  date: new Date().toISOString(),
+  database: "ppo_synthetic_test",
+  native_writer: "scripts/demo-database.ts:reconcileTesters",
+  workspace: demoWorkspace,
+};
+try {
+  // Install the existing hosted-only schema track locally, as tests/demo do.
+  // No hosted connection, operator CLI or demo configuration is used.
+  await migrateDemo();
+  const before = Number((await database().query("SELECT count(*) FROM ppo.users")).rows[0].count);
+  evidence.foreign_keys = (await database().query(`
+    SELECT conname, pg_get_constraintdef(oid) AS definition, convalidated
+    FROM pg_constraint WHERE conrelid='ppo.users'::regclass AND contype='f'
+    ORDER BY conname`)).rows;
+  evidence.server = (await database().query("SELECT version() AS version")).rows[0].version;
+  pg.Client.prototype.query = function (...args: unknown[]) {
+    if (!trace.getStore()) return Reflect.apply(original, this, args);
+    const sql = typeof args[0] === "string" ? args[0] : (args[0] as { text: string }).text;
+    statements.push(sql);
+    if (sql === "COMMIT") {
+      const writer = this;
+      return trace.run(false, async () => {
+        await Reflect.apply(original, writer, ["SET CONSTRAINTS ALL IMMEDIATE"]);
+        const users = await Reflect.apply(original, writer, ["SELECT count(*) FROM ppo.users"]);
+        assert.equal(Number(users.rows[0].count), before + 2);
+        evidence.inserted_users = 2;
+        const probes: Record<string, string> = {};
+        for (const mode of ["KEY SHARE", "SHARE", "NO KEY UPDATE", "UPDATE"]) {
+          const observer = await database().connect();
+          try {
+            await observer.query("BEGIN");
+            await observer.query(`SELECT id FROM ppo.workspaces WHERE id=$1 FOR ${mode} NOWAIT`, [demoWorkspace]);
+            probes[mode] = "acquired";
+          } catch (error) {
+            probes[mode] = (error as { code: string }).code;
+          } finally {
+            await observer.query("ROLLBACK");
+            observer.release();
+          }
+        }
+        assert.deepEqual(probes, {
+          "KEY SHARE": "acquired", "SHARE": "acquired",
+          "NO KEY UPDATE": "acquired", "UPDATE": "55P03",
+        });
+        evidence.workspace_lock_probes = probes;
+        evidence.explicit_workspace_lock_statements = statements.filter(sql => /\bFOR\s+(?:KEY SHARE|SHARE|NO KEY UPDATE|UPDATE)\b/i.test(sql) && /ppo\.workspaces/i.test(sql));
+        assert.deepEqual(evidence.explicit_workspace_lock_statements, []);
+        throw rollback;
+      });
+    }
+    return Reflect.apply(original, this, args);
+  } as typeof original;
+  await assert.rejects(trace.run(true, () => reconcileTesters(randomUUID(), [{
+    object_id: randomUUID(), expires_at: new Date(Date.now() + 86400000).toISOString(),
+  }])), error => error === rollback);
+  assert.equal(Number((await database().query("SELECT count(*) FROM ppo.users")).rows[0].count), before);
+  evidence.writer_rolled_back = true;
+  evidence.statements_without_bind_values = statements;
+  await writeFile("tmp/prompt-s/writer-lock-probe.json", JSON.stringify(evidence, null, 2) + "\n");
+  console.log(JSON.stringify({ inserted_users: 2, probes: evidence.workspace_lock_probes, writer_rolled_back: true }));
+} finally {
+  pg.Client.prototype.query = original;
+  await closeDatabase();
+}

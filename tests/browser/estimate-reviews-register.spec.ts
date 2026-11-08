@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page, type Request } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { crmCreate, crmBase } from "../helpers/crm";
 import { releaseFixture, prepared } from "../helpers/quotation-release";
@@ -273,6 +273,41 @@ test("quotation snapshot hands over to the exact native approval on desktop and 
 test("empty awaiting-my-review windows retain native continuation beyond 25 candidates", async ({
   page,
 }) => {
+  // Diagnostics only: preserve every assertion, timeout and request behaviour.
+  // Log unique request IDs so overlapping offset-0 reads are visible in CI.
+  let nextRequest = 0;
+  const requests = new Map<
+    Request,
+    { id: number; offset: number; view: string; began: number }
+  >();
+  const log = (request: Request, event: "start" | "finish" | "failed") => {
+    const url = new URL(request.url());
+    if (url.pathname !== "/api/v1/estimating/reviews") return;
+    if (event === "start")
+      requests.set(request, {
+        id: ++nextRequest,
+        offset: Number(url.searchParams.get("offset") ?? 0),
+        view: url.searchParams.get("view") ?? "all",
+        began: performance.now(),
+      });
+    const entry = requests.get(request);
+    if (!entry) return;
+    console.log(
+      "PPO_REVIEW_QUEUE_REQUEST",
+      JSON.stringify({
+        event,
+        id: entry.id,
+        offset: entry.offset,
+        view: entry.view,
+        at: new Date().toISOString(),
+        elapsed_ms: Math.round((performance.now() - entry.began) * 1000) / 1000,
+      }),
+    );
+    if (event !== "start") requests.delete(request);
+  };
+  page.on("request", (request) => log(request, "start"));
+  page.on("requestfinished", (request) => log(request, "finish"));
+  page.on("requestfailed", (request) => log(request, "failed"));
   await identity(page);
   const title = `SYN Browser window ${randomUUID()}`;
   for (let i = 0; i < 26; i++) await fixture(page, title, true);

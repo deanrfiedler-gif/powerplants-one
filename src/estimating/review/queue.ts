@@ -36,7 +36,9 @@ export async function readEstimatingReviewQueue(
   const filters = queueQuery(input);
   return transaction(async (c) => {
     await requireCapability(c, p, "estimating.read");
-    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE", [
+    // Concurrent queue readers share this lock; native workspace mutations still
+    // take FOR UPDATE. Exact-source and final permission rechecks stay intact.
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
       p.workspace_id,
     ]);
     const quotationRead = await hasPermission(c, p, "estimating.quote.read");

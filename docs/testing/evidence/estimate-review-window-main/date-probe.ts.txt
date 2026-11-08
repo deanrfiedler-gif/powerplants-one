@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {database,closeDatabase} from '../../src/platform/database';
+import {localConfig} from '../../src/platform/config';
+import {createSession} from '../../src/platform/identity';
+import {readEstimatingReviewQueue} from '../../src/estimating/review/queue';
+assert.equal(localConfig().database_name,'ppo_synthetic_test');
+const p=(await createSession('coordinator')).principal;
+const {title}=JSON.parse(await readFile('tmp/prompt-s/baseline.json','utf8'));
+const records:any[]=[];
+for(const timezone of ['UTC','Australia/Sydney']){
+  await closeDatabase();process.env.TZ=timezone;
+  await database().query("SELECT set_config('TimeZone',$1,false)",[timezone]);
+  const date=(await database().query("SELECT current_date::text AS date,current_setting('TimeZone') AS timezone")).rows[0];
+  assert.equal(database().totalCount,1);
+  for(const offset of ['0','25'])for(const view of ['all','awaiting_me']){
+    const start=performance.now();const result=await readEstimatingReviewQueue(p,{q:title,offset,view});
+    const ms=performance.now()-start;
+    assert.equal(result.items.length,view==='awaiting_me'?0:offset==='0'?75:3);
+    assert.equal(result.next_offset,offset==='0'?25:null);
+    assert.equal(result.completeness,'CompleteWindow');
+    const {as_of,...stable}=result;
+    records.push({...date,offset,view,items:result.items.length,ms,dto_sha256:createHash('sha256').update(JSON.stringify(stable)).digest('hex')});
+  }
+}
+assert.notEqual(records[0].date,records[4].date);
+for(let i=0;i<4;i++)assert.equal(records[i].dto_sha256,records[i+4].dto_sha256);
+await writeFile('tmp/prompt-s/dates.json',JSON.stringify(records,null,2));console.log(JSON.stringify(records));
+await closeDatabase();
