@@ -87,6 +87,7 @@ export async function runQuoteJob(id:string,hooks:{render?:typeof renderQuote;af
   } catch(e) {
     if(e instanceof QuoteWorkerInterrupted) throw e;
     await transaction(async c=>{
+      await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",[j.workspace_id]);
       const changed=await c.query("UPDATE ppo.estimate_quote_jobs SET state='Failed',lease_token=NULL,lease_until=NULL,error_code='DraftRenderFailed',updated_at=clock_timestamp() WHERE id=$1 AND state='Running' AND lease_token=$2",[id,j.lease_token]);
       if(changed.rowCount) await c.query("INSERT INTO ppo.estimate_quote_attempts(job_id,attempt,outcome,code) VALUES($1,$2,'Failed','DraftRenderFailed')",[id,j.attempts]);
     });
