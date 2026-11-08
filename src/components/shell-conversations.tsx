@@ -6,6 +6,7 @@ import { usePlatformResource } from "./platform-resource";
 import { useShell } from "./shell-provider";
 import { ShellIcon } from "./shell-icon";
 import { conversationsChanged } from "../conversations/events";
+import { capShellBadge } from "../shell/refined";
 import { conversationBadgeLabel } from "../conversations/badge";
 
 type Badge = { unread_threads: number };
@@ -16,7 +17,7 @@ type Badge = { unread_threads: number };
 export type ConversationsAction = { name: string; title: string; badge: string | null; count?: number; current: boolean };
 // `enabled` false reads nothing: the phone record row asks only when its More menu is the one showing the action.
 export function useConversationsAction(enabled = true): ConversationsAction | null {
-  const { context } = useShell();
+  const { context,refinedDesktop } = useShell();
   const pathname = usePathname();
   const read = usePlatformResource<Badge>(enabled && context?.conversations ? "conversations/badge" : null);
   const { reload } = read;
@@ -33,7 +34,7 @@ export function useConversationsAction(enabled = true): ConversationsAction | nu
   else if (read.error && kept.badge) setKept({ scope });
   if (!enabled || !context?.conversations) return null;
   const count = read.error ? undefined : (read.data ?? kept.badge)?.unread_threads;
-  const badge = conversationBadgeLabel(count);
+  const badge = refinedDesktop ? capShellBadge(count) : conversationBadgeLabel(count);
   return {
     name: badge ? `Conversations, ${count} unread` : "Conversations",
     title: badge ? `Conversations · ${count} with new messages` : "Conversations",
@@ -43,6 +44,7 @@ export function useConversationsAction(enabled = true): ConversationsAction | nu
   };
 }
 export function ShellConversations() {
+  const {refinedDesktop}=useShell();
   const action = useConversationsAction();
   if (!action) return null;
   const { name, title, badge, current } = action;
@@ -51,7 +53,8 @@ export function ShellConversations() {
       href="/conversations"
       className="ppo-top-action ppo-conversations-action"
       aria-label={name}
-      title={title}
+      title={refinedDesktop ? undefined : title}
+      data-tooltip={refinedDesktop ? title : undefined}
       aria-current={current ? "page" : undefined}
     >
       <ShellIcon name="conversations" />

@@ -9,11 +9,15 @@ export function ApplicationFrame({
   hosted,
   development,
   railExpanded = true,
+  refinedOverride,
+  buildCommit,
 }: {
   children: React.ReactNode;
   hosted: boolean;
   development: boolean;
   railExpanded?: boolean;
+  refinedOverride?: string;
+  buildCommit?: string;
 }) {
   const pathname = usePathname();
   // Presentation only. The preview page independently enforces the server gate.
@@ -25,7 +29,7 @@ export function ApplicationFrame({
       </main>
     );
   return (
-    <ShellProvider hosted={hosted} development={development} renderedRailExpanded={railExpanded}>
+    <ShellProvider hosted={hosted} development={development} renderedRailExpanded={railExpanded} refinedOverride={refinedOverride} buildCommit={buildCommit}>
       <FrameContents>{children}</FrameContents>
     </ShellProvider>
   );
@@ -34,7 +38,7 @@ function FrameContents({ children }: { children: React.ReactNode }) {
   const shell = useShell();
   const path = usePathname();
   const fertigation = (/^\/estimating\/fertigation\/[^/]+$/.test(path) && !path.endsWith("/new"));
-  return <div className="app-frame" data-shell-design={fertigation ? "fertigation" : undefined} data-rail={shell.railExpanded ? "expanded" : "compact"}>
+  return <div className="app-frame" data-shell-version={shell.refinedDesktop ? "refined" : undefined} data-shell-design={fertigation ? "fertigation" : undefined} data-rail={shell.railExpanded ? "expanded" : "compact"}>
         <ProductNavigation />
         <div className="workspace">
           <ProductHeader />

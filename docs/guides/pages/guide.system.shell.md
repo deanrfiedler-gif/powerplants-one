@@ -3,6 +3,9 @@ guide_key: guide.system.shell
 entry_key: system:shell
 also_applies_to: []
 carried_over_from: src/shell/guide.ts
+# Refined S1 instructions await release review in
+# docs/design/development/component-bindings/2026-11-08-shell-refined-s1.md.
+# Preserve this carried-over guide and its parity fixture while legacy is default.
 title: Application shell
 status: InReview
 shown_before_review: true

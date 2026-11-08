@@ -1,4 +1,4 @@
-import { ShellProvider } from "../../src/components/shell-provider";
+import { ShellProvider, useShell } from "../../src/components/shell-provider";
 import { destinations } from "../../src/shell/navigation";
 import { createRoot } from "react-dom/client";
 import { BusinessSession } from "../../src/components/business-session";
@@ -94,6 +94,7 @@ window.fetch = async (input) => {
     data = { current: "tester", available: ["tester", "pack-reviewer"] };
   else if (url.pathname.endsWith("/shell/context")) data = {
     preference_scope: `${CRM.workspace}:${CRM.owner}`,
+    ...(new URLSearchParams(location.search).get("refined") === "1" ? { companies:[{id:CRM.company,name:"SYN-A · SYN Review company"}], working_company_id:CRM.company } : {}),
     conversations: new URLSearchParams(location.search).get("conversations") === "1",
     navigation: destinations.filter(item => item.href).map(item => item.id),
       can_preview: true,
@@ -178,7 +179,7 @@ window.fetch = async (input) => {
   });
 };
 createRoot(document.getElementById("root")!).render(
-  <GuideLibraryProvider value={PPO_RELEASED_GUIDES}><ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"} development={new URLSearchParams(location.search).get("development") === "1"}><div className="app-frame">
+  <GuideLibraryProvider value={PPO_RELEASED_GUIDES}><ShellProvider hosted={new URLSearchParams(location.search).get("mode") !== "local"} development={new URLSearchParams(location.search).get("development") === "1"} refinedOverride={new URLSearchParams(location.search).get("refined") === "1" ? "1" : undefined}><FixtureFrame>
     <ProductNavigation />
     <div className="workspace">
       <ProductHeader />
@@ -190,5 +191,7 @@ createRoot(document.getElementById("root")!).render(
         </BusinessSession>
       </main>
     </div>
-  </div></ShellProvider></GuideLibraryProvider>,
+  </FixtureFrame></ShellProvider></GuideLibraryProvider>,
 );
+
+function FixtureFrame({children}: {children:React.ReactNode}) { const shell=useShell(); return <div className="app-frame" data-shell-version={shell.refinedDesktop ? "refined" : undefined} data-rail={shell.refinedDesktop ? shell.railExpanded ? "expanded" : "compact" : undefined}>{children}</div>; }

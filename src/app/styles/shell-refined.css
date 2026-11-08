@@ -1,0 +1,944 @@
+/* S1: opt-in desktop chrome only. Legacy and <768 px keep their accepted styles. */
+.ppo-legacy-heading:not([hidden]) {
+  display: contents;
+}
+.ppo-legacy-heading[hidden] {
+  display: none;
+}
+.ppo-refined-preference {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+}
+.ppo-refined-preference input {
+  width: 18px;
+  min-height: 18px;
+  margin: 0;
+}
+@media (min-width: 768px) {
+  .app-frame[data-shell-version="refined"] {
+    --ppo-refined-search-width: clamp(
+      360px,
+      calc(360px + (100vw - 1024px) * 0.15625),
+      400px
+    );
+    padding-top: 48px;
+  }
+  .app-frame[data-shell-version="refined"]
+    .workspace
+    > #shell-header.topbar.ppo-shell-header,
+  .app-frame[data-shell-version="refined"]
+    .workspace
+    > #shell-header.topbar.ppo-shell-header:has(#header-search:not(:empty)) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    min-height: 48px;
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) var(--ppo-refined-search-width)
+      minmax(0, 1fr);
+    gap: 0;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    background: var(--ppo-refined-brand-navy-deep);
+    color: var(--ppo-refined-brand-white);
+    z-index: 90;
+  }
+  [data-shell-version="refined"] #shell-header [hidden] {
+    display: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(
+      .mobile-brand,
+      .ppo-phone-lead,
+      .ppo-phone-title,
+      .ppo-phone-actions,
+      .ppo-phone-before,
+      .ppo-phone-after,
+      .ppo-phone-page-action,
+      .ppo-phone-filter,
+      .ppo-phone-search-filter,
+      .ppo-phone-previous,
+      .ppo-phone-next,
+      .ppo-phone-more
+    ) {
+    display: none;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-header-start {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    min-width: 0;
+    padding: 0 16px 0 18px;
+    gap: 8px;
+  }
+  [data-shell-version="refined"] .ppo-refined-brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: none;
+    width: 176px;
+    height: 44px;
+    gap: 10px;
+    padding: 0 8px 0 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ppo-refined-brand-white);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.16px;
+    white-space: nowrap;
+  }
+  [data-shell-version="refined"] .ppo-refined-brand .brand-logo {
+    display: block;
+    width: 32px;
+    height: 32px;
+    max-width: none;
+    object-fit: contain;
+  }
+  [data-shell-version="refined"] .ppo-refined-brand > span > span {
+    font-weight: 400;
+    color: var(--ppo-refined-white-72);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-header-centre {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 48px;
+    padding: 8px 0;
+    min-width: 0;
+    transform: none;
+    left: auto;
+    top: auto;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-global-search {
+    position: relative;
+    width: 100%;
+    height: 32px;
+    min-height: 32px;
+    padding: 0 6px 0 10px;
+    gap: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--ppo-refined-white-28);
+    background: var(--ppo-refined-white-12);
+    color: var(--ppo-refined-white-84);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-global-search input {
+    min-height: 28px;
+    height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--ppo-refined-brand-white);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search
+    input::placeholder {
+    color: var(--ppo-refined-white-72);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search
+    .product-icon {
+    width: 16px;
+    height: 16px;
+    color: inherit;
+  }
+  [data-shell-version="refined"] #shell-header kbd {
+    font:
+      500 11px/14px PPOShellRoboto,
+      Roboto,
+      sans-serif;
+    border: 0;
+    padding: 3px 6px;
+    background: var(--ppo-refined-white-12);
+    color: var(--ppo-refined-white-84);
+    border-radius: 4px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-header-end {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    width: 100%;
+    min-width: 0;
+    gap: 2px;
+    padding: 0 16px;
+    margin: 0;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-top-action {
+    position: relative;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ppo-refined-brand-white);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-top-action .product-icon {
+    width: 20px;
+    height: 20px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-add {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    border-radius: 50%;
+    color: var(--ppo-refined-brand-navy);
+    background: var(--ppo-refined-brand-white);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-add::before {
+    display: none;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-add .product-icon {
+    width: 18px;
+    height: 18px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-header-utilities {
+    display: flex;
+    align-items: center;
+    flex: none;
+    gap: 2px;
+    margin: 0;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-spacer {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-divider {
+    flex: 0 0 1px;
+    width: 1px;
+    height: 24px;
+    background: var(--ppo-refined-white-20);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-account-gap {
+    flex: 0 0 4px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.header-tools, .header-account) {
+    display: flex;
+    flex: none;
+    align-items: center;
+    min-height: 0;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  [data-shell-version="refined"] #shell-header .identity-strip {
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .identity-strip
+    > div:first-child
+    > strong {
+    display: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.identity-toggle, .ppo-account-toggle) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 6px 0 4px;
+    margin: 0;
+    width: auto;
+    height: 36px;
+    min-height: 36px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ppo-refined-brand-white);
+    font-size: 13px;
+    font-weight: 400;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-identity-label {
+    display: none;
+  }
+  [data-shell-version="refined"] #shell-header .account-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    border: 0;
+    font:
+      500 11px/13px PPOShellRoboto,
+      Roboto,
+      sans-serif;
+    border-radius: 50%;
+    background: var(--person-surface, var(--ppo-refined-person-teal-surface));
+    color: var(--person-ink, var(--ppo-refined-person-teal-ink));
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.identity-toggle, .ppo-account-toggle)
+    > .product-icon {
+    width: 14px;
+    height: 14px;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-name {
+    max-width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-top-badge {
+    top: 2px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--ppo-refined-brand-white);
+    color: var(--ppo-refined-brand-navy);
+    box-shadow: none;
+    font-size: 10px;
+    line-height: 16px;
+  }
+  [data-shell-version="refined"] #shell-header :is(button, a):focus-visible {
+    outline: 2px solid var(--ppo-refined-brand-white);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-global-search:focus-within {
+    outline: 2px solid var(--ppo-refined-brand-white);
+    outline-offset: 2px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(
+      .ppo-top-action,
+      .ppo-refined-brand,
+      .identity-toggle,
+      .ppo-account-toggle
+    ):is(:hover, [aria-expanded="true"]) {
+    background: var(--ppo-refined-white-16);
+    color: var(--ppo-refined-brand-white);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-quick-add:is(:hover, [aria-expanded="true"]) {
+    background: var(--ppo-refined-surface-chrome-hover);
+    color: var(--ppo-refined-brand-navy);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-tenant {
+    position: relative;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-tenant-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    min-height: 32px;
+    padding: 0 8px 0 4px;
+    margin: 0;
+    border: 1px solid var(--ppo-refined-white-28);
+    border-radius: 6px;
+    background: var(--ppo-refined-white-12);
+    color: var(--ppo-refined-brand-white);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-tenant-chip:hover {
+    background: var(--ppo-refined-white-16);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-refined-tenant-chip[aria-expanded="true"] {
+    background: var(--ppo-refined-white-24);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-refined-tenant-chip[aria-expanded="true"]
+    > .product-icon {
+    transform: rotate(180deg);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-refined-tenant-chip
+    .product-icon {
+    width: 14px;
+    height: 14px;
+  }
+  [data-shell-version="refined"] .ppo-tenant-name {
+    max-width: 96px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  [data-shell-version="refined"] .ppo-tenant-initials {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--ppo-refined-surface-navy-tint);
+    color: var(--ppo-refined-brand-navy);
+    font-size: 10px;
+  }
+  [data-shell-version="refined"] #shell-header #header-search {
+    display: none;
+  }
+  [data-shell-version="refined"] #shell-header #header-menu {
+    position: fixed;
+    top: 48px;
+    left: calc(var(--ppo-rail-width) + 8px);
+  }
+  [data-shell-version="refined"] #shell-header #header-menu button {
+    color: var(--ppo-refined-text-ink);
+    background: var(--ppo-refined-surface-canvas);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .header-account
+    :is(.identity-strip > div:first-child, .hosted-account-summary) {
+    position: static;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    overflow: visible;
+    visibility: visible;
+    flex-wrap: nowrap;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.identity-toggle, .ppo-account-toggle)[data-company="selected"]::after {
+    content: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header[data-phone-header="record"]
+    .ppo-conversations-action {
+    display: inline-flex;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-global-search kbd {
+    display: inline-block;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-top-action[aria-current="page"] {
+    background: var(--ppo-refined-white-24);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-account-panel
+    :is(p, small, label) {
+    color: var(--ppo-refined-text-secondary);
+  }
+  /* Layers use the same token; the search's input stays mounted over the card. */
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.ppo-header-panel, .ppo-account-panel, .ppo-refined-popover) {
+    border: 1px solid var(--ppo-refined-line-soft);
+    border-radius: 8px;
+    background: var(--ppo-refined-surface-canvas);
+    color: var(--ppo-refined-text-ink);
+    box-shadow: var(--ppo-refined-popover-shadow);
+    font:
+      400 13px/18px PPOShellRoboto,
+      Roboto,
+      sans-serif;
+    z-index: 100;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.ppo-header-panel, .ppo-account-panel, .ppo-refined-popover)
+    :is(button, a, input, summary):focus-visible {
+    outline: 2px solid var(--ppo-refined-text-link);
+    outline-offset: -2px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-popover {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 280px;
+    max-height: calc(100dvh - 68px);
+    overflow-y: auto;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-popover h2 {
+    padding: 12px 16px 4px;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-popover button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 4px;
+    width: calc(100% - 8px);
+    border: 0;
+    border-radius: 6px;
+    min-height: 44px;
+    text-align: left;
+    background: transparent;
+    color: var(--ppo-refined-text-ink);
+    font-size: 13px;
+    font-weight: 400;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-refined-popover
+    button:is(:hover, [aria-checked="true"]) {
+    background: var(--ppo-refined-surface-navy-tint);
+  }
+  [data-shell-version="refined"] .ppo-refined-popover button > span {
+    flex: 1;
+  }
+  [data-shell-version="refined"] .ppo-refined-popover .product-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  [data-shell-version="refined"] .ppo-refined-popover small {
+    display: block;
+    color: var(--ppo-refined-text-secondary);
+    font-size: 12px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-account-panel {
+    top: 52px;
+    right: 16px;
+    width: 280px;
+    max-height: calc(100dvh - 68px);
+    overflow-y: auto;
+  }
+  [data-shell-version="refined"]
+    .ppo-account-panel
+    > :is(.ppo-panel-titlebar, .ppo-panel-footer) {
+    display: none;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--ppo-refined-line-soft);
+  }
+  [data-shell-version="refined"] .ppo-refined-account-profile > div {
+    min-width: 0;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-profile strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-profile small {
+    display: block;
+    color: var(--ppo-refined-text-secondary);
+    font-size: 12px;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-menu nav {
+    padding: 8px 4px;
+  }
+  [data-shell-version="refined"]
+    .ppo-refined-account-menu
+    :is(nav > button, nav > a, summary) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 36px;
+    width: 100%;
+    margin: 0;
+    padding: 8px 12px;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: var(--ppo-refined-text-ink);
+    font: inherit;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+  }
+  [data-shell-version="refined"]
+    .ppo-refined-account-menu
+    :is(button, a, summary):hover {
+    background: var(--ppo-refined-surface-hover);
+  }
+  [data-shell-version="refined"] .ppo-refined-account-menu .product-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"] .ppo-refined-account-menu hr {
+    border: 0;
+    border-top: 1px solid var(--ppo-refined-line-soft);
+    margin: 8px -4px;
+  }
+  [data-shell-version="refined"] .ppo-refined-account-menu footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--ppo-refined-line-soft);
+    color: var(--ppo-refined-text-secondary);
+    font-size: 11px;
+  }
+  [data-shell-version="refined"] .ppo-refined-preferences > label {
+    padding: 8px 12px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-quick-panel
+    :is(.ppo-panel-titlebar, .ppo-panel-footer) {
+    display: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-quick-panel
+    .ppo-panel-body {
+    padding: 0;
+  }
+  [data-shell-version="refined"] .ppo-quick-panel section {
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--ppo-refined-line-soft);
+  }
+  [data-shell-version="refined"] .ppo-quick-panel h3 {
+    margin: 0;
+    padding: 4px 12px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-option {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 0;
+    margin: 0;
+    background: transparent;
+    color: var(--ppo-refined-text-ink);
+    font-size: 13px;
+    font-weight: 400;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-option:hover {
+    background: var(--ppo-refined-surface-hover);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-quick-option .product-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.ppo-quick-panel, .ppo-account-panel)
+    kbd {
+    margin-left: auto;
+    padding: 2px 5px;
+    background: var(--ppo-refined-surface-hover);
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-all-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    min-height: 40px;
+    padding: 8px 16px;
+    background: transparent;
+    color: var(--ppo-refined-text-link);
+    text-align: left;
+    font-size: 13px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-refined-all-actions
+    .product-icon {
+    width: 14px;
+    height: 14px;
+  }
+  [data-shell-version="refined"] #shell-search-panel {
+    padding-top: 40px;
+  }
+  [data-shell-version="refined"] #shell-search-panel > .ppo-panel-titlebar {
+    display: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search:has([aria-expanded="true"]) {
+    z-index: 101;
+    background: var(--ppo-refined-brand-white);
+    border-color: transparent;
+    border-bottom-color: var(--ppo-refined-line-soft);
+    border-radius: 8px 8px 0 0;
+    outline: none;
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search:has([aria-expanded="true"])
+    input {
+    color: var(--ppo-refined-text-ink);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search:has([aria-expanded="true"])
+    input::placeholder {
+    color: var(--ppo-refined-text-secondary);
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-global-search:has([aria-expanded="true"])
+    kbd {
+    background: var(--ppo-refined-surface-hover);
+    color: var(--ppo-refined-text-secondary);
+  }
+  /* S2 owns the rail replacement. S1 moves the existing rail below the new bar. */
+  [data-shell-version="refined"].app-frame .sidebar.ppo-rail {
+    top: 48px;
+    height: calc(100dvh - 48px);
+  }
+  [data-shell-version="refined"].app-frame .ppo-rail > .brand {
+    display: none;
+  }
+  [data-shell-version="refined"].app-frame .ppo-more-panel {
+    top: 48px;
+    max-height: calc(100dvh - 48px);
+  }
+  [data-shell-version="refined"] .ppo-refined-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 24px 4px 56px;
+    min-height: 32px;
+    background: var(--ppo-refined-surface-canvas);
+    color: var(--ppo-refined-text-secondary);
+    font:
+      400 13px/20px PPOShellRoboto,
+      Roboto,
+      sans-serif;
+  }
+  [data-shell-version="refined"] .ppo-refined-location a {
+    color: var(--ppo-refined-text-link);
+  }
+  [data-shell-version="refined"] [data-tooltip] {
+    position: relative;
+  }
+  [data-shell-version="refined"] [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 110;
+    pointer-events: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+    width: max-content;
+    max-width: 280px;
+    background: var(--ppo-refined-brand-navy);
+    color: var(--ppo-refined-brand-white);
+    font:
+      400 12px/16px PPOShellRoboto,
+      Roboto,
+      sans-serif;
+    opacity: 0;
+    visibility: hidden;
+  }
+  [data-shell-version="refined"] [data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 400ms;
+  }
+  [data-shell-version="refined"] [data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  [data-shell-version="refined"] .ppo-header-utilities [data-tooltip]::after {
+    left: auto;
+    right: 0;
+  }
+  [data-person-colour="sage"] {
+    --person-surface: var(--ppo-refined-person-sage-surface);
+    --person-ink: var(--ppo-refined-person-sage-ink);
+  }
+  [data-person-colour="sky"] {
+    --person-surface: var(--ppo-refined-person-sky-surface);
+    --person-ink: var(--ppo-refined-person-sky-ink);
+  }
+  [data-person-colour="lilac"] {
+    --person-surface: var(--ppo-refined-person-lilac-surface);
+    --person-ink: var(--ppo-refined-person-lilac-ink);
+  }
+  [data-person-colour="sand"] {
+    --person-surface: var(--ppo-refined-person-sand-surface);
+    --person-ink: var(--ppo-refined-person-sand-ink);
+  }
+  [data-person-colour="rose"] {
+    --person-surface: var(--ppo-refined-person-rose-surface);
+    --person-ink: var(--ppo-refined-person-rose-ink);
+  }
+  [data-person-colour="teal"] {
+    --person-surface: var(--ppo-refined-person-teal-surface);
+    --person-ink: var(--ppo-refined-person-teal-ink);
+  }
+}
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .app-frame[data-shell-version="refined"] {
+    --ppo-refined-search-width: calc(400px + (100vw - 1280px) * 0.3);
+  }
+}
+@media (min-width: 1440px) {
+  .app-frame[data-shell-version="refined"] {
+    --ppo-refined-search-width: clamp(
+      448px,
+      calc(448px + (100vw - 1440px) / 15),
+      480px
+    );
+  }
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  [data-shell-version="refined"]
+    :is(.ppo-refined-account-name, .ppo-tenant-name) {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  [data-shell-version="refined"] #shell-header .ppo-global-search kbd {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  [data-shell-version="refined"] #shell-header .ppo-global-search::before {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-global-search input {
+    position: relative;
+  }
+
+  .app-frame[data-shell-version="refined"] {
+    --ppo-refined-search-width: clamp(230px, calc(100vw - 572px), 262px);
+  }
+  .app-frame[data-shell-version="refined"]
+    .workspace
+    > #shell-header.topbar.ppo-shell-header {
+    grid-template-columns: minmax(0, 1fr) var(--ppo-refined-search-width) 300px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-header-start {
+    padding-right: 14px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.ppo-refined-calendar, .ppo-guide-action) {
+    display: none;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-header-utilities
+    .ppo-top-action {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(.identity-toggle, .ppo-account-toggle) {
+    height: 44px;
+    min-height: 44px;
+  }
+  [data-shell-version="refined"] #shell-header .ppo-refined-tenant-chip::before,
+  [data-shell-version="refined"] #shell-header .ppo-quick-add::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: -6px;
+    background: transparent;
+  }
+  [data-shell-version="refined"]
+    #shell-header
+    :is(
+      .ppo-refined-popover button,
+      .ppo-quick-option,
+      .ppo-refined-account-menu nav > button,
+      .ppo-refined-account-menu nav > a,
+      .ppo-refined-account-menu summary
+    ) {
+    min-height: 44px;
+  }
+  [data-shell-version="refined"] [data-tooltip]::after {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 820px) {
+  [data-shell-version="refined"] .ppo-refined-brand {
+    width: 46px;
+  }
+  [data-shell-version="refined"] .ppo-refined-brand > span {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-shell-version="refined"] * {
+    transition-duration: 0s;
+    animation-duration: 0s;
+  }
+}
+
+/* The refined bar begins at 768 px; preserve the old rail geometry for the 13 px
+   overlap with the accepted phone breakpoint until S2 replaces the desktop rail. */
+@media (min-width: 768px) and (max-width: 780px) {
+  .app-frame[data-shell-version="refined"] {
+    display: grid;
+    grid-template-columns: var(--ppo-rail-width) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .app-frame[data-shell-version="refined"] .sidebar.ppo-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--ppo-rail-width);
+    padding: 0;
+    overflow: auto;
+    background: var(--ppo-refined-brand-navy);
+  }
+  [data-shell-version="refined"] .ppo-rail .ppo-primary-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  [data-shell-version="refined"] .ppo-rail .ppo-rail-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    width: 100%;
+    padding: 8px;
+    color: var(--ppo-refined-brand-white);
+  }
+  [data-shell-version="refined"] .mobile-navigation {
+    display: none;
+  }
+}

@@ -21,6 +21,10 @@ import {
 } from "./session-signal";
 import { railCookieValue } from "../shell/rail";
 
+import { refinedPreference, refinedPreferenceKey, refinedEnabled, shellBuildLabel } from "../shell/refined";
+
+const refinedVisitPreferences = new Map<string, boolean>();
+const desktopSubscribe = (notify: () => void) => { const media = window.matchMedia("(min-width: 768px)"); media.addEventListener("change", notify); return () => media.removeEventListener("change", notify); };
 const preferenceEvent = "ppo-shell-workspace";
 const visitPreferences = new Map<string, WorkspaceId>();
 const railPreferences = new Map<string, boolean>();
@@ -56,6 +60,12 @@ type State = {
   selectPreview: (id: WorkspaceId) => boolean;
   selectWorkspace: (id: WorkspaceId) => boolean;
   resetPreview: () => boolean;
+  refined: boolean;
+  refinedDesktop: boolean;
+  desktop: boolean;
+  refinedForced: boolean;
+  buildLabel: string;
+  setRefined: (enabled: boolean) => void;
   railExpanded: boolean;
   setRailExpanded: (expanded: boolean) => void;
 };
@@ -70,17 +80,31 @@ export function ShellProvider({
   hosted = false,
   development = false,
   renderedRailExpanded = true,
+  refinedOverride,
+  buildCommit,
 }: {
   children: ReactNode;
   hosted?: boolean;
   development?: boolean;
   renderedRailExpanded?: boolean;
+  refinedOverride?: string;
+  buildCommit?: string;
 }) {
   const [context, setContext] = useState<ShellContext | null>(null),
     [error, setError] = useState(""),
     [retry, setRetry] = useState(0);
   const generation = useRef(0);
   const userKey = context?.preference_scope ? `${preferenceKey}:${context.preference_scope}` : null;
+  const refinedKey = context?.preference_scope ? refinedPreferenceKey(context.preference_scope) : null;
+  const refined = useSyncExternalStore(subscribe, () => {
+    let preference = false;
+    if (refinedKey) {
+      if (refinedVisitPreferences.has(refinedKey)) preference = refinedVisitPreferences.get(refinedKey)!;
+      else try { preference = refinedPreference(localStorage.getItem(refinedKey)); } catch { /* Session fallback below. */ }
+    }
+    return refinedEnabled(refinedOverride, preference);
+  }, () => refinedEnabled(refinedOverride, false));
+  const desktop = useSyncExternalStore(desktopSubscribe, () => window.matchMedia("(min-width: 768px)").matches, () => true);
   const preview = useSyncExternalStore(
     subscribe,
     () => snapshot(userKey),
@@ -177,6 +201,15 @@ export function ShellProvider({
         hosted,
         development,
         preview,
+        refined, refinedDesktop: refined && desktop, desktop,
+        buildLabel: shellBuildLabel(buildCommit),
+        refinedForced: refinedOverride === "1" || refinedOverride === "0",
+        setRefined: enabled => {
+          if (!refinedKey) return;
+          try { localStorage.setItem(refinedKey, JSON.stringify({schema_version:1,version:enabled ? "refined" : "legacy"})); refinedVisitPreferences.delete(refinedKey); }
+          catch { refinedVisitPreferences.set(refinedKey, enabled); }
+          window.dispatchEvent(new Event(preferenceEvent));
+        },
         railExpanded,
         setRailExpanded: expanded => {
           if (!userKey) return;

@@ -68,11 +68,13 @@ export function ProductNavigation() {
 }
 function NavigationWithLocation() {
   const path = usePathname(), query = useSearchParams().toString();
-  const wide = useSyncExternalStore(
+  const shell = useShell();
+  const legacyWide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
     () => true,
   );
+  const wide = shell.refinedDesktop || legacyWide;
   return (
     <>
       <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} locationQuery={query} />
@@ -495,7 +497,8 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
+  const legacyWide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
+  const wide = shell.refinedDesktop || legacyWide;
   const phoneConfig = usePhoneHeaderConfig();
   // P4: a dot on the phone menu shows unread notifications, read on phones only (the bell has moved into the menu). The
   // inbox read is not cheap (it projects notices and reads each source activity), so it is not made on every page load:
@@ -596,9 +599,18 @@ export function ProductHeader() {
         {/* R9: three zones on desktop. This start zone and the end zone are equal in width, so the
             global search between them sits at the top bar's centre on every page (desktop-shell.css). */}
         <div className="ppo-header-start">
+          {shell.refinedDesktop && <>
+            <Link href="/" className="ppo-refined-brand" aria-label="Powerplants One home" data-tooltip="Home · My Work">
+              <Image src="/brand/powerplants-logo-green-white.png" alt="" width={32} height={32} unoptimized className="brand-logo" />
+              <span>Powerplants <span>One</span></span>
+            </Link>
+            <div id="header-tenant" />
+          </>}
+          <div id="header-menu" className="ppo-header-menu-slot" />
+          <div className="ppo-legacy-heading" hidden={shell.refinedDesktop}>
           {/* A workspace with a secondary menu mounts its icon-only trigger here. Empty otherwise, and
               the empty slot reserves no width (desktop-shell.css). */}
-          <div id="header-menu" className="ppo-header-menu-slot" />
+
           {crumbs.length ? (
             <nav className="product-heading" aria-label="Breadcrumb">
               {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
@@ -627,6 +639,7 @@ export function ProductHeader() {
             </div>
           )}
         </div>
+        </div>
         {/* The controls stay mounted across routes and reset themselves, because the account mount
             in the end zone must never be replaced (header-content.tsx). */}
         <ShellControls
@@ -641,6 +654,7 @@ export function ProductHeader() {
           </div>
         </ShellControls>
       </header>
+      {shell.refinedDesktop && <div className="ppo-refined-location"><nav aria-label="Breadcrumb">{crumbs.map((crumb,index) => <span key={crumb.key}>{index > 0 && " / "}{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current="page">{crumb.label}</span>}</span>)}</nav></div>}
       {(!!tabs.length || reserveTabs) && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav
           className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}

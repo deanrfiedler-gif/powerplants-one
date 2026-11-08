@@ -83,6 +83,11 @@
       "id": "nav-create-leave",
       "fixture": "tests/browser/navigation-safety.spec.ts",
       "description": "Dirty create forms ask before rail (phone bar), header search and Back navigation, keep the typed value on Cancel and leave on OK; clean create forms leave without asking."
+    },
+    {
+      "id": "nav-refined-s1",
+      "fixture": "tests/browser/shell-refined.spec.ts; tests/ui/desktop-shell.spec.ts; tests/unit/shell-refined.test.ts",
+      "description": "Opt-in refined top bar geometry, both rail states, 390 px phone retention, keyboard/focus/history, existing working-company cancellation/persistence and identity-isolated preference. Browser execution and rendered comparison pending."
     }
   ]
 }

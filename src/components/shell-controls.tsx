@@ -20,6 +20,12 @@ import { DevelopmentPageGuide } from "../development/page-guide";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { businessViewChannel, sessionLockEvent } from "./session-signal";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
+import { refinedActionGroups } from "../shell/refined-actions";
+import { capShellBadge } from "../shell/refined";
+import { layerControls, layerKeyboard } from "../shell/layer-keyboard";
+import { RefinedUtilityGroup } from "./refined-shell-menu";
+import { usePlatformResource } from "./platform-resource";
+import type { notificationInbox } from "../notifications/service";
 import { contextualActions, type SearchResults } from "../shell/model";
 
 type Panel =
@@ -38,8 +44,15 @@ const subscribe = (changed: () => void) => {
   return () => media.removeEventListener("change", changed);
 };
 function panelPosition(panel: Exclude<Panel, null>, target: HTMLElement) {
-  const mobile = window.innerWidth <= 780;
+  const refined = !!document.querySelector('[data-shell-version="refined"]');
+  const mobile = !refined && window.innerWidth <= 780;
   const rect = (panel === "search" ? (target.closest("label") ?? target) : target).getBoundingClientRect();
+  if (refined) {
+    const width = panel === "search" ? rect.width : panel === "guide" ? Math.min(560,window.innerWidth-32) : panel === "notifications" ? 400 : 280;
+    const left = panel === "search" || panel === "quick" ? rect.left : rect.right-width;
+    const inset = panel === "quick" && window.innerWidth < 1024 ? 4 : 16;
+    return {width,top:panel === "search" ? rect.top : 52,left:Math.max(inset,Math.min(window.innerWidth-width-inset,left)),right:"auto" as const};
+  }
   const width = mobile ? window.innerWidth - 24 : panel === "search" ? rect.width : panel === "guide" ? 560 : panel === "quick" ? 320 : 344;
   return {
     width,
@@ -79,12 +92,16 @@ export function ShellControls({
   const router = useRouter();
   const pathname = usePathname();
   const locationQuery = useSearchParams();
-  const { context, error: contextError, reload, hosted, preview, development } = useShell();
-  const wide = useSyncExternalStore(
+  const { context, error: contextError, reload, hosted, preview, development, refinedDesktop: refined } = useShell();
+  const legacyWide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
     () => true,
   );
+  const wide = refined || legacyWide;
+  const notifications = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(refined && context ? "notifications" : null, false);
+  const notificationCount = notifications.data?.state !== "unavailable" ? capShellBadge(notifications.data?.unread) : null;
+  const [allActions,setAllActions] = useState(false);
   const [position, setPosition] = useState<ReturnType<typeof panelPosition>>();
   const [panel, setPanel] = useState<Panel>(null),
     [q, setQ] = useState("");
@@ -202,6 +219,7 @@ export function ShellControls({
       // Focus returns to whatever opened the menu: the phone header's Menu button (a record page's row has Back in its
       // place, so the tab bar's More), or the desktop More.
       opener.current =
+        (refined && document.activeElement instanceof HTMLElement ? document.activeElement : null) ??
         (window.innerWidth <= 780 ? document.getElementById("shell-phone-menu") : null) ??
         document.getElementById("navigation-toggle") ??
         document.getElementById("desktop-more-toggle");
@@ -231,6 +249,11 @@ export function ShellControls({
         openShellPanel("header");
         setPanel("search");
       }
+      const editable = event.target instanceof Element && !!event.target.closest('input,textarea,select,[contenteditable="true"]');
+      if (refined && !event.defaultPrevented && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey && !editable && !(event.target instanceof Element && event.target.closest('[role="dialog"]')) && !document.querySelector('dialog[open],[role="dialog"][aria-modal="true"]')) {
+        if (!panel && event.key.toLowerCase() === "n") { event.preventDefault(); document.getElementById("refined-new-toggle")?.click(); }
+        if (!panel && event.key === "?") { event.preventDefault(); window.dispatchEvent(new CustomEvent("ppo-shell-utility",{detail:"help"})); }
+      }
       if (event.key === "Escape") {
         setPanel(null);
         if (panel) {
@@ -253,12 +276,14 @@ export function ShellControls({
       document.removeEventListener("focusin", outside);
       document.removeEventListener("keydown", shortcut);
     };
-  }, [panel]);
+  }, [panel,refined]);
   useEffect(() => {
     if (panel === "search" && !wide) input.current?.focus();
-    else if (panel && panel !== "search")
-      popup.current?.querySelector<HTMLButtonElement>("button")?.focus();
-  }, [panel, wide]);
+    else if (panel && panel !== "search" && popup.current) {
+      if (refined) layerControls(popup.current)[0]?.focus();
+      else popup.current.querySelector<HTMLElement>("button")?.focus();
+    }
+  }, [panel, wide,refined]);
   useEffect(() => {
     if (selected >= 0)
       document
@@ -266,6 +291,7 @@ export function ShellControls({
         ?.scrollIntoView({ block: "nearest" });
   }, [selected]);
   const show = (value: Exclude<Panel, null>, target: HTMLElement) => {
+    setAllActions(false);
     opener.current = target;
     setPosition(panelPosition(value, target));
     openShellPanel("header");
@@ -280,6 +306,7 @@ export function ShellControls({
   const actions = contextualActions(context?.actions ?? [], module);
   const query = q.trim();
   const activeWorkspace = workspaceForLocation(pathname, new URLSearchParams(locationQuery), preview, context?.navigation ?? []);
+  const groupedActions = refinedActionGroups(context?.actions ?? [],activeWorkspace,context?.navigation ?? [],hosted);
   const suggested = [workspaces.find(w => w.id === activeWorkspace)!.primary, "work", "customers", "equipment"].map(destination);
   const pageMatches = context ? (query.length >= 2 ? menuGroups(query,activeWorkspace).flatMap(group => group.items) : query ? [] : suggested).filter(item => canOpen(item, context.navigation, hosted)) : [];
   const searchItems = [
@@ -329,7 +356,7 @@ export function ShellControls({
             ? `shell-result-${selected}`
             : undefined
         }
-        placeholder="Search Powerplants One"
+        placeholder={refined ? "Search records, pages and help" : "Search Powerplants One"}
         autoComplete="off"
         maxLength={200}
         value={q}
@@ -378,8 +405,10 @@ export function ShellControls({
       <div className="ppo-header-end">
         <button
           className="ppo-top-action ppo-quick-add"
-          aria-label="Quick add"
-          title="Quick add"
+          id={refined ? "refined-new-toggle" : undefined}
+          aria-label={refined ? "New" : "Quick add"}
+          title={refined ? undefined : "Quick add"}
+          data-tooltip={refined ? "New · N" : undefined}
           aria-expanded={panel === "quick"}
           aria-controls="shell-utility-panel"
           onClick={(event) => show("quick", event.currentTarget)}
@@ -387,17 +416,20 @@ export function ShellControls({
         >
           <ProductIcon name="plus" />
         </button>
-        <div className="ppo-header-utilities" data-shell-header-control>
-          {development && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
+        {refined && <span className="ppo-refined-spacer" aria-hidden="true" />}
+        <RefinedUtilityGroup enabled={refined}>
+          {development && !refined && <button className="ppo-top-action ppo-studio-link" aria-label="Design and build workspace" title="Design & Development workspace" onClick={()=>navigateWithReview(()=>router.push('/development/page-register'))}><ProductIcon name="engineering" /></button>}
           {phoneBefore}
           {/* D1 and D2: Conversations sits left of the Page guide, on every page and in the phone header. Global search
               is in the phone menu (phone header amendment P4). */}
+          {refined && canOpen(destination("calendar"),context?.navigation ?? [],hosted) && <Link className="ppo-top-action ppo-refined-calendar" href={destination("calendar").href!} aria-label="Calendar" data-tooltip="Calendar"><ProductIcon name="calendar" /></Link>}
           <ShellConversations />
           {phoneAfter}
           <button
             className="ppo-top-action ppo-guide-action"
             aria-label="Page guide"
-            title="Page guide: what this page is for and how to use it"
+            title={refined ? undefined : "Page guide: what this page is for and how to use it"}
+            data-tooltip={refined ? "Page guide" : undefined}
             aria-expanded={panel === "guide"}
             aria-controls="shell-utility-panel"
             onClick={(event) => show("guide", event.currentTarget)}
@@ -405,6 +437,7 @@ export function ShellControls({
             <ProductIcon name="info" />
           </button>
           <button
+            hidden={refined}
             className="ppo-top-action ppo-desktop-utility"
             aria-label="Quick Help"
             title="Help: keyboard shortcuts and support"
@@ -416,15 +449,18 @@ export function ShellControls({
           </button>
           <button
             className="ppo-top-action ppo-desktop-utility"
-            aria-label="Notifications"
-            title="Notifications"
+            aria-label={refined && notificationCount ? `Notifications, ${notifications.data?.unread} unread` : "Notifications"}
+            title={refined ? undefined : "Notifications"}
+            data-tooltip={refined ? "Notifications" : undefined}
             aria-expanded={panel === "notifications"}
             aria-controls="shell-utility-panel"
             onClick={(event) => show("notifications", event.currentTarget)}
           >
             <ProductIcon name="bell" />
+            {refined && notificationCount && <span className="ppo-top-badge" aria-hidden="true">{notificationCount}</span>}
           </button>
-        </div>
+        </RefinedUtilityGroup>
+        {refined && <><span className="ppo-refined-spacer" aria-hidden="true" /><span className="ppo-refined-divider" aria-hidden="true" /><span className="ppo-refined-account-gap" aria-hidden="true" /></>}
         <div className="ppo-account-fallback" data-shell-header-control>
           <button
             className="ppo-top-action"
@@ -446,6 +482,7 @@ export function ShellControls({
         role="dialog"
         aria-label="Global search"
         hidden={panel !== "search"}
+        onKeyDown={event=>{if(refined) layerKeyboard(event,close,false);}}
         data-shell-header-control
       >
         <div className="ppo-panel-titlebar">
@@ -535,6 +572,14 @@ export function ShellControls({
         hidden={!panel || panel === "search"}
         data-shell-header-control
         onKeyDown={(event) => {
+          if (refined) {
+            if (panel === "quick" && !event.ctrlKey && !event.metaKey && !event.altKey && event.key.length === 1) {
+              const action=[...groupedActions.current,...groupedActions.shared,...(allActions ? groupedActions.other : [])].find(a=>a.accelerator?.toLowerCase()===event.key.toLowerCase());
+              if(action) { event.preventDefault(); event.stopPropagation(); navigateWithReview(()=>{setPanel(null);router.push(action.href);},{href:action.href}); return; }
+            }
+            layerKeyboard(event,close);
+            return;
+          }
           if (
             panel !== "quick" ||
             !["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)
@@ -567,7 +612,7 @@ export function ShellControls({
         }}
       >
         <div className="ppo-panel-titlebar">
-          <h2 id="shell-utility-title">{panel ? panelNames[panel] : ""}</h2>
+          <h2 id="shell-utility-title">{panel ? refined && panel === "quick" ? "New" : panelNames[panel] : ""}</h2>
           <button
             className="ppo-top-action"
             aria-label="Close panel"
@@ -578,7 +623,7 @@ export function ShellControls({
         </div>
         <div className="ppo-panel-body">
           {panel === "guide" && <>{development && <DevelopmentPageGuide key={pathname} />}<ShellPageGuide key={page} page={page} /></>}
-          {panel === "quick" && (
+          {panel === "quick" && !refined && (
             <>
               <p className="ppo-panel-hint">
                 {module} actions appear first. Choose a record to create.
@@ -616,6 +661,16 @@ export function ShellControls({
               )}
             </>
           )}
+          {panel === "quick" && refined && <>
+            {!context ? <p role="status">{contextError || "Loading your actions…"}</p> : <nav aria-label="Create a record">{[
+              {label:`Create in ${workspaces.find(w=>w.id===activeWorkspace)!.label}`,items:groupedActions.current},
+              {label:"Shared records",items:groupedActions.shared},
+              ...(allActions ? [{label:"Other record types",items:groupedActions.other}] : []),
+            ].filter(group=>group.items.length).map(group=><section key={group.label}><h3>{group.label}</h3>{group.items.map(action=><Link key={action.id} className="ppo-quick-option" href={action.href} onClick={()=>setPanel(null)}><ProductIcon name="plus" /><span>New {action.label.toLowerCase()}</span>{action.accelerator && <kbd>{action.accelerator}</kbd>}</Link>)}</section>)}
+            {groupedActions.other.length > 0 && <button className="ppo-refined-all-actions" onClick={()=>setAllActions(!allActions)} aria-expanded={allActions}>{allActions ? "Fewer record types" : "All record types"}<ProductIcon name="chevron-right" /></button>}
+            {![...groupedActions.current,...groupedActions.shared,...groupedActions.other].length && <p>No creation actions are available for this identity.</p>}
+            </nav>}
+          </>}
           {panel === "help" && (
             <div className="ppo-help-content">
               <h3>Quick tips</h3>

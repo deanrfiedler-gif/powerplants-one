@@ -253,3 +253,27 @@ The [System pages design decision](../../../decisions/system-pages-figma-design.
 - **Error:** a support reference with Copy and Return to Home, no stack trace; "could not start" with no shell where the root layout itself fails. Captures 09, 11, 12, 14 and 28.
 - **Uncertain outcome:** one "Outcome unknown" banner and dialog, with "Check the outcome" and "Retry the same action". The original operation is kept and no second one is created. External sends keep their own wording. Captures 15–19.
 - **Offline, inline notices, loading and session changed:** captures 19, 20 and 27.
+
+## Refined concept S1
+
+S1 adds an opt-in desktop header and the 66 PPO colour variables from the private “PPO - Shell refined concept” file. The existing shell remains the default until S8. Enable Refined desktop shell in the account profile (then Account → Preferences in the refined version), or use `PPO_SHELL_REFINED=1`; `0` forces legacy. The preference belongs to the identity/browser and has a visit-memory fallback. The [build adaptations](../../../decisions/shell-refined-s1-build.md) record Dean's existing-company and unavailable-sign-in decisions. No permissions, routes, grants or stores change.
+
+Measurements read before implementation from sheets A/G/I/N/T, the detached reference bars and all 66 colour variables:
+
+| Viewport | Start / search / end | Bar |
+|---|---|---|
+| 834 | 272 / 262 / 300 px | 48 px |
+| 1024 | 332 / 360 / 332 px | 48 px |
+| 1280 | 440 / 400 / 440 px | 48 px |
+| 1440 | 496 / 448 / 496 px | 48 px |
+| 1920 | 720 / 480 / 720 px | 48 px |
+
+At 1440 the search is x496–944 and the 32 px white New circle starts at x960. Mark 32 px, centre x40; brand tile 44 px high; search and tenant fields 32 px high, radius 6 px; tenant fills 12/16/24% white and border 28%. Utilities have 36 px targets and 2 px gaps with equal spacers, followed by one 1×24 px hairline and the 28 px account avatar, right inset 16 px. Tenant/New/account popovers are 280 px wide at y52, radius 8 px; drawn heights are 177/372/405 px respectively. Runtime heights accommodate permitted actions and full synthetic company names. Touch targets are 44 px; focus rings 2 px. Search widths interpolate between the reference desktop sizes; the bar does not depend on rail width.
+
+The 834 nested search drawing measures 360 px inside a 262 px zone; the record's 262 px governs. Stale main-component descriptions also retain older 400 px search and rail numbers. The record governs those differences. The top-bar component is `3:194`; the rule card is `5:686`. The private design link and supplied artwork are not stored in Git. Existing installed Font Awesome Light icons and the existing logo reference are reused.
+
+The New menu groups server actions by the current registry workspace, then shared records, then All record types; readiness and identity access are checked again. D/L/A/C/O/S open only available create forms, with unsaved-work review. No quotation-create or ready Assistant destination exists in the registry, so those controls are omitted. Calendar, Conversations, Page guide and Notifications remain available under their existing access checks. Search drops from its field; S5 owns the further result states and Conversations peek. Account repeats the current company and opens the same tenant switcher. Its Help and page guide uses the existing guide and Notification settings reaches Preferences through Notifications. Build information uses the validated deployed commit or Local build.
+
+S1 moves the existing rail below the header; S2 owns its replacement. Below 768 px the accepted phone header is retained. At 768–780 only the opted-in desktop composition bridges the older shell breakpoint. The inherited secondary menus, remaining layers/page states and full-shell focus-order refinements remain in their assigned later stages.
+
+Bindings and host fixtures: [S1 consumer note](../component-bindings/2026-11-08-shell-refined-s1.md). Browser captures are unavailable in this workspace: cloud setup reported Chrome unavailable and the browser guard confirmed the missing Chrome executable. Geometry, keyboard and tenant-persistence suites are authored but unexecuted here. Review records remain unchanged; stale evidence is reported by studio:check, never relabelled as accepted.
