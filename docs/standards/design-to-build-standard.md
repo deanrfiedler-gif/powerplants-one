@@ -32,8 +32,8 @@ A proposal is never a source of truth. A Figma design never becomes a production
 1. **Propose.** Draw it from the library, with synthetic data, on a page named `[Page name] · [scope ID]`.
 2. **Design ready.** Pass the checklist below. A Claude session other than the one that drew the page checks it and records what it looked at. Anything left open is recorded as a question. This is a design check before acceptance, not a pull request review.
 3. **Accept.** Dean accepts it in words, and those words go in the decision record.
-4. **Lock in.** Claude saves the named version, marks the accepted frames Ready for dev, retains the captures, and adds the decision record, register rows and status fragment. This record is the build specification; a page without it is not ready to build.
-5. **Build.** Codex builds it from the lock-in in the repository, not from Figma directly, using shared components and tokens and adding any new token to the app in the same pull request.
+4. **Lock in.** Claude saves the named version, marks the accepted frames Ready for dev, and adds the decision record, register rows and status fragment. The record names the file, the named version and the accepted frames' node IDs; a page without it is not ready to build. Design captures are optional.
+5. **Build.** Codex builds it from the accepted design at that named version, never from the file's current state, and records in the pull request the exact values it read and any discrepancy between frames. It uses shared components and tokens and adds any new token to the app in the same pull request. This follows Dean's [named-version handoff decision](../decisions/figma-named-version-build-handoff.md) of 8 November 2026.
 6. **Build done.** Codex passes the checklist below and reports it when asking for review.
 7. **Review.** Claude reviews the build once, including the comparison below, under the one-review rule in the [roles decision](../decisions/design-build-review-roles.md). GitHub CI then proves it and Dean merges. Dean's visual review, functional proof and deployment stay separate claims. Review follows the [UI build sequence](../decisions/ui-build-sequence.md), module by module.
 
@@ -53,7 +53,8 @@ A proposal is never a source of truth. A Figma design never becomes a production
 
 ### Build done
 
-- [ ] It is compared with the accepted capture using the method below, and each difference is fixed or recorded.
+- [ ] It is compared with the accepted design at its named version using the method below, and each difference is fixed or recorded.
+- [ ] The pull request records the values read from that named version.
 - [ ] It uses shared components and tokens, and adds no new hard-coded colour.
 - [ ] Figma and CSS use the same token names, and `python3 scripts/check_design_tokens.py` passes.
 - [ ] Keyboard, focus, reflow, screen-reader and phone behaviour have been checked. WCAG 2.2 AA is the proposed NFR-08 target; visual inspection alone does not establish conformance.
@@ -62,7 +63,7 @@ A proposal is never a source of truth. A Figma design never becomes a production
 
 ### Comparing a build with its design
 
-Compare the running page with the accepted capture side by side, at the capture's viewport, using the same synthetic data where possible. Claude does this as part of its one review of the build, in the local app. Where no browser is available, it compares the build's committed captures instead and says so. Each graded difference is a review finding: Codex fixes or answers it, and Claude confirms only those findings. The comparison is part of that review, not a second gate. Captures hold icon placeholders, so icons are checked against the Font Awesome mapping instead. Run `node scripts/design-baseline-check.mjs --app <base-url>` where the page has a registered baseline. This compares tokens, not appearance.
+Compare the running page with the accepted frames at their named version side by side, at the frame's viewport, using the same synthetic data where possible. Claude does this as part of its one review of the build, in the local app. Where no browser is available, it compares captures of the running application from CI instead and says so. Each graded difference is a review finding: Codex fixes or answers it, and Claude confirms only those findings. The comparison is part of that review, not a second gate. Captures hold icon placeholders, so icons are checked against the Font Awesome mapping instead. Run `node scripts/design-baseline-check.mjs --app <base-url>` where the page has a registered baseline. This compares tokens, not appearance.
 
 | Grade | Meaning | Who can waive it |
 |---|---|---|
@@ -211,7 +212,7 @@ Cite the file name, node ID and named version: `PPO - Sales & Products`, `123:45
 ## 9. Evidence
 
 - **A named version** marks acceptance, as before.
-- **Captures:** at lock-in, copy the frames to a temporary page named `Capture · in progress`, replace icons with `Icon/placeholder`, export them, hash them, then delete that page. Do not keep capture copies in Figma.
+- **Captures** are optional at lock-in since the [named-version handoff](../decisions/figma-named-version-build-handoff.md); the build source is the named version. Captures of the running application are as-built evidence. When design captures are taken, copy the frames to a temporary page named `Capture · in progress`, replace icons with `Icon/placeholder`, export them, hash them, then delete that page. Do not keep capture copies in Figma.
 - **Keep only what a builder needs:** one capture per viewport for each distinct layout or state. Do not retain repeats that add nothing.
 - **Capture READMEs** cite the source frame, named version and hash, not the deleted copy.
 - **Existing captures and READMEs** stay unchanged.
@@ -251,7 +252,7 @@ No check proves acceptance. That remains Dean's decision, recorded in Git.
 | Draw and check a page | Reviews in Figma | Draws, then verifies by screenshot and layer checks | |
 | Design ready | | A session other than the one that drew the page | |
 | Lock in an accepted design | | Records it in the repository | |
-| Build a page and pass Build done | | | Builds from the lock-in, one page per pull request |
+| Build a page and pass Build done | | | Builds from the named version the lock-in cites, one page per pull request |
 | Review a build, including the comparison | | Once, under the one-review rule | Fixes or answers each finding |
 | Move files, enable the library, accept library updates | Does it, or lets a session with desktop access | These have no connector or plugin route | |
 | Publish the library | Sees the release note | Prepares and publishes under section 5 | |

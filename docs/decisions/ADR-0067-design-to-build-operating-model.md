@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. **Status:** decided by Claude on 1 November 2026 under the delegation quoted below. It is an agent decision under delegated authority, not an owner acceptance of any page. Dean can overrule any part of it. It amends [ADR-0053](ADR-0053-figma-page-design.md) and [ADR-0055](ADR-0055-figma-file-structure.md). The working rules are in the [design-to-build standard](../standards/design-to-build-standard.md). Aligned on 3 November 2026 with the later [roles decision](design-build-review-roles.md); see [Roles](#roles).
+Owner: Dean Fiedler. **Status:** decided by Claude on 1 November 2026 under the delegation quoted below. It is an agent decision under delegated authority, not an owner acceptance of any page. Dean can overrule any part of it. It amends [ADR-0053](ADR-0053-figma-page-design.md) and [ADR-0055](ADR-0055-figma-file-structure.md). The working rules are in the [design-to-build standard](../standards/design-to-build-standard.md). Aligned on 3 November 2026 with the later [roles decision](design-build-review-roles.md); see [Roles](#roles). Its build handoff was amended by Dean on 8 November 2026; see [Build handoff](#build-handoff).
 
 ## Owner direction — 1 November 2026
 
@@ -132,6 +132,10 @@ This record was written on 1 November 2026. On 2 November Dean adopted the [role
 - The Build done comparison is part of that one review, so its findings are fixed or answered and then confirmed, not reviewed again.
 
 Design ready stays a check by a separate Claude session, because it happens in Figma before Dean's acceptance and is not a pull request review. Nothing else in this record changed.
+
+## Build handoff
+
+On 8 November 2026 Dean amended the handoff ([decision](figma-named-version-build-handoff.md), [DEAN] comment on PR #874). Codex builds from the accepted Figma design pinned to its named version, not from repository captures. The pull request records the values it reads, Claude reviews against the same named version, and a later design change needs a new named version and its own build step. Captures of the running application are as-built evidence; design captures at lock-in (decision 12) become optional. Where this record or the standard says to build "from the lock-in in the repository, not from Figma directly", that decision governs.
 
 ## Consequences
 
