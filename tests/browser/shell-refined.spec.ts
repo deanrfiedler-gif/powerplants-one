@@ -126,6 +126,70 @@ test("utilities are one tab stop across responsive changes, with arrow navigatio
   await expect(page.locator("#identity-toggle")).not.toBeFocused();
 });
 
+test("utilities keep one tab stop when controls mount and unhide at a fixed group size", async ({
+  page,
+}) => {
+  await page.goto("/customers");
+  const toolbar = page.getByRole("toolbar", { name: "Shell utilities" });
+  const stops = toolbar.locator('[tabindex="0"]');
+  await expect(stops).toHaveCount(1);
+  const size = await toolbar.evaluate((node) => {
+    const { width, height } = node.getBoundingClientRect();
+    node.style.width = `${width}px`;
+    node.style.height = `${height}px`;
+    node.style.flex = "none";
+    return { width, height };
+  });
+  await stops.focus();
+  await toolbar.evaluate((node) => {
+    for (const hidden of [false, true]) {
+      const button = document.createElement("button");
+      button.textContent = hidden
+        ? "SYN hidden utility"
+        : "SYN mounted utility";
+      button.dataset.testUtility = hidden ? "hidden" : "mounted";
+      button.hidden = hidden;
+      if (!hidden) button.tabIndex = 3;
+      // Outside flex layout: insertion and visibility cannot resize the group.
+      button.style.position = "absolute";
+      node.append(button);
+    }
+  });
+  const mounted = toolbar.locator('[data-test-utility="mounted"]');
+  const hidden = toolbar.locator('[data-test-utility="hidden"]');
+  await expect(mounted).toHaveAttribute("tabindex", "-1");
+  await expect(stops).toHaveCount(1);
+  await expect(stops).toBeFocused();
+  await hidden.evaluate((node) => {
+    node.removeAttribute("hidden");
+  });
+  await expect(hidden).toHaveAttribute("tabindex", "-1");
+  await expect(stops).toHaveCount(1);
+  await hidden.focus();
+  await expect(hidden).toHaveAttribute("tabindex", "0");
+  await expect(stops).toHaveCount(1);
+  await hidden.evaluate((node) => {
+    node.setAttribute("hidden", "");
+  });
+  await expect(hidden).toHaveAttribute("tabindex", "-1");
+  await expect(stops).toHaveCount(1);
+  await expect(stops).toBeVisible();
+  expect(
+    await toolbar.evaluate((node) => {
+      const { width, height } = node.getBoundingClientRect();
+      return { width, height };
+    }),
+  ).toEqual(size);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('[data-test-utility="mounted"]')).toHaveAttribute(
+    "tabindex",
+    "3",
+  );
+  await expect(
+    page.locator('[data-test-utility="hidden"]'),
+  ).not.toHaveAttribute("tabindex");
+});
+
 test("New opens only its existing create form and respects typing in inputs", async ({
   page,
 }) => {

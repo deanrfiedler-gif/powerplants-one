@@ -124,14 +124,39 @@ export function RefinedUtilityGroup({
         controls[0];
       controls.forEach((n) => {
         if (!original.has(n)) original.set(n, n.getAttribute("tabindex"));
-        n.tabIndex = n === selected ? 0 : -1;
+      });
+      original.forEach((_, n) => {
+        const value = n === selected ? 0 : -1;
+        // Attribute observation also sees our writes; only write a changed value.
+        if (n.getAttribute("tabindex") !== String(value)) n.tabIndex = value;
       });
     };
     update();
     const observer = new ResizeObserver(update);
     observer.observe(node);
+    // Children can mount, become enabled or unhide without resizing the toolbar.
+    const mutations = new MutationObserver(update);
+    mutations.observe(node, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: [
+        "hidden",
+        "class",
+        "style",
+        "disabled",
+        "tabindex",
+        "href",
+      ],
+    });
+    node.addEventListener("focusin", update);
+    // Media queries can change child visibility without changing the group size.
+    window.addEventListener("resize", update);
     return () => {
       observer.disconnect();
+      mutations.disconnect();
+      node.removeEventListener("focusin", update);
+      window.removeEventListener("resize", update);
       original.forEach((value, n) => {
         if (value === null) n.removeAttribute("tabindex");
         else n.setAttribute("tabindex", value);

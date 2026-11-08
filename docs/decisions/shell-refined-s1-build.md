@@ -35,6 +35,8 @@ Page guide remains a bar utility below 1024 until S4 supplies the right strip; Q
 
 ## Shortcut audit and recovery
 
+Item 13 continuation on 9 November 2026: **Dean's decision, given in chat in Codex's session; no [DEAN] comment**. Continue from `1cba4d85` following the [released claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/874#issuecomment-6727821679), fix only the [utility roving-tabstop finding](https://github.com/deanrfiedler-gif/powerplants-one/pull/874#issuecomment-6727791950), preserve tabindex cleanup and add a fixed-size mount/unhide regression. Push without rebasing or force-pushing, leave timeouts unchanged, run the full suites and request Claude's confirmation of items 1–13 only.
+
 Codex searched existing key/code handlers before enabling N, ?, and the New-menu letters. No existing global N or ? handler was found; Ctrl/Cmd K retains the existing search handler. Creation letters are handled only inside the open New menu. N and ? ignore editable fields, prevented events, repeats, modifier chords, dialog and composite-widget contexts (menus, menubars, listboxes, grids and trees), and any open native popover. Entering a create form remains subject to the existing unsaved-work review and never creates a record itself. The remaining R48 shortcuts belong to their later stages.
 
 Turn off Refined desktop shell in Account → Preferences to return that identity to the legacy version; a CI override takes precedence. Revert code through a reviewed successor PR if needed. The phone code, navigation authority and data contracts remain unchanged. Browser rendering, physical devices, screen readers, owner acceptance and the required independent Claude review are not inferred from source checks.

@@ -2,7 +2,7 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Build owner: Codex. Delivery: PR #874; Claude reviewed head ef875edf0 with twelve consolidated findings. Fix confirmation and owner visual/device acceptance remain pending.
+Owner: Dean Fiedler. Build owner: Codex. Delivery: PR #874; Claude reviewed head ef875edf0 with thirteen consolidated findings, including the utility-tabstop addendum. Fix confirmation and owner visual/device acceptance remain pending.
 
 ## application-shell
 
@@ -15,6 +15,8 @@ The source's New/account/tenant heights are 372/405/177 px at width 280; actual 
 **Proposed S1 departure:** the extra breadcrumb row is a temporary bridge, absent from sheet A. It retains full-path title, Page hierarchy and accessible separators; the accepted end state places breadcrumb and title within the page header. Its 32 px desktop row becomes at least 44 px below 1024 for touch. Dean has not accepted this departure. Page guide remains in the tablet bar until S4. The browser-local preference can show a legacy first paint before context loads; see the build record. These limits must remain visible in review.
 
 All new S1 consumer/state/dependency information belongs to this additive binding and its JSON, not the frozen `components.json`. The older catalogue remains unchanged. Refined S1 adds the 66 `--ppo-refined-*` variables and the 48 px opted-in desktop bar; existing component reviews do not grant acceptance to these additions.
+
+Item 13 keeps a single utility tab stop when controls mount, unhide or become enabled without resizing the toolbar. Subtree/attribute observation, focus entry and viewport resize recompute the visible control set; idempotent tabindex writes avoid observer feedback. Cleanup disconnects observers and listeners before restoring each control's original tabindex. The browser regression inserts and unhides synthetic controls outside flex layout, asserts unchanged group dimensions and one visible tab stop, then checks attribute restoration when the phone shell disables roving focus.
 
 ### Refined desktop instructions — pending release
 

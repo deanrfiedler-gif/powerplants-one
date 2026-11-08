@@ -276,6 +276,8 @@ The New menu groups server actions by the current registry workspace, then share
 
 S1 moves the existing rail below the header; S2 owns its replacement. **Proposed S1 departure, pending Dean:** the separate breadcrumb bridge is absent from sheet A, whose breadcrumb belongs to the page header. The bridge preserves hierarchy, full-path title and accessible separators, at 32 px on desktop and at least 44 px below 1024. It must not be recorded as accepted design. Page guide remains on the tablet bar until S4; only Calendar leaves under Q19. The browser-local opt-in may paint legacy before context resolves; this known first-paint limit is recorded in the build decision for S7/S8. Below 768 px the accepted phone header is retained. At 768–780 only the opted-in desktop composition bridges the older shell breakpoint. The inherited secondary menus, remaining layers/page states and full-shell focus-order refinements remain in their assigned later stages.
 
+Utility roving focus recomputes on subtree/visibility changes, focus entry and viewport resize as well as group resize; disabling it restores original tabindex values. Its fixed-size insertion/unhide regression accompanies the responsive keyboard case.
+
 Bindings and host fixtures: [S1 consumer note](../component-bindings/2026-11-08-shell-refined-s1.md). Browser captures are unavailable in this workspace: cloud setup reported Chrome unavailable and the browser guard confirmed the missing Chrome executable. Geometry, keyboard and tenant-persistence suites are authored but unexecuted here, including the 768/780 px boundary checks. Review records remain unchanged; stale evidence is reported by studio:check, never relabelled as accepted.
 
 ## Shell refined concept — 8 November 2026
