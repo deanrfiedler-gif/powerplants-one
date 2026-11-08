@@ -1,0 +1,26 @@
+✔ frozen main equivalence: owner, all, search=true (61334.364534ms)
+✔ frozen main equivalence: owner, all, search=false (29142.551191ms)
+✔ frozen main equivalence: owner, estimates, search=true (9434.126258ms)
+✔ frozen main equivalence: owner, estimates, search=false (8750.072808ms)
+✔ frozen main equivalence: owner, quotations, search=true (25679.350575ms)
+✔ frozen main equivalence: owner, quotations, search=false (35628.703358ms)
+✔ frozen main equivalence: partial, all, search=true (28925.307416ms)
+✔ frozen main equivalence: partial, all, search=false (23145.148626ms)
+✔ frozen main equivalence: partial, estimates, search=true (7312.829961ms)
+✔ frozen main equivalence: partial, estimates, search=false (10724.694124ms)
+✔ frozen main equivalence: partial, quotations, search=true (15039.12214ms)
+✔ frozen main equivalence: partial, quotations, search=false (13736.914155ms)
+✔ frozen main equivalence: issuer, all, search=true (19013.875399ms)
+✔ frozen main equivalence: issuer, all, search=false (21037.169414ms)
+✔ frozen main equivalence: issuer, estimates, search=true (6278.722063ms)
+✔ frozen main equivalence: issuer, estimates, search=false (6056.062914ms)
+✔ frozen main equivalence: issuer, quotations, search=true (13687.589203ms)
+✔ frozen main equivalence: issuer, quotations, search=false (14415.496393ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 350793.37875

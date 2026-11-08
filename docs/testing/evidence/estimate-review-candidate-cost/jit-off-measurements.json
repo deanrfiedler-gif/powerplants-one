@@ -1,0 +1,510 @@
+{
+  "title": "SYN Candidate window d8f102a7-82a3-49fa-8ccd-b60b4df829d2",
+  "rows": [
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": false,
+      "explain_execution_ms": 3103.533,
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 356,
+      "database_ms": 2450.045215999995,
+      "longest_ms": 2301.101007999998,
+      "candidate_ms": 2301.101007999998,
+      "wall_ms": 2454.969447000003
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 2985.27,
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 357,
+      "database_ms": 2487.068032999974,
+      "longest_ms": 2349.367352999994,
+      "candidate_ms": 2349.367352999994,
+      "wall_ms": 2491.9579430000013
+    },
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": false,
+      "explain_execution_ms": 2930.756,
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 8708,
+      "database_ms": 5648.162078999674,
+      "longest_ms": 2412.271099999998,
+      "candidate_ms": 2412.271099999998,
+      "wall_ms": 5745.057375999997
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 33.932,
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 8709,
+      "database_ms": 5397.6857470002,
+      "longest_ms": 2281.4164670000027,
+      "candidate_ms": 2281.4164670000027,
+      "wall_ms": 5485.618670999989
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": false,
+      "explain_execution_ms": 33.337,
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 6883,
+      "database_ms": 2658.140386000203,
+      "longest_ms": 67.35277199999837,
+      "candidate_ms": 67.35277199999837,
+      "wall_ms": 2739.2192579999974
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 37.365,
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 6884,
+      "database_ms": 2697.3526380004914,
+      "longest_ms": 66.40069799999765,
+      "candidate_ms": 66.40069799999765,
+      "wall_ms": 2776.1876289999927
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": false,
+      "explain_execution_ms": 34.163,
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 7545,
+      "database_ms": 2945.6826880000153,
+      "longest_ms": 71.20740100000694,
+      "candidate_ms": 71.20740100000694,
+      "wall_ms": 3071.764406999995
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 34.53,
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 7546,
+      "database_ms": 3022.053089999754,
+      "longest_ms": 65.71178899999359,
+      "candidate_ms": 65.71178899999359,
+      "wall_ms": 3159.517948000008
+    },
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 285.374,
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 356,
+      "database_ms": 429.6381600004097,
+      "longest_ms": 298.19316799999797,
+      "candidate_ms": 298.19316799999797,
+      "wall_ms": 433.09476300000097
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 34.266,
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 357,
+      "database_ms": 208.7257250000257,
+      "longest_ms": 65.38890899997205,
+      "candidate_ms": 65.38890899997205,
+      "wall_ms": 212.72252599999774
+    },
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 283.834,
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 8708,
+      "database_ms": 3364.933594001661,
+      "longest_ms": 330.6295290000271,
+      "candidate_ms": 330.6295290000271,
+      "wall_ms": 3444.999754999997
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 29.944,
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 8709,
+      "database_ms": 3390.0083629996225,
+      "longest_ms": 70.3292439999932,
+      "candidate_ms": 70.3292439999932,
+      "wall_ms": 3475.633885999996
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 274.149,
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 6883,
+      "database_ms": 2716.9635450003843,
+      "longest_ms": 317.49413199999253,
+      "candidate_ms": 317.49413199999253,
+      "wall_ms": 2785.5978900000046
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 29.537,
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 6884,
+      "database_ms": 2544.6326570008823,
+      "longest_ms": 56.20071999999345,
+      "candidate_ms": 56.20071999999345,
+      "wall_ms": 2618.0663270000077
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 287.963,
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 9531,
+      "database_ms": 4153.072461999371,
+      "longest_ms": 318.95587099995464,
+      "candidate_ms": 318.95587099995464,
+      "wall_ms": 4429.707656999992
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 30.365,
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 9532,
+      "database_ms": 3710.653752001119,
+      "longest_ms": 55.515539000043646,
+      "candidate_ms": 55.515539000043646,
+      "wall_ms": 3982.6005440000445
+    },
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 2835.929,
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 356,
+      "database_ms": 3109.4359200020554,
+      "longest_ms": 2969.6743390000192,
+      "candidate_ms": 2969.6743390000192,
+      "wall_ms": 3113.3878269999987
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 96.41,
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 357,
+      "database_ms": 260.46409699879587,
+      "longest_ms": 121.13814499997534,
+      "candidate_ms": 121.13814499997534,
+      "wall_ms": 266.3303639999358
+    },
+    {
+      "label": "before",
+      "search": true,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 3067.768,
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 8708,
+      "database_ms": 6339.360356003279,
+      "longest_ms": 2813.972418999998,
+      "candidate_ms": 2813.972418999998,
+      "wall_ms": 6431.281232999987
+    },
+    {
+      "label": "after",
+      "search": true,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 122.541,
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 8709,
+      "database_ms": 3443.2828049972886,
+      "longest_ms": 154.72210900008213,
+      "candidate_ms": 154.72210900008213,
+      "wall_ms": 3526.3413840000285
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 2882.812,
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 9273,
+      "database_ms": 6443.803511007805,
+      "longest_ms": 2884.5859599999385,
+      "candidate_ms": 2884.5859599999385,
+      "wall_ms": 6687.183989999932
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 130.666,
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 9274,
+      "database_ms": 4251.852444002638,
+      "longest_ms": 134.43890599999577,
+      "candidate_ms": 134.43890599999577,
+      "wall_ms": 4525.180308000068
+    },
+    {
+      "label": "before",
+      "search": false,
+      "jit_setting": "on",
+      "explain_has_jit": true,
+      "explain_execution_ms": 2777.067,
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 11113,
+      "database_ms": 7583.910794998286,
+      "longest_ms": 2900.0456189999823,
+      "candidate_ms": 2900.0456189999823,
+      "wall_ms": 7986.864715000032
+    },
+    {
+      "label": "after",
+      "search": false,
+      "jit_setting": "off",
+      "explain_has_jit": false,
+      "explain_execution_ms": 120.176,
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 11114,
+      "database_ms": 4987.751303005614,
+      "longest_ms": 129.99729799991474,
+      "candidate_ms": 129.99729799991474,
+      "wall_ms": 5407.149310000008
+    }
+  ],
+  "method": "Final JIT-off-only run: single warmed samples, frozen main then changed reader on identical native rows, search on/off, both offsets. EXPLAIN runs in a transaction with the corresponding JIT setting."
+}

@@ -1,0 +1,503 @@
+[
+  {
+    "volume": 100,
+    "groups": {
+      "a8402858d4f1e1d27afee976520485ebb4b96a5387355b823f0d0b8079729032": {
+        "sql_prefix": "BEGIN",
+        "count": 1,
+        "summed_ms": 0.20479899999918416,
+        "longest_ms": 0.20479899999918416
+      },
+      "dd7f9dffdf7e3553b5db23cee0d044a3059f4dee1655fc2ff003f9c8578964b7": {
+        "sql_prefix": "SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)\n    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.ca",
+        "count": 103,
+        "summed_ms": 35.20802100001674,
+        "longest_ms": 2.7635730000001786
+      },
+      "0ce5ae9d6dc9c8ceb0f542b339c6a610c1d0ec0f47e2fcfe50a96b2bea680f82": {
+        "sql_prefix": "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+        "count": 1,
+        "summed_ms": 0.15831899999830057,
+        "longest_ms": 0.15831899999830057
+      },
+      "71d500622c1da3687cc9a297e4116c26fc371b79346a3d5212d3ec8ddc4ede68": {
+        "sql_prefix": "SELECT clock_timestamp() AS now",
+        "count": 1,
+        "summed_ms": 0.10376600000017788,
+        "longest_ms": 0.10376600000017788
+      },
+      "928e7bf0e7300d71df7bad41bc9d0a73459693d9cb32120bc5a8be2dc1b67b12": {
+        "sql_prefix": "WITH candidates AS (\n        SELECT e.id,'EstimateReview'::text AS source,e.id AS estimate_id,\n          s.created_at AS submitted_at,e.owner_id,u.display_name ",
+        "count": 1,
+        "summed_ms": 75.43286199999784,
+        "longest_ms": 75.43286199999784
+      },
+      "781e1364155b70f1f40e4933d30f1f5a101b59f8747c8fa81b5763c4baa37be6": {
+        "sql_prefix": "SELECT * FROM ppo.estimates WHERE workspace_id=$1 AND id=$2",
+        "count": 10,
+        "summed_ms": 3.9380249999994703,
+        "longest_ms": 1.129174999998213
+      },
+      "b0d50554aab5762a47206cd880ad6d5796341f9b517a269ff251185f61cab0f9": {
+        "sql_prefix": "SELECT to_regclass('ppo.estimate_discovery_roots') AS relation",
+        "count": 20,
+        "summed_ms": 3.035894000004191,
+        "longest_ms": 0.24078299999746378
+      },
+      "ba6c16b992045c82084c7049e8fde3df2e811add7712c2ba34fb367a18a6029d": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_discovery_roots WHERE workspace_id=$1 AND estimate_id=$2",
+        "count": 20,
+        "summed_ms": 4.148765999991156,
+        "longest_ms": 0.337599999998929
+      },
+      "7c2aacb373713a133bd686bd6cadc3c5d4e5193d0e157a67b6389abb16cb2d23": {
+        "sql_prefix": "SELECT o.*,to_jsonb(o)->>'expected_close_date' AS expected_close_date FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND EXISTS(SELECT 1 FROM ppo.",
+        "count": 18,
+        "summed_ms": 36.12653099999079,
+        "longest_ms": 6.398311000000831
+      },
+      "0a8de6b8e2535aaed09acb8153b791f03bf22b8f251c3a26432df76157481e04": {
+        "sql_prefix": "SELECT 1 FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+        "count": 12,
+        "summed_ms": 2.8127690000037546,
+        "longest_ms": 0.5127639999991516
+      },
+      "3db5e136ec830a9a1e2b52e4a4709b628cf152707948085831c59aefe1953c23": {
+        "sql_prefix": "SELECT r.* FROM ppo.sites r WHERE r.workspace_id=$1 AND r.id=$3 AND EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.wo",
+        "count": 12,
+        "summed_ms": 4.943573999989894,
+        "longest_ms": 0.5013169999983802
+      },
+      "7bee43d1943c4f291f50555675a494e31b359359e898aa389b98379bc41380e6": {
+        "sql_prefix": "SELECT r.* FROM ppo.organisations r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.",
+        "count": 12,
+        "summed_ms": 6.9445249999917,
+        "longest_ms": 0.7388250000003609
+      },
+      "bbd86f7caa2380668b5dc3b1747f6055b7b67aa62d65859a4a39559357db0ac7": {
+        "sql_prefix": "SELECT 1 FROM ppo.site_parties WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND organisation_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NULL ",
+        "count": 12,
+        "summed_ms": 3.0136700000075507,
+        "longest_ms": 0.32237700000041514
+      },
+      "2a8658abf07924a0360fa51c8eaf349802c953f70de36d3ba69c77a12a3cc4e9": {
+        "sql_prefix": "SELECT r.* FROM ppo.people r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=r.workspace_id A",
+        "count": 12,
+        "summed_ms": 8.451279000000795,
+        "longest_ms": 1.1859809999987192
+      },
+      "9bf3563d9aa799eb03d2b59db5611b96f9c32b1bf656b164fffd68478c6e0858": {
+        "sql_prefix": "SELECT 1 FROM ppo.relationships WHERE workspace_id=$1 AND company_id=$2 AND organisation_id=$3 AND person_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NU",
+        "count": 12,
+        "summed_ms": 3.007039000003715,
+        "longest_ms": 0.36119500000131666
+      },
+      "89e10fbaffc2ec5918cc7bfc9c19e56c6e0685c2af28151e639607f655a32091": {
+        "sql_prefix": "SELECT 1 FROM ppo.crm_pipeline_definitions d WHERE d.workspace_id=$1 AND d.id=$2 AND d.definition_key IN ('SyntheticEnquiryI1','SyntheticFiveStage') AND d.versi",
+        "count": 12,
+        "summed_ms": 3.820698999999877,
+        "longest_ms": 0.6476779999975406
+      },
+      "61e347b05d9bc1c35c55c8c64534196bfec00ad5cc98a55bacc1e3ae15761edb": {
+        "sql_prefix": "SELECT to_regclass('ppo.cost_sources') AS present",
+        "count": 28,
+        "summed_ms": 4.220760000000155,
+        "longest_ms": 0.3090459999984887
+      },
+      "7ebeac665755160e72e1dbba02d24d11538e867e64d2626645d6655f625266e2": {
+        "sql_prefix": "SELECT b.line_id,r.source_id,b.source_revision_id,b.review_event_id,\n    to_char(b.pricing_date,'YYYY-MM-DD') AS pricing_date,b.tier_minimum_quantity::text,b.un",
+        "count": 28,
+        "summed_ms": 9.155217999992601,
+        "longest_ms": 0.4431189999995695
+      },
+      "a9bfb4570028693b69fec4a99953f89b660ec54f0f74699cffba9e2151bc1564": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 AND id=$3",
+        "count": 10,
+        "summed_ms": 3.496420000003127,
+        "longest_ms": 0.5374210000009043
+      },
+      "07d149c1b97790735ce697affa05ef25028af0e55d1e6e0d4929de550ba659ae": {
+        "sql_prefix": "SELECT to_regclass('ppo.specialist_configurations') AS relation",
+        "count": 8,
+        "summed_ms": 1.1204319999960717,
+        "longest_ms": 0.24513999999908265
+      },
+      "5c1df9bcc710616802b0244452f75f4b71fe8a5d7ef11d8ba3afc7e00ec5b4f7": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_specialist_lineage WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 1.7646940000049653,
+        "longest_ms": 0.29351300000053016
+      },
+      "869a8f85535416693eaffdfe78ceee28dffac8b81c7c9376419904d0b8fae03e": {
+        "sql_prefix": "SELECT revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 1.458690999999817,
+        "longest_ms": 0.2729120000003604
+      },
+      "0f85c092f03737356020ce3532fca9e991d4252358035f830bec16c78a41d3dd": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_review_events WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY sequence",
+        "count": 2,
+        "summed_ms": 0.9271499999958905,
+        "longest_ms": 0.612965999996959
+      },
+      "f6aba3e18a106a6ae67c81f2f83b2298119477e4676bda9c1c8f62342c7fde86": {
+        "sql_prefix": "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2 AND active",
+        "count": 2,
+        "summed_ms": 0.3802130000003672,
+        "longest_ms": 0.21275099999911617
+      },
+      "40edbf2d149dcaf17762bd427396e03e3a23f552ca2fd495657fe2a84f1ed456": {
+        "sql_prefix": "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.2448789999980363,
+        "longest_ms": 0.2448789999980363
+      },
+      "116c946a946fd18748df0ec08d2b246cb26f782baaf901537b4d290df4e1ea69": {
+        "sql_prefix": "SELECT id,display_name AS name FROM ppo.sites WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.17369200000030105,
+        "longest_ms": 0.17369200000030105
+      },
+      "79663c1d3b43ceaf9ee728e501c64b57ae2e4d6cb36ff5c65eddcda1de27342f": {
+        "sql_prefix": "COMMIT",
+        "count": 1,
+        "summed_ms": 0.9885119999999006,
+        "longest_ms": 0.9885119999999006
+      }
+    }
+  },
+  {
+    "volume": 1000,
+    "groups": {
+      "a8402858d4f1e1d27afee976520485ebb4b96a5387355b823f0d0b8079729032": {
+        "sql_prefix": "BEGIN",
+        "count": 1,
+        "summed_ms": 0.20300599999609403,
+        "longest_ms": 0.20300599999609403
+      },
+      "dd7f9dffdf7e3553b5db23cee0d044a3059f4dee1655fc2ff003f9c8578964b7": {
+        "sql_prefix": "SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)\n    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.ca",
+        "count": 103,
+        "summed_ms": 32.06189300000551,
+        "longest_ms": 0.6118029999779537
+      },
+      "0ce5ae9d6dc9c8ceb0f542b339c6a610c1d0ec0f47e2fcfe50a96b2bea680f82": {
+        "sql_prefix": "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+        "count": 1,
+        "summed_ms": 0.31303200000547804,
+        "longest_ms": 0.31303200000547804
+      },
+      "71d500622c1da3687cc9a297e4116c26fc371b79346a3d5212d3ec8ddc4ede68": {
+        "sql_prefix": "SELECT clock_timestamp() AS now",
+        "count": 1,
+        "summed_ms": 0.09593400001176633,
+        "longest_ms": 0.09593400001176633
+      },
+      "928e7bf0e7300d71df7bad41bc9d0a73459693d9cb32120bc5a8be2dc1b67b12": {
+        "sql_prefix": "WITH candidates AS (\n        SELECT e.id,'EstimateReview'::text AS source,e.id AS estimate_id,\n          s.created_at AS submitted_at,e.owner_id,u.display_name ",
+        "count": 1,
+        "summed_ms": 326.3503020000062,
+        "longest_ms": 326.3503020000062
+      },
+      "781e1364155b70f1f40e4933d30f1f5a101b59f8747c8fa81b5763c4baa37be6": {
+        "sql_prefix": "SELECT * FROM ppo.estimates WHERE workspace_id=$1 AND id=$2",
+        "count": 10,
+        "summed_ms": 3.78755400000955,
+        "longest_ms": 1.023564000002807
+      },
+      "b0d50554aab5762a47206cd880ad6d5796341f9b517a269ff251185f61cab0f9": {
+        "sql_prefix": "SELECT to_regclass('ppo.estimate_discovery_roots') AS relation",
+        "count": 20,
+        "summed_ms": 2.9380429999437183,
+        "longest_ms": 0.29453499999362975
+      },
+      "ba6c16b992045c82084c7049e8fde3df2e811add7712c2ba34fb367a18a6029d": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_discovery_roots WHERE workspace_id=$1 AND estimate_id=$2",
+        "count": 20,
+        "summed_ms": 3.4974690000526607,
+        "longest_ms": 0.2717500000144355
+      },
+      "7c2aacb373713a133bd686bd6cadc3c5d4e5193d0e157a67b6389abb16cb2d23": {
+        "sql_prefix": "SELECT o.*,to_jsonb(o)->>'expected_close_date' AS expected_close_date FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND EXISTS(SELECT 1 FROM ppo.",
+        "count": 18,
+        "summed_ms": 26.65176699994481,
+        "longest_ms": 2.0003369999758434
+      },
+      "0a8de6b8e2535aaed09acb8153b791f03bf22b8f251c3a26432df76157481e04": {
+        "sql_prefix": "SELECT 1 FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+        "count": 12,
+        "summed_ms": 2.3539720000117086,
+        "longest_ms": 0.28892600000835955
+      },
+      "3db5e136ec830a9a1e2b52e4a4709b628cf152707948085831c59aefe1953c23": {
+        "sql_prefix": "SELECT r.* FROM ppo.sites r WHERE r.workspace_id=$1 AND r.id=$3 AND EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.wo",
+        "count": 12,
+        "summed_ms": 4.945961999997962,
+        "longest_ms": 0.4821970000048168
+      },
+      "7bee43d1943c4f291f50555675a494e31b359359e898aa389b98379bc41380e6": {
+        "sql_prefix": "SELECT r.* FROM ppo.organisations r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.",
+        "count": 12,
+        "summed_ms": 7.022149999917019,
+        "longest_ms": 0.7414080000016838
+      },
+      "bbd86f7caa2380668b5dc3b1747f6055b7b67aa62d65859a4a39559357db0ac7": {
+        "sql_prefix": "SELECT 1 FROM ppo.site_parties WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND organisation_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NULL ",
+        "count": 12,
+        "summed_ms": 3.0732159999897704,
+        "longest_ms": 0.3278940000163857
+      },
+      "2a8658abf07924a0360fa51c8eaf349802c953f70de36d3ba69c77a12a3cc4e9": {
+        "sql_prefix": "SELECT r.* FROM ppo.people r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=r.workspace_id A",
+        "count": 12,
+        "summed_ms": 7.314986999990651,
+        "longest_ms": 0.884674000000814
+      },
+      "9bf3563d9aa799eb03d2b59db5611b96f9c32b1bf656b164fffd68478c6e0858": {
+        "sql_prefix": "SELECT 1 FROM ppo.relationships WHERE workspace_id=$1 AND company_id=$2 AND organisation_id=$3 AND person_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NU",
+        "count": 12,
+        "summed_ms": 3.213052000006428,
+        "longest_ms": 0.5262640000146348
+      },
+      "89e10fbaffc2ec5918cc7bfc9c19e56c6e0685c2af28151e639607f655a32091": {
+        "sql_prefix": "SELECT 1 FROM ppo.crm_pipeline_definitions d WHERE d.workspace_id=$1 AND d.id=$2 AND d.definition_key IN ('SyntheticEnquiryI1','SyntheticFiveStage') AND d.versi",
+        "count": 12,
+        "summed_ms": 3.1528159999579657,
+        "longest_ms": 0.31683799999882467
+      },
+      "61e347b05d9bc1c35c55c8c64534196bfec00ad5cc98a55bacc1e3ae15761edb": {
+        "sql_prefix": "SELECT to_regclass('ppo.cost_sources') AS present",
+        "count": 28,
+        "summed_ms": 3.5922369999752846,
+        "longest_ms": 0.3135419999889564
+      },
+      "7ebeac665755160e72e1dbba02d24d11538e867e64d2626645d6655f625266e2": {
+        "sql_prefix": "SELECT b.line_id,r.source_id,b.source_revision_id,b.review_event_id,\n    to_char(b.pricing_date,'YYYY-MM-DD') AS pricing_date,b.tier_minimum_quantity::text,b.un",
+        "count": 28,
+        "summed_ms": 9.172210999997333,
+        "longest_ms": 0.6947979999822564
+      },
+      "a9bfb4570028693b69fec4a99953f89b660ec54f0f74699cffba9e2151bc1564": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 AND id=$3",
+        "count": 10,
+        "summed_ms": 2.9117930000356864,
+        "longest_ms": 0.44283799998811446
+      },
+      "07d149c1b97790735ce697affa05ef25028af0e55d1e6e0d4929de550ba659ae": {
+        "sql_prefix": "SELECT to_regclass('ppo.specialist_configurations') AS relation",
+        "count": 8,
+        "summed_ms": 0.944733999989694,
+        "longest_ms": 0.14459800001350231
+      },
+      "5c1df9bcc710616802b0244452f75f4b71fe8a5d7ef11d8ba3afc7e00ec5b4f7": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_specialist_lineage WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 1.51388399998541,
+        "longest_ms": 0.2703380000020843
+      },
+      "869a8f85535416693eaffdfe78ceee28dffac8b81c7c9376419904d0b8fae03e": {
+        "sql_prefix": "SELECT revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 1.0816210000193678,
+        "longest_ms": 0.15119800000684336
+      },
+      "0f85c092f03737356020ce3532fca9e991d4252358035f830bec16c78a41d3dd": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_review_events WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY sequence",
+        "count": 2,
+        "summed_ms": 0.793407000019215,
+        "longest_ms": 0.4368090000061784
+      },
+      "f6aba3e18a106a6ae67c81f2f83b2298119477e4676bda9c1c8f62342c7fde86": {
+        "sql_prefix": "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2 AND active",
+        "count": 2,
+        "summed_ms": 0.3080049999989569,
+        "longest_ms": 0.15485399999306537
+      },
+      "40edbf2d149dcaf17762bd427396e03e3a23f552ca2fd495657fe2a84f1ed456": {
+        "sql_prefix": "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.2883350000192877,
+        "longest_ms": 0.2883350000192877
+      },
+      "116c946a946fd18748df0ec08d2b246cb26f782baaf901537b4d290df4e1ea69": {
+        "sql_prefix": "SELECT id,display_name AS name FROM ppo.sites WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.18752300000051036,
+        "longest_ms": 0.18752300000051036
+      },
+      "79663c1d3b43ceaf9ee728e501c64b57ae2e4d6cb36ff5c65eddcda1de27342f": {
+        "sql_prefix": "COMMIT",
+        "count": 1,
+        "summed_ms": 0.7979840000043623,
+        "longest_ms": 0.7979840000043623
+      }
+    }
+  },
+  {
+    "volume": 3000,
+    "groups": {
+      "a8402858d4f1e1d27afee976520485ebb4b96a5387355b823f0d0b8079729032": {
+        "sql_prefix": "BEGIN",
+        "count": 1,
+        "summed_ms": 0.1855399999767542,
+        "longest_ms": 0.1855399999767542
+      },
+      "dd7f9dffdf7e3553b5db23cee0d044a3059f4dee1655fc2ff003f9c8578964b7": {
+        "sql_prefix": "SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.workspace_id,g.user_id)\n    WHERE g.workspace_id=$1 AND g.user_id=$2 AND g.ca",
+        "count": 103,
+        "summed_ms": 33.7122799999197,
+        "longest_ms": 0.8586670000222512
+      },
+      "0ce5ae9d6dc9c8ceb0f542b339c6a610c1d0ec0f47e2fcfe50a96b2bea680f82": {
+        "sql_prefix": "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+        "count": 1,
+        "summed_ms": 0.2159760000067763,
+        "longest_ms": 0.2159760000067763
+      },
+      "71d500622c1da3687cc9a297e4116c26fc371b79346a3d5212d3ec8ddc4ede68": {
+        "sql_prefix": "SELECT clock_timestamp() AS now",
+        "count": 1,
+        "summed_ms": 0.15813900000648573,
+        "longest_ms": 0.15813900000648573
+      },
+      "928e7bf0e7300d71df7bad41bc9d0a73459693d9cb32120bc5a8be2dc1b67b12": {
+        "sql_prefix": "WITH candidates AS (\n        SELECT e.id,'EstimateReview'::text AS source,e.id AS estimate_id,\n          s.created_at AS submitted_at,e.owner_id,u.display_name ",
+        "count": 1,
+        "summed_ms": 2814.863719999965,
+        "longest_ms": 2814.863719999965
+      },
+      "781e1364155b70f1f40e4933d30f1f5a101b59f8747c8fa81b5763c4baa37be6": {
+        "sql_prefix": "SELECT * FROM ppo.estimates WHERE workspace_id=$1 AND id=$2",
+        "count": 10,
+        "summed_ms": 3.9882980000111274,
+        "longest_ms": 1.006900999986101
+      },
+      "b0d50554aab5762a47206cd880ad6d5796341f9b517a269ff251185f61cab0f9": {
+        "sql_prefix": "SELECT to_regclass('ppo.estimate_discovery_roots') AS relation",
+        "count": 20,
+        "summed_ms": 3.205313000071328,
+        "longest_ms": 0.341115000017453
+      },
+      "ba6c16b992045c82084c7049e8fde3df2e811add7712c2ba34fb367a18a6029d": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_discovery_roots WHERE workspace_id=$1 AND estimate_id=$2",
+        "count": 20,
+        "summed_ms": 3.8974309999030083,
+        "longest_ms": 0.40708400000585243
+      },
+      "7c2aacb373713a133bd686bd6cadc3c5d4e5193d0e157a67b6389abb16cb2d23": {
+        "sql_prefix": "SELECT o.*,to_jsonb(o)->>'expected_close_date' AS expected_close_date FROM ppo.opportunities o WHERE o.workspace_id=$1 AND o.id=$3 AND EXISTS(SELECT 1 FROM ppo.",
+        "count": 18,
+        "summed_ms": 30.18107299983967,
+        "longest_ms": 2.5253629999933764
+      },
+      "0a8de6b8e2535aaed09acb8153b791f03bf22b8f251c3a26432df76157481e04": {
+        "sql_prefix": "SELECT 1 FROM ppo.companies WHERE workspace_id=$1 AND id=$2",
+        "count": 12,
+        "summed_ms": 2.6176310000009835,
+        "longest_ms": 0.3388620000332594
+      },
+      "3db5e136ec830a9a1e2b52e4a4709b628cf152707948085831c59aefe1953c23": {
+        "sql_prefix": "SELECT r.* FROM ppo.sites r WHERE r.workspace_id=$1 AND r.id=$3 AND EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.id)=(g.wo",
+        "count": 12,
+        "summed_ms": 5.094651999999769,
+        "longest_ms": 0.5857949999626726
+      },
+      "7bee43d1943c4f291f50555675a494e31b359359e898aa389b98379bc41380e6": {
+        "sql_prefix": "SELECT r.* FROM ppo.organisations r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.permission_grants g JOIN ppo.users u ON (u.workspace_id,u.",
+        "count": 12,
+        "summed_ms": 7.8981470000580885,
+        "longest_ms": 1.6342980000190437
+      },
+      "bbd86f7caa2380668b5dc3b1747f6055b7b67aa62d65859a4a39559357db0ac7": {
+        "sql_prefix": "SELECT 1 FROM ppo.site_parties WHERE workspace_id=$1 AND company_id=$2 AND site_id=$3 AND organisation_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NULL ",
+        "count": 12,
+        "summed_ms": 3.2938059998559766,
+        "longest_ms": 0.4620479999575764
+      },
+      "2a8658abf07924a0360fa51c8eaf349802c953f70de36d3ba69c77a12a3cc4e9": {
+        "sql_prefix": "SELECT r.* FROM ppo.people r WHERE r.workspace_id=$1 AND r.id=$3 AND (EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=r.workspace_id A",
+        "count": 12,
+        "summed_ms": 7.238828000146896,
+        "longest_ms": 0.8371330000227317
+      },
+      "9bf3563d9aa799eb03d2b59db5611b96f9c32b1bf656b164fffd68478c6e0858": {
+        "sql_prefix": "SELECT 1 FROM ppo.relationships WHERE workspace_id=$1 AND company_id=$2 AND organisation_id=$3 AND person_id=$4 AND valid_from<=CURRENT_DATE AND (valid_to IS NU",
+        "count": 12,
+        "summed_ms": 2.9751629998208955,
+        "longest_ms": 0.40896700002485886
+      },
+      "89e10fbaffc2ec5918cc7bfc9c19e56c6e0685c2af28151e639607f655a32091": {
+        "sql_prefix": "SELECT 1 FROM ppo.crm_pipeline_definitions d WHERE d.workspace_id=$1 AND d.id=$2 AND d.definition_key IN ('SyntheticEnquiryI1','SyntheticFiveStage') AND d.versi",
+        "count": 12,
+        "summed_ms": 3.6085290001356043,
+        "longest_ms": 0.5020089999889024
+      },
+      "61e347b05d9bc1c35c55c8c64534196bfec00ad5cc98a55bacc1e3ae15761edb": {
+        "sql_prefix": "SELECT to_regclass('ppo.cost_sources') AS present",
+        "count": 28,
+        "summed_ms": 4.510665999958292,
+        "longest_ms": 0.8207190000102855
+      },
+      "7ebeac665755160e72e1dbba02d24d11538e867e64d2626645d6655f625266e2": {
+        "sql_prefix": "SELECT b.line_id,r.source_id,b.source_revision_id,b.review_event_id,\n    to_char(b.pricing_date,'YYYY-MM-DD') AS pricing_date,b.tier_minimum_quantity::text,b.un",
+        "count": 28,
+        "summed_ms": 11.07468899997184,
+        "longest_ms": 1.5111010000109673
+      },
+      "a9bfb4570028693b69fec4a99953f89b660ec54f0f74699cffba9e2151bc1564": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_versions WHERE workspace_id=$1 AND estimate_id=$2 AND id=$3",
+        "count": 10,
+        "summed_ms": 3.4099190001143143,
+        "longest_ms": 0.5010669999755919
+      },
+      "07d149c1b97790735ce697affa05ef25028af0e55d1e6e0d4929de550ba659ae": {
+        "sql_prefix": "SELECT to_regclass('ppo.specialist_configurations') AS relation",
+        "count": 8,
+        "summed_ms": 1.1839779998990707,
+        "longest_ms": 0.3065829999977723
+      },
+      "5c1df9bcc710616802b0244452f75f4b71fe8a5d7ef11d8ba3afc7e00ec5b4f7": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_specialist_lineage WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 2.2259009999688715,
+        "longest_ms": 0.44512300001224503
+      },
+      "869a8f85535416693eaffdfe78ceee28dffac8b81c7c9376419904d0b8fae03e": {
+        "sql_prefix": "SELECT revision_id FROM ppo.estimate_discovery_bases WHERE workspace_id=$1 AND estimate_version_id=$2",
+        "count": 8,
+        "summed_ms": 1.5754099999321625,
+        "longest_ms": 0.31555699999444187
+      },
+      "0f85c092f03737356020ce3532fca9e991d4252358035f830bec16c78a41d3dd": {
+        "sql_prefix": "SELECT * FROM ppo.estimate_review_events WHERE workspace_id=$1 AND estimate_id=$2 ORDER BY sequence",
+        "count": 2,
+        "summed_ms": 0.6670569999259897,
+        "longest_ms": 0.3656619999674149
+      },
+      "f6aba3e18a106a6ae67c81f2f83b2298119477e4676bda9c1c8f62342c7fde86": {
+        "sql_prefix": "SELECT id,display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2 AND active",
+        "count": 2,
+        "summed_ms": 0.6005170000134967,
+        "longest_ms": 0.38050500000827014
+      },
+      "40edbf2d149dcaf17762bd427396e03e3a23f552ca2fd495657fe2a84f1ed456": {
+        "sql_prefix": "SELECT display_name FROM ppo.users WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.30016300000716,
+        "longest_ms": 0.30016300000716
+      },
+      "116c946a946fd18748df0ec08d2b246cb26f782baaf901537b4d290df4e1ea69": {
+        "sql_prefix": "SELECT id,display_name AS name FROM ppo.sites WHERE workspace_id=$1 AND id=$2",
+        "count": 1,
+        "summed_ms": 0.23635700001614168,
+        "longest_ms": 0.23635700001614168
+      },
+      "79663c1d3b43ceaf9ee728e501c64b57ae2e4d6cb36ff5c65eddcda1de27342f": {
+        "sql_prefix": "COMMIT",
+        "count": 1,
+        "summed_ms": 1.126291000051424,
+        "longest_ms": 1.126291000051424
+      }
+    }
+  }
+]

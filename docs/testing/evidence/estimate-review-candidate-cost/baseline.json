@@ -1,0 +1,102 @@
+{
+  "title": "SYN Candidate window cf63add0-b863-4166-8a1e-ad5e790a792f",
+  "rows": [
+    {
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 356,
+      "database_ms": 215.28119899998637,
+      "longest_ms": 75.43286199999784,
+      "candidate_ms": 75.43286199999784,
+      "wall_ms": 220.60311799999909
+    },
+    {
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 8708,
+      "database_ms": 3201.3529669997915,
+      "longest_ms": 66.02483799999754,
+      "candidate_ms": 66.02483799999754,
+      "wall_ms": 3288.5952309999993
+    },
+    {
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 356,
+      "database_ms": 448.5668889998924,
+      "longest_ms": 326.3503020000062,
+      "candidate_ms": 326.3503020000062,
+      "wall_ms": 452.1391109999968
+    },
+    {
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 8708,
+      "database_ms": 3366.9234799988044,
+      "longest_ms": 304.4563509999716,
+      "candidate_ms": 304.4563509999716,
+      "wall_ms": 3444.4344479999854
+    },
+    {
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 356,
+      "database_ms": 2950.0454739995766,
+      "longest_ms": 2814.863719999965,
+      "candidate_ms": 2814.863719999965,
+      "wall_ms": 2953.394403000013
+    },
+    {
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 8708,
+      "database_ms": 6064.066230999073,
+      "longest_ms": 2806.485871000041,
+      "candidate_ms": 2806.485871000041,
+      "wall_ms": 6153.940348999982
+    }
+  ],
+  "method": "Preliminary main-reader run; one warmed sample per volume/window; client-observed pg query duration, not server-only time."
+}

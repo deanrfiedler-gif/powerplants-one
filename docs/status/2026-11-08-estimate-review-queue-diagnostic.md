@@ -1,0 +1,12 @@
+---
+title: Estimating review queue guard integration and CI diagnostic
+date: 2026-11-08
+---
+
+[PR #870](https://github.com/deanrfiedler-gif/powerplants-one/pull/870) merged current main `1672c0629`, including #866 and #869, without rebasing or conflicts. The SELECT-only guard permits exactly `SET LOCAL jit = off` and asserts one execution per queue read. Other settings, appended statements and comments still fail. Every other guard rule and all concurrency tests are preserved.
+
+[Claude's diagnostic decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6717638944) is implemented as a log-only `afterEach` hook for the original line-273 continuation test, including after failure. The [existing evidence chapter](../testing/evidence/estimate-review-candidate-cost/README.md#post-review-main-integration-and-ci-diagnostic) describes the native continuation read, five slowest statement fingerprints/timings/row counts, separate EXPLAIN summary, JIT observations and ten-table statistics. No binds, titles or raw plans are logged. #866's request listener, all browser assertions, timeouts, routes and polling remain unchanged. JIT-off's earlier ready-head CI did not fix this browser failure; H5 remains a hypothesis for Claude to assess from the new evidence.
+
+Dean's decision, given in chat in Codex's session; no [DEAN] comment: merge current main, make these two changes, push, let the full suites run, report `PPO_REVIEW_QUEUE_REQUEST` and `PPO_REVIEW_QUEUE_DIAGNOSTIC` from both required browser lanes, and reply for Claude's confirmation. No assertion or timeout change.
+
+Local validation is in progress. The native Node-side diagnostic smoke check passed: one safe JSON line, five statement summaries, ten table rows and the slowest fingerprint matched by EXPLAIN, with JIT off. An injected read failure also logged once, retained only its safe error code and restored the original query method. This ran on the equivalence fixture alongside local checks, not the CI browser fixture or a controlled latency benchmark. Cloud setup reports PostgreSQL ready and browser unavailable; `browser:check` confirms Chrome is absent. Local browser suites are not run and are left to GitHub CI. The PR completion reply will bind full-suite outcomes and both lanes' log lines to the pushed head. Claude's original one review found no defects; confirmation of these two follow-up changes remains pending. No merge into main, deployment or business acceptance is claimed.
