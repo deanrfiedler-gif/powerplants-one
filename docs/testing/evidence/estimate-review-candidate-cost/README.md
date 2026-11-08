@@ -1,6 +1,6 @@
 # Estimating review queue: transaction-local JIT control
 
-Date: 8 November 2026. Owner: Codex. Scope: Prompt Y, ES-04/05 and EST-03/07/08. [Draft PR #870](https://github.com/deanrfiedler-gif/powerplants-one/pull/870) follows [the original diagnostic decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6716124027) and [Claude’s subsequent JIT-off decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6716621588). This is synthetic performance and equivalence evidence, not business acceptance or proof of the original CI database census.
+Date: 8 November 2026. Owner: Codex. Scope: Prompt Y, ES-04/05 and EST-03/07/08. [PR #870](https://github.com/deanrfiedler-gif/powerplants-one/pull/870) follows [the original diagnostic decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/866#issuecomment-6716124027) and [Claude’s subsequent JIT-off decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6716621588). This is synthetic performance and equivalence evidence, not business acceptance or proof of the original CI database census.
 
 ## Final implementation
 
@@ -48,9 +48,19 @@ Native Playwright discovery places line 273 after 279 entries in desktop shard 1
 
 The original #866 evidence remains: compiled line 273 passed in 27.8 seconds with 3,796 / 3,869 ms continuations; P01–P11 failed in 22.2 seconds with the continuation still running after 5,700 ms. Fresh ready-head durations and request diagnostics remain a separate gate.
 
-#866 is not merged into this baseline. Its branch’s `estimating-review-locks.test.ts:57–78` rejects `SET`; when it reaches main, exempt exactly `SET LOCAL jit = off` and assert it once per queue read, retaining every other guard and running its concurrency cases. This conditional integration follows [Claude’s merge-order clarification](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6716875001): if #870 lands first after #866’s re-run fails, #866 adds the exemption to its own guard and #870 changes no #866 test. The new current-main transaction tests do not substitute for the concurrency cases.
+## Post-review main integration and CI diagnostic
 
-Final JIT-off measurements and validation follow below. Independent review has not happened. Local browser suites are not run because setup reports the browser unavailable; full ready-head CI follows Claude’s one draft-head review. No merge, deployment or business acceptance is claimed.
+Claude's [one independent review](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#pullrequestreview-5816561228) found no defects on `062c0777`. Its [completed ready-head suites](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6717801511) nevertheless failed the original line-273 test in P01–P11 (22.4 s), while compiled desktop-1 passed (30.3 s). **JIT-off does not fix that CI failure.** The measured production-volume benefit remains; low-volume plan instability is a hypothesis for the CI cost, not an established cause.
+
+After #866 and #869 merged, current main `1672c0629` was merged into #870 without rebasing or conflicts. The queue retains #866's FOR SHARE lock. Its SELECT-only guard now exempts exactly `SET LOCAL jit = off`, checks it once per queue read, and rejects altered settings or appended SQL/comments. Every other guard rule and the three concurrency cases remain unchanged.
+
+Under [Claude's diagnostic decision](https://github.com/deanrfiedler-gif/powerplants-one/pull/870#issuecomment-6717638944), only the original line-273 continuation test gets an `afterEach` diagnostic, including after assertion failure. It reuses the principal returned by the test's existing coordinator login and its search, then calls the native reader at `awaiting_me`, offset 25. A temporary Node-side client wrapper records statement durations and row counts (or a safe error code for rejected statements) and is restored in `finally`. One `PPO_REVIEW_QUEUE_DIAGNOSTIC` JSON line reports the five slowest statements by whitespace-normalised SHA-256 fingerprint, table statistics for all ten named tables, and `SHOW jit` after the read. The slowest read is separately replayed using its own parameters inside a JIT-off transaction for `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)`, reporting its fingerprint, JIT setting, execution/planning times, JIT presence, shared-buffer hits and the 15 plan nodes with highest time multiplied by loops (including actual rows/loops and tree paths).
+
+Only safe summary fields are logged: no SQL, bind values, titles, raw plans or error messages. Diagnostic errors become safe codes in that same line; missing setup is explicitly skipped. EXPLAIN is a subsequent execution, not the measured request's original plan. Statistics can change between observations. The hook runs after browser assertions and does not change requests, routes, polling, assertions or timeouts. #866's `PPO_REVIEW_QUEUE_REQUEST` listener stays unchanged. Both required lanes' first-attempt logs and full-suite results will be reported in the PR completion reply, requesting Claude's confirmation of these two changes only.
+
+Dean's decision, given in chat in Codex's session; no [DEAN] comment: merge current main (merge, no rebase), make the exact guard exemption and exact-once check, add Claude's log-only diagnostic, push, let full suites run, report both required lanes' request/diagnostic lines, and reply for Claude's confirmation. No assertion or timeout change.
+
+Local integration validation and any limits are recorded in the [follow-up status fragment](../../../status/2026-11-08-estimate-review-queue-diagnostic.md). No merge into main, deployment or business acceptance is claimed.
 
 ## Final JIT-off-only measurements
 
@@ -93,7 +103,7 @@ Single warmed samples, milliseconds. Every after result matched frozen main exce
 - [The final volume diagnostic passed](jit-off-volume-results.txt) all 24 samples and 12 paired response comparisons, including search and no search; every JIT-off EXPLAIN lacks a JIT section.
 - `npm run check` passed on JIT-off alone: Studio, lint, typecheck, 1,437 unit tests and production build. Documentation, migration numbering and source-scope checks are reported on the final PR head.
 - The existing ES-04/queue rendering failure is classified in the [final regression log](jit-off-regression-results.txt) and PR comment. The [earlier regression evidence](regression-results.txt) includes the unmodified-main reproduction. The baseline unmodified-main run produced the same failure; no assertion or timeout was weakened.
-- Local browser suites: not run, because cloud setup reports browser unavailable. Full ready-head CI: not run while draft pending Claude’s one review. The conditional #866 guard/concurrency integration and both line-273 durations/request logs remain open.
+- Local browser suites: not run, because cloud setup reports browser unavailable. These original implementation results precede the completed ready-head CI and follow-up integration described above.
 
 ## Observed low-volume plan instability
 
