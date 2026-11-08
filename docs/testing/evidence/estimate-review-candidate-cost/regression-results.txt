@@ -1,0 +1,79 @@
+CHANGED READER
+✔ ES04 concurrent submission, original recovery and immutable events preserve exact estimate and Draft input (5917.812464ms)
+✔ ES04 returned findings require attributable responses and independent review of a corrected successor (1432.626312ms)
+✔ ES04 price-only successor retains technical and completeness evidence but refuses stale price review (1084.290339ms)
+✔ ES04 scope and duty revocation protect commands, exact originals and history; source duty alone cannot review (596.488964ms)
+✔ ES04 two reviewers racing, and late evidence failure, cannot duplicate or partly record a decision (784.181563ms)
+✔ ES04 later source revisions invalidate only source-price review and preserve earlier reviewed bindings (1733.561236ms)
+✔ review snapshots preserve exact returns, successor responses and native independent authority (1392.339164ms)
+✔ review queue continues beyond 25 candidates without claiming review-row totals (10596.096752ms)
+✔ review queue preserves submitted identity, current eligibility, own-work and read-only counts (662.03705ms)
+✔ review queue retains returned findings, requires successor review and carries only applicable Reviewed decisions (1566.972949ms)
+✔ review queue paginates candidate windows independently of views and excludes other company data (815.747138ms)
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1322.328304ms)
+✔ review queue rechecks duties and exact relationship access without exposing restricted counts (744.844376ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30709.727746
+
+✖ failing tests:
+
+test at tests/helpers/estimating-review-queue-cases.ts:1:9480
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1322.328304ms)
+  Error: The exact draft output is unavailable. Its saved revision is retained for recovery.
+      at missing (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:12:19)
+      at runQuoteJob (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:93:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async retryQuote (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:99:3)
+      at async TestContext.<anonymous> (/workspace/estimate-review-candidate-cost/tests/helpers/estimating-review-queue-cases.ts:352:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDraftUnavailable',
+    field_errors: []
+  }
+
+UNMODIFIED MAIN SOURCE
+✔ ES04 concurrent submission, original recovery and immutable events preserve exact estimate and Draft input (5671.573907ms)
+✔ ES04 returned findings require attributable responses and independent review of a corrected successor (1287.188666ms)
+✔ ES04 price-only successor retains technical and completeness evidence but refuses stale price review (1004.029434ms)
+✔ ES04 scope and duty revocation protect commands, exact originals and history; source duty alone cannot review (605.529645ms)
+✔ ES04 two reviewers racing, and late evidence failure, cannot duplicate or partly record a decision (712.357646ms)
+✔ ES04 later source revisions invalidate only source-price review and preserve earlier reviewed bindings (1607.081117ms)
+✔ review snapshots preserve exact returns, successor responses and native independent authority (1291.49762ms)
+✔ review queue continues beyond 25 candidates without claiming review-row totals (10473.101336ms)
+✔ review queue preserves submitted identity, current eligibility, own-work and read-only counts (961.534872ms)
+✔ review queue retains returned findings, requires successor review and carries only applicable Reviewed decisions (1954.298604ms)
+✔ review queue paginates candidate windows independently of views and excludes other company data (875.853439ms)
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1612.420886ms)
+✔ review queue rechecks duties and exact relationship access without exposing restricted counts (753.403647ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30882.044808
+
+✖ failing tests:
+
+test at tests/helpers/estimating-review-queue-cases.ts:1:9480
+✖ quotation queue uses actual output and approval authority and remains separate from estimate review (1612.420886ms)
+  Error: The exact draft output is unavailable. Its saved revision is retained for recovery.
+      at missing (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:12:19)
+      at runQuoteJob (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:93:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async retryQuote (/workspace/estimate-review-candidate-cost/src/estimating/worker.ts:99:3)
+      at async TestContext.<anonymous> (/workspace/estimate-review-candidate-cost/tests/helpers/estimating-review-queue-cases.ts:352:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 503,
+    code: 'ExactDraftUnavailable',
+    field_errors: []
+  }

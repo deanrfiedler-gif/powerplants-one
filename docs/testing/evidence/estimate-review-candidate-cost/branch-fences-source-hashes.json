@@ -1,0 +1,14 @@
+{
+  "parent_head": "43d5553f8d12203b2f1d607d802eb9e956637900",
+  "sha256": {
+    "src/estimating/review/queue.ts": "375681213fc95976966ef9d11e068e11ca0c1c4a3eb3f892bcf73fa642e64d95",
+    "tests/database/estimate-review-candidate-plan.test.ts": "56bc61af0d5e8de4c434cdd96a10f496c5493cd074ec3a71ef4ca6a5e4f08308",
+    "tests/database/estimate-review-candidate-plan.proof.ts": "5bfb69faf9c61dfd5a531b026bdad924f09e7500ce64dff4a05c085eae39abaa",
+    "tests/helpers/estimate-review-candidate-plan.ts": "5a04300c323b50ff01ec354474e311133a87e798b71fb098af51788b121d9c16",
+    "tests/helpers/estimate-review-queue-main.ts": "60255348d7be609a2d344c39186b5fbddd1c8da7124b4c94edfc8d431a2ca0dd",
+    "tests/database/estimate-review-candidate-cost.test.ts": "de1fed2de86e75912d16858dcdfcf849db8254e1a505f2774cdcdfaafc080dfb",
+    "tests/database/estimating-review-locks.test.ts": "9944b2bbc1a95bc6e80aedd7d7716b3a4b5145d13af1dc4a2ac68ac56aa09d48",
+    "tests/helpers/estimate-review-queue-diagnostic.ts": "9c370a6a001443f0993391347d56d98e9c368c51c5e1a105c6c3688f12273708",
+    "tests/browser/estimate-reviews-register.spec.ts": "c4218fbdb0e5fcfac2258d74136c58e2878421c2c6628cfde7e015eb4e4f5360"
+  }
+}
