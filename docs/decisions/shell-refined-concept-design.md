@@ -112,7 +112,7 @@ Components: 36 shell components and sets (top bar, rails, strip, flyout, docked 
 
 ## 5. Rules, in summary
 
-The notes card carries R1 to R115. The build should read them there; the headlines are:
+The notes card carries R1 to R115, reproduced in the repository as [Shell refined concept — rules, differences and decisions](../design/development/systems/shell-refined-concept-rules.md) so the build and its reviewers can read them without Figma access. The headlines are:
 
 - **Top bar (R1, R3, R20, R60, R99, R100, R103).** 48 px, navy-deep, never two lines tall. Zones 496 / 448 / 496 at 1440: brand tile and tenant chip, a centred 448 px search with 16 px gaps either side, New as a 32 px white circle whose left edge sits on the right drawer's left edge at x 960, five utilities centred between New and the account by twin spacers, one hairline before the account. The tenant chip is a field: 12 % white at rest, 16 % hover, 24 % open, 28 % border. Zones 440 / 400 / 440 at 1280, 332 / 360 / 332 at 1024, 272 / 262 / 300 at 834, 720 / 480 / 720 at 1920.
 - **Rail (R5, R78, R83, R105, R113).** 80 px collapsed with 11 px labels truncated at 72 px, 240 px expanded; surface/rail one clear step lighter than the bar, hover and active stepped above it; green current marker; counts cap at 99+; twelve workspaces scroll behind a 48 px fade with the footer fixed; the rail lists only what the role may open and the first visible workspace takes the current state.
