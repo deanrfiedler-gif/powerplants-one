@@ -1,0 +1,714 @@
+{
+  "passed": 30,
+  "failed": 95,
+  "failures": [
+    {
+      "test": "P10 simultaneous competing handoffs reserve one complete source quantity only",
+      "location": "tests/database/finance-boundaries.test.ts:1:1727",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 factual material successor retains captured original and invalidates downstream exact review",
+      "location": "tests/database/finance-boundaries.test.ts:1:2523",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 accepted Partial attendance with time_declaration Incomplete is a Finance blocker, never zero",
+      "location": "tests/database/finance-boundaries.test.ts:1:4418",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 accepted Partial attendance with material_declaration Incomplete is a Finance blocker, never zero",
+      "location": "tests/database/finance-boundaries.test.ts:1:4418",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 captured Travel is never silently reclassified as Labour",
+      "location": "tests/database/finance-boundaries.test.ts:1:5096",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 captured Break is never silently reclassified as Labour",
+      "location": "tests/database/finance-boundaries.test.ts:1:5096",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 captured Waiting is never silently reclassified as Labour",
+      "location": "tests/database/finance-boundaries.test.ts:1:5096",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 captured Other is never silently reclassified as Labour",
+      "location": "tests/database/finance-boundaries.test.ts:1:5096",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 fractional-minute capture stays exact and refuses unapproved payroll rounding",
+      "location": "tests/database/finance-boundaries.test.ts:1:6033",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 exact source/review/issue IDs and mixed target grains refuse substitution atomically",
+      "location": "tests/database/finance-boundaries.test.ts:1:6611",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 unresolved warranty/goodwill remains unknown billable quantity and cannot approve",
+      "location": "tests/database/finance-boundaries.test.ts:1:7367",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 Approved return preserves its exact approval and correction event before any effect",
+      "location": "tests/database/finance-boundaries.test.ts:1:8198",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 current exact account mapping changes block mutation and mark account balance unavailable",
+      "location": "tests/database/finance-boundaries.test.ts:1:8820",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 no-posting review consumes complete source dispositions without inventing a target",
+      "location": "tests/database/finance-boundaries.test.ts:1:9712",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 revoked processing capability denies dispatch and original claim receipt without effects",
+      "location": "tests/database/finance-boundaries.test.ts:1:11358",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 source successor after unknown acceptance permits original lookup but refuses stale reconciliation",
+      "location": "tests/database/finance-boundaries.test.ts:1:12140",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 late audit_events failure rolls back allocation, state, event and original receipt together",
+      "location": "tests/database/finance-boundaries.test.ts:1:13125",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 late operation_receipts failure rolls back allocation, state, event and original receipt together",
+      "location": "tests/database/finance-boundaries.test.ts:1:13125",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 late outbox_jobs failure rolls back allocation, state, event and original receipt together",
+      "location": "tests/database/finance-boundaries.test.ts:1:13125",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 database failure after possible effect retains one target and fences a changed original ID",
+      "location": "tests/database/finance-boundaries.test.ts:1:14236",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 missing-result lookup durably fences late dispatch and retains NotProcessed evidence",
+      "location": "tests/database/finance-boundaries.test.ts:1:15089",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 original missing Finance bytes fail closed without regeneration",
+      "location": "tests/database/finance-boundaries.test.ts:1:16317",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 original wrong-hash Finance bytes fail closed without regeneration",
+      "location": "tests/database/finance-boundaries.test.ts:1:16317",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 revoked output owner after durable storage cannot release, retry or recover its receipt",
+      "location": "tests/database/finance-boundaries.test.ts:1:17229",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 source changes after rendering preserve reserved bytes and refuse release",
+      "location": "tests/database/finance-boundaries.test.ts:1:17991",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 revoked Finance read scope denies released bytes and original issue receipt",
+      "location": "tests/database/finance-boundaries.test.ts:1:18603",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 changed exact policy after rendering cannot issue stale bytes",
+      "location": "tests/database/finance-boundaries.test.ts:1:19387",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 changed exact renderer after rendering cannot issue stale bytes",
+      "location": "tests/database/finance-boundaries.test.ts:1:19387",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target",
+      "location": "tests/database/finance-same-name-mapping.test.ts:1:4067",
+      "message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "pre-existing on main in this environment",
+      "main_message": "Cannot read properties of undefined (reading 'assignment_id')",
+      "main_test": "PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target"
+    },
+    {
+      "test": "P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds",
+      "location": "tests/database/finance-upgrade.test.ts:1:1235",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants",
+      "location": "tests/database/finance-upgrade.test.ts:1:3493",
+      "message": "The exact draft output is unavailable. Its saved revision is retained for recovery.",
+      "code": "ExactDraftUnavailable",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 F-06 preserves Draft field originals and separately conserves 90 MIN and 2 EA",
+      "location": "tests/database/finance.test.ts:1:1458",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 source creation and every direct read/receipt obey current Finance grants",
+      "location": "tests/database/finance.test.ts:1:2249",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 exact duplicate original recovers receipt; changed reuse and malformed fields fail",
+      "location": "tests/database/finance.test.ts:1:3133",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 return retains original holds, explicit revision releases and transfers them",
+      "location": "tests/database/finance.test.ts:1:3734",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 over, under and duplicate allocations cannot release source quantities",
+      "location": "tests/database/finance.test.ts:1:4839",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 F-07 records Unknown then reconciles the same one target by original lookup",
+      "location": "tests/database/finance.test.ts:1:5694",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 simultaneous claims and original outcome requests have only one effect",
+      "location": "tests/database/finance.test.ts:1:6806",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 accepted target survives local failure and cannot be blindly replayed",
+      "location": "tests/database/finance.test.ts:1:7632",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 verified NotProcessed releases processor and preserves original target identity on new attempt",
+      "location": "tests/database/finance.test.ts:1:8460",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 pre-effect report successor invalidates readiness and retains submitted allocations",
+      "location": "tests/database/finance.test.ts:1:9226",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 source correction after possible processing preserves original target and requires a linked correction",
+      "location": "tests/database/finance.test.ts:1:9864",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 partial target cannot reconcile; target/history remain immutable",
+      "location": "tests/database/finance.test.ts:1:10687",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 stale definition and changed exact account mapping block submit",
+      "location": "tests/database/finance.test.ts:1:11299",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P10 OUT-14 storage-success/database-failure recovers original exact bytes and release identity",
+      "location": "tests/database/finance.test.ts:1:12929",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P11 Returned review keeps internal narratives in current Service scope and exact corrections with their author",
+      "location": "tests/database/quality-reports.test.ts:1:781",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P11 Approved review keeps internal narratives in current Service scope and exact corrections with their author",
+      "location": "tests/database/quality-reports.test.ts:1:781",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 offline exact draft dependency remains immutable and submission retries recover the original receipt",
+      "location": "tests/database/reports-offline.test.ts:1:943",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 offline response verifies original signature and exact cached HTML, with no widened restricted recovery",
+      "location": "tests/database/reports-offline.test.ts:1:2326",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 offline stale response is retained and cannot be rewritten or transferred after a correction cycle",
+      "location": "tests/database/reports-offline.test.ts:1:3671",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 fresh and P08 upgrade preserve originals and repeat seed does not revive revoked report grants",
+      "location": "tests/database/reports.test.ts:8:704",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 exact submission freezes entries; duplicate original recovers same receipt; changed reuse conflicts",
+      "location": "tests/database/reports.test.ts:8:2078",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "SV-06 register projects permitted exact attendance facts and recorded return counts",
+      "location": "tests/database/reports.test.ts:8:2862",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 return comments, linked correction, successor submission and narrow attendance acceptance",
+      "location": "tests/database/reports.test.ts:8:4203",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 competing approve and return decide exactly one set and late retry recovers original",
+      "location": "tests/database/reports.test.ts:8:5735",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 strict review fields, exact set/version and server owner permissions",
+      "location": "tests/database/reports.test.ts:8:6331",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 required bytes missing after submission block review without changing original",
+      "location": "tests/database/reports.test.ts:8:7016",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 all five exact responses, mandatory remarks, immutable synthetic marks and original receipt recovery",
+      "location": "tests/database/reports.test.ts:8:7625",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issued bytes and every customer projection exclude private fields and filenames",
+      "location": "tests/database/reports.test.ts:8:9374",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 storage success then database failure reconciles original bundle and one issue",
+      "location": "tests/database/reports.test.ts:8:10171",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 template change during real generation retains stale owned output and no issue",
+      "location": "tests/database/reports.test.ts:8:11235",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 revoked review and response receipt capability returns no original receipt",
+      "location": "tests/database/reports.test.ts:8:12019",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 accepted attendance correction preserves old output and refuses prior response reassociation",
+      "location": "tests/database/reports.test.ts:8:12477",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 submit late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 submit late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 submit late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 review late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 review late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 review late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 return late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 return late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 return late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 amend late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 amend late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 amend late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issue late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issue late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issue late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 response late audit_events rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 response late operation_receipts rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 response late outbox_jobs rollback preserves business facts and original recovery",
+      "location": "tests/database/reports.test.ts:8:16833",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 exact render input, response nullable checks and accepted end are physically protected",
+      "location": "tests/database/reports.test.ts:8:19792",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 source snapshot canonical hash uses persisted timestamps and every exact accepted original",
+      "location": "tests/database/reports.test.ts:8:20463",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 competing personal submissions and identical customer responses produce one original effect",
+      "location": "tests/database/reports.test.ts:8:20757",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 real source change during generation and corrupted original bundle cannot issue",
+      "location": "tests/database/reports.test.ts:8:22064",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issued original byte removal or wrong hash is unavailable rather than regenerated",
+      "location": "tests/database/reports.test.ts:8:22846",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 unsupported signature bytes are rejected without response or follow-up",
+      "location": "tests/database/reports.test.ts:8:23594",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 returned Complete and accepted report-only correction retain passed controls and original attendance",
+      "location": "tests/database/reports.test.ts:8:24173",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 all actually started crew must be accepted independently, with no invented attendance or declarations",
+      "location": "tests/database/reports.test.ts:8:26558",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 competing report correction and issue request respect one exact report version",
+      "location": "tests/database/reports.test.ts:8:28078",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 issue authority revoked after durable storage refuses release and original issue receipt recovery",
+      "location": "tests/database/reports.test.ts:8:28851",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 partial attendance review retains incomplete declarations without inventing missing quantities or Finance readiness",
+      "location": "tests/database/reports.test.ts:8:29880",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "P09 actual template source changes after rendering retain the original attempt without release",
+      "location": "tests/database/reports.test.ts:8:31327",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "SH06 real Service submission and return reflect the exact source decision and author",
+      "location": "tests/database/sh-platform.test.ts:1:14482",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    },
+    {
+      "test": "SH06 real Finance handoff appears for the eligible reviewer and sending owner",
+      "location": "tests/database/sh-platform.test.ts:1:15177",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "code": "ERR_TEST_FAILURE",
+      "classification": "environment-blocked: browser"
+    }
+  ],
+  "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-reporter=tap tests/database/sh-platform.test.ts tests/database/my-work.test.ts tests/database/activity-list.test.ts tests/database/engineering-changes.test.ts tests/database/finance*.test.ts tests/database/reports*.test.ts tests/database/quality-reports.test.ts tests/database/customer-360-reads.test.ts",
+  "main_comparison_sha": "78fe5732b88a93bb16f1e5ce820fe2828112bbb4",
+  "database_ready": true,
+  "browser_ready": false,
+  "additional_download_suite": {
+    "passed": 0,
+    "failed": 1,
+    "failures": [
+      {
+        "test": "PT-01 / PT-18 Service and Finance download authority and exact recovery over HTTP",
+        "location": "tests/database/report-finance-download-http.test.ts:1:190",
+        "message": "Command failed: /workspace/.ppo-tools/node-v24.21.0/lib/node_modules/node-linux-x64/bin/node --conditions=react-server --import tsx --test tests/helpers/report-finance-download-http.ts\n",
+        "code": 1,
+        "classification": "pre-existing on main in this environment",
+        "main_message": "Command failed: /workspace/.ppo-tools/node-v24.21.0/lib/node_modules/node-linux-x64/bin/node --conditions=react-server --import tsx --test tests/helpers/report-finance-download-http.ts\n"
+      }
+    ],
+    "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-reporter=tap tests/database/report-finance-download-http.test.ts",
+    "diagnostic": {
+      "command": "node --env-file=.env.local --conditions=react-server --import tsx --test --test-reporter=tap tests/helpers/report-finance-download-http.ts",
+      "test": "Service and Finance output checks current authority after private storage",
+      "message": "{\"processed\":true,\"state\":\"Failed\",\"error_code\":\"RenderOrStorageFailure\"}",
+      "classification": "environment-blocked: browser"
+    }
+  },
+  "equivalence": {
+    "command": "node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-reporter=tap tests/database/review-sources-reads.test.ts",
+    "passed": 2,
+    "failed": 0,
+    "duration_ms": 85179.574126,
+    "tests": [
+      {
+        "name": "Review sources preserve full DTO, JSON, authority, paging and work summaries against frozen main",
+        "duration_ms": 43908.020561
+      },
+      {
+        "name": "Review sources keep the 200-package bound and perform scoped checks once per request",
+        "duration_ms": 37408.767861
+      }
+    ]
+  }
+}
