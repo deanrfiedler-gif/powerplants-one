@@ -1,0 +1,210 @@
+{
+  "title": "SYN Candidate window dd8c0bf5-4ab7-46fd-ba9d-1362c0c8245d",
+  "rows": [
+    {
+      "label": "before",
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 356,
+      "database_ms": 205.95733299998756,
+      "longest_ms": 64.69667499999923,
+      "candidate_ms": 64.69667499999923,
+      "wall_ms": 210.70588399999906
+    },
+    {
+      "label": "after",
+      "volume": 100,
+      "offset": 25,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 356,
+      "database_ms": 177.17327800003113,
+      "longest_ms": 46.54983699999866,
+      "candidate_ms": 46.54983699999866,
+      "wall_ms": 181.573088000001
+    },
+    {
+      "label": "before",
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 8708,
+      "database_ms": 3185.34711100017,
+      "longest_ms": 71.61227700000018,
+      "candidate_ms": 71.61227700000018,
+      "wall_ms": 3277.3485710000023
+    },
+    {
+      "label": "after",
+      "volume": 100,
+      "offset": 0,
+      "counts": {
+        "estimates": "128",
+        "submissions": "128",
+        "release_bases": "2",
+        "opportunities": "128",
+        "organisations": "105"
+      },
+      "statements": 8708,
+      "database_ms": 3015.734909000166,
+      "longest_ms": 42.326602000001,
+      "candidate_ms": 42.326602000001,
+      "wall_ms": 3095.126526999993
+    },
+    {
+      "label": "before",
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 356,
+      "database_ms": 408.9015760002658,
+      "longest_ms": 293.09938600001624,
+      "candidate_ms": 293.09938600001624,
+      "wall_ms": 411.8755860000092
+    },
+    {
+      "label": "after",
+      "volume": 1000,
+      "offset": 25,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 356,
+      "database_ms": 379.02637099981075,
+      "longest_ms": 225.2758470000117,
+      "candidate_ms": 225.2758470000117,
+      "wall_ms": 382.4887349999917
+    },
+    {
+      "label": "before",
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 8708,
+      "database_ms": 3764.045905000501,
+      "longest_ms": 331.8735250000027,
+      "candidate_ms": 331.8735250000027,
+      "wall_ms": 3855.3418900000106
+    },
+    {
+      "label": "after",
+      "volume": 1000,
+      "offset": 0,
+      "counts": {
+        "estimates": "1036",
+        "submissions": "1036",
+        "release_bases": "10",
+        "opportunities": "1036",
+        "organisations": "1005"
+      },
+      "statements": 8708,
+      "database_ms": 3559.9578530015424,
+      "longest_ms": 250.88059899999644,
+      "candidate_ms": 250.88059899999644,
+      "wall_ms": 3640.1810680000053
+    },
+    {
+      "label": "before",
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 356,
+      "database_ms": 3046.6004690000555,
+      "longest_ms": 2911.835586000001,
+      "candidate_ms": 2911.835586000001,
+      "wall_ms": 3050.5312220000196
+    },
+    {
+      "label": "after",
+      "volume": 3000,
+      "offset": 25,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 356,
+      "database_ms": 419.620998999977,
+      "longest_ms": 305.23551999998745,
+      "candidate_ms": 305.23551999998745,
+      "wall_ms": 423.6159559999942
+    },
+    {
+      "label": "before",
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 8708,
+      "database_ms": 6343.108806003176,
+      "longest_ms": 2853.7140430000727,
+      "candidate_ms": 2853.7140430000727,
+      "wall_ms": 6443.081079000025
+    },
+    {
+      "label": "after",
+      "volume": 3000,
+      "offset": 0,
+      "counts": {
+        "estimates": "3056",
+        "submissions": "3056",
+        "release_bases": "30",
+        "opportunities": "3056",
+        "organisations": "3005"
+      },
+      "statements": 8708,
+      "database_ms": 3630.8148370077834,
+      "longest_ms": 287.2261080000317,
+      "candidate_ms": 287.2261080000317,
+      "wall_ms": 3720.5539550000103
+    }
+  ],
+  "method": "Final paired run, single warmed samples; frozen main then changed reader on the same native synthetic rows at each volume; client-observed pg elapsed time."
+}

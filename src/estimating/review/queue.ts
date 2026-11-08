@@ -45,14 +45,17 @@ export async function readEstimatingReviewQueue(
     const asOf = (
       await c.query<{ now: Date }>("SELECT clock_timestamp() AS now")
     ).rows[0].now;
+    // Search and order cheap source rows before the volatile authority subplans.
+    // OFFSET 0 is only an optimiser boundary: it discards no candidate. The
+    // actual window is applied after authority, so hidden rows cannot shift it.
     const candidates = (
       await c.query<Candidate>(
         `
       WITH candidates AS (
-        SELECT e.id,'EstimateReview'::text AS source,e.id AS estimate_id,
+        SELECT e.id AS candidate_id,'EstimateReview'::text AS source,e.id AS estimate_id,
           s.created_at AS submitted_at,e.owner_id,u.display_name AS owner,
           v.created_by AS author_id,e.display_number AS reference,org.display_name AS customer,
-          v.title
+          v.title,e.id,e.workspace_id,e.company_id,e.site_id,e.opportunity_id,e.current_version_id
         FROM ppo.estimates e
         JOIN LATERAL (SELECT * FROM ppo.estimate_review_events s
           WHERE s.workspace_id=e.workspace_id AND s.estimate_id=e.id AND s.kind='Submission'
@@ -61,10 +64,11 @@ export async function readEstimatingReviewQueue(
         JOIN ppo.opportunities o ON (o.workspace_id,o.id)=(e.workspace_id,e.opportunity_id)
         JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
         JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.owner_id)
-        WHERE e.workspace_id=$1 AND $3 IN ('all','estimates') AND ${estimateVisibility("e", "estimating.read", true)}
+        WHERE e.workspace_id=$1 AND $3 IN ('all','estimates')
         UNION ALL
         SELECT b.revision_id,'QuotationApproval'::text,e.id,b.created_at,e.owner_id,u.display_name,
-          r.created_by,q.display_number,org.display_name,v.title
+          r.created_by,q.display_number,org.display_name,v.title,
+          e.id,e.workspace_id,e.company_id,e.site_id,e.opportunity_id,e.current_version_id
         FROM ppo.draft_quotes q
         JOIN LATERAL (SELECT b.* FROM ppo.quote_release_bases b
           JOIN ppo.draft_quote_revisions r ON (r.workspace_id,r.id)=(b.workspace_id,b.revision_id)
@@ -77,11 +81,16 @@ export async function readEstimatingReviewQueue(
         JOIN ppo.organisations org ON (org.workspace_id,org.id)=(o.workspace_id,o.organisation_id)
         JOIN ppo.users u ON (u.workspace_id,u.id)=(e.workspace_id,e.owner_id)
         WHERE q.workspace_id=$1 AND $3 IN ('all','quotations') AND $4::boolean
-          AND ${estimateVisibility("e", "estimating.read", true)}
-          AND ${estimateVisibility("e", "estimating.quote.read", true)}
-      )
+      ), matching AS (
       SELECT * FROM candidates WHERE $5='' OR strpos(lower(title || ' ' || reference || ' ' || customer),lower($5))>0
-      ORDER BY submitted_at DESC,source,id LIMIT $6 OFFSET $7`,
+      ORDER BY submitted_at DESC,source,candidate_id OFFSET 0
+      )
+      SELECT candidate_id AS id,source,estimate_id,submitted_at,owner_id,owner,
+        author_id,reference,customer,title
+      FROM matching e
+      WHERE ${estimateVisibility("e", "estimating.read", true)}
+        AND (source='EstimateReview' OR ${estimateVisibility("e", "estimating.quote.read", true)})
+      ORDER BY submitted_at DESC,source,candidate_id LIMIT $6 OFFSET $7`,
         [
           p.workspace_id,
           p.actor_id,

@@ -1,0 +1,21 @@
+{
+  "base": "e67c9ea8dd64055e5d7859eeb3bacc59d575d5c1",
+  "files": {
+    "src/estimating/review/queue.ts": {
+      "git_blob": "6392dc1c18012fa968915552608784f575fbbf3d",
+      "sha256": "85348a840ae2a0de97aec24cac24b94da01ff4088466d64565229cdc5906fb27"
+    },
+    "tests/helpers/estimate-review-queue-main.ts": {
+      "git_blob": "41a3fe5e83e31ace4aa80da7f82cebc10d8dfe81",
+      "sha256": "60255348d7be609a2d344c39186b5fbddd1c8da7124b4c94edfc8d431a2ca0dd"
+    },
+    "tests/database/estimate-review-candidate-cost.test.ts": {
+      "git_blob": "2bdeb4d6e64cced0781991e6db0ff33fb7755aad",
+      "sha256": "a7dba95238d5a40ce089832fc14a883be2125783a4528ebbb238300368bd8baa"
+    },
+    "tests/database/estimate-review-candidate-cost.proof.ts": {
+      "git_blob": "20cfd28852f643c19e8accc0a819f50ae8bea261",
+      "sha256": "d06f75c2098768ec0f6859cd951b705b01b897ada722ab706e9e1d18db108999"
+    }
+  }
+}
