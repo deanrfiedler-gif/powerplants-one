@@ -6,7 +6,7 @@
         {
           "id": "refined-s1-top-bar",
           "label": "Refined S1 top bar opt-in",
-          "description": "Actual header at 834/960/1024/1199/1200/1280/1366/1440/1920 with both rail states; legacy default and 390 px phone retained. Tests: tests/ui/desktop-shell.spec.ts and tests/browser/shell-refined.spec.ts; browser execution pending."
+          "description": "Actual header at 768/780/834/960/1024/1199/1200/1280/1366/1440/1920 with both rail states; legacy default and 390 px phone retained. Tests: tests/ui/desktop-shell.spec.ts and tests/browser/shell-refined.spec.ts; browser execution pending."
         },
         {
           "id": "refined-s1-menus",
@@ -32,8 +32,8 @@
         {
           "id": "application-shell-refined-s1-review",
           "expected": "Refined S1 geometry, interactions, legacy/phone isolation and source adaptation review on the exact PR head.",
-          "actual": "Code and automated test cases supplied; local Chrome missing. No rendered capture, device check, owner acceptance or independent review is claimed. Existing data omits named-tenant mapping and sign-in metadata; unavailable entries are hidden.",
-          "action": "Run affected browser/UI suites and compare captures against A/G/I/N/T and responsive bars. Obtain independent Claude review before marking ready; Dean owns acceptance and merge. Continue S2 only after merge.",
+          "actual": "Code and automated test cases supplied; local Chrome missing. Claude reviewed ef875edf0; confirmation of twelve consolidated fixes/answers is pending. No rendered capture, device check or owner acceptance is claimed. Existing data omits named-tenant mapping and sign-in metadata; unavailable entries are hidden.",
+          "action": "Run affected browser/UI suites and compare captures against A/G/I/N/T and responsive bars. Obtain Claude confirmation of the twelve consolidated findings on the revised head; Dean owns the proposed breadcrumb departure, acceptance and merge. Continue S2 only after merge.",
           "priority": "High",
           "owner": "Dean Fiedler"
         }

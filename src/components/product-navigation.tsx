@@ -613,7 +613,7 @@ export function ProductHeader() {
 
           {crumbs.length ? (
             <nav className="product-heading" aria-label="Breadcrumb">
-              {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
+              {hierarchy && !shell.refinedDesktop && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
               <ol className="ppo-crumbs" title={trail.map((c) => c.label).join(" / ")}>
                 {crumbs.map((crumb, index) => (
                   <li key={crumb.key} data-crumb={crumb.kind}>
@@ -654,7 +654,18 @@ export function ProductHeader() {
           </div>
         </ShellControls>
       </header>
-      {shell.refinedDesktop && <div className="ppo-refined-location"><nav aria-label="Breadcrumb">{crumbs.map((crumb,index) => <span key={crumb.key}>{index > 0 && " / "}{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current="page">{crumb.label}</span>}</span>)}</nav></div>}
+      {shell.refinedDesktop && <div className="ppo-refined-location">
+        <nav className="product-heading" aria-label="Breadcrumb">
+          {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
+          <ol className="ppo-crumbs" title={trail.map((crumb) => crumb.label).join(" / ")}>
+            {crumbs.map((crumb, index) => <li key={crumb.key} data-crumb={crumb.kind}>
+              {index > 0 && <span className="ppo-crumb-separator" aria-hidden="true"> / </span>}
+              {crumb.href ? <Link className="ppo-crumb" href={crumb.href}>{crumb.label}</Link> :
+                <span className={index === crumbs.length - 1 ? "ppo-crumb ppo-crumb-current" : "ppo-crumb"} aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}
+            </li>)}
+          </ol>
+        </nav>
+      </div>}
       {(!!tabs.length || reserveTabs) && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav
           className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}

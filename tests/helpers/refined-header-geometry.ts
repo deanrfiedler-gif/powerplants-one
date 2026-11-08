@@ -6,6 +6,7 @@ export async function expectRefinedHeader(page: Page, width: number) {
       "#header-account .identity-toggle, #header-account .ppo-account-toggle",
     ),
   ).toBeVisible();
+  await expect(page.locator("#shell-header .ppo-guide-action")).toBeVisible();
   const boxes = await page.locator("#shell-header").evaluate((header) => {
     const rect = (selector: string) => {
       const r = header.querySelector(selector)!.getBoundingClientRect();
@@ -18,6 +19,10 @@ export async function expectRefinedHeader(page: Page, width: number) {
       };
     };
     const bar = header.getBoundingClientRect();
+    const frame = header.closest(".app-frame")!;
+    const rail = frame
+      .querySelector(".sidebar.ppo-rail")!
+      .getBoundingClientRect();
     return {
       bar: { x: bar.x, width: bar.width, height: bar.height },
       start: rect(".ppo-header-start"),
@@ -26,6 +31,9 @@ export async function expectRefinedHeader(page: Page, width: number) {
       search: rect(".ppo-global-search"),
       add: rect(".ppo-quick-add"),
       overflow: document.documentElement.scrollWidth > innerWidth,
+      framePaddingBottom: getComputedStyle(frame).paddingBottom,
+      rail: { top: rail.top, bottom: rail.bottom },
+      viewportHeight: innerHeight,
       controls: [
         ...header.querySelectorAll<HTMLElement>(
           ".ppo-header-utilities a,.ppo-header-utilities button,.ppo-account-toggle,.identity-toggle",
@@ -57,6 +65,9 @@ export async function expectRefinedHeader(page: Page, width: number) {
   expect(boxes.add.width).toBe(32);
   if (width === 1440) expect(boxes.add.x).toBe(960);
   expect(boxes.overflow).toBe(false);
+  expect(boxes.framePaddingBottom).toBe("0px");
+  expect(boxes.rail.top).toBe(48);
+  expect(boxes.rail.bottom).toBe(boxes.viewportHeight);
   for (const [i, box] of boxes.controls.entries()) {
     expect(box.y).toBeGreaterThanOrEqual(0);
     expect(box.bottom).toBeLessThanOrEqual(48);

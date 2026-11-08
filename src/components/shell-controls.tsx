@@ -99,7 +99,15 @@ export function ShellControls({
     () => true,
   );
   const wide = refined || legacyWide;
-  const notifications = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(refined && context ? "notifications" : null, false);
+  // Match the phone badge's deferred projection: ten seconds or the first bell opening,
+  // without repeating this costly inbox read when the window regains focus.
+  const [noticesArmed, setNoticesArmed] = useState(false);
+  useEffect(() => {
+    if (!refined || !context || noticesArmed) return;
+    const timer = setTimeout(() => setNoticesArmed(true), 10000);
+    return () => clearTimeout(timer);
+  }, [refined, context, noticesArmed]);
+  const notifications = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(refined && context && noticesArmed ? "notifications" : null, false);
   const notificationCount = notifications.data?.state !== "unavailable" ? capShellBadge(notifications.data?.unread) : null;
   const [allActions,setAllActions] = useState(false);
   const [position, setPosition] = useState<ReturnType<typeof panelPosition>>();
@@ -225,6 +233,7 @@ export function ShellControls({
         document.getElementById("desktop-more-toggle");
       if (opener.current) setPosition(panelPosition(value, opener.current));
       openShellPanel("header");
+      if (refined && value === "notifications") setNoticesArmed(true);
       setPanel(value);
     };
     window.addEventListener("ppo-shell-utility", utility);
@@ -250,7 +259,7 @@ export function ShellControls({
         setPanel("search");
       }
       const editable = event.target instanceof Element && !!event.target.closest('input,textarea,select,[contenteditable="true"]');
-      if (refined && !event.defaultPrevented && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey && !editable && !(event.target instanceof Element && event.target.closest('[role="dialog"]')) && !document.querySelector('dialog[open],[role="dialog"][aria-modal="true"]')) {
+      if (refined && !event.defaultPrevented && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey && !editable && !(event.target instanceof Element && event.target.closest('[role="dialog"],[role="menu"],[role="menubar"],[role="listbox"],[role="grid"],[role="tree"]')) && !document.querySelector('dialog[open],[role="dialog"][aria-modal="true"],:popover-open')) {
         if (!panel && event.key.toLowerCase() === "n") { event.preventDefault(); document.getElementById("refined-new-toggle")?.click(); }
         if (!panel && event.key === "?") { event.preventDefault(); window.dispatchEvent(new CustomEvent("ppo-shell-utility",{detail:"help"})); }
       }
@@ -292,6 +301,7 @@ export function ShellControls({
   }, [selected]);
   const show = (value: Exclude<Panel, null>, target: HTMLElement) => {
     setAllActions(false);
+    if (refined && value === "notifications") setNoticesArmed(true);
     opener.current = target;
     setPosition(panelPosition(value, target));
     openShellPanel("header");

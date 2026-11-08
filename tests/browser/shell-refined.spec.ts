@@ -116,6 +116,9 @@ test("utilities are one tab stop across responsive changes, with arrow navigatio
   await page.setViewportSize({ width: 834, height: 900 });
   await expect(stops).toHaveCount(1);
   await expect(stops).toBeVisible();
+  await expect(
+    toolbar.getByRole("button", { name: "Page guide", exact: true }),
+  ).toBeVisible();
   await stops.focus();
   await page.keyboard.press("Tab");
   await expect(page.locator("#identity-toggle")).toBeFocused();
@@ -199,6 +202,10 @@ test("tenant switching reviews unsaved work and persists through the existing AP
         exact: true,
       }),
     ).toBeVisible();
+    await page.getByRole("button", { name: /^Switch tenant:/ }).click();
+    await expect(
+      page.locator('#refined-tenant-menu [aria-checked="true"]'),
+    ).toBeFocused();
   } finally {
     expect(
       (
@@ -248,4 +255,132 @@ test("the preference can be turned off and does not follow another identity", as
     "data-shell-version",
     "refined",
   );
+});
+
+test("page widget typeahead and open native popovers retain single-letter keys", async ({
+  page,
+}) => {
+  await page.goto("/customers");
+  await expect(page.locator("#refined-new-toggle")).toBeVisible();
+  // Exercise bubbling, unhandled keys from each composite widget context.
+  for (const role of ["menu", "menubar", "listbox", "grid", "tree"]) {
+    await page.evaluate((role) => {
+      const widget = document.createElement("div");
+      widget.id = "shortcut-probe";
+      widget.setAttribute("role", role);
+      widget.tabIndex = 0;
+      document.getElementById("main")!.append(widget);
+      widget.focus();
+    }, role);
+    await page.keyboard.press("n");
+    await page.keyboard.press("?");
+    await expect(
+      page.getByRole("dialog", { name: "New", exact: true }),
+    ).toBeHidden();
+    await expect(
+      page.getByRole("dialog", { name: "Quick Help", exact: true }),
+    ).toBeHidden();
+    await page.locator("#shortcut-probe").evaluate((el) => el.remove());
+  }
+  await page.evaluate(() => {
+    const popover = document.createElement("div");
+    popover.id = "shortcut-probe";
+    popover.popover = "auto";
+    popover.tabIndex = 0;
+    document.getElementById("main")!.append(popover);
+    popover.showPopover();
+    popover.focus();
+  });
+  await page.keyboard.press("n");
+  await page.keyboard.press("?");
+  await expect(
+    page.getByRole("dialog", { name: "New", exact: true }),
+  ).toBeHidden();
+  await expect(
+    page.getByRole("dialog", { name: "Quick Help", exact: true }),
+  ).toBeHidden();
+});
+
+test("refined breadcrumb keeps the full hierarchy and accessible separators", async ({
+  page,
+}) => {
+  await page.goto("/sales/opportunities/new");
+  const location = page.locator(".ppo-refined-location");
+  await expect(location.locator("ol[title]")).toHaveAttribute(
+    "title",
+    /Sales.*Deals/,
+  );
+  await expect(location.locator("[aria-current=page]")).toBeVisible();
+  await expect(
+    location.locator(".ppo-crumb-separator:not([aria-hidden=true])"),
+  ).toHaveCount(0);
+  const hierarchy = location.getByRole("button", {
+    name: "Page hierarchy",
+    exact: true,
+  });
+  await hierarchy.click();
+  await expect(page.locator("#page-hierarchy:popover-open")).toBeVisible();
+  await page.locator("#page-hierarchy").getByRole("link").first().focus();
+  await page.keyboard.press("Escape");
+  await expect(hierarchy).toBeFocused();
+});
+
+test("shell tooltips leave the page-owned keyboard tooltip unchanged", async ({
+  page,
+}) => {
+  await page.goto("/customers");
+  await expect(page.locator("#refined-new-toggle")).toBeVisible();
+  // Use the actual CRM owner's tooltip class in the page, including its CSS pseudo-element.
+  await page.evaluate(() => {
+    const owner = document.createElement("span");
+    owner.className = "crm-help-trigger";
+    owner.id = "owner-tooltip-probe";
+    owner.dataset.tooltip = "Synthetic owner";
+    owner.tabIndex = 0;
+    owner.textContent = "Owner";
+    document.getElementById("main")!.append(owner);
+    owner.focus();
+  });
+  for (const width of [1440, 834]) {
+    await page.setViewportSize({ width, height: 900 });
+    const style = await page.locator("#owner-tooltip-probe").evaluate((el) => {
+      const css = getComputedStyle(el, "::after");
+      return {
+        content: css.content,
+        opacity: css.opacity,
+        visibility: css.visibility,
+        display: css.display,
+      };
+    });
+    expect(style.content).toBe('"Synthetic owner"');
+    expect(style.opacity).toBe("1");
+    expect(style.visibility).toBe("visible");
+    expect(style.display).not.toBe("none");
+  }
+});
+
+test("refined unread projection waits ten seconds or the first bell opening", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await page.clock.pauseAt(new Date());
+  let reads = 0;
+  await page.route("**/api/v1/notifications", async (route) => {
+    reads++;
+    await route.fulfill({ json: { state: "available", unread: 3, items: [] } });
+  });
+  await page.goto("/customers");
+  await expect(page.locator("#refined-new-toggle")).toBeVisible();
+  expect(reads).toBe(0);
+  await page.clock.runFor(9999);
+  expect(reads).toBe(0);
+  await page.clock.runFor(1);
+  await expect.poll(() => reads).toBe(1);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  expect(reads).toBe(1);
+  await page.reload();
+  await expect(page.locator("#refined-new-toggle")).toBeVisible();
+  expect(reads).toBe(1);
+  await page.getByRole("button", { name: /^Notifications/ }).click();
+  await expect.poll(() => reads).toBeGreaterThan(1);
 });

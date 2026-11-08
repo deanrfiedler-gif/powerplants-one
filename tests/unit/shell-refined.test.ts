@@ -6,6 +6,7 @@ import {
   refinedEnabled,
   capShellBadge,
   shortTenantName,
+  tenantInitials,
   shellBuildLabel,
   personColour,
 } from "../../src/shell/refined";
@@ -157,4 +158,14 @@ test("identity avatar colours are stable across visits without using status colo
     assert.ok(colours.has(personColour(identity)));
     assert.equal(personColour(identity), personColour(`${identity}`));
   }
+});
+
+// Compact tenant labels must remain identifiable without displaying punctuation.
+test("tenant initials retain synthetic codes and use name initials otherwise", () => {
+  assert.equal(tenantInitials("SYN-A · SYN Greenhouse Demonstration"), "A");
+  assert.equal(tenantInitials("SYN-B · SYN Nursery"), "B");
+  assert.equal(tenantInitials("Powerplants Australia"), "PA");
+  assert.equal(tenantInitials("Demo company"), "DC");
+  assert.equal(tenantInitials("Élan"), "É");
+  assert.equal(tenantInitials(""), "");
 });

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { ShellIcon } from "./shell-icon";
 import { openShellPanel, shellPanelEvent } from "./shell-events";
 import { sessionLockEvent } from "./session-signal";
-import { shortTenantName } from "../shell/refined";
+import { shortTenantName, tenantInitials } from "../shell/refined";
 import { layerKeyboard } from "../shell/layer-keyboard";
 import { useShell } from "./shell-provider";
 
@@ -60,10 +60,12 @@ export function RefinedTenantSwitcher({
     };
   }, [path, scope]);
   useEffect(() => {
-    if (open)
-      panel.current
-        ?.querySelector<HTMLElement>('[aria-checked="true"],button')
-        ?.focus();
+    if (open) {
+      const current = panel.current?.querySelector<HTMLElement>(
+        '[aria-checked="true"]',
+      );
+      (current ?? panel.current?.querySelector<HTMLElement>("button"))?.focus();
+    }
   }, [open]);
   if (!shell.refinedDesktop || !scope || !companies.length) return null;
   return (
@@ -82,7 +84,7 @@ export function RefinedTenantSwitcher({
         }}
       >
         <span className="ppo-tenant-initials" aria-hidden="true">
-          {selected ? name.split(" · ")[0].slice(-2) : "All"}
+          {selected ? tenantInitials(name) : "All"}
         </span>
         <span className="ppo-tenant-name">{shortTenantName(name)}</span>
         <ShellIcon name="down" />

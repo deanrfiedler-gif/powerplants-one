@@ -2,15 +2,19 @@
 
 <!-- versioning: git; committed history is authoritative -->
 
-Owner: Dean Fiedler. Build owner: Codex. Delivery: draft PR #874; independent review and owner visual/device acceptance pending.
+Owner: Dean Fiedler. Build owner: Codex. Delivery: PR #874; Claude reviewed head ef875edf0 with twelve consolidated findings. Fix confirmation and owner visual/device acceptance remain pending.
 
 ## application-shell
 
 The real ProductHeader/ShellControls/BusinessSession host adds the refined desktop header behind the identity preference and `PPO_SHELL_REFINED` override. The [shell master](../systems/shell.md#refined-concept-s1) records the measured widths and source differences; the [build decision](../../../decisions/shell-refined-s1-build.md) records the two existing-data adaptations. The [guide](../../../guides/pages/guide.system.shell.md) retains the carried-over legacy instructions and its parity fixture; the proposed refined instructions below await release review. Retiring that guide now would remove general-user help before the final switch-over.
 
-Host tests are `tests/browser/shell-refined.spec.ts` and the added case in `tests/ui/desktop-shell.spec.ts`; the latter uses actual React controls with the existing synthetic transport fixture and opt-in `?mode=local&refined=1&conversations=1`. Widths: 834, 960, 1024, 1199, 1200, 1280, 1366, 1440 and 1920, both rail states, with a 390 px phone check. The browser journey includes New accelerators, utility roving focus, Esc/history, tenant cancellation and persistence, account-to-tenant handoff and preference isolation. These authored cases are not recorded as executed here: cloud setup and the browser guard reported missing Chrome. No new captures are available.
+Host tests are `tests/browser/shell-refined.spec.ts` and the added case in `tests/ui/desktop-shell.spec.ts`; the latter uses actual React controls with the existing synthetic transport fixture and opt-in `?mode=local&refined=1&conversations=1`. Widths: 768, 780, 834, 960, 1024, 1199, 1200, 1280, 1366, 1440 and 1920, both rail states, with a 390 px phone check. The browser journey includes New accelerators, utility roving focus, Esc/history, tenant cancellation/persistence and selected-row focus, account-to-tenant handoff, preference isolation, page-widget shortcut isolation, breadcrumb hierarchy, page-owned tooltips and deferred inbox reads. Geometry assertions also cover the rail bottom and frame padding. These authored cases are not recorded as executed here: cloud setup and the browser guard reported missing Chrome. No new captures are available.
 
 The source's New/account/tenant heights are 372/405/177 px at width 280; actual content follows permitted actions and full names. There is no registered quotation create action or ready Assistant destination. Help uses the existing page guide; Notification settings reaches Preferences through the existing Notifications page. Rail/menu/drawer replacements, search modes, further layers and situations remain in S2–S7. The accepted phone component remains unchanged. Existing review fingerprints are retained and stale reviews must remain visible.
+
+**Proposed S1 departure:** the extra breadcrumb row is a temporary bridge, absent from sheet A. It retains full-path title, Page hierarchy and accessible separators; the accepted end state places breadcrumb and title within the page header. Its 32 px desktop row becomes at least 44 px below 1024 for touch. Dean has not accepted this departure. Page guide remains in the tablet bar until S4. The browser-local preference can show a legacy first paint before context loads; see the build record. These limits must remain visible in review.
+
+All new S1 consumer/state/dependency information belongs to this additive binding and its JSON, not the frozen `components.json`. The older catalogue remains unchanged. Refined S1 adds the 66 `--ppo-refined-*` variables and the 48 px opted-in desktop bar; existing component reviews do not grant acceptance to these additions.
 
 ### Refined desktop instructions — pending release
 

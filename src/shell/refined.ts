@@ -38,3 +38,13 @@ export function shellBuildLabel(commit: string | undefined) {
     ? `Build ${commit!.slice(0, 8)}`
     : "Local build";
 }
+
+export function tenantInitials(name: string) {
+  const code = /^SYN-([\p{L}\p{N}]+)(?:\s*·|$)/u.exec(name);
+  if (code) return Array.from(code[1]).slice(0, 2).join("").toUpperCase();
+  return (name.match(/[\p{L}\p{N}]+/gu) ?? [])
+    .slice(0, 2)
+    .map((word) => Array.from(word)[0])
+    .join("")
+    .toUpperCase();
+}
