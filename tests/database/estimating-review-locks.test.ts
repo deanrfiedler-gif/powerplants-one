@@ -44,6 +44,7 @@ after(closeDatabase);
 
 const workspaceLock =
   /SELECT 1 FROM ppo\.workspaces WHERE id=\$1 FOR (?:SHARE|UPDATE)/;
+const queueWorkspaceLock = "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE";
 type Scope = {
   pid?: number;
   sql: string[];
@@ -54,6 +55,8 @@ type Scope = {
 const observed = new AsyncLocalStorage<Scope>();
 
 function assertSelect(sql: string) {
+  // Only this exact statement may take a row lock in the queue callback.
+  if (sql === queueWorkspaceLock) return;
   // Lexically remove SQL literals/comments before checking CTEs or a second
   // statement. Source audit separately enumerates the SELECT function calls.
   const code = sql
@@ -62,7 +65,12 @@ function assertSelect(sql: string) {
     .trim();
   assert.match(code, /^(SELECT|WITH)\b/i, "queue callback must only SELECT");
   assert.doesNotMatch(
-    code.replace(/\bFOR UPDATE\b/gi, "FOR_LOCK"),
+    code,
+    /\bFOR\s+(?:(?:NO\s+KEY\s+)?UPDATE|(?:KEY\s+)?SHARE)\b/i,
+    "queue callback must not take any other row lock",
+  );
+  assert.doesNotMatch(
+    code,
     /;|\b(INSERT|UPDATE|DELETE|MERGE|CREATE|ALTER|DROP|TRUNCATE|CALL|DO|COPY|SET|RESET|nextval|setval)\b/i,
     "queue callback must not hide writes in CTEs, functions or extra statements",
   );
@@ -151,6 +159,12 @@ test("queue callback rejects non-SELECT SQL across source, specialist/discovery 
     "WITH x AS (DELETE FROM ppo.users RETURNING *) SELECT * FROM x",
     "SELECT 1; DELETE FROM ppo.users",
     "SELECT nextval('x')",
+    "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE",
+    "SELECT id FROM ppo.opportunities WHERE id=$1 FOR UPDATE",
+    "SELECT id FROM ppo.opportunities WHERE id=$1 FOR NO KEY UPDATE",
+    "SELECT id FROM ppo.opportunities WHERE id=$1 FOR SHARE",
+    "SELECT id FROM ppo.opportunities WHERE id=$1 FOR KEY SHARE",
+    `${queueWorkspaceLock} NOWAIT`,
   ])
     assert.throws(() => assertSelect(sql));
   const f = await fixture();
@@ -213,18 +227,28 @@ test("queue callback rejects non-SELECT SQL across source, specialist/discovery 
 
   instrument(t);
   const scope: Scope = { sql: [], selectOnly: true };
+  const read = async (...args: Parameters<typeof readEstimatingReviewQueue>) => {
+    const start = scope.sql.length;
+    const result = await readEstimatingReviewQueue(...args);
+    assert.equal(
+      scope.sql.slice(start).filter((sql) => sql === queueWorkspaceLock).length,
+      1,
+      "each queue read must take its exact workspace share lock once",
+    );
+    return result;
+  };
   const [sourceQueue, specialistQueue, quotationQueue] = await observed.run(
     scope,
     async () => [
-      await readEstimatingReviewQueue(reviewer, {
+      await read(reviewer, {
         q: f.title,
         source: "estimates",
       }),
-      await readEstimatingReviewQueue(s.p, {
+      await read(s.p, {
         q: "SYN Northbank Screen Systems estimate",
         source: "estimates",
       }),
-      await readEstimatingReviewQueue(q.approver, { source: "quotations" }),
+      await read(q.approver, { source: "quotations" }),
     ],
   );
   assert.equal(sourceQueue.items.length, 3);
@@ -258,6 +282,7 @@ test("queue callback rejects non-SELECT SQL across source, specialist/discovery 
     );
   assert.equal(scope.sql.filter((sql) => sql === "BEGIN").length, 3);
   assert.equal(scope.sql.filter((sql) => sql === "COMMIT").length, 3);
+  assert.equal(scope.sql.filter((sql) => sql === queueWorkspaceLock).length, 3);
   assert.equal(scope.sql.includes("ROLLBACK"), false);
 });
 
