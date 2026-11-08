@@ -4,7 +4,7 @@ import { object, choice, invalid, optionalId } from "../shared/validation";
 import { listReports, reportReviewTask } from "../reports/service";
 import { listFinance, readFinance } from "../finance/reads";
 import { listEngineering } from "../engineering/service";
-import { changeReviewTasks } from "../engineering/changes/reads";
+import { engineeringReviewPages } from "../engineering/changes/review-pages";
 import { inReviewView, reviewViews, type ReviewTask } from "./model";
 import { equipmentReviewTasks } from "../equipment/reviews";
 import { database } from "../platform/database";
@@ -90,6 +90,7 @@ export async function reviewSources(
       } else if(domain === "Customers & sites") {
         const source=await surveyReviewTasks(p,company);selected.push(...source.items);bounded=source.bounded;
       } else {
+        const readPage = engineeringReviewPages(p);
         let cursor: string | null = null,
           count = 0;
         do {
@@ -98,8 +99,7 @@ export async function reviewSources(
             ...(cursor ? { cursor } : {}),
             ...(company ? { company_id: company } : {}),
           });
-          for (const row of page.items)
-            selected.push(...(await changeReviewTasks(p, row.id)));
+          selected.push(...(await readPage(page.items.map(row => row.id))));
           cursor = page.next_cursor;
           count += page.items.length;
           bounded = !!cursor && count >= 200;
