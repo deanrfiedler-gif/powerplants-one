@@ -84,7 +84,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   const toggleAccount = () => { openShellPanel("account"); setAccountDetails(false); setShowIdentity(!showIdentity); };
   useEffect(() => { if(showIdentity && shell.refinedDesktop) account.current?.querySelector<HTMLElement>(".ppo-refined-account-menu button")?.focus(); }, [showIdentity,shell.refinedDesktop]);
   const initials = accountInitials(p?.display_name);
-  const closeAccount = () => { setShowIdentity(false); focusAccountOpener(hosted ? "hosted-account-toggle" : "identity-toggle"); };
+  const closeAccount = () => { setShowIdentity(false); const id=hosted ? "hosted-account-toggle" : "identity-toggle"; if(shell.refinedDesktop) document.getElementById(id)?.focus(); else focusAccountOpener(id); };
   const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
   // PPO-CONV-T1C-DESIGN 10.2: the controls the narrow top bars give up. The Page guide moves here at 320 px, and the
   // builder's design workspace below 1200 px and on phones (D2); the stylesheet shows each only where the bar hides it.

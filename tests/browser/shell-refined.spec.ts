@@ -33,7 +33,9 @@ test("refined header geometry is independent of either rail width", async ({
   await expect(
     page.getByRole("button", { name: "New", exact: true }),
   ).toBeVisible();
-  for (const width of [834, 960, 1024, 1199, 1200, 1280, 1366, 1440, 1920]) {
+  for (const width of [
+    768, 780, 834, 960, 1024, 1199, 1200, 1280, 1366, 1440, 1920,
+  ]) {
     await page.setViewportSize({ width, height: 900 });
     for (let state = 0; state < 2; state++) {
       await expectRefinedHeader(page, width);

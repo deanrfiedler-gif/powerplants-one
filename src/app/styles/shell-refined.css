@@ -194,6 +194,7 @@
     height: 20px;
   }
   [data-shell-version="refined"] #shell-header .ppo-quick-add {
+    display: inline-flex;
     width: 32px;
     height: 32px;
     min-height: 32px;
@@ -910,6 +911,12 @@
 /* The refined bar begins at 768 px; preserve the old rail geometry for the 13 px
    overlap with the accepted phone breakpoint until S2 replaces the desktop rail. */
 @media (min-width: 768px) and (max-width: 780px) {
+  [data-shell-version="refined"]
+    #shell-header
+    .ppo-header-utilities
+    .ppo-desktop-utility:not([hidden]) {
+    display: inline-flex;
+  }
   .app-frame[data-shell-version="refined"] {
     display: grid;
     grid-template-columns: var(--ppo-rail-width) minmax(0, 1fr);
