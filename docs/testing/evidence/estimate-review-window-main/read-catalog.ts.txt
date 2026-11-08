@@ -1,0 +1,17 @@
+import { writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {database,closeDatabase} from '../../src/platform/database';
+import {localConfig} from '../../src/platform/config';
+assert.equal(localConfig().database_name,'ppo_synthetic_test');
+const tables=["workspaces", "users", "permission_grants", "companies", "estimates", "estimate_versions", "estimate_review_events", "draft_quotes", "draft_quote_revisions", "quote_release_bases", "quote_release_events", "estimate_quote_jobs", "opportunities", "organisations", "people", "sites", "site_parties", "relationships", "person_company_contexts", "crm_pipeline_definitions", "crm_stage_definitions", "estimate_discovery_roots", "estimate_discovery_bases", "estimating_options", "estimation_revisions", "estimating_workspaces", "estimate_cost_source_bindings", "cost_source_revisions", "cost_sources", "estimate_specialist_lineage", "specialist_configurations", "specialist_definitions", "specialist_runs", "specialist_drafts", "facilities", "assets", "activities", "activity_links", "projects", "lead_candidates", "tickets"];
+const workspaceFks=(await database().query(`SELECT conrelid::regclass::text AS table_name,conname,pg_get_constraintdef(oid) AS definition,convalidated
+ FROM pg_constraint WHERE contype='f' AND confrelid='ppo.workspaces'::regclass
+ AND conrelid::regclass::text=ANY($1::text[]) ORDER BY 1,2`,[[...tables,'audit_events','operation_receipts','outbox_jobs','estimate_quote_attempts'].map(t=>'ppo.'+t)])).rows;
+const functions=(await database().query(`SELECT p.oid,p.proname,pg_get_functiondef(p.oid) definition
+ FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='ppo' AND p.prokind='f'`)).rows;
+const writers=functions.filter(f=>tables.some(t=>new RegExp('(?:INSERT\\s+INTO|UPDATE|DELETE\\s+FROM)\\s+ppo\\.'+t+'\\b','i').test(f.definition)));
+for(const f of writers)f.triggers=(await database().query(`SELECT tgrelid::regclass::text table_name,tgname,pg_get_triggerdef(oid) definition FROM pg_trigger WHERE tgfoid=$1 AND NOT tgisinternal ORDER BY 1,2`,[f.oid])).rows;
+const result={at:new Date().toISOString(),read_tables:tables,workspace_foreign_keys:workspaceFks,read_set_function_writers:writers.map(({oid,...f})=>f)};
+await writeFile('tmp/prompt-s/live-read-dependencies.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({workspace_foreign_keys:workspaceFks.length,function_writers:writers.map(f=>({name:f.proname,triggers:f.triggers.map((t:any)=>t.table_name)}))}));
+await closeDatabase();

@@ -1,0 +1,101 @@
+import assert from 'node:assert/strict';
+import { randomUUID, createHash } from 'node:crypto';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import { writeFile } from 'node:fs/promises';
+import pg from 'pg';
+import { database, closeDatabase } from '../../src/platform/database';
+import { localConfig } from '../../src/platform/config';
+import { createSession } from '../../src/platform/identity';
+import { createOpportunity } from '../../src/crm/opportunities';
+import { createEstimate } from '../../src/estimating/service';
+import { readEstimateReview } from '../../src/estimating/review/reads';
+import { submitEstimateReview } from '../../src/estimating/review/service';
+import { readEstimatingReviewQueue } from '../../src/estimating/review/queue';
+import { crmBase, crmCreate } from '../../tests/helpers/crm';
+import { estimateInput } from '../../tests/helpers/estimating';
+
+assert.equal(localConfig().database_name, 'ppo_synthetic_test');
+const p = (await createSession('coordinator')).principal;
+const reuse=process.argv.includes('--reuse');
+const title = reuse ? (await database().query("SELECT title FROM ppo.estimate_versions WHERE title LIKE 'SYN Prompt S v3 %' GROUP BY title HAVING count(DISTINCT estimate_id)=26 ORDER BY max(created_at) DESC LIMIT 1")).rows[0]?.title : `SYN Prompt S v3 ${randomUUID()}`;
+assert.ok(title);
+async function fixture(name:string) {
+  const o=crmCreate(); await createOpportunity(p,o);
+  const e={...estimateInput(o.id),title:name}; await createEstimate(p,e);
+  const d=await readEstimateReview(p,e.id);
+  await submitEstimateReview(p,e.id,{...crmBase(),estimate_version_id:d.saved.id,basis_hash:d.basis_hash,expected_version:d.estimate.version,expected_review_version:d.sequence,responses:[]});
+}
+for(let i=0;i<(reuse?0:26);i++)await fixture(title);
+for(let i=0;i<(reuse?0:100);i++)await fixture(`SYN unrelated v3 ${randomUUID()}`);
+
+type Sample={label:string,mode:'UPDATE'|'SHARE',pid?:number,began?:number,ended?:number,statements:number,lock_ms?:number,wall_ms?:number,items?:number,next_offset?:number|null,digest?:string,acquired?:()=>void};
+const context=new AsyncLocalStorage<Sample>();
+const lock='SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE';
+const original=pg.Client.prototype.query;
+// The control changes only the observed queue lock back to the original SQL.
+// Fixture commands, read graph, DTOs and connection settings are untouched.
+pg.Client.prototype.query=function(...args:any[]) {
+  const sample=context.getStore();
+  if(!sample)return original.apply(this,args as any);
+  const sql=typeof args[0]==='string'?args[0]:args[0].text;
+  sample.pid=(this as any).processID; sample.statements++;
+  if(sql===lock&&sample.mode==='UPDATE') args[0]=lock.replace('FOR SHARE','FOR UPDATE');
+  const start=performance.now();
+  return (original.apply(this,args as any) as any).then((r:any)=>{
+    if(sql===lock){sample.lock_ms=performance.now()-start;sample.acquired?.();}
+    return r;
+  });
+} as any;
+const observer=new pg.Client({connectionString:localConfig().database_url,application_name:'prompt-s-v3-observer'});
+await observer.connect();
+const samples:Sample[]=[],observations:any[]=[];
+let monitoring=true;
+const monitor=(async()=>{while(monitoring){
+  const rows=(await observer.query(`SELECT pid,wait_event_type,wait_event,pg_blocking_pids(pid) blockers,left(query,90) query
+    FROM pg_stat_activity WHERE datname=current_database() AND application_name='PPO-P01' AND state<>'idle'`)).rows;
+  observations.push({at:performance.now(),rows});await new Promise(r=>setTimeout(r,20));
+}})();
+async function read(label:string,mode:Sample['mode'],offset:number,view='all',acquired?:()=>void){
+  const s:Sample={label,mode,statements:0,acquired};samples.push(s);const start=performance.now();s.began=start;
+  const d=await context.run(s,()=>readEstimatingReviewQueue(p,{q:title,offset:String(offset),view}));
+  s.ended=performance.now();s.wall_ms=s.ended-start;s.items=d.items.length;s.next_offset=d.next_offset;
+  const {as_of,...stable}=d;s.digest=createHash('sha256').update(JSON.stringify(stable)).digest('hex');
+  assert.equal(d.items.length,view==='awaiting_me'?0:offset===0?75:3);
+  assert.equal(d.next_offset,offset===0?25:null);assert.equal(d.completeness,'CompleteWindow');
+  if(view==='all'){assert.deepEqual([...new Set(d.items.map(x=>x.kind))].sort(),['Completeness','SourcePrice','Technical']);assert.ok(d.items.every(x=>x.state==='Pending'&&x.own_work&&!x.can_decide));}
+  assert.equal(s.statements,offset===0?8708:356);
+  console.log(JSON.stringify(s));return s;
+}
+function gate(){let resolve!:()=>void;const promise=new Promise<void>(r=>resolve=r);return {resolve,promise};}
+const blockers:any[]=[];
+for(const mode of ['UPDATE','SHARE'] as const){
+  for(let n=0;n<3;n++){await read(`${mode}-sequential-${n}-0`,mode,0);await read(`${mode}-sequential-${n}-25`,mode,25);}
+  const a=gate(),b=gate();
+  const first=read(`${mode}-duplicate-first-0`,mode,0,'all',a.resolve);await a.promise;
+  const second=read(`${mode}-duplicate-second-0`,mode,0,'all',b.resolve);
+  if(mode==='UPDATE'){
+    let found=false;
+    for(let i=0;i<200&&!found;i++){
+      const rows=(await observer.query("SELECT pid,pg_blocking_pids(pid) blockers FROM pg_stat_activity WHERE application_name='PPO-P01' AND wait_event_type='Lock' AND query='SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR UPDATE'")).rows;
+      if(rows.length){blockers.push(...rows);found=true;}else await new Promise(r=>setTimeout(r,10));
+    }
+    assert.ok(found,'original lock must demonstrably block second full read');
+  }else await b.promise;
+  await Promise.all([first,second,read(`${mode}-duplicate-continuation-25`,mode,25)]);
+  await read(`${mode}-awaiting-0`,mode,0,'awaiting_me');await read(`${mode}-awaiting-25`,mode,25,'awaiting_me');
+}
+for(const suffix of ['sequential-0-0','sequential-0-25','duplicate-continuation-25','awaiting-0','awaiting-25'])
+  assert.equal(samples.find(s=>s.label===`UPDATE-${suffix}`)?.digest,samples.find(s=>s.label===`SHARE-${suffix}`)?.digest);
+monitoring=false;await monitor;
+const result={at:new Date().toISOString(),database:'ppo_synthetic_test',engine:(await observer.query('SELECT version() engine')).rows[0].engine,
+  fixture:{matching:26,unrelated:100,priorRows:'Retained ES-04 suite rows on the same disposable database; identical for both modes'},
+  method:'Same queue read and fixture; UPDATE control replaces only the queue lock SQL. No injected delay. 20ms independent wait observer. SHARE continuation starts after both full readers acquire locks; UPDATE after observed second-reader blocking.',
+  background_build:false,
+  original_retained_baseline:{head:'78fe5732',continuation_wall_ms:6905.969,workspace_lock_ms:6700.027},samples,
+  control_observed_blockers:blockers,
+  waits:samples.map(s=>({label:s.label,pid:s.pid,lock_observations:observations.filter(o=>o.at>=s.began!&&o.at<=s.ended!).flatMap(o=>o.rows).filter(r=>r.pid===s.pid&&r.wait_event_type==='Lock').length})),
+  dto_equality_except_as_of:true,observations_sha256:createHash('sha256').update(JSON.stringify(observations)+'\n').digest('hex')};
+// Per-call intervals disambiguate pool backend reuse across sequential samples.
+await writeFile('tmp/prompt-s/compare-locks.json',JSON.stringify(result,null,2)+'\n');
+await writeFile('tmp/prompt-s/compare-locks-observations.json',JSON.stringify(observations)+'\n');
+pg.Client.prototype.query=original;await observer.end();await closeDatabase();
