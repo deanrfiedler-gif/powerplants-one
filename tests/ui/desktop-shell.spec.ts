@@ -288,6 +288,7 @@ test("refined tablet zones survive a populated page-search mount", async ({page}
     await page.setViewportSize({width,height:900});
     for (const rail of ["compact","expanded"]) {
       await page.locator(".app-frame").evaluate((frame,state)=>frame.setAttribute("data-rail",state),rail);
+      await expect(slot.locator("input")).toHaveCount(1);
       await expect(slot).toBeHidden();
       await expectRefinedHeader(page,width);
     }
