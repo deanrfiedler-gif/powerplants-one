@@ -2,16 +2,18 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Proposal for Dean's review; not an accepted design baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision.
+
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
-This record is a **proposal**. It describes what was drawn, the rules applied, the assumptions made and the questions Dean has to decide. It changes no code, test, migration, seed, permission or route, and it does not make the drawn pages an accepted baseline.
+This record began as a **proposal**. It describes what was drawn, the rules applied, the assumptions made and the questions Dean had to decide; section 9 records his acceptance. It changes no code, test, migration, seed, permission or route. Acceptance of the design does not make the drawn pages an implementation baseline: source presence, visual review of the built pages, functional proof and deployment stay separate.
 
 ## 1. Sources
 
@@ -95,7 +97,7 @@ All sheets are 1440 × 900 desktop frames. Node IDs are those of the frame in th
 
 ## 5. Assumptions and proposed departures
 
-Each item is for Dean's decision. "Accept as recommended" adopts them all.
+Each item was for Dean's decision. He accepted them all as recommended on 9 November 2026 (section 9).
 
 | ID | Assumption or departure | Recommendation |
 |---|---|---|
@@ -105,7 +107,7 @@ Each item is for Dean's decision. "Accept as recommended" adopts them all.
 | A4 | Email keeps two panes (thread list with day groups and quick filters; reading pane with linked-record chips and the privacy banner) with mailbox views as tiles. The EC-01 side menu moves into the docked workspace menu, so the page has no third pane | Keep |
 | A5 | Every record uses the shared layout: one-row header, state or checks bar, 380 px details column, view tabs. Short decisions are centred dialogs of 560 to 720 px with a 12 px radius over a navy 32 % scrim; forms (New deal, New lead, Filters) open in a 432 px right panel without a scrim, like the preview drawer | Keep |
 | A6 | Won-deal receiving states are written as Not prepared, Prepared, Awaiting receiving review, Returned, Accepted and Converted. No verified contract defines them (CR-03) | Keep as proposed words until the receiving contract names them |
-| A7 | The Insights rail item, unavailable in `navigation.ts`, opens Pipeline insights (CR-04) and Sales performance (RP-02) as drawn | Decide whether Insights opens Pipeline insights first or a report list |
+| A7 | The Insights rail item, unavailable in `navigation.ts`, opens Pipeline insights (CR-04) and Sales performance (RP-02) as drawn | Keep as drawn: Insights opens Pipeline insights first, with Sales performance as its second view |
 | A8 | Sales has no quotation register of its own. Quotations appear on the Deal record tab (R02), on the Deals Quoted column (newest revision and its state) and in REP-04; Estimating owns the register | Keep |
 | A9 | The synthetic story is as at Thursday 5 November 2026, 09:00, signed in as Dean Fiedler, with new SYN-OPP, SYN-LEAD, SYN-ORG and SYN-QUO references. If the pages are adopted, align these with the accepted module stories when each page is next touched | Align later |
 | A10 | Lucide icons stand in for Font Awesome Light and the shell components are local copies of the accepted file. Swap both to the published library when the shell is published | Swap on publication |
@@ -122,4 +124,10 @@ Phone and tablet variants; the Deal record's Scope & sites, Correspondence, Docu
 
 ## 8. Boundary and next steps
 
-This proposal authorises nothing in the application. If Dean accepts it, as drawn or with amendments, the next steps are: save a named Figma version; record the acceptance in this file; update the page guidance in `docs/design/development/pages/` for each route with the exact sheet references; and plan the build against the current application pages, keeping source presence, visual review, functional proof and deployment separate.
+This record authorises nothing in the application. With the acceptance in section 9, the next steps are: Dean saves a named Figma version (recommended title "Sales module — accepted"); the page guidance in `docs/design/development/pages/` is updated for each route with the exact sheet references, in its own reviewed change; and the build is planned against the current application pages, keeping source presence, visual review, functional proof and deployment separate.
+
+## 9. Acceptance — 9 November 2026
+
+Asked to review the proposal, Dean answered: "Accept A1–A10 as recommended". That adopts every item in section 5 with its recommendation: A1 view tiles under each register title beside the nested docked-menu views; A2 group totals in the scroll-region band; A3 Tasks row actions on hover and focus with the Owner column hidden under Owner Mine; A4 the two-pane Email layout with mailbox views as tiles; A5 the shared record layout, 560–720 px dialogs over a 32 % navy scrim and 432 px right panels without a scrim; A6 the proposed Won-deal receiving state words until the receiving contract names them; A7 Insights opening Pipeline insights first with Sales performance second, as drawn; A8 no Sales quotation register, with quotations on the Deal record tab, the Deals Quoted column and REP-04; A9 the synthetic story aligned with the accepted module stories when each page is next touched; A10 Lucide icons and the copied shell components swapped to the published library when the shell is published.
+
+What the acceptance covers: the 34 desktop sheets listed in section 3 as the accepted design for the Sales workspace pages, and the rules in section 4. What it does not cover: the items in section 7 that are not drawn, phone and tablet layouts, prototype behaviour, the built application pages, and any business approval. In the Figma file the page and the sheet sections were renamed from "(proposal)" to "(accepted 9 November 2026)" and the header and index cards now carry the acceptance; the named version is Dean's to save.
