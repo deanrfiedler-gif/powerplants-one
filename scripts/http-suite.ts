@@ -11,6 +11,7 @@ const exclusive = new Set([
   "estimating-e2-verification.test.ts",
   "project-commercial.test.ts",
   "project-claims.test.ts",
+  "project-claim-finance.test.ts",
   "project-commercial-ui.test.ts",
   "project-specialist.test.ts",
   "project-specialist-handover.test.ts",
@@ -20,7 +21,7 @@ const exclusive = new Set([
   "cpq-costs.test.ts",
   "cpq-packages.test.ts",
   "cpq-rebase.test.ts",
-    "cpq-quality.test.ts",
+  "cpq-quality.test.ts",
   "cpq-products.test.ts",
   "excel-import-review.test.ts",
   "excel-import-persistence.test.ts",
@@ -49,24 +50,38 @@ const files = (await readdir(new URL("../tests/http/", import.meta.url)))
 if (!files.length) throw Error("No HTTP tests discovered");
 
 async function run(args: string[], reset = false) {
-  const child = spawn(process.execPath, ["--env-file=.env.local", "--import", "tsx", ...args], {
-    stdio: "inherit",
-    env: reset
-      ? { ...process.env, PPO_ALLOW_RESET: "dispose-synthetic", PPO_RESET_DATABASE: "ppo_synthetic_test" }
-      : process.env,
-  });
+  const child = spawn(
+    process.execPath,
+    ["--env-file=.env.local", "--import", "tsx", ...args],
+    {
+      stdio: "inherit",
+      env: reset
+        ? {
+            ...process.env,
+            PPO_ALLOW_RESET: "dispose-synthetic",
+            PPO_RESET_DATABASE: "ppo_synthetic_test",
+          }
+        : process.env,
+    },
+  );
   const code = await new Promise<number>((resolve, reject) => {
     child.once("error", reject);
-    child.once("exit", (code, signal) => signal
-      ? reject(Error(`HTTP proof interrupted by ${signal}`))
-      : resolve(code ?? 1));
+    child.once("exit", (code, signal) =>
+      signal
+        ? reject(Error(`HTTP proof interrupted by ${signal}`))
+        : resolve(code ?? 1),
+    );
   });
   if (code !== 0) process.exit(code);
 }
 
 const shared = files.filter((name) => !exclusive.has(name));
 if (shared.length)
-  await run(["--test", ...process.argv.slice(2), ...shared.map((name) => `tests/http/${name}`)]);
+  await run([
+    "--test",
+    ...process.argv.slice(2),
+    ...shared.map((name) => `tests/http/${name}`),
+  ]);
 for (const name of files.filter((name) => exclusive.has(name))) {
   console.log(`Exclusive fresh-database HTTP proof: ${name}`);
   await run(["scripts/database.ts", "reset"], true);

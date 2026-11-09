@@ -26,7 +26,8 @@ mock.module(new URL("../../src/platform/browser.ts", import.meta.url).href, {
           setContent: async (value) => {
             html = value;
           },
-          evaluate: async () => {},
+          // Command-only placeholder for font readiness/checks; no font or layout proof.
+          evaluate: async () => true,
           pdf: async () =>
             Buffer.from(
               `%PDF-SYNTHETIC-B2-COMMAND-PROOF-NOT-RENDERED\n${createHash("sha256").update(html).digest("hex")}\n`,

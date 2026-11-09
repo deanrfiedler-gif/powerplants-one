@@ -309,3 +309,29 @@ Migration 0125 adds no seed or grant. Applied-version and exact added-migration 
 - Production build status is recorded in the dated B2 status fragment.
 
 Claude's one independent review and full ready-head CI remain outstanding. The PR remains draft, with no review, operational acceptance, merge or deployment claimed.
+
+## B3 ProjectClaim Finance backend — 10 November 2026
+
+Source: draft [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), branch `codex/project-claim-finance`, stacked on B2 #881 at `b621787cc336d288663e7257f1de15379012f687`; main baseline `0d1959f7363ef3434fefa4434904724b9e4af78a`. See the [Finance contract](../../../contracts/finance-handoff.md#b3-projectclaim-backend-amendment) and [implementation choices](../../../decisions/project-delivery-billing.md#b3-backend-implementation-choices--10-november-2026). Code delivery is separate from independent review, rendered integration proof, business acceptance and deployment.
+
+Cloud setup succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15. It reports browser unavailable; this turn's `npm run browser:check` again fails because `/opt/google/chrome/chrome` is absent. The unchanged-main renderer control recorded in B2 above remains the baseline evidence. Normal B3 database/compiled HTTP/browser integration is **not run here** and remains for CI. The authored HTTP case uses the existing Finance routes; no normal test/CI command loads a renderer substitute.
+
+The separate command-only proof explicitly uses the B2 synthetic-byte helper described above, preserving native command, source, permission, SQL, audit, receipt and simulator code. It is not an actual rendered document or operational ERP proof:
+
+```sh
+PPO_B2_SYNTHETIC_RENDERER=command-proof-only node --env-file=.env.local \
+  --experimental-test-module-mocks --import tsx \
+  --import ./tests/helpers/project-claims-synthetic-renderer.mjs \
+  --test --test-concurrency=1 --test-timeout=120000 \
+  tests/database/project-claim-finance.test.ts
+```
+
+Six B3 command-only cases passed (203 seconds): whole claim lifecycle and exact target amounts, separate Finance review/reconciliation, competing submits, Returned-to-revised-Draft transfer and omission release, pre-effect cancellation, Unknown and local-failure recovery, one original target, permission revocation, source correction holds, forged amount/missing-hold rollback, NotProcessed cancellation, partial-target refusal, and separate approved variation. The consumed-entitlement re-claim is refused. Repeated migration/seeding and connection-pool recovery preserve receipts; no database-process restart was tested. Ten focused Finance/claim/migration unit cases passed.
+
+Remaining validation results are recorded in the [dated B3 status](../../../status/2026-11-10-project-claim-finance.md). Claude's independent review and full ready-head CI remain outstanding; no merge or deployment is claimed.
+
+Additional B3 verification: three existing P10 WorkOrder cases (F-06 source conservation, Returned revision, F-07 Unknown lookup) and the new populated 0125 Finance upgrade passed with the explicit synthetic renderer helper. The upgrade creates and reconciles a WorkOrder handoff before applying 0126, preserves every original field across Finance sources/revisions/lines/holds/reviews/attempts/targets/outcomes/reconciliations plus audit/receipts/outbox/grants/seed receipts, verifies historical checksums, and proves repeat migration/seed and original receipt recovery. The helper returns a synthetic placeholder for font-check evaluation; it proves neither fonts nor layout. Normal rendered integration remains required.
+
+Nine unmocked historical/demo upgrade cases passed, including pending-migration transaction compatibility, retained originals, idempotence, runtime privileges and late-failure rollback. `npm run check` passed Studio, lint, TypeScript, all 1,449 unit tests and the production build. The 44 documentation tests and foundation/prototype/naming/migration checks passed.
+
+The focused compiled HTTP command proof passed (one case): normal compiled application server, normal Finance routes, synthetic bytes substituted only in the test process's fixture setup. It covers creation, submission, independent approval, AcceptedThenTimeout, hidden target before original lookup, recovery, exact creation replay, Finance capability denial and unknown monetary-input rejection. This is command/HTTP integration over synthetic source bytes, not the normal rendered end-to-end journey. The local server was stopped afterward.

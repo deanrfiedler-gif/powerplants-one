@@ -34,6 +34,9 @@ import {
   basis,
 } from "./validation";
 
+import { saveProjectFinance } from "./project-claims-service";
+import { projectClaimSource } from "./project-claims-source";
+
 type Context = Awaited<ReturnType<typeof financeContext>>;
 type Mutation = { operation_id: string; reason: string };
 export async function event(
@@ -107,6 +110,21 @@ export async function currentRevision(
         "Re-review the exact current Finance policy and definition.",
       );
     await accountCurrent(c, p, ctx.a);
+    if (ctx.h.source_kind === "ProjectClaim") {
+      const original = v.source_snapshot.project_claim;
+      const current = await projectClaimSource(
+        c,
+        p,
+        ctx.h.project_id,
+        original.basis_id,
+        original.claims.map((e: { event_version: number }) => e.event_version),
+      );
+      if (
+        hash({ ...v.source_snapshot, project_claim: current }) !== v.source_hash
+      )
+        blocked("SourceChanged", "The exact project claim source changed.");
+      return v;
+    }
     const sources = [];
     for (const ref of v.source_snapshot.reports as SourceRef[])
       sources.push(await exactSource(c, p, ctx.w, ref));
@@ -136,7 +154,11 @@ export async function currentRevision(
   }
   return v;
 }
-async function noPossibleEffect(c: PoolClient, p: Principal, h: Context["h"]) {
+export async function noPossibleEffect(
+  c: PoolClient,
+  p: Principal,
+  h: Context["h"],
+) {
   if (
     (
       await c.query(
@@ -269,6 +291,13 @@ export async function saveFinance(
   id: string | null,
   input: unknown,
 ) {
+  if (
+    input &&
+    typeof input === "object" &&
+    "source_kind" in input &&
+    input.source_kind === "ProjectClaim"
+  )
+    return saveProjectFinance(p, id, input);
   const cmd = editCommand(id, input);
   return sharedOperation(
     p,
@@ -366,23 +395,58 @@ export async function submitFinance(p: Principal, id: string, input: unknown) {
           l.entry_id,
           (totals.get(l.entry_id) ?? 0n) + scaled(l.allocated_quantity),
         );
-      for (const s of v.source_snapshot.reports)
+      for (const s of v.source_snapshot.reports ?? [])
         for (const e of s.entries as SourceEntry[])
           if (totals.get(e.id) !== scaled(e.quantity))
             blocked(
               "AllocationIncomplete",
               "Disposition the complete reviewed quantity of every selected report entry, including non-billable quantities.",
             );
-      for (const l of lines)
+      for (const l of lines) {
+        if (
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.finance_allocation_holds WHERE workspace_id=$1 AND line_id=$2 AND state='Held'",
+              [p.workspace_id, l.id],
+            )
+          ).rowCount
+        )
+          continue;
+        if (
+          l.source_kind === "ProjectClaim" &&
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.finance_allocation_holds WHERE workspace_id=$1 AND claim_basis_id=$2 AND claim_kind=$3 AND claim_target_id=$4 AND state<>'Released'",
+              [
+                p.workspace_id,
+                l.claim_basis_id,
+                l.claim_kind,
+                l.claim_target_id,
+              ],
+            )
+          ).rowCount
+        )
+          blocked(
+            "ClaimEntitlementUnavailable",
+            "This whole entitlement is already held or consumed by a Finance claim.",
+          );
         await insert(c, "finance_allocation_holds", {
           workspace_id: p.workspace_id,
           handoff_id: id,
           revision_id: v.id,
           line_id: l.id,
           root_entry_id: l.root_entry_id,
+          ...(l.source_kind === "ProjectClaim"
+            ? {
+                claim_basis_id: l.claim_basis_id,
+                claim_kind: l.claim_kind,
+                claim_target_id: l.claim_target_id,
+              }
+            : {}),
           quantity: l.allocated_quantity,
           state: "Held",
         });
+      }
       return bump(c, p, ctx.h, cmd, "Submitted", { status: "ReadyForReview" });
     },
     "FinancialHandoff",
@@ -512,6 +576,9 @@ export type TargetLine = {
   uom: string;
   direction: string;
   source_allocations: { line_id: string; quantity: string }[];
+  amount?: string;
+  currency?: string;
+  tax_basis?: string;
 };
 function targetLines(
   lines: Awaited<ReturnType<typeof financeLines>>,
@@ -528,6 +595,13 @@ function targetLines(
         uom: l.uom,
         direction: l.direction,
         source_allocations: [],
+        ...(l.source_kind === "ProjectClaim"
+          ? {
+              amount: l.claim_amount,
+              currency: l.claim_currency,
+              tax_basis: l.claim_tax_basis,
+            }
+          : {}),
       };
       groups.set(l.target_group, t);
     }
@@ -595,7 +669,10 @@ export async function beginFinanceProcessing(
           account_id: ctx.h.account_id,
           currency: ctx.h.currency,
           correlation_id: ctx.h.correlation_id,
-          kind: "SyntheticServiceCharge",
+          kind:
+            ctx.h.source_kind === "ProjectClaim"
+              ? "SyntheticProjectClaim"
+              : "SyntheticServiceCharge",
           lines: targetLines(await financeLines(c, p, r.id)),
         },
         a = await insert(c, "finance_processing_attempts", {
@@ -691,7 +768,10 @@ async function simulator(
           correlation_id: a.correlation_id,
           input_hash: a.input_hash,
           attempt_id: a.id,
-          kind: "SyntheticServiceCharge",
+          kind:
+            ctx.h.source_kind === "ProjectClaim"
+              ? "SyntheticProjectClaim"
+              : "SyntheticServiceCharge",
           status: a.scenario === "Partial" ? "Partial" : "Accepted",
           lines: JSON.stringify(lines),
         });
@@ -934,6 +1014,7 @@ export async function reconcileFinance(
           !t ||
           o.outcome !== "Processed" ||
           t.status !== "Accepted" ||
+          t.kind !== a.source_snapshot.kind ||
           t.account_id !== ctx.h.account_id ||
           t.company_id !== ctx.h.company_id ||
           t.customer_id !== ctx.h.customer_id ||

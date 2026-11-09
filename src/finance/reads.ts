@@ -75,42 +75,74 @@ export async function financeSources(
   });
 }
 export async function listFinance(p: Principal, input: unknown = {}) {
-  const q = object(input, ["company_id", "site_id", "after", "status"]),
-    c = database();
-  await requireCapability(c, p, "finance.read");
-  const rows = (
-    await c.query(
-      `SELECT f.id,f.display_number,f.version,f.status,f.company_id,f.site_id,f.customer_id,f.account_id,f.currency,f.mode,f.needs_review,f.source_blocker,f.created_at,f.updated_at,u.display_name AS owner,w.display_number AS work_reference,o.display_name AS customer_name,a.fixture_key AS account_reference,(SELECT min(occurred_at) FROM ppo.finance_events e WHERE e.handoff_id=f.id AND e.kind='Submitted') AS submitted_at,(SELECT max(reviewed_at) FROM ppo.finance_reviews r WHERE r.handoff_id=f.id) AS reviewed_at,(SELECT max(claimed_at) FROM ppo.finance_processing_attempts t WHERE t.handoff_id=f.id) AS claimed_at FROM ppo.finance_handoffs f JOIN ppo.users u ON (u.workspace_id,u.id)=(f.workspace_id,f.owner_id) JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(f.workspace_id,f.work_order_id) JOIN ppo.organisations o ON (o.workspace_id,o.id)=(f.workspace_id,f.customer_id) JOIN ppo.finance_accounts a ON (a.workspace_id,a.id)=(f.workspace_id,f.account_id) WHERE f.workspace_id=$1 AND ${scopeSql("f.company_id", "f.site_id", "finance.read")} AND ${scopeSql("f.company_id", "f.site_id", "shared.finance.read")} AND ($3::uuid IS NULL OR f.company_id=$3) AND ($4::uuid IS NULL OR f.site_id=$4) AND ($5::uuid IS NULL OR f.id>$5) AND ($6::text IS NULL OR f.status=$6) ORDER BY f.id LIMIT 51`,
-      [
-        p.workspace_id,
-        p.actor_id,
-        optionalId(q.company_id, "company_id"),
-        optionalId(q.site_id, "site_id"),
-        optionalId(q.after, "after"),
-        q.status === undefined
-          ? null
-          : choice(q.status, "status", [
-              "Draft",
-              "ReadyForReview",
-              "Returned",
-              "Approved",
-              "AwaitingERP",
-              "OutcomeUnknown",
-              "ReconciliationRequired",
-              "Reconciled",
-              "Cancelled",
-            ]),
-      ],
-    )
-  ).rows;
-  return {
-    schema_version: 1,
-    synthetic: true,
-    as_at: new Date().toISOString(),
-    timezone: "UTC",
-    items: rows
-      .slice(0, 50)
-      .map((row) => ({
+  const q = object(input, [
+    "company_id",
+    "site_id",
+    "after",
+    "status",
+    "source_kind",
+  ]);
+  return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
+      p.workspace_id,
+    ]);
+    await requireCapability(c, p, "finance.read");
+    const fetchRows = async (after: string | null) =>
+      (
+        await c.query(
+          `SELECT f.id,f.source_kind,f.project_id,f.display_number,f.version,f.status,f.company_id,f.site_id,f.customer_id,f.account_id,f.currency,f.mode,f.needs_review,f.source_blocker,f.created_at,f.updated_at,u.display_name AS owner,coalesce(w.display_number,pr.display_number) AS work_reference,o.display_name AS customer_name,a.fixture_key AS account_reference,(SELECT min(occurred_at) FROM ppo.finance_events e WHERE e.handoff_id=f.id AND e.kind='Submitted') AS submitted_at,(SELECT max(reviewed_at) FROM ppo.finance_reviews r WHERE r.handoff_id=f.id) AS reviewed_at,(SELECT max(claimed_at) FROM ppo.finance_processing_attempts t WHERE t.handoff_id=f.id) AS claimed_at FROM ppo.finance_handoffs f JOIN ppo.users u ON (u.workspace_id,u.id)=(f.workspace_id,f.owner_id) LEFT JOIN ppo.work_orders w ON (w.workspace_id,w.id)=(f.workspace_id,f.work_order_id) LEFT JOIN ppo.projects pr ON (pr.workspace_id,pr.id)=(f.workspace_id,f.project_id) JOIN ppo.organisations o ON (o.workspace_id,o.id)=(f.workspace_id,f.customer_id) JOIN ppo.finance_accounts a ON (a.workspace_id,a.id)=(f.workspace_id,f.account_id) WHERE f.workspace_id=$1 AND ${scopeSql("f.company_id", "f.site_id", "finance.read")} AND ${scopeSql("f.company_id", "f.site_id", "shared.finance.read")} AND ($3::uuid IS NULL OR f.company_id=$3) AND ($4::uuid IS NULL OR f.site_id=$4) AND ($5::uuid IS NULL OR f.id>$5) AND ($6::text IS NULL OR f.status=$6) AND f.source_kind=$7 ORDER BY f.id LIMIT 51`,
+          [
+            p.workspace_id,
+            p.actor_id,
+            optionalId(q.company_id, "company_id"),
+            optionalId(q.site_id, "site_id"),
+            after,
+            q.status === undefined
+              ? null
+              : choice(q.status, "status", [
+                  "Draft",
+                  "ReadyForReview",
+                  "Returned",
+                  "Approved",
+                  "AwaitingERP",
+                  "OutcomeUnknown",
+                  "ReconciliationRequired",
+                  "Reconciled",
+                  "Cancelled",
+                ]),
+            q.source_kind === undefined
+              ? "WorkOrder"
+              : choice(q.source_kind, "source_kind", [
+                  "WorkOrder",
+                  "ProjectClaim",
+                ]),
+          ],
+        )
+      ).rows;
+    const visible: Awaited<ReturnType<typeof fetchRows>> = [];
+    let after = optionalId(q.after, "after");
+    while (visible.length < 51) {
+      const batch = await fetchRows(after);
+      for (const row of batch) {
+        try {
+          if (row.source_kind === "ProjectClaim")
+            await financeContext(c, p, row.id);
+          visible.push(row);
+          if (visible.length === 51) break;
+        } catch (e) {
+          if (!(e instanceof AppError) || ![403, 404].includes(e.status))
+            throw e;
+        }
+      }
+      if (batch.length < 51) break;
+      after = batch.at(-1)!.id;
+    }
+    return {
+      schema_version: 1,
+      synthetic: true,
+      as_at: new Date().toISOString(),
+      timezone: "UTC",
+      items: visible.slice(0, 50).map((row) => ({
         ...row,
         age_seconds: Math.max(
           0,
@@ -122,10 +154,11 @@ export async function listFinance(p: Principal, input: unknown = {}) {
         ),
         age_basis: row.submitted_at ? "First submission" : "Draft creation",
       })),
-    next_cursor: rows.length > 50 ? rows[49].id : null,
-    due_policy: "Not defined",
-    count_scope: "Current visible page only",
-  };
+      next_cursor: visible.length > 50 ? visible[49].id : null,
+      due_policy: "Not defined",
+      count_scope: "Current visible page only",
+    };
+  });
 }
 export async function readFinance(
   p: Principal,
@@ -134,6 +167,9 @@ export async function readFinance(
 ) {
   object(input, []);
   return transaction(async (c) => {
+    await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [
+      p.workspace_id,
+    ]);
     const ctx = await financeContext(c, p, uuid(id, "handoff_id")),
       history = {} as Record<
         | "revisions"
@@ -166,7 +202,7 @@ export async function readFinance(
       ).rows;
     const lines = (
         await c.query(
-          "SELECT l.*,(SELECT sum(quantity) FROM ppo.finance_allocation_holds h WHERE h.workspace_id=l.workspace_id AND h.root_entry_id=l.root_entry_id AND h.state<>'Released') AS reserved_quantity FROM ppo.finance_lines l WHERE workspace_id=$1 AND revision_id=$2 ORDER BY id",
+          "SELECT l.*,(SELECT sum(quantity) FROM ppo.finance_allocation_holds h WHERE h.workspace_id=l.workspace_id AND (h.root_entry_id=l.root_entry_id OR (h.claim_basis_id=l.claim_basis_id AND h.claim_kind=l.claim_kind AND h.claim_target_id=l.claim_target_id)) AND h.state<>'Released') AS reserved_quantity FROM ppo.finance_lines l WHERE workspace_id=$1 AND revision_id=$2 ORDER BY id",
           [p.workspace_id, ctx.h.current_revision_id],
         )
       ).rows,

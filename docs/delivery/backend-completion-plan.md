@@ -144,3 +144,7 @@ Local verification passed 50 units, 62 distinct serial database cases across ret
 ## PJ-06 R1 execution — 15 October 2026
 
 From main `a676fde`, PJ-05 is integrated and #499 is merged externally; #500 has independent clean review with CI pending under its existing monitor. The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) implements the first [PJ-06 package receiving contract](../contracts/project-specialist-packages.md) on a separate main-based branch. See [evidence](../testing/evidence/project-specialist/README.md). This establishes internal brief coordination, not all specialist delivery controls. The next PJ-06 dependencies are exact technical/procurement acceptance and work-evidence contracts; unrelated Service/Supply and Finance/Reporting boundaries remain in the reconciliation. Earlier checkpoint wording remains historical.
+
+### Project billing B3 backend
+
+Draft [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), dependent on B2 #881, adds ProjectClaim sources to the existing Finance pipeline, whole-entitlement holds, synthetic processing/reconciliation and project state/hold measures. See the [contract](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment). Claim UI/output, B4 cost-only enforcement and connected TS-01 acceptance remain separate. Code presence does not close independent review or integration evidence.
