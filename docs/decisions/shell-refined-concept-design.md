@@ -154,3 +154,7 @@ These are departures from the accepted top bar amendment and rail alignment of O
 - The workspace menus were built from the navigation definitions in `src/shell/navigation.ts`, `src/supply/navigation.ts` and `src/engineering/control/navigation.ts` and from `register.json`, so every page link names a defined destination or a registered scope.
 - Nothing is built: there is no application, keyboard, screen-reader, zoom or device evidence, and the sheets set no UI baseline.
 - Dean saved the named Figma version on 8 November 2026 ("It has been saved."); the file history holds every earlier change.
+
+## 9. File name — 9 November 2026
+
+The private Figma file is now named "PPO - Shell (accepted)". Every citation in this record, in the [rules export](../design/development/systems/shell-refined-concept-rules.md) and in the shell system page that names "PPO - Shell refined concept" means this file; node IDs are unchanged, so no citation is rewritten. On 9 November 2026 the file holds two pages, "Shell refined · desktop shell and menus" and "Workspace menus · flyout and docked (accepted 8 November 2026)". The earlier "Sales module · refined UI pages (proposal)" page is no longer in it; the Sales pages are recorded in the [Sales module refined UI record](sales-module-refined-ui-proposal.md) against their own file, "PPO - Sales module (accepted)". The named version cited for builds remains "Shell refined concept — accepted" (8 November 2026) until a later named version of this file is recorded.
