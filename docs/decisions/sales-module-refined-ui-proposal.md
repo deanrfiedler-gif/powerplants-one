@@ -2,14 +2,14 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated); named version "PPO - Sales module (accepted)" saved by Dean on 9 November 2026 before N1–N4 were integrated, so a further named version is needed to pin them; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, and section 12 the acceptance of N1–N4 and the named version.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, section 12 the acceptance of N1–N4 and the named version, and section 13 the second batch, the customisation pages, the adoption of N13, the tablet-bar correction, the restructure of the file into pages and the version that pins them.
 
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
@@ -351,4 +351,36 @@ Dean answered "Adopt N13 and remove the Proposed label from the Add stage row". 
 
 Changed in the file: on AD06 `96:22533` and its X25 clone `96:22962` the Add stage row lost the "Proposed · N13" chip and now reads as a live control with the adopted wording, and the AD06 sheet name and label say "N13 adopted"; on AD01 `89:23787` the add-stage line reads as available in a draft instead of "unavailable"; the Pipeline card on AD05 `96:22104` names the stage set among the things a version carries; the header card, the Administration row of the index card and a new N13 row on the audit card record the adoption.
 
-Named version: Dean saved "PPO - Sales module (accepted) · batch 2 · N13" on 9 November 2026 after these edits. Under [Build from the named Figma version](figma-named-version-build-handoff.md) it is the version a build starts from: it pins every sheet in sections 11 to 13 including the adopted N13 state, and supersedes "PPO - Sales module (accepted) · batch 2", which remains the record of the state before N13. No sheet has changed since it was saved.
+Named version: Dean saved "PPO - Sales module (accepted) · batch 2 · N13" on 9 November 2026 after these edits. Under [Build from the named Figma version](figma-named-version-build-handoff.md) it is the version a build starts from: it pins every sheet in sections 11 to 13 including the adopted N13 state, and supersedes "PPO - Sales module (accepted) · batch 2", which remains the record of the state before N13. Section 13.6 records the two changes made after that save and the version that pins them.
+
+### 13.6 Tablet bar corrected, the file restructured into pages, and the named version re-saved — 9 November 2026
+
+Two changes were made to the file after the "· batch 2 · N13" version was saved; neither redrew a sheet.
+
+**Tablet top bar corrected.** The Sales file's derived 1024 top bar component (`64:14189`, in the kit) had been drawn with zones of 280, 360 and 384 px. The accepted shell draws the 1024 bar as three zones of 332, 360 and 332 px (sheet W `66:6462`, frame `66:6463`, rules R19 and R75 of the [shell refined concept design](shell-refined-concept-design.md)). The component was rebuilt to the accepted geometry, with the keyboard hint and the account name hidden at that width as the shell sheet shows them; its 19 instances, one on every Tablet 1024 sheet, follow it. The correction was verified by measuring each instance and by render; no tablet sheet moved and no node ID changed.
+
+**File restructured into the page template.** Dean asked for the Sales file to be restructured as step 1 of a Figma file per module, following the page order of the [design-to-build standard](../standards/design-to-build-standard.md): Read me, — Accepted —, the scope pages, — Proposals —, Scratch. The single page became thirteen pages, listed here with node IDs and the count of sheets each holds:
+
+| Page | Node | Sheets |
+|---|---|---|
+| Read me · PPO - Sales (header card `9:161`, "Sheet index and notes" `51:9990`, audit card `57:9989`, Page template card `135:2`) | `0:1` | — |
+| — Accepted — (separator, empty) | `133:27403` | — |
+| Deals · CR-01 · CR-04 | `133:27404` | 19 |
+| Deal record · CR-01 | `133:27405` | 15 |
+| Leads and Sales Pulse · LC-11 · LC-12 · LC-13 · SH-02 | `133:27406` | 21 |
+| Tasks, Activities and Email · SH-02 · EC-01 · EC-03 | `133:27407` | 11 |
+| Handovers and aftercare · CR-02 · CR-03 · CR-05 | `133:27408` | 18 |
+| Contacts, customers, products and insights · CS-01 · CS-02 · CS-03 · CS-04 · PD-01 · CR-04 · RP-02 | `133:27409` | 19 |
+| Administration and customisation · AD-02 | `133:27410` | 10 |
+| Interaction states and accessibility · app-wide (to move to PPO - Library) | `133:27411` | 1 |
+| Shell and kit · local copies until PPO - Library (Shell components `7:2`, Sales kit `9:165`, icons `9:289`, tablet and phone chrome `134:27465` with the corrected bar, the hidden helper node `26:3470`) | `133:27412` | — |
+| — Proposals — (separator, empty) | `133:27413` | — |
+| Scratch (empty) | `133:27414` | — |
+
+Every scope page carries the same sections in the same order, Desktop 1440, Dialogs and panels, States, Tablet 1024, Phone 390 and 320, and Flows and notes (a card stating what the page covers, its decisions and what is proposed), stacked in one column with 360 px gaps; a page omits a section it has nothing for. Desktop and dialog sheets sit at x 60, 1660 and 3260 in rows 1060 px apart, tablets at x 60, 1144, 2228 and 3312 in rows 840 px apart, phones at a 450 px pitch in rows 944 px apart, and every sheet keeps its one-line label 26 px above it, truncated to the sheet's width. The Page template card on the Read me page states these rules for the Estimating, Projects and Supply files to follow. Sheets were moved between pages with the Plugin API's `appendChild`, which keeps node IDs, so every node ID in sections 3, 11 and 13 still opens the same sheet; the file still holds 114 sheets and no sheet was redrawn. The helper library in the hidden node now finds the icon components on the kit page by name instead of on the current page.
+
+**Audit after the restructure.** A structural and position audit over every page found each sheet inside its section with a matching label above it, no overlap between sheets, labels, cards or sections at any level, nothing hidden, transparent or loose, and both separator pages empty. Dean then reported sheets overlapping on the Handovers and aftercare page; a second geometric audit of that page (four sections, 18 sheets, 18 labels, no intersecting bounds) and a whole-page render found none. The likely cause is a Figma client whose view had not refreshed after the cross-page moves; the report stays open until Dean confirms after reloading the file, and is noted here as a limit rather than a correction.
+
+**Named version.** Dean re-saved the file on 9 November 2026 after these two changes under the same name, "PPO - Sales module (accepted) · batch 2 · N13", so the version history now holds two versions of that name. Under [Build from the named Figma version](figma-named-version-build-handoff.md) the later one, saved after the tablet-bar correction and the restructure, is the version a build starts from; the earlier one remains the record of the single-page state with the uncorrected bar. The two differ only in the tablet bar component and the page structure; every sheet's content is the same. Renaming the later version in the version history (for example by appending "· tablet bar and pages") would remove the ambiguity; this record identifies it by its save order and content.
+
+**Follow-ups recorded, not drawn.** (1) A shared record header toolbar, proposed from Dean's screenshot of a quotation record header, is drawn in the Shell file as a proposal (page "Record header toolbar (proposal 9 November 2026)", component set `170:10178`): a favourite star, a labelled Actions menu, an Outputs menu, previous and next within the register view, and one state-driven primary action. It is not accepted; if Dean accepts it, the Sales record pages adopt it in a follow-up batch that replaces the "…" menu. (2) The [readable reference namespaces decision](readable-reference-namespaces.md) confirms the short reference form this file uses (`SYN-OPP-`, `SYN-QUO-`, `SYN-PRJ-`); the two-digit revision labels (`r01`, `r02`) it implies are a polish item for the quotation sheets. (3) The per-route page-guidance updates and the design register still follow in their own change; no application code exists for these pages.
