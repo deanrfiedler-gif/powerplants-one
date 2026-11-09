@@ -1,0 +1,11 @@
+---
+title: Projects module refined UI pages proposed in Figma
+date: 2026-11-09
+---
+
+Dean asked for the complete refined UI page set of the Projects module to be drawn in Figma in the new private file "PPO - Projects module (proposal)", inside the accepted shell chrome and on the page template adopted for the Sales file, and recorded in the repository. The [proposal record](../decisions/projects-module-refined-ui-proposal.md) (PPO-PROJECTS-REFINED-FIGMA-PROP) holds the sources, the conformance declaration seeded from the interface matrix, the sheet inventory with node IDs, the rules applied (including the short reference form of PPO-REFERENCE-NAMESPACES-DEC), the assumptions and proposed departures A1 onwards, and what is not drawn. The file has been set up on the template (Read me, separator pages, fourteen scope pages under — Proposals —, Shell and kit, Scratch); the accepted shell components, the kit, the 101 icon stand-ins, the tablet and phone chrome and the 66 "PPO colour" variables were rebuilt from the Sales file by script because the Plugin API cannot copy nodes across files. The scope-page sheets follow batch by batch in this change. The file's link is not recorded here (ADR-0050, ADR-0053).
+
+Checked: the rebuilt shell, kit, icon and chrome sections were rendered and inspected; the icon background fill that the export carried was removed so icons render as strokes on dark chrome. Repository checks run for this change: `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`. Not done yet: the scope-page sheets, the audit and the position audit; no application code, route, migration or permission; design acceptance is Dean's. Every record, person, value and date shown is synthetic.
+
+<!-- decision-index -->
+[Projects module refined UI proposal](../decisions/projects-module-refined-ui-proposal.md) (PPO-PROJECTS-REFINED-FIGMA-PROP) records the Projects workspace sheets drawn on 9 November 2026 inside the accepted shell in a new private Figma file on the Sales page template, with one line per register cell, no second search box, the short reference form and the assumptions for Dean's decision. It authorises no application code, route, migration, permission or deployment; all data is synthetic.
