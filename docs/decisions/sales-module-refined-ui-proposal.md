@@ -131,3 +131,113 @@ This record authorises nothing in the application. With the acceptance in sectio
 Asked to review the proposal, Dean answered: "Accept A1–A10 as recommended". That adopts every item in section 5 with its recommendation: A1 view tiles under each register title beside the nested docked-menu views; A2 group totals in the scroll-region band; A3 Tasks row actions on hover and focus with the Owner column hidden under Owner Mine; A4 the two-pane Email layout with mailbox views as tiles; A5 the shared record layout, 560–720 px dialogs over a 32 % navy scrim and 432 px right panels without a scrim; A6 the proposed Won-deal receiving state words until the receiving contract names them; A7 Insights opening Pipeline insights first with Sales performance second, as drawn; A8 no Sales quotation register, with quotations on the Deal record tab, the Deals Quoted column and REP-04; A9 the synthetic story aligned with the accepted module stories when each page is next touched; A10 Lucide icons and the copied shell components swapped to the published library when the shell is published.
 
 What the acceptance covers: the 34 desktop sheets listed in section 3 as the accepted design for the Sales workspace pages, and the rules in section 4. What it does not cover: the items in section 7 that are not drawn, phone and tablet layouts, prototype behaviour, the built application pages, and any business approval. In the Figma file the page and the sheet sections were renamed from "(proposal)" to "(accepted 9 November 2026)" and the header and index cards now carry the acceptance; the named version is Dean's to save.
+
+## 10. Audit — 9 November 2026
+
+After the acceptance Dean asked for an extensive audit of the new pages: gaps, refinements, new and innovative features, coverage of every scenario, and whether the pages can look more professional ("I basically just want all the UI pages to look as professional and as advanced as possible"). Every sheet was re-rendered at its current state and read against the design-critique framework (first impression, usability, hierarchy, consistency, accessibility), then a journey-by-journey coverage matrix was built. The results are below; items are for Dean's decision unless marked as corrected.
+
+### 10.1 Corrections made during the audit (my own errors, fixed in the file)
+
+| ID | Correction |
+|---|---|
+| C1 | The Riverbend Growers story disagreed with itself across sheets. One truth now holds everywhere: deal title "Glasshouse fertigation upgrade"; site "Riverbend glasshouse · Lindenow VIC"; Mei Tran, Operations manager, 0400 555 101; organisation SYN-ORG-000142, sector Hydroponic vegetables (12 texts on 9 sheets and 6 titles changed) |
+| C2 | Aftercare worklist sub-line shortened so it no longer runs off the content area |
+| C3 | Sales brief record: "1 check missing before Submit" now sits beside the disabled Submit button |
+| C4 | Activities: the now line carries its time label (09:00) |
+| C5 | Email: the "Not business email" chip uses a neutral icon instead of an × that read as a close control |
+
+### 10.2 Coverage matrix
+
+| Journey | Drawn | Not drawn |
+|---|---|---|
+| Capture a lead | X02 | Create a lead from an email (M01) |
+| Work a lead | L01, L02, P01, T01, A01 | Lead record Customer context, Emails, Files and History tabs |
+| Resolve customer context (LC-12) | Resolved state on L02 | The resolve dialog with candidate matches and reasons; disqualify, park and reopen a lead |
+| Convert | X06 | — |
+| Create and work a deal | X01, R01 | Deal record Scope & sites (what is being sold: sites, areas, equipment, scope lines that feed the brief), Correspondence, Documents and History tabs |
+| Brief Estimating | H01, H02 | Questions tab (answer a clarification); successor r2 comparison |
+| Quote | R02 (Estimating owns the quotation pages) | Request quotation dialog |
+| Stage, Won, Lost | X05, X03, X04 | Reopen deal |
+| Won handover | W01, W02 | Prepare handover form (items, evidence, destination) |
+| Aftercare | AC01, AC02 | Complete review dialog, Service referral side form, renewal handover (accepted in the aftercare design, not redrawn in this shell) |
+| Daily work | P01, T01, A01, M01 | Record outcome, Plan activity, Reschedule and Log call dialogs in this shell |
+| Customer knowledge | C01, O01, C360 | Person record; Sites register and record (third hub tab); New organisation and New person forms; Stakeholders |
+| Products | PR01 | Product snapshot and record (PD-01, accepted elsewhere) |
+| Insights | IN01, IN02 | Drill-through list; win/loss analysis |
+| Administration | — | Pipeline configuration (stage definitions, version), saved views, column chooser, export dialog, import leads wizard, notification preferences |
+| States | X08 filtered-empty, X09 loading | True-empty ("You're up to date"), could not load, denied, stale or newer version, offline, partial source |
+| Responsive and accessibility | — | Tablet 1024 and phone 390/320; focus states, keyboard order, 200 % zoom, contrast proof |
+
+### 10.3 Refinements (R)
+
+| ID | Refinement |
+|---|---|
+| R1 | An in-row attention marker (left-edge bar or icon in the title cell) on Deals and Leads rows that the "Needs attention" count refers to |
+| R2 | A signals strip on the Deal, Lead and Customer records: last contact, next activity, open tasks, unread emails, quotation state, days in stage against the median; rule-based and explainable, no score |
+| R3 | Preview drawer quick actions (Plan activity, Log call, Email) and the readiness checks as a compact list |
+| R4 | Board card age reads "12 d in stage"; a swimlane-by-owner toggle |
+| R5 | Forecast chart: total labels above each month; legend order matching the stack order |
+| R6 | Email reading pane: earlier messages collapsed inline (headers only); a suggested-links row for unlinked threads; the pane fills its height |
+| R7 | Customer 360 overview: "Relationship signals" and "Recent activity" cards fill the empty column |
+| R8 | Won-deal receiving: "Routing decision required" as a warning chip like the other states |
+| R9 | Record Won dialog: collapse the unselected evidence types once one is chosen (825 px becomes about 640 px) |
+| R10 | Pulse Deal attention rows: wider title, value on the second line |
+| R11 | Register sub-lines and footers cut to one clause, with the rule text moved into the information-icon popover the shell already has. This is the single biggest "professional" lift: several sub-lines run 120 to 170 characters and read as documentation |
+| R12 | One KPI tile (D05 and D06 use custom cards; P01 and IN01 use the kit tile) and a documented chip tone ramp: New = info, working states = neutral, nurturing = grey, Won = success, Lost = danger, stages neutral |
+| R13 | Tabular figures on numeric cells; a frozen-edge shadow when a register is scrolled; sortable header hover |
+| R14 | A states sheet: row hover, selected and focus, button focus rings, keyboard order per register |
+
+### 10.4 Gaps to draw (G)
+
+| ID | Gap |
+|---|---|
+| G1 | Deal record · Scope & sites tab (scope lines, sites, areas, equipment, products) — it feeds the Sales brief and is the main missing page |
+| G2 | Deal record · Correspondence, Documents and History tabs; Lead record · Customer context, Emails, Files and History tabs |
+| G3 | Resolve customer context dialog (LC-12) with candidate matches and reasons; disqualify, park and reopen a lead |
+| G4 | Record outcome, Plan activity, Reschedule and Log call dialogs redrawn in this shell |
+| G5 | Sales brief · Questions tab (answering a clarification) and the successor r2 comparison, Sales side |
+| G6 | Prepare handover form (Won): items, evidence, destination; Reopen deal |
+| G7 | Aftercare · Complete review dialog, Service referral side form, renewal handover to Deals |
+| G8 | Person record; Sites register and record; New organisation and New person forms; Stakeholders panel |
+| G9 | Administration: pipeline configuration, saved views manager, column chooser, export dialog, import leads wizard, notification preferences |
+| G10 | States per register and record: true-empty, could not load, denied, stale or newer version, offline, partial source |
+| G11 | Tablet 1024 and phone 390/320 variants of the registers, records and Pulse |
+| G12 | Insights drill-through list; win/loss analysis (reasons, competitors) |
+
+### 10.5 New and innovative features (N)
+
+Rules-based logic first; AI only where it adds value, always grounded in record data and never writing without review.
+
+| ID | Feature | Basis |
+|---|---|---|
+| N1 | "Catch me up": a summary of a deal, lead or email thread with a suggested next step, from the composer sparkle | AI, grounded in the record's activities; review before anything is saved |
+| N2 | "Focus for today" on Pulse: three ranked actions | Deterministic rules (overdue, close date passed, no next activity, quotation viewed); AI ranking later |
+| N3 | Deal health signals (R2) on board cards and as a "Needs attention" view | Explainable rules only; no scores or probabilities (R11) |
+| N4 | Email intelligence: suggested record links with reasons (EC-01 D3), "Create lead from this email", proposed meeting times lifted into Plan activity | Rules plus AI extraction, reviewed |
+| N5 | Stakeholder map on deals (roles, coverage, last contact) | Reuses CS-07 stakeholders |
+| N6 | Quote-view notification to the deal owner and a follow-up prompt | Quote-view tracking state word |
+| N7 | Scheduling assist: "Find a time" with Team availability; travel time between site visits | Calendar design Q1 |
+| N8 | Inline editing in registers (value, expected close, owner) with a change reason; a keyboard-shortcuts sheet | Rules |
+| N9 | Command palette: Ctrl K extended to actions (New deal, Record outcome, Move to …) | Shell search |
+| N10 | Shared customer timeline across modules on Customer 360; an account health band | CS-01 sources |
+| N11 | Map view of organisations and sites | Customers and sites decisions |
+| N12 | Phone lead capture from a business-card photo or voice note | Phone scope, later |
+
+### 10.6 Professional polish (P)
+
+| ID | Polish |
+|---|---|
+| P1 | Shorter sub-lines and footers (R11) |
+| P2 | One header rhythm: 20/28 title, state chip, star; at most three actions on the right |
+| P3 | Density: 40 px rows and 36 px headers stay; add a compact 32 px density choice in the column chooser |
+| P4 | Colour discipline: stage chips neutral; status chips by the ramp in R12; green only for current or positive; amber for attention; red for overdue or lost |
+| P5 | Empty space on record pages (Customer 360, Email) filled or card widths capped |
+| P6 | Elevation stays as drawn: drawer −4/0/24 at 18 %, dialog 0/12/40 at 24 % |
+| P7 | Tabular numerals; dates as d Mon yyyy with the weekday where there is room |
+| P8 | Font Awesome Light replaces the Lucide stand-ins on publication (A10) |
+| P9 | Drawn states for registers and buttons (R14) |
+| P10 | A contrast table for every text and surface pair; amber text on the amber surface is the likely failure and should move to ink text on tinted bands |
+
+### 10.7 Recommended order
+
+Draw R11 with P1 first (every sheet benefits), then R1 to R3, G1, G4 and G10, then G3 and G6, R9, and only then G11. N1 to N3 can be drawn as a proposal once the rule-based signals in R2 exist, because they rest on the same data.
