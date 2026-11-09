@@ -275,3 +275,21 @@ test("refined S1 header retains its zones in both rail states", async ({page}) =
     }
   }
 });
+
+test("refined tablet zones survive a populated page-search mount", async ({page}) => {
+  const { expectRefinedHeader } = await import("../helpers/refined-header-geometry");
+  await page.goto(fixture + "?mode=local&refined=1&conversations=1");
+  await expect(page.getByRole("button",{name:"New",exact:true})).toBeVisible();
+  // Real pages can populate this legacy slot even though refined hides it. Its
+  // :not(:empty) selector must not restore the desktop's symmetric side columns.
+  const slot = page.locator("#header-search");
+  await slot.evaluate(node => node.appendChild(document.createElement("input")));
+  for (const width of [768,780,834,960]) {
+    await page.setViewportSize({width,height:900});
+    for (const rail of ["compact","expanded"]) {
+      await page.locator(".app-frame").evaluate((frame,state)=>frame.setAttribute("data-rail",state),rail);
+      await expect(slot).toBeHidden();
+      await expectRefinedHeader(page,width);
+    }
+  }
+});

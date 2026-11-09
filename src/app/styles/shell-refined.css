@@ -895,9 +895,14 @@
   .app-frame[data-shell-version="refined"] {
     --ppo-refined-search-width: clamp(230px, calc(100vw - 572px), 262px);
   }
+  /* A populated (but hidden) legacy search slot also matches the more-specific
+     base selector. Override both forms so real pages retain the 300 px end zone. */
   .app-frame[data-shell-version="refined"]
     .workspace
-    > #shell-header.topbar.ppo-shell-header {
+    > #shell-header.topbar.ppo-shell-header,
+  .app-frame[data-shell-version="refined"]
+    .workspace
+    > #shell-header.topbar.ppo-shell-header:has(#header-search:not(:empty)) {
     grid-template-columns: minmax(0, 1fr) var(--ppo-refined-search-width) 300px;
   }
   [data-shell-version="refined"] #shell-header .ppo-header-start {
@@ -961,21 +966,6 @@
 /* The refined bar begins at 768 px; preserve the old rail geometry for the 13 px
    overlap with the accepted phone breakpoint until S2 replaces the desktop rail. */
 @media (min-width: 768px) and (max-width: 780px) {
-  /* This overlap still receives the phone account/container rules. Reserve the
-     account's intrinsic track inside the 16 px end inset, with the same twin
-     spacers as the wider bar, rather than letting a phone flex basis size it. */
-  [data-shell-version="refined"] #shell-header .ppo-header-end {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) auto minmax(0, 1fr) 1px 4px auto;
-  }
-  [data-shell-version="refined"] #shell-header .header-account .identity-strip {
-    position: relative;
-    inset: auto;
-    display: block;
-    width: max-content;
-    max-width: none;
-    flex: none;
-  }
   [data-shell-version="refined"]
     #shell-header
     .ppo-header-utilities
