@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## Project billing B2 backend — 10 November 2026
+
+[PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the claim-schedule and completion-evidence API slice of the [project billing decision](../decisions/project-delivery-billing.md). See the [B2 contract](../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence). B3 Finance entitlements, B4 field-work billability and maintenance M2/C1 follow in dependency order. Claim-schedule page controls and connected TS-01 acceptance remain open; this does not complete BC-06/07. Verification and review status are recorded in the dated status fragment.
+
 ## BC-06 Service findings reads and next action — 20 October 2026
 
 Dean authorised BC-06 continuation while another agent owns Conversations T2b. Merged [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623) supplies R1: source-owned inspection, incident, incomplete report, customer-response and scheduling findings, with bounded authorised-window counts and native Activity links. [PR #634](https://github.com/deanrfiedler-gif/powerplants-one/pull/634) adds R2 next-action assignment/editing, required evidence, history, source authority and retry recovery under the [SV-07 contract](../contracts/service-findings.md), with migration 0111 and no new capabilities/seeds/grants. [Execution evidence](../testing/evidence/service-findings/README.md) records validation and independent review separately from acceptance and integration. SV-07 recurrence, page implementation, SV-08 receiving, remaining PJ-06/PJ-07/PJ-08 work, Warranty-to-Supply and capacity/reservation rules remain open. T2b is unchanged.

@@ -1,3 +1,4 @@
+import { claimReceiptAuthority } from "../projects/commercial/claims";
 import { caseContext as escalationCaseContext, assetContext as escalationAssetContext } from "../service/escalations/context";
 import { conversationReceiptAuthority } from "../conversations/access";
 import { callEventReceiptAuthority } from "../calls/events";
@@ -133,7 +134,8 @@ export async function readOperation(
   } else if (r.object_type === "ProjectCommercialRecord") {
     return transaction(async c => {
       await c.query("SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE", [p.workspace_id]);
-      await commercialReceiptAuthority(c,p,r.record_id,operation_id);
+      if (r.command.startsWith("ProjectClaims:")) await claimReceiptAuthority(c,p,r.record_id,operation_id);
+      else await commercialReceiptAuthority(c,p,r.record_id,operation_id);
       return r.result as OperationReceipt;
     });
   } else if (r.object_type === "TemplateUseAssignment") {
