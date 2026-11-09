@@ -277,3 +277,35 @@ The two database files ran serially with `node --env-file=.env.local --import ts
 The requested ordered run of `tests/browser/project-commercial-ui.spec.ts` followed by `tests/browser/shared.spec.ts`, with `workers=1`, is **not run here; left to GitHub CI** on both `desktop-chromium` and `mobile-chromium`, because setup reports the browser unavailable. HTTP suites, populated upgrades, process restarts, fresh visual captures and the broader database/browser matrix are also **not run here; left to GitHub CI**.
 
 Open: GitHub CI on the pushed head, the requested desktop/mobile ordered regression runs, and Claude's narrow confirmation that cleanup removes exactly the fixture's added grants, Refresh follows the accepted composition, and no assertion or timeout changed. No new full review is requested. The previously documented full-project scan cost remains. Dean merges; no deployment or owner acceptance is claimed.
+
+
+## B2 claim-schedule backend — 10 November 2026
+
+Source: [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881), branch `codex/project-claim-schedules`, based on main `0d1959f7363ef3434fefa4434904724b9e4af78a`. The [contract](../../../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence) defines the backend-only boundary and the [decision](../../../decisions/project-delivery-billing.md#b2-backend-implementation-choices--10-november-2026) records versioning, evidence and correction choices. No UI, operational acceptance, Finance posting or deployment is included.
+
+### Verification method and limits
+
+Cloud setup succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15. It reports browser unavailable. `npm run browser:check` confirms Chrome is absent at `/opt/google/chrome/chrome`. The ordinary four-case `tests/database/project-claims.test.ts` run fails in the unchanged commercial fixture's quotation rendering with `ExactDraftUnavailable`, before the B2 commands. Keep those failures; they are not passing rendered-output proof. The unmodified-main `PJ05-01 native` case at `0d1959f7` reproduces the same `ExactDraftUnavailable` in `commercialFixture` / `prepared` / `retryQuote`, before any B2 implementation.
+
+For a separate command-only proof, `tests/helpers/project-claims-synthetic-renderer.mjs` explicitly substitutes synthetic retained bytes at the renderer boundary. Its output identifies itself as `SYNTHETIC-B2-STORED-BYTES-NOT-RENDERED`. It requires the disposable database and an explicit environment switch; normal unit/database/HTTP/CI commands never load it. Native commercial sources, review, permissions, SQL guards, commands and receipts still execute. Reproduce from the checkout with the cloud tools sourced:
+
+```sh
+PPO_B2_SYNTHETIC_RENDERER=command-proof-only node --env-file=.env.local \
+  --experimental-test-module-mocks --import tsx \
+  --import ./tests/helpers/project-claims-synthetic-renderer.mjs \
+  --test --test-concurrency=1 --test-timeout=120000 tests/database/project-claims.test.ts
+```
+
+The normal database proof and compiled HTTP proof remain the required integration evidence when the pinned renderer is available. The command-only run is not a substitute. Closing/reopening the connection pool in the proof establishes connection recovery only, not a PostgreSQL process restart.
+
+Migration 0125 adds no seed or grant. Applied-version and exact added-migration assertions were extended while seed ledgers, grant snapshots and original historical versions remain unchanged. The late Products 0052 proof gains a starting point at 0125. The demo-upgrade review gate was inspected and extended for an empty append-only table; its original rollback/privilege and grant assertions remain.
+
+### Executed results
+
+- Four command-only database cases passed with the explicit synthetic renderer boundary: native source-to-schedule-to-milestone/variation workflow, independent review and return/revision, competing submits, exact receipts/replay and changed-payload refusal, immutability and deferred evidence rollback, source drift, access revocation, exact-target/future-evidence refusals and negative-variation hold. No Finance handoffs were created. Connection-pool recovery is covered; process restart is not.
+- Nine unmocked upgrade tests passed across `project-commercial-upgrade.test.ts` and `tests/demo/upgrade.test.ts`: historical source/receipt preservation, repeat migration/seed, demo runtime privileges and transactional rollback. These do not require the document renderer.
+- The full unit run passed 1,447 tests. Focused claim/migration unit run passed 6 tests. Full lint and TypeScript passed; targeted final-source lint passed. Studio, foundation, prototype, naming, migration numbering, status-source and diff-whitespace checks passed.
+- Four ordinary B2 database cases are environment-blocked by absent Chrome; the same prerequisite fails on unchanged main as described above. The compiled HTTP test is authored but not run here because its native fixture uses that renderer. Browser journeys and full database/HTTP CI are not run here and remain required in CI.
+- Production build status is recorded in the dated B2 status fragment.
+
+Claude's one independent review and full ready-head CI remain outstanding. The PR remains draft, with no review, operational acceptance, merge or deployment claimed.

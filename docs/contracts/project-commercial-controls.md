@@ -91,6 +91,29 @@ Money is bounded to ±999999999999.99 per record, rejects excess precision and i
 
 Source choices and initial ownership are fixed. There is one approved original per Project. Changed source evidence holds new basis/variation revisions, submissions and independent decisions. Recorded notices, withdrawals and factual obligation satisfaction/reopening can still retain evidence under current access after source drift; none claims a new source approval. Current source checks verify exact retained document and quotation output bytes; historical recovery needs authority to the original sources rather than successful current reapproval.
 
+## B2 claim schedules and completion evidence
+
+Implemented backend slice in [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881), under the [billing decision and B2 choices](../decisions/project-delivery-billing.md#b2-backend-implementation-choices--10-november-2026). Migration 0125 adds `project_claim_events`; no seed or capability is added. The existing basis remains the audit/receipt identity. Its claim-event `version` is a separate namespace from PJ-05 commercial-event versions; consumers must retain the command family and `schedule_version`.
+
+`GET /api/v1/projects/:id/commercial/claims?basis_id=<uuid>` returns the approved original basis identity/version and exact AUD/excluding-tax control value, current schedule revision/state, ordered milestones, latest retained completion per target, and at most 50 history events. `before_version` continues history; `history_has_more` and `next_before_version` describe only that history window. An unconfigured schedule has version 0 and state NotConfigured. No Finance totals or reservations are inferred. `finance_processing_available` is false until B3 exists.
+
+`POST` to that route uses common operation fields (`operation_id`, `reason`, and the existing synthetic command context), `basis_id`, `expected_version` and one action:
+
+| Action | Additional input | Result |
+| --- | --- | --- |
+| Save | `milestones`: 1–50 ordered `{id,title,trigger,amount}` rows | New Draft schedule revision; exact positive decimal amounts sum to the frozen original control value, excluding separately priced variations. IDs are unique; no floating-point arithmetic. Refused while Submitted or after any completion evidence. |
+| Submit | None | Draft/Returned → Submitted; retains the exact schedule. |
+| Approve / Return | None | Submitted → Approved/Returned. Reviewer differs from every schedule author/submitter; existing commercial review duty applies. |
+| RecordEvidence | `completion`: kind Milestone/Variation, `target_id`, `target_version`, exact `document_id`, `revision_id`, `review_id`, `document_version`, `occurred_at`, `explanation` | Requires Approved schedule. Milestone targets name its exact schedule revision; variations name their exact approved commercial event. Server freezes the amount and document content hash. A later event for the same target corrects its evidence without creating another entitlement. |
+
+All new commands require an Active project, the current original commercial source, current commercial read plus prepare/review authority, and the same native source permissions as PJ-05. Preparers must be the current coordinator or recorded basis owner. Documents must be in the same company/customer and matching site or customer-wide scope, independently Reviewed, current, and without unresolved or later findings. Future completion dates, foreign targets, stale versions and changed source content are refused. Milestone triggers and evidence explanations are staff assertions supported by exact retained documents, not automated confirmation of physical completion.
+
+Completion evidence alone creates no invoice, claim, hold, outbox communication or accounting entry. The ordinary audit/receipt outbox records the local command. `eligible_for_claim` identifies current source/evidence eligibility only, not Finance approval, available allocation or an issued claim. Negative/zero variation claims need the separate correction policy; the original signed commercial records remain unchanged.
+
+Historical reads and original-operation recovery recheck current permissions before exposing any data. New source drift holds current eligibility; it never overwrites the original receipt. Losing access to required completion evidence fails the claim read closed, rather than returning a misleading complete total. Command and receipt recovery work after project closure and source supersession under retained authority. The workspace lock serialises writers and keeps the source/permission/read snapshot consistent. Immutable-event and deferred audit/receipt/outbox database guards provide transaction rollback for incomplete writes.
+
+The native PJ-05 page is unchanged in this backend slice. UI controls, B3 entitlement holds/processing and B4 non-billable enforcement are not supplied by this API.
+
 ## Recovery, stale evidence and privacy
 
 - The identical accepted operation recovers its original result after later workflow/source changes, provided the actor retains original-command and source read authority. Check authorisation before returning the receipt; do not rerun current eligibility as though it were a new action.

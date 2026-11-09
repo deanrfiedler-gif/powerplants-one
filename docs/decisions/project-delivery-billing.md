@@ -111,6 +111,16 @@ Each increment is its own pull request. Increments that change a migration or a 
 | B3 | `ProjectClaim` Finance handoff source kind, entitlement holds under the existing allocation lifecycle (R2), ERP evidence and the project's claim measures (migration) | B2 |
 | B4 | R3 rule for project-linked work orders, enforced at submit, approval and begin processing; TS-01 updated to raise field work from the project and to claim M1–M4 and V-01 | B1, B3 |
 
+## B2 backend implementation choices — 10 November 2026
+
+[DECIDED by Codex] Dean instructed proceeding with the backend recommendation. [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the B2 API and persistence slice. These implementation choices are agent decisions, not owner design or business acceptance.
+
+- **Basis revision representation.** PJ-05 preserves one immutable approved original basis and prohibits replacing it. Rather than change that economic/source contract, B2 adds an append-only claim-schedule extension keyed by that basis. The exact basis plus `schedule_version` identifies the revised payment terms. Saving a successor schedule requires independent resubmission/review; original basis amounts and sources stay unchanged. Reversing this choice requires a separately specified full commercial-basis successor model.
+- **In-use schedules.** A successor may be saved before any completion evidence exists. Once evidence exists, schedule replacement is held until a reconciliation/correction policy protects the entitlements that B3 will allocate. Old events remain readable. The alternative of replacing an in-use schedule would risk duplicate entitlement identities.
+- **Evidence source.** This first slice binds exact independently reviewed native Library document revisions, their review IDs and content hashes, with an occurrence timestamp and a preparer's explanation. The source can contain acceptance, delivery or commissioning evidence. B2 does not assert that free text or a document's presence proves native milestone completion. Dedicated acceptance-stage/commissioning selectors can extend the same contract later.
+- **Signed variations.** Positive independently approved variation amounts can be evidenced as claimable lines, separately from milestones. Zero/negative adjustments stay in commercial history and are held from this first claimable projection pending the correction/credit policy already left open by R2. No credit or reversal is invented.
+- **Delivery boundary.** This PR supplies backend commands, read/history API and proofs. PJ-05 exists, but claim-schedule controls have not been added to its accepted page. B3 processing, B4 billability, M2/C1, rendered end-to-end proof and TS-01 acceptance remain distinct follow-ups.
+
 ## Still open
 
 - Real milestone schedules come from each reviewed contract; this record sets none.
