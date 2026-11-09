@@ -402,7 +402,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // No new users or invited-tester duties; no sender, integration, existing reference or evidence
   // changes. Generic runtime table grants cover the new records. Hosted users remain denied
   // unless a separate authority decision grants this duty; no capability is added to additions.
-  if (latestMigrationVersion !== 124) throw Error("Review the existing-demo upgrade for this release.");
+  // 0125 adds an empty append-only claim schedule ledger on existing commercial bases.
+  // No seed, identity, grant, external effect or historical evidence changes.
+  if (latestMigrationVersion !== 125) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({
