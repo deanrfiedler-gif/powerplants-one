@@ -2,14 +2,14 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated); named version "PPO - Sales module (accepted)" saved by Dean on 9 November 2026 before N1–N4 were integrated, so a further named version is needed to pin them; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit and section 11 what was drawn after Dean accepted the audit's recommended order.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, and section 12 the acceptance of N1–N4 and the named version.
 
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
@@ -266,3 +266,32 @@ Counts: the accepted set is now 60 sheets (the original 36 plus 24) and there ar
 Verification: every new or changed sheet was rendered and inspected; a structural pass over all 64 sheets found no child outside its frame, no wrapped register cell and Roboto as the only font family.
 
 Limits: tablet and phone layouts exist for four pages (Deals list, Deal record, Sales Pulse, Leads), not for every page; the phone header and tab bar are derived here and should be replaced by the accepted phone components when those are published; N1–N4 await a separate decision; the per-route page-guidance updates still follow in their own change.
+
+## 12. N1–N4 accepted and the named version — 9 November 2026
+
+Dean answered: "Draw N1–N4 as accepted. I have saved the named version as \"PPO - Sales module (accepted)\". If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The four items were integrated into the accepted sheets rather than kept as a proposal section, and the counts they depend on were reconciled across every page that states them.
+
+### 12.1 What changed in the file
+
+| Item | Integrated as |
+|---|---|
+| N1 Catch me up | A collapsed bar under the view tabs of the Deal record (R01, R02, R03) and the Lead record (L02), and in the Email reading pane header (M01): sparkle, "Catch me up", what it summarises, and Show. The open state is R04 `69:15444` in the Deal record section (the former N01 sheet, moved). The summary is grounded in the record's own activities, emails, brief and quotation; the suggested next step states its rule; nothing is saved until the person acts; it never writes to the record |
+| N2 Focus for today | A compact one-row card at the top of Sales Pulse (P01) and its clones (X10, X13, S05): three actions ranked by rule (overdue first, then close date passed, then no next activity) with "why this order". Tablet TB03 carries a two-row version; phone PH03 a sideways-scrolling card row |
+| N3 Health signals | Explainable chips on every board card of D04 (contact age, next activity, quotation state, overdue, no next, moved 3×); words, never a score or probability |
+| N4 Needs attention view | D08 `72:16631`, built from the Deals list with the Needs attention filter active: grouped by rule in severity order (overdue next action, close date passed, no next activity, moved 3 or more times), each group stating its rule and count (including "0 deals" for close date passed), the signal detail in words and the fix beside each row |
+
+The "Proposals · N1–N3" section was removed once empty. The accepted set is 62 sheets in nine sections; there are no proposal sheets.
+
+### 12.2 Counts reconciled (C6)
+
+The deal-attention rules now give the same answer on every page, as at Thursday 5 November 2026, 09:00: overdue next action 1 (Mallee Fresh Produce, 3 days), close date passed 0, no next activity 1 (Coastal Herbs, A$54,800), moved 3 or more times 1 (Hillcrest Tomatoes, +42 days), so 3 deals need attention. Pipeline insights (IN01) now reads Planned next activity 37 of 38, No next activity 1, Overdue next action 1, Close date passed 0, and its No next action card lists Coastal Herbs only; the Hunter Hydro row was removed because Hunter Hydro is a lead on Leads and a won deal on Won-deal receiving. The Filters panel (X07) counts read 1, 1 and 0. Sales Pulse (P01 and its clones, TB03, PH03) replaces the "Deals without a next step" tile with "Deals needing attention · 3 deals · no next step 1 · overdue 1 · moved 3 times 1", its Deal attention section shows Coastal Herbs and Mallee Fresh Produce with "3 in your scope · first 2 shown" (the accepted D19 wording), and the Deals "Needs attention 3" chip is unchanged.
+
+### 12.3 Named version
+
+Dean saved the named version "PPO - Sales module (accepted)" on 9 November 2026. It was saved before N1–N4 were integrated and before the C6 reconciliation, so under [Build from the named Figma version](figma-named-version-build-handoff.md) rule 5 it does not pin this state. Recommended: save a further named version, "PPO - Sales module (accepted) · N1–N4", and record it here when saved. A build that starts from the first version builds the 60 sheets as they were; the N1–N4 additions and the reconciled counts need the second.
+
+### 12.4 Verification and limits
+
+Renders of D04, D08, P01, R01, L02, M01, TB03, PH03, IN01 and X07 were inspected after the change. A structural pass over all 62 sheets found no child outside its frame, no wrapped register cell and Roboto as the only font family. The header, index and audit cards in the file carry the new counts and node IDs.
+
+Limits: the Catch me up bar is not drawn on the tablet or phone record variants; the Focus for today ranking is deterministic as drawn and the AI ranking named in N2 is a later step; the health-signal thresholds (for example "lead goes cold at 7 days") are synthetic wording, not adopted rules; the per-route page-guidance updates still follow in their own change.
