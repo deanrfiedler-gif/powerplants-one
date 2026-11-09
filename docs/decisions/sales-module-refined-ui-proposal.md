@@ -2,14 +2,14 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit and section 11 what was drawn after Dean accepted the audit's recommended order.
 
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
@@ -114,7 +114,7 @@ Each item was for Dean's decision. He accepted them all as recommended on 9 Nove
 
 ## 6. Verification
 
-Every sheet was rendered and inspected after each build or repair. A structural pass over all 34 sheets found no child outside its 1440 × 900 frame, no wrapped text inside a register cell, no duplicate sheet labels and Roboto as the only font family (the brand wordmark mixes Roboto weights). Overflows found in review were corrected before this record: group totals moved into the scroll band, long tile labels, check labels and stepper notes shortened, the REP-04 and Aftercare column orders adjusted, and the dialog scrim corrected from an opaque fill to a 32 % paint.
+Every sheet was rendered and inspected after each build or repair. A structural pass over all 36 sheets found no child outside its 1440 × 900 frame, no wrapped text inside a register cell, no duplicate sheet labels and Roboto as the only font family (the brand wordmark mixes Roboto weights). Overflows found in review were corrected before this record: group totals moved into the scroll band, long tile labels, check labels and stepper notes shortened, the REP-04 and Aftercare column orders adjusted, and the dialog scrim corrected from an opaque fill to a 32 % paint.
 
 Limits: this is a visual proposal. No prototype links, phone or tablet variants, keyboard order, contrast measurement across every pairing, screen-reader behaviour or application comparison were done. Repository check run for this change: `python3 scripts/build_status.py --check`.
 
@@ -241,3 +241,28 @@ Rules-based logic first; AI only where it adds value, always grounded in record 
 ### 10.7 Recommended order
 
 Draw R11 with P1 first (every sheet benefits), then R1 to R3, G1, G4 and G10, then G3 and G6, R9, and only then G11. N1 to N3 can be drawn as a proposal once the rule-based signals in R2 exist, because they rest on the same data.
+
+## 11. Drawn after the acceptance — 9 November 2026
+
+Dean answered "Accept the recommended order and draw them". Everything in section 10.7 was drawn the same day, in that order, in the same file. Node IDs are the new sheets' frames.
+
+| Item | What was drawn |
+|---|---|
+| R11 + P1 | On every sheet: page sub-lines cut to one clause with an "About this page" link (12 pages), 19 register footers reduced to the count and the as-at time, 39 texts freed of decision-ID brackets, record-header and bar clauses trimmed |
+| R1 | A 3 px attention marker on the rows the Needs attention count refers to (red for overdue, amber for the other rules) on D01, D02, D03, D07, L01 and the dialog sheets that show those rows; not on the archive, handover or aftercare registers |
+| R2 | A rule-based signals strip under the header of the Deal record (R01, R02 and the dialog clones), the Lead record and Customer 360: last contact, next activity, open tasks, emails, quotation, days in stage against the median; words, no score |
+| R3 | Quick actions (Plan activity, Log call, Email) under the preview-drawer header on D03 and the readiness summary shown as a four-item check list |
+| G1 | R03 Deal record · Scope & sites `60:10146`: scope summary, six scope lines with kind, quantity, site or area and basis, sites and areas in or out of scope, existing equipment read from Sites, and the rule that the Sales brief carries the lines as reported context |
+| G4 | X10 Record outcome `60:10914`, X11 Plan activity `60:11235`, X12 Reschedule `60:11678`, X13 Log call `60:12152`, all in this shell and all saving on the original activity |
+| G10 | States section `61:11501`: S01 Leads true-empty `61:11502`, S02 Deals could not load `61:12297` (counts read a dash), S03 Deal record denied or not found `61:13228` (reads as not found), S04 newer saved version `61:13433`, S05 Pulse partial source `63:14018`, S06 Tasks "You're up to date" `61:14464` |
+| G3 | X14 Resolve customer context `62:12848` (matches with reasons, nothing merged), X15 Disqualify or park a lead `62:13180` |
+| G6 | X16 Prepare handover `62:13516` (destination, items from the accepted quotation, evidence, dates, prerequisites; Submit unavailable while evidence is missing), X17 Reopen deal `62:14191` |
+| R9 | X03 Record Won shortened from 825 to 638 px by collapsing the unselected evidence types into a change-type line |
+| G11 | Tablet and phone section `63:14522` with derived chrome (tablet top bar `64:14189` from a detached copy of the accepted bar with zones 280/360/384; phone header `64:14190`; Sales tab bar `64:14209` from `salesPhoneBar`: My Work, Deals, Activities, Contacts, More; status bar `64:14242`). Tablet 1024 × 768: TB01 Deals list `65:14070`, TB02 Deal record `66:14793`, TB03 Sales Pulse `65:15209`, TB04 Leads `65:14651`. Phone 390 × 844: PH01 Deals list `67:15013`, PH02 Deal record `67:15797`, PH03 Sales Pulse `67:15640`, PH04 Leads `67:15461`; PH05 Deals list at 320 `67:15237` |
+| N1–N3 | Drawn as **proposals**, not accepted, in their own section `69:15443`: N01 "Catch me up" summary on the Deal record `69:15444`, N02 "Focus for today" on Pulse `69:15988`, N03 health signals on board cards `69:16429`, N04 the Needs attention list view `69:16971` |
+
+Counts: the accepted set is now 60 sheets (the original 36 plus 24) and there are 4 proposal sheets. Section 3 of this record said 34 sheets; its table has always held 36 (the nine dialog sheets were miscounted), and the figure is corrected here rather than in the text above.
+
+Verification: every new or changed sheet was rendered and inspected; a structural pass over all 64 sheets found no child outside its frame, no wrapped register cell and Roboto as the only font family.
+
+Limits: tablet and phone layouts exist for four pages (Deals list, Deal record, Sales Pulse, Leads), not for every page; the phone header and tab bar are derived here and should be replaced by the accepted phone components when those are published; N1–N4 await a separate decision; the per-route page-guidance updates still follow in their own change.
