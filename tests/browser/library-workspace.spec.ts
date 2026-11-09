@@ -170,10 +170,18 @@ test("DK-UI uncertain review retries the same operation and denied refresh clear
     path: `${capture}/${test.info().project.name}/uncertain-review.png`,
     fullPage: true,
   });
+  // Saving automatically refreshes the record. Do not install the denied manual
+  // refresh response until that read has consumed its successful fixture: merely
+  // waiting for the dialog to close races LibraryRecord.onSaved's refresh().
+  const savedRecord = page.waitForResponse(response =>
+    response.url().endsWith(`/api/v1/document-library/${libraryItem.document.id}`) &&
+    response.request().method() === "GET" && response.ok(),
+  );
   await dialog
     .getByRole("button", { name: "Retry original operation" })
     .click();
   await expect(dialog).not.toBeVisible();
+  await (await savedRecord).finished();
   expect(bodies[0]).toEqual(bodies[1]);
   await page.route(
     `**/api/v1/document-library/${libraryItem.document.id}`,

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "refined-s1-top-bar",
+          "label": "Refined S1 top bar opt-in",
+          "description": "Actual header at 768/780/834/960/1024/1199/1200/1280/1366/1440/1920 with both rail states; legacy default and 390 px phone retained. Tests: tests/ui/desktop-shell.spec.ts and tests/browser/shell-refined.spec.ts; browser execution pending."
+        },
+        {
+          "id": "refined-s1-menus",
+          "label": "Refined S1 tenant, New and account",
+          "description": "Existing company choices with dirty-work cancellation/persistence, authorised creation letters, keyboard/focus/history, identity preference isolation and unavailable sign-in metadata. Browser execution pending."
+        }
+      ],
+      "dependencies": [
+        "src/components/refined-preference.tsx",
+        "src/components/refined-shell-menu.tsx",
+        "src/components/refined-tenant-switcher.tsx",
+        "src/shell/refined.ts",
+        "src/shell/refined-actions.ts",
+        "src/shell/layer-keyboard.ts",
+        "src/app/styles/shell-refined-tokens.css",
+        "src/app/styles/shell-refined.css",
+        "docs/decisions/shell-refined-s1-build.md"
+      ],
+      "used_on": [
+        "system:shell"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-refined-s1-review",
+          "expected": "Refined S1 geometry, interactions, legacy/phone isolation and source adaptation review on the exact PR head.",
+          "actual": "Code and automated test cases supplied; local Chrome missing. Claude reviewed ef875edf0; confirmation of twelve consolidated fixes/answers is pending. No rendered capture, device check or owner acceptance is claimed. Existing data omits named-tenant mapping and sign-in metadata; unavailable entries are hidden.",
+          "action": "Run affected browser/UI suites and compare captures against A/G/I/N/T and responsive bars. Obtain Claude confirmation of the twelve consolidated findings on the revised head; Dean owns the proposed breadcrumb departure, acceptance and merge. Continue S2 only after merge.",
+          "priority": "High",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    },
+    "foundations": {
+      "states": [
+        {
+          "id": "refined-s1-colours",
+          "label": "PPO colour variables",
+          "description": "66 exact design variables: 30 core, 12 person, 24 workspace accents. Semantic application pairings have contrast tests; unused accents are not asserted as text pairings."
+        }
+      ],
+      "dependencies": [
+        "src/app/styles/shell-refined-tokens.css"
+      ],
+      "used_on": [
+        "system:shell"
+      ],
+      "gaps": [
+        {
+          "id": "foundations-refined-s1-review",
+          "expected": "Accepted PPO colour names and values with appropriate semantic use in the running header.",
+          "actual": "All 66 read from the design and mapped; rendered comparison pending. Legacy token consumers remain unchanged.",
+          "action": "Review the exact header captures when supported Chrome is available; retain existing review fingerprints.",
+          "priority": "Medium",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

@@ -43,15 +43,15 @@ The proposed top bar with centred search (1046:259953) and breadcrumb (1037:103)
 
 ## Desktop
 
-Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service.
+Review the real global search, workspace switcher, rail, More and utility controls around this catalogue. Shell access can be unavailable without a running identity/database service. The opt-in refined S1 header is 48 px at desktop widths from 768 px, with 496/448/496 zones at 1440, a tenant chip, workspace-aware New and account menu. The legacy shell remains the default; exact responsive measurements and source differences are in the shell master and S1 binding note.
 
 ## Mobile
 
-Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application.
+Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. The refined opt-in does not replace the accepted header below 768 px.
 
 ## Keyboard and accessibility
 
-Check tab order, skip link, More dialog, Escape and focus return in the real host.
+Check tab order, skip link, More dialog, Escape and focus return in the real host. Refined bar utilities use one Tab stop and Left/Right/Home/End; popovers use Up/Down/Home/End, typing, Escape and trigger focus return without history entries. New letters open permitted existing create forms, with unsaved-work review.
 
 ## States and interaction
 

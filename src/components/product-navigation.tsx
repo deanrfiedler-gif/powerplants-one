@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
@@ -42,8 +43,11 @@ const subscribe = (changed: () => void) => {
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
-function PageHierarchy({ crumbs, location }: { crumbs: Crumb[]; location: string }) {
+const subscribeHierarchyMount = () => () => {};
+const hierarchyServerMount = () => null;
+function PageHierarchy({ crumbs, location, separate = false }: { crumbs: Crumb[]; location: string; separate?: boolean }) {
   const panel = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  const mount = useSyncExternalStore(subscribeHierarchyMount, () => document.querySelector(".app-frame"), hierarchyServerMount);
   const [open, setOpen] = useState(false);
   useEffect(() => { panel.current?.hidePopover(); }, [location]);
   useEffect(() => {
@@ -51,16 +55,21 @@ function PageHierarchy({ crumbs, location }: { crumbs: Crumb[]; location: string
     window.addEventListener(shellPanelEvent, close);
     return () => window.removeEventListener(shellPanelEvent, close);
   }, []);
-  return <>
-    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
-      openShellPanel("hierarchy"); panel.current?.togglePopover();
-    }}><ProductIcon name="list" /></button>
+  const contents = (
     <div ref={panel} id="page-hierarchy" popover="auto" className="ppo-hierarchy-panel" aria-label="Page hierarchy" onToggle={event => setOpen(event.newState === "open")} onKeyDown={event => {
       if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
     }}>
       <strong>Page hierarchy</strong>
       <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
     </div>
+  );
+  return <>
+    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
+      openShellPanel("hierarchy"); panel.current?.togglePopover();
+    }}><ProductIcon name="list" /></button>
+    {/* The hierarchy is its own list, not a second current page in the breadcrumb
+        band. Keep it in the frame so its rail positioning variables still apply. */}
+    {separate ? mount && createPortal(contents, mount) : contents}
   </>;
 }
 export function ProductNavigation() {
@@ -68,11 +77,13 @@ export function ProductNavigation() {
 }
 function NavigationWithLocation() {
   const path = usePathname(), query = useSearchParams().toString();
-  const wide = useSyncExternalStore(
+  const shell = useShell();
+  const legacyWide = useSyncExternalStore(
     subscribe,
     () => window.matchMedia("(min-width: 781px)").matches,
     () => true,
   );
+  const wide = shell.refinedDesktop || legacyWide;
   return (
     <>
       <ProductNavigationView key={`${path}:${wide}`} path={path} wide={wide} locationQuery={query} />
@@ -495,7 +506,8 @@ export function ProductHeader() {
   const path = usePathname(),
     page = pageForPath(path),
     shell = useShell();
-  const wide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
+  const legacyWide = useSyncExternalStore(subscribe, () => window.matchMedia("(min-width: 781px)").matches, () => true);
+  const wide = shell.refinedDesktop || legacyWide;
   const phoneConfig = usePhoneHeaderConfig();
   // P4: a dot on the phone menu shows unread notifications, read on phones only (the bell has moved into the menu). The
   // inbox read is not cheap (it projects notices and reads each source activity), so it is not made on every page load:
@@ -596,12 +608,21 @@ export function ProductHeader() {
         {/* R9: three zones on desktop. This start zone and the end zone are equal in width, so the
             global search between them sits at the top bar's centre on every page (desktop-shell.css). */}
         <div className="ppo-header-start">
+          {shell.refinedDesktop && <>
+            <Link href="/" className="ppo-refined-brand" aria-label="Powerplants One home" data-tooltip="Home · My Work">
+              <Image src="/brand/powerplants-logo-green-white.png" alt="" width={32} height={32} unoptimized className="brand-logo" />
+              <span>Powerplants <span>One</span></span>
+            </Link>
+            <div id="header-tenant" />
+          </>}
+          <div id="header-menu" className="ppo-header-menu-slot" />
+          <div className="ppo-legacy-heading" hidden={shell.refinedDesktop}>
           {/* A workspace with a secondary menu mounts its icon-only trigger here. Empty otherwise, and
               the empty slot reserves no width (desktop-shell.css). */}
-          <div id="header-menu" className="ppo-header-menu-slot" />
+
           {crumbs.length ? (
             <nav className="product-heading" aria-label="Breadcrumb">
-              {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
+              {hierarchy && !shell.refinedDesktop && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
               <ol className="ppo-crumbs" title={trail.map((c) => c.label).join(" / ")}>
                 {crumbs.map((crumb, index) => (
                   <li key={crumb.key} data-crumb={crumb.kind}>
@@ -627,6 +648,7 @@ export function ProductHeader() {
             </div>
           )}
         </div>
+        </div>
         {/* The controls stay mounted across routes and reset themselves, because the account mount
             in the end zone must never be replaced (header-content.tsx). */}
         <ShellControls
@@ -641,6 +663,18 @@ export function ProductHeader() {
           </div>
         </ShellControls>
       </header>
+      {shell.refinedDesktop && <div className="ppo-refined-location">
+        <nav className="product-heading" aria-label="Breadcrumb">
+          {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} separate />}
+          <ol className="ppo-crumbs" title={trail.map((crumb) => crumb.label).join(" / ")}>
+            {crumbs.map((crumb, index) => <li key={crumb.key} data-crumb={crumb.kind}>
+              {index > 0 && <span className="ppo-crumb-separator" aria-hidden="true"> / </span>}
+              {crumb.href ? <Link className="ppo-crumb" href={crumb.href}>{crumb.label}</Link> :
+                <span className={index === crumbs.length - 1 ? "ppo-crumb ppo-crumb-current" : "ppo-crumb"} aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}
+            </li>)}
+          </ol>
+        </nav>
+      </div>}
       {(!!tabs.length || reserveTabs) && moduleWorkspaceForPath(path)?.navigation !== "workspace" && (
         <nav
           className={`module-navigation${page?.workspace === "sales" ? " ppo-sales-navigation" : ""}`}
