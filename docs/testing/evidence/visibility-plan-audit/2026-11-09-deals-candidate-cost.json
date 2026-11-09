@@ -1,0 +1,1734 @@
+{
+  "baseline": "c1dcdf8ba4d661542c8b7a454fb75b67c1c3d6be",
+  "date": "2026-11-09",
+  "postgresql": "16.15",
+  "node": "24.21.0",
+  "samples": [
+    {
+      "size": 30,
+      "bound": 300,
+      "statisticsBefore": [
+        {
+          "relname": "activities",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "32",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "activity_links",
+          "n_live_tup": "83",
+          "n_mod_since_analyze": "83",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "assets",
+          "n_live_tup": "30",
+          "n_mod_since_analyze": "30",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "facilities",
+          "n_live_tup": "35",
+          "n_mod_since_analyze": "35",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunities",
+          "n_live_tup": "25",
+          "n_mod_since_analyze": "25",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunity_events",
+          "n_live_tup": "25",
+          "n_mod_since_analyze": "25",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "organisations",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "58",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "people",
+          "n_live_tup": "28",
+          "n_mod_since_analyze": "28",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "sites",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "32",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        }
+      ],
+      "statisticsAfter": [
+        {
+          "relname": "activities",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "32",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "activity_links",
+          "n_live_tup": "83",
+          "n_mod_since_analyze": "83",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "assets",
+          "n_live_tup": "30",
+          "n_mod_since_analyze": "30",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "facilities",
+          "n_live_tup": "35",
+          "n_mod_since_analyze": "35",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunities",
+          "n_live_tup": "25",
+          "n_mod_since_analyze": "25",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunity_events",
+          "n_live_tup": "25",
+          "n_mod_since_analyze": "25",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "organisations",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "58",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "people",
+          "n_live_tup": "28",
+          "n_mod_since_analyze": "28",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "sites",
+          "n_live_tup": "32",
+          "n_mod_since_analyze": "32",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        }
+      ],
+      "counts": {
+        "organisations": 36,
+        "people": 32,
+        "sites": 36,
+        "facilities": 40,
+        "assets": 35,
+        "opportunities": 30,
+        "projects": 30,
+        "project_tasks": 30,
+        "conversation_threads": 30
+      },
+      "full_local_evidence_sha256": "e31cce0693d7ffebfa1f81084708f025e1ead4c2daeae5eb110561467986557b",
+      "before": {
+        "sql_sha256": "ac655d798da30779a6439594475e53c15d3a68b981358744330179a415776447",
+        "jit_setting": "on",
+        "execution_ms": 46.712,
+        "planning_ms": 7.878,
+        "max_loops": 1110,
+        "shared_hit_blocks": 72375,
+        "has_jit": false,
+        "visible_rows": 30,
+        "maximum_nodes": [
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 3",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_1",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_1",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 4",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_2",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_2",
+            "Actual Rows": 1,
+            "Actual Loops": 1110
+          }
+        ]
+      },
+      "after": {
+        "sql_sha256": "a671ff356832090d954374bed7eedfc382b5149eaf4a4b8d424a2f664d8b707c",
+        "jit_setting": "on",
+        "execution_ms": 6.072,
+        "planning_ms": 5.828,
+        "max_loops": 30,
+        "shared_hit_blocks": 4196,
+        "has_jit": false,
+        "visible_rows": 30,
+        "maximum_nodes": [
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan",
+            "Node Type": "Bitmap Heap Scan",
+            "Relation Name": "companies",
+            "Alias": "co",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan/Bitmap Index Scan",
+            "Node Type": "Bitmap Index Scan",
+            "Actual Rows": 2,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan",
+            "Node Type": "Bitmap Heap Scan",
+            "Relation Name": "users",
+            "Alias": "u",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan/Bitmap Index Scan",
+            "Node Type": "Bitmap Index Scan",
+            "Actual Rows": 34,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "organisations",
+            "Alias": "r",
+            "Actual Rows": 19,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "sites",
+            "Alias": "s",
+            "Actual Rows": 18,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "people",
+            "Alias": "pe",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "activities",
+            "Alias": "a",
+            "Actual Rows": 18,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 2",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 3",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_2",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 4",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_2",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_3",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 10",
+            "Relation Name": "sites",
+            "Alias": "cs",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 9",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_5",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_6",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 8",
+            "Relation Name": "organisations",
+            "Alias": "crm_org",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 5",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_3",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_4",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 15",
+            "Relation Name": "people",
+            "Alias": "cp",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 12",
+            "Relation Name": "person_company_contexts",
+            "Alias": "pc",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 11",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_6",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_7",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 17",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_8",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_9",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 18",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_9",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_10",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 19",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_10",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_11",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 80",
+            "Relation Name": "activity_links",
+            "Alias": "al",
+            "Actual Rows": 0,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 26",
+            "Relation Name": "sites",
+            "Alias": "ls",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 25",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_14",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_15",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 24",
+            "Relation Name": "organisations",
+            "Alias": "lo",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 21",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_12",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_13",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68",
+            "Node Type": "Index Scan",
+            "Subplan Name": "SubPlan 68",
+            "Relation Name": "opportunities",
+            "Alias": "co_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 54",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_30",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_31",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 55",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_31",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_32",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 56",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_32",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_33",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 62",
+            "Relation Name": "sites",
+            "Alias": "cs_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 61",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_35",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_36",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 60",
+            "Relation Name": "organisations",
+            "Alias": "crm_org_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 57",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_33",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_34",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 67",
+            "Relation Name": "people",
+            "Alias": "cp_1",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 64",
+            "Relation Name": "person_company_contexts",
+            "Alias": "pc_2",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 63",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_36",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_37",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "au",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 82",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_43",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_44",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 83",
+            "Node Type": "Aggregate",
+            "Subplan Name": "SubPlan 83",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 83/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "opportunity_events",
+            "Alias": "e",
+            "Actual Rows": 1,
+            "Actual Loops": 30
+          }
+        ]
+      }
+    },
+    {
+      "size": 45,
+      "bound": 450,
+      "statisticsBefore": [
+        {
+          "relname": "activities",
+          "n_live_tup": "47",
+          "n_mod_since_analyze": "47",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "activity_links",
+          "n_live_tup": "128",
+          "n_mod_since_analyze": "128",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "assets",
+          "n_live_tup": "45",
+          "n_mod_since_analyze": "45",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "facilities",
+          "n_live_tup": "50",
+          "n_mod_since_analyze": "50",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunities",
+          "n_live_tup": "40",
+          "n_mod_since_analyze": "40",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunity_events",
+          "n_live_tup": "40",
+          "n_mod_since_analyze": "40",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "organisations",
+          "n_live_tup": "47",
+          "n_mod_since_analyze": "87",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "people",
+          "n_live_tup": "43",
+          "n_mod_since_analyze": "43",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "sites",
+          "n_live_tup": "46",
+          "n_mod_since_analyze": "46",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        }
+      ],
+      "statisticsAfter": [
+        {
+          "relname": "activities",
+          "n_live_tup": "52",
+          "n_mod_since_analyze": "52",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "activity_links",
+          "n_live_tup": "143",
+          "n_mod_since_analyze": "143",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "assets",
+          "n_live_tup": "50",
+          "n_mod_since_analyze": "50",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "facilities",
+          "n_live_tup": "55",
+          "n_mod_since_analyze": "55",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunities",
+          "n_live_tup": "45",
+          "n_mod_since_analyze": "45",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "opportunity_events",
+          "n_live_tup": "45",
+          "n_mod_since_analyze": "45",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "organisations",
+          "n_live_tup": "51",
+          "n_mod_since_analyze": "96",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "people",
+          "n_live_tup": "47",
+          "n_mod_since_analyze": "47",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        },
+        {
+          "relname": "sites",
+          "n_live_tup": "51",
+          "n_mod_since_analyze": "51",
+          "last_analyze": null,
+          "last_autoanalyze": null,
+          "analyze_count": "0",
+          "autoanalyze_count": "0"
+        }
+      ],
+      "counts": {
+        "organisations": 51,
+        "people": 47,
+        "sites": 51,
+        "facilities": 55,
+        "assets": 50,
+        "opportunities": 45,
+        "projects": 45,
+        "project_tasks": 45,
+        "conversation_threads": 45
+      },
+      "full_local_evidence_sha256": "ff7e0c233600e94c988e72e59373478ee2fc27721394f4288bed289fef35aa80",
+      "before": {
+        "sql_sha256": "ac655d798da30779a6439594475e53c15d3a68b981358744330179a415776447",
+        "jit_setting": "on",
+        "execution_ms": 120.115,
+        "planning_ms": 9.476,
+        "max_loops": 2340,
+        "shared_hit_blocks": 162102,
+        "has_jit": false,
+        "visible_rows": 45,
+        "maximum_nodes": [
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 3",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_1",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_1",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 4",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_2",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Nested Loop/Nested Loop/Nested Loop/Merge Join/Nested Loop/Nested Loop/Index Scan/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_2",
+            "Actual Rows": 1,
+            "Actual Loops": 2340
+          }
+        ]
+      },
+      "after": {
+        "sql_sha256": "a671ff356832090d954374bed7eedfc382b5149eaf4a4b8d424a2f664d8b707c",
+        "jit_setting": "on",
+        "execution_ms": 11.307,
+        "planning_ms": 9.59,
+        "max_loops": 45,
+        "shared_hit_blocks": 7840,
+        "has_jit": false,
+        "visible_rows": 45,
+        "maximum_nodes": [
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan",
+            "Node Type": "Bitmap Heap Scan",
+            "Relation Name": "companies",
+            "Alias": "co",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan/Bitmap Index Scan",
+            "Node Type": "Bitmap Index Scan",
+            "Actual Rows": 2,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan",
+            "Node Type": "Bitmap Heap Scan",
+            "Relation Name": "users",
+            "Alias": "u",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Nested Loop/Bitmap Heap Scan/Bitmap Index Scan",
+            "Node Type": "Bitmap Index Scan",
+            "Actual Rows": 34,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "organisations",
+            "Alias": "r",
+            "Actual Rows": 26,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "sites",
+            "Alias": "s",
+            "Actual Rows": 25,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Nested Loop/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "people",
+            "Alias": "pe",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE candidates/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "activities",
+            "Alias": "a",
+            "Actual Rows": 26,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 2",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 2/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 3",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 3/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_2",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 4",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_2",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 4/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_3",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 10",
+            "Relation Name": "sites",
+            "Alias": "cs",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 9",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_5",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 10/SubPlan 9/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_6",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 8",
+            "Relation Name": "organisations",
+            "Alias": "crm_org",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 5",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_3",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 8/SubPlan 5/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_4",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 15",
+            "Relation Name": "people",
+            "Alias": "cp",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 12",
+            "Relation Name": "person_company_contexts",
+            "Alias": "pc",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 11",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_6",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_opportunities/SubPlan 15/SubPlan 12/SubPlan 11/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_7",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 17",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_8",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 17/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_9",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 18",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_9",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 18/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_10",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 19",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_10",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 19/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_11",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 80",
+            "Relation Name": "activity_links",
+            "Alias": "al",
+            "Actual Rows": 0,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 26",
+            "Relation Name": "sites",
+            "Alias": "ls",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 25",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_14",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 26/SubPlan 25/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_15",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 24",
+            "Relation Name": "organisations",
+            "Alias": "lo",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 21",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_12",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 24/SubPlan 21/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_13",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68",
+            "Node Type": "Index Scan",
+            "Subplan Name": "SubPlan 68",
+            "Relation Name": "opportunities",
+            "Alias": "co_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 54",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_30",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 54/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_31",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 55",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_31",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 55/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_32",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 56",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_32",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 56/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_33",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 62",
+            "Relation Name": "sites",
+            "Alias": "cs_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 61",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_35",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 62/SubPlan 61/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_36",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 60",
+            "Relation Name": "organisations",
+            "Alias": "crm_org_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 57",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_33",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 60/SubPlan 57/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_34",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 67",
+            "Relation Name": "people",
+            "Alias": "cp_1",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64",
+            "Node Type": "Index Only Scan",
+            "Subplan Name": "SubPlan 64",
+            "Relation Name": "person_company_contexts",
+            "Alias": "pc_2",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 63",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_36",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/CTE visible_actions/SubPlan 80/SubPlan 68/SubPlan 67/SubPlan 64/SubPlan 63/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_37",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "au",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82",
+            "Node Type": "Nested Loop",
+            "Subplan Name": "SubPlan 82",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "permission_grants",
+            "Alias": "g_43",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 82/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "users",
+            "Alias": "u_44",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 83",
+            "Node Type": "Aggregate",
+            "Subplan Name": "SubPlan 83",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          },
+          {
+            "path": "/Subquery Scan/CTE permitted/SubPlan 83/Index Scan",
+            "Node Type": "Index Scan",
+            "Relation Name": "opportunity_events",
+            "Alias": "e",
+            "Actual Rows": 1,
+            "Actual Loops": 45
+          }
+        ]
+      }
+    }
+  ],
+  "growth": {
+    "before": {
+      "max_loops": 2.108108108108108,
+      "shared_hit_blocks": 2.2397512953367875,
+      "execution_ms": 2.5713949306388075
+    },
+    "after": {
+      "max_loops": 1.5,
+      "shared_hit_blocks": 1.8684461391801717,
+      "execution_ms": 1.8621541501976284
+    }
+  }
+}

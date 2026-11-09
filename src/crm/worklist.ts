@@ -71,24 +71,39 @@ export async function listOpportunities(p: Principal, input: unknown = {}, pipel
   const descending = filters.sort === "Newest";
   const result = (await c.query<{ stamp: string; items: (WorklistItem & { sort_key: string; action_version: number | null })[] }>(
     `WITH permitted AS MATERIALIZED (
-      SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.updated_at,o.version,to_jsonb(o)->>'value_amount' AS value_amount,to_jsonb(o)->>'expected_close_date' AS expected_close_date,(o.owner_id=$2 AND ${scopeSql("o.company_id","o.site_id","crm.opportunity.edit")}) AS can_edit,
-        o.company_id,co.display_name AS company_name,r.display_name AS organisation_name,o.site_id,s.display_name AS site_name,
-        o.primary_person_id,pe.display_name AS contact_name,o.owner_id,u.display_name AS owner_name,a.id AS next_action_id,a.summary AS next_action_summary,a.owner_id AS action_owner_id,au.display_name AS action_owner_name,a.due_at,a.due_needed,a.version AS action_version,
-        CASE WHEN a.id IS NULL THEN 'Unavailable' WHEN a.status NOT IN ('Open','InProgress') THEN 'Needed' WHEN a.due_needed THEN 'DueNeeded' WHEN a.due_at<$10::timestamptz THEN 'Overdue' ELSE 'Upcoming' END AS next_action_state,
-        (SELECT coalesce(jsonb_agg(jsonb_build_object('version',e.opportunity_version,'at',e.created_at,'from_stage',e.from_stage,'to_stage',e.to_stage,'close_date',e.record_snapshot->>'expected_close_date','close_recorded',coalesce(e.record_snapshot ? 'expected_close_date',false)) ORDER BY e.opportunity_version),'[]'::jsonb) FROM ppo.opportunity_events e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id) AS history,
-        ${sortKey} AS sort_key
+      -- Fence identity/context joins before either visibility predicate can be
+      -- multiplied by the small-table join plan. Keep these internal columns
+      -- out of permitted: matching's row_to_json shape is the cursor stamp.
+      WITH candidates AS MATERIALIZED (
+        SELECT o.*,co.display_name AS company_name,r.display_name AS organisation_name,
+          s.display_name AS site_name,pe.display_name AS contact_name,u.display_name AS owner_name,
+          a AS next_action
       FROM ppo.opportunities o JOIN ppo.companies co ON (co.workspace_id,co.id)=(o.workspace_id,o.company_id)
       JOIN ppo.users u ON (u.workspace_id,u.id)=(o.workspace_id,o.owner_id)
       JOIN ppo.organisations r ON (r.workspace_id,r.id)=(o.workspace_id,o.organisation_id)
       LEFT JOIN ppo.sites s ON (s.workspace_id,s.id)=(o.workspace_id,o.site_id)
       LEFT JOIN ppo.people pe ON (pe.workspace_id,pe.id)=(o.workspace_id,o.primary_person_id)
-      LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id) AND ${activityVisibility("a", true, await leadsAvailable(c), await projectsAvailable(c))}
-      LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(a.workspace_id,a.owner_id)
-      WHERE o.workspace_id=$1 AND ${opportunityVisibility()} AND ($13::uuid IS NULL OR o.pipeline_definition_id=$13) AND ($14='All' OR o.close_outcome=$14 OR ($14='Closed' AND o.close_outcome IN ('Won','Lost')))
+      LEFT JOIN ppo.activities a ON (a.workspace_id,a.id)=(o.workspace_id,o.next_activity_id)
+      WHERE o.workspace_id=$1 AND ($13::uuid IS NULL OR o.pipeline_definition_id=$13) AND ($14='All' OR o.close_outcome=$14 OR ($14='Closed' AND o.close_outcome IN ('Won','Lost')))
         AND ($3::uuid IS NULL OR o.company_id=$3) AND ($4::uuid IS NULL OR o.site_id=$4)
         AND position(lower($5) in lower(o.title||' '||o.display_number||' '||r.display_name))>0
         AND ($6::uuid IS NULL OR o.owner_id=$6) AND ($7::text IS NULL OR o.stage_id=$7)
         AND o.created_at<=$10::timestamptz
+      ), visible_opportunities AS MATERIALIZED (
+        SELECT * FROM candidates o WHERE ${opportunityVisibility()}
+      ), visible_actions AS MATERIALIZED (
+        SELECT o.*,CASE WHEN (o.next_action).id IS NOT NULL AND ${activityVisibility("(o.next_action)", true, await leadsAvailable(c), await projectsAvailable(c))}
+          THEN o.next_action END AS visible_action
+        FROM visible_opportunities o
+      )
+      SELECT o.id,o.display_number,o.title,o.stage_id,o.close_outcome,o.stage_entered_at,o.updated_at,o.version,to_jsonb(o)->>'value_amount' AS value_amount,to_jsonb(o)->>'expected_close_date' AS expected_close_date,(o.owner_id=$2 AND ${scopeSql("o.company_id","o.site_id","crm.opportunity.edit")}) AS can_edit,
+        o.company_id,o.company_name,o.organisation_name,o.site_id,o.site_name,
+        o.primary_person_id,o.contact_name,o.owner_id,o.owner_name,(o.visible_action).id AS next_action_id,(o.visible_action).summary AS next_action_summary,(o.visible_action).owner_id AS action_owner_id,au.display_name AS action_owner_name,(o.visible_action).due_at,(o.visible_action).due_needed,(o.visible_action).version AS action_version,
+        CASE WHEN (o.visible_action).id IS NULL THEN 'Unavailable' WHEN (o.visible_action).status NOT IN ('Open','InProgress') THEN 'Needed' WHEN (o.visible_action).due_needed THEN 'DueNeeded' WHEN (o.visible_action).due_at<$10::timestamptz THEN 'Overdue' ELSE 'Upcoming' END AS next_action_state,
+        (SELECT coalesce(jsonb_agg(jsonb_build_object('version',e.opportunity_version,'at',e.created_at,'from_stage',e.from_stage,'to_stage',e.to_stage,'close_date',e.record_snapshot->>'expected_close_date','close_recorded',coalesce(e.record_snapshot ? 'expected_close_date',false)) ORDER BY e.opportunity_version),'[]'::jsonb) FROM ppo.opportunity_events e WHERE e.workspace_id=o.workspace_id AND e.opportunity_id=o.id) AS history,
+        ${sortKey} AS sort_key
+      FROM visible_actions o
+      LEFT JOIN ppo.users au ON (au.workspace_id,au.id)=(o.workspace_id,(o.visible_action).owner_id)
     ), matching AS MATERIALIZED (SELECT * FROM permitted WHERE $8::text IS NULL OR next_action_state=$8),
     stamp AS (SELECT md5(coalesce(string_agg(md5(row_to_json(m)::text),'' ORDER BY id),'')) AS stamp FROM matching m),
     result_window AS (SELECT * FROM matching WHERE $9::uuid IS NULL OR sort_key COLLATE "C" ${descending ? "<" : ">"} $11::text COLLATE "C" OR (sort_key COLLATE "C"=$11::text COLLATE "C" AND id>$9) ORDER BY sort_key COLLATE "C" ${descending ? "DESC" : "ASC"},id LIMIT $12)

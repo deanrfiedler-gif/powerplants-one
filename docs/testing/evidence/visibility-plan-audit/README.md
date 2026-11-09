@@ -317,3 +317,33 @@ These hashes identify local ignored outputs from this execution; rerunning creat
 | `45/conversations.json` | `8a9a472dd013323f6eb4ca88dae29553838372dd14f6e29c10ea95547b42abfa` |
 | `45/estimating-workload.json` | `04749df54b866d19f3c8eb1db25223bf67669702bf9123ebe5848a946272768d` |
 | `growth.json` | `0a9f8b0378e503ded9094a2035ddce1ef43cb4fc800fe715a0079656854e0cc1` |
+
+## Deals candidate fences — 9 November 2026
+
+[PR #880](https://github.com/deanrfiedler-gif/powerplants-one/pull/880) implements the first reader follow-up against main `c1dcdf8ba4d661542c8b7a454fb75b67c1c3d6be`. The [measurement record](2026-11-09-deals-candidate-cost.json) retains counts, before/after statistics, SQL hashes, maximum-node paths and exact growth ratios. PostgreSQL 16.15 and Node 24.21.0; synthetic `ppo_synthetic_test` only.
+
+Inside the existing `permitted` CTE, `candidates` materialises the cheap opportunity/context and next-activity identity joins. `visible_opportunities` materialises the unchanged opportunity predicate, then `visible_actions` checks the unchanged activity predicate against the fenced composite row. Refusal produces a null action, retaining the deal. The action-owner name lookup, per-deal history and `can_edit` run after those fences. Keeping the action-owner lookup after the fence also prevents its index scan being multiplied by the cheap join plan. The final explicit projection preserves matching's columns, names and order and the original `row_to_json` stamp input; membership still precedes the keyset window.
+
+| Native candidates | Maximum loops main → fixed | Shared hits main → fixed | Execution ms main → fixed |
+| --- | ---: | ---: | ---: |
+| 30 | 1,110 → 30 | 72,375 → 4,196 | 46.712 → 6.072 |
+| 45 | 2,340 → 45 | 162,102 → 7,840 | 120.115 → 11.307 |
+| Growth 45/30 | 2.108× → **1.500×** | 2.240× → 1.868× | 2.571× → 1.862× |
+
+Every fixed-plan node, including SubPlans and InitPlans, is below 10× candidates at both volumes (bounds 300 and 450). Each candidate/visibility fence executes once with exactly 30 or 45 rows. The same assertion fails on frozen main, whose maximum remains the activity permission branch (`SubPlan 3`, including `permission_grants g_1` and `users u_1`, with `SubPlan 4` also at the maximum). The fixed maximum is ordinary per-candidate work; the full set of maximum-node paths is in the measurement record. Loop growth is linear at these two points. Shared-hit/time growth is separately reported and is not claimed to be linear; these are single warm EXPLAIN observations, not latency distributions or an asymptotic proof.
+
+The native fixture builder is copied from the audit, with its size passed explicitly. It still creates organisations, people, affiliations, sites, facilities, equipment, opportunities, projects, tasks and conversations through native commands. There are exactly 30/45 deals and the same seed offsets as the audit. The nine audit candidate/supporting tables pass `assertNeverAnalysed` before and after both readers. No `ANALYZE`, planner setting, migration, index, grant, capability, dependency or timeout change is used. Native JIT remains on, but neither plan has a JIT section.
+
+The frozen `tests/helpers/deals-worklist-main.ts` retains main's complete `listOpportunities`, including cursor signing and validation; only import paths are relocated. No edited helper is reached by the oracle. The equivalence suite uses 32 native deals, 16 in each pipeline, interleaving both companies in IDs, titles and creation order. Existing coordinator, Company B and quotation-approver identities supply the three authority cases; the last has no action-read grant. No grant is added or changed. Eight deals are closed (four Won, four Lost); native legacy-pipeline closure is refused, so its Closed filter is explicitly empty. Histories include three-event information changes and six-event won deals.
+
+All **111 equivalence tests pass**: both pipelines, Open/Closed/All, Reference/Title/Newest, search on/off, every cursor through the terminal page, owner/stage/all five action-state filters and the internal all-pipelines mode. Explicit counts, named deals, stage counts, action states/nulls, edit rights, histories, expected ordering and completeness accompany `deepEqual` and `JSON.stringify` comparisons. The tests give only the two independent reader modules the same synthetic ephemeral signing key and freeze the JS read clock after native fixture writes, then compare full signed cursors and raw SQL stamps byte for byte. Real randomness is restored before creating sessions or fixture records; SQL grant clocks remain real.
+
+Reproduce serially after cloud setup, sourcing the environment path it prints:
+
+```bash
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/deals-worklist-equivalence.test.ts tests/database/deals-worklist-candidate-plan.test.ts
+```
+
+The plan test resets the disposable database separately at each size and writes full SQL/binds, plans, statistics and results to ignored `tmp/deals-worklist-candidate-cost/{30,45}.json`. `PPO_PLAN_FROZEN_MAIN=1` applies the bound to frozen main and must fail; the normal test also asserts that failure directly. Neither suite may run alongside another database suite.
+
+Local application/regression checks and draft-head CI are reported on the pull request. Cloud setup lists browser tooling as unavailable, so browser suites are not run locally and remain for GitHub CI. Claude's one review and ready-head full suites remain open; no merge, business acceptance or production readiness is claimed.
