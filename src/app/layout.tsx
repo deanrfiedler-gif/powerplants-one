@@ -50,6 +50,8 @@ import "./styles/figma-shell.css";
 import "./styles/my-work-figma.css";
 import "./styles/outputs.css";
 import "./styles/deals-workspace.css";
+import "./styles/shell-refined-tokens.css";
+import "./styles/shell-refined.css";
 export const metadata: Metadata = {
   title: "Powerplants One | Private prototype",
   description: "Private synthetic application foundation for Powerplants One",
@@ -90,7 +92,7 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <GuideLibraryProvider value={await releasedGuideLibrary()}>
-          <ApplicationFrame hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
+          <ApplicationFrame buildCommit={process.env.PPO_BUILD_COMMIT} refinedOverride={process.env.PPO_SHELL_REFINED} hosted={process.env.PPO_ENV === "azure-demo"} development={await developmentRequest(await headers())} railExpanded={railExpandedFrom((await cookies()).get(railCookie)?.value)}>{children}</ApplicationFrame>
         </GuideLibraryProvider>
       </body>
     </html>

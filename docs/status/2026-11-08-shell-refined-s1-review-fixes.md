@@ -1,0 +1,14 @@
+---
+title: Refined shell S1 response to Claude review
+date: 2026-11-08
+---
+
+S1 [PR #874](https://github.com/deanrfiedler-gif/powerplants-one/pull/874) now responds to the twelve consolidated findings in Claude's review of ef875edf0. The review of record is 5819822075, with findings 11–12 consolidated from 5819822959 by comment 6727637474. This is a fix/answer pass; Claude's confirmation on the revised head remains pending. Dean alone merges; S2 has not started.
+
+The implementation fixes the inherited Conversations order and rail/frame geometry at 768–780 px, restricts shell tooltip CSS to the header, defers the notification-count projection, restores breadcrumb hierarchy/title/hidden separators, suppresses single-letter shortcuts in composite widgets and native popovers, gives tenant chips meaningful initials and focuses the selected tenant. Page guide remains in the tablet bar until S4; Calendar leaves under Q19. New S1 consumer information has moved out of the frozen components.json into the additive bindings.
+
+The [build record](../decisions/shell-refined-s1-build.md) identifies the extra breadcrumb row as a **proposed temporary S1 departure**, not accepted design, and records the browser-local preference's legacy first-paint limitation. It also cites Dean's staged-build and named-version directions: use **Shell refined concept — accepted**, saved 8 November 2026, with application captures as as-built evidence. The two company/account adaptations retain this provenance: **Dean’s decision, given in chat in Codex’s session; no [DEAN] comment**. Neither provenance nor code review grants visual/device acceptance.
+
+Regression tests were added before the fixes. The focused unit test initially failed on the absent tenant-initials helper; after implementation all seven focused tests and the full 1,444-test unit suite passed. Typecheck, lint, production build, CRM UI fixture compilation, studio:check, foundation, naming, status and migration-number checks passed. Studio still reports 26 stale page/system reviews (including system:shell) and 53 pending component reviews; no fingerprints were updated. The final-head documentation-scope result and exact commands are recorded in the PR.
+
+The earlier head's CI job 128869664988 failed the refined header's visual/DOM ordering assertion; the reviewed source fix addresses that inheritance, but the revised head still needs CI confirmation. Cloud setup's disposable synthetic database is available; the Chrome executable is not. The browser guard and UI attempt fail before tests. Refined-shell, navigation-safety, department-navigation, shell-loading and desktop UI execution remain for supported Chrome/CI. No capture, UI baseline, physical-device verification, production readiness or owner acceptance is claimed. No route, permission, capability, grant, migration or data-model change is included.

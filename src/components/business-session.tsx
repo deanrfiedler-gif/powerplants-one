@@ -9,6 +9,10 @@ import { focusAccountOpener, openShellPanel, shellPanelEvent } from "./shell-eve
 import { ShellAccountProfile, accountInitials } from "./shell-account-profile";
 import { ShellIcon } from "./shell-icon";
 import { useShell } from "./shell-provider";
+import { RefinedAccountMenu } from "./refined-shell-menu";
+import { RefinedTenantSwitcher, tenantSwitcherEvent } from "./refined-tenant-switcher";
+import { personColour } from "../shell/refined";
+import { layerKeyboard } from "../shell/layer-keyboard";
 import { navigateWithReview } from "./navigation-intent";
 type Identity = {
   actor_id: string;
@@ -27,6 +31,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
   const router = useRouter();
   const account = useRef<HTMLElement>(null);
   const [showIdentity, setShowIdentity] = useState(false);
+  const [accountDetails, setAccountDetails] = useState(false);
   const [p, setP] = useState<Identity | null>(null),
     [profile, setProfile] = useState("coordinator"),
     [error, setError] = useState<unknown>(null),
@@ -76,9 +81,10 @@ export function BusinessSession({ children, hosted = false }: { children: React.
     window.addEventListener(shellPanelEvent, other);
     return () => { document.removeEventListener("pointerdown", outside); window.removeEventListener(shellPanelEvent, other); };
   }, []);
-  const toggleAccount = () => { openShellPanel("account"); setShowIdentity(!showIdentity); };
+  const toggleAccount = () => { openShellPanel("account"); setAccountDetails(false); setShowIdentity(!showIdentity); };
+  useEffect(() => { if(showIdentity && shell.refinedDesktop) account.current?.querySelector<HTMLElement>(".ppo-refined-account-menu button")?.focus(); }, [showIdentity,shell.refinedDesktop]);
   const initials = accountInitials(p?.display_name);
-  const closeAccount = () => { setShowIdentity(false); focusAccountOpener(hosted ? "hosted-account-toggle" : "identity-toggle"); };
+  const closeAccount = () => { setShowIdentity(false); const id=hosted ? "hosted-account-toggle" : "identity-toggle"; if(shell.refinedDesktop) document.getElementById(id)?.focus(); else focusAccountOpener(id); };
   const accountTitle = <div className="ppo-panel-titlebar"><h2>Account</h2><button className="ppo-top-action ppo-account-close" aria-label="Close account" onClick={closeAccount}><ShellIcon name="close" /></button></div>;
   // PPO-CONV-T1C-DESIGN 10.2: the controls the narrow top bars give up. The Page guide moves here at 320 px, and the
   // builder's design workspace below 1200 px and on phones (D2); the stylesheet shows each only where the bar hides it.
@@ -105,13 +111,13 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       setBusy(false);
     }
   }
-  function chooseCompany() {
+  function chooseCompany(company: string | null = companyChoice || null) {
     navigateWithReview(async () => {
       lockOtherBusinessViews();
       setBusy(true);
       setError(null);
       try {
-        await api("shell/company", { company_id: companyChoice || null });
+        await api("shell/company", { company_id: company });
         setCompanyDraft(null);
         shell.reload();
         setEpoch((x) => x + 1);
@@ -136,7 +142,7 @@ export function BusinessSession({ children, hosted = false }: { children: React.
         <option value="">All companies</option>
         {companies.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
       </select>
-      <button type="button" onClick={chooseCompany} disabled={busy || companyChoice === (working ?? "")}>
+      <button type="button" onClick={() => chooseCompany()} disabled={busy || companyChoice === (working ?? "")}>
         {busy ? "Switching…" : "Work in this company"}
       </button>
       <p className="identity-explanation">Pages, search and actions show only the chosen company&apos;s records. Your permissions are unchanged.</p>
@@ -161,13 +167,20 @@ export function BusinessSession({ children, hosted = false }: { children: React.
       setBusy(false);
     }
   }
+  const signOut = () => {
+    if (hosted) { account.current?.querySelector<HTMLFormElement>('form[action="/auth/logout"]')?.requestSubmit(); return; }
+    lockOtherBusinessViews(); setP(null); setEpoch(x=>x+1);
+    void (async()=>{try{if(localStorage.getItem("ppo-offline-marker"))await lockLocal();await api("local-session/sign-out",{});}catch(e){setError(e);}finally{lockOtherBusinessViews();}})();
+  };
+  const refinedMenu = shell.refinedDesktop && p ? <RefinedAccountMenu name={p.display_name} company={companyLabel} hosted={hosted} details={accountDetails} openDetails={()=>setAccountDetails(!accountDetails)} switchTenant={()=>{setShowIdentity(false);window.dispatchEvent(new Event(tenantSwitcherEvent));}} close={closeAccount} signOut={signOut} /> : null;
   return (
     <>
+      <HeaderContent slot="tenant"><RefinedTenantSwitcher busy={busy} choose={chooseCompany} /></HeaderContent>
       <HeaderContent slot="account">
       {hosted ? <section ref={account} className="identity-strip identity-compact identity-hosted" aria-label="Private demo account" onKeyDown={event => { if (event.key === "Escape") { setShowIdentity(false); focusAccountOpener("hosted-account-toggle"); } }}>
-        <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" title={companyHint ? `Account · ${companyHint}` : "Account"} data-company={companyMarker} aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span></button></div>
-        <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account">
-          {accountTitle}<div className="ppo-panel-body">
+        <div className="hosted-account-summary"><strong title={p?.display_name}>{p?.display_name ?? "Private prototype"}</strong><button id="hosted-account-toggle" className="ppo-account-toggle" aria-label="Account" title={shell.refinedDesktop ? undefined : companyHint ? `Account · ${companyHint}` : "Account"} data-tooltip={shell.refinedDesktop ? "Account" : undefined} data-company={shell.refinedDesktop ? undefined : companyMarker} data-person-colour={shell.refinedDesktop ? personColour(shell.context?.preference_scope ?? "") : undefined} aria-expanded={showIdentity} aria-controls="hosted-account-controls" onClick={toggleAccount}><span className="account-avatar" aria-hidden="true">{initials}</span>{shell.refinedDesktop && <><span className="ppo-refined-account-name">{p?.display_name}</span><ShellIcon name="down" /></>}</button></div>
+        <div id="hosted-account-controls" className="ppo-hosted-account-controls ppo-account-panel" data-open={showIdentity} role="dialog" aria-label="Account" onKeyDown={event=>{if(shell.refinedDesktop) layerKeyboard(event,closeAccount);}}>
+          {accountTitle}{refinedMenu}<div className="ppo-panel-body" hidden={!!refinedMenu && !accountDetails}>
           <ShellAccountProfile name={p?.display_name} />
           {accountShortcuts}
           {p && companyChoiceControl}
@@ -196,10 +209,10 @@ export function BusinessSession({ children, hosted = false }: { children: React.
           <strong>
             {p?.display_name ?? "Choose a demonstration identity"}
           </strong>
-          {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" aria-label="Change identity" title={companyHint ? `Change identity · ${companyHint}` : "Change identity"} data-company={companyMarker} onClick={toggleAccount}><span className="ppo-identity-label">Change identity</span><span className="account-avatar ppo-local-avatar" aria-hidden="true">{initials}</span></button>}
+          {p && <button id="identity-toggle" className="secondary identity-toggle" aria-expanded={showIdentity} aria-controls="identity-controls" aria-label={shell.refinedDesktop ? "Account" : "Change identity"} title={shell.refinedDesktop ? undefined : companyHint ? `Change identity · ${companyHint}` : "Change identity"} data-tooltip={shell.refinedDesktop ? "Account" : undefined} data-company={shell.refinedDesktop ? undefined : companyMarker} data-person-colour={shell.refinedDesktop ? personColour(shell.context?.preference_scope ?? "") : undefined} onClick={toggleAccount}><span className="ppo-identity-label">Change identity</span><span className="account-avatar ppo-local-avatar" aria-hidden="true">{initials}</span>{shell.refinedDesktop && <><span className="ppo-refined-account-name">{p?.display_name}</span><ShellIcon name="down" /></>}</button>}
         </div>
-        <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account">
-        {accountTitle}<div className="ppo-panel-body">
+        <div id="identity-controls" className="identity-controls ppo-account-panel" hidden={!!(p && !showIdentity)} role="dialog" aria-label="Account" onKeyDown={event=>{if(shell.refinedDesktop) layerKeyboard(event,closeAccount);}}>
+        {accountTitle}{refinedMenu}<div className="ppo-panel-body" hidden={!!refinedMenu && !accountDetails}>
         <ShellAccountProfile name={p?.display_name} />
         {accountShortcuts}
         {p && companyChoiceControl}
