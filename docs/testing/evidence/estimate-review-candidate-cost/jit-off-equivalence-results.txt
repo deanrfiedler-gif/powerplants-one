@@ -1,0 +1,28 @@
+✔ frozen main equivalence: owner, all, search=true (74934.178201ms)
+✔ frozen main equivalence: owner, all, search=false (33989.381777ms)
+✔ frozen main equivalence: owner, estimates, search=true (9546.697491ms)
+✔ frozen main equivalence: owner, estimates, search=false (12894.819282ms)
+✔ frozen main equivalence: owner, quotations, search=true (41723.197577ms)
+✔ frozen main equivalence: owner, quotations, search=false (38011.275626ms)
+✔ frozen main equivalence: partial, all, search=true (23309.736707ms)
+✔ frozen main equivalence: partial, all, search=false (22835.542538ms)
+✔ frozen main equivalence: partial, estimates, search=true (5324.295289ms)
+✔ frozen main equivalence: partial, estimates, search=false (5539.740915ms)
+✔ frozen main equivalence: partial, quotations, search=true (18772.964272ms)
+✔ frozen main equivalence: partial, quotations, search=false (18778.702347ms)
+✔ frozen main equivalence: issuer, all, search=true (23259.161937ms)
+✔ frozen main equivalence: issuer, all, search=false (23835.209427ms)
+✔ frozen main equivalence: issuer, estimates, search=true (6056.565369ms)
+✔ frozen main equivalence: issuer, estimates, search=false (6040.954698ms)
+✔ frozen main equivalence: issuer, quotations, search=true (18992.065358ms)
+✔ frozen main equivalence: issuer, quotations, search=false (19777.649021ms)
+✔ queue disables JIT exactly once and restores the same pooled client on commit (563.236593ms)
+✔ queue disables JIT exactly once and restores the same pooled client on rollback (2.75709ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 406647.098019

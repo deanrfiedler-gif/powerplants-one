@@ -1,0 +1,10 @@
+PPO_CANDIDATE_PLAN {"counts":{"estimates":35,"submissions":35,"quotations":3,"organisations":29,"opportunities":126},"loop_bound":380,"before":{"candidate_ms":164.3818629999987,"execution_ms":125.838,"max_loops":1036,"shared_hit_blocks":112404,"has_jit":false},"after":{"candidate_ms":54.56801899999846,"execution_ms":11.699,"max_loops":126,"shared_hit_blocks":7205,"has_jit":false}}
+✔ candidate branch fences bound every plan node on never-analysed small tables (25513.948348ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26681.692098

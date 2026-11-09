@@ -45,6 +45,7 @@ after(closeDatabase);
 const workspaceLock =
   /SELECT 1 FROM ppo\.workspaces WHERE id=\$1 FOR (?:SHARE|UPDATE)/;
 const queueWorkspaceLock = "SELECT 1 FROM ppo.workspaces WHERE id=$1 FOR SHARE";
+const queueJitSetting = "SET LOCAL jit = off";
 type Scope = {
   pid?: number;
   sql: string[];
@@ -57,6 +58,8 @@ const observed = new AsyncLocalStorage<Scope>();
 function assertSelect(sql: string) {
   // Only this exact statement may take a row lock in the queue callback.
   if (sql === queueWorkspaceLock) return;
+  // Only this exact transaction-local setting is allowed; all other SETs fail.
+  if (sql === queueJitSetting) return;
   // Lexically remove SQL literals/comments before checking CTEs or a second
   // statement. Source audit separately enumerates the SELECT function calls.
   const code = sql
@@ -165,6 +168,10 @@ test("queue callback rejects non-SELECT SQL across source, specialist/discovery 
     "SELECT id FROM ppo.opportunities WHERE id=$1 FOR SHARE",
     "SELECT id FROM ppo.opportunities WHERE id=$1 FOR KEY SHARE",
     `${queueWorkspaceLock} NOWAIT`,
+    "SET jit = off",
+    "SET LOCAL jit = on",
+    `${queueJitSetting}; SELECT 1`,
+    `${queueJitSetting} -- not the exact statement`,
   ])
     assert.throws(() => assertSelect(sql));
   const f = await fixture();
@@ -234,6 +241,11 @@ test("queue callback rejects non-SELECT SQL across source, specialist/discovery 
       scope.sql.slice(start).filter((sql) => sql === queueWorkspaceLock).length,
       1,
       "each queue read must take its exact workspace share lock once",
+    );
+    assert.equal(
+      scope.sql.slice(start).filter((sql) => sql === queueJitSetting).length,
+      1,
+      "each queue read must disable JIT with the exact local statement once",
     );
     return result;
   };

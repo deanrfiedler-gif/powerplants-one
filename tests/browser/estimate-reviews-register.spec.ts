@@ -4,6 +4,13 @@ import { crmCreate, crmBase } from "../helpers/crm";
 import { releaseFixture, prepared } from "../helpers/quotation-release";
 import { closeDatabase } from "../../src/platform/database";
 import { estimateInput } from "../helpers/estimating";
+import type { Principal } from "../../src/platform/identity";
+import { logReviewQueueDiagnostic } from "../helpers/estimate-review-queue-diagnostic";
+
+const continuationDiagnostics = new Map<
+  string,
+  { principal: Principal; q: string }
+>();
 
 test.describe.configure({ timeout: 300000 });
 test.beforeAll(() => {
@@ -11,6 +18,18 @@ test.beforeAll(() => {
   if (!process.env.DATABASE_URL) process.loadEnvFile(".env.local");
 });
 test.afterAll(closeDatabase);
+test.afterEach(async ({}, info) => {
+  if (
+    info.title !==
+    "empty awaiting-my-review windows retain native continuation beyond 25 candidates"
+  ) return;
+  const context = continuationDiagnostics.get(info.testId);
+  continuationDiagnostics.delete(info.testId);
+  await logReviewQueueDiagnostic(context, {
+    project: info.project.name,
+    status: info.status,
+  });
+});
 async function identity(page: Page, profile = "coordinator") {
   await page.goto("/work");
   const r = await page.request.post("/api/v1/local-session", {
@@ -18,6 +37,7 @@ async function identity(page: Page, profile = "coordinator") {
     data: { profile },
   });
   expect(r.ok(), await r.text()).toBe(true);
+  return (await r.json()) as Principal;
 }
 async function post(page: Page, path: string, data: unknown) {
   const r = await page.request.post(`/api/v1/${path}`, {
@@ -272,7 +292,7 @@ test("quotation snapshot hands over to the exact native approval on desktop and 
 
 test("empty awaiting-my-review windows retain native continuation beyond 25 candidates", async ({
   page,
-}) => {
+}, info) => {
   // Diagnostics only: preserve every assertion, timeout and request behaviour.
   // Log unique request IDs so overlapping offset-0 reads are visible in CI.
   let nextRequest = 0;
@@ -308,8 +328,9 @@ test("empty awaiting-my-review windows retain native continuation beyond 25 cand
   page.on("request", (request) => log(request, "start"));
   page.on("requestfinished", (request) => log(request, "finish"));
   page.on("requestfailed", (request) => log(request, "failed"));
-  await identity(page);
+  const principal = await identity(page);
   const title = `SYN Browser window ${randomUUID()}`;
+  continuationDiagnostics.set(info.testId, { principal, q: title });
   for (let i = 0; i < 26; i++) await fixture(page, title, true);
   await page.goto(
     `/estimating/reviews?q=${encodeURIComponent(title)}&view=awaiting_me`,
