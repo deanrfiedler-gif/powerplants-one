@@ -198,7 +198,7 @@ The ten manual pairs executed against `ppo_synthetic_test`; raw artefacts remain
 
 `npm run check` passed (studio register, full lint, TypeScript, 1,437 unit tests with no skips, production build). A final focused lint/typecheck covers the subsequent input-metadata correction in the proof. Foundation, prototype, naming, status-source, documentation unit, migration numbering, documentation-scope and whitespace results are recorded in the draft-head completion comment.
 
-Full database/HTTP/application CI is not run for this draft; the manual audit is the targeted database evidence. Cloud setup reported browser unavailable, so browser suites are not run locally and are left to ready-head GitHub CI. No business acceptance scenario is executed and no approval, deployment or merge is claimed.
+Full database/HTTP/application suites were not run locally; the manual audit is the targeted database evidence. Most GitHub suites skip this draft. One existing exception is `.github/workflows/crm-leads.yml:3`: its pull-request trigger and `leads` job have no draft guard, so GitHub also started the Leads acceptance workflow automatically. It was not manually dispatched or used to mark this PR ready; its head-specific state belongs in the completion comment. Changing that protected workflow is outside this audit. Cloud setup reported browser unavailable, so browser suites are not run locally and are left to ready-head GitHub CI. No business acceptance scenario is executed and no approval, deployment or merge is claimed.
 
 ### Raw run identity
 
