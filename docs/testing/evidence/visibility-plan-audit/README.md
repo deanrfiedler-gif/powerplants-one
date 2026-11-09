@@ -131,18 +131,20 @@ Run from the repository root after `scripts/cloud-setup.sh` succeeds, using the 
 
 ```bash
 source /workspace/.ppo-tools/env.sh
-node --env-file=.env.local --import tsx tests/database/visibility-plan-audit.proof.ts --analyse-control
+node --env-file=.env.local --import tsx tests/database/visibility-plan-audit.proof.ts --analyse-control --size=30
+node --env-file=.env.local --import tsx tests/database/visibility-plan-audit.proof.ts --analyse-control --size=45
+node --env-file=.env.local --import tsx tests/database/visibility-plan-audit.proof.ts --analyse-control --compare
 ```
 
-This is a destructive, disposable proof restricted to `ppo_synthetic_test`. An optional `--reader=sites` (or another measurement-table ID) runs one pair. It resets the database separately for each reader, creates native synthetic records, measures the main statement, manually runs `ANALYZE` in this proof only, then measures the identical SQL with the original binds. Never run it alongside another database suite. It is outside `tests/database/*.test.ts`, has no test registrations and asserts no loop bound on unfixed readers. No routine CI command executes it. Outputs, including full recursive plans, SQL/binds, statistics, fixture IDs, counts and reader results, go to ignored `tmp/visibility-plan-audit/<reader>.json`.
+This is a destructive, disposable proof restricted to `ppo_synthetic_test`. An optional `--reader=sites` (or another measurement-table ID) runs one pair at the selected size. Only sizes 30 and 45 are accepted. `--compare` reads the retained two-volume files and writes `growth.json`; it does not reset or query the database. It resets the database separately for each reader, creates native synthetic records, measures the main statement, manually runs `ANALYZE` in this proof only, then measures the identical SQL with the original binds. Never run it alongside another database suite. It is outside `tests/database/*.test.ts`, has no test registrations and asserts no loop bound on unfixed readers. No routine CI command executes it. Outputs, including full recursive plans, SQL/binds, statistics, fixture IDs, counts and reader results, go to ignored `tmp/visibility-plan-audit/<reader>.json` at size 30 and `tmp/visibility-plan-audit/45/<reader>.json` at size 45. The original size-30 artefacts are retained unchanged for this comparison; their legacy `classification` fields are superseded by `growth.json`. New individual runs report only whether the screen bound was exceeded.
 
-Each fixture uses the native `coordinator` session with its existing grants and the native working-company context for the synthetic CRM company. It creates 30 linked sets through `createOrganisation`, `createPerson`, `addAffiliation`, `createSite`, `createFacility`, `createAsset`, `createOpportunity`, `createProject`, `saveTask` and `startThread`. IDs are unique and each primary table's actual count is asserted between 30 and 50. No raw INSERT is added. Native seed records remain: organisations 36, people 32, sites 36, facilities 40, equipment 35, opportunities 30, projects 30, project tasks 30 and threads 30. Each thread has a message and participant; each deal has its initial overdue activity. Activities total 37, links 98, site parties 39 and affiliations 32: native commands legitimately create more than one supporting row per candidate.
+Both volumes use the native `coordinator` session with its existing grants and the native working-company context for the synthetic CRM company. It creates 30 or 45 linked sets through `createOrganisation`, `createPerson`, `addAffiliation`, `createSite`, `createFacility`, `createAsset`, `createOpportunity`, `createProject`, `saveTask` and `startThread`. IDs are unique and each primary table's actual count is asserted between the requested size and that size plus ten retained seed rows. No raw INSERT is added. At size 30, native seed records remain: organisations 36, people 32, sites 36, facilities 40, equipment 35, opportunities 30, projects 30, project tasks 30 and threads 30. At size 45 the actual primary counts are organisations 51, people 47, sites 51, facilities 55, equipment 50, opportunities/projects/tasks/threads 45 each. Forty-five new rows plus retained seeds is the requested approximate volume; counts are not silently truncated to 45. Each thread has a message and participant; each deal has its initial overdue activity. Activities total 37, links 98, site parties 39 and affiliations 32: native commands legitimately create more than one supporting row per candidate.
 
-The selected readers' explicit candidate/supporting table sets are in `readers[].tables`. `assertNeverAnalysed` passed before and after each unanalysed measurement: both timestamps null and both analysis counters zero for every selected table. Control counters are positive after manual `ANALYZE`. All-table statistics are also retained as `dependencies`, including shared catalogues outside those assertion sets. In all ten final saved runs, these snapshots also have zero analysis counters throughout. A preliminary Facilities run had autoanalysed shared catalogues (including permissions); a fresh disposable repeat removed that ambiguity and still measured 40 loops. Its final pair is reported below. This does not assert that every table in the database has 30–50 rows. Seed appointments/work orders have 13/10 rows; lead candidates, contact notices, conversation asks/mentions and estimating workspaces are empty. Thus the workload result covers the 30 unstarted deals and the conversation result covers anchored threads/messages, not populated workspace/ask/mention branches. These are limits of the BOUNDED findings, not evidence for those branches.
+The selected readers' explicit candidate/supporting table sets are in `readers[].tables`. `assertNeverAnalysed` passed before and after each unanalysed measurement: both timestamps null and both analysis counters zero for every selected table. Control counters are positive after manual `ANALYZE`. All-table statistics are also retained as `dependencies`, including shared catalogues outside those assertion sets. In all twenty final saved runs across both volumes, these snapshots also have zero analysis counters throughout. A preliminary Facilities run had autoanalysed shared catalogues (including permissions); a fresh disposable repeat removed that ambiguity and still measured 40 loops. Its final pair is reported below. This does not assert that every table in the database has 30–50 rows. Seed appointments/work orders have 13/10 rows; lead candidates, contact notices, conversation asks/mentions and estimating workspaces are empty. Thus the workload result covers the 30 unstarted deals and the conversation result covers anchored threads/messages, not populated workspace/ask/mention branches. These are limits of the BOUNDED findings, not evidence for those branches.
 
 The main SELECT runs normally and is immediately explained on the same connection, retaining any transaction established by the reader and its native settings. No planner setting is added. The EXPLAIN execution follows a real read and is consequently warm; these are single-run plan observations, not end-to-end latency distributions. The control repeats the same binds, including the original time boundary. Shared hits are the root plan's total, not the sum of cumulative counters from every node. Maximum loops use **every node** from `planNodes()`, including InitPlans/SubPlans; no top-N logging contributes to the maximum. The plan's top-level JIT presence is recorded separately from `SHOW jit`.
 
-Visible rows mean the main statement's reported total matching visible population when it has one, otherwise its returned candidate window. In particular My Work's default overview window contains eight rows; registers may report more matches than their first page. The bound is exactly ten times that recorded denominator. This is the requested diagnostic rule, not a claim of asymptotic complexity.
+For the initial screen, the denominator was the main statement's reported total matching visible population when it had one, otherwise its returned candidate window. F1 makes each denominator explicit below and uses Facilities' separately reported total rather than counting its SQL look-ahead row. In particular My Work's default overview window contains eight rows; registers may report more matches than their first page. The bound is exactly ten times the stated denominator. This is the requested diagnostic rule, not a claim of asymptotic complexity.
 
 | Reader ID | Screen/default input used | Caller evidence |
 | --- | --- | --- |
@@ -157,46 +159,129 @@ Visible rows mean the main statement's reported total matching visible populatio
 | conversations | Conversations, native default view/window | `src/conversations/reads.ts:50`, `/api/v1/conversations` |
 | estimating-workload | Estimating workload, native default owner/view/order | `src/components/estimating-workload.tsx:134` |
 
-## Measurements — 9 November 2026
+## First-volume measurements — 9 November 2026
 
-PostgreSQL 16.15; Node 24.21.0. Seven AT RISK and three BOUNDED in these fixtures. Every number below comes from the full plan, not a truncated diagnostic. `U` is the never-analysed candidate-table run; `A` is its manual ANALYZE control. Classifications use U. JIT sections were absent in **both** plans for all ten reads; native JIT was off for organisations/sites and on for the other eight.
+PostgreSQL 16.15; Node 24.21.0. The initial single-volume screen flagged seven reads above the loop bound and three below it; F1 below supersedes the original risk classification. Every number below comes from the full plan, not a truncated diagnostic. `U` is the never-analysed candidate-table run; `A` is its manual ANALYZE control. This table retains the original screen result; final classifications use both volumes below. JIT sections were absent in **both** plans for all ten reads; native JIT was off for organisations/sites and on for the other eight.
 
-| Reader | Visible / bound | Max loops U / A | Shared hits U / A | Execution ms U / A | Classification |
+| Reader | Visible / bound | Max loops U / A | Shared hits U / A | Execution ms U / A | Single-volume screen |
 | --- | ---: | ---: | ---: | ---: | --- |
-| organisations | 34 / 340 | 1,400 / 1,020 | 29,488 / 18,204 | 31.019 / 26.174 | AT RISK |
-| sites | 34 / 340 | 654 / 40 | 15,342 / 1,962 | 17.993 / 5.271 | AT RISK |
-| my-work | 8 / 80 | 960 / 32 | 9,593 / 2,790 | 12.545 / 8.950 | AT RISK |
-| deals | 30 / 300 | 1,110 / 30 | 72,355 / 3,189 | 66.519 / 6.341 | AT RISK |
-| projects | 30 / 300 | 552 / 35 | 6,261 / 718 | 5.092 / 8.136 | AT RISK |
+| organisations | 34 / 340 | 1,400 / 1,020 | 29,488 / 18,204 | 31.019 / 26.174 | OVER SCREEN |
+| sites | 34 / 340 | 654 / 40 | 15,342 / 1,962 | 17.993 / 5.271 | OVER SCREEN |
+| my-work | 8 / 80 | 960 / 32 | 9,593 / 2,790 | 12.545 / 8.950 | OVER SCREEN |
+| deals | 30 / 300 | 1,110 / 30 | 72,355 / 3,189 | 66.519 / 6.341 | OVER SCREEN |
+| projects | 30 / 300 | 552 / 35 | 6,261 / 718 | 5.092 / 8.136 | OVER SCREEN |
 | facilities | 40 / 400 | 40 / 40 | 1,054 / 491 | 1.224 / 0.885 | BOUNDED |
-| equipment | 33 / 330 | 648 / 37 | 7,241 / 642 | 5.019 / 1.445 | AT RISK |
-| people | 31 / 310 | 572 / 35 | 5,093 / 1,724 | 7.856 / 3.768 | AT RISK |
+| equipment | 33 / 330 | 648 / 37 | 7,241 / 642 | 5.019 / 1.445 | OVER SCREEN |
+| people | 31 / 310 | 572 / 35 | 5,093 / 1,724 | 7.856 / 3.768 | OVER SCREEN |
 | conversations | 30 / 300 | 30 / 30 | 1,653 / 1,291 | 1.967 / 2.091 | BOUNDED |
 | estimating-workload | 30 / 300 | 30 / 30 | 1,427 / 1,112 | 2.641 / 1.167 | BOUNDED |
 
 The organisation register remains above its bound after statistics exist (1,020 > 340). The other six AT RISK reads fall below their bounds in the control. Projects demonstrates why elapsed time alone is insufficient: its control has fewer loops/hits but a slower individual execution. No claim of a statistically significant speed-up is made.
 
+## F1: two-volume growth and final classifications
+
+[Claude's one review](https://github.com/deanrfiedler-gif/powerplants-one/pull/877#pullrequestreview-5820770148) found that the single-volume bound did not distinguish ordinary correlated per-row subplans from super-linear repeated work. The original audit followed its acceptance criterion; this section replaces that criterion's risk interpretation.
+
+Dean's decision, given in chat in Codex's session; no [DEAN] comment: address F1 with a second never-analysed volume, report growth/denominators, reclassify, retain the proposed fixes and re-rank them, then mark ready under rule 23 and request confirmation after the full suites. No application change is included.
+
+All ten readers were rerun with **45 native fixture sets**, preserving the same caller, screen input, native JIT setting and SQL as the retained 30-set run. Before/after never-analysed assertions passed for all selected table sets. Manual ANALYZE controls at size 45 also passed same-SQL/binds/settings/count assertions. A preliminary 45-set People run had analysed shared dependencies, including permissions; its fresh repeat has none and is the final observation below (1,175 loops). No autovacuum setting was changed and no selected-table assertion was removed.
+
+[DECIDED by Codex] Use a documented two-point loop-growth screen. The fixture growth factor is 45/30 = **1.5**; nominal linear and quadratic loop ratios are **1.5** and **2.25**. A reader is **BOUNDED** when its maximum loops meet the stated 10× denominator at both points. Among reads over that bound, a loop ratio above **1.875**, the midpoint between those two reference ratios, is **SUPER-LINEAR (AT RISK)**; otherwise it is **LINEAR OVER SCREEN**. This operational threshold separates the observed groups, not a statistical confidence interval or proof of asymptotic complexity. Reversing this choice means recomputing the screen from the retained raw ratios. Shared-hit and execution-time ratios are reported independently and cannot be inferred from loop ratios.
+
+The result is **seven SUPER-LINEAR (AT RISK), zero LINEAR OVER SCREEN and three BOUNDED**. The seven loop ratios are 1.96–2.20, substantially beyond the nominal 1.5× fixture increase and near the 2.25× quadratic reference. Seed offsets mean actual table/population ratios vary; the denominator table makes that visible. The high-volume maxima remain on the same named branches as the low-volume maxima below. These observations support investigating the retained branch-fence proposals, but do not prove those fixes or reproduce #870's 5.4-second severity.
+
+### Growth ratios (never-analysed runs)
+
+Ratios are large/small, rounded only for display. Times are single warm EXPLAIN executions, not medians or controlled latency estimates. In particular, timing noise must not determine a growth classification.
+
+| Reader | Max loops 30 → 45 | Loop ratio | Shared hits 30 → 45 | Hit ratio | Execution ms 30 → 45 | Time ratio | Final classification |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| organisations | 1,400 → 2,750 | 1.964× | 29,488 → 60,503 | 2.052× | 31.019 → 39.811 | 1.283× | SUPER-LINEAR (AT RISK) |
+| sites | 654 → 1,309 | 2.002× | 15,342 → 20,182 | 1.315× | 17.993 → 21.086 | 1.172× | SUPER-LINEAR (AT RISK) |
+| my-work | 960 → 2,115 | 2.203× | 9,593 → 70,627 | 7.362× | 12.545 → 32.450 | 2.587× | SUPER-LINEAR (AT RISK) |
+| deals | 1,110 → 2,340 | 2.108× | 72,355 → 161,528 | 2.232× | 66.519 → 197.201 | 2.965× | SUPER-LINEAR (AT RISK) |
+| projects | 552 → 1,169 | 2.118× | 6,261 → 13,709 | 2.190× | 5.092 → 11.565 | 2.271× | SUPER-LINEAR (AT RISK) |
+| facilities | 40 → 55 | 1.375× | 1,054 → 4,617 | 4.380× | 1.224 → 2.509 | 2.050× | BOUNDED |
+| equipment | 648 → 1,305 | 2.014× | 7,241 → 15,640 | 2.160× | 5.019 → 8.620 | 1.717× | SUPER-LINEAR (AT RISK) |
+| people | 572 → 1,175 | 2.054× | 5,093 → 9,938 | 1.951× | 7.856 → 12.530 | 1.595× | SUPER-LINEAR (AT RISK) |
+| conversations | 30 → 45 | 1.500× | 1,653 → 2,478 | 1.499× | 1.967 → 3.807 | 1.935× | BOUNDED |
+| estimating-workload | 30 → 45 | 1.500× | 1,427 → 2,496 | 1.749× | 2.641 → 2.287 | 0.866× | BOUNDED |
+
+Sites illustrates the difference between metrics: loops double while hits rise only 1.315×. Conversely Facilities' hits rise 4.380× although maximum loops track its population (40 → 55); BOUNDED here is explicitly the loop screen, not a claim of linear total work or a safe plan for every branch. Its 45-set execution is 2.509 ms. Follow-up coverage should investigate that buffer amplification before making a general safety claim. Estimating workload's lower measured time at the larger volume is also not evidence of a speed-up.
+
+### Bound denominators
+
+The 10× screen is not used to compare latency across readers. It retains each query's relevant population/window, with the basis named. The fixture-growth comparison is 30 → 45 native sets even when a screen window stays fixed.
+
+| Reader | Denominator basis | Denominator 30 → 45 | Bound 30 → 45 |
+| --- | --- | ---: | ---: |
+| organisations | Reported visible population total | 34 → 49 | 340 → 490 |
+| sites | Reported visible population total | 34 → 49 | 340 → 490 |
+| my-work | Returned overview window | 8 → 8 | 80 → 80 |
+| deals | Returned candidate window | 30 → 45 | 300 → 450 |
+| projects | Reported visible population total | 30 → 45 | 300 → 450 |
+| facilities | Reported visible population total | 40 → 55 | 400 → 550 |
+| equipment | Reported visible population total | 33 → 48 | 330 → 480 |
+| people | Reported visible population total | 31 → 46 | 310 → 460 |
+| conversations | Returned candidate window | 30 → 45 | 300 → 450 |
+| estimating-workload | Returned candidate window | 30 → 45 | 300 → 450 |
+
+Facilities' reader reports total 55 from its separate count query (`src/shared/facilities/reads.ts:395`), while the main SQL fetches 51 rows for a 50-item page plus one look-ahead row (`:418`, `:423`). The size-45 raw capture retains that 51-row statement count; the comparison uses total 55, so the explicit bound is 550. At size 30 both counts were 40. Either interpretation stays BOUNDED, but only the stated total is used here. My Work deliberately retains its eight-item overview window; its underlying fixture grows while that denominator remains eight. Deals, Conversations and workload have unsaturated candidate windows of 30/45 in this fixture.
+
+### Size-45 ANALYZE controls
+
+JIT sections are absent from all twenty size-45 plans, just as at size 30. Native JIT remains off only for organisations/sites. All-table statistics snapshots after the final unanalysed runs have zero analysis counters, including dependencies beyond each selected assertion set.
+
+| Reader | Maximum loops U / A | Shared hits U / A | Execution ms U / A |
+| --- | ---: | ---: | ---: |
+| organisations | 2,750 / 2,205 | 60,503 / 36,717 | 39.811 / 34.884 |
+| sites | 1,309 / 55 | 20,182 / 2,775 | 21.086 / 5.686 |
+| my-work | 2,115 / 47 | 70,627 / 4,790 | 32.450 / 32.324 |
+| deals | 2,340 / 45 | 161,528 / 4,904 | 197.201 / 17.458 |
+| projects | 1,169 / 50 | 13,709 / 1,243 | 11.565 / 2.947 |
+| facilities | 55 / 55 | 4,617 / 710 | 2.509 / 1.355 |
+| equipment | 1,305 / 52 | 15,640 / 963 | 8.620 / 1.881 |
+| people | 1,175 / 50 | 9,938 / 2,777 | 12.530 / 10.976 |
+| conversations | 45 / 45 | 2,478 / 1,981 | 3.807 / 2.953 |
+| estimating-workload | 45 / 45 | 2,496 / 1,683 | 2.287 / 2.380 |
+
+### Follow-up priority after F1
+
+Sort the seven existing proposals by **unrounded maximum-loop growth descending**, then **size-45 shared hits descending**, then **size-45 execution time descending**. There are no loop-ratio ties here, so absolute cost is shown as the explicit secondary key rather than silently overriding growth. Small differences between ratios are not significant estimates of a complexity exponent. Deals has the largest absolute cost despite ranking third by loop growth. Claude chooses follow-up prompts; this table selects no fix.
+
+| Rank | Existing proposal | Loop growth | Size-45 shared hits | Size-45 execution ms |
+| ---: | --- | ---: | ---: | ---: |
+| 1 | my-work | 2.203× | 70,627 | 32.450 |
+| 2 | projects | 2.118× | 13,709 | 11.565 |
+| 3 | deals | 2.108× | 161,528 | 197.201 |
+| 4 | people | 2.054× | 9,938 | 12.530 |
+| 5 | equipment | 2.014× | 15,640 | 8.620 |
+| 6 | sites | 2.002× | 20,182 | 21.086 |
+| 7 | organisations | 1.964× | 60,503 | 39.811 |
+
+The proposed changes and frozen-oracle proof requirements below are unchanged; only their order follows the new ranking.
+
 ## Proposed follow-ups — no fixes implemented
 
-Node numbers below identify these saved plans and are not stable across PostgreSQL versions or reruns. Tied maximum nodes are retained in each JSON. These are smallest source-local candidates for follow-up investigation, not proven remedies. Each needs its own pull request and another full-plan measurement; do not assert that inserting a fence anywhere will suffice.
+Node numbers and counts below identify the retained size-30 plans and are not stable across PostgreSQL versions or reruns. Tied maximum nodes are retained in each JSON. These are smallest source-local candidates for follow-up investigation, not proven remedies. Each needs its own pull request and another full-plan measurement; do not assert that inserting a fence anywhere will suffice.
 
 | AT RISK reader | Named maximum node without statistics | Smallest candidate change in #870's pattern | Required frozen-oracle equivalence proof |
 | --- | --- | --- | --- |
-| Organisation register | `Nested Loop`, `SubPlan 8`, and its `permission_grants g_3`/`users u_4` index scans: **1,400** | In `src/shared/organisation-register.ts:109`, materialise cheap site-party/site/facility pairs before `shared.read` in `area_counts`, then aggregate authorised rows by organisation. Inspect the other independently scoped aggregate branches too: the analysed control still reaches 1,020, so one branch fence is not yet demonstrated sufficient. | Freeze the old complete reader and any changed builders. Assert explicit visible/hidden organisation counts, site/facility/deal counts and follow-up labels; retain name ambiguity, empty relationships, expired parties, all view/sort/cursor boundaries and cross-company restrictions. |
-| Sites register | `Nested Loop`, `SubPlan 23`, and `permission_grants g_11` index scan: **654** | In `src/shared/sites.ts:103`, fence the cheap current site-party/organisation join before organisation visibility, then aggregate visible customer labels by site. Keep existing site permission and other derived branches. | Frozen reader; assert named visible sites and absent Restricted sites, exact customer/facility/equipment/visit counts, expired parties, invisible customer labels and first/next-page sort identity. |
 | My Work overview | `Index Scan` on organisations `prjo`, organisations `opo` and people `opp`: **960** | In `src/activities/work-overview.ts:129`, materialise the cheap activity/link/parent join population before evaluating the combined visibility predicates and final window. Preserve lateral link selection and optional-parent semantics. | Freeze the old row builder as well as reader if changed; oracle must not reach the new builder. Assert multiple named activity kinds and explicit counts, including hidden/deleted parents, owner/company filters, equal due dates, timezone boundaries and exact default eight-row window/overflow counts. |
-| Deals worklist | `Nested Loop`, `SubPlan 3`, activity `permission_grants g_1` and `users u_1` index scans (also SubPlan 4): **1,110** | In `src/crm/worklist.ts:85`, fence cheap opportunity/context/next-activity identity joins before activity/opportunity visibility. Preserve the LEFT JOIN's null action when action visibility refuses; do not turn that into removal of the deal. | Frozen reader and changed visibility/query builders; assert 30 named Open deals in the active pipeline, hidden deal exclusion, a visible deal with an inaccessible next action, exact stages/history/counts and first/next cursors under each sort. |
 | Projects register | `Nested Loop`, `SubPlan 5`, and organisation `permission_grants g_3` index scan: **552** | In `src/projects/register.ts:73`, fence project/organisation/site/user cheap joins before `projectVisibility`; then compute existing authorised task facts and cursor window. | Freeze complete reader/builders; assert named Active and closed projects, explicit overdue milestone/risk counts, missing/hidden parents, equal target dates, owner filters and cursor boundaries. |
-| Equipment register | `Nested Loop`, `SubPlan 1`, and organisation `permission_grants g` index scan: **648** | In `src/equipment/reads.ts:25`, materialise cheap site-party/organisation pairs before customer visibility, then aggregate by site for the equipment projection. Retain served-facility visibility separately. | Frozen projection and reader; assert explicit located/unlocated/Restricted populations, customer labels, served areas, multiple current parties, location history and exact page/order/view counts. |
+| Deals worklist | `Nested Loop`, `SubPlan 3`, activity `permission_grants g_1` and `users u_1` index scans (also SubPlan 4): **1,110** | In `src/crm/worklist.ts:85`, fence cheap opportunity/context/next-activity identity joins before activity/opportunity visibility. Preserve the LEFT JOIN's null action when action visibility refuses; do not turn that into removal of the deal. | Frozen reader and changed visibility/query builders; assert 30 named Open deals in the active pipeline, hidden deal exclusion, a visible deal with an inaccessible next action, exact stages/history/counts and first/next cursors under each sort. |
 | People register | `Nested Loop`, `SubPlan 16`, and organisation `permission_grants g_7` index scan: **572** | In `src/shared/people-register.ts:79`, fence relationship/permitted-person/organisation joins before organisation visibility in `affiliations`; then aggregate the authorised relationships by person. | Freeze reader/builders; assert explicit visible people and hidden people, multiple/expired affiliations, hidden organisation labels, site links, populated notice/correction branches and exact default/filtered/cursor pages. |
+| Equipment register | `Nested Loop`, `SubPlan 1`, and organisation `permission_grants g` index scan: **648** | In `src/equipment/reads.ts:25`, materialise cheap site-party/organisation pairs before customer visibility, then aggregate by site for the equipment projection. Retain served-facility visibility separately. | Frozen projection and reader; assert explicit located/unlocated/Restricted populations, customer labels, served areas, multiple current parties, location history and exact page/order/view counts. |
+| Sites register | `Nested Loop`, `SubPlan 23`, and `permission_grants g_11` index scan: **654** | In `src/shared/sites.ts:103`, fence the cheap current site-party/organisation join before organisation visibility, then aggregate visible customer labels by site. Keep existing site permission and other derived branches. | Frozen reader; assert named visible sites and absent Restricted sites, exact customer/facility/equipment/visit counts, expired parties, invisible customer labels and first/next-page sort identity. |
+| Organisation register | `Nested Loop`, `SubPlan 8`, and its `permission_grants g_3`/`users u_4` index scans: **1,400** | In `src/shared/organisation-register.ts:109`, materialise cheap site-party/site/facility pairs before `shared.read` in `area_counts`, then aggregate authorised rows by organisation. Inspect the other independently scoped aggregate branches too: the analysed control still reaches 1,020, so one branch fence is not yet demonstrated sufficient. | Freeze the old complete reader and any changed builders. Assert explicit visible/hidden organisation counts, site/facility/deal counts and follow-up labels; retain name ambiguity, empty relationships, expired parties, all view/sort/cursor boundaries and cross-company restrictions. |
 
 Every proposed proof must compare DTOs/ordering/counts against an oracle which cannot reach any edited helper. Deep equality alone is insufficient: assert explicit record counts, kinds, states and excluded identities before comparison. Repeat the never-analysed bound on the new and frozen statements, with identical principals and binds. No equivalence proof or application improvement is claimed by this audit.
 
 ## Validation and remaining work
 
-The ten manual pairs executed against `ppo_synthetic_test`; raw artefacts remain ignored. The inventory contains 77 reader entries (some dispatch multiple kinds). Further priorities include populated optional branches and the unmeasured readers above. Claude decides follow-up prompts, one reader per pull request. Review, ready-head full CI and business acceptance are separate from these measurements.
+Twenty final manual pairs across both volumes executed against `ppo_synthetic_test`; raw artefacts remain ignored. The inventory contains 77 reader entries (some dispatch multiple kinds). Further priorities include populated optional branches and the unmeasured readers above. Claude's one review identified F1, addressed above. Claude decides follow-up prompts, one reader per pull request. Ready-head full CI, confirmation of F1 and business acceptance are separate from these measurements.
 
-`npm run check` passed (studio register, full lint, TypeScript, 1,437 unit tests with no skips, production build). A final focused lint/typecheck covers the subsequent input-metadata correction in the proof. Foundation, prototype, naming, status-source, documentation unit, migration numbering, documentation-scope and whitespace results are recorded in the draft-head completion comment.
+`npm run check` passed (studio register, full lint, TypeScript, 1,437 unit tests with no skips, production build). The complete `npm run check` was rerun successfully for F1, as were the documentation checks; `--compare` executed against all twenty retained measurement pairs and verified matching SQL, callers, inputs, JIT settings and never-analysed statistics. All seven proposed fix/proof rows were compared byte-for-byte before and after their reorder. Foundation, prototype, naming, status-source, documentation unit, migration numbering, documentation-scope and whitespace results are recorded in the draft-head completion comment.
 
 Full database/HTTP/application suites were not run locally; the manual audit is the targeted database evidence. Most GitHub suites skip this draft. One existing exception is `.github/workflows/crm-leads.yml:3`: its pull-request trigger and `leads` job have no draft guard, so GitHub also started the Leads acceptance workflow automatically. It was not manually dispatched or used to mark this PR ready; its head-specific state belongs in the completion comment. Changing that protected workflow is outside this audit. Cloud setup reported browser unavailable, so browser suites are not run locally and are left to ready-head GitHub CI. No business acceptance scenario is executed and no approval, deployment or merge is claimed.
 
@@ -216,3 +301,19 @@ These hashes identify local ignored outputs from this execution; rerunning creat
 | `people.json` | `f259c467014d7e5c35b1501993e92de0a199b176c3ddebdab805663bddce1092` |
 | `conversations.json` | `d6087b28a3591d01366a8ccb460d7f2377e05515212c976f1466a3736e4bc4e4` |
 | `estimating-workload.json` | `a60e8efc235e18d2b848ee8254f6bff5b112215d942e1df0e68715fbc627a291` |
+
+### Size-45 raw run identity
+
+| Raw artefact | SHA-256 |
+| --- | --- |
+| `45/organisations.json` | `206e6c5c44f87891f5b4f5eabd15f213c66d5f06d94948bff21b49c71a064f2f` |
+| `45/sites.json` | `e29a30481acc2a16cad2e575e6f21c7af64a9a2181805d913e15f482263a1165` |
+| `45/my-work.json` | `9565f28a4816b8a915fad19ee845892990a1b45c91457eb2d88c6cd1917c1fd9` |
+| `45/deals.json` | `30bf632bbb11e03d6f5d22f1d34b0f45f6294eb89f47480939cbe8302577e530` |
+| `45/projects.json` | `4a8be700c2461d570538b801a2b0454ae16c958997e132a1da81a708ba7353cc` |
+| `45/facilities.json` | `9d4f5f07d813d22b9801ef38c591a2a08157120abdf91cd82a402d6bcf8ee7a6` |
+| `45/equipment.json` | `52b7066431e7cc83dc6fc15ff00301c9d9957904ab8b45d13ee2fa1fe4ad7894` |
+| `45/people.json` | `931aa9567229554eaa5279fec3c6a76f9650c16ab8c04aa67e891254d3ee1aba` |
+| `45/conversations.json` | `8a9a472dd013323f6eb4ca88dae29553838372dd14f6e29c10ea95547b42abfa` |
+| `45/estimating-workload.json` | `04749df54b866d19f3c8eb1db25223bf67669702bf9123ebe5848a946272768d` |
+| `growth.json` | `0a9f8b0378e503ded9094a2035ddce1ef43cb4fc800fe715a0079656854e0cc1` |

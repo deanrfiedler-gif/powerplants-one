@@ -1,7 +1,7 @@
 // Manual, disposable proof only. Not matched by tests/database/*.test.ts.
 import assert from "node:assert/strict";
 import { createHash, randomUUID } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import pg from "pg";
 import { reset } from "../../scripts/database";
 import { localConfig } from "../../src/platform/config";
@@ -37,8 +37,11 @@ import {
   type PlanNode,
 } from "../helpers/estimate-review-candidate-plan";
 
-const output = "tmp/visibility-plan-audit";
-const size = 30;
+const size = Number(
+  process.argv.find((arg) => arg.startsWith("--size="))?.slice(7) ?? 30,
+);
+assert.ok(size === 30 || size === 45, "Use --size=30 or --size=45");
+const output = `tmp/visibility-plan-audit${size === 30 ? "" : "/45"}`;
 const dealInput = Object.fromEntries(
   Object.entries(initialWorklistFilters).filter(([, value]) => value !== ""),
 );
@@ -162,6 +165,99 @@ const readers: Reader[] = [
     tables: ["opportunities", "organisations", "estimating_workspaces"],
   },
 ];
+
+// This is a two-point screen, not a claim about asymptotic complexity.
+// The midpoint separates nominal linear (1.5x) and quadratic (2.25x) growth.
+function compareVolumes() {
+  const root = "tmp/visibility-plan-audit";
+  const growth = readers.map((reader) => {
+    const small = JSON.parse(
+      readFileSync(`${root}/${reader.name}.json`, "utf8"),
+    );
+    const large = JSON.parse(
+      readFileSync(`${root}/45/${reader.name}.json`, "utf8"),
+    );
+    assert.equal(small.fixture_size, 30);
+    assert.equal(large.fixture_size, 45);
+    assert.equal(small.without.sql, large.without.sql);
+    assert.equal(small.profile, large.profile);
+    assert.equal(small.company, large.company);
+    assert.deepEqual(small.input, large.input);
+    assert.equal(small.without.jit_setting, large.without.jit_setting);
+    for (const sample of [small, large]) {
+      assert.ok(sample.without.visible_rows > 0);
+      assert.ok(sample.beforeStatistics.length > 0);
+      assert.equal(sample.beforeStatistics.length, reader.tables.length);
+      assert.equal(sample.afterStatistics.length, reader.tables.length);
+      for (const stat of [
+        ...sample.beforeStatistics,
+        ...sample.afterStatistics,
+      ]) {
+        assert.equal(stat.last_analyze, null, stat.relname);
+        assert.equal(stat.last_autoanalyze, null, stat.relname);
+        assert.equal(Number(stat.analyze_count), 0, stat.relname);
+        assert.equal(Number(stat.autoanalyze_count), 0, stat.relname);
+      }
+    }
+    const loops = large.without.max_loops / small.without.max_loops;
+    const ratio = large.fixture_size / small.fixture_size;
+    const midpoint = (ratio + ratio ** 2) / 2;
+    // Facilities returns its total in a separate count query. Its main SQL
+    // fetches limit+1 rows, so the raw statement row count is not a screen total.
+    const smallDenominator =
+      reader.name === "facilities"
+        ? small.without.reader_result.total
+        : small.without.visible_rows;
+    const largeDenominator =
+      reader.name === "facilities"
+        ? large.without.reader_result.total
+        : large.without.visible_rows;
+    assert.ok(Number.isInteger(smallDenominator) && smallDenominator > 0);
+    assert.ok(Number.isInteger(largeDenominator) && largeDenominator > 0);
+    const bounded =
+      small.without.max_loops <= 10 * smallDenominator &&
+      large.without.max_loops <= 10 * largeDenominator;
+    return {
+      reader: reader.name,
+      fixture_ratio: ratio,
+      classification: bounded
+        ? "BOUNDED"
+        : loops > midpoint
+          ? "SUPER-LINEAR (AT RISK)"
+          : "LINEAR OVER SCREEN",
+      screening_midpoint: midpoint,
+      denominator: {
+        kind:
+          reader.name === "my-work"
+            ? "Returned overview window"
+            : ["deals", "conversations", "estimating-workload"].includes(
+                  reader.name,
+                )
+              ? "Returned candidate window"
+              : "Reported visible population total",
+        small: smallDenominator,
+        large: largeDenominator,
+      },
+      small: {
+        loops: small.without.max_loops,
+        hits: small.without.shared_hit_blocks,
+        ms: small.without.execution_ms,
+      },
+      large: {
+        loops: large.without.max_loops,
+        hits: large.without.shared_hit_blocks,
+        ms: large.without.execution_ms,
+      },
+      ratios: {
+        loops,
+        hits: large.without.shared_hit_blocks / small.without.shared_hit_blocks,
+        ms: large.without.execution_ms / small.without.execution_ms,
+      },
+    };
+  });
+  writeFileSync(`${root}/growth.json`, JSON.stringify(growth, null, 2));
+  console.log(JSON.stringify(growth));
+}
 
 async function statistics(tables?: string[]) {
   return (
@@ -317,7 +413,7 @@ async function fixture(p: Principal) {
     assert.equal(new Set(ids).size, size);
   const actual = await counts(Object.keys(created));
   for (const n of Object.values(actual))
-    assert.ok(n >= size && n <= 50, `Small primary population: ${n}`);
+    assert.ok(n >= size && n <= size + 10, `Small primary population: ${n}`);
   return { created, counts: actual };
 }
 
@@ -426,76 +522,79 @@ mkdirSync(output, { recursive: true });
 const selected = process.argv.find((a) => a.startsWith("--reader="))?.slice(9);
 assert.ok(!selected || readers.some((r) => r.name === selected));
 try {
-  for (const reader of readers.filter(
-    (r) => !selected || r.name === selected,
-  )) {
-    console.log(`Preparing ${reader.name}`);
-    await reset();
-    const p = (await createSession("coordinator")).principal;
-    const native = await fixture(p);
-    const tableCounts = await counts(reader.tables);
-    const beforeStatistics = await assertNeverAnalysed(reader.tables);
-    const without = await measure(reader, p);
-    const afterStatistics = await assertNeverAnalysed(reader.tables);
-    const dependencies = await statistics();
-    // This file is a manual proof only, never a CI test or setup path.
-    await database().query("ANALYZE");
-    const controlStatistics = await statistics(reader.tables);
-    for (const stat of controlStatistics)
-      assert.ok(Number(stat.analyze_count) > 0, stat.relname);
-    const control = await measure(reader, p, without);
-    assert.deepEqual(control.values, without.values);
-    assert.equal(control.jit_setting, without.jit_setting);
-    assert.equal(without.sql, control.sql);
-    assert.equal(without.visible_rows, control.visible_rows);
-    const bound = 10 * without.visible_rows;
-    const summary = {
-      reader: reader.name,
-      profile: "coordinator",
-      company: CRM.company,
-      input:
-        reader.name === "facilities"
-          ? { sort: "site", area_view: "all" }
-          : reader.name === "deals"
-            ? dealInput
-            : {},
-      fixture_size: size,
-      tableCounts,
-      beforeStatistics,
-      afterStatistics,
-      dependencies,
-      controlStatistics,
-      bound,
-      classification: without.max_loops <= bound ? "BOUNDED" : "AT RISK",
-      without,
-      control,
-      native,
-    };
-    writeFileSync(
-      `${output}/${reader.name}.json`,
-      JSON.stringify(summary, null, 2),
-    );
-    console.log(
-      JSON.stringify({
+  if (process.argv.includes("--compare")) {
+    compareVolumes();
+  } else
+    for (const reader of readers.filter(
+      (r) => !selected || r.name === selected,
+    )) {
+      console.log(`Preparing ${reader.name}`);
+      await reset();
+      const p = (await createSession("coordinator")).principal;
+      const native = await fixture(p);
+      const tableCounts = await counts(reader.tables);
+      const beforeStatistics = await assertNeverAnalysed(reader.tables);
+      const without = await measure(reader, p);
+      const afterStatistics = await assertNeverAnalysed(reader.tables);
+      const dependencies = await statistics();
+      // This file is a manual proof only, never a CI test or setup path.
+      await database().query("ANALYZE");
+      const controlStatistics = await statistics(reader.tables);
+      for (const stat of controlStatistics)
+        assert.ok(Number(stat.analyze_count) > 0, stat.relname);
+      const control = await measure(reader, p, without);
+      assert.deepEqual(control.values, without.values);
+      assert.equal(control.jit_setting, without.jit_setting);
+      assert.equal(without.sql, control.sql);
+      assert.equal(without.visible_rows, control.visible_rows);
+      const bound = 10 * without.visible_rows;
+      const summary = {
         reader: reader.name,
+        profile: "coordinator",
+        company: CRM.company,
+        input:
+          reader.name === "facilities"
+            ? { sort: "site", area_view: "all" }
+            : reader.name === "deals"
+              ? dealInput
+              : {},
+        fixture_size: size,
+        tableCounts,
+        beforeStatistics,
+        afterStatistics,
+        dependencies,
+        controlStatistics,
         bound,
-        classification: summary.classification,
-        without: {
-          loops: without.max_loops,
-          hits: without.shared_hit_blocks,
-          ms: without.execution_ms,
-          jit: without.has_jit,
-          visible: without.visible_rows,
-        },
-        control: {
-          loops: control.max_loops,
-          hits: control.shared_hit_blocks,
-          ms: control.execution_ms,
-          jit: control.has_jit,
-        },
-      }),
-    );
-  }
+        screen_bound_exceeded: without.max_loops > bound,
+        without,
+        control,
+        native,
+      };
+      writeFileSync(
+        `${output}/${reader.name}.json`,
+        JSON.stringify(summary, null, 2),
+      );
+      console.log(
+        JSON.stringify({
+          reader: reader.name,
+          bound,
+          screen_bound_exceeded: summary.screen_bound_exceeded,
+          without: {
+            loops: without.max_loops,
+            hits: without.shared_hit_blocks,
+            ms: without.execution_ms,
+            jit: without.has_jit,
+            visible: without.visible_rows,
+          },
+          control: {
+            loops: control.max_loops,
+            hits: control.shared_hit_blocks,
+            ms: control.execution_ms,
+            jit: control.has_jit,
+          },
+        }),
+      );
+    }
 } finally {
   await closeDatabase();
 }
