@@ -961,6 +961,21 @@
 /* The refined bar begins at 768 px; preserve the old rail geometry for the 13 px
    overlap with the accepted phone breakpoint until S2 replaces the desktop rail. */
 @media (min-width: 768px) and (max-width: 780px) {
+  /* This overlap still receives the phone account/container rules. Reserve the
+     account's intrinsic track inside the 16 px end inset, with the same twin
+     spacers as the wider bar, rather than letting a phone flex basis size it. */
+  [data-shell-version="refined"] #shell-header .ppo-header-end {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) auto minmax(0, 1fr) 1px 4px auto;
+  }
+  [data-shell-version="refined"] #shell-header .header-account .identity-strip {
+    position: relative;
+    inset: auto;
+    display: block;
+    width: max-content;
+    max-width: none;
+    flex: none;
+  }
   [data-shell-version="refined"]
     #shell-header
     .ppo-header-utilities

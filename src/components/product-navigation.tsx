@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { ShellIcon as ProductIcon } from "./shell-icon";
 import { ShellControls } from "./shell-controls";
 import { useShell } from "./shell-provider";
@@ -42,8 +43,11 @@ const subscribe = (changed: () => void) => {
   media.addEventListener("change", changed);
   return () => media.removeEventListener("change", changed);
 };
-function PageHierarchy({ crumbs, location }: { crumbs: Crumb[]; location: string }) {
+const subscribeHierarchyMount = () => () => {};
+const hierarchyServerMount = () => null;
+function PageHierarchy({ crumbs, location, separate = false }: { crumbs: Crumb[]; location: string; separate?: boolean }) {
   const panel = useRef<HTMLDivElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  const mount = useSyncExternalStore(subscribeHierarchyMount, () => document.querySelector(".app-frame"), hierarchyServerMount);
   const [open, setOpen] = useState(false);
   useEffect(() => { panel.current?.hidePopover(); }, [location]);
   useEffect(() => {
@@ -51,16 +55,21 @@ function PageHierarchy({ crumbs, location }: { crumbs: Crumb[]; location: string
     window.addEventListener(shellPanelEvent, close);
     return () => window.removeEventListener(shellPanelEvent, close);
   }, []);
-  return <>
-    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
-      openShellPanel("hierarchy"); panel.current?.togglePopover();
-    }}><ProductIcon name="list" /></button>
+  const contents = (
     <div ref={panel} id="page-hierarchy" popover="auto" className="ppo-hierarchy-panel" aria-label="Page hierarchy" onToggle={event => setOpen(event.newState === "open")} onKeyDown={event => {
       if (event.key === "Escape") { event.preventDefault(); panel.current?.hidePopover(); trigger.current?.focus(); }
     }}>
       <strong>Page hierarchy</strong>
       <ol>{crumbs.map((crumb,index) => <li key={crumb.key}>{crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : <span aria-current={index === crumbs.length - 1 ? "page" : undefined}>{crumb.label}</span>}</li>)}</ol>
     </div>
+  );
+  return <>
+    <button ref={trigger} className="ppo-breadcrumb-trigger" aria-label="Page hierarchy" aria-expanded={open} aria-controls="page-hierarchy" onClick={() => {
+      openShellPanel("hierarchy"); panel.current?.togglePopover();
+    }}><ProductIcon name="list" /></button>
+    {/* The hierarchy is its own list, not a second current page in the breadcrumb
+        band. Keep it in the frame so its rail positioning variables still apply. */}
+    {separate ? mount && createPortal(contents, mount) : contents}
   </>;
 }
 export function ProductNavigation() {
@@ -656,7 +665,7 @@ export function ProductHeader() {
       </header>
       {shell.refinedDesktop && <div className="ppo-refined-location">
         <nav className="product-heading" aria-label="Breadcrumb">
-          {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} />}
+          {hierarchy && <PageHierarchy crumbs={trail} location={`${path}?${query.toString()}`} separate />}
           <ol className="ppo-crumbs" title={trail.map((crumb) => crumb.label).join(" / ")}>
             {crumbs.map((crumb, index) => <li key={crumb.key} data-crumb={crumb.kind}>
               {index > 0 && <span className="ppo-crumb-separator" aria-hidden="true"> / </span>}

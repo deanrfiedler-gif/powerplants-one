@@ -5,6 +5,7 @@ import { NotificationBell } from "./notification-bell";
 import { navigateWithReview } from "./navigation-intent";
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   useSyncExternalStore,
@@ -102,11 +103,15 @@ export function ShellControls({
   // Match the phone badge's deferred projection: ten seconds or the first bell opening,
   // without repeating this costly inbox read when the window regains focus.
   const [noticesArmed, setNoticesArmed] = useState(false);
-  useEffect(() => {
-    if (!refined || !context || noticesArmed) return;
+  const notificationScope = context?.preference_scope;
+  // BusinessSession's session-ready event revalidates the same identity after the
+  // first context response. That replacement object must not restart the delay.
+  // Register before paint so a visible refined header has a running deadline.
+  useLayoutEffect(() => {
+    if (!refined || !notificationScope || noticesArmed) return;
     const timer = setTimeout(() => setNoticesArmed(true), 10000);
     return () => clearTimeout(timer);
-  }, [refined, context, noticesArmed]);
+  }, [refined, notificationScope, noticesArmed]);
   const notifications = usePlatformResource<Awaited<ReturnType<typeof notificationInbox>>>(refined && context && noticesArmed ? "notifications" : null, false);
   const notificationCount = notifications.data?.state !== "unavailable" ? capShellBadge(notifications.data?.unread) : null;
   const [allActions,setAllActions] = useState(false);

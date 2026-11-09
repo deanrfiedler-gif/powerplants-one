@@ -375,6 +375,7 @@ test("refined breadcrumb keeps the full hierarchy and accessible separators", as
     /Sales.*Deals/,
   );
   await expect(location.locator("[aria-current=page]")).toBeVisible();
+  await expect(location.locator("[aria-current=page]")).toHaveCount(1);
   await expect(
     location.locator(".ppo-crumb-separator:not([aria-hidden=true])"),
   ).toHaveCount(0);
@@ -384,6 +385,8 @@ test("refined breadcrumb keeps the full hierarchy and accessible separators", as
   });
   await hierarchy.click();
   await expect(page.locator("#page-hierarchy:popover-open")).toBeVisible();
+  await expect(location.locator("[aria-current=page]")).toHaveCount(1);
+  await expect(page.locator("#page-hierarchy [aria-current=page]")).toBeVisible();
   await page.locator("#page-hierarchy").getByRole("link").first().focus();
   await page.keyboard.press("Escape");
   await expect(hierarchy).toBeFocused();
@@ -447,4 +450,37 @@ test("refined unread projection waits ten seconds or the first bell opening", as
   expect(reads).toBe(1);
   await page.getByRole("button", { name: /^Notifications/ }).click();
   await expect.poll(() => reads).toBeGreaterThan(1);
+});
+
+test("same-identity context revalidation cannot restart the deferred inbox deadline", async ({ page }) => {
+  const context = await (await page.request.get("/api/v1/shell/context")).json();
+  const company = context.companies[0];
+  let revalidated = false;
+  await page.route("**/api/v1/shell/context", route => route.fulfill({ json: {
+    ...context,
+    // A visible context field proves that React consumed the replacement, not
+    // merely that its HTTP response arrived. The preference scope stays fixed.
+    companies: [{ ...company, name: revalidated ? "SYN Timer revalidated" : "SYN Timer initial" }],
+    working_company_id: company.id,
+  } }));
+  let reads = 0;
+  await page.route("**/api/v1/notifications", route => {
+    reads++;
+    return route.fulfill({ json: { state: "available", unread: 3, items: [] } });
+  });
+  await page.clock.install();
+  await page.clock.pauseAt(new Date());
+  await page.goto("/customers");
+  await expect(page.locator("#refined-new-toggle")).toBeVisible();
+  await page.clock.runFor(5000);
+  revalidated = true;
+  // BusinessSession dispatches this after its independently loaded identity.
+  await page.evaluate(() => window.dispatchEvent(new Event("ppo-session-ready")));
+  await expect(page.getByRole("button", { name: "Switch tenant: SYN Timer revalidated", exact: true })).toBeVisible();
+  await page.clock.runFor(4999);
+  expect(reads).toBe(0);
+  await page.clock.runFor(1);
+  await expect.poll(() => reads).toBe(1);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  expect(reads).toBe(1);
 });
