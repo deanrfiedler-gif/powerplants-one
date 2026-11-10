@@ -5,30 +5,26 @@ date: 2026-11-10
 
 Dean created the private Figma file "PPO - Library" and asked for the shared table interactions page to be drawn there, so that every module's registers use one behaviour for moving and resizing columns instead of each module redrawing its own interaction sheet. The [proposal record](../decisions/library-grid-table-interactions.md) (PPO-LIBRARY-GRID-INTERACTIONS-PROP) lists what was drawn.
 
-- **Variables.** The library now holds the 66 "PPO colour" variables copied from PPO - Shell (accepted 8 November 2026). Twenty of them carry web code syntax where the app already has an identical CSS value.
-- **Text styles.** Seven proposed Roboto text styles.
-- **Components.** Page "Grid · Table interactions" holds five `Status: Proposed` component families: Grid / Header cell (8 states), Grid / Row (7), Grid / Checkbox, Grid / Column divider and Grid / Drop indicator.
-- **Review board.** Six cards:
-  - column reorder, with its keyboard, non-drag and touch routes;
-  - column resize, with its hit zone, guide, limits, double-click to fit, keyboard steps and the Set width… popover;
-  - sort, header states and frozen edge;
-  - row states;
-  - values, sources and the accepted decisions;
-  - the WAI-ARIA data grid keyboard contract, touch rules and shared-view behaviour.
-- **Sources.** The page consolidates the Sales ST01 and Estimating ST01 sheets, which differ on the focus-ring colour and the frozen edge. The Projects and Supply interaction pages are empty and adopt the library page directly.
-- **Decisions.** Dean asked for the recommendations to be checked as the most professional approach; the check against WCAG 2.2 AA, the component rules and data-grid practice changed D3 and D4 and added D6–D8. Dean then accepted D1–D8 as recommended on 10 November 2026, and the page was updated to match. The page itself, and its components, remain proposed until he accepts it.
-- **Audit.** Dean then asked for an audit of the pages. Section 9 of the record holds it: four stale captions corrected in the file, gaps G1–G12, refinements R1–R6, presentation items P1–P7, ideas N1–N10 and a recommended order. Its main finding is that the header menu has no pointer or touch opener, so the touch resize route accepted in D7 cannot be reached until a menu button is added (G1). None of the recommendations is drawn yet.
+- **Variables and styles.** The library holds 84 variables: the 66 "PPO colour" variables copied from PPO - Shell (accepted 8 November 2026), 15 "PPO layout" variables and 3 "Grid density" variables with Comfortable and Compact modes. It also holds eight text styles and one effect style. [`docs/design/library-variables.json`](../design/library-variables.json) records the variables.
+- **Pages.** Read me (file cover, page index, how to use), Foundations (specimens) and Grid · Table interactions.
+- **Components.** Nine `Status: Proposed` Grid component families: Header cell, Header cell · Select, Cell, Cell · Edit, Row, Row marker, Checkbox, Column divider and Drop indicator, with icons and annotation cursors.
+- **Review board.** A header band, an anatomy figure and eleven cards: column reorder, column resize, sort and frozen edges, rows and selection, grid states, inline editing, columns and undo, keyboard and shared views, density, Do and Don't, and values with the decisions and a change log. A playground frame links the variants for a Figma prototype.
+- **Decisions.** Dean accepted D1–D8 as recommended on 10 November 2026, after asking for the recommendations to be checked against professional practice.
+- **Audit.** Dean then asked for an audit; section 9 of the record holds it. He accepted its recommended order ("Accept the recommended order and draw them"), and section 10 records what was drawn. The components and the board were rebuilt, so node IDs recorded earlier that day were replaced. The audit's main finding, that the header menu had no pointer or touch opener, is fixed by a menu button on the header cell.
+- **To confirm.** Three things drawn with the audit items are new and await Dean: the 40% frozen-zone limit, the personal-layout rules, and Compact density for pointer devices only.
+- **Token check.** The enforced token check could not be pointed at the library, because it allows no new variable without a CSS name and 63 library variables have none. The 21 with a code name were verified against the app's CSS with the check's own logic.
 - **Community libraries.** Dean switched off the eight community libraries on the file; a connector read confirmed none remain added.
 
-**Checked:** every card was rendered and inspected after each change, and drawing defects found on the way were fixed (icon placement, focus rings shifting content, an oversized stage). Contrast ratios for D1 and D8 were computed from the colour values. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
+**Checked:** every card, the components, the playground, the Foundations board and the cover were rendered and inspected, and drawing defects found on the way were fixed. A structural read found no solid fill or stroke without a variable, no text without a text style and no shadow without the effect style. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
 
 **Not done:**
-- The page is not accepted and the library is not published.
+- The page is not accepted and the library is not published; no named version is saved.
+- The prototype links were set and read back but not played.
 - No module file uses the components yet, and Sales ST01 and Estimating ST01 are unchanged.
-- Layout variables, effect styles, icons, shell components and the page template are not in the library.
-- No application code, binding, register or page guide changed; RegisterTable alignment and per-type width limits are later reviewed changes.
+- Buttons, chips, menus and dialogs are not yet library components; audit candidates N4–N8 and N10 are not drawn.
+- No application code, binding, register or page guide changed.
 
 Every record shown is synthetic. File links are not recorded here (ADR-0050, ADR-0053).
 
 <!-- decision-index -->
-[Grid table interactions in PPO - Library](../decisions/library-grid-table-interactions.md) (PPO-LIBRARY-GRID-INTERACTIONS-PROP) records the shared column reorder, column resize, sort, frozen-edge, row-state, keyboard, touch and shared-view pattern drawn in the private library file on 10 November 2026, its sources in the Sales and Estimating interaction sheets, its values and Dean's accepted decisions D1–D8. It authorises no application code, route, migration, permission or deployment; all data is synthetic.
+[Grid table interactions in PPO - Library](../decisions/library-grid-table-interactions.md) (PPO-LIBRARY-GRID-INTERACTIONS-PROP) records the shared register pattern drawn in the private library file on 10 November 2026 (column reorder and resize, sort, frozen edges, rows and selection, grid states, inline editing, column chooser, keyboard, touch, shared views and density), its sources in the Sales and Estimating interaction sheets, its values, Dean's accepted decisions D1–D8, the audit and the items drawn from it. It authorises no application code, route, migration, permission or deployment; all data is synthetic.
