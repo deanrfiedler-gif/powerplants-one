@@ -48,20 +48,22 @@ The first components and review board were replaced on 10 November 2026 when the
 | Page | Node | Holds |
 |---|---|---|
 | Read me | `0:1` | File cover `36:3`; Read me card `36:114` with purpose, page index, how to use the library, rules and contents |
-| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, nine text styles, layout, density and control-size variables, three effect styles |
+| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, nine text styles, layout, density and control-size variables, three effect styles |
 | Icons | `46:2030` | 22 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page when the Controls page was drawn (section 12) |
 | Controls | `46:2031` | Sixteen control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
 | Grid · Table interactions | `4:76` | Components section `22:337`; review board `26:587`; playground frame `32:1736` |
 | Move · Drag and drop | `66:37` | Six parts for moving things and their review board, recorded in [Move · Drag and drop in PPO - Library](library-move.md) |
 | Board · Cards and stages | `82:37` | Five board parts and their review board, recorded in [Board · Cards and stages in PPO - Library](library-board.md) |
 | Time · Planners and calendars | `97:37` | Nine time parts and their review board, recorded in [Time · Planners and calendars in PPO - Library](library-time.md) |
+| Gantt · Bars and links | `116:37` | Six Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
 
 **Variables and styles**
 
 | Item | Count | Notes |
 |---|---|---|
 | Collection "PPO colour" | 66, one mode "Value" | Names, values, scopes and descriptions as in PPO - Shell. Web code syntax on the 20 whose value is identical to an existing CSS property in the app |
-| Collection "PPO layout" | 27, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)) |
+| Collection "PPO layout" | 30, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)), and `gantt/bar-height`, `gantt/week-width`, `radius/milestone` ([Gantt record](library-gantt.md)) |
+| Collection "Gantt colour" | 11, one mode "Value" | The Gantt colours of PPO-GANTT-FIGMA-COLOURS-DEC; nine carry the built Gantt's `--gantt-*` code names ([Gantt record](library-gantt.md)) |
 | Collection "Grid density" | 3, modes "Comfortable" and "Compact" | `grid/row-height` 40 / 32, `grid/header-height` 36 / 32, `grid/cell-padding-x` 12 / 10 |
 | Collection "Control size" | 3, modes "Medium" and "Small" | `control/height` 32 / 28, `control/field-height` 36 / 32, `control/padding-x` 12 / 10 (section 12) |
 | Text styles | 9 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium, 10 Medium; Display / 40 Medium for file covers |

@@ -137,7 +137,7 @@ On 10 November 2026 Dean confirmed these five items, together with the five on t
 - **Candidates, not drawn.** Swimlanes by owner (a follow-up on the Sales Deals page), limits on cards per stage, a compact card, cover images.
 - **No proof beyond the design.** No prototype links were set on the Board parts. Keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two `board/` variables have no CSS property yet.
-- **Next pages in the accepted order.** Time · Planners and calendars was drawn on 10 November 2026 and has [its own record](library-time.md). The Gantt chart in the Projects file is not started.
+- **Next pages in the accepted order.** Time · Planners and calendars was drawn on 10 November 2026 and has [its own record](library-time.md). At Dean's choice the Gantt parts were drawn on a library page, Gantt · Bars and links, instead of in the Projects file ([its record](library-gantt.md)).
 
 ## 8. Checks
 

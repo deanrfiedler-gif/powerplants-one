@@ -141,7 +141,7 @@ On 10 November 2026 Dean confirmed these five items: "Confirm all five items as 
 - **Candidates, not drawn.** A month view (no accepted page draws one), multi-day bars in a calendar week, the planner's map, editing a repeating meeting.
 - **No proof beyond the design.** No prototype links were set on the Time parts. Timing, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The four `time/` variables have no CSS property yet.
-- **Next page in the accepted order.** The Gantt chart, drawn in the Projects file on this page's axis. Not started.
+- **Next page in the accepted order.** The Gantt chart was to be drawn in the Projects file on this page's axis. At Dean's choice it was drawn on a library page, Gantt · Bars and links, instead ([its record](library-gantt.md)). That page added two kinds to Time / Band, Working exception and Non-working exception, for the saved calendar's dated exceptions; Time / Band now has seven kinds.
 
 ## 8. Checks
 

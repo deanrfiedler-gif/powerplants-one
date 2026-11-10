@@ -5,16 +5,17 @@
       "PPO colour",
       "PPO layout",
       "Grid density",
-      "Control size"
+      "Control size",
+      "Gantt colour"
     ],
     "read_on": "2026-11-10",
     "read_by": "Figma connector, read-only"
   },
-  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md and docs/decisions/library-time.md.",
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md and docs/decisions/library-gantt.md.",
   "counts": {
-    "variables": 99,
-    "mapped": 21,
-    "no_code_name": 78
+    "variables": 113,
+    "mapped": 30,
+    "no_code_name": 83
   },
   "variables": [
     {
@@ -597,6 +598,24 @@
       "status": "no-code-name"
     },
     {
+      "collection": "PPO layout",
+      "name": "gantt/bar-height",
+      "value": 20,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "gantt/week-width",
+      "value": 120,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/milestone",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
       "collection": "Grid density",
       "name": "grid/row-height",
       "value": 40,
@@ -654,6 +673,81 @@
         "Medium": 12,
         "Small": 10
       },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-fill",
+      "value": "#e8f1fb",
+      "code": "var(--gantt-blue-fill)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-progress",
+      "value": "#b7d1ef",
+      "code": "var(--gantt-blue-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-outline",
+      "value": "#4a7bb7",
+      "code": "var(--gantt-blue-outline)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/orange-progress",
+      "value": "#f6cd8b",
+      "code": "var(--gantt-orange-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/green-progress",
+      "value": "#9fcd8e",
+      "code": "var(--gantt-green-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/red-progress",
+      "value": "#f2b5a7",
+      "code": "var(--gantt-red-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today",
+      "value": "#7c5cc4",
+      "code": "var(--gantt-today)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today-surface",
+      "value": "#eee9fb",
+      "code": "var(--gantt-today-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today-text",
+      "value": "#5b3fb0",
+      "code": "var(--gantt-today-text)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/dependency",
+      "value": "#899eb1",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/dependency-warning",
+      "value": "#b95445",
       "status": "no-code-name"
     }
   ]

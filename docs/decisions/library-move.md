@@ -141,7 +141,7 @@ On 10 November 2026 Dean confirmed these five items, together with the five on t
 - **Other pages unchanged.** The grid page's lifted header and origin-slot states stay as Grid / Header cell variants. No module file changed.
 - **No proof beyond the design.** The steps are drawn, not played; no prototype links were set on the Move components. Timing, auto-scroll, keyboard and screen-reader behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The four `move/` variables have no CSS property yet.
-- **Next pages in the accepted order.** Board · Cards and stages was drawn on 10 November 2026 and has [its own record](library-board.md). Time · Planners and calendars followed ([its record](library-time.md)) and draws the time ghost in full. The Gantt chart in the Projects file is not started.
+- **Next pages in the accepted order.** Board · Cards and stages was drawn on 10 November 2026 and has [its own record](library-board.md). Time · Planners and calendars followed ([its record](library-time.md)) and draws the time ghost in full. At Dean's choice the Gantt parts were drawn on a library page, Gantt · Bars and links, instead of in the Projects file ([its record](library-gantt.md)); it moves bars with the time ghost.
 
 ## 8. Checks
 
