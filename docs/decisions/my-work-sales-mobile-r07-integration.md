@@ -43,6 +43,8 @@ This is a change to a synthetic prototype. Nothing here is a production claim, a
 | M11 | **A workspace that mounts its own menu gets a one-row phone header**: menu, title, search, page guide, account. The rule is keyed to the header's menu slot, so only My Work is affected. | This also lifts shell drift SD-1 **for My Work**: the older three-column grid no longer pushes search and the page guide onto a second row there. Every other page keeps the header it has; SD-1 remains open for them. The in-page "Show menu" bar is removed from all six views. |
 | M12 | **Weather preferences are per-person presentation in the browser** (shown or hidden, last place chosen), beside the existing layout preference (D8). | No server preference store exists. They hold no forecast and imply no provider. |
 
+**Amendment — 10 November 2026.** "Five icon-only cells" in M10 is superseded: every phone bar cell shows a visible label ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The destinations and routes in M10 stand.
+
 ## 3. Capability status
 
 Status words as the report asks: *connected*, *UI-ready, unconfigured*, *deferred*, *blocked by a named missing contract*.
