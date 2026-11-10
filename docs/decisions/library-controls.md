@@ -153,7 +153,7 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.
 - **No proof beyond the design.** 32 prototype links (button, link, icon button and checkbox states) were set and read back, not played. Keyboard and screen-reader behaviour needs the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The Control size variables and the new layout variables have no CSS property yet.
-- **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board · Cards and stages followed the same day ([its record](library-board.md)). Planners and calendars with a shared time axis, and the Gantt chart in the Projects file, are not started.
+- **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board · Cards and stages followed the same day ([its record](library-board.md)). Time · Planners and calendars followed ([its record](library-time.md)). The Gantt chart in the Projects file is not started.
 
 ## 8. Checks
 

@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-MOVE-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; five items await his confirmation (section 6); every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Move · Drag and drop in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items to confirm ([section 6](#6-to-confirm)).
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean accepted an order for the next pages of `PPO - Library`: Controls, shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file ([Controls record](library-controls.md)). After the Controls page he answered: "Confirm all nine items as recommended and draw the next page". The nine items are recorded in section 6.1 of the [grid record](library-grid-table-interactions.md) and section 6 of the Controls record. This record covers the next page, named "Move · Drag and drop".
 
@@ -82,7 +82,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | 7 · Without dragging | `73:811` | Keyboard pick-up, move and drop; the Move menu; touch rules; keys |
 | 8 · After the drop | `74:852` | Saved with Undo; still saving; refused by the server; announcements; rules |
 | 9 · Do and Don't | `74:1030` | Three pairs |
-| 10 · Values, sources and items to confirm | `76:1061` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 10 · Values, sources and confirmed items | `76:1061` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The example lists, cards and containers on the board are plain frames, not library components; the Board cards page supplies the card ([board record](library-board.md)). The Read me page and the Foundations board were updated for the new page and variables.
 
@@ -121,9 +121,11 @@ The example lists, cards and containers on the board are plain frames, not libra
 | Undo | Toast with Undo for 6 s | Shell R71; grid audit R3 |
 | Announcements | Polite live region on pick-up, each move, drop, cancel and undo | Grid D3 |
 
-## 6. To confirm
+## 6. Confirmed — 10 November 2026
 
-| ID | Item | Drawn | Why it needs a decision |
+On 10 November 2026 Dean confirmed these five items, together with the five on the [Board page](library-board.md): "Confirm all ten items as recommended and draw the next page". Card 10, the intro of card 5 and step 6.2 now say so.
+
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | M1 | Target feedback | A line for a position; a 2 px brand/green-deep outline and 6% tint for a container; a dashed status/danger outline with a reason tag for a refusal | Only the line has a source. The outline, the refusal and the reason tag are new |
 | M2 | Handle or whole item | A handle where the item has its own actions; the whole surface for cards and bars | No source states which items carry a handle |
@@ -139,7 +141,7 @@ The example lists, cards and containers on the board are plain frames, not libra
 - **Other pages unchanged.** The grid page's lifted header and origin-slot states stay as Grid / Header cell variants. No module file changed.
 - **No proof beyond the design.** The steps are drawn, not played; no prototype links were set on the Move components. Timing, auto-scroll, keyboard and screen-reader behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The four `move/` variables have no CSS property yet.
-- **Next pages in the accepted order.** Board · Cards and stages was drawn on 10 November 2026 and has [its own record](library-board.md). Planners and calendars with a shared time axis, and the Gantt chart in the Projects file, are not started.
+- **Next pages in the accepted order.** Board · Cards and stages was drawn on 10 November 2026 and has [its own record](library-board.md). Time · Planners and calendars followed ([its record](library-time.md)) and draws the time ghost in full. The Gantt chart in the Projects file is not started.
 
 ## 8. Checks
 

@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-BOARD-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 as the next page in the order Dean accepted; five items await his confirmation (section 6); every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 as the next page in the order Dean accepted; the five items in section 6 were confirmed by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Board · Cards and stages in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items to confirm ([section 6](#6-to-confirm)).
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean accepted an order for the next pages of `PPO - Library`: Controls, shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file ([Controls record](library-controls.md)). Controls and [Move · Drag and drop](library-move.md) were drawn that day. After the Move page was reported, with Board cards named as next in the order, Dean answered "Continue". This record covers that page, named "Board · Cards and stages".
 
@@ -81,7 +81,7 @@ The stage itself (header, then a surface/chrome column of cards) is drawn as a l
 | 6 · Board states | `88:1059` | Loading, nothing yet, no matches, could not load |
 | 7 · Keyboard, touch and phone | `88:1151` | Keys, touch rules, a 320 px phone with a stage picker |
 | 8 · Do and Don't | `89:1182` | Three pairs |
-| 9 · Values, sources and items to confirm | `89:1399` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 9 · Values, sources and confirmed items | `89:1399` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated for the new page, variables and effect style. Read me also now says that the nine Grid and Controls items are confirmed.
 
@@ -117,9 +117,11 @@ The Read me page and the Foundations board were updated for the new page, variab
 | Moving | The Move page parts; the stage-change command; Undo for 6 s | Move page; shell R71 |
 | Phone | Below 768 px one stage with a stage picker; Move to stage in the card menu | Sales board rules; Move M5 |
 
-## 6. To confirm
+## 6. Confirmed — 10 November 2026
 
-| ID | Item | Drawn | Why it needs a decision |
+On 10 November 2026 Dean confirmed these five items, together with the five on the [Move page](library-move.md): "Confirm all ten items as recommended and draw the next page". Card 9, the page header and the rule on moving to any stage in card 5 now say so. When Sales adopts the library, its board hint "Drag a card to move it one stage" becomes "Drag a card to another stage" (B5).
+
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | B1 | Card rows and their order | The six rows of the accepted Sales deal card, made the card for every board | The Sales card was accepted for deals only; service and project boards have not been drawn |
 | B2 | Signals and age at 12 px | Controls / Chip (12 Medium) for signals and 12 Regular for age; at most two signals, then "+N" | The accepted Sales card uses 10 px pills and 11 px age text |
@@ -135,7 +137,7 @@ The Read me page and the Foundations board were updated for the new page, variab
 - **Candidates, not drawn.** Swimlanes by owner (a follow-up on the Sales Deals page), limits on cards per stage, a compact card, cover images.
 - **No proof beyond the design.** No prototype links were set on the Board parts. Keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two `board/` variables have no CSS property yet.
-- **Next pages in the accepted order.** Planners and calendars with a shared time axis, then the Gantt chart in the Projects file. Neither is started.
+- **Next pages in the accepted order.** Time · Planners and calendars was drawn on 10 November 2026 and has [its own record](library-time.md). The Gantt chart in the Projects file is not started.
 
 ## 8. Checks
 
