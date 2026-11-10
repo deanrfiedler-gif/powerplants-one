@@ -59,6 +59,8 @@ export async function projectRegister(
     status: "lifecycle",
     reference: "display_number",
   }[sort];
+  // Fence the cheap parent joins before visibility, then calculate task facts.
+  // Re-expose the original aliases so visibility builders retain their SQL scopes.
   // One database snapshot for permission-scoped options, all-match counts, derived schedule facts and paging.
   const result = (
     await c.query<{
@@ -69,21 +71,30 @@ export async function projectRegister(
       options: ProjectRegisterData["options"];
       cursor_found: boolean;
     }>(
-      `WITH authorised AS MATERIALIZED (
-    SELECT p.id,p.version,p.display_number,p.title,p.company_id,p.organisation_id,p.site_id,p.coordinator_id,
-      p.lifecycle,p.acceptance_version,p.target_date,p.updated_at,p.created_at,
-      o.display_name AS customer_name,s.display_name AS site_name,s.timezone,u.display_name AS coordinator_name,
-      false AS can_edit,
-      CASE WHEN m.id IS NULL THEN NULL ELSE jsonb_build_object('id',m.id,'title',m.title,'finish_date',m.finish_date) END AS next_milestone,
-      m.finish_date AS milestone_date,
-      coalesce(m.finish_date<($6::timestamptz AT TIME ZONE s.timezone)::date,false) AS milestone_overdue,
-      (SELECT count(*)::int FROM ppo.project_tasks t WHERE t.workspace_id=p.workspace_id AND t.project_id=p.id AND NOT t.milestone AND t.status='AtRisk') AS at_risk
+      `WITH project_candidates AS MATERIALIZED (
+    SELECT p AS project,o AS organisation,s AS site,u.display_name AS coordinator_name
     FROM ppo.projects p
     JOIN ppo.organisations o ON (o.workspace_id,o.id)=(p.workspace_id,p.organisation_id)
     JOIN ppo.sites s ON (s.workspace_id,s.id)=(p.workspace_id,p.site_id)
     JOIN ppo.users u ON (u.workspace_id,u.id)=(p.workspace_id,p.coordinator_id)
-    LEFT JOIN LATERAL (SELECT t.id,t.title,t.finish_date FROM ppo.project_tasks t WHERE t.workspace_id=p.workspace_id AND t.project_id=p.id AND t.milestone AND t.status<>'Complete' ORDER BY t.finish_date ASC NULLS LAST,t.id LIMIT 1) m ON true
-    WHERE p.workspace_id=$1 AND ${projectVisibility()}
+    WHERE p.workspace_id=$1
+  ), visible_projects AS MATERIALIZED (
+    SELECT c.* FROM project_candidates c
+    CROSS JOIN LATERAL (SELECT (c.project).*) p
+    CROSS JOIN LATERAL (SELECT (c.organisation).*) o
+    CROSS JOIN LATERAL (SELECT (c.site).*) s
+    WHERE ${projectVisibility()}
+  ), authorised AS MATERIALIZED (
+    SELECT (c.project).id,(c.project).version,(c.project).display_number,(c.project).title,(c.project).company_id,(c.project).organisation_id,(c.project).site_id,(c.project).coordinator_id,
+      (c.project).lifecycle,(c.project).acceptance_version,(c.project).target_date,(c.project).updated_at,(c.project).created_at,
+      (c.organisation).display_name AS customer_name,(c.site).display_name AS site_name,(c.site).timezone,c.coordinator_name AS coordinator_name,
+      false AS can_edit,
+      CASE WHEN m.id IS NULL THEN NULL ELSE jsonb_build_object('id',m.id,'title',m.title,'finish_date',m.finish_date) END AS next_milestone,
+      m.finish_date AS milestone_date,
+      coalesce(m.finish_date<($6::timestamptz AT TIME ZONE (c.site).timezone)::date,false) AS milestone_overdue,
+      (SELECT count(*)::int FROM ppo.project_tasks t WHERE t.workspace_id=(c.project).workspace_id AND t.project_id=(c.project).id AND NOT t.milestone AND t.status='AtRisk') AS at_risk
+    FROM visible_projects c
+    LEFT JOIN LATERAL (SELECT t.id,t.title,t.finish_date FROM ppo.project_tasks t WHERE t.workspace_id=(c.project).workspace_id AND t.project_id=(c.project).id AND t.milestone AND t.status<>'Complete' ORDER BY t.finish_date ASC NULLS LAST,t.id LIMIT 1) m ON true
   ), filtered AS MATERIALIZED (
     SELECT * FROM authorised WHERE ($3='' OR position(lower($3) in lower(concat_ws(' ',title,display_number,id::text,customer_name,site_name)))>0)
       AND ($4::uuid IS NULL OR coordinator_id=$4) AND ($5::uuid IS NULL OR organisation_id=$5)
