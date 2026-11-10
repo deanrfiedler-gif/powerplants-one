@@ -4,7 +4,7 @@ Owner: Codex. Implementation: [PR #893](https://github.com/deanrfiedler-gif/powe
 
 ## Verified starting point
 
-B2 #881 and B3 #883 are merged. B3’s reviewed fix head is `ff3f04572ee624b20f157b5114c0e72e78c27db0`; Claude confirmed all five findings, including bounded post-effect reconciliation, in review 5834959542. Current main at branch integration was `ceaa98c4595bc404384bc413307a9bfbe2af22cb`. The existing B4 draft `1845dfec` was merged with main in a dedicated worktree; no implementation was written in the shared checkout.
+B2 #881 and B3 #883 are merged. B3’s reviewed fix head is `ff3f04572ee624b20f157b5114c0e72e78c27db0`; Claude confirmed all five findings, including bounded post-effect reconciliation, in review 5834959542. The initial integration used main `ceaa98c4595bc404384bc413307a9bfbe2af22cb`; final integration uses `1888cc81d4c99e68836390110a6655e767fa17d5`. The existing B4 draft `1845dfec` was merged with main in a dedicated worktree; no implementation was written in the shared checkout.
 
 B3 Application assurance [run 42730198494](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42730198494) is successful. Its latest database-3 job `129594485114` passed controlled renderer installation, static/unit/build checks and the real PostgreSQL suite. The returned final-head workflow runs were successful. The obsolete installation failure required no new retry, and no successful job was rerun. The workflow query for the main merge SHA returned no runs; this is not a claim of fresh post-merge main CI or merged-tree assurance.
 
@@ -35,4 +35,22 @@ PPO_B2_SYNTHETIC_RENDERER=command-proof-only node --env-file=.env.local \
   tests/database/finance-project-ts01.test.ts
 ```
 
-Validation is in progress; final results and retained summaries will be recorded before handover. Full rendered CI and Claude’s independent review are outstanding. No merge, deployment, real data, real ERP effect or executed TS-01 acceptance is claimed.
+Implementation commit `bbee5a57e` and conflict-free main integration `8eb2f4865` were validated as follows. [Retained case results](validation.json) include names, counts and source-log digests; repeated targeted runs are not extra coverage.
+
+| Check | Local result |
+| --- | --- |
+| Integrated `npm run check` | Passed: Studio, full lint, TypeScript, 1,449/1,449 units and production build |
+| New B4 database coverage | 16/16 passed; strengthened Approved cancellation and TS-01 public measures rerun; final integrated TS-01 currency/tax assertions passed |
+| Compiled HTTP refusal/non-disclosure | 1/1 passed on the initial and final integrated builds; normal application server, helper only in client fixture setup |
+| Historical upgrades | quality-upgrade 3/3; finance-upgrade 2/2; project-claim-finance-upgrade 1/1 |
+| Existing ProjectClaim Finance and same-name mapping | 8/8 and 7/7 |
+| Existing Finance boundaries | All 28 cases passed: 19 completed in the original aggregate run, remaining 9 in a fresh process |
+| Existing finance.test.ts | 15/16 passed; the sole OUT-14 PDF-size failure reproduced on unmodified main with the same synthetic-byte renderer |
+| Documentation | Foundation, prototype, naming, migration, status, documentation-scope, 44 documentation unit tests and whitespace checks passed |
+| Contacts | Deterministic issued-artifact check passed; pinned `src/finance/context.ts`, source pin and artifact are unchanged |
+
+The existing regression selection therefore has **64 passes and one renderer-dependent failure across 65 distinct cases**, including all six historical upgrade proofs. The OUT-14 assertion `bytes.bytes.length > 1000` fails identically on untouched main `1888cc81d`; the helper emits short synthetic bytes. The assertion is unchanged. This is not a green real-renderer suite.
+
+The first aggregate boundary run was stopped after 19 completed cases because repeated resets slowed this environment. Successful cases were preserved, and the remaining nine ran with an exact positive name selector. An unsupported skip-option attempt ran no tests; a negative-selector attempt repeated a few existing cases and was stopped. Neither counts as additional coverage. Local command proofs used a 300-second per-test harness timeout; repository and CI deadlines are unchanged.
+
+Full rendered CI, browser/restart coverage and Claude’s independent review remain outstanding at this evidence commit. PR #893 records the subsequent ready-head CI status and review handover. No merge, deployment, real data, real ERP effect or executed TS-01 acceptance is claimed.
