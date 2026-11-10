@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-GRID-INTERACTIONS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026; decisions D1–D8 accepted by Dean on 10 November 2026; the audit items were drawn the same day in the order Dean accepted (section 10), which replaced the first components and board; three new values and rules await his confirmation (section 6.1); the page and its components remain Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026; decisions D1–D8 accepted by Dean on 10 November 2026; the audit items were drawn the same day in the order Dean accepted (section 10), which replaced the first components and board; quick inline editing was added the same day at his request (section 11); four new values and rules await his confirmation (section 6.1); the page and its components remain Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Grid · Table interactions in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Decisions D1–D8 accepted by Dean on 10 November 2026 ([section 6](#6-decisions-accepted--10-november-2026)); audit items drawn the same day ([section 10](#10-audit-items-drawn--10-november-2026)). Sections 3, 4, 5, 7 and 8 describe the file as it now stands. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Decisions D1–D8 accepted by Dean on 10 November 2026 ([section 6](#6-decisions-accepted--10-november-2026)); audit items drawn the same day ([section 10](#10-audit-items-drawn--10-november-2026)); quick inline editing added the same day ([section 11](#11-quick-inline-editing--10-november-2026)). Sections 3, 4, 5, 7 and 8 describe the file as it now stands. The page itself awaits acceptance.
 
 On 9 November 2026 Dean asked whether the module UIs needed one place that defines how shared elements behave and look, giving two examples: dragging a table column to a new position, and hovering a column divider to change its width. The recommendation was to draw these as shared patterns in `PPO - Library`, which section 3 of the [design-to-build standard](../standards/design-to-build-standard.md) already designates for "shared patterns", rather than in a new file or in each module file. Dean created the `PPO - Library` file and asked for the table interactions page to be drawn: "I have created the PPO - Library file. … You can now draw the table interactions page." He then supplied the links to the shell and module files as the source for the tokens and the existing interaction sheets.
 
@@ -68,7 +68,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | Grid / Header cell | `23:640` | 20 variants: State (Default, Hover, Focus, Lifted, Origin slot), Sort (None, Ascending, Descending), Align (Left, Right). Options: Label, Filtered, Menu button, Frozen edge |
 | Grid / Header cell · Select | `23:652` | 3: Selection None, Some, All |
 | Grid / Cell | `24:537` | 18: Type (Text, Identity, Numeric, Chip, Checkbox, Row menu) by Row state (Default, Hover, Selected). Options: Value, Flag, Flag icon |
-| Grid / Cell · Edit | `24:565` | 7: Editable hover, Editing, Saving, Saved, Failed, Locked, Reason required |
+| Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value |
 | Grid / Row | `24:759` | 8: Default, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
 | Grid / Row marker | `22:420` | 3: Previewed, Attention, Overdue |
 | Grid / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint) |
@@ -87,7 +87,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | 3 · Sort, header options and frozen edges | `29:948` | Twelve header examples; both frozen edges at the start and scrolled to the end |
 | 4 · Rows and selection | `29:1403` | Eight row states; row menu; truncation tooltip; bulk bar and "Select all N matching" |
 | 5 · Grid states | `30:1416` | Loading, empty, no results, error, footer |
-| 6 · Inline editing | `30:1562` | Seven edit states |
+| 6 · Quick inline editing | `43:1858` | Steps 6.1 to 6.6, an editor for each field type, nine cell states, and where quick edit is offered |
 | 7 · Columns, undo and personal layout | `30:1607` | Column chooser, undo toasts, personal-layout rules |
 | 8 · Keyboard, touch and shared views | `31:1535` | Keyboard contract, touch rules, shared-view bar |
 | 9 · Density | `31:1623` | The same register in Comfortable and Compact |
@@ -108,7 +108,7 @@ Every solid fill and stroke on the components, the board and the playground is b
 
 **Rows and selection.** Row states as the Sales and Estimating sheets, with the focus ring in text/link (D1), a white chip on a selected row, and attention shown by a 3 px marker and an icon, never by colour alone. The row menu button is always visible in the frozen right column. A truncated cell or header shows its full value in a tooltip on hover and focus. The header checkbox and Ctrl+A select the rows loaded; when all are selected a banner offers "Select all N matching". A bulk bar replaces the toolbar while anything is selected.
 
-**Grid states and inline editing.** Loading (skeleton rows), empty, no results and error keep the header, the column widths and the person's layout in place. The footer gives the range and the total. Inline editing has seven states taken from Estimating ST01, with the editing ring in text/link.
+**Grid states and inline editing.** Loading (skeleton rows), empty, no results and error keep the header, the column widths and the person's layout in place. The footer gives the range and the total. Quick inline editing is described in section 11.
 
 **Columns, undo and personal layout.** The column chooser lists every column, shows and hides them, reorders them with buttons or the grip, locks the frozen ones and offers Reset to view default. Hiding, moving or resetting shows a toast with Undo (shell R71). Order, widths and hidden columns are the person's own layout for the view and save automatically; sort and filters belong to the view, and changing them on a shared view shows a "Modified" bar with Reset, Save as new view, and Save (owner only). The rules for what happens to a personal layout when the view changes are in card 7 (to confirm, section 6.1).
 
@@ -145,6 +145,7 @@ Every solid fill and stroke on the components, the board and the playground is b
 | Settle motion | 150 ms ease-out; none under reduced motion | D3 |
 | Persistence | Order, widths and hidden columns per person per view; sort and filters edit the view | D4; rules to confirm |
 | Undo | Toast with Undo after hide, move or reset; 6 s | Audit R3; shell R71 |
+| Quick edit | 1 px text/link outline and a 24 px pencil button on hover; 2 px ring on focus; editor popover under the cell | Dean, 10 November 2026; to confirm |
 | Keyboard model | WAI-ARIA data grid with the full contract (section 4) | D6 |
 | Announcements | Polite live region after a move, resize, save or selection change | D3 |
 
@@ -165,17 +166,18 @@ Dean first asked for the recommendations to be checked "to ensure they are the m
 
 ### 6.1 To confirm
 
-Drawing the audit items introduced three things that Dean has not yet decided. Each is marked "to confirm" on the page.
+Drawing the audit items and quick inline editing introduced four things that Dean has not yet decided. Each is marked "to confirm" on the page.
 
 | Item | Drawn | Where |
 |---|---|---|
 | Frozen zone limit | The frozen zone can be widened to at most 40% of the grid's visible width | Card 2, step 2.9 |
 | Personal layout rules | Seven rules for what happens to a person's layout when the view changes, including widths saved separately for desktop and tablet | Card 7 |
 | Compact density | Compact is offered to pointer devices only; touch stays Comfortable | Card 9 |
+| Quick edit rules | Which cells offer quick edit; the editor popover replacing the in-place typing first taken from Estimating ST01; a 1 px outline on hover against the 2 px ring on focus | Card 6 |
 
 ## 7. Not done and open
 
-- **Three items to confirm** (section 6.1).
+- **Four items to confirm** (section 6.1).
 - **Page acceptance and publishing.** The components stay `Status: Proposed` until Dean accepts the page. Publishing then needs a release note under section 5 of the standard; the change of the Sales focus ring from green to text/link is Medium impact and needs Dean's acceptance recorded first.
 - **Named version and thumbnail.** No named version of the library exists; saving one, and setting the cover `36:3` as the file thumbnail, are steps for Dean in Figma (the connector cannot do either).
 - **Module files unchanged.** Sales ST01 and Estimating ST01 are untouched; the Projects and Supply interaction pages are empty. After publishing, each module saves a named version, enables the library, swaps its local grid parts for the library components, and replaces the grid sections of its States page with a reference card to this page. Enabling the library and accepting updates are desktop-app steps for Dean. Address lookup and the workbench and CPQ line states stay in the module files.
@@ -188,7 +190,7 @@ Drawing the audit items introduced three things that Dean has not yet decided. E
 ## 8. Checks
 
 - Every card on the review board, the components section, the playground, the Foundations board and the cover were rendered and inspected. Defects found while drawing were fixed: cursor labels covering header text, a clipped announcement, a clipped line in card 11, and the grip sitting against the label.
-- A structural read of the rebuilt Grid page (378 component nodes, 1,576 board nodes) found no solid fill or stroke without a variable, no text without a text style, no shadow without the effect style and no component without a status line. It also confirmed 37 prototype links across five component sets.
+- A structural read of the rebuilt Grid page (378 component nodes, 1,576 board nodes) found no solid fill or stroke without a variable, no text without a text style, no shadow without the effect style and no component without a status line. It also confirmed 37 prototype links across five component sets; reworking Grid / Cell · Edit for quick inline editing brought the total to 40.
 - Variables read back from the file: 66 in "PPO colour", 15 in "PPO layout", 3 in "Grid density" with two modes.
 - The 21 library variables with a code name were checked with the logic of `scripts/check_design_tokens.py`: each one's value is present on its CSS property in `src/`.
 - Contrast ratios in D1, D8 and audit G12 were computed from the PPO colour values with the WCAG relative-luminance formula.
@@ -298,4 +300,46 @@ Dean answered the audit with "Accept the recommended order and draw them". The c
 | N3 | Keyboard pick-up drawn as steps 1.7 to 1.9 and added to the keyboard contract |
 | N9 | Done differently from the audit's wording. The enforced token check allows no new variable without a CSS name, and 63 library variables have none, so the check cannot be pointed at the library yet. Instead [`docs/design/library-variables.json`](../design/library-variables.json) records all 84 library variables so a change shows in Git review, and the 21 with a code name were verified against the app's CSS with the check's own logic. Pointing the enforced check at the library waits for the reconciliation in ADR-0067 stage 5 |
 | N4 to N8, N10 | Not drawn; they remain candidates for Dean to pick from |
+
+## 11. Quick inline editing — 10 November 2026
+
+Dean asked: "I would like to include the feature where the user can make quick inline edits in certain cells where possible and appropriate", and attached a Pipedrive screenshot of a hovered cell with a blue outline and a pencil button. He asked whether something similar could be included in the page. Pipedrive's grammar is the stated starting point of the design-to-build standard (section 14), and only the pattern is borrowed, not its artwork.
+
+**What was drawn**
+
+| Item | Node | Change |
+|---|---|---|
+| Grid / Cell · Edit | `24:565` | Reworked from seven to nine states. Rest is a plain cell. Editable hover has a 1 px text/link outline and a 24 px pencil button. Editable focus has the 2 px focus ring (D1) and the pencil button. Editing is the cell while its editor is open. Saving, Saved, Failed, Locked and Reason required are kept. A Value option was added |
+| Card 6 · Quick inline editing | `43:1858` | Replaces the earlier inline-editing card. Steps 6.1 to 6.6 (`43:1936`, `43:2010`, `43:2093`, `43:2166`, `43:2239`, `43:2316`); editors for text, number, date, single choice, person, and a value with a change reason; the nine cell states; the table of where quick edit is offered |
+| Cards 8 and 11, page header | `31:1535`, `31:2027`, `26:588` | Keyboard row, values row, the item to confirm, the change log and the contents line updated |
+| Playground | `32:1736` | Its editable cell now starts from Rest, so hover shows the outline and pencil |
+
+**Behaviour**
+
+- **Hover.** The row takes its hover tint. The cell under the pointer, if it can be edited, gains the outline and the pencil button. The pencil shows only on hover and focus. A click elsewhere in the row still does what the row does.
+- **Editor.** Clicking the pencil, or Enter or F2 with focus on the cell, opens an editor under the cell with the value selected. Enter or Save keeps the change; Esc, Cancel or a click outside discards it and returns focus to the cell. Nothing changes until Save.
+- **Editors by type.** Text; number, right-aligned with its unit; date, typed as dd/mm/yyyy or picked; single choice; person, with search; and any of these with a change-reason field, where Save stays unavailable until the reason is given.
+- **Saving.** The cell shows the new value at once with a saving mark, then a tick for 2 s, announced in a polite live region. Only that cell is saved.
+- **Failure.** The cell keeps what was typed, outlined in status/danger, with "Not saved · Retry".
+- **Not editable.** No outline and no pencil; a lock on hover and focus and a tooltip with the reason.
+- **Keyboard and touch.** In a register with editable cells the arrows move by cell (D6). Tab moves inside the editor. On touch, a tap on a cell shows its pencil and a tap on the pencil opens the editor.
+
+**Where quick edit is offered** (to confirm)
+
+| Kind of cell | Quick edit |
+|---|---|
+| Short text, number, date, single choice, person | Offered |
+| A value that needs a change reason | Offered, with a reason |
+| A value this person may not change; issued, approved or closed records | Locked, with the reason |
+| Calculated or totalled values | Not offered; change the inputs on the record |
+| Values owned by MYOB or another system of record | Not offered |
+| Stage or status changes that start a workflow | Not offered; use the record's action |
+| Long text, addresses, anything with a lookup or several fields | Not offered; open the record or the drawer |
+| A register that is read-only for this person | No pencils at all |
+
+Each module names its editable columns in its own page guide. Editing several selected rows at once is not part of this pattern.
+
+**Differences from the earlier drawing.** Section 10 took inline editing from Estimating ST01 `76:54861`, which typed in the cell itself. The editor popover replaces that, because it gives pointer and touch users Save and Cancel buttons and works for every field type. The hover outline is 1 px so that the 2 px ring keeps its meaning as keyboard focus (D1); the Pipedrive example uses one outline for both. Both points are for Dean to confirm (section 6.1).
+
+**Checked.** Card 6 and the reworked component were rendered and inspected; a cursor covering the pencil and columns too narrow for their values were corrected. The eight links on Grid / Cell · Edit were set and read back, not played.
 
