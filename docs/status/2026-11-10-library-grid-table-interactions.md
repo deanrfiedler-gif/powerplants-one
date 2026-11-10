@@ -8,24 +8,26 @@ Dean created the private Figma file "PPO - Library" and asked for the shared tab
 - **Variables.** The library now holds the 66 "PPO colour" variables copied from PPO - Shell (accepted 8 November 2026). Twenty of them carry web code syntax where the app already has an identical CSS value.
 - **Text styles.** Seven proposed Roboto text styles.
 - **Components.** Page "Grid · Table interactions" holds five `Status: Proposed` component families: Grid / Header cell (8 states), Grid / Row (7), Grid / Checkbox, Grid / Column divider and Grid / Drop indicator.
-- **Review board.** Five cards:
-  - column reorder, with its keyboard and non-drag alternative;
-  - column resize, with its hit zone, guide, limits, double-click to fit and keyboard steps;
+- **Review board.** Six cards:
+  - column reorder, with its keyboard, non-drag and touch routes;
+  - column resize, with its hit zone, guide, limits, double-click to fit, keyboard steps and the Set width… popover;
   - sort, header states and frozen edge;
   - row states;
-  - values and sources, with decisions D1–D5.
-- **Sources.** The page consolidates the Sales ST01 and Estimating ST01 sheets, which differ on the focus-ring colour (D1) and the frozen edge (D2). Several values come from neither sheet and are marked proposed (D3).
+  - values, sources and the accepted decisions;
+  - the WAI-ARIA data grid keyboard contract, touch rules and shared-view behaviour.
+- **Sources.** The page consolidates the Sales ST01 and Estimating ST01 sheets, which differ on the focus-ring colour and the frozen edge. The Projects and Supply interaction pages are empty and adopt the library page directly.
+- **Decisions.** Dean asked for the recommendations to be checked as the most professional approach; the check against WCAG 2.2 AA, the component rules and data-grid practice changed D3 and D4 and added D6–D8. Dean then accepted D1–D8 as recommended on 10 November 2026, and the page was updated to match. The page itself, and its components, remain proposed until he accepts it.
+- **Community libraries.** Dean switched off the eight community libraries on the file; a connector read confirmed none remain added.
 
-**Checked:** every card was rendered and inspected, and two drawing defects were fixed (icon placement, and focus rings shifting content). Repository checks: `python3 scripts/build_status.py --check` and `python3 scripts/check_naming.py`.
+**Checked:** every card was rendered and inspected after each change, and drawing defects found on the way were fixed (icon placement, focus rings shifting content, an oversized stage). Contrast ratios for D1 and D8 were computed from the colour values. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
 
 **Not done:**
-- The library is not published.
+- The page is not accepted and the library is not published.
 - No module file uses the components yet, and Sales ST01 and Estimating ST01 are unchanged.
 - Layout variables, effect styles, icons, shell components and the page template are not in the library.
-- The eight enabled community libraries still need to be switched off in the desktop app.
-- No application code, binding, register or page guide changed.
+- No application code, binding, register or page guide changed; RegisterTable alignment and per-type width limits are later reviewed changes.
 
 Every record shown is synthetic. File links are not recorded here (ADR-0050, ADR-0053).
 
 <!-- decision-index -->
-[Grid table interactions in PPO - Library](../decisions/library-grid-table-interactions.md) (PPO-LIBRARY-GRID-INTERACTIONS-PROP) records the shared column reorder, column resize, sort, frozen-edge and row-state pattern drawn in the private library file on 10 November 2026, its sources in the Sales and Estimating interaction sheets, its values and Dean's open decisions D1–D5. It authorises no application code, route, migration, permission or deployment; all data is synthetic.
+[Grid table interactions in PPO - Library](../decisions/library-grid-table-interactions.md) (PPO-LIBRARY-GRID-INTERACTIONS-PROP) records the shared column reorder, column resize, sort, frozen-edge, row-state, keyboard, touch and shared-view pattern drawn in the private library file on 10 November 2026, its sources in the Sales and Estimating interaction sheets, its values and Dean's accepted decisions D1–D8. It authorises no application code, route, migration, permission or deployment; all data is synthetic.
