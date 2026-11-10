@@ -600,3 +600,105 @@ test("native task completion removes a valid cursor anchor and preserves refresh
         ),
     );
 });
+
+// All records come from the native setup above. Narrow an existing seeded grant
+// and reassign an existing site-party relationship only inside a rolled-back
+// fixture transaction; no grant is added and every constraint remains enabled.
+test("site-scoped parent visibility decides rows, counts and options", async (t) => {
+  const pool = database(),
+    c = await pool.connect();
+  await c.query("BEGIN");
+  const route = t.mock.method(pool, "query", (...args: unknown[]) =>
+    Reflect.apply(c.query, c, args),
+  );
+  try {
+    const grants = (
+      await c.query(
+        "SELECT * FROM ppo.permission_grants WHERE user_id=$1 AND capability='shared.read'",
+        [sam],
+      )
+    ).rows;
+    assert.equal(grants.length, 1);
+    assert.equal(grants[0].scope_type, "Company");
+    assert.equal(grants[0].company_id, CRM.company);
+    const site = expected[0].site_id;
+    await c.query(
+      "UPDATE ppo.permission_grants SET scope_type='Site',scope_id=$2,site_id=$2 WHERE id=$1",
+      [grants[0].id, site],
+    );
+    t.mock.timers.enable({
+      apis: ["Date"],
+      now: new Date("2026-11-10T00:00:00Z"),
+    });
+    const check = async (ids: string[]) => {
+      const a = await captureRegister(original, samPrincipal, { view: "All" });
+      const b = await captureRegister(projectRegister, samPrincipal, {
+        view: "All",
+      });
+      assert.deepEqual(
+        b.data.items.map((r) => r.id),
+        ids,
+      );
+      assert.equal(b.data.total, ids.length);
+      assert.deepEqual(
+        b.data.counts,
+        ids.length
+          ? {
+              Active: 2,
+              Mine: 0,
+              All: 3,
+              Closed: 1,
+              Overdue: 1,
+              AtRisk: 1,
+              NoTarget: 0,
+            }
+          : {
+              Active: 0,
+              Mine: 0,
+              All: 0,
+              Closed: 0,
+              Overdue: 0,
+              AtRisk: 0,
+              NoTarget: 0,
+            },
+      );
+      assert.equal(b.data.active_count, ids.length ? 2 : 0);
+      assert.deepEqual(
+        b.data.options,
+        ids.length
+          ? {
+              customers: [{ id: org1, name: expected[0].customer_name }],
+              coordinators: [
+                {
+                  id: coordinator.actor_id,
+                  name: expected[0].coordinator_name,
+                },
+              ],
+            }
+          : { customers: [], coordinators: [] },
+      );
+      assert.equal(b.data.next_cursor, null);
+      assert.deepEqual(b.raw, a.raw);
+      assert.deepEqual(b.values, a.values);
+      assert.deepEqual(b.data, a.data);
+    };
+    // Organisation passes only through site_parties; swapping o/s loses these rows.
+    await check([id(1), id(2), id(4)]);
+    // Reassign the relationship, not the mandatory project parent. The project
+    // scope and site remain visible but org1 has no party at the permitted site.
+    // Dropping both parent checks would incorrectly return P1/P2/P4 here.
+    const reassigned = await c.query(
+      "UPDATE ppo.site_parties SET organisation_id=$3 WHERE site_id=$1 AND organisation_id=$2 RETURNING id",
+      [site, org1, org2],
+    );
+    assert.equal(reassigned.rowCount, 1);
+    // Validate deferred constraints too, even though this fixture is rolled back.
+    await c.query("SET CONSTRAINTS ALL IMMEDIATE");
+    await check([]);
+  } finally {
+    t.mock.timers.reset();
+    route.mock.restore();
+    await c.query("ROLLBACK");
+    c.release();
+  }
+});

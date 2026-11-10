@@ -60,7 +60,7 @@ export async function projectRegister(
     reference: "display_number",
   }[sort];
   // Fence the cheap parent joins before visibility, then calculate task facts.
-  // Relocate only outer p/o/s aliases; permission subqueries retain their own users u.
+  // Re-expose the original aliases so visibility builders retain their SQL scopes.
   // One database snapshot for permission-scoped options, all-match counts, derived schedule facts and paging.
   const result = (
     await c.query<{
@@ -79,10 +79,11 @@ export async function projectRegister(
     JOIN ppo.users u ON (u.workspace_id,u.id)=(p.workspace_id,p.coordinator_id)
     WHERE p.workspace_id=$1
   ), visible_projects AS MATERIALIZED (
-    SELECT c.* FROM project_candidates c WHERE ${projectVisibility()
-      .replace(/\bp\./g, "(c.project).")
-      .replace(/\bo\./g, "(c.organisation).")
-      .replace(/\bs\./g, "(c.site).")}
+    SELECT c.* FROM project_candidates c
+    CROSS JOIN LATERAL (SELECT (c.project).*) p
+    CROSS JOIN LATERAL (SELECT (c.organisation).*) o
+    CROSS JOIN LATERAL (SELECT (c.site).*) s
+    WHERE ${projectVisibility()}
   ), authorised AS MATERIALIZED (
     SELECT (c.project).id,(c.project).version,(c.project).display_number,(c.project).title,(c.project).company_id,(c.project).organisation_id,(c.project).site_id,(c.project).coordinator_id,
       (c.project).lifecycle,(c.project).acceptance_version,(c.project).target_date,(c.project).updated_at,(c.project).created_at,
