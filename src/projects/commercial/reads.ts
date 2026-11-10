@@ -1,3 +1,4 @@
+import { projectClaimMeasures } from "../../finance/project-claims-measures";
 import { createHash } from "node:crypto";
 import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { commercialNames, commercialPresentation } from "./presentation";
@@ -411,6 +412,7 @@ export async function readCommercialFinance(
       original_control_value: null,
       approved_change_value: null,
       adjusted_control_value: null,
+      claim_measures: null,
       requested_pending: null,
       priced_pending: null,
       disputed: null,
@@ -461,6 +463,7 @@ export async function readCommercialFinance(
       basis_id: basis.id,
       original_control_value: source.amount,
       approved_change_value: approvedTotal.value,
+      claim_measures: await projectClaimMeasures(c, p, pr.id),
       adjusted_control_value:
         status === "Current" && approvedTotal.value !== null
           ? decimal(cents(source.amount) + cents(approvedTotal.value))
