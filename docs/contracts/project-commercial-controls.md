@@ -114,6 +114,10 @@ Historical reads and original-operation recovery recheck current permissions bef
 
 The native PJ-05 page is unchanged in this backend slice. UI controls, B3 entitlement holds/processing and B4 non-billable enforcement are not supplied by this API.
 
+## B3 Finance claim processing
+
+The [Finance B3 amendment](finance-handoff.md#b3-projectclaim-backend-amendment) connects exact B2 completion versions to the existing Finance handoff lifecycle. It defines the whole-entitlement holds, recovery, authority and API boundary. The commercial Finance read adds `claim_measures` with state amounts and unique Held/Consumed amounts at the same workspace-locked read; it retains the existing D-017 unavailable measures. Permission loss makes required evidence unavailable, never a zero or a visible-page subtotal. A current B2 completion is a source candidate, not proof that its entitlement is free to reserve. B2's `finance_processing_available` now reflects the caller's Finance preparation/read duties; claim UI and claim document output remain open.
+
 ## Recovery, stale evidence and privacy
 
 - The identical accepted operation recovers its original result after later workflow/source changes, provided the actor retains original-command and source read authority. Check authorisation before returning the receipt; do not rerun current eligibility as though it were a new action.
@@ -143,7 +147,3 @@ Local test keys below do not replace parent acceptance IDs. AT-31/AT-38 and owne
 | PJ05-12 | Exact final-source regression/build/type/lint, access catalogue and documentation/register checks pass, with unchanged-main evidence for any genuine environment limitation |
 
 The implementation handover must state delivered subsets and remaining boundaries accurately. This contract is not proof that an endpoint, migration or test already exists.
-
-## B3 Finance claim processing
-
-The [Finance B3 amendment](finance-handoff.md#b3-projectclaim-backend-amendment) connects exact B2 completion versions to the existing Finance handoff lifecycle. It defines the whole-entitlement holds, recovery, authority and API boundary. The commercial Finance read adds `claim_measures` with state amounts and unique Held/Consumed amounts at the same workspace-locked read; it retains the existing D-017 unavailable measures. Permission loss makes required evidence unavailable, never a zero or a visible-page subtotal. A current B2 completion is a source candidate, not proof that its entitlement is free to reserve. B2's `finance_processing_available` now reflects the caller's Finance preparation/read duties; claim UI and claim document output remain open.

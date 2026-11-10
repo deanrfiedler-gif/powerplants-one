@@ -36,6 +36,12 @@ Source review — 6 November 2026, PR #863: comparison of `src/shared/reads.ts` 
 
 Following [Claude’s agent decision under the standing order](https://github.com/deanrfiedler-gif/powerplants-one/pull/863#issuecomment-6675179377), Codex independently compared the pinned Scheduling source at `9f516a90` with main `b6ee136c`. The changes add a `SiteReadiness` contact purpose, its hold release, and permission-checked dispatch/preparation projections. The `bd-05` assertion still matches `recordContact`: Person visibility, active status, the current Site primary contact and the appointment’s company context remain required. Omitted purpose retains the original DateAgreement command hash. Both working source pins are refreshed after these comparisons. The planner refresh corrects metadata already stale on main; the Customer 360 runtime change leaves Scheduling source untouched. The [execution evidence](../../testing/evidence/customer-360-read/README.md) records validation. Issued HTML, historical manifests and acceptance records remain unchanged.
 
+## Finance claim contract re-read — 10 November 2026
+
+For PR #883 finding 2, Codex compared `src/finance/context.ts` against merged main `900daa9d0` and read the Contacts model's active-person and downstream Finance audience assertions. The only changes are ProjectClaim context selection and historical claim-source authority; the WorkOrder path, active Person/company-context query and `SourceAudienceChanged` refusal remain unchanged. Project claims introduce no Contacts command, relationship field or customer-distribution authority. The existing Contacts design remains accurate.
+
+Only the working Finance contract pin is refreshed after this source review. Issued HTML, historical build manifests, fixture evidence and visual/owner acceptance remain unchanged. Deterministic and model checks are recorded separately from browser execution in the B3 review-fix evidence.
+
 ## The theme edition
 
 The module builds on the r20 shared token core and adopts theme **r22**'s selection family. `source-pins.json` pins the r22 board by content — SHA-256 `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0` — and the builder refuses to run if it changes.

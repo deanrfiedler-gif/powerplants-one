@@ -89,6 +89,7 @@ export async function currentRevision(
   p: Principal,
   ctx: Context,
   checkSource = true,
+  historicalProjectClaim = false,
 ) {
   const v = (
     await c.query(
@@ -118,6 +119,7 @@ export async function currentRevision(
         ctx.h.project_id,
         original.basis_id,
         original.claims.map((e: { event_version: number }) => e.event_version),
+        !historicalProjectClaim,
       );
       if (
         hash({ ...v.source_snapshot, project_claim: current }) !== v.source_hash
@@ -978,7 +980,15 @@ export async function reconcileFinance(
           "FinanceStateChanged",
           "A separate reconciler must compare the recorded outcome.",
         );
-      await currentRevision(c, p, ctx);
+      // Post-effect ProjectClaim reconciliation uses historical evidence, while
+      // retaining needs-review, policy, account and exact target checks.
+      await currentRevision(
+        c,
+        p,
+        ctx,
+        true,
+        ctx.h.source_kind === "ProjectClaim",
+      );
       const o = (
         await c.query(
           "SELECT * FROM ppo.finance_outcomes WHERE workspace_id=$1 AND handoff_id=$2 AND id=$3",

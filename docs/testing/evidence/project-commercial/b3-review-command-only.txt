@@ -1,0 +1,34 @@
+(node:27910) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27910) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds (36326.487162ms)
+✔ P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants (10835.509401ms)
+(node:27972) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27972) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B3 populated 0125 Finance upgrade preserves processed WorkOrder records, exact receipts and allocations (13602.954825ms)
+(node:28010) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28010) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B3 native claim lifecycle, exact amounts, independent review/reconciliation and replay (26715.04897ms)
+✔ B3 competing submits, Returned hold transfer, omitted release and pre-effect cancellation (21709.702399ms)
+✔ B3 uncertain outcome retains holds and lookup recovers the one target after local failure (21839.038511ms)
+✔ B3 source correction holds new authority but preserves recovery; access revocation fails closed (20071.148728ms)
+✔ B3 SQL refuses forged amount and missing holds; rejected transaction leaves original intact (16261.276999ms)
+✔ B3 Unknown keeps holds, NotProcessed allows safe cancellation, partial targets cannot reconcile, approved variation is separate (47561.98234ms)
+✔ B3 closed project reconciles only an exact Accepted post-effect target (28251.497995ms)
+✔ B3 closed project reconciles only an exact Partial post-effect target (24791.892093ms)
+(node:28095) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28095) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants (11222.587871ms)
+✔ P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants (13736.690823ms)
+✔ P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants (19626.014308ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 321871.119268

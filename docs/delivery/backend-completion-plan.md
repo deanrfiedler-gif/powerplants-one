@@ -4,6 +4,10 @@
 
 [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the claim-schedule and completion-evidence API slice of the [project billing decision](../decisions/project-delivery-billing.md). See the [B2 contract](../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence). B3 Finance entitlements, B4 field-work billability and maintenance M2/C1 follow in dependency order. Claim-schedule page controls and connected TS-01 acceptance remain open; this does not complete BC-06/07. Verification and review status are recorded in the dated status fragment.
 
+### Project billing B3 backend
+
+Draft [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), based on main after B2 #881 merged, adds ProjectClaim sources to the existing Finance pipeline, whole-entitlement holds, synthetic processing/reconciliation and project state/hold measures. See the [contract](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment). Claim UI/output, B4 cost-only enforcement and connected TS-01 acceptance remain separate. Code presence does not close independent review or integration evidence.
+
 ## BC-06 Service findings reads and next action — 20 October 2026
 
 Dean authorised BC-06 continuation while another agent owns Conversations T2b. Merged [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623) supplies R1: source-owned inspection, incident, incomplete report, customer-response and scheduling findings, with bounded authorised-window counts and native Activity links. [PR #634](https://github.com/deanrfiedler-gif/powerplants-one/pull/634) adds R2 next-action assignment/editing, required evidence, history, source authority and retry recovery under the [SV-07 contract](../contracts/service-findings.md), with migration 0111 and no new capabilities/seeds/grants. [Execution evidence](../testing/evidence/service-findings/README.md) records validation and independent review separately from acceptance and integration. SV-07 recurrence, page implementation, SV-08 receiving, remaining PJ-06/PJ-07/PJ-08 work, Warranty-to-Supply and capacity/reservation rules remain open. T2b is unchanged.
@@ -144,7 +148,3 @@ Local verification passed 50 units, 62 distinct serial database cases across ret
 ## PJ-06 R1 execution — 15 October 2026
 
 From main `a676fde`, PJ-05 is integrated and #499 is merged externally; #500 has independent clean review with CI pending under its existing monitor. The unmerged [PR #518](https://github.com/deanrfiedler-gif/powerplants-one/pull/518) implements the first [PJ-06 package receiving contract](../contracts/project-specialist-packages.md) on a separate main-based branch. See [evidence](../testing/evidence/project-specialist/README.md). This establishes internal brief coordination, not all specialist delivery controls. The next PJ-06 dependencies are exact technical/procurement acceptance and work-evidence contracts; unrelated Service/Supply and Finance/Reporting boundaries remain in the reconciliation. Earlier checkpoint wording remains historical.
-
-### Project billing B3 backend
-
-Draft [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), dependent on B2 #881, adds ProjectClaim sources to the existing Finance pipeline, whole-entitlement holds, synthetic processing/reconciliation and project state/hold measures. See the [contract](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment). Claim UI/output, B4 cost-only enforcement and connected TS-01 acceptance remain separate. Code presence does not close independent review or integration evidence.

@@ -377,3 +377,52 @@ test("B3 Unknown keeps holds, NotProcessed allows safe cancellation, partial tar
     ),
   );
 });
+
+for (const scenario of ["Accepted", "Partial"]) {
+  test(`B3 closed project reconciles only an exact ${scenario} post-effect target`, async () => {
+    const f = await projectFinanceFixture(),
+      a = await saveClaim(f, [4]);
+    await approveClaim(f, a.id);
+    await begin(f, a.id, scenario);
+    await outcome(f, a.id);
+    const pending = await saveClaim(f, [5]);
+    await approveClaim(f, pending.id);
+    // Isolate the Finance lifecycle boundary in this disposable database. PJ-09's
+    // native acceptance closeout journey is tested separately; this is no TS-01 proof.
+    await transaction(async (c) => {
+      await c.query("ALTER TABLE ppo.projects DISABLE TRIGGER USER");
+      await c.query("UPDATE ppo.projects SET lifecycle='Closed' WHERE id=$1", [
+        f.project.id,
+      ]);
+      await c.query("ALTER TABLE ppo.projects ENABLE TRIGGER USER");
+    });
+    await assert.rejects(begin(f, pending.id), code("ClosedProject"));
+    const r = await readFinance(f.reconciler, a.id);
+    const reconcile = () =>
+      reconcileFinance(f.reconciler, a.id, {
+        ...crmBase(),
+        expected_version: r.handoff.version,
+        outcome_id: r.outcomes[0].id,
+        basis: "SYN compare frozen target after project closeout",
+      });
+    // The historical-source exception must not disable Finance policy validation.
+    await database().query("UPDATE ppo.finance_policy SET version=version+1");
+    await assert.rejects(reconcile(), code("FinancePolicyChanged"));
+    await database().query("UPDATE ppo.finance_policy SET version=version-1");
+    if (scenario === "Partial") {
+      await assert.rejects(reconcile(), code("TargetDifference"));
+      assert.equal(
+        (await readFinance(f.reconciler, a.id)).handoff.status,
+        "ReconciliationRequired",
+      );
+    } else {
+      await reconcile();
+      assert.equal(
+        (await readFinance(f.reconciler, a.id)).handoff.status,
+        "Reconciled",
+      );
+    }
+    assert.equal((await holds(a.id))[0].state, "Consumed");
+    assert.equal((await holds(pending.id))[0].state, "Held");
+  });
+}
