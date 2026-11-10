@@ -88,7 +88,7 @@ Synthetic, using the TS-01 milestones above.
 2. Finance returns A because M2's delivery evidence is incomplete. M1 and M2 stay Held by A.
 3. Claim B names M2 and is submitted. It is refused: M2 is Held by A.
 4. Finance creates revised Draft A2, claiming M1 only. In one locked step, M1's hold transfers to A2 and M2 is released.
-5. Claim B is submitted again and now reserves M2. Revising A2 to add M2 back is refused while B holds it.
+5. Claim B is submitted again and now reserves M2. Revising A2 may add M2 back to its proposal, but submitting that revision is refused while B holds it. The B3 clarification below supersedes the earlier revision-time refusal.
 6. A2 is processed and reconciled, so M1 becomes Consumed. Claim C naming M1 is refused, and stays refused until a linked correction or reversal policy exists.
 7. B is dispatched and its MYOB outcome is Unknown. M2 stays Held by B: B cannot be cancelled or returned, and no other claim can take M2, until the outcome is verified.
 
@@ -120,6 +120,19 @@ Each increment is its own pull request. Increments that change a migration or a 
 - **Evidence source.** This first slice binds exact independently reviewed native Library document revisions, their review IDs and content hashes, with an occurrence timestamp and a preparer's explanation. The source can contain acceptance, delivery or commissioning evidence. B2 does not assert that free text or a document's presence proves native milestone completion. Dedicated acceptance-stage/commissioning selectors can extend the same contract later.
 - **Signed variations.** Positive independently approved variation amounts can be evidenced as claimable lines, separately from milestones. Zero/negative adjustments stay in commercial history and are held from this first claimable projection pending the correction/credit policy already left open by R2. No credit or reversal is invented.
 - **Delivery boundary.** This PR supplies backend commands, read/history API and proofs. PJ-05 exists, but claim-schedule controls have not been added to its accepted page. B3 processing, B4 billability, M2/C1, rendered end-to-end proof and TS-01 acceptance remain distinct follow-ups.
+
+## B3 backend implementation choices — 10 November 2026
+
+Codex implements B3 on Dean's instruction to proceed with Finance holds and claim processing. These bounded choices are agent decisions under the standing order, not acceptance of a UI or operational Finance policy:
+
+- Extend the existing Finance handoff/line/hold schema with a discriminated ProjectClaim source, rather than duplicate processing or create artificial work orders. Each monetary entitlement remains one whole line; its exact cents are separate from its count of one. Existing WorkOrder values receive compatible defaults; historical source bytes, outcomes, seed receipts and grants are preserved.
+- Keep Returned holds through revision: selected entitlements transfer to the revised Draft in the same locked transaction; omitted ones release. Completion corrections never change the conservation identity. Recorded partial processing remains consumed and unresolved, preventing a second claim while the discrepancy is investigated.
+- Review clarification (10 November 2026, findings 3–4): newly added entitlements are reserved at submission, superseding the earlier step 5 revision-time refusal in this record. Retained entitlements still transfer atomically on revision. ProjectClaim reconciliation after an external effect uses historical source authority, including on a Closed project, while retaining exact source/target, needs-review, policy and account checks. This avoids reopening delivery just to record an exact completed effect; new processing still requires Active. The alternative was to block project closeout on in-flight claims. Reversal requires changing this contract and its database proofs; no WorkOrder reconciliation exception is adopted.
+- Use existing Finance duties plus native project/commercial/Library authority. No new seed grants broaden access. Changing evidence blocks new release authority but preserves authorised original lookup and receipt recovery.
+- Extend the controlled simulator with SyntheticProjectClaim targets carrying frozen amount, currency and tax basis. No MYOB document type/number or tax invoice policy is asserted. OUT-14 remains held for this source until its claim output is defined.
+- Expose the source-specific queue and state/hold measures through existing APIs. Keep the legacy queue default on WorkOrder until claim UI is designed. State totals describe current claim proposals; Held/Consumed totals conserve entitlements. They are not invoiced value, revenue or cash.
+
+The [Finance amendment](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment) is authoritative for this backend boundary. B4 cost-only enforcement and TS-01 acceptance remain separate work. B2 #881 is merged. Claude reviewed B3 #883 at `423b0e23`; the review corrections require confirmation before B3 is ready.
 
 ## Still open
 

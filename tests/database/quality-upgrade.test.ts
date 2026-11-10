@@ -31,6 +31,7 @@ import {
   processFinanceJob,
   financeIssueBytes,
 } from "../../src/finance/worker";
+import { listFinance } from "../../src/finance/reads";
 import { readOperation } from "../../src/shared/receipts";
 import { recoverSchema } from "../helpers/recover-schema";
 
@@ -55,6 +56,10 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
         : state === "OutcomeUnknown"
           ? await processedFinance("AcceptedThenTimeout")
           : await reconciledFinance();
+    const queued = (await listFinance(q.p)).items.find(x => x.id === q.id);
+    assert.ok(queued);
+    assert.equal(queued.source_kind, "WorkOrder");
+    assert.equal(queued.project_id, null);
     let issueId: string | undefined, bytes: Buffer | undefined;
     if (state === "Reconciled") {
       const d = await readFinance(q.reconciler, q.id);
@@ -249,6 +254,26 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       sorted(agentAskSeedGrants([...originalGrants.map(g => g.value), ...expected])));
   assert.deepEqual(sorted(added.map(g => g.value).filter(g => g.capability === "service_escalation.record")),
       sorted(escalationSeedGrants([...originalGrants.map(g => g.value), ...expected])));
+    // 0126 adds only these defaults. Preserve every original field and reject
+    // unexpected new columns; all other tables keep their whole-row comparison.
+    const financeDefaults: Record<string, Record<string, unknown>> = {
+      finance_handoffs: { source_kind: "WorkOrder", project_id: null },
+      finance_lines: { source_kind: "WorkOrder", claim_basis_id: null, claim_event_version: null,
+        claim_kind: null, claim_target_id: null, claim_amount: null, claim_currency: null, claim_tax_basis: null },
+      finance_allocation_holds: { claim_basis_id: null, claim_kind: null, claim_target_id: null },
+    };
+    for (const [table, defaults] of Object.entries(financeDefaults)) {
+      const originalRows = before[table] as { value: Record<string, unknown> }[];
+      const upgradedRows = afterUpgrade[table] as { value: Record<string, unknown> }[];
+      assert.equal(upgradedRows.length, originalRows.length, table);
+      for (const original of originalRows) {
+        const key = table === "finance_allocation_holds" ? "line_id" : "id";
+        const upgraded = upgradedRows.find(x => x.value.workspace_id === original.value.workspace_id
+          && x.value[key] === original.value[key]);
+        assert.deepEqual(upgraded?.value, { ...original.value, ...defaults }, table);
+      }
+      afterUpgrade[table] = originalRows;
+    }
     assert.deepEqual({ ...afterUpgrade, permission_grants: originalGrants }, before);
     assert.deepEqual(
       await rows(
