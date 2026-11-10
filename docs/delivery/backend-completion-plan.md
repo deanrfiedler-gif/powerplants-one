@@ -16,6 +16,10 @@ Merged [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), 
 
 [PR #904](https://github.com/deanrfiedler-gif/powerplants-one/pull/904) extends WorkOrder allocation defaults for Covered agreement work with reasoned Finance exceptions and B4 precedence. [Contract](../contracts/finance-handoff.md#m2-agreement-covered-workorder-defaults) and [evidence](../testing/evidence/maintenance-m2/README.md) record the bounded API slice. C1 scheduled charges, UI, connected TS-02 acceptance and operational authority remain separate.
 
+## Agreement charges C1 backend — 11 November 2026
+
+[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) adds reviewed exact agreement charge schedules and typed AgreementCharge sources in the existing Finance pipeline. It stacks on M2 solely to sequence shared sources/contracts; B3 is merged. See [contract](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md). Migration 0127 has no seed/grant. UI, OUT-14 wording, full TS-01/02 acceptance, real ERP, D-017 and operational authority remain separate.
+
 ## BC-06 Service findings reads and next action — 20 October 2026
 
 Dean authorised BC-06 continuation while another agent owns Conversations T2b. Merged [PR #623](https://github.com/deanrfiedler-gif/powerplants-one/pull/623) supplies R1: source-owned inspection, incident, incomplete report, customer-response and scheduling findings, with bounded authorised-window counts and native Activity links. [PR #634](https://github.com/deanrfiedler-gif/powerplants-one/pull/634) adds R2 next-action assignment/editing, required evidence, history, source authority and retry recovery under the [SV-07 contract](../contracts/service-findings.md), with migration 0111 and no new capabilities/seeds/grants. [Execution evidence](../testing/evidence/service-findings/README.md) records validation and independent review separately from acceptance and integration. SV-07 recurrence, page implementation, SV-08 receiving, remaining PJ-06/PJ-07/PJ-08 work, Warranty-to-Supply and capacity/reservation rules remain open. T2b is unchanged.

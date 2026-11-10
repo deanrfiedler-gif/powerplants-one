@@ -11,6 +11,8 @@ import {
 } from "../shared/validation";
 import { coverageStates, list } from "../service/work-scope-validation";
 
+import { chargeSchedule } from "./charge-schedule";
+
 export const sourceStates = [
   "Available",
   "Partial",
@@ -72,6 +74,7 @@ export function agreementFields(v: unknown) {
     "exclusions",
     "response_terms",
     "charging_basis",
+    "charge_schedule",
     "billing_owner_id",
     "responsibilities",
     "source",
@@ -130,6 +133,15 @@ export function agreementFields(v: unknown) {
     exclusions: text(x.exclusions, "exclusions"),
     response_terms: optionalNarrative(x.response_terms, "response_terms", 2000),
     charging_basis: text(x.charging_basis, "charging_basis"),
+    ...(x.charge_schedule === undefined
+      ? {}
+      : {
+          charge_schedule: chargeSchedule(
+            x.charge_schedule,
+            effective_from,
+            effective_to,
+          ),
+        }),
     billing_owner_id: uuid(x.billing_owner_id, "billing_owner_id"),
     responsibilities: text(x.responsibilities, "responsibilities"),
     source: sourceFields(x.source),
@@ -363,7 +375,10 @@ export function assessmentFields(v: unknown) {
 // would split a surrogate pair). Every break advances at least 500 code units, so a 4,000-character
 // requirement yields at most 8 entries.
 // A requirement within the limit stays a single, unchanged entry.
-export function completionRequirementEntries(requirement: string, limit = 1000) {
+export function completionRequirementEntries(
+  requirement: string,
+  limit = 1000,
+) {
   const entries: string[] = [];
   let rest = requirement.trim();
   while (rest.length > limit) {
@@ -375,7 +390,11 @@ export function completionRequirementEntries(requirement: string, limit = 1000) 
       }
     // A hard cut never separates a surrogate pair: the whole character moves to the next entry,
     // so every entry stays well-formed Unicode within the 1,000-code-unit limit (#770 review).
-    if (at === limit && /[\uD800-\uDBFF]/.test(rest[at - 1]) && /[\uDC00-\uDFFF]/.test(rest[at]))
+    if (
+      at === limit &&
+      /[\uD800-\uDBFF]/.test(rest[at - 1]) &&
+      /[\uDC00-\uDFFF]/.test(rest[at])
+    )
       at -= 1;
     entries.push(rest.slice(0, at).trim());
     rest = rest.slice(at).trim();

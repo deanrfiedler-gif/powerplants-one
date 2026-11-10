@@ -85,6 +85,17 @@ async function saveRevision(
     created_by: p.actor_id,
     reason,
   });
+  for (const line of x.charge_schedule?.lines ?? [])
+    await insert(c, "agreement_charge_lines", {
+      workspace_id: p.workspace_id,
+      agreement_id: row.id,
+      revision_id: id,
+      charge_id: line.id,
+      due_date: line.due_date,
+      amount: line.amount,
+      currency: x.charge_schedule!.currency,
+      tax_basis: x.charge_schedule!.tax_basis,
+    });
   for (const s of x.sites) {
     await insert(c, "agreement_scope", {
       workspace_id: p.workspace_id,
@@ -259,6 +270,21 @@ export async function agreementCommand(
           "authority_reference",
           "Record the exact approval or withdrawal authority evidence.",
         );
+      if (action === "Approve" && current.revision.content.charge_schedule) {
+        if (current.revision.created_by === p.actor_id)
+          invalid(
+            "action",
+            "A different Finance reviewer must approve the exact charge schedule.",
+          );
+        for (const site of current.revision.content.sites)
+          await companyContext(
+            c,
+            p,
+            row.company_id,
+            site.site_id,
+            "finance.review",
+          );
+      }
       if (
         action === "Approve" &&
         (row.state !== "Proposed" ||

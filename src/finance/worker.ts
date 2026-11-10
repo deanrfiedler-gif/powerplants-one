@@ -99,6 +99,11 @@ export async function requestFinanceEvidence(
     (c) => financeContext(c, p, id, "finance.issue"),
     async (c, ctx) => {
       sameVersion(ctx.h.version, cmd.expected_version);
+      if (ctx.h.source_kind === "AgreementCharge")
+        blocked(
+          "AgreementChargeOutputNotDefined",
+          "Agreement charge output content is not defined; use the exact internal Finance evidence.",
+        );
       if (ctx.h.source_kind === "ProjectClaim")
         blocked(
           "ProjectClaimOutputNotDefined",
