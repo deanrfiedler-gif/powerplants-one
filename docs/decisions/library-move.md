@@ -84,7 +84,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | 9 · Do and Don't | `74:1030` | Three pairs |
 | 10 · Values, sources and items to confirm | `76:1061` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
-The example lists, cards and containers on the board are plain frames, not library components; the Board cards page will supply the card. The Read me page and the Foundations board were updated for the new page and variables.
+The example lists, cards and containers on the board are plain frames, not library components; the Board cards page supplies the card ([board record](library-board.md)). The Read me page and the Foundations board were updated for the new page and variables.
 
 ## 4. Rules drawn
 
@@ -139,7 +139,7 @@ The example lists, cards and containers on the board are plain frames, not libra
 - **Other pages unchanged.** The grid page's lifted header and origin-slot states stay as Grid / Header cell variants. No module file changed.
 - **No proof beyond the design.** The steps are drawn, not played; no prototype links were set on the Move components. Timing, auto-scroll, keyboard and screen-reader behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The four `move/` variables have no CSS property yet.
-- **Next pages in the accepted order.** Board cards, planners and calendars with a shared time axis, and the Gantt chart in the Projects file. None is started.
+- **Next pages in the accepted order.** Board · Cards and stages was drawn on 10 November 2026 and has [its own record](library-board.md). Planners and calendars with a shared time axis, and the Gantt chart in the Projects file, are not started.
 
 ## 8. Checks
 
