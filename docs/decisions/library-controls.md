@@ -2,17 +2,17 @@
 document_id: PPO-LIBRARY-CONTROLS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; five items await his confirmation (section 6); every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Controls in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items to confirm ([section 6](#6-to-confirm)).
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean asked whether pages for other interactions (Gantt charts, board cards, planners and calendars) should be added to `PPO - Library`. The recommendation was to add them in this order: a Controls page, a page of shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file using those shared parts. Controls came first because the [Grid · Table interactions](library-grid-table-interactions.md) page drew its buttons, chips, menus, tooltips and toasts as plain frames, and every later page would otherwise redraw them. Dean answered: "Accept the recommended order and start with the Controls page."
 
-This record is a **proposal**. Accepting the order did not confirm the four open items on the grid page (section 6.1 of that record); they remain open.
+This record is a **proposal**. Accepting the order did not confirm the four open items on the grid page (section 6.1 of that record). Dean confirmed those, and the five on this page, later the same day (section 6).
 
 ## 1. Sources
 
@@ -40,7 +40,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | Reused components | The Sales kit and the shell sheets are the references. New in the library, all `Status: Proposed`: the sixteen families in section 3 |
 | Incoming handover | A module page places these components from the library |
 | Outgoing handover | None |
-| Departures | The items in section 6 |
+| Departures | The items in section 6, confirmed by Dean on 10 November 2026 |
 
 ## 3. What was drawn
 
@@ -48,7 +48,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 
 | Page | Node | Holds |
 |---|---|---|
-| Icons | `46:2030` | Section `46:2032`: 19 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page with their nodes unchanged; five were added: Chevron down `46:2034`, Plus `46:2036`, Search `46:2038`, Info `46:2041`, Spinner `46:2045` |
+| Icons | `46:2030` | Section `46:2032`: 20 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page with their nodes unchanged; five were added: Chevron down `46:2034`, Plus `46:2036`, Search `46:2038`, Info `46:2041`, Spinner `46:2045`. Blocked `66:42` came with the [Move page](library-move.md) |
 | Controls | `46:2031` | Components section `46:2033`; review board `52:126` |
 
 **Variables and styles added**
@@ -98,7 +98,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | 6 · Menus and tooltips | `53:523` | A composed menu; tooltips; rules for menus, popovers and tooltips |
 | 7 · Toasts and banners | `53:602` | Four tones of each; rules |
 | 8 · Dialogs | `53:709` | Destructive over a scrim; Confirm; rules |
-| 9 · Values, sources and items to confirm | `53:773` | The table in section 5, the items in section 6, what is not yet here, change log |
+| 9 · Values, sources and confirmed items | `53:773` | The table in section 5, the items in section 6, what is not yet here, change log |
 
 Every solid fill and stroke on the components and the board is bound to a PPO colour variable, every text node uses a library text style, every shadow uses an effect style, and no layer has a default name. Sizes, paddings and most corner radii are bound to variables; 24 layers in the components and 3 on the board (focus rings, state layers, tone bars) still have a plain radius.
 
@@ -133,12 +133,14 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Banner | 40 px, tone surface and icon, one action, dismiss | Shell sheet S; R71 |
 | Dialog | 400 px, 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70 |
 
-## 6. To confirm
+## 6. Confirmed — 10 November 2026
 
-| ID | Item | Drawn | Why it needs a decision |
+Five things on this page had no single accepted source. On 10 November 2026 Dean confirmed them, together with the four open items on the grid page: "Confirm all nine items as recommended and draw the next page". Card 9 and the notes on cards 1 and 2 now say so.
+
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | C1 | Hover and Pressed on buttons | A state layer over the kind's colour: brand/navy at 6% and 12% on the light kinds, brand/white at 12% and 24% on Primary and Danger | Sales ST01 says "hover darkens one step, pressed two"; Estimating ST01 draws 88% and 76% opacity. Neither gives values that work for every kind |
-| C2 | Chip tone meanings | One merged meaning per tone (section 3, card 2). "Draft" would be Neutral | The Sales kit (accepted) has "Draft" as Warning; Estimating has it as Neutral. Tint and Navy are also described differently. Adopting the merged meanings would change Sales chips that show Draft |
+| C2 | Chip tone meanings | One merged meaning per tone (section 3, card 2). "Draft" is Neutral | The Sales kit (accepted) has "Draft" as Warning; Estimating has it as Neutral. Tint and Navy are also described differently. The Sales chips that show Draft change when Sales adopts these components |
 | C3 | New states | Field Focus, Error, Disabled and Read-only; Hover and Focus on filter chips and tabs | No accepted source draws them |
 | C4 | Small size | A "Control size" mode: buttons 28 px and fields 32 px in toolbars, popovers and tables | The shell allows 28 px as a minimum (C6); using a variable mode for it is new |
 | C5 | Checkbox | 4 px corners and a 1 px border, as the Sales kit | The grid page first drew 3 px and 1.5 px; this changes every checkbox on that page |
@@ -147,11 +149,11 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 
 - **Page acceptance and publishing.** As for the grid page: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Not yet here.** Radio, switch, date picker, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
-- **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 19 the library uses so far, drawn by hand, and is not the shared icon set.
+- **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 20 the library uses so far, drawn by hand, and is not the shared icon set.
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.
 - **No proof beyond the design.** 32 prototype links (button, link, icon button and checkbox states) were set and read back, not played. Keyboard and screen-reader behaviour needs the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The Control size variables and the new layout variables have no CSS property yet.
-- **Next pages in the accepted order.** Moving things (shared drag rules), board cards, planners and calendars with a shared time axis, and the Gantt chart in the Projects file. None is started.
+- **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board cards, planners and calendars with a shared time axis, and the Gantt chart in the Projects file are not started.
 
 ## 8. Checks
 
@@ -160,3 +162,4 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 - Variables read back from the file: 66 in "PPO colour", 17 in "PPO layout", 3 in "Grid density", 3 in "Control size". [`docs/design/library-variables.json`](../design/library-variables.json) was updated to match.
 - After the swap on the grid page, no plain button, tooltip, toast or menu-item frame remained there, and the affected cards were rendered and inspected.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `python3 scripts/check_design_tokens.py`.
+- After the confirmation, card 9 and the notes on cards 1 and 2 were updated; card 9 was rendered and inspected.
