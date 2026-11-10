@@ -277,6 +277,71 @@ Node numbers and counts below identify the retained size-30 plans and are not st
 
 Every proposed proof must compare DTOs/ordering/counts against an oracle which cannot reach any edited helper. Deep equality alone is insufficient: assert explicit record counts, kinds, states and excluded identities before comparison. Repeat the never-analysed bound on the new and frozen statements, with identical principals and binds. No equivalence proof or application improvement is claimed by this audit.
 
+## Projects register candidate fences — 10 November 2026
+
+[PR #889](https://github.com/deanrfiedler-gif/powerplants-one/pull/889) implements Dean's bounded Projects register follow-up against main `900daa9d0929c12251226c4a7ff02cce247ad9f9`. It began with a claim-only investigation while three build slots were occupied; after B2 #881 merged, the branch merged current main and froze the complete reader before implementation. B3 billing and My Work remain independent. The [shared-path coordination](https://github.com/deanrfiedler-gif/powerplants-one/pull/887#issuecomment-6754466464) places this section before the historical audit validation, leaving #887's disjoint My Work evidence intact.
+
+Scope remains PJ01 / PPO-012 and PRJ-01, PRJ-02, PRJ-07 and PRJ-08 under the [existing register decision](../../../decisions/projects-register-native.md). Only `src/projects/register.ts` changes production code. `project_candidates` materialises the existing project/organisation/site/user inner joins and workspace restriction. `visible_projects` materialises the unchanged visibility predicate over those rows; lateral projections re-expose the original `p`, `o` and `s` aliases. `projectVisibility()` is interpolated unchanged, without any text rewrite, so nested aliases retain their SQL scopes. The original milestone lateral lookup and ordinary AtRisk-task count then run over the authorised rows. The explicit output projection, filters, counts, options, ordering, ordinal cursor lookup and public DTO remain intact. Visibility and task facts still precede the page window. No shared builder, other reader, permission/grant, schema, index, dependency, workflow, timeout or planner setting changes.
+
+### Frozen oracle and measured result
+
+`tests/helpers/projects-register-main.ts` contains the complete original reader from the baseline above, including validation, paging, cursor rejection, observation time and public projection. Only imports are relocated. Inverse relocation is byte-identical to main: original blob `e20c63d27933fdcf72b0538417ccfcede6c767ce`, SHA-256 `f28338afa4ba9ef4223eaef6adfd7f38172f5c0adb9167355f08e37ddedce1b1`. No helper was edited, and the oracle cannot reach the changed reader. The hash is asserted in the plan suite.
+
+The [measurement record](2026-11-10-projects-register-candidate-cost.json) retains the native created IDs/counts, raw and public results/hashes, SQL and binds, exhaustive node metrics/paths, statistics and full raw-artefact hashes. Measurements use the unchanged native audit fixture via `auditDealFixture`, including its other supporting records and seed offsets, on disposable `ppo_synthetic_test`. PostgreSQL 16.15, Node 24.21.0, npm 11.19.0; native JIT is on and neither plan has a JIT section.
+
+| Native projects / bound | Maximum loops baseline → fixed | Shared hits baseline → fixed | Execution ms baseline → fixed | Planning ms baseline → fixed |
+| --- | ---: | ---: | ---: | ---: |
+| 30 / 300 | 550 → **30** | 6,300 → 1,213 | 9.170 → 5.013 | 2.469 → 3.333 |
+| 45 / 450 | 1,183 → **45** | 13,766 → 2,570 | 21.939 → 4.514 | 1.563 → 2.332 |
+
+The denominator remains the **reported visible population**, exactly 30/45, not the SQL statement's one JSON row or a smaller page size. Every EXPLAIN node is traversed, including SubPlans and InitPlans: 59 baseline nodes and 62 fixed nodes at each volume. Every fixed node passes the 10× bound; the same assertion fails on each frozen baseline. Baseline maxima are in the repeated organisation-visibility branch. The fixture explicitly asserts every project ID and exact Active/Mine/All counts of 30/45, zero Closed/Overdue/AtRisk/NoTarget counts, null milestones, zero risks and no cursor. Both raw SQL results and complete public outputs are equal, with identical binds and a shared frozen JavaScript observation clock after fixture writes; PostgreSQL grant clocks remain real.
+
+Loop growth over the two volumes is **2.151× → 1.500×**. Shared-hit growth is separately **2.185× → 2.119×**, and execution-time growth **2.392× → 0.900×**. Buffer growth is not claimed linear. Timings are individual warm EXPLAIN observations, not endpoint latency, distributions or production-load acceptance. Fresh UUIDs and encounter order vary, so the new baseline maxima need not equal the original audit's 552/1,169.
+
+The ten candidate/supporting tables must be never-analysed before and after both readers, including `permission_grants`, `users` and `site_parties`. An early run exposed automatic analysis of seeded permissions during fixture creation and was rejected. The final plan test takes test-only `SHARE UPDATE EXCLUSIVE` table locks, allowing native DML and both reads while preventing concurrent auto-analysis. It changes no statistics or configuration. If auto-analysis already happened during reset/seed, that entire setup can be disposed before any fixture or reader runs, with a maximum of three setup attempts; query, equivalence and bound failures are never retried. Both recorded final volumes passed on **setup attempt 1** with null analysis timestamps and zero counters throughout. No ANALYZE command, statistics-counter clearing, disabled trigger/constraint or planner change is used. Full raw plans remain under ignored `tmp/projects-register-candidate-cost/`.
+
+### Semantic and cursor proof
+
+The six native projects use stable IDs `f1000000-0000-4000-8000-000000000001` through `...000006`, labelled P1–P6 below. The expectation ledger is independent of both implementations. Existing grants permit only one native Project coordinator per company; no extra grant is invented. Sam is an authorised reader of Company A's projects, with no Mine matches, which also proves permission subqueries do not accidentally bind to the project coordinator.
+
+| Project | Company / coordinator | State / target | Explicit schedule facts |
+| --- | --- | --- | --- |
+| P1 | A / coordinator | Active / 2030-01-01 | One ordinary risk task. Earlier completed milestone excluded. Earliest incomplete dated milestone is overdue; a tied later ID loses. An undated AtRisk milestone does not increase task risk. |
+| P2 | A / coordinator | Active / 2030-01-01 | No tasks or milestone; retained, including when Sam reads it. |
+| P3 | A / coordinator | Active / null | Only an undated incomplete milestone; overdue false, risk zero. Optional primary contact and parent organisation are null. |
+| P4 | A / coordinator | Closed / 2031-01-01 | Overdue milestone and risk facts retained, but excluded from active attention views. |
+| P5 | A / coordinator | Active / 2029-01-01 | Ordinary non-risk task; no milestone. |
+| P6 | B / Company B coordinator | Active / 2030-01-01 | Absent from A's rows/counts/options; visible to existing Company B authority. |
+
+Company A's explicit default order is `[P5,P1,P2,P3]`; All is `[P5,P1,P2,P4,P3]`; Closed is `[P4]`; Overdue/AtRisk are `[P1]`; NoTarget is `[P3]`. Counts are `{Active:4,Mine:4,All:5,Closed:1,Overdue:1,AtRisk:1,NoTarget:1}`, with active badge 4. Sam's Mine is empty while All remains five. Company B sees only P6, Active/Mine/All=1 and the other counts zero. Customer filters group P1/P2/P4 and P3/P5; coordinator filters include the real owner and empty non-owner case. Filtered reads retain unfiltered authorised options and the active badge. The reader has no independent task-total or milestone-count field; its actual task-derived fields are preserved without inventing new fields.
+
+The equivalence suite covers all seven views × eight sorts × both directions, case-insensitive search, reference/UUID/site search, empty matches, owner/customer combinations, null-last sorting, tied IDs, and complete cursor traversal at limits 1/2 plus a complete page. It asserts named identities, counts, options and schedule facts before comparing raw rows and every public field, including signed cursors and `observed_at`. Negative cases cover altered query/view/sort/direction/owner/customer/limit/actor, tampered signatures, denied profiles, working-company exclusions, and native completion removing an AtRisk cursor anchor with the same refresh-required 422.
+
+P4 is closed through native commands: explicitly removed synthetic scope with its authority reference, a native Commercial Not required source and Finance disposition, then `closeProject`. No renderer, direct lifecycle update or guard bypass is used. The live schema confirms organisation/site/coordinator are mandatory foreign-key parents (organisation/site keys include company/workspace). The tests retain legal null optional parents, assert missing-parent creation and parent-deletion refusals, and re-read the unchanged projects. They do not manufacture rows with broken mandatory parents or disable constraints/triggers. Parent/company exclusions include hidden Company B labels in options as well as rows.
+
+### Review fixes F1–F3
+
+F1 adds a decisive parent-visibility case using the six native-created projects. In a rolled-back transaction it narrows Sam’s **existing** Company A `shared.read` grant to the Alpha site, retaining the same grant ID; it inserts no grant and leaves `project.read`/`shared.internal.read` unchanged. P1/P2/P4 are visible only through organisation Alpha’s `site_parties` relationship. P3/P5/P6 are excluded, counts are `{Active:2,Mine:0,All:3,Closed:1,Overdue:1,AtRisk:1,NoTarget:0}`, active badge 2, and options contain only Alpha and the coordinator. A constraint-checked fixture update then reassigns the existing Alpha-site party to Beta organisation. The project scope and site remain visible while Alpha organisation becomes hidden: both readers return no rows, all counts/badge zero and empty options. Mandatory project parents remain intact. These two fixture updates use SQL inside the rollback transaction, not new business commands; no guard or constraint is disabled. Raw rows, binds and all public fields match in both states.
+
+Both exact review mutations were applied temporarily to reviewed head `7300611e` with this new test. Swapping the organisation/site rewrite targets fails the first assertion (actual `[]`, expected `[P1,P2,P4]`). Dropping both parent checks with `projectVisibility().split(" AND (EXISTS")[0]` fails the second (actual `[P1,P2,P4]`, expected `[]`). Each run exits 1 with `ERR_ASSERTION`; the restored implementation passes. No mutation is committed.
+
+F2 removes the regex rewrite completely. The original aliases are exposed by lateral projections, preserving SQL name scoping. The refreshed 30/45 proof measures this actual SQL. The evidence now compares the emitted visibility predicate literally with the frozen statement; the inverse-rewrite check has been removed. F3 corrects the local-versus-CI wording and replaces the transient draft-state claim with the remaining review and CI gates.
+
+### Reproduction and validation
+
+After successful repository cloud setup, source the environment path it prints and run database files serially:
+
+```bash
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/projects-register-equivalence.test.ts tests/database/projects-register-candidate-plan.test.ts
+```
+
+The plan test resets the disposable database at each volume and writes full SQL/binds, plans, statistics and results to ignored `tmp/projects-register-candidate-cost/{30,45}.json`. `PPO_PLAN_FROZEN_MAIN=1` applies the same bound to frozen main and must fail; the normal suite already asserts that failure at both volumes. Do not run it alongside another database suite.
+
+All **128 new proof tests pass**: 125 semantic/cursor cases plus the oracle hash and two native-volume plan cases. **26 existing Projects database regressions** also pass (`projects-register`, `projects-gantt`, `project-programme`, `project-baselines`, `project-raid`). `npm run check` passes: Studio, full lint, TypeScript, **1,447 unit tests** and the production build. Foundation, prototype, naming, migration numbering, status-source, **44 documentation unit tests**, documentation-scope and whitespace checks pass. Browser tooling remains unavailable: `npm run browser:check` confirms Chrome is absent at `/opt/google/chrome/chrome`. Browser suites and the full database/HTTP matrix are not run locally and remain for CI.
+
+Claude’s independent review of head `7300611e65c5304164aa72c04f1268c3c40ea662` identified F1–F3. The fixes below await focused confirmation of those findings and applicable final-head CI. No merge, deployment, business acceptance or production readiness is claimed.
+
+
 ## Validation and remaining work
 
 Twenty final manual pairs across both volumes executed against `ppo_synthetic_test`; raw artefacts remain ignored. The inventory contains 77 reader entries (some dispatch multiple kinds). Further priorities include populated optional branches and the unmeasured readers above. Claude's one review identified F1, addressed above. Claude decides follow-up prompts, one reader per pull request. Ready-head full CI, confirmation of F1 and business acceptance are separate from these measurements.
