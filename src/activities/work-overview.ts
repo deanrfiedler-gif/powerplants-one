@@ -228,9 +228,17 @@ export async function readWorkOverview(p: Principal, input: unknown = {}) {
   const order = list.sort === "Title" ? 'lower(a.summary) COLLATE "C"' : "coalesce(a.starts_at,a.due_at)";
   const rows = (
     await c.query<Raw>(
-      `SELECT ${sql.select} FROM ppo.activities a ${sql.joins}
-       WHERE ${scoped} AND a.due_at IS NOT NULL AND coalesce(a.starts_at,a.due_at)<$7 AND ($8::text IS NULL OR a.activity_type=$8)
-       ORDER BY (a.due_at<$6) DESC,${order},a.id LIMIT $9`,
+      // Resolve membership and the ordered window before optional display joins. The
+      // owner join remains inside membership, preserving its original inner-join rule.
+      // Each optional display join selects at most one record per activity.
+      `WITH overview_window AS MATERIALIZED (
+         SELECT a.* FROM ppo.activities a
+         JOIN ppo.users u ON (u.workspace_id,u.id)=(a.workspace_id,a.owner_id)
+         WHERE ${scoped} AND a.due_at IS NOT NULL AND coalesce(a.starts_at,a.due_at)<$7 AND ($8::text IS NULL OR a.activity_type=$8)
+         ORDER BY (a.due_at<$6) DESC,${order},a.id LIMIT $9
+       )
+       SELECT ${sql.select} FROM overview_window a ${sql.joins}
+       ORDER BY (a.due_at<$6) DESC,${order},a.id`,
       [...args, list.activity_type, limit],
     )
   ).rows;
