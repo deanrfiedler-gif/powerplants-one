@@ -1,0 +1,754 @@
+{
+  "source": {
+    "file": "PPO - Library",
+    "collections": [
+      "PPO colour",
+      "PPO layout",
+      "Grid density",
+      "Control size",
+      "Gantt colour"
+    ],
+    "read_on": "2026-11-10",
+    "read_by": "Figma connector, read-only"
+  },
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md and docs/decisions/library-gantt.md.",
+  "counts": {
+    "variables": 113,
+    "mapped": 30,
+    "no_code_name": 83
+  },
+  "variables": [
+    {
+      "collection": "PPO colour",
+      "name": "brand/navy",
+      "value": "#242a37",
+      "code": "var(--navy)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "brand/navy-deep",
+      "value": "#1f242f",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "brand/green",
+      "value": "#62bb46",
+      "code": "var(--green)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "brand/white",
+      "value": "#ffffff",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/workspace",
+      "value": "#f5f6f8",
+      "code": "var(--paper)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/hover",
+      "value": "#f0f2f5",
+      "code": "var(--surface-hover)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/navy-tint",
+      "value": "#e9eef5",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/rail-hover",
+      "value": "#353d4d",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/rail-active",
+      "value": "#3b4455",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "line/soft",
+      "value": "#e9ecf1",
+      "code": "var(--line-soft)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "line/strong",
+      "value": "#dce2e9",
+      "code": "var(--line-strong)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "line/control",
+      "value": "#828e9f",
+      "code": "var(--control-border)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "text/ink",
+      "value": "#242a37",
+      "code": "var(--ink)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "text/secondary",
+      "value": "#596779",
+      "code": "var(--text-secondary)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "text/link",
+      "value": "#355b80",
+      "code": "var(--link)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/success",
+      "value": "#416d33",
+      "code": "var(--success)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/success-surface",
+      "value": "#edf5e9",
+      "code": "var(--success-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/warning",
+      "value": "#80530e",
+      "code": "var(--warning)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/warning-surface",
+      "value": "#fff2d9",
+      "code": "var(--warning-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/danger",
+      "value": "#993b2a",
+      "code": "var(--danger)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/danger-surface",
+      "value": "#fff1ed",
+      "code": "var(--danger-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/info",
+      "value": "#346580",
+      "code": "var(--info)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/info-surface",
+      "value": "#e9f2f8",
+      "code": "var(--info-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/neutral",
+      "value": "#526078",
+      "code": "var(--neutral)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "status/alert-dot",
+      "value": "#e5533d",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/canvas",
+      "value": "#ffffff",
+      "code": "var(--surface-white)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/chrome",
+      "value": "#f4f5f7",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/chrome-hover",
+      "value": "#e8ebf0",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "brand/green-deep",
+      "value": "#3d9a37",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sage-surface",
+      "value": "#e3efe0",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sage-ink",
+      "value": "#2f6b2a",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sky-surface",
+      "value": "#dfeaf6",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sky-ink",
+      "value": "#2c5d8f",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/lilac-surface",
+      "value": "#ebe4f5",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/lilac-ink",
+      "value": "#5f3f94",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sand-surface",
+      "value": "#f3eadb",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/sand-ink",
+      "value": "#7d5a1e",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/rose-surface",
+      "value": "#f6e3e8",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/rose-ink",
+      "value": "#8f3b55",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/teal-surface",
+      "value": "#dcf0ee",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "person/teal-ink",
+      "value": "#1f6f66",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/sales-surface",
+      "value": "#e6f4e2",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/sales-ink",
+      "value": "#3d9a37",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/estimating-surface",
+      "value": "#dff3f1",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/estimating-ink",
+      "value": "#1f8a7e",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/engineering-surface",
+      "value": "#e6e9f8",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/engineering-ink",
+      "value": "#4a56b8",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/projects-surface",
+      "value": "#efe6f8",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/projects-ink",
+      "value": "#7a4bb3",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/service-surface",
+      "value": "#f3e4ee",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/service-ink",
+      "value": "#9b3d6f",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/supply-surface",
+      "value": "#edf1dc",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/supply-ink",
+      "value": "#6b7d1f",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/finance-surface",
+      "value": "#e4ebf2",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/finance-ink",
+      "value": "#3f5f7a",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/reporting-surface",
+      "value": "#e6eaee",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/reporting-ink",
+      "value": "#52657a",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/knowledge-surface",
+      "value": "#f1e9e1",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/knowledge-ink",
+      "value": "#8a5a2b",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/portal-surface",
+      "value": "#dff3f7",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/portal-ink",
+      "value": "#1f7f99",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/administration-surface",
+      "value": "#e9ebee",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/administration-ink",
+      "value": "#5c6773",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/assistant-surface",
+      "value": "#e9eef5",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "accent/assistant-ink",
+      "value": "#242a37",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO colour",
+      "name": "surface/rail",
+      "value": "#2b3241",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/2",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/4",
+      "value": 4,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/6",
+      "value": 6,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/8",
+      "value": 8,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/12",
+      "value": 12,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/16",
+      "value": 16,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/24",
+      "value": 24,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/checkbox",
+      "value": 4,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/chip",
+      "value": 4,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/control",
+      "value": 6,
+      "code": "var(--radius-control)",
+      "status": "mapped"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/popover",
+      "value": 8,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "grid/marker-width",
+      "value": 3,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "grid/divider-hit",
+      "value": 8,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "grid/focus-ring",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "grid/frozen-rule",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/dialog",
+      "value": 12,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/pill",
+      "value": 999,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "move/handle-size",
+      "value": 24,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "move/indicator",
+      "value": 3,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "move/target-outline",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "move/scroll-zone",
+      "value": 48,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "board/stage-width",
+      "value": 240,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "board/stage-collapsed",
+      "value": 40,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "time/hour-height",
+      "value": 48,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "time/hour-width",
+      "value": 96,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "time/gutter",
+      "value": 64,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "time/lane-height",
+      "value": 64,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "gantt/bar-height",
+      "value": 20,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "gantt/week-width",
+      "value": 120,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/milestone",
+      "value": 2,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Grid density",
+      "name": "grid/row-height",
+      "value": 40,
+      "modes": {
+        "Comfortable": 40,
+        "Compact": 32
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Grid density",
+      "name": "grid/header-height",
+      "value": 36,
+      "modes": {
+        "Comfortable": 36,
+        "Compact": 32
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Grid density",
+      "name": "grid/cell-padding-x",
+      "value": 12,
+      "modes": {
+        "Comfortable": 12,
+        "Compact": 10
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/height",
+      "value": 32,
+      "modes": {
+        "Medium": 32,
+        "Small": 28
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/field-height",
+      "value": 36,
+      "modes": {
+        "Medium": 36,
+        "Small": 32
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/padding-x",
+      "value": 12,
+      "modes": {
+        "Medium": 12,
+        "Small": 10
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-fill",
+      "value": "#e8f1fb",
+      "code": "var(--gantt-blue-fill)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-progress",
+      "value": "#b7d1ef",
+      "code": "var(--gantt-blue-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/blue-outline",
+      "value": "#4a7bb7",
+      "code": "var(--gantt-blue-outline)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/orange-progress",
+      "value": "#f6cd8b",
+      "code": "var(--gantt-orange-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/green-progress",
+      "value": "#9fcd8e",
+      "code": "var(--gantt-green-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/red-progress",
+      "value": "#f2b5a7",
+      "code": "var(--gantt-red-progress)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today",
+      "value": "#7c5cc4",
+      "code": "var(--gantt-today)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today-surface",
+      "value": "#eee9fb",
+      "code": "var(--gantt-today-surface)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/today-text",
+      "value": "#5b3fb0",
+      "code": "var(--gantt-today-text)",
+      "status": "mapped"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/dependency",
+      "value": "#899eb1",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Gantt colour",
+      "name": "gantt/dependency-warning",
+      "value": "#b95445",
+      "status": "no-code-name"
+    }
+  ]
+}
