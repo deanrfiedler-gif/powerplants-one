@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-TIME-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; five items await his confirmation (section 6); every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Time · Planners and calendars in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items to confirm ([section 6](#6-to-confirm)).
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean accepted an order for the next pages of `PPO - Library`: Controls, shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file ([Controls record](library-controls.md)). After the [Move](library-move.md) and [Board](library-board.md) pages he answered: "Confirm all ten items as recommended and draw the next page". This record covers that page, named "Time · Planners and calendars".
 
@@ -82,7 +82,7 @@ The axis itself (hour labels, hour lines, day columns or lanes) is drawn as a la
 | 7 · Keyboard, touch and phone | `108:1520` | Keys, touch rules, a 320 px phone day |
 | 8 · States | `110:1399` | Loading, empty day, no access, last good read |
 | 9 · Do and Don't | `110:1509` | Three pairs |
-| 10 · Values, sources and items to confirm | `110:1783` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 10 · Values, sources and confirmed items | `110:1783` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated for the new page and variables. Read me also now says that the nineteen items on the Grid, Controls, Move and Board pages are confirmed.
 
@@ -122,9 +122,11 @@ The Read me page and the Foundations board were updated for the new page and var
 | Planning by dragging | A "New" ghost and a small form; pointer only | New |
 | Phone | Day chips, the untimed items and the day as a list; planner cards per person with a strip | Sales PH11; Service phone design |
 
-## 6. To confirm
+## 6. Confirmed — 10 November 2026
 
-| ID | Item | Drawn | Why it needs a decision |
+On 10 November 2026 Dean confirmed these five items: "Confirm all five items as recommended and draw the next page". Card 10 and the page header now say so. Confirming T1 means the built Service planner's hatched proposed visits and its colours are to be aligned with this page in a later reviewed change.
+
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | T1 | Event kinds | Six kinds that merge the Sales calendar's colours (activity, Outlook meeting, tentative, private) with the Service planner's (confirmed, needs attention, proposed). Proposed visits become dashed instead of hatched | The two sources draw proposed and confirmed differently; hatching is kept for time nobody can book |
 | T2 | One axis, two directions | 48 px an hour down the page, 96 px an hour across, 15-minute snap, for the calendar, the planner and the Gantt chart | The 96 px value is new, and applying one axis to the Gantt chart is a choice for the Projects file |
@@ -135,7 +137,7 @@ The Read me page and the Foundations board were updated for the new page and var
 ## 7. Not done and open
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
-- **Module files unchanged.** The accepted Sales Activities sheets keep their local events. The Service planner is built in code to its own refinement decisions; its hover growth, hatched proposed visits and colours differ from this page until T1 is decided and a reviewed change aligns them.
+- **Module files unchanged.** The accepted Sales Activities sheets keep their local events. The Service planner is built in code to its own refinement decisions; its hover growth, hatched proposed visits and colours differ from this page until a reviewed change aligns them with T1, which Dean confirmed.
 - **Candidates, not drawn.** A month view (no accepted page draws one), multi-day bars in a calendar week, the planner's map, editing a repeating meeting.
 - **No proof beyond the design.** No prototype links were set on the Time parts. Timing, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The four `time/` variables have no CSS property yet.

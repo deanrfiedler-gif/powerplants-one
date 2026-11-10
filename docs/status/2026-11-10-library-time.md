@@ -11,7 +11,7 @@ Dean confirmed the ten open items on the Move and Board pages of the private Fig
 - **Review board.** Ten cards: one axis in two directions, events, bands and the Now line, scales, overlaps, moving, resizing and planning, keyboard, touch and phone, states, Do and Don't, and the values.
 - **Sources.** The accepted Sales Activities week view (A01) and the Service planner built on 10 October 2026, with Dean's working hours.
 - **Variables.** Four `time/` variables. The library now holds 99 variables; [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
-- **To confirm.** Five items await Dean: the six event kinds (proposed visits dashed, not hatched), one axis at 48 px and 96 px an hour with a 15-minute snap, resizing by an edge, planning by dragging across empty time, and overlaps side by side up to three.
+- **Confirmed.** Five items needed Dean's decision: the six event kinds (proposed visits dashed, not hatched), one axis at 48 px and 96 px an hour with a 15-minute snap, resizing by an edge, planning by dragging across empty time, and overlaps side by side up to three. He confirmed them later the same day ("Confirm all five items as recommended and draw the next page").
 
 **Checked:** the components and every card were rendered and inspected, and drawing defects found on the way were fixed. A structural read found no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style and no plain corner radius. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
 
