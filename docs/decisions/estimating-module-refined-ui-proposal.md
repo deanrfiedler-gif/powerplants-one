@@ -2,14 +2,14 @@
 document_id: PPO-ESTIMATING-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Accepted by Dean Fiedler on 10 November 2026 on the recommendations recorded in section 12 (A1–A24 and Q1–Q12 decided); re-aligned 9 and 10 November 2026 to his prompt version 4 and addendum A2 (section 11); two directions he gave on 9 November are recorded in section 10; Design ready check, lock-in and the accepted audit batch in progress (section 12); no named version saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Accepted by Dean Fiedler on 10 November 2026 on the recommendations recorded in section 12 (A1–A24 and Q1–Q12 decided); re-aligned 9 and 10 November 2026 to his prompt version 4 and addendum A2 (section 11); two directions he gave on 9 November are recorded in section 10; Design ready check run by an independent session and its corrections made, the lock-in done except the named version, and the accepted audit batch drawn (section 12); the named version is Dean's to save; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 900daa9d0929c12251226c4a7ff02cce247ad9f9
 versioning: git
 ---
 
 # Estimating module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Accepted on 10 November 2026 (section 12); lock-in in progress. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2; section 12 records his acceptance, the decisions adopted, the Design ready check, the lock-in and the audit batch drawn from it. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Accepted on 10 November 2026 (section 12); checked, corrected and locked in the same day except the named version, which Dean saves. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2; section 12 records his acceptance, the decisions adopted, the Design ready check, the lock-in and the audit batch drawn from it. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 9 November 2026 Dean asked for the complete refined UI page set of the Estimating module to be drawn in a brand-new private Figma file, "PPO - Estimating module (proposal)", inside the accepted shell and to at least the standard of the Sales module file, using the accepted "PPO - Shell" file as the source of truth for the chrome and the Design file's Estimating pages as content reference only. His brief fixed ten decisions: the module is named Estimating; quotations are an output of Estimating and exist in Sales as simple quotations; four specialised workbenches (Screens, Fertigation, Automation, Control) share a generic template; Excel estimates import to lines and keep the workbook as evidence; review and approval gates are rule-based and explained; customer e-mail and page tracking are built in; customisation publishes from drafts with impact shown; one register standard applies to the whole application (reorder, resize, inline edit with a change reason, address lookup); the docked workspace menu can collapse; and the synthetic story stands at Thursday 5 November 2026, 09:00, signed in as Priya Nair, estimator. He gave the same four rules as for Sales: one line of data per register cell even if the table scrolls sideways, no second search bar in the content area, pages as professional as the shell, and otherwise full creative control, with everything undecided decided by the designer and recorded for him.
 
@@ -379,6 +379,15 @@ Each item is for Dean's decision; the recommendation is what the file shows.
 | A22 | The motor selection lookup table keeps the three class rows of dataset 9.16 (0–200 Nm M-1, 200–400 M-2, 400–450 M-3); the Tue 3 Nov import of 9.8 "12 rows, 11 accepted, 1 rejected" is drawn as 12 workbook rows read, of which eight were unchanged, two changed, one new (400–450 M-3) and one rejected as a duplicate range | Keep; reconcile the two counts if the table is meant to have twelve rows |
 | A23 | Calibration (O08–O12, V01, I03) is drawn as hours per dosing zone (42 h → 49 h, median of 5 eligible cases, Kim Patel's proposal SYN-CAL-0003 of Fri 30 Oct 2026, Sam Whitfield's independent review pending, adoption unavailable, preview on Riverbend v03 line 7 180 h → 196 h, A$17,100.00 → A$18,620.00) in place of the earlier × 1.08 factor; per-case hours (Hillcrest 44 → 50, Mallee 40 → 48, Coastal Herbs 42 → 47, Tamar 44 → 50, Lakeside 42 → 49) are synthetic | Keep |
 | A24 | Screens: dataset 9.15 CS resolves the controller conflict with 4 controllers after the per-span motor count doubled; the sheet inventory row x06 said 2, and the dataset wins. Evaluation 1 (Mon 26 Oct 2026) → evaluation 2 (Tue 3 Nov 2026, 11:20) is drawn as saved with no unsaved change, so Compare & save compares the two saved evaluations | Keep |
+| A25 | Register scroll affordance: the last data column scrolls under the frozen actions column; an inner shadow on the scroll region's left edge, a drop shadow from the frozen actions column and the horizontal scrollbar show it on every register (register standard, A6) | Keep (Design ready DR-1) |
+| A26 | accent/estimating-ink darkened from #1f8a7e to #156e64 in this file's PPO colour collection (5.29 : 1 on accent/estimating-surface, 6.1 : 1 on white); the library takes the value on publication and the other module accents are to be checked the same way | Keep (R1, DR-20) |
+| A27 | Tablet 1024: the derived top bar hides the account name as the accepted shell does at that width, and the rails hide Favourites at 768 px so More clears the Settings group; the Shell file decides the tablet rail rule | Keep until the Shell file decides (DR-5) |
+| A28 | surface/scrim, brand/navy at 32 % alpha, added to the PPO colour collection and bound on every dialog scrim; a library follow-up. Every colour variable carries the CSS code syntax `--ppo-<group>-<name>` | Keep (DR-9, DR-11) |
+| A29 | Text styles: ten PPO/… styles (Caption 11 to Display 24, Roboto Regular and Medium with the helper's line heights) were created at lock-in and not applied; the sheets' type was set directly from the same ramp; the styles are applied when the shell library publishes and the components are swapped (A8). Tabular figures cannot be set through the plugin API and come with the text styles | Keep (DR-10, R5) |
+| A30 | Prototype flows: Figma flows stay within one page, so the main journey is one flow per scope page (fourteen starting points named "Main journey · <page>"; Interaction states has none), each hotspot a named button or the sheet itself, with the hand-offs between pages written on the Flows and notes card | Keep (G5, DR-21) |
+| A31 | Desktop-first scope: seven pages have no phone sheet and six no tablet sheet by decision; each Flows and notes card now states how the page adapts and which shared page states apply (PS01–PS05 for registers, PS06–PS10 for records, PS11–PS13 for workbenches); X45 shows the validation state a required reason shares across X16, X17 and X20 | Keep (DR-14, DR-15) |
+| A32 | Pointer targets: a register checkbox's target is its 40 × 36 cell (the 44 px row on the phone); status chips are not interactive; the customer page's section chips are 28 px anchors; every phone action is 44 px high. The hand-drawn parts named like controls (Button ·, Filter ·, Field ·, Pager, Badge, Tile) become library components at stage 3 of the standard | Keep (DR-13, DR-16, DR-17, DR-18) |
+| A33 | Documentation: handovers, permissions, keyboard order and open questions stay on the Flows and notes cards and ST01 rather than Figma annotations; Ready for dev cannot be set through the plugin API, so the named version alone marks acceptance; the customer page's bracketed sender details and issue date are merge fields filled at issue (D-024) and now read "set at issue" | Keep (DR-19, DR-25, standard section 2 step 4) |
 
 Capability assumptions (prompt 4.2, marked † on the sheets where a duty decides what is offered): Priya Nair holds estimating.author, cpq.author and quotation.prepare; Marcus Tan estimating.review (and prepared Tamar's r02, so he is never offered its approval, G7); Jordan Blake quotation.approve; Sam Whitfield cpq.review (independent of Kim Patel, who authors rule sets as the engineering owner); Dean Fiedler quotation.issue and the deals he owns; Sasha Clarke and Tom Reid record customer responses on their deals; Robin Hale supply.coordinate receives conversions; Lee Nakamura holds estimating.read only (T16); cpq.publish is not yet assigned (DEC-CCE-06), so Publish reads unavailable on X10 and AD07. Where the matrix names no duty for an action, the sheet shows the action unavailable with its reason rather than hiding it.
 
@@ -629,12 +638,57 @@ Audit order of 9.7, as adopted with two changes: refinements R1 to R10 and polis
 
 ### 12.2 Design ready check
 
-To follow once the independent check has run.
+A session that had not drawn the file ran the standard's Design ready checklist on 10 November 2026, read-only: all fifteen scope pages, all 90 sections and 300 frames walked programmatically (about 118,000 nodes), 29 renders read, seven contrast pairs computed independently (5.14 to 14.37 : 1, agreeing with ST01). Its report is kept with the session notes, not in the repository, because it names the file. Before correction the checklist read 1 pass (contrast), 5 partly, 4 fail (variables and text styles, clipping and overlap, pointer targets, Present mode) and 1 not checkable (drag, sticky and repeated steps, which need a prototype); 29 findings, 11 corrections, 12 questions and 5 notes.
+
+The corrections were made the same day, before lock-in:
+
+| Finding | What changed |
+|---|---|
+| DR-1 the last register column clipped under the sticky actions column on 8 of 9 registers | Scroll affordance on all 29 register tables (A25) |
+| DR-2 chip groups over the meaning text on the ST01 card | The chip groups wrap in a 300 px column |
+| DR-3 customer pricing rows without an item label | The Freight to site row rebuilt and the stray row removed on QP01, QP02, QP07 and QP08. The first attempt also removed the Exclusions, Terms and Options sections and the phone footer card on seven sheets; they were rebuilt from the dataset text (9.14) and the renders re-read |
+| DR-4 T01 title row and checks strip overflow | Title one line at 300 px; the checks note truncates |
+| DR-5 tablet top bar clipped the name; the rail's bottom group covered More | A27 |
+| DR-6 C00 toolbar and card titles | Toolbar reduced to the view switcher, Workbench and State filters, Add filter, Group and Sort; card titles are the family names |
+| DR-7 AD01 clipped chip and truncated navigation | Navigation labels 200 px; row columns 180 and 150 px |
+| DR-8 contradictory counts | CO01 title 6 with "1 expiring Fri 13 Nov"; V01 title and All open 8 |
+| DR-9 scrims on a raw colour | A28 |
+| DR-10 no text styles; DR-11 no CSS names | A29, A28 |
+| DR-12 derived chrome not labelled Proposed | The four derived components renamed "· Proposed" with a Status description |
+| DR-18 phone buttons 40 px | Seventeen phone buttons at 44 px (A32) |
+| DR-21 no prototype | A30: fourteen flows |
+| DR-22 titles and breadcrumbs | TB01 and PH12 read "Intake & workload"; I01 to I03 read Estimating › Insights › page name |
+| DR-24 X35 hosted on the Quotations register; X15 truncated carry-over | X35 re-hosted on a clone of the Workload register content; the X15 text wraps |
+| DR-26 KPI captions truncated | Twelve KPI labels split into label and meta (T01, K07, the wizard and insight tiles) |
+| DR-27, DR-29 | The fifteen Flows and notes cards carry a FLOWS label; the Read me audit card says what its position audit measured |
+
+The questions were decided under Dean's standing order and recorded as A25 to A33. The notes (DR-23 row-edge bars explained on ST01, DR-28 raw paints inside the shell copies inherited from the accepted file) stand as recorded in A8 and on ST01.
 
 ### 12.3 Lock-in
 
-To follow once the pages have moved above the — Proposals — separator and the named version is saved.
+The fifteen scope pages moved above the — Proposals — separator with their names and node IDs unchanged, as the standard's section 4 requires. The CS04 basis line reads the adopted Q11 rule ("2 delay units per drive line (one at each end) · v2 count rule. The length threshold (over 50 m) is the v4 draft rule, R09; its absence fails the v3 case on R10"). Two hidden helper text nodes were added beside the library on Shell and kit, holding the refinement pass and the flow routines, so a later session can continue. Ready for dev marks could not be set through the plugin API (A33). The named version "PPO - Estimating module (accepted)" is Dean's to save now that the batch is drawn; it is recorded here when saved, and any later design change needs a new one.
 
 ### 12.4 Drawn after the acceptance
 
-To follow once the batch is drawn and verified.
+**One pass over all fifteen pages** (refinements and polish). Sub-lines fill the row so "About this page" sits at one x on every page head (P3), and the long ones are cut to one clause (R4: E01, Q01, V01, I01 and twelve others); footers one clause on Q01 and V01 (P5); 46 stage bars drop the time, then the weekday, when the chip is tight (R3: 171 dates shortened, 19 hidden); E01 view tiles fill like Q01's (P1); the TB01 table fills to the footer (P7); row-menu icons 16 px (P6); chip casing scanned, two fixed (P4); 41 sheet labels trimmed to read the code and page before the ellipsis (P8); K07 carries the "Policy not configured" chip beside margin and markup (R7); the V01 rule-set group shows family and version chips (R10); the ST01 contrast row reads 5.29 : 1 (R1). Verified rather than changed: the CF and CC rule-set chips already took the provisional tone (R6); no text in CS03 sits white on brand/green-deep, so the ST01 3.57 : 1 row is a UI-only pair (R2); the KPI tile is one component across E05 and I01 to I03 and O01 has none by design (R8); the legend sits on QP02 only (R9). Tabular figures (R5) come with the text styles (A29).
+
+**New sheets:**
+
+| Sheet | Node | Page · section |
+|---|---|---|
+| TB17 Approve with confirmations, tablet | `215:10825` | Quotations · Tablet |
+| TB18 Return approval with reason, tablet | `215:11076` | Quotations · Tablet |
+| TB19 Record customer response · Accepted, tablet | `215:11316` | Quotations · Tablet |
+| PH13 Return approval with reason, phone bottom sheet | `215:11587` | Quotations · Phone |
+| Q29 Conversion result after step 4 (dataset 9.11; plan frozen Thu 5 Nov 2026, 10:05, one of the sheets after the story time, A13) | `215:11643` | Quotations · Desktop |
+| X45 Return approval with reason, validation state | `215:12165` | Quotations · Dialogs |
+| PS11 Workbench denied | `215:26295` | Workbenches · States |
+| PS12 Workbench offline | `215:26661` | Workbenches · States |
+| PS13 Workbench partial source | `215:27091` | Workbenches · States |
+| R17 Proposed · suggested rule-set draft from an imported workbook (N-E5) | `217:5608` | Rules studio · Desktop |
+| K16 Proposed · what-if with margin sensitivity to a source change (N-E7) | `218:4610` | Configure & price · Desktop |
+| V12 Proposed · explain this finding in plain English (N-E9) | `218:8733` | Reviews & approvals · Desktop |
+
+The sheet count is 297 (285 plus these twelve); the Read me index lists every sheet with its node. G2's phone variants of the approve and record-response dialogs already existed as PH05 and PH07. G1 and the other Sales items wait for a Sales-file prompt; G4, G7 and G8 wait for their contracts; N-E6 and N-E10 are deferred (12.1).
+
+**Verification after the batch.** Position audit on all fifteen pages: no loose node, no sheet outside its section, no sheet overlap, no section overlap, no unlabelled sheet; the only children beyond a sheet's bounds are the QP03, QP04 and PH11 page columns, clipped to the first screen by design. Renders re-read: E01, T01, C00, TB01, Q29, PH13, PS12, K16, R17, V12, X45, AD01, QP01, QP03, X35, TB17 and the ST01 chip card; three follow-up trims came from them (the C00 toolbar, the Q29 title, the K16 state column). Not re-run: the full weekday and story scans (the new sheets' dates were written from the dataset), the overflow guard (the pass touched text widths, not sheet bounds), and the contrast table beyond the two changed rows.
