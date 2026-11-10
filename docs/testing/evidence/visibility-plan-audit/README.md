@@ -383,15 +383,15 @@ Local application checks and draft-head CI are recorded on the pull request. Clo
 
 ## People register affiliation fence — 10 November 2026
 
-[PR #897](https://github.com/deanrfiedler-gif/powerplants-one/pull/897) follows the People audit finding against main `c248355e0b570bcf0a027000a123b7790a27f194`. The [measurement record](2026-11-10-people-register-candidate-cost.json) retains source identities, statistics, fixture IDs, counts, SQL hashes, every plan node and maximum-node paths. This supports CS-02, NFR-01 and NFR-04; synthetic plan evidence is not representative-load acceptance.
+[PR #897](https://github.com/deanrfiedler-gif/powerplants-one/pull/897) follows the People audit finding against main `c248355e0b570bcf0a027000a123b7790a27f194`. Current main `ceaa98c45` (including merged B3) was integrated before the final proof. The [measurement record](2026-11-10-people-register-candidate-cost.json) retains source identities, statistics, fixture IDs, counts, SQL hashes, every plan node and maximum-node paths. This supports CS-02, NFR-01 and NFR-04; synthetic plan evidence is not representative-load acceptance.
 
 Only `src/shared/people-register.ts` changes production code. `affiliation_candidates AS MATERIALIZED` performs the existing relationship/permitted-person/organisation joins and date checks before the unchanged affiliation company and organisation visibility predicates. Composite rows retain the original `rel` and `o` aliases through lateral projections; there is no SQL text or regex rewrite. The existing authorised affiliation aggregate, sites, notices, correction history, filters, ordering and cursor window remain unchanged. The candidate CTE is internal: its unauthorised relationships cannot reach public rows, counts, options or search.
 
 | Native fixture volume | Visible total / bound | Maximum loops frozen → fixed | Shared hits frozen → fixed | Execution ms frozen → fixed |
 | --- | --- | ---: | ---: | ---: |
-| 30 | 31 / 310 | 576 → 35 | 5,118 → 2,323 | 10.902 → 4.787 |
-| 45 | 46 / 460 | 1,182 → 50 | 9,849 → 4,083 | 11.614 → 8.380 |
-| Growth 45/30 | Visible population includes one seed person | 2.052× → 1.429× | 1.924× → 1.758× | 1.065× → 1.751× |
+| 30 | 31 / 310 | 569 → 35 | 5,075 → 2,321 | 6.429 → 5.629 |
+| 45 | 46 / 460 | 1,172 → 50 | 9,893 → 4,190 | 17.047 → 8.435 |
+| Growth 45/30 | Visible population includes one seed person | 2.060× → 1.429× | 1.949× → 1.805× | 2.652× → 1.498× |
 
 The denominator is the audit's **reported visible total, 31/46**, not the 30/45 native fixture size, 25-item default page, 26 raw look-ahead items or one SQL result row. Every fixed-plan node passes bounds **310/460**, including SubPlans and InitPlans; the same assertion must fail on each frozen-reader plan. The original maximum is the organisation permission branch (`SubPlan 16`); the fixed maximum is primary-site permission work (`SubPlan 21`). The new candidate CTE executes once with 32/47 rows, including the shared seed person's hidden Company B affiliation, which the later unchanged checks exclude. Both plans have zero shared reads. These are single warm observations: buffer and timing growth are reported independently from loops, with no latency or asymptotic claim.
 
@@ -401,7 +401,7 @@ The complete original reader is frozen in `tests/helpers/people-register-main.ts
 
 Four semantic tests exercise all 32 view/sort/direction combinations through every one-item cursor page, including tied case-folded names, emails, phones and status, nulls last and terminal cursors. Explicit ID/count ledgers also cover inactive people, absent affiliations/sites, multiple roles, expired/future affiliations, global organisation options, organisation/search/notice filters, latest notice versions and populated native correction evidence. Company A excludes a Company B-only person and the shared seed person's Company B affiliation/site; Company B sees those records and excludes Company A-only people. A site-only observer sees only the assigned contact, no organisation options, and restricted notices/history. Other-workspace identities remain isolated. Changed filters, actor, working company, limit and tampered cursors are refused, as is a cursor whose anchor becomes inactive. Real parent-deletion guards are asserted; no constraints or triggers are disabled.
 
-The affiliation's same-company organisation foreign key makes the organisation visibility term redundant when the relationship-company term already passes. Removing the organisation term alone therefore cannot produce a legal counterexample. Both terms remain unchanged; the permission-sensitive fixture verifies their combined boundary using the shared seed person's valid A/B affiliations. This is distinct from a claim that either term alone is independently decisive.
+With grant validity stable throughout a statement, the affiliation's same-company organisation foreign key means the organisation term cannot exclude a row already admitted by the relationship-company term. The fixture therefore tests their combined boundary using the shared seed person's valid A/B affiliations; it does not claim an independently decisive organisation-only mutation. Both terms and their real volatile `clock_timestamp()` grant checks remain unchanged. Grant validity changing between predicate evaluations is not covered by these fixtures. Two temporary mutations were killed by the frozen-oracle comparison: replacing both affiliation permission terms with `true`, and removing the affiliation date condition. The original code was restored; the measurement record identifies each mutation and its failed test.
 
 Reproduce serially after cloud setup, sourcing the environment path it prints:
 
