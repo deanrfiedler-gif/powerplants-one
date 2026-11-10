@@ -155,7 +155,7 @@ These six items need Dean's decision. Card 10 lists them.
 - **Not here.** Address lookup (kept in module files, as the Grid record notes); attachments and uploads; rich text; multi-step wizards such as Create estimate; inline editing in registers (Grid page); a switch, a search field, a segmented control and pagination.
 - **No proof beyond the design.** No prototype links were set on the Form parts. Focus order, announcements, keyboard behaviour in the picker and the date picker, and touch sizes need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The five new variables have no CSS property yet; the built app's `--ppo-control-height` (44 px) matches the Touch value, not Medium.
-- **Next in the recommended order.** States, then Record, then Phone patterns, then the shell and page template.
+- **Next in the recommended order.** States, then Record, then Phone patterns, then the shell and page template. The [States page](library-states.md) followed; its item S1 asks whether the uncertain state of Form / Save bar should take the System pages "Outcome unknown" banner and wording instead of Confirm original save.
 
 ## 8. Checks
 

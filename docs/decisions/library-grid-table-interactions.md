@@ -48,7 +48,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | Page | Node | Holds |
 |---|---|---|
 | Read me | `0:1` | File cover `36:3`; Read me card `36:114` with purpose, page index, how to use the library, rules and contents |
-| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, eleven text styles, layout, density and control-size variables, three effect styles |
+| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, thirteen text styles, layout, density and control-size variables, three effect styles |
 | Icons | `46:2030` | 24 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page when the Controls page was drawn (section 12); Chevron left and right came with the [Forms page](library-forms.md) |
 | Controls | `46:2031` | Sixteen control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
 | Grid · Table interactions | `4:76` | Components section `22:337`; review board `26:587`; playground frame `32:1736` |
@@ -57,17 +57,18 @@ The first components and review board were replaced on 10 November 2026 when the
 | Time · Planners and calendars | `97:37` | Nine time parts and their review board, recorded in [Time · Planners and calendars in PPO - Library](library-time.md) |
 | Gantt · Bars and links | `116:37` | Six Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
 | Forms · Fields and validation | `140:37` | Ten form parts and their review board, recorded in [Forms · Fields and validation in PPO - Library](library-forms.md) |
+| States · Loading, empty and errors | `162:37` | Six state parts and their review board, recorded in [States · Loading, empty and errors in PPO - Library](library-states.md) |
 
 **Variables and styles**
 
 | Item | Count | Notes |
 |---|---|---|
 | Collection "PPO colour" | 66, one mode "Value" | Names, values, scopes and descriptions as in PPO - Shell. Web code syntax on the 20 whose value is identical to an existing CSS property in the app |
-| Collection "PPO layout" | 33, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)), and `gantt/bar-height`, `gantt/week-width`, `radius/milestone` ([Gantt record](library-gantt.md)), and `form/check-width`, `form/panel-width`, `form/phone-action` ([Forms record](library-forms.md)) |
+| Collection "PPO layout" | 34, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)), and `gantt/bar-height`, `gantt/week-width`, `radius/milestone` ([Gantt record](library-gantt.md)), and `form/check-width`, `form/panel-width`, `form/phone-action` ([Forms record](library-forms.md)), and `state/panel-width` ([States record](library-states.md)) |
 | Collection "Gantt colour" | 11, one mode "Value" | The Gantt colours of PPO-GANTT-FIGMA-COLOURS-DEC; nine carry the built Gantt's `--gantt-*` code names ([Gantt record](library-gantt.md)) |
 | Collection "Grid density" | 3, modes "Comfortable" and "Compact" | `grid/row-height` 40 / 32, `grid/header-height` 36 / 32, `grid/cell-padding-x` 12 / 10 |
 | Collection "Control size" | 5, modes "Medium", "Small" and "Touch" | `control/height` 32 / 28 / 44, `control/field-height` 36 / 32 / 44, `control/padding-x` 12 / 10 / 12 (section 12), `control/text-size` 13 / 13 / 16 and `control/line-height` 18 / 18 / 24; Touch and the two text variables came with the [Forms page](library-forms.md) |
-| Text styles | 11 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium, 10 Medium; Display / 40 Medium for file covers; Text / Control, whose size follows the Control size mode, and Text / Section label ([Forms record](library-forms.md)) |
+| Text styles | 13 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium, 10 Medium; Display / 40 Medium for file covers; Text / Control, whose size follows the Control size mode, and Text / Section label ([Forms record](library-forms.md)); Text / 28 Medium and Text / Reference in Roboto Mono ([States record](library-states.md)) |
 | Effect styles | 3 | Elevation / Card: 0 1 2 at 6% navy (accepted Sales board; [board record](library-board.md)). Elevation / Popover: 0 8 24 at 18% navy (shell R44). Elevation / Dialog: 0 16 48 at 24% navy (shell R70) |
 
 **Components** (all `Status: Proposed`, in section `22:337`)
