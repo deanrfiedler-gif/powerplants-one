@@ -347,3 +347,36 @@ node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeo
 The plan test resets the disposable database separately at each size and writes full SQL/binds, plans, statistics and results to ignored `tmp/deals-worklist-candidate-cost/{30,45}.json`. `PPO_PLAN_FROZEN_MAIN=1` applies the bound to frozen main and must fail; the normal test also asserts that failure directly. Neither suite may run alongside another database suite.
 
 Local application/regression checks and draft-head CI are reported on the pull request. Cloud setup lists browser tooling as unavailable, so browser suites are not run locally and remain for GitHub CI. Claude's one review and ready-head full suites remain open; no merge, business acceptance or production readiness is claimed.
+
+
+## My Work overview window fence — 10 November 2026
+
+[PR #887](https://github.com/deanrfiedler-gif/powerplants-one/pull/887) follows the My Work audit finding against main `df87f8ba675b5d7bee55150e8f1f04d718fa668f`. The [measurement record](2026-11-10-my-work-overview-candidate-cost.json) retains statistics, counts, SQL hashes, all maximum-node paths and growth ratios. This supports NFR-01 (server authorisation) and NFR-04 (read performance); it is not representative-load acceptance or a production-readiness claim.
+
+The change is confined to the overview's main activity window. `overview_window AS MATERIALIZED` applies the unchanged visibility, filters, ordering and limit before the display joins. The original inner owner join also remains inside the fence, so membership is preserved even when an owner is missing. Every remaining lateral selection returns at most one link, and each optional parent lookup is unique. Moving those optional joins after the window therefore preserves membership, linked-record priority and null handling. The final query repeats the original ordering because CTE order alone is not an output-order guarantee. Counts, date-needed and schedule queries, other panels and other My Work readers are unchanged.
+
+This is a narrower fence than the audit's suggested all-candidate display-join materialisation. It avoids computing display details for rows outside the returned window and leaves the shared row builder untouched. Visibility still runs before the limit; hidden rows never consume a slot. No visibility predicate, permission definition, grant definition, migration, index, dependency, timeout or planner setting changes.
+
+| Native fixture volume | Matching activities / returned window | Maximum loops main → fixed | Shared hits main → fixed | Execution ms main → fixed |
+| --- | --- | ---: | ---: | ---: |
+| 30 | 32 / 8 | 960 → 32 | 9,295 → 2,620 | 18.793 → 3.578 |
+| 45 | 47 / 8 | 2,115 → 47 | 42,775 → 4,392 | 84.746 → 6.445 |
+| Growth 45/30 | Window stays 8 | 2.203× → **1.469×** | 4.602× → 1.676× | 4.509× → 1.801× |
+
+The denominator remains the audit's default **eight-row window**, so every recursive plan node must stay at or below **80 loops**, including SubPlans and InitPlans. Both fixed plans pass. The same assertion is explicitly required to fail on both frozen-main plans. The window CTE executes once and returns exactly eight rows at each volume. Timing and shared-buffer observations are separate from loop growth: these are single warm EXPLAIN observations under local development load, not latency distributions or an asymptotic proof.
+
+The proof reuses the native audit fixture already retained in `tests/helpers/deals-worklist-plan.ts`: organisations, people, affiliations, sites, facilities, assets, opportunities, projects, tasks and conversations. The two seeded activities remain in the candidate population. All eleven My Work audit tables have null manual/automatic analysis timestamps and zero analysis counters before and after both reads. There is no `ANALYZE` call or altered planner setting; native JIT remains on and neither captured plan has a JIT section.
+
+The frozen `tests/helpers/my-work-overview-main.ts` retains main's complete reader module, private row builder and projection, with only import paths relocated. Raw query rows compare both structurally and as JSON. The public activities, counts, scope, date-needed panel, schedule, capabilities, day and timezone also compare exactly. Only the overview's observation clock is fixed; SQL permission clocks remain real.
+
+All **24 equivalence tests and the two-volume plan test pass**, alongside the existing **seven My Work database regressions**. Named fixtures cover Project, Lead, Opportunity, Ticket, Asset, Site and Organisation links; multiple links of one type; Project precedence; optional Lead context; three activity kinds; Open/InProgress/Completed/Cancelled; two owners in Company A and a separate Company B reader; hidden parents and an expired Lead-read grant; Due/Title sorting, tied titles and due instants; limits 1/8/25; activity-type/company filters; and a fixed Brisbane clock with exact-now, day-end, next-day and cross-midnight appointment boundaries. Assertions name expected IDs, ordering, counts, completeness and linked records. Deleting linked Organisation or Lead parents is refused by the live schema; the proof asserts refusal and unchanged membership instead of disabling constraints to manufacture dangling records.
+
+Reproduce serially after cloud setup, sourcing the environment path it prints:
+
+```bash
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/my-work-overview-candidate-plan.test.ts tests/database/my-work-overview-equivalence.test.ts tests/database/my-work.test.ts
+```
+
+The plan test resets only disposable `ppo_synthetic_test` at each volume and writes full SQL/binds, plans, statistics and reader results to ignored `tmp/my-work-overview-candidate-cost/{30,45}.json`. `PPO_PLAN_FROZEN_MAIN=1` selects frozen main for the bound and must fail; the normal test also checks that failure directly. Run database suites serially.
+
+Local application checks and draft-head CI are recorded on the pull request. Cloud setup reported browser tooling unavailable, so browser suites are not run locally and remain for CI. Independent Claude review and ready-head full CI remain outstanding. This branch does not change B2/B3 billing work and is not merged or deployed.
