@@ -463,7 +463,7 @@ Page `11:18` · Supply and Workshop settings; no route is built · 16 sheets.
 | A11 | The carrier "SYN Freight Co" and "Freight platform (to be named)" are placeholders (Q2) |
 | A12 | Reference forms. The accepted Shell flyout keeps its Recent list wording (PO-000318, SH-0091, RA-0007) as accepted. Instrument tags (SYN-MEG-002), manufacturer serials (DP25-77341), unit serials (SYN-SN-260040) and test definitions keep their own forms. The `SYN-PPO-…` references on the earlier Design pages (for example `SYN-PPO-BLD-000042`, `SYN-PPO-PO-000215`) are legacy examples; the numbers carry over |
 | A13 | Three earlier Design-page facts are replaced by this file's dataset (Q8): the DP-25 serial is DP25-77341 (earlier DP25-88412); the DP-25 shipment is SYN-SHP-000010 from SYN Drive Systems (earlier SYN-SHP-000007 from SYN Motion Parts); Glasshouse 4 belongs to Hillview Growers (earlier Riverbend) |
-| A14 | Conflicts inside the brief's dataset were resolved one way everywhere: readiness counts are Ready 15, At risk 5, Blocked 4, Evidence needed 3, Not assessed 4 (not "17 further demands all Ready"); the two Unknown sends are the SYN-RCT-000084 correction and the SYN-RTN-000020 return to supplier, with the SYN-RCT-000080 correction drawn Posted; impact counts are New 1, Owners notified 2, In progress 1, Resolved with holds 1, with SYN-IMP-000024 drawn Resolved and SYN-IMP-000033 added |
+| A14 | Conflicts inside the brief's dataset were resolved one way everywhere: readiness counts are Ready 15, At risk 5, Blocked 4, Evidence needed 3, Not assessed 4 (not "17 further demands all Ready"); the two Unknown sends are the SYN-RCT-000084 correction and the SYN-RTN-000020 return to supplier, with the SYN-RCT-000080 correction drawn Posted; impact counts are New 1, Owners notified 2, In progress 1, Resolved with holds 1, with SYN-IMP-000024 drawn Resolved and SYN-IMP-000033 added. SYN-RCT-000091 is drawn inspected 2 EA, not the dataset's 1 EA, so the accepted Receiving rule D6 (usable plus quarantined cannot exceed inspected) holds |
 | A15 | "MYOB send not confirmed" states for Workshop, Kitting, Bench testing and Dispatch are drawn as earlier moments that later Posted, so the week's ledger stays Posted 41, Sent 3, Unknown 2, Refused 1 |
 | A16 | Page names follow the brief; the accepted menu labels differ and are kept in the menu: Inventory is "Stock & reservations", Receiving is "Receiving & inspection", Dispatch and delivery covers "Picking & dispatch" and "Customer deliveries" |
 | A17 | SC-09 D1's "Material changes" side-menu group is superseded by the Shell's Reviews group |
@@ -481,7 +481,8 @@ Proposed features (section 10 of the brief): N-S1 Supply Pulse, N-S2 "why this s
 - **Position audit, all pages.** Six sections per scope page in template order at x 0 with 360 px gaps, each refitted with 60 px padding; no sheet, label or section overlaps another; nothing is loose, hidden or transparent; the two separator pages and Scratch are empty. One loose leftover cell on the Interaction states page was found by the audit and removed.
 - **Scans.** No date in a style other than "Thu 5 Nov 2026", except the ISO format named in the export dialog; no dollar amount without the A$ prefix; every `SYN-` reference carries six digits except instrument tags, which keep the dataset's three.
 - **Contrast.** Computed on ST01 from the PPO colour variables with the WCAG 2.1 formula. Lowest text pair in use: text/secondary on surface/hover, 5.14:1. Lowest control edge: line/control on white, 3.32:1; the focus ring, brand/green-deep on white, 3.57:1. One pair is below 4.5:1: white on brand/green-deep, 3.57:1, so the green button kind must not carry small text; no Supply sheet uses it. line/strong on white (1.30:1) is a decorative divider, not a control boundary.
-- **Story.** The counts of the dataset were checked where they repeat across pages during the build (demands 31 with their readiness split, the MYOB send ledger, shipments, receipts, returns, impacts, parts-ready 7 of 9). A file-wide text comparison of every reference, date and quantity against the dataset was not run as one pass; it remains open.
+- **Story.** The counts of the dataset were checked where they repeat across pages during the build (demands 31 with their readiness split, the MYOB send ledger, shipments, receipts, returns, impacts, parts-ready 7 of 9). A file-wide story scan then read every text on all 233 sheets: every weekday and date pair is a real calendar day; every person named is on the persona list; no replaced Design-page fact (DP25-88412, SYN-SHP-000007, Riverbend for Glasshouse 4) appears except in a note that explains it; view tiles and stats show the same counts wherever the same view appears. It found two story defects, both corrected (C7, C8). The scan compares patterns and repeated counts; it does not prove every quantity in every row against the dataset.
+- **Clipping scan.** Every text was measured against the frame that clips it, excluding register scroll regions, which scroll sideways by design. 43 texts on 31 sheets ran past their container; all were fixed (C6), and a re-scan of all 15 pages found no clipped text, no wrapped register cell, no checks bar wider than its row and no child outside its sheet.
 - **Capability and authority.** Enabled commands follow the persona matrix; the separation-of-duties sheets are PUS1 and PU03, RC05, WBS1, AS01, RT04 with RT13 and IS04, PH17 and PS03. No sheet reads as a PPO stock balance, purchase or posting.
 - **Not done.** No prototype flow is wired and none was played. No owner device, keyboard, screen reader or 200% zoom review is recorded. The sheets are design compositions and set no UI baseline.
 - **Repository checks for this change.** `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`.
@@ -514,7 +515,7 @@ Proposed features (section 10 of the brief): N-S1 Supply Pulse, N-S2 "why this s
 
 ## 9. Audit — 10 November 2026
 
-Run after the last batch. What was clearly right was applied; the rest is proposed.
+Run after the last batch, with a second pass the same day after the first record was merged (section 11). What was clearly right was applied; the rest is proposed.
 
 **Scenario coverage.** S-01 to S-38 of the brief each map to at least one sheet; the mapping is on the file's audit card. Three are partly covered: S-02 shows the Forecast demands as register rows only; S-31 draws propose, review and publish on the readiness rules, with the receiving change as a command on AD04; S-32 draws the proposal and the refused review, with publish shown by the pattern of AD03.
 
@@ -525,9 +526,12 @@ Run after the last batch. What was clearly right was applied; the rest is propos
 | C3 | The not-ready visits on MD11 now match SS08 (SYN-WO-000066 and SYN-WO-000062) | Applied |
 | C4 | Cut date and state columns widened on AD01, AD03, AD07 and TB19; the Version column on AD08 made visible; a tooltip that covered Filters on ST02 moved | Applied |
 | C5 | A loose leftover cell removed from Interaction states | Applied |
-| R1 | Re-render the record sheets drawn before the checks-bar fix (Workshop builds first) so the bar's note never clips at docked width | Proposed |
-| R2 | IS01 Materials: widen Promise basis and Need date, or split basis and date | Proposed |
-| R3 | IV03: widen the first column of Locations | Proposed |
+| C6 | Clipped text fixed on 31 sheets: person sub-lines wrap under the name; checks-bar notes truncate; the controller checks on KC04 to KC06 use shorter labels; frozen group labels truncate on SH02, SH06 and IV08; the old "Book of record" label is gone from ten Workshop MYOB cards; one note on MD04 wraps | Applied |
+| C7 | SYN-RCT-000091 reads inspected 2 EA on RS02 and PH01, and the RS02 checks bar reads "Inspected 2 of 2". The dataset's 1 EA broke Receiving D6, and the drawn rule had been loosened to "≤ counted" | Applied |
+| C8 | The RT12 footer no longer adds two credits into one figure (A$581.00); it counts the credits and says amounts are never totalled (D6 of the brief) | Applied |
+| R1 | The checks bars drawn before the helper fix now truncate their note at docked width (with C6) | Applied |
+| R2 | The Materials table on IS01, X20, IS04, IS05 and TB17 gives Promise basis and Need date more width, taken from Readiness and Cause | Applied |
+| R3 | IV03: the Locations column widened from 260 to 300 px | Applied |
 | R4 | Tablet rail at 720 px: More and Settings crowd, as in the Sales file; needs a Shell rule for short viewports | Proposed |
 | R5 | Define hover and pressed tokens in the Design file; ST01 uses the nearest existing variables | Proposed |
 | R6 | Move the page kit from its Sales names to shared kit names when the kit moves to the Design file | Proposed |
@@ -536,8 +540,13 @@ Run after the last batch. What was clearly right was applied; the rest is propos
 | N-S5 to N-S10 | Shown as proposals (PU05 and IS02; SH06 and MC06; Receiving notes; DL10 and X17; KC03; notes) | Proposed |
 | P1 to P4 | One wording for the same state across pages; one pattern for group-band meta; one "as at" footer wording; long sheet labels are cut at the sheet width by design | Proposed |
 
-**Recommended order.** 1. Review the flagship pages Receiving and Inventory, then Material demand. 2. Confirm or reverse the defaults for Q1 to Q8. 3. Apply R1 to R3. 4. Wire one prototype flow for "Receive and find stock". 5. Take the Workshop menu entry and Supply Pulse to the Shell file. 6. Update the design register and page guidance in their own change. 7. Save the named version and accept page by page.
+**Recommended order.** 1. Review the flagship pages Receiving and Inventory, then Material demand. 2. Confirm or reverse the defaults for Q1 to Q8. 3. Wire one prototype flow for "Receive and find stock". 4. Take the Workshop menu entry and Supply Pulse to the Shell file. 5. Update the design register and page guidance in their own change. 6. Save the named version and accept page by page.
 
 ## 10. Named version
 
 No named version is saved yet. The proposal state should be pinned by Dean saving the named version "Supply module · refined UI pages — proposal (10 November 2026)"; this section is updated when he does. Any later design change needs a new named version ([named-version build handoff](figma-named-version-build-handoff.md)).
+
+## 11. Second pass — 10 November 2026
+
+After the first version of this record was merged, the verification the brief requires before recording (section 11.6 of the brief) was completed and the clearly right refinements were applied in the file. Changed: C6 to C8 and R1 to R3 in section 9; the Story and Clipping scan entries in section 6; A14 in section 5; the audit card on the file's Read me page. No sheet was added, removed or moved, so the inventory in section 3 and every node ID are unchanged. The named version in section 10 has still not been saved; it should be saved after this pass so that it pins the corrected sheets.
+
