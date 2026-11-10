@@ -4,16 +4,17 @@
     "collections": [
       "PPO colour",
       "PPO layout",
-      "Grid density"
+      "Grid density",
+      "Control size"
     ],
     "read_on": "2026-11-10",
     "read_by": "Figma connector, read-only"
   },
-  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10.",
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10 and docs/decisions/library-controls.md.",
   "counts": {
-    "variables": 84,
+    "variables": 89,
     "mapped": 21,
-    "no_code_name": 63
+    "no_code_name": 68
   },
   "variables": [
     {
@@ -477,7 +478,7 @@
     {
       "collection": "PPO layout",
       "name": "radius/checkbox",
-      "value": 3,
+      "value": 4,
       "status": "no-code-name"
     },
     {
@@ -524,6 +525,18 @@
       "status": "no-code-name"
     },
     {
+      "collection": "PPO layout",
+      "name": "radius/dialog",
+      "value": 12,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "radius/pill",
+      "value": 999,
+      "status": "no-code-name"
+    },
+    {
       "collection": "Grid density",
       "name": "grid/row-height",
       "value": 40,
@@ -550,6 +563,36 @@
       "modes": {
         "Comfortable": 12,
         "Compact": 10
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/height",
+      "value": 32,
+      "modes": {
+        "Medium": 32,
+        "Small": 28
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/field-height",
+      "value": 36,
+      "modes": {
+        "Medium": 36,
+        "Small": 32
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/padding-x",
+      "value": 12,
+      "modes": {
+        "Medium": 12,
+        "Small": 10
       },
       "status": "no-code-name"
     }

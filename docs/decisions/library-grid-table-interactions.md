@@ -34,7 +34,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). No
 |---|---|
 | Scope identity | Shared register pattern used by every module's register pages; no new route. No parent requirement ID is added or renamed; all 78 remain |
 | Page type (r20) | Register / worklist: the grid inside it |
-| Reused components | None yet in the library; the Sales and Estimating local kits are the references. New, all `Status: Proposed`: Grid / Header cell, Grid / Header cell · Select, Grid / Cell, Grid / Cell · Edit, Grid / Row, Grid / Row marker, Grid / Checkbox, Grid / Column divider, Grid / Drop indicator |
+| Reused components | None yet in the library; the Sales and Estimating local kits are the references. New, all `Status: Proposed`: Grid / Header cell, Grid / Header cell · Select, Grid / Cell, Grid / Cell · Edit, Grid / Row, Grid / Row marker, Grid / Column divider, Grid / Drop indicator. Buttons, chips, checkboxes, menus, tooltips and toasts come from the Controls page (section 12) |
 | Incoming handover | A module register page places these components |
 | Outgoing handover | The record opened from a row (drawer preview or record page), unchanged |
 | Departures from module sheets | D1 focus-ring colour and D2 frozen-edge treatment differ from one or both module sheets; accepted by Dean on 10 November 2026 |
@@ -48,7 +48,9 @@ The first components and review board were replaced on 10 November 2026 when the
 | Page | Node | Holds |
 |---|---|---|
 | Read me | `0:1` | File cover `36:3`; Read me card `36:114` with purpose, page index, how to use the library, rules and contents |
-| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, eight text styles, layout and density variables, the effect style |
+| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, nine text styles, layout, density and control-size variables, two effect styles |
+| Icons | `46:2030` | 19 icons and 5 annotation cursors, moved from the Grid page when the Controls page was drawn (section 12) |
+| Controls | `46:2031` | Sixteen control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
 | Grid · Table interactions | `4:76` | Components section `22:337`; review board `26:587`; playground frame `32:1736` |
 
 **Variables and styles**
@@ -56,10 +58,11 @@ The first components and review board were replaced on 10 November 2026 when the
 | Item | Count | Notes |
 |---|---|---|
 | Collection "PPO colour" | 66, one mode "Value" | Names, values, scopes and descriptions as in PPO - Shell. Web code syntax on the 20 whose value is identical to an existing CSS property in the app |
-| Collection "PPO layout" | 15, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule` |
+| Collection "PPO layout" | 17, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule` |
 | Collection "Grid density" | 3, modes "Comfortable" and "Compact" | `grid/row-height` 40 / 32, `grid/header-height` 36 / 32, `grid/cell-padding-x` 12 / 10 |
-| Text styles | 8 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium; Display / 40 Medium for file covers |
-| Effect style | 1 | Elevation / Popover: 0 8 24 at 18% navy (shell R44) |
+| Collection "Control size" | 3, modes "Medium" and "Small" | `control/height` 32 / 28, `control/field-height` 36 / 32, `control/padding-x` 12 / 10 (section 12) |
+| Text styles | 9 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium, 10 Medium; Display / 40 Medium for file covers |
+| Effect styles | 2 | Elevation / Popover: 0 8 24 at 18% navy (shell R44). Elevation / Dialog: 0 16 48 at 24% navy (shell R70) |
 
 **Components** (all `Status: Proposed`, in section `22:337`)
 
@@ -71,10 +74,10 @@ The first components and review board were replaced on 10 November 2026 when the
 | Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value |
 | Grid / Row | `24:759` | 8: Default, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
 | Grid / Row marker | `22:420` | 3: Previewed, Attention, Overdue |
-| Grid / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint) |
+| Controls / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint). Formerly Grid / Checkbox; renamed and moved to the Controls page with its node unchanged (section 12) |
 | Grid / Column divider | `5:109` | 4: Rest, Hover, Active, Focus |
 | Grid / Drop indicator | `5:110` | One component |
-| Icons and cursors | `22:338` to `22:387` | 14 icons (arrows, More, Grip, Filter, Attention, Overdue, Edit, Saving, Saved, Locked, Columns, Close, Undo) and 5 annotation cursors (Arrow, Grab, Grabbing, Col-resize, Not-allowed). The cursors are for annotation only |
+| Icons and cursors | `22:338` to `22:387` | 14 icons (arrows, More, Grip, Filter, Attention, Overdue, Edit, Saving, Saved, Locked, Columns, Close, Undo) and 5 annotation cursors (Arrow, Grab, Grabbing, Col-resize, Not-allowed). The cursors are for annotation only. Moved to the Icons page with their nodes unchanged (section 12) |
 
 **Review board** `26:587`
 
@@ -181,8 +184,8 @@ Drawing the audit items and quick inline editing introduced four things that Dea
 - **Page acceptance and publishing.** The components stay `Status: Proposed` until Dean accepts the page. Publishing then needs a release note under section 5 of the standard; the change of the Sales focus ring from green to text/link is Medium impact and needs Dean's acceptance recorded first.
 - **Named version and thumbnail.** No named version of the library exists; saving one, and setting the cover `36:3` as the file thumbnail, are steps for Dean in Figma (the connector cannot do either).
 - **Module files unchanged.** Sales ST01 and Estimating ST01 are untouched; the Projects and Supply interaction pages are empty. After publishing, each module saves a named version, enables the library, swaps its local grid parts for the library components, and replaces the grid sections of its States page with a reference card to this page. Enabling the library and accepting updates are desktop-app steps for Dean. Address lookup and the workbench and CPQ line states stay in the module files.
-- **Not yet in the library.** Buttons, chips, fields, menus, toasts and dialogs as components (a Controls page); they are drawn on the board as plain frames. A shared icon set, the shell components and the page template.
-- **Code names.** 63 of the 84 library variables have no CSS property yet (46 colours, 14 layout, 3 density).
+- **Not yet in the library.** The full icon set, the shell components and the page template. Field boxes inside the quick-edit editors and the Set width… popover are still plain frames (section 12).
+- **Code names.** 68 of the 89 library variables have no CSS property yet (46 colours, 16 layout, 3 density, 3 control size).
 - **Candidates not drawn.** N4 user-set freeze, N5 layout-changed marker, N6 scroll-edge fade, N7 multi-column sort, N8 Dev Mode annotations and Code Connect, N10 motion.
 - **No proof beyond the design.** The prototype links between variants were set and read back but not played, because the connector cannot run a Figma presentation. Dragging, the header menu and keyboard pick-up are drawn as steps, not played. Keyboard, screen-reader and touch behaviour and the D3 values need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. RegisterTable alignment (D5, D6) and the column registry's per-type width limits (D3) are later reviewed changes.
@@ -342,4 +345,20 @@ Each module names its editable columns in its own page guide. Editing several se
 **Differences from the earlier drawing.** Section 10 took inline editing from Estimating ST01 `76:54861`, which typed in the cell itself. The editor popover replaces that, because it gives pointer and touch users Save and Cancel buttons and works for every field type. The hover outline is 1 px so that the 2 px ring keeps its meaning as keyboard focus (D1); the Pipedrive example uses one outline for both. Both points are for Dean to confirm (section 6.1).
 
 **Checked.** Card 6 and the reworked component were rendered and inspected; a cursor covering the pencil and columns too narrow for their values were corrected. The eight links on Grid / Cell · Edit were set and read back, not played.
+
+## 12. Controls adopted on this page — 10 November 2026
+
+Dean accepted the order for the next library pages and asked for the Controls page first ("Accept the recommended order and start with the Controls page"). [Controls in PPO - Library](library-controls.md) records that page. It changed this page in five ways.
+
+| Change | Detail |
+|---|---|
+| Checkbox | Grid / Checkbox was renamed Controls / Checkbox and moved to the Controls page. Its node `22:416` and every instance are unchanged. It was aligned to the accepted Sales kit: 4 px corners (`radius/checkbox` changed from 3 to 4) and a 1 px border |
+| Icons | The 14 icons and 5 annotation cursors moved to the new Icons page with their nodes unchanged. Five icons were added there |
+| Plain frames replaced | 60 plain frames on the review board became Controls instances: 29 buttons, 9 chips, 2 tooltips, 3 toasts, 14 menu items and 3 menu dividers. None of those plain frames remain |
+| Toasts | The undo toasts in card 7 now follow the accepted shell toast: a tone bar and icon, the message, the Undo link and a dismiss button |
+| Cell chip | The chip inside Grid / Cell, Type=Chip, was set to 18 px to match Controls / Chip. It stays a local layer so the Value option can set its text |
+
+Still plain frames on this page: the field boxes inside the quick-edit editors and the Set width… popover (the number editor needs a unit prefix that Controls / Field does not have yet), the bulk bar, the selection banner, the "Modified" bar and the column chooser panel, which are register-specific.
+
+**Checked.** The header menu, the row menu, cards 4 and 7 and the anatomy were rendered and inspected after the swap; the header-menu step was made taller for the menu dividers.
 
