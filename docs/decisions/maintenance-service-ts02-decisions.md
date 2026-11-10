@@ -2,7 +2,7 @@
 document_id: PPO-MAINTENANCE-TS02-DEC
 date: 2026-10-30
 owner: Dean Fiedler
-status: Dean adopted the recommended answers to TS-02 Q1–Q5 on 30 October 2026; build increments M1, M2 and C1 proposed for agent delivery under the standing order; no application change in this record
+status: Dean adopted TS-02 Q1–Q5 on 30 October 2026; M1 is on main; M2 and C1 backend implementation is in review; operating authority and acceptance remain separate
 source_commit: fa15714324b1dcb939355666023272e0a4ffb0f3
 versioning: git
 ---

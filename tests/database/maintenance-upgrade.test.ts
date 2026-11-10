@@ -134,3 +134,29 @@ test("SV08 seed 124 is inert when late reserved Maintenance 0051 is installed af
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),completeLedger);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),completeSeeds);
 });
+
+test("C1 command-only late Maintenance installation preserves all earlier rows and adds exact dependent migrations", async () => {
+  await currentMainWithoutMaintenance();
+  const p = await principal(), proposal = crmCreate();
+  const accepted = await createOpportunity(p, proposal);
+  const tables = (await rows("SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename"))
+    .map((r: {tablename:string}) => r.tablename)
+    .filter((name:string) => !["permission_grants","seed_receipts"].includes(name));
+  const before = await snapshot(tables), ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate(); await seed();
+  const expected = {...before,
+    coverage_assessments: before.coverage_assessments.map((row:Record<string,unknown>)=>({...row,entitlement_assessment_id:null})),
+    finance_handoffs: before.finance_handoffs.map((row:Record<string,unknown>)=>({...row,agreement_id:null})),
+    finance_lines: before.finance_lines.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
+    finance_allocation_holds: before.finance_allocation_holds.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
+  };
+  assert.deepEqual(await snapshot(tables), expected);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127) ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version IN (51,123,127) ORDER BY version"),[{version:51},{version:123},{version:127}]);
+  assert.deepEqual(await rows("SELECT * FROM ppo.agreement_charge_lines"),[]);
+  assert.deepEqual((await createOpportunity(p, proposal)).receipt,accepted.receipt);
+  const finalLedger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate(); await seed();
+  assert.deepEqual(await snapshot(tables),expected);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),finalLedger);
+});

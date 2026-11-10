@@ -19,3 +19,21 @@ The first focused run passed three cases and found two fixture/assertion defects
 Cloud setup for M2 supplied Node 24.21.0/npm 11.19.0/PostgreSQL 16.15. C1 uses the same configured tools and separate worktree, with database suites sequenced after M2. Chrome is absent, confirmed by the M2 browser probe. Document-producing ProjectClaim/upgrade fixtures explicitly use `project-claims-synthetic-renderer.mjs` only on disposable `ppo_synthetic_test`; these are command/persistence proofs, not real PDF evidence. The new C1 focused cases need no renderer; the helper was loaded during that run but no agreement output was rendered.
 
 Full CI, independent Claude review, native UI/output, complete TS-01/02 acceptance, operational agreement/rate/tax authority and real ERP remain separate. No actual MYOB document type or number is claimed.
+
+## Historical upgrade and tooling follow-up
+
+The first broader upgrade run passed the new populated-0126 case, the existing populated-0125 case and all eight B3 database scenarios. Its two Maintenance reconstruction cases failed because the fixture attempted to install C1 0127 before the intentionally absent Maintenance 0051. The fixture now defers both dependent migrations 0123/0127, preserves the complete prior ledger and expects exactly 0051/0123/0127 on installation. No migration is skipped in an actual upgrade. The corrected SV08 case and a separate command-only all-row preservation/receipt/idempotency case pass unmocked. The original rendered-output proof keeps its unchanged `pdf.length > 1000` assertion; the short synthetic-byte helper cannot satisfy it. Its baseline comparison and the real-renderer CI boundary are recorded below.
+
+The first compiled build could not resolve Next.js through a shared `node_modules` symlink outside Turbopack's root. Installing the unchanged lockfile into this worktree fixed the environment; the production build then passed. One premature repeat was refused by Next's build lock while that build was still running; no lock was removed. The final sequential build passed on the final application source. Lint, TypeScript, Studio coverage and all 1,452 unit tests passed; this is not reported as a single green initial `npm run check`, whose first build attempt failed on the symlink.
+
+## Final local results
+
+- Studio, lint, final TypeScript and **1,452 unit tests passed**; final production build passed with local installed dependencies.
+- **20 selected database cases passed**: five new C1 lifecycle/authority/SQL cases, one new populated-0126 upgrade, eight existing B3 cases, one existing populated-0125 upgrade, three P11 quality upgrades and two corrected late-Maintenance cases. The historical source/output fixtures use the explicit synthetic renderer boundary above; the two final late-Maintenance cases run unmocked without rendering.
+- **7/7 existing demo-upgrade cases passed unmocked**, preserving saved CRM/mailbox/session/grant/checksum histories, CRLF ledger compatibility and transactional rollback. No hosted demo was accessed or changed.
+- **1/1 compiled HTTP case passed without renderer substitution**, using the ordinary compiled application server: existing Finance create/read/submit/review/process/lookup routes, exact AUD 4,800.00 source amount, original receipt replay, queue visibility and negative cases. The server loads no test module mocks.
+- Foundation, prototype, naming, migration numbering, status-source and documentation-scope checks passed; **44 documentation tests passed**. Final source/whitespace checks and CI/review are tracked on the PR.
+
+Full real-renderer database/browser suites remain unrun locally because Chrome is absent. The existing rendered late-Maintenance proof fails its unchanged >1,000-byte PDF assertion under the explicitly short synthetic renderer helper. The independent unmodified-main control is recorded below. This failure is not counted as a passing rendered suite or as evidence against business behavior.
+
+Independent Claude review and full final-head/merged-tree CI are outstanding. C1 must retarget to main after M2 merges; agents do not merge. No full TS-01/02, device/visual, operational financial policy, real MYOB or SharePoint acceptance is claimed.
