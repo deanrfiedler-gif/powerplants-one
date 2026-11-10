@@ -78,6 +78,10 @@ Synthetic. Work order WO-A is covered by agreement SYN-AGR-0001 and is not linke
 
 Changes to migrations or grants need a cross-model review before merge. TS-01 and TS-02 move back to six-monthly service when M1 lands.
 
+## M2 backend implementation — 11 November 2026
+
+[DECIDED by Codex] Dean instructed proceeding with M2 and C1 in chat. M2 follows merged M1 and B4. It extends the existing WorkOrder sources API defaults and server reason fallback, preserving explicit allocation input rather than silently replacing a Finance decision. Only Covered with an agreement reference receives the agreement default; no inferred agreement or zero charge is invented for missing evidence. Current project links retain unconditional B4 precedence. No UI is changed. [Contract](../contracts/finance-handoff.md#m2-agreement-covered-workorder-defaults) and [evidence](../testing/evidence/maintenance-m2/README.md) distinguish source delivery from executed acceptance. C1 remains separate.
+
 ## Traceability
 
 SVC-01, SVC-03, FIN-05, FIN-06; BP-01 section 6.3 (journey J-02); D-017 and D-018 stay open for operational Finance and coverage policy. TS-02 findings F2-01, F2-03, F2-05 and F-12; acceptance AT-14, AT-19 and AT-33. All 78 parent requirement IDs are unchanged.

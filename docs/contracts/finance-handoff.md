@@ -163,6 +163,14 @@ The WorkOrder sources API provides `allocation_defaults` with `disposition: NonB
 
 Additional work is charged through approved positive variation ProjectClaims; its field hours and parts remain cost evidence. ProjectClaim commands and amounts are unchanged. A pre-existing Approved billable WorkOrder handoff cannot begin processing while linked, but may still be returned or cancelled before any possible effect. Existing hold/revision rules remain intact. AwaitingERP and later dispatch, original lookup, reconciliation and correction behavior are unchanged. No historical row rewrite, migration, seed, permission, grant or dependency is introduced. [Execution evidence](../testing/evidence/project-billing-b4/README.md) separates database/HTTP component proof from full TS-01 acceptance.
 
+## M2 agreement-covered WorkOrder defaults
+
+The WorkOrder sources API returns the same `allocation_defaults` shape for unlinked work whose current scope assessment is Covered and has an agreement reference: `NonBillable`, `Covered by agreement <reference>`, and null target group. Covered without a reference, Unknown, Disputed, NotCovered, NotApplicable and absent coverage return null. Finance source authority is checked before reading coverage. No agreement read permission or operational billing authority is inferred from a free-text reference.
+
+Draft save/revision retains explicit dispositions. An omitted reason is filled from these defaults only for NonBillable lines; Billable exceptions require an explicit valid reason and target group. Explicit reasons remain unchanged. This is an advisory backend preparation default, not a mandatory non-billing rule or an assertion that the UI consumes it. Existing saved revisions remain immutable. Source-currentness, full allocation conservation and review remain unchanged.
+
+Project-linked work takes precedence over agreement coverage. B4 continues to recheck the current link at submission, approval and begin processing, including links added after preparation; it permits no Billable override. Agreement charge schedules and fees are C1, a separate increment. No migration, seed, permission, grant, UI or live integration is added. See [M2 evidence](../testing/evidence/maintenance-m2/README.md).
+
 ## P11 approved synthetic Travel amendment
 
 [ADR-0018](../decisions/ADR-0018-p11-travel-and-integrated-quality.md) records Dean's 7 September 2026 approval. For the selected private P11 journey, exact whole-minute Travel is supported separately from Labour under successor Finance definition v2. Every Travel allocation requires explicit NonBillable disposition and a reason; billable quantity is zero and target group is absent. Full source conservation reserves/consumes the entire actual Travel quantity. Separate Finance review and no-posting reconciliation remain required. NonBillable means neither zero cost nor unpaid staff time.
