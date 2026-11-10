@@ -1,5 +1,5 @@
 import type { Principal } from "../../platform/identity";
-import type { QueryClient } from "../../platform/permissions";
+import { hasPermission, type QueryClient } from "../../platform/permissions";
 import { transaction } from "../../platform/database";
 import { sharedOperation } from "../../platform/operations";
 import { AppError, unavailable } from "../../platform/errors";
@@ -25,7 +25,7 @@ import {
 const hold = (code: string, message: string): never => {
   throw new AppError(409, code, message);
 };
-async function basisContext(
+export async function basisContext(
   c: QueryClient,
   p: Principal,
   project: string,
@@ -53,7 +53,7 @@ async function latest(c: QueryClient, p: Principal, id: string) {
     )
   ).rows[0];
 }
-async function evidence(
+export async function evidence(
   c: QueryClient,
   p: Principal,
   project: string,
@@ -105,7 +105,7 @@ async function evidence(
   }
   return revision.source.content_hash;
 }
-async function variationAmount(
+export async function variationAmount(
   c: QueryClient,
   p: Principal,
   project: string,
@@ -409,7 +409,28 @@ export async function readClaims(
       currency: ctx.source.currency,
       tax_basis: ctx.source.tax_basis,
       synthetic: true,
-      finance_processing_available: false,
+      finance_processing_available:
+        (await hasPermission(
+          c,
+          p,
+          "finance.read",
+          ctx.pr.company_id,
+          ctx.pr.site_id,
+        )) &&
+        (await hasPermission(
+          c,
+          p,
+          "finance.prepare",
+          ctx.pr.company_id,
+          ctx.pr.site_id,
+        )) &&
+        (await hasPermission(
+          c,
+          p,
+          "shared.finance.read",
+          ctx.pr.company_id,
+          ctx.pr.site_id,
+        )),
     };
   });
 }

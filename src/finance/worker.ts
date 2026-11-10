@@ -99,6 +99,11 @@ export async function requestFinanceEvidence(
     (c) => financeContext(c, p, id, "finance.issue"),
     async (c, ctx) => {
       sameVersion(ctx.h.version, cmd.expected_version);
+      if (ctx.h.source_kind === "ProjectClaim")
+        blocked(
+          "ProjectClaimOutputNotDefined",
+          "Project claim OUT-14 content requires a separately reviewed output definition.",
+        );
       if (ctx.h.status !== "Reconciled")
         blocked(
           "FinanceStateChanged",
