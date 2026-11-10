@@ -11,11 +11,11 @@
     "read_on": "2026-11-10",
     "read_by": "Figma connector, read-only"
   },
-  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md and docs/decisions/library-gantt.md.",
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md and docs/decisions/library-forms.md.",
   "counts": {
-    "variables": 113,
+    "variables": 118,
     "mapped": 30,
-    "no_code_name": 83
+    "no_code_name": 88
   },
   "variables": [
     {
@@ -616,6 +616,24 @@
       "status": "no-code-name"
     },
     {
+      "collection": "PPO layout",
+      "name": "form/check-width",
+      "value": 380,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "form/panel-width",
+      "value": 680,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "form/phone-action",
+      "value": 48,
+      "status": "no-code-name"
+    },
+    {
       "collection": "Grid density",
       "name": "grid/row-height",
       "value": 40,
@@ -651,7 +669,8 @@
       "value": 32,
       "modes": {
         "Medium": 32,
-        "Small": 28
+        "Small": 28,
+        "Touch": 44
       },
       "status": "no-code-name"
     },
@@ -661,7 +680,8 @@
       "value": 36,
       "modes": {
         "Medium": 36,
-        "Small": 32
+        "Small": 32,
+        "Touch": 44
       },
       "status": "no-code-name"
     },
@@ -671,7 +691,30 @@
       "value": 12,
       "modes": {
         "Medium": 12,
-        "Small": 10
+        "Small": 10,
+        "Touch": 12
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/text-size",
+      "value": 13,
+      "modes": {
+        "Medium": 13,
+        "Small": 13,
+        "Touch": 16
+      },
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Control size",
+      "name": "control/line-height",
+      "value": 18,
+      "modes": {
+        "Medium": 18,
+        "Small": 18,
+        "Touch": 24
       },
       "status": "no-code-name"
     },

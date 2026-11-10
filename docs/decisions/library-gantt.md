@@ -147,7 +147,7 @@ These five items need Dean's decision. Card 9 lists them.
 - **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
 - **No proof beyond the design.** No prototype links were set on the Gantt parts. Dragging, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two dependency colours and the three new layout variables have no CSS property yet.
-- **Accepted order complete.** Every page in the accepted order is now drawn.
+- **Accepted order complete.** Every page in the accepted order is now drawn. Forms · Fields and validation followed, as the first of the groups the design-to-build standard requires ([its record](library-forms.md)); it changed Controls / Field and Banner, which the task panel on card 6 uses.
 
 ## 8. Checks
 
