@@ -132,7 +132,13 @@ Codex implements B3 on Dean's instruction to proceed with Finance holds and clai
 - Extend the controlled simulator with SyntheticProjectClaim targets carrying frozen amount, currency and tax basis. No MYOB document type/number or tax invoice policy is asserted. OUT-14 remains held for this source until its claim output is defined.
 - Expose the source-specific queue and state/hold measures through existing APIs. Keep the legacy queue default on WorkOrder until claim UI is designed. State totals describe current claim proposals; Held/Consumed totals conserve entitlements. They are not invoiced value, revenue or cash.
 
-The [Finance amendment](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment) is authoritative for this backend boundary. B4 cost-only enforcement and TS-01 acceptance remain separate work. B2 #881 is merged. Claude reviewed B3 #883 at `423b0e23`; the review corrections require confirmation before B3 is ready.
+The [Finance amendment](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment) is authoritative for this backend boundary. B4 cost-only enforcement is recorded in the next section; full TS-01 acceptance remains separate. B2 #881 and B3 #883 are merged. Claude reviewed B3 at `423b0e23` and confirmed all five findings at `ff3f0457`, with no defects in that fix commit.
+
+## B4 backend implementation choices — 10 November 2026
+
+[DECIDED by Codex] [PR #893](https://github.com/deanrfiedler-gif/powerplants-one/pull/893) implements R3 with TypeScript command-boundary enforcement under the existing workspace lock. It reads the live optional link through `to_jsonb`, preserving migration-12 Finance proofs. It adds no SQL guard or migration. Every non-NonBillable disposition is refused at submission, approval and begin processing; Draft save remains available to correct a proposal. The named refusal exposes no project identity. Backend source defaults and omitted-reason handling prefill "Included in project contract" without treating reason text as authority.
+
+B3 #883 is merged at confirmed head `ff3f0457`; its final-head database-3 retry and Application assurance are successful. B4 builds on current main. AwaitingERP and later processing/recovery retain their existing rules; no historical records are changed. Reversal would require a new decision explicitly protecting cross-pipeline allocation before permitting any exception. The [Finance contract](../contracts/finance-handoff.md#b4-project-linked-workorder-cost-only-amendment) and [execution evidence](../testing/evidence/project-billing-b4/README.md) define delivery and validation. Connected Finance component proof does not execute or accept the entire TS-01 scenario.
 
 ## Still open
 

@@ -1,0 +1,537 @@
+{
+  "date": "2026-11-10",
+  "scope": "Synthetic local component and command proofs; no full TS-01 acceptance or real rendered PDF evidence.",
+  "implementation_commit": "bbee5a57e",
+  "integrated_code_commit": "8eb2f48654d693e41a2de8bdd6ae3d2fdcfc61ee",
+  "main_control_commit": "1888cc81d4c99e68836390110a6655e767fa17d5",
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test",
+    "chrome": "unavailable"
+  },
+  "database_renderer": "PPO_B2_SYNTHETIC_RENDERER=command-proof-only; --experimental-test-module-mocks --import ./tests/helpers/project-claims-synthetic-renderer.mjs",
+  "local_database_timeout_ms": 300000,
+  "notes": [
+    "19 original boundary cases completed before a slow aggregate run was stopped. The final positive name selector executes only the remaining 9. No assertion or repository deadline was changed.",
+    "One attempted resumption used an unsupported skip flag and executed no tests; another negative selector matched the parent suite, repeated existing cases and was stopped. Neither contributes additional coverage.",
+    "The single Finance OUT-14 bytes.length > 1000 failure is reproduced unchanged on main with the same synthetic-byte helper. The assertion remains intact; real PDF rendering and browser/restart suites are left to CI.",
+    "Initial B4 tests were followed by targeted reruns after strengthening the assertions; repeated tests are not counted as new coverage."
+  ],
+  "runs": [
+    {
+      "suite": "B4 initial database component run",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation"
+        },
+        {
+          "status": "ok",
+          "name": "B4 refuses Labour at submit and revised Returned Draft; no override by reason"
+        },
+        {
+          "status": "ok",
+          "name": "B4 refuses Consumed part at submit and revised Returned Draft; no override by reason"
+        },
+        {
+          "status": "ok",
+          "name": "B4 backend prefill and changed reason retain NonBillable and reconcile without a target"
+        },
+        {
+          "status": "ok",
+          "name": "B4 current link at submit, including legacy Billable handoffs; Return and Cancel remain safe"
+        },
+        {
+          "status": "ok",
+          "name": "B4 current link at approval, including legacy Billable handoffs; Return and Cancel remain safe"
+        },
+        {
+          "status": "ok",
+          "name": "B4 current link at begin, including legacy Billable handoffs; Return and Cancel remain safe"
+        },
+        {
+          "status": "ok",
+          "name": "B4 removal of current link before submit restores ordinary WorkOrder rules"
+        },
+        {
+          "status": "ok",
+          "name": "B4 removal of current link before approval restores ordinary WorkOrder rules"
+        },
+        {
+          "status": "ok",
+          "name": "B4 removal of current link before begin restores ordinary WorkOrder rules"
+        },
+        {
+          "status": "ok",
+          "name": "B4 Closed project still refuses at submit"
+        },
+        {
+          "status": "ok",
+          "name": "B4 Closed project still refuses at approval"
+        },
+        {
+          "status": "ok",
+          "name": "B4 Closed project still refuses at begin"
+        },
+        {
+          "status": "ok",
+          "name": "B4 Pending and review dispositions cannot pass submission on linked work"
+        },
+        {
+          "status": "ok",
+          "name": "B4 does not alter AwaitingERP dispatch, unknown original lookup or reconciliation"
+        },
+        {
+          "status": "ok",
+          "name": "B4 unlinked F-06 still posts 60 MIN and retains 30 MIN cost evidence"
+        }
+      ],
+      "summary": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "2f4434f2e41326e03577a20cf1463d5aa09998b7a45a31ad25ad0a4126cbb640"
+    },
+    {
+      "suite": "B4 strengthened closeout and Approved cancellation",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation"
+        },
+        {
+          "status": "ok",
+          "name": "B4 current link at begin, including legacy Billable handoffs; Return and Cancel remain safe"
+        }
+      ],
+      "summary": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "173a783a6657ff23ca755c74639944c5aa93696d79eb0f9c6788566dd6ff292b"
+    },
+    {
+      "suite": "B4 integrated TS-01 exact tax/currency/public measures",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation"
+        }
+      ],
+      "summary": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "17b0b209d14e872cdbb5c02684f06bfa5c7a34bb1eae8e6d2d1055288b8997de"
+    },
+    {
+      "suite": "B4 compiled HTTP initial",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B4 compiled HTTP refuses billable project work without disclosing project identity"
+        }
+      ],
+      "summary": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "a2713df2f9ed3c7fb2449e8b5f58c897d9c855745befeebeebdba4ce888f6651"
+    },
+    {
+      "suite": "B4 compiled HTTP integrated",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B4 compiled HTTP refuses billable project work without disclosing project identity"
+        }
+      ],
+      "summary": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "af6b5017b235ad61058cf939ac4d3f7004638ef3e3d6946d97a5d290328150dd"
+    },
+    {
+      "suite": "quality-upgrade",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P11 additive upgrade preserves actual current-main/P10 Approved records, original outputs and revoked receipt grants"
+        },
+        {
+          "status": "ok",
+          "name": "P11 additive upgrade preserves actual current-main/P10 OutcomeUnknown records, original outputs and revoked receipt grants"
+        },
+        {
+          "status": "ok",
+          "name": "P11 additive upgrade preserves actual current-main/P10 Reconciled records, original outputs and revoked receipt grants"
+        }
+      ],
+      "summary": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "912cdd08ed6ad21abaeda7f3fabcde593f55eefb381dd5de03d9d6959656c239"
+    },
+    {
+      "suite": "finance-upgrade",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P10 additive upgrade from real P09 issued originals retains exact rows, bytes, migration checksums and repeat seeds"
+        },
+        {
+          "status": "ok",
+          "name": "P10 arrival after already-applied E1 0012 retains exact estimating originals, output, receipts and revoked grants"
+        }
+      ],
+      "summary": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "62578b43fcaacf7dcf7702527fbc8879a8cb82a48cc9c54f7be53ddc040340c2"
+    },
+    {
+      "suite": "project-claim-finance-upgrade",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B3 populated 0125 Finance upgrade preserves processed WorkOrder records, exact receipts and allocations"
+        }
+      ],
+      "summary": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "3d12381eb00795eb1045d705d54f2b74355349374b4e6fdfc8797d70aadb3690"
+    },
+    {
+      "suite": "project-claim-finance",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "B3 native claim lifecycle, exact amounts, independent review/reconciliation and replay"
+        },
+        {
+          "status": "ok",
+          "name": "B3 competing submits, Returned hold transfer, omitted release and pre-effect cancellation"
+        },
+        {
+          "status": "ok",
+          "name": "B3 uncertain outcome retains holds and lookup recovers the one target after local failure"
+        },
+        {
+          "status": "ok",
+          "name": "B3 source correction holds new authority but preserves recovery; access revocation fails closed"
+        },
+        {
+          "status": "ok",
+          "name": "B3 SQL refuses forged amount and missing holds; rejected transaction leaves original intact"
+        },
+        {
+          "status": "ok",
+          "name": "B3 Unknown keeps holds, NotProcessed allows safe cancellation, partial targets cannot reconcile, approved variation is separate"
+        },
+        {
+          "status": "ok",
+          "name": "B3 closed project reconciles only an exact Accepted post-effect target"
+        },
+        {
+          "status": "ok",
+          "name": "B3 closed project reconciles only an exact Partial post-effect target"
+        }
+      ],
+      "summary": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "b9ebfccb1124cd28894c499ad13fc7ca8bebbf2f9a94d7ae3de8be3bf1ad8481"
+    },
+    {
+      "suite": "finance-same-name-mapping",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "PT-02 same-name Q01 customer selects one exact synthetic debtor through release and target"
+        }
+      ],
+      "summary": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "67b9ae98f8044f19a6a3c5717b9abeaa1cc0f2603431bae1afef20b5a56bff6d"
+    },
+    {
+      "suite": "finance-boundaries initial 19 completed cases; process stopped before case 20",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P10 simultaneous competing handoffs reserve one complete source quantity only"
+        },
+        {
+          "status": "ok",
+          "name": "P10 factual material successor retains captured original and invalidates downstream exact review"
+        },
+        {
+          "status": "ok",
+          "name": "P10 accepted Partial attendance with time_declaration Incomplete is a Finance blocker, never zero"
+        },
+        {
+          "status": "ok",
+          "name": "P10 accepted Partial attendance with material_declaration Incomplete is a Finance blocker, never zero"
+        },
+        {
+          "status": "ok",
+          "name": "P10 captured Travel is never silently reclassified as Labour"
+        },
+        {
+          "status": "ok",
+          "name": "P10 captured Break is never silently reclassified as Labour"
+        },
+        {
+          "status": "ok",
+          "name": "P10 captured Waiting is never silently reclassified as Labour"
+        },
+        {
+          "status": "ok",
+          "name": "P10 captured Other is never silently reclassified as Labour"
+        },
+        {
+          "status": "ok",
+          "name": "P10 fractional-minute capture stays exact and refuses unapproved payroll rounding"
+        },
+        {
+          "status": "ok",
+          "name": "P10 exact source/review/issue IDs and mixed target grains refuse substitution atomically"
+        },
+        {
+          "status": "ok",
+          "name": "P10 unresolved warranty/goodwill remains unknown billable quantity and cannot approve"
+        },
+        {
+          "status": "ok",
+          "name": "P10 Approved return preserves its exact approval and correction event before any effect"
+        },
+        {
+          "status": "ok",
+          "name": "P10 current exact account mapping changes block mutation and mark account balance unavailable"
+        },
+        {
+          "status": "ok",
+          "name": "P10 no-posting review consumes complete source dispositions without inventing a target"
+        },
+        {
+          "status": "ok",
+          "name": "P10 revoked processing capability denies dispatch and original claim receipt without effects"
+        },
+        {
+          "status": "ok",
+          "name": "P10 source successor after unknown acceptance permits original lookup but refuses stale reconciliation"
+        },
+        {
+          "status": "ok",
+          "name": "P10 late audit_events failure rolls back allocation, state, event and original receipt together"
+        },
+        {
+          "status": "ok",
+          "name": "P10 late operation_receipts failure rolls back allocation, state, event and original receipt together"
+        },
+        {
+          "status": "ok",
+          "name": "P10 late outbox_jobs failure rolls back allocation, state, event and original receipt together"
+        }
+      ],
+      "summary": {},
+      "source_log_sha256": "0e7074c76f3d6a132d299db55ef01f31a34de6d1652a7adba46ba640aafb49bc"
+    },
+    {
+      "suite": "finance-boundaries remaining 9 cases",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P10 database failure after possible effect retains one target and fences a changed original ID"
+        },
+        {
+          "status": "ok",
+          "name": "P10 missing-result lookup durably fences late dispatch and retains NotProcessed evidence"
+        },
+        {
+          "status": "ok",
+          "name": "P10 original missing Finance bytes fail closed without regeneration"
+        },
+        {
+          "status": "ok",
+          "name": "P10 original wrong-hash Finance bytes fail closed without regeneration"
+        },
+        {
+          "status": "ok",
+          "name": "P10 revoked output owner after durable storage cannot release, retry or recover its receipt"
+        },
+        {
+          "status": "ok",
+          "name": "P10 source changes after rendering preserve reserved bytes and refuse release"
+        },
+        {
+          "status": "ok",
+          "name": "P10 revoked Finance read scope denies released bytes and original issue receipt"
+        },
+        {
+          "status": "ok",
+          "name": "P10 changed exact policy after rendering cannot issue stale bytes"
+        },
+        {
+          "status": "ok",
+          "name": "P10 changed exact renderer after rendering cannot issue stale bytes"
+        }
+      ],
+      "summary": {
+        "tests": 9,
+        "pass": 9,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "ab70b273f3f8de769778b8179d2267582b7f329a77e5d3e3ce5bac1a820da123"
+    },
+    {
+      "suite": "finance first 8 cases",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P10 F-06 preserves Draft field originals and separately conserves 90 MIN and 2 EA"
+        },
+        {
+          "status": "ok",
+          "name": "P10 source creation and every direct read/receipt obey current Finance grants"
+        },
+        {
+          "status": "ok",
+          "name": "P10 exact duplicate original recovers receipt; changed reuse and malformed fields fail"
+        },
+        {
+          "status": "ok",
+          "name": "P10 return retains original holds, explicit revision releases and transfers them"
+        },
+        {
+          "status": "ok",
+          "name": "P10 over, under and duplicate allocations cannot release source quantities"
+        },
+        {
+          "status": "ok",
+          "name": "P10 F-07 records Unknown then reconciles the same one target by original lookup"
+        },
+        {
+          "status": "ok",
+          "name": "P10 simultaneous claims and original outcome requests have only one effect"
+        },
+        {
+          "status": "ok",
+          "name": "P10 accepted target survives local failure and cannot be blindly replayed"
+        }
+      ],
+      "summary": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "c49e9deacb50dd1a22029901d5cd544f6f36ff1bc1e6f8608bbf1ec83247430b"
+    },
+    {
+      "suite": "finance last 8 cases",
+      "cases": [
+        {
+          "status": "ok",
+          "name": "P10 verified NotProcessed releases processor and preserves original target identity on new attempt"
+        },
+        {
+          "status": "ok",
+          "name": "P10 pre-effect report successor invalidates readiness and retains submitted allocations"
+        },
+        {
+          "status": "ok",
+          "name": "P10 source correction after possible processing preserves original target and requires a linked correction"
+        },
+        {
+          "status": "ok",
+          "name": "P10 partial target cannot reconcile; target/history remain immutable"
+        },
+        {
+          "status": "ok",
+          "name": "P10 stale definition and changed exact account mapping block submit"
+        },
+        {
+          "status": "ok",
+          "name": "P10 F-01–F-05 prove source balances, reversals, partial extraction and failure labels"
+        },
+        {
+          "status": "not ok",
+          "name": "P10 OUT-14 storage-success/database-failure recovers original exact bytes and release identity"
+        },
+        {
+          "status": "ok",
+          "name": "P10 empty scoped queue is explicit and never grants Finance to Systems"
+        }
+      ],
+      "summary": {
+        "tests": 8,
+        "pass": 7,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "80464abd1392eb681b33defeac49797a5712678e17c630cde43e74128ae25ffa"
+    },
+    {
+      "suite": "unmodified main renderer control",
+      "cases": [
+        {
+          "status": "not ok",
+          "name": "P10 OUT-14 storage-success/database-failure recovers original exact bytes and release identity"
+        }
+      ],
+      "summary": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source_log_sha256": "d9bb859ac04f42496cf43bd38d7c10e4d1f8dee848a1d8f5f9c5511ba59a1a4a"
+    }
+  ]
+}

@@ -434,12 +434,12 @@ If a profile is refused a step below for lack of a duty, use the profile PPO per
 
 **Entry criteria:** stage 9 exit met.
 
-A project cannot hold appointments, job packs, reports or Finance handoffs. Field work runs on a Service work order, which needs a service request and refers to the project only by a typed reference (finding F-02).
+Field work runs on a Service work order linked through B1’s typed `project_id`. Create the Service request/work order for the project, then use B1’s Link a work order control (or the typed create API) before attendance starts; Service retains ownership of appointments, packs and reports. B2/B3 provide the separate milestone/variation Finance claim path; B4 keeps work-order hours and parts cost-only (finding F-02).
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS01-10.01 | Coordinator (as project manager) | `/service/tickets/new` | Create a service request for the installation at the Bellbird site, quoting the project reference; triage it | Request `SYN-TKT-` moves New to Triaged | S2; stop |
-| TS01-10.02 | Coordinator | `/service/work-orders/new` | Create the work order from the request: rev B installation scope, customer, site, project reference `SYN-PRJ-…` | Work order `SYN-WO-` in Draft; the project reference is shown | S2; stop |
+| TS01-10.01 | Coordinator (as project manager) | `/service/tickets/new` | From the project context, create the installation service request at the Bellbird site in Service; triage it | Request `SYN-TKT-` moves New to Triaged | S2; stop |
+| TS01-10.02 | Coordinator | `/service/work-orders/new` | Create the work order from the request with rev B scope/customer/site, then use Link a work order on the project to set the typed link before any visit starts (API alternative: create with project_id) | Work order `SYN-WO-` in Draft; its typed link and the project field-work list identify the same record | S2; stop |
 | TS01-10.03 | Coordinator | `/service/work-orders/[id]` | Authorise the work order | Authorised; Authorisation-stage readiness criteria Pass | S2; stop |
 | TS01-10.04 | Coordinator | `/schedule` | Propose APT-1 for Riley and Morgan (scenario dates 22–26 February; see time compression); Confirm booking | Appointment `SYN-APT-` Confirmed with both technicians and no overlap | S2; stop |
 | TS01-10.05 | Coordinator | `/service/appointments/[id]` | On /supply/material-readiness, set Appointment / visit to APT-1 on each Approved demand; then open APT-1's readiness view | Parts criterion is derived from Supply as Pass and cannot be ticked by hand | S1 if it can be ticked by hand |
@@ -515,20 +515,22 @@ The 11 commissioning tests: T01–T02 EC control, zones A and B; T03–T04 pH co
 
 **Entry criteria:** stage 13 exit met.
 
-Finance handoffs belong to work orders. PPO has no project invoicing, so the $139,890.00 ex GST contract value has no PPO path to Finance today (F-02).
+WorkOrder handoffs carry cost evidence; ProjectClaim handoffs carry the $135,090.00 ex GST milestone/variation amount. The separate $4,800.00 agreement is not a project claim. B2/B3 expose claim APIs and B4 enforces cost-only field work; no claim UI or claim OUT-14 exists.
+
+**Execution order:** first close the acceptance stage in TS01-14.03 so M4’s practical-completion trigger is evidenced, leaving the project Active. Then execute the preparation, submission, independent approval, begin processing and synthetic dispatch portion of TS01-14.08. Return to 14.03 for whole-project closure, then execute 14.08’s exact reconciliation under B3 historical authority. Do not defer new claim authority or dispatch until after closure. Step IDs remain stable for existing logs. The [B4 component proof](evidence/project-billing-b4/README.md) is not an executed full scenario; it uses a bounded field fixture, not all 116 scenario hours and three visits.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
 | TS01-14.01 | Jamie — Service coordinator | `/projects/acceptance/handover` | Record independent Service receiving of the support handover | Received by Jamie, a different person from the project manager | S2; stop |
-| TS01-14.02 | Finance reviewer | `/projects/acceptance/closeout` | Record commercial disposition, noting that V-01 was approved outside PPO | Disposition recorded with person and time | S2; stop |
-| TS01-14.03 | Coordinator (as project manager) | `/projects/acceptance/closeout` | Close the stage, then close the project | Closeout Closed; project lifecycle Closed; status unchanged (record what it shows) | S2; stop |
-| TS01-14.04 | Finance preparer | `/finance/handoffs/new` | Create the handoff for the work order from the three reviewed reports; mark every line NonBillable, reason "Included in project contract" (Q9); Submit | Handoff `SYN-FH-` ReadyForReview; labour and materials exactly as the three reviewed reports show; captured and reviewed quantities shown apart | S1 if a quantity differs |
+| TS01-14.02 | Finance reviewer | `/projects/acceptance/closeout` | Record commercial disposition, citing V-01’s independently approved native commercial record and exact completed-work evidence | Disposition recorded with person and time | S2; stop |
+| TS01-14.03 | Coordinator (as project manager) | `/projects/acceptance/closeout` | Close the stage first; leave the project Active for 14.08’s claim authority and dispatch, then return to close the project | Closeout Closed; project lifecycle Closed; status unchanged (record what it shows) | S2; stop |
+| TS01-14.04 | Finance preparer | `/finance/handoffs/new` | Create the handoff for the linked work order from the three reviewed reports. Attempt a Billable labour or part line with reason "Extra site time requested by customer" and submit: expect ProjectWorkNotBillable. Then mark every line NonBillable, reason "Included in project contract" (Q9); a reason-only edit remains allowed; Submit | Handoff `SYN-FH-` ReadyForReview; labour and materials exactly as the three reviewed reports show; captured and reviewed quantities shown apart | S1 if a quantity differs |
 | TS01-14.05 | Finance preparer, then Finance reviewer | `/finance/handoffs/[id]` | Preparer tries to approve; reviewer approves | Preparer refused; reviewer's approval moves it to Approved | S1 if the preparer can approve |
 | TS01-14.06 | Finance processor | `/finance/handoffs/[id]` | Claim original processing action (any scenario); execute the synthetic action and record the outcome | Outcome NotProcessed, because no line is billable; state ReconciliationRequired; nothing reaches a real ERP | S1 if a real call is made |
 | TS01-14.07 | Finance reconciler | `/finance/handoffs/[id]` | Reconcile | Result NoPostingRequired; state Reconciled | S2; stop |
-| TS01-14.08 | Finance preparer | — | Hand the project value of $135,090.00 ex GST ($148,599.00 inc GST: rev B plus V-01) to Finance for invoicing; the $4,800.00 agreement is billed under the agreement | **Not testable yet**: no project invoicing (F-02) | Record Not testable yet |
+| TS01-14.08 | Finance preparer, reviewer, processor, reconciler | Existing Finance handoff API (`source_kind: ProjectClaim`); **Not testable in the UI yet** | On Active project, claim exact reached M1–M4 and evidenced approved V-01: $129,910.00 + $5,180.00 = $135,090.00 ex GST. Submit, independently approve, begin processing and record the synthetic outcome between 14.03’s stage closeout and whole-project closure. After project closeout, reconcile the exact frozen target lines | Reconciled / Matched for five entitlements; measures say processed per recorded synthetic ERP outcome; billed value, cash received and open receivable unavailable. No real invoice or claim OUT-14 is produced | Record API result separately from UI gap and full acceptance |
 
-**Exit criteria:** project Closed; Finance handoff Reconciled with quantities equal to the reviewed reports.
+**Exit criteria:** project Closed; WorkOrder handoff Reconciled / NoPostingRequired with quantities equal to the reviewed reports; five ProjectClaim entitlements Reconciled / Matched for $135,090.00 ex GST. UI gaps and API evidence recorded separately.
 
 **Links:** `docs/contracts/finance-handoff.md`; AT-12, AT-18; PT-17, PT-19. Branch TS01-X15.
 
@@ -590,17 +592,17 @@ Each branch starts from the stage named and runs on a copy of the data at that p
 | 7 Project set-up | Partly | Commercial basis and obligations (F-03); PJ-02 record page (F-04) |
 | 8 Engineering | Yes | — |
 | 9 Supply | Yes | ERP outcomes simulated by design |
-| 10 Scheduling | Partly, through a work order | Text-only project link (F-02); dispatch always held on customer site readiness (F-08) |
+| 10 Scheduling | Partly, through a work order | Typed project link available (B1); check current customer-site-readiness UI separately (F-08) |
 | 11 Installation | Yes | — |
 | 12 Variation | Partly | Variation V-01 (F-03) |
 | 13 Commissioning | Partly | APT-2 and APT-3 dispatch held on customer site readiness (F-08) |
-| 14 Closeout, Finance | Partly | No project invoicing (F-02) |
+| 14 Closeout, Finance | API component testable; full scenario not executed | B1–B4 backend path available; claim UI and claim OUT-14 remain unavailable (F-02) |
 | 15 Aftercare | Yes | — |
 
 | ID | Finding | Effect on TS-01 | Source |
 | --- | --- | --- | --- |
 | F-01 | The Fertigation workbench hands scoping notes to Discovery, not priced lines; the parts proposal into CPQ is a proposed contract (step B0), with B1, B2 and B4 unbuilt | Lines are keyed twice, so scope and price can drift apart | `docs/contracts/workbench-parts-proposal.md` |
-| F-02 | A project cannot hold appointments, packs, reports or Finance handoffs; a work order refers to it only by text; Finance handoffs are per work order and there is no project invoicing | The project and its field work are linked only by text, and the contract value has no path to Finance. Decided 30 October 2026 (PR #751): a typed work-order link and milestone claims, to be built as B1-B4 | `db/migrations/0004-work-scope.sql`; `docs/contracts/finance-handoff.md` |
+| F-02 | B1 supplies typed work-order links; B2 supplies reviewed schedules/completion evidence; B3 supplies ProjectClaim holds/processing; B4 enforces cost-only work-order lines | Backend gap resolved by B1–B4 with bounded connected Finance component coverage. Claim UI, claim OUT-14, real ERP, correction/reversal policy and full TS-01 acceptance remain open; Service still owns field scheduling | `docs/decisions/project-delivery-billing.md`; `docs/contracts/finance-handoff.md`; [B4 evidence](evidence/project-billing-b4/README.md) |
 | F-03 | PJ-05 commercial controls are backend only, with no page and no seeded grants | Obligations and variation V-01 cannot be tested | `docs/contracts/project-commercial-controls.md` |
 | F-04 | The accepted PJ-02 project record and the PJ-07 delivery readiness design are not built | The older schedule page is tested instead | `docs/decisions/project-record-page-design.md (build in draft PR #698); PJ-07 status fragment of 25 October 2026` |
 | F-05 | The Coordinator profile holds Sales, Estimating, project manager and scheduler duties | Separation between those roles cannot be shown | `src/components/business-session.tsx` |
@@ -669,7 +671,7 @@ A reviewer who did not run the test checks the evidence and records the disposit
 
 ## 11. Results log
 
-Each run gets its own results log under `docs/testing/evidence/ts-01/`, named `TS-01-run-<UTC timestamp>-01.md` (PPO-STD-001 section 11.3). It records the commit, database health result, date mapping, tester and reviewer, then one row per step and exception test (106 steps and 18 branches, 124 rows) with columns Step, Status (Not run, Pass, Fail, Blocked, Not testable yet), Run date, Actual result, Evidence file, Defect and severity, Reviewer disposition. Steps TS01-07.04, TS01-12.04 and TS01-14.08 start as Not testable yet.
+Each run gets its own results log under `docs/testing/evidence/ts-01/`, named `TS-01-run-<UTC timestamp>-01.md` (PPO-STD-001 section 11.3). It records the commit, database health result, date mapping, tester and reviewer, then one row per step and exception test (106 steps and 18 branches, 124 rows) with columns Step, Status (Not run, Pass, Fail, Blocked, Not testable yet), Run date, Actual result, Evidence file, Defect and severity, Reviewer disposition. Steps TS01-07.04 and TS01-12.04 retain their separately recorded limitations. TS01-14.08 starts as Not run for the API procedure and Not testable in the UI yet; B4 component results do not fill its full-scenario acceptance row.
 
 ## 12. Open questions for Dean
 

@@ -11,8 +11,8 @@ import {
   reviewFinance,
 } from "../../src/finance/service";
 export { crmBase, readFinance };
-export async function projectFinanceFixture() {
-  const f = await commercialFixture();
+export async function projectFinanceFixture(ts01 = false) {
+  const f = await commercialFixture(ts01 ? "64955" : "175");
   await approvedBasis(f);
   const action = (expected_version: number, action: string) => ({
     ...crmBase(),
@@ -20,20 +20,32 @@ export async function projectFinanceFixture() {
     expected_version,
     action,
   });
-  const milestones = [
-    {
-      id: randomUUID(),
-      title: "Acceptance",
-      trigger: "Reviewed contract acceptance",
-      amount: "105.00",
-    },
-    {
-      id: randomUUID(),
-      title: "Delivery",
-      trigger: "Reviewed delivery evidence",
-      amount: "245.00",
-    },
-  ];
+  const milestones = ts01
+    ? [
+        ["M1 Acceptance", "38973.00"],
+        ["M2 Equipment delivered", "51964.00"],
+        ["M3 Commissioning", "25982.00"],
+        ["M4 Practical completion", "12991.00"],
+      ].map(([title, amount]) => ({
+        id: randomUUID(),
+        title,
+        amount,
+        trigger: "SYN independently reviewed exact milestone evidence",
+      }))
+    : [
+        {
+          id: randomUUID(),
+          title: "Acceptance",
+          trigger: "Reviewed contract acceptance",
+          amount: "105.00",
+        },
+        {
+          id: randomUUID(),
+          title: "Delivery",
+          trigger: "Reviewed delivery evidence",
+          amount: "245.00",
+        },
+      ];
   await commandClaims(f.owner, f.project.id, {
     ...action(0, "Save"),
     milestones,
@@ -51,7 +63,7 @@ export async function projectFinanceFixture() {
     occurred_at: "2026-10-01T00:00:00.000Z",
     explanation: "SYN reviewed completed milestone evidence",
   });
-  for (const i of [0, 1])
+  for (const i of milestones.keys())
     await commandClaims(f.owner, f.project.id, {
       ...action(i + 3, "RecordEvidence"),
       completion: completion(i),

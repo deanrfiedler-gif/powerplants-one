@@ -36,6 +36,11 @@ import {
 
 import { saveProjectFinance } from "./project-claims-service";
 import { projectClaimSource } from "./project-claims-source";
+import {
+  projectWorkLinked,
+  projectWorkReason,
+  requireProjectWorkNonBillable,
+} from "./project-work-billability";
 
 type Context = Awaited<ReturnType<typeof financeContext>>;
 type Mutation = { operation_id: string; reason: string };
@@ -241,6 +246,7 @@ async function revision(
       sources.flatMap((s) => s.entries).map((e) => [e.id, e]),
     ),
     groups = new Map<string, string>();
+  const linked = await projectWorkLinked(c, p, ctx.w.id);
   for (const l of cmd.lines) {
     const e = entries.get(l.entry_id);
     if (!e) throw unavailable();
@@ -281,7 +287,9 @@ async function revision(
       uom: e.uom,
       direction: e.direction,
       disposition: l.disposition,
-      reason: l.reason,
+      reason:
+        l.reason ??
+        (linked ? projectWorkReason : basis(undefined, "line reason")),
       target_group: l.target_group,
       source_entry_hash: e.source_entry_hash,
     });
@@ -389,6 +397,7 @@ export async function submitFinance(p: Principal, id: string, input: unknown) {
       sameVersion(ctx.h.version, cmd.expected_version);
       if (ctx.h.status !== "Draft")
         blocked("FinanceStateChanged", "Submit the current Draft revision.");
+      await requireProjectWorkNonBillable(c, p, ctx.h);
       const v = await currentRevision(c, p, ctx),
         lines = await financeLines(c, p, v.id),
         totals = new Map<string, bigint>();
@@ -488,6 +497,8 @@ export async function reviewFinance(p: Principal, id: string, input: unknown) {
           "FinanceReviewRequired",
           "An independent synthetic Finance reviewer must review ReadyForReview.",
         );
+      if (cmd.decision === "Approved")
+        await requireProjectWorkNonBillable(c, p, ctx.h);
       const r = await currentRevision(c, p, ctx, cmd.decision === "Approved");
       if (r.id !== cmd.revision_id || r.source_hash !== cmd.source_hash)
         blocked(
@@ -634,6 +645,7 @@ export async function beginFinanceProcessing(
           "FinanceStateChanged",
           "Only current Approved evidence can be claimed once.",
         );
+      await requireProjectWorkNonBillable(c, p, ctx.h);
       if (
         ctx.h.mode === "SyntheticManual" &&
         cmd.scenario === "AcceptedThenTimeout"

@@ -48,7 +48,7 @@ export const commercialAction = (
   action,
   note: "SYN exact commercial action",
 });
-export async function commercialFixture() {
+export async function commercialFixture(productUnitSell = "175") {
   const owner = (await createSession("coordinator")).principal,
     reviewer = (await createSession("estimating-source-reviewer")).principal,
     approver = (await createSession("quotation-approver")).principal,
@@ -84,11 +84,12 @@ export async function commercialFixture() {
       identification_activity_id: null,
     });
   const input = estimateInput(o.id);
+  input.lines[0].unit_sell = productUnitSell;
   await createEstimate(owner, input);
   await reviewed(owner, reviewer, input.id);
   const estimate = await readEstimate(owner, input.id),
     draft = quoteCommand(estimate.saved);
-  // Quote only the two Product units: 350.00, rather than the 720.00 estimate.
+  // Quote only the two Product units (350.00 by default).
   draft.choices = draft.choices.map((x, i) => ({
     ...x,
     included: i === 0,

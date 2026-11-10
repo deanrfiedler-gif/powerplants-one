@@ -6,7 +6,11 @@
 
 ### Project billing B3 backend
 
-Draft [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), based on main after B2 #881 merged, adds ProjectClaim sources to the existing Finance pipeline, whole-entitlement holds, synthetic processing/reconciliation and project state/hold measures. See the [contract](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment). Claim UI/output, B4 cost-only enforcement and connected TS-01 acceptance remain separate. Code presence does not close independent review or integration evidence.
+Merged [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), based on main after B2 #881 merged, adds ProjectClaim sources to the existing Finance pipeline, whole-entitlement holds, synthetic processing/reconciliation and project state/hold measures. See the [contract](../contracts/finance-handoff.md#b3-projectclaim-backend-amendment). Claim UI/output, B4 cost-only enforcement and connected TS-01 acceptance remain separate. Code presence does not close independent review or integration evidence.
+
+### Project billing B4 backend — 10 November 2026
+
+[PR #893](https://github.com/deanrfiedler-gif/powerplants-one/pull/893) follows merged B1–B3 and enforces current-link cost-only treatment at Finance submission, approval and begin processing, including revised and previously Approved handoffs. See the [B4 contract](../contracts/finance-handoff.md#b4-project-linked-workorder-cost-only-amendment) and [execution evidence](../testing/evidence/project-billing-b4/README.md). The connected TS-01 Finance component covers no-posting field evidence and exact M1–M4/V-01 claims, with native closeout before reconciliation. Historical upgrade checks, independent Claude review and full CI are separate recorded gates. Claim UI/OUT-14, full TS-01 acceptance, D-017, retentions and real ERP remain open; this does not complete BC-06/07.
 
 ## BC-06 Service findings reads and next action — 20 October 2026
 
