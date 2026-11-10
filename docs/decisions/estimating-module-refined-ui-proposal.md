@@ -2,20 +2,20 @@
 document_id: PPO-ESTIMATING-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposal, 9 November 2026, re-aligned 9 and 10 November 2026 to Dean's prompt version 4 and addendum A2 (section 11), awaiting Dean Fiedler's acceptance of A1–A24 and his answers to Q1–Q12; two directions he gave on 9 November are recorded in section 10; no named version saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Accepted by Dean Fiedler on 10 November 2026 on the recommendations recorded in section 12 (A1–A24 and Q1–Q12 decided); re-aligned 9 and 10 November 2026 to his prompt version 4 and addendum A2 (section 11); two directions he gave on 9 November are recorded in section 10; Design ready check, lock-in and the accepted audit batch in progress (section 12); no named version saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 900daa9d0929c12251226c4a7ff02cce247ad9f9
 versioning: git
 ---
 
 # Estimating module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Proposal awaiting acceptance. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Accepted on 10 November 2026 (section 12); lock-in in progress. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2; section 12 records his acceptance, the decisions adopted, the Design ready check, the lock-in and the audit batch drawn from it. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 9 November 2026 Dean asked for the complete refined UI page set of the Estimating module to be drawn in a brand-new private Figma file, "PPO - Estimating module (proposal)", inside the accepted shell and to at least the standard of the Sales module file, using the accepted "PPO - Shell" file as the source of truth for the chrome and the Design file's Estimating pages as content reference only. His brief fixed ten decisions: the module is named Estimating; quotations are an output of Estimating and exist in Sales as simple quotations; four specialised workbenches (Screens, Fertigation, Automation, Control) share a generic template; Excel estimates import to lines and keep the workbook as evidence; review and approval gates are rule-based and explained; customer e-mail and page tracking are built in; customisation publishes from drafts with impact shown; one register standard applies to the whole application (reorder, resize, inline edit with a change reason, address lookup); the docked workspace menu can collapse; and the synthetic story stands at Thursday 5 November 2026, 09:00, signed in as Priya Nair, estimator. He gave the same four rules as for Sales: one line of data per register cell even if the table scrolls sideways, no second search bar in the content area, pages as professional as the shell, and otherwise full creative control, with everything undecided decided by the designer and recorded for him.
 
 Later on 9 November Dean issued version 4 of the prompt and addendum A2. Version 4 binds a page template (one Figma page per scope between an — Accepted — and a — Proposals — separator, six sections per page), makes the synthetic dataset of its section 9 the truth for every sheet, adds the drill-through list I04 and the New Express workspace dialog X44, sets the tablet top bar zones to 332 / 360 / 332, gives the seven gate sentences and template Quotation r04 with six section keys, and asks for the persona × capability matrix and the interface matrix to seed this record. Addendum A2 confirms the short reference form of [readable reference namespaces](readable-reference-namespaces.md) (SYN-EST-000312, SYN-QUO-000214 r02, SYN-OPP-000312, SYN-DEM-000103, SYN-PRJ-000190; revisions two-digit) and withdraws the long D12 form, the "reconcile short forms" follow-up and question Q7. The file was restructured and every sheet re-aligned on 9 and 10 November; section 11 lists the changes and the re-verification.
 
-This record is a **proposal**. It describes what was drawn, the rules applied, the assumptions made and the questions Dean has to decide. It changes no code, test, migration, seed, permission or route. Acceptance of the design will not make the drawn pages an implementation baseline: source presence, visual review of built pages, functional proof and deployment stay separate.
+This record was a **proposal** until 10 November 2026 and is now the **accepted design record** of section 12. It describes what was drawn, the rules applied, the assumptions made and the questions Dean has to decide. It changes no code, test, migration, seed, permission or route. Acceptance of the design will not make the drawn pages an implementation baseline: source presence, visual review of built pages, functional proof and deployment stay separate.
 
 ## 1. Sources
 
@@ -590,3 +590,51 @@ Sheet count after the re-alignment: 285 (283 plus I04 and X44). The Read me card
 ### 11.3 Hand-back
 
 The named version remains Dean's to save once he decides A1–A24 and Q1–Q12 (suggested title "PPO - Estimating module (accepted)"); any later design change needs a new named version. This section changes nothing in the application and no parent requirement ID.
+
+## 12. Acceptance — 10 November 2026
+
+Asked on 10 November 2026 for professional recommendations on every decision still open, and given them, Dean answered: "I am happy for you to proceed based on all of your professional recommendations. If you still need answers from me, let me know which ones." Those words are his acceptance of the design and of the decisions in 12.1. Under the [design-to-build standard](../standards/design-to-build-standard.md) the acceptance is checked by a session other than the drawing one (12.2), locked in with the named version and the Ready for dev marks (12.3), and followed by the batch he accepted in the same words (12.4).
+
+### 12.1 Decisions adopted
+
+Assumptions and departures of section 5:
+
+| Items | Decision |
+|---|---|
+| A5, A9, A10, A11, A12, A13, A14, A19, A20, A21, A23, A24 | Accepted as drawn |
+| A1, A6, A8, A15, A16, A17, A18 | Accepted, each with a carry-forward outside this file: A1 renames the module in `src/shell/navigation.ts`, BP-04 and the Shell file as a build change of its own; A6 and A15 to A17 are shell refinements to land in the Shell file and then the Sales file; A8 waits for the shell library to publish; A18's Sales-side page is G1 in the Sales file |
+| A4, A7, A22 | Accepted as labelled: A4 stays "proposed" until D-009 defines the control rule set; A7 keeps illustrative gate values until D-010 names the policy; A22 keeps three class rows and reads the twelve-row import as workbook rows |
+| A2 | Accepted as drawn for this file (the accepted 12 px strip). The 56 px icon strip with per-user persistence is to be decided in the Shell file, because a 12 px strip has no affordance and fails the 24 px pointer-target rule of the standard's Design ready checklist, and then carried into Sales and Estimating together |
+| A3 | Accepted: five labelled tabs; the icon-only phone bar accepted in Reviews & approvals D8 is recorded as superseded for phones, so one phone bar pattern applies across the application |
+| Capability assumptions | Accepted. `cpq.publish` is recommended for the independent reviewer duty with an author-cannot-publish rule, to be recorded in DEC-CCE-06; until then Publish reads unavailable on X10 and AD07 |
+
+Questions of section 7:
+
+| # | Decision |
+|---|---|
+| Q1 | Yes to both; the rename is a build change of its own |
+| Q2 | Illustrative values stay in the design; the real approver and thresholds are decided in D-010 as a duty, not a person, and the design shows whatever the policy says wherever a gate reads it |
+| Q3 | The Control workbench stays as proposed and is built last of the four |
+| Q4 | Five labelled tabs (A3) |
+| Q5 | One numbering series; gates by value only unless a rule set is involved (A5) |
+| Q6 | The icon strip, decided in the Shell file first (A2) |
+| Q7 | Withdrawn by addendum A2 |
+| Q8 | Section 9 wins |
+| Q9 | GST shown separately, with the total excluding GST and the total including GST |
+| Q10 | Keep the business day the label names (A14) |
+| Q11 | Reading adopted: Screen systems v2 derives delay units by a fixed count rule; v3 broke that derivation in its drive rework; v4 restores it as the length-threshold rule. One basis line on CS04 changes to say so; R09 and R10 stand |
+| Q12 | Resolved from dataset 9.8 without a decision: SYN-REF-000031 is "Pinion drive, two spans", so the rule the v3 change list declares (2 motors per span for pinion drive, couplings as shafts plus motors) gives the 4 motors and 6 couplings the case expects, and the run's 2 and 4 show the declared change is not effective in v3. The reviewer's note on R12 asking the author to confirm the drive-type condition is the right finding and stands |
+
+Audit order of 9.7, as adopted with two changes: refinements R1 to R10 and polish P1 to P8 are drawn as one pass, because each touches every sheet and one pass means one verification run; and G5, prototype links for the main journey, is pulled into that pass because the standard's Design ready checklist requires the main journey to play in Present mode. G2, G6 and G3 are drawn now; G4, G7 and G8 wait for their contracts; N-E5, N-E7 and N-E9 are drawn as proposals with their rules written first; N-E6 is deferred until a review-before-send policy exists, and N-E10 as a later platform capability; G1 and the other Sales items go to one Sales-file prompt. One named version, "PPO - Estimating module (accepted)", is to be saved after the batch so that a single version pins the accepted state including the contrast corrections R1 and R2.
+
+### 12.2 Design ready check
+
+To follow once the independent check has run.
+
+### 12.3 Lock-in
+
+To follow once the pages have moved above the — Proposals — separator and the named version is saved.
+
+### 12.4 Drawn after the acceptance
+
+To follow once the batch is drawn and verified.
