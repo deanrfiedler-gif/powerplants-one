@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "application-shell": {
+      "states": [
+        {
+          "id": "phone-tab-bar-labelled",
+          "label": "Labelled phone tab bar on rail colours",
+          "description": "Every phone tab bar cell shows its icon and a fitted label (Roboto 11 px; Medium when current) on the desktop rail's colours, with the current cell full height on the rail's lighter surface under a 3 px green top line (PPO-PHONE-TAB-BAR-DEC, T1-T8). Drawn in the six module Figma files on 10 November 2026; not built yet."
+        }
+      ],
+      "dependencies": [
+        "docs/decisions/phone-tab-bar-labels-and-rail-colours.md"
+      ],
+      "used_on": [
+        "system:shell"
+      ],
+      "gaps": [
+        {
+          "id": "application-shell-phone-tab-bar-labels",
+          "expected": "Every phone tab bar cell shows its icon and the phone label in section 3 of PPO-PHONE-TAB-BAR-DEC, fitting at 320 px without wrapping or truncating, with the label as the accessible name and the current cell full height.",
+          "actual": "The application hides phone bar labels visually (src/app/styles/figma-shell.css; src/app/styles/projects-register.css for Projects), and cells outside Sales would show full destination names that do not fit.",
+          "action": "Codex builds from the decision once it is merged and Dean has saved the Sales named version; Claude reviews once. Colours stay on the desktop rail's tokens until the refined rail (S2) moves both together.",
+          "priority": "High",
+          "owner": "Dean Fiedler"
+        }
+      ]
+    }
+  }
+}

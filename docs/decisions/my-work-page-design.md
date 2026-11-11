@@ -18,6 +18,8 @@ Claude redrew My Work on the accepted pattern that the other Figma pages share:
 - the record window that opens over a register;
 - the phone pattern with flush lists and an icon-only tab bar.
 
+**Amendment — 10 November 2026.** The icon-only tab bar in this phone pattern, and in the Phone row of the decision table below, is superseded: every phone tab shows a visible label ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)).
+
 It read the six My Work views, the activity detail and the phone overview from the application code. It also read Dean's 9 October owner review, so the redraw applies those findings.
 
 While the page was being drawn, Dean asked: "Could we also include a module in the My work page relating to "Todays weather"? I could connect the account to google weather. Do you think this would be an interesting feature to include?" Claude recommended it, focused on today's site visits, and added it as a proposed module (section 6).

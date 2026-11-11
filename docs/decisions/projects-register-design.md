@@ -85,6 +85,8 @@ The Leads and Reviews & approvals departures apply unchanged: the labelled rail,
 | P6 | The Projects rail leaves out Delivery readiness, Risks & issues, Variations & obligations and Site assurance, which the app hides while they are unavailable. Acceptance & closeout becomes a rail item | The rail as built |
 | P7 | Phone rows show the title; customer and target with an "n at risk" tag; and the next milestone with its date or Overdue. The phone tab bar has five icon-only tabs: My Work, Projects (current), Programme, Acceptance & closeout and More | Four labelled tabs: My Work, Projects, Programme and More |
 
+**Amendment — 10 November 2026.** The icon-only tabs in P7 are superseded: every phone tab shows a visible label, with Acceptance & closeout labelled "Acceptance" ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The rest of P7 stands.
+
 ### Observations raised before the confirmation
 
 - **Desktop header.** The notes card says the breadcrumb reads "Projects / Project register"; the drawn desktop header reads "Projects". Dean accepted the page as drawn. The built page uses "Projects / Project register" ([implementation decision](projects-register-native.md)). The shell top bar amendment accepted on 16 October (breadcrumb rules R1–R8) will govern the header for every page when it is locked in and built; this record does not settle it.

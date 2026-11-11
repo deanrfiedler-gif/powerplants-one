@@ -74,6 +74,8 @@ These depart from the adopted Shell page (built from `main@ed3ccb8`) or the firs
 | D9 | Five proposal colours give the tints exact values: `proposal/menu-selected` `#e3e8ee`, `proposal/row-selected` `#eff2f6`, `proposal/rail-text` `#e0e1e3`, `proposal/rail-muted` `#acaeb3` and `proposal/rail-badge` `#474c57` | No equivalent tokens |
 | D10 | Bulk actions are limited to Open in sequence and Export list. Decisions stay one review at a time, as ES-04 requires | Not designed |
 
+**Amendment — 10 November 2026.** The icon-only part of D8, and of the "Phone header and tab bar" source row above, is superseded: Dean adopted a visible label on every phone tab bar, with the Reviews & approvals tab labelled "Reviews", and its colours follow the desktop rail ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The rest of D8 stands.
+
 ## 5. Not decided
 
 - **Building the page.** The route, data, permission and capability need their own decision and pull requests. The navigation coverage ledger still says "No capability invented".
