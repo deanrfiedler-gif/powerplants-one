@@ -380,9 +380,11 @@ test("P05 controlled move conflict keeps original position; uncertain accepted r
     exact: true,
   });
   if (info.project.name.startsWith("desktop")) {
-    await lane
-      .locator(savedVisit)
-      .dragTo(lane.locator('[data-day="2031-10-10"]'));
+    const source = lane.locator(savedVisit);
+    // A retained tile stays visible while the refreshed schedule is loading,
+    // but the planner deliberately disables dragging until that read settles.
+    await expect(source).toHaveAttribute("draggable", "true");
+    await source.dragTo(lane.locator('[data-day="2031-10-10"]'));
     await expect(page.getByRole("dialog")).toBeVisible();
     await capture(page, info, "drag-proposal");
   } else {
